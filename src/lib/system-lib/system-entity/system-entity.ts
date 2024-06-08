@@ -17,10 +17,14 @@ export class SystemEntity {
     this._name = params.name;
     this._nsid = params.nsid;
     this._type = params.type;
+    if (params.position) {
+      this._localPosition = new Vector(params.position.x, params.position.y, 0);
+    }
   }
 
   /**
    * Get the position of the entity in world coordinates.
+   * Undefined if no system tile object.
    *
    * @returns
    */
@@ -73,7 +77,7 @@ export class SystemEntity {
     return this;
   }
 
-  setSystemObjId(systemObjId: string): this {
+  setSystemTileObjId(systemObjId: string): this {
     this._systemTileObjId = systemObjId;
     return this;
   }

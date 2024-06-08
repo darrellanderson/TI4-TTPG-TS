@@ -1,9 +1,8 @@
 import { z } from "zod";
 
-export const SYSTEM_ENTITY_SCHEMA = z
+export const SystemEntySchema = z
   .object({
     name: z.string(),
-    nsid: z.string().optional(),
     type: z.enum([
       "anomaly",
       "homebrew",
@@ -12,6 +11,7 @@ export const SYSTEM_ENTITY_SCHEMA = z
       "wormhole",
     ]),
 
+    nsid: z.string().optional(),
     position: z
       .object({
         x: z.number(),
@@ -22,4 +22,4 @@ export const SYSTEM_ENTITY_SCHEMA = z
   })
   .strict();
 
-export type SystemEntityType = z.infer<typeof SYSTEM_ENTITY_SCHEMA>;
+export type SystemEntityType = z.infer<typeof SystemEntySchema>;
