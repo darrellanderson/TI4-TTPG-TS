@@ -8,7 +8,7 @@ it("constructor (with optional)", () => {
   expect(planetEntity.getName()).toEqual("my-name");
   expect(planetEntity.getType()).toEqual("planet");
   expect(planetEntity.getNSID()).toBeUndefined();
-  expect(planetEntity.getLocalPosition()).toBeUndefined();
+  expect(planetEntity.getLocalPosition().toString()).toEqual("(X=0,Y=0,Z=0)");
   expect(planetEntity.getInfluence()).toEqual(0);
   expect(planetEntity.getResources()).toEqual(0);
   expect(planetEntity.getTraits()).toEqual([]);
@@ -38,7 +38,7 @@ it("constructor (with optional)", () => {
   expect(planetEntity.getName()).toEqual("my-name");
   expect(planetEntity.getType()).toEqual("planet");
   expect(planetEntity.getNSID()).toEqual("my-nsid");
-  expect(planetEntity.getLocalPosition()).toEqual({ x: 1, y: 2, z: 0 });
+  expect(planetEntity.getLocalPosition().toString()).toEqual("(X=1,Y=2,Z=0)");
   expect(planetEntity.getInfluence()).toEqual(3);
   expect(planetEntity.getResources()).toEqual(4);
   expect(planetEntity.getTraits()).toEqual(["cultural"]);
