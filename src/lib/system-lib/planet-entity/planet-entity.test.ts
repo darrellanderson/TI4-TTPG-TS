@@ -15,7 +15,7 @@ it("constructor (with optional)", () => {
   expect(planetEntity.getTechs()).toEqual([]);
   expect(planetEntity.isLegendary()).toEqual(false);
   expect(planetEntity.getRadius()).toBeUndefined();
-  expect(planetEntity.shouldDestroyPlanet()).toEqual(false);
+  expect(planetEntity.isDestroyPlanet()).toEqual(false);
 });
 
 it("constructor (with optional)", () => {
@@ -45,5 +45,5 @@ it("constructor (with optional)", () => {
   expect(planetEntity.getTechs()).toEqual(["blue"]);
   expect(planetEntity.isLegendary()).toEqual(true);
   expect(planetEntity.getRadius()).toEqual(5);
-  expect(planetEntity.shouldDestroyPlanet()).toEqual(true);
+  expect(planetEntity.isDestroyPlanet()).toEqual(true);
 });

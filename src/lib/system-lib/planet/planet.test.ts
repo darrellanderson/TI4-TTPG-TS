@@ -1,0 +1,43 @@
+import { SystemDefaults } from "../data/system-defaults";
+import { Planet } from "./planet";
+
+it("constructor (required only)", () => {
+  const planet = new Planet({
+    name: "my-name",
+    type: "planet",
+  });
+  expect(planet.getName()).toEqual("my-name");
+  expect(planet.getInfluence()).toEqual(0);
+  expect(planet.getRadius()).toEqual(SystemDefaults.PLANET_RADIUS);
+  expect(planet.getResources()).toEqual(0);
+  expect(planet.getTechs()).toEqual([]);
+  expect(planet.getTraits()).toEqual([]);
+  expect(planet.isDestroyPlanet()).toEqual(false);
+  expect(planet.isLegendary()).toEqual(false);
+});
+
+it("constructor (with optional)", () => {
+  const planet = new Planet({
+    name: "my-name",
+    type: "planet",
+    nsid: "my-nsid",
+    position: {
+      x: 1,
+      y: 2,
+    },
+    influence: 3,
+    resources: 4,
+    traits: ["cultural"],
+    techs: ["blue"],
+    legendary: true,
+    radius: 5,
+    destroyPlanet: true,
+  });
+  expect(planet.getInfluence()).toEqual(3);
+  expect(planet.getRadius()).toEqual(5);
+  expect(planet.getResources()).toEqual(4);
+  expect(planet.getTechs()).toEqual(["blue"]);
+  expect(planet.getTraits()).toEqual(["cultural"]);
+  expect(planet.isDestroyPlanet()).toEqual(true);
+  expect(planet.isLegendary()).toEqual(true);
+});

@@ -21,23 +21,23 @@ export class PlanetEntity extends SystemEntity {
     this.destroyPlanet = params.destroyPlanet ?? false;
   }
 
-  getInfluence(): number | undefined {
+  getInfluence(): number {
     return this.influence;
   }
 
-  getResources(): number | undefined {
+  getResources(): number {
     return this.resources;
   }
 
-  getTraits(): string[] | undefined {
+  getTraits(): string[] {
     return this.traits;
   }
 
-  getTechs(): string[] | undefined {
+  getTechs(): string[] {
     return this.techs;
   }
 
-  isLegendary(): boolean | undefined {
+  isLegendary(): boolean {
     return this.legendary;
   }
 
@@ -45,7 +45,7 @@ export class PlanetEntity extends SystemEntity {
     return this.radius;
   }
 
-  shouldDestroyPlanet(): boolean | undefined {
+  isDestroyPlanet(): boolean {
     return this.destroyPlanet;
   }
 }
