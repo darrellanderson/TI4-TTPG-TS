@@ -41,3 +41,21 @@ it("parse with optional", () => {
     destroyPlanet: false,
   });
 });
+
+it("parse with omitted anomalies", () => {
+  expect(() => {
+    PlanetEntitySchema.parse({
+      name: "my-name",
+      anomalies: [],
+    });
+  }).toThrow();
+});
+
+it("parse with omitted wormholes", () => {
+  expect(() => {
+    PlanetEntitySchema.parse({
+      name: "my-name",
+      wormholes: [],
+    });
+  }).toThrow();
+});

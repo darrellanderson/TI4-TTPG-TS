@@ -4,6 +4,7 @@ export const SystemEntitySchema = z
   .object({
     name: z.string(),
 
+    anomalies: z.array(z.string()).optional(),
     nsid: z.string().optional(),
     position: z
       .object({
@@ -12,6 +13,7 @@ export const SystemEntitySchema = z
       })
       .strict()
       .optional(),
+    wormholes: z.array(z.string()).optional(),
   })
   .strict();
 

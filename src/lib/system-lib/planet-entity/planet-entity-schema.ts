@@ -9,6 +9,8 @@ export const PlanetEntitySchema = SystemEntitySchema.extend({
   legendary: z.boolean().optional(),
   radius: z.number().optional(),
   destroyPlanet: z.boolean().optional(),
-}).strict();
+})
+  .omit({ anomalies: true, wormholes: true }) // reserved for system level
+  .strict();
 
 export type PlanetEntityType = z.infer<typeof PlanetEntitySchema>;

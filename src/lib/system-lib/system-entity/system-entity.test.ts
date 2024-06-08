@@ -5,15 +5,19 @@ import { SystemEntityType } from "./system-entity-schema";
 
 it("constructor/getters", () => {
   const params: SystemEntityType = {
+    anomalies: ["asteroid-field"],
     name: "my-name",
     nsid: "my-nsid",
     position: { x: 1, y: 2 },
+    wormholes: ["alpha"],
   };
   const systemEntity = new SystemEntity(params);
+  expect(systemEntity.getAnomalies()).toEqual(["asteroid-field"]);
   expect(systemEntity.getName()).toBe("my-name");
   expect(systemEntity.getNSID()).toBe("my-nsid");
   expect(systemEntity.getSystemTileObjId()).toBeUndefined();
   expect(systemEntity.getLocalPosition().toString()).toBe("(X=1,Y=2,Z=0)");
+  expect(systemEntity.getWormholes()).toEqual(["alpha"]);
 });
 
 it("setLocalPosition", () => {

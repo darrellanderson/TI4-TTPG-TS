@@ -6,18 +6,27 @@ import { SystemEntityType } from "./system-entity-schema";
  * Could be intrisic to the system tile, or an attachment/token.
  */
 export class SystemEntity {
-  private readonly _name: string = "";
-  private readonly _nsid: string | undefined = undefined;
+  private readonly _anomalies: string[];
+  private readonly _name: string;
+  private readonly _nsid: string | undefined;
+  private readonly _wormholes: string[];
 
   private _localPosition: Vector = new Vector(0, 0, 0);
   private _systemTileObjId: string | undefined = undefined;
 
   constructor(params: SystemEntityType) {
+    this._anomalies = params.anomalies ?? [];
     this._name = params.name;
     this._nsid = params.nsid;
+    this._wormholes = params.wormholes ?? [];
+
     if (params.position) {
       this._localPosition = new Vector(params.position.x, params.position.y, 0);
     }
+  }
+
+  getAnomalies(): string[] {
+    return this._anomalies;
   }
 
   /**
@@ -64,6 +73,10 @@ export class SystemEntity {
 
   getSystemTileObjId(): string | undefined {
     return this._systemTileObjId;
+  }
+
+  getWormholes(): string[] {
+    return this._wormholes;
   }
 
   setLocalPosition(localPosition: Vector): this {

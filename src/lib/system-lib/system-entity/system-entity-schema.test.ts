@@ -12,19 +12,23 @@ it("parse (required only)", () => {
 it("parse with optional", () => {
   const parsed: SystemEntityType = SystemEntitySchema.parse({
     name: "my-name",
+    anomalies: ["asteroid-field"],
     nsid: "my-nsid",
     position: {
       x: 1,
       y: 2,
     },
+    wormholes: ["alpha"],
   });
   expect(parsed).toEqual({
     name: "my-name",
+    anomalies: ["asteroid-field"],
     nsid: "my-nsid",
     position: {
       x: 1,
       y: 2,
     },
+    wormholes: ["alpha"],
   });
 });
 
