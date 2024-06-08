@@ -1,0 +1,29 @@
+{
+  "compilerOptions": {
+    "checkJs": true,
+    "lib": ["ES2023", "DOM"],
+    "module": "commonjs",
+    "strict": true,
+    "outDir": "./build",
+    "useUnknownInCatchVariables": false,
+    "jsx": "react",
+    "jsxFactory": "jsxInTTPG",
+    "jsxFragmentFactory": "jsxFrag",
+    "rootDir": "./src",
+    "moduleResolution": "Node",
+    "resolveJsonModule": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "target": "ES6",
+    "baseUrl": "./src",
+    "paths": {
+      "@mock/*": ["./mock/*"],
+      "@wrapper/*": ["./wrapper/*"]
+    }
+  },
+  "include": [
+    "./src/**/*.ts",
+    "./src/**/*.tsx",
+    "src/lib/system-lib/abstract-system-entity"
+  ]
+}
