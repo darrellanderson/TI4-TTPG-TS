@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-export const SystemEntySchema = z
+export const SystemEntitySchema = z
   .object({
     name: z.string(),
     type: z.enum([
@@ -22,4 +22,4 @@ export const SystemEntySchema = z
   })
   .strict();
 
-export type SystemEntityType = z.infer<typeof SystemEntySchema>;
+export type SystemEntityType = z.infer<typeof SystemEntitySchema>;

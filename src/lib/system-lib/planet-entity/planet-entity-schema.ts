@@ -1,7 +1,7 @@
 import { z } from "zod";
-import { SYSTEM_ENTITY_SCHEMA } from "../system-entity/system-entity-schema";
+import { SystemEntitySchema } from "../system-entity/system-entity-schema";
 
-export const PLANET_ENTITY_SCHEMA = SYSTEM_ENTITY_SCHEMA.extend({
+export const PlanetEntitySchema = SystemEntitySchema.extend({
   influence: z.number().optional(),
   resources: z.number().optional(),
   traits: z.array(z.enum(["cultural", "hazardous", "industrial"])).optional(),
@@ -11,4 +11,4 @@ export const PLANET_ENTITY_SCHEMA = SYSTEM_ENTITY_SCHEMA.extend({
   destroyPlanet: z.boolean().optional(),
 }).strict();
 
-export type PlanetEntityType = z.infer<typeof PLANET_ENTITY_SCHEMA>;
+export type PlanetEntityType = z.infer<typeof PlanetEntitySchema>;

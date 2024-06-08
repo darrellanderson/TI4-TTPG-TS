@@ -1,14 +1,27 @@
-import { SystemEntySchema } from "./system-entity-schema";
+import { SystemEntitySchema, SystemEntityType } from "./system-entity-schema";
 
-it("parse", () => {
-  SystemEntySchema.parse({
+it("parse (required only)", () => {
+  const parsed: SystemEntityType = SystemEntitySchema.parse({
+    name: "my-name",
+    type: "anomaly",
+  });
+  expect(parsed).toEqual({
     name: "my-name",
     type: "anomaly",
   });
 });
 
 it("parse with optional", () => {
-  SystemEntySchema.parse({
+  const parsed: SystemEntityType = SystemEntitySchema.parse({
+    name: "my-name",
+    type: "anomaly",
+    nsid: "my-nsid",
+    position: {
+      x: 1,
+      y: 2,
+    },
+  });
+  expect(parsed).toEqual({
     name: "my-name",
     type: "anomaly",
     nsid: "my-nsid",
@@ -21,7 +34,7 @@ it("parse with optional", () => {
 
 it("parse with invalid name", () => {
   expect(() => {
-    SystemEntySchema.parse({
+    SystemEntitySchema.parse({
       name: 123, // not a string
       type: "anomaly",
     });
@@ -30,7 +43,7 @@ it("parse with invalid name", () => {
 
 it("parse with invalid type", () => {
   expect(() => {
-    SystemEntySchema.parse({
+    SystemEntitySchema.parse({
       name: "my-name",
       type: "NOT_A_VALID_TYPE",
     });
@@ -39,7 +52,7 @@ it("parse with invalid type", () => {
 
 it("parse with an invalid field", () => {
   expect(() => {
-    SystemEntySchema.parse({
+    SystemEntitySchema.parse({
       name: "my-name",
       type: "anomaly",
       invalidField: "invalid",
