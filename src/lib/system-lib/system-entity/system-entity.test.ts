@@ -7,12 +7,10 @@ it("constructor/getters", () => {
   const params: SystemEntityType = {
     name: "my-name",
     nsid: "my-nsid",
-    type: "anomaly",
     position: { x: 1, y: 2 },
   };
   const systemEntity = new SystemEntity(params);
   expect(systemEntity.getName()).toBe("my-name");
-  expect(systemEntity.getType()).toBe("anomaly");
   expect(systemEntity.getNSID()).toBe("my-nsid");
   expect(systemEntity.getSystemTileObjId()).toBeUndefined();
   expect(systemEntity.getLocalPosition().toString()).toBe("(X=1,Y=2,Z=0)");
@@ -21,7 +19,6 @@ it("constructor/getters", () => {
 it("setLocalPosition", () => {
   const params: SystemEntityType = {
     name: "my-name",
-    type: "anomaly",
   };
   const systemEntity = new SystemEntity(params);
   expect(systemEntity.getLocalPosition().toString()).toBe("(X=0,Y=0,Z=0)");
@@ -33,7 +30,6 @@ it("setLocalPosition", () => {
 it("setSystemTileObjId", () => {
   const params: SystemEntityType = {
     name: "my-name",
-    type: "anomaly",
   };
   const systemEntity = new SystemEntity(params);
   expect(systemEntity.getSystemTileObjId()).toBeUndefined();
@@ -45,7 +41,6 @@ it("setSystemTileObjId", () => {
 it("getGlobalPosition", () => {
   const params: SystemEntityType = {
     name: "my-name",
-    type: "anomaly",
     position: { x: 1, y: 2 },
   };
   const systemEntity = new SystemEntity(params);
@@ -63,7 +58,6 @@ it("getGlobalPosition", () => {
 it("getSystemTileObj (valid)", () => {
   const params: SystemEntityType = {
     name: "my-name",
-    type: "anomaly",
   };
   const systemEntity = new SystemEntity(params);
   expect(systemEntity.getSystemTileObj()).toBeUndefined();
@@ -78,7 +72,6 @@ it("getSystemTileObj (valid)", () => {
 it("getSystemTileObj (invalid object)", () => {
   const params: SystemEntityType = {
     name: "my-name",
-    type: "anomaly",
   };
   const systemEntity = new SystemEntity(params);
   expect(systemEntity.getSystemTileObj()).toBeUndefined();
@@ -96,7 +89,6 @@ it("getSystemTileObj (invalid object)", () => {
 it("getSystemTileObj (invalid id)", () => {
   const params: SystemEntityType = {
     name: "my-name",
-    type: "anomaly",
   };
   const systemEntity = new SystemEntity(params);
   expect(systemEntity.getSystemTileObj()).toBeUndefined();

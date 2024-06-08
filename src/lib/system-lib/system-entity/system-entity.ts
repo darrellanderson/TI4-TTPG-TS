@@ -8,7 +8,6 @@ import { SystemEntityType } from "./system-entity-schema";
 export class SystemEntity {
   private readonly _name: string = "";
   private readonly _nsid: string | undefined = undefined;
-  private readonly _type: string = "";
 
   private _localPosition: Vector = new Vector(0, 0, 0);
   private _systemTileObjId: string | undefined = undefined;
@@ -16,7 +15,6 @@ export class SystemEntity {
   constructor(params: SystemEntityType) {
     this._name = params.name;
     this._nsid = params.nsid;
-    this._type = params.type;
     if (params.position) {
       this._localPosition = new Vector(params.position.x, params.position.y, 0);
     }
@@ -66,10 +64,6 @@ export class SystemEntity {
 
   getSystemTileObjId(): string | undefined {
     return this._systemTileObjId;
-  }
-
-  getType(): string {
-    return this._type;
   }
 
   setLocalPosition(localPosition: Vector): this {

@@ -3,13 +3,6 @@ import { z } from "zod";
 export const SystemEntitySchema = z
   .object({
     name: z.string(),
-    type: z.enum([
-      "anomaly",
-      "homebrew",
-      "planet",
-      "planet-attachment",
-      "wormhole",
-    ]),
 
     nsid: z.string().optional(),
     position: z

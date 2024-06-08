@@ -4,7 +4,6 @@ import { Planet } from "./planet";
 it("constructor (required only)", () => {
   const planet = new Planet({
     name: "my-name",
-    type: "planet",
   });
   expect(planet.getName()).toEqual("my-name");
   expect(planet.getInfluence()).toEqual(0);
@@ -19,7 +18,6 @@ it("constructor (required only)", () => {
 it("constructor (with optional)", () => {
   const planet = new Planet({
     name: "my-name",
-    type: "planet",
     nsid: "my-nsid",
     position: {
       x: 1,

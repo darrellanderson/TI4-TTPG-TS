@@ -3,18 +3,15 @@ import { PlanetEntitySchema, PlanetEntityType } from "./planet-entity-schema";
 it("parse (required only)", () => {
   const parsed: PlanetEntityType = PlanetEntitySchema.parse({
     name: "my-name",
-    type: "anomaly",
   });
   expect(parsed).toEqual({
     name: "my-name",
-    type: "anomaly",
   });
 });
 
 it("parse with optional", () => {
   const parsed: PlanetEntityType = PlanetEntitySchema.parse({
     name: "my-name",
-    type: "anomaly",
     nsid: "my-nsid",
     position: {
       x: 1,
@@ -30,7 +27,6 @@ it("parse with optional", () => {
   });
   expect(parsed).toEqual({
     name: "my-name",
-    type: "anomaly",
     nsid: "my-nsid",
     position: {
       x: 1,
