@@ -17,13 +17,15 @@ it("parse with optional", () => {
       x: 1,
       y: 2,
     },
+    radius: 5,
     influence: 3,
     resources: 4,
     traits: ["cultural"],
     techs: ["blue"],
-    legendary: true,
-    radius: 5,
-    destroyPlanet: false,
+    isLegendary: true,
+    isDestroyPlanet: true,
+    img: "my-img",
+    imgPackageId: "my-img-package-id",
   });
   expect(parsed).toEqual({
     name: "my-name",
@@ -32,13 +34,15 @@ it("parse with optional", () => {
       x: 1,
       y: 2,
     },
+    radius: 5,
     influence: 3,
     resources: 4,
     traits: ["cultural"],
     techs: ["blue"],
-    legendary: true,
-    radius: 5,
-    destroyPlanet: false,
+    isLegendary: true,
+    isDestroyPlanet: true,
+    img: "my-img",
+    imgPackageId: "my-img-package-id",
   });
 });
 

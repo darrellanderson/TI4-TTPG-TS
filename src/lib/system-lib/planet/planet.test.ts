@@ -6,8 +6,9 @@ it("constructor (required only)", () => {
     name: "my-name",
   });
   expect(planet.getName()).toEqual("my-name");
-  expect(planet.getInfluence()).toEqual(0);
   expect(planet.getRadius()).toEqual(SystemDefaults.PLANET_RADIUS);
+  expect(planet.getLocalPosition().toString()).toEqual("(X=0,Y=0,Z=0)");
+  expect(planet.getInfluence()).toEqual(0);
   expect(planet.getResources()).toEqual(0);
   expect(planet.getTechs()).toEqual([]);
   expect(planet.getTraits()).toEqual([]);
@@ -23,16 +24,17 @@ it("constructor (with optional)", () => {
       x: 1,
       y: 2,
     },
+    radius: 5,
     influence: 3,
     resources: 4,
     traits: ["cultural"],
     techs: ["blue"],
-    legendary: true,
-    radius: 5,
-    destroyPlanet: true,
+    isLegendary: true,
+    isDestroyPlanet: true,
   });
-  expect(planet.getInfluence()).toEqual(3);
+  expect(planet.getLocalPosition().toString()).toEqual("(X=1,Y=2,Z=0)");
   expect(planet.getRadius()).toEqual(5);
+  expect(planet.getInfluence()).toEqual(3);
   expect(planet.getResources()).toEqual(4);
   expect(planet.getTechs()).toEqual(["blue"]);
   expect(planet.getTraits()).toEqual(["cultural"]);

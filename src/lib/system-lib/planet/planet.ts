@@ -1,3 +1,4 @@
+import { Vector } from "@tabletop-playground/api";
 import { SystemDefaults } from "../data/system-defaults";
 import { PlanetEntity } from "../planet-entity/planet-entity";
 import { PlanetEntityType } from "../planet-entity/planet-entity-schema";
@@ -21,6 +22,10 @@ export class Planet {
 
   getName(): string {
     return this._primeEntry.getName();
+  }
+
+  getLocalPosition(): Vector {
+    return this._primeEntry.getLocalPosition();
   }
 
   getRadius(): number {

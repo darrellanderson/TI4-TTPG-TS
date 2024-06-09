@@ -1,51 +1,87 @@
-import { SystemEntity } from "../system-entity/system-entity";
+import { Vector } from "@tabletop-playground/api";
 import { PlanetEntityType } from "./planet-entity-schema";
 
-export class PlanetEntity extends SystemEntity {
-  private readonly influence: number;
-  private readonly resources: number;
-  private readonly traits: string[];
-  private readonly techs: string[];
-  private readonly legendary: boolean;
-  private readonly radius: number | undefined;
-  private readonly destroyPlanet: boolean;
+export class PlanetEntity {
+  private readonly _name: string;
+  private readonly _nsid: string | undefined;
+  private readonly _radius: number | undefined;
+  private readonly _influence: number;
+  private readonly _resources: number;
+  private readonly _techs: string[];
+  private readonly _traits: string[];
+  private readonly _isLegendary: boolean;
+  private readonly _isDestroyPlanet: boolean;
+  private readonly _img: string | undefined;
+  private readonly _imgPackageId: string | undefined;
+  private _localPosition: Vector = new Vector(0, 0, 0);
 
   constructor(params: PlanetEntityType) {
-    super(params);
-    this.influence = params.influence ?? 0;
-    this.resources = params.resources ?? 0;
-    this.traits = params.traits ?? [];
-    this.techs = params.techs ?? [];
-    this.legendary = params.legendary ?? false;
-    this.radius = params.radius;
-    this.destroyPlanet = params.destroyPlanet ?? false;
+    this._name = params.name;
+    this._nsid = params.nsid;
+    this._influence = params.influence ?? 0;
+    this._resources = params.resources ?? 0;
+    this._traits = params.traits ?? [];
+    this._techs = params.techs ?? [];
+    this._isLegendary = params.isLegendary ?? false;
+    this._radius = params.radius;
+    this._isDestroyPlanet = params.isDestroyPlanet ?? false;
+    this._img = params.img;
+    this._imgPackageId = params.imgPackageId;
+    if (params.position) {
+      this._localPosition = new Vector(params.position.x, params.position.y, 0);
+    }
+  }
+
+  getImg(): string | undefined {
+    return this._img;
+  }
+
+  getImgPackageId(): string | undefined {
+    return this._imgPackageId;
   }
 
   getInfluence(): number {
-    return this.influence;
+    return this._influence;
   }
 
-  getResources(): number {
-    return this.resources;
+  getLocalPosition(): Vector {
+    return this._localPosition.clone();
   }
 
-  getTraits(): string[] {
-    return this.traits;
+  getName(): string {
+    return this._name;
   }
 
-  getTechs(): string[] {
-    return this.techs;
-  }
-
-  isLegendary(): boolean {
-    return this.legendary;
+  getNSID(): string | undefined {
+    return this._nsid;
   }
 
   getRadius(): number | undefined {
-    return this.radius;
+    return this._radius;
+  }
+
+  getResources(): number {
+    return this._resources;
+  }
+
+  getTechs(): string[] {
+    return this._techs;
+  }
+
+  getTraits(): string[] {
+    return this._traits;
+  }
+
+  isLegendary(): boolean {
+    return this._isLegendary;
   }
 
   isDestroyPlanet(): boolean {
-    return this.destroyPlanet;
+    return this._isDestroyPlanet;
+  }
+
+  setLocalPosition(localPosition: Vector): this {
+    this._localPosition = localPosition.clone();
+    return this;
   }
 }
