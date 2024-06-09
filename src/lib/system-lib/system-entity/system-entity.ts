@@ -1,6 +1,6 @@
-import { GameObject, Vector, world } from "@tabletop-playground/api";
+import { Vector } from "@tabletop-playground/api";
 import { SystemEntityType } from "./system-entity-schema";
-import { PlanetEntity } from "../planet-entity/planet-entity";
+import { PlanetEntityType } from "../planet-entity/planet-entity-schema";
 
 /**
  * Something linked to a system, e.g. a wormhole, anomaly, planet, etc.
@@ -16,7 +16,7 @@ export class SystemEntity {
   private readonly _wormholes: Array<string>;
   private readonly _img: string | undefined;
   private readonly _imgPackageId: string | undefined;
-  private readonly _planets: Array<PlanetEntity> = [];
+  private readonly _planetEntityTypes: Array<PlanetEntityType> = [];
   private _localPosition: Vector = new Vector(0, 0, 0);
 
   constructor(params: SystemEntityType) {
@@ -33,9 +33,8 @@ export class SystemEntity {
       this._localPosition = new Vector(params.position.x, params.position.y, 0);
     }
     if (params.planets) {
-      for (const planet of params.planets) {
-        const planetEntity = new PlanetEntity(planet);
-        this._planets.push(planetEntity);
+      for (const planetEntityType of params.planets) {
+        this._planetEntityTypes.push(planetEntityType);
       }
     }
   }
@@ -68,8 +67,8 @@ export class SystemEntity {
     return this._nsid;
   }
 
-  getPlanets(): Array<PlanetEntity> {
-    return this._planets;
+  getPlanetEntityTypes(): Array<PlanetEntityType> {
+    return this._planetEntityTypes;
   }
 
   getTile(): number | undefined {

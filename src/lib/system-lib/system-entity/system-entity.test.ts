@@ -57,7 +57,5 @@ it("planets", () => {
     ],
   };
   const systemEntity = new SystemEntity(params);
-  expect(systemEntity.getPlanets().length).toBe(2);
-  expect(systemEntity.getPlanets()[0].getName()).toBe("planet-1");
-  expect(systemEntity.getPlanets()[1].getName()).toBe("planet-2");
+  expect(systemEntity.getPlanetEntityTypes().length).toBe(2);
 });

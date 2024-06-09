@@ -80,3 +80,22 @@ it("getSystemTileObj (invalid id)", () => {
   system.setSystemTileObjId("no-such-id");
   expect(system.getSystemTileObj()).toBeUndefined();
 });
+
+it("planets", () => {
+  const params: SystemEntityType = {
+    name: "my-name",
+    planets: [
+      {
+        name: "planet-1",
+        position: { x: 1, y: 2 },
+      },
+      {
+        name: "planet-2",
+        position: { x: 3, y: 4 },
+      },
+    ],
+  };
+  const systemEntity = new SystemEntity(params);
+  const system = new System(systemEntity);
+  expect(system.getPlanets().length).toBe(2);
+});
