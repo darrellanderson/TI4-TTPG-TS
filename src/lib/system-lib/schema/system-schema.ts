@@ -5,6 +5,7 @@ import {
   WormholeWithPositionSchema,
   HyperlaneSchema,
 } from "./basic-types-schema";
+import { PlanetSchema } from "./planet-schema";
 
 export const SystemSchema = z
   .object({
@@ -28,6 +29,8 @@ export const SystemSchema = z
 
     hyperlanes: HyperlaneSchema.optional(),
     hyperlanesFaceDown: HyperlaneSchema.optional(),
+
+    planets: z.array(PlanetSchema).optional(),
 
     // System tile image, PNG transparent square, fill to left/right edge.
     img: z.string().optional(),

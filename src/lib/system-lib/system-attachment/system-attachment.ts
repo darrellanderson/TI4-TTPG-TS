@@ -1,7 +1,8 @@
-import { GameObject, world } from "@tabletop-playground/api";
+import { GameObject, Vector, world } from "@tabletop-playground/api";
 import { Facing } from "ttpg-darrell";
 import { Planet } from "../planet/planet";
 import { SystemAttachmentSchemaType } from "../schema/system-attachment-schema";
+import { WormholeWithGlobalPosition } from "../system/system";
 
 export class SystemAttachment {
   private readonly _params: SystemAttachmentSchemaType;
@@ -18,6 +19,19 @@ export class SystemAttachment {
 
   getAnomalies(): Array<string> {
     return this._params.anomalies || [];
+  }
+
+  getAttachmentObj(): GameObject | undefined {
+    if (!this._attachmentObjId) {
+      return undefined;
+    }
+    const obj: GameObject | undefined = world.getObjectById(
+      this._attachmentObjId
+    );
+    if (!obj || !obj.isValid()) {
+      return undefined;
+    }
+    return obj;
   }
 
   getImg(): string | undefined {
@@ -47,14 +61,29 @@ export class SystemAttachment {
     return this._params.wormholes || [];
   }
 
-  isAttachmentFaceUp(): boolean {
-    if (!this._attachmentObjId) {
-      return true;
+  getWormholesWithGlobalPositions(): Array<WormholeWithGlobalPosition> {
+    const result: Array<WormholeWithGlobalPosition> = [];
+
+    const attachmentObj: GameObject | undefined = this.getAttachmentObj();
+    if (!attachmentObj) {
+      return result;
     }
-    const obj: GameObject | undefined = world.getObjectById(
-      this._attachmentObjId
-    );
-    if (!obj || !obj.isValid()) {
+
+    const globalPosition: Vector = attachmentObj.getPosition();
+
+    for (const wormhole of this.getWormholes()) {
+      result.push({
+        globalPosition,
+        wormhole,
+      });
+    }
+
+    return result;
+  }
+
+  isAttachmentFaceUp(): boolean {
+    const obj: GameObject | undefined = this.getAttachmentObj();
+    if (!obj) {
       return true;
     }
     return Facing.isFaceUp(obj);

@@ -1,6 +1,7 @@
 import { GameObject } from "@tabletop-playground/api";
 import { SystemAttachment } from "./system-attachment";
 import { MockGameObject } from "ttpg-mock";
+import { WormholeWithGlobalPosition } from "../system/system";
 
 it("constructor", () => {
   const attachment = new SystemAttachment({
@@ -58,4 +59,44 @@ it("wormholesFaceDown", () => {
   obj.destroy();
   expect(attachment.isAttachmentFaceUp()).toEqual(true);
   expect(attachment.getWormholes()).toEqual(["alpha"]);
+});
+
+it("wormholesGlobalPosition", () => {
+  const attachment = new SystemAttachment({
+    name: "my-name",
+    nsid: "my-nsid",
+    wormholes: ["alpha"],
+    wormholesFaceDown: ["beta"],
+  });
+
+  const obj: GameObject = new MockGameObject({
+    rotation: [0, 0, 0],
+  });
+  attachment.setAttachmentObjId(obj.getId());
+
+  const out: Array<WormholeWithGlobalPosition> =
+    attachment.getWormholesWithGlobalPositions();
+
+  const check = out.map((x) => `${x.wormhole}:${x.globalPosition.toString()}`);
+  expect(check).toEqual(["alpha:(X=0,Y=0,Z=0)"]);
+});
+
+it("wormholesGlobalPosition face down", () => {
+  const attachment = new SystemAttachment({
+    name: "my-name",
+    nsid: "my-nsid",
+    wormholes: ["alpha"],
+    wormholesFaceDown: ["beta"],
+  });
+
+  const obj: GameObject = new MockGameObject({
+    rotation: [0, 0, 180],
+  });
+  attachment.setAttachmentObjId(obj.getId());
+
+  const out: Array<WormholeWithGlobalPosition> =
+    attachment.getWormholesWithGlobalPositions();
+
+  const check = out.map((x) => `${x.wormhole}:${x.globalPosition.toString()}`);
+  expect(check).toEqual(["beta:(X=0,Y=0,Z=0)"]);
 });
