@@ -129,6 +129,7 @@ export class SystemAttachment {
 
   /**
    * Get the wormholes with global positions.
+   * Given as origin if no attachment object.
    * System attachment may generate different results if face up/down.
    *
    * @returns {Array<WormholeWithGlobalPosition>} The wormholes with global positions.
@@ -137,11 +138,9 @@ export class SystemAttachment {
     const result: Array<WormholeWithGlobalPosition> = [];
 
     const attachmentObj: GameObject | undefined = this.getAttachmentObj();
-    if (!attachmentObj) {
-      return result;
-    }
 
-    const globalPosition: Vector = attachmentObj.getPosition();
+    const globalPosition: Vector =
+      attachmentObj?.getPosition() ?? new Vector(0, 0, 0);
     for (const wormhole of this.getWormholes()) {
       result.push({
         globalPosition,

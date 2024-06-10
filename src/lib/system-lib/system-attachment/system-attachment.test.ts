@@ -1,4 +1,4 @@
-import { GameObject } from "@tabletop-playground/api";
+import { GameObject, refPackageId } from "@tabletop-playground/api";
 import { SystemAttachment } from "./system-attachment";
 import { MockGameObject } from "ttpg-mock";
 import { WormholeWithGlobalPosition } from "../system/system";
@@ -29,6 +29,24 @@ it("anomalies empty", () => {
     nsid: "my-nsid",
   });
   expect(attachment.getAnomalies()).toEqual([]);
+});
+
+it("img empty", () => {
+  const attachment = new SystemAttachment({
+    name: "my-name",
+    nsid: "my-nsid",
+  });
+  expect(attachment.getImg()).toBeUndefined();
+});
+
+it("img no package id", () => {
+  const attachment = new SystemAttachment({
+    name: "my-name",
+    nsid: "my-nsid",
+    img: "my-img",
+  });
+
+  expect(attachment.getImg()).toBe(`my-img:${refPackageId}`);
 });
 
 it("wormholes empty", () => {
@@ -111,14 +129,22 @@ it("wormholesGlobalPosition face down", () => {
     wormholesFaceDown: ["beta"],
   });
 
+  let out: Array<WormholeWithGlobalPosition>;
+  let summary: Array<string>;
+
+  // System tile obj not linked yet, uses origin and face-up.
+  out = attachment.getWormholesWithGlobalPositions();
+  summary = out.map((x) => `${x.wormhole}:${x.globalPosition.toString()}`);
+  expect(summary).toEqual(["alpha:(X=0,Y=0,Z=0)"]);
+
+  // Link system tile obj.
   const obj: GameObject = new MockGameObject({
+    position: [1, 2, 3],
     rotation: [0, 0, 180],
   });
   attachment.setAttachmentObjId(obj.getId());
 
-  const out: Array<WormholeWithGlobalPosition> =
-    attachment.getWormholesWithGlobalPositions();
-
-  const check = out.map((x) => `${x.wormhole}:${x.globalPosition.toString()}`);
-  expect(check).toEqual(["beta:(X=0,Y=0,Z=0)"]);
+  out = attachment.getWormholesWithGlobalPositions();
+  summary = out.map((x) => `${x.wormhole}:${x.globalPosition.toString()}`);
+  expect(summary).toEqual(["beta:(X=1,Y=2,Z=3)"]);
 });
