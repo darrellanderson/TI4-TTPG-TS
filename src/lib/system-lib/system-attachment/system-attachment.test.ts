@@ -50,6 +50,7 @@ it("wormholesFaceDown", () => {
   expect(attachment.getWormholes()).toEqual(["alpha"]);
 
   const obj: GameObject = new MockGameObject({
+    id: "my-obj",
     rotation: [0, 0, 180],
   });
   attachment.setAttachmentObjId(obj.getId());
@@ -79,6 +80,27 @@ it("wormholesGlobalPosition", () => {
 
   const check = out.map((x) => `${x.wormhole}:${x.globalPosition.toString()}`);
   expect(check).toEqual(["alpha:(X=0,Y=0,Z=0)"]);
+});
+
+it("wormholesGlobalPosition (non-origin attachment)", () => {
+  const attachment = new SystemAttachment({
+    name: "my-name",
+    nsid: "my-nsid",
+    wormholes: ["alpha"],
+    wormholesFaceDown: ["beta"],
+  });
+
+  const obj: GameObject = new MockGameObject({
+    position: [1, 2, 3],
+    rotation: [0, 0, 0],
+  });
+  attachment.setAttachmentObjId(obj.getId());
+
+  const out: Array<WormholeWithGlobalPosition> =
+    attachment.getWormholesWithGlobalPositions();
+
+  const check = out.map((x) => `${x.wormhole}:${x.globalPosition.toString()}`);
+  expect(check).toEqual(["alpha:(X=1,Y=2,Z=3)"]);
 });
 
 it("wormholesGlobalPosition face down", () => {
