@@ -1,15 +1,13 @@
 import { MockGameObject } from "ttpg-mock";
-import { SystemEntityType } from "../system-entity/system-entity-schema";
-import { SystemEntity } from "../system-entity/system-entity";
 import { System } from "./system";
 import { Vector } from "@tabletop-playground/api";
+import { SystemSchemaType } from "../schema/system-schema";
 
 it("setSystemTileObjId", () => {
-  const params: SystemEntityType = {
-    name: "my-name",
+  const params: SystemSchemaType = {
+    tile: 1,
   };
-  const systemEntity = new SystemEntity(params);
-  const system = new System(systemEntity);
+  const system = new System(params);
   expect(system.getSystemTileObjId()).toBeUndefined();
 
   system.setSystemTileObjId("my-id");
@@ -17,15 +15,14 @@ it("setSystemTileObjId", () => {
 });
 
 it("getGlobalPosition", () => {
-  const params: SystemEntityType = {
-    name: "my-name",
+  const params: SystemSchemaType = {
+    tile: 1,
   };
-  const systemEntity = new SystemEntity(params);
-  const system = new System(systemEntity);
+  const system = new System(params);
   const localPosition = new Vector(1, 2, 3);
   expect(system.getGlobalPosition(localPosition)).toBeUndefined();
 
-  const systemTileObj = new MockGameObject({
+  new MockGameObject({
     id: "my-system-tile-id",
     position: [10, 20, 30],
   });
@@ -37,11 +34,10 @@ it("getGlobalPosition", () => {
 });
 
 it("getSystemTileObj (valid)", () => {
-  const params: SystemEntityType = {
-    name: "my-name",
+  const params: SystemSchemaType = {
+    tile: 1,
   };
-  const systemEntity = new SystemEntity(params);
-  const system = new System(systemEntity);
+  const system = new System(params);
   expect(system.getSystemTileObj()).toBeUndefined();
 
   const systemTileObj = new MockGameObject({
@@ -52,11 +48,10 @@ it("getSystemTileObj (valid)", () => {
 });
 
 it("getSystemTileObj (invalid object)", () => {
-  const params: SystemEntityType = {
-    name: "my-name",
+  const params: SystemSchemaType = {
+    tile: 1,
   };
-  const systemEntity = new SystemEntity(params);
-  const system = new System(systemEntity);
+  const system = new System(params);
   expect(system.getSystemTileObj()).toBeUndefined();
 
   const systemTileObj = new MockGameObject({
@@ -70,32 +65,12 @@ it("getSystemTileObj (invalid object)", () => {
 });
 
 it("getSystemTileObj (invalid id)", () => {
-  const params: SystemEntityType = {
-    name: "my-name",
+  const params: SystemSchemaType = {
+    tile: 1,
   };
-  const systemEntity = new SystemEntity(params);
-  const system = new System(systemEntity);
+  const system = new System(params);
   expect(system.getSystemTileObj()).toBeUndefined();
 
   system.setSystemTileObjId("no-such-id");
   expect(system.getSystemTileObj()).toBeUndefined();
-});
-
-it("planets", () => {
-  const params: SystemEntityType = {
-    name: "my-name",
-    planets: [
-      {
-        name: "planet-1",
-        position: { x: 1, y: 2 },
-      },
-      {
-        name: "planet-2",
-        position: { x: 3, y: 4 },
-      },
-    ],
-  };
-  const systemEntity = new SystemEntity(params);
-  const system = new System(systemEntity);
-  expect(system.getPlanets().length).toBe(2);
 });
