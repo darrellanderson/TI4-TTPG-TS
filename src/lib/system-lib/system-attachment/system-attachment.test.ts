@@ -22,6 +22,22 @@ it("constructor", () => {
   expect(attachment.isAttachmentFaceUp()).toEqual(true);
 });
 
+it("anomalies empty", () => {
+  const attachment = new SystemAttachment({
+    name: "my-name",
+    nsid: "my-nsid",
+  });
+  expect(attachment.getAnomalies()).toEqual([]);
+});
+
+it("wormholes empty", () => {
+  const attachment = new SystemAttachment({
+    name: "my-name",
+    nsid: "my-nsid",
+  });
+  expect(attachment.getWormholes()).toEqual([]);
+});
+
 it("wormholesFaceDown", () => {
   const attachment = new SystemAttachment({
     name: "my-name",
@@ -36,7 +52,10 @@ it("wormholesFaceDown", () => {
     rotation: [0, 0, 180],
   });
   attachment.setAttachmentObjId(obj.getId());
-
   expect(attachment.isAttachmentFaceUp()).toEqual(false);
   expect(attachment.getWormholes()).toEqual(["beta"]);
+
+  obj.destroy();
+  expect(attachment.isAttachmentFaceUp()).toEqual(true);
+  expect(attachment.getWormholes()).toEqual(["alpha"]);
 });
