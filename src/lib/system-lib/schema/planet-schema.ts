@@ -17,6 +17,7 @@ export const PlanetSchema = z
     isLegendary: z.boolean().optional(),
     legendaryCardNsid: z.string().optional(),
   })
-  .strict();
+  .strict()
+  .readonly();
 
 export type PlanetSchemaType = z.infer<typeof PlanetSchema>;

@@ -19,24 +19,31 @@ export const HyperlaneSchema = z
     sw: z.array(z.enum(["n", "ne", "se", "s", "nw"])).optional(),
     nw: z.array(z.enum(["n", "ne", "se", "s", "nw"])).optional(),
   })
-  .strict();
+  .strict()
+  .readonly();
 
 export const LocalPositionSchema = z
   .object({
     x: z.number(),
     y: z.number(),
   })
-  .strict();
+  .strict()
+  .readonly();
 
-export const TechSchema = z.enum(["blue", "green", "red", "yellow"]);
+export const TechSchema = z.enum(["blue", "green", "red", "yellow"]).readonly();
 
-export const TraitSchema = z.enum(["cultural", "hazardous", "industrial"]);
+export const TraitSchema = z
+  .enum(["cultural", "hazardous", "industrial"])
+  .readonly();
 
-export const WormholeSchema = z.enum(["alpha", "beta", "delta", "gamma"]);
+export const WormholeSchema = z
+  .enum(["alpha", "beta", "delta", "gamma"])
+  .readonly();
 
 export const WormholeWithPositionSchema = z
   .object({
     wormhole: z.string(),
     localPosition: LocalPositionSchema,
   })
-  .strict();
+  .strict()
+  .readonly();

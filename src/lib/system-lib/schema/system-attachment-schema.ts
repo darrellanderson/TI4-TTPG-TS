@@ -16,6 +16,7 @@ export const SystemAttachmentSchema = z
     img: z.string().optional(),
     imgPackageId: z.string().optional(),
   })
-  .strict();
+  .strict()
+  .readonly();
 
 export type SystemAttachmentSchemaType = z.infer<typeof SystemAttachmentSchema>;

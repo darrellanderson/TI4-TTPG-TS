@@ -33,6 +33,7 @@ export const SystemSchema = z
     img: z.string().optional(),
     imgPackageId: z.string().optional(),
   })
-  .strict();
+  .strict()
+  .readonly();
 
 export type SystemSchemaType = z.infer<typeof SystemSchema>;
