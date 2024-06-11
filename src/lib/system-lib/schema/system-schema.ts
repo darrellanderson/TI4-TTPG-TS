@@ -16,6 +16,9 @@ export const SystemSchema = z
     // "offMap" items are never adjacent to any others (except by wormholes).
     class: z.enum(["map", "offMap"]).optional(),
 
+    // "map" class but not eligible for drafting, e.g. Muaat hero system.
+    isExcludeFromDraft: z.boolean().optional(),
+
     isHome: z.boolean().optional(),
     isHyperlane: z.boolean().optional(),
     anomalies: z.array(AnomalySchema).optional(),

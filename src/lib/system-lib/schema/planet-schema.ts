@@ -8,6 +8,7 @@ import {
 export const PlanetSchema = z
   .object({
     name: z.string(),
+    cardNsid: z.string(),
     localPosition: LocalPositionSchema.optional(),
     radius: z.number().optional(),
     influence: z.number().optional(),

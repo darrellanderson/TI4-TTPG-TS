@@ -169,12 +169,15 @@ it("getPlanets", () => {
     tile: 1,
     source: "my-source",
 
-    planets: [{ name: "planet-1" }, { name: "planet-2" }],
+    planets: [
+      { name: "planet-1", cardNsid: "my-card-nsid-1" },
+      { name: "planet-2", cardNsid: "my-card-nsid-2" },
+    ],
   });
   const attachment = new SystemAttachment({
     name: "attachment-1",
     nsid: "attachment-1-nsid",
-    planets: [{ name: "planet-3" }],
+    planets: [{ name: "planet-3", cardNsid: "my-card-nsid" }],
   });
   system.addAttachment(attachment);
 

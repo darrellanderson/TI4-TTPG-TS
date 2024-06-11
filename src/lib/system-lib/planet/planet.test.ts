@@ -7,6 +7,7 @@ import { SystemDefaults } from "../data/system-defaults";
 it("constructor", () => {
   const params: PlanetSchemaType = {
     name: "my-planet-name",
+    cardNsid: "my-planet-card-nsid",
   };
   const planet = new Planet(params);
   expect(planet.getName()).toEqual("my-planet-name");
@@ -15,6 +16,7 @@ it("constructor", () => {
 it("attachment management", () => {
   const planet = new Planet({
     name: "my-planet-name",
+    cardNsid: "my-planet-card-nsid",
   });
   const attachment = new PlanetAttachment({
     name: "my-attachment-name",
@@ -29,6 +31,7 @@ it("attachment management", () => {
 it("getInfluence", () => {
   const planet = new Planet({
     name: "my-planet-name",
+    cardNsid: "my-planet-card-nsid",
     influence: 2,
   });
   const attachment = new PlanetAttachment({
@@ -43,6 +46,7 @@ it("getInfluence", () => {
 it("getInfluence (default)", () => {
   const planet = new Planet({
     name: "my-planet-name",
+    cardNsid: "my-planet-card-nsid",
   });
   expect(planet.getInfluence()).toEqual(0);
 });
@@ -50,6 +54,7 @@ it("getInfluence (default)", () => {
 it("getLegendaryCardNsids", () => {
   const planet = new Planet({
     name: "my-planet-name",
+    cardNsid: "my-planet-card-nsid",
     legendaryCardNsid: "my-planet-legendary-card-nsid",
   });
   const attachment = new PlanetAttachment({
@@ -67,6 +72,7 @@ it("getLegendaryCardNsids", () => {
 it("getLegendaryCardNsids (default)", () => {
   const planet = new Planet({
     name: "my-planet-name",
+    cardNsid: "my-planet-card-nsid",
   });
   expect(planet.getLegendaryCardNsids()).toEqual([]);
 });
@@ -74,6 +80,7 @@ it("getLegendaryCardNsids (default)", () => {
 it("getName", () => {
   const planet = new Planet({
     name: "my-planet-name",
+    cardNsid: "my-planet-card-nsid",
   });
   expect(planet.getName()).toEqual("my-planet-name");
 });
@@ -81,6 +88,7 @@ it("getName", () => {
 it("getLocalPosition", () => {
   const planet = new Planet({
     name: "my-planet-name",
+    cardNsid: "my-planet-card-nsid",
   });
   expect(planet.getLocalPosition().toString()).toEqual("(X=0,Y=0,Z=0)");
 
@@ -91,6 +99,7 @@ it("getLocalPosition", () => {
 it("getRadius", () => {
   const planet = new Planet({
     name: "my-planet-name",
+    cardNsid: "my-planet-card-nsid",
     radius: 2,
   });
   expect(planet.getRadius()).toEqual(2);
@@ -99,6 +108,7 @@ it("getRadius", () => {
 it("getRadius (default)", () => {
   const planet = new Planet({
     name: "my-planet-name",
+    cardNsid: "my-planet-card-nsid",
   });
   expect(planet.getRadius()).toEqual(SystemDefaults.PLANET_RADIUS);
 });
@@ -106,6 +116,7 @@ it("getRadius (default)", () => {
 it("getResources", () => {
   const planet = new Planet({
     name: "my-planet-name",
+    cardNsid: "my-planet-card-nsid",
     resources: 2,
   });
   const attachment = new PlanetAttachment({
@@ -120,6 +131,7 @@ it("getResources", () => {
 it("getResources (default)", () => {
   const planet = new Planet({
     name: "my-planet-name",
+    cardNsid: "my-planet-card-nsid",
   });
   expect(planet.getResources()).toEqual(0);
 });
@@ -127,6 +139,7 @@ it("getResources (default)", () => {
 it("getTechs", () => {
   const planet = new Planet({
     name: "my-planet-name",
+    cardNsid: "my-planet-card-nsid",
     techs: ["red"],
   });
   const attachment = new PlanetAttachment({
@@ -141,6 +154,7 @@ it("getTechs", () => {
 it("getTechs (default)", () => {
   const planet = new Planet({
     name: "my-planet-name",
+    cardNsid: "my-planet-card-nsid",
   });
   expect(planet.getTechs()).toEqual([]);
 });
@@ -148,6 +162,7 @@ it("getTechs (default)", () => {
 it("getTraits", () => {
   const planet = new Planet({
     name: "my-planet-name",
+    cardNsid: "my-planet-card-nsid",
     traits: ["cultural"],
   });
   const attachment = new PlanetAttachment({
@@ -162,6 +177,7 @@ it("getTraits", () => {
 it("getTraits (default)", () => {
   const planet = new Planet({
     name: "my-planet-name",
+    cardNsid: "my-planet-card-nsid",
   });
   expect(planet.getTraits()).toEqual([]);
 });
@@ -169,6 +185,7 @@ it("getTraits (default)", () => {
 it("isDestroyedPlanet", () => {
   const planet = new Planet({
     name: "my-planet-name",
+    cardNsid: "my-planet-card-nsid",
   });
   const attachment = new PlanetAttachment({
     name: "my-attachment-name",
@@ -182,6 +199,7 @@ it("isDestroyedPlanet", () => {
 it("isDestroyedPlanet (default)", () => {
   const planet = new Planet({
     name: "my-planet-name",
+    cardNsid: "my-planet-card-nsid",
   });
   expect(planet.isDestroyedPlanet()).toEqual(false);
 });
@@ -189,6 +207,7 @@ it("isDestroyedPlanet (default)", () => {
 it("isLegendaryPlanet", () => {
   const planet = new Planet({
     name: "my-planet-name",
+    cardNsid: "my-planet-card-nsid",
     isLegendary: true,
   });
   expect(planet.isLegendary()).toEqual(true);
@@ -197,6 +216,7 @@ it("isLegendaryPlanet", () => {
 it("isLegendaryPlanet (attachment)", () => {
   const planet = new Planet({
     name: "my-planet-name",
+    cardNsid: "my-planet-card-nsid",
   });
   const attachment = new PlanetAttachment({
     name: "my-attachment-name",
@@ -210,6 +230,7 @@ it("isLegendaryPlanet (attachment)", () => {
 it("isLegendaryPlanet (default)", () => {
   const planet = new Planet({
     name: "my-planet-name",
+    cardNsid: "my-planet-card-nsid",
   });
   expect(planet.isLegendary()).toEqual(false);
 });
@@ -217,6 +238,7 @@ it("isLegendaryPlanet (default)", () => {
 it("setLocalPosition", () => {
   const planet = new Planet({
     name: "my-planet-name",
+    cardNsid: "my-planet-card-nsid",
   });
   expect(planet.getLocalPosition().toString()).toEqual("(X=0,Y=0,Z=0)");
 
@@ -227,6 +249,7 @@ it("setLocalPosition", () => {
 it("setLocalPositionFromStandard", () => {
   let planet = new Planet({
     name: "my-planet-name",
+    cardNsid: "my-planet-card-nsid",
   });
   expect(planet.getLocalPosition().toString()).toEqual("(X=0,Y=0,Z=0)");
 
