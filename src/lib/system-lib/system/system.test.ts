@@ -7,6 +7,7 @@ import { SystemAttachment } from "../system-attachment/system-attachment";
 it("setSystemTileObjId", () => {
   const params: SystemSchemaType = {
     tile: 1,
+    source: "my-source",
   };
   const system = new System(params);
   expect(system.getSystemTileObjId()).toBeUndefined();
@@ -18,6 +19,7 @@ it("setSystemTileObjId", () => {
 it("worldPositionToLocal", () => {
   const params: SystemSchemaType = {
     tile: 1,
+    source: "my-source",
   };
   const system = new System(params);
   const globalPosition = new Vector(1, 2, 3);
@@ -37,6 +39,7 @@ it("worldPositionToLocal", () => {
 it("localPositionToWorld", () => {
   const params: SystemSchemaType = {
     tile: 1,
+    source: "my-source",
   };
   const system = new System(params);
   const localPosition = new Vector(1, 2, 3);
@@ -56,6 +59,7 @@ it("localPositionToWorld", () => {
 it("getSystemTileObj (valid)", () => {
   const params: SystemSchemaType = {
     tile: 1,
+    source: "my-source",
   };
   const system = new System(params);
   expect(system.getSystemTileObj()).toBeUndefined();
@@ -70,6 +74,7 @@ it("getSystemTileObj (valid)", () => {
 it("getSystemTileObj (invalid object)", () => {
   const params: SystemSchemaType = {
     tile: 1,
+    source: "my-source",
   };
   const system = new System(params);
   expect(system.getSystemTileObj()).toBeUndefined();
@@ -87,6 +92,7 @@ it("getSystemTileObj (invalid object)", () => {
 it("getSystemTileObj (invalid id)", () => {
   const params: SystemSchemaType = {
     tile: 1,
+    source: "my-source",
   };
   const system = new System(params);
   expect(system.getSystemTileObj()).toBeUndefined();
@@ -98,6 +104,7 @@ it("getSystemTileObj (invalid id)", () => {
 it("attachment management", () => {
   const system = new System({
     tile: 1,
+    source: "my-source",
   });
   const attachment = new SystemAttachment({
     name: "my-name",
@@ -115,6 +122,8 @@ it("attachment management", () => {
 it("getAnomalies", () => {
   const system = new System({
     tile: 1,
+    source: "my-source",
+
     anomalies: ["asteroid_field"],
   });
   const attachment = new SystemAttachment({
@@ -129,6 +138,8 @@ it("getAnomalies", () => {
 it("getImg", () => {
   const system = new System({
     tile: 1,
+    source: "my-source",
+
     img: "my-img",
     imgPackageId: "my-package-id",
   });
@@ -138,6 +149,8 @@ it("getImg", () => {
 it("getImg (no package id)", () => {
   const system = new System({
     tile: 1,
+    source: "my-source",
+
     img: "my-img",
   });
   expect(system.getImg()).toBe(`my-img:${refPackageId}`);
@@ -146,6 +159,7 @@ it("getImg (no package id)", () => {
 it("getImg (none)", () => {
   const system = new System({
     tile: 1,
+    source: "my-source",
   });
   expect(system.getImg()).toBeUndefined();
 });
@@ -153,6 +167,8 @@ it("getImg (none)", () => {
 it("getPlanets", () => {
   const system = new System({
     tile: 1,
+    source: "my-source",
+
     planets: [{ name: "planet-1" }, { name: "planet-2" }],
   });
   const attachment = new SystemAttachment({
@@ -172,6 +188,7 @@ it("getPlanets", () => {
 it("getTile", () => {
   const system = new System({
     tile: 1,
+    source: "my-source",
   });
   expect(system.getTile()).toBe(1);
 });
@@ -179,6 +196,8 @@ it("getTile", () => {
 it("getWormholes", () => {
   const system = new System({
     tile: 1,
+    source: "my-source",
+
     wormholes: ["alpha"],
   });
   const attachment = new SystemAttachment({
@@ -194,6 +213,8 @@ it("getWormholes", () => {
 it("getWormholes face down", () => {
   const system = new System({
     tile: 1,
+    source: "my-source",
+
     wormholesWithPositions: [
       { wormhole: "alpha", localPosition: { x: 1, y: 2 } },
     ],
@@ -222,6 +243,8 @@ it("getWormholes face down", () => {
 it("getWormholesWithGlobalPosition", () => {
   const system = new System({
     tile: 1,
+    source: "my-source",
+
     wormholes: ["alpha"],
   });
   const attachment = new SystemAttachment({
@@ -259,6 +282,8 @@ it("getWormholesWithGlobalPosition", () => {
 it("isHome", () => {
   const system = new System({
     tile: 1,
+    source: "my-source",
+
     isHome: true,
   });
   expect(system.isHome()).toBe(true);
@@ -267,6 +292,7 @@ it("isHome", () => {
 it("isHome (default)", () => {
   const system = new System({
     tile: 1,
+    source: "my-source",
   });
   expect(system.isHome()).toBe(false);
 });
@@ -274,6 +300,8 @@ it("isHome (default)", () => {
 it("isHyperlane", () => {
   const system = new System({
     tile: 1,
+    source: "my-source",
+
     isHyperlane: true,
   });
   expect(system.isHyperlane()).toBe(true);
@@ -282,6 +310,7 @@ it("isHyperlane", () => {
 it("isHyperlane (default)", () => {
   const system = new System({
     tile: 1,
+    source: "my-source",
   });
   expect(system.isHyperlane()).toBe(false);
 });
