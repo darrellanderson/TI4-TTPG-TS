@@ -301,7 +301,7 @@ export class System {
    * @returns {boolean}
    */
   isHome(): boolean {
-    return this._params.isHome || false;
+    return this._params.isHome ?? false;
   }
 
   /**
@@ -310,7 +310,7 @@ export class System {
    * @returns {boolean}
    */
   isHyperlane(): boolean {
-    return this._params.isHyperlane || false;
+    return this._params.isHyperlane ?? false;
   }
 
   /**

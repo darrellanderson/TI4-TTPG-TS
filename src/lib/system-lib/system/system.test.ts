@@ -169,7 +169,14 @@ it("getPlanets", () => {
   ]);
 });
 
-it("getWormholes_", () => {
+it("getTile", () => {
+  const system = new System({
+    tile: 1,
+  });
+  expect(system.getTile()).toBe(1);
+});
+
+it("getWormholes", () => {
   const system = new System({
     tile: 1,
     wormholes: ["alpha"],
@@ -182,6 +189,34 @@ it("getWormholes_", () => {
   system.addAttachment(attachment);
 
   expect(system.getWormholes()).toEqual(["alpha", "beta"]);
+});
+
+it("getWormholes face down", () => {
+  const system = new System({
+    tile: 1,
+    wormholesWithPositions: [
+      { wormhole: "alpha", localPosition: { x: 1, y: 2 } },
+    ],
+    wormholesWithPositionsFaceDown: [
+      { wormhole: "delta", localPosition: { x: 1, y: 2 } },
+    ],
+  });
+  const attachment = new SystemAttachment({
+    name: "attachment-1",
+    nsid: "attachment-1-nsid",
+    wormholes: ["beta"],
+  });
+  system.addAttachment(attachment);
+
+  // Before attaching system tile.
+  expect(system.getWormholes()).toEqual(["alpha", "beta"]);
+
+  // Link face-down system tile.
+  const systemTile: GameObject = new MockGameObject({
+    rotation: [0, 0, 180],
+  });
+  system.setSystemTileObjId(systemTile.getId());
+  expect(system.getWormholes()).toEqual(["delta", "beta"]);
 });
 
 it("getWormholesWithGlobalPosition", () => {
@@ -219,4 +254,34 @@ it("getWormholesWithGlobalPosition", () => {
   expect(summary).toEqual(["alpha:(X=10,Y=20,Z=30)", "beta:(X=1,Y=2,Z=3)"]);
 
   // Link the attachment object.
+});
+
+it("isHome", () => {
+  const system = new System({
+    tile: 1,
+    isHome: true,
+  });
+  expect(system.isHome()).toBe(true);
+});
+
+it("isHome (default)", () => {
+  const system = new System({
+    tile: 1,
+  });
+  expect(system.isHome()).toBe(false);
+});
+
+it("isHyperlane", () => {
+  const system = new System({
+    tile: 1,
+    isHyperlane: true,
+  });
+  expect(system.isHyperlane()).toBe(true);
+});
+
+it("isHyperlane (default)", () => {
+  const system = new System({
+    tile: 1,
+  });
+  expect(system.isHyperlane()).toBe(false);
 });
