@@ -36,7 +36,7 @@ export const SYSTEM_DATA: Array<SystemSchemaType> = [
     isHome: true,
     planets: [
       {
-        name: "planet.darien",
+        name: "Darien",
         cardNsid: "card.planet:base/darien",
         resources: 4,
         influence: 4,
@@ -50,7 +50,7 @@ export const SYSTEM_DATA: Array<SystemSchemaType> = [
     isHome: true,
     planets: [
       {
-        name: "planet.muaat",
+        name: "Muaat",
         cardNsid: "card.planet:base/muaat",
         resources: 4,
         influence: 1,
@@ -64,7 +64,7 @@ export const SYSTEM_DATA: Array<SystemSchemaType> = [
     isHome: true,
     planets: [
       {
-        name: "planet.nestphar",
+        name: "Nestphar",
         cardNsid: "card.planet:base/nestphar",
         resources: 3,
         influence: 2,
@@ -78,7 +78,7 @@ export const SYSTEM_DATA: Array<SystemSchemaType> = [
     isHome: true,
     planets: [
       {
-        name: "planet.000",
+        name: "000",
         cardNsid: "card.planet:base/000",
         resources: 5,
         influence: 0,
@@ -92,7 +92,7 @@ export const SYSTEM_DATA: Array<SystemSchemaType> = [
     isHome: true,
     planets: [
       {
-        name: "planet.winnu",
+        name: "Winnu",
         cardNsid: "card.planet:base/winnu",
         resources: 3,
         influence: 4,
@@ -106,7 +106,7 @@ export const SYSTEM_DATA: Array<SystemSchemaType> = [
     isHome: true,
     planets: [
       {
-        name: "planet.mordai_ii",
+        name: "Mordai II",
         cardNsid: "card.planet:base/mordai_ii",
         resources: 4,
         influence: 0,
@@ -120,13 +120,13 @@ export const SYSTEM_DATA: Array<SystemSchemaType> = [
     isHome: true,
     planets: [
       {
-        name: "planet.maaluuk",
+        name: "Maaluuk",
         cardNsid: "card.planet:base/maaluuk",
         resources: 0,
         influence: 2,
       },
       {
-        name: "planet.druaa",
+        name: "Druaa",
         cardNsid: "card.planet:base/druaa",
         resources: 3,
         influence: 1,
@@ -140,13 +140,13 @@ export const SYSTEM_DATA: Array<SystemSchemaType> = [
     isHome: true,
     planets: [
       {
-        name: "planet.arc_prime",
+        name: "Arc Prime",
         cardNsid: "card.planet:base/arc_prime",
         resources: 4,
         influence: 0,
       },
       {
-        name: "planet.wren_terra",
+        name: "Wren Terra",
         cardNsid: "card.planet:base/wren_terra",
         resources: 2,
         influence: 1,
@@ -160,14 +160,14 @@ export const SYSTEM_DATA: Array<SystemSchemaType> = [
     isHome: true,
     planets: [
       {
-        name: "planet.lisis_ii",
+        name: "Lisis II",
         cardNsid: "card.planet:base/lisis_ii",
         resources: 1,
         influence: 0,
         radius: 1.75,
       },
       {
-        name: "planet.ragh",
+        name: "Ragh",
         cardNsid: "card.planet:base/ragh",
         resources: 2,
         influence: 1,
@@ -183,13 +183,13 @@ export const SYSTEM_DATA: Array<SystemSchemaType> = [
     isHome: true,
     planets: [
       {
-        name: "planet.nar",
+        name: "Nar",
         cardNsid: "card.planet:base/nar",
         resources: 2,
         influence: 3,
       },
       {
-        name: "planet.jol",
+        name: "Jol",
         cardNsid: "card.planet:base/jol",
         resources: 1,
         influence: 2,
@@ -203,13 +203,13 @@ export const SYSTEM_DATA: Array<SystemSchemaType> = [
     isHome: true,
     planets: [
       {
-        name: "planet.trenlak",
+        name: "Trenlak",
         cardNsid: "card.planet:base/trenlak",
         resources: 1,
         influence: 0,
       },
       {
-        name: "planet.quinarra",
+        name: "Quinarra",
         cardNsid: "card.planet:base/quinarra",
         resources: 3,
         influence: 1,
@@ -223,13 +223,13 @@ export const SYSTEM_DATA: Array<SystemSchemaType> = [
     isHome: true,
     planets: [
       {
-        name: "planet.archon_ren",
+        name: "Archon Ren",
         cardNsid: "card.planet:base/archon_ren",
         resources: 2,
         influence: 3,
       },
       {
-        name: "planet.archon_tau",
+        name: "Archon Tau",
         cardNsid: "card.planet:base/archon_tau",
         resources: 1,
         influence: 1,
@@ -243,13 +243,13 @@ export const SYSTEM_DATA: Array<SystemSchemaType> = [
     isHome: true,
     planets: [
       {
-        name: "planet.retillion",
+        name: "Retillion",
         cardNsid: "card.planet:base/retillion",
         resources: 2,
         influence: 3,
       },
       {
-        name: "planet.shalloq",
+        name: "Shalloq",
         cardNsid: "card.planet:base/shalloq",
         resources: 1,
         influence: 2,
@@ -263,19 +263,19 @@ export const SYSTEM_DATA: Array<SystemSchemaType> = [
     isHome: true,
     planets: [
       {
-        name: "planet.hercant",
+        name: "Hercant",
         cardNsid: "card.planet:base/hercant",
         resources: 1,
         influence: 1,
       },
       {
-        name: "planet.arretze",
+        name: "Arretze",
         cardNsid: "card.planet:base/arretze",
         resources: 2,
         influence: 0,
       },
       {
-        name: "planet.kamdorn",
+        name: "Kamdorn",
         cardNsid: "card.planet:base/kamdorn",
         resources: 0,
         influence: 1,
@@ -296,7 +296,7 @@ export const SYSTEM_DATA: Array<SystemSchemaType> = [
     source: "base",
     planets: [
       {
-        name: "planet.mecatol_rex",
+        name: "Mecatol Rex",
         cardNsid: "card.planet:base/mecatol_rex",
         resources: 1,
         influence: 6,
@@ -310,7 +310,7 @@ export const SYSTEM_DATA: Array<SystemSchemaType> = [
     source: "base",
     planets: [
       {
-        name: "planet.wellon",
+        name: "Wellon",
         cardNsid: "card.planet:base/wellon",
         resources: 1,
         influence: 2,
@@ -325,7 +325,7 @@ export const SYSTEM_DATA: Array<SystemSchemaType> = [
     source: "base",
     planets: [
       {
-        name: "planet.vefut_ii",
+        name: "Vefut II",
         cardNsid: "card.planet:base/vefut_ii",
         resources: 2,
         influence: 2,
@@ -339,7 +339,7 @@ export const SYSTEM_DATA: Array<SystemSchemaType> = [
     source: "base",
     planets: [
       {
-        name: "planet.thibah",
+        name: "Thibah",
         cardNsid: "card.planet:base/thibah",
         resources: 1,
         influence: 1,
@@ -354,7 +354,7 @@ export const SYSTEM_DATA: Array<SystemSchemaType> = [
     source: "base",
     planets: [
       {
-        name: "planet.tarmann",
+        name: "Tarmann",
         cardNsid: "card.planet:base/tarmann",
         resources: 1,
         influence: 1,
@@ -369,7 +369,7 @@ export const SYSTEM_DATA: Array<SystemSchemaType> = [
     source: "base",
     planets: [
       {
-        name: "planet.saudor",
+        name: "Saudor",
         cardNsid: "card.planet:base/saudor",
         resources: 2,
         influence: 2,
@@ -383,7 +383,7 @@ export const SYSTEM_DATA: Array<SystemSchemaType> = [
     source: "base",
     planets: [
       {
-        name: "planet.mehar_xull",
+        name: "Mehar Xull",
         cardNsid: "card.planet:base/mehar_xull",
         resources: 1,
         influence: 3,
@@ -399,7 +399,7 @@ export const SYSTEM_DATA: Array<SystemSchemaType> = [
     wormholes: ["beta"],
     planets: [
       {
-        name: "planet.quann",
+        name: "Quann",
         cardNsid: "card.planet:base/quann",
         resources: 2,
         influence: 1,
@@ -415,7 +415,7 @@ export const SYSTEM_DATA: Array<SystemSchemaType> = [
     wormholes: ["alpha"],
     planets: [
       {
-        name: "planet.lodor",
+        name: "Lodor",
         cardNsid: "card.planet:base/lodor",
         resources: 3,
         influence: 1,
@@ -430,7 +430,7 @@ export const SYSTEM_DATA: Array<SystemSchemaType> = [
     source: "base",
     planets: [
       {
-        name: "planet.new_albion",
+        name: "New Albion",
         cardNsid: "card.planet:base/new_albion",
         resources: 1,
         influence: 1,
@@ -438,7 +438,7 @@ export const SYSTEM_DATA: Array<SystemSchemaType> = [
         techs: ["green"],
       },
       {
-        name: "planet.starpoint",
+        name: "Starpoint",
         cardNsid: "card.planet:base/starpoint",
         resources: 3,
         influence: 1,
@@ -452,14 +452,14 @@ export const SYSTEM_DATA: Array<SystemSchemaType> = [
     source: "base",
     planets: [
       {
-        name: "planet.tequran",
+        name: "Tequran",
         cardNsid: "card.planet:base/tequran",
         resources: 2,
         influence: 0,
         traits: ["hazardous"],
       },
       {
-        name: "planet.torkan",
+        name: "Torkan",
         cardNsid: "card.planet:base/torkan",
         resources: 0,
         influence: 3,
@@ -473,14 +473,14 @@ export const SYSTEM_DATA: Array<SystemSchemaType> = [
     source: "base",
     planets: [
       {
-        name: "planet.qucenn",
+        name: "Qucenn",
         cardNsid: "card.planet:base/qucenn",
         resources: 1,
         influence: 2,
         traits: ["industrial"],
       },
       {
-        name: "planet.rarron",
+        name: "Rarron",
         cardNsid: "card.planet:base/rarron",
         resources: 0,
         influence: 3,
@@ -494,14 +494,14 @@ export const SYSTEM_DATA: Array<SystemSchemaType> = [
     source: "base",
     planets: [
       {
-        name: "planet.mellon",
+        name: "Mellon",
         cardNsid: "card.planet:base/mellon",
         resources: 0,
         influence: 2,
         traits: ["cultural"],
       },
       {
-        name: "planet.zohbat",
+        name: "Zohbat",
         cardNsid: "card.planet:base/zohbat",
         resources: 3,
         influence: 1,
@@ -515,7 +515,7 @@ export const SYSTEM_DATA: Array<SystemSchemaType> = [
     source: "base",
     planets: [
       {
-        name: "planet.lazar",
+        name: "Lazar",
         cardNsid: "card.planet:base/lazar",
         resources: 1,
         influence: 0,
@@ -523,7 +523,7 @@ export const SYSTEM_DATA: Array<SystemSchemaType> = [
         techs: ["yellow"],
       },
       {
-        name: "planet.sakulag",
+        name: "Sakulag",
         cardNsid: "card.planet:base/sakulag",
         resources: 2,
         influence: 1,
@@ -537,14 +537,14 @@ export const SYSTEM_DATA: Array<SystemSchemaType> = [
     source: "base",
     planets: [
       {
-        name: "planet.dal_bootha",
+        name: "Dal Bootha",
         cardNsid: "card.planet:base/dal_bootha",
         resources: 0,
         influence: 2,
         traits: ["cultural"],
       },
       {
-        name: "planet.xxehan",
+        name: "Xxehan",
         cardNsid: "card.planet:base/xxehan",
         resources: 1,
         influence: 1,
@@ -558,14 +558,14 @@ export const SYSTEM_DATA: Array<SystemSchemaType> = [
     source: "base",
     planets: [
       {
-        name: "planet.corneeq",
+        name: "Corneeq",
         cardNsid: "card.planet:base/corneeq",
         resources: 1,
         influence: 2,
         traits: ["cultural"],
       },
       {
-        name: "planet.resculon",
+        name: "Resculon",
         cardNsid: "card.planet:base/resculon",
         resources: 2,
         influence: 0,
@@ -579,14 +579,14 @@ export const SYSTEM_DATA: Array<SystemSchemaType> = [
     source: "base",
     planets: [
       {
-        name: "planet.centauri",
+        name: "Centauri",
         cardNsid: "card.planet:base/centauri",
         resources: 1,
         influence: 3,
         traits: ["cultural"],
       },
       {
-        name: "planet.gral",
+        name: "Gral",
         cardNsid: "card.planet:base/gral",
         resources: 1,
         influence: 1,
@@ -601,14 +601,14 @@ export const SYSTEM_DATA: Array<SystemSchemaType> = [
     source: "base",
     planets: [
       {
-        name: "planet.bereg",
+        name: "Bereg",
         cardNsid: "card.planet:base/bereg",
         resources: 3,
         influence: 1,
         traits: ["hazardous"],
       },
       {
-        name: "planet.lirta_iv",
+        name: "Lirta IV",
         cardNsid: "card.planet:base/lirta_iv",
         resources: 2,
         influence: 3,
@@ -622,14 +622,14 @@ export const SYSTEM_DATA: Array<SystemSchemaType> = [
     source: "base",
     planets: [
       {
-        name: "planet.arnor",
+        name: "Arnor",
         cardNsid: "card.planet:base/arnor",
         resources: 2,
         influence: 1,
         traits: ["industrial"],
       },
       {
-        name: "planet.lor",
+        name: "Lor",
         cardNsid: "card.planet:base/lor",
         resources: 1,
         influence: 2,
@@ -643,14 +643,14 @@ export const SYSTEM_DATA: Array<SystemSchemaType> = [
     source: "base",
     planets: [
       {
-        name: "planet.arinam",
+        name: "Arinam",
         cardNsid: "card.planet:base/arinam",
         resources: 1,
         influence: 2,
         traits: ["industrial"],
       },
       {
-        name: "planet.meer",
+        name: "Meer",
         cardNsid: "card.planet:base/meer",
         resources: 0,
         influence: 4,
@@ -665,14 +665,14 @@ export const SYSTEM_DATA: Array<SystemSchemaType> = [
     source: "base",
     planets: [
       {
-        name: "planet.abyz",
+        name: "Abyz",
         cardNsid: "card.planet:base/abyz",
         resources: 3,
         influence: 0,
         traits: ["hazardous"],
       },
       {
-        name: "planet.fria",
+        name: "Fria",
         cardNsid: "card.planet:base/fria",
         resources: 2,
         influence: 0,
@@ -756,7 +756,7 @@ export const SYSTEM_DATA: Array<SystemSchemaType> = [
     wormholes: ["delta"],
     planets: [
       {
-        name: "planet.creuss",
+        name: "Creuss",
         cardNsid: "card.planet:base/creuss",
         resources: 4,
         influence: 2,
@@ -773,7 +773,7 @@ export const SYSTEM_DATA: Array<SystemSchemaType> = [
     isHome: true,
     planets: [
       {
-        name: "planet.ixth",
+        name: "Ixth",
         cardNsid: "card.planet:pok/ixth",
         resources: 3,
         influence: 5,
@@ -787,7 +787,7 @@ export const SYSTEM_DATA: Array<SystemSchemaType> = [
     isHome: true,
     planets: [
       {
-        name: "planet.arcturus",
+        name: "Arcturus",
         cardNsid: "card.planet:pok/arcturus",
         resources: 4,
         influence: 4,
@@ -801,7 +801,7 @@ export const SYSTEM_DATA: Array<SystemSchemaType> = [
     isHome: true,
     planets: [
       {
-        name: "planet.acheron",
+        name: "Acheron",
         cardNsid: "card.planet:pok/acheron",
         resources: 4,
         influence: 0,
@@ -815,7 +815,7 @@ export const SYSTEM_DATA: Array<SystemSchemaType> = [
     isHome: true,
     planets: [
       {
-        name: "planet.elysium",
+        name: "Elysium",
         cardNsid: "card.planet:pok/elysium",
         resources: 4,
         influence: 1,
@@ -832,7 +832,7 @@ export const SYSTEM_DATA: Array<SystemSchemaType> = [
     anomalies: ["nebula"],
     planets: [
       {
-        name: "planet.the_dark",
+        name: "The Dark",
         cardNsid: "card.planet:pok/the_dark",
         resources: 3,
         influence: 4,
@@ -846,13 +846,13 @@ export const SYSTEM_DATA: Array<SystemSchemaType> = [
     isHome: true,
     planets: [
       {
-        name: "planet.naazir",
+        name: "Naazir",
         cardNsid: "card.planet:pok/naazir",
         resources: 2,
         influence: 1,
       },
       {
-        name: "planet.rokha",
+        name: "Rokha",
         cardNsid: "card.planet:pok/rokha",
         resources: 1,
         influence: 2,
@@ -866,21 +866,21 @@ export const SYSTEM_DATA: Array<SystemSchemaType> = [
     isHome: true,
     planets: [
       {
-        name: "planet.valk",
+        name: "Valk",
         cardNsid: "card.planet:pok/valk",
         resources: 2,
         influence: 0,
         localPosition: { x: 0.5, y: -2.75 },
       },
       {
-        name: "planet.ylir",
+        name: "Ylir",
         cardNsid: "card.planet:pok/ylir",
         resources: 0,
         influence: 2,
         localPosition: { x: 2.3, y: 1.3 },
       },
       {
-        name: "planet.avar",
+        name: "Avar",
         cardNsid: "card.planet:pok/avar",
         resources: 1,
         influence: 1,
@@ -894,7 +894,7 @@ export const SYSTEM_DATA: Array<SystemSchemaType> = [
     source: "pok",
     planets: [
       {
-        name: "planet.archon_vail",
+        name: "Archon Vail",
         cardNsid: "card.planet:pok/archon_vail",
         resources: 1,
         influence: 3,
@@ -909,7 +909,7 @@ export const SYSTEM_DATA: Array<SystemSchemaType> = [
     source: "pok",
     planets: [
       {
-        name: "planet.perimeter",
+        name: "Perimeter",
         cardNsid: "card.planet:pok/perimeter",
         resources: 2,
         influence: 1,
@@ -923,7 +923,7 @@ export const SYSTEM_DATA: Array<SystemSchemaType> = [
     source: "pok",
     planets: [
       {
-        name: "planet.ang",
+        name: "Ang",
         cardNsid: "card.planet:pok/ang",
         resources: 2,
         influence: 0,
@@ -938,7 +938,7 @@ export const SYSTEM_DATA: Array<SystemSchemaType> = [
     source: "pok",
     planets: [
       {
-        name: "planet.semlore",
+        name: "Semlore",
         cardNsid: "card.planet:pok/semlore",
         resources: 3,
         influence: 2,
@@ -953,7 +953,7 @@ export const SYSTEM_DATA: Array<SystemSchemaType> = [
     source: "pok",
     planets: [
       {
-        name: "planet.vorhal",
+        name: "Vorhal",
         cardNsid: "card.planet:pok/vorhal",
         resources: 0,
         influence: 2,
@@ -969,7 +969,7 @@ export const SYSTEM_DATA: Array<SystemSchemaType> = [
     wormholes: ["beta"],
     planets: [
       {
-        name: "planet.atlas",
+        name: "Atlas",
         cardNsid: "card.planet:pok/atlas",
         resources: 3,
         influence: 1,
@@ -984,7 +984,7 @@ export const SYSTEM_DATA: Array<SystemSchemaType> = [
     source: "pok",
     planets: [
       {
-        name: "planet.primor",
+        name: "Primor",
         cardNsid: "card.planet:pok/primor",
         resources: 2,
         influence: 1,
@@ -1001,7 +1001,7 @@ export const SYSTEM_DATA: Array<SystemSchemaType> = [
     source: "pok",
     planets: [
       {
-        name: "planet.hopes_end",
+        name: "Hopes End",
         cardNsid: "card.planet:pok/hopes_end",
         resources: 3,
         influence: 0,
@@ -1019,7 +1019,7 @@ export const SYSTEM_DATA: Array<SystemSchemaType> = [
     anomalies: ["gravity_rift"],
     planets: [
       {
-        name: "planet.cormund",
+        name: "Cormund",
         cardNsid: "card.planet:pok/cormund",
         resources: 2,
         influence: 0,
@@ -1035,7 +1035,7 @@ export const SYSTEM_DATA: Array<SystemSchemaType> = [
     anomalies: ["nebula"],
     planets: [
       {
-        name: "planet.everra",
+        name: "Everra",
         cardNsid: "card.planet:pok/everra",
         resources: 3,
         influence: 1,
@@ -1050,14 +1050,14 @@ export const SYSTEM_DATA: Array<SystemSchemaType> = [
     source: "pok",
     planets: [
       {
-        name: "planet.accoen",
+        name: "Accoen",
         cardNsid: "card.planet:pok/accoen",
         resources: 2,
         influence: 3,
         traits: ["industrial"],
       },
       {
-        name: "planet.jeol_ir",
+        name: "Jeol Ir",
         cardNsid: "card.planet:pok/jeol_ir",
         resources: 2,
         influence: 3,
@@ -1071,14 +1071,14 @@ export const SYSTEM_DATA: Array<SystemSchemaType> = [
     source: "pok",
     planets: [
       {
-        name: "planet.kraag",
+        name: "Kraag",
         cardNsid: "card.planet:pok/kraag",
         resources: 2,
         influence: 1,
         traits: ["hazardous"],
       },
       {
-        name: "planet.siig",
+        name: "Siig",
         cardNsid: "card.planet:pok/siig",
         resources: 0,
         influence: 2,
@@ -1092,14 +1092,14 @@ export const SYSTEM_DATA: Array<SystemSchemaType> = [
     source: "pok",
     planets: [
       {
-        name: "planet.bakal",
+        name: "Bakal",
         cardNsid: "card.planet:pok/bakal",
         resources: 3,
         influence: 2,
         traits: ["industrial"],
       },
       {
-        name: "planet.alio_prima",
+        name: "Alio Prima",
         cardNsid: "card.planet:pok/alio_prima",
         resources: 1,
         influence: 1,
@@ -1113,14 +1113,14 @@ export const SYSTEM_DATA: Array<SystemSchemaType> = [
     source: "pok",
     planets: [
       {
-        name: "planet.lisis",
+        name: "Lisis",
         cardNsid: "card.planet:pok/lisis",
         resources: 2,
         influence: 2,
         traits: ["industrial"],
       },
       {
-        name: "planet.velnor",
+        name: "Velnor",
         cardNsid: "card.planet:pok/velnor",
         resources: 2,
         influence: 1,
@@ -1135,7 +1135,7 @@ export const SYSTEM_DATA: Array<SystemSchemaType> = [
     source: "pok",
     planets: [
       {
-        name: "planet.cealdri",
+        name: "Cealdri",
         cardNsid: "card.planet:pok/cealdri",
         resources: 0,
         influence: 2,
@@ -1143,7 +1143,7 @@ export const SYSTEM_DATA: Array<SystemSchemaType> = [
         techs: ["yellow"],
       },
       {
-        name: "planet.xanhact",
+        name: "Xanhact",
         cardNsid: "card.planet:pok/xanhact",
         resources: 0,
         influence: 1,
@@ -1157,14 +1157,14 @@ export const SYSTEM_DATA: Array<SystemSchemaType> = [
     source: "pok",
     planets: [
       {
-        name: "planet.vega_major",
+        name: "Vega Major",
         cardNsid: "card.planet:pok/vega_major",
         resources: 2,
         influence: 1,
         traits: ["cultural"],
       },
       {
-        name: "planet.vega_minor",
+        name: "Vega Minor",
         cardNsid: "card.planet:pok/vega_minor",
         resources: 1,
         influence: 2,
@@ -1179,21 +1179,21 @@ export const SYSTEM_DATA: Array<SystemSchemaType> = [
     source: "pok",
     planets: [
       {
-        name: "planet.loki",
+        name: "Loki",
         cardNsid: "card.planet:pok/loki",
         resources: 1,
         influence: 2,
         traits: ["cultural"],
       },
       {
-        name: "planet.abaddon",
+        name: "Abaddon",
         cardNsid: "card.planet:pok/abaddon",
         resources: 1,
         influence: 0,
         traits: ["cultural"],
       },
       {
-        name: "planet.ashtroth",
+        name: "Ashtroth",
         cardNsid: "card.planet:pok/ashtroth",
         resources: 2,
         influence: 0,
@@ -1207,7 +1207,7 @@ export const SYSTEM_DATA: Array<SystemSchemaType> = [
     source: "pok",
     planets: [
       {
-        name: "planet.rigel_iii",
+        name: "Rigel III",
         cardNsid: "card.planet:pok/rigel_iii",
         resources: 1,
         influence: 1,
@@ -1215,14 +1215,14 @@ export const SYSTEM_DATA: Array<SystemSchemaType> = [
         techs: ["green"],
       },
       {
-        name: "planet.rigel_ii",
+        name: "Rigel II",
         cardNsid: "card.planet:pok/rigel_ii",
         resources: 1,
         influence: 2,
         traits: ["industrial"],
       },
       {
-        name: "planet.rigel_i",
+        name: "Rigel I",
         cardNsid: "card.planet:pok/rigel_i",
         resources: 0,
         influence: 1,
@@ -1269,7 +1269,7 @@ export const SYSTEM_DATA: Array<SystemSchemaType> = [
     wormholesFaceDown: ["gamma"],
     planets: [
       {
-        name: "planet.mallice",
+        name: "Mallice",
         cardNsid: "card.planet:pok/mallice",
         resources: 0,
         influence: 3,
@@ -1369,7 +1369,7 @@ export const SYSTEM_DATA: Array<SystemSchemaType> = [
     source: "codex.vigil",
     planets: [
       {
-        name: "planet.custodia_vigilia",
+        name: "Custodia Vigilia",
         cardNsid: "card.planet:codex.vigil/custodia_vigilia",
         resources: 2,
         influence: 3,
