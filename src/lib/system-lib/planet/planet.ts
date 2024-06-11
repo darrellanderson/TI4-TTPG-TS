@@ -3,6 +3,14 @@ import { PlanetSchemaType } from "../schema/planet-schema";
 import { PlanetAttachment } from "../planet-attachment/planet-attachment";
 import { SystemDefaults } from "../data/system-defaults";
 
+/**
+ * Represent a single planet.
+ *
+ * Planets can have multiple attachments, normally add by placing a token on
+ * the planet and delete by removing the token.
+ *
+ * A token-less planet attachment is possible, see it for details.
+ */
 export class Planet {
   private readonly _params: PlanetSchemaType;
   private readonly _attachments: Array<PlanetAttachment> = [];
@@ -12,6 +20,13 @@ export class Planet {
     this._params = planetSchemaType;
   }
 
+  /**
+   * Add an attachment to the planet.
+   * Allow multiple attachments with the same NSID.
+   *
+   * @param planetAttachment
+   * @returns
+   */
   addAttachment(planetAttachment: PlanetAttachment): this {
     this._attachments.push(planetAttachment);
     return this;
@@ -46,6 +61,11 @@ export class Planet {
     });
   }
 
+  /**
+   * Get influence of the planet and all attachments.
+   *
+   * @returns
+   */
   getInfluence(): number {
     let result: number = this._params.influence ?? 0;
     for (const attachment of this._attachments) {
@@ -54,6 +74,11 @@ export class Planet {
     return result;
   }
 
+  /**
+   * Get legendary card NSID of the planet and all attachments.
+   *
+   * @returns
+   */
   getLegendaryCardNsids(): Array<string> {
     const result: Array<string> = [];
     if (this._params.legendaryCardNsid) {
@@ -68,18 +93,38 @@ export class Planet {
     return result;
   }
 
+  /**
+   * Get the name of the planet.
+   *
+   * @returns
+   */
   getName(): string {
     return this._params.name;
   }
 
+  /**
+   * Get the local position of the planet relative to a system tile.
+   *
+   * @returns
+   */
   getLocalPosition(): Vector {
     return this._localPosition.clone();
   }
 
+  /**
+   * Get the radius of the planet.
+   *
+   * @returns
+   */
   getRadius(): number {
     return this._params.radius ?? SystemDefaults.PLANET_RADIUS;
   }
 
+  /**
+   * Get resources of the planet and all attachments.
+   *
+   * @returns
+   */
   getResources(): number {
     let result: number = this._params.resources ?? 0;
     for (const attachment of this._attachments) {
@@ -88,6 +133,11 @@ export class Planet {
     return result;
   }
 
+  /**
+   * Get techs of the planet and all attachments.
+   *
+   * @returns
+   */
   getTechs(): Array<string> {
     const result: Array<string> = [];
     if (this._params.techs) {
@@ -99,6 +149,11 @@ export class Planet {
     return result;
   }
 
+  /**
+   * Get traits of the planet and all attachments.
+   *
+   * @returns
+   */
   getTraits(): Array<string> {
     const result: Array<string> = [];
     if (this._params.traits) {
@@ -110,6 +165,11 @@ export class Planet {
     return result;
   }
 
+  /**
+   * Is the planet destroyed?  An attachment can destroy a planet.
+   *
+   * @returns
+   */
   isDestroyedPlanet(): boolean {
     let result: boolean = false;
     for (const attachment of this._attachments) {
@@ -118,6 +178,11 @@ export class Planet {
     return result;
   }
 
+  /**
+   * Is the planet legendary?  An attachment can make a planet legendary.
+   *
+   * @returns
+   */
   isLegendary(): boolean {
     let result: boolean = this._params.isLegendary ?? false;
     for (const attachment of this._attachments) {
@@ -126,11 +191,26 @@ export class Planet {
     return result;
   }
 
+  /**
+   * Set planet local position relative to a system tile.
+   *
+   * @returns
+   */
   setLocalPosition(localPosition: Vector): this {
     this._localPosition = localPosition.clone();
     return this;
   }
 
+  /**
+   * Set the local position of the planet from a standard position.
+   * The standard position is based on the entity index and count, entities
+   * can include wormholes as well.
+   *
+   * @param entityIndex
+   * @param entityCount
+   * @param isHome
+   * @returns
+   */
   setLocalPositionFromStandard(
     entityIndex: number,
     entityCount: number,

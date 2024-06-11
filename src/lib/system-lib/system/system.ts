@@ -23,7 +23,7 @@ export type WormholeWithLocalPosition = {
  * Represent a single system, usually with a corresponding system tile game
  * object.  It can exist without a system tile object for data lookups, etc.
  *
- * Systems can have mutable attachments, normally add by placing a system
+ * Systems can have multiple attachments, normally add by placing a system
  * attachment token (e.g. "alpha wormhole") and delete by removing the token.
  *
  * A token-less system attachment is possible, see it for details.
