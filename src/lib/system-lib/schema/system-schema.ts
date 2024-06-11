@@ -39,6 +39,7 @@ export const SystemSchema = z
 
     // System tile image, PNG transparent square, fill to left/right edge.
     img: z.string().optional(),
+    imgFaceDown: z.string().optional(),
     imgPackageId: z.string().optional(),
   })
   .strict()

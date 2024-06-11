@@ -4,16 +4,6 @@ import { GameObject, Vector, refPackageId } from "@tabletop-playground/api";
 import { SystemSchemaType } from "../schema/system-schema";
 import { SystemAttachment } from "../system-attachment/system-attachment";
 
-it("static get", () => {
-  const system = new System({
-    tile: 1,
-    source: "my-source",
-  });
-  system.setSystemTileObjId("my-id");
-  expect(System.getByTileNumber(1)).toBe(system);
-  expect(System.getByTileObjId("my-id")).toBe(system);
-});
-
 it("setSystemTileObjId", () => {
   const params: SystemSchemaType = {
     tile: 1,
@@ -156,6 +146,22 @@ it("getImg", () => {
   expect(system.getImg()).toBe("my-img:my-package-id");
 });
 
+it("getImg (face down)", () => {
+  const system = new System({
+    tile: 1,
+    source: "my-source",
+
+    img: "my-img",
+    imgFaceDown: "my-img=face-down",
+    imgPackageId: "my-package-id",
+  });
+  const systemTile: GameObject = new MockGameObject({
+    rotation: [0, 0, 180],
+  });
+  system.setSystemTileObjId(systemTile.getId());
+  expect(system.getImg()).toBe("my-img-face-down:my-package-id");
+});
+
 it("getImg (no package id)", () => {
   const system = new System({
     tile: 1,
@@ -198,12 +204,12 @@ it("getPlanets", () => {
   ]);
 });
 
-it("getTile", () => {
+it("getTileNumber", () => {
   const system = new System({
     tile: 1,
     source: "my-source",
   });
-  expect(system.getTile()).toBe(1);
+  expect(system.getTileNumber()).toBe(1);
 });
 
 it("getWormholes", () => {

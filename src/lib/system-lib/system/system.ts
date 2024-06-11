@@ -29,9 +29,6 @@ export type WormholeWithLocalPosition = {
  * A token-less system attachment is possible, see it for details.
  */
 export class System {
-  private static readonly _tileNumberToSystem: Map<number, System> = new Map();
-  private static readonly _tileObjIdToSystem: Map<string, System> = new Map();
-
   private readonly _params: SystemSchemaType;
   private readonly _planets: Array<Planet> = [];
   private readonly _wormholes: Array<WormholeWithLocalPosition> = [];
@@ -40,14 +37,6 @@ export class System {
     | undefined;
   private readonly _attachments: Array<SystemAttachment> = [];
   private _systemTileObjId: string | undefined = undefined;
-
-  public static getByTileNumber(tile: number): System | undefined {
-    return System._tileNumberToSystem.get(tile);
-  }
-
-  public static getByTileObjId(tileObjId: string): System | undefined {
-    return System._tileObjIdToSystem.get(tileObjId);
-  }
 
   constructor(params: SystemSchemaType) {
     this._params = params;
@@ -115,8 +104,6 @@ export class System {
     if (wormholesFaceDown.length > 0) {
       this._wormholesFaceDown = wormholesFaceDown;
     }
-
-    System._tileNumberToSystem.set(params.tile, this);
   }
 
   /**
@@ -214,8 +201,12 @@ export class System {
    * @returns {string | undefined} The image of the system attachment.
    */
   getImg(): string | undefined {
-    const img: string | undefined = this._params.img;
-    if (!img) {
+    let img: string | undefined = undefined;
+    if (this._params.imgFaceDown && !this.isSystemFaceUp()) {
+      img = this._params.imgFaceDown;
+    } else if (this._params.img) {
+      img = this._params.img;
+    } else {
       return undefined;
     }
     const packageId: string = this._params.imgPackageId ?? refPackageId;
@@ -264,11 +255,11 @@ export class System {
   }
 
   /**
-   * Get the system tile tile number.
+   * Get the system tile (string so homebrew can use short prefix).
    *
-   * @returns {number}
+   * @returns
    */
-  getTile(): number {
+  getTileNumber(): number {
     return this._params.tile;
   }
 
@@ -362,9 +353,6 @@ export class System {
    */
   setSystemTileObjId(systemObjId: string | undefined): this {
     this._systemTileObjId = systemObjId;
-    if (systemObjId) {
-      System._tileObjIdToSystem.set(systemObjId, this);
-    }
     return this;
   }
 }
