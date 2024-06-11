@@ -154,7 +154,7 @@ export class System {
    * @param globalPosition
    * @returns
    */
-  getLocalPosition(globalPosition: Vector): Vector | undefined {
+  worldPositionToLocal(globalPosition: Vector): Vector | undefined {
     const systemTileObj: GameObject | undefined = this.getSystemTileObj();
     if (!systemTileObj) {
       return undefined;
@@ -170,7 +170,7 @@ export class System {
    * @param localPosition
    * @returns
    */
-  getGlobalPosition(localPosition: Vector): Vector | undefined {
+  localPositionToWorld(localPosition: Vector): Vector | undefined {
     const systemTileObj: GameObject | undefined = this.getSystemTileObj();
     if (!systemTileObj) {
       return undefined;

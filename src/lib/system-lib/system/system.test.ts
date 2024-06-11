@@ -15,13 +15,13 @@ it("setSystemTileObjId", () => {
   expect(system.getSystemTileObjId()).toBe("my-id");
 });
 
-it("getLocalPosition", () => {
+it("worldPositionToLocal", () => {
   const params: SystemSchemaType = {
     tile: 1,
   };
   const system = new System(params);
   const globalPosition = new Vector(1, 2, 3);
-  expect(system.getLocalPosition(globalPosition)).toBeUndefined();
+  expect(system.worldPositionToLocal(globalPosition)).toBeUndefined();
 
   new MockGameObject({
     id: "my-system-tile-id",
@@ -29,18 +29,18 @@ it("getLocalPosition", () => {
   });
   system.setSystemTileObjId("my-system-tile-id");
 
-  expect(system.getLocalPosition(globalPosition)?.toString()).toBe(
+  expect(system.worldPositionToLocal(globalPosition)?.toString()).toBe(
     "(X=-9,Y=-18,Z=-27)"
   );
 });
 
-it("getGlobalPosition", () => {
+it("localPositionToWorld", () => {
   const params: SystemSchemaType = {
     tile: 1,
   };
   const system = new System(params);
   const localPosition = new Vector(1, 2, 3);
-  expect(system.getGlobalPosition(localPosition)).toBeUndefined();
+  expect(system.localPositionToWorld(localPosition)).toBeUndefined();
 
   new MockGameObject({
     id: "my-system-tile-id",
@@ -48,7 +48,7 @@ it("getGlobalPosition", () => {
   });
   system.setSystemTileObjId("my-system-tile-id");
 
-  expect(system.getGlobalPosition(localPosition)?.toString()).toBe(
+  expect(system.localPositionToWorld(localPosition)?.toString()).toBe(
     "(X=11,Y=22,Z=33)"
   );
 });
