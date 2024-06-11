@@ -29,6 +29,9 @@ export type WormholeWithLocalPosition = {
  * A token-less system attachment is possible, see it for details.
  */
 export class System {
+  private static readonly _tileNumberToSystem: Map<number, System> = new Map();
+  private static readonly _tileObjIdToSystem: Map<string, System> = new Map();
+
   private readonly _params: SystemSchemaType;
   private readonly _planets: Array<Planet> = [];
   private readonly _wormholes: Array<WormholeWithLocalPosition> = [];
@@ -37,6 +40,14 @@ export class System {
     | undefined;
   private readonly _attachments: Array<SystemAttachment> = [];
   private _systemTileObjId: string | undefined = undefined;
+
+  public static getByTileNumber(tile: number): System | undefined {
+    return System._tileNumberToSystem.get(tile);
+  }
+
+  public static getByTileObjId(tileObjId: string): System | undefined {
+    return System._tileObjIdToSystem.get(tileObjId);
+  }
 
   constructor(params: SystemSchemaType) {
     this._params = params;
@@ -104,6 +115,8 @@ export class System {
     if (wormholesFaceDown.length > 0) {
       this._wormholesFaceDown = wormholesFaceDown;
     }
+
+    System._tileNumberToSystem.set(params.tile, this);
   }
 
   /**
@@ -349,6 +362,9 @@ export class System {
    */
   setSystemTileObjId(systemObjId: string | undefined): this {
     this._systemTileObjId = systemObjId;
+    if (systemObjId) {
+      System._tileObjIdToSystem.set(systemObjId, this);
+    }
     return this;
   }
 }

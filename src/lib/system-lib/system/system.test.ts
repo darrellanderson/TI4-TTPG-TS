@@ -4,6 +4,16 @@ import { GameObject, Vector, refPackageId } from "@tabletop-playground/api";
 import { SystemSchemaType } from "../schema/system-schema";
 import { SystemAttachment } from "../system-attachment/system-attachment";
 
+it("static get", () => {
+  const system = new System({
+    tile: 1,
+    source: "my-source",
+  });
+  system.setSystemTileObjId("my-id");
+  expect(System.getByTileNumber(1)).toBe(system);
+  expect(System.getByTileObjId("my-id")).toBe(system);
+});
+
 it("setSystemTileObjId", () => {
   const params: SystemSchemaType = {
     tile: 1,
