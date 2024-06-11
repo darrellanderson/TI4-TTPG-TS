@@ -152,7 +152,7 @@ it("getImg (face down)", () => {
     source: "my-source",
 
     img: "my-img",
-    imgFaceDown: "my-img=face-down",
+    imgFaceDown: "my-img-face-down",
     imgPackageId: "my-package-id",
   });
   const systemTile: GameObject = new MockGameObject({
