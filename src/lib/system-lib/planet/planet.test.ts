@@ -213,3 +213,52 @@ it("isLegendaryPlanet (default)", () => {
   });
   expect(planet.isLegendary()).toEqual(false);
 });
+
+it("setLocalPosition", () => {
+  const planet = new Planet({
+    name: "my-planet-name",
+  });
+  expect(planet.getLocalPosition().toString()).toEqual("(X=0,Y=0,Z=0)");
+
+  planet.setLocalPosition(new Vector(1, 2, 3));
+  expect(planet.getLocalPosition().toString()).toEqual("(X=1,Y=2,Z=3)");
+});
+
+it("setLocalPositionFromStandard", () => {
+  let planet = new Planet({
+    name: "my-planet-name",
+  });
+  expect(planet.getLocalPosition().toString()).toEqual("(X=0,Y=0,Z=0)");
+
+  let entityIndex: number = -1;
+  let entityCount: number = -1;
+  let isHome: boolean = false;
+  let vs: string = "";
+
+  expect(() => {
+    planet.setLocalPositionFromStandard(entityIndex, entityCount, isHome);
+  }).toThrow();
+
+  entityIndex = 0;
+  entityCount = 1;
+  isHome = true;
+  vs = SystemDefaults.HOME_PLANET_POS[`POS_1_OF_1`].toString();
+  planet.setLocalPositionFromStandard(entityIndex, entityCount, isHome);
+  expect(planet.getLocalPosition().toString()).toEqual(vs);
+
+  entityIndex = 0;
+  entityCount = 1;
+  isHome = false;
+  vs = SystemDefaults.PLANET_POS[`POS_1_OF_1`].toString();
+  planet.setLocalPositionFromStandard(entityIndex, entityCount, isHome);
+  expect(planet.getLocalPosition().toString()).toEqual(vs);
+
+  // Test with offset.
+  planet = new Planet({
+    name: "my-planet-name",
+    offset: new Vector(1, 2, 3),
+  });
+  vs = SystemDefaults.PLANET_POS[`POS_1_OF_1`].add([1, 2, 0]).toString();
+  planet.setLocalPositionFromStandard(entityIndex, entityCount, isHome);
+  expect(planet.getLocalPosition().toString()).toEqual(vs);
+});

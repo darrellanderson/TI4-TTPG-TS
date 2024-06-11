@@ -1,3 +1,4 @@
+import exp from "constants";
 import { z } from "zod";
 
 export const AnomalySchema = z.enum([
@@ -6,6 +7,7 @@ export const AnomalySchema = z.enum([
   "nebula",
   "supernova",
 ]);
+export type AnomalySchemaType = z.infer<typeof AnomalySchema>;
 
 /**
  * Connect edge to set of edges.
@@ -21,6 +23,7 @@ export const HyperlaneSchema = z
   })
   .strict()
   .readonly();
+export type HyperlaneSchemaType = z.infer<typeof HyperlaneSchema>;
 
 export const LocalPositionSchema = z
   .object({
@@ -29,16 +32,20 @@ export const LocalPositionSchema = z
   })
   .strict()
   .readonly();
+export type LocalPositionSchemaType = z.infer<typeof LocalPositionSchema>;
 
 export const TechSchema = z.enum(["blue", "green", "red", "yellow"]).readonly();
+export type TechSchemaType = z.infer<typeof TechSchema>;
 
 export const TraitSchema = z
   .enum(["cultural", "hazardous", "industrial"])
   .readonly();
+export type TraitSchemaType = z.infer<typeof TraitSchema>;
 
 export const WormholeSchema = z
   .enum(["alpha", "beta", "delta", "gamma"])
   .readonly();
+export type WormholeSchemaType = z.infer<typeof WormholeSchema>;
 
 export const WormholeWithPositionSchema = z
   .object({
@@ -47,3 +54,6 @@ export const WormholeWithPositionSchema = z
   })
   .strict()
   .readonly();
+export type WormholeWithPositionSchemaType = z.infer<
+  typeof WormholeWithPositionSchema
+>;

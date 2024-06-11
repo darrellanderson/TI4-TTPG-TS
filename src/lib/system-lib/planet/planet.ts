@@ -131,9 +131,26 @@ export class Planet {
     return this;
   }
 
-  setLocalPositionFromStandard(entityIndex: number, entityCount: number): this {
-    // TODO
-    // TODO apply offset
+  setLocalPositionFromStandard(
+    entityIndex: number,
+    entityCount: number,
+    isHome: boolean
+  ): this {
+    // Apply standard position.
+    const map: { [key: string]: Vector } = isHome
+      ? SystemDefaults.HOME_PLANET_POS
+      : SystemDefaults.PLANET_POS;
+    const key: string = `POS_${entityIndex + 1}_OF_${entityCount}`;
+    let pos: Vector | undefined = map[key];
+    if (!pos) {
+      throw new Error(`Invalid planet position: ${key}`);
+    }
+
+    // Apply offset.
+    if (this._params.offset) {
+      pos = pos.add([this._params.offset.x, this._params.offset.y, 0]);
+    }
+    this._localPosition = pos;
     return this;
   }
 }
