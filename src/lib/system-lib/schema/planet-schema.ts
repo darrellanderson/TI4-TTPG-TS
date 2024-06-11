@@ -8,7 +8,7 @@ import {
 export const PlanetSchema = z
   .object({
     name: z.string(),
-    offset: LocalPositionSchema.optional(),
+    localPosition: LocalPositionSchema.optional(),
     radius: z.number().optional(),
     influence: z.number().optional(),
     resources: z.number().optional(),

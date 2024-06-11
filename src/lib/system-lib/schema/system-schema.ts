@@ -20,6 +20,7 @@ export const SystemSchema = z
     isHyperlane: z.boolean().optional(),
     anomalies: z.array(AnomalySchema).optional(),
     wormholes: z.array(WormholeSchema).optional(),
+    wormholesFaceDown: z.array(WormholeSchema).optional(),
 
     // Some systems have wormholes in non-standard positions.
     // Wormhole nexus changes wormholes when flipped.

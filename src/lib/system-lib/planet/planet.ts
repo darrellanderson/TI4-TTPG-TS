@@ -221,14 +221,9 @@ export class Planet {
       ? SystemDefaults.HOME_PLANET_POS
       : SystemDefaults.PLANET_POS;
     const key: string = `POS_${entityIndex + 1}_OF_${entityCount}`;
-    let pos: Vector | undefined = map[key];
+    const pos: Vector | undefined = map[key];
     if (!pos) {
       throw new Error(`Invalid planet position: ${key}`);
-    }
-
-    // Apply offset.
-    if (this._params.offset) {
-      pos = pos.add([this._params.offset.x, this._params.offset.y, 0]);
     }
     this._localPosition = pos;
     return this;

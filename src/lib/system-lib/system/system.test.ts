@@ -218,6 +218,7 @@ it("getWormholes face down", () => {
     wormholesWithPositions: [
       { wormhole: "alpha", localPosition: { x: 1, y: 2 } },
     ],
+    wormholesFaceDown: ["gamma"],
     wormholesWithPositionsFaceDown: [
       { wormhole: "delta", localPosition: { x: 1, y: 2 } },
     ],
@@ -237,7 +238,7 @@ it("getWormholes face down", () => {
     rotation: [0, 0, 180],
   });
   system.setSystemTileObjId(systemTile.getId());
-  expect(system.getWormholes()).toEqual(["delta", "beta"]);
+  expect(system.getWormholes()).toEqual(["gamma", "delta", "beta"]);
 });
 
 it("getWormholesWithGlobalPosition", () => {

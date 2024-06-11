@@ -252,13 +252,4 @@ it("setLocalPositionFromStandard", () => {
   vs = SystemDefaults.PLANET_POS[`POS_1_OF_1`].toString();
   planet.setLocalPositionFromStandard(entityIndex, entityCount, isHome);
   expect(planet.getLocalPosition().toString()).toEqual(vs);
-
-  // Test with offset.
-  planet = new Planet({
-    name: "my-planet-name",
-    offset: new Vector(1, 2, 3),
-  });
-  vs = SystemDefaults.PLANET_POS[`POS_1_OF_1`].add([1, 2, 0]).toString();
-  planet.setLocalPositionFromStandard(entityIndex, entityCount, isHome);
-  expect(planet.getLocalPosition().toString()).toEqual(vs);
 });

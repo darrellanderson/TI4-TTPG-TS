@@ -74,8 +74,19 @@ export class System {
       }
     }
     Object.freeze(this._wormholes);
+
+    const wormholesFaceDown: Array<WormholeWithLocalPosition> = [];
+    if (params.wormholesFaceDown) {
+      for (const wormhole of params.wormholesFaceDown) {
+        const localPosition: Vector = new Vector(0, 0, 0);
+        const wormholeWithLocalPosition: WormholeWithLocalPosition = {
+          wormhole,
+          localPosition,
+        };
+        wormholesFaceDown.push(wormholeWithLocalPosition);
+      }
+    }
     if (params.wormholesWithPositionsFaceDown) {
-      this._wormholesFaceDown = [];
       for (const wormholeWithPosition of params.wormholesWithPositionsFaceDown) {
         const localPosition: Vector = new Vector(
           wormholeWithPosition.localPosition.x,
@@ -86,9 +97,12 @@ export class System {
           wormhole: wormholeWithPosition.wormhole,
           localPosition,
         };
-        this._wormholesFaceDown.push(wormholeWithLocalPosition);
+        wormholesFaceDown.push(wormholeWithLocalPosition);
       }
       Object.freeze(this._wormholesFaceDown);
+    }
+    if (wormholesFaceDown.length > 0) {
+      this._wormholesFaceDown = wormholesFaceDown;
     }
   }
 
