@@ -3,6 +3,7 @@ import { System, WormholeWithGlobalPosition } from "./system";
 import { GameObject, Vector, refPackageId } from "@tabletop-playground/api";
 import { SystemSchemaType } from "../schema/system-schema";
 import { SystemAttachment } from "../system-attachment/system-attachment";
+import { Planet } from "../planet/planet";
 
 it("setSystemTileObjId", () => {
   const params: SystemSchemaType = {
@@ -178,6 +179,72 @@ it("getImg (none)", () => {
     source: "my-source",
   });
   expect(system.getImg()).toBeUndefined();
+});
+
+it("getPlanetClosest", () => {
+  const system = new System({
+    tile: 1,
+    source: "my-source",
+    planets: [{ name: "planet-1", cardNsid: "my-card-nsid-1" }],
+  });
+  let planet: Planet | undefined;
+
+  // No system tile obj.
+  planet = system.getPlanetClosest(new Vector(0, 0, 0));
+  expect(planet).toBeUndefined();
+
+  // With system tile obj.
+  const systemTile: GameObject = new MockGameObject();
+  system.setSystemTileObjId(systemTile.getId()); // must have a tile
+  planet = system.getPlanetClosest(new Vector(0, 0, 0));
+  expect(planet?.getName()).toBe("planet-1");
+
+  // Further.
+  planet = system.getPlanetClosest(new Vector(1000, 0, 0));
+  expect(planet?.getName()).toBe("planet-1");
+});
+
+it("getPlanetClosest (no planets)", () => {
+  const system = new System({
+    tile: 1,
+    source: "my-source",
+  });
+  const systemTile: GameObject = new MockGameObject();
+  system.setSystemTileObjId(systemTile.getId()); // must have a tile
+  expect(system.getPlanetClosest(new Vector(0, 0, 0))).toBeUndefined();
+});
+
+it("getPlanetExact", () => {
+  const system = new System({
+    tile: 1,
+    source: "my-source",
+    planets: [{ name: "planet-1", cardNsid: "my-card-nsid-1" }],
+  });
+  let planet: Planet | undefined;
+
+  // No system tile obj.
+  planet = system.getPlanetExact(new Vector(0, 0, 0));
+  expect(planet).toBeUndefined();
+
+  // With system tile obj.
+  const systemTile: GameObject = new MockGameObject();
+  system.setSystemTileObjId(systemTile.getId()); // must have a tile
+  planet = system.getPlanetExact(new Vector(0, 0, 0));
+  expect(planet?.getName()).toBe("planet-1");
+
+  // Further.
+  planet = system.getPlanetExact(new Vector(1000, 0, 0));
+  expect(planet?.getName()).toBeUndefined();
+});
+
+it("getPlanetClosest (no planets)", () => {
+  const system = new System({
+    tile: 1,
+    source: "my-source",
+  });
+  const systemTile: GameObject = new MockGameObject();
+  system.setSystemTileObjId(systemTile.getId()); // must have a tile
+  expect(system.getPlanetExact(new Vector(0, 0, 0))).toBeUndefined();
 });
 
 it("getPlanets", () => {
