@@ -217,6 +217,61 @@ export class System {
   }
 
   /**
+   * Get planet closest to a position.
+   *
+   * @param position
+   * @returns
+   */
+  getPlanetClosest(position: Vector): Planet | undefined {
+    const localPosition: Vector | undefined =
+      this.worldPositionToLocal(position);
+    if (!localPosition) {
+      return undefined; // must have a system tile object
+    }
+
+    let closestPlanet: Planet | undefined = undefined;
+    let closestDsq: number = Number.MAX_VALUE;
+    for (const planet of this._planets) {
+      const planetLocalPosition: Vector = planet.getLocalPosition();
+      const dSq: number = localPosition
+        .subtract(planetLocalPosition)
+        .magnitudeSquared();
+      if (dSq < closestDsq) {
+        closestPlanet = planet;
+        closestDsq = dSq;
+      }
+    }
+    return closestPlanet;
+  }
+
+  /**
+   * Get planet containing a position (not just closest).
+   *
+   * @param position
+   * @returns
+   */
+  getPlanetExact(position: Vector): Planet | undefined {
+    const localPosition: Vector | undefined =
+      this.worldPositionToLocal(position);
+    if (!localPosition) {
+      return undefined; // must have a system tile object
+    }
+
+    const planet: Planet | undefined = this.getPlanetClosest(position);
+    if (!planet) {
+      return undefined;
+    }
+
+    const planetLocalPosition: Vector = planet.getLocalPosition();
+    const distance: number = localPosition.distance(planetLocalPosition);
+    if (distance > planet.getRadius()) {
+      return undefined;
+    }
+
+    return planet;
+  }
+
+  /**
    * Get planets of the system and all attachments.
    *
    * @returns {Array<Planet>}

@@ -6,7 +6,7 @@ import { NSID, ParsedNSID } from "ttpg-darrell";
 export class SystemRegistry {
   private readonly _tileNumberToSystem: Map<number, System> = new Map();
 
-  private static _getTileNumberFromObj(obj: GameObject): number | undefined {
+  public static _getTileNumberFromObj(obj: GameObject): number | undefined {
     const nsid: string = NSID.get(obj);
     if (!nsid.startsWith("tile.system")) {
       return undefined; // not a system tile
@@ -15,10 +15,8 @@ export class SystemRegistry {
     if (!parsed) {
       return undefined; // not a valid NSID
     }
-    let tileNumber: number = 0;
-    try {
-      tileNumber = Number.parseInt(parsed.nameParts[0]);
-    } catch (e) {
+    const tileNumber: number = Number.parseInt(parsed.nameParts[0]);
+    if (Number.isNaN(tileNumber)) {
       return undefined; // not a valid tile number
     }
     return tileNumber;
@@ -63,7 +61,14 @@ export class SystemRegistry {
 
   public load(systems: Array<SystemSchemaType>): this {
     const tileNumberToTileObjId: Map<number, string> = new Map();
-    // TODO scan for tiles
+    const skipContained: boolean = false;
+    for (const obj of world.getAllObjects(skipContained)) {
+      const tileNumber: number | undefined =
+        SystemRegistry._getTileNumberFromObj(obj);
+      if (tileNumber !== undefined) {
+        tileNumberToTileObjId.set(tileNumber, obj.getId());
+      }
+    }
 
     for (const systemSchema of systems) {
       // Create system.
@@ -90,7 +95,7 @@ export class SystemRegistry {
 
   public getByTileObjId(tileObjId: string): System | undefined {
     const tileObj: GameObject | undefined = world.getObjectById(tileObjId);
-    if (tileObj === undefined) {
+    if (!tileObj || !tileObj.isValid()) {
       return undefined;
     }
     const tileNumber: number | undefined =
