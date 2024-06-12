@@ -184,7 +184,6 @@ it("getPlanets", () => {
   const system = new System({
     tile: 1,
     source: "my-source",
-
     planets: [
       { name: "planet-1", cardNsid: "my-card-nsid-1" },
       { name: "planet-2", cardNsid: "my-card-nsid-2" },
@@ -196,6 +195,11 @@ it("getPlanets", () => {
     planets: [{ name: "planet-3", cardNsid: "my-card-nsid" }],
   });
   system.addAttachment(attachment);
+  expect(system.getPlanets().map((p) => p.getName())).toEqual([
+    "planet-1",
+    "planet-2",
+    "planet-3",
+  ]);
 });
 
 it("getTileNumber", () => {
