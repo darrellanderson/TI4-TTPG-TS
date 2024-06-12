@@ -8,24 +8,20 @@ export class SystemAttachmentRegistry {
 
   private readonly _onObjectCreatedHandler = (obj: GameObject): void => {
     const nsid: string = NSID.get(obj);
-
     const systemAttachment: SystemAttachment | undefined =
       this._nsidToSystemAttachment.get(nsid);
-    if (!systemAttachment) {
-      return;
+    if (systemAttachment) {
+      systemAttachment.setAttachmentObjId(obj.getId());
     }
-    // TODO
   };
 
   private readonly _onObjectDestroyedHandler = (obj: GameObject): void => {
     const nsid: string = NSID.get(obj);
-
     const systemAttachment: SystemAttachment | undefined =
       this._nsidToSystemAttachment.get(nsid);
-    if (!systemAttachment) {
-      return;
+    if (systemAttachment) {
+      systemAttachment.setAttachmentObjId(undefined);
     }
-    // TODO
   };
 
   constructor() {

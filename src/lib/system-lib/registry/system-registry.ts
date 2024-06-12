@@ -4,17 +4,35 @@ import { System } from "../system/system";
 import { NSID } from "ttpg-darrell";
 import { SOURCE_TO_SYSTEM_DATA } from "../data/system.data";
 
+type SchemaAndSource = {
+  schema: SystemSchemaType;
+  source: string;
+};
+
 /**
  * Keep system data, lookup by tile number or system tile object id.
  */
 export class SystemRegistry {
-  private readonly _systemTileNsidToSystem: Map<string, System> = new Map();
-  private readonly _systemTileNumberToSystem: Map<number, System> = new Map();
+  private readonly _systemTileNumberToSchemaAndSource: Map<
+    number,
+    SchemaAndSource
+  > = new Map();
+
+  // Instantiate system objects for system tile objects.
+  // Duplicates are an "error" but we cannot prevent them,
+  // so create a separate system object for each.
+  private readonly _systemTileObjIdToSystem: Map<string, System> = new Map();
+
+  // TODO WORK IN PROGRESS
 
   private readonly _onObjectCreatedHandler = (obj: GameObject): void => {
     const nsid: string = NSID.get(obj);
     const system: System | undefined = this.getBySystemTileNsid(nsid);
     if (system) {
+      const oldObjId: string | undefined = system.getSystemTileObjId();
+      if (oldObjId) {
+        // TODO duplicate, what to do?
+      }
       system.setSystemTileObjId(obj.getId());
     }
   };
