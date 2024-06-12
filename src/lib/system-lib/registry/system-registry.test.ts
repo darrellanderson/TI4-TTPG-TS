@@ -34,7 +34,9 @@ it("constructor", () => {
 });
 
 it("onObjectCreated/Destroyed", () => {
-  const registry = new SystemRegistry().load([{ tile: 12, source: "base" }]);
+  const registry = new SystemRegistry().loadOrThrow([
+    { tile: 12, source: "base" },
+  ]);
   const system = registry.getByTileNumber(12);
   expect(registry.getByTileObjId("my-id")).toBeUndefined();
   expect(system?.getSystemTileObjId()).toBeUndefined();
@@ -77,10 +79,61 @@ it("load (system tile obj exists)", () => {
     id: "my-id",
     templateMetadata: "tile.system:base/12",
   });
-  const registry = new SystemRegistry().load([{ tile: 12, source: "base" }]);
+  const registry = new SystemRegistry().loadOrThrow([
+    { tile: 12, source: "base" },
+  ]);
   const system = registry.getByTileNumber(12);
   expect(system?.getSystemTileObjId()).toBe("my-id");
   registry.destroy();
+});
+
+it("load (duplicate system tile)", () => {
+  const mock = jest.spyOn(global.console, "error").mockImplementation(() => {});
+
+  const registry = new SystemRegistry();
+  expect(registry.getByTileNumber(12)).toBeUndefined();
+
+  // Add first.
+  const ignored: Array<number> = [];
+  registry.load([{ tile: 12, source: "base" }], ignored);
+  expect(registry.getByTileNumber(12)?.getSource()).toBe("base");
+  expect(ignored).toEqual([]); // no duplicates
+
+  // Add duplicate, expect ignored but non-duplicate entries still added.
+  registry.load(
+    [
+      { tile: 11, source: "homebrew" },
+      { tile: 12, source: "homebrew" },
+      { tile: 13, source: "homebrew" },
+    ],
+    ignored
+  );
+  expect(registry.getByTileNumber(11)?.getSource()).toBe("homebrew");
+  expect(registry.getByTileNumber(12)?.getSource()).toBe("base"); // not overwritten
+  expect(registry.getByTileNumber(13)?.getSource()).toBe("homebrew");
+  expect(ignored).toEqual([12]);
+
+  registry.destroy();
+  mock.mockRestore();
+});
+
+it("loadOrThrow (duplicate system tile)", () => {
+  const mock = jest.spyOn(global.console, "error").mockImplementation(() => {});
+
+  const registry = new SystemRegistry();
+  expect(registry.getByTileNumber(12)).toBeUndefined();
+
+  // Add first.
+  registry.loadOrThrow([{ tile: 12, source: "base" }]);
+  expect(registry.getByTileNumber(12)?.getSource()).toBe("base");
+
+  // Add duplicate, expect exception.
+  expect(() => {
+    registry.loadOrThrow([{ tile: 12, source: "homebrew" }]);
+  }).toThrow("Duplicate system tile numbers: 12");
+
+  registry.destroy();
+  mock.mockRestore();
 });
 
 it("getByTileObjId (obj exists, bad nsid)", () => {

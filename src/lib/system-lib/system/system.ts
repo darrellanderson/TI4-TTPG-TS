@@ -286,6 +286,15 @@ export class System {
   }
 
   /**
+   * Get the source (base, expansion, homebrew.x, etc.)
+   *
+   * @returns
+   */
+  getSource(): string {
+    return this._params.source;
+  }
+
+  /**
    * Get the linked system tile object, if any.
    *
    * @returns {GameObject | undefined}

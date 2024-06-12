@@ -3,6 +3,9 @@ import { SystemSchemaType } from "../schema/system-schema";
 import { System } from "../system/system";
 import { NSID, ParsedNSID } from "ttpg-darrell";
 
+/**
+ * Keep system data, lookup by tile number or system tile object id.
+ */
 export class SystemRegistry {
   private readonly _tileNumberToSystem: Map<number, System> = new Map();
 
@@ -59,7 +62,19 @@ export class SystemRegistry {
     globalEvents.onObjectDestroyed.remove(this._onObjectDestroyedHandler);
   }
 
-  public load(systems: Array<SystemSchemaType>): this {
+  /**
+   * Register new systems.
+   *
+   * Ignores any duplicate (by tile number), adding to duplicates parameter.
+   *
+   * @param systems
+   * @returns
+   */
+  public load(
+    systems: Array<SystemSchemaType>,
+    ignoredTileNumbers: Array<number>
+  ): this {
+    // Get all system tile objects (to link with added systems).
     const tileNumberToTileObjId: Map<number, string> = new Map();
     const skipContained: boolean = false;
     for (const obj of world.getAllObjects(skipContained)) {
@@ -70,10 +85,20 @@ export class SystemRegistry {
       }
     }
 
+    // Add systems.
     for (const systemSchema of systems) {
       // Create system.
       const system: System = new System(systemSchema);
       const tileNumber: number = system.getTileNumber();
+
+      // Duplicates are a data error, report to console and skip this system.
+      if (this._tileNumberToSystem.has(tileNumber)) {
+        console.error(
+          `Duplicate system tile number: ${tileNumber} (${system.getSource()})`
+        );
+        ignoredTileNumbers.push(tileNumber);
+        continue;
+      }
 
       // Link system tile game object.
       const tileObjId: string | undefined =
@@ -89,10 +114,39 @@ export class SystemRegistry {
     return this;
   }
 
+  /**
+   * Load, except throw an error if any duplicate system tile numbers.
+   *
+   * @param systems
+   * @returns
+   */
+  public loadOrThrow(systems: Array<SystemSchemaType>): this {
+    const ignoredTileNumbers: Array<number> = [];
+    this.load(systems, ignoredTileNumbers);
+    if (ignoredTileNumbers.length > 0) {
+      throw new Error(
+        `Duplicate system tile numbers: ${ignoredTileNumbers.join(", ")}`
+      );
+    }
+    return this;
+  }
+
+  /**
+   * Lookup system by tile number.
+   *
+   * @param tile
+   * @returns
+   */
   public getByTileNumber(tile: number): System | undefined {
     return this._tileNumberToSystem.get(tile);
   }
 
+  /**
+   * Lookup system by system tile object id.
+   *
+   * @param tileObjId
+   * @returns
+   */
   public getByTileObjId(tileObjId: string): System | undefined {
     const tileObj: GameObject | undefined = world.getObjectById(tileObjId);
     if (!tileObj || !tileObj.isValid()) {

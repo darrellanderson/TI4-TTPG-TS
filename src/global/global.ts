@@ -7,7 +7,9 @@ export class TI4Class {
 
   // Libraries.
   hex: Hex = new Hex(HEX_LAYOUT_POINTY, 5.77735 * 1.5);
-  systemRegistry: SystemRegistry = new SystemRegistry().load(SYSTEM_DATA);
+  systemRegistry: SystemRegistry = new SystemRegistry().loadOrThrow(
+    SYSTEM_DATA
+  );
 }
 
 // Place "TI4" in the global namespace.

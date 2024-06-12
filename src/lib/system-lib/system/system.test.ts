@@ -57,6 +57,15 @@ it("localPositionToWorld", () => {
   );
 });
 
+it("getSource", () => {
+  const params: SystemSchemaType = {
+    tile: 1,
+    source: "my-source",
+  };
+  const system = new System(params);
+  expect(system.getSource()).toBe("my-source");
+});
+
 it("getSystemTileObj (valid)", () => {
   const params: SystemSchemaType = {
     tile: 1,
