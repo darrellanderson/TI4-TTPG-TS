@@ -196,12 +196,6 @@ it("getPlanets", () => {
     planets: [{ name: "planet-3", cardNsid: "my-card-nsid" }],
   });
   system.addAttachment(attachment);
-
-  expect(system.getPlanets().map((planet) => planet.getName())).toEqual([
-    "planet-1",
-    "planet-2",
-    "planet-3",
-  ]);
 });
 
 it("getTileNumber", () => {

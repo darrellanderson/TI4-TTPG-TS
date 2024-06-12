@@ -44,7 +44,10 @@ export class System {
 
     // Planets.
     if (params.planets) {
-      this._planets = params.planets.map((planet) => new Planet(planet));
+      for (const planetParams of params.planets) {
+        const planet: Planet = new Planet(planetParams);
+        this._planets.push(planet);
+      }
     }
     Object.freeze(this._planets);
 

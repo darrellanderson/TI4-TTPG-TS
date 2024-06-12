@@ -61,7 +61,7 @@ export class SystemRegistry {
     globalEvents.onObjectDestroyed.remove(this._onObjectDestroyedHandler);
   }
 
-  public load(systems: Array<SystemSchemaType>) {
+  public load(systems: Array<SystemSchemaType>): this {
     const tileNumberToTileObjId: Map<number, string> = new Map();
     // TODO scan for tiles
 
@@ -80,6 +80,8 @@ export class SystemRegistry {
       // Register system.
       this._tileNumberToSystem.set(tileNumber, system);
     }
+
+    return this;
   }
 
   public getByTileNumber(tile: number): System | undefined {
