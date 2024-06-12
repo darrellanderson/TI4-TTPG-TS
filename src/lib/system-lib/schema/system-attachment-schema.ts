@@ -1,11 +1,15 @@
 import { z } from "zod";
-import { AnomalySchema, WormholeSchema } from "./basic-types-schema";
+import {
+  AnomalySchema,
+  NsidNameSchema,
+  WormholeSchema,
+} from "./basic-types-schema";
 import { PlanetSchema } from "./planet-schema";
 
 export const SystemAttachmentSchema = z
   .object({
     name: z.string(),
-    nsid: z.string(),
+    nsidName: NsidNameSchema, // NSID "token.attachment:${source}/${nsidName}"
 
     anomalies: z.array(AnomalySchema).optional(),
     wormholes: z.array(WormholeSchema).optional(),

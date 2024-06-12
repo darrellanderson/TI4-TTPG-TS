@@ -6,8 +6,12 @@ import {
 } from "@tabletop-playground/api";
 import { Facing } from "ttpg-darrell";
 import { Planet } from "../planet/planet";
-import { SystemAttachmentSchemaType } from "../schema/system-attachment-schema";
+import {
+  SystemAttachmentSchema,
+  SystemAttachmentSchemaType,
+} from "../schema/system-attachment-schema";
 import { WormholeWithGlobalPosition } from "../system/system";
+import { NsidNameSchema } from "../schema/basic-types-schema";
 
 /**
  * A system attachment is normally a token placed in a system to add attributes
@@ -18,6 +22,7 @@ import { WormholeWithGlobalPosition } from "../system/system";
  */
 export class SystemAttachment {
   private readonly _params: SystemAttachmentSchemaType;
+  private readonly _source: string;
   private readonly _planets: Array<Planet> = [];
   private _attachmentObjId: string | undefined;
 
@@ -27,13 +32,22 @@ export class SystemAttachment {
    *
    * @param {SystemAttachmentSchemaType} params - The system attachment parameters.
    */
-  constructor(params: SystemAttachmentSchemaType) {
-    this._params = params;
-    if (params.planets) {
-      this._planets = params.planets.map((planet) => new Planet(planet));
+  constructor(params: SystemAttachmentSchemaType, source: string) {
+    try {
+      SystemAttachmentSchema.parse(params); // validate the schema
+      NsidNameSchema.parse(source); // validate the schema
+    } catch (e) {
+      const msg = `error: ${e.message}\nparsing: ${JSON.stringify(params)}`;
+      throw new Error(msg);
     }
-    Object.freeze(this._params);
-    Object.freeze(this._planets);
+
+    this._params = params;
+    this._source = source;
+    if (params.planets) {
+      this._planets = params.planets.map(
+        (planet) => new Planet(planet, this._source)
+      );
+    }
   }
 
   /**
@@ -99,7 +113,7 @@ export class SystemAttachment {
    * @returns {string} The NSID of the system attachment.
    */
   getNsid(): string {
-    return this._params.nsid;
+    return `token.attachment:${this._source}/${this._params.nsidName}`;
   }
 
   /**

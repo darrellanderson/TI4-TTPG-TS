@@ -9,8 +9,7 @@ import { PlanetSchema } from "./planet-schema";
 
 export const SystemSchema = z
   .object({
-    tile: z.number(),
-    source: z.string(),
+    tile: z.number(), // NSID "tile.system:${source}/${tile}"
 
     // "map" items are adjacent to other "map" items.
     // "offMap" items are never adjacent to any others (except by wormholes).

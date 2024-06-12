@@ -2,6 +2,7 @@ import {
   AnomalySchema,
   HyperlaneSchema,
   LocalPositionSchema,
+  NsidNameSchema,
   TechSchema,
   TraitSchema,
   WormholeSchema,
@@ -34,6 +35,16 @@ it("LocalPositionSchema", () => {
   };
   const parsed = LocalPositionSchema.parse(data);
   expect(parsed).toEqual(data);
+});
+
+it("NsidNameSchema", () => {
+  const data = "my-nsid_name.2";
+  const parsed = NsidNameSchema.parse(data);
+  expect(parsed).toEqual(data);
+
+  expect(() => {
+    NsidNameSchema.parse("?");
+  }).toThrow();
 });
 
 it("TechSchema", () => {

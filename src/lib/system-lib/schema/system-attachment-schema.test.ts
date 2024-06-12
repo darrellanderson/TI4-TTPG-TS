@@ -3,7 +3,7 @@ import { SystemAttachmentSchema } from "./system-attachment-schema";
 it("SystemAttachmentSchema", () => {
   const data = {
     name: "my-name",
-    nsid: "my-nsid",
+    nsidName: "my-nsid-name",
     anomalies: ["gravity_rift", "asteroid_field"],
     wormholes: ["alpha", "beta"],
     wormholesFaceDown: ["gamma"],

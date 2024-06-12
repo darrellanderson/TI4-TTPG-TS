@@ -3,7 +3,7 @@ import { PlanetSchema, PlanetSchemaType } from "./planet-schema";
 it("PlanetSchema", () => {
   const params: PlanetSchemaType = {
     name: "my-name",
-    cardNsid: "my-card-nsid",
+    nsidName: "my-nsid-name",
     localPosition: { x: 1, y: 2 },
     radius: 3,
     influence: 4,
@@ -11,7 +11,7 @@ it("PlanetSchema", () => {
     techs: [],
     traits: [],
     isLegendary: true,
-    legendaryCardNsid: "my-legendary-card-nsid",
+    legendaryNsidName: "my-legendary-nsid-name",
   };
   const planetSchema = PlanetSchema.parse(params);
   expect(planetSchema).toEqual(params);

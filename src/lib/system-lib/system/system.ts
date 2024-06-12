@@ -5,9 +5,10 @@ import {
   world,
 } from "@tabletop-playground/api";
 import { Facing } from "ttpg-darrell";
-import { SystemSchemaType } from "../schema/system-schema";
+import { SystemSchema, SystemSchemaType } from "../schema/system-schema";
 import { Planet } from "../planet/planet";
 import { SystemAttachment } from "../system-attachment/system-attachment";
+import { NsidNameSchema } from "../schema/basic-types-schema";
 
 export type WormholeWithGlobalPosition = {
   wormhole: string;
@@ -30,6 +31,7 @@ export type WormholeWithLocalPosition = {
  */
 export class System {
   private readonly _params: SystemSchemaType;
+  private readonly _source: string;
   private readonly _planets: Array<Planet> = [];
   private readonly _wormholes: Array<WormholeWithLocalPosition> = [];
   private readonly _wormholesFaceDown:
@@ -38,18 +40,25 @@ export class System {
   private readonly _attachments: Array<SystemAttachment> = [];
   private _systemTileObjId: string | undefined = undefined;
 
-  constructor(params: SystemSchemaType) {
+  constructor(params: SystemSchemaType, source: string) {
+    try {
+      SystemSchema.parse(params); // validate the schema
+      NsidNameSchema.parse(source); // validate the schema
+    } catch (e) {
+      const msg = `error: ${e.message}\nparsing: ${JSON.stringify(params)}`;
+      throw new Error(msg);
+    }
+
     this._params = params;
-    Object.freeze(this._params);
+    this._source = source;
 
     // Planets.
     if (params.planets) {
       for (const planetParams of params.planets) {
-        const planet: Planet = new Planet(planetParams);
+        const planet: Planet = new Planet(planetParams, this._source);
         this._planets.push(planet);
       }
     }
-    Object.freeze(this._planets);
 
     // Wormholes (face up and face down, as well as with positions)
     if (params.wormholes) {
@@ -76,7 +85,6 @@ export class System {
         this._wormholes.push(wormholeWithLocalPosition);
       }
     }
-    Object.freeze(this._wormholes);
 
     const wormholesFaceDown: Array<WormholeWithLocalPosition> = [];
     if (params.wormholesFaceDown) {
@@ -102,7 +110,6 @@ export class System {
         };
         wormholesFaceDown.push(wormholeWithLocalPosition);
       }
-      Object.freeze(this._wormholesFaceDown);
     }
     if (wormholesFaceDown.length > 0) {
       this._wormholesFaceDown = wormholesFaceDown;
@@ -163,38 +170,6 @@ export class System {
       result.push(...attachment.getAnomalies());
     }
     return result;
-  }
-
-  /**
-   * Transorm a global position to a system tile local position.
-   *
-   * @param globalPosition
-   * @returns
-   */
-  worldPositionToLocal(globalPosition: Vector): Vector | undefined {
-    const systemTileObj: GameObject | undefined = this.getSystemTileObj();
-    if (!systemTileObj) {
-      return undefined;
-    }
-    const localPosition: Vector =
-      systemTileObj.worldPositionToLocal(globalPosition);
-    return localPosition;
-  }
-
-  /**
-   * Transform a system tile local position to a global position.
-   *
-   * @param localPosition
-   * @returns
-   */
-  localPositionToWorld(localPosition: Vector): Vector | undefined {
-    const systemTileObj: GameObject | undefined = this.getSystemTileObj();
-    if (!systemTileObj) {
-      return undefined;
-    }
-    const globalPosition: Vector =
-      systemTileObj.localPositionToWorld(localPosition);
-    return globalPosition;
   }
 
   /**
@@ -291,7 +266,25 @@ export class System {
    * @returns
    */
   getSource(): string {
-    return this._params.source;
+    return this._source;
+  }
+
+  /**
+   * Get the system tile NSID.
+   *
+   * @returns {string}
+   */
+  getSystemTileNsid(): string {
+    return `tile.system:${this._source}/${this._params.tile}`;
+  }
+
+  /**
+   * Get the system tile number.
+   *
+   * @returns
+   */
+  getSystemTileNumber(): number {
+    return this._params.tile;
   }
 
   /**
@@ -319,15 +312,6 @@ export class System {
    */
   getSystemTileObjId(): string | undefined {
     return this._systemTileObjId;
-  }
-
-  /**
-   * Get the system tile (string so homebrew can use short prefix).
-   *
-   * @returns
-   */
-  getTileNumber(): number {
-    return this._params.tile;
   }
 
   /**
@@ -421,5 +405,37 @@ export class System {
   setSystemTileObjId(systemObjId: string | undefined): this {
     this._systemTileObjId = systemObjId;
     return this;
+  }
+
+  /**
+   * Transform a system tile local position to a global position.
+   *
+   * @param localPosition
+   * @returns
+   */
+  localPositionToWorld(localPosition: Vector): Vector | undefined {
+    const systemTileObj: GameObject | undefined = this.getSystemTileObj();
+    if (!systemTileObj) {
+      return undefined;
+    }
+    const globalPosition: Vector =
+      systemTileObj.localPositionToWorld(localPosition);
+    return globalPosition;
+  }
+
+  /**
+   * Transorm a global position to a system tile local position.
+   *
+   * @param globalPosition
+   * @returns
+   */
+  worldPositionToLocal(globalPosition: Vector): Vector | undefined {
+    const systemTileObj: GameObject | undefined = this.getSystemTileObj();
+    if (!systemTileObj) {
+      return undefined;
+    }
+    const localPosition: Vector =
+      systemTileObj.worldPositionToLocal(globalPosition);
+    return localPosition;
   }
 }

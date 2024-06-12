@@ -1,14 +1,15 @@
 import { z } from "zod";
 import {
   LocalPositionSchema,
+  NsidNameSchema,
   TechSchema,
   TraitSchema,
 } from "./basic-types-schema";
 
 export const PlanetSchema = z
   .object({
-    name: z.string(),
-    cardNsid: z.string(),
+    name: z.string().min(1),
+    nsidName: NsidNameSchema, // card NSID "card.planet:${source}/${nsidName}"
     localPosition: LocalPositionSchema.optional(),
     radius: z.number().optional(),
     influence: z.number().optional(),
@@ -16,7 +17,7 @@ export const PlanetSchema = z
     techs: z.array(TechSchema).optional(),
     traits: z.array(TraitSchema).optional(),
     isLegendary: z.boolean().optional(),
-    legendaryCardNsid: z.string().optional(),
+    legendaryNsidName: NsidNameSchema.optional(), // card NSID "card.legendary_planet:${source}/${legendaryNsidName}"
   })
   .strict()
   .readonly();

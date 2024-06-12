@@ -1,5 +1,4 @@
 import { GlobalInit, Hex, HEX_LAYOUT_POINTY, IGlobal } from "ttpg-darrell";
-import { SYSTEM_DATA } from "../lib/system-lib/data/system.data";
 import { SystemRegistry } from "../lib/system-lib/registry/system-registry";
 
 export class TI4Class {
@@ -7,9 +6,7 @@ export class TI4Class {
 
   // Libraries.
   hex: Hex = new Hex(HEX_LAYOUT_POINTY, 5.77735 * 1.5);
-  systemRegistry: SystemRegistry = new SystemRegistry().loadOrThrow(
-    SYSTEM_DATA
-  );
+  systemRegistry: SystemRegistry = new SystemRegistry().loadDefaultData();
 }
 
 // Place "TI4" in the global namespace.

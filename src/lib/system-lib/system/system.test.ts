@@ -5,12 +5,29 @@ import { SystemSchemaType } from "../schema/system-schema";
 import { SystemAttachment } from "../system-attachment/system-attachment";
 import { Planet } from "../planet/planet";
 
+it("constructor", () => {
+  const params: SystemSchemaType = {
+    tile: 1,
+  };
+  const system = new System(params, "my-source");
+  expect(system.getSystemTileNumber()).toBe(1);
+});
+
+it("constructor (invalid params)", () => {
+  const params: SystemSchemaType = {
+    tile: 1,
+    planets: [{ name: "", nsidName: "@@invalid??" }],
+  };
+  expect(() => {
+    new System(params, "my-source");
+  }).toThrow();
+});
+
 it("setSystemTileObjId", () => {
   const params: SystemSchemaType = {
     tile: 1,
-    source: "my-source",
   };
-  const system = new System(params);
+  const system = new System(params, "my-source");
   expect(system.getSystemTileObjId()).toBeUndefined();
 
   system.setSystemTileObjId("my-id");
@@ -20,9 +37,8 @@ it("setSystemTileObjId", () => {
 it("worldPositionToLocal", () => {
   const params: SystemSchemaType = {
     tile: 1,
-    source: "my-source",
   };
-  const system = new System(params);
+  const system = new System(params, "my-source");
   const globalPosition = new Vector(1, 2, 3);
   expect(system.worldPositionToLocal(globalPosition)).toBeUndefined();
 
@@ -40,9 +56,8 @@ it("worldPositionToLocal", () => {
 it("localPositionToWorld", () => {
   const params: SystemSchemaType = {
     tile: 1,
-    source: "my-source",
   };
-  const system = new System(params);
+  const system = new System(params, "my-source");
   const localPosition = new Vector(1, 2, 3);
   expect(system.localPositionToWorld(localPosition)).toBeUndefined();
 
@@ -60,18 +75,24 @@ it("localPositionToWorld", () => {
 it("getSource", () => {
   const params: SystemSchemaType = {
     tile: 1,
-    source: "my-source",
   };
-  const system = new System(params);
+  const system = new System(params, "my-source");
   expect(system.getSource()).toBe("my-source");
+});
+
+it("getSystemTileNsid", () => {
+  const params: SystemSchemaType = {
+    tile: 1,
+  };
+  const system = new System(params, "my-source");
+  expect(system.getSystemTileNsid()).toBe("tile.system:my-source/1");
 });
 
 it("getSystemTileObj (valid)", () => {
   const params: SystemSchemaType = {
     tile: 1,
-    source: "my-source",
   };
-  const system = new System(params);
+  const system = new System(params, "my-source");
   expect(system.getSystemTileObj()).toBeUndefined();
 
   const systemTileObj = new MockGameObject({
@@ -84,9 +105,8 @@ it("getSystemTileObj (valid)", () => {
 it("getSystemTileObj (invalid object)", () => {
   const params: SystemSchemaType = {
     tile: 1,
-    source: "my-source",
   };
-  const system = new System(params);
+  const system = new System(params, "my-source");
   expect(system.getSystemTileObj()).toBeUndefined();
 
   const systemTileObj = new MockGameObject({
@@ -102,9 +122,8 @@ it("getSystemTileObj (invalid object)", () => {
 it("getSystemTileObj (invalid id)", () => {
   const params: SystemSchemaType = {
     tile: 1,
-    source: "my-source",
   };
-  const system = new System(params);
+  const system = new System(params, "my-source");
   expect(system.getSystemTileObj()).toBeUndefined();
 
   system.setSystemTileObjId("no-such-id");
@@ -112,59 +131,71 @@ it("getSystemTileObj (invalid id)", () => {
 });
 
 it("attachment management", () => {
-  const system = new System({
-    tile: 1,
-    source: "my-source",
-  });
-  const attachment = new SystemAttachment({
-    name: "my-name",
-    nsid: "my-nsid",
-  });
-  expect(system.hasAttachment("my-nsid")).toBe(false);
+  const system = new System(
+    {
+      tile: 1,
+    },
+    "my-source"
+  );
+  const attachment = new SystemAttachment(
+    {
+      name: "my-name",
+      nsidName: "my-attachment-nsid-name",
+    },
+    "my-source"
+  );
+  const attachmentNsid: string = attachment.getNsid();
+  expect(system.hasAttachment(attachmentNsid)).toBe(false);
 
   system.addAttachment(attachment);
-  expect(system.hasAttachment("my-nsid")).toBe(true);
+  expect(system.hasAttachment(attachmentNsid)).toBe(true);
 
-  system.delAttachment("my-nsid");
-  expect(system.hasAttachment("my-nsid")).toBe(false);
+  system.delAttachment(attachmentNsid);
+  expect(system.hasAttachment(attachmentNsid)).toBe(false);
 });
 
 it("getAnomalies", () => {
-  const system = new System({
-    tile: 1,
-    source: "my-source",
-
-    anomalies: ["asteroid_field"],
-  });
-  const attachment = new SystemAttachment({
-    name: "my-name",
-    nsid: "my-nsid",
-    anomalies: ["gravity_rift"],
-  });
+  const system = new System(
+    {
+      tile: 1,
+      anomalies: ["asteroid_field"],
+    },
+    "my-source"
+  );
+  const attachment = new SystemAttachment(
+    {
+      name: "my-name",
+      nsidName: "my-nsid-name",
+      anomalies: ["gravity_rift"],
+    },
+    "my-source"
+  );
   system.addAttachment(attachment);
   expect(system.getAnomalies()).toEqual(["asteroid_field", "gravity_rift"]);
 });
 
 it("getImg", () => {
-  const system = new System({
-    tile: 1,
-    source: "my-source",
-
-    img: "my-img",
-    imgPackageId: "my-package-id",
-  });
+  const system = new System(
+    {
+      tile: 1,
+      img: "my-img",
+      imgPackageId: "my-package-id",
+    },
+    "my-source"
+  );
   expect(system.getImg()).toBe("my-img:my-package-id");
 });
 
 it("getImg (face down)", () => {
-  const system = new System({
-    tile: 1,
-    source: "my-source",
-
-    img: "my-img",
-    imgFaceDown: "my-img-face-down",
-    imgPackageId: "my-package-id",
-  });
+  const system = new System(
+    {
+      tile: 1,
+      img: "my-img",
+      imgFaceDown: "my-img-face-down",
+      imgPackageId: "my-package-id",
+    },
+    "my-source"
+  );
   const systemTile: GameObject = new MockGameObject({
     rotation: [0, 0, 180],
   });
@@ -173,29 +204,34 @@ it("getImg (face down)", () => {
 });
 
 it("getImg (no package id)", () => {
-  const system = new System({
-    tile: 1,
-    source: "my-source",
-
-    img: "my-img",
-  });
+  const system = new System(
+    {
+      tile: 1,
+      img: "my-img",
+    },
+    "my-source"
+  );
   expect(system.getImg()).toBe(`my-img:${refPackageId}`);
 });
 
 it("getImg (none)", () => {
-  const system = new System({
-    tile: 1,
-    source: "my-source",
-  });
+  const system = new System(
+    {
+      tile: 1,
+    },
+    "my-source"
+  );
   expect(system.getImg()).toBeUndefined();
 });
 
 it("getPlanetClosest", () => {
-  const system = new System({
-    tile: 1,
-    source: "my-source",
-    planets: [{ name: "planet-1", cardNsid: "my-card-nsid-1" }],
-  });
+  const system = new System(
+    {
+      tile: 1,
+      planets: [{ name: "planet-1", nsidName: "my-nsid-name" }],
+    },
+    "my-source"
+  );
   let planet: Planet | undefined;
 
   // No system tile obj.
@@ -214,21 +250,25 @@ it("getPlanetClosest", () => {
 });
 
 it("getPlanetClosest (no planets)", () => {
-  const system = new System({
-    tile: 1,
-    source: "my-source",
-  });
+  const system = new System(
+    {
+      tile: 1,
+    },
+    "my-source"
+  );
   const systemTile: GameObject = new MockGameObject();
   system.setSystemTileObjId(systemTile.getId()); // must have a tile
   expect(system.getPlanetClosest(new Vector(0, 0, 0))).toBeUndefined();
 });
 
 it("getPlanetExact", () => {
-  const system = new System({
-    tile: 1,
-    source: "my-source",
-    planets: [{ name: "planet-1", cardNsid: "my-card-nsid-1" }],
-  });
+  const system = new System(
+    {
+      tile: 1,
+      planets: [{ name: "planet-1", nsidName: "my-nsid-name" }],
+    },
+    "my-source"
+  );
   let planet: Planet | undefined;
 
   // No system tile obj.
@@ -247,29 +287,36 @@ it("getPlanetExact", () => {
 });
 
 it("getPlanetClosest (no planets)", () => {
-  const system = new System({
-    tile: 1,
-    source: "my-source",
-  });
+  const system = new System(
+    {
+      tile: 1,
+    },
+    "my-source"
+  );
   const systemTile: GameObject = new MockGameObject();
   system.setSystemTileObjId(systemTile.getId()); // must have a tile
   expect(system.getPlanetExact(new Vector(0, 0, 0))).toBeUndefined();
 });
 
 it("getPlanets", () => {
-  const system = new System({
-    tile: 1,
-    source: "my-source",
-    planets: [
-      { name: "planet-1", cardNsid: "my-card-nsid-1" },
-      { name: "planet-2", cardNsid: "my-card-nsid-2" },
-    ],
-  });
-  const attachment = new SystemAttachment({
-    name: "attachment-1",
-    nsid: "attachment-1-nsid",
-    planets: [{ name: "planet-3", cardNsid: "my-card-nsid" }],
-  });
+  const system = new System(
+    {
+      tile: 1,
+      planets: [
+        { name: "planet-1", nsidName: "my-nsid-name-1" },
+        { name: "planet-2", nsidName: "my-nsid-name-2" },
+      ],
+    },
+    "my-source"
+  );
+  const attachment = new SystemAttachment(
+    {
+      name: "attachment-1",
+      nsidName: "attachment-1-nsid",
+      planets: [{ name: "planet-3", nsidName: "my-nsid-name" }],
+    },
+    "my-source"
+  );
   system.addAttachment(attachment);
   expect(system.getPlanets().map((p) => p.getName())).toEqual([
     "planet-1",
@@ -278,49 +325,48 @@ it("getPlanets", () => {
   ]);
 });
 
-it("getTileNumber", () => {
-  const system = new System({
-    tile: 1,
-    source: "my-source",
-  });
-  expect(system.getTileNumber()).toBe(1);
+it("getSystemTileNumber", () => {
+  const system = new System({ tile: 1 }, "my-source");
+  expect(system.getSystemTileNumber()).toBe(1);
 });
 
 it("getWormholes", () => {
-  const system = new System({
-    tile: 1,
-    source: "my-source",
-
-    wormholes: ["alpha"],
-  });
-  const attachment = new SystemAttachment({
-    name: "attachment-1",
-    nsid: "attachment-1-nsid",
-    wormholes: ["beta"],
-  });
+  const system = new System({ tile: 1, wormholes: ["alpha"] }, "my-source");
+  const attachment = new SystemAttachment(
+    {
+      name: "attachment-1",
+      nsidName: "attachment-1-nsid",
+      wormholes: ["beta"],
+    },
+    "my-source"
+  );
   system.addAttachment(attachment);
 
   expect(system.getWormholes()).toEqual(["alpha", "beta"]);
 });
 
 it("getWormholes face down", () => {
-  const system = new System({
-    tile: 1,
-    source: "my-source",
-
-    wormholesWithPositions: [
-      { wormhole: "alpha", localPosition: { x: 1, y: 2 } },
-    ],
-    wormholesFaceDown: ["gamma"],
-    wormholesWithPositionsFaceDown: [
-      { wormhole: "delta", localPosition: { x: 1, y: 2 } },
-    ],
-  });
-  const attachment = new SystemAttachment({
-    name: "attachment-1",
-    nsid: "attachment-1-nsid",
-    wormholes: ["beta"],
-  });
+  const system = new System(
+    {
+      tile: 1,
+      wormholesWithPositions: [
+        { wormhole: "alpha", localPosition: { x: 1, y: 2 } },
+      ],
+      wormholesFaceDown: ["gamma"],
+      wormholesWithPositionsFaceDown: [
+        { wormhole: "delta", localPosition: { x: 1, y: 2 } },
+      ],
+    },
+    "my-source"
+  );
+  const attachment = new SystemAttachment(
+    {
+      name: "attachment-1",
+      nsidName: "attachment-1-nsid",
+      wormholes: ["beta"],
+    },
+    "my-source"
+  );
   system.addAttachment(attachment);
 
   // Before attaching system tile.
@@ -335,17 +381,21 @@ it("getWormholes face down", () => {
 });
 
 it("getWormholesWithGlobalPosition", () => {
-  const system = new System({
-    tile: 1,
-    source: "my-source",
-
-    wormholes: ["alpha"],
-  });
-  const attachment = new SystemAttachment({
-    name: "attachment-1",
-    nsid: "attachment-1-nsid",
-    wormholes: ["beta"],
-  });
+  const system = new System(
+    {
+      tile: 1,
+      wormholes: ["alpha"],
+    },
+    "my-source"
+  );
+  const attachment = new SystemAttachment(
+    {
+      name: "attachment-1",
+      nsidName: "attachment-1-nsid",
+      wormholes: ["beta"],
+    },
+    "my-source"
+  );
   system.addAttachment(attachment);
 
   let out: Array<WormholeWithGlobalPosition>;
@@ -374,37 +424,43 @@ it("getWormholesWithGlobalPosition", () => {
 });
 
 it("isHome", () => {
-  const system = new System({
-    tile: 1,
-    source: "my-source",
-
-    isHome: true,
-  });
+  const system = new System(
+    {
+      tile: 1,
+      isHome: true,
+    },
+    "my-source"
+  );
   expect(system.isHome()).toBe(true);
 });
 
 it("isHome (default)", () => {
-  const system = new System({
-    tile: 1,
-    source: "my-source",
-  });
+  const system = new System(
+    {
+      tile: 1,
+    },
+    "my-source"
+  );
   expect(system.isHome()).toBe(false);
 });
 
 it("isHyperlane", () => {
-  const system = new System({
-    tile: 1,
-    source: "my-source",
-
-    isHyperlane: true,
-  });
+  const system = new System(
+    {
+      tile: 1,
+      isHyperlane: true,
+    },
+    "my-source"
+  );
   expect(system.isHyperlane()).toBe(true);
 });
 
 it("isHyperlane (default)", () => {
-  const system = new System({
-    tile: 1,
-    source: "my-source",
-  });
+  const system = new System(
+    {
+      tile: 1,
+    },
+    "my-source"
+  );
   expect(system.isHyperlane()).toBe(false);
 });

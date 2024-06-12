@@ -34,6 +34,13 @@ export const LocalPositionSchema = z
   .readonly();
 export type LocalPositionSchemaType = z.infer<typeof LocalPositionSchema>;
 
+export const NsidNameSchema = z
+  .string()
+  .min(1)
+  .refine((value: string) => /^[a-z0-9\._-]+$/.test(value))
+  .readonly();
+export type NsidNameSchemaType = z.infer<typeof NsidNameSchema>;
+
 export const TechSchema = z.enum(["blue", "green", "red", "yellow"]).readonly();
 export type TechSchemaType = z.infer<typeof TechSchema>;
 

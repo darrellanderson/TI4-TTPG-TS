@@ -1,11 +1,11 @@
 import { z } from "zod";
-import { TechSchema, TraitSchema } from "./basic-types-schema";
+import { NsidNameSchema, TechSchema, TraitSchema } from "./basic-types-schema";
 import exp from "constants";
 
 export const PlanetAttachmentSchema = z
   .object({
     name: z.string(),
-    nsid: z.string(),
+    nsidName: NsidNameSchema, // NSID "token.attachment:${source}/${nsidName}"
 
     img: z.string().optional(),
     imgFaceDown: z.string().optional(),
@@ -20,7 +20,7 @@ export const PlanetAttachmentSchema = z
     traits: z.array(TraitSchema).optional(),
     traitsFaceDown: z.array(TraitSchema).optional(),
     isLegendary: z.boolean().optional(),
-    legendaryCardNsid: z.string().optional(),
+    legendaryNsidName: z.string().optional(),
     isDestroyPlanet: z.boolean().optional(),
   })
   .strict()

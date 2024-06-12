@@ -1,7 +1,11 @@
-import { Vector } from "ttpg-mock";
-import { PlanetSchemaType } from "../schema/planet-schema";
+import { Vector } from "@tabletop-playground/api";
+import { PlanetSchema, PlanetSchemaType } from "../schema/planet-schema";
 import { PlanetAttachment } from "../planet-attachment/planet-attachment";
 import { SystemDefaults } from "../data/system-defaults";
+import {
+  NsidNameSchema,
+  NsidNameSchemaType,
+} from "../schema/basic-types-schema";
 
 /**
  * Represent a single planet.
@@ -13,11 +17,21 @@ import { SystemDefaults } from "../data/system-defaults";
  */
 export class Planet {
   private readonly _params: PlanetSchemaType;
+  private readonly _source: string;
   private readonly _attachments: Array<PlanetAttachment> = [];
   private _localPosition: Vector = new Vector(0, 0, 0);
 
-  constructor(planetSchemaType: PlanetSchemaType) {
-    this._params = planetSchemaType;
+  constructor(params: PlanetSchemaType, source: string) {
+    try {
+      PlanetSchema.parse(params); // validate the schema
+      NsidNameSchema.parse(source); // validate the schema
+    } catch (e) {
+      const msg = `error: ${e.message}\nparsing: ${JSON.stringify(params)}`;
+      throw new Error(msg);
+    }
+
+    this._params = params;
+    this._source = source;
   }
 
   /**
@@ -81,8 +95,9 @@ export class Planet {
    */
   getLegendaryCardNsids(): Array<string> {
     const result: Array<string> = [];
-    if (this._params.legendaryCardNsid) {
-      result.push(this._params.legendaryCardNsid);
+    if (this._params.legendaryNsidName) {
+      const nsid: string = `card.legendary_planet:${this._source}/${this._params.legendaryNsidName}`;
+      result.push(nsid);
     }
     for (const attachment of this._attachments) {
       const nsid = attachment.getLegendaryCardNsid();
@@ -109,6 +124,15 @@ export class Planet {
    */
   getLocalPosition(): Vector {
     return this._localPosition.clone();
+  }
+
+  /**
+   * Get planet card NSID.
+   *
+   * @returns {string} The NSID of the planet card.
+   */
+  getPlanetCardNsid(): string {
+    return `card.planet:${this._source}/${this._params.nsidName}`;
   }
 
   /**

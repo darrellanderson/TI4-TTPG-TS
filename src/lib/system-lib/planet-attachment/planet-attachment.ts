@@ -5,7 +5,11 @@ import {
   world,
 } from "@tabletop-playground/api";
 import { Facing } from "ttpg-darrell";
-import { PlanetAttachmentSchemaType } from "../schema/planet-attachment-schema";
+import {
+  PlanetAttachmentSchema,
+  PlanetAttachmentSchemaType,
+} from "../schema/planet-attachment-schema";
+import { NsidNameSchema } from "../schema/basic-types-schema";
 
 /**
  * A planet attachment is normally a token placed on a planet to add attributes
@@ -16,6 +20,7 @@ import { PlanetAttachmentSchemaType } from "../schema/planet-attachment-schema";
  */
 export class PlanetAttachment {
   private readonly _params: PlanetAttachmentSchemaType;
+  private readonly _source: string;
   private _attachmentObjId: string | undefined;
 
   /**
@@ -24,9 +29,17 @@ export class PlanetAttachment {
    *
    * @param {PlanetAttachmentSchemaType} params - The planet attachment parameters.
    */
-  constructor(params: PlanetAttachmentSchemaType) {
+  constructor(params: PlanetAttachmentSchemaType, source: string) {
+    try {
+      PlanetAttachmentSchema.parse(params); // validate the schema
+      NsidNameSchema.parse(source); // validate the schema
+    } catch (e) {
+      const msg = `error: ${e.message}\nparsing: ${JSON.stringify(params)}`;
+      throw new Error(msg);
+    }
+
     this._params = params;
-    Object.freeze(this._params);
+    this._source = source;
   }
 
   /**
@@ -78,7 +91,7 @@ export class PlanetAttachment {
    * @returns
    */
   getLegendaryCardNsid(): string | undefined {
-    return this._params.legendaryCardNsid;
+    return `card.legendary_planet:${this._source}/${this._params.legendaryNsidName}`;
   }
 
   /**
@@ -96,7 +109,7 @@ export class PlanetAttachment {
    * @returns
    */
   public getNsid(): string {
-    return this._params.nsid;
+    return `token.attachment:${this._source}/${this._params.nsidName}`;
   }
 
   /**

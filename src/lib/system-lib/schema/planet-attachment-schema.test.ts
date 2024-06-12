@@ -3,7 +3,7 @@ import { PlanetAttachmentSchema } from "./planet-attachment-schema";
 it("PlanetAttachmentSchema", () => {
   const data = {
     name: "my-name",
-    nsid: "my-nsid",
+    nsidName: "my-nsid-name",
     img: "my-img",
     imgPackageId: "my-img-package-id",
     influence: 1,
@@ -11,7 +11,7 @@ it("PlanetAttachmentSchema", () => {
     techs: ["red", "blue"],
     traits: ["cultural", "industrial"],
     isLegendary: true,
-    legendaryCardNsid: "legendary-card-nsid",
+    legendaryNsidName: "legendary-nsid-name",
     isDestroyPlanet: true,
   };
   const parsed = PlanetAttachmentSchema.parse(data);

@@ -1,4 +1,4 @@
-import { Vector } from "ttpg-mock";
+import { Vector } from "@tabletop-playground/api";
 
 export class SystemDefaults {
   // Planet radius relative to system tile.
