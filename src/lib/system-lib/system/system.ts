@@ -4,7 +4,7 @@ import {
   refPackageId,
   world,
 } from "@tabletop-playground/api";
-import { Facing } from "ttpg-darrell";
+import { Facing, NSID, ParsedNSID } from "ttpg-darrell";
 import { SystemSchema, SystemSchemaType } from "../schema/system-schema";
 import { Planet } from "../planet/planet";
 import { SystemAttachment } from "../system-attachment/system-attachment";
@@ -39,6 +39,21 @@ export class System {
     | undefined;
   private readonly _attachments: Array<SystemAttachment> = [];
   private _systemTileObjId: string | undefined = undefined;
+
+  public static nsidToSystemTileNumber(nsid: string): number | undefined {
+    if (nsid.startsWith("tile.system:")) {
+      const parsed: ParsedNSID | undefined = NSID.parse(nsid);
+      if (parsed) {
+        const name: string | undefined = parsed.nameParts[0];
+        if (name !== undefined) {
+          const systemTileNumber: number = Number.parseInt(name);
+          if (!Number.isNaN(systemTileNumber)) {
+            return systemTileNumber;
+          }
+        }
+      }
+    }
+  }
 
   constructor(params: SystemSchemaType, source: string) {
     try {

@@ -5,6 +5,26 @@ import { SystemSchemaType } from "../schema/system-schema";
 import { SystemAttachment } from "../system-attachment/system-attachment";
 import { Planet } from "../planet/planet";
 
+it("static nsidToSystemTileNumber", () => {
+  expect(System.nsidToSystemTileNumber("tile.system:my-source/1")).toBe(1);
+});
+
+it("static nsidToSystemTileNumber (invalid prefix)", () => {
+  expect(System.nsidToSystemTileNumber("invalid-prefix")).toBeUndefined();
+});
+
+it("static nsidToSystemTileNumber (good prefix, nsid parse fail)", () => {
+  expect(System.nsidToSystemTileNumber("tile.system:@@@@")).toBeUndefined();
+});
+
+it("static nsidToSystemTileNumber (name not a number)", () => {
+  expect(System.nsidToSystemTileNumber("tile.system:base/")).toBeUndefined();
+});
+
+it("static nsidToSystemTileNumber (name not a number)", () => {
+  expect(System.nsidToSystemTileNumber("tile.system:base/x")).toBeUndefined();
+});
+
 it("constructor", () => {
   const params: SystemSchemaType = {
     tile: 1,

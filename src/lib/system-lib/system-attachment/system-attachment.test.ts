@@ -90,7 +90,7 @@ it("planets", () => {
     "my-source"
   );
   expect(attachment.getPlanets().length).toEqual(1);
-  expect(attachment.getPlanets()[0].getName()).toEqual("my-planet-name");
+  expect(attachment.getPlanets()[0]?.getName()).toEqual("my-planet-name");
 });
 
 it("wormholes empty", () => {

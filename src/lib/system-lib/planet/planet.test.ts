@@ -390,14 +390,14 @@ it("setLocalPositionFromStandard", () => {
   entityIndex = 0;
   entityCount = 1;
   isHome = true;
-  vs = SystemDefaults.HOME_PLANET_POS[`POS_1_OF_1`].toString();
+  vs = SystemDefaults.HOME_PLANET_POS[`POS_1_OF_1`]?.toString() ?? "";
   planet.setLocalPositionFromStandard(entityIndex, entityCount, isHome);
   expect(planet.getLocalPosition().toString()).toEqual(vs);
 
   entityIndex = 0;
   entityCount = 1;
   isHome = false;
-  vs = SystemDefaults.PLANET_POS[`POS_1_OF_1`].toString();
+  vs = SystemDefaults.PLANET_POS[`POS_1_OF_1`]?.toString() ?? "";
   planet.setLocalPositionFromStandard(entityIndex, entityCount, isHome);
   expect(planet.getLocalPosition().toString()).toEqual(vs);
 });
