@@ -37,8 +37,7 @@ export const SystemSchema = z
     planets: z.array(PlanetSchema).optional(),
 
     // System tile image, PNG transparent square, fill to left/right edge.
-    img: z.string().optional(),
-    imgFaceDown: z.string().optional(),
+    imgFaceDown: z.boolean().optional(), // has a custom back image
     imgPackageId: z.string().optional(),
   })
   .strict()

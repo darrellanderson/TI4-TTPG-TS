@@ -198,20 +198,20 @@ it("getImg", () => {
   const system = new System(
     {
       tile: 1,
-      img: "my-img",
       imgPackageId: "my-package-id",
     },
     "my-source"
   );
-  expect(system.getImg()).toBe("my-img:my-package-id");
+  expect(system.getImg()).toBe(
+    "tile/system/my-source/tile-001.png:my-package-id"
+  );
 });
 
 it("getImg (face down)", () => {
   const system = new System(
     {
       tile: 1,
-      img: "my-img",
-      imgFaceDown: "my-img-face-down",
+      imgFaceDown: true,
       imgPackageId: "my-package-id",
     },
     "my-source"
@@ -220,28 +220,21 @@ it("getImg (face down)", () => {
     rotation: [0, 0, 180],
   });
   system.setSystemTileObjId(systemTile.getId());
-  expect(system.getImg()).toBe("my-img-face-down:my-package-id");
+  expect(system.getImg()).toBe(
+    "tile/system/my-source/tile-001.back.png:my-package-id"
+  );
 });
 
 it("getImg (no package id)", () => {
   const system = new System(
     {
       tile: 1,
-      img: "my-img",
     },
     "my-source"
   );
-  expect(system.getImg()).toBe(`my-img:${refPackageId}`);
-});
-
-it("getImg (none)", () => {
-  const system = new System(
-    {
-      tile: 1,
-    },
-    "my-source"
+  expect(system.getImg()).toBe(
+    `tile/system/my-source/tile-001.png:${refPackageId}`
   );
-  expect(system.getImg()).toBeUndefined();
 });
 
 it("getPlanetClosest", () => {

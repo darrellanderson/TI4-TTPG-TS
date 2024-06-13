@@ -88,7 +88,7 @@ export class SystemRegistry {
         throw new Error(msg);
       }
 
-      // Duplicates not allowed.
+      // Tile numbers cannot be reused.
       const tileNumber: number = systemSchemaType.tile;
       if (this._systemTileNumberToSchemaAndSource.has(tileNumber)) {
         throw new Error(`Duplicate system tile number: ${tileNumber}`);

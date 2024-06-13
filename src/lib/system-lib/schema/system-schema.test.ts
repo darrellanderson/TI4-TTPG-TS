@@ -7,7 +7,7 @@ it("SystemSchema", () => {
     isHyperlane: true,
     anomalies: ["asteroid_field", "gravity_rift"],
     wormholes: ["alpha", "beta"],
-    img: "my-img",
+    imgFaceDown: true,
     imgPackageId: "my-img-package-id",
   };
   const parsed = SystemSchema.parse(data);

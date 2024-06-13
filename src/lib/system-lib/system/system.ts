@@ -189,20 +189,31 @@ export class System {
   }
 
   /**
-   * Get the token image, if any.
+   * Get the system tile image, if any.  This is the "UI" version, a square PNG
+   * with the system image centered vertically and fully filling horizontally.
    * Image is in the form of "image:packageId".
    *
-   * @returns {string | undefined} The image of the system attachment.
+   * @returns {string} The image of the system attachment.
    */
-  getImg(): string | undefined {
-    let img: string | undefined = undefined;
-    if (this._params.imgFaceDown && !this.isSystemFaceUp()) {
-      img = this._params.imgFaceDown;
-    } else if (this._params.img) {
-      img = this._params.img;
+  getImg(): string {
+    const useBack: boolean =
+      (this._params.imgFaceDown && !this.isSystemFaceUp()) || false;
+    const filename: string = `tile-${this._params.tile
+      .toString()
+      .padStart(3, "0")}${useBack ? ".back" : ""}.png`;
+
+    let img: string = "tile/system";
+
+    // Homebrew puts source first to group all related files.
+    // "Official" puts source deeper in the path to collect in a single
+    // folder for easier Object Library usage.
+    if (this._source.startsWith("homebrew")) {
+      img = `${this._source}/${img}/${filename}`;
     } else {
-      return undefined;
+      img = `${img}/${this._source}/${filename}`;
     }
+
+    // Attach package id.
     const packageId: string = this._params.imgPackageId ?? refPackageId;
     return `${img}:${packageId}`;
   }
