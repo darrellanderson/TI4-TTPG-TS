@@ -1,8 +1,9 @@
 import { GameObject, globalEvents, world } from "@tabletop-playground/api";
-import { SystemSchemaType } from "../schema/system-schema";
+import { SystemSchema, SystemSchemaType } from "../schema/system-schema";
 import { System } from "../system/system";
 import { NSID } from "ttpg-darrell";
 import { SOURCE_TO_SYSTEM_DATA } from "../data/system.data";
+import { NsidNameSchema } from "../schema/basic-types-schema";
 
 type SchemaAndSource = {
   schema: SystemSchemaType;
@@ -23,25 +24,29 @@ export class SystemRegistry {
   // so create a separate system object for each.
   private readonly _systemTileObjIdToSystem: Map<string, System> = new Map();
 
-  // TODO WORK IN PROGRESS
-
   private readonly _onObjectCreatedHandler = (obj: GameObject): void => {
     const nsid: string = NSID.get(obj);
-    const system: System | undefined = this.getBySystemTileNsid(nsid);
-    if (system) {
-      const oldObjId: string | undefined = system.getSystemTileObjId();
-      if (oldObjId) {
-        // TODO duplicate, what to do?
+    const systemTileNumber: number | undefined =
+      System.nsidToSystemTileNumber(nsid);
+    if (systemTileNumber !== undefined) {
+      const schemaAndSource: SchemaAndSource | undefined =
+        this._systemTileNumberToSchemaAndSource.get(systemTileNumber);
+      if (schemaAndSource) {
+        // Register a fresh system object for this system tile object.
+        const system: System = new System(
+          schemaAndSource.schema,
+          schemaAndSource.source
+        );
+        system.setSystemTileObjId(obj.getId());
+        this._systemTileObjIdToSystem.set(obj.getId(), system);
       }
-      system.setSystemTileObjId(obj.getId());
     }
   };
 
   private readonly _onObjectDestroyedHandler = (obj: GameObject): void => {
-    const nsid: string = NSID.get(obj);
-    const system: System | undefined = this.getBySystemTileNsid(nsid);
-    if (system) {
-      system.setSystemTileObjId(undefined);
+    const objId: string = obj.getId();
+    if (this._systemTileObjIdToSystem.has(objId)) {
+      this._systemTileObjIdToSystem.delete(objId);
     }
   };
 
@@ -64,28 +69,47 @@ export class SystemRegistry {
   public load(systemSchemas: Array<SystemSchemaType>, source: string): this {
     // Add systems.
     for (const systemSchema of systemSchemas) {
-      // Create system (throws if invalid schema).
-      const system: System = new System(systemSchema, source);
-      const nsid: string = system.getSystemTileNsid();
-      const tileNumber: number = system.getSystemTileNumber();
+      // Validate schema (oterhwise not validated until used).
+      try {
+        SystemSchema.parse(systemSchema);
+        NsidNameSchema.parse(source);
+      } catch (e) {
+        const msg = `error: ${e.message}\nparsing: ${JSON.stringify(
+          systemSchema
+        )}`;
+        throw new Error(msg);
+      }
 
-      // Duplicates are a data error, report to console and skip this system.
-      if (this._systemTileNumberToSystem.has(tileNumber)) {
+      // Duplicates not allowed.
+      const tileNumber: number = systemSchema.tile;
+      if (this._systemTileNumberToSchemaAndSource.has(tileNumber)) {
         throw new Error(`Duplicate system tile number: ${tileNumber}`);
       }
 
       // Register system.
-      this._systemTileNsidToSystem.set(nsid, system);
-      this._systemTileNumberToSystem.set(tileNumber, system);
+      this._systemTileNumberToSchemaAndSource.set(tileNumber, {
+        schema: systemSchema,
+        source,
+      });
     }
 
     // Link (or harmlessly re-link) system tile objects.
     const skipContained: boolean = false;
     for (const obj of world.getAllObjects(skipContained)) {
       const nsid: string = NSID.get(obj);
-      const system: System | undefined = this.getBySystemTileNsid(nsid);
-      if (system) {
-        system.setSystemTileObjId(obj.getId());
+      const systemTileNumber: number | undefined =
+        System.nsidToSystemTileNumber(nsid);
+      if (systemTileNumber !== undefined) {
+        const schemaAndSource: SchemaAndSource | undefined =
+          this._systemTileNumberToSchemaAndSource.get(systemTileNumber);
+        if (schemaAndSource) {
+          const system = new System(
+            schemaAndSource.schema,
+            schemaAndSource.source
+          );
+          system.setSystemTileObjId(obj.getId());
+          this._systemTileObjIdToSystem.set(obj.getId(), system);
+        }
       }
     }
 
@@ -107,8 +131,8 @@ export class SystemRegistry {
    * @param nsid
    * @returns
    */
-  public getBySystemTileNsid(nsid: string): System | undefined {
-    return this._systemTileNsidToSystem.get(nsid);
+  public getBySystemTileObjId(nsid: string): System | undefined {
+    return this._systemTileObjIdToSystem.get(nsid);
   }
 
   /**
@@ -117,7 +141,12 @@ export class SystemRegistry {
    * @param tile
    * @returns
    */
-  public getBySystemTileNumber(tile: number): System | undefined {
-    return this._systemTileNumberToSystem.get(tile);
+  public rawBySystemTileNumber(tile: number): System | undefined {
+    const schemaAndSource: SchemaAndSource | undefined =
+      this._systemTileNumberToSchemaAndSource.get(tile);
+    if (schemaAndSource) {
+      return new System(schemaAndSource.schema, schemaAndSource.source);
+    }
+    return undefined;
   }
 }

@@ -53,6 +53,7 @@ export class System {
         }
       }
     }
+    return undefined;
   }
 
   constructor(params: SystemSchemaType, source: string) {
