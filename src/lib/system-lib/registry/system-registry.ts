@@ -19,9 +19,8 @@ export class SystemRegistry {
     SchemaAndSource
   > = new Map();
 
-  // Instantiate system objects for system tile objects.
-  // Duplicates are an "error" but we cannot prevent them,
-  // so create a separate system object for each.
+  // Instantiate per relevant game object.  There "shoud not" be duplicates,
+  // but that cannot be enforced.  If a copy exists, have a separate instance.
   private readonly _systemTileObjIdToSystem: Map<string, System> = new Map();
 
   private readonly _onObjectCreatedHandler = (obj: GameObject): void => {
@@ -66,29 +65,32 @@ export class SystemRegistry {
    * @param systems
    * @returns
    */
-  public load(systemSchemas: Array<SystemSchemaType>, source: string): this {
+  public load(
+    systemSchemaTypes: Array<SystemSchemaType>,
+    source: string
+  ): this {
     // Add systems.
-    for (const systemSchema of systemSchemas) {
+    for (const systemSchemaType of systemSchemaTypes) {
       // Validate schema (oterhwise not validated until used).
       try {
-        SystemSchema.parse(systemSchema);
+        SystemSchema.parse(systemSchemaType);
         NsidNameSchema.parse(source);
       } catch (e) {
         const msg = `error: ${e.message}\nparsing: ${JSON.stringify(
-          systemSchema
+          systemSchemaType
         )}`;
         throw new Error(msg);
       }
 
       // Duplicates not allowed.
-      const tileNumber: number = systemSchema.tile;
+      const tileNumber: number = systemSchemaType.tile;
       if (this._systemTileNumberToSchemaAndSource.has(tileNumber)) {
         throw new Error(`Duplicate system tile number: ${tileNumber}`);
       }
 
       // Register system.
       this._systemTileNumberToSchemaAndSource.set(tileNumber, {
-        schema: systemSchema,
+        schema: systemSchemaType,
         source,
       });
     }

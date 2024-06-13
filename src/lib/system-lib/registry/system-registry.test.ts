@@ -18,7 +18,7 @@ it("onObjectCreated/Destroyed", () => {
 
   obj.destroy();
   expect(registry.rawBySystemTileNumber(12)).toBeDefined();
-  expect(registry.getBySystemTileObjId("my-id")).toBeDefined();
+  expect(registry.getBySystemTileObjId("my-id")).toBeUndefined();
 
   registry.destroy();
 });
