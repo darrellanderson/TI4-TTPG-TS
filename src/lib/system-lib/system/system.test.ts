@@ -237,6 +237,18 @@ it("getImg (no package id)", () => {
   );
 });
 
+it("getImg (homebrew)", () => {
+  const system = new System(
+    {
+      tile: 1,
+    },
+    "homebrew-x"
+  );
+  expect(system.getImg()).toBe(
+    `homebrew-x/tile/system/tile-001.png:${refPackageId}`
+  );
+});
+
 it("getPlanetClosest", () => {
   const system = new System(
     {
