@@ -73,8 +73,16 @@ export class SystemAttachmentRegistry {
         )}`;
         throw new Error(msg);
       }
-    }
 
+      const attachment = new SystemAttachment(
+        systemAttachmentSchemaType,
+        source
+      );
+      this._nsidToSchemaAndSource.set(attachment.getNsid(), {
+        schema: systemAttachmentSchemaType,
+        source,
+      });
+    }
     return this;
   }
 }
