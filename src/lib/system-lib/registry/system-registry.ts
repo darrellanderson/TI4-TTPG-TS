@@ -1,4 +1,10 @@
-import { GameObject, globalEvents, world } from "@tabletop-playground/api";
+import {
+  GameObject,
+  TraceHit,
+  Vector,
+  globalEvents,
+  world,
+} from "@tabletop-playground/api";
 import { SystemSchema, SystemSchemaType } from "../schema/system-schema";
 import { System } from "../system/system";
 import { NSID } from "ttpg-darrell";
@@ -118,6 +124,11 @@ export class SystemRegistry {
     return this;
   }
 
+  /**
+   * Load the game data (base plus codices and expansions).
+   *
+   * @returns
+   */
   public loadDefaultData(): this {
     for (const [source, systemSchemas] of Object.entries(
       SOURCE_TO_SYSTEM_DATA
@@ -128,7 +139,32 @@ export class SystemRegistry {
   }
 
   /**
+   * Lookup system by position.
+   *
+   * @param pos
+   * @returns
+   */
+  getByPosition(pos: Vector): System | undefined {
+    const z = world.getTableHeight(pos);
+    const start = new Vector(pos.x, pos.y, z + 10);
+    const end = new Vector(pos.x, pos.y, z - 10);
+    const hits: Array<TraceHit> = world.lineTrace(start, end);
+    for (const hit of hits) {
+      if (hit.object.isValid()) {
+        const objId = hit.object.getId();
+        const system = this.getBySystemTileObjId(objId);
+        if (system) {
+          return system;
+        }
+      }
+    }
+
+    return undefined;
+  }
+
+  /**
    * Lookup system by system tile object nsid.
+   * Duplicate tiles for the "same" system have separate System instances.
    *
    * @param nsid
    * @returns

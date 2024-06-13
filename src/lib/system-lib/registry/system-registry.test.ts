@@ -1,5 +1,6 @@
 import { MockGameObject } from "ttpg-mock";
 import { SystemRegistry } from "./system-registry";
+import { Vector, world } from "@tabletop-playground/api";
 
 it("constructor", () => {
   new SystemRegistry();
@@ -77,5 +78,24 @@ it("loadDefaultData", () => {
   expect(registry.rawBySystemTileNumber(12)).toBeUndefined();
   registry.loadDefaultData();
   expect(registry.rawBySystemTileNumber(12)).toBeDefined();
+  registry.destroy();
+});
+
+it("getByPosition", () => {
+  const z = world.getTableHeight();
+  const pos = new Vector(1, 2, z);
+  const registry = new SystemRegistry().load([{ tile: 12 }], "my-source");
+  expect(registry.getByPosition(pos)).toBeUndefined();
+
+  const obj = new MockGameObject({
+    id: "my-id",
+    position: pos,
+    templateMetadata: "tile.system:my-source/12",
+  });
+  expect(registry.getByPosition(pos)).toBeDefined();
+
+  obj.destroy();
+  expect(registry.getByPosition(pos)).toBeUndefined();
+
   registry.destroy();
 });
