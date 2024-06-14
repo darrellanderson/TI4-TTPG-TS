@@ -130,16 +130,16 @@ export class SystemAttachmentRegistry {
       const objIds: Array<string> =
         nsidToObjIds.get(attachment.getNsid()) ?? [];
       for (const objId of objIds) {
-        const attachment = new SystemAttachment(
-          systemAttachmentSchemaType,
-          source
-        );
-        attachment.setAttachmentObjId(objId);
-        this._attachmentObjIdToSystemAttachment.set(objId, attachment);
-
-        // Add grab/release event listeners.
         const obj: GameObject | undefined = world.getObjectById(objId);
-        if (obj) {
+        if (obj && obj.isValid()) {
+          const attachment = new SystemAttachment(
+            systemAttachmentSchemaType,
+            source
+          );
+          attachment.setAttachmentObjId(objId);
+          this._attachmentObjIdToSystemAttachment.set(objId, attachment);
+
+          // Add grab/release event listeners.
           obj.onGrab.remove(this._onGrabHandler);
           obj.onGrab.add(this._onGrabHandler);
           obj.onReleased.remove(this._onReleasedHandler);
@@ -160,7 +160,9 @@ export class SystemAttachmentRegistry {
    * @param objId
    * @returns
    */
-  public getBySystemTileObjId(objId: string): SystemAttachment | undefined {
+  public getBySystemAttachmentObjId(
+    objId: string
+  ): SystemAttachment | undefined {
     return this._attachmentObjIdToSystemAttachment.get(objId);
   }
 }

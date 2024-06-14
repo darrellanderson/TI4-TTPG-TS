@@ -3,7 +3,6 @@ import { MockGameObject } from "ttpg-mock";
 import { WormholeWithGlobalPosition } from "../system/system";
 import { SystemAttachment } from "./system-attachment";
 import { resetGlobalThisTI4 } from "../../../global/global";
-import exp from "constants";
 
 it("constructor", () => {
   const attachment = new SystemAttachment(
@@ -229,7 +228,7 @@ it("attach/detach", () => {
 
   // Link token object, necessary for position.
   const attachmentTokenObj: GameObject = new MockGameObject({
-    templateMetadata: `token.attachment:${attachmentNsid}`,
+    templateMetadata: attachmentNsid,
     position: [1, 0, 0],
   });
   attachment.setAttachmentObjId(attachmentTokenObj.getId());
