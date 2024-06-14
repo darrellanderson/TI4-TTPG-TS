@@ -1,27 +1,27 @@
 import { GameObject, globalEvents, world } from "@tabletop-playground/api";
 import { NSID } from "ttpg-darrell";
 
-import { SystemAttachment } from "../system-attachment/system-attachment";
 import { NsidNameSchema } from "../schema/basic-types-schema";
+import { PlanetAttachment } from "../planet-attachment/planet-attachment";
 import {
-  SystemAttachmentSchema,
-  SystemAttachmentSchemaType,
-} from "../schema/system-attachment-schema";
+  PlanetAttachmentSchema,
+  PlanetAttachmentSchemaType,
+} from "../schema/planet-attachment-schema";
 
 type SchemaAndSource = {
-  schema: SystemAttachmentSchemaType;
+  schema: PlanetAttachmentSchemaType;
   source: string;
 };
 
-export class SystemAttachmentRegistry {
+export class PlanetAttachmentRegistry {
   private readonly _nsidToSchemaAndSource: Map<string, SchemaAndSource> =
     new Map();
 
   // Instantiate per relevant game object.  There "shoud not" be duplicates,
   // but that cannot be enforced.  If a copy exists, have a separate instance.
-  private readonly _attachmentObjIdToSystemAttachment: Map<
+  private readonly _attachmentObjIdToPlanetAttachment: Map<
     string,
-    SystemAttachment
+    PlanetAttachment
   > = new Map();
 
   private readonly _onObjectCreatedHandler = (obj: GameObject): void => {
@@ -30,14 +30,14 @@ export class SystemAttachmentRegistry {
       this._nsidToSchemaAndSource.get(nsid);
     if (schemaAndSource) {
       // Register a fresh system object for this system tile object.
-      const systemAttachment: SystemAttachment = new SystemAttachment(
+      const planetAttachment: PlanetAttachment = new PlanetAttachment(
         schemaAndSource.schema,
         schemaAndSource.source
       );
-      systemAttachment.setAttachmentObjId(obj.getId());
-      this._attachmentObjIdToSystemAttachment.set(
+      planetAttachment.setAttachmentObjId(obj.getId());
+      this._attachmentObjIdToPlanetAttachment.set(
         obj.getId(),
-        systemAttachment
+        planetAttachment
       );
 
       // Add grab/release event listeners.
@@ -50,29 +50,19 @@ export class SystemAttachmentRegistry {
 
   private readonly _onObjectDestroyedHandler = (obj: GameObject): void => {
     const objId: string = obj.getId();
-    if (this._attachmentObjIdToSystemAttachment.has(objId)) {
-      this._attachmentObjIdToSystemAttachment.delete(objId);
+    if (this._attachmentObjIdToPlanetAttachment.has(objId)) {
+      this._attachmentObjIdToPlanetAttachment.delete(objId);
       obj.onGrab.remove(this._onGrabHandler);
       obj.onReleased.remove(this._onReleasedHandler);
     }
   };
 
   private readonly _onGrabHandler = (obj: GameObject): void => {
-    // Remove attachment from system.
-    const systemAttachment: SystemAttachment | undefined =
-      this._attachmentObjIdToSystemAttachment.get(obj.getId());
-    if (systemAttachment) {
-      systemAttachment.detach();
-    }
+    // Remove attachment from planet.
   };
 
   private readonly _onReleasedHandler = (obj: GameObject): void => {
-    // Add attachment to system.
-    const systemAttachment: SystemAttachment | undefined =
-      this._attachmentObjIdToSystemAttachment.get(obj.getId());
-    if (systemAttachment) {
-      systemAttachment.attach();
-    }
+    // Add attachment to planet.
   };
 
   constructor() {
@@ -96,7 +86,7 @@ export class SystemAttachmentRegistry {
   }
 
   public load(
-    systemAttachmentSchemaTypes: Array<SystemAttachmentSchemaType>,
+    planetAttachmentSchemaTypes: Array<PlanetAttachmentSchemaType>,
     source: string
   ): this {
     // Find all system attachment objects.
@@ -114,25 +104,25 @@ export class SystemAttachmentRegistry {
       }
     }
 
-    for (const systemAttachmentSchemaType of systemAttachmentSchemaTypes) {
+    for (const planetAttachmentSchemaType of planetAttachmentSchemaTypes) {
       // Validate schema (oterhwise not validated until used).
       try {
-        SystemAttachmentSchema.parse(systemAttachmentSchemaType);
+        PlanetAttachmentSchema.parse(planetAttachmentSchemaType);
         NsidNameSchema.parse(source);
       } catch (e) {
         const msg = `error: ${e.message}\nparsing: ${JSON.stringify(
-          systemAttachmentSchemaType
+          planetAttachmentSchemaType
         )}`;
         throw new Error(msg);
       }
 
       // Register (create temporary attachment for nsid generation).
-      const attachment = new SystemAttachment(
-        systemAttachmentSchemaType,
+      const attachment = new PlanetAttachment(
+        planetAttachmentSchemaType,
         source
       );
       this._nsidToSchemaAndSource.set(attachment.getNsid(), {
-        schema: systemAttachmentSchemaType,
+        schema: planetAttachmentSchemaType,
         source,
       });
 
@@ -142,12 +132,12 @@ export class SystemAttachmentRegistry {
       for (const objId of objIds) {
         const obj: GameObject | undefined = world.getObjectById(objId);
         if (obj && obj.isValid()) {
-          const attachment = new SystemAttachment(
-            systemAttachmentSchemaType,
+          const attachment = new PlanetAttachment(
+            planetAttachmentSchemaType,
             source
           );
           attachment.setAttachmentObjId(objId);
-          this._attachmentObjIdToSystemAttachment.set(objId, attachment);
+          this._attachmentObjIdToPlanetAttachment.set(objId, attachment);
 
           // Add grab/release event listeners.
           obj.onGrab.remove(this._onGrabHandler);
@@ -164,15 +154,15 @@ export class SystemAttachmentRegistry {
   }
 
   /**
-   * Lookup system attachment by system attachment token object nsid.
-   * Duplicate tokens for the "same" attachment have separate instances.
+   * Lookup planet attachment by planet attachment token object nsid.
+   * Duplicate tiles for the "same" attachment have separate instances.
    *
    * @param objId
    * @returns
    */
-  public getBySystemAttachmentObjId(
+  public getByPlanetAttachmentObjId(
     objId: string
-  ): SystemAttachment | undefined {
-    return this._attachmentObjIdToSystemAttachment.get(objId);
+  ): PlanetAttachment | undefined {
+    return this._attachmentObjIdToPlanetAttachment.get(objId);
   }
 }
