@@ -10,6 +10,8 @@ import {
   PlanetAttachmentSchemaType,
 } from "../schema/planet-attachment-schema";
 import { NsidNameSchema } from "../schema/basic-types-schema";
+import { Planet } from "../planet/planet";
+import { System } from "../system/system";
 
 /**
  * A planet attachment is normally a token placed on a planet to add attributes
@@ -40,6 +42,39 @@ export class PlanetAttachment {
 
     this._params = params;
     this._source = source;
+  }
+
+  _getPlanetAtAttachmentPosition(): Planet | undefined {
+    const objId: string | undefined = this._attachmentObjId;
+    if (objId) {
+      const obj: GameObject | undefined = world.getObjectById(objId);
+      if (obj) {
+        const pos: Vector = obj.getPosition();
+        const system: System | undefined =
+          TI4.systemRegistry.getByPosition(pos);
+        return system?.getPlanetClosest(pos);
+      }
+    }
+    return undefined;
+  }
+
+  attach(): boolean {
+    const planet: Planet | undefined = this._getPlanetAtAttachmentPosition();
+    if (planet) {
+      planet.addAttachment(this);
+      return true;
+    }
+    return false;
+  }
+
+  detach(): boolean {
+    const planet: Planet | undefined = this._getPlanetAtAttachmentPosition();
+    const nsid: string = this.getNsid();
+    if (planet && planet.hasAttachment(nsid)) {
+      planet.delAttachment(nsid);
+      return true;
+    }
+    return false;
   }
 
   /**

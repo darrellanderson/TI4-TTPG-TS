@@ -1,5 +1,9 @@
+import { GameObject, Vector } from "@tabletop-playground/api";
 import { MockGameObject } from "ttpg-mock";
 import { PlanetAttachment } from "./planet-attachment";
+import { resetGlobalThisTI4 } from "../../../global/global";
+import { System } from "../system/system";
+import { Planet } from "../planet/planet";
 
 it("constructor", () => {
   const planetAttachment = new PlanetAttachment(
@@ -307,4 +311,39 @@ it("isLegendary (default)", () => {
     "my-source"
   );
   expect(planetAttachment.isLegendary()).toBe(false);
+});
+
+it("attach/dettach", () => {
+  resetGlobalThisTI4();
+  const systemTileObj: GameObject = new MockGameObject({
+    templateMetadata: "tile.system:base/1",
+  });
+  const system: System | undefined = TI4.systemRegistry.getBySystemTileObjId(
+    systemTileObj.getId()
+  );
+  expect(system).toBeDefined();
+  const planet: Planet | undefined = system?.getPlanetClosest(
+    new Vector(0, 0, 0)
+  );
+  expect(planet).toBeDefined();
+
+  const attachment = new PlanetAttachment(
+    {
+      name: "my-name",
+      nsidName: "my-nsid-name",
+    },
+    "my-source"
+  );
+  const attachmentNsid: string = attachment.getNsid();
+
+  const attachmentTokenObj: GameObject = new MockGameObject({
+    templateMetadata: attachmentNsid,
+  });
+  attachment.setAttachmentObjId(attachmentTokenObj.getId());
+
+  expect(planet?.hasAttachment(attachmentNsid)).toBe(false);
+  attachment.attach();
+  expect(planet?.hasAttachment(attachmentNsid)).toBe(true);
+  attachment.detach();
+  expect(planet?.hasAttachment(attachmentNsid)).toBe(false);
 });
