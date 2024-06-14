@@ -4,6 +4,7 @@ import { PlanetAttachment } from "./planet-attachment";
 import { resetGlobalThisTI4 } from "../../../global/global";
 import { System } from "../system/system";
 import { Planet } from "../planet/planet";
+import exp from "constants";
 
 it("constructor", () => {
   const planetAttachment = new PlanetAttachment(
@@ -313,8 +314,53 @@ it("isLegendary (default)", () => {
   expect(planetAttachment.isLegendary()).toBe(false);
 });
 
+it("_getPlanetAtAttachmentPosition", () => {
+  resetGlobalThisTI4();
+
+  // Attachment with token (necessary for position).
+  const attachment = new PlanetAttachment(
+    {
+      name: "my-name",
+      nsidName: "my-nsid-name",
+    },
+    "my-source"
+  );
+  const attachmentTokenObj: GameObject = new MockGameObject({
+    templateMetadata: attachment.getNsid(),
+  });
+  attachment.setAttachmentObjId(attachmentTokenObj.getId());
+  expect(attachment._getPlanetAtAttachmentPosition()).toBeUndefined();
+
+  // Add system (global TI4.systemRegisty loaded with systems arleady).
+  const systemTileObj: GameObject = new MockGameObject({
+    templateMetadata: "tile.system:base/1",
+  });
+  expect(attachment._getPlanetAtAttachmentPosition()).toBeDefined();
+});
+
 it("attach/dettach", () => {
   resetGlobalThisTI4();
+
+  // Attachment with token (necessary for position).
+  const attachment = new PlanetAttachment(
+    {
+      name: "my-name",
+      nsidName: "my-nsid-name",
+    },
+    "my-source"
+  );
+  const attachmentNsid: string = attachment.getNsid();
+  const attachmentTokenObj: GameObject = new MockGameObject({
+    templateMetadata: attachmentNsid,
+  });
+  attachment.setAttachmentObjId(attachmentTokenObj.getId());
+
+  // Nothing to attach to!
+  let success: boolean;
+  success = attachment.attach();
+  expect(success).toBe(false);
+
+  // Add system (global TI4.systemRegisty loaded with systems arleady).
   const systemTileObj: GameObject = new MockGameObject({
     templateMetadata: "tile.system:base/1",
   });
@@ -327,23 +373,16 @@ it("attach/dettach", () => {
   );
   expect(planet).toBeDefined();
 
-  const attachment = new PlanetAttachment(
-    {
-      name: "my-name",
-      nsidName: "my-nsid-name",
-    },
-    "my-source"
-  );
-  const attachmentNsid: string = attachment.getNsid();
-
-  const attachmentTokenObj: GameObject = new MockGameObject({
-    templateMetadata: attachmentNsid,
-  });
-  attachment.setAttachmentObjId(attachmentTokenObj.getId());
-
   expect(planet?.hasAttachment(attachmentNsid)).toBe(false);
-  attachment.attach();
+  success = attachment.attach();
+  expect(success).toBe(true);
+
   expect(planet?.hasAttachment(attachmentNsid)).toBe(true);
-  attachment.detach();
+  success = attachment.detach();
+  expect(success).toBe(true);
   expect(planet?.hasAttachment(attachmentNsid)).toBe(false);
+
+  // Already detached.
+  success = attachment.detach();
+  expect(success).toBe(false);
 });

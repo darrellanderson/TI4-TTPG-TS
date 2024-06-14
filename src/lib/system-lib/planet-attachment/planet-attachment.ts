@@ -52,7 +52,9 @@ export class PlanetAttachment {
         const pos: Vector = obj.getPosition();
         const system: System | undefined =
           TI4.systemRegistry.getByPosition(pos);
-        return system?.getPlanetClosest(pos);
+        if (system) {
+          return system.getPlanetClosest(pos);
+        }
       }
     }
     return undefined;
