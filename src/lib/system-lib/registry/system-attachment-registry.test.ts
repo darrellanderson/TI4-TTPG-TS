@@ -100,7 +100,7 @@ it("token existed at load time", () => {
   const token: GameObject = new MockGameObject({
     id: "my-id",
     templateMetadata: "token.attachment:my-source/my-nsid-name",
-    position: [1, 0, 0],
+    position: [0, 0, 0],
   });
   registry.load(
     [

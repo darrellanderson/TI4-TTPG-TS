@@ -1,4 +1,4 @@
-import { MockGameObject } from "ttpg-mock";
+import { MockGameObject, MockGameWorld, mockWorld } from "ttpg-mock";
 import { SystemRegistry } from "./system-registry";
 import { Vector, world } from "@tabletop-playground/api";
 
@@ -83,7 +83,7 @@ it("loadDefaultData", () => {
 
 it("getByPosition", () => {
   const z: number = world.getTableHeight();
-  const pos = new Vector(1, 0, z);
+  const pos = new Vector(0, 0, z);
   const registry = new SystemRegistry().load([{ tile: 12 }], "my-source");
   expect(registry.getByPosition(pos)).toBeUndefined();
 
@@ -96,6 +96,5 @@ it("getByPosition", () => {
 
   obj.destroy();
   expect(registry.getByPosition(pos)).toBeUndefined();
-
   registry.destroy();
 });

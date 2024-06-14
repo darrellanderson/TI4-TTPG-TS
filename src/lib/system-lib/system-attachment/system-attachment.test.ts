@@ -1,6 +1,6 @@
 import { GameObject, refPackageId } from "@tabletop-playground/api";
 import { MockGameObject } from "ttpg-mock";
-import { WormholeWithGlobalPosition } from "../system/system";
+import { System, WormholeWithGlobalPosition } from "../system/system";
 import { SystemAttachment } from "./system-attachment";
 import { resetGlobalThisTI4 } from "../../../global/global";
 
@@ -207,6 +207,38 @@ it("wormholesGlobalPosition face down", () => {
   out = attachment.getWormholesWithGlobalPositions();
   summary = out.map((x) => `${x.wormhole}:${x.globalPosition.toString()}`);
   expect(summary).toEqual(["beta:(X=1,Y=2,Z=3)"]);
+});
+
+it("_getSystemAtAttachmentPosition", () => {
+  // Reset TI4.systemRegistry because globalEvents gets reset between tests.
+  resetGlobalThisTI4();
+
+  const attachment = new SystemAttachment(
+    {
+      name: "my-name",
+      nsidName: "my-nsid-name",
+    },
+    "my-source"
+  );
+  const obj: GameObject = new MockGameObject({
+    position: [1, 0, 0],
+  });
+  attachment.setAttachmentObjId(obj.getId());
+
+  let system: System | undefined;
+  system = attachment._getSystemAtAttachmentPosition();
+  expect(system).toBeUndefined();
+
+  const systemTileObj: GameObject = new MockGameObject({
+    templateMetadata: `tile.system:base/1`,
+    position: [1, 0, 0],
+  });
+  expect(
+    TI4.systemRegistry.getBySystemTileObjId(systemTileObj.getId())
+  ).toBeDefined();
+
+  system = attachment._getSystemAtAttachmentPosition();
+  expect(system).toBeDefined();
 });
 
 it("attach/detach", () => {
