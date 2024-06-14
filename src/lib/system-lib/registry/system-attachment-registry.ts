@@ -1,11 +1,12 @@
 import { GameObject, globalEvents, world } from "@tabletop-playground/api";
-import { SystemAttachment } from "../system-attachment/system-attachment";
 import { NSID } from "ttpg-darrell";
+
+import { SystemAttachment } from "../system-attachment/system-attachment";
+import { NsidNameSchema } from "../schema/basic-types-schema";
 import {
   SystemAttachmentSchema,
   SystemAttachmentSchemaType,
 } from "../schema/system-attachment-schema";
-import { NsidNameSchema } from "../schema/basic-types-schema";
 
 type SchemaAndSource = {
   schema: SystemAttachmentSchemaType;
@@ -38,6 +39,12 @@ export class SystemAttachmentRegistry {
         obj.getId(),
         systemAttachment
       );
+
+      // Add grab/release event listeners.
+      obj.onGrab.remove(this._onGrabHandler);
+      obj.onGrab.add(this._onGrabHandler);
+      obj.onReleased.remove(this._onReleasedHandler);
+      obj.onReleased.add(this._onReleasedHandler);
     }
   };
 
@@ -45,7 +52,17 @@ export class SystemAttachmentRegistry {
     const objId: string = obj.getId();
     if (this._attachmentObjIdToSystemAttachment.has(objId)) {
       this._attachmentObjIdToSystemAttachment.delete(objId);
+      obj.onGrab.remove(this._onGrabHandler);
+      obj.onReleased.remove(this._onReleasedHandler);
     }
+  };
+
+  private readonly _onGrabHandler = (obj: GameObject): void => {
+    // Remove attachment from system.
+  };
+
+  private readonly _onReleasedHandler = (obj: GameObject): void => {
+    // Add attachment to system.
   };
 
   constructor() {
@@ -58,10 +75,35 @@ export class SystemAttachmentRegistry {
     globalEvents.onObjectDestroyed.remove(this._onObjectDestroyedHandler);
   }
 
+  /**
+   * Add system attachments to systems.
+   *
+   * Init runs after setting up other objects, in this case we need system
+   * registry to have loaded system data for finding by positon.
+   */
+  init() {
+    //
+  }
+
   public load(
     systemAttachmentSchemaTypes: Array<SystemAttachmentSchemaType>,
     source: string
   ): this {
+    // Find all system attachment objects.
+    const nsidToObjIds: Map<string, Array<string>> = new Map();
+    const skipContained: boolean = false;
+    for (const obj of world.getAllObjects(skipContained)) {
+      const nsid: string = NSID.get(obj);
+      if (nsid.startsWith("token.attachment:")) {
+        let objIds: Array<string> | undefined = nsidToObjIds.get(nsid);
+        if (!objIds) {
+          objIds = [];
+          nsidToObjIds.set(nsid, objIds);
+        }
+        objIds.push(obj.getId());
+      }
+    }
+
     for (const systemAttachmentSchemaType of systemAttachmentSchemaTypes) {
       // Validate schema (oterhwise not validated until used).
       try {
@@ -74,6 +116,7 @@ export class SystemAttachmentRegistry {
         throw new Error(msg);
       }
 
+      // Register (create temporary attachment for nsid generation).
       const attachment = new SystemAttachment(
         systemAttachmentSchemaType,
         source
@@ -82,7 +125,42 @@ export class SystemAttachmentRegistry {
         schema: systemAttachmentSchemaType,
         source,
       });
+
+      // Instantiate for any existing objects.
+      const objIds: Array<string> =
+        nsidToObjIds.get(attachment.getNsid()) ?? [];
+      for (const objId of objIds) {
+        const attachment = new SystemAttachment(
+          systemAttachmentSchemaType,
+          source
+        );
+        attachment.setAttachmentObjId(objId);
+        this._attachmentObjIdToSystemAttachment.set(objId, attachment);
+
+        // Add grab/release event listeners.
+        const obj: GameObject | undefined = world.getObjectById(objId);
+        if (obj) {
+          obj.onGrab.remove(this._onGrabHandler);
+          obj.onGrab.add(this._onGrabHandler);
+          obj.onReleased.remove(this._onReleasedHandler);
+          obj.onReleased.add(this._onReleasedHandler);
+
+          // Perform attach if on a system.
+          this._onReleasedHandler(obj);
+        }
+      }
     }
     return this;
+  }
+
+  /**
+   * Lookup system attachment by system attachment token object nsid.
+   * Duplicate tiles for the "same" system have separate System instances.
+   *
+   * @param objId
+   * @returns
+   */
+  public getBySystemTileObjId(objId: string): SystemAttachment | undefined {
+    return this._attachmentObjIdToSystemAttachment.get(objId);
   }
 }

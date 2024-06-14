@@ -75,6 +75,24 @@ export class SystemRegistry {
     systemSchemaTypes: Array<SystemSchemaType>,
     source: string
   ): this {
+    // Find all system tile objects.
+    const tileToObjIds: Map<number, Array<string>> = new Map();
+    const skipContained: boolean = false;
+    for (const obj of world.getAllObjects(skipContained)) {
+      const nsid: string = NSID.get(obj);
+      const systemTileNumber: number | undefined =
+        System.nsidToSystemTileNumber(nsid);
+      if (systemTileNumber !== undefined) {
+        let objIds: Array<string> | undefined =
+          tileToObjIds.get(systemTileNumber);
+        if (!objIds) {
+          objIds = [];
+          tileToObjIds.set(systemTileNumber, objIds);
+        }
+        objIds.push(obj.getId());
+      }
+    }
+
     // Add systems.
     for (const systemSchemaType of systemSchemaTypes) {
       // Validate schema (oterhwise not validated until used).
@@ -99,25 +117,13 @@ export class SystemRegistry {
         schema: systemSchemaType,
         source,
       });
-    }
 
-    // Link (or harmlessly re-link) system tile objects.
-    const skipContained: boolean = false;
-    for (const obj of world.getAllObjects(skipContained)) {
-      const nsid: string = NSID.get(obj);
-      const systemTileNumber: number | undefined =
-        System.nsidToSystemTileNumber(nsid);
-      if (systemTileNumber !== undefined) {
-        const schemaAndSource: SchemaAndSource | undefined =
-          this._systemTileNumberToSchemaAndSource.get(systemTileNumber);
-        if (schemaAndSource) {
-          const system = new System(
-            schemaAndSource.schema,
-            schemaAndSource.source
-          );
-          system.setSystemTileObjId(obj.getId());
-          this._systemTileObjIdToSystem.set(obj.getId(), system);
-        }
+      // Instantiate for any existing system tile objects.
+      const objIds: Array<string> = tileToObjIds.get(tileNumber) ?? [];
+      for (const objId of objIds) {
+        const system = new System(systemSchemaType, source);
+        system.setSystemTileObjId(objId);
+        this._systemTileObjIdToSystem.set(objId, system);
       }
     }
 
@@ -145,7 +151,7 @@ export class SystemRegistry {
    * @returns
    */
   getByPosition(pos: Vector): System | undefined {
-    const z = world.getTableHeight(pos);
+    const z: number = world.getTableHeight(pos);
     const start = new Vector(pos.x, pos.y, z + 10);
     const end = new Vector(pos.x, pos.y, z - 10);
     const hits: Array<TraceHit> = world.lineTrace(start, end);
@@ -158,7 +164,6 @@ export class SystemRegistry {
         }
       }
     }
-
     return undefined;
   }
 
@@ -166,11 +171,11 @@ export class SystemRegistry {
    * Lookup system by system tile object nsid.
    * Duplicate tiles for the "same" system have separate System instances.
    *
-   * @param nsid
+   * @param objId
    * @returns
    */
-  public getBySystemTileObjId(nsid: string): System | undefined {
-    return this._systemTileObjIdToSystem.get(nsid);
+  public getBySystemTileObjId(objId: string): System | undefined {
+    return this._systemTileObjIdToSystem.get(objId);
   }
 
   /**

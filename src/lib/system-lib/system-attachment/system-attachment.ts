@@ -5,13 +5,13 @@ import {
   world,
 } from "@tabletop-playground/api";
 import { Facing } from "ttpg-darrell";
+import { NsidNameSchema } from "../schema/basic-types-schema";
 import { Planet } from "../planet/planet";
+import { System, WormholeWithGlobalPosition } from "../system/system";
 import {
   SystemAttachmentSchema,
   SystemAttachmentSchemaType,
 } from "../schema/system-attachment-schema";
-import { WormholeWithGlobalPosition } from "../system/system";
-import { NsidNameSchema } from "../schema/basic-types-schema";
 
 /**
  * A system attachment is normally a token placed in a system to add attributes
@@ -48,6 +48,39 @@ export class SystemAttachment {
         (planet) => new Planet(planet, this._source)
       );
     }
+  }
+
+  _getSystemAtAttachmentPosition(): System | undefined {
+    const objId: string | undefined = this._attachmentObjId;
+    if (objId) {
+      const obj: GameObject | undefined = world.getObjectById(objId);
+      if (obj) {
+        const pos: Vector = obj.getPosition();
+        const system: System | undefined =
+          TI4.systemRegistry.getByPosition(pos);
+        return system;
+      }
+    }
+    return undefined;
+  }
+
+  attach(): boolean {
+    const system: System | undefined = this._getSystemAtAttachmentPosition();
+    if (system) {
+      system.addAttachment(this);
+      return true;
+    }
+    return false;
+  }
+
+  detach(): boolean {
+    const system: System | undefined = this._getSystemAtAttachmentPosition();
+    const nsid: string = this.getNsid();
+    if (system && system.hasAttachment(nsid)) {
+      system.delAttachment(nsid);
+      return true;
+    }
+    return false;
   }
 
   /**

@@ -82,8 +82,8 @@ it("loadDefaultData", () => {
 });
 
 it("getByPosition", () => {
-  const z = world.getTableHeight();
-  const pos = new Vector(1, 2, z);
+  const z: number = world.getTableHeight();
+  const pos = new Vector(1, 0, z);
   const registry = new SystemRegistry().load([{ tile: 12 }], "my-source");
   expect(registry.getByPosition(pos)).toBeUndefined();
 

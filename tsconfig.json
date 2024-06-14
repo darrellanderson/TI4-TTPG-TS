@@ -5,22 +5,18 @@
     "module": "commonjs",
     "strict": true,
     "noUncheckedIndexedAccess": true,
-    "outDir": "./build",
     "useUnknownInCatchVariables": false,
+    "resolveJsonModule": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
     "jsx": "react",
     "jsxFactory": "jsxInTTPG",
     "jsxFragmentFactory": "jsxFrag",
     "rootDir": "./src",
-    "moduleResolution": "Node",
-    "resolveJsonModule": true,
-    "esModuleInterop": true,
-    "skipLibCheck": true,
-    "target": "ES6",
     "baseUrl": "./src",
-    "paths": {
-      "@mock/*": ["./mock/*"],
-      "@wrapper/*": ["./wrapper/*"]
-    }
+    "outDir": "./build",
+    "moduleResolution": "Node",
+    "target": "ES6"
   },
   "include": [
     "./src/**/*.ts",

@@ -1,7 +1,9 @@
 import { GameObject, refPackageId } from "@tabletop-playground/api";
-import { SystemAttachment } from "./system-attachment";
 import { MockGameObject } from "ttpg-mock";
 import { WormholeWithGlobalPosition } from "../system/system";
+import { SystemAttachment } from "./system-attachment";
+import { resetGlobalThisTI4 } from "../../../global/global";
+import exp from "constants";
 
 it("constructor", () => {
   const attachment = new SystemAttachment(
@@ -206,4 +208,54 @@ it("wormholesGlobalPosition face down", () => {
   out = attachment.getWormholesWithGlobalPositions();
   summary = out.map((x) => `${x.wormhole}:${x.globalPosition.toString()}`);
   expect(summary).toEqual(["beta:(X=1,Y=2,Z=3)"]);
+});
+
+it("attach/detach", () => {
+  // Reset TI4.systemRegistry because globalEvents gets reset between tests.
+  resetGlobalThisTI4();
+
+  const attachment = new SystemAttachment(
+    {
+      name: "my-name",
+      nsidName: "my-nsid-name",
+    },
+    "my-source"
+  );
+  const attachmentNsid: string = attachment.getNsid();
+
+  let success: boolean = false;
+  success = attachment.attach();
+  expect(success).toBe(false); // no attachment token obj
+
+  // Link token object, necessary for position.
+  const attachmentTokenObj: GameObject = new MockGameObject({
+    templateMetadata: `token.attachment:${attachmentNsid}`,
+    position: [1, 0, 0],
+  });
+  attachment.setAttachmentObjId(attachmentTokenObj.getId());
+
+  success = attachment.attach();
+  expect(success).toBe(false); // no system tile obj
+
+  // Create system tile obj, expect SystemRegistry add it via
+  // globalEvents.onObjectCreated.
+  const systemTileObj: GameObject = new MockGameObject({
+    templateMetadata: `tile.system:base/1`,
+    position: [1, 0, 0],
+  });
+
+  const system = TI4.systemRegistry.getBySystemTileObjId(systemTileObj.getId());
+  expect(system).toBeDefined();
+  expect(system?.hasAttachment(attachmentNsid)).toBe(false);
+
+  success = attachment.attach(); // finds system at position
+  expect(success).toBe(true);
+  expect(system?.hasAttachment(attachmentNsid)).toBe(true);
+
+  success = attachment.detach();
+  expect(success).toBe(true);
+  expect(system?.hasAttachment(attachmentNsid)).toBe(false);
+
+  success = attachment.detach();
+  expect(success).toBe(false); // not attached
 });
