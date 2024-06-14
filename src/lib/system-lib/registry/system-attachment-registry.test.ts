@@ -93,15 +93,29 @@ it("load (invalid)", () => {
   registry.destroy();
 });
 
-it("token existed at load time", () => {
+it("token existed at load time, not attached until init.", () => {
+  resetGlobalThisTI4();
+
+  // Create system (picked up by global TI4.systemRegistry).
+  const systemTileObj: GameObject = new MockGameObject({
+    templateMetadata: "tile.system:base/1",
+  });
+  const system: System | undefined = TI4.systemRegistry.getBySystemTileObjId(
+    systemTileObj.getId()
+  );
+  expect(system).toBeDefined();
+
   const registry = new SystemAttachmentRegistry();
   expect(registry.getBySystemAttachmentObjId("my-id")).toBeUndefined();
 
-  const token: GameObject = new MockGameObject({
+  // Create attachment token.
+  const tokenNsid: string = "token.attachment:my-source/my-nsid-name";
+  new MockGameObject({
     id: "my-id",
-    templateMetadata: "token.attachment:my-source/my-nsid-name",
-    position: [0, 0, 0],
+    templateMetadata: tokenNsid,
   });
+  expect(registry.getBySystemAttachmentObjId("my-id")).toBeUndefined();
+
   registry.load(
     [
       {
@@ -112,5 +126,53 @@ it("token existed at load time", () => {
     "my-source"
   );
   expect(registry.getBySystemAttachmentObjId("my-id")).toBeDefined();
+  expect(system?.hasAttachment(tokenNsid)).toBe(false);
+
+  registry.init();
+  expect(system?.hasAttachment(tokenNsid)).toBe(true);
+
+  registry.destroy();
+});
+
+it("load after init, attaches to system", () => {
+  resetGlobalThisTI4();
+
+  // Create system (picked up by global TI4.systemRegistry).
+  const systemTileObj: GameObject = new MockGameObject({
+    templateMetadata: "tile.system:base/1",
+    position: [1, 0, 0],
+  });
+  const system: System | undefined = TI4.systemRegistry.getBySystemTileObjId(
+    systemTileObj.getId()
+  );
+  expect(system).toBeDefined();
+
+  // Create attachment token.
+  const tokenNsid: string = "token.attachment:my-source/my-nsid-name";
+  new MockGameObject({
+    id: "my-id",
+    templateMetadata: tokenNsid,
+    position: [1, 0, 0],
+  });
+  expect(system?.hasAttachment(tokenNsid)).toBe(false);
+
+  // Create and init registry (load after init will attach at load time).
+  const registry = new SystemAttachmentRegistry();
+  registry.init();
+  registry.load(
+    [
+      {
+        name: "my-name",
+        nsidName: "my-nsid-name",
+      },
+    ],
+    "my-source"
+  );
+
+  // Shoule be attached.
+  expect(system?.hasAttachment("token.attachment:my-source/my-nsid-name")).toBe(
+    true
+  );
+
   registry.destroy();
 });

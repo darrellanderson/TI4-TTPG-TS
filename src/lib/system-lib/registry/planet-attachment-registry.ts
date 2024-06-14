@@ -24,6 +24,8 @@ export class PlanetAttachmentRegistry {
     PlanetAttachment
   > = new Map();
 
+  private _initCalled: boolean = false;
+
   private readonly _onObjectCreatedHandler = (obj: GameObject): void => {
     const nsid: string = NSID.get(obj);
     const schemaAndSource: SchemaAndSource | undefined =
@@ -76,13 +78,14 @@ export class PlanetAttachmentRegistry {
   }
 
   /**
-   * Add system attachments to systems.
+   * Add planet attachments to planets.
    *
    * Init runs after setting up other objects, in this case we need system
    * registry to have loaded system data for finding by positon.
    */
   init() {
-    //
+    this._initCalled = true;
+    // TODO
   }
 
   public load(
@@ -145,8 +148,11 @@ export class PlanetAttachmentRegistry {
           obj.onReleased.remove(this._onReleasedHandler);
           obj.onReleased.add(this._onReleasedHandler);
 
-          // Perform attach if on a system.
-          this._onReleasedHandler(obj);
+          // Init attaches tokens (other systems have had a chance to load).
+          // If init has already been called, attach now.
+          if (this._initCalled) {
+            attachment.attach();
+          }
         }
       }
     }

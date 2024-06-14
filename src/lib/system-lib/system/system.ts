@@ -166,10 +166,17 @@ export class System {
    * @param nsid
    * @returns
    */
-  hasAttachment(nsid: string): boolean {
-    return this._attachments.some((attachment) => {
-      return attachment.getNsid() === nsid;
-    });
+  hasAttachment(nsid: string, objId?: string): boolean {
+    for (const attachment of this._attachments) {
+      if (attachment.getNsid() !== nsid) {
+        continue;
+      }
+      if (objId && objId !== attachment.getAttachmentObj()?.getId()) {
+        continue;
+      }
+      return true;
+    }
+    return false;
   }
 
   /**

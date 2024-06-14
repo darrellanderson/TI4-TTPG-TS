@@ -1,4 +1,9 @@
-import { GameObject, globalEvents, world } from "@tabletop-playground/api";
+import {
+  GameObject,
+  Vector,
+  globalEvents,
+  world,
+} from "@tabletop-playground/api";
 import { NSID } from "ttpg-darrell";
 
 import { SystemAttachment } from "../system-attachment/system-attachment";
@@ -7,6 +12,7 @@ import {
   SystemAttachmentSchema,
   SystemAttachmentSchemaType,
 } from "../schema/system-attachment-schema";
+import { System } from "../system/system";
 
 type SchemaAndSource = {
   schema: SystemAttachmentSchemaType;
@@ -23,6 +29,8 @@ export class SystemAttachmentRegistry {
     string,
     SystemAttachment
   > = new Map();
+
+  private _initCalled: boolean = false;
 
   private readonly _onObjectCreatedHandler = (obj: GameObject): void => {
     const nsid: string = NSID.get(obj);
@@ -92,7 +100,21 @@ export class SystemAttachmentRegistry {
    * registry to have loaded system data for finding by positon.
    */
   init() {
-    //
+    this._initCalled = true;
+
+    // If any attachments are not yet attached, attach them.
+    for (const systemAttachment of this._attachmentObjIdToSystemAttachment.values()) {
+      const nsid: string = systemAttachment.getNsid();
+      const obj: GameObject | undefined = systemAttachment.getAttachmentObj();
+      if (obj) {
+        const pos: Vector = obj.getPosition();
+        const system: System | undefined =
+          TI4.systemRegistry.getByPosition(pos);
+        if (system && !system.hasAttachment(nsid, obj.getId())) {
+          system.addAttachment(systemAttachment);
+        }
+      }
+    }
   }
 
   public load(
@@ -155,8 +177,11 @@ export class SystemAttachmentRegistry {
           obj.onReleased.remove(this._onReleasedHandler);
           obj.onReleased.add(this._onReleasedHandler);
 
-          // Perform attach if on a system.
-          this._onReleasedHandler(obj);
+          // Init attaches tokens (other systems have had a chance to load).
+          // If init has already been called, attach now.
+          if (this._initCalled) {
+            attachment.attach();
+          }
         }
       }
     }
