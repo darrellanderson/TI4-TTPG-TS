@@ -1,4 +1,9 @@
-import { GameObject, globalEvents, world } from "@tabletop-playground/api";
+import {
+  GameObject,
+  globalEvents,
+  Vector,
+  world,
+} from "@tabletop-playground/api";
 import { NSID } from "ttpg-darrell";
 
 import { NsidNameSchema } from "../schema/basic-types-schema";
@@ -7,6 +12,8 @@ import {
   PlanetAttachmentSchema,
   PlanetAttachmentSchemaType,
 } from "../schema/planet-attachment-schema";
+import { System } from "../system/system";
+import { Planet } from "../planet/planet";
 
 type SchemaAndSource = {
   schema: PlanetAttachmentSchemaType;
@@ -85,7 +92,23 @@ export class PlanetAttachmentRegistry {
    */
   init() {
     this._initCalled = true;
-    // TODO
+
+    // If any attachments are not yet attached, attach them.
+    for (const planetAttachment of this._attachmentObjIdToPlanetAttachment.values()) {
+      const nsid: string = planetAttachment.getNsid();
+      const obj: GameObject | undefined = planetAttachment.getAttachmentObj();
+      if (obj) {
+        const pos: Vector = obj.getPosition();
+        const system: System | undefined =
+          TI4.systemRegistry.getByPosition(pos);
+        if (system) {
+          const planet: Planet | undefined = system.getPlanetClosest(pos);
+          if (planet && !planet.hasAttachment(nsid)) {
+            planet.addAttachment(planetAttachment);
+          }
+        }
+      }
+    }
   }
 
   public load(
