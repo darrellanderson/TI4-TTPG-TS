@@ -1,23 +1,19 @@
-import {
-  GameObject,
-  globalEvents,
-  Vector,
-  world,
-} from "@tabletop-playground/api";
+import { GameObject, globalEvents, world } from "@tabletop-playground/api";
 import { NSID } from "ttpg-darrell";
 
-import { NsidNameSchema } from "../schema/basic-types-schema";
+import {
+  SourceAndPackageIdSchema,
+  SourceAndPackageIdSchemaType,
+} from "../schema/basic-types-schema";
 import { PlanetAttachment } from "../planet-attachment/planet-attachment";
 import {
   PlanetAttachmentSchema,
   PlanetAttachmentSchemaType,
 } from "../schema/planet-attachment-schema";
-import { System } from "../system/system";
-import { Planet } from "../planet/planet";
 
 type SchemaAndSource = {
   schema: PlanetAttachmentSchemaType;
-  source: string;
+  sourceAndPackageId: SourceAndPackageIdSchemaType;
 };
 
 export class PlanetAttachmentRegistry {
@@ -31,8 +27,6 @@ export class PlanetAttachmentRegistry {
     PlanetAttachment
   > = new Map();
 
-  private _initCalled: boolean = false;
-
   private readonly _onObjectCreatedHandler = (obj: GameObject): void => {
     const nsid: string = NSID.get(obj);
     const schemaAndSource: SchemaAndSource | undefined =
@@ -40,10 +34,10 @@ export class PlanetAttachmentRegistry {
     if (schemaAndSource) {
       // Register a fresh system object for this system tile object.
       const planetAttachment: PlanetAttachment = new PlanetAttachment(
-        schemaAndSource.schema,
-        schemaAndSource.source
+        obj,
+        schemaAndSource.sourceAndPackageId,
+        schemaAndSource.schema
       );
-      planetAttachment.setAttachmentObjId(obj.getId());
       this._attachmentObjIdToPlanetAttachment.set(
         obj.getId(),
         planetAttachment
@@ -67,11 +61,19 @@ export class PlanetAttachmentRegistry {
   };
 
   private readonly _onGrabHandler = (obj: GameObject): void => {
-    // Remove attachment from planet.
+    const planetAttachment: PlanetAttachment | undefined =
+      this._attachmentObjIdToPlanetAttachment.get(obj.getId());
+    if (planetAttachment) {
+      planetAttachment.detach();
+    }
   };
 
   private readonly _onReleasedHandler = (obj: GameObject): void => {
-    // Add attachment to planet.
+    const planetAttachment: PlanetAttachment | undefined =
+      this._attachmentObjIdToPlanetAttachment.get(obj.getId());
+    if (planetAttachment) {
+      planetAttachment.attach();
+    }
   };
 
   constructor() {
@@ -89,38 +91,27 @@ export class PlanetAttachmentRegistry {
    *
    * Init runs after setting up other objects, in this case we need system
    * registry to have loaded system data for finding by positon.
+   *
+   * Global takes care of calling init, but if any homebrew loads new content
+   * it must also be sure to call init to attach any existing tokens.
    */
   init() {
-    this._initCalled = true;
-
     // If any attachments are not yet attached, attach them.
     for (const planetAttachment of this._attachmentObjIdToPlanetAttachment.values()) {
-      const nsid: string = planetAttachment.getNsid();
-      const obj: GameObject | undefined = planetAttachment.getAttachmentObj();
-      if (obj) {
-        const pos: Vector = obj.getPosition();
-        const system: System | undefined =
-          TI4.systemRegistry.getByPosition(pos);
-        if (system) {
-          const planet: Planet | undefined = system.getPlanetClosest(pos);
-          if (planet && !planet.hasAttachment(nsid, obj.getId())) {
-            planet.addAttachment(planetAttachment);
-          }
-        }
-      }
+      planetAttachment.attach();
     }
   }
 
   public load(
-    planetAttachmentSchemaTypes: Array<PlanetAttachmentSchemaType>,
-    source: string
+    sourceAndPackageId: SourceAndPackageIdSchemaType,
+    planetAttachmentSchemaTypes: Array<PlanetAttachmentSchemaType>
   ): this {
     // Find all system attachment objects.
     const nsidToObjIds: Map<string, Array<string>> = new Map();
     const skipContained: boolean = false;
     for (const obj of world.getAllObjects(skipContained)) {
       const nsid: string = NSID.get(obj);
-      if (nsid.startsWith("token.attachment:")) {
+      if (nsid.startsWith("token.attachment.planet:")) {
         let objIds: Array<string> | undefined = nsidToObjIds.get(nsid);
         if (!objIds) {
           objIds = [];
@@ -133,8 +124,8 @@ export class PlanetAttachmentRegistry {
     for (const planetAttachmentSchemaType of planetAttachmentSchemaTypes) {
       // Validate schema (oterhwise not validated until used).
       try {
+        SourceAndPackageIdSchema.parse(sourceAndPackageId);
         PlanetAttachmentSchema.parse(planetAttachmentSchemaType);
-        NsidNameSchema.parse(source);
       } catch (e) {
         const msg = `error: ${e.message}\nparsing: ${JSON.stringify(
           planetAttachmentSchemaType
@@ -143,26 +134,25 @@ export class PlanetAttachmentRegistry {
       }
 
       // Register (create temporary attachment for nsid generation).
-      const attachment = new PlanetAttachment(
-        planetAttachmentSchemaType,
-        source
+      const nsid: string = PlanetAttachment.schemaToNsid(
+        sourceAndPackageId.source,
+        planetAttachmentSchemaType
       );
-      this._nsidToSchemaAndSource.set(attachment.getNsid(), {
+      this._nsidToSchemaAndSource.set(nsid, {
+        sourceAndPackageId,
         schema: planetAttachmentSchemaType,
-        source,
       });
 
       // Instantiate for any existing objects.
-      const objIds: Array<string> =
-        nsidToObjIds.get(attachment.getNsid()) ?? [];
+      const objIds: Array<string> = nsidToObjIds.get(nsid) ?? [];
       for (const objId of objIds) {
         const obj: GameObject | undefined = world.getObjectById(objId);
         if (obj && obj.isValid()) {
           const attachment = new PlanetAttachment(
-            planetAttachmentSchemaType,
-            source
+            obj,
+            sourceAndPackageId,
+            planetAttachmentSchemaType
           );
-          attachment.setAttachmentObjId(objId);
           this._attachmentObjIdToPlanetAttachment.set(objId, attachment);
 
           // Add grab/release event listeners.
@@ -170,12 +160,6 @@ export class PlanetAttachmentRegistry {
           obj.onGrab.add(this._onGrabHandler);
           obj.onReleased.remove(this._onReleasedHandler);
           obj.onReleased.add(this._onReleasedHandler);
-
-          // Init attaches tokens (other systems have had a chance to load).
-          // If init has already been called, attach now.
-          if (this._initCalled) {
-            attachment.attach();
-          }
         }
       }
     }

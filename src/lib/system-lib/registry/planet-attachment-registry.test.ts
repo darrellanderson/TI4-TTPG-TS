@@ -8,19 +8,19 @@ it("constructor", () => {
 
 it("object create/desroy", () => {
   const registry = new PlanetAttachmentRegistry().load(
+    { source: "my-source", packageId: "my-package-id" },
     [
       {
         name: "my-name",
         nsidName: "my-nsid-name",
       },
-    ],
-    "my-source"
+    ]
   );
   expect(registry.getByPlanetAttachmentObjId("my-id")).toBeUndefined();
 
   const token: GameObject = new MockGameObject({
     id: "my-id",
-    templateMetadata: "token.attachment:my-source/my-nsid-name",
+    templateMetadata: "token.attachment.planet:my-source/my-nsid-name",
   });
   expect(registry.getByPlanetAttachmentObjId("my-id")).toBeDefined();
 
