@@ -1,9 +1,4 @@
-import {
-  GameObject,
-  Vector,
-  refPackageId,
-  world,
-} from "@tabletop-playground/api";
+import { GameObject, Vector, refPackageId } from "@tabletop-playground/api";
 import { Facing } from "ttpg-darrell";
 import {
   PlanetAttachmentSchema,
@@ -26,7 +21,20 @@ export class PlanetAttachment {
   private readonly _obj: GameObject;
   private readonly _source: string;
   private readonly _params: PlanetAttachmentSchemaType;
-  private _attachmentObjId: string | undefined;
+
+  /**
+   * Get the planet attachment token NSID.
+   *
+   * @param source
+   * @param schema
+   * @returns
+   */
+  static schemaToNsid(
+    source: string,
+    schema: PlanetAttachmentSchemaType
+  ): string {
+    return `token.attachment.planet:${source}/${schema.nsidName}`;
+  }
 
   /**
    * Create a planet attachment.
@@ -51,32 +59,48 @@ export class PlanetAttachment {
     this._params = params;
   }
 
+  /**
+   * Attach the planet attachment to a planet.
+   * May fail if no planet, already attached, etc.
+   *
+   * @returns {boolean} True if the attachment was added to a planet.
+   */
   attach(): boolean {
     const pos: Vector = this._obj.getPosition();
     const system: System | undefined = TI4.systemRegistry.getByPosition(pos);
     if (system) {
       const planet: Planet | undefined = system.getPlanetClosest(pos);
       if (planet) {
-        planet.addAttachment(this);
-        return true;
+        return planet.addAttachment(this);
       }
     }
     return false;
   }
 
+  /**
+   * Detach the planet attachment from a planet.
+   * May fail if no planet, not attached, etc.
+   *
+   * @returns {boolean} True if the attachment was removed from a system.
+   */
   detach(): boolean {
     const pos: Vector = this._obj.getPosition();
     const system: System | undefined = TI4.systemRegistry.getByPosition(pos);
     if (system) {
       const planet: Planet | undefined = system.getPlanetClosest(pos);
       if (planet) {
-        planet.delAttachment(this);
-        return true;
+        return planet.delAttachment(this);
       }
     }
     return false;
   }
 
+  /**
+   * Get the token image, if any.
+   * Image is in the form of "image-path.png:packageId".
+   *
+   * @returns {string | undefined} The image of the planet attachment.
+   */
   getImg(): string {
     const useBack: boolean =
       (this._params.imgFaceDown && !Facing.isFaceUp(this._obj)) || false;
@@ -84,7 +108,7 @@ export class PlanetAttachment {
       useBack ? ".back" : ""
     }.png`;
 
-    let img = "token/attachment/planet/";
+    let img = "token/attachment/planet";
 
     // Homebrew puts source first to group all related files.
     // "Official" puts source deeper in the path to collect in a single

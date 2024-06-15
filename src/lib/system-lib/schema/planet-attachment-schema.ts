@@ -5,7 +5,7 @@ import exp from "constants";
 export const PlanetAttachmentSchema = z
   .object({
     name: z.string(),
-    nsidName: NsidNameSchema, // NSID "token.attachment:${source}/${nsidName}"
+    nsidName: NsidNameSchema, // NSID "token.attachment.planet:${source}/${nsidName}"
 
     imgFaceDown: z.boolean().optional(),
     imgPackageId: z.string().optional(),

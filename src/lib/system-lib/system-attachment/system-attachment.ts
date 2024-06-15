@@ -25,7 +25,7 @@ export class SystemAttachment {
   private readonly _planets: Array<Planet> = [];
 
   /**
-   * Get the system attachment NSID.
+   * Get the system attachment token NSID.
    *
    * @param source
    * @param schema
