@@ -51,6 +51,13 @@ export class System {
     return undefined;
   }
 
+  public static systemTileNumberToNsid(
+    source: string,
+    systemTileNumber: number
+  ): string {
+    return `tile.system:${source}/${systemTileNumber}`;
+  }
+
   constructor(obj: GameObject, source: string, params: SystemSchemaType) {
     try {
       SystemSchema.parse(params); // validate the schema

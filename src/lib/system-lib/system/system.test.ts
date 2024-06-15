@@ -25,6 +25,12 @@ it("static nsidToSystemTileNumber (name not a number)", () => {
   expect(System.nsidToSystemTileNumber("tile.system:base/x")).toBeUndefined();
 });
 
+it("static systemTileNumberToNsid", () => {
+  expect(System.systemTileNumberToNsid("my-source", 1)).toBe(
+    "tile.system:my-source/1"
+  );
+});
+
 it("constructor", () => {
   const obj: GameObject = new MockGameObject();
   const source: string = "my-source";
