@@ -1,11 +1,8 @@
-import { Vector } from "@tabletop-playground/api";
+import { GameObject, Vector } from "@tabletop-playground/api";
 import { PlanetSchema, PlanetSchemaType } from "../schema/planet-schema";
 import { PlanetAttachment } from "../planet-attachment/planet-attachment";
 import { SystemDefaults } from "../data/system-defaults";
-import {
-  NsidNameSchema,
-  NsidNameSchemaType,
-} from "../schema/basic-types-schema";
+import { NsidNameSchema } from "../schema/basic-types-schema";
 
 /**
  * Represent a single planet.
@@ -16,12 +13,13 @@ import {
  * A token-less planet attachment is possible, see it for details.
  */
 export class Planet {
-  private readonly _params: PlanetSchemaType;
+  private readonly _obj: GameObject;
   private readonly _source: string;
+  private readonly _params: PlanetSchemaType;
   private readonly _attachments: Array<PlanetAttachment> = [];
   private _localPosition: Vector = new Vector(0, 0, 0);
 
-  constructor(params: PlanetSchemaType, source: string) {
+  constructor(obj: GameObject, source: string, params: PlanetSchemaType) {
     try {
       PlanetSchema.parse(params); // validate the schema
       NsidNameSchema.parse(source); // validate the schema
@@ -30,8 +28,17 @@ export class Planet {
       throw new Error(msg);
     }
 
-    this._params = params;
+    this._obj = obj;
     this._source = source;
+    this._params = params;
+
+    if (params.localPosition) {
+      this._localPosition = new Vector(
+        params.localPosition.x,
+        params.localPosition.y,
+        0
+      );
+    }
   }
 
   /**
@@ -41,26 +48,24 @@ export class Planet {
    * @param planetAttachment
    * @returns
    */
-  addAttachment(planetAttachment: PlanetAttachment): this {
-    this._attachments.push(planetAttachment);
+  addAttachment(attachment: PlanetAttachment): this {
+    this._attachments.push(attachment);
     return this;
   }
 
   /**
    * Remove an attachment from the planet.
-   * Fails silently if the attachment is not found.
    *
    * @param nsid
    * @returns
    */
-  delAttachment(nsid: string): this {
-    const index: number = this._attachments.findIndex((attachment) => {
-      return attachment.getNsid() === nsid;
-    });
+  delAttachment(attachment: PlanetAttachment): boolean {
+    const index: number = this._attachments.indexOf(attachment);
     if (index >= 0) {
       this._attachments.splice(index, 1);
+      return true;
     }
-    return this;
+    return false;
   }
 
   /**
@@ -69,10 +74,9 @@ export class Planet {
    * @param nsid
    * @returns
    */
-  hasAttachment(nsid: string): boolean {
-    return this._attachments.some((attachment) => {
-      return attachment.getNsid() === nsid;
-    });
+  hasAttachment(attachment: PlanetAttachment): boolean {
+    const index: number = this._attachments.indexOf(attachment);
+    return index >= 0;
   }
 
   /**
@@ -118,12 +122,12 @@ export class Planet {
   }
 
   /**
-   * Get the local position of the planet relative to a system tile.
+   * Get the global position of the planet.
    *
    * @returns
    */
-  getLocalPosition(): Vector {
-    return this._localPosition.clone();
+  getPosition(): Vector {
+    return this._obj.localPositionToWorld(this._localPosition);
   }
 
   /**
@@ -213,16 +217,6 @@ export class Planet {
       result = result || attachment.isLegendary();
     }
     return result;
-  }
-
-  /**
-   * Set planet local position relative to a system tile.
-   *
-   * @returns
-   */
-  setLocalPosition(localPosition: Vector): this {
-    this._localPosition = localPosition.clone();
-    return this;
   }
 
   /**

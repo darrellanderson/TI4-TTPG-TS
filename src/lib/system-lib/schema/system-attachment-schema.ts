@@ -17,7 +17,7 @@ export const SystemAttachmentSchema = z
 
     planets: z.array(PlanetSchema).optional(),
 
-    img: z.string().optional(),
+    imgFaceDown: z.boolean().optional(),
     imgPackageId: z.string().optional(),
   })
   .strict()

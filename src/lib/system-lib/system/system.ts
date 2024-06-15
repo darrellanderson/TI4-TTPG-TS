@@ -1,16 +1,11 @@
-import {
-  GameObject,
-  Vector,
-  refPackageId,
-  world,
-} from "@tabletop-playground/api";
+import { GameObject, Vector, refPackageId } from "@tabletop-playground/api";
 import { Facing, NSID, ParsedNSID } from "ttpg-darrell";
 import { SystemSchema, SystemSchemaType } from "../schema/system-schema";
 import { Planet } from "../planet/planet";
 import { SystemAttachment } from "../system-attachment/system-attachment";
 import { NsidNameSchema } from "../schema/basic-types-schema";
 
-export type WormholeWithGlobalPosition = {
+export type WormholeWithWorldPosition = {
   wormhole: string;
   globalPosition: Vector;
 };
@@ -30,15 +25,15 @@ export type WormholeWithLocalPosition = {
  * A token-less system attachment is possible, see it for details.
  */
 export class System {
-  private readonly _params: SystemSchemaType;
+  private readonly _obj: GameObject;
   private readonly _source: string;
+  private readonly _params: SystemSchemaType;
   private readonly _planets: Array<Planet> = [];
   private readonly _wormholes: Array<WormholeWithLocalPosition> = [];
   private readonly _wormholesFaceDown:
     | Array<WormholeWithLocalPosition>
     | undefined;
   private readonly _attachments: Array<SystemAttachment> = [];
-  private _systemTileObjId: string | undefined = undefined;
 
   public static nsidToSystemTileNumber(nsid: string): number | undefined {
     if (nsid.startsWith("tile.system:")) {
@@ -56,7 +51,7 @@ export class System {
     return undefined;
   }
 
-  constructor(params: SystemSchemaType, source: string) {
+  constructor(obj: GameObject, source: string, params: SystemSchemaType) {
     try {
       SystemSchema.parse(params); // validate the schema
       NsidNameSchema.parse(source); // validate the schema
@@ -65,13 +60,18 @@ export class System {
       throw new Error(msg);
     }
 
-    this._params = params;
+    this._obj = obj;
     this._source = source;
+    this._params = params;
 
     // Planets.
     if (params.planets) {
       for (const planetParams of params.planets) {
-        const planet: Planet = new Planet(planetParams, this._source);
+        const planet: Planet = new Planet(
+          this._obj,
+          this._source,
+          planetParams
+        );
         this._planets.push(planet);
       }
     }
@@ -138,57 +138,34 @@ export class System {
    * @param attachment
    * @returns
    */
-  addAttachment(attachment: SystemAttachment): this {
+  addAttachment(attachment: SystemAttachment): void {
     this._attachments.push(attachment);
-    return this;
   }
 
   /**
    * Remove an attachment from the system.
-   * Fails silently if the attachment is not found.
    *
-   * @param nsid
+   * @param attachment
    * @returns
    */
-  delAttachment(nsid: string): this {
-    const index: number = this._attachments.findIndex((attachment) => {
-      return attachment.getNsid() === nsid;
-    });
+  delAttachment(attachment: SystemAttachment): boolean {
+    const index: number = this._attachments.indexOf(attachment);
     if (index >= 0) {
       this._attachments.splice(index, 1);
+      return true;
     }
-    return this;
+    return false;
   }
 
   /**
    * Does the system have an attachment with the given NSID?
    *
-   * @param nsid
+   * @param attachment
    * @returns
    */
-  hasAttachment(nsid: string, objId?: string): boolean {
-    for (const attachment of this._attachments) {
-      if (attachment.getNsid() !== nsid) {
-        continue;
-      }
-
-      // If no object to compare, just return true.
-      if (!objId) {
-        return true;
-      }
-
-      // Otherwise, compare object IDs.
-      const attachmentObj: GameObject | undefined =
-        attachment.getAttachmentObj();
-      if (
-        attachmentObj &&
-        attachmentObj.isValid() &&
-        attachmentObj.getId() === objId
-      ) {
-        return true;
-      }
-    }
-    return false;
+  hasAttachment(attachment: SystemAttachment): boolean {
+    const index: number = this._attachments.indexOf(attachment);
+    return index >= 0;
   }
 
   /**
@@ -208,6 +185,18 @@ export class System {
   }
 
   /**
+   * Get the class of the system attachment.
+   *
+   * Systems are neighbor-adjacent to other systems of the same class, with
+   * the exception of "off-map" which are never adjacent to any other system.
+   *
+   * @returns {string} The class of the system attachment.
+   */
+  getClass(): string {
+    return this._params.class ?? "map";
+  }
+
+  /**
    * Get the system tile image, if any.  This is the "UI" version, a square PNG
    * with the system image centered vertically and fully filling horizontally.
    * Image is in the form of "image:packageId".
@@ -216,7 +205,7 @@ export class System {
    */
   getImg(): string {
     const useBack: boolean =
-      (this._params.imgFaceDown && !this.isSystemFaceUp()) || false;
+      (this._params.imgFaceDown && !Facing.isFaceUp(this._obj)) || false;
     const filename: string = `tile-${this._params.tile
       .toString()
       .padStart(3, "0")}${useBack ? ".back" : ""}.png`;
@@ -244,19 +233,11 @@ export class System {
    * @returns
    */
   getPlanetClosest(position: Vector): Planet | undefined {
-    const localPosition: Vector | undefined =
-      this.worldPositionToLocal(position);
-    if (!localPosition) {
-      return undefined; // must have a system tile object
-    }
-
     let closestPlanet: Planet | undefined = undefined;
     let closestDsq: number = Number.MAX_VALUE;
     for (const planet of this._planets) {
-      const planetLocalPosition: Vector = planet.getLocalPosition();
-      const dSq: number = localPosition
-        .subtract(planetLocalPosition)
-        .magnitudeSquared();
+      const planetPosition: Vector = planet.getPosition();
+      const dSq: number = position.subtract(planetPosition).magnitudeSquared();
       if (dSq < closestDsq) {
         closestPlanet = planet;
         closestDsq = dSq;
@@ -272,19 +253,15 @@ export class System {
    * @returns
    */
   getPlanetExact(position: Vector): Planet | undefined {
-    const localPosition: Vector | undefined =
-      this.worldPositionToLocal(position);
-    if (!localPosition) {
-      return undefined; // must have a system tile object
-    }
-
     const planet: Planet | undefined = this.getPlanetClosest(position);
     if (!planet) {
       return undefined;
     }
 
-    const planetLocalPosition: Vector = planet.getLocalPosition();
-    const distance: number = localPosition.distance(planetLocalPosition);
+    const planetLocal: Vector = this._obj.worldPositionToLocal(
+      planet.getPosition()
+    );
+    const distance: number = position.distance(planetLocal);
     if (distance > planet.getRadius()) {
       return undefined;
     }
@@ -307,57 +284,12 @@ export class System {
   }
 
   /**
-   * Get the source (base, expansion, homebrew.x, etc.)
+   * Get system tile number.
    *
-   * @returns
+   * @returns {number | undefined}
    */
-  getSource(): string {
-    return this._source;
-  }
-
-  /**
-   * Get the system tile NSID.
-   *
-   * @returns {string}
-   */
-  getSystemTileNsid(): string {
-    return `tile.system:${this._source}/${this._params.tile}`;
-  }
-
-  /**
-   * Get the system tile number.
-   *
-   * @returns
-   */
-  getSystemTileNumber(): number {
+  getSystemTileNumber(): number | undefined {
     return this._params.tile;
-  }
-
-  /**
-   * Get the linked system tile object, if any.
-   *
-   * @returns {GameObject | undefined}
-   */
-  getSystemTileObj(): GameObject | undefined {
-    if (!this._systemTileObjId) {
-      return undefined;
-    }
-    const systemTileObj: GameObject | undefined = world.getObjectById(
-      this._systemTileObjId
-    );
-    if (!systemTileObj || !systemTileObj.isValid()) {
-      return undefined;
-    }
-    return systemTileObj;
-  }
-
-  /**
-   * Get the linked system tile object ID, if any.
-   *
-   * @returns {string | undefined}
-   */
-  getSystemTileObjId(): string | undefined {
-    return this._systemTileObjId;
   }
 
   /**
@@ -368,7 +300,7 @@ export class System {
   getWormholes(): Array<string> {
     const result: Array<string> = [];
     // Includes attachments.
-    for (const wormholeWithLocalPosition of this.getWormholesWithGlobalPositions()) {
+    for (const wormholeWithLocalPosition of this.getWormholesWithPositions()) {
       result.push(wormholeWithLocalPosition.wormhole);
     }
     return result;
@@ -380,22 +312,21 @@ export class System {
    *
    * @returns {Array<WormholeWithGlobalPosition>}
    */
-  getWormholesWithGlobalPositions(): Array<WormholeWithGlobalPosition> {
-    const result: Array<WormholeWithGlobalPosition> = [];
+  getWormholesWithPositions(): Array<WormholeWithWorldPosition> {
+    const result: Array<WormholeWithWorldPosition> = [];
 
     // Wormholes in the raw system.
-    const systemTileObj: GameObject | undefined = this.getSystemTileObj();
     let thisLocalWormholes: Array<WormholeWithLocalPosition> = [];
-    if (this._wormholesFaceDown && !this.isSystemFaceUp()) {
+    if (this._wormholesFaceDown && !Facing.isFaceUp(this._obj)) {
       thisLocalWormholes = this._wormholesFaceDown;
     } else {
       thisLocalWormholes = this._wormholes;
     }
     for (const localWormhole of thisLocalWormholes) {
-      const globalPosition: Vector =
-        systemTileObj?.localPositionToWorld(localWormhole.localPosition) ??
-        new Vector(0, 0, 0);
-      const wormholeWithGlobalPosition: WormholeWithGlobalPosition = {
+      const globalPosition: Vector = this._obj.localPositionToWorld(
+        localWormhole.localPosition
+      );
+      const wormholeWithGlobalPosition: WormholeWithWorldPosition = {
         wormhole: localWormhole.wormhole,
         globalPosition,
       };
@@ -404,7 +335,7 @@ export class System {
 
     // Wormholes in attachments.
     for (const attachment of this._attachments) {
-      result.push(...attachment.getWormholesWithGlobalPositions());
+      result.push(...attachment.getWormholesWithPositions());
     }
 
     return result;
@@ -426,62 +357,5 @@ export class System {
    */
   isHyperlane(): boolean {
     return this._params.isHyperlane ?? false;
-  }
-
-  /**
-   * Is the system face up?
-   * Matters for Mallice with different wormholes for face up/down.
-   *
-   * @returns {boolean}
-   */
-  isSystemFaceUp(): boolean {
-    const systemTileObj: GameObject | undefined = this.getSystemTileObj();
-    if (!systemTileObj) {
-      return true;
-    }
-    return Facing.isFaceUp(systemTileObj);
-  }
-
-  /**
-   * Link the system to a system tile game object.
-   *
-   * @param systemObjId
-   * @returns
-   */
-  setSystemTileObjId(systemObjId: string | undefined): this {
-    this._systemTileObjId = systemObjId;
-    return this;
-  }
-
-  /**
-   * Transform a system tile local position to a global position.
-   *
-   * @param localPosition
-   * @returns
-   */
-  localPositionToWorld(localPosition: Vector): Vector | undefined {
-    const systemTileObj: GameObject | undefined = this.getSystemTileObj();
-    if (!systemTileObj) {
-      return undefined;
-    }
-    const globalPosition: Vector =
-      systemTileObj.localPositionToWorld(localPosition);
-    return globalPosition;
-  }
-
-  /**
-   * Transorm a global position to a system tile local position.
-   *
-   * @param globalPosition
-   * @returns
-   */
-  worldPositionToLocal(globalPosition: Vector): Vector | undefined {
-    const systemTileObj: GameObject | undefined = this.getSystemTileObj();
-    if (!systemTileObj) {
-      return undefined;
-    }
-    const localPosition: Vector =
-      systemTileObj.worldPositionToLocal(globalPosition);
-    return localPosition;
   }
 }

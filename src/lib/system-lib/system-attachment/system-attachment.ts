@@ -1,13 +1,8 @@
-import {
-  GameObject,
-  Vector,
-  refPackageId,
-  world,
-} from "@tabletop-playground/api";
+import { GameObject, Vector, refPackageId } from "@tabletop-playground/api";
 import { Facing } from "ttpg-darrell";
 import { NsidNameSchema } from "../schema/basic-types-schema";
 import { Planet } from "../planet/planet";
-import { System, WormholeWithGlobalPosition } from "../system/system";
+import { System, WormholeWithWorldPosition } from "../system/system";
 import {
   SystemAttachmentSchema,
   SystemAttachmentSchemaType,
@@ -21,10 +16,10 @@ import {
  * example for a game effect to add something.
  */
 export class SystemAttachment {
-  private readonly _params: SystemAttachmentSchemaType;
+  private readonly _obj: GameObject;
   private readonly _source: string;
+  private readonly _params: SystemAttachmentSchemaType;
   private readonly _planets: Array<Planet> = [];
-  private _attachmentObjId: string | undefined;
 
   /**
    * Create a system attachment.
@@ -32,7 +27,11 @@ export class SystemAttachment {
    *
    * @param {SystemAttachmentSchemaType} params - The system attachment parameters.
    */
-  constructor(params: SystemAttachmentSchemaType, source: string) {
+  constructor(
+    obj: GameObject,
+    source: string,
+    params: SystemAttachmentSchemaType
+  ) {
     try {
       SystemAttachmentSchema.parse(params); // validate the schema
       NsidNameSchema.parse(source); // validate the schema
@@ -41,31 +40,19 @@ export class SystemAttachment {
       throw new Error(msg);
     }
 
-    this._params = params;
+    this._obj = obj;
     this._source = source;
+    this._params = params;
     if (params.planets) {
       this._planets = params.planets.map(
-        (planet) => new Planet(planet, this._source)
+        (planet) => new Planet(this._obj, this._source, planet)
       );
     }
   }
 
-  _getSystemAtAttachmentPosition(): System | undefined {
-    const objId: string | undefined = this._attachmentObjId;
-    if (objId) {
-      const obj: GameObject | undefined = world.getObjectById(objId);
-      if (obj) {
-        const pos: Vector = obj.getPosition();
-        const system: System | undefined =
-          TI4.systemRegistry.getByPosition(pos);
-        return system;
-      }
-    }
-    return undefined;
-  }
-
   attach(): boolean {
-    const system: System | undefined = this._getSystemAtAttachmentPosition();
+    const pos: Vector = this._obj.getPosition();
+    const system: System | undefined = TI4.systemRegistry.getByPosition(pos);
     if (system) {
       system.addAttachment(this);
       return true;
@@ -74,10 +61,10 @@ export class SystemAttachment {
   }
 
   detach(): boolean {
-    const system: System | undefined = this._getSystemAtAttachmentPosition();
-    const nsid: string = this.getNsid();
-    if (system && system.hasAttachment(nsid)) {
-      system.delAttachment(nsid);
+    const pos: Vector = this._obj.getPosition();
+    const system: System | undefined = TI4.systemRegistry.getByPosition(pos);
+    if (system && system.hasAttachment(this)) {
+      system.delAttachment(this);
       return true;
     }
     return false;
@@ -97,34 +84,30 @@ export class SystemAttachment {
   }
 
   /**
-   * Get the attachment object, if any.
-   *
-   * @return {GameObject | undefined} The attachment object or undefined.
-   */
-  getAttachmentObj(): GameObject | undefined {
-    if (!this._attachmentObjId) {
-      return undefined;
-    }
-    const obj: GameObject | undefined = world.getObjectById(
-      this._attachmentObjId
-    );
-    if (!obj || !obj.isValid()) {
-      return undefined;
-    }
-    return obj;
-  }
-
-  /**
    * Get the token image, if any.
    * Image is in the form of "image:packageId".
    *
    * @returns {string | undefined} The image of the system attachment.
    */
   getImg(): string | undefined {
-    const img: string | undefined = this._params.img;
-    if (!img) {
-      return undefined;
+    const useBack: boolean =
+      (this._params.imgFaceDown && !Facing.isFaceUp(this._obj)) || false;
+    const filename: string = `${this._params.nsidName}${
+      useBack ? ".back" : ""
+    }.png`;
+
+    let img = "token/attachment/system/";
+
+    // Homebrew puts source first to group all related files.
+    // "Official" puts source deeper in the path to collect in a single
+    // folder for easier Object Library usage.
+    if (this._source.startsWith("homebrew")) {
+      img = `${this._source}/${img}/${filename}`;
+    } else {
+      img = `${img}/${this._source}/${filename}`;
     }
+
+    // Attach package id.
     const packageId: string = this._params.imgPackageId ?? refPackageId;
     return `${img}:${packageId}`;
   }
@@ -166,7 +149,7 @@ export class SystemAttachment {
    */
   getWormholes(): Array<string> {
     let result: Array<string> = [];
-    if (this._params.wormholesFaceDown && !this.isAttachmentFaceUp()) {
+    if (this._params.wormholesFaceDown && !Facing.isFaceUp(this._obj)) {
       result.push(...this._params.wormholesFaceDown);
     } else if (this._params.wormholes) {
       result.push(...this._params.wormholes);
@@ -181,13 +164,10 @@ export class SystemAttachment {
    *
    * @returns {Array<WormholeWithGlobalPosition>} The wormholes with global positions.
    */
-  getWormholesWithGlobalPositions(): Array<WormholeWithGlobalPosition> {
-    const result: Array<WormholeWithGlobalPosition> = [];
+  getWormholesWithPositions(): Array<WormholeWithWorldPosition> {
+    const result: Array<WormholeWithWorldPosition> = [];
 
-    const attachmentObj: GameObject | undefined = this.getAttachmentObj();
-
-    const globalPosition: Vector =
-      attachmentObj?.getPosition() ?? new Vector(0, 0, 0);
+    const globalPosition: Vector = this._obj.getPosition();
     for (const wormhole of this.getWormholes()) {
       result.push({
         globalPosition,
@@ -196,29 +176,5 @@ export class SystemAttachment {
     }
 
     return result;
-  }
-
-  /**
-   * Is the attachment object face up?  True if no attachment object.
-   *
-   * @returns {boolean} True if the attachment object is face up.
-   */
-  isAttachmentFaceUp(): boolean {
-    const obj: GameObject | undefined = this.getAttachmentObj();
-    if (!obj) {
-      return true;
-    }
-    return Facing.isFaceUp(obj);
-  }
-
-  /**
-   * Link the system attachment to a token's game object.
-   *
-   * @param objId
-   * @returns
-   */
-  setAttachmentObjId(objId: string | undefined): this {
-    this._attachmentObjId = objId;
-    return this;
   }
 }

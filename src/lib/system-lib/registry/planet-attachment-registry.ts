@@ -103,7 +103,7 @@ export class PlanetAttachmentRegistry {
           TI4.systemRegistry.getByPosition(pos);
         if (system) {
           const planet: Planet | undefined = system.getPlanetClosest(pos);
-          if (planet && !planet.hasAttachment(nsid)) {
+          if (planet && !planet.hasAttachment(nsid, obj.getId())) {
             planet.addAttachment(planetAttachment);
           }
         }

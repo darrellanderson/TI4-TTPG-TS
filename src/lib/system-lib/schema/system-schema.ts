@@ -13,7 +13,7 @@ export const SystemSchema = z
 
     // "map" items are adjacent to other "map" items.
     // "offMap" items are never adjacent to any others (except by wormholes).
-    class: z.enum(["map", "offMap"]).optional(),
+    class: z.enum(["map", "off-map"]).optional(),
 
     // "map" class but not eligible for drafting, e.g. Muaat hero system.
     isExcludeFromDraft: z.boolean().optional(),

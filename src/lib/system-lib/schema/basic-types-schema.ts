@@ -1,9 +1,8 @@
-import exp from "constants";
 import { z } from "zod";
 
 export const AnomalySchema = z.enum([
-  "asteroid_field",
-  "gravity_rift",
+  "asteroid-field",
+  "gravity-rift",
   "nebula",
   "supernova",
 ]);

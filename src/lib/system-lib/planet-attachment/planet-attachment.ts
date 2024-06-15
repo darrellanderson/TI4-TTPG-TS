@@ -21,8 +21,9 @@ import { System } from "../system/system";
  * example for a game effect to add something.
  */
 export class PlanetAttachment {
-  private readonly _params: PlanetAttachmentSchemaType;
+  private readonly _obj: GameObject;
   private readonly _source: string;
+  private readonly _params: PlanetAttachmentSchemaType;
   private _attachmentObjId: string | undefined;
 
   /**
@@ -31,7 +32,11 @@ export class PlanetAttachment {
    *
    * @param {PlanetAttachmentSchemaType} params - The planet attachment parameters.
    */
-  constructor(params: PlanetAttachmentSchemaType, source: string) {
+  constructor(
+    obj: GameObject,
+    source: string,
+    params: PlanetAttachmentSchemaType
+  ) {
     try {
       PlanetAttachmentSchema.parse(params); // validate the schema
       NsidNameSchema.parse(source); // validate the schema
@@ -40,8 +45,9 @@ export class PlanetAttachment {
       throw new Error(msg);
     }
 
-    this._params = params;
+    this._obj = obj;
     this._source = source;
+    this._params = params;
   }
 
   _getPlanetAtAttachmentPosition(): Planet | undefined {
@@ -71,39 +77,34 @@ export class PlanetAttachment {
 
   detach(): boolean {
     const planet: Planet | undefined = this._getPlanetAtAttachmentPosition();
-    const nsid: string = this.getNsid();
-    if (planet && planet.hasAttachment(nsid)) {
-      planet.delAttachment(nsid);
+    if (planet && planet.hasAttachment(this)) {
+      planet.delAttachment(this);
       return true;
     }
     return false;
   }
 
-  /**
-   * Get the attachment object, if any.
-   *
-   * @return {GameObject | undefined} The attachment object or undefined.
-   */
-  public getAttachmentObj(): GameObject | undefined {
-    if (this._attachmentObjId === undefined) {
-      return undefined;
-    }
-    const obj: GameObject | undefined = world.getObjectById(
-      this._attachmentObjId
-    );
-    if (!obj || !obj.isValid()) {
-      return undefined;
-    }
-    return obj;
-  }
+  getImg(): string {
+    const useBack: boolean =
+      (this._params.imgFaceDown && !Facing.isFaceUp(this._obj)) || false;
+    const filename: string = `${this._params.nsidName}${
+      useBack ? ".back" : ""
+    }.png`;
 
-  /**
-   * Get the attachment object ID, if any.
-   *
-   * @return {string | undefined} The attachment object ID or undefined.
-   */
-  public getAttachmentObjId(): string | undefined {
-    return this._attachmentObjId;
+    let img = "token/attachment/planet/";
+
+    // Homebrew puts source first to group all related files.
+    // "Official" puts source deeper in the path to collect in a single
+    // folder for easier Object Library usage.
+    if (this._source.startsWith("homebrew")) {
+      img = `${this._source}/${img}/${filename}`;
+    } else {
+      img = `${img}/${this._source}/${filename}`;
+    }
+
+    // Attach package id.
+    const packageId: string = this._params.imgPackageId ?? refPackageId;
+    return `${img}:${packageId}`;
   }
 
   /**
@@ -115,7 +116,7 @@ export class PlanetAttachment {
   public getInfluence(): number {
     if (
       this._params.influenceFaceDown !== undefined &&
-      !this.isAttachmentFaceUp()
+      !Facing.isFaceUp(this._obj)
     ) {
       return this._params.influenceFaceDown;
     }
@@ -157,7 +158,7 @@ export class PlanetAttachment {
   public getResources(): number {
     if (
       this._params.resourcesFaceDown !== undefined &&
-      !this.isAttachmentFaceUp()
+      !Facing.isFaceUp(this._obj)
     ) {
       return this._params.resourcesFaceDown;
     }
@@ -173,7 +174,7 @@ export class PlanetAttachment {
     const result: Array<string> = [];
     if (
       this._params.techsFaceDown !== undefined &&
-      !this.isAttachmentFaceUp()
+      !Facing.isFaceUp(this._obj)
     ) {
       result.push(...this._params.techsFaceDown);
     } else if (this._params.techs) {
@@ -191,27 +192,13 @@ export class PlanetAttachment {
     const result: Array<string> = [];
     if (
       this._params.traitsFaceDown !== undefined &&
-      !this.isAttachmentFaceUp()
+      !Facing.isFaceUp(this._obj)
     ) {
       result.push(...this._params.traitsFaceDown);
     } else if (this._params.traits) {
       result.push(...this._params.traits);
     }
     return result;
-  }
-
-  /**
-   * Is the planet attachment face up?
-   * True if no attachment object.
-   *
-   * @returns
-   */
-  public isAttachmentFaceUp(): boolean {
-    const obj = this.getAttachmentObj();
-    if (!obj) {
-      return true;
-    }
-    return Facing.isFaceUp(obj);
   }
 
   /**
@@ -230,15 +217,5 @@ export class PlanetAttachment {
    */
   public isLegendary(): boolean {
     return this._params.isLegendary ?? false;
-  }
-
-  /**
-   * Link the attachment to a token's game object.
-   *
-   * @returns
-   */
-  public setAttachmentObjId(objId: string | undefined): this {
-    this._attachmentObjId = objId;
-    return this;
   }
 }
