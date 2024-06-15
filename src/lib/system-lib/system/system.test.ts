@@ -32,6 +32,18 @@ it("static schemaToNsid", () => {
   );
 });
 
+it("static standardLocalPostion", () => {
+  expect(System.standardLocalPosition(0, 2, false)).toEqual(
+    SystemDefaults.PLANET_POS.POS_1_OF_2
+  );
+  expect(System.standardLocalPosition(0, 2, true)).toEqual(
+    SystemDefaults.HOME_PLANET_POS.POS_1_OF_2
+  );
+  expect(() => {
+    System.standardLocalPosition(1, 4, false); // invalid
+  }).toThrow();
+});
+
 it("constructor", () => {
   const obj: GameObject = new MockGameObject();
   const source: string = "my-source";

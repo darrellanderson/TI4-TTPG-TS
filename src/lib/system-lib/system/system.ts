@@ -5,6 +5,7 @@ import { Planet } from "../planet/planet";
 import { SystemAttachment } from "../system-attachment/system-attachment";
 import { NsidNameSchema } from "../schema/basic-types-schema";
 import { PlanetSchemaType } from "../schema/planet-schema";
+import { SystemDefaults } from "../data/system-defaults";
 
 export type WormholeWithWorldPosition = {
   wormhole: string;
@@ -17,13 +18,10 @@ export type WormholeWithLocalPosition = {
 };
 
 /**
- * Represent a single system, usually with a corresponding system tile game
- * object.  It can exist without a system tile object for data lookups, etc.
+ * Represent a single system with a corresponding system tile game object.
  *
- * Systems can have multiple attachments, normally add by placing a system
- * attachment token (e.g. "alpha wormhole") and delete by removing the token.
- *
- * A token-less system attachment is possible, see it for details.
+ * Systems can have multiple attachments, add by placing a system attachment
+ * token game object (e.g. "alpha wormhole") and delete by removing the token.
  */
 export class System {
   private readonly _obj: GameObject;
@@ -36,6 +34,12 @@ export class System {
     | undefined;
   private readonly _attachments: Array<SystemAttachment> = [];
 
+  /**
+   * Parse the system tile number from an NSID.
+   *
+   * @param nsid
+   * @returns
+   */
   public static nsidToSystemTileNumber(nsid: string): number | undefined {
     if (nsid.startsWith("tile.system:")) {
       const parsed: ParsedNSID | undefined = NSID.parse(nsid);
@@ -52,8 +56,42 @@ export class System {
     return undefined;
   }
 
+  /**
+   * Generate the NSID for a system tile from its source and schema.
+   *
+   * @param source
+   * @param schema
+   * @returns
+   */
   public static schemaToNsid(source: string, schema: SystemSchemaType): string {
     return `tile.system:${source}/${schema.tile}`;
+  }
+
+  /**
+   * Get the local position of the planet from a standard position.
+   * The standard position is based on the entity index and count, entities
+   * can include wormholes as well.
+   *
+   * @param entityIndex
+   * @param entityCount
+   * @param isHome
+   * @returns
+   */
+  public static standardLocalPosition(
+    entityIndex: number,
+    entityCount: number,
+    isHome: boolean
+  ): Vector {
+    // Apply standard position.
+    const map: { [key: string]: Vector } = isHome
+      ? SystemDefaults.HOME_PLANET_POS
+      : SystemDefaults.PLANET_POS;
+    const key: string = `POS_${entityIndex + 1}_OF_${entityCount}`;
+    const pos: Vector | undefined = map[key];
+    if (!pos) {
+      throw new Error(`Invalid planet position: ${key}`);
+    }
+    return pos;
   }
 
   constructor(obj: GameObject, source: string, params: SystemSchemaType) {
@@ -69,6 +107,12 @@ export class System {
     this._source = source;
     this._params = params;
 
+    // Wormholes also use default-position slots.
+    // Do not apply wormholes with position overrides, those systems differ.
+    const numPlanets: number = params.planets?.length ?? 0;
+    const numWormholes: number = params.wormholes?.length ?? 0;
+    const numPositionEntities: number = numPlanets + numWormholes;
+
     // Planets.  Apply default positions if not specified.
     if (params.planets) {
       for (let i = 0; i < params.planets.length; i++) {
@@ -80,11 +124,12 @@ export class System {
             planetParams
           );
           if (!planetParams.localPosition) {
-            planet.setLocalPositionFromStandard(
+            const pos: Vector = System.standardLocalPosition(
               i,
-              params.planets.length,
+              numPositionEntities,
               this.isHome()
             );
+            planet.setLocalPosition(pos);
           }
 
           this._planets.push(planet);
@@ -93,14 +138,22 @@ export class System {
     }
 
     // Wormholes (face up and face down, as well as with positions)
+    // Apply default positions for position-less wormholes.
     if (params.wormholes) {
-      for (const wormhole of params.wormholes) {
-        const localPosition: Vector = new Vector(0, 0, 0);
-        const wormholeWithLocalPosition: WormholeWithLocalPosition = {
-          wormhole,
-          localPosition,
-        };
-        this._wormholes.push(wormholeWithLocalPosition);
+      for (let i = 0; i < params.wormholes.length; i++) {
+        const wormhole: string | undefined = params.wormholes[i];
+        if (wormhole) {
+          const localPosition: Vector = System.standardLocalPosition(
+            i + numPlanets,
+            numPositionEntities,
+            this.isHome()
+          );
+          const wormholeWithLocalPosition: WormholeWithLocalPosition = {
+            wormhole,
+            localPosition,
+          };
+          this._wormholes.push(wormholeWithLocalPosition);
+        }
       }
     }
     if (params.wormholesWithPositions) {

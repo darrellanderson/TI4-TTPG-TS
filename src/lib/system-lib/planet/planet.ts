@@ -220,29 +220,12 @@ export class Planet {
   }
 
   /**
-   * Set the local position of the planet from a standard position.
-   * The standard position is based on the entity index and count, entities
-   * can include wormholes as well.
+   * Set planet local position.
    *
-   * @param entityIndex
-   * @param entityCount
-   * @param isHome
+   * @param pos
    * @returns
    */
-  setLocalPositionFromStandard(
-    entityIndex: number,
-    entityCount: number,
-    isHome: boolean
-  ): this {
-    // Apply standard position.
-    const map: { [key: string]: Vector } = isHome
-      ? SystemDefaults.HOME_PLANET_POS
-      : SystemDefaults.PLANET_POS;
-    const key: string = `POS_${entityIndex + 1}_OF_${entityCount}`;
-    const pos: Vector | undefined = map[key];
-    if (!pos) {
-      throw new Error(`Invalid planet position: ${key}`);
-    }
+  setLocalPosition(pos: Vector): this {
     this._localPosition = pos;
     return this;
   }
