@@ -3,7 +3,7 @@ import { NSID } from "ttpg-darrell";
 
 import { SystemAttachment } from "../system-attachment/system-attachment";
 import {
-  NsidNameSchema,
+  SourceAndPackageIdSchema,
   SourceAndPackageIdSchemaType,
 } from "../schema/basic-types-schema";
 import {
@@ -134,8 +134,8 @@ export class SystemAttachmentRegistry {
     for (const systemAttachmentSchemaType of systemAttachmentSchemaTypes) {
       // Validate schema (oterhwise not validated until used).
       try {
+        SourceAndPackageIdSchema.parse(sourceAndPackageId);
         SystemAttachmentSchema.parse(systemAttachmentSchemaType);
-        NsidNameSchema.parse(sourceAndPackageId);
       } catch (e) {
         const msg = `error: ${e.message}\nparsing: ${JSON.stringify(
           systemAttachmentSchemaType
