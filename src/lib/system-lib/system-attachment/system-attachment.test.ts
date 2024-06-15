@@ -94,7 +94,7 @@ it("img homebrew", () => {
     imgPackageId: "my-package-id",
   });
   expect(attachment.getImg()).toBe(
-    "my-source/token/attachment/system/my-nsid-name.png:my-package-id"
+    "homebrew-x/token/attachment/system/my-nsid-name.png:my-package-id"
   );
 });
 
