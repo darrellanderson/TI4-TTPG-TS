@@ -171,10 +171,22 @@ export class System {
       if (attachment.getNsid() !== nsid) {
         continue;
       }
-      if (objId && objId !== attachment.getAttachmentObj()?.getId()) {
-        continue;
+
+      // If no object to compare, just return true.
+      if (!objId) {
+        return true;
       }
-      return true;
+
+      // Otherwise, compare object IDs.
+      const attachmentObj: GameObject | undefined =
+        attachment.getAttachmentObj();
+      if (
+        attachmentObj &&
+        attachmentObj.isValid() &&
+        attachmentObj.getId() === objId
+      ) {
+        return true;
+      }
     }
     return false;
   }

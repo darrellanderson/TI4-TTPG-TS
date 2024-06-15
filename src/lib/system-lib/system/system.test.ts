@@ -179,21 +179,27 @@ it("attachment management", () => {
   });
 
   expect(system.hasAttachment(attachmentNsid1)).toBe(false);
+  expect(system.hasAttachment(attachmentNsid1, "token-1")).toBe(false);
   expect(system.hasAttachment(attachmentNsid2)).toBe(false);
 
   system.addAttachment(attachment1);
-  expect(system.hasAttachment(attachmentNsid1)).toBe(true);
+  expect(system.hasAttachment(attachmentNsid1)).toBe(true); // new
   expect(system.hasAttachment(attachmentNsid1, "token-1")).toBe(false);
   expect(system.hasAttachment(attachmentNsid2)).toBe(false);
 
   attachment1.setAttachmentObjId("token-1");
-  expect(system.hasAttachment(attachmentNsid1, "token-1")).toBe(true);
+  expect(system.hasAttachment(attachmentNsid1)).toBe(true);
+  expect(system.hasAttachment(attachmentNsid1, "token-1")).toBe(true); // new
+  expect(system.hasAttachment(attachmentNsid2)).toBe(false);
 
   attachmentTokenObj1.destroy();
-  expect(system.hasAttachment(attachmentNsid1, "token-1")).toBe(false);
+  expect(system.hasAttachment(attachmentNsid1)).toBe(true); // did not ask about object
+  expect(system.hasAttachment(attachmentNsid1, "token-1")).toBe(false); // new
+  expect(system.hasAttachment(attachmentNsid2)).toBe(false);
 
-  system.delAttachment(attachmentNsid2);
-  expect(system.hasAttachment(attachmentNsid1)).toBe(false);
+  system.delAttachment(attachmentNsid1);
+  expect(system.hasAttachment(attachmentNsid1)).toBe(false); // new
+  expect(system.hasAttachment(attachmentNsid1, "token-1")).toBe(false);
   expect(system.hasAttachment(attachmentNsid2)).toBe(false);
 });
 
