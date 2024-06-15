@@ -4,6 +4,7 @@ import { GameObject, Vector, refPackageId } from "@tabletop-playground/api";
 import { SystemSchemaType } from "../schema/system-schema";
 import { SystemAttachment } from "../system-attachment/system-attachment";
 import { Planet } from "../planet/planet";
+import { SystemDefaults } from "../data/system-defaults";
 
 it("static nsidToSystemTileNumber", () => {
   expect(System.nsidToSystemTileNumber("tile.system:my-source/1")).toBe(1);
@@ -25,8 +26,8 @@ it("static nsidToSystemTileNumber (name not a number)", () => {
   expect(System.nsidToSystemTileNumber("tile.system:base/x")).toBeUndefined();
 });
 
-it("static systemSchemaToNsid", () => {
-  expect(System.systemSchemaToNsid("my-source", { tile: 1 })).toBe(
+it("static schemaToNsid", () => {
+  expect(System.schemaToNsid("my-source", { tile: 1 })).toBe(
     "tile.system:my-source/1"
   );
 });
@@ -204,7 +205,11 @@ it("getPlanets", () => {
     tile: 1,
     planets: [
       { name: "planet-1", nsidName: "my-nsid-name-1" },
-      { name: "planet-2", nsidName: "my-nsid-name-2" },
+      {
+        name: "planet-2",
+        nsidName: "my-nsid-name-2",
+        localPosition: { x: 1, y: 2 },
+      },
     ],
   });
   const attachment = new SystemAttachment(new MockGameObject(), "my-source", {
@@ -213,11 +218,16 @@ it("getPlanets", () => {
     planets: [{ name: "planet-3", nsidName: "my-nsid-name" }],
   });
   system.addAttachment(attachment);
-  expect(system.getPlanets().map((p) => p.getName())).toEqual([
+  const planets: Array<Planet> = system.getPlanets();
+  expect(planets.map((p) => p.getName())).toEqual([
     "planet-1",
     "planet-2",
     "planet-3",
   ]);
+  expect(planets[0]?.getPosition().toString()).toBe(
+    SystemDefaults.PLANET_POS.POS_1_OF_2?.toString()
+  );
+  expect(planets[1]?.getPosition().toString()).toBe("(X=1,Y=2,Z=0)");
 });
 
 it("getSystemTileNumber", () => {

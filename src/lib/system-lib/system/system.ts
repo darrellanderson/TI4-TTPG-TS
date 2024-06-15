@@ -4,6 +4,7 @@ import { SystemSchema, SystemSchemaType } from "../schema/system-schema";
 import { Planet } from "../planet/planet";
 import { SystemAttachment } from "../system-attachment/system-attachment";
 import { NsidNameSchema } from "../schema/basic-types-schema";
+import { PlanetSchemaType } from "../schema/planet-schema";
 
 export type WormholeWithWorldPosition = {
   wormhole: string;
@@ -51,10 +52,7 @@ export class System {
     return undefined;
   }
 
-  public static systemSchemaToNsid(
-    source: string,
-    schema: SystemSchemaType
-  ): string {
+  public static schemaToNsid(source: string, schema: SystemSchemaType): string {
     return `tile.system:${source}/${schema.tile}`;
   }
 
@@ -71,15 +69,26 @@ export class System {
     this._source = source;
     this._params = params;
 
-    // Planets.
+    // Planets.  Apply default positions if not specified.
     if (params.planets) {
-      for (const planetParams of params.planets) {
-        const planet: Planet = new Planet(
-          this._obj,
-          this._source,
-          planetParams
-        );
-        this._planets.push(planet);
+      for (let i = 0; i < params.planets.length; i++) {
+        const planetParams: PlanetSchemaType | undefined = params.planets[i];
+        if (planetParams) {
+          const planet: Planet = new Planet(
+            this._obj,
+            this._source,
+            planetParams
+          );
+          if (!planetParams.localPosition) {
+            planet.setLocalPositionFromStandard(
+              i,
+              params.planets.length,
+              this.isHome()
+            );
+          }
+
+          this._planets.push(planet);
+        }
       }
     }
 

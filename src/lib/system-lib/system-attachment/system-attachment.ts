@@ -22,8 +22,11 @@ export class SystemAttachment {
   private readonly _params: SystemAttachmentSchemaType;
   private readonly _planets: Array<Planet> = [];
 
-  static schemaToNsid(source: string, nsidName: string): string {
-    return `token.attachment.system:${source}/${nsidName}`;
+  static schemaToNsid(
+    source: string,
+    schema: SystemAttachmentSchemaType
+  ): string {
+    return `token.attachment.system:${source}/${schema.nsidName}`;
   }
 
   /**

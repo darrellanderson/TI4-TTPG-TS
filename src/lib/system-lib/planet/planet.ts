@@ -122,21 +122,21 @@ export class Planet {
   }
 
   /**
-   * Get the global position of the planet.
-   *
-   * @returns
-   */
-  getPosition(): Vector {
-    return this._obj.localPositionToWorld(this._localPosition);
-  }
-
-  /**
    * Get planet card NSID.
    *
    * @returns {string} The NSID of the planet card.
    */
   getPlanetCardNsid(): string {
     return `card.planet:${this._source}/${this._params.nsidName}`;
+  }
+
+  /**
+   * Get the global position of the planet.
+   *
+   * @returns
+   */
+  getPosition(): Vector {
+    return this._obj.localPositionToWorld(this._localPosition);
   }
 
   /**
