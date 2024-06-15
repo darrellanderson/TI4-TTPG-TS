@@ -8,7 +8,6 @@ export const PlanetAttachmentSchema = z
     nsidName: NsidNameSchema, // NSID "token.attachment.planet:${source}/${nsidName}"
 
     imgFaceDown: z.boolean().optional(),
-    imgPackageId: z.string().optional(),
 
     influence: z.number().optional(),
     influenceFaceDown: z.number().optional(),

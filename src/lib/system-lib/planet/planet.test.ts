@@ -11,7 +11,11 @@ it("constructor", () => {
     name: "my-planet-name",
     nsidName: "my-planet-card-nsid",
   };
-  const planet = new Planet(new MockGameObject(), "my-source", params);
+  const planet = new Planet(
+    new MockGameObject(),
+    { source: "my-source", packageId: "my-package-id" },
+    params
+  );
   expect(planet.getName()).toEqual("my-planet-name");
 });
 
@@ -21,19 +25,31 @@ it("constructor (invalid params)", () => {
     nsidName: "@@invalid??",
   };
   expect(() => {
-    new Planet(new MockGameObject(), "my-source", params);
+    new Planet(
+      new MockGameObject(),
+      { source: "my-source", packageId: "my-package-id" },
+      params
+    );
   }).toThrow();
 });
 
 it("attachment management", () => {
-  const planet = new Planet(new MockGameObject(), "my-source", {
-    name: "my-planet-name",
-    nsidName: "my-planet-card-nsid",
-  });
-  const attachment = new PlanetAttachment(new MockGameObject(), "my-source", {
-    name: "my-attachment-name",
-    nsidName: "my-attachment-nsid-name",
-  });
+  const planet = new Planet(
+    new MockGameObject(),
+    { source: "my-source", packageId: "my-package-id" },
+    {
+      name: "my-planet-name",
+      nsidName: "my-planet-card-nsid",
+    }
+  );
+  const attachment = new PlanetAttachment(
+    new MockGameObject(),
+    { source: "my-source", packageId: "my-package-id" },
+    {
+      name: "my-attachment-name",
+      nsidName: "my-attachment-nsid-name",
+    }
+  );
   let success: boolean = false;
   expect(planet.hasAttachment(attachment)).toEqual(false);
 
@@ -55,39 +71,59 @@ it("attachment management", () => {
 });
 
 it("getInfluence", () => {
-  const planet = new Planet(new MockGameObject(), "my-source", {
-    name: "my-planet-name",
-    nsidName: "my-planet-card-nsid",
-    influence: 2,
-  });
-  const attachment = new PlanetAttachment(new MockGameObject(), "my-source", {
-    name: "my-attachment-name",
-    nsidName: "my-attachment-nsid-name",
-    influence: 3,
-  });
+  const planet = new Planet(
+    new MockGameObject(),
+    { source: "my-source", packageId: "my-package-id" },
+    {
+      name: "my-planet-name",
+      nsidName: "my-planet-card-nsid",
+      influence: 2,
+    }
+  );
+  const attachment = new PlanetAttachment(
+    new MockGameObject(),
+    { source: "my-source", packageId: "my-package-id" },
+    {
+      name: "my-attachment-name",
+      nsidName: "my-attachment-nsid-name",
+      influence: 3,
+    }
+  );
   planet.addAttachment(attachment);
   expect(planet.getInfluence()).toEqual(5);
 });
 
 it("getInfluence (default)", () => {
-  const planet = new Planet(new MockGameObject(), "my-source", {
-    name: "my-planet-name",
-    nsidName: "my-planet-card-nsid",
-  });
+  const planet = new Planet(
+    new MockGameObject(),
+    { source: "my-source", packageId: "my-package-id" },
+    {
+      name: "my-planet-name",
+      nsidName: "my-planet-card-nsid",
+    }
+  );
   expect(planet.getInfluence()).toEqual(0);
 });
 
 it("getLegendarynsidNames", () => {
-  const planet = new Planet(new MockGameObject(), "my-source", {
-    name: "my-planet-name",
-    nsidName: "my-planet-card-nsid",
-    legendaryNsidName: "my-planet-legendary-card-nsid",
-  });
-  const attachment = new PlanetAttachment(new MockGameObject(), "my-source", {
-    name: "my-attachment-name",
-    nsidName: "my-attachment-nsid-name",
-    legendaryNsidName: "my-attachment-legendary-card-nsid",
-  });
+  const planet = new Planet(
+    new MockGameObject(),
+    { source: "my-source", packageId: "my-package-id" },
+    {
+      name: "my-planet-name",
+      nsidName: "my-planet-card-nsid",
+      legendaryNsidName: "my-planet-legendary-card-nsid",
+    }
+  );
+  const attachment = new PlanetAttachment(
+    new MockGameObject(),
+    { source: "my-source", packageId: "my-package-id" },
+    {
+      name: "my-attachment-name",
+      nsidName: "my-attachment-nsid-name",
+      legendaryNsidName: "my-attachment-legendary-card-nsid",
+    }
+  );
   planet.addAttachment(attachment);
   expect(planet.getLegendaryCardNsids()).toEqual([
     "card.legendary_planet:my-source/my-planet-legendary-card-nsid",
@@ -96,192 +132,288 @@ it("getLegendarynsidNames", () => {
 });
 
 it("getLegendarynsidNames (default)", () => {
-  const planet = new Planet(new MockGameObject(), "my-source", {
-    name: "my-planet-name",
-    nsidName: "my-planet-card-nsid",
-  });
+  const planet = new Planet(
+    new MockGameObject(),
+    { source: "my-source", packageId: "my-package-id" },
+    {
+      name: "my-planet-name",
+      nsidName: "my-planet-card-nsid",
+    }
+  );
   expect(planet.getLegendaryCardNsids()).toEqual([]);
 });
 
 it("getName", () => {
-  const planet = new Planet(new MockGameObject(), "my-source", {
-    name: "my-planet-name",
-    nsidName: "my-planet-card-nsid",
-  });
+  const planet = new Planet(
+    new MockGameObject(),
+    { source: "my-source", packageId: "my-package-id" },
+    {
+      name: "my-planet-name",
+      nsidName: "my-planet-card-nsid",
+    }
+  );
   expect(planet.getName()).toEqual("my-planet-name");
 });
 
 it("getPlanetCardNsid", () => {
-  const planet = new Planet(new MockGameObject(), "my-source", {
-    name: "my-planet-name",
-    nsidName: "my-planet-card-nsid-name",
-  });
+  const planet = new Planet(
+    new MockGameObject(),
+    { source: "my-source", packageId: "my-package-id" },
+    {
+      name: "my-planet-name",
+      nsidName: "my-planet-card-nsid-name",
+    }
+  );
   expect(planet.getPlanetCardNsid()).toEqual(
     "card.planet:my-source/my-planet-card-nsid-name"
   );
 });
 
 it("getPosition", () => {
-  const planet = new Planet(new MockGameObject(), "my-source", {
-    name: "my-planet-name",
-    nsidName: "my-planet-card-nsid",
-    localPosition: { x: 1, y: 2 },
-  });
+  const planet = new Planet(
+    new MockGameObject(),
+    { source: "my-source", packageId: "my-package-id" },
+    {
+      name: "my-planet-name",
+      nsidName: "my-planet-card-nsid",
+      localPosition: { x: 1, y: 2 },
+    }
+  );
   expect(planet.getPosition().toString()).toEqual("(X=1,Y=2,Z=0)");
 });
 
 it("getPosition (default)", () => {
-  const planet = new Planet(new MockGameObject(), "my-source", {
-    name: "my-planet-name",
-    nsidName: "my-planet-card-nsid",
-  });
+  const planet = new Planet(
+    new MockGameObject(),
+    { source: "my-source", packageId: "my-package-id" },
+    {
+      name: "my-planet-name",
+      nsidName: "my-planet-card-nsid",
+    }
+  );
   expect(planet.getPosition().toString()).toEqual("(X=0,Y=0,Z=0)");
 });
 
 it("getRadius", () => {
-  const planet = new Planet(new MockGameObject(), "my-source", {
-    name: "my-planet-name",
-    nsidName: "my-planet-card-nsid",
-    radius: 2,
-  });
+  const planet = new Planet(
+    new MockGameObject(),
+    { source: "my-source", packageId: "my-package-id" },
+    {
+      name: "my-planet-name",
+      nsidName: "my-planet-card-nsid",
+      radius: 2,
+    }
+  );
   expect(planet.getRadius()).toEqual(2);
 });
 
 it("getRadius (default)", () => {
-  const planet = new Planet(new MockGameObject(), "my-source", {
-    name: "my-planet-name",
-    nsidName: "my-planet-card-nsid",
-  });
+  const planet = new Planet(
+    new MockGameObject(),
+    { source: "my-source", packageId: "my-package-id" },
+    {
+      name: "my-planet-name",
+      nsidName: "my-planet-card-nsid",
+    }
+  );
   expect(planet.getRadius()).toEqual(SystemDefaults.PLANET_RADIUS);
 });
 
 it("getResources", () => {
-  const planet = new Planet(new MockGameObject(), "my-source", {
-    name: "my-planet-name",
-    nsidName: "my-planet-card-nsid",
-    resources: 2,
-  });
-  const attachment = new PlanetAttachment(new MockGameObject(), "my-source", {
-    name: "my-attachment-name",
-    nsidName: "my-attachment-nsid-name",
-    resources: 3,
-  });
+  const planet = new Planet(
+    new MockGameObject(),
+    { source: "my-source", packageId: "my-package-id" },
+    {
+      name: "my-planet-name",
+      nsidName: "my-planet-card-nsid",
+      resources: 2,
+    }
+  );
+  const attachment = new PlanetAttachment(
+    new MockGameObject(),
+    { source: "my-source", packageId: "my-package-id" },
+    {
+      name: "my-attachment-name",
+      nsidName: "my-attachment-nsid-name",
+      resources: 3,
+    }
+  );
   planet.addAttachment(attachment);
   expect(planet.getResources()).toEqual(5);
 });
 
 it("getResources (default)", () => {
-  const planet = new Planet(new MockGameObject(), "my-source", {
-    name: "my-planet-name",
-    nsidName: "my-planet-card-nsid",
-  });
+  const planet = new Planet(
+    new MockGameObject(),
+    { source: "my-source", packageId: "my-package-id" },
+    {
+      name: "my-planet-name",
+      nsidName: "my-planet-card-nsid",
+    }
+  );
   expect(planet.getResources()).toEqual(0);
 });
 
 it("getTechs", () => {
-  const planet = new Planet(new MockGameObject(), "my-source", {
-    name: "my-planet-name",
-    nsidName: "my-planet-card-nsid",
-    techs: ["red"],
-  });
-  const attachment = new PlanetAttachment(new MockGameObject(), "my-source", {
-    name: "my-attachment-name",
-    nsidName: "my-attachment-nsid-name",
-    techs: ["blue"],
-  });
+  const planet = new Planet(
+    new MockGameObject(),
+    { source: "my-source", packageId: "my-package-id" },
+    {
+      name: "my-planet-name",
+      nsidName: "my-planet-card-nsid",
+      techs: ["red"],
+    }
+  );
+  const attachment = new PlanetAttachment(
+    new MockGameObject(),
+    { source: "my-source", packageId: "my-package-id" },
+    {
+      name: "my-attachment-name",
+      nsidName: "my-attachment-nsid-name",
+      techs: ["blue"],
+    }
+  );
   planet.addAttachment(attachment);
   expect(planet.getTechs()).toEqual(["red", "blue"]);
 });
 
 it("getTechs (default)", () => {
-  const planet = new Planet(new MockGameObject(), "my-source", {
-    name: "my-planet-name",
-    nsidName: "my-planet-card-nsid",
-  });
+  const planet = new Planet(
+    new MockGameObject(),
+    { source: "my-source", packageId: "my-package-id" },
+    {
+      name: "my-planet-name",
+      nsidName: "my-planet-card-nsid",
+    }
+  );
   expect(planet.getTechs()).toEqual([]);
 });
 
 it("getTraits", () => {
-  const planet = new Planet(new MockGameObject(), "my-source", {
-    name: "my-planet-name",
-    nsidName: "my-planet-card-nsid",
-    traits: ["cultural"],
-  });
-  const attachment = new PlanetAttachment(new MockGameObject(), "my-source", {
-    name: "my-attachment-name",
-    nsidName: "my-attachment-nsid-name",
-    traits: ["industrial"],
-  });
+  const planet = new Planet(
+    new MockGameObject(),
+    { source: "my-source", packageId: "my-package-id" },
+    {
+      name: "my-planet-name",
+      nsidName: "my-planet-card-nsid",
+      traits: ["cultural"],
+    }
+  );
+  const attachment = new PlanetAttachment(
+    new MockGameObject(),
+    { source: "my-source", packageId: "my-package-id" },
+    {
+      name: "my-attachment-name",
+      nsidName: "my-attachment-nsid-name",
+      traits: ["industrial"],
+    }
+  );
   planet.addAttachment(attachment);
   expect(planet.getTraits()).toEqual(["cultural", "industrial"]);
 });
 
 it("getTraits (default)", () => {
-  const planet = new Planet(new MockGameObject(), "my-source", {
-    name: "my-planet-name",
-    nsidName: "my-planet-card-nsid",
-  });
+  const planet = new Planet(
+    new MockGameObject(),
+    { source: "my-source", packageId: "my-package-id" },
+    {
+      name: "my-planet-name",
+      nsidName: "my-planet-card-nsid",
+    }
+  );
   expect(planet.getTraits()).toEqual([]);
 });
 
 it("isDestroyedPlanet", () => {
-  const planet = new Planet(new MockGameObject(), "my-source", {
-    name: "my-planet-name",
-    nsidName: "my-planet-card-nsid",
-  });
-  const attachment = new PlanetAttachment(new MockGameObject(), "my-source", {
-    name: "my-attachment-name",
-    nsidName: "my-attachment-nsid-name",
-    isDestroyPlanet: true,
-  });
+  const planet = new Planet(
+    new MockGameObject(),
+    { source: "my-source", packageId: "my-package-id" },
+    {
+      name: "my-planet-name",
+      nsidName: "my-planet-card-nsid",
+    }
+  );
+  const attachment = new PlanetAttachment(
+    new MockGameObject(),
+    { source: "my-source", packageId: "my-package-id" },
+    {
+      name: "my-attachment-name",
+      nsidName: "my-attachment-nsid-name",
+      isDestroyPlanet: true,
+    }
+  );
   planet.addAttachment(attachment);
   expect(planet.isDestroyedPlanet()).toEqual(true);
 });
 
 it("isDestroyedPlanet (default)", () => {
-  const planet = new Planet(new MockGameObject(), "my-source", {
-    name: "my-planet-name",
-    nsidName: "my-planet-card-nsid",
-  });
+  const planet = new Planet(
+    new MockGameObject(),
+    { source: "my-source", packageId: "my-package-id" },
+    {
+      name: "my-planet-name",
+      nsidName: "my-planet-card-nsid",
+    }
+  );
   expect(planet.isDestroyedPlanet()).toEqual(false);
 });
 
 it("isLegendaryPlanet", () => {
-  const planet = new Planet(new MockGameObject(), "my-source", {
-    name: "my-planet-name",
-    nsidName: "my-planet-card-nsid",
-    isLegendary: true,
-  });
+  const planet = new Planet(
+    new MockGameObject(),
+    { source: "my-source", packageId: "my-package-id" },
+    {
+      name: "my-planet-name",
+      nsidName: "my-planet-card-nsid",
+      isLegendary: true,
+    }
+  );
   expect(planet.isLegendary()).toEqual(true);
 });
 
 it("isLegendaryPlanet (attachment)", () => {
-  const planet = new Planet(new MockGameObject(), "my-source", {
-    name: "my-planet-name",
-    nsidName: "my-planet-card-nsid",
-  });
-  const attachment = new PlanetAttachment(new MockGameObject(), "my-source", {
-    name: "my-attachment-name",
-    nsidName: "my-attachment-nsid-name",
-    isLegendary: true,
-  });
+  const planet = new Planet(
+    new MockGameObject(),
+    { source: "my-source", packageId: "my-package-id" },
+    {
+      name: "my-planet-name",
+      nsidName: "my-planet-card-nsid",
+    }
+  );
+  const attachment = new PlanetAttachment(
+    new MockGameObject(),
+    { source: "my-source", packageId: "my-package-id" },
+    {
+      name: "my-attachment-name",
+      nsidName: "my-attachment-nsid-name",
+      isLegendary: true,
+    }
+  );
   planet.addAttachment(attachment);
   expect(planet.isLegendary()).toEqual(true);
 });
 
 it("isLegendaryPlanet (default)", () => {
-  const planet = new Planet(new MockGameObject(), "my-source", {
-    name: "my-planet-name",
-    nsidName: "my-planet-card-nsid",
-  });
+  const planet = new Planet(
+    new MockGameObject(),
+    { source: "my-source", packageId: "my-package-id" },
+    {
+      name: "my-planet-name",
+      nsidName: "my-planet-card-nsid",
+    }
+  );
   expect(planet.isLegendary()).toEqual(false);
 });
 
 it("setLocalPosition", () => {
-  const planet = new Planet(new MockGameObject(), "my-source", {
-    name: "my-planet-name",
-    nsidName: "my-planet-card-nsid",
-  });
+  const planet = new Planet(
+    new MockGameObject(),
+    { source: "my-source", packageId: "my-package-id" },
+    {
+      name: "my-planet-name",
+      nsidName: "my-planet-card-nsid",
+    }
+  );
   expect(planet.getPosition().toString()).toEqual("(X=0,Y=0,Z=0)");
 
   planet.setLocalPosition(new Vector(1, 2, 3));

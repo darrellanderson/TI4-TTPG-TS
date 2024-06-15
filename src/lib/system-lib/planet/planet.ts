@@ -2,7 +2,10 @@ import { GameObject, Vector } from "@tabletop-playground/api";
 import { PlanetSchema, PlanetSchemaType } from "../schema/planet-schema";
 import { PlanetAttachment } from "../planet-attachment/planet-attachment";
 import { SystemDefaults } from "../data/system-defaults";
-import { NsidNameSchema } from "../schema/basic-types-schema";
+import {
+  SourceAndPackageIdSchema,
+  SourceAndPackageIdSchemaType,
+} from "../schema/basic-types-schema";
 
 /**
  * Represent a single planet.
@@ -14,22 +17,26 @@ import { NsidNameSchema } from "../schema/basic-types-schema";
  */
 export class Planet {
   private readonly _obj: GameObject; // system tile or system attachment
-  private readonly _source: string;
+  private readonly _sourceAndPackageId: SourceAndPackageIdSchemaType;
   private readonly _params: PlanetSchemaType;
   private readonly _attachments: Array<PlanetAttachment> = [];
   private _localPosition: Vector = new Vector(0, 0, 0);
 
-  constructor(obj: GameObject, source: string, params: PlanetSchemaType) {
+  constructor(
+    obj: GameObject,
+    sourceAndPackageId: SourceAndPackageIdSchemaType,
+    params: PlanetSchemaType
+  ) {
     try {
       PlanetSchema.parse(params); // validate the schema
-      NsidNameSchema.parse(source); // validate the schema
+      SourceAndPackageIdSchema.parse(sourceAndPackageId); // validate the schema
     } catch (e) {
       const msg = `error: ${e.message}\nparsing: ${JSON.stringify(params)}`;
       throw new Error(msg);
     }
 
     this._obj = obj;
-    this._source = source;
+    this._sourceAndPackageId = sourceAndPackageId;
     this._params = params;
 
     if (params.localPosition) {
@@ -103,7 +110,8 @@ export class Planet {
   getLegendaryCardNsids(): Array<string> {
     const result: Array<string> = [];
     if (this._params.legendaryNsidName) {
-      const nsid: string = `card.legendary_planet:${this._source}/${this._params.legendaryNsidName}`;
+      const source: string = this._sourceAndPackageId.source;
+      const nsid: string = `card.legendary_planet:${source}/${this._params.legendaryNsidName}`;
       result.push(nsid);
     }
     for (const attachment of this._attachments) {
@@ -130,7 +138,8 @@ export class Planet {
    * @returns {string} The NSID of the planet card.
    */
   getPlanetCardNsid(): string {
-    return `card.planet:${this._source}/${this._params.nsidName}`;
+    const source: string = this._sourceAndPackageId.source;
+    return `card.planet:${source}/${this._params.nsidName}`;
   }
 
   /**

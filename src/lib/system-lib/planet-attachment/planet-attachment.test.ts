@@ -1,10 +1,9 @@
-import { GameObject, Vector, refPackageId } from "@tabletop-playground/api";
+import { Vector } from "@tabletop-playground/api";
 import { MockGameObject } from "ttpg-mock";
 import { PlanetAttachment } from "./planet-attachment";
 import { resetGlobalThisTI4 } from "../../../global/global";
 import { System } from "../system/system";
 import { Planet } from "../planet/planet";
-import exp from "constants";
 
 it("static schemaToNsid", () => {
   expect(
@@ -18,7 +17,7 @@ it("static schemaToNsid", () => {
 it("constructor", () => {
   const planetAttachment = new PlanetAttachment(
     new MockGameObject(),
-    "my-source",
+    { source: "my-source", packageId: "my-package-id" },
     {
       name: "my-name",
       nsidName: "my-nsid-name",
@@ -29,10 +28,14 @@ it("constructor", () => {
 
 it("constructor (invalid params)", () => {
   expect(() => {
-    new PlanetAttachment(new MockGameObject(), "my-source", {
-      name: "",
-      nsidName: "@@invalid??",
-    });
+    new PlanetAttachment(
+      new MockGameObject(),
+      { source: "my-source", packageId: "my-package-id" },
+      {
+        name: "",
+        nsidName: "@@invalid??",
+      }
+    );
   }).toThrow();
 });
 
@@ -41,7 +44,7 @@ it("attach/detach", () => {
 
   const planetAttachment = new PlanetAttachment(
     new MockGameObject(),
-    "my-source",
+    { source: "my-source", packageId: "my-package-id" },
     {
       name: "my-name",
       nsidName: "my-nsid-name",
@@ -91,11 +94,14 @@ it("attach/detach", () => {
 });
 
 it("img", () => {
-  const attachment = new PlanetAttachment(new MockGameObject(), "my-source", {
-    name: "my-name",
-    nsidName: "my-nsid-name",
-    imgPackageId: "my-package-id",
-  });
+  const attachment = new PlanetAttachment(
+    new MockGameObject(),
+    { source: "my-source", packageId: "my-package-id" },
+    {
+      name: "my-name",
+      nsidName: "my-nsid-name",
+    }
+  );
   expect(attachment.getImg()).toBe(
     "token/attachment/planet/my-source/my-nsid-name.png:my-package-id"
   );
@@ -104,12 +110,11 @@ it("img", () => {
 it("img face down", () => {
   const attachment = new PlanetAttachment(
     new MockGameObject({ rotation: [0, 0, 180] }),
-    "my-source",
+    { source: "my-source", packageId: "my-package-id" },
     {
       name: "my-name",
       nsidName: "my-nsid-name",
       imgFaceDown: true,
-      imgPackageId: "my-package-id",
     }
   );
   expect(attachment.getImg()).toBe(
@@ -117,22 +122,15 @@ it("img face down", () => {
   );
 });
 
-it("img no package id", () => {
-  const attachment = new PlanetAttachment(new MockGameObject(), "my-source", {
-    name: "my-name",
-    nsidName: "my-nsid-name",
-  });
-  expect(attachment.getImg()).toBe(
-    `token/attachment/planet/my-source/my-nsid-name.png:${refPackageId}`
-  );
-});
-
 it("img homebrew", () => {
-  const attachment = new PlanetAttachment(new MockGameObject(), "homebrew-x", {
-    name: "my-name",
-    nsidName: "my-nsid-name",
-    imgPackageId: "my-package-id",
-  });
+  const attachment = new PlanetAttachment(
+    new MockGameObject(),
+    { source: "homebrew-x", packageId: "my-package-id" },
+    {
+      name: "my-name",
+      nsidName: "my-nsid-name",
+    }
+  );
   expect(attachment.getImg()).toBe(
     "homebrew-x/token/attachment/planet/my-nsid-name.png:my-package-id"
   );
@@ -140,7 +138,7 @@ it("img homebrew", () => {
 it("getInfluence", () => {
   const planetAttachment = new PlanetAttachment(
     new MockGameObject(),
-    "my-source",
+    { source: "my-source", packageId: "my-package-id" },
     {
       name: "my-name",
       nsidName: "my-nsid-name",
@@ -153,7 +151,7 @@ it("getInfluence", () => {
 it("getInfluence (default)", () => {
   const planetAttachment = new PlanetAttachment(
     new MockGameObject(),
-    "my-source",
+    { source: "my-source", packageId: "my-package-id" },
     {
       name: "my-name",
       nsidName: "my-nsid-name",
@@ -165,7 +163,7 @@ it("getInfluence (default)", () => {
 it("getInfluence (face down)", () => {
   const planetAttachment = new PlanetAttachment(
     new MockGameObject({ rotation: [0, 0, 180] }),
-    "my-source",
+    { source: "my-source", packageId: "my-package-id" },
     {
       name: "my-name",
       nsidName: "my-nsid-name",
@@ -179,7 +177,7 @@ it("getInfluence (face down)", () => {
 it("getLegendaryCardNsid", () => {
   const planetAttachment = new PlanetAttachment(
     new MockGameObject(),
-    "my-source",
+    { source: "my-source", packageId: "my-package-id" },
 
     {
       name: "my-name",
@@ -195,7 +193,7 @@ it("getLegendaryCardNsid", () => {
 it("getName", () => {
   const planetAttachment = new PlanetAttachment(
     new MockGameObject(),
-    "my-source",
+    { source: "my-source", packageId: "my-package-id" },
 
     {
       name: "my-name",
@@ -208,7 +206,7 @@ it("getName", () => {
 it("getResources", () => {
   const planetAttachment = new PlanetAttachment(
     new MockGameObject(),
-    "my-source",
+    { source: "my-source", packageId: "my-package-id" },
 
     {
       name: "my-name",
@@ -222,7 +220,7 @@ it("getResources", () => {
 it("getResources (default)", () => {
   const planetAttachment = new PlanetAttachment(
     new MockGameObject(),
-    "my-source",
+    { source: "my-source", packageId: "my-package-id" },
     {
       name: "my-name",
       nsidName: "my-nsid-name",
@@ -234,7 +232,7 @@ it("getResources (default)", () => {
 it("getResources (face down)", () => {
   const planetAttachment = new PlanetAttachment(
     new MockGameObject({ rotation: [0, 0, 180] }),
-    "my-source",
+    { source: "my-source", packageId: "my-package-id" },
     {
       name: "my-name",
       nsidName: "my-nsid-name",
@@ -248,7 +246,7 @@ it("getResources (face down)", () => {
 it("getTechs", () => {
   const planetAttachment = new PlanetAttachment(
     new MockGameObject(),
-    "my-source",
+    { source: "my-source", packageId: "my-package-id" },
     {
       name: "my-name",
       nsidName: "my-nsid-name",
@@ -261,7 +259,7 @@ it("getTechs", () => {
 it("getTechs (face down)", () => {
   const planetAttachment = new PlanetAttachment(
     new MockGameObject({ rotation: [0, 0, 180] }),
-    "my-source",
+    { source: "my-source", packageId: "my-package-id" },
     {
       name: "my-name",
       nsidName: "my-nsid-name",
@@ -275,7 +273,7 @@ it("getTechs (face down)", () => {
 it("getTraits", () => {
   const planetAttachment = new PlanetAttachment(
     new MockGameObject(),
-    "my-source",
+    { source: "my-source", packageId: "my-package-id" },
     {
       name: "my-name",
       nsidName: "my-nsid-name",
@@ -288,7 +286,7 @@ it("getTraits", () => {
 it("getTraits (face down)", () => {
   const planetAttachment = new PlanetAttachment(
     new MockGameObject({ rotation: [0, 0, 180] }),
-    "my-source",
+    { source: "my-source", packageId: "my-package-id" },
     {
       name: "my-name",
       nsidName: "my-nsid-name",
@@ -302,7 +300,7 @@ it("getTraits (face down)", () => {
 it("isDestroyPlanet", () => {
   const planetAttachment = new PlanetAttachment(
     new MockGameObject(),
-    "my-source",
+    { source: "my-source", packageId: "my-package-id" },
     {
       name: "my-name",
       nsidName: "my-nsid-name",
@@ -315,7 +313,7 @@ it("isDestroyPlanet", () => {
 it("isDestroyPlanet (default)", () => {
   const planetAttachment = new PlanetAttachment(
     new MockGameObject(),
-    "my-source",
+    { source: "my-source", packageId: "my-package-id" },
     {
       name: "my-name",
       nsidName: "my-nsid-name",
@@ -327,7 +325,7 @@ it("isDestroyPlanet (default)", () => {
 it("isLegendary", () => {
   const planetAttachment = new PlanetAttachment(
     new MockGameObject(),
-    "my-source",
+    { source: "my-source", packageId: "my-package-id" },
     {
       name: "my-name",
       nsidName: "my-nsid-name",
@@ -340,7 +338,7 @@ it("isLegendary", () => {
 it("isLegendary (default)", () => {
   const planetAttachment = new PlanetAttachment(
     new MockGameObject(),
-    "my-source",
+    { source: "my-source", packageId: "my-package-id" },
 
     {
       name: "my-name",

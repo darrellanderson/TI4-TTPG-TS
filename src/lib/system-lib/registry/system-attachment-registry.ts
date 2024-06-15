@@ -2,7 +2,10 @@ import { GameObject, globalEvents, world } from "@tabletop-playground/api";
 import { NSID } from "ttpg-darrell";
 
 import { SystemAttachment } from "../system-attachment/system-attachment";
-import { NsidNameSchema } from "../schema/basic-types-schema";
+import {
+  NsidNameSchema,
+  SourceAndPackageIdSchemaType,
+} from "../schema/basic-types-schema";
 import {
   SystemAttachmentSchema,
   SystemAttachmentSchemaType,
@@ -10,7 +13,7 @@ import {
 
 type SchemaAndSource = {
   schema: SystemAttachmentSchemaType;
-  source: string;
+  sourceAndPackageId: SourceAndPackageIdSchemaType;
 };
 
 export class SystemAttachmentRegistry {
@@ -32,7 +35,7 @@ export class SystemAttachmentRegistry {
       // Register a fresh system object for this system tile object.
       const systemAttachment: SystemAttachment = new SystemAttachment(
         obj,
-        schemaAndSource.source,
+        schemaAndSource.sourceAndPackageId,
         schemaAndSource.schema
       );
       this._attachmentObjIdToSystemAttachment.set(
@@ -110,8 +113,8 @@ export class SystemAttachmentRegistry {
    * @returns
    */
   public load(
-    systemAttachmentSchemaTypes: Array<SystemAttachmentSchemaType>,
-    source: string
+    sourceAndPackageId: SourceAndPackageIdSchemaType,
+    systemAttachmentSchemaTypes: Array<SystemAttachmentSchemaType>
   ): this {
     // Find all system attachment objects.
     const nsidToObjIds: Map<string, Array<string>> = new Map();
@@ -132,7 +135,7 @@ export class SystemAttachmentRegistry {
       // Validate schema (oterhwise not validated until used).
       try {
         SystemAttachmentSchema.parse(systemAttachmentSchemaType);
-        NsidNameSchema.parse(source);
+        NsidNameSchema.parse(sourceAndPackageId);
       } catch (e) {
         const msg = `error: ${e.message}\nparsing: ${JSON.stringify(
           systemAttachmentSchemaType
@@ -142,12 +145,12 @@ export class SystemAttachmentRegistry {
 
       // Register (create temporary attachment for nsid generation).
       const nsid: string = SystemAttachment.schemaToNsid(
-        source,
+        sourceAndPackageId.source,
         systemAttachmentSchemaType
       );
       this._nsidToSchemaAndSource.set(nsid, {
+        sourceAndPackageId,
         schema: systemAttachmentSchemaType,
-        source,
       });
 
       // Instantiate for any existing objects.
@@ -157,7 +160,7 @@ export class SystemAttachmentRegistry {
         if (obj && obj.isValid()) {
           const attachment = new SystemAttachment(
             obj,
-            source,
+            sourceAndPackageId,
             systemAttachmentSchemaType
           );
           this._attachmentObjIdToSystemAttachment.set(objId, attachment);

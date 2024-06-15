@@ -4,8 +4,7 @@ it("PlanetAttachmentSchema", () => {
   const data = {
     name: "my-name",
     nsidName: "my-nsid-name",
-    img: "my-img",
-    imgPackageId: "my-img-package-id",
+    imgFaceDown: true,
     influence: 1,
     resources: 2,
     techs: ["red", "blue"],

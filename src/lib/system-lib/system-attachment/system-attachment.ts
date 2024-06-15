@@ -1,7 +1,10 @@
-import { GameObject, Vector, refPackageId } from "@tabletop-playground/api";
+import { GameObject, Vector } from "@tabletop-playground/api";
 import { Facing } from "ttpg-darrell";
 
-import { NsidNameSchema } from "../schema/basic-types-schema";
+import {
+  SourceAndPackageIdSchema,
+  SourceAndPackageIdSchemaType,
+} from "../schema/basic-types-schema";
 import { Planet } from "../planet/planet";
 import { System, WormholeWithPosition } from "../system/system";
 import {
@@ -20,7 +23,7 @@ import {
  */
 export class SystemAttachment {
   private readonly _obj: GameObject;
-  private readonly _source: string;
+  private readonly _sourceAndPackageId: SourceAndPackageIdSchemaType;
   private readonly _params: SystemAttachmentSchemaType;
   private readonly _planets: Array<Planet> = [];
 
@@ -45,23 +48,23 @@ export class SystemAttachment {
    */
   constructor(
     obj: GameObject,
-    source: string,
+    sourceAndPackageId: SourceAndPackageIdSchemaType,
     params: SystemAttachmentSchemaType
   ) {
     try {
       SystemAttachmentSchema.parse(params); // validate the schema
-      NsidNameSchema.parse(source); // validate the schema
+      SourceAndPackageIdSchema.parse(sourceAndPackageId); // validate the schema
     } catch (e) {
       const msg = `error: ${e.message}\nparsing: ${JSON.stringify(params)}`;
       throw new Error(msg);
     }
 
     this._obj = obj;
-    this._source = source;
+    this._sourceAndPackageId = sourceAndPackageId;
     this._params = params;
     if (params.planets) {
       this._planets = params.planets.map(
-        (planet) => new Planet(this._obj, this._source, planet)
+        (planet) => new Planet(this._obj, this._sourceAndPackageId, planet)
       );
     }
   }
@@ -127,14 +130,15 @@ export class SystemAttachment {
     // Homebrew puts source first to group all related files.
     // "Official" puts source deeper in the path to collect in a single
     // folder for easier Object Library usage.
-    if (this._source.startsWith("homebrew")) {
-      img = `${this._source}/${img}/${filename}`;
+    const source: string = this._sourceAndPackageId.source;
+    if (source.startsWith("homebrew")) {
+      img = `${source}/${img}/${filename}`;
     } else {
-      img = `${img}/${this._source}/${filename}`;
+      img = `${img}/${source}/${filename}`;
     }
 
     // Attach package id.
-    const packageId: string = this._params.imgPackageId ?? refPackageId;
+    const packageId: string = this._sourceAndPackageId.packageId;
     return `${img}:${packageId}`;
   }
 

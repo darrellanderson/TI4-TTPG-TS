@@ -1,9 +1,12 @@
-import { GameObject, Vector, refPackageId } from "@tabletop-playground/api";
+import { GameObject, Vector } from "@tabletop-playground/api";
 import { Facing, NSID, ParsedNSID } from "ttpg-darrell";
 import { SystemSchema, SystemSchemaType } from "../schema/system-schema";
 import { Planet } from "../planet/planet";
 import { SystemAttachment } from "../system-attachment/system-attachment";
-import { NsidNameSchema } from "../schema/basic-types-schema";
+import {
+  SourceAndPackageIdSchema,
+  SourceAndPackageIdSchemaType,
+} from "../schema/basic-types-schema";
 import { PlanetSchemaType } from "../schema/planet-schema";
 import { SystemDefaults } from "../data/system-defaults";
 
@@ -25,7 +28,7 @@ export type WormholeWithLocalPosition = {
  */
 export class System {
   private readonly _obj: GameObject;
-  private readonly _source: string;
+  private readonly _sourceAndPackageId: SourceAndPackageIdSchemaType;
   private readonly _params: SystemSchemaType;
   private readonly _planets: Array<Planet> = [];
   private readonly _wormholes: Array<WormholeWithLocalPosition> = [];
@@ -94,17 +97,21 @@ export class System {
     return pos;
   }
 
-  constructor(obj: GameObject, source: string, params: SystemSchemaType) {
+  constructor(
+    obj: GameObject,
+    sourceAndPackageId: SourceAndPackageIdSchemaType,
+    params: SystemSchemaType
+  ) {
     try {
+      SourceAndPackageIdSchema.parse(sourceAndPackageId); // validate the schema
       SystemSchema.parse(params); // validate the schema
-      NsidNameSchema.parse(source); // validate the schema
     } catch (e) {
       const msg = `error: ${e.message}\nparsing: ${JSON.stringify(params)}`;
       throw new Error(msg);
     }
 
     this._obj = obj;
-    this._source = source;
+    this._sourceAndPackageId = sourceAndPackageId;
     this._params = params;
 
     // Wormholes also use default-position slots.
@@ -120,7 +127,7 @@ export class System {
         if (planetParams) {
           const planet: Planet = new Planet(
             this._obj,
-            this._source,
+            this._sourceAndPackageId,
             planetParams
           );
           if (!planetParams.localPosition) {
@@ -288,14 +295,15 @@ export class System {
     // Homebrew puts source first to group all related files.
     // "Official" puts source deeper in the path to collect in a single
     // folder for easier Object Library usage.
-    if (this._source.startsWith("homebrew")) {
-      img = `${this._source}/${img}/${filename}`;
+    const source: string = this._sourceAndPackageId.source;
+    if (source.startsWith("homebrew")) {
+      img = `${source}/${img}/${filename}`;
     } else {
-      img = `${img}/${this._source}/${filename}`;
+      img = `${img}/${source}/${filename}`;
     }
 
     // Attach package id.
-    const packageId: string = this._params.imgPackageId ?? refPackageId;
+    const packageId: string = this._sourceAndPackageId.packageId;
     return `${img}:${packageId}`;
   }
 

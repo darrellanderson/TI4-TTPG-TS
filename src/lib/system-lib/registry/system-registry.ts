@@ -3,6 +3,7 @@ import {
   TraceHit,
   Vector,
   globalEvents,
+  refPackageId,
   world,
 } from "@tabletop-playground/api";
 import { NSID } from "ttpg-darrell";
@@ -10,11 +11,14 @@ import { NSID } from "ttpg-darrell";
 import { SystemSchema, SystemSchemaType } from "../schema/system-schema";
 import { System } from "../system/system";
 import { SOURCE_TO_SYSTEM_DATA } from "../data/system.data";
-import { NsidNameSchema } from "../schema/basic-types-schema";
+import {
+  SourceAndPackageIdSchema,
+  SourceAndPackageIdSchemaType,
+} from "../schema/basic-types-schema";
 
 type SchemaAndSource = {
   schema: SystemSchemaType;
-  source: string;
+  sourceAndPackageId: SourceAndPackageIdSchemaType;
 };
 
 /**
@@ -41,7 +45,7 @@ export class SystemRegistry {
         // Register a fresh system object for this system tile object.
         const system: System = new System(
           obj,
-          schemaAndSource.source,
+          schemaAndSource.sourceAndPackageId,
           schemaAndSource.schema
         );
         this._systemTileObjIdToSystem.set(obj.getId(), system);
@@ -73,8 +77,8 @@ export class SystemRegistry {
    * @returns
    */
   public load(
-    systemSchemaTypes: Array<SystemSchemaType>,
-    source: string
+    sourceAndPackageId: SourceAndPackageIdSchemaType,
+    systemSchemaTypes: Array<SystemSchemaType>
   ): this {
     // Find all system tile objects.
     const tileToObjs: Map<number, Array<GameObject>> = new Map();
@@ -99,7 +103,7 @@ export class SystemRegistry {
       // Validate schema (oterhwise not validated until used).
       try {
         SystemSchema.parse(systemSchemaType);
-        NsidNameSchema.parse(source);
+        SourceAndPackageIdSchema.parse(sourceAndPackageId);
       } catch (e) {
         const msg = `error: ${e.message}\nparsing: ${JSON.stringify(
           systemSchemaType
@@ -115,14 +119,14 @@ export class SystemRegistry {
 
       // Register system.
       this._systemTileNumberToSchemaAndSource.set(tileNumber, {
+        sourceAndPackageId,
         schema: systemSchemaType,
-        source,
       });
 
       // Instantiate for any existing system tile objects.
       const objs: Array<GameObject> = tileToObjs.get(tileNumber) ?? [];
       for (const obj of objs) {
-        const system = new System(obj, source, systemSchemaType);
+        const system = new System(obj, sourceAndPackageId, systemSchemaType);
         this._systemTileObjIdToSystem.set(obj.getId(), system);
       }
     }
@@ -139,7 +143,11 @@ export class SystemRegistry {
     for (const [source, systemSchemas] of Object.entries(
       SOURCE_TO_SYSTEM_DATA
     )) {
-      this.load(systemSchemas, source);
+      const sourceAndPackageId: SourceAndPackageIdSchemaType = {
+        source,
+        packageId: refPackageId,
+      };
+      this.load(sourceAndPackageId, systemSchemas);
     }
     return this;
   }

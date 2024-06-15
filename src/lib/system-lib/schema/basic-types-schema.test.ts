@@ -3,6 +3,7 @@ import {
   HyperlaneSchema,
   LocalPositionSchema,
   NsidNameSchema,
+  SourceAndPackageIdSchema,
   TechSchema,
   TraitSchema,
   WormholeSchema,
@@ -10,7 +11,7 @@ import {
 } from "./basic-types-schema";
 
 it("AnomalySchema", () => {
-  const data = "asteroid_field";
+  const data = "asteroid-field";
   const parsed = AnomalySchema.parse(data);
   expect(parsed).toEqual(data);
 });
@@ -45,6 +46,15 @@ it("NsidNameSchema", () => {
   expect(() => {
     NsidNameSchema.parse("?");
   }).toThrow();
+});
+
+it("SourceAndPackageIdSchema", () => {
+  const data = {
+    source: "my-source",
+    packageId: "my-package-id",
+  };
+  const parsed = SourceAndPackageIdSchema.parse(data);
+  expect(parsed).toEqual(data);
 });
 
 it("TechSchema", () => {

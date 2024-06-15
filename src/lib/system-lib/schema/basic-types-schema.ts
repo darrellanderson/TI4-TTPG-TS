@@ -40,6 +40,17 @@ export const NsidNameSchema = z
   .readonly();
 export type NsidNameSchemaType = z.infer<typeof NsidNameSchema>;
 
+export const SourceAndPackageIdSchema = z
+  .object({
+    source: NsidNameSchema,
+    packageId: z.string(),
+  })
+  .strict()
+  .readonly();
+export type SourceAndPackageIdSchemaType = z.infer<
+  typeof SourceAndPackageIdSchema
+>;
+
 export const TechSchema = z.enum(["blue", "green", "red", "yellow"]).readonly();
 export type TechSchemaType = z.infer<typeof TechSchema>;
 

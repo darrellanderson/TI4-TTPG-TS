@@ -8,8 +8,7 @@ it("SystemAttachmentSchema", () => {
     wormholes: ["alpha", "beta"],
     wormholesFaceDown: ["gamma"],
     planets: [],
-    img: "my-img",
-    imgPackageId: "my-img-package-id",
+    imgFaceDown: true,
   };
   const parsed = SystemAttachmentSchema.parse(data);
   expect(parsed).toEqual(data);

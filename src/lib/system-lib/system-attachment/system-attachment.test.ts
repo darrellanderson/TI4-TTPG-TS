@@ -1,4 +1,4 @@
-import { Vector, refPackageId } from "@tabletop-playground/api";
+import { Vector } from "@tabletop-playground/api";
 import { MockGameObject } from "ttpg-mock";
 
 import { System, WormholeWithPosition } from "../system/system";
@@ -15,15 +15,18 @@ it("static schemaToNsid", () => {
 });
 
 it("constructor", () => {
-  const attachment = new SystemAttachment(new MockGameObject(), "my-source", {
-    anomalies: ["asteroid-field"],
-    imgPackageId: "my-package-id",
-    name: "my-name",
-    nsidName: "my-nsid-name",
-    planets: [],
-    wormholes: ["alpha"],
-    wormholesFaceDown: ["beta"],
-  });
+  const attachment = new SystemAttachment(
+    new MockGameObject(),
+    { source: "my-source", packageId: "my-package-id" },
+    {
+      anomalies: ["asteroid-field"],
+      name: "my-name",
+      nsidName: "my-nsid-name",
+      planets: [],
+      wormholes: ["alpha"],
+      wormholesFaceDown: ["beta"],
+    }
+  );
   expect(attachment.getAnomalies()).toEqual(["asteroid-field"]);
   expect(attachment.getImg()).toEqual(
     "token/attachment/system/my-source/my-nsid-name.png:my-package-id"
@@ -35,27 +38,38 @@ it("constructor", () => {
 
 it("constructor (invalid params)", () => {
   expect(() => {
-    new SystemAttachment(new MockGameObject(), "my-source", {
-      name: "",
-      nsidName: "@@invalid??",
-    });
+    new SystemAttachment(
+      new MockGameObject(),
+      { source: "my-source", packageId: "my-package-id" },
+      {
+        name: "",
+        nsidName: "@@invalid??",
+      }
+    );
   }).toThrow();
 });
 
 it("anomalies empty", () => {
-  const attachment = new SystemAttachment(new MockGameObject(), "my-source", {
-    name: "my-name",
-    nsidName: "my-nsid-name",
-  });
+  const attachment = new SystemAttachment(
+    new MockGameObject(),
+    { source: "my-source", packageId: "my-package-id" },
+    {
+      name: "my-name",
+      nsidName: "my-nsid-name",
+    }
+  );
   expect(attachment.getAnomalies()).toEqual([]);
 });
 
 it("img", () => {
-  const attachment = new SystemAttachment(new MockGameObject(), "my-source", {
-    name: "my-name",
-    nsidName: "my-nsid-name",
-    imgPackageId: "my-package-id",
-  });
+  const attachment = new SystemAttachment(
+    new MockGameObject(),
+    { source: "my-source", packageId: "my-package-id" },
+    {
+      name: "my-name",
+      nsidName: "my-nsid-name",
+    }
+  );
   expect(attachment.getImg()).toBe(
     "token/attachment/system/my-source/my-nsid-name.png:my-package-id"
   );
@@ -64,12 +78,11 @@ it("img", () => {
 it("img face down", () => {
   const attachment = new SystemAttachment(
     new MockGameObject({ rotation: [0, 0, 180] }),
-    "my-source",
+    { source: "my-source", packageId: "my-package-id" },
     {
       name: "my-name",
       nsidName: "my-nsid-name",
       imgFaceDown: true,
-      imgPackageId: "my-package-id",
     }
   );
   expect(attachment.getImg()).toBe(
@@ -77,54 +90,55 @@ it("img face down", () => {
   );
 });
 
-it("img no package id", () => {
-  const attachment = new SystemAttachment(new MockGameObject(), "my-source", {
-    name: "my-name",
-    nsidName: "my-nsid-name",
-  });
-  expect(attachment.getImg()).toBe(
-    `token/attachment/system/my-source/my-nsid-name.png:${refPackageId}`
-  );
-});
-
 it("img homebrew", () => {
-  const attachment = new SystemAttachment(new MockGameObject(), "homebrew-x", {
-    name: "my-name",
-    nsidName: "my-nsid-name",
-    imgPackageId: "my-package-id",
-  });
+  const attachment = new SystemAttachment(
+    new MockGameObject(),
+    { source: "homebrew-x", packageId: "my-package-id" },
+    {
+      name: "my-name",
+      nsidName: "my-nsid-name",
+    }
+  );
   expect(attachment.getImg()).toBe(
     "homebrew-x/token/attachment/system/my-nsid-name.png:my-package-id"
   );
 });
 
 it("planets", () => {
-  const attachment = new SystemAttachment(new MockGameObject(), "my-source", {
-    name: "my-name",
-    nsidName: "my-nsid-name",
-    planets: [
-      {
-        name: "my-planet-name",
-        nsidName: "my-planet-nsid",
-      },
-    ],
-  });
+  const attachment = new SystemAttachment(
+    new MockGameObject(),
+    { source: "my-source", packageId: "my-package-id" },
+    {
+      name: "my-name",
+      nsidName: "my-nsid-name",
+      planets: [
+        {
+          name: "my-planet-name",
+          nsidName: "my-planet-nsid",
+        },
+      ],
+    }
+  );
   expect(attachment.getPlanets().length).toEqual(1);
   expect(attachment.getPlanets()[0]?.getName()).toEqual("my-planet-name");
 });
 
 it("wormholes empty", () => {
-  const attachment = new SystemAttachment(new MockGameObject(), "my-source", {
-    name: "my-name",
-    nsidName: "my-nsid-name",
-  });
+  const attachment = new SystemAttachment(
+    new MockGameObject(),
+    { source: "my-source", packageId: "my-package-id" },
+    {
+      name: "my-name",
+      nsidName: "my-nsid-name",
+    }
+  );
   expect(attachment.getWormholes()).toEqual([]);
 });
 
 it("wormholesFaceDown", () => {
   const attachment = new SystemAttachment(
     new MockGameObject({ rotation: [0, 0, 180] }),
-    "my-source",
+    { source: "my-source", packageId: "my-package-id" },
     {
       name: "my-name",
       nsidName: "my-nsid-name",
@@ -138,7 +152,7 @@ it("wormholesFaceDown", () => {
 it("wormholesGlobalPosition", () => {
   const attachment = new SystemAttachment(
     new MockGameObject({ position: [1, 2, 3] }),
-    "my-source",
+    { source: "my-source", packageId: "my-package-id" },
     {
       name: "my-name",
       nsidName: "my-nsid-name",
@@ -155,7 +169,7 @@ it("wormholesGlobalPosition", () => {
 it("wormholesWorldPosition face down", () => {
   const attachment = new SystemAttachment(
     new MockGameObject({ position: [1, 2, 3], rotation: [0, 0, 180] }),
-    "my-source",
+    { source: "my-source", packageId: "my-package-id" },
     {
       name: "my-name",
       nsidName: "my-nsid-name",
@@ -173,10 +187,14 @@ it("attach/detach", () => {
   // Reset TI4.systemRegistry because globalEvents gets reset between tests.
   resetGlobalThisTI4();
 
-  const attachment = new SystemAttachment(new MockGameObject(), "my-source", {
-    name: "my-name",
-    nsidName: "my-nsid-name",
-  });
+  const attachment = new SystemAttachment(
+    new MockGameObject(),
+    { source: "my-source", packageId: "my-package-id" },
+    {
+      name: "my-name",
+      nsidName: "my-nsid-name",
+    }
+  );
   let success: boolean = false;
 
   success = attachment.attach();
