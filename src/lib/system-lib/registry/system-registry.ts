@@ -185,4 +185,18 @@ export class SystemRegistry {
   public getBySystemTileObjId(objId: string): System | undefined {
     return this._systemTileObjIdToSystem.get(objId);
   }
+
+  /**
+   * Get the raw system schema associated with the tile number.
+   *
+   * @param tileNumber
+   * @returns
+   */
+  public rawBySystemTileNumber(
+    tileNumber: number
+  ): SystemSchemaType | undefined {
+    const schemaAndSource =
+      this._systemTileNumberToSchemaAndSource.get(tileNumber);
+    return schemaAndSource?.schema;
+  }
 }

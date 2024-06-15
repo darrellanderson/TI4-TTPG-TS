@@ -1,45 +1,48 @@
 import { MockGameObject, MockGameWorld, mockWorld } from "ttpg-mock";
 import { SystemRegistry } from "./system-registry";
-import { Vector, world } from "@tabletop-playground/api";
+import { GameObject, Vector, world } from "@tabletop-playground/api";
 
 it("constructor", () => {
   new SystemRegistry();
 });
 
 it("onObjectCreated/Destroyed", () => {
-  const registry = new SystemRegistry().load([{ tile: 12 }], "my-source");
+  const registry = new SystemRegistry().load(
+    { source: "my-source", packageId: "my-package-id" },
+    [{ tile: 12 }]
+  );
   expect(registry.rawBySystemTileNumber(12)).toBeDefined();
 
-  let obj = new MockGameObject({
+  let systemTileObj: GameObject = new MockGameObject({
     id: "my-id",
     templateMetadata: "tile.system:my-source/12",
   });
   expect(registry.rawBySystemTileNumber(12)).toBeDefined();
   expect(registry.getBySystemTileObjId("my-id")).toBeDefined();
 
-  obj.destroy();
+  systemTileObj.destroy();
   expect(registry.rawBySystemTileNumber(12)).toBeDefined();
   expect(registry.getBySystemTileObjId("my-id")).toBeUndefined();
 
   registry.destroy();
 });
 
-it("load (system tile obj exists)", () => {
-  new MockGameObject({
+it("load (system tile obj exists at load time)", () => {
+  let systemTileObj: GameObject = new MockGameObject({
     id: "my-id",
     templateMetadata: "tile.system:my-source/12",
   });
-  const registry = new SystemRegistry().load([{ tile: 12 }], "my-source");
+  const registry = new SystemRegistry().load(
+    { source: "my-source", packageId: "my-package-id" },
+    [{ tile: 12 }]
+  );
+  expect(registry.rawBySystemTileNumber(12)).toBeDefined();
+  expect(registry.getBySystemTileObjId("my-id")).toBeDefined();
 
-  // Tile system exists, but not linked to object.
-  const tileSystem = registry.rawBySystemTileNumber(12);
-  expect(tileSystem).toBeDefined();
-  expect(tileSystem?.getSystemTileObjId()).toBeUndefined();
+  systemTileObj.destroy();
+  expect(registry.rawBySystemTileNumber(12)).toBeDefined();
+  expect(registry.getBySystemTileObjId("my-id")).toBeUndefined();
 
-  // Obj id system exists and is linked to object.
-  const objSystem = registry.getBySystemTileObjId("my-id");
-  expect(objSystem).toBeDefined();
-  expect(objSystem?.getSystemTileObjId()).toBe("my-id");
   registry.destroy();
 });
 
@@ -48,16 +51,22 @@ it("load (duplicate system tile)", () => {
   expect(registry.rawBySystemTileNumber(12)).toBeUndefined();
 
   // Add first.
-  registry.load([{ tile: 12 }], "base");
-  expect(registry.rawBySystemTileNumber(12)?.getSource()).toBe("base");
+  registry.load({ source: "base", packageId: "my-package-id" }, [
+    { tile: 12, wormholes: ["alpha"] },
+  ]);
+  expect(registry.rawBySystemTileNumber(12)?.wormholes).toEqual(["alpha"]);
 
   // Add duplicate, expect ignored but non-duplicate entries still added.
   expect(() => {
-    registry.load([{ tile: 11 }, { tile: 12 }, { tile: 13 }], "homebrew");
+    registry.load({ source: "homebrew", packageId: "my-package-id" }, [
+      { tile: 11, wormholes: ["beta"] },
+      { tile: 12, wormholes: ["beta"] },
+      { tile: 13 },
+    ]);
   }).toThrow();
-  expect(registry.rawBySystemTileNumber(11)?.getSource()).toBe("homebrew");
-  expect(registry.rawBySystemTileNumber(12)?.getSource()).toBe("base"); // not overwritten
-  expect(registry.rawBySystemTileNumber(13)?.getSource()).toBeUndefined(); // throw before added
+  expect(registry.rawBySystemTileNumber(11)?.wormholes).toEqual(["beta"]);
+  expect(registry.rawBySystemTileNumber(12)?.wormholes).toEqual(["alpha"]); // not overwritten
+  expect(registry.rawBySystemTileNumber(13)).toBeUndefined(); // throw before added
 
   registry.destroy();
 });
@@ -65,10 +74,9 @@ it("load (duplicate system tile)", () => {
 it("load (invalid schema)", () => {
   const registry = new SystemRegistry();
   expect(() => {
-    registry.load(
-      [{ tile: 12, planets: [{ name: "x", nsidName: "@@" }] }],
-      "base"
-    );
+    registry.load({ source: "my-source", packageId: "my-package-id" }, [
+      { tile: 12, planets: [{ name: "x", nsidName: "@@" }] },
+    ]);
   }).toThrow();
   registry.destroy();
 });
@@ -84,7 +92,10 @@ it("loadDefaultData", () => {
 it("getByPosition", () => {
   const z: number = world.getTableHeight();
   const pos = new Vector(0, 0, z);
-  const registry = new SystemRegistry().load([{ tile: 12 }], "my-source");
+  const registry = new SystemRegistry().load(
+    { source: "my-source", packageId: "my-package-id" },
+    [{ tile: 12 }]
+  );
   expect(registry.getByPosition(pos)).toBeUndefined();
 
   const obj = new MockGameObject({
