@@ -13,8 +13,9 @@ import {
  * A system attachment is normally a token placed in a system to add attributes
  * such as planets or wormholes.  Removing the token removes the attachment.
  *
- * It is legal to have a system "attachment" without a corresponding token, for
- * example for a game effect to add something.
+ * In some rare cases a game effect rather than a token game object may want to
+ * create an attachment.  It is possible to create a `new GameObject()` which
+ * does not exist in the world (not world methods will find it).
  */
 export class SystemAttachment {
   private readonly _obj: GameObject;
@@ -38,7 +39,6 @@ export class SystemAttachment {
 
   /**
    * Create a system attachment.
-   * If there is a token, call setAttachmentObjId() to link it.
    *
    * @param {SystemAttachmentSchemaType} params - The system attachment parameters.
    */
@@ -65,6 +65,12 @@ export class SystemAttachment {
     }
   }
 
+  /**
+   * Attach the system attachment to a system.
+   * May fail if no system, already attached, etc.
+   *
+   * @returns {boolean} True if the attachment was added to a system.
+   */
   attach(): boolean {
     const pos: Vector = this._obj.getPosition();
     const system: System | undefined = TI4.systemRegistry.getByPosition(pos);
@@ -74,6 +80,12 @@ export class SystemAttachment {
     return false;
   }
 
+  /**
+   * Detach the system attachment from a system.
+   * May fail if no system, not attached, etc.
+   *
+   * @returns {boolean} True if the attachment was removed from a system.
+   */
   detach(): boolean {
     const pos: Vector = this._obj.getPosition();
     const system: System | undefined = TI4.systemRegistry.getByPosition(pos);
@@ -98,7 +110,7 @@ export class SystemAttachment {
 
   /**
    * Get the token image, if any.
-   * Image is in the form of "image:packageId".
+   * Image is in the form of "image-path.png:packageId".
    *
    * @returns {string | undefined} The image of the system attachment.
    */
