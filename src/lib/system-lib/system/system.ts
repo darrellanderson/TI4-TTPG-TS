@@ -327,19 +327,14 @@ export class System {
    */
   getPlanetExact(position: Vector): Planet | undefined {
     const planet: Planet | undefined = this.getPlanetClosest(position);
-    if (!planet) {
-      return undefined;
+    if (planet) {
+      const planetPos: Vector = planet.getPosition();
+      const distance: number = position.distance(planetPos); // radius is world space
+      if (distance <= planet.getRadius()) {
+        return planet;
+      }
     }
-
-    const planetLocal: Vector = this._obj.worldPositionToLocal(
-      planet.getPosition()
-    );
-    const distance: number = position.distance(planetLocal);
-    if (distance > planet.getRadius()) {
-      return undefined;
-    }
-
-    return planet;
+    return undefined;
   }
 
   /**

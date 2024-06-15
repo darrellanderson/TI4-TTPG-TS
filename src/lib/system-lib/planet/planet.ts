@@ -7,13 +7,13 @@ import { NsidNameSchema } from "../schema/basic-types-schema";
 /**
  * Represent a single planet.
  *
- * Planets can have multiple attachments, normally add by placing a token on
- * the planet and delete by removing the token.
+ * Planets can have multiple attachments, add by placing the planet attachment
+ * token on the planet and delete by removing the token.
  *
  * A token-less planet attachment is possible, see it for details.
  */
 export class Planet {
-  private readonly _obj: GameObject;
+  private readonly _obj: GameObject; // system tile or system attachment
   private readonly _source: string;
   private readonly _params: PlanetSchemaType;
   private readonly _attachments: Array<PlanetAttachment> = [];
@@ -48,9 +48,12 @@ export class Planet {
    * @param planetAttachment
    * @returns
    */
-  addAttachment(attachment: PlanetAttachment): this {
-    this._attachments.push(attachment);
-    return this;
+  addAttachment(attachment: PlanetAttachment): boolean {
+    if (!this.hasAttachment(attachment)) {
+      this._attachments.push(attachment);
+      return true;
+    }
+    return false;
   }
 
   /**
@@ -140,7 +143,7 @@ export class Planet {
   }
 
   /**
-   * Get the radius of the planet.
+   * Get the radius of the planet, in world units.
    *
    * @returns
    */

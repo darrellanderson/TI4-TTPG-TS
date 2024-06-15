@@ -10,8 +10,9 @@ import {
 } from "../schema/system-attachment-schema";
 
 /**
- * A system attachment is normally a token placed in a system to add attributes
- * such as planets or wormholes.  Removing the token removes the attachment.
+ * A system attachment is a token game object placed in a system to add
+ * attributes such as planets or wormholes.  Removing the token removes the
+ * attachment.
  *
  * In some rare cases a game effect rather than a token game object may want to
  * create an attachment.  It is possible to create a `new GameObject()` which

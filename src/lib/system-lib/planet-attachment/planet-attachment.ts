@@ -14,11 +14,13 @@ import { Planet } from "../planet/planet";
 import { System } from "../system/system";
 
 /**
- * A planet attachment is normally a token placed on a planet to add attributes
- * such as resources, techs, etc.  Removing the token removes the attachment.
+ * A planet attachment is a token game object placed on a planet to add
+ * attributes such as resources, techs, etc.  Removing the token removes the
+ * attachment.
  *
- * It is legal to have a planet "attachment" without a corresponding token, for
- * example for a game effect to add something.
+ * In some rare cases a game effect rather than a token game object may want to
+ * create an attachment.  It is possible to create a `new GameObject()` which
+ * does not exist in the world (not world methods will find it).
  */
 export class PlanetAttachment {
   private readonly _obj: GameObject;
@@ -28,7 +30,6 @@ export class PlanetAttachment {
 
   /**
    * Create a planet attachment.
-   * If there is a token, call setAttachmentObjId() to link it.
    *
    * @param {PlanetAttachmentSchemaType} params - The planet attachment parameters.
    */
@@ -50,36 +51,28 @@ export class PlanetAttachment {
     this._params = params;
   }
 
-  _getPlanetAtAttachmentPosition(): Planet | undefined {
-    const objId: string | undefined = this._attachmentObjId;
-    if (objId) {
-      const obj: GameObject | undefined = world.getObjectById(objId);
-      if (obj) {
-        const pos: Vector = obj.getPosition();
-        const system: System | undefined =
-          TI4.systemRegistry.getByPosition(pos);
-        if (system) {
-          return system.getPlanetClosest(pos);
-        }
-      }
-    }
-    return undefined;
-  }
-
   attach(): boolean {
-    const planet: Planet | undefined = this._getPlanetAtAttachmentPosition();
-    if (planet) {
-      planet.addAttachment(this);
-      return true;
+    const pos: Vector = this._obj.getPosition();
+    const system: System | undefined = TI4.systemRegistry.getByPosition(pos);
+    if (system) {
+      const planet: Planet | undefined = system.getPlanetClosest(pos);
+      if (planet) {
+        planet.addAttachment(this);
+        return true;
+      }
     }
     return false;
   }
 
   detach(): boolean {
-    const planet: Planet | undefined = this._getPlanetAtAttachmentPosition();
-    if (planet && planet.hasAttachment(this)) {
-      planet.delAttachment(this);
-      return true;
+    const pos: Vector = this._obj.getPosition();
+    const system: System | undefined = TI4.systemRegistry.getByPosition(pos);
+    if (system) {
+      const planet: Planet | undefined = system.getPlanetClosest(pos);
+      if (planet) {
+        planet.delAttachment(this);
+        return true;
+      }
     }
     return false;
   }
@@ -139,15 +132,6 @@ export class PlanetAttachment {
    */
   public getName(): string {
     return this._params.name;
-  }
-
-  /**
-   * Get the NSID of the planet attachment, normally the token's.
-   *
-   * @returns
-   */
-  public getNsid(): string {
-    return `token.attachment:${this._source}/${this._params.nsidName}`;
   }
 
   /**
