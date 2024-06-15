@@ -1,5 +1,5 @@
 import { MockGameObject } from "ttpg-mock";
-import { System, WormholeWithWorldPosition } from "./system";
+import { System, WormholeWithPosition } from "./system";
 import { GameObject, Vector, refPackageId } from "@tabletop-playground/api";
 import { SystemSchemaType } from "../schema/system-schema";
 import { SystemAttachment } from "../system-attachment/system-attachment";
@@ -306,10 +306,9 @@ it("getWormholesWithGlobalPosition", () => {
     }
   );
   system.addAttachment(attachment);
-  const out: Array<WormholeWithWorldPosition> =
-    system.getWormholesWithPositions();
+  const out: Array<WormholeWithPosition> = system.getWormholesWithPositions();
   const summary: Array<string> = out.map(
-    (w) => `${w.wormhole}:${w.globalPosition.toString()}`
+    (w) => `${w.wormhole}:${w.position.toString()}`
   );
   expect(summary).toEqual(["alpha:(X=10,Y=20,Z=30)", "beta:(X=1,Y=2,Z=3)"]);
 

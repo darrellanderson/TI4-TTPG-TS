@@ -1,9 +1,18 @@
-import { refPackageId } from "@tabletop-playground/api";
+import { Vector, refPackageId } from "@tabletop-playground/api";
 import { MockGameObject } from "ttpg-mock";
 
-import { System, WormholeWithWorldPosition } from "../system/system";
+import { System, WormholeWithPosition } from "../system/system";
 import { SystemAttachment } from "./system-attachment";
 import { resetGlobalThisTI4 } from "../../../global/global";
+
+it("static schemaToNsid", () => {
+  expect(
+    SystemAttachment.schemaToNsid("my-source", {
+      name: "my-name",
+      nsidName: "my-nsid-name",
+    })
+  ).toBe("token.attachment.system:my-source/my-nsid-name");
+});
 
 it("constructor", () => {
   const attachment = new SystemAttachment(new MockGameObject(), "my-source", {
@@ -15,14 +24,11 @@ it("constructor", () => {
     wormholes: ["alpha"],
     wormholesFaceDown: ["beta"],
   });
-  expect(attachment.getAnomalies()).toEqual(["asteroid_field"]);
+  expect(attachment.getAnomalies()).toEqual(["asteroid-field"]);
   expect(attachment.getImg()).toEqual(
-    "token/attachment/system/my-nsid-name.png:my-package-id"
+    "token/attachment/system/my-source/my-nsid-name.png:my-package-id"
   );
   expect(attachment.getName()).toEqual("my-name");
-  expect(attachment.getNsid()).toEqual(
-    "token.attachment:my-source/my-nsid-name"
-  );
   expect(attachment.getPlanets()).toEqual([]);
   expect(attachment.getWormholes()).toEqual(["alpha"]);
 });
@@ -44,13 +50,51 @@ it("anomalies empty", () => {
   expect(attachment.getAnomalies()).toEqual([]);
 });
 
+it("img", () => {
+  const attachment = new SystemAttachment(new MockGameObject(), "my-source", {
+    name: "my-name",
+    nsidName: "my-nsid-name",
+    imgPackageId: "my-package-id",
+  });
+  expect(attachment.getImg()).toBe(
+    "token/attachment/system/my-source/my-nsid-name.png:my-package-id"
+  );
+});
+
+it("img face down", () => {
+  const attachment = new SystemAttachment(
+    new MockGameObject({ rotation: [0, 0, 180] }),
+    "my-source",
+    {
+      name: "my-name",
+      nsidName: "my-nsid-name",
+      imgFaceDown: true,
+      imgPackageId: "my-package-id",
+    }
+  );
+  expect(attachment.getImg()).toBe(
+    `token/attachment/system/my-source/my-nsid-name.back.png:my-package-id`
+  );
+});
+
 it("img no package id", () => {
   const attachment = new SystemAttachment(new MockGameObject(), "my-source", {
     name: "my-name",
     nsidName: "my-nsid-name",
   });
   expect(attachment.getImg()).toBe(
-    `token/attachment/system/my-nsid-name.png:${refPackageId}`
+    `token/attachment/system/my-source/my-nsid-name.png:${refPackageId}`
+  );
+});
+
+it("img homebrew", () => {
+  const attachment = new SystemAttachment(new MockGameObject(), "homebrew-x", {
+    name: "my-name",
+    nsidName: "my-nsid-name",
+    imgPackageId: "my-package-id",
+  });
+  expect(attachment.getImg()).toBe(
+    "my-source/token/attachment/system/my-nsid-name.png:my-package-id"
   );
 });
 
@@ -91,20 +135,7 @@ it("wormholesFaceDown", () => {
   expect(attachment.getWormholes()).toEqual(["beta"]);
 });
 
-it("wormholesWorldPosition", () => {
-  const attachment = new SystemAttachment(new MockGameObject(), "my-source", {
-    name: "my-name",
-    nsidName: "my-nsid-name",
-    wormholes: ["alpha"],
-    wormholesFaceDown: ["beta"],
-  });
-  const out: Array<WormholeWithWorldPosition> =
-    attachment.getWormholesWithPositions();
-  const check = out.map((x) => `${x.wormhole}:${x.globalPosition.toString()}`);
-  expect(check).toEqual(["alpha:(X=0,Y=0,Z=0)"]);
-});
-
-it("wormholesGlobalPosition (non-origin attachment)", () => {
+it("wormholesGlobalPosition", () => {
   const attachment = new SystemAttachment(
     new MockGameObject({ position: [1, 2, 3] }),
     "my-source",
@@ -115,15 +146,15 @@ it("wormholesGlobalPosition (non-origin attachment)", () => {
       wormholesFaceDown: ["beta"],
     }
   );
-  const out: Array<WormholeWithWorldPosition> =
+  const out: Array<WormholeWithPosition> =
     attachment.getWormholesWithPositions();
-  const check = out.map((x) => `${x.wormhole}:${x.globalPosition.toString()}`);
+  const check = out.map((x) => `${x.wormhole}:${x.position.toString()}`);
   expect(check).toEqual(["alpha:(X=1,Y=2,Z=3)"]);
 });
 
 it("wormholesWorldPosition face down", () => {
   const attachment = new SystemAttachment(
-    new MockGameObject({ rotation: [0, 0, 180] }),
+    new MockGameObject({ position: [1, 2, 3], rotation: [0, 0, 180] }),
     "my-source",
     {
       name: "my-name",
@@ -132,30 +163,36 @@ it("wormholesWorldPosition face down", () => {
       wormholesFaceDown: ["beta"],
     }
   );
-  const out: Array<WormholeWithWorldPosition> =
+  const out: Array<WormholeWithPosition> =
     attachment.getWormholesWithPositions();
-  const check = out.map((x) => `${x.wormhole}:${x.globalPosition.toString()}`);
-  expect(check).toEqual(["beta:(X=0,Y=0,Z=0)"]);
+  const check = out.map((x) => `${x.wormhole}:${x.position.toString()}`);
+  expect(check).toEqual(["beta:(X=1,Y=2,Z=3)"]);
 });
 
 it("attach/detach", () => {
   // Reset TI4.systemRegistry because globalEvents gets reset between tests.
   resetGlobalThisTI4();
-  new MockGameObject({ templateMetadata: `tile.system:base/1` });
-  const system: System | undefined =
-    TI4.systemRegistry.getBySystemTileObjId("1");
-  expect(system).toBeDefined();
-  if (!system) {
-    throw new Error("system not found"); // for TypeScript
-  }
 
   const attachment = new SystemAttachment(new MockGameObject(), "my-source", {
     name: "my-name",
     nsidName: "my-nsid-name",
   });
+  let success: boolean = false;
+
+  success = attachment.attach();
+  expect(success).toBe(false); // no system
+
+  // Create system tile object, TI4.systemRegistry picks it up.
+  new MockGameObject({ templateMetadata: `tile.system:base/1` });
+  const system: System | undefined = TI4.systemRegistry.getByPosition(
+    new Vector(0, 0, 0)
+  );
+  expect(system).toBeDefined();
+  if (!system) {
+    throw new Error("system not found"); // for TypeScript
+  }
   expect(system.hasAttachment(attachment)).toBe(false);
 
-  let success: boolean = false;
   success = attachment.attach();
   expect(success).toBe(true);
   expect(system.hasAttachment(attachment)).toBe(true);

@@ -24,8 +24,6 @@ export class SystemAttachmentRegistry {
     SystemAttachment
   > = new Map();
 
-  private _initCalled: boolean = false;
-
   private readonly _onObjectCreatedHandler = (obj: GameObject): void => {
     const nsid: string = NSID.get(obj);
     const schemaAndSource: SchemaAndSource | undefined =
@@ -92,16 +90,25 @@ export class SystemAttachmentRegistry {
    *
    * Init runs after setting up other objects, in this case we need system
    * registry to have loaded system data for finding by positon.
+   *
+   * Global takes care of calling init, but if any homebrew loads new content
+   * it must also be sure to call init to attach any existing tokens.
    */
   init() {
-    this._initCalled = true;
-
-    // If any attachments are not yet attached, attach them.
+    // Attach (will not re-attach if already attached) system attachments.
     for (const systemAttachment of this._attachmentObjIdToSystemAttachment.values()) {
       systemAttachment.attach();
     }
   }
 
+  /**
+   * Define new system attachment types.
+   * Call init to attach to existing tokens.
+   *
+   * @param systemAttachmentSchemaTypes
+   * @param source
+   * @returns
+   */
   public load(
     systemAttachmentSchemaTypes: Array<SystemAttachmentSchemaType>,
     source: string
@@ -111,7 +118,7 @@ export class SystemAttachmentRegistry {
     const skipContained: boolean = false;
     for (const obj of world.getAllObjects(skipContained)) {
       const nsid: string = NSID.get(obj);
-      if (nsid.startsWith("token.attachment:")) {
+      if (nsid.startsWith("token.attachment.system:")) {
         let objIds: Array<string> | undefined = nsidToObjIds.get(nsid);
         if (!objIds) {
           objIds = [];
@@ -134,23 +141,25 @@ export class SystemAttachmentRegistry {
       }
 
       // Register (create temporary attachment for nsid generation).
-
-      this._nsidToSchemaAndSource.set(attachment.getNsid(), {
+      const nsid: string = SystemAttachment.schemaToNsid(
+        source,
+        systemAttachmentSchemaType
+      );
+      this._nsidToSchemaAndSource.set(nsid, {
         schema: systemAttachmentSchemaType,
         source,
       });
 
       // Instantiate for any existing objects.
-      const objIds: Array<string> =
-        nsidToObjIds.get(attachment.getNsid()) ?? [];
+      const objIds: Array<string> = nsidToObjIds.get(nsid) ?? [];
       for (const objId of objIds) {
         const obj: GameObject | undefined = world.getObjectById(objId);
         if (obj && obj.isValid()) {
           const attachment = new SystemAttachment(
-            systemAttachmentSchemaType,
-            source
+            obj,
+            source,
+            systemAttachmentSchemaType
           );
-          attachment.setAttachmentObjId(objId);
           this._attachmentObjIdToSystemAttachment.set(objId, attachment);
 
           // Add grab/release event listeners.
@@ -158,12 +167,6 @@ export class SystemAttachmentRegistry {
           obj.onGrab.add(this._onGrabHandler);
           obj.onReleased.remove(this._onReleasedHandler);
           obj.onReleased.add(this._onReleasedHandler);
-
-          // Init attaches tokens (other systems have had a chance to load).
-          // If init has already been called, attach now.
-          if (this._initCalled) {
-            attachment.attach();
-          }
         }
       }
     }

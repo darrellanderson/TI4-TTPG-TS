@@ -3,7 +3,7 @@ import { Facing } from "ttpg-darrell";
 
 import { NsidNameSchema } from "../schema/basic-types-schema";
 import { Planet } from "../planet/planet";
-import { System, WormholeWithWorldPosition } from "../system/system";
+import { System, WormholeWithPosition } from "../system/system";
 import {
   SystemAttachmentSchema,
   SystemAttachmentSchemaType,
@@ -22,6 +22,13 @@ export class SystemAttachment {
   private readonly _params: SystemAttachmentSchemaType;
   private readonly _planets: Array<Planet> = [];
 
+  /**
+   * Get the system attachment NSID.
+   *
+   * @param source
+   * @param schema
+   * @returns
+   */
   static schemaToNsid(
     source: string,
     schema: SystemAttachmentSchemaType
@@ -102,7 +109,7 @@ export class SystemAttachment {
       useBack ? ".back" : ""
     }.png`;
 
-    let img = "token/attachment/system/";
+    let img = "token/attachment/system";
 
     // Homebrew puts source first to group all related files.
     // "Official" puts source deeper in the path to collect in a single
@@ -125,17 +132,6 @@ export class SystemAttachment {
    */
   getName(): string {
     return this._params.name;
-  }
-
-  /**
-   * Each system attachment has a unique NSID, normally the same as the token.
-   * A no-token system attachment can specify a relevant NSID not linked to any
-   * game object.
-   *
-   * @returns {string} The NSID of the system attachment.
-   */
-  getNsid(): string {
-    return `token.attachment:${this._source}/${this._params.nsidName}`;
   }
 
   /**
@@ -164,23 +160,20 @@ export class SystemAttachment {
   }
 
   /**
-   * Get the wormholes with global positions.
-   * Given as origin if no attachment object.
+   * Get the wormholes with world positions.
    * System attachment may generate different results if face up/down.
    *
-   * @returns {Array<WormholeWithGlobalPosition>} The wormholes with global positions.
+   * @returns {Array<WormholeWithPosition>} The wormholes with global positions.
    */
-  getWormholesWithPositions(): Array<WormholeWithWorldPosition> {
-    const result: Array<WormholeWithWorldPosition> = [];
-
-    const globalPosition: Vector = this._obj.getPosition();
+  getWormholesWithPositions(): Array<WormholeWithPosition> {
+    const result: Array<WormholeWithPosition> = [];
+    const position: Vector = this._obj.getPosition();
     for (const wormhole of this.getWormholes()) {
       result.push({
-        globalPosition,
+        position,
         wormhole,
       });
     }
-
     return result;
   }
 }

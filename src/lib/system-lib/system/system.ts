@@ -7,9 +7,9 @@ import { NsidNameSchema } from "../schema/basic-types-schema";
 import { PlanetSchemaType } from "../schema/planet-schema";
 import { SystemDefaults } from "../data/system-defaults";
 
-export type WormholeWithWorldPosition = {
+export type WormholeWithPosition = {
   wormhole: string;
-  globalPosition: Vector;
+  position: Vector;
 };
 
 export type WormholeWithLocalPosition = {
@@ -385,8 +385,8 @@ export class System {
    *
    * @returns {Array<WormholeWithGlobalPosition>}
    */
-  getWormholesWithPositions(): Array<WormholeWithWorldPosition> {
-    const result: Array<WormholeWithWorldPosition> = [];
+  getWormholesWithPositions(): Array<WormholeWithPosition> {
+    const result: Array<WormholeWithPosition> = [];
 
     // Wormholes in the raw system.
     let thisLocalWormholes: Array<WormholeWithLocalPosition> = [];
@@ -396,14 +396,14 @@ export class System {
       thisLocalWormholes = this._wormholes;
     }
     for (const localWormhole of thisLocalWormholes) {
-      const globalPosition: Vector = this._obj.localPositionToWorld(
+      const position: Vector = this._obj.localPositionToWorld(
         localWormhole.localPosition
       );
-      const wormholeWithGlobalPosition: WormholeWithWorldPosition = {
+      const wormholeWithPosition: WormholeWithPosition = {
         wormhole: localWormhole.wormhole,
-        globalPosition,
+        position,
       };
-      result.push(wormholeWithGlobalPosition);
+      result.push(wormholeWithPosition);
     }
 
     // Wormholes in attachments.

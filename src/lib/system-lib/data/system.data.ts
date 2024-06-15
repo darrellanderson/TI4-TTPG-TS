@@ -615,7 +615,7 @@ export const SOURCE_TO_SYSTEM_DATA: Record<string, Array<SystemSchemaType>> = {
     },
     {
       tile: 41,
-      anomalies: ["gravity_rift"],
+      anomalies: ["gravity-rift"],
     },
     {
       tile: 42,
@@ -627,11 +627,11 @@ export const SOURCE_TO_SYSTEM_DATA: Record<string, Array<SystemSchemaType>> = {
     },
     {
       tile: 44,
-      anomalies: ["asteroid_field"],
+      anomalies: ["asteroid-field"],
     },
     {
       tile: 45,
-      anomalies: ["asteroid_field"],
+      anomalies: ["asteroid-field"],
     },
     {
       tile: 46,
@@ -650,7 +650,7 @@ export const SOURCE_TO_SYSTEM_DATA: Record<string, Array<SystemSchemaType>> = {
     },
     {
       tile: 51,
-      class: "offMap",
+      class: "off-map",
       isHome: true,
       wormholes: ["delta"],
       planets: [
@@ -883,7 +883,7 @@ export const SOURCE_TO_SYSTEM_DATA: Record<string, Array<SystemSchemaType>> = {
     },
     {
       tile: 67,
-      anomalies: ["gravity_rift"],
+      anomalies: ["gravity-rift"],
       planets: [
         {
           name: "Cormund",
@@ -1087,7 +1087,7 @@ export const SOURCE_TO_SYSTEM_DATA: Record<string, Array<SystemSchemaType>> = {
     },
     {
       tile: 79,
-      anomalies: ["asteroid_field"],
+      anomalies: ["asteroid-field"],
       wormholes: ["alpha"],
     },
     {
@@ -1101,7 +1101,7 @@ export const SOURCE_TO_SYSTEM_DATA: Record<string, Array<SystemSchemaType>> = {
     },
     {
       tile: 82,
-      class: "offMap",
+      class: "off-map",
       wormholes: ["alpha", "beta", "gamma"],
       wormholesFaceDown: ["gamma"],
       planets: [

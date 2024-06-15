@@ -9,7 +9,7 @@ import { PlanetSchema } from "./planet-schema";
 export const SystemAttachmentSchema = z
   .object({
     name: z.string(),
-    nsidName: NsidNameSchema, // NSID "token.attachment:${source}/${nsidName}"
+    nsidName: NsidNameSchema, // NSID "token.attachment.system:${source}/${nsidName}"
 
     anomalies: z.array(AnomalySchema).optional(),
     wormholes: z.array(WormholeSchema).optional(),
