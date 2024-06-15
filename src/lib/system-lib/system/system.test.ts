@@ -157,21 +157,44 @@ it("attachment management", () => {
     },
     "my-source"
   );
-  const attachment = new SystemAttachment(
+  const attachment1 = new SystemAttachment(
     {
       name: "my-name",
-      nsidName: "my-attachment-nsid-name",
+      nsidName: "my-attachment-nsid-name-1",
     },
     "my-source"
   );
-  const attachmentNsid: string = attachment.getNsid();
-  expect(system.hasAttachment(attachmentNsid)).toBe(false);
+  const attachment2 = new SystemAttachment(
+    {
+      name: "my-name",
+      nsidName: "my-attachment-nsid-name-2",
+    },
+    "my-source"
+  );
+  const attachmentNsid1: string = attachment1.getNsid();
+  const attachmentNsid2: string = attachment2.getNsid();
+  const attachmentTokenObj1 = new MockGameObject({
+    id: "token-1",
+    templateMetadata: attachmentNsid1,
+  });
 
-  system.addAttachment(attachment);
-  expect(system.hasAttachment(attachmentNsid)).toBe(true);
+  expect(system.hasAttachment(attachmentNsid1)).toBe(false);
+  expect(system.hasAttachment(attachmentNsid2)).toBe(false);
 
-  system.delAttachment(attachmentNsid);
-  expect(system.hasAttachment(attachmentNsid)).toBe(false);
+  system.addAttachment(attachment1);
+  expect(system.hasAttachment(attachmentNsid1)).toBe(true);
+  expect(system.hasAttachment(attachmentNsid1, "token-1")).toBe(false);
+  expect(system.hasAttachment(attachmentNsid2)).toBe(false);
+
+  attachment1.setAttachmentObjId("token-1");
+  expect(system.hasAttachment(attachmentNsid1, "token-1")).toBe(true);
+
+  attachmentTokenObj1.destroy();
+  expect(system.hasAttachment(attachmentNsid1, "token-1")).toBe(false);
+
+  system.delAttachment(attachmentNsid2);
+  expect(system.hasAttachment(attachmentNsid1)).toBe(false);
+  expect(system.hasAttachment(attachmentNsid2)).toBe(false);
 });
 
 it("getAnomalies", () => {
