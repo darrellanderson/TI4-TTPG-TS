@@ -5,9 +5,10 @@ import {
   globalEvents,
   world,
 } from "@tabletop-playground/api";
+import { NSID } from "ttpg-darrell";
+
 import { SystemSchema, SystemSchemaType } from "../schema/system-schema";
 import { System } from "../system/system";
-import { NSID } from "ttpg-darrell";
 import { SOURCE_TO_SYSTEM_DATA } from "../data/system.data";
 import { NsidNameSchema } from "../schema/basic-types-schema";
 
@@ -39,10 +40,10 @@ export class SystemRegistry {
       if (schemaAndSource) {
         // Register a fresh system object for this system tile object.
         const system: System = new System(
-          schemaAndSource.schema,
-          schemaAndSource.source
+          obj,
+          schemaAndSource.source,
+          schemaAndSource.schema
         );
-        system.setSystemTileObjId(obj.getId());
         this._systemTileObjIdToSystem.set(obj.getId(), system);
       }
     }
@@ -76,20 +77,20 @@ export class SystemRegistry {
     source: string
   ): this {
     // Find all system tile objects.
-    const tileToObjIds: Map<number, Array<string>> = new Map();
+    const tileToObjs: Map<number, Array<GameObject>> = new Map();
     const skipContained: boolean = false;
     for (const obj of world.getAllObjects(skipContained)) {
       const nsid: string = NSID.get(obj);
       const systemTileNumber: number | undefined =
         System.nsidToSystemTileNumber(nsid);
       if (systemTileNumber !== undefined) {
-        let objIds: Array<string> | undefined =
-          tileToObjIds.get(systemTileNumber);
-        if (!objIds) {
-          objIds = [];
-          tileToObjIds.set(systemTileNumber, objIds);
+        let objs: Array<GameObject> | undefined =
+          tileToObjs.get(systemTileNumber);
+        if (!objs) {
+          objs = [];
+          tileToObjs.set(systemTileNumber, objs);
         }
-        objIds.push(obj.getId());
+        objs.push(obj);
       }
     }
 
@@ -119,11 +120,10 @@ export class SystemRegistry {
       });
 
       // Instantiate for any existing system tile objects.
-      const objIds: Array<string> = tileToObjIds.get(tileNumber) ?? [];
-      for (const objId of objIds) {
-        const system = new System(systemSchemaType, source);
-        system.setSystemTileObjId(objId);
-        this._systemTileObjIdToSystem.set(objId, system);
+      const objs: Array<GameObject> = tileToObjs.get(tileNumber) ?? [];
+      for (const obj of objs) {
+        const system = new System(obj, source, systemSchemaType);
+        this._systemTileObjIdToSystem.set(obj.getId(), system);
       }
     }
 
@@ -176,20 +176,5 @@ export class SystemRegistry {
    */
   public getBySystemTileObjId(objId: string): System | undefined {
     return this._systemTileObjIdToSystem.get(objId);
-  }
-
-  /**
-   * Lookup system by tile number.
-   *
-   * @param tile
-   * @returns
-   */
-  public rawBySystemTileNumber(tile: number): System | undefined {
-    const schemaAndSource: SchemaAndSource | undefined =
-      this._systemTileNumberToSchemaAndSource.get(tile);
-    if (schemaAndSource) {
-      return new System(schemaAndSource.schema, schemaAndSource.source);
-    }
-    return undefined;
   }
 }

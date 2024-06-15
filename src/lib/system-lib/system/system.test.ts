@@ -25,8 +25,8 @@ it("static nsidToSystemTileNumber (name not a number)", () => {
   expect(System.nsidToSystemTileNumber("tile.system:base/x")).toBeUndefined();
 });
 
-it("static systemTileNumberToNsid", () => {
-  expect(System.systemTileNumberToNsid("my-source", 1)).toBe(
+it("static systemSchemaToNsid", () => {
+  expect(System.systemSchemaToNsid("my-source", { tile: 1 })).toBe(
     "tile.system:my-source/1"
   );
 });
@@ -63,10 +63,16 @@ it("attachment management", () => {
   });
   expect(system.hasAttachment(attachment)).toBe(false);
 
-  system.addAttachment(attachment);
+  let success: boolean;
+  success = system.addAttachment(attachment);
+  expect(success).toBe(true);
   expect(system.hasAttachment(attachment)).toBe(true);
 
-  let success: boolean = system.delAttachment(attachment);
+  success = system.addAttachment(attachment);
+  expect(success).toBe(false); // already added
+  expect(system.hasAttachment(attachment)).toBe(true);
+
+  success = system.delAttachment(attachment);
   expect(success).toBe(true);
   expect(system.hasAttachment(attachment)).toBe(false);
 

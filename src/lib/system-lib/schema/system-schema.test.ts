@@ -5,7 +5,7 @@ it("SystemSchema", () => {
     tile: 1,
     isHome: true,
     isHyperlane: true,
-    anomalies: ["asteroid_field", "gravity_rift"],
+    anomalies: ["asteroid-field", "gravity-rift"],
     wormholes: ["alpha", "beta"],
     imgFaceDown: true,
     imgPackageId: "my-img-package-id",

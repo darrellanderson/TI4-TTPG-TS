@@ -51,11 +51,11 @@ export class System {
     return undefined;
   }
 
-  public static systemTileNumberToNsid(
+  public static systemSchemaToNsid(
     source: string,
-    systemTileNumber: number
+    schema: SystemSchemaType
   ): string {
-    return `tile.system:${source}/${systemTileNumber}`;
+    return `tile.system:${source}/${schema.tile}`;
   }
 
   constructor(obj: GameObject, source: string, params: SystemSchemaType) {
@@ -145,8 +145,12 @@ export class System {
    * @param attachment
    * @returns
    */
-  addAttachment(attachment: SystemAttachment): void {
-    this._attachments.push(attachment);
+  addAttachment(attachment: SystemAttachment): boolean {
+    if (!this.hasAttachment(attachment)) {
+      this._attachments.push(attachment);
+      return true;
+    }
+    return false;
   }
 
   /**

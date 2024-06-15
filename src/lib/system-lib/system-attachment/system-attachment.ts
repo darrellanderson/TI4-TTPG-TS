@@ -1,5 +1,6 @@
 import { GameObject, Vector, refPackageId } from "@tabletop-playground/api";
 import { Facing } from "ttpg-darrell";
+
 import { NsidNameSchema } from "../schema/basic-types-schema";
 import { Planet } from "../planet/planet";
 import { System, WormholeWithWorldPosition } from "../system/system";
@@ -20,6 +21,10 @@ export class SystemAttachment {
   private readonly _source: string;
   private readonly _params: SystemAttachmentSchemaType;
   private readonly _planets: Array<Planet> = [];
+
+  static schemaToNsid(source: string, nsidName: string): string {
+    return `token.attachment.system:${source}/${nsidName}`;
+  }
 
   /**
    * Create a system attachment.
@@ -54,8 +59,7 @@ export class SystemAttachment {
     const pos: Vector = this._obj.getPosition();
     const system: System | undefined = TI4.systemRegistry.getByPosition(pos);
     if (system) {
-      system.addAttachment(this);
-      return true;
+      return system.addAttachment(this);
     }
     return false;
   }
@@ -64,8 +68,7 @@ export class SystemAttachment {
     const pos: Vector = this._obj.getPosition();
     const system: System | undefined = TI4.systemRegistry.getByPosition(pos);
     if (system && system.hasAttachment(this)) {
-      system.delAttachment(this);
-      return true;
+      return system.delAttachment(this);
     }
     return false;
   }

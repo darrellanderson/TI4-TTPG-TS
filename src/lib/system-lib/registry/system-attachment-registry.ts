@@ -1,9 +1,4 @@
-import {
-  GameObject,
-  Vector,
-  globalEvents,
-  world,
-} from "@tabletop-playground/api";
+import { GameObject, globalEvents, world } from "@tabletop-playground/api";
 import { NSID } from "ttpg-darrell";
 
 import { SystemAttachment } from "../system-attachment/system-attachment";
@@ -12,7 +7,6 @@ import {
   SystemAttachmentSchema,
   SystemAttachmentSchemaType,
 } from "../schema/system-attachment-schema";
-import { System } from "../system/system";
 
 type SchemaAndSource = {
   schema: SystemAttachmentSchemaType;
@@ -39,10 +33,10 @@ export class SystemAttachmentRegistry {
     if (schemaAndSource) {
       // Register a fresh system object for this system tile object.
       const systemAttachment: SystemAttachment = new SystemAttachment(
-        schemaAndSource.schema,
-        schemaAndSource.source
+        obj,
+        schemaAndSource.source,
+        schemaAndSource.schema
       );
-      systemAttachment.setAttachmentObjId(obj.getId());
       this._attachmentObjIdToSystemAttachment.set(
         obj.getId(),
         systemAttachment
@@ -104,16 +98,7 @@ export class SystemAttachmentRegistry {
 
     // If any attachments are not yet attached, attach them.
     for (const systemAttachment of this._attachmentObjIdToSystemAttachment.values()) {
-      const nsid: string = systemAttachment.getNsid();
-      const obj: GameObject | undefined = systemAttachment.getAttachmentObj();
-      if (obj) {
-        const pos: Vector = obj.getPosition();
-        const system: System | undefined =
-          TI4.systemRegistry.getByPosition(pos);
-        if (system && !system.hasAttachment(nsid, obj.getId())) {
-          system.addAttachment(systemAttachment);
-        }
-      }
+      systemAttachment.attach();
     }
   }
 
@@ -149,10 +134,7 @@ export class SystemAttachmentRegistry {
       }
 
       // Register (create temporary attachment for nsid generation).
-      const attachment = new SystemAttachment(
-        systemAttachmentSchemaType,
-        source
-      );
+
       this._nsidToSchemaAndSource.set(attachment.getNsid(), {
         schema: systemAttachmentSchemaType,
         source,

@@ -1,292 +1,174 @@
-import { GameObject, refPackageId } from "@tabletop-playground/api";
+import { refPackageId } from "@tabletop-playground/api";
 import { MockGameObject } from "ttpg-mock";
-import { System, WormholeWithGlobalPosition } from "../system/system";
+
+import { System, WormholeWithWorldPosition } from "../system/system";
 import { SystemAttachment } from "./system-attachment";
 import { resetGlobalThisTI4 } from "../../../global/global";
 
 it("constructor", () => {
-  const attachment = new SystemAttachment(
-    {
-      anomalies: ["asteroid_field"],
-      img: "my-img",
-      imgPackageId: "my-imgPackageId",
-      name: "my-name",
-      nsidName: "my-nsid-name",
-      planets: [],
-      wormholes: ["alpha"],
-      wormholesFaceDown: ["beta"],
-    },
-    "my-source"
-  );
+  const attachment = new SystemAttachment(new MockGameObject(), "my-source", {
+    anomalies: ["asteroid-field"],
+    imgPackageId: "my-package-id",
+    name: "my-name",
+    nsidName: "my-nsid-name",
+    planets: [],
+    wormholes: ["alpha"],
+    wormholesFaceDown: ["beta"],
+  });
   expect(attachment.getAnomalies()).toEqual(["asteroid_field"]);
-  expect(attachment.getImg()).toEqual("my-img:my-imgPackageId");
+  expect(attachment.getImg()).toEqual(
+    "token/attachment/system/my-nsid-name.png:my-package-id"
+  );
   expect(attachment.getName()).toEqual("my-name");
   expect(attachment.getNsid()).toEqual(
     "token.attachment:my-source/my-nsid-name"
   );
   expect(attachment.getPlanets()).toEqual([]);
   expect(attachment.getWormholes()).toEqual(["alpha"]);
-  expect(attachment.isAttachmentFaceUp()).toEqual(true);
 });
 
 it("constructor (invalid params)", () => {
   expect(() => {
-    new SystemAttachment(
-      {
-        name: "",
-        nsidName: "@@invalid??",
-      },
-      "my-source"
-    );
+    new SystemAttachment(new MockGameObject(), "my-source", {
+      name: "",
+      nsidName: "@@invalid??",
+    });
   }).toThrow();
 });
 
 it("anomalies empty", () => {
-  const attachment = new SystemAttachment(
-    {
-      name: "my-name",
-      nsidName: "my-nsid-name",
-    },
-    "my-source"
-  );
+  const attachment = new SystemAttachment(new MockGameObject(), "my-source", {
+    name: "my-name",
+    nsidName: "my-nsid-name",
+  });
   expect(attachment.getAnomalies()).toEqual([]);
 });
 
-it("img empty", () => {
-  const attachment = new SystemAttachment(
-    {
-      name: "my-name",
-      nsidName: "my-nsid-name",
-    },
-    "my-source"
-  );
-  expect(attachment.getImg()).toBeUndefined();
-});
-
 it("img no package id", () => {
-  const attachment = new SystemAttachment(
-    {
-      name: "my-name",
-      nsidName: "my-nsid-name",
-      img: "my-img",
-    },
-    "my-source"
+  const attachment = new SystemAttachment(new MockGameObject(), "my-source", {
+    name: "my-name",
+    nsidName: "my-nsid-name",
+  });
+  expect(attachment.getImg()).toBe(
+    `token/attachment/system/my-nsid-name.png:${refPackageId}`
   );
-
-  expect(attachment.getImg()).toBe(`my-img:${refPackageId}`);
 });
 
 it("planets", () => {
-  const attachment = new SystemAttachment(
-    {
-      name: "my-name",
-      nsidName: "my-nsid-name",
-      planets: [
-        {
-          name: "my-planet-name",
-          nsidName: "my-planet-nsid",
-        },
-      ],
-    },
-    "my-source"
-  );
+  const attachment = new SystemAttachment(new MockGameObject(), "my-source", {
+    name: "my-name",
+    nsidName: "my-nsid-name",
+    planets: [
+      {
+        name: "my-planet-name",
+        nsidName: "my-planet-nsid",
+      },
+    ],
+  });
   expect(attachment.getPlanets().length).toEqual(1);
   expect(attachment.getPlanets()[0]?.getName()).toEqual("my-planet-name");
 });
 
 it("wormholes empty", () => {
-  const attachment = new SystemAttachment(
-    {
-      name: "my-name",
-      nsidName: "my-nsid-name",
-    },
-    "my-source"
-  );
+  const attachment = new SystemAttachment(new MockGameObject(), "my-source", {
+    name: "my-name",
+    nsidName: "my-nsid-name",
+  });
   expect(attachment.getWormholes()).toEqual([]);
 });
 
 it("wormholesFaceDown", () => {
   const attachment = new SystemAttachment(
+    new MockGameObject({ rotation: [0, 0, 180] }),
+    "my-source",
     {
       name: "my-name",
       nsidName: "my-nsid-name",
       wormholes: ["alpha"],
       wormholesFaceDown: ["beta"],
-    },
-    "my-source"
+    }
   );
-  expect(attachment.isAttachmentFaceUp()).toEqual(true);
-  expect(attachment.getWormholes()).toEqual(["alpha"]);
-
-  const obj: GameObject = new MockGameObject({
-    id: "my-obj",
-    rotation: [0, 0, 180],
-  });
-  attachment.setAttachmentObjId(obj.getId());
-  expect(attachment.isAttachmentFaceUp()).toEqual(false);
   expect(attachment.getWormholes()).toEqual(["beta"]);
-
-  obj.destroy();
-  expect(attachment.isAttachmentFaceUp()).toEqual(true);
-  expect(attachment.getWormholes()).toEqual(["alpha"]);
 });
 
-it("wormholesGlobalPosition", () => {
-  const attachment = new SystemAttachment(
-    {
-      name: "my-name",
-      nsidName: "my-nsid-name",
-      wormholes: ["alpha"],
-      wormholesFaceDown: ["beta"],
-    },
-    "my-source"
-  );
-
-  const obj: GameObject = new MockGameObject({
-    rotation: [0, 0, 0],
+it("wormholesWorldPosition", () => {
+  const attachment = new SystemAttachment(new MockGameObject(), "my-source", {
+    name: "my-name",
+    nsidName: "my-nsid-name",
+    wormholes: ["alpha"],
+    wormholesFaceDown: ["beta"],
   });
-  attachment.setAttachmentObjId(obj.getId());
-
-  const out: Array<WormholeWithGlobalPosition> =
-    attachment.getWormholesWithGlobalPositions();
-
+  const out: Array<WormholeWithWorldPosition> =
+    attachment.getWormholesWithPositions();
   const check = out.map((x) => `${x.wormhole}:${x.globalPosition.toString()}`);
   expect(check).toEqual(["alpha:(X=0,Y=0,Z=0)"]);
 });
 
 it("wormholesGlobalPosition (non-origin attachment)", () => {
   const attachment = new SystemAttachment(
+    new MockGameObject({ position: [1, 2, 3] }),
+    "my-source",
     {
       name: "my-name",
       nsidName: "my-nsid-name",
       wormholes: ["alpha"],
       wormholesFaceDown: ["beta"],
-    },
-    "my-source"
+    }
   );
-
-  const obj: GameObject = new MockGameObject({
-    position: [1, 2, 3],
-    rotation: [0, 0, 0],
-  });
-  attachment.setAttachmentObjId(obj.getId());
-
-  const out: Array<WormholeWithGlobalPosition> =
-    attachment.getWormholesWithGlobalPositions();
-
+  const out: Array<WormholeWithWorldPosition> =
+    attachment.getWormholesWithPositions();
   const check = out.map((x) => `${x.wormhole}:${x.globalPosition.toString()}`);
   expect(check).toEqual(["alpha:(X=1,Y=2,Z=3)"]);
 });
 
-it("wormholesGlobalPosition face down", () => {
+it("wormholesWorldPosition face down", () => {
   const attachment = new SystemAttachment(
+    new MockGameObject({ rotation: [0, 0, 180] }),
+    "my-source",
     {
       name: "my-name",
       nsidName: "my-nsid-name",
       wormholes: ["alpha"],
       wormholesFaceDown: ["beta"],
-    },
-    "my-source"
+    }
   );
-
-  let out: Array<WormholeWithGlobalPosition>;
-  let summary: Array<string>;
-
-  // System tile obj not linked yet, uses origin and face-up.
-  out = attachment.getWormholesWithGlobalPositions();
-  summary = out.map((x) => `${x.wormhole}:${x.globalPosition.toString()}`);
-  expect(summary).toEqual(["alpha:(X=0,Y=0,Z=0)"]);
-
-  // Link system tile obj.
-  const obj: GameObject = new MockGameObject({
-    position: [1, 2, 3],
-    rotation: [0, 0, 180],
-  });
-  attachment.setAttachmentObjId(obj.getId());
-
-  out = attachment.getWormholesWithGlobalPositions();
-  summary = out.map((x) => `${x.wormhole}:${x.globalPosition.toString()}`);
-  expect(summary).toEqual(["beta:(X=1,Y=2,Z=3)"]);
-});
-
-it("_getSystemAtAttachmentPosition", () => {
-  // Reset TI4.systemRegistry because globalEvents gets reset between tests.
-  resetGlobalThisTI4();
-
-  const attachment = new SystemAttachment(
-    {
-      name: "my-name",
-      nsidName: "my-nsid-name",
-    },
-    "my-source"
-  );
-  const obj: GameObject = new MockGameObject({
-    position: [1, 0, 0],
-  });
-  attachment.setAttachmentObjId(obj.getId());
-
-  let system: System | undefined;
-  system = attachment._getSystemAtAttachmentPosition();
-  expect(system).toBeUndefined();
-
-  const systemTileObj: GameObject = new MockGameObject({
-    templateMetadata: `tile.system:base/1`,
-    position: [1, 0, 0],
-  });
-  expect(
-    TI4.systemRegistry.getBySystemTileObjId(systemTileObj.getId())
-  ).toBeDefined();
-
-  system = attachment._getSystemAtAttachmentPosition();
-  expect(system).toBeDefined();
+  const out: Array<WormholeWithWorldPosition> =
+    attachment.getWormholesWithPositions();
+  const check = out.map((x) => `${x.wormhole}:${x.globalPosition.toString()}`);
+  expect(check).toEqual(["beta:(X=0,Y=0,Z=0)"]);
 });
 
 it("attach/detach", () => {
   // Reset TI4.systemRegistry because globalEvents gets reset between tests.
   resetGlobalThisTI4();
+  new MockGameObject({ templateMetadata: `tile.system:base/1` });
+  const system: System | undefined =
+    TI4.systemRegistry.getBySystemTileObjId("1");
+  expect(system).toBeDefined();
+  if (!system) {
+    throw new Error("system not found"); // for TypeScript
+  }
 
-  const attachment = new SystemAttachment(
-    {
-      name: "my-name",
-      nsidName: "my-nsid-name",
-    },
-    "my-source"
-  );
-  const attachmentNsid: string = attachment.getNsid();
+  const attachment = new SystemAttachment(new MockGameObject(), "my-source", {
+    name: "my-name",
+    nsidName: "my-nsid-name",
+  });
+  expect(system.hasAttachment(attachment)).toBe(false);
 
   let success: boolean = false;
   success = attachment.attach();
-  expect(success).toBe(false); // no attachment token obj
-
-  // Link token object, necessary for position.
-  const attachmentTokenObj: GameObject = new MockGameObject({
-    templateMetadata: attachmentNsid,
-    position: [1, 0, 0],
-  });
-  attachment.setAttachmentObjId(attachmentTokenObj.getId());
+  expect(success).toBe(true);
+  expect(system.hasAttachment(attachment)).toBe(true);
 
   success = attachment.attach();
-  expect(success).toBe(false); // no system tile obj
-
-  // Create system tile obj, expect SystemRegistry add it via
-  // globalEvents.onObjectCreated.
-  const systemTileObj: GameObject = new MockGameObject({
-    templateMetadata: `tile.system:base/1`,
-    position: [1, 0, 0],
-  });
-
-  const system = TI4.systemRegistry.getBySystemTileObjId(systemTileObj.getId());
-  expect(system).toBeDefined();
-  expect(system?.hasAttachment(attachmentNsid)).toBe(false);
-
-  success = attachment.attach(); // finds system at position
-  expect(success).toBe(true);
-  expect(system?.hasAttachment(attachmentNsid)).toBe(true);
+  expect(success).toBe(false); // already attached
+  expect(system.hasAttachment(attachment)).toBe(true);
 
   success = attachment.detach();
   expect(success).toBe(true);
-  expect(system?.hasAttachment(attachmentNsid)).toBe(false);
+  expect(system.hasAttachment(attachment)).toBe(false);
 
   success = attachment.detach();
-  expect(success).toBe(false); // not attached
+  expect(success).toBe(false);
+  expect(system.hasAttachment(attachment)).toBe(false);
 });

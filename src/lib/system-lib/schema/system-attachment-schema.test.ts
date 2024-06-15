@@ -4,7 +4,7 @@ it("SystemAttachmentSchema", () => {
   const data = {
     name: "my-name",
     nsidName: "my-nsid-name",
-    anomalies: ["gravity_rift", "asteroid_field"],
+    anomalies: ["gravity-rift", "asteroid-field"],
     wormholes: ["alpha", "beta"],
     wormholesFaceDown: ["gamma"],
     planets: [],
