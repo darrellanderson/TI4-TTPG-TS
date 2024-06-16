@@ -1,5 +1,6 @@
 import {
   GameObject,
+  Package,
   TraceHit,
   Vector,
   globalEvents,
@@ -15,6 +16,7 @@ import {
   SourceAndPackageIdSchema,
   SourceAndPackageIdSchemaType,
 } from "../schema/basic-types-schema";
+import { ValidateImages } from "../validate/validate-images";
 
 type SchemaAndSource = {
   schema: SystemSchemaType;
@@ -198,5 +200,25 @@ export class SystemRegistry {
     const schemaAndSource =
       this._systemTileNumberToSchemaAndSource.get(tileNumber);
     return schemaAndSource?.schema;
+  }
+
+  public validateImages(): this {
+    const validateImages = new ValidateImages();
+    const obj: GameObject = new GameObject();
+    for (const schemaAndSource of this._systemTileNumberToSchemaAndSource.values()) {
+      const schema = schemaAndSource.schema;
+      const system: System = new System(
+        obj,
+        schemaAndSource.sourceAndPackageId,
+        schema
+      );
+      const packageId: string = system.getImgPackageId();
+      obj.setRotation([0, 0, 0]);
+      validateImages.add(system.getImg(), packageId);
+      obj.setRotation([0, 0, 180]);
+      validateImages.add(system.getImg(), packageId);
+    }
+    validateImages.validateOrThrow();
+    return this;
   }
 }

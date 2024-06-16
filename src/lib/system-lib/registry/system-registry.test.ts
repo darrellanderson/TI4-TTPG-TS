@@ -1,6 +1,11 @@
-import { MockGameObject, MockGameWorld, mockWorld } from "ttpg-mock";
+import {
+  MockGameObject,
+  MockGameWorld,
+  MockPackage,
+  mockWorld,
+} from "ttpg-mock";
 import { SystemRegistry } from "./system-registry";
-import { GameObject, Vector, world } from "@tabletop-playground/api";
+import { GameObject, Package, Vector, world } from "@tabletop-playground/api";
 
 it("constructor", () => {
   new SystemRegistry();
@@ -107,5 +112,19 @@ it("getByPosition", () => {
 
   obj.destroy();
   expect(registry.getByPosition(pos)).toBeUndefined();
+  registry.destroy();
+});
+
+it("validateImages", () => {
+  const registry = new SystemRegistry().load(
+    { source: "my-source", packageId: "my-package-id" },
+    [{ tile: 12 }]
+  );
+  const myPackage: Package = new MockPackage({
+    textureFiles: ["tile/system/my-source/tile-012.png"],
+    uniqueId: "my-package-id",
+  });
+  mockWorld._reset({ packages: [myPackage] });
+  registry.validateImages();
   registry.destroy();
 });
