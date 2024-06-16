@@ -1,9 +1,4 @@
-import {
-  GameObject,
-  ImageWidget,
-  Vector,
-  Widget,
-} from "@tabletop-playground/api";
+import { GameObject, Vector } from "@tabletop-playground/api";
 import { Facing, NSID, ParsedNSID } from "ttpg-darrell";
 import { SystemSchema, SystemSchemaType } from "../schema/system-schema";
 import { Planet } from "../planet/planet";
@@ -291,7 +286,7 @@ export class System {
   }
 
   /**
-   * Get the system tile image, if any.  This is the "UI" version, a square PNG
+   * Get the system tile image file.  This is the "UI" version, a square PNG
    * with the system image centered vertically and fully filling horizontally.
    *
    * @returns {string} The image of the system attachment.
@@ -318,10 +313,13 @@ export class System {
     return img;
   }
 
-  getImgWidget(): Widget {
-    const img: string = this.getImg();
-    const packageId: string = this._sourceAndPackageId.packageId;
-    return new ImageWidget().setImage(img, packageId);
+  /**
+   * Get the package id.
+   *
+   * @returns
+   */
+  getImgPackageId(): string {
+    return this._sourceAndPackageId.packageId;
   }
 
   /**

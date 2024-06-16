@@ -29,8 +29,9 @@ it("constructor", () => {
   );
   expect(attachment.getAnomalies()).toEqual(["asteroid-field"]);
   expect(attachment.getImg()).toEqual(
-    "token/attachment/system/my-source/my-nsid-name.png:my-package-id"
+    "token/attachment/system/my-source/my-nsid-name.png"
   );
+  expect(attachment.getImgPackageId()).toEqual("my-package-id");
   expect(attachment.getName()).toEqual("my-name");
   expect(attachment.getPlanets()).toEqual([]);
   expect(attachment.getWormholes()).toEqual(["alpha"]);
@@ -71,7 +72,7 @@ it("img", () => {
     }
   );
   expect(attachment.getImg()).toBe(
-    "token/attachment/system/my-source/my-nsid-name.png:my-package-id"
+    "token/attachment/system/my-source/my-nsid-name.png"
   );
 });
 
@@ -86,7 +87,7 @@ it("img face down", () => {
     }
   );
   expect(attachment.getImg()).toBe(
-    `token/attachment/system/my-source/my-nsid-name.back.png:my-package-id`
+    `token/attachment/system/my-source/my-nsid-name.back.png`
   );
 });
 
@@ -100,7 +101,7 @@ it("img homebrew", () => {
     }
   );
   expect(attachment.getImg()).toBe(
-    "homebrew-x/token/attachment/system/my-nsid-name.png:my-package-id"
+    "homebrew-x/token/attachment/system/my-nsid-name.png"
   );
 });
 

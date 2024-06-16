@@ -103,8 +103,9 @@ it("img", () => {
     }
   );
   expect(attachment.getImg()).toBe(
-    "token/attachment/planet/my-source/my-nsid-name.png:my-package-id"
+    "token/attachment/planet/my-source/my-nsid-name.png"
   );
+  expect(attachment.getImagePackageId()).toBe("my-package-id");
 });
 
 it("img face down", () => {
@@ -118,7 +119,7 @@ it("img face down", () => {
     }
   );
   expect(attachment.getImg()).toBe(
-    `token/attachment/planet/my-source/my-nsid-name.back.png:my-package-id`
+    "token/attachment/planet/my-source/my-nsid-name.back.png"
   );
 });
 
@@ -132,9 +133,10 @@ it("img homebrew", () => {
     }
   );
   expect(attachment.getImg()).toBe(
-    "homebrew-x/token/attachment/planet/my-nsid-name.png:my-package-id"
+    "homebrew-x/token/attachment/planet/my-nsid-name.png"
   );
 });
+
 it("getInfluence", () => {
   const planetAttachment = new PlanetAttachment(
     new MockGameObject(),

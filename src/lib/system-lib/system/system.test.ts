@@ -168,6 +168,7 @@ it("getImg", () => {
     }
   );
   expect(system.getImg()).toBe("tile/system/my-source/tile-001.png");
+  expect(system.getImgPackageId()).toBe("my-package-id");
 });
 
 it("getImg (face down)", () => {

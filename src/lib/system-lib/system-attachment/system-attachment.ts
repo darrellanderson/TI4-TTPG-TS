@@ -113,12 +113,11 @@ export class SystemAttachment {
   }
 
   /**
-   * Get the token image, if any.
-   * Image is in the form of "image-path.png:packageId".
+   * Get the token image file.
    *
-   * @returns {string | undefined} The image of the system attachment.
+   * @returns {string}
    */
-  getImg(): string | undefined {
+  getImg(): string {
     const useBack: boolean =
       (this._params.imgFaceDown && !Facing.isFaceUp(this._obj)) || false;
     const filename: string = `${this._params.nsidName}${
@@ -137,9 +136,16 @@ export class SystemAttachment {
       img = `${img}/${source}/${filename}`;
     }
 
-    // Attach package id.
-    const packageId: string = this._sourceAndPackageId.packageId;
-    return `${img}:${packageId}`;
+    return img;
+  }
+
+  /**
+   * Get the package id.
+   *
+   * @returns
+   */
+  getImgPackageId(): string {
+    return this._sourceAndPackageId.packageId;
   }
 
   /**

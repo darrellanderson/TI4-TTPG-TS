@@ -99,8 +99,7 @@ export class PlanetAttachment {
   }
 
   /**
-   * Get the token image, if any.
-   * Image is in the form of "image-path.png:packageId".
+   * Get the token image file.
    *
    * @returns {string | undefined} The image of the planet attachment.
    */
@@ -123,9 +122,16 @@ export class PlanetAttachment {
       img = `${img}/${source}/${filename}`;
     }
 
-    // Attach package id.
-    const packageId: string = this._sourceAndPackageId.packageId;
-    return `${img}:${packageId}`;
+    return img;
+  }
+
+  /**
+   * Get the package id.
+   *
+   * @returns
+   */
+  getImagePackageId(): string {
+    return this._sourceAndPackageId.packageId;
   }
 
   /**
