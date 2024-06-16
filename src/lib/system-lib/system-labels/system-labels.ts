@@ -1,4 +1,4 @@
-import { System } from "./system";
+import { System } from "../system/system";
 
 export class SystemLabels {
   private readonly _system: System;

@@ -1,4 +1,4 @@
-import { System } from "./system";
+import { System } from "../system/system";
 
 const WORMHOLE_TO_CODE: Record<string, string> = {
   alpha: "α",

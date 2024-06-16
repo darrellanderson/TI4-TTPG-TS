@@ -259,6 +259,7 @@ export const SOURCE_TO_SYSTEM_DATA: Record<string, Array<SystemSchemaType>> = {
     },
     {
       tile: 18,
+      isExcludeFromDraft: true,
       planets: [
         {
           name: "Mecatol Rex",
@@ -1095,9 +1096,9 @@ export const SOURCE_TO_SYSTEM_DATA: Record<string, Array<SystemSchemaType>> = {
       anomalies: ["supernova"],
     },
     {
-      tile: 81,
+      tile: 81, // muaat hero supernova tile
       isExcludeFromDraft: true,
-      anomalies: ["supernova"], // muaat hero supernova tile
+      anomalies: ["supernova"],
     },
     {
       tile: 82,
@@ -1186,6 +1187,7 @@ export const SOURCE_TO_SYSTEM_DATA: Record<string, Array<SystemSchemaType>> = {
     // Planets without a system.
     {
       tile: -9,
+      isExcludeFromDraft: true,
       planets: [
         {
           name: "Custodia Vigilia",

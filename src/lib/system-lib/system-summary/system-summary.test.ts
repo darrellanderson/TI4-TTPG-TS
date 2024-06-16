@@ -1,5 +1,5 @@
 import { MockGameObject } from "ttpg-mock";
-import { System } from "./system";
+import { System } from "../system/system";
 import { SystemSummary } from "./system-summary";
 
 it("constructor", () => {

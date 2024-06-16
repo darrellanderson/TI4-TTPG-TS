@@ -1,5 +1,5 @@
 import { MockGameObject } from "ttpg-mock";
-import { System } from "./system";
+import { System } from "../system/system";
 import { SystemLabels } from "./system-labels";
 
 it("constructor", () => {
