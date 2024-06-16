@@ -60,7 +60,7 @@ export const TraitSchema = z
 export type TraitSchemaType = z.infer<typeof TraitSchema>;
 
 export const WormholeSchema = z
-  .enum(["alpha", "beta", "delta", "gamma"])
+  .enum(["alpha", "beta", "gamma", "delta", "epsilon"])
   .readonly();
 export type WormholeSchemaType = z.infer<typeof WormholeSchema>;
 
