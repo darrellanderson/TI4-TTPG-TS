@@ -372,9 +372,9 @@ export class System {
   /**
    * Get system tile number.
    *
-   * @returns {number | undefined}
+   * @returns {number}
    */
-  getSystemTileNumber(): number | undefined {
+  getSystemTileNumber(): number {
     return this._params.tile;
   }
 
@@ -450,6 +450,15 @@ export class System {
     }
 
     return result;
+  }
+
+  /**
+   * exlude from draft?
+   *
+   * @returns {boolean}
+   */
+  isExcludeFromDraft(): boolean {
+    return this._params.isExcludeFromDraft ?? false;
   }
 
   /**

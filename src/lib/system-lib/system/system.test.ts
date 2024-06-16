@@ -410,6 +410,15 @@ it("getWormholesWithPosition", () => {
   expect(summary).toEqual(["beta:(X=1,Y=2,Z=3)"]);
 });
 
+it("isExcludeFromDraft", () => {
+  const system = new System(
+    new MockGameObject(),
+    { source: "my-source", packageId: "my-package-id" },
+    { tile: 1, isExcludeFromDraft: true }
+  );
+  expect(system.isExcludeFromDraft()).toBe(true);
+});
+
 it("isHome", () => {
   const system = new System(
     new MockGameObject(),
