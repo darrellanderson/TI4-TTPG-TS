@@ -8,6 +8,7 @@ import { SystemAttachment } from "../system-attachment/system-attachment";
 import { SystemDefaults } from "../data/system-defaults";
 import { SystemSchemaType } from "../schema/system-schema";
 import exp from "constants";
+import { PlanetAttachment } from "../planet-attachment/planet-attachment";
 
 it("static nsidToSystemTileNumber", () => {
   expect(System.nsidToSystemTileNumber("tile.system:my-source/1")).toBe(1);
@@ -286,7 +287,7 @@ it("getPlanets", () => {
     }
   );
   system.addAttachment(attachment);
-  const planets: Array<Planet> = system.getPlanets();
+  let planets: Array<Planet> = system.getPlanets();
   expect(planets.map((p) => p.getName())).toEqual([
     "planet-1",
     "planet-2",
@@ -296,6 +297,19 @@ it("getPlanets", () => {
     SystemDefaults.PLANET_POS.POS_1_OF_2?.toString()
   );
   expect(planets[1]?.getPosition().toString()).toBe("(X=1,Y=2,Z=0)");
+
+  // Destroy planet.
+  const destroy: PlanetAttachment = new PlanetAttachment(
+    new GameObject(),
+    { source: "my-source", packageId: "my-package-id" },
+    { name: "destroy", nsidName: "destroy", isDestroyPlanet: true }
+  );
+  const planet2: Planet | undefined = planets[1];
+  if (planet2) {
+    planet2.addAttachment(destroy);
+  }
+  planets = system.getPlanets();
+  expect(planets.map((p) => p.getName())).toEqual(["planet-1", "planet-3"]);
 });
 
 it("getSystemTileNumber", () => {
@@ -357,7 +371,7 @@ it("getWormholes face down", () => {
   expect(system.getWormholes()).toEqual(["gamma", "delta", "beta"]);
 });
 
-it("getWormholesWithGlobalPosition", () => {
+it("getWormholesWithPosition", () => {
   const system = new System(
     new MockGameObject({
       position: new Vector(10, 20, 30),
@@ -378,13 +392,22 @@ it("getWormholesWithGlobalPosition", () => {
     }
   );
   system.addAttachment(attachment);
-  const out: Array<WormholeWithPosition> = system.getWormholesWithPositions();
-  const summary: Array<string> = out.map(
+  let out: Array<WormholeWithPosition> = system.getWormholesWithPositions();
+  let summary: Array<string> = out.map(
     (w) => `${w.wormhole}:${w.position.toString()}`
   );
   expect(summary).toEqual(["alpha:(X=10,Y=20,Z=30)", "beta:(X=1,Y=2,Z=3)"]);
 
-  // Link the attachment object.
+  // Destroy wormhole attachment.
+  const destroy: SystemAttachment = new SystemAttachment(
+    new MockGameObject({ position: [10, 20, 30] }),
+    { source: "my-source", packageId: "my-package-id" },
+    { name: "destroy", nsidName: "destroy", isDestroyWormhole: true }
+  );
+  system.addAttachment(destroy);
+  out = system.getWormholesWithPositions();
+  summary = out.map((w) => `${w.wormhole}:${w.position.toString()}`);
+  expect(summary).toEqual(["beta:(X=1,Y=2,Z=3)"]);
 });
 
 it("isHome", () => {

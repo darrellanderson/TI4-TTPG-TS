@@ -356,6 +356,7 @@ export class System {
 
   /**
    * Get planets of the system and all attachments.
+   * Excludes destroyed planets.
    *
    * @returns {Array<Planet>}
    */
@@ -365,7 +366,7 @@ export class System {
     for (const attachment of this._attachments) {
       result.push(...attachment.getPlanets());
     }
-    return result;
+    return result.filter((planet) => !planet.isDestroyedPlanet());
   }
 
   /**
@@ -421,6 +422,31 @@ export class System {
     // Wormholes in attachments.
     for (const attachment of this._attachments) {
       result.push(...attachment.getWormholesWithPositions());
+    }
+
+    // Attachment can destroy closest wormhole.
+    for (const attachment of this._attachments) {
+      if (attachment.isDestroyWormhole()) {
+        let closestIndex: number = -1;
+        let closestDsq: number = Number.MAX_VALUE;
+        for (let i = 0; i < result.length; i++) {
+          const wormholeWithPosition: WormholeWithPosition | undefined =
+            result[i];
+          if (wormholeWithPosition) {
+            const dSq: number = this._obj
+              .getPosition()
+              .subtract(wormholeWithPosition.position)
+              .magnitudeSquared();
+            if (dSq < closestDsq) {
+              closestIndex = i;
+              closestDsq = dSq;
+            }
+          }
+        }
+        if (closestIndex >= 0) {
+          result.splice(closestIndex, 1);
+        }
+      }
     }
 
     return result;

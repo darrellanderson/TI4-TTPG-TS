@@ -227,3 +227,28 @@ it("attach/detach", () => {
   expect(success).toBe(false);
   expect(system.hasAttachment(attachment)).toBe(false);
 });
+
+it("isDestroyWormhole", () => {
+  const attachment = new SystemAttachment(
+    new MockGameObject(),
+    { source: "my-source", packageId: "my-package-id" },
+    {
+      name: "my-name",
+      nsidName: "my-nsid-name",
+      isDestroyWormhole: true,
+    }
+  );
+  expect(attachment.isDestroyWormhole()).toBe(true);
+});
+
+it("isDestroyWormhole (default)", () => {
+  const attachment = new SystemAttachment(
+    new MockGameObject(),
+    { source: "my-source", packageId: "my-package-id" },
+    {
+      name: "my-name",
+      nsidName: "my-nsid-name",
+    }
+  );
+  expect(attachment.isDestroyWormhole()).toBe(false);
+});

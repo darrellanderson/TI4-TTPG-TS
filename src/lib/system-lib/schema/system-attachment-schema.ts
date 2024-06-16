@@ -14,6 +14,7 @@ export const SystemAttachmentSchema = z
     anomalies: z.array(AnomalySchema).optional(),
     wormholes: z.array(WormholeSchema).optional(),
     wormholesFaceDown: z.array(WormholeSchema).optional(),
+    isDestroyWormhole: z.boolean().optional(),
 
     planets: z.array(PlanetSchema).optional(),
 

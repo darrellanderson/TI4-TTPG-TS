@@ -193,4 +193,13 @@ export class SystemAttachment {
     }
     return result;
   }
+
+  /**
+   * Check if the system attachment destroys wormholes.
+   *
+   * @returns {boolean} True if the system attachment destroys wormholes.
+   */
+  isDestroyWormhole(): boolean {
+    return this._params.isDestroyWormhole || false;
+  }
 }
