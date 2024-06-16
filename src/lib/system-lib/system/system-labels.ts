@@ -16,7 +16,7 @@ export class SystemLabels {
     this._system = system;
   }
 
-  attachLabels(): this {
+  attach(): this {
     const addText = (text: string, pos: Vector): void => {
       const ui: UIElement = new UIElement();
       ui.widget = new Border().setChild(
@@ -32,10 +32,21 @@ export class SystemLabels {
       this._system.getObj().getPosition()
     );
 
+    for (const planet of this._system.getPlanets()) {
+      addText(planet.getName(), planet.getPosition());
+    }
+
+    for (const {
+      wormhole,
+      position,
+    } of this._system.getWormholesWithPositions()) {
+      addText(wormhole, position);
+    }
+
     return this;
   }
 
-  detachLabels(): this {
+  detach(): this {
     for (const ui of this._uis) {
       world.removeUIElement(ui);
     }

@@ -201,10 +201,10 @@ export class SystemAttachmentRegistry {
         schema
       );
       const packageId: string = attachment.getImgPackageId();
-      obj.setRotation([0, 0, 0]);
       validateImages.add(attachment.getImg(), packageId);
-      obj.setRotation([0, 0, 180]);
-      validateImages.add(attachment.getImg(), packageId);
+      if (schema.imgFaceDown) {
+        validateImages.add(attachment.getImg(true), packageId);
+      }
     }
     validateImages.validateOrThrow();
     return this;

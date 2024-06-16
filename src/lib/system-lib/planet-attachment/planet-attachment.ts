@@ -103,9 +103,11 @@ export class PlanetAttachment {
    *
    * @returns {string | undefined} The image of the planet attachment.
    */
-  getImg(): string {
+  getImg(forceBack?: boolean): string {
     const useBack: boolean =
-      (this._params.imgFaceDown && !Facing.isFaceUp(this._obj)) || false;
+      forceBack ||
+      (this._params.imgFaceDown && !Facing.isFaceUp(this._obj)) ||
+      false;
     const filename: string = `${this._params.nsidName}${
       useBack ? ".back" : ""
     }.png`;
