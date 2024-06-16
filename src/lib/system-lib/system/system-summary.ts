@@ -71,8 +71,10 @@ export class SystemSummary {
       }
 
       for (const wormhole of system.getWormholes()) {
-        const code: string = WORMHOLE_TO_CODE[wormhole] ?? `<${wormhole}>`;
-        result.wormholes += code;
+        const code: string | undefined = WORMHOLE_TO_CODE[wormhole];
+        if (code) {
+          result.wormholes += code;
+        }
       }
     }
 

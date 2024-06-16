@@ -14,11 +14,11 @@ it("getSummaryRaw", () => {
       { source: "my-source", packageId: "my-package-id" },
       {
         tile: 1,
-        wormholes: ["beta", "alpha"],
+        wormholes: ["beta"],
         planets: [
           {
-            name: "my-planet",
-            nsidName: "my-nsid-name",
+            name: "my-planet-1",
+            nsidName: "my-nsid-name-1",
             influence: 1,
             resources: 2,
             isLegendary: true,
@@ -28,14 +28,45 @@ it("getSummaryRaw", () => {
         ],
       }
     ),
+    new System(
+      new MockGameObject(),
+      { source: "my-source", packageId: "my-package-id" },
+      {
+        tile: 2,
+        wormholes: ["alpha"],
+        planets: [
+          {
+            name: "my-planet-2",
+            nsidName: "my-nsid-name-2",
+            influence: 20,
+            resources: 10,
+          },
+        ],
+      }
+    ),
+    new System(
+      new MockGameObject(),
+      { source: "my-source", packageId: "my-package-id" },
+      {
+        tile: 3,
+        planets: [
+          {
+            name: "my-planet-3",
+            nsidName: "my-nsid-name-3",
+            influence: 100,
+            resources: 100,
+          },
+        ],
+      }
+    ),
   ];
   const systemSummary: SystemSummary = new SystemSummary(systems);
   const result = systemSummary.getSummaryRaw();
   expect(result).toEqual({
-    influence: 1,
-    optInfluence: 0,
-    resources: 2,
-    optResources: 2,
+    influence: 121,
+    optInfluence: 70,
+    resources: 112,
+    optResources: 52,
     legendary: "L",
     techs: "BR",
     traits: "CI",
