@@ -1,14 +1,13 @@
-import { GameObject, Vector, refPackageId } from "@tabletop-playground/api";
+import { GameObject, Vector } from "@tabletop-playground/api";
 import { MockGameObject } from "ttpg-mock";
 
 import { Planet } from "../planet/planet";
+import { PlanetAttachment } from "../planet-attachment/planet-attachment";
 import { SourceAndPackageIdSchemaType } from "../schema/basic-types-schema";
 import { System, WormholeWithPosition } from "./system";
 import { SystemAttachment } from "../system-attachment/system-attachment";
 import { SystemDefaults } from "../data/system-defaults";
 import { SystemSchemaType } from "../schema/system-schema";
-import exp from "constants";
-import { PlanetAttachment } from "../planet-attachment/planet-attachment";
 
 it("static nsidToSystemTileNumber", () => {
   expect(System.nsidToSystemTileNumber("tile.system:my-source/1")).toBe(1);
@@ -49,7 +48,7 @@ it("static standardLocalPostion", () => {
 });
 
 it("constructor", () => {
-  const obj: GameObject = new MockGameObject();
+  const systemTileObj: GameObject = new MockGameObject();
   const source: SourceAndPackageIdSchemaType = {
     source: "my-source",
     packageId: "my-package-id",
@@ -57,7 +56,8 @@ it("constructor", () => {
   const params: SystemSchemaType = {
     tile: 1,
   };
-  const system = new System(obj, source, params);
+  const system = new System(systemTileObj, source, params);
+  expect(system.getObj()).toBe(systemTileObj);
   expect(system.getSystemTileNumber()).toBe(1);
 });
 

@@ -15,8 +15,9 @@ it("static schemaToNsid", () => {
 });
 
 it("constructor", () => {
+  const attachmentTokenObj = new MockGameObject();
   const attachment = new SystemAttachment(
-    new MockGameObject(),
+    attachmentTokenObj,
     { source: "my-source", packageId: "my-package-id" },
     {
       anomalies: ["asteroid-field"],
@@ -33,6 +34,7 @@ it("constructor", () => {
   );
   expect(attachment.getImgPackageId()).toEqual("my-package-id");
   expect(attachment.getName()).toEqual("my-name");
+  expect(attachment.getObj()).toBe(attachmentTokenObj);
   expect(attachment.getPlanets()).toEqual([]);
   expect(attachment.getWormholes()).toEqual(["alpha"]);
 });

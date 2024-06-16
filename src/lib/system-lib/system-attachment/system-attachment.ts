@@ -158,6 +158,15 @@ export class SystemAttachment {
   }
 
   /**
+   * Get the system attachment token game object.
+   *
+   * @returns
+   */
+  public getObj(): GameObject {
+    return this._obj;
+  }
+
+  /**
    * Get any planets added by the system attachment.
    *
    * @returns {Array<Planet>} The planets of the system attachment.

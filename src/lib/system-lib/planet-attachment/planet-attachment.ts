@@ -170,6 +170,15 @@ export class PlanetAttachment {
   }
 
   /**
+   * Get the planet attachment token game object.
+   *
+   * @returns
+   */
+  public getObj(): GameObject {
+    return this._obj;
+  }
+
+  /**
    * Get the resources of the planet attachment.
    *
    * @returns

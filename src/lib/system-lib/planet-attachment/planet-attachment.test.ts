@@ -15,8 +15,9 @@ it("static schemaToNsid", () => {
 });
 
 it("constructor", () => {
+  const attachmentTokenObj = new MockGameObject();
   const planetAttachment = new PlanetAttachment(
-    new MockGameObject(),
+    attachmentTokenObj,
     { source: "my-source", packageId: "my-package-id" },
     {
       name: "my-name",
@@ -24,6 +25,7 @@ it("constructor", () => {
     }
   );
   expect(planetAttachment.getName()).toBe("my-name");
+  expect(planetAttachment.getObj()).toBe(attachmentTokenObj);
 });
 
 it("constructor (invalid params)", () => {

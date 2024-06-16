@@ -323,6 +323,15 @@ export class System {
   }
 
   /**
+   * Get the system tile game object.
+   *
+   * @returns
+   */
+  public getObj(): GameObject {
+    return this._obj;
+  }
+
+  /**
    * Get planet closest to a position.
    *
    * @param position
