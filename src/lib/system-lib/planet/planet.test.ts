@@ -196,7 +196,7 @@ it("getPosition (default)", () => {
 
 it("getRadius", () => {
   const planet = new Planet(
-    new MockGameObject(),
+    new MockGameObject({ scale: [3, 3, 3] }),
     { source: "my-source", packageId: "my-package-id" },
     {
       name: "my-planet-name",
@@ -204,7 +204,7 @@ it("getRadius", () => {
       radius: 2,
     }
   );
-  expect(planet.getRadius()).toEqual(2);
+  expect(planet.getRadius()).toEqual(6);
 });
 
 it("getRadius (default)", () => {

@@ -157,7 +157,10 @@ export class Planet {
    * @returns
    */
   getRadius(): number {
-    return this._params.radius ?? SystemDefaults.PLANET_RADIUS;
+    const localRadius: number =
+      this._params.radius ?? SystemDefaults.PLANET_RADIUS;
+    const worldRadius: number = this._obj.getScale().x * localRadius;
+    return worldRadius;
   }
 
   /**
