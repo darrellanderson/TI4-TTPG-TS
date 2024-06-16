@@ -167,9 +167,7 @@ it("getImg", () => {
       tile: 1,
     }
   );
-  expect(system.getImg()).toBe(
-    "tile/system/my-source/tile-001.png:my-package-id"
-  );
+  expect(system.getImg()).toBe("tile/system/my-source/tile-001.png");
 });
 
 it("getImg (face down)", () => {
@@ -183,9 +181,7 @@ it("getImg (face down)", () => {
       imgFaceDown: true,
     }
   );
-  expect(system.getImg()).toBe(
-    "tile/system/my-source/tile-001.back.png:my-package-id"
-  );
+  expect(system.getImg()).toBe("tile/system/my-source/tile-001.back.png");
 });
 
 it("getImg (homebrew)", () => {
@@ -196,9 +192,7 @@ it("getImg (homebrew)", () => {
       tile: 1,
     }
   );
-  expect(system.getImg()).toBe(
-    `homebrew-x/tile/system/tile-001.png:my-package-id`
-  );
+  expect(system.getImg()).toBe(`homebrew-x/tile/system/tile-001.png`);
 });
 
 it("getPlanetClosest", () => {
