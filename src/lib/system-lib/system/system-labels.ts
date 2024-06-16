@@ -34,6 +34,9 @@ export class SystemLabels {
 
     for (const planet of this._system.getPlanets()) {
       addText(planet.getName(), planet.getPosition());
+      for (const attachment of planet.getAttachments()) {
+        addText(attachment.getName(), attachment.getObj().getPosition());
+      }
     }
 
     for (const {
@@ -41,6 +44,10 @@ export class SystemLabels {
       position,
     } of this._system.getWormholesWithPositions()) {
       addText(wormhole, position);
+    }
+
+    for (const attachment of this._system.getAttachments()) {
+      addText(attachment.getName(), attachment.getObj().getPosition());
     }
 
     return this;
