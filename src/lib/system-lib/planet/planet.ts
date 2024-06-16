@@ -89,6 +89,10 @@ export class Planet {
     return index >= 0;
   }
 
+  getAttachments(): Array<PlanetAttachment> {
+    return [...this._attachments];
+  }
+
   /**
    * Get influence of the planet and all attachments.
    *

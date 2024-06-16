@@ -265,6 +265,15 @@ export class System {
   }
 
   /**
+   * Get the system attachments (not planet attachments).
+   *
+   * @returns
+   */
+  getAttachments(): Array<SystemAttachment> {
+    return [...this._attachments];
+  }
+
+  /**
    * Get the class of the system attachment.
    *
    * Systems are neighbor-adjacent to other systems of the same class, with

@@ -5,6 +5,7 @@ import { PlanetSchemaType } from "../schema/planet-schema";
 import { Planet } from "./planet";
 import { PlanetAttachment } from "../planet-attachment/planet-attachment";
 import { SystemDefaults } from "../data/system-defaults";
+import exp from "constants";
 
 it("constructor", () => {
   const params: PlanetSchemaType = {
@@ -52,10 +53,12 @@ it("attachment management", () => {
   );
   let success: boolean = false;
   expect(planet.hasAttachment(attachment)).toEqual(false);
+  expect(planet.getAttachments()).toEqual([]);
 
   success = planet.addAttachment(attachment);
   expect(success).toEqual(true);
   expect(planet.hasAttachment(attachment)).toEqual(true);
+  expect(planet.getAttachments()).toEqual([attachment]);
 
   success = planet.addAttachment(attachment);
   expect(success).toEqual(false); // already added

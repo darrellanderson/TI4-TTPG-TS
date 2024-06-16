@@ -7,6 +7,7 @@ import { System, WormholeWithPosition } from "./system";
 import { SystemAttachment } from "../system-attachment/system-attachment";
 import { SystemDefaults } from "../data/system-defaults";
 import { SystemSchemaType } from "../schema/system-schema";
+import exp from "constants";
 
 it("static nsidToSystemTileNumber", () => {
   expect(System.nsidToSystemTileNumber("tile.system:my-source/1")).toBe(1);
@@ -91,11 +92,13 @@ it("attachment management", () => {
     }
   );
   expect(system.hasAttachment(attachment)).toBe(false);
+  expect(system.getAttachments()).toEqual([]);
 
   let success: boolean;
   success = system.addAttachment(attachment);
   expect(success).toBe(true);
   expect(system.hasAttachment(attachment)).toBe(true);
+  expect(system.getAttachments()).toEqual([attachment]);
 
   success = system.addAttachment(attachment);
   expect(success).toBe(false); // already added
