@@ -105,7 +105,7 @@ it("img", () => {
   expect(attachment.getImg()).toBe(
     "token/attachment/planet/my-source/my-nsid-name.png"
   );
-  expect(attachment.getImagePackageId()).toBe("my-package-id");
+  expect(attachment.getImgPackageId()).toBe("my-package-id");
 });
 
 it("img face down", () => {

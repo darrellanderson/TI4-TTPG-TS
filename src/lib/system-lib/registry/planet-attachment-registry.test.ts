@@ -1,5 +1,5 @@
-import { GameObject, Player, Vector } from "@tabletop-playground/api";
-import { MockGameObject, MockPlayer } from "ttpg-mock";
+import { GameObject, Package, Player, Vector } from "@tabletop-playground/api";
+import { MockGameObject, MockPackage, MockPlayer, mockWorld } from "ttpg-mock";
 
 import { Planet } from "../planet/planet";
 import { PlanetAttachment } from "../planet-attachment/planet-attachment";
@@ -151,4 +151,21 @@ it("load (corrupt data)", () => {
       [{ name: "my-name", nsidName: "@@invalid" }]
     );
   }).toThrow();
+});
+
+it("validateImages", () => {
+  const registry = new PlanetAttachmentRegistry().load(
+    { source: "my-source", packageId: "my-package-id" },
+    [{ name: "my-name", nsidName: "my-nsid-name", imgFaceDown: true }]
+  );
+  const myPackage: Package = new MockPackage({
+    textureFiles: [
+      "token/attachment/system/my-source/my-nsid-name.png",
+      "token/attachment/system/my-source/my-nsid-name.back.png",
+    ],
+    uniqueId: "my-package-id",
+  });
+  mockWorld._reset({ packages: [myPackage] });
+  registry.validateImages();
+  registry.destroy();
 });

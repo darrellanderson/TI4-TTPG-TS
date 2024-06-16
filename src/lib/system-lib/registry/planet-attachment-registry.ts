@@ -10,6 +10,7 @@ import {
   PlanetAttachmentSchema,
   PlanetAttachmentSchemaType,
 } from "../schema/planet-attachment-schema";
+import { ValidateImages } from "../validate/validate-images";
 
 type SchemaAndSource = {
   schema: PlanetAttachmentSchemaType;
@@ -177,5 +178,25 @@ export class PlanetAttachmentRegistry {
     objId: string
   ): PlanetAttachment | undefined {
     return this._attachmentObjIdToPlanetAttachment.get(objId);
+  }
+
+  public validateImages(): this {
+    const validateImages = new ValidateImages();
+    const obj: GameObject = new GameObject();
+    for (const schemaAndSource of this._nsidToSchemaAndSource.values()) {
+      const schema = schemaAndSource.schema;
+      const attachment: PlanetAttachment = new PlanetAttachment(
+        obj,
+        schemaAndSource.sourceAndPackageId,
+        schema
+      );
+      const packageId: string = attachment.getImgPackageId();
+      obj.setRotation([0, 0, 0]);
+      validateImages.add(attachment.getImg(), packageId);
+      obj.setRotation([0, 0, 180]);
+      validateImages.add(attachment.getImg(), packageId);
+    }
+    validateImages.validateOrThrow();
+    return this;
   }
 }

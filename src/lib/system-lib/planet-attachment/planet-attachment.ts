@@ -130,7 +130,7 @@ export class PlanetAttachment {
    *
    * @returns
    */
-  getImagePackageId(): string {
+  getImgPackageId(): string {
     return this._sourceAndPackageId.packageId;
   }
 

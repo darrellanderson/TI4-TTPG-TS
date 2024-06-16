@@ -1,5 +1,5 @@
-import { GameObject, Player } from "@tabletop-playground/api";
-import { MockGameObject, MockPlayer } from "ttpg-mock";
+import { GameObject, Package, Player } from "@tabletop-playground/api";
+import { MockGameObject, MockPackage, MockPlayer, mockWorld } from "ttpg-mock";
 
 import { SystemAttachmentRegistry } from "./system-attachment-registry";
 import { System } from "../system/system";
@@ -141,5 +141,22 @@ it("token existed at load time, not attached until init.", () => {
   registry.init();
   expect(system?.hasAttachment(attachment)).toBe(true);
 
+  registry.destroy();
+});
+
+it("validateImages", () => {
+  const registry = new SystemAttachmentRegistry().load(
+    { source: "my-source", packageId: "my-package-id" },
+    [{ name: "my-name", nsidName: "my-nsid-name", imgFaceDown: true }]
+  );
+  const myPackage: Package = new MockPackage({
+    textureFiles: [
+      "token/attachment/system/my-source/my-nsid-name.png",
+      "token/attachment/system/my-source/my-nsid-name.back.png",
+    ],
+    uniqueId: "my-package-id",
+  });
+  mockWorld._reset({ packages: [myPackage] });
+  registry.validateImages();
   registry.destroy();
 });

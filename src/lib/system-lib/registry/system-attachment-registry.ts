@@ -10,6 +10,7 @@ import {
   SystemAttachmentSchema,
   SystemAttachmentSchemaType,
 } from "../schema/system-attachment-schema";
+import { ValidateImages } from "../validate/validate-images";
 
 type SchemaAndSource = {
   schema: SystemAttachmentSchemaType;
@@ -187,5 +188,25 @@ export class SystemAttachmentRegistry {
     objId: string
   ): SystemAttachment | undefined {
     return this._attachmentObjIdToSystemAttachment.get(objId);
+  }
+
+  public validateImages(): this {
+    const validateImages = new ValidateImages();
+    const obj: GameObject = new GameObject();
+    for (const schemaAndSource of this._nsidToSchemaAndSource.values()) {
+      const schema = schemaAndSource.schema;
+      const attachment: SystemAttachment = new SystemAttachment(
+        obj,
+        schemaAndSource.sourceAndPackageId,
+        schema
+      );
+      const packageId: string = attachment.getImgPackageId();
+      obj.setRotation([0, 0, 0]);
+      validateImages.add(attachment.getImg(), packageId);
+      obj.setRotation([0, 0, 180]);
+      validateImages.add(attachment.getImg(), packageId);
+    }
+    validateImages.validateOrThrow();
+    return this;
   }
 }
