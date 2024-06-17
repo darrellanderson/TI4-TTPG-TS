@@ -189,6 +189,20 @@ export class SystemRegistry {
   }
 
   /**
+   * Get systems for system tile objects on the table (skip contained).
+   *
+   * @returns
+   */
+  getOnTableSystems(): Array<System> {
+    return Array.from(this._systemTileObjIdToSystem.values()).filter(
+      (system) => {
+        const obj: GameObject = system.getObj();
+        return obj.isValid() && !obj.getContainer();
+      }
+    );
+  }
+
+  /**
    * Get the raw system schema associated with the tile number.
    *
    * @param tileNumber
