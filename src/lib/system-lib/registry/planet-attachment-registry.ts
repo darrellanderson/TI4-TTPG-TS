@@ -1,4 +1,9 @@
-import { GameObject, globalEvents, world } from "@tabletop-playground/api";
+import {
+  GameObject,
+  globalEvents,
+  refPackageId,
+  world,
+} from "@tabletop-playground/api";
 import { NSID } from "ttpg-darrell";
 
 import {
@@ -11,6 +16,7 @@ import {
   PlanetAttachmentSchemaType,
 } from "../schema/planet-attachment-schema";
 import { ValidateImages } from "../validate/validate-images";
+import { SOURCE_TO_PLANET_ATTACHMENT_DATA } from "../data/planet-attachment.data";
 
 type SchemaAndSource = {
   schema: PlanetAttachmentSchemaType;
@@ -138,6 +144,24 @@ export class PlanetAttachmentRegistry {
   }
 
   /**
+   * Load the game data (base plus codices and expansions).
+   *
+   * @returns
+   */
+  public loadDefaultData(): this {
+    for (const [source, planetAttachmentSchemas] of Object.entries(
+      SOURCE_TO_PLANET_ATTACHMENT_DATA
+    )) {
+      const sourceAndPackageId: SourceAndPackageIdSchemaType = {
+        source,
+        packageId: refPackageId,
+      };
+      this.load(sourceAndPackageId, planetAttachmentSchemas);
+    }
+    return this;
+  }
+
+  /**
    * Lookup planet attachment by planet attachment token object nsid.
    * Duplicate tiles for the "same" attachment have separate instances.
    *
@@ -148,6 +172,10 @@ export class PlanetAttachmentRegistry {
     objId: string
   ): PlanetAttachment | undefined {
     return this._attachmentObjIdToPlanetAttachment.get(objId);
+  }
+
+  public rawByNsid(nsid: string): PlanetAttachmentSchemaType | undefined {
+    return this._nsidToSchemaAndSource.get(nsid)?.schema;
   }
 
   public validateImages(): this {

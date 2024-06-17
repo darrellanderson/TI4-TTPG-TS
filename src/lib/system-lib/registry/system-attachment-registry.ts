@@ -1,4 +1,9 @@
-import { GameObject, globalEvents, world } from "@tabletop-playground/api";
+import {
+  GameObject,
+  globalEvents,
+  refPackageId,
+  world,
+} from "@tabletop-playground/api";
 import { NSID } from "ttpg-darrell";
 
 import { SystemAttachment } from "../system-attachment/system-attachment";
@@ -11,6 +16,7 @@ import {
   SystemAttachmentSchemaType,
 } from "../schema/system-attachment-schema";
 import { ValidateImages } from "../validate/validate-images";
+import { SOURCE_TO_SYSTEM_ATTACHMENT_DATA } from "../data/system-attachment.data";
 
 type SchemaAndSource = {
   schema: SystemAttachmentSchemaType;
@@ -146,6 +152,24 @@ export class SystemAttachmentRegistry {
   }
 
   /**
+   * Load the game data (base plus codices and expansions).
+   *
+   * @returns
+   */
+  public loadDefaultData(): this {
+    for (const [source, systemAttachmentSchemas] of Object.entries(
+      SOURCE_TO_SYSTEM_ATTACHMENT_DATA
+    )) {
+      const sourceAndPackageId: SourceAndPackageIdSchemaType = {
+        source,
+        packageId: refPackageId,
+      };
+      this.load(sourceAndPackageId, systemAttachmentSchemas);
+    }
+    return this;
+  }
+
+  /**
    * Lookup system attachment by system attachment token object nsid.
    * Duplicate tokens for the "same" attachment have separate instances.
    *
@@ -156,6 +180,10 @@ export class SystemAttachmentRegistry {
     objId: string
   ): SystemAttachment | undefined {
     return this._attachmentObjIdToSystemAttachment.get(objId);
+  }
+
+  public rawByNsid(nsid: string): SystemAttachmentSchemaType | undefined {
+    return this._nsidToSchemaAndSource.get(nsid)?.schema;
   }
 
   public validateImages(): this {

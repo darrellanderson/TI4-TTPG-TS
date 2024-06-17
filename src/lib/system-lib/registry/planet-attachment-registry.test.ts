@@ -103,6 +103,15 @@ it("load (corrupt data)", () => {
   }).toThrow();
 });
 
+it("loadDefaultData", () => {
+  const registry = new PlanetAttachmentRegistry();
+  const nsid: string = "token.attachment.planet:pok/dmz";
+  expect(registry.rawByNsid(nsid)).toBeUndefined();
+  registry.loadDefaultData();
+  expect(registry.rawByNsid(nsid)).toBeDefined();
+  registry.destroy();
+});
+
 it("validateImages", () => {
   const registry = new PlanetAttachmentRegistry().load(
     { source: "my-source", packageId: "my-package-id" },

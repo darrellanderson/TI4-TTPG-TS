@@ -94,6 +94,15 @@ it("token existed at load time, not attached until init.", () => {
   registry.destroy();
 });
 
+it("loadDefaultData", () => {
+  const registry = new SystemAttachmentRegistry();
+  const nsid: string = "token.attachment.system:base/alpha-wormhole.creuss";
+  expect(registry.rawByNsid(nsid)).toBeUndefined();
+  registry.loadDefaultData();
+  expect(registry.rawByNsid(nsid)).toBeDefined();
+  registry.destroy();
+});
+
 it("validateImages", () => {
   const registry = new SystemAttachmentRegistry().load(
     { source: "my-source", packageId: "my-package-id" },
