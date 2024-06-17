@@ -60,6 +60,13 @@ export class PlanetAttachment {
     this._obj = obj;
     this._sourceAndPackageId = sourceAndPackageId;
     this._params = params;
+
+    obj.onGrab.add(() => {
+      this.detach();
+    });
+    obj.onReleased.add(() => {
+      this.attach();
+    });
   }
 
   /**

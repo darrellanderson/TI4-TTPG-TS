@@ -1,5 +1,5 @@
-import { GameObject, Package, Player, Vector } from "@tabletop-playground/api";
-import { MockGameObject, MockPackage, MockPlayer, mockWorld } from "ttpg-mock";
+import { GameObject, Package, Vector } from "@tabletop-playground/api";
+import { MockGameObject, MockPackage, mockWorld } from "ttpg-mock";
 
 import { Planet } from "../planet/planet";
 import { PlanetAttachment } from "../planet-attachment/planet-attachment";
@@ -31,56 +31,6 @@ it("object create/desroy", () => {
 
   token.destroy();
   expect(registry.getByPlanetAttachmentObjId("my-id")).toBeUndefined();
-
-  registry.destroy();
-});
-
-it("grab/release", () => {
-  resetGlobalThisTI4(); // for TI4.systemRegistry
-  new MockGameObject({
-    templateMetadata: "tile.system:base/1",
-  });
-  const system: System | undefined = TI4.systemRegistry.getByPosition(
-    new Vector(0, 0, 0)
-  );
-  expect(system).toBeDefined();
-  if (!system) {
-    throw new Error("system not found"); // for TypeScript
-  }
-  const planet: Planet | undefined = system.getPlanets()[0];
-  expect(planet).toBeDefined();
-  if (!planet) {
-    throw new Error("planet not found"); // for TypeScript
-  }
-
-  const registry = new PlanetAttachmentRegistry().load(
-    { source: "my-source", packageId: "my-package-id" },
-    [
-      {
-        name: "my-name",
-        nsidName: "my-nsid-name",
-      },
-    ]
-  );
-  const token: MockGameObject = new MockGameObject({
-    id: "my-id",
-    templateMetadata: "token.attachment.planet:my-source/my-nsid-name",
-  });
-  const attachment: PlanetAttachment | undefined =
-    registry.getByPlanetAttachmentObjId("my-id");
-  expect(attachment).toBeDefined();
-  if (!attachment) {
-    throw new Error("attachment not found"); // for TypeScript
-  }
-
-  expect(planet.hasAttachment(attachment)).toBe(false);
-
-  const player: Player = new MockPlayer();
-  token._releaseAsPlayer(player, false);
-  expect(planet.hasAttachment(attachment)).toBe(true);
-
-  token._grabAsPlayer(player);
-  expect(planet.hasAttachment(attachment)).toBe(false);
 
   registry.destroy();
 });

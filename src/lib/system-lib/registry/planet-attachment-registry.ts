@@ -43,12 +43,6 @@ export class PlanetAttachmentRegistry {
         obj.getId(),
         planetAttachment
       );
-
-      // Add grab/release event listeners.
-      obj.onGrab.remove(this._onGrabHandler);
-      obj.onGrab.add(this._onGrabHandler);
-      obj.onReleased.remove(this._onReleasedHandler);
-      obj.onReleased.add(this._onReleasedHandler);
     }
   };
 
@@ -56,24 +50,6 @@ export class PlanetAttachmentRegistry {
     const objId: string = obj.getId();
     if (this._attachmentObjIdToPlanetAttachment.has(objId)) {
       this._attachmentObjIdToPlanetAttachment.delete(objId);
-      obj.onGrab.remove(this._onGrabHandler);
-      obj.onReleased.remove(this._onReleasedHandler);
-    }
-  };
-
-  private readonly _onGrabHandler = (obj: GameObject): void => {
-    const planetAttachment: PlanetAttachment | undefined =
-      this._attachmentObjIdToPlanetAttachment.get(obj.getId());
-    if (planetAttachment) {
-      planetAttachment.detach();
-    }
-  };
-
-  private readonly _onReleasedHandler = (obj: GameObject): void => {
-    const planetAttachment: PlanetAttachment | undefined =
-      this._attachmentObjIdToPlanetAttachment.get(obj.getId());
-    if (planetAttachment) {
-      planetAttachment.attach();
     }
   };
 
@@ -155,12 +131,6 @@ export class PlanetAttachmentRegistry {
             planetAttachmentSchemaType
           );
           this._attachmentObjIdToPlanetAttachment.set(objId, attachment);
-
-          // Add grab/release event listeners.
-          obj.onGrab.remove(this._onGrabHandler);
-          obj.onGrab.add(this._onGrabHandler);
-          obj.onReleased.remove(this._onReleasedHandler);
-          obj.onReleased.add(this._onReleasedHandler);
         }
       }
     }

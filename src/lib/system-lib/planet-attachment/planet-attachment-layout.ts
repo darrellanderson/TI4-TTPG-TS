@@ -1,9 +1,4 @@
-import {
-  GameObject,
-  ObjectType,
-  Vector,
-  world,
-} from "@tabletop-playground/api";
+import { ObjectType, Vector } from "@tabletop-playground/api";
 import { Planet } from "../planet/planet";
 import { PlanetAttachment } from "./planet-attachment";
 import { SystemReserveSpace } from "../system/system-reserve-space";

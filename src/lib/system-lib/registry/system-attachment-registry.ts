@@ -43,12 +43,6 @@ export class SystemAttachmentRegistry {
         obj.getId(),
         systemAttachment
       );
-
-      // Add grab/release event listeners.
-      obj.onGrab.remove(this._onGrabHandler);
-      obj.onGrab.add(this._onGrabHandler);
-      obj.onReleased.remove(this._onReleasedHandler);
-      obj.onReleased.add(this._onReleasedHandler);
     }
   };
 
@@ -56,26 +50,6 @@ export class SystemAttachmentRegistry {
     const objId: string = obj.getId();
     if (this._attachmentObjIdToSystemAttachment.has(objId)) {
       this._attachmentObjIdToSystemAttachment.delete(objId);
-      obj.onGrab.remove(this._onGrabHandler);
-      obj.onReleased.remove(this._onReleasedHandler);
-    }
-  };
-
-  private readonly _onGrabHandler = (obj: GameObject): void => {
-    // Remove attachment from system.
-    const systemAttachment: SystemAttachment | undefined =
-      this._attachmentObjIdToSystemAttachment.get(obj.getId());
-    if (systemAttachment) {
-      systemAttachment.detach();
-    }
-  };
-
-  private readonly _onReleasedHandler = (obj: GameObject): void => {
-    // Add attachment to system.
-    const systemAttachment: SystemAttachment | undefined =
-      this._attachmentObjIdToSystemAttachment.get(obj.getId());
-    if (systemAttachment) {
-      systemAttachment.attach();
     }
   };
 
@@ -165,12 +139,6 @@ export class SystemAttachmentRegistry {
             systemAttachmentSchemaType
           );
           this._attachmentObjIdToSystemAttachment.set(objId, attachment);
-
-          // Add grab/release event listeners.
-          obj.onGrab.remove(this._onGrabHandler);
-          obj.onGrab.add(this._onGrabHandler);
-          obj.onReleased.remove(this._onReleasedHandler);
-          obj.onReleased.add(this._onReleasedHandler);
         }
       }
     }

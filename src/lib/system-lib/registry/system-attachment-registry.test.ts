@@ -1,5 +1,5 @@
-import { GameObject, Package, Player } from "@tabletop-playground/api";
-import { MockGameObject, MockPackage, MockPlayer, mockWorld } from "ttpg-mock";
+import { GameObject, Package } from "@tabletop-playground/api";
+import { MockGameObject, MockPackage, mockWorld } from "ttpg-mock";
 
 import { SystemAttachmentRegistry } from "./system-attachment-registry";
 import { System } from "../system/system";
@@ -30,56 +30,6 @@ it("object create/desroy", () => {
 
   token.destroy();
   expect(registry.getBySystemAttachmentObjId("my-id")).toBeUndefined();
-
-  registry.destroy();
-});
-
-it("object release/grab", () => {
-  // Reset TI4.systemRegistry because globalEvents gets reset between tests.
-  resetGlobalThisTI4();
-  expect(TI4.systemRegistry.rawBySystemTileNumber(1)).toBeDefined(); // defaults
-  const systemTileObj: GameObject = new MockGameObject({
-    templateMetadata: `tile.system:my-source/1`,
-    position: [1, 0, 0],
-  });
-  const system: System | undefined = TI4.systemRegistry.getBySystemTileObjId(
-    systemTileObj.getId()
-  );
-  expect(system).toBeDefined();
-  if (!system) {
-    throw new Error("system not defined"); // for TypeScript
-  }
-
-  const registry = new SystemAttachmentRegistry().load(
-    { source: "my-source", packageId: "my-package-id" },
-    [
-      {
-        name: "my-name",
-        nsidName: "my-nsid-name",
-      },
-    ]
-  );
-  const attachmentToken: MockGameObject = new MockGameObject({
-    id: "my-id",
-    templateMetadata: "token.attachment.system:my-source/my-nsid-name",
-    position: [1, 0, 0],
-  });
-  const attachment: SystemAttachment | undefined =
-    registry.getBySystemAttachmentObjId("my-id");
-  expect(attachment).toBeDefined();
-  if (!attachment) {
-    throw new Error("attachment not defined"); // for TypeScript
-  }
-
-  expect(system.hasAttachment(attachment)).toBe(false);
-
-  const player: Player = new MockPlayer();
-
-  attachmentToken._releaseAsPlayer(player, false);
-  expect(system.hasAttachment(attachment)).toBe(true);
-
-  attachmentToken._grabAsPlayer(player);
-  expect(system.hasAttachment(attachment)).toBe(false);
 
   registry.destroy();
 });

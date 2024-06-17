@@ -1,5 +1,5 @@
-import { Vector } from "@tabletop-playground/api";
-import { MockGameObject } from "ttpg-mock";
+import { GameObject, Player, Vector } from "@tabletop-playground/api";
+import { MockGameObject, MockPlayer } from "ttpg-mock";
 import { PlanetAttachment } from "./planet-attachment";
 import { resetGlobalThisTI4 } from "../../../global/global";
 import { System } from "../system/system";
@@ -93,6 +93,43 @@ it("attach/detach", () => {
   success = planetAttachment.detach();
   expect(success).toBe(false); // already detached
   expect(planet.hasAttachment(planetAttachment)).toBe(false);
+});
+
+it("grab/release", () => {
+  resetGlobalThisTI4(); // for TI4.systemRegistry.getByPosition
+  const systemTileObj: GameObject = new MockGameObject({
+    templateMetadata: "tile.system:base/1",
+  });
+  const system: System | undefined = TI4.systemRegistry.getBySystemTileObjId(
+    systemTileObj.getId()
+  );
+  expect(system).toBeDefined();
+  if (!system) {
+    throw new Error("system not defined"); // for TypeScript
+  }
+  const planet: Planet | undefined = system.getPlanets()[0];
+  expect(planet).toBeDefined();
+  if (!planet) {
+    throw new Error("planet not defined"); // for TypeScript
+  }
+
+  const attachmentTokenObj: MockGameObject = new MockGameObject();
+  const attachment = new PlanetAttachment(
+    attachmentTokenObj,
+    { source: "my-source", packageId: "my-package-id" },
+    {
+      name: "my-name",
+      nsidName: "my-nsid-name",
+    }
+  );
+
+  const player: Player = new MockPlayer();
+
+  expect(planet.hasAttachment(attachment)).toBe(false);
+  attachmentTokenObj._releaseAsPlayer(player, false);
+  expect(planet.hasAttachment(attachment)).toBe(true);
+  attachmentTokenObj._grabAsPlayer(player);
+  expect(planet.hasAttachment(attachment)).toBe(false);
 });
 
 it("img", () => {

@@ -67,6 +67,13 @@ export class SystemAttachment {
         (planet) => new Planet(this._obj, this._sourceAndPackageId, planet)
       );
     }
+
+    this._obj.onGrab.add(() => {
+      this.detach();
+    });
+    this._obj.onReleased.add(() => {
+      this.attach();
+    });
   }
 
   /**

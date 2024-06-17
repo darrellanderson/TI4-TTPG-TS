@@ -1,5 +1,5 @@
-import { Vector } from "@tabletop-playground/api";
-import { MockGameObject } from "ttpg-mock";
+import { GameObject, Player, Vector } from "@tabletop-playground/api";
+import { MockGameObject, MockPlayer } from "ttpg-mock";
 
 import { System, WormholeWithPosition } from "../system/system";
 import { SystemAttachment } from "./system-attachment";
@@ -228,6 +228,38 @@ it("attach/detach", () => {
 
   success = attachment.detach();
   expect(success).toBe(false);
+  expect(system.hasAttachment(attachment)).toBe(false);
+});
+
+it("grab/release", () => {
+  resetGlobalThisTI4(); // for TI4.systemRegistry.getByPosition
+  const systemTileObj: GameObject = new MockGameObject({
+    templateMetadata: "tile.system:base/1",
+  });
+  const system: System | undefined = TI4.systemRegistry.getBySystemTileObjId(
+    systemTileObj.getId()
+  );
+  expect(system).toBeDefined();
+  if (!system) {
+    throw new Error("system not defined"); // for TypeScript
+  }
+
+  const attachmentTokenObj: MockGameObject = new MockGameObject();
+  const attachment = new SystemAttachment(
+    attachmentTokenObj,
+    { source: "my-source", packageId: "my-package-id" },
+    {
+      name: "my-name",
+      nsidName: "my-nsid-name",
+    }
+  );
+
+  const player: Player = new MockPlayer();
+
+  expect(system.hasAttachment(attachment)).toBe(false);
+  attachmentTokenObj._releaseAsPlayer(player, false);
+  expect(system.hasAttachment(attachment)).toBe(true);
+  attachmentTokenObj._grabAsPlayer(player);
   expect(system.hasAttachment(attachment)).toBe(false);
 });
 
