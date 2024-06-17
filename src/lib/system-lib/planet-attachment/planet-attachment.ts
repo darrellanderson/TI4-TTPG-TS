@@ -10,6 +10,7 @@ import {
   SourceAndPackageIdSchemaType,
   SourceAndPackageIdSchema,
 } from "../schema/basic-types-schema";
+import { PlanetAttachmentLayout } from "./planet-attachment-layout";
 
 /**
  * A planet attachment is a token game object placed on a planet to add
@@ -24,6 +25,7 @@ export class PlanetAttachment {
   private readonly _obj: GameObject;
   private readonly _sourceAndPackageId: SourceAndPackageIdSchemaType;
   private readonly _params: PlanetAttachmentSchemaType;
+  private _planet: Planet | undefined;
 
   /**
    * Get the planet attachment token NSID.
@@ -66,6 +68,11 @@ export class PlanetAttachment {
     });
     obj.onReleased.add(() => {
       this.attach();
+
+      // Place token under other things.
+      if (this._planet) {
+        new PlanetAttachmentLayout().layout(this._planet);
+      }
     });
   }
 
@@ -79,9 +86,9 @@ export class PlanetAttachment {
     const pos: Vector = this._obj.getPosition();
     const system: System | undefined = TI4.systemRegistry.getByPosition(pos);
     if (system) {
-      const planet: Planet | undefined = system.getPlanetClosest(pos);
-      if (planet) {
-        return planet.addAttachment(this);
+      this._planet = system.getPlanetClosest(pos);
+      if (this._planet) {
+        return this._planet.addAttachment(this);
       }
     }
     return false;
@@ -95,11 +102,10 @@ export class PlanetAttachment {
    */
   detach(): boolean {
     const pos: Vector = this._obj.getPosition();
-    const system: System | undefined = TI4.systemRegistry.getByPosition(pos);
-    if (system) {
-      const planet: Planet | undefined = system.getPlanetClosest(pos);
-      if (planet) {
-        return planet.delAttachment(this);
+    if (this._planet) {
+      if (this._planet.delAttachment(this)) {
+        this._planet = undefined;
+        return true;
       }
     }
     return false;

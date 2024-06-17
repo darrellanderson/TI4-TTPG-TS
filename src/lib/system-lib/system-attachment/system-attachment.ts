@@ -11,6 +11,7 @@ import {
   SystemAttachmentSchema,
   SystemAttachmentSchemaType,
 } from "../schema/system-attachment-schema";
+import { SystemReserveSpace } from "../system/system-reserve-space";
 
 /**
  * A system attachment is a token game object placed in a system to add
@@ -26,6 +27,7 @@ export class SystemAttachment {
   private readonly _sourceAndPackageId: SourceAndPackageIdSchemaType;
   private readonly _params: SystemAttachmentSchemaType;
   private readonly _planets: Array<Planet> = [];
+  private _system: System | undefined;
 
   /**
    * Get the system attachment token NSID.
@@ -73,6 +75,16 @@ export class SystemAttachment {
     });
     this._obj.onReleased.add(() => {
       this.attach();
+
+      // Place token under other things.
+      if (this._system) {
+        const reserve = new SystemReserveSpace(this._system.getObj()).lift();
+        const pos = this._obj.getPosition();
+        pos.z = this._system.getObj().getPosition().z + 3;
+        this._obj.setPosition(pos);
+        this._obj.snapToGround();
+        reserve.drop();
+      }
     });
   }
 
@@ -84,9 +96,9 @@ export class SystemAttachment {
    */
   attach(): boolean {
     const pos: Vector = this._obj.getPosition();
-    const system: System | undefined = TI4.systemRegistry.getByPosition(pos);
-    if (system) {
-      return system.addAttachment(this);
+    this._system = TI4.systemRegistry.getByPosition(pos);
+    if (this._system) {
+      return this._system.addAttachment(this);
     }
     return false;
   }
@@ -99,9 +111,11 @@ export class SystemAttachment {
    */
   detach(): boolean {
     const pos: Vector = this._obj.getPosition();
-    const system: System | undefined = TI4.systemRegistry.getByPosition(pos);
-    if (system && system.hasAttachment(this)) {
-      return system.delAttachment(this);
+    if (this._system && this._system.hasAttachment(this)) {
+      if (this._system.delAttachment(this)) {
+        this._system = undefined;
+        return true;
+      }
     }
     return false;
   }
