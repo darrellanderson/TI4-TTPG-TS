@@ -6,6 +6,7 @@ import {
 } from "@tabletop-playground/api";
 import { Planet } from "../planet/planet";
 import { PlanetAttachment } from "./planet-attachment";
+import { SystemReserveSpace } from "../system/system-reserve-space";
 
 export class PlanetAttachmentLayout {
   static _getOffset(index: number): Vector {
@@ -20,13 +21,7 @@ export class PlanetAttachmentLayout {
     const planetPos: Vector = planet.getPosition();
 
     // Lift everything in the area, including attachments.
-    const r: number = planet.getRadius(); // world space
-    const objs: Array<GameObject> = world
-      .boxOverlap(planetPos, new Vector(r, r, 3))
-      .sort((a, b) => a.getPosition().z - b.getPosition().z); // bottom to top
-    for (const obj of objs) {
-      obj.setPosition(obj.getPosition().add(new Vector(0, 0, 3)));
-    }
+    const systemReserveSpace = new SystemReserveSpace(planet.getObj()).lift();
 
     const attachments: Array<PlanetAttachment> = planet.getAttachments();
     for (let i = 0; i < attachments.length; i++) {
@@ -41,8 +36,6 @@ export class PlanetAttachmentLayout {
     }
 
     // Drop everything lifted (in bottom to top order).
-    for (const obj of objs) {
-      obj.snapToGround();
-    }
+    systemReserveSpace.drop();
   }
 }

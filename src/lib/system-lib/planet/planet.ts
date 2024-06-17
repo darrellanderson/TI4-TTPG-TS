@@ -137,6 +137,14 @@ export class Planet {
   }
 
   /**
+   * Get the system tile or system attachment token game object.
+   *
+   * @returns
+   */
+  public getObj(): GameObject {
+    return this._obj;
+  }
+  /**
    * Get planet card NSID.
    *
    * @returns {string} The NSID of the planet card.

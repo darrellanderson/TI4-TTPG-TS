@@ -1,23 +1,24 @@
-import { Vector } from "@tabletop-playground/api";
+import { GameObject, Vector } from "@tabletop-playground/api";
 import { MockGameObject } from "ttpg-mock";
 
 import { PlanetSchemaType } from "../schema/planet-schema";
 import { Planet } from "./planet";
 import { PlanetAttachment } from "../planet-attachment/planet-attachment";
 import { SystemDefaults } from "../data/system-defaults";
-import exp from "constants";
 
 it("constructor", () => {
+  const systemTileObj: GameObject = new MockGameObject();
   const params: PlanetSchemaType = {
     name: "my-planet-name",
     nsidName: "my-planet-card-nsid",
   };
   const planet = new Planet(
-    new MockGameObject(),
+    systemTileObj,
     { source: "my-source", packageId: "my-package-id" },
     params
   );
-  expect(planet.getName()).toEqual("my-planet-name");
+  expect(planet.getName()).toBe("my-planet-name");
+  expect(planet.getObj()).toBe(systemTileObj);
 });
 
 it("constructor (invalid params)", () => {
