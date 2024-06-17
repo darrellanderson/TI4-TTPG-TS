@@ -75,16 +75,7 @@ export class SystemAttachment {
     });
     this._obj.onReleased.add(() => {
       this.attach();
-
-      // Place token under other things.
-      if (this._system) {
-        const reserve = new SystemReserveSpace(this._system.getObj()).lift();
-        const pos = this._obj.getPosition();
-        pos.z = this._system.getObj().getPosition().z + 3;
-        this._obj.setPosition(pos);
-        this._obj.snapToGround();
-        reserve.drop();
-      }
+      this.doLayout();
     });
   }
 
@@ -118,6 +109,17 @@ export class SystemAttachment {
       }
     }
     return false;
+  }
+
+  doLayout(): void {
+    if (this._system) {
+      const reserve = new SystemReserveSpace(this._system.getObj()).lift();
+      const pos = this._obj.getPosition();
+      pos.z = this._system.getObj().getPosition().z + 3;
+      this._obj.setPosition(pos);
+      this._obj.snapToGround();
+      reserve.drop();
+    }
   }
 
   /**

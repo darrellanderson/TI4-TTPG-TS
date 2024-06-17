@@ -68,11 +68,7 @@ export class PlanetAttachment {
     });
     obj.onReleased.add(() => {
       this.attach();
-
-      // Place token under other things.
-      if (this._planet) {
-        new PlanetAttachmentLayout().layout(this._planet);
-      }
+      this.doLayout();
     });
   }
 
@@ -109,6 +105,12 @@ export class PlanetAttachment {
       }
     }
     return false;
+  }
+
+  doLayout(): void {
+    if (this._planet) {
+      new PlanetAttachmentLayout().layout(this._planet);
+    }
   }
 
   /**
