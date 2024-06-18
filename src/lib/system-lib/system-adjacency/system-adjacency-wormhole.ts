@@ -1,6 +1,7 @@
 import { Adjacency, CardUtil, Find, HexType } from "ttpg-darrell";
 import { System } from "../system/system";
 import { GameObject, Vector } from "@tabletop-playground/api";
+import { UnitModifierActiveIdle } from "../../unit-lib/unit-modifier/unit-modifier-active-idle";
 
 export class SystemAdjacencyWormhole {
   public static WORMHOMES: Array<string> = [
@@ -80,9 +81,9 @@ export class SystemAdjacencyWormhole {
     );
     if (
       card &&
-      this._cardUtil.isLooseCard(card, allowFaceDown, rejectSnapPointTags)
+      this._cardUtil.isLooseCard(card, allowFaceDown, rejectSnapPointTags) &&
+      UnitModifierActiveIdle.isActive(card)
     ) {
-      // TODO XXX: is card active?
       for (const a of SystemAdjacencyWormhole.WORMHOMES) {
         for (const b of SystemAdjacencyWormhole.WORMHOMES) {
           adjacency.addLink(a, b);

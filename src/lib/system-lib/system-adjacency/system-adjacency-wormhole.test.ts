@@ -1,11 +1,12 @@
+import { Card } from "@tabletop-playground/api";
 import { Adjacency, HexType } from "ttpg-darrell";
 import { MockCard, MockGameObject, MockSnapPoint } from "ttpg-mock";
 
 import { System } from "../system/system";
 import { SystemAdjacencyWormhole } from "./system-adjacency-wormhole";
 import { SystemAdjacency } from "./system-adjacency";
+import { UnitModifierActiveIdle } from "../../unit-lib/unit-modifier/unit-modifier-active-idle";
 import { resetGlobalThisTI4 } from "../../../global/global";
-import { Card } from "@tabletop-playground/api";
 
 it("constructor", () => {
   new SystemAdjacencyWormhole();
@@ -52,4 +53,55 @@ it("card wormhole_reconstruction (in discard)", () => {
   expect(adjacency.hasLink("alpha", "beta")).toBe(false);
   new SystemAdjacencyWormhole()._applyCards(adjacency);
   expect(adjacency.hasLink("alpha", "beta")).toBe(false);
+});
+
+it("card lost_star_chart", () => {
+  MockCard.simple("card.action:base/lost_star_chart");
+  const adjacency: Adjacency = new Adjacency();
+  expect(adjacency.hasLink("alpha", "beta")).toBe(false);
+  new SystemAdjacencyWormhole()._applyCards(adjacency);
+  expect(adjacency.hasLink("alpha", "beta")).toBe(true);
+});
+
+it("card lost_star_chart (face down)", () => {
+  MockCard.simple("card.action:base/lost_star_chart", {
+    isFaceUp: false,
+  });
+  const adjacency: Adjacency = new Adjacency();
+  expect(adjacency.hasLink("alpha", "beta")).toBe(false);
+  new SystemAdjacencyWormhole()._applyCards(adjacency);
+  expect(adjacency.hasLink("alpha", "beta")).toBe(false);
+});
+
+it("card lost_star_chart (in discard)", () => {
+  MockCard.simple("card.action:base/lost_star_chart", {
+    snappedToPoint: new MockSnapPoint({ tags: ["discard.card.action"] }),
+  });
+  const adjacency: Adjacency = new Adjacency();
+  expect(adjacency.hasLink("alpha", "beta")).toBe(false);
+  new SystemAdjacencyWormhole()._applyCards(adjacency);
+  expect(adjacency.hasLink("alpha", "beta")).toBe(false);
+});
+
+it("card emissary_taivra (active)", () => {
+  const card: Card = MockCard.simple(
+    "card.leader.agent.creuss:pok/emissary_taivra"
+  );
+
+  let adjacency: Adjacency;
+
+  adjacency = new Adjacency();
+  expect(UnitModifierActiveIdle.isActive(card)).toBe(false);
+  expect(adjacency.hasLink("alpha", "delta")).toBe(false);
+
+  adjacency = new Adjacency();
+  new SystemAdjacencyWormhole()._applyCards(adjacency);
+  expect(UnitModifierActiveIdle.isActive(card)).toBe(false);
+  expect(adjacency.hasLink("alpha", "delta")).toBe(false);
+
+  UnitModifierActiveIdle.setActive(card, true);
+  adjacency = new Adjacency();
+  new SystemAdjacencyWormhole()._applyCards(adjacency);
+  expect(UnitModifierActiveIdle.isActive(card)).toBe(true);
+  expect(adjacency.hasLink("alpha", "delta")).toBe(true);
 });
