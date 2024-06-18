@@ -49,4 +49,18 @@ it("static neighborsWithRotAndFlip", () => {
     system
   );
   expect(neighbors[0]).toEqual(defaultNeighbors[1]);
+
+  systemTileObj.setRotation([0, 300, 0]);
+  neighbors = SystemAdjacencyHyperlane.neighborsWithRotAndFlip(
+    "<0,0,0>",
+    system
+  );
+  expect(neighbors[0]).toEqual(defaultNeighbors[1]);
+
+  systemTileObj.setRotation([0, 300, -180]);
+  neighbors = SystemAdjacencyHyperlane.neighborsWithRotAndFlip(
+    "<0,0,0>",
+    system
+  );
+  expect(neighbors[0]).toEqual(defaultNeighbors[5]);
 });
