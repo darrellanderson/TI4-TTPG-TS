@@ -1,7 +1,6 @@
 import { Adjacency, CardUtil, Find, HexType } from "ttpg-darrell";
 import { System } from "../system/system";
 import { GameObject, Vector } from "@tabletop-playground/api";
-import { WormholeSchema } from "../schema/basic-types-schema";
 
 export class SystemAdjacencyWormhole {
   public static WORMHOMES: Array<string> = [
@@ -47,8 +46,11 @@ export class SystemAdjacencyWormhole {
 
   _applyCards(adjacency: Adjacency): void {
     let card: GameObject | undefined;
-    let allowFaceDown: boolean = false;
-    let rejectSnapPointTags: Array<string> = [];
+    const allowFaceDown: boolean = false;
+    const rejectSnapPointTags: Array<string> = [
+      "discard.card.action",
+      "discard.card.agenda",
+    ];
 
     card = this._find.findGameObject(
       "card.agenda:base/wormhole_reconstruction"
