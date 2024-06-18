@@ -1,9 +1,9 @@
-import { MockGameObject } from "ttpg-mock";
-import { SystemAdjacencyHyperlane } from "./system-adjacency-hyperlane";
-import { Hex, HexType } from "ttpg-darrell";
-import { System } from "../system/system";
 import { GameObject } from "@tabletop-playground/api";
-import exp from "constants";
+import { MockGameObject } from "ttpg-mock";
+import { Hex, HexType } from "ttpg-darrell";
+
+import { SystemAdjacencyHyperlane } from "./system-adjacency-hyperlane";
+import { System } from "../system/system";
 
 it("static yawToShift", () => {
   // Round to nearest 60 degrees.

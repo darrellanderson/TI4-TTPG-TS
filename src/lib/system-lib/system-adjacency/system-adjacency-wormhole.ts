@@ -36,8 +36,13 @@ export class SystemAdjacencyWormhole {
 
   _applyCreussFlagship(adjacency: Adjacency): void {
     const nsid: string = "unit.flagship:base/creuss";
-    const creussFlagship: GameObject | undefined =
-      this._find.findGameObject(nsid);
+    const playerSlot: number = -1;
+    const skipContained: boolean = true;
+    const creussFlagship: GameObject | undefined = this._find.findGameObject(
+      nsid,
+      playerSlot,
+      skipContained
+    );
     if (creussFlagship) {
       const pos: Vector = creussFlagship.getPosition();
       const hex: HexType = TI4.hex.fromPosition(pos);

@@ -1,4 +1,4 @@
-import { Card } from "@tabletop-playground/api";
+import { Card, GameObject } from "@tabletop-playground/api";
 import { Adjacency, HexType } from "ttpg-darrell";
 import { MockCard, MockGameObject, MockSnapPoint } from "ttpg-mock";
 
@@ -25,6 +25,17 @@ it("addTags", () => {
   expect(adjacency.hasLink("beta", "beta")).toBe(true);
   expect(adjacency.hasNodeTag("<0,0,0>", "alpha")).toBe(false);
   expect(adjacency.hasNodeTag("<0,0,0>", "beta")).toBe(true);
+});
+
+it("creuss flagship", () => {
+  const flagship: GameObject = MockGameObject.simple(
+    "unit.flagship:base/creuss"
+  );
+  const hex: HexType = TI4.hex.fromPosition(flagship.getPosition());
+  const adjacency: Adjacency = new Adjacency();
+  expect(adjacency.hasNodeTag(hex, "delta")).toBe(false);
+  new SystemAdjacencyWormhole()._applyCreussFlagship(adjacency);
+  expect(adjacency.hasNodeTag(hex, "delta")).toBe(true);
 });
 
 it("card wormhole_reconstruction", () => {
