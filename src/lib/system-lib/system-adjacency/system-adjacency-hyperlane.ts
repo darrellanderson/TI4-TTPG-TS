@@ -1,13 +1,31 @@
-import { Adjacency, Hex, HexType } from "ttpg-darrell";
+import { GameObject } from "@tabletop-playground/api";
+import { Adjacency, Facing, Hex, HexType } from "ttpg-darrell";
 import { System } from "../system/system";
 
 export class SystemAdjacencyHyperlane {
   constructor() {}
 
   static yawToShift(yaw: number): number {
-    yaw = yaw % 360; // force [-360:360]
-    yaw = (yaw + 360) % 360; // force [0:360]
-    return Math.round(yaw / 60);
+    yaw = yaw % 360; // [-360:360]
+    yaw = (yaw + 360) % 360; // [0:360]
+    return Math.round(yaw / 60) % 6; // [0:5]
+  }
+
+  static neighborsWithRotAndFlip(hex: HexType, system: System): Array<HexType> {
+    const systemTileObj: GameObject = system.getObj();
+    const faceUp: boolean = Facing.isFaceUp(systemTileObj);
+    const yaw: number = systemTileObj.getRotation().yaw;
+    const n: number = SystemAdjacencyHyperlane.yawToShift(yaw);
+
+    const neighbors: Array<HexType> = Hex.neighbors(hex);
+    for (let i = 0; i < n; i++) {
+      if (faceUp) {
+        neighbors.unshift(neighbors.pop()!);
+      } else {
+        neighbors.push(neighbors.shift()!);
+      }
+    }
+    return neighbors;
   }
 
   public addTags(
