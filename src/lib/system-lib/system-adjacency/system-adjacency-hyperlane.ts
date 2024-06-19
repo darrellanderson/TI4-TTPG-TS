@@ -20,9 +20,9 @@ export class SystemAdjacencyHyperlane {
     const neighbors: Array<HexType> = Hex.neighbors(hex);
     for (let i = 0; i < n; i++) {
       if (faceUp) {
-        neighbors.unshift(neighbors.pop()!);
-      } else {
         neighbors.push(neighbors.shift()!);
+      } else {
+        neighbors.unshift(neighbors.pop()!);
       }
     }
     return neighbors;

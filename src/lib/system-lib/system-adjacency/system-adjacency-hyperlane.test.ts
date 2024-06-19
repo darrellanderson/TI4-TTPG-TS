@@ -34,39 +34,45 @@ it("static neighborsWithRotAndFlip", () => {
     { source: "my-source", packageId: "my-package-id" },
     { tile: 1000 }
   );
+  // First is "above", winding counterclockwise.
   neighbors = SystemAdjacencyHyperlane.neighborsWithRotAndFlip(
     "<0,0,0>",
     system
   );
   expect(neighbors[0]).toEqual(defaultNeighbors[0]);
+  expect(neighbors[1]).toEqual(defaultNeighbors[1]);
 
   systemTileObj.setRotation([0, 60, 0]);
   neighbors = SystemAdjacencyHyperlane.neighborsWithRotAndFlip(
     "<0,0,0>",
     system
   );
-  expect(neighbors[0]).toEqual(defaultNeighbors[5]);
+  expect(neighbors[0]).toEqual(defaultNeighbors[1]);
+  expect(neighbors[1]).toEqual(defaultNeighbors[2]);
 
   systemTileObj.setRotation([0, 60, -180]);
   neighbors = SystemAdjacencyHyperlane.neighborsWithRotAndFlip(
     "<0,0,0>",
     system
   );
-  expect(neighbors[0]).toEqual(defaultNeighbors[1]);
+  expect(neighbors[0]).toEqual(defaultNeighbors[5]);
+  expect(neighbors[1]).toEqual(defaultNeighbors[0]);
 
   systemTileObj.setRotation([0, 300, 0]);
   neighbors = SystemAdjacencyHyperlane.neighborsWithRotAndFlip(
     "<0,0,0>",
     system
   );
-  expect(neighbors[0]).toEqual(defaultNeighbors[1]);
+  expect(neighbors[0]).toEqual(defaultNeighbors[5]);
+  expect(neighbors[1]).toEqual(defaultNeighbors[0]);
 
   systemTileObj.setRotation([0, 300, -180]);
   neighbors = SystemAdjacencyHyperlane.neighborsWithRotAndFlip(
     "<0,0,0>",
     system
   );
-  expect(neighbors[0]).toEqual(defaultNeighbors[5]);
+  expect(neighbors[0]).toEqual(defaultNeighbors[1]);
+  expect(neighbors[1]).toEqual(defaultNeighbors[2]);
 });
 
 it("addTags", () => {
@@ -98,9 +104,8 @@ it("addTags", () => {
     );
   }
 
-  // Add hyperlane system (center).  All systems must be registerd with
+  // Add sw-ne hyperlane system (center).  All systems must be registerd with
   // hexToSystem for SystemAdjaencyNeighbor to add links.
-  // sw-ne.
   new MockGameObject({
     templateMetadata: "tile.system:pok/83",
   });
@@ -141,4 +146,31 @@ it("addTags", () => {
   expect(adjacency.get("<0,0,0>", 2)).toEqual([
     { distance: 0, node: "<0,0,0>", path: ["<0,0,0>"] },
   ]);
+});
+
+it("addTags (rotated hyperlane)", () => {
+  resetGlobalThisTI4();
+  const hexToSystem: Map<HexType, System> = new Map<HexType, System>();
+  const adjacency: Adjacency = new Adjacency();
+
+  // Add sw-ne hyperlane system.
+  new MockGameObject({
+    templateMetadata: "tile.system:pok/83",
+    rotation: [0, 60, 0],
+  });
+  const hyperlaneSystem: System | undefined = TI4.systemRegistry.getByPosition(
+    new Vector(0, 0, 0)
+  );
+  if (hyperlaneSystem) {
+    hexToSystem.set("<0,0,0>", hyperlaneSystem);
+  }
+
+  // Register hyperlane nodes and links.
+  new SystemAdjacencyHyperlane().addTags(hexToSystem, adjacency);
+  expect(adjacency.hasTransitNode("<0,0,0>-sw")).toBe(true); // sw relative to rotated
+  expect(adjacency.hasTransitNode("<0,0,0>-ne")).toBe(true);
+  expect(adjacency.hasNodeTag("<0,0,0>-sw", "<-1,0,1>-<0,0,0>")).toBe(true);
+  expect(adjacency.hasNodeTag("<0,0,0>-sw", "<0,0,0>-<1,0,-1>")).toBe(true);
+  expect(adjacency.hasNodeTag("<0,0,0>-ne", "<-1,0,1>-<0,0,0>")).toBe(true);
+  expect(adjacency.hasNodeTag("<0,0,0>-ne", "<0,0,0>-<1,0,-1>")).toBe(true);
 });
