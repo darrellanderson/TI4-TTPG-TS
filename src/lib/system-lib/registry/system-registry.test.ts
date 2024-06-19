@@ -118,10 +118,13 @@ it("getByPosition", () => {
 it("validateImages", () => {
   const registry = new SystemRegistry().load(
     { source: "my-source", packageId: "my-package-id" },
-    [{ tile: 12 }]
+    [{ tile: 12, imgFaceDown: true }]
   );
   const myPackage: Package = new MockPackage({
-    textureFiles: ["tile/system/my-source/tile-012.png"],
+    textureFiles: [
+      "tile/system/my-source/tile-012.png",
+      "tile/system/my-source/tile-012.back.png",
+    ],
     uniqueId: "my-package-id",
   });
   mockWorld._reset({ packages: [myPackage] });
