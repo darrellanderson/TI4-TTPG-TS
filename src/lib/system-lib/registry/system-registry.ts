@@ -1,6 +1,5 @@
 import {
   GameObject,
-  Package,
   TraceHit,
   Vector,
   globalEvents,
@@ -220,17 +219,15 @@ export class SystemRegistry {
     const validateImages = new ValidateImages();
     const obj: GameObject = new GameObject();
     for (const schemaAndSource of this._systemTileNumberToSchemaAndSource.values()) {
-      const schema = schemaAndSource.schema;
-      const system: System = new System(
-        obj,
-        schemaAndSource.sourceAndPackageId,
-        schema
-      );
-      const packageId: string = system.getImgPackageId();
-      obj.setRotation([0, 0, 0]);
-      validateImages.add(system.getImg(), packageId);
-      obj.setRotation([0, 0, 180]);
-      validateImages.add(system.getImg(), packageId);
+      const source: SourceAndPackageIdSchemaType =
+        schemaAndSource.sourceAndPackageId;
+      const schema: SystemSchemaType = schemaAndSource.schema;
+      let img: string = System.schemaToImg(source, schema, false);
+      validateImages.add(img, source.packageId);
+      if (schema.imgFaceDown) {
+        img = System.schemaToImg(source, schema, true);
+        validateImages.add(img, source.packageId);
+      }
     }
     validateImages.validateOrThrow();
     return this;

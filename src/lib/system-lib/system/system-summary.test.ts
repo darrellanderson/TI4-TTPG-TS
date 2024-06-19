@@ -10,10 +10,10 @@ it("constructor", () => {
 it("getSummaryRaw", () => {
   const systems: Array<System> = [
     new System(
-      new MockGameObject(),
+      new MockGameObject({ templateMetadata: "tile.system:my-source/1000" }),
       { source: "my-source", packageId: "my-package-id" },
       {
-        tile: 1,
+        tile: 1000,
         wormholes: ["beta"],
         planets: [
           {
@@ -29,10 +29,10 @@ it("getSummaryRaw", () => {
       }
     ),
     new System(
-      new MockGameObject(),
+      new MockGameObject({ templateMetadata: "tile.system:my-source/1001" }),
       { source: "my-source", packageId: "my-package-id" },
       {
-        tile: 2,
+        tile: 1001,
         wormholes: ["alpha"],
         planets: [
           {
@@ -45,10 +45,10 @@ it("getSummaryRaw", () => {
       }
     ),
     new System(
-      new MockGameObject(),
+      new MockGameObject({ templateMetadata: "tile.system:my-source/1002" }),
       { source: "my-source", packageId: "my-package-id" },
       {
-        tile: 3,
+        tile: 1002,
         planets: [
           {
             name: "my-planet-3",

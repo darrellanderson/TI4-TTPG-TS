@@ -59,6 +59,30 @@ export class System {
     return undefined;
   }
 
+  static schemaToImg(
+    sourceAndPackageId: SourceAndPackageIdSchemaType,
+    schema: SystemSchemaType,
+    useBack: boolean
+  ): string {
+    const filename: string = `tile-${schema.tile.toString().padStart(3, "0")}${
+      useBack ? ".back" : ""
+    }.png`;
+
+    let img: string = "tile/system";
+
+    // Homebrew puts source first to group all related files.
+    // "Official" puts source deeper in the path to collect in a single
+    // folder for easier Object Library usage.
+    const source: string = sourceAndPackageId.source;
+    if (source.startsWith("homebrew")) {
+      img = `${source}/${img}/${filename}`;
+    } else {
+      img = `${img}/${source}/${filename}`;
+    }
+
+    return img;
+  }
+
   /**
    * Generate the NSID for a system tile from its source and schema.
    *
@@ -308,23 +332,7 @@ export class System {
   getImg(): string {
     const useBack: boolean =
       (this._params.imgFaceDown && !Facing.isFaceUp(this._obj)) || false;
-    const filename: string = `tile-${this._params.tile
-      .toString()
-      .padStart(3, "0")}${useBack ? ".back" : ""}.png`;
-
-    let img: string = "tile/system";
-
-    // Homebrew puts source first to group all related files.
-    // "Official" puts source deeper in the path to collect in a single
-    // folder for easier Object Library usage.
-    const source: string = this._sourceAndPackageId.source;
-    if (source.startsWith("homebrew")) {
-      img = `${source}/${img}/${filename}`;
-    } else {
-      img = `${img}/${source}/${filename}`;
-    }
-
-    return img;
+    return System.schemaToImg(this._sourceAndPackageId, this._params, useBack);
   }
 
   /**

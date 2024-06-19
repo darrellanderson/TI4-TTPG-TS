@@ -5,37 +5,37 @@ import { System } from "../system/system";
 
 it("getTier (exclude)", () => {
   const system: System = new System(
-    new MockGameObject(),
+    new MockGameObject({ templateMetadata: "tile.system:my-source/1000" }),
     { source: "my-source", packageId: "my-package-id" },
-    { tile: 1, isExcludeFromDraft: true }
+    { tile: 1000, isExcludeFromDraft: true }
   );
   expect(new SystemTier().getTier(system)).toBe("other");
 });
 
 it("getTier (red, no planets)", () => {
   const system: System = new System(
-    new MockGameObject(),
+    new MockGameObject({ templateMetadata: "tile.system:my-source/1000" }),
     { source: "my-source", packageId: "my-package-id" },
-    { tile: 1 }
+    { tile: 1000 }
   );
   expect(new SystemTier().getTier(system)).toBe("red");
 });
 
 it("getTier (red, anomalies)", () => {
   const system: System = new System(
-    new MockGameObject(),
+    new MockGameObject({ templateMetadata: "tile.system:my-source/1000" }),
     { source: "my-source", packageId: "my-package-id" },
     {
-      tile: 1,
+      tile: 1000,
       anomalies: ["gravity-rift"],
     }
   );
   expect(new SystemTier().getTier(system)).toBe("red");
 });
 
-it("getTier (med, tile 26)", () => {
+it("getTier (med)", () => {
   const system: System = new System(
-    new MockGameObject(),
+    new MockGameObject({ templateMetadata: "tile.system:my-source/26" }),
     { source: "my-source", packageId: "my-package-id" },
     { tile: 26, planets: [{ name: "my-name", nsidName: "my-nsid-name" }] }
   );
@@ -44,10 +44,10 @@ it("getTier (med, tile 26)", () => {
 
 it("getTier (high, legendary)", () => {
   const system: System = new System(
-    new MockGameObject(),
+    new MockGameObject({ templateMetadata: "tile.system:my-source/1000" }),
     { source: "my-source", packageId: "my-package-id" },
     {
-      tile: 1,
+      tile: 1000,
       planets: [
         { name: "my-name", nsidName: "my-nsid-name", isLegendary: true },
       ],
@@ -58,10 +58,10 @@ it("getTier (high, legendary)", () => {
 
 it("getTier (med, two planets)", () => {
   const system: System = new System(
-    new MockGameObject(),
+    new MockGameObject({ templateMetadata: "tile.system:my-source/1000" }),
     { source: "my-source", packageId: "my-package-id" },
     {
-      tile: 1,
+      tile: 1000,
       planets: [
         { name: "my-name-1", nsidName: "my-nsid-name-1" },
         { name: "my-name-2", nsidName: "my-nsid-name-2" },
@@ -73,10 +73,10 @@ it("getTier (med, two planets)", () => {
 
 it("getTier (low, one planets)", () => {
   const system: System = new System(
-    new MockGameObject(),
+    new MockGameObject({ templateMetadata: "tile.system:my-source/1000" }),
     { source: "my-source", packageId: "my-package-id" },
     {
-      tile: 1,
+      tile: 1000,
       planets: [{ name: "my-name-1", nsidName: "my-nsid-name-1" }],
     }
   );
