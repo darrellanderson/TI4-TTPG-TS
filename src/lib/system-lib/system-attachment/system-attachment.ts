@@ -43,6 +43,28 @@ export class SystemAttachment {
     return `token.attachment.system:${source}/${schema.nsidName}`;
   }
 
+  static schemaToImg(
+    sourceAndPackageId: SourceAndPackageIdSchemaType,
+    schema: SystemAttachmentSchemaType,
+    useBack: boolean
+  ): string {
+    const filename: string = `${schema.nsidName}${useBack ? ".back" : ""}.png`;
+
+    let img = "token/attachment/system";
+
+    // Homebrew puts source first to group all related files.
+    // "Official" puts source deeper in the path to collect in a single
+    // folder for easier Object Library usage.
+    const source: string = sourceAndPackageId.source;
+    if (source.startsWith("homebrew")) {
+      img = `${source}/${img}/${filename}`;
+    } else {
+      img = `${img}/${source}/${filename}`;
+    }
+
+    return img;
+  }
+
   /**
    * Create a system attachment.
    *
@@ -154,23 +176,11 @@ export class SystemAttachment {
       forceBack ||
       (this._params.imgFaceDown && !Facing.isFaceUp(this._obj)) ||
       false;
-    const filename: string = `${this._params.nsidName}${
-      useBack ? ".back" : ""
-    }.png`;
-
-    let img = "token/attachment/system";
-
-    // Homebrew puts source first to group all related files.
-    // "Official" puts source deeper in the path to collect in a single
-    // folder for easier Object Library usage.
-    const source: string = this._sourceAndPackageId.source;
-    if (source.startsWith("homebrew")) {
-      img = `${source}/${img}/${filename}`;
-    } else {
-      img = `${img}/${source}/${filename}`;
-    }
-
-    return img;
+    return SystemAttachment.schemaToImg(
+      this._sourceAndPackageId,
+      this._params,
+      useBack
+    );
   }
 
   /**

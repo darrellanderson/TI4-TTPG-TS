@@ -188,18 +188,15 @@ export class SystemAttachmentRegistry {
 
   public validateImages(): this {
     const validateImages = new ValidateImages();
-    const obj: GameObject = new GameObject();
     for (const schemaAndSource of this._nsidToSchemaAndSource.values()) {
-      const schema = schemaAndSource.schema;
-      const attachment: SystemAttachment = new SystemAttachment(
-        obj,
-        schemaAndSource.sourceAndPackageId,
-        schema
-      );
-      const packageId: string = attachment.getImgPackageId();
-      validateImages.add(attachment.getImg(), packageId);
+      const source: SourceAndPackageIdSchemaType =
+        schemaAndSource.sourceAndPackageId;
+      const schema: SystemAttachmentSchemaType = schemaAndSource.schema;
+      let img: string = SystemAttachment.schemaToImg(source, schema, false);
+      validateImages.add(img, source.packageId);
       if (schema.imgFaceDown) {
-        validateImages.add(attachment.getImg(true), packageId);
+        img = SystemAttachment.schemaToImg(source, schema, true);
+        validateImages.add(img, source.packageId);
       }
     }
     validateImages.validateOrThrow();

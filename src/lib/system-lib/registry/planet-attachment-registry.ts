@@ -180,18 +180,15 @@ export class PlanetAttachmentRegistry {
 
   public validateImages(): this {
     const validateImages = new ValidateImages();
-    const obj: GameObject = new GameObject();
     for (const schemaAndSource of this._nsidToSchemaAndSource.values()) {
-      const schema = schemaAndSource.schema;
-      const attachment: PlanetAttachment = new PlanetAttachment(
-        obj,
-        schemaAndSource.sourceAndPackageId,
-        schema
-      );
-      const packageId: string = attachment.getImgPackageId();
-      validateImages.add(attachment.getImg(), packageId);
+      const source: SourceAndPackageIdSchemaType =
+        schemaAndSource.sourceAndPackageId;
+      const schema: PlanetAttachmentSchemaType = schemaAndSource.schema;
+      let img: string = PlanetAttachment.schemaToImg(source, schema, false);
+      validateImages.add(img, source.packageId);
       if (schema.imgFaceDown) {
-        validateImages.add(attachment.getImg(true), packageId);
+        img = PlanetAttachment.schemaToImg(source, schema, true);
+        validateImages.add(img, source.packageId);
       }
     }
     validateImages.validateOrThrow();

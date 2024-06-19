@@ -6,9 +6,9 @@ import { PlanetAttachment } from "../planet-attachment/planet-attachment";
 
 it("constructor", () => {
   const system = new System(
-    new MockGameObject(),
+    new MockGameObject({ templateMetadata: "tile.system:my-source/1000" }),
     { source: "my-source", packageId: "my-package-id" },
-    { tile: 1 }
+    { tile: 1000 }
   );
   const systemLabels = new SystemLabels(system);
   expect(systemLabels).toBeDefined();
@@ -16,10 +16,10 @@ it("constructor", () => {
 
 it("attach/detach", () => {
   const system = new System(
-    new MockGameObject(),
+    new MockGameObject({ templateMetadata: "tile.system:my-source/1000" }),
     { source: "my-source", packageId: "my-package-id" },
     {
-      tile: 1,
+      tile: 1000,
       planets: [{ name: "my-planet", nsidName: "my-plnaet-nsid-name" }],
       wormholes: ["alpha"],
     }
@@ -27,21 +27,24 @@ it("attach/detach", () => {
 
   system.addAttachment(
     new SystemAttachment(
-      new MockGameObject(),
+      new MockGameObject({
+        templateMetadata: "token.attachment.system:my-source/my-nsid-name",
+      }),
       { source: "my-source", packageId: "my-package-id" },
       { name: "my-name", nsidName: "my-nsid-name" }
     )
   );
 
-  system
-    .getPlanets()[0]
-    ?.addAttachment(
-      new PlanetAttachment(
-        new MockGameObject(),
-        { source: "my-source", packageId: "my-package-id" },
-        { name: "my-planet-name", nsidName: "my-planet-nsid" }
-      )
-    );
+  system.getPlanets()[0]?.addAttachment(
+    new PlanetAttachment(
+      new MockGameObject({
+        templateMetadata:
+          "token.attachment.planet:my-source/my-planet-nsid-name",
+      }),
+      { source: "my-source", packageId: "my-package-id" },
+      { name: "my-planet-name", nsidName: "my-planet-nsid-name" }
+    )
+  );
 
   new SystemLabels(system).attach().detach();
 });

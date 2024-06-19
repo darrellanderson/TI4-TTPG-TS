@@ -122,7 +122,9 @@ it("attachment management", () => {
     }
   );
   const attachment = new SystemAttachment(
-    new MockGameObject(),
+    new MockGameObject({
+      templateMetadata: "token.attachment.system:my-source/my-nsid-name",
+    }),
     { source: "my-source", packageId: "my-package-id" },
     {
       name: "my-name",
@@ -161,11 +163,14 @@ it("getAnomalies", () => {
     }
   );
   const attachment = new SystemAttachment(
-    new MockGameObject(),
+    new MockGameObject({
+      templateMetadata:
+        "token.attachment.system:my-source/my-attachment-nsid-name",
+    }),
     { source: "my-source", packageId: "my-package-id" },
     {
-      name: "my-name",
-      nsidName: "my-nsid-name",
+      name: "my-attachment-name",
+      nsidName: "my-attachment-nsid-name",
       anomalies: ["gravity-rift"],
     }
   );
@@ -336,7 +341,9 @@ it("getPlanets", () => {
 
   // Destroy planet.
   const destroy: PlanetAttachment = new PlanetAttachment(
-    new GameObject(),
+    new MockGameObject({
+      templateMetadata: "token.attachment.planet:my-source/destroy",
+    }),
     { source: "my-source", packageId: "my-package-id" },
     { name: "destroy", nsidName: "destroy", isDestroyPlanet: true }
   );
@@ -367,7 +374,10 @@ it("getWormholes", () => {
     }
   );
   const attachment = new SystemAttachment(
-    new MockGameObject(),
+    new MockGameObject({
+      templateMetadata:
+        "token.attachment.system:my-source/my-attachment-nsid-name",
+    }),
     { source: "my-source", packageId: "my-package-id" },
     {
       name: "my-attachment",
@@ -447,7 +457,10 @@ it("getWormholesWithPosition", () => {
 
   // Destroy wormhole attachment.
   const destroy: SystemAttachment = new SystemAttachment(
-    new MockGameObject({ position: [10, 20, 30] }),
+    new MockGameObject({
+      position: [10, 20, 30],
+      templateMetadata: "token.attachment.system:my-source/destroy",
+    }),
     { source: "my-source", packageId: "my-package-id" },
     { name: "destroy", nsidName: "destroy", isDestroyWormhole: true }
   );

@@ -217,7 +217,6 @@ export class SystemRegistry {
 
   public validateImages(): this {
     const validateImages = new ValidateImages();
-    const obj: GameObject = new GameObject();
     for (const schemaAndSource of this._systemTileNumberToSchemaAndSource.values()) {
       const source: SourceAndPackageIdSchemaType =
         schemaAndSource.sourceAndPackageId;

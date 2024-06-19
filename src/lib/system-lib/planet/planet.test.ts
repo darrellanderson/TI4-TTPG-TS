@@ -45,7 +45,10 @@ it("attachment management", () => {
     }
   );
   const attachment = new PlanetAttachment(
-    new MockGameObject(),
+    new MockGameObject({
+      templateMetadata:
+        "token.attachment.planet:my-source/my-attachment-nsid-name",
+    }),
     { source: "my-source", packageId: "my-package-id" },
     {
       name: "my-attachment-name",
@@ -85,7 +88,10 @@ it("getInfluence", () => {
     }
   );
   const attachment = new PlanetAttachment(
-    new MockGameObject(),
+    new MockGameObject({
+      templateMetadata:
+        "token.attachment.planet:my-source/my-attachment-nsid-name",
+    }),
     { source: "my-source", packageId: "my-package-id" },
     {
       name: "my-attachment-name",
@@ -120,7 +126,10 @@ it("getLegendarynsidNames", () => {
     }
   );
   const attachment = new PlanetAttachment(
-    new MockGameObject(),
+    new MockGameObject({
+      templateMetadata:
+        "token.attachment.planet:my-source/my-attachment-nsid-name",
+    }),
     { source: "my-source", packageId: "my-package-id" },
     {
       name: "my-attachment-name",
@@ -234,7 +243,10 @@ it("getResources", () => {
     }
   );
   const attachment = new PlanetAttachment(
-    new MockGameObject(),
+    new MockGameObject({
+      templateMetadata:
+        "token.attachment.planet:my-source/my-attachment-nsid-name",
+    }),
     { source: "my-source", packageId: "my-package-id" },
     {
       name: "my-attachment-name",
@@ -269,7 +281,10 @@ it("getTechs", () => {
     }
   );
   const attachment = new PlanetAttachment(
-    new MockGameObject(),
+    new MockGameObject({
+      templateMetadata:
+        "token.attachment.planet:my-source/my-attachment-nsid-name",
+    }),
     { source: "my-source", packageId: "my-package-id" },
     {
       name: "my-attachment-name",
@@ -283,7 +298,9 @@ it("getTechs", () => {
 
 it("getTechs (default)", () => {
   const planet = new Planet(
-    new MockGameObject(),
+    new MockGameObject({
+      templateMetadata: "token.planet:my-source/my-planet-card-nsid",
+    }),
     { source: "my-source", packageId: "my-package-id" },
     {
       name: "my-planet-name",
@@ -304,7 +321,10 @@ it("getTraits", () => {
     }
   );
   const attachment = new PlanetAttachment(
-    new MockGameObject(),
+    new MockGameObject({
+      templateMetadata:
+        "token.attachment.planet:my-source/my-attachment-nsid-name",
+    }),
     { source: "my-source", packageId: "my-package-id" },
     {
       name: "my-attachment-name",
@@ -338,7 +358,10 @@ it("isDestroyedPlanet", () => {
     }
   );
   const attachment = new PlanetAttachment(
-    new MockGameObject(),
+    new MockGameObject({
+      templateMetadata:
+        "token.attachment.planet:my-source/my-attachment-nsid-name",
+    }),
     { source: "my-source", packageId: "my-package-id" },
     {
       name: "my-attachment-name",
@@ -385,7 +408,10 @@ it("isLegendaryPlanet (attachment)", () => {
     }
   );
   const attachment = new PlanetAttachment(
-    new MockGameObject(),
+    new MockGameObject({
+      templateMetadata:
+        "token.attachment.planet:my-source/my-attachment-nsid-name",
+    }),
     { source: "my-source", packageId: "my-package-id" },
     {
       name: "my-attachment-name",
