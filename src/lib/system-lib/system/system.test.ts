@@ -1,5 +1,5 @@
-import { GameObject, Vector } from "@tabletop-playground/api";
-import { MockGameObject } from "ttpg-mock";
+import { GameObject, Player, Vector } from "@tabletop-playground/api";
+import { MockGameObject, MockPlayer } from "ttpg-mock";
 
 import { Planet } from "../planet/planet";
 import { PlanetAttachment } from "../planet-attachment/planet-attachment";
@@ -8,6 +8,7 @@ import { System, WormholeWithPosition } from "./system";
 import { SystemAttachment } from "../system-attachment/system-attachment";
 import { SystemDefaults } from "../data/system-defaults";
 import { SystemSchemaType } from "../schema/system-schema";
+import { resetGlobalThisTI4 } from "../../../global/global";
 
 it("static nsidToSystemTileNumber", () => {
   expect(System.nsidToSystemTileNumber("tile.system:my-source/1")).toBe(1);
@@ -74,6 +75,21 @@ it("constructor (invalid params)", () => {
   expect(() => {
     new System(obj, source, params);
   }).toThrow();
+});
+
+it("onReleased", () => {
+  resetGlobalThisTI4(); // not strictly necessary, but including it creates global TI4
+  const systemTileObj: MockGameObject = new MockGameObject({
+    position: [0.1, 0.1, 0],
+  });
+  const system = new System(
+    systemTileObj,
+    { source: "my-source", packageId: "my-package-id" },
+    { tile: 1 }
+  );
+  const player: Player = new MockPlayer();
+  systemTileObj._releaseAsPlayer(player, false);
+  expect(systemTileObj.getPosition().toString()).toEqual("(X=0,Y=0,Z=0)");
 });
 
 it("attachment management", () => {

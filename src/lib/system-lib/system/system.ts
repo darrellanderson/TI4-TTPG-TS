@@ -1,5 +1,5 @@
 import { GameObject, Vector } from "@tabletop-playground/api";
-import { Facing, NSID, ParsedNSID } from "ttpg-darrell";
+import { Facing, HexType, NSID, ParsedNSID } from "ttpg-darrell";
 import { SystemSchema, SystemSchemaType } from "../schema/system-schema";
 import { Planet } from "../planet/planet";
 import { SystemAttachment } from "../system-attachment/system-attachment";
@@ -206,6 +206,14 @@ export class System {
     if (wormholesFaceDown.length > 0) {
       this._wormholesFaceDown = wormholesFaceDown;
     }
+
+    this._obj.onReleased.add(() => {
+      // Snap to hex.
+      const hex: HexType = TI4.hex.fromPosition(this._obj.getPosition());
+      const pos: Vector = TI4.hex.toPosition(hex);
+      pos.z = this._obj.getPosition().z;
+      this._obj.setPosition(pos);
+    });
   }
 
   /**
