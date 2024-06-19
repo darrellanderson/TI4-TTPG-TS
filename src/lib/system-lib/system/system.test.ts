@@ -49,43 +49,64 @@ it("static standardLocalPostion", () => {
 });
 
 it("constructor", () => {
-  const systemTileObj: GameObject = new MockGameObject();
+  const systemTileObj: GameObject = new MockGameObject({
+    templateMetadata: "tile.system:my-source/1000",
+  });
   const source: SourceAndPackageIdSchemaType = {
     source: "my-source",
     packageId: "my-package-id",
   };
   const params: SystemSchemaType = {
-    tile: 1,
+    tile: 1000,
   };
   const system = new System(systemTileObj, source, params);
   expect(system.getObj()).toBe(systemTileObj);
-  expect(system.getSystemTileNumber()).toBe(1);
+  expect(system.getSystemTileNumber()).toBe(1000);
 });
 
 it("constructor (invalid params)", () => {
-  const obj: GameObject = new MockGameObject();
+  const systemTileObj: GameObject = new MockGameObject({
+    templateMetadata: "tile.system:my-source/1000",
+  });
+  const source: SourceAndPackageIdSchemaType = {
+    source: "my-source",
+    packageId: "my-package-id",
+  };
+  const params: SystemSchemaType = {
+    tile: 1000,
+    planets: [{ name: "ny-name", nsidName: "@@invalid??" }],
+  };
+  expect(() => {
+    new System(systemTileObj, source, params);
+  }).toThrow();
+});
+
+it("constructor (invalid nsid)", () => {
+  const systemTileObj: GameObject = new MockGameObject({
+    templateMetadata: "nope",
+  });
   const source: SourceAndPackageIdSchemaType = {
     source: "my-source",
     packageId: "my-package-id",
   };
   const params: SystemSchemaType = {
     tile: 1,
-    planets: [{ name: "", nsidName: "@@invalid??" }],
   };
   expect(() => {
-    new System(obj, source, params);
-  }).toThrow();
+    new System(systemTileObj, source, params);
+  }).toThrow('NSID mismatch: expected "tile.system:my-source/1", got "nope"');
 });
 
 it("onReleased", () => {
   resetGlobalThisTI4(); // not strictly necessary, but including it creates global TI4
   const systemTileObj: MockGameObject = new MockGameObject({
     position: [0.1, 0.1, 0],
+    templateMetadata: "tile.system:my-source/1000",
   });
   const system = new System(
     systemTileObj,
     { source: "my-source", packageId: "my-package-id" },
-    { tile: 1 }
+    { tile: 1000 }
   );
   const player: Player = new MockPlayer();
   systemTileObj._releaseAsPlayer(player, false);
@@ -94,10 +115,10 @@ it("onReleased", () => {
 
 it("attachment management", () => {
   const system = new System(
-    new MockGameObject(),
+    new MockGameObject({ templateMetadata: "tile.system:my-source/1000" }),
     { source: "my-source", packageId: "my-package-id" },
     {
-      tile: 1,
+      tile: 1000,
     }
   );
   const attachment = new SystemAttachment(
@@ -132,10 +153,10 @@ it("attachment management", () => {
 
 it("getAnomalies", () => {
   const system = new System(
-    new MockGameObject(),
+    new MockGameObject({ templateMetadata: "tile.system:my-source/1000" }),
     { source: "my-source", packageId: "my-package-id" },
     {
-      tile: 1,
+      tile: 1000,
       anomalies: ["asteroid-field"],
     }
   );
@@ -154,10 +175,10 @@ it("getAnomalies", () => {
 
 it("getClass", () => {
   const system = new System(
-    new MockGameObject(),
+    new MockGameObject({ templateMetadata: "tile.system:my-source/1000" }),
     { source: "my-source", packageId: "my-package-id" },
     {
-      tile: 1,
+      tile: 1000,
       class: "off-map",
     }
   );
@@ -166,10 +187,10 @@ it("getClass", () => {
 
 it("getClass (default)", () => {
   const system = new System(
-    new MockGameObject(),
+    new MockGameObject({ templateMetadata: "tile.system:my-source/1000" }),
     { source: "my-source", packageId: "my-package-id" },
     {
-      tile: 1,
+      tile: 1000,
     }
   );
   expect(system.getClass()).toBe("map");
@@ -177,13 +198,13 @@ it("getClass (default)", () => {
 
 it("getImg", () => {
   const system = new System(
-    new MockGameObject(),
+    new MockGameObject({ templateMetadata: "tile.system:my-source/1000" }),
     { source: "my-source", packageId: "my-package-id" },
     {
-      tile: 1,
+      tile: 1000,
     }
   );
-  expect(system.getImg()).toBe("tile/system/my-source/tile-001.png");
+  expect(system.getImg()).toBe("tile/system/my-source/tile-1000.png");
   expect(system.getImgPackageId()).toBe("my-package-id");
 });
 
@@ -191,33 +212,34 @@ it("getImg (face down)", () => {
   const system = new System(
     new MockGameObject({
       rotation: [0, 0, 180],
+      templateMetadata: "tile.system:my-source/1000",
     }),
     { source: "my-source", packageId: "my-package-id" },
     {
-      tile: 1,
+      tile: 1000,
       imgFaceDown: true,
     }
   );
-  expect(system.getImg()).toBe("tile/system/my-source/tile-001.back.png");
+  expect(system.getImg()).toBe("tile/system/my-source/tile-1000.back.png");
 });
 
 it("getImg (homebrew)", () => {
   const system = new System(
-    new MockGameObject(),
+    new MockGameObject({ templateMetadata: "tile.system:homebrew-x/1000" }),
     { source: "homebrew-x", packageId: "my-package-id" },
     {
-      tile: 1,
+      tile: 1000,
     }
   );
-  expect(system.getImg()).toBe(`homebrew-x/tile/system/tile-001.png`);
+  expect(system.getImg()).toBe(`homebrew-x/tile/system/tile-1000.png`);
 });
 
 it("getPlanetClosest", () => {
   const system = new System(
-    new MockGameObject(),
+    new MockGameObject({ templateMetadata: "tile.system:my-source/1000" }),
     { source: "my-source", packageId: "my-package-id" },
     {
-      tile: 1,
+      tile: 1000,
       planets: [{ name: "planet-1", nsidName: "my-nsid-name" }],
     }
   );
@@ -233,10 +255,10 @@ it("getPlanetClosest", () => {
 
 it("getPlanetClosest (no planets)", () => {
   const system = new System(
-    new MockGameObject(),
+    new MockGameObject({ templateMetadata: "tile.system:my-source/1000" }),
     { source: "my-source", packageId: "my-package-id" },
     {
-      tile: 1,
+      tile: 1000,
     }
   );
   expect(system.getPlanetClosest(new Vector(0, 0, 0))).toBeUndefined();
@@ -244,10 +266,10 @@ it("getPlanetClosest (no planets)", () => {
 
 it("getPlanetExact", () => {
   const system = new System(
-    new MockGameObject(),
+    new MockGameObject({ templateMetadata: "tile.system:my-source/1000" }),
     { source: "my-source", packageId: "my-package-id" },
     {
-      tile: 1,
+      tile: 1000,
       planets: [{ name: "planet-1", nsidName: "my-nsid-name" }],
     }
   );
@@ -263,10 +285,10 @@ it("getPlanetExact", () => {
 
 it("getPlanetExact (no planets)", () => {
   const system = new System(
-    new MockGameObject(),
+    new MockGameObject({ templateMetadata: "tile.system:my-source/1000" }),
     { source: "my-source", packageId: "my-package-id" },
     {
-      tile: 1,
+      tile: 1000,
     }
   );
   expect(system.getPlanetExact(new Vector(0, 0, 0))).toBeUndefined();
@@ -274,10 +296,10 @@ it("getPlanetExact (no planets)", () => {
 
 it("getPlanets", () => {
   const system = new System(
-    new MockGameObject(),
+    new MockGameObject({ templateMetadata: "tile.system:my-source/1000" }),
     { source: "my-source", packageId: "my-package-id" },
     {
-      tile: 1,
+      tile: 1000,
       planets: [
         { name: "planet-1", nsidName: "my-nsid-name-1" },
         {
@@ -289,11 +311,14 @@ it("getPlanets", () => {
     }
   );
   const attachment = new SystemAttachment(
-    new MockGameObject(),
+    new MockGameObject({
+      templateMetadata:
+        "token.attachment.system:my-source/my-attachment-nsid-name",
+    }),
     { source: "my-source", packageId: "my-package-id" },
     {
-      name: "attachment-1",
-      nsidName: "attachment-1-nsid",
+      name: "my-attachment",
+      nsidName: "my-attachment-nsid-name",
       planets: [{ name: "planet-3", nsidName: "my-nsid-name" }],
     }
   );
@@ -325,19 +350,19 @@ it("getPlanets", () => {
 
 it("getSystemTileNumber", () => {
   const system = new System(
-    new MockGameObject(),
+    new MockGameObject({ templateMetadata: "tile.system:my-source/1000" }),
     { source: "my-source", packageId: "my-package-id" },
-    { tile: 1 }
+    { tile: 1000 }
   );
-  expect(system.getSystemTileNumber()).toBe(1);
+  expect(system.getSystemTileNumber()).toBe(1000);
 });
 
 it("getWormholes", () => {
   const system = new System(
-    new MockGameObject(),
+    new MockGameObject({ templateMetadata: "tile.system:my-source/1000" }),
     { source: "my-source", packageId: "my-package-id" },
     {
-      tile: 1,
+      tile: 1000,
       wormholes: ["alpha"],
     }
   );
@@ -345,8 +370,8 @@ it("getWormholes", () => {
     new MockGameObject(),
     { source: "my-source", packageId: "my-package-id" },
     {
-      name: "attachment-1",
-      nsidName: "attachment-1-nsid",
+      name: "my-attachment",
+      nsidName: "my-attachment-nsid-name",
       wormholes: ["beta"],
     }
   );
@@ -356,10 +381,13 @@ it("getWormholes", () => {
 
 it("getWormholes face down", () => {
   const system = new System(
-    new MockGameObject({ rotation: [0, 0, 180] }),
+    new MockGameObject({
+      rotation: [0, 0, 180],
+      templateMetadata: "tile.system:my-source/1000",
+    }),
     { source: "my-source", packageId: "my-package-id" },
     {
-      tile: 1,
+      tile: 1000,
       wormholesWithPositions: [
         { wormhole: "alpha", localPosition: { x: 1, y: 2 } },
       ],
@@ -370,11 +398,14 @@ it("getWormholes face down", () => {
     }
   );
   const attachment = new SystemAttachment(
-    new MockGameObject(),
+    new MockGameObject({
+      templateMetadata:
+        "token.attachment.system:my-source/my-attachment-nsid-name",
+    }),
     { source: "my-source", packageId: "my-package-id" },
     {
-      name: "attachment-1",
-      nsidName: "attachment-1-nsid",
+      name: "my-attachment",
+      nsidName: "my-attachment-nsid-name",
       wormholes: ["beta"],
     }
   );
@@ -386,19 +417,24 @@ it("getWormholesWithPosition", () => {
   const system = new System(
     new MockGameObject({
       position: new Vector(10, 20, 30),
+      templateMetadata: "tile.system:my-source/1000",
     }),
     { source: "my-source", packageId: "my-package-id" },
     {
-      tile: 1,
+      tile: 1000,
       wormholes: ["alpha"],
     }
   );
   const attachment = new SystemAttachment(
-    new MockGameObject({ position: [1, 2, 3] }),
+    new MockGameObject({
+      position: [1, 2, 3],
+      templateMetadata:
+        "token.attachment.system:my-source/my-attachment-nsid-name",
+    }),
     { source: "my-source", packageId: "my-package-id" },
     {
-      name: "attachment-1",
-      nsidName: "attachment-1-nsid",
+      name: "my-attachment",
+      nsidName: "my-attachment-nsid-name",
       wormholes: ["beta"],
     }
   );
@@ -423,19 +459,19 @@ it("getWormholesWithPosition", () => {
 
 it("isExcludeFromDraft", () => {
   const system = new System(
-    new MockGameObject(),
+    new MockGameObject({ templateMetadata: "tile.system:my-source/1000" }),
     { source: "my-source", packageId: "my-package-id" },
-    { tile: 1, isExcludeFromDraft: true }
+    { tile: 1000, isExcludeFromDraft: true }
   );
   expect(system.isExcludeFromDraft()).toBe(true);
 });
 
 it("isHome", () => {
   const system = new System(
-    new MockGameObject(),
+    new MockGameObject({ templateMetadata: "tile.system:my-source/1000" }),
     { source: "my-source", packageId: "my-package-id" },
     {
-      tile: 1,
+      tile: 1000,
       isHome: true,
     }
   );
@@ -444,10 +480,10 @@ it("isHome", () => {
 
 it("isHome (default)", () => {
   const system = new System(
-    new MockGameObject(),
+    new MockGameObject({ templateMetadata: "tile.system:my-source/1000" }),
     { source: "my-source", packageId: "my-package-id" },
     {
-      tile: 1,
+      tile: 1000,
     }
   );
   expect(system.isHome()).toBe(false);
@@ -455,10 +491,10 @@ it("isHome (default)", () => {
 
 it("isHyperlane", () => {
   const system = new System(
-    new MockGameObject(),
+    new MockGameObject({ templateMetadata: "tile.system:my-source/1000" }),
     { source: "my-source", packageId: "my-package-id" },
     {
-      tile: 1,
+      tile: 1000,
       isHyperlane: true,
     }
   );
@@ -467,10 +503,10 @@ it("isHyperlane", () => {
 
 it("isHyperlane (default)", () => {
   const system = new System(
-    new MockGameObject(),
+    new MockGameObject({ templateMetadata: "tile.system:my-source/1000" }),
     { source: "my-source", packageId: "my-package-id" },
     {
-      tile: 1,
+      tile: 1000,
     }
   );
   expect(system.isHyperlane()).toBe(false);

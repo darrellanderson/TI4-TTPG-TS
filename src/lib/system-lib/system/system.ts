@@ -110,6 +110,12 @@ export class System {
       throw new Error(msg);
     }
 
+    const nsid: string = System.schemaToNsid(sourceAndPackageId.source, params);
+    const objNsid: string = NSID.get(obj);
+    if (nsid !== objNsid) {
+      throw new Error(`NSID mismatch: expected "${nsid}", got "${objNsid}"`);
+    }
+
     this._obj = obj;
     this._sourceAndPackageId = sourceAndPackageId;
     this._params = params;
