@@ -6,6 +6,7 @@ import {
   SourceAndPackageIdSchema,
   SourceAndPackageIdSchemaType,
 } from "../schema/basic-types-schema";
+import { NSID } from "ttpg-darrell";
 
 /**
  * Represent a single planet.
@@ -33,6 +34,16 @@ export class Planet {
     } catch (e) {
       const msg = `error: ${e.message}\nparsing: ${JSON.stringify(params)}`;
       throw new Error(msg);
+    }
+
+    const objNsid: string = NSID.get(obj);
+    if (
+      !objNsid.startsWith("tile.system:") &&
+      !objNsid.startsWith("token.attachment.system:")
+    ) {
+      throw new Error(
+        `invalid object: "${objNsid}", expect either "tile.system:" or "token.attachment.system:" prefix`
+      );
     }
 
     this._obj = obj;

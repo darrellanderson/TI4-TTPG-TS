@@ -7,7 +7,9 @@ import { PlanetAttachment } from "../planet-attachment/planet-attachment";
 import { SystemDefaults } from "../data/system-defaults";
 
 it("constructor", () => {
-  const systemTileObj: GameObject = new MockGameObject();
+  const systemTileObj: GameObject = new MockGameObject({
+    templateMetadata: "tile.system:my-source/1000",
+  });
   const params: PlanetSchemaType = {
     name: "my-planet-name",
     nsidName: "my-planet-card-nsid",
@@ -28,7 +30,9 @@ it("constructor (invalid params)", () => {
   };
   expect(() => {
     new Planet(
-      new MockGameObject(),
+      new MockGameObject({
+        templateMetadata: "tile.system:my-source/1000",
+      }),
       { source: "my-source", packageId: "my-package-id" },
       params
     );
@@ -37,7 +41,9 @@ it("constructor (invalid params)", () => {
 
 it("attachment management", () => {
   const planet = new Planet(
-    new MockGameObject(),
+    new MockGameObject({
+      templateMetadata: "tile.system:my-source/1000",
+    }),
     { source: "my-source", packageId: "my-package-id" },
     {
       name: "my-planet-name",
@@ -79,7 +85,9 @@ it("attachment management", () => {
 
 it("getInfluence", () => {
   const planet = new Planet(
-    new MockGameObject(),
+    new MockGameObject({
+      templateMetadata: "tile.system:my-source/1000",
+    }),
     { source: "my-source", packageId: "my-package-id" },
     {
       name: "my-planet-name",
@@ -105,7 +113,9 @@ it("getInfluence", () => {
 
 it("getInfluence (default)", () => {
   const planet = new Planet(
-    new MockGameObject(),
+    new MockGameObject({
+      templateMetadata: "tile.system:my-source/1000",
+    }),
     { source: "my-source", packageId: "my-package-id" },
     {
       name: "my-planet-name",
@@ -117,7 +127,9 @@ it("getInfluence (default)", () => {
 
 it("getLegendarynsidNames", () => {
   const planet = new Planet(
-    new MockGameObject(),
+    new MockGameObject({
+      templateMetadata: "tile.system:my-source/1000",
+    }),
     { source: "my-source", packageId: "my-package-id" },
     {
       name: "my-planet-name",
@@ -146,7 +158,9 @@ it("getLegendarynsidNames", () => {
 
 it("getLegendarynsidNames (default)", () => {
   const planet = new Planet(
-    new MockGameObject(),
+    new MockGameObject({
+      templateMetadata: "tile.system:my-source/1000",
+    }),
     { source: "my-source", packageId: "my-package-id" },
     {
       name: "my-planet-name",
@@ -158,7 +172,9 @@ it("getLegendarynsidNames (default)", () => {
 
 it("getName", () => {
   const planet = new Planet(
-    new MockGameObject(),
+    new MockGameObject({
+      templateMetadata: "tile.system:my-source/1000",
+    }),
     { source: "my-source", packageId: "my-package-id" },
     {
       name: "my-planet-name",
@@ -170,7 +186,9 @@ it("getName", () => {
 
 it("getPlanetCardNsid", () => {
   const planet = new Planet(
-    new MockGameObject(),
+    new MockGameObject({
+      templateMetadata: "tile.system:my-source/1000",
+    }),
     { source: "my-source", packageId: "my-package-id" },
     {
       name: "my-planet-name",
@@ -184,7 +202,9 @@ it("getPlanetCardNsid", () => {
 
 it("getPosition", () => {
   const planet = new Planet(
-    new MockGameObject(),
+    new MockGameObject({
+      templateMetadata: "tile.system:my-source/1000",
+    }),
     { source: "my-source", packageId: "my-package-id" },
     {
       name: "my-planet-name",
@@ -197,7 +217,9 @@ it("getPosition", () => {
 
 it("getPosition (default)", () => {
   const planet = new Planet(
-    new MockGameObject(),
+    new MockGameObject({
+      templateMetadata: "tile.system:my-source/1000",
+    }),
     { source: "my-source", packageId: "my-package-id" },
     {
       name: "my-planet-name",
@@ -209,7 +231,10 @@ it("getPosition (default)", () => {
 
 it("getRadius", () => {
   const planet = new Planet(
-    new MockGameObject({ scale: [3, 3, 3] }),
+    new MockGameObject({
+      scale: [3, 3, 3],
+      templateMetadata: "tile.system:my-source/1000",
+    }),
     { source: "my-source", packageId: "my-package-id" },
     {
       name: "my-planet-name",
@@ -222,7 +247,9 @@ it("getRadius", () => {
 
 it("getRadius (default)", () => {
   const planet = new Planet(
-    new MockGameObject(),
+    new MockGameObject({
+      templateMetadata: "tile.system:my-source/1000",
+    }),
     { source: "my-source", packageId: "my-package-id" },
     {
       name: "my-planet-name",
@@ -234,7 +261,9 @@ it("getRadius (default)", () => {
 
 it("getResources", () => {
   const planet = new Planet(
-    new MockGameObject(),
+    new MockGameObject({
+      templateMetadata: "tile.system:my-source/1000",
+    }),
     { source: "my-source", packageId: "my-package-id" },
     {
       name: "my-planet-name",
@@ -260,7 +289,9 @@ it("getResources", () => {
 
 it("getResources (default)", () => {
   const planet = new Planet(
-    new MockGameObject(),
+    new MockGameObject({
+      templateMetadata: "tile.system:my-source/1000",
+    }),
     { source: "my-source", packageId: "my-package-id" },
     {
       name: "my-planet-name",
@@ -272,7 +303,9 @@ it("getResources (default)", () => {
 
 it("getTechs", () => {
   const planet = new Planet(
-    new MockGameObject(),
+    new MockGameObject({
+      templateMetadata: "tile.system:my-source/1000",
+    }),
     { source: "my-source", packageId: "my-package-id" },
     {
       name: "my-planet-name",
@@ -299,7 +332,7 @@ it("getTechs", () => {
 it("getTechs (default)", () => {
   const planet = new Planet(
     new MockGameObject({
-      templateMetadata: "token.planet:my-source/my-planet-card-nsid",
+      templateMetadata: "token.attachment.system:my-source/my-planet-card-nsid",
     }),
     { source: "my-source", packageId: "my-package-id" },
     {
@@ -312,7 +345,9 @@ it("getTechs (default)", () => {
 
 it("getTraits", () => {
   const planet = new Planet(
-    new MockGameObject(),
+    new MockGameObject({
+      templateMetadata: "tile.system:my-source/1000",
+    }),
     { source: "my-source", packageId: "my-package-id" },
     {
       name: "my-planet-name",
@@ -338,7 +373,9 @@ it("getTraits", () => {
 
 it("getTraits (default)", () => {
   const planet = new Planet(
-    new MockGameObject(),
+    new MockGameObject({
+      templateMetadata: "tile.system:my-source/1000",
+    }),
     { source: "my-source", packageId: "my-package-id" },
     {
       name: "my-planet-name",
@@ -350,7 +387,9 @@ it("getTraits (default)", () => {
 
 it("isDestroyedPlanet", () => {
   const planet = new Planet(
-    new MockGameObject(),
+    new MockGameObject({
+      templateMetadata: "tile.system:my-source/1000",
+    }),
     { source: "my-source", packageId: "my-package-id" },
     {
       name: "my-planet-name",
@@ -375,7 +414,9 @@ it("isDestroyedPlanet", () => {
 
 it("isDestroyedPlanet (default)", () => {
   const planet = new Planet(
-    new MockGameObject(),
+    new MockGameObject({
+      templateMetadata: "tile.system:my-source/1000",
+    }),
     { source: "my-source", packageId: "my-package-id" },
     {
       name: "my-planet-name",
@@ -387,7 +428,9 @@ it("isDestroyedPlanet (default)", () => {
 
 it("isLegendaryPlanet", () => {
   const planet = new Planet(
-    new MockGameObject(),
+    new MockGameObject({
+      templateMetadata: "tile.system:my-source/1000",
+    }),
     { source: "my-source", packageId: "my-package-id" },
     {
       name: "my-planet-name",
@@ -400,7 +443,9 @@ it("isLegendaryPlanet", () => {
 
 it("isLegendaryPlanet (attachment)", () => {
   const planet = new Planet(
-    new MockGameObject(),
+    new MockGameObject({
+      templateMetadata: "tile.system:my-source/1000",
+    }),
     { source: "my-source", packageId: "my-package-id" },
     {
       name: "my-planet-name",
@@ -425,7 +470,9 @@ it("isLegendaryPlanet (attachment)", () => {
 
 it("isLegendaryPlanet (default)", () => {
   const planet = new Planet(
-    new MockGameObject(),
+    new MockGameObject({
+      templateMetadata: "tile.system:my-source/1000",
+    }),
     { source: "my-source", packageId: "my-package-id" },
     {
       name: "my-planet-name",
@@ -437,7 +484,9 @@ it("isLegendaryPlanet (default)", () => {
 
 it("setLocalPosition", () => {
   const planet = new Planet(
-    new MockGameObject(),
+    new MockGameObject({
+      templateMetadata: "tile.system:my-source/1000",
+    }),
     { source: "my-source", packageId: "my-package-id" },
     {
       name: "my-planet-name",

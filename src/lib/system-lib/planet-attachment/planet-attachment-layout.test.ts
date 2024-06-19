@@ -20,7 +20,7 @@ it("constructor", () => {
 
 it("layout", () => {
   const planet = new Planet(
-    new MockGameObject(),
+    new MockGameObject({ templateMetadata: "tile.system:my-source/1000" }),
     { source: "my-source", packageId: "my-package-id" },
     { name: "my-planet", nsidName: "my-planet-nsid-name" }
   );
