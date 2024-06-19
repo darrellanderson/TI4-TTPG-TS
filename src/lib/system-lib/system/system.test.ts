@@ -201,6 +201,34 @@ it("getClass (default)", () => {
   expect(system.getClass()).toBe("map");
 });
 
+it("getHyperlanes", () => {
+  const system = new System(
+    new MockGameObject({ templateMetadata: "tile.system:my-source/1000" }),
+    { source: "my-source", packageId: "my-package-id" },
+    {
+      tile: 1000,
+      hyperlanes: { n: ["s"] },
+    }
+  );
+  expect(system.getHyperlanes()).toEqual({ n: ["s"] });
+});
+
+it("getHyperlanes (face down)", () => {
+  const system = new System(
+    new MockGameObject({
+      rotation: [0, 0, 180],
+      templateMetadata: "tile.system:my-source/1000",
+    }),
+    { source: "my-source", packageId: "my-package-id" },
+    {
+      tile: 1000,
+      hyperlanes: { n: ["s"] },
+      hyperlanesFaceDown: { nw: ["se"] },
+    }
+  );
+  expect(system.getHyperlanes()).toEqual({ nw: ["se"] });
+});
+
 it("getImg", () => {
   const system = new System(
     new MockGameObject({ templateMetadata: "tile.system:my-source/1000" }),

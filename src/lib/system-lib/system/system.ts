@@ -324,6 +324,18 @@ export class System {
   }
 
   /**
+   * Get hyperlanes, may differ based on face up or face down.
+   *
+   * @returns
+   */
+  getHyperlanes(): Record<string, Array<string>> {
+    if (Facing.isFaceUp(this._obj)) {
+      return this._params.hyperlanes ?? {};
+    }
+    return this._params.hyperlanesFaceDown ?? {};
+  }
+
+  /**
    * Get the system tile image file.  This is the "UI" version, a square PNG
    * with the system image centered vertically and fully filling horizontally.
    *
