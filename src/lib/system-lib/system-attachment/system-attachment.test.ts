@@ -15,7 +15,9 @@ it("static schemaToNsid", () => {
 });
 
 it("constructor", () => {
-  const attachmentTokenObj = new MockGameObject();
+  const attachmentTokenObj = new MockGameObject({
+    templateMetadata: "token.attachment.system:my-source/my-nsid-name",
+  });
   const attachment = new SystemAttachment(
     attachmentTokenObj,
     { source: "my-source", packageId: "my-package-id" },
@@ -42,19 +44,37 @@ it("constructor", () => {
 it("constructor (invalid params)", () => {
   expect(() => {
     new SystemAttachment(
-      new MockGameObject(),
+      new MockGameObject({
+        templateMetadata: "token.attachment.system:my-source/my-nsid-name",
+      }),
       { source: "my-source", packageId: "my-package-id" },
       {
-        name: "",
+        name: "my-name",
         nsidName: "@@invalid??",
       }
     );
   }).toThrow();
 });
 
+it("constructor (invalid nsid)", () => {
+  expect(() => {
+    new SystemAttachment(
+      new MockGameObject({
+        templateMetadata: "nope",
+      }),
+      { source: "my-source", packageId: "my-package-id" },
+      { name: "my-name", nsidName: "my-nsid-name" }
+    );
+  }).toThrow(
+    'NSID mismatch: expected "token.attachment.system:my-source/my-nsid-name", got "nope"'
+  );
+});
+
 it("anomalies empty", () => {
   const attachment = new SystemAttachment(
-    new MockGameObject(),
+    new MockGameObject({
+      templateMetadata: "token.attachment.system:my-source/my-nsid-name",
+    }),
     { source: "my-source", packageId: "my-package-id" },
     {
       name: "my-name",
@@ -66,7 +86,9 @@ it("anomalies empty", () => {
 
 it("img", () => {
   const attachment = new SystemAttachment(
-    new MockGameObject(),
+    new MockGameObject({
+      templateMetadata: "token.attachment.system:my-source/my-nsid-name",
+    }),
     { source: "my-source", packageId: "my-package-id" },
     {
       name: "my-name",
@@ -80,7 +102,10 @@ it("img", () => {
 
 it("img face down", () => {
   const attachment = new SystemAttachment(
-    new MockGameObject({ rotation: [0, 0, 180] }),
+    new MockGameObject({
+      rotation: [0, 0, 180],
+      templateMetadata: "token.attachment.system:my-source/my-nsid-name",
+    }),
     { source: "my-source", packageId: "my-package-id" },
     {
       name: "my-name",
@@ -95,7 +120,9 @@ it("img face down", () => {
 
 it("img homebrew", () => {
   const attachment = new SystemAttachment(
-    new MockGameObject(),
+    new MockGameObject({
+      templateMetadata: "token.attachment.system:homebrew-x/my-nsid-name",
+    }),
     { source: "homebrew-x", packageId: "my-package-id" },
     {
       name: "my-name",
@@ -109,7 +136,9 @@ it("img homebrew", () => {
 
 it("planets", () => {
   const attachment = new SystemAttachment(
-    new MockGameObject(),
+    new MockGameObject({
+      templateMetadata: "token.attachment.system:my-source/my-nsid-name",
+    }),
     { source: "my-source", packageId: "my-package-id" },
     {
       name: "my-name",
@@ -128,7 +157,9 @@ it("planets", () => {
 
 it("wormholes empty", () => {
   const attachment = new SystemAttachment(
-    new MockGameObject(),
+    new MockGameObject({
+      templateMetadata: "token.attachment.system:my-source/my-nsid-name",
+    }),
     { source: "my-source", packageId: "my-package-id" },
     {
       name: "my-name",
@@ -140,7 +171,10 @@ it("wormholes empty", () => {
 
 it("wormholesFaceDown", () => {
   const attachment = new SystemAttachment(
-    new MockGameObject({ rotation: [0, 0, 180] }),
+    new MockGameObject({
+      rotation: [0, 0, 180],
+      templateMetadata: "token.attachment.system:my-source/my-nsid-name",
+    }),
     { source: "my-source", packageId: "my-package-id" },
     {
       name: "my-name",
@@ -154,7 +188,10 @@ it("wormholesFaceDown", () => {
 
 it("wormholesGlobalPosition", () => {
   const attachment = new SystemAttachment(
-    new MockGameObject({ position: [1, 2, 3] }),
+    new MockGameObject({
+      position: [1, 2, 3],
+      templateMetadata: "token.attachment.system:my-source/my-nsid-name",
+    }),
     { source: "my-source", packageId: "my-package-id" },
     {
       name: "my-name",
@@ -171,7 +208,11 @@ it("wormholesGlobalPosition", () => {
 
 it("wormholesWorldPosition face down", () => {
   const attachment = new SystemAttachment(
-    new MockGameObject({ position: [1, 2, 3], rotation: [0, 0, 180] }),
+    new MockGameObject({
+      position: [1, 2, 3],
+      rotation: [0, 0, 180],
+      templateMetadata: "token.attachment.system:my-source/my-nsid-name",
+    }),
     { source: "my-source", packageId: "my-package-id" },
     {
       name: "my-name",
@@ -191,7 +232,9 @@ it("attach/detach", () => {
   resetGlobalThisTI4();
 
   const attachment = new SystemAttachment(
-    new MockGameObject(),
+    new MockGameObject({
+      templateMetadata: "token.attachment.system:my-source/my-nsid-name",
+    }),
     { source: "my-source", packageId: "my-package-id" },
     {
       name: "my-name",
@@ -244,7 +287,9 @@ it("grab/release", () => {
     throw new Error("system not defined"); // for TypeScript
   }
 
-  const attachmentTokenObj: MockGameObject = new MockGameObject();
+  const attachmentTokenObj: MockGameObject = new MockGameObject({
+    templateMetadata: "token.attachment.system:my-source/my-nsid-name",
+  });
   const attachment = new SystemAttachment(
     attachmentTokenObj,
     { source: "my-source", packageId: "my-package-id" },
@@ -265,7 +310,9 @@ it("grab/release", () => {
 
 it("isDestroyWormhole", () => {
   const attachment = new SystemAttachment(
-    new MockGameObject(),
+    new MockGameObject({
+      templateMetadata: "token.attachment.system:my-source/my-nsid-name",
+    }),
     { source: "my-source", packageId: "my-package-id" },
     {
       name: "my-name",
@@ -278,7 +325,9 @@ it("isDestroyWormhole", () => {
 
 it("isDestroyWormhole (default)", () => {
   const attachment = new SystemAttachment(
-    new MockGameObject(),
+    new MockGameObject({
+      templateMetadata: "token.attachment.system:my-source/my-nsid-name",
+    }),
     { source: "my-source", packageId: "my-package-id" },
     {
       name: "my-name",
