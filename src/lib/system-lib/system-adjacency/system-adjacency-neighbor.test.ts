@@ -58,3 +58,25 @@ it("addTags", () => {
     },
   ]);
 });
+
+it("hyperlanes are other systems' neighbors", () => {
+  resetGlobalThisTI4();
+  new MockGameObject({
+    position: TI4.hex.toPosition("<0,0,0>"),
+    templateMetadata: "tile.system:base/1",
+  });
+  new MockGameObject({
+    position: TI4.hex.toPosition("<1,0,-1>"),
+    templateMetadata: "tile.system:pok/83", // hyperlane
+  });
+  const hexToSystem: Map<HexType, System> = SystemAdjacency.getHexToSystem();
+  expect(hexToSystem.get("<0,0,0>")?.getSystemTileNumber()).toBe(1);
+  expect(hexToSystem.get("<1,0,-1>")?.getSystemTileNumber()).toBe(83);
+
+  const adjacency: Adjacency = new Adjacency();
+  new SystemAdjacencyNeighbor().addTags(hexToSystem, adjacency);
+
+  expect(adjacency.hasNodeTag("<0,0,0>", "<0,0,0>-<1,0,-1>")).toBe(true); // normal outgoing
+  expect(adjacency.hasNodeTag("<1,0,-1>", "<0,0,0>-<1,0,-1>")).toBe(false); // hyperlane outgoing
+  expect(adjacency.hasLink("<0,0,0>-<1,0,-1>", "<0,0,0>-<1,0,-1>")).toBe(true);
+});

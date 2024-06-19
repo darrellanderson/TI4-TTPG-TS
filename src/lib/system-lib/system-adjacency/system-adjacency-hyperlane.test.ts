@@ -81,6 +81,8 @@ it("addTags", () => {
     se: "<-1,1,0>",
     ne: "<0,1,-1>",
   };
+
+  // Add neighbor systems.
   const hexToSystem: Map<HexType, System> = new Map<HexType, System>();
   for (const hex of Object.values(dirToHex)) {
     const tile: number = 1000 + hexToSystem.size;
@@ -96,9 +98,8 @@ it("addTags", () => {
     );
   }
 
-  // Register the "normal" systems with neighbor tags.
-  new SystemAdjacencyNeighbor().addTags(hexToSystem, adjacency);
-
+  // Add hyperlane system (center).  All systems must be registerd with
+  // hexToSystem for SystemAdjaencyNeighbor to add links.
   // sw-ne.
   new MockGameObject({
     templateMetadata: "tile.system:pok/83",
@@ -110,13 +111,34 @@ it("addTags", () => {
     hexToSystem.set("<0,0,0>", hyperlaneSystem);
   }
 
+  // Register the "neighbor" systems with neighbor tags.
+  new SystemAdjacencyNeighbor().addTags(hexToSystem, adjacency);
+  expect(adjacency.hasNodeTag("<0,-1,1>", "<0,-1,1>-<0,0,0>")).toBe(true);
+
+  // Register hyperlane nodes and links.
   new SystemAdjacencyHyperlane().addTags(hexToSystem, adjacency);
   expect(adjacency.hasTransitNode("<0,0,0>-sw")).toBe(true);
   expect(adjacency.hasTransitNode("<0,0,0>-ne")).toBe(true);
   expect(adjacency.hasNodeTag("<0,0,0>-sw", "<0,-1,1>-<0,0,0>")).toBe(true);
+  expect(adjacency.hasNodeTag("<0,0,0>-sw", "<0,0,0>-<0,1,-1>")).toBe(true);
+  expect(adjacency.hasNodeTag("<0,0,0>-ne", "<0,-1,1>-<0,0,0>")).toBe(true);
   expect(adjacency.hasNodeTag("<0,0,0>-ne", "<0,0,0>-<0,1,-1>")).toBe(true);
 
   // Verify adjacency is being used correctly.
-  //const paths: Array<AdjacencyResult> = adjacency.get("<0,-1,1>", 10);
-  //expect(paths).toEqual("");
+  const paths: Array<AdjacencyResult> = adjacency.get("<0,-1,1>", 1);
+  expect(paths).toEqual([
+    { distance: 0, node: "<0,-1,1>", path: ["<0,-1,1>"] },
+    { distance: 1, node: "<-1,0,1>", path: ["<0,-1,1>", "<-1,0,1>"] }, // neighbor
+    {
+      distance: 1,
+      node: "<0,1,-1>",
+      path: ["<0,-1,1>", "<0,0,0>-ne", "<0,0,0>-sw", "<0,1,-1>"], // hyperlane transit
+    },
+    { distance: 1, node: "<1,-1,0>", path: ["<0,-1,1>", "<1,-1,0>"] }, // neighbor
+  ]);
+
+  // Hyperlane hex (without which-edge annotation) has no non-self adjacency.
+  expect(adjacency.get("<0,0,0>", 2)).toEqual([
+    { distance: 0, node: "<0,0,0>", path: ["<0,0,0>"] },
+  ]);
 });
