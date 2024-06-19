@@ -24,11 +24,13 @@ it("static neighborsWithRotAndFlip", () => {
   const defaultNeighbors: Array<HexType> = Hex.neighbors("<0,0,0>");
   let neighbors: Array<HexType>;
 
-  const systemTileObj: GameObject = new MockGameObject();
+  const systemTileObj: GameObject = new MockGameObject({
+    templateMetadata: "tile.system:my-source/1000",
+  });
   const system: System = new System(
     systemTileObj,
     { source: "my-source", packageId: "my-package-id" },
-    { tile: 1 }
+    { tile: 1000 }
   );
   neighbors = SystemAdjacencyHyperlane.neighborsWithRotAndFlip(
     "<0,0,0>",

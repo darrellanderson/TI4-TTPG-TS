@@ -26,7 +26,10 @@ it("layout", () => {
   );
   for (let i = 0; i < 6; i++) {
     const attachment = new PlanetAttachment(
-      new MockGameObject(),
+      new MockGameObject({
+        templateMetadata:
+          "token.attachment.planet:my-source/my-attachment-nsid-name",
+      }),
       { source: "my-source", packageId: "my-package-id" },
       { name: "my-attachment", nsidName: "my-attachment-nsid-name" }
     );
