@@ -118,16 +118,16 @@ it("addTags", () => {
 
   // Register the "neighbor" systems with neighbor tags.
   new SystemAdjacencyNeighbor().addTags(hexToSystem, adjacency);
-  expect(adjacency.hasNodeTag("<0,-1,1>", "<0,-1,1>-<0,0,0>")).toBe(true);
+  expect(adjacency.hasNodeTag("<0,-1,1>", "<0,-1,1>|<0,0,0>")).toBe(true);
 
   // Register hyperlane nodes and links.
   new SystemAdjacencyHyperlane().addTags(hexToSystem, adjacency);
   expect(adjacency.hasTransitNode("<0,0,0>-sw")).toBe(true);
   expect(adjacency.hasTransitNode("<0,0,0>-ne")).toBe(true);
-  expect(adjacency.hasNodeTag("<0,0,0>-sw", "<0,-1,1>-<0,0,0>")).toBe(true);
-  expect(adjacency.hasNodeTag("<0,0,0>-sw", "<0,0,0>-<0,1,-1>")).toBe(true);
-  expect(adjacency.hasNodeTag("<0,0,0>-ne", "<0,-1,1>-<0,0,0>")).toBe(true);
-  expect(adjacency.hasNodeTag("<0,0,0>-ne", "<0,0,0>-<0,1,-1>")).toBe(true);
+  expect(adjacency.hasNodeTag("<0,0,0>-sw", "<0,-1,1>|<0,0,0>")).toBe(true);
+  expect(adjacency.hasNodeTag("<0,0,0>-sw", "<0,0,0>|<0,1,-1>")).toBe(true);
+  expect(adjacency.hasNodeTag("<0,0,0>-ne", "<0,-1,1>|<0,0,0>")).toBe(true);
+  expect(adjacency.hasNodeTag("<0,0,0>-ne", "<0,0,0>|<0,1,-1>")).toBe(true);
 
   // Verify adjacency is being used correctly.
   const paths: Array<AdjacencyResult> = adjacency.get("<0,-1,1>", 1);
@@ -169,8 +169,8 @@ it("addTags (rotated hyperlane)", () => {
   new SystemAdjacencyHyperlane().addTags(hexToSystem, adjacency);
   expect(adjacency.hasTransitNode("<0,0,0>-sw")).toBe(true); // sw relative to rotated
   expect(adjacency.hasTransitNode("<0,0,0>-ne")).toBe(true);
-  expect(adjacency.hasNodeTag("<0,0,0>-sw", "<-1,0,1>-<0,0,0>")).toBe(true);
-  expect(adjacency.hasNodeTag("<0,0,0>-sw", "<0,0,0>-<1,0,-1>")).toBe(true);
-  expect(adjacency.hasNodeTag("<0,0,0>-ne", "<-1,0,1>-<0,0,0>")).toBe(true);
-  expect(adjacency.hasNodeTag("<0,0,0>-ne", "<0,0,0>-<1,0,-1>")).toBe(true);
+  expect(adjacency.hasNodeTag("<0,0,0>-sw", "<-1,0,1>|<0,0,0>")).toBe(true);
+  expect(adjacency.hasNodeTag("<0,0,0>-sw", "<0,0,0>|<1,0,-1>")).toBe(true);
+  expect(adjacency.hasNodeTag("<0,0,0>-ne", "<-1,0,1>|<0,0,0>")).toBe(true);
+  expect(adjacency.hasNodeTag("<0,0,0>-ne", "<0,0,0>|<1,0,-1>")).toBe(true);
 });

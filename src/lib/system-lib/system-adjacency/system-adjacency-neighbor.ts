@@ -23,7 +23,7 @@ export class SystemAdjacencyNeighbor {
       for (const neighbor of neighbors) {
         const neighborSystem: System | undefined = hexToSystem.get(neighbor);
         if (neighborSystem && neighborSystem.getClass() === system.getClass()) {
-          const edge: string = [hex, neighbor].sort().join("-");
+          const edge: string = [hex, neighbor].sort().join("|");
           adjacency.addNodeTags(hex, [edge]);
           adjacency.addLink(edge, edge); // make nodes sharing this tag adjacent
         }

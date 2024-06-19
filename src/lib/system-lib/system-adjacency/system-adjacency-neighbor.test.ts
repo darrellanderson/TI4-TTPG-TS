@@ -36,13 +36,13 @@ it("addTags", () => {
   const adjacency: Adjacency = new Adjacency();
   new SystemAdjacencyNeighbor().addTags(hexToSystem, adjacency);
 
-  expect(adjacency.hasNodeTag("<0,0,0>", "<0,0,0>-<1,0,-1>")).toBe(true);
-  expect(adjacency.hasNodeTag("<1,0,-1>", "<0,0,0>-<1,0,-1>")).toBe(true);
-  expect(adjacency.hasLink("<0,0,0>-<1,0,-1>", "<0,0,0>-<1,0,-1>")).toBe(true);
+  expect(adjacency.hasNodeTag("<0,0,0>", "<0,0,0>|<1,0,-1>")).toBe(true);
+  expect(adjacency.hasNodeTag("<1,0,-1>", "<0,0,0>|<1,0,-1>")).toBe(true);
+  expect(adjacency.hasLink("<0,0,0>|<1,0,-1>", "<0,0,0>|<1,0,-1>")).toBe(true);
 
-  expect(adjacency.hasNodeTag("<1,0,-1>", "<1,0,-1>-<2,0,-2>")).toBe(true);
-  expect(adjacency.hasNodeTag("<2,0,-2>", "<1,0,-1>-<2,0,-2>")).toBe(true);
-  expect(adjacency.hasLink("<1,0,-1>-<2,0,-2>", "<1,0,-1>-<2,0,-2>")).toBe(
+  expect(adjacency.hasNodeTag("<1,0,-1>", "<1,0,-1>|<2,0,-2>")).toBe(true);
+  expect(adjacency.hasNodeTag("<2,0,-2>", "<1,0,-1>|<2,0,-2>")).toBe(true);
+  expect(adjacency.hasLink("<1,0,-1>|<2,0,-2>", "<1,0,-1>|<2,0,-2>")).toBe(
     true
   );
 
@@ -76,7 +76,7 @@ it("hyperlanes are other systems' neighbors", () => {
   const adjacency: Adjacency = new Adjacency();
   new SystemAdjacencyNeighbor().addTags(hexToSystem, adjacency);
 
-  expect(adjacency.hasNodeTag("<0,0,0>", "<0,0,0>-<1,0,-1>")).toBe(true); // normal outgoing
-  expect(adjacency.hasNodeTag("<1,0,-1>", "<0,0,0>-<1,0,-1>")).toBe(false); // hyperlane outgoing
-  expect(adjacency.hasLink("<0,0,0>-<1,0,-1>", "<0,0,0>-<1,0,-1>")).toBe(true);
+  expect(adjacency.hasNodeTag("<0,0,0>", "<0,0,0>|<1,0,-1>")).toBe(true); // normal outgoing
+  expect(adjacency.hasNodeTag("<1,0,-1>", "<0,0,0>|<1,0,-1>")).toBe(false); // hyperlane outgoing
+  expect(adjacency.hasLink("<0,0,0>|<1,0,-1>", "<0,0,0>|<1,0,-1>")).toBe(true);
 });

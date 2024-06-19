@@ -57,7 +57,7 @@ export class SystemAdjacencyHyperlane {
         const srcHex: HexType | undefined = dirToHex[srcDir];
         if (srcHex) {
           const node: string = `${hex}-${srcDir}`;
-          const edge = [srcHex, hex].sort().join("-");
+          const edge = [srcHex, hex].sort().join("|");
           adjacency.addNodeTags(node, [edge]);
           adjacency.addTransitNode(node);
           adjacency.addLink(edge, edge); // make nodes sharing this tag adjacent
@@ -65,7 +65,7 @@ export class SystemAdjacencyHyperlane {
           for (const dstDir of dstDirs) {
             const dstHex: HexType | undefined = dirToHex[dstDir];
             if (dstHex) {
-              const edge = [hex, dstHex].sort().join("-");
+              const edge = [hex, dstHex].sort().join("|");
               adjacency.addNodeTags(node, [edge]);
               adjacency.addLink(edge, edge); // make nodes sharing this tag adjacent
             }
