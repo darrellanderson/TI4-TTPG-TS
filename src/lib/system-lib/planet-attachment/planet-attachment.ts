@@ -1,5 +1,5 @@
 import { GameObject, Vector } from "@tabletop-playground/api";
-import { Facing } from "ttpg-darrell";
+import { Facing, NSID } from "ttpg-darrell";
 import {
   PlanetAttachmentSchema,
   PlanetAttachmentSchemaType,
@@ -57,6 +57,15 @@ export class PlanetAttachment {
     } catch (e) {
       const msg = `error: ${e.message}\nparsing: ${JSON.stringify(params)}`;
       throw new Error(msg);
+    }
+
+    const nsid: string = PlanetAttachment.schemaToNsid(
+      sourceAndPackageId.source,
+      params
+    );
+    const objNsid: string = NSID.get(obj);
+    if (nsid !== objNsid) {
+      throw new Error(`NSID mismatch: expected "${nsid}", got "${objNsid}"`);
     }
 
     this._obj = obj;
