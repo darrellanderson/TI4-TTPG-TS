@@ -1121,6 +1121,10 @@ export const SOURCE_TO_SYSTEM_DATA: Record<string, Array<SystemSchemaType>> = {
     {
       tile: 83,
       isHyperlane: true,
+      hyperlanes: {
+        sw: ["ne"],
+        ne: ["sw"],
+      },
       //hyperlaneFaceUp: [[], [], [5], [], [], [2]],
       //hyperlaneFaceDown: [[3, 4], [3], [], [0, 1], [0], []],
       imgFaceDown: true,
