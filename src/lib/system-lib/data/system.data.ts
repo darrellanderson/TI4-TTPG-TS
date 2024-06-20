@@ -1121,10 +1121,15 @@ export const SOURCE_TO_SYSTEM_DATA: Record<string, Array<SystemSchemaType>> = {
     {
       tile: 83,
       isHyperlane: true,
-      hyperlanes: {
-        sw: ["ne"],
-        ne: ["sw"],
+      hyperlanes: { sw: ["ne"], ne: ["sw"] },
+      hyperlanesFaceDown: {
+        n: ["s", "se"],
+        nw: ["s"],
+        s: ["n", "nw"],
+        se: ["n"],
       },
+      // dirs = ['n', 'nw', 'sw', 's', 'se', 'ne']
+      // f = (input) => { const out = {}; for (let i = 0; i < 6; i++) {const key = dirs[i]; out[key] = input[i].map((d)=>dirs[d]) } return out}
       //hyperlaneFaceUp: [[], [], [5], [], [], [2]],
       //hyperlaneFaceDown: [[3, 4], [3], [], [0, 1], [0], []],
       imgFaceDown: true,
@@ -1132,6 +1137,13 @@ export const SOURCE_TO_SYSTEM_DATA: Record<string, Array<SystemSchemaType>> = {
     {
       tile: 84,
       isHyperlane: true,
+      hyperlanes: { nw: ["se"], se: ["nw"] },
+      hyperlanesFaceDown: {
+        n: ["sw", "s"],
+        sw: ["n"],
+        s: ["n", "ne"],
+        ne: ["s"],
+      },
       //hyperlaneFaceUp: [[], [4], [], [], [1], []],
       //hyperlaneFaceDown: [[2, 3], [], [0], [0, 5], [], [3]],
       imgFaceDown: true,
@@ -1139,6 +1151,13 @@ export const SOURCE_TO_SYSTEM_DATA: Record<string, Array<SystemSchemaType>> = {
     {
       tile: 85,
       isHyperlane: true,
+      hyperlanes: { nw: ["ne"], ne: ["nw"] },
+      hyperlanesFaceDown: {
+        n: ["s", "se"],
+        nw: ["s"],
+        s: ["n", "nw"],
+        se: ["n"],
+      },
       //hyperlaneFaceUp: [[], [5], [], [], [], [1]],
       //hyperlaneFaceDown: [[3, 4], [3], [], [0, 1], [0], []],
       imgFaceDown: true,
@@ -1146,6 +1165,13 @@ export const SOURCE_TO_SYSTEM_DATA: Record<string, Array<SystemSchemaType>> = {
     {
       tile: 86,
       isHyperlane: true,
+      hyperlanes: { nw: ["ne"], ne: ["nw"] },
+      hyperlanesFaceDown: {
+        n: ["sw", "s"],
+        sw: ["n"],
+        s: ["n", "ne"],
+        ne: ["s"],
+      },
       //hyperlaneFaceUp: [[], [5], [], [], [], [1]],
       //hyperlaneFaceDown: [[2, 3], [], [0], [0, 5], [], [3]],
       imgFaceDown: true,
@@ -1153,6 +1179,8 @@ export const SOURCE_TO_SYSTEM_DATA: Record<string, Array<SystemSchemaType>> = {
     {
       tile: 87,
       isHyperlane: true,
+      hyperlanes: { n: ["se"], nw: ["se"], sw: ["se"], se: ["n", "nw", "sw"] },
+      hyperlanesFaceDown: { n: ["s", "se"], s: ["n"], se: ["n"] },
       //hyperlaneFaceUp: [[4], [4], [4], [], [0, 1, 2], []],
       //hyperlaneFaceDown: [[3, 4], [], [], [0], [0], []],
       imgFaceDown: true,
@@ -1160,6 +1188,13 @@ export const SOURCE_TO_SYSTEM_DATA: Record<string, Array<SystemSchemaType>> = {
     {
       tile: 88,
       isHyperlane: true,
+      hyperlanes: { n: ["sw"], sw: ["n", "se", "ne"], se: ["sw"], ne: ["sw"] },
+      hyperlanesFaceDown: {
+        n: ["s", "se"],
+        nw: ["s"],
+        s: ["n", "nw"],
+        se: ["n"],
+      },
       //hyperlaneFaceUp: [[2], [], [0, 4, 5], [], [2], [2]],
       //hyperlaneFaceDown: [[3, 4], [3], [], [0, 1], [0], []],
       imgFaceDown: true,
@@ -1167,6 +1202,8 @@ export const SOURCE_TO_SYSTEM_DATA: Record<string, Array<SystemSchemaType>> = {
     {
       tile: 89,
       isHyperlane: true,
+      hyperlanes: { n: ["sw", "se"], sw: ["n", "se"], se: ["n", "sw"] },
+      hyperlanesFaceDown: { n: ["sw", "s"], sw: ["n"], s: ["n"] },
       //hyperlaneFaceUp: [[2, 4], [], [0, 4], [], [0, 2], []],
       //hyperlaneFaceDown: [[2, 3], [], [0], [0], [], []],
       imgFaceDown: true,
@@ -1174,6 +1211,8 @@ export const SOURCE_TO_SYSTEM_DATA: Record<string, Array<SystemSchemaType>> = {
     {
       tile: 90,
       isHyperlane: true,
+      hyperlanes: { nw: ["ne"], sw: ["se"], se: ["sw"], ne: ["nw"] },
+      hyperlanesFaceDown: { n: ["sw", "s"], sw: ["n"], s: ["n"] },
       //hyperlaneFaceUp: [[], [5], [4], [], [2], [1]],
       //hyperlaneFaceDown: [[2, 3], [], [0], [0], [], []],
       imgFaceDown: true,
@@ -1181,6 +1220,8 @@ export const SOURCE_TO_SYSTEM_DATA: Record<string, Array<SystemSchemaType>> = {
     {
       tile: 91,
       isHyperlane: true,
+      hyperlanes: { n: ["sw", "s"], sw: ["n"], s: ["n", "ne"], ne: ["s"] },
+      hyperlanesFaceDown: { n: ["s", "se"], s: ["n"], se: ["n"] },
       //hyperlaneFaceUp: [[2, 3], [], [0], [0, 5], [], [3]],
       //hyperlaneFaceDown: [[3, 4], [], [], [0], [0], []],
       imgFaceDown: true,
