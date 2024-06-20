@@ -11,17 +11,20 @@ import {
 import { SystemAttachmentRegistry } from "../lib/system-lib/registry/system-attachment-registry";
 import { SystemRegistry } from "../lib/system-lib/registry/system-registry";
 
-if (GameWorld.getExecutionReason() !== "unittest") {
-  console.log("--- Welcome to TI4 ---");
+export function registerErrorHandler() {
+  if (GameWorld.getExecutionReason() !== "unittest") {
+    console.log("--- Welcome to TI4 ---");
 
-  // Initialize error handing when running in production.
-  new ErrorHandler().init();
-  new BugSplatRemoteReporter({
-    database: "da_test",
-    appName: "TI4-TTPG-TS",
-    appVersion: "1",
-  }).init();
+    // Initialize error handing when running in production.
+    new ErrorHandler().init();
+    new BugSplatRemoteReporter({
+      database: "da_test",
+      appName: "TI4-TTPG-TS",
+      appVersion: "1",
+    }).init();
+  }
 }
+registerErrorHandler();
 
 export class TI4Class {
   // Events.
