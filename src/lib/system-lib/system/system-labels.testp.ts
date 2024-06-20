@@ -1,6 +1,8 @@
 import { System } from "./system";
 import { SystemLabels } from "./system-labels";
 
+SystemLabels.removePlanetLines();
+
 const systems: Array<System> = TI4.systemRegistry.getOnTableSystems();
 systems.forEach((system) => {
   console.log("system", system.getName());

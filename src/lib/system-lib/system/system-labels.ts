@@ -9,17 +9,19 @@ import {
 import { System } from "../system/system";
 import { Planet } from "../planet/planet";
 
-for (const line of world.getDrawingLines()) {
-  if (line.tag === "SystemLabels") {
-    world.removeDrawingLineObject(line);
-  }
-}
-
 export class SystemLabels {
   private static readonly SCALE: number = 4;
   private readonly _system: System;
   private _uis: Array<UIElement> = [];
   private _lines: Array<DrawingLine> = [];
+
+  static removePlanetLines(): void {
+    for (const line of world.getDrawingLines()) {
+      if (line.tag === "SystemLabels") {
+        world.removeDrawingLineObject(line);
+      }
+    }
+  }
 
   static getPlanetLine(planet: Planet, z: number): DrawingLine {
     const points: Array<Vector> = [];

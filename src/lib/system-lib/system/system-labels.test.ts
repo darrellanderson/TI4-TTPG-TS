@@ -46,5 +46,9 @@ it("attach/detach", () => {
     )
   );
 
-  new SystemLabels(system).attach().detach();
+  const systemLabels = new SystemLabels(system);
+  systemLabels.attach().detach();
+
+  systemLabels.attach(); // leave lines for pruning
+  SystemLabels.removePlanetLines();
 });
