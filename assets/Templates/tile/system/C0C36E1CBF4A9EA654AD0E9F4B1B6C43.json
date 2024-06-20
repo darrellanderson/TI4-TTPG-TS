@@ -1,8 +1,8 @@
 {
 	"Type": "Generic",
-	"GUID": "C2C570021D4DB4DC9BB08FB858282161",
-	"Name": "Tile 009",
-	"Metadata": "tile.system:base/9",
+	"GUID": "C0C36E1CBF4A9EA654AD0E9F4B1B6C43",
+	"Name": "Tile 016",
+	"Metadata": "tile.system:base/16",
 	"CollisionType": "Regular",
 	"Friction": 0.7,
 	"Restitution": 0.3,
@@ -48,7 +48,7 @@
 				"Y": 0,
 				"Z": 0
 			},
-			"Texture": "tile/system/base/tile_009.jpg",
+			"Texture": "tile/system/base/tile_016.jpg",
 			"NormalMap": "",
 			"ExtraMap": "",
 			"ExtraMap2": "",

@@ -21,7 +21,7 @@ export function registerErrorHandler() {
       database: "da_test",
       appName: "TI4-TTPG-TS",
       appVersion: "1",
-    }).init();
+    }); //.init();
   }
 }
 registerErrorHandler();
