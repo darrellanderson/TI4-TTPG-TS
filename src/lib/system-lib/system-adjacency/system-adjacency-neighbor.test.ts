@@ -150,3 +150,54 @@ it("neighbors must share same system class", () => {
   expect(adjacency.hasNodeTag("<1,0,-1>", "<1,0,-1>|<2,0,-2>")).toBe(false); // split here
   expect(adjacency.hasNodeTag("<2,0,-2>", "<2,0,-2>|<3,0,-3>")).toBe(true);
 });
+
+it("off-map systems are not neighbors", () => {
+  const hexToSystem: Map<HexType, System> = SystemAdjacency.getHexToSystem();
+  hexToSystem.set(
+    "<0,0,0>",
+    new System(
+      new MockGameObject({ templateMetadata: "tile.system:my-source/1000" }),
+      { source: "my-source", packageId: "my-package-id" },
+      { tile: 1000 }
+    )
+  );
+  hexToSystem.set(
+    "<1,0,-1>",
+    new System(
+      new MockGameObject({ templateMetadata: "tile.system:my-source/1001" }),
+      { source: "my-source", packageId: "my-package-id" },
+      { tile: 1001 }
+    )
+  );
+
+  let adjacency: Adjacency = new Adjacency();
+  new SystemAdjacencyNeighbor().addTags(hexToSystem, adjacency);
+
+  // "normal" system class.
+  expect(adjacency.hasNodeTag("<0,0,0>", "<0,0,0>|<1,0,-1>")).toBe(true);
+  expect(adjacency.hasNodeTag("<1,0,-1>", "<0,0,0>|<1,0,-1>")).toBe(true);
+
+  hexToSystem.set(
+    "<0,0,0>",
+    new System(
+      new MockGameObject({ templateMetadata: "tile.system:my-source/1000" }),
+      { source: "my-source", packageId: "my-package-id" },
+      { tile: 1000, class: "off-map" }
+    )
+  );
+  hexToSystem.set(
+    "<1,0,-1>",
+    new System(
+      new MockGameObject({ templateMetadata: "tile.system:my-source/1001" }),
+      { source: "my-source", packageId: "my-package-id" },
+      { tile: 1001, class: "off-map" }
+    )
+  );
+
+  adjacency = new Adjacency();
+  new SystemAdjacencyNeighbor().addTags(hexToSystem, adjacency);
+
+  // "off-map" never direct neighbors.
+  expect(adjacency.hasNodeTag("<0,0,0>", "<0,0,0>|<1,0,-1>")).toBe(false);
+  expect(adjacency.hasNodeTag("<1,0,-1>", "<0,0,0>|<1,0,-1>")).toBe(false);
+});
