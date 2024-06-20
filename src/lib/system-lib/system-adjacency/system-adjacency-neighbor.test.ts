@@ -80,3 +80,73 @@ it("hyperlanes are other systems' neighbors", () => {
   expect(adjacency.hasNodeTag("<1,0,-1>", "<0,0,0>|<1,0,-1>")).toBe(false); // hyperlane outgoing
   expect(adjacency.hasLink("<0,0,0>|<1,0,-1>", "<0,0,0>|<1,0,-1>")).toBe(true);
 });
+
+it("neighbors must share same system class", () => {
+  const hexToSystem: Map<HexType, System> = SystemAdjacency.getHexToSystem();
+  hexToSystem.set(
+    "<0,0,0>",
+    new System(
+      new MockGameObject({ templateMetadata: "tile.system:my-source/1000" }),
+      { source: "my-source", packageId: "my-package-id" },
+      { tile: 1000 }
+    )
+  );
+  hexToSystem.set(
+    "<1,0,-1>",
+    new System(
+      new MockGameObject({ templateMetadata: "tile.system:my-source/1001" }),
+      { source: "my-source", packageId: "my-package-id" },
+      { tile: 1001 }
+    )
+  );
+  hexToSystem.set(
+    "<2,0,-2>",
+    new System(
+      new MockGameObject({ templateMetadata: "tile.system:my-source/1002" }),
+      { source: "my-source", packageId: "my-package-id" },
+      { tile: 1002 }
+    )
+  );
+  hexToSystem.set(
+    "<3,0,-3>",
+    new System(
+      new MockGameObject({ templateMetadata: "tile.system:my-source/1003" }),
+      { source: "my-source", packageId: "my-package-id" },
+      { tile: 1003 }
+    )
+  );
+
+  let adjacency: Adjacency = new Adjacency();
+  new SystemAdjacencyNeighbor().addTags(hexToSystem, adjacency);
+
+  // All share same tag.
+  expect(adjacency.hasNodeTag("<0,0,0>", "<0,0,0>|<1,0,-1>")).toBe(true);
+  expect(adjacency.hasNodeTag("<1,0,-1>", "<1,0,-1>|<2,0,-2>")).toBe(true);
+  expect(adjacency.hasNodeTag("<2,0,-2>", "<2,0,-2>|<3,0,-3>")).toBe(true);
+
+  // Reset last two to have different system class.
+  hexToSystem.set(
+    "<2,0,-2>",
+    new System(
+      new MockGameObject({ templateMetadata: "tile.system:my-source/1002" }),
+      { source: "my-source", packageId: "my-package-id" },
+      { tile: 1002, class: "alt" }
+    )
+  );
+  hexToSystem.set(
+    "<3,0,-3>",
+    new System(
+      new MockGameObject({ templateMetadata: "tile.system:my-source/1003" }),
+      { source: "my-source", packageId: "my-package-id" },
+      { tile: 1003, class: "alt" }
+    )
+  );
+
+  adjacency = new Adjacency();
+  new SystemAdjacencyNeighbor().addTags(hexToSystem, adjacency);
+
+  // First two and last two differ.
+  expect(adjacency.hasNodeTag("<0,0,0>", "<0,0,0>|<1,0,-1>")).toBe(true);
+  expect(adjacency.hasNodeTag("<1,0,-1>", "<1,0,-1>|<2,0,-2>")).toBe(false); // split here
+  expect(adjacency.hasNodeTag("<2,0,-2>", "<2,0,-2>|<3,0,-3>")).toBe(true);
+});

@@ -4,6 +4,7 @@ import {
   LocalPositionSchema,
   NsidNameSchema,
   SourceAndPackageIdSchema,
+  SystemClassSchema,
   TechSchema,
   TraitSchema,
   WormholeSchema,
@@ -54,6 +55,12 @@ it("SourceAndPackageIdSchema", () => {
     packageId: "my-package-id",
   };
   const parsed = SourceAndPackageIdSchema.parse(data);
+  expect(parsed).toEqual(data);
+});
+
+it("SystemClassSchema", () => {
+  const data = "map";
+  const parsed = SystemClassSchema.parse(data);
   expect(parsed).toEqual(data);
 });
 

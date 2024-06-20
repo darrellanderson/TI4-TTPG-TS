@@ -51,6 +51,9 @@ export type SourceAndPackageIdSchemaType = z.infer<
   typeof SourceAndPackageIdSchema
 >;
 
+export const SystemClassSchema = z.enum(["map", "off-map", "alt"]).readonly();
+export type SystemClassSchemaType = z.infer<typeof SystemClassSchema>;
+
 export const TechSchema = z.enum(["blue", "green", "red", "yellow"]).readonly();
 export type TechSchemaType = z.infer<typeof TechSchema>;
 
