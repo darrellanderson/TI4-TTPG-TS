@@ -8,9 +8,9 @@ import {
   IGlobal,
 } from "ttpg-darrell";
 
+import { PlanetAttachmentRegistry } from "../lib/system-lib/registry/planet-attachment-registry";
 import { SystemAttachmentRegistry } from "../lib/system-lib/registry/system-attachment-registry";
 import { SystemRegistry } from "../lib/system-lib/registry/system-registry";
-import { PlanetAttachmentRegistry } from "lib/system-lib/registry/planet-attachment-registry";
 
 export function registerErrorHandler() {
   if (GameWorld.getExecutionReason() !== "unittest") {

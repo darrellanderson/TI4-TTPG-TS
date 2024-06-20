@@ -30,7 +30,7 @@
     "typescript": "^5.4.5"
   },
   "dependencies": {
-    "ttpg-darrell": "^1.0.45",
+    "ttpg-darrell": "^1.0.50",
     "zod": "^3.23.8"
   }
 }
