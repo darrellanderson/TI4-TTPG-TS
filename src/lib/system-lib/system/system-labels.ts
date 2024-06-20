@@ -77,11 +77,11 @@ export class SystemLabels {
       addLine(planet);
     }
 
-    for (const {
-      wormhole,
-      position,
-    } of this._system.getWormholesWithPositions()) {
-      addText(wormhole, position);
+    for (const getWormholesWithPositions of this._system.getWormholesWithPositions()) {
+      addText(
+        getWormholesWithPositions.wormhole,
+        getWormholesWithPositions.position.add([-1.5, 0, 0])
+      );
     }
 
     for (const attachment of this._system.getAttachments()) {
