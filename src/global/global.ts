@@ -1,6 +1,26 @@
-import { GlobalInit, Hex, HEX_LAYOUT_POINTY, IGlobal } from "ttpg-darrell";
+import { GameWorld } from "@tabletop-playground/api";
+import {
+  BugSplatRemoteReporter,
+  ErrorHandler,
+  GlobalInit,
+  Hex,
+  HEX_LAYOUT_POINTY,
+  IGlobal,
+} from "ttpg-darrell";
+
 import { SystemAttachmentRegistry } from "../lib/system-lib/registry/system-attachment-registry";
 import { SystemRegistry } from "../lib/system-lib/registry/system-registry";
+
+if (GameWorld.getExecutionReason() !== "unittest") {
+  console.log("--- Welcome to TI4 ---");
+}
+
+new ErrorHandler().init();
+new BugSplatRemoteReporter({
+  database: "da_test",
+  appName: "TI4-TTPG-TS",
+  appVersion: "1",
+}).init();
 
 export class TI4Class {
   // Events.

@@ -1,5 +1,5 @@
 import { GameObject, Vector } from "@tabletop-playground/api";
-import { Facing, HexType, NSID, ParsedNSID } from "ttpg-darrell";
+import { Facing, HexType, NSID, ParsedNSID, locale } from "ttpg-darrell";
 import { SystemSchema, SystemSchemaType } from "../schema/system-schema";
 import { Planet } from "../planet/planet";
 import { SystemAttachment } from "../system-attachment/system-attachment";
@@ -329,10 +329,10 @@ export class System {
    * @returns
    */
   getHyperlanes(): Record<string, Array<string>> {
-    if (Facing.isFaceUp(this._obj)) {
-      return this._params.hyperlanes ?? {};
+    if (this._params.hyperlanesFaceDown && !Facing.isFaceUp(this._obj)) {
+      return this._params.hyperlanesFaceDown;
     }
-    return this._params.hyperlanesFaceDown ?? {};
+    return this._params.hyperlanes ?? {};
   }
 
   /**
@@ -354,6 +354,22 @@ export class System {
    */
   getImgPackageId(): string {
     return this._sourceAndPackageId.packageId;
+  }
+
+  getName(): string {
+    locale.inject({ "system.name": "System {tile}: {entities}" });
+    const tile: number = this.getSystemTileNumber();
+    const entities: Array<string> = [];
+    for (const planet of this._planets) {
+      entities.push(planet.getName());
+    }
+    for (const wormhole of this.getWormholes()) {
+      entities.push(wormhole);
+    }
+    if (entities.length === 0) {
+      entities.push("<>");
+    }
+    return locale("system.name", { tile, entities: entities.join(", ") });
   }
 
   /**

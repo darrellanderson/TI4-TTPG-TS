@@ -212,6 +212,16 @@ it("getHyperlanes", () => {
   );
   expect(system.getHyperlanes()).toEqual({ n: ["s"] });
 });
+it("getHyperlanes (default)", () => {
+  const system = new System(
+    new MockGameObject({ templateMetadata: "tile.system:my-source/1000" }),
+    { source: "my-source", packageId: "my-package-id" },
+    {
+      tile: 1000,
+    }
+  );
+  expect(system.getHyperlanes()).toEqual({});
+});
 
 it("getHyperlanes (face down)", () => {
   const system = new System(
@@ -265,6 +275,30 @@ it("getImg (homebrew)", () => {
     }
   );
   expect(system.getImg()).toBe(`homebrew-x/tile/system/tile-1000.png`);
+});
+
+it("getName (empty)", () => {
+  const system = new System(
+    new MockGameObject({ templateMetadata: "tile.system:my-source/1000" }),
+    { source: "my-source", packageId: "my-package-id" },
+    {
+      tile: 1000,
+      planets: [{ name: "my-planet", nsidName: "my-planet-nsid-name" }],
+      wormholes: ["alpha"],
+    }
+  );
+  expect(system.getName()).toBe("System 1000: my-planet, alpha");
+});
+
+it("getName (empty)", () => {
+  const system = new System(
+    new MockGameObject({ templateMetadata: "tile.system:my-source/1000" }),
+    { source: "my-source", packageId: "my-package-id" },
+    {
+      tile: 1000,
+    }
+  );
+  expect(system.getName()).toBe("System 1000: <>");
 });
 
 it("getPlanetClosest", () => {

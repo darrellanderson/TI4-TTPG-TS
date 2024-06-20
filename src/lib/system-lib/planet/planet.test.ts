@@ -25,7 +25,7 @@ it("constructor", () => {
 
 it("constructor (invalid params)", () => {
   const params: PlanetSchemaType = {
-    name: "",
+    name: "my-planet-name",
     nsidName: "@@invalid??",
   };
   expect(() => {
@@ -37,6 +37,24 @@ it("constructor (invalid params)", () => {
       params
     );
   }).toThrow();
+});
+
+it("constructor (invalid nsid)", () => {
+  const params: PlanetSchemaType = {
+    name: "my-planet-name",
+    nsidName: "my-planet-nsid-name",
+  };
+  expect(() => {
+    new Planet(
+      new MockGameObject({
+        templateMetadata: "not-a-system-tile-or-attachment",
+      }),
+      { source: "my-source", packageId: "my-package-id" },
+      params
+    );
+  }).toThrow(
+    'invalid object: "not-a-system-tile-or-attachment", expect either "tile.system:" or "token.attachment.system:" prefix'
+  );
 });
 
 it("attachment management", () => {

@@ -3,12 +3,12 @@ import {
   Text,
   UIElement,
   Vector,
-  Widget,
   world,
 } from "@tabletop-playground/api";
 import { System } from "../system/system";
 
 export class SystemLabels {
+  private static readonly SCALE: number = 4;
   private readonly _system: System;
   private _uis: Array<UIElement> = [];
 
@@ -20,16 +20,17 @@ export class SystemLabels {
     const addText = (text: string, pos: Vector): void => {
       const ui: UIElement = new UIElement();
       ui.widget = new Border().setChild(
-        new Text().setFontSize(10).setText(text)
+        new Text().setFontSize(7 * SystemLabels.SCALE).setText(` ${text} `)
       );
-      ui.position = pos.add([0, 0, 0.5]);
+      ui.position = pos.add([0, 0, 0.2]);
+      ui.scale = 1 / SystemLabels.SCALE;
       world.addUI(ui);
       this._uis.push(ui);
     };
 
     addText(
       `System ${this._system.getSystemTileNumber()}`,
-      this._system.getObj().getPosition()
+      this._system.getObj().getPosition().add([-1.5, 0, 0])
     );
 
     for (const planet of this._system.getPlanets()) {
