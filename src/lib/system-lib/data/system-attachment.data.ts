@@ -11,4 +11,12 @@ export const SOURCE_TO_SYSTEM_ATTACHMENT_DATA: Record<
       wormholes: ["alpha"],
     },
   ],
+  pok: [
+    {
+      name: "Ion Storm",
+      nsidName: "ion_storm",
+      wormholes: ["alpha"],
+      wormholesFaceDown: ["beta"],
+    },
+  ],
 };

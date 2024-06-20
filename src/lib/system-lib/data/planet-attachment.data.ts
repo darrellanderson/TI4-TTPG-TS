@@ -10,5 +10,10 @@ export const SOURCE_TO_PLANET_ATTACHMENT_DATA: Record<
       nsidName: "dmz",
       isDestroyPlanet: true,
     },
+    {
+      name: "Stellar Converter",
+      nsidName: "stellar_converter",
+      isDestroyPlanet: true,
+    },
   ],
 };

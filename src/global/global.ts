@@ -10,6 +10,7 @@ import {
 
 import { SystemAttachmentRegistry } from "../lib/system-lib/registry/system-attachment-registry";
 import { SystemRegistry } from "../lib/system-lib/registry/system-registry";
+import { PlanetAttachmentRegistry } from "lib/system-lib/registry/planet-attachment-registry";
 
 export function registerErrorHandler() {
   if (GameWorld.getExecutionReason() !== "unittest") {
@@ -31,7 +32,8 @@ export class TI4Class {
 
   // Libraries.
   hex = new Hex(HEX_LAYOUT_POINTY, 5.77735 * 1.5);
-  systemAttachmentRegistry = new SystemAttachmentRegistry();
+  planetAttachmentRegistry = new PlanetAttachmentRegistry().loadDefaultData();
+  systemAttachmentRegistry = new SystemAttachmentRegistry().loadDefaultData();
   systemRegistry = new SystemRegistry().loadDefaultData();
 }
 
