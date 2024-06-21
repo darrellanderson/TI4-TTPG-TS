@@ -2,6 +2,8 @@ import crypto from "crypto";
 import fs from "fs";
 
 import { SOURCE_TO_SYSTEM_DATA } from "../../src/lib/system-lib/data/system.data";
+import { TILE_SYSTEM_TEMPLATE } from "./tile-system.data";
+import path from "path";
 
 type TileInfo = {
   guid: string;
@@ -68,4 +70,30 @@ for (const tileInfo of tileInfos) {
   if (!fs.existsSync("./prebuild/" + tileInfo.backImgFile)) {
     console.error(`File not found: "${tileInfo.backImgFile}"`);
   }
+}
+
+for (const tileInfo of tileInfos) {
+  const json = JSON.parse(JSON.stringify(TILE_SYSTEM_TEMPLATE));
+  json.GUID = tileInfo.guid;
+  json.Name = tileInfo.name;
+  json.Metadata = tileInfo.nsid;
+  json.Models[0].Texture = tileInfo.faceImgFile;
+  json.Models[1].Texture = tileInfo.backImgFile;
+
+  const templateFile: string = "./assets/Templates/" + tileInfo.templateFile;
+  const templateDir: string = path.dirname(templateFile);
+  const templateData: Buffer = Buffer.from(JSON.stringify(json, null, 2));
+
+  fs.mkdirSync(templateDir, { recursive: true });
+  fs.writeFileSync(templateFile, templateData);
+
+  fs.cpSync(
+    "./prebuild/" + tileInfo.faceImgFile,
+    "./assets/Textures/" + tileInfo.faceImgFile
+  );
+  fs.cpSync(
+    "./prebuild/" + tileInfo.backImgFile,
+    "./assets/Textures/" + tileInfo.backImgFile
+  );
+  throw new Error("stop");
 }
