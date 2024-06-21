@@ -95,5 +95,4 @@ for (const tileInfo of tileInfos) {
     "./prebuild/" + tileInfo.backImgFile,
     "./assets/Textures/" + tileInfo.backImgFile
   );
-  throw new Error("stop");
 }
