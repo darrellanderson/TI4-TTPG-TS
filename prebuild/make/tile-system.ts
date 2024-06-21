@@ -9,8 +9,10 @@ type TileInfo = {
   guid: string;
   name: string;
   nsid: string;
-  faceImgFile: string; // paths are relative to prebuild or assets/Textures
-  backImgFile: string;
+  imgFileFace: string; // paths are relative to prebuild or assets/Textures
+  imgFileBack: string;
+  modelFileFace: string;
+  modelFileBack: string;
   templateFile: string;
 };
 
@@ -26,7 +28,16 @@ for (const [source, systemSchemas] of Object.entries(SOURCE_TO_SYSTEM_DATA)) {
     const tileStr: string = tile.toString().padStart(3, "0");
     const name: string = `Tile ${tileStr}`;
     const nsid: string = `tile.system:${source}/${tile}`;
-    const faceImgFile: string = `tile/system/${source}/tile-${tileStr}.jpg`;
+    const imgFileFace: string = `tile/system/${source}/tile-${tileStr}.jpg`;
+    const modelFileFace: string =
+      systemSchema.class === "off-map"
+        ? "tile/system/system-tile-off-map.face.obj"
+        : "tile/system/system-tile.obj";
+    const modelFileBack: string =
+      systemSchema.class === "off-map"
+        ? "tile/system/system-tile-off-map.back.obj"
+        : "tile/system/system-tile.obj";
+
     const templateFile: string = `tile/system/${source}/tile-${tileStr}.json`;
 
     const guid: string = crypto
@@ -37,26 +48,28 @@ for (const [source, systemSchemas] of Object.entries(SOURCE_TO_SYSTEM_DATA)) {
       .toUpperCase();
 
     // Back will vary.
-    let backImgFile: string = "";
+    let imgFileBack: string = "";
     if (systemSchema.imgFaceDown) {
-      backImgFile = `tile/system/${source}/tile-${tileStr}.back.jpg`;
+      imgFileBack = `tile/system/${source}/tile-${tileStr}.back.jpg`;
     } else if (systemSchema.isHome) {
-      backImgFile = "tile/system/base/green.back.jpg";
+      imgFileBack = "tile/system/base/green.back.jpg";
     } else if (
       (systemSchema.anomalies ?? []).length > 0 ||
       (systemSchema.planets ?? []).length === 0
     ) {
-      backImgFile = "tile/system/base/red.back.jpg";
+      imgFileBack = "tile/system/base/red.back.jpg";
     } else {
-      backImgFile = "tile/system/base/blue.back.jpg";
+      imgFileBack = "tile/system/base/blue.back.jpg";
     }
 
     tileInfos.push({
       guid,
       name,
       nsid,
-      faceImgFile,
-      backImgFile,
+      imgFileFace,
+      imgFileBack,
+      modelFileFace,
+      modelFileBack,
       templateFile,
     });
   }
@@ -64,11 +77,11 @@ for (const [source, systemSchemas] of Object.entries(SOURCE_TO_SYSTEM_DATA)) {
 
 // Validate the input files.
 for (const tileInfo of tileInfos) {
-  if (!fs.existsSync("./prebuild/" + tileInfo.faceImgFile)) {
-    console.error(`File not found: "${tileInfo.faceImgFile}"`);
+  if (!fs.existsSync("./prebuild/" + tileInfo.imgFileFace)) {
+    console.error(`File not found: "${tileInfo.imgFileFace}"`);
   }
-  if (!fs.existsSync("./prebuild/" + tileInfo.backImgFile)) {
-    console.error(`File not found: "${tileInfo.backImgFile}"`);
+  if (!fs.existsSync("./prebuild/" + tileInfo.imgFileBack)) {
+    console.error(`File not found: "${tileInfo.imgFileBack}"`);
   }
 }
 
@@ -77,8 +90,10 @@ for (const tileInfo of tileInfos) {
   json.GUID = tileInfo.guid;
   json.Name = tileInfo.name;
   json.Metadata = tileInfo.nsid;
-  json.Models[0].Texture = tileInfo.faceImgFile;
-  json.Models[1].Texture = tileInfo.backImgFile;
+  json.Models[0].Texture = tileInfo.imgFileFace;
+  json.Models[1].Texture = tileInfo.imgFileBack;
+  json.Models[0].Model = tileInfo.modelFileFace;
+  json.Models[1].Model = tileInfo.modelFileBack;
 
   const templateFile: string = "./assets/Templates/" + tileInfo.templateFile;
   const templateDir: string = path.dirname(templateFile);
@@ -88,11 +103,11 @@ for (const tileInfo of tileInfos) {
   fs.writeFileSync(templateFile, templateData);
 
   fs.cpSync(
-    "./prebuild/" + tileInfo.faceImgFile,
-    "./assets/Textures/" + tileInfo.faceImgFile
+    "./prebuild/" + tileInfo.imgFileFace,
+    "./assets/Textures/" + tileInfo.imgFileBack
   );
   fs.cpSync(
-    "./prebuild/" + tileInfo.backImgFile,
-    "./assets/Textures/" + tileInfo.backImgFile
+    "./prebuild/" + tileInfo.imgFileBack,
+    "./assets/Textures/" + tileInfo.imgFileBack
   );
 }

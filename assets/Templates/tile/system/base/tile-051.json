@@ -27,7 +27,7 @@
   "Blueprint": "",
   "Models": [
     {
-      "Model": "tile/system/system-tile.obj",
+      "Model": "tile/system/system-tile-off-map.face.obj",
       "Offset": {
         "X": 0,
         "Y": 0,
@@ -54,7 +54,7 @@
       "SurfaceType": "Cardboard"
     },
     {
-      "Model": "tile/system/system-tile.obj",
+      "Model": "tile/system/system-tile-off-map.back.obj",
       "Offset": {
         "X": 0,
         "Y": 0,
