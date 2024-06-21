@@ -1,5 +1,6 @@
 ttpgcfg.local.json
 dev
+.DS_Store
 
 yarn.lock
 

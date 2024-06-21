@@ -1,8 +1,8 @@
 export const TILE_SYSTEM_TEMPLATE = {
   Type: "Generic",
-  GUID: "0A479945264FE74D1796A69DC6891C68",
-  Name: "Tile 018",
-  Metadata: "tile.system:base/18",
+  GUID: "", // hex string
+  Name: "", // e.g. "Tile 018"
+  Metadata: "", // e.g. "tile.system:base/18",
   CollisionType: "Regular",
   Friction: 0.7,
   Restitution: 0.3,
