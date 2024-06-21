@@ -215,6 +215,22 @@ export class SystemRegistry {
     return schemaAndSource?.schema;
   }
 
+  /**
+   * Get the registered system's system tile object NSID.
+   *
+   * @param tileNumber
+   * @returns
+   */
+  public tileNumberToSystemTileObjNsid(tileNumber: number): string | undefined {
+    const schemaAndSource: SchemaAndSource | undefined =
+      this._systemTileNumberToSchemaAndSource.get(tileNumber);
+    if (schemaAndSource) {
+      const source: string = schemaAndSource.sourceAndPackageId.source;
+      return `tile.system:${source}/${tileNumber}`;
+    }
+    return undefined;
+  }
+
   public validateImages(): this {
     const validateImages = new ValidateImages();
     for (const schemaAndSource of this._systemTileNumberToSchemaAndSource.values()) {

@@ -115,6 +115,22 @@ it("getByPosition", () => {
   registry.destroy();
 });
 
+it("tileNumberToSystemTileObjNsid", () => {
+  const registry = new SystemRegistry().load(
+    { source: "my-source", packageId: "my-package-id" },
+    [{ tile: 1000 }]
+  );
+  let nsid: string | undefined;
+
+  nsid = registry.tileNumberToSystemTileObjNsid(1000);
+  expect(nsid).toEqual("tile.system:my-source/1000");
+
+  nsid = registry.tileNumberToSystemTileObjNsid(999);
+  expect(nsid).toBeUndefined();
+
+  registry.destroy();
+});
+
 it("validateImages", () => {
   const registry = new SystemRegistry().load(
     { source: "my-source", packageId: "my-package-id" },
