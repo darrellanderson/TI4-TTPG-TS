@@ -12,6 +12,8 @@ export type MapStringEntry = {
  *
  * A map string may have a first entry in curly braces {} to
  * override 18 as the center tile.
+ *
+ * Adapted from Dotlogix's JavaScript.
  */
 export class MapStringParser {
   private readonly _entryRegExp: RegExp = /^([-]?\d+)([abAB]?)([012345]?)$/;

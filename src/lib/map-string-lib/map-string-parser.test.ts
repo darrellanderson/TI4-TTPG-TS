@@ -52,7 +52,7 @@ it("parse (invalid entry)", () => {
   const errors: Array<string> = [];
   const entries = new MapStringParser().parse("<invalid> 2A3", errors);
   expect(entries).toEqual([{ tile: 18 }, { rot: 3, side: "a", tile: 2 }]);
-  expect(errors).toEqual("<invalid>");
+  expect(errors).toEqual(["<invalid>"]);
 });
 
 it("parseOrThrow (parse)", () => {
