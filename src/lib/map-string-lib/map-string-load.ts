@@ -9,6 +9,7 @@ import { Broadcast, HexType, locale, Spawn } from "ttpg-darrell";
 import { MapStringEntry, MapStringParser } from "./map-string-parser";
 import { System } from "lib/system-lib/system/system";
 import { MapStringHex } from "./map-string-hex";
+import { skip } from "node:test";
 
 export class MapStringLoad {
   _parseAndValidateMapString(
@@ -79,28 +80,79 @@ export class MapStringLoad {
     return true;
   }
 
-  _findOrSpawnSystemTileObj(systemTileNumber: number): GameObject | undefined {
-    let systemTileObj: GameObject | undefined = undefined;
+  /**
+   * Get a snapshot of systems in game (on the table AND in containers).
+   * Used to place systems with duplicates support.
+   */
+  _getTileNumberToSystemsSnapshot(): Map<number, Array<System>> {
+    const skipContained: boolean = false; // look inside containers
+    const systems: Array<System> =
+      TI4.systemRegistry.getAllSystemsWithObjs(skipContained);
 
-    const system: System | undefined =
-      TI4.systemRegistry.getBySystemTileNumber(systemTileNumber)[0];
-    if (system) {
-      // Existing system.
-      systemTileObj = system.getObj();
-      const container: Container | undefined = systemTileObj.getContainer();
-      if (container) {
-        container.remove(systemTileObj);
+    const result: Map<number, Array<System>> = new Map();
+    for (const system of systems) {
+      const tileNumber = system.getSystemTileNumber();
+      let systems: Array<System> | undefined = result.get(tileNumber);
+      if (!systems) {
+        systems = [];
+        result.set(tileNumber, systems);
       }
-    } else {
-      // No system, spawn a new one.
-      const nsid: string | undefined =
-        TI4.systemRegistry.tileNumberToSystemTileObjNsid(systemTileNumber);
-      if (nsid) {
-        systemTileObj = Spawn.spawn(nsid);
-      }
+      systems.push(system);
+    }
+    return result;
+  }
+
+  _tryMoveExistingSystemTileObj(
+    systemTileNumber: number,
+    pos: Vector,
+    rot: Rotator,
+    systemsSnapshot: Map<number, Array<System>>
+  ): boolean {
+    // The snapshot tracks unused systems.  Check if we have one, if yes
+    // remove it from the snapshot and use it.
+    const systems: Array<System> | undefined =
+      systemsSnapshot.get(systemTileNumber);
+    if (!systems) {
+      return false; // no systems with that tile number
+    }
+    const system: System | undefined = systems.pop();
+    if (!system) {
+      return false; // no systems left with that tile number
     }
 
-    return systemTileObj;
+    // Found a system.  If inside container take it out.
+    const systemTileObj: GameObject = system.getObj();
+    const container: Container | undefined = systemTileObj.getContainer();
+    if (container) {
+      const showAnimation: boolean = false;
+      const keep: boolean = false;
+      const success: boolean = container.take(
+        systemTileObj,
+        pos,
+        showAnimation,
+        keep
+      );
+      if (!success) {
+        return false;
+      }
+    }
+    systemTileObj.setPosition(pos);
+    systemTileObj.setRotation(rot);
+    return true;
+  }
+
+  _trySpawnNewSystemTileObj(
+    systemTileNumber: number,
+    pos: Vector,
+    rot: Rotator
+  ): boolean {
+    const nsid: string | undefined =
+      TI4.systemRegistry.tileNumberToSystemTileObjNsid(systemTileNumber);
+    if (!nsid) {
+      return false;
+    }
+    const systemTileObj: GameObject | undefined = Spawn.spawn(nsid, pos, rot);
+    return systemTileObj !== undefined;
   }
 
   public load(mapString: string): boolean {
@@ -115,6 +167,12 @@ export class MapStringLoad {
       return false;
     }
 
+    // Gather existing systems to pull from.
+    const systemsSnapshot: Map<
+      number,
+      Array<System>
+    > = this._getTileNumberToSystemsSnapshot();
+
     const maxStringHex: MapStringHex = new MapStringHex();
     for (let i = 0; i < entries.length; i++) {
       const entry: MapStringEntry | undefined = entries[i];
@@ -127,11 +185,20 @@ export class MapStringLoad {
           entry.rot ? entry.rot * 60 : 0,
           entry.side === "b" ? 180 : 0
         );
-        const systemTileObj: GameObject | undefined =
-          this._findOrSpawnSystemTileObj(entry.tile);
-        if (systemTileObj) {
-          systemTileObj.setPosition(pos);
-          systemTileObj.setRotation(rot);
+
+        if (
+          this._tryMoveExistingSystemTileObj(
+            entry.tile,
+            pos,
+            rot,
+            systemsSnapshot
+          )
+        ) {
+          continue; // success, moved an existing tile
+        }
+
+        if (this._trySpawnNewSystemTileObj(entry.tile, pos, rot)) {
+          continue; // success, spawned a new tile
         }
       }
     }

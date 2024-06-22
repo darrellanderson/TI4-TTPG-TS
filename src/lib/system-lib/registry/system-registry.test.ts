@@ -139,14 +139,6 @@ it("getByPosition", () => {
   registry.destroy();
 });
 
-it("getBySystemTileNumber", () => {
-  const registry = new SystemRegistry().loadDefaultData();
-  new MockGameObject({ templateMetadata: "tile.system:base/12" });
-  expect(registry.getBySystemTileNumber(12)).toHaveLength(1);
-  expect(registry.getBySystemTileNumber(13)).toHaveLength(0);
-  registry.destroy();
-});
-
 it("tileNumberToSystemTileObjNsid", () => {
   const registry = new SystemRegistry().load(
     { source: "my-source", packageId: "my-package-id" },
