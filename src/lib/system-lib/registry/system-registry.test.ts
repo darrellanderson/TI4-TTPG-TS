@@ -7,6 +7,7 @@ import {
 } from "ttpg-mock";
 import { SystemRegistry } from "./system-registry";
 import { GameObject, Package, Vector, world } from "@tabletop-playground/api";
+import { resetGlobalThisTI4 } from "global/global";
 
 it("constructor", () => {
   new SystemRegistry();
@@ -135,6 +136,14 @@ it("getByPosition", () => {
 
   obj.destroy();
   expect(registry.getByPosition(pos)).toBeUndefined();
+  registry.destroy();
+});
+
+it("getBySystemTileNumber", () => {
+  const registry = new SystemRegistry().loadDefaultData();
+  new MockGameObject({ templateMetadata: "tile.system:base/12" });
+  expect(registry.getBySystemTileNumber(12)).toHaveLength(1);
+  expect(registry.getBySystemTileNumber(13)).toHaveLength(0);
   registry.destroy();
 });
 

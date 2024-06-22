@@ -194,6 +194,23 @@ export class SystemRegistry {
   }
 
   /**
+   * Find systems with game objects that have the same tile number.
+   * May be in a container.
+   *
+   * @param tileNumber
+   * @returns
+   */
+  public getBySystemTileNumber(tileNumber: number): Array<System> {
+    const result: Array<System> = [];
+    for (const system of this._systemTileObjIdToSystem.values()) {
+      if (system.getSystemTileNumber() === tileNumber) {
+        result.push(system);
+      }
+    }
+    return result;
+  }
+
+  /**
    * Lookup system by system tile object nsid.
    * Duplicate tiles for the "same" system have separate System instances.
    *
