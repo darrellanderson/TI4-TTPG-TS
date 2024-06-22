@@ -516,3 +516,22 @@ it("setLocalPosition", () => {
   planet.setLocalPosition(new Vector(1, 2, 3));
   expect(planet.getPosition().toString()).toEqual("(X=1,Y=2,Z=3)");
 });
+
+it("localPositionFaceDown", () => {
+  const planet = new Planet(
+    new MockGameObject({
+      templateMetadata: "tile.system:my-source/1000",
+    }),
+    { source: "my-source", packageId: "my-package-id" },
+    {
+      name: "my-planet-name",
+      nsidName: "my-planet-card-nsid",
+      localPosition: { x: 1, y: 2 },
+      localPositionFaceDown: { x: 3, y: 4 },
+    }
+  );
+  expect(planet.getPosition().toString()).toEqual("(X=1,Y=2,Z=0)");
+
+  planet.getObj().setRotation([0, 0, 180]);
+  expect(planet.getPosition().toString()).toEqual("(X=3,Y=-4,Z=0)");
+});
