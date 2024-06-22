@@ -6,7 +6,7 @@ import {
   SourceAndPackageIdSchema,
   SourceAndPackageIdSchemaType,
 } from "../schema/basic-types-schema";
-import { NSID } from "ttpg-darrell";
+import { Facing, NSID } from "ttpg-darrell";
 
 /**
  * Represent a single planet.
@@ -22,6 +22,7 @@ export class Planet {
   private readonly _params: PlanetSchemaType;
   private readonly _attachments: Array<PlanetAttachment> = [];
   private _localPosition: Vector = new Vector(0, 0, 0);
+  private _localPositionFaceDown: Vector | undefined;
 
   constructor(
     obj: GameObject,
@@ -54,6 +55,13 @@ export class Planet {
       this._localPosition = new Vector(
         params.localPosition.x,
         params.localPosition.y,
+        0
+      );
+    }
+    if (params.localPositionFaceDown) {
+      this._localPositionFaceDown = new Vector(
+        params.localPositionFaceDown.x,
+        params.localPositionFaceDown.y,
         0
       );
     }
@@ -171,7 +179,11 @@ export class Planet {
    * @returns
    */
   getPosition(): Vector {
-    return this._obj.localPositionToWorld(this._localPosition);
+    let localPosition = this._localPosition;
+    if (this._localPositionFaceDown && !Facing.isFaceUp(this._obj)) {
+      localPosition = this._localPositionFaceDown;
+    }
+    return this._obj.localPositionToWorld(localPosition);
   }
 
   /**

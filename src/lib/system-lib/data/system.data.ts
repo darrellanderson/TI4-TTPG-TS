@@ -255,7 +255,9 @@ export const SOURCE_TO_SYSTEM_DATA: Record<string, Array<SystemSchemaType>> = {
       // Creuss gate, linked to home system.
       tile: 17,
       isExcludeFromDraft: true,
-      wormholes: ["delta"],
+      wormholesWithPositions: [
+        { wormhole: "delta", localPosition: { x: -3.4, y: 2.8 } },
+      ],
     },
     {
       tile: 18,
@@ -653,7 +655,9 @@ export const SOURCE_TO_SYSTEM_DATA: Record<string, Array<SystemSchemaType>> = {
       tile: 51,
       class: "off-map",
       isHome: true,
-      wormholes: ["delta"],
+      wormholesWithPositions: [
+        { wormhole: "delta", localPosition: { x: -3.4, y: 3.5 } },
+      ],
       planets: [
         {
           name: "Creuss",
@@ -1103,8 +1107,15 @@ export const SOURCE_TO_SYSTEM_DATA: Record<string, Array<SystemSchemaType>> = {
     {
       tile: 82,
       class: "off-map",
-      wormholes: ["alpha", "beta", "gamma"],
-      wormholesFaceDown: ["gamma"],
+      imgFaceDown: true,
+      wormholesWithPositions: [
+        { wormhole: "alpha", localPosition: { x: -3.2, y: -3.5 } },
+        { wormhole: "beta", localPosition: { x: -4.5, y: 0.1 } },
+        { wormhole: "gamma", localPosition: { x: -3.2, y: 4 } },
+      ],
+      wormholesWithPositionsFaceDown: [
+        { wormhole: "gamma", localPosition: { x: -4.4, y: 0 } },
+      ],
       planets: [
         {
           name: "Mallice",
@@ -1115,6 +1126,7 @@ export const SOURCE_TO_SYSTEM_DATA: Record<string, Array<SystemSchemaType>> = {
           legendaryNsidName: "exterrix_headquarters",
           traits: ["cultural"],
           localPosition: { x: 1.8, y: 1.5 },
+          localPositionFaceDown: { x: 1.8, y: -1.5 },
         },
       ],
     },

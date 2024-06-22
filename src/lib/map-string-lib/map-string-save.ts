@@ -1,7 +1,8 @@
-import { Facing, HexType } from "ttpg-darrell";
-import { MapStringHex } from "./map-string-hex";
-import { SystemAdjacencyHyperlane } from "lib/system-lib/system-adjacency/system-adjacency-hyperlane";
 import { Vector } from "@tabletop-playground/api";
+import { Facing, HexType } from "ttpg-darrell";
+
+import { MapStringHex } from "./map-string-hex";
+import { SystemAdjacencyHyperlane } from "..//system-lib/system-adjacency/system-adjacency-hyperlane";
 
 export class MapStringSave {
   save(): string {
@@ -48,7 +49,7 @@ export class MapStringSave {
     // Otherwise mark the custom start as such.
     if (entries[0] === "18") {
       entries.shift();
-    } else {
+    } else if (entries[0]) {
       entries[0] = `{${entries[0]}}`;
     }
 
