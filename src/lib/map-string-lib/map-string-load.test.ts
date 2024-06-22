@@ -3,6 +3,7 @@ import { MapStringEntry } from "./map-string-parser";
 import { resetGlobalThisTI4 } from "../../global/global";
 import { Spawn } from "ttpg-darrell";
 import { MockContainer, MockGameObject, mockWorld } from "ttpg-mock";
+import { System } from "lib/system-lib/system/system";
 
 it("constructor", () => {
   new MapStringLoad();
@@ -111,7 +112,9 @@ it("load (missing template)", () => {
 it("load (spawn)", () => {
   resetGlobalThisTI4();
   mockWorld._reset({
-    _templateIdToMockGameObjectParams: { "my-template-id": {} },
+    _templateIdToMockGameObjectParams: {
+      "my-template-id": { templateMetadata: "tile.system:base/1" },
+    },
   });
   Spawn.inject({ "tile.system:base/1": "my-template-id" });
   const mapString: string = "{1}";
@@ -122,10 +125,22 @@ it("load (spawn)", () => {
 it("load (spawn with side+rot)", () => {
   resetGlobalThisTI4();
   mockWorld._reset({
-    _templateIdToMockGameObjectParams: { "my-template-id": {} },
+    _templateIdToMockGameObjectParams: {
+      "my-template-id": {
+        templateMetadata: "tile.system:base/1",
+      },
+    },
   });
   Spawn.inject({ "tile.system:base/1": "my-template-id" });
   const mapString: string = "{1B3}";
   const load: MapStringLoad = new MapStringLoad();
   expect(load.load(mapString)).toBe(true);
+
+  const system: System | undefined =
+    TI4.systemRegistry.getBySystemTileNumber(1)[0];
+  expect(system).toBeDefined();
+  if (!system) {
+    throw new Error("system is undefined"); // TypeScript
+  }
+  expect(system.getObj().getPosition().toString()).toBe("(X=0,Y=0,Z=0)");
 });
