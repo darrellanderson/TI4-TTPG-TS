@@ -63,13 +63,16 @@ export class MapStringParser {
 
   /**
    * Parse a map string, a space or comma separated list of entries.
-   * Add any invalid entries to the errors array.
+   * Add any invalid entries to the invalidEntries array.
    *
    * @param mapString
-   * @param errors
+   * @param invalidEntries
    * @returns
    */
-  parse(mapString: string, errors: Array<string>): Array<MapStringEntry> {
+  parse(
+    mapString: string,
+    invalidEntries: Array<string>
+  ): Array<MapStringEntry> {
     const result: Array<MapStringEntry> = [];
 
     const rawEntries: Array<string> = mapString
@@ -97,7 +100,7 @@ export class MapStringParser {
       if (entry) {
         result.push(entry);
       } else {
-        errors.push(rawEntry);
+        invalidEntries.push(rawEntry);
       }
     }
 
@@ -111,10 +114,12 @@ export class MapStringParser {
    * @returns
    */
   parseOrThrow(mapString: string): Array<MapStringEntry> {
-    const errors: Array<string> = [];
-    const result: Array<MapStringEntry> = this.parse(mapString, errors);
-    if (errors.length > 0) {
-      throw new Error(`Invalid map string entries: ${errors.join(", ")}`);
+    const invalidEntries: Array<string> = [];
+    const result: Array<MapStringEntry> = this.parse(mapString, invalidEntries);
+    if (invalidEntries.length > 0) {
+      throw new Error(
+        `Invalid map string entries: ${invalidEntries.join(", ")}`
+      );
     }
     return result;
   }

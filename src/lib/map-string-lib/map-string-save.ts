@@ -9,7 +9,10 @@ export class MapStringSave {
     const entries: Array<string> = [];
     const mapStringHex: MapStringHex = new MapStringHex();
 
-    for (const system of TI4.systemRegistry.getOnTableSystems()) {
+    const skipContained: boolean = true;
+    for (const system of TI4.systemRegistry.getAllSystemsWithObjs(
+      skipContained
+    )) {
       // Ignore off-map systems.
       if (system.getClass() === "off-map") {
         continue;

@@ -1,4 +1,5 @@
 import {
+  MockContainer,
   MockGameObject,
   MockGameWorld,
   MockPackage,
@@ -91,6 +92,28 @@ it("loadDefaultData", () => {
   expect(registry.rawBySystemTileNumber(12)).toBeUndefined();
   registry.loadDefaultData();
   expect(registry.rawBySystemTileNumber(12)).toBeDefined();
+  registry.destroy();
+});
+
+it("getAllSystemsWithObjs", () => {
+  const registry = new SystemRegistry().load(
+    { source: "my-source", packageId: "my-package-id" },
+    [{ tile: 12 }]
+  );
+  const obj = new MockGameObject({
+    id: "my-id-1",
+    templateMetadata: "tile.system:my-source/12",
+  });
+  new MockGameObject({
+    id: "my-id-2",
+    templateMetadata: "tile.system:my-source/12",
+    container: new MockContainer(),
+  });
+  expect(registry.getAllSystemsWithObjs()).toHaveLength(2);
+  expect(registry.getAllSystemsWithObjs(true)).toHaveLength(1); // skip contained
+  obj.destroy();
+  expect(obj.isValid()).toBeFalsy();
+  expect(registry.getAllSystemsWithObjs()).toHaveLength(1);
   registry.destroy();
 });
 

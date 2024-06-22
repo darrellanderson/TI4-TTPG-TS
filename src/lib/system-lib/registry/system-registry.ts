@@ -154,6 +154,23 @@ export class SystemRegistry {
   }
 
   /**
+   * Get systems for system tile objects on the table (skip contained).
+   *
+   * @returns
+   */
+  getAllSystemsWithObjs(skipContained: boolean = false): Array<System> {
+    return Array.from(this._systemTileObjIdToSystem.values()).filter(
+      (system) => {
+        const obj: GameObject = system.getObj();
+        if (skipContained && obj.getContainer()) {
+          return false;
+        }
+        return true;
+      }
+    );
+  }
+
+  /**
    * Lookup system by position.
    *
    * @param pos
@@ -185,20 +202,6 @@ export class SystemRegistry {
    */
   public getBySystemTileObjId(objId: string): System | undefined {
     return this._systemTileObjIdToSystem.get(objId);
-  }
-
-  /**
-   * Get systems for system tile objects on the table (skip contained).
-   *
-   * @returns
-   */
-  getOnTableSystems(): Array<System> {
-    return Array.from(this._systemTileObjIdToSystem.values()).filter(
-      (system) => {
-        const obj: GameObject = system.getObj();
-        return obj.isValid() && !obj.getContainer();
-      }
-    );
   }
 
   /**
