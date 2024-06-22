@@ -2,6 +2,7 @@ import { MapStringLoad } from "./map-string-load";
 import { MapStringEntry } from "./map-string-parser";
 import { resetGlobalThisTI4 } from "../../global/global";
 import { Spawn } from "ttpg-darrell";
+import { MockContainer, MockGameObject, mockWorld } from "ttpg-mock";
 
 it("constructor", () => {
   new MapStringLoad();
@@ -42,6 +43,45 @@ it("_validateTemplates (missing template)", () => {
   expect(new MapStringLoad()._validateTemplates(entries)).toBe(false);
 });
 
+it("_findOrSpawnSystemTileObj (existing system)", () => {
+  resetGlobalThisTI4();
+  new MockGameObject({ templateMetadata: "tile.system:base/1" });
+  const load: MapStringLoad = new MapStringLoad();
+  expect(load._findOrSpawnSystemTileObj(1)).toBeDefined();
+});
+
+it("_findOrSpawnSystemTileObj (existing system in container)", () => {
+  resetGlobalThisTI4();
+  new MockGameObject({
+    templateMetadata: "tile.system:base/1",
+    container: new MockContainer(),
+  });
+  const load: MapStringLoad = new MapStringLoad();
+  expect(load._findOrSpawnSystemTileObj(1)).toBeDefined();
+});
+
+it("_findOrSpawnSystemTileObj (spawn)", () => {
+  resetGlobalThisTI4();
+  mockWorld._reset({
+    _templateIdToMockGameObjectParams: { "my-template-id": {} },
+  });
+  Spawn.inject({ "tile.system:base/1": "my-template-id" });
+  expect(TI4.systemRegistry.tileNumberToSystemTileObjNsid(1)).toBeDefined();
+  expect(Spawn.has("tile.system:base/1")).toBe(true);
+  const load: MapStringLoad = new MapStringLoad();
+  expect(load._findOrSpawnSystemTileObj(1)).toBeDefined();
+});
+
+it("_findOrSpawnSystemTileObj (missing tile number)", () => {
+  const load: MapStringLoad = new MapStringLoad();
+  expect(load._findOrSpawnSystemTileObj(4398)).toBeUndefined();
+});
+
+it("_findOrSpawnSystemTileObj (missing, bad tile)", () => {
+  const load: MapStringLoad = new MapStringLoad();
+  expect(load._findOrSpawnSystemTileObj(4398)).toBeUndefined();
+});
+
 it("load", () => {
   Spawn.inject({ "tile.system:base/1": "my-template-id" });
   const mapString: string = "{1}";
@@ -66,4 +106,26 @@ it("load (missing template)", () => {
   const mapString: string = "{1}";
   const load: MapStringLoad = new MapStringLoad();
   expect(load.load(mapString)).toBe(false);
+});
+
+it("load (spawn)", () => {
+  resetGlobalThisTI4();
+  mockWorld._reset({
+    _templateIdToMockGameObjectParams: { "my-template-id": {} },
+  });
+  Spawn.inject({ "tile.system:base/1": "my-template-id" });
+  const mapString: string = "{1}";
+  const load: MapStringLoad = new MapStringLoad();
+  expect(load.load(mapString)).toBe(true);
+});
+
+it("load (spawn with side+rot)", () => {
+  resetGlobalThisTI4();
+  mockWorld._reset({
+    _templateIdToMockGameObjectParams: { "my-template-id": {} },
+  });
+  Spawn.inject({ "tile.system:base/1": "my-template-id" });
+  const mapString: string = "{1B3}";
+  const load: MapStringLoad = new MapStringLoad();
+  expect(load.load(mapString)).toBe(true);
 });
