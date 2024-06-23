@@ -34,6 +34,10 @@ for (const [source, systemAttachmentSchemas] of Object.entries(
     let modelFileFace: string = "token/attachment/system/round.obj";
     let modelFileBack: string = "token/attachment/system/round.obj";
 
+    // Rewrite some outliers.
+    if (nsidName.startsWith("dimensional-tear")) {
+      imgFileFace = `token/attachment/system/pok/dimensional-tear.jpg`;
+    }
     if (nsidName.startsWith("wormhole-") && nsidName.endsWith(".creuss")) {
       imgFileBack = `token/attachment/system/base/wormhole.creuss.back.jpg`;
     }
@@ -63,10 +67,10 @@ for (const [source, systemAttachmentSchemas] of Object.entries(
 // Validate the input files.
 for (const info of infos) {
   if (!fs.existsSync("./prebuild/" + info.imgFileFace)) {
-    console.error(`File not found: "${info.imgFileFace}"`);
+    console.error(`File face not found: "${info.imgFileFace}"`);
   }
   if (!fs.existsSync("./prebuild/" + info.imgFileBack)) {
-    console.error(`File not found: "${info.imgFileBack}"`);
+    console.error(`File back not found: "${info.imgFileBack}"`);
   }
 }
 

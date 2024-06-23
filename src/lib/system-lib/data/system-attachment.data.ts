@@ -8,30 +8,35 @@ export const SOURCE_TO_SYSTEM_ATTACHMENT_DATA: Record<
     {
       name: "Alpha Wormhole (Creuss)",
       nsidName: "wormhole-alpha.creuss",
+      imgFaceDown: true,
       wormholes: ["alpha"],
     },
     {
       name: "Beta Wormhole (Creuss)",
       nsidName: "wormhole-beta.creuss",
+      imgFaceDown: true,
       wormholes: ["beta"],
     },
   ],
   pok: [
     {
       name: "Dimensional Tear",
-      nsidName: "dimensional-tear",
+      nsidName: "dimensional-tear.vuilraith",
+      imgFaceDown: true,
+      anomalies: ["gravity-rift"],
+    },
+    {
+      name: "Dimensional Tear",
+      nsidName: "dimensional-tear.nekro",
+      imgFaceDown: true,
       anomalies: ["gravity-rift"],
     },
     {
       name: "Ion Storm",
       nsidName: "ion-storm",
+      imgFaceDown: true,
       wormholes: ["alpha"],
       wormholesFaceDown: ["beta"],
-    },
-    {
-      name: "Gamma Relay",
-      //cardNsid: "card.exploration.frontier:pok/gamma-relay",
-      nsidName: "wormhole-gamma",
     },
     {
       name: "Gamma Wormhole",
@@ -41,6 +46,7 @@ export const SOURCE_TO_SYSTEM_ATTACHMENT_DATA: Record<
     {
       name: "Gamma Wormhole (Creuss)",
       nsidName: "wormhole-gamma.creuss",
+      imgFaceDown: true,
       wormholes: ["gamma"],
     },
     {
