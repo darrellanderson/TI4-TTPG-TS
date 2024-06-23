@@ -11,6 +11,8 @@ type AttachmentInfo = {
   nsid: string;
   imgFileFace: string; // paths are relative to prebuild or assets/Textures
   imgFileBack: string;
+  modelFileFace: string;
+  modelFileBack: string;
   templateFile: string;
 };
 
@@ -30,6 +32,12 @@ for (const [source, systemAttachmentSchemas] of Object.entries(
       imgFileBack = `token/attachment/system/${source}/${nsidName}.back.jpg`;
     }
 
+    let modelFileFace: string = "token/attachment/system/round.obj";
+    let modelFileBack: string = "token/attachment/system/round.obj";
+    if (nsidName.startsWith("wormhole-") && nsidName.endsWith(".creuss")) {
+      //
+    }
+
     const templateFile: string = `token/attachment/system/${source}/${nsidName}.json`;
 
     const guid: string = crypto
@@ -45,6 +53,8 @@ for (const [source, systemAttachmentSchemas] of Object.entries(
       nsid,
       imgFileFace,
       imgFileBack,
+      modelFileFace,
+      modelFileBack,
       templateFile,
     });
   }
@@ -67,7 +77,9 @@ for (const info of infos) {
   json.GUID = info.guid;
   json.Name = info.name;
   json.Metadata = info.nsid;
+  json.Models[0].Model = info.modelFileFace;
   json.Models[0].Texture = info.imgFileFace;
+  json.Models[1].Model = info.modelFileBack;
   json.Models[1].Texture = info.imgFileBack;
 
   const templateFile: string = "./assets/Templates/" + info.templateFile;
