@@ -65,26 +65,34 @@ for (const [source, systemAttachmentSchemas] of Object.entries(
 }
 
 // Validate the input files.
+const errors: Array<string> = [];
 for (const info of infos) {
   if (!fs.existsSync("./prebuild/" + info.imgFileFace)) {
-    console.error(`File face not found: "${info.imgFileFace}"`);
+    errors.push(`File face not found: "${info.imgFileFace}"`);
   }
   if (!fs.existsSync("./prebuild/" + info.imgFileBack)) {
-    console.error(`File back not found: "${info.imgFileBack}"`);
+    errors.push(`File back not found: "${info.imgFileBack}"`);
   }
+}
+if (errors.length > 0) {
+  throw new Error(errors.join("\n"));
 }
 
 throw new Error("stop!");
 
 for (const info of infos) {
+  console.log(`Building token: ${info.name}`);
+
   const json = JSON.parse(JSON.stringify(TOKEN_SYSTEM_ATTACHMENT_TEMPLATE));
   json.GUID = info.guid;
   json.Name = info.name;
   json.Metadata = info.nsid;
   json.Models[0].Model = info.modelFileFace;
   json.Models[0].Texture = info.imgFileFace;
-  json.Models[1].Model = info.modelFileBack;
-  json.Models[1].Texture = info.imgFileBack;
+  if (json.Models[1]) {
+    json.Models[1].Model = info.modelFileBack;
+    json.Models[1].Texture = info.imgFileBack;
+  }
 
   const templateFile: string = "./assets/Templates/" + info.templateFile;
   const templateDir: string = path.dirname(templateFile);
@@ -95,10 +103,12 @@ for (const info of infos) {
 
   fs.cpSync(
     "./prebuild/" + info.imgFileFace,
-    "./assets/Textures/" + info.imgFileBack
+    "./assets/Textures/" + info.imgFileFace
   );
-  fs.cpSync(
-    "./prebuild/" + info.imgFileBack,
-    "./assets/Textures/" + info.imgFileBack
-  );
+  if (info.imgFileFace !== info.imgFileBack) {
+    fs.cpSync(
+      "./prebuild/" + info.imgFileBack,
+      "./assets/Textures/" + info.imgFileBack
+    );
+  }
 }

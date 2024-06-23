@@ -79,6 +79,9 @@ it("init attaches", () => {
       },
     ]
   );
+  expect(
+    registry.rawByNsid("token.attachment.planet:my-source/my-nsid-name")
+  ).toBeDefined();
   const attachment: PlanetAttachment | undefined =
     registry.getByPlanetAttachmentObjId("my-id");
   expect(attachment).toBeDefined();
@@ -101,6 +104,23 @@ it("load (corrupt data)", () => {
       [{ name: "my-name", nsidName: "@@invalid" }]
     );
   }).toThrow();
+});
+
+it("load (do not attach)", () => {
+  const registry = new PlanetAttachmentRegistry().load(
+    { source: "my-source", packageId: "my-package-id" },
+    [
+      {
+        name: "my-name",
+        nsidName: "my-nsid-name",
+        doNotAttach: true,
+      },
+    ]
+  );
+  expect(
+    registry.rawByNsid("token.attachment.planet:my-source/my-nsid-name")
+  ).toBeUndefined();
+  registry.destroy();
 });
 
 it("loadDefaultData", () => {

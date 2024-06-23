@@ -116,6 +116,11 @@ export class PlanetAttachmentRegistry {
         throw new Error(msg);
       }
 
+      // Skip "do not attach" entries (used to create inert tokens).
+      if (planetAttachmentSchemaType.doNotAttach) {
+        continue;
+      }
+
       // Register (create temporary attachment for nsid generation).
       const nsid: string = PlanetAttachment.schemaToNsid(
         sourceAndPackageId.source,

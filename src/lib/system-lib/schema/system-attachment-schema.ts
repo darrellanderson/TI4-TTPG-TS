@@ -10,6 +10,9 @@ export const SystemAttachmentSchema = z
   .object({
     name: z.string(),
     nsidName: NsidNameSchema, // NSID "token.attachment.system:${source}/${nsidName}"
+    imgFaceDown: z.boolean().optional(), // has separate back image?
+    doNotAttach: z.boolean().optional(), // do not attach, or add to registry
+    scaleModel: z.number().optional(), // override default x/y size
 
     anomalies: z.array(AnomalySchema).optional(),
     wormholes: z.array(WormholeSchema).optional(),
@@ -17,8 +20,6 @@ export const SystemAttachmentSchema = z
     isDestroyWormhole: z.boolean().optional(),
 
     planets: z.array(PlanetSchema).optional(),
-
-    imgFaceDown: z.boolean().optional(),
   })
   .strict()
   .readonly();

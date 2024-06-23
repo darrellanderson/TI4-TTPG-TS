@@ -17,7 +17,7 @@ type TileInfo = {
 };
 
 // Assemble tile info records.
-const tileInfos: Array<TileInfo> = [];
+const infos: Array<TileInfo> = [];
 for (const [source, systemSchemas] of Object.entries(SOURCE_TO_SYSTEM_DATA)) {
   for (const systemSchema of systemSchemas) {
     const tile: number = systemSchema.tile;
@@ -62,7 +62,7 @@ for (const [source, systemSchemas] of Object.entries(SOURCE_TO_SYSTEM_DATA)) {
       imgFileBack = "tile/system/base/blue.back.jpg";
     }
 
-    tileInfos.push({
+    infos.push({
       guid,
       name,
       nsid,
@@ -76,26 +76,32 @@ for (const [source, systemSchemas] of Object.entries(SOURCE_TO_SYSTEM_DATA)) {
 }
 
 // Validate the input files.
-for (const tileInfo of tileInfos) {
-  if (!fs.existsSync("./prebuild/" + tileInfo.imgFileFace)) {
-    console.error(`File not found: "${tileInfo.imgFileFace}"`);
+const errors: Array<string> = [];
+for (const info of infos) {
+  if (!fs.existsSync("./prebuild/" + info.imgFileFace)) {
+    errors.push(`File face not found: "${info.imgFileFace}"`);
   }
-  if (!fs.existsSync("./prebuild/" + tileInfo.imgFileBack)) {
-    console.error(`File not found: "${tileInfo.imgFileBack}"`);
+  if (!fs.existsSync("./prebuild/" + info.imgFileBack)) {
+    errors.push(`File back not found: "${info.imgFileBack}"`);
   }
 }
+if (errors.length > 0) {
+  throw new Error(errors.join("\n"));
+}
 
-for (const tileInfo of tileInfos) {
+for (const info of infos) {
+  console.log(`Building tile: ${info.name}`);
+
   const json = JSON.parse(JSON.stringify(TILE_SYSTEM_TEMPLATE));
-  json.GUID = tileInfo.guid;
-  json.Name = tileInfo.name;
-  json.Metadata = tileInfo.nsid;
-  json.Models[0].Texture = tileInfo.imgFileFace;
-  json.Models[1].Texture = tileInfo.imgFileBack;
-  json.Models[0].Model = tileInfo.modelFileFace;
-  json.Models[1].Model = tileInfo.modelFileBack;
+  json.GUID = info.guid;
+  json.Name = info.name;
+  json.Metadata = info.nsid;
+  json.Models[0].Texture = info.imgFileFace;
+  json.Models[1].Texture = info.imgFileBack;
+  json.Models[0].Model = info.modelFileFace;
+  json.Models[1].Model = info.modelFileBack;
 
-  const templateFile: string = "./assets/Templates/" + tileInfo.templateFile;
+  const templateFile: string = "./assets/Templates/" + info.templateFile;
   const templateDir: string = path.dirname(templateFile);
   const templateData: Buffer = Buffer.from(JSON.stringify(json, null, 2));
 
@@ -103,11 +109,11 @@ for (const tileInfo of tileInfos) {
   fs.writeFileSync(templateFile, templateData);
 
   fs.cpSync(
-    "./prebuild/" + tileInfo.imgFileFace,
-    "./assets/Textures/" + tileInfo.imgFileBack
+    "./prebuild/" + info.imgFileFace,
+    "./assets/Textures/" + info.imgFileFace
   );
   fs.cpSync(
-    "./prebuild/" + tileInfo.imgFileBack,
-    "./assets/Textures/" + tileInfo.imgFileBack
+    "./prebuild/" + info.imgFileBack,
+    "./assets/Textures/" + info.imgFileBack
   );
 }

@@ -20,6 +20,9 @@ it("object create/desroy", () => {
       },
     ]
   );
+  expect(
+    registry.rawByNsid("token.attachment.system:my-source/my-nsid-name")
+  ).toBeDefined();
   expect(registry.getBySystemAttachmentObjId("my-id")).toBeUndefined();
 
   const token: GameObject = new MockGameObject({
@@ -44,6 +47,23 @@ it("load (invalid)", () => {
       },
     ]);
   }).toThrow();
+  registry.destroy();
+});
+
+it("load (do not attach)", () => {
+  const registry = new SystemAttachmentRegistry().load(
+    { source: "my-source", packageId: "my-package-id" },
+    [
+      {
+        name: "my-name",
+        nsidName: "my-nsid-name",
+        doNotAttach: true,
+      },
+    ]
+  );
+  expect(
+    registry.rawByNsid("token.attachment.system:my-source/my-nsid-name")
+  ).toBeUndefined();
   registry.destroy();
 });
 

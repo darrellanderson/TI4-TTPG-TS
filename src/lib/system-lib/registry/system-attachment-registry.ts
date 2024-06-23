@@ -124,6 +124,11 @@ export class SystemAttachmentRegistry {
         throw new Error(msg);
       }
 
+      // Skip "do not attach" entries (used to create inert tokens).
+      if (systemAttachmentSchemaType.doNotAttach) {
+        continue;
+      }
+
       // Register (create temporary attachment for nsid generation).
       const nsid: string = SystemAttachment.schemaToNsid(
         sourceAndPackageId.source,
