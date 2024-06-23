@@ -7,12 +7,12 @@ export const SOURCE_TO_SYSTEM_ATTACHMENT_DATA: Record<
   base: [
     {
       name: "Alpha Wormhole (Creuss)",
-      nsidName: "alpha-wormhole.creuss",
+      nsidName: "wormhole-alpha.creuss",
       wormholes: ["alpha"],
     },
     {
       name: "Beta Wormhole (Creuss)",
-      nsidName: "beta-wormhole.creuss",
+      nsidName: "wormhole-beta.creuss",
       wormholes: ["beta"],
     },
   ],
@@ -31,16 +31,16 @@ export const SOURCE_TO_SYSTEM_ATTACHMENT_DATA: Record<
     {
       name: "Gamma Relay",
       //cardNsid: "card.exploration.frontier:pok/gamma-relay",
-      nsidName: "gamma-relay",
+      nsidName: "wormhole-gamma.relay",
     },
     {
       name: "Gamma Wormhole",
       //cardNsid: "card.exploration.cultural:pok/gamma-wormhole",
-      nsidName: "gamma-wormhole",
+      nsidName: "wormhole-gamma",
     },
     {
       name: "Gamma Wormhole (Creuss)",
-      nsidName: "gamma-wormhole.creuss",
+      nsidName: "wormhole-gamma.creuss",
       wormholes: ["gamma"],
     },
     {

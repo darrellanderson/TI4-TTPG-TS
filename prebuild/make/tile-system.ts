@@ -1,9 +1,9 @@
 import crypto from "crypto";
 import fs from "fs";
+import path from "path";
 
 import { SOURCE_TO_SYSTEM_DATA } from "../../src/lib/system-lib/data/system.data";
 import { TILE_SYSTEM_TEMPLATE } from "./tile-system.data";
-import path from "path";
 
 type TileInfo = {
   guid: string;
