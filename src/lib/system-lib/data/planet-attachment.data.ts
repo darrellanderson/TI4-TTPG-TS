@@ -6,14 +6,112 @@ export const SOURCE_TO_PLANET_ATTACHMENT_DATA: Record<
 > = {
   pok: [
     {
+      name: "Biotic Facility",
+      nsidName: "biotic-facility",
+      resources: 1,
+      influence: 1,
+      resourcesFaceDown: 0,
+      influenceFaceDown: 0,
+      techsFaceDown: ["green"],
+    },
+    {
+      // Unit modifier handles space cannon, checks token for face up.
+      name: "Custodia Vigilia",
+      nsidName: "custodia-vigilia",
+    },
+    {
+      name: "Cybernetic Research Facility",
+      nsidName: "cybernetic-research-facility",
+      resources: 1,
+      influence: 1,
+      resourcesFaceDown: 0,
+      influenceFaceDown: 0,
+      techsFaceDown: ["yellow"],
+    },
+    {
       name: "Demilitarized Zone",
       nsidName: "dmz",
-      isDestroyPlanet: true,
+    },
+    {
+      name: "Sleeper Token",
+      nsidName: "sleeper-token",
     },
     {
       name: "Stellar Converter",
-      nsidName: "stellar_converter",
+      nsidName: "stellar-converter",
       isDestroyPlanet: true,
+    },
+
+    {
+      name: "Dyson Sphere",
+      nsidName: "dyson-sphere",
+      resources: 2,
+      influence: 1,
+    },
+    {
+      // Unit modifier handles space cannon.
+      name: "Geoform",
+      nsidName: "geoform",
+      resources: 3,
+      influence: 3,
+    },
+    {
+      name: "Lazax Survivors",
+      nsidName: "lazax-survivors",
+      resources: 1,
+      influence: 2,
+    },
+    {
+      name: "Mining World",
+      nsidName: "mining-world",
+      resources: 2,
+    },
+    {
+      name: "Nano Forge",
+      nsidName: "nanoforge",
+      resources: 2,
+      influence: 2,
+      isLegendary: true,
+    },
+    {
+      name: "Paradise World",
+      nsidName: "paradise-world",
+      influence: 2,
+    },
+    {
+      name: "Propulsion Research Facility",
+      nsidName: "propulsion-research-facility",
+      resources: 1,
+      influence: 1,
+      resourcesFaceDown: 0,
+      influenceFaceDown: 0,
+      techsFaceDown: ["blue"],
+    },
+    {
+      name: "Rich World",
+      nsidName: "rich-world",
+      resources: 1,
+    },
+    {
+      name: "Terraform",
+      nsidName: "terraform",
+      resources: 1,
+      influence: 1,
+      traits: ["industrial", "hazardous", "cultural"],
+    },
+    {
+      name: "Tomb of Emphidia",
+      nsidName: "tomb-of-emphidia",
+      influence: 1,
+    },
+    {
+      name: "Warfare Research Facility",
+      nsidName: "warfare-research-facility",
+      resources: 1,
+      influence: 1,
+      resourcesFaceDown: 0,
+      influenceFaceDown: 0,
+      techsFaceDown: ["red"],
     },
   ],
 };

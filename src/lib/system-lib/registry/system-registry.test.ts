@@ -158,16 +158,19 @@ it("tileNumberToSystemTileObjNsid", () => {
 it("validateImages", () => {
   const registry = new SystemRegistry().load(
     { source: "my-source", packageId: "my-package-id" },
-    [{ tile: 12, imgFaceDown: true }]
+    [{ tile: 12, imgFaceDown: true }, { tile: -1 }]
   );
   const myPackage: Package = new MockPackage({
     textureFiles: [
       "tile/system/my-source/tile-012.png",
       "tile/system/my-source/tile-012.back.png",
+      "tile/system/my-source/tile-012.jpg",
+      "tile/system/my-source/tile-012.back.jpg",
     ],
     uniqueId: "my-package-id",
   });
   mockWorld._reset({ packages: [myPackage] });
   registry.validateImages();
+  registry.validateImages(true);
   registry.destroy();
 });

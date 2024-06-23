@@ -20,7 +20,7 @@ export const SOURCE_TO_SYSTEM_DATA: Record<string, Array<SystemSchemaType>> = {
       planets: [
         {
           name: "Moll Primus",
-          nsidName: "moll_primus",
+          nsidName: "moll-primus",
           resources: 4,
           influence: 1,
         },
@@ -92,7 +92,7 @@ export const SOURCE_TO_SYSTEM_DATA: Record<string, Array<SystemSchemaType>> = {
       planets: [
         {
           name: "Mordai II",
-          nsidName: "mordai_ii",
+          nsidName: "mordai-ii",
           resources: 4,
           influence: 0,
         },
@@ -122,13 +122,13 @@ export const SOURCE_TO_SYSTEM_DATA: Record<string, Array<SystemSchemaType>> = {
       planets: [
         {
           name: "Arc Prime",
-          nsidName: "arc_prime",
+          nsidName: "arc-prime",
           resources: 4,
           influence: 0,
         },
         {
           name: "Wren Terra",
-          nsidName: "wren_terra",
+          nsidName: "wren-terra",
           resources: 2,
           influence: 1,
         },
@@ -140,7 +140,7 @@ export const SOURCE_TO_SYSTEM_DATA: Record<string, Array<SystemSchemaType>> = {
       planets: [
         {
           name: "Lisis II",
-          nsidName: "lisis_ii",
+          nsidName: "lisis-ii",
           resources: 1,
           influence: 0,
           radius: 3.95,
@@ -197,13 +197,13 @@ export const SOURCE_TO_SYSTEM_DATA: Record<string, Array<SystemSchemaType>> = {
       planets: [
         {
           name: "Archon Ren",
-          nsidName: "archon_ren",
+          nsidName: "archon-ren",
           resources: 2,
           influence: 3,
         },
         {
           name: "Archon Tau",
-          nsidName: "archon_tau",
+          nsidName: "archon-tau",
           resources: 1,
           influence: 1,
         },
@@ -265,7 +265,7 @@ export const SOURCE_TO_SYSTEM_DATA: Record<string, Array<SystemSchemaType>> = {
       planets: [
         {
           name: "Mecatol Rex",
-          nsidName: "mecatol_rex",
+          nsidName: "mecatol-rex",
           resources: 1,
           influence: 6,
           radius: 6,
@@ -290,7 +290,7 @@ export const SOURCE_TO_SYSTEM_DATA: Record<string, Array<SystemSchemaType>> = {
       planets: [
         {
           name: "Vefut II",
-          nsidName: "vefut_ii",
+          nsidName: "vefut-ii",
           resources: 2,
           influence: 2,
           traits: ["hazardous"],
@@ -340,7 +340,7 @@ export const SOURCE_TO_SYSTEM_DATA: Record<string, Array<SystemSchemaType>> = {
       planets: [
         {
           name: "Mehar Xull",
-          nsidName: "mehar_xull",
+          nsidName: "mehar-xull",
           resources: 1,
           influence: 3,
           traits: ["hazardous"],
@@ -381,7 +381,7 @@ export const SOURCE_TO_SYSTEM_DATA: Record<string, Array<SystemSchemaType>> = {
       planets: [
         {
           name: "New Albion",
-          nsidName: "new_albion",
+          nsidName: "new-albion",
           resources: 1,
           influence: 1,
           traits: ["industrial"],
@@ -478,7 +478,7 @@ export const SOURCE_TO_SYSTEM_DATA: Record<string, Array<SystemSchemaType>> = {
       planets: [
         {
           name: "Dal Bootha",
-          nsidName: "dal_bootha",
+          nsidName: "dal-bootha",
           resources: 0,
           influence: 2,
           traits: ["cultural"],
@@ -543,7 +543,7 @@ export const SOURCE_TO_SYSTEM_DATA: Record<string, Array<SystemSchemaType>> = {
         },
         {
           name: "Lirta IV",
-          nsidName: "lirta_iv",
+          nsidName: "lirta-iv",
           resources: 2,
           influence: 3,
           traits: ["hazardous"],
@@ -727,7 +727,7 @@ export const SOURCE_TO_SYSTEM_DATA: Record<string, Array<SystemSchemaType>> = {
       planets: [
         {
           name: "The Dark",
-          nsidName: "the_dark",
+          nsidName: "the-dark",
           resources: 3,
           influence: 4,
         },
@@ -783,7 +783,7 @@ export const SOURCE_TO_SYSTEM_DATA: Record<string, Array<SystemSchemaType>> = {
       planets: [
         {
           name: "Archon Vail",
-          nsidName: "archon_vail",
+          nsidName: "archon-vail",
           resources: 1,
           influence: 3,
           traits: ["hazardous"],
@@ -867,7 +867,7 @@ export const SOURCE_TO_SYSTEM_DATA: Record<string, Array<SystemSchemaType>> = {
           traits: ["cultural"],
           radius: 4.88,
           isLegendary: true,
-          legendaryNsidName: "the_atrament",
+          legendaryNsidName: "the-atrament",
         },
       ],
     },
@@ -876,13 +876,13 @@ export const SOURCE_TO_SYSTEM_DATA: Record<string, Array<SystemSchemaType>> = {
       planets: [
         {
           name: "Hopes End",
-          nsidName: "hopes_end",
+          nsidName: "hopes-end",
           resources: 3,
           influence: 0,
           traits: ["hazardous"],
           radius: 4.88,
           isLegendary: true,
-          legendaryNsidName: "imperial_arms_vault",
+          legendaryNsidName: "imperial-arms-vault",
         },
       ],
     },
@@ -926,7 +926,7 @@ export const SOURCE_TO_SYSTEM_DATA: Record<string, Array<SystemSchemaType>> = {
         },
         {
           name: "Jeol Ir",
-          nsidName: "jeol_ir",
+          nsidName: "jeol-ir",
           resources: 2,
           influence: 3,
           traits: ["industrial"],
@@ -964,7 +964,7 @@ export const SOURCE_TO_SYSTEM_DATA: Record<string, Array<SystemSchemaType>> = {
         },
         {
           name: "Alio Prima",
-          nsidName: "alio_prima",
+          nsidName: "alio-prima",
           resources: 1,
           influence: 1,
           traits: ["cultural"],
@@ -1016,14 +1016,14 @@ export const SOURCE_TO_SYSTEM_DATA: Record<string, Array<SystemSchemaType>> = {
       planets: [
         {
           name: "Vega Major",
-          nsidName: "vega_major",
+          nsidName: "vega-major",
           resources: 2,
           influence: 1,
           traits: ["cultural"],
         },
         {
           name: "Vega Minor",
-          nsidName: "vega_minor",
+          nsidName: "vega-minor",
           resources: 1,
           influence: 2,
           traits: ["cultural"],
@@ -1062,7 +1062,7 @@ export const SOURCE_TO_SYSTEM_DATA: Record<string, Array<SystemSchemaType>> = {
       planets: [
         {
           name: "Rigel III",
-          nsidName: "rigel_iii",
+          nsidName: "rigel-iii",
           resources: 1,
           influence: 1,
           traits: ["industrial"],
@@ -1070,14 +1070,14 @@ export const SOURCE_TO_SYSTEM_DATA: Record<string, Array<SystemSchemaType>> = {
         },
         {
           name: "Rigel II",
-          nsidName: "rigel_ii",
+          nsidName: "rigel-ii",
           resources: 1,
           influence: 2,
           traits: ["industrial"],
         },
         {
           name: "Rigel I",
-          nsidName: "rigel_i",
+          nsidName: "rigel-i",
           resources: 0,
           influence: 1,
           traits: ["hazardous"],
@@ -1123,7 +1123,7 @@ export const SOURCE_TO_SYSTEM_DATA: Record<string, Array<SystemSchemaType>> = {
           resources: 0,
           influence: 3,
           isLegendary: true,
-          legendaryNsidName: "exterrix_headquarters",
+          legendaryNsidName: "exterrix-headquarters",
           traits: ["cultural"],
           localPosition: { x: 1.8, y: 1.5 },
           localPositionFaceDown: { x: 1.8, y: -1.5 },
@@ -1248,11 +1248,11 @@ export const SOURCE_TO_SYSTEM_DATA: Record<string, Array<SystemSchemaType>> = {
       planets: [
         {
           name: "Custodia Vigilia",
-          nsidName: "custodia_vigilia",
+          nsidName: "custodia-vigilia",
           resources: 2,
           influence: 3,
           isLegendary: true,
-          legendaryNsidName: "custodia_vigilia",
+          legendaryNsidName: "custodia-vigilia",
         },
       ],
     },
