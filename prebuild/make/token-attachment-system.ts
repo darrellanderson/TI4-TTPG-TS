@@ -26,16 +26,16 @@ for (const [source, systemAttachmentSchemas] of Object.entries(
     const nsidName: string = systemAttachmentSchema.nsidName;
     const nsid: string = `token.attachment.system:${source}/${nsidName}`;
 
-    const imgFileFace: string = `token/attachment/system/${source}/${nsidName}.jpg`;
+    let imgFileFace: string = `token/attachment/system/${source}/${nsidName}.jpg`;
     let imgFileBack: string = imgFileFace;
     if (systemAttachmentSchema.imgFaceDown) {
       imgFileBack = `token/attachment/system/${source}/${nsidName}.back.jpg`;
     }
-
     let modelFileFace: string = "token/attachment/system/round.obj";
     let modelFileBack: string = "token/attachment/system/round.obj";
+
     if (nsidName.startsWith("wormhole-") && nsidName.endsWith(".creuss")) {
-      //
+      imgFileBack = `token/attachment/system/base/wormhole.creuss.back.jpg`;
     }
 
     const templateFile: string = `token/attachment/system/${source}/${nsidName}.json`;

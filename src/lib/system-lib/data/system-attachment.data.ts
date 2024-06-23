@@ -31,7 +31,7 @@ export const SOURCE_TO_SYSTEM_ATTACHMENT_DATA: Record<
     {
       name: "Gamma Relay",
       //cardNsid: "card.exploration.frontier:pok/gamma-relay",
-      nsidName: "wormhole-gamma.relay",
+      nsidName: "wormhole-gamma",
     },
     {
       name: "Gamma Wormhole",

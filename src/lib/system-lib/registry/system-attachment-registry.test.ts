@@ -96,7 +96,7 @@ it("token existed at load time, not attached until init.", () => {
 
 it("loadDefaultData", () => {
   const registry = new SystemAttachmentRegistry();
-  const nsid: string = "token.attachment.system:base/alpha-wormhole.creuss";
+  const nsid: string = "token.attachment.system:base/wormhole-alpha.creuss";
   expect(registry.rawByNsid(nsid)).toBeUndefined();
   registry.loadDefaultData();
   expect(registry.rawByNsid(nsid)).toBeDefined();
