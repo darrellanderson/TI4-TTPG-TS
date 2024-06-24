@@ -1,3 +1,11 @@
+/**
+ * Create a collider model from a Wavefront OBJ model.
+ * The tooling used here isn't final, hence the crazy import paths.
+ *
+ * Input: "assets/Models/token/mirage.obj"
+ * Output: "assets/Models/token/mirage.col.obj"
+ */
+
 import fs from "fs";
 import path from "path";
 

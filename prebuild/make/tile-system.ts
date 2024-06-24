@@ -1,3 +1,12 @@
+/**
+ * Create system tile objects.
+ *
+ * Input: prebuild/tile/system/{source}/tile-{tile}.jpg
+ * Output:
+ * - assets/Templates/tile/system/{source}/tile-{tile}.json
+ * - assets/Textures/tile/system/{source}/tile-{tile}.jpg
+ */
+
 import crypto from "crypto";
 import fs from "fs";
 import path from "path";

@@ -1,3 +1,13 @@
+/**
+ * Create system attachment tokens.
+ *
+ * Input: prebuild/token/attachment/system/*.jpg
+ *
+ * Output:
+ * - assets/Templates/token/attachment/system/*.json
+ * - assets/Textures/token/attachment/system/*.jpg
+ */
+
 import crypto from "crypto";
 import fs from "fs";
 import path from "path";
