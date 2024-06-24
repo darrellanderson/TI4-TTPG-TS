@@ -256,7 +256,7 @@ export const SOURCE_TO_SYSTEM_DATA: Record<string, Array<SystemSchemaType>> = {
       tile: 17,
       isExcludeFromDraft: true,
       wormholesWithPositions: [
-        { wormhole: "delta", localPosition: { x: -3.4, y: 2.8 } },
+        { wormhole: "delta", localPosition: { x: -4.9, y: 2.8 } },
       ],
     },
     {
@@ -656,7 +656,7 @@ export const SOURCE_TO_SYSTEM_DATA: Record<string, Array<SystemSchemaType>> = {
       class: "off-map",
       isHome: true,
       wormholesWithPositions: [
-        { wormhole: "delta", localPosition: { x: -3.4, y: 3.5 } },
+        { wormhole: "delta", localPosition: { x: -4.9, y: 3.5 } },
       ],
       planets: [
         {
@@ -1109,12 +1109,12 @@ export const SOURCE_TO_SYSTEM_DATA: Record<string, Array<SystemSchemaType>> = {
       class: "off-map",
       imgFaceDown: true,
       wormholesWithPositions: [
-        { wormhole: "alpha", localPosition: { x: -3.2, y: -3.5 } },
-        { wormhole: "beta", localPosition: { x: -4.5, y: 0.1 } },
-        { wormhole: "gamma", localPosition: { x: -3.2, y: 4 } },
+        { wormhole: "alpha", localPosition: { x: -4.7, y: -3.5 } },
+        { wormhole: "beta", localPosition: { x: -6, y: 0.1 } },
+        { wormhole: "gamma", localPosition: { x: -4.7, y: 4 } },
       ],
       wormholesWithPositionsFaceDown: [
-        { wormhole: "gamma", localPosition: { x: -4.4, y: 0 } },
+        { wormhole: "gamma", localPosition: { x: -5.9, y: 0 } },
       ],
       planets: [
         {

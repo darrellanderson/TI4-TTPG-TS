@@ -80,12 +80,15 @@ export class SystemLabels {
     for (const getWormholesWithPositions of this._system.getWormholesWithPositions()) {
       addText(
         getWormholesWithPositions.wormhole,
-        getWormholesWithPositions.position.add([-1.5, 0, 0])
+        getWormholesWithPositions.position
       );
     }
 
     for (const attachment of this._system.getAttachments()) {
-      addText(attachment.getName(), attachment.getObj().getPosition());
+      addText(
+        attachment.getName(),
+        attachment.getObj().getPosition().add([1.5, 0, 0])
+      );
     }
 
     return this;
