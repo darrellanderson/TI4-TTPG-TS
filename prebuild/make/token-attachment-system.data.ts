@@ -27,7 +27,7 @@ export const TOKEN_SYSTEM_ATTACHMENT_TEMPLATE = {
   Blueprint: "",
   Models: [
     {
-      Model: "tokens/round.obj",
+      Model: "token/round.obj",
       Offset: {
         X: 0,
         Y: 0,
@@ -52,7 +52,7 @@ export const TOKEN_SYSTEM_ATTACHMENT_TEMPLATE = {
       SurfaceType: "Cardboard",
     },
     {
-      Model: "tokens/round-msh.obj",
+      Model: "token/round.obj",
       Offset: {
         X: 0,
         Y: 0,
