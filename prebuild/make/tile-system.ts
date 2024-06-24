@@ -10,6 +10,7 @@
 import crypto from "crypto";
 import fs from "fs";
 import path from "path";
+import sharp from "sharp";
 
 import { SOURCE_TO_SYSTEM_DATA } from "../../src/lib/system-lib/data/system.data";
 import { TILE_SYSTEM_TEMPLATE } from "./tile-system.data";
@@ -98,6 +99,7 @@ if (errors.length > 0) {
   throw new Error(errors.join("\n"));
 }
 
+const transformFiles: Array<string> = [];
 for (const info of infos) {
   console.log(`Building tile: ${info.name}`);
 
@@ -125,4 +127,69 @@ for (const info of infos) {
     "./prebuild/" + info.imgFileBack,
     "./assets/Textures/" + info.imgFileBack
   );
+
+  transformFiles.push("./assets/Textures/" + info.imgFileFace);
+
+  /*
+  const mask = await new sharp("assets/Textures/global/ui/tiles/blank.png")
+    .resize(512, 512, { fit: "fill" })
+    .extractChannel("alpha")
+    .toBuffer();
+  const ui = await img
+    .extract({
+      left: 70,
+      top: 70,
+      width: 884,
+      height: 884,
+    })
+    .resize(512, 512, { fit: "fill" })
+    .joinChannel(mask);
+    */
 }
+
+async function transformImage(filename: string) {
+  console.log(`Transforming image: ${filename}`);
+
+  // Apply image transform to the face.
+  const brightness: number = 1.2;
+  const saturation: number = 1.3;
+  const contrast: number = 0.7;
+
+  let img = sharp(filename);
+
+  // The CLAHE "contrast limiting adaptive histogram equalization"
+  // operation gives poor results (tried varying both size and slope).
+  // Instead, do a linear clamp about 0.5 and let brightness shift
+  // it if necessary.
+  img = await img.linear(contrast, 128 - 128 * contrast);
+  img = await img.modulate({
+    brightness: brightness,
+    saturation: saturation,
+  });
+
+  const buffer: Buffer = await img.toBuffer();
+  await sharp(buffer).toFile(filename);
+
+  // Now write a PNG version for UI.
+  const mask = await sharp("prebuild/tile/system/blank.png")
+    .resize(512, 512, { fit: "fill" })
+    .extractChannel("alpha")
+    .toBuffer();
+  await sharp(buffer)
+    .extract({
+      left: 70,
+      top: 70,
+      width: 884,
+      height: 884,
+    })
+    .resize(512, 512, { fit: "fill" })
+    .joinChannel(mask)
+    .toFile(filename.replace(/.jpg$/, ".png"));
+}
+
+async function transformImages() {
+  for (const filename of transformFiles) {
+    await transformImage(filename);
+  }
+}
+transformImages();
