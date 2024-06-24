@@ -6,8 +6,9 @@ export const SOURCE_TO_PLANET_ATTACHMENT_DATA: Record<
 > = {
   pok: [
     {
-      name: "Biotic Facility",
-      nsidName: "biotic-facility",
+      name: "Biotic Research Facility",
+      nsidName: "biotic-research-facility",
+      imgFaceDown: true,
       resources: 1,
       influence: 1,
       resourcesFaceDown: 0,
@@ -15,13 +16,9 @@ export const SOURCE_TO_PLANET_ATTACHMENT_DATA: Record<
       techsFaceDown: ["green"],
     },
     {
-      // Unit modifier handles space cannon, checks token for face up.
-      name: "Custodia Vigilia",
-      nsidName: "custodia-vigilia",
-    },
-    {
       name: "Cybernetic Research Facility",
       nsidName: "cybernetic-research-facility",
+      imgFaceDown: true,
       resources: 1,
       influence: 1,
       resourcesFaceDown: 0,
@@ -84,6 +81,7 @@ export const SOURCE_TO_PLANET_ATTACHMENT_DATA: Record<
     {
       name: "Propulsion Research Facility",
       nsidName: "propulsion-research-facility",
+      imgFaceDown: true,
       resources: 1,
       influence: 1,
       resourcesFaceDown: 0,
@@ -110,11 +108,20 @@ export const SOURCE_TO_PLANET_ATTACHMENT_DATA: Record<
     {
       name: "Warfare Research Facility",
       nsidName: "warfare-research-facility",
+      imgFaceDown: true,
       resources: 1,
       influence: 1,
       resourcesFaceDown: 0,
       influenceFaceDown: 0,
       techsFaceDown: ["red"],
+    },
+  ],
+
+  ["codex.vigil"]: [
+    {
+      // Unit modifier handles space cannon, checks token for face up.
+      name: "Custodia Vigilia",
+      nsidName: "custodia-vigilia",
     },
   ],
 };
