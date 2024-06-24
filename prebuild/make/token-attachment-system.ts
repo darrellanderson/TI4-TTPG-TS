@@ -23,6 +23,8 @@ type AttachmentInfo = {
   imgFileBack: string;
   modelFileFace: string;
   modelFileBack: string;
+  modelCollider: string;
+  modelScale: number;
   templateFile: string;
 };
 
@@ -41,15 +43,20 @@ for (const [source, systemAttachmentSchemas] of Object.entries(
     if (systemAttachmentSchema.imgFaceDown) {
       imgFileBack = `token/attachment/system/${source}/${nsidName}.back.jpg`;
     }
-    let modelFileFace: string = "token/attachment/system/round.obj";
-    let modelFileBack: string = "token/attachment/system/round.obj";
+    let modelFileFace: string = "token/round.obj";
+    let modelFileBack: string = "token/round.obj";
+    let modelCollider: string = "token/round.col.obj";
+    const modelScale = systemAttachmentSchema.modelScale ?? 1;
 
     // Rewrite some outliers.
     if (nsidName.startsWith("dimensional-tear")) {
       imgFileFace = `token/attachment/system/pok/dimensional-tear.jpg`;
     }
     if (nsidName.startsWith("wormhole-") && nsidName.endsWith(".creuss")) {
-      imgFileBack = `token/attachment/system/base/wormhole.creuss.back.jpg`;
+      imgFileBack = "";
+      modelFileFace = "token/wormhole-creuss.obj";
+      modelFileBack = ""; // wormhole.obj has face and back in same image
+      modelCollider = "token/wormhole-creuss.col.obj";
     }
 
     const templateFile: string = `token/attachment/system/${source}/${nsidName}.json`;
@@ -69,6 +76,8 @@ for (const [source, systemAttachmentSchemas] of Object.entries(
       imgFileBack,
       modelFileFace,
       modelFileBack,
+      modelCollider,
+      modelScale,
       templateFile,
     });
   }
@@ -88,8 +97,6 @@ if (errors.length > 0) {
   throw new Error(errors.join("\n"));
 }
 
-throw new Error("stop!");
-
 for (const info of infos) {
   console.log(`Building token: ${info.name}`);
 
@@ -99,9 +106,24 @@ for (const info of infos) {
   json.Metadata = info.nsid;
   json.Models[0].Model = info.modelFileFace;
   json.Models[0].Texture = info.imgFileFace;
-  if (json.Models[1]) {
-    json.Models[1].Model = info.modelFileBack;
-    json.Models[1].Texture = info.imgFileBack;
+  json.Collision[0].Model = info.modelCollider;
+  json.Models[1].Model = info.modelFileBack;
+  json.Models[1].Texture = info.imgFileBack;
+  json.Models[0].Scale.X *= info.modelScale;
+  json.Models[0].Scale.Y *= info.modelScale;
+  json.Models[1].Scale.X *= info.modelScale;
+  json.Models[1].Scale.Y *= info.modelScale;
+  json.Collision[0].Scale.X *= info.modelScale;
+  json.Collision[0].Scale.Y *= info.modelScale;
+
+  // Generally tokens have different front/back models, with separate images.
+  // Some have a single model with both front/back in the same image.
+  if (info.modelFileBack === "") {
+    json.Models.pop();
+  }
+
+  if (info.modelCollider === "") {
+    json.Collision = [];
   }
 
   const templateFile: string = "./assets/Templates/" + info.templateFile;
@@ -115,7 +137,7 @@ for (const info of infos) {
     "./prebuild/" + info.imgFileFace,
     "./assets/Textures/" + info.imgFileFace
   );
-  if (info.imgFileFace !== info.imgFileBack) {
+  if (info.imgFileFace !== info.imgFileBack && info.imgFileBack !== "") {
     fs.cpSync(
       "./prebuild/" + info.imgFileBack,
       "./assets/Textures/" + info.imgFileBack

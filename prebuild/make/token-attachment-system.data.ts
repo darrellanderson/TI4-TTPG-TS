@@ -1,8 +1,8 @@
 export const TOKEN_SYSTEM_ATTACHMENT_TEMPLATE = {
   Type: "Generic",
   GUID: "", // hex string
-  Name: "", // e.g. "Tile 018"
-  Metadata: "", // e.g. "tile.system:base/18",
+  Name: "", // e.g. "Geoform"
+  Metadata: "", // e.g. "token.attachment.system:pok/geoform",
   CollisionType: "Regular",
   Friction: 0.7,
   Restitution: 0.3,
@@ -27,42 +27,40 @@ export const TOKEN_SYSTEM_ATTACHMENT_TEMPLATE = {
   Blueprint: "",
   Models: [
     {
-      Model: "tile/system/system-tile.obj",
+      Model: "tokens/round.obj",
       Offset: {
         X: 0,
         Y: 0,
         Z: 0,
       },
       Scale: {
-        X: 1.5,
-        Y: 1.5,
+        X: 1,
+        Y: 1,
         Z: 1,
       },
       Rotation: {
-        X: -0,
+        X: 0,
         Y: 0,
         Z: 0,
       },
-      Texture: "", // face, e.g. "tile/system/base/tile_018.jpg",
+      Texture: "", // face, e.g. "token/attachment/system/pok/geoform.jpg",
       NormalMap: "",
       ExtraMap: "",
-      ExtraMap2: "",
       IsTransparent: false,
       CastShadow: true,
-      IsTwoSided: false,
       UseOverrides: true,
       SurfaceType: "Cardboard",
     },
     {
-      Model: "tile/system/system-tile.obj",
+      Model: "tokens/round-msh.obj",
       Offset: {
         X: 0,
         Y: 0,
         Z: 0,
       },
       Scale: {
-        X: 1.5,
-        Y: 1.5,
+        X: 1,
+        Y: 1,
         Z: 1,
       },
       Rotation: {
@@ -70,32 +68,30 @@ export const TOKEN_SYSTEM_ATTACHMENT_TEMPLATE = {
         Y: 0,
         Z: 0,
       },
-      Texture: "", // back, e.g.
+      Texture: "", // back
       NormalMap: "",
       ExtraMap: "",
-      ExtraMap2: "",
       IsTransparent: false,
       CastShadow: true,
-      IsTwoSided: false,
       UseOverrides: true,
       SurfaceType: "Cardboard",
     },
   ],
   Collision: [
     {
-      Model: "tile/system/system-tile.col.obj",
+      Model: "token/round.col.obj",
       Offset: {
         X: 0,
         Y: 0,
         Z: 0,
       },
       Scale: {
-        X: 1.5,
-        Y: 1.5,
+        X: 1,
+        Y: 1,
         Z: 1,
       },
       Rotation: {
-        X: -0,
+        X: 0,
         Y: 0,
         Z: 0,
       },
