@@ -35,14 +35,14 @@ for (const [source, planetAttachmentSchemas] of Object.entries(
     const nsidName: string = planetAttachmentSchema.nsidName;
     const nsid: string = `token.attachment.planet:${source}/${nsidName}`;
 
-    let imgFileFace: string = `token/attachment/planet/${source}/${nsidName}.jpg`;
+    let imgFileFace: string = `token/attachment/planet/${nsidName}.jpg`;
     let imgFileBack: string = imgFileFace;
     if (planetAttachmentSchema.imgFaceDown) {
-      imgFileBack = `token/attachment/planet/${source}/${nsidName}.back.jpg`;
+      imgFileBack = `token/attachment/planet/${nsidName}.back.jpg`;
     }
     const modelScale = planetAttachmentSchema.modelScale ?? 1;
 
-    const templateFile: string = `token/attachment/planet/${source}/${nsidName}.json`;
+    const templateFile: string = `token/attachment/planet/${nsidName}.json`;
 
     const guid: string = crypto
       .createHash("sha256")

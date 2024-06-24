@@ -38,10 +38,10 @@ for (const [source, systemAttachmentSchemas] of Object.entries(
     const nsidName: string = systemAttachmentSchema.nsidName;
     const nsid: string = `token.attachment.system:${source}/${nsidName}`;
 
-    let imgFileFace: string = `token/attachment/system/${source}/${nsidName}.jpg`;
+    let imgFileFace: string = `token/attachment/system/${nsidName}.jpg`;
     let imgFileBack: string = imgFileFace;
     if (systemAttachmentSchema.imgFaceDown) {
-      imgFileBack = `token/attachment/system/${source}/${nsidName}.back.jpg`;
+      imgFileBack = `token/attachment/system/${nsidName}.back.jpg`;
     }
     let modelFileFace: string = "token/round.obj";
     let modelFileBack: string = "token/round.obj";
@@ -50,7 +50,7 @@ for (const [source, systemAttachmentSchemas] of Object.entries(
 
     // Rewrite some outliers.
     if (nsidName.startsWith("dimensional-tear")) {
-      imgFileFace = `token/attachment/system/pok/dimensional-tear.jpg`;
+      imgFileFace = `token/attachment/system/dimensional-tear.jpg`;
     } else if (
       nsidName.startsWith("wormhole-") &&
       nsidName.endsWith(".creuss")
@@ -66,7 +66,7 @@ for (const [source, systemAttachmentSchemas] of Object.entries(
       modelCollider = "token/mirage.col.obj";
     }
 
-    const templateFile: string = `token/attachment/system/${source}/${nsidName}.json`;
+    const templateFile: string = `token/attachment/system/${nsidName}.json`;
 
     const guid: string = crypto
       .createHash("sha256")

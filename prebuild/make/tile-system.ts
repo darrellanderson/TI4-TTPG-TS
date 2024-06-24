@@ -1,10 +1,10 @@
 /**
  * Create system tile objects.
  *
- * Input: prebuild/tile/system/{source}/tile-{tile}.jpg
+ * Input: prebuild/tile/system/tile-{tile}.jpg
  * Output:
- * - assets/Templates/tile/system/{source}/tile-{tile}.json
- * - assets/Textures/tile/system/{source}/tile-{tile}.jpg
+ * - assets/Templates/tile/system/tile-{tile}.json
+ * - assets/Textures/tile/system/tile-{tile}.jpg
  */
 
 import crypto from "crypto";
@@ -38,7 +38,7 @@ for (const [source, systemSchemas] of Object.entries(SOURCE_TO_SYSTEM_DATA)) {
     const tileStr: string = tile.toString().padStart(3, "0");
     const name: string = `Tile ${tileStr}`;
     const nsid: string = `tile.system:${source}/${tile}`;
-    const imgFileFace: string = `tile/system/${source}/tile-${tileStr}.jpg`;
+    const imgFileFace: string = `tile/system/tile-${tileStr}.jpg`;
     const modelFileFace: string =
       systemSchema.class === "off-map"
         ? "tile/system/system-tile-off-map.face.obj"
@@ -48,7 +48,7 @@ for (const [source, systemSchemas] of Object.entries(SOURCE_TO_SYSTEM_DATA)) {
         ? "tile/system/system-tile-off-map.back.obj"
         : "tile/system/system-tile.obj";
 
-    const templateFile: string = `tile/system/${source}/tile-${tileStr}.json`;
+    const templateFile: string = `tile/system/tile-${tileStr}.json`;
 
     const guid: string = crypto
       .createHash("sha256")
@@ -60,16 +60,16 @@ for (const [source, systemSchemas] of Object.entries(SOURCE_TO_SYSTEM_DATA)) {
     // Back will vary.
     let imgFileBack: string = "";
     if (systemSchema.imgFaceDown) {
-      imgFileBack = `tile/system/${source}/tile-${tileStr}.back.jpg`;
+      imgFileBack = `tile/system/tile-${tileStr}.back.jpg`;
     } else if (systemSchema.isHome) {
-      imgFileBack = "tile/system/base/green.back.jpg";
+      imgFileBack = "tile/system/green.back.jpg";
     } else if (
       (systemSchema.anomalies ?? []).length > 0 ||
       (systemSchema.planets ?? []).length === 0
     ) {
-      imgFileBack = "tile/system/base/red.back.jpg";
+      imgFileBack = "tile/system/red.back.jpg";
     } else {
-      imgFileBack = "tile/system/base/blue.back.jpg";
+      imgFileBack = "tile/system/blue.back.jpg";
     }
 
     infos.push({
@@ -129,24 +129,14 @@ for (const info of infos) {
   );
 
   transformFiles.push("./assets/Textures/" + info.imgFileFace);
-
-  /*
-  const mask = await new sharp("assets/Textures/global/ui/tiles/blank.png")
-    .resize(512, 512, { fit: "fill" })
-    .extractChannel("alpha")
-    .toBuffer();
-  const ui = await img
-    .extract({
-      left: 70,
-      top: 70,
-      width: 884,
-      height: 884,
-    })
-    .resize(512, 512, { fit: "fill" })
-    .joinChannel(mask);
-    */
 }
 
+/**
+ * Input images are "clean", but we want to apply some image adjustments to
+ * make it easier to see units and such on them.
+ *
+ * @param filename
+ */
 async function transformImage(filename: string) {
   console.log(`Transforming image: ${filename}`);
 
