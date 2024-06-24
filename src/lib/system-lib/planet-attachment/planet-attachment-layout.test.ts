@@ -8,10 +8,10 @@ it("static _getOffset", () => {
   let offset: Vector;
 
   offset = PlanetAttachmentLayout._getOffset(0);
-  expect(offset.toString()).toBe("(X=0,Y=-1.05,Z=0)");
+  expect(offset.toString()).toBe("(X=0,Y=-1.58,Z=0)");
 
   offset = PlanetAttachmentLayout._getOffset(1);
-  expect(offset.toString()).toBe("(X=-0.909,Y=0.525,Z=0)");
+  expect(offset.toString()).toBe("(X=-1.368,Y=0.79,Z=0)");
 });
 
 it("constructor", () => {
