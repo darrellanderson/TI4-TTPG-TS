@@ -139,8 +139,8 @@ it("validateImages", () => {
   );
   const myPackage: Package = new MockPackage({
     textureFiles: [
-      "token/attachment/planet/my-source/my-nsid-name.png",
-      "token/attachment/planet/my-source/my-nsid-name.back.png",
+      "token/attachment/planet/my-nsid-name.png",
+      "token/attachment/planet/my-nsid-name.back.png",
     ],
     uniqueId: "my-package-id",
   });

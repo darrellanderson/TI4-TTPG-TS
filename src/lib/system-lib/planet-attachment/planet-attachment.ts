@@ -47,17 +47,12 @@ export class PlanetAttachment {
     useBack: boolean
   ) {
     const filename: string = `${schema.nsidName}${useBack ? ".back" : ""}.png`;
+    let img = `token/attachment/planet/${filename}`;
 
-    let img = "token/attachment/planet";
-
-    // Homebrew puts source first to group all related files.
-    // "Official" puts source deeper in the path to collect in a single
-    // folder for easier Object Library usage.
+    // Homebrew prepends source first to group all related files.
     const source: string = sourceAndPackageId.source;
     if (source.startsWith("homebrew")) {
-      img = `${source}/${img}/${filename}`;
-    } else {
-      img = `${img}/${source}/${filename}`;
+      img = `${source}/${img}`;
     }
 
     return img;

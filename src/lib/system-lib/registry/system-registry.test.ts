@@ -162,10 +162,10 @@ it("validateImages", () => {
   );
   const myPackage: Package = new MockPackage({
     textureFiles: [
-      "tile/system/my-source/tile-012.png",
-      "tile/system/my-source/tile-012.back.png",
-      "tile/system/my-source/tile-012.jpg",
-      "tile/system/my-source/tile-012.back.jpg",
+      "tile/system/tile-012.png",
+      "tile/system/tile-012.back.png",
+      "tile/system/tile-012.jpg",
+      "tile/system/tile-012.back.jpg",
     ],
     uniqueId: "my-package-id",
   });

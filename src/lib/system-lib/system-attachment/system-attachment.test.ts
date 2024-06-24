@@ -32,7 +32,7 @@ it("constructor", () => {
   );
   expect(attachment.getAnomalies()).toEqual(["asteroid-field"]);
   expect(attachment.getImg()).toEqual(
-    "token/attachment/system/my-source/my-nsid-name.png"
+    "token/attachment/system/my-nsid-name.png"
   );
   expect(attachment.getImgPackageId()).toEqual("my-package-id");
   expect(attachment.getName()).toEqual("my-name");
@@ -95,9 +95,7 @@ it("img", () => {
       nsidName: "my-nsid-name",
     }
   );
-  expect(attachment.getImg()).toBe(
-    "token/attachment/system/my-source/my-nsid-name.png"
-  );
+  expect(attachment.getImg()).toBe("token/attachment/system/my-nsid-name.png");
 });
 
 it("img face down", () => {
@@ -114,7 +112,7 @@ it("img face down", () => {
     }
   );
   expect(attachment.getImg()).toBe(
-    `token/attachment/system/my-source/my-nsid-name.back.png`
+    `token/attachment/system/my-nsid-name.back.png`
   );
 });
 

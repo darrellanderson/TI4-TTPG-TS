@@ -166,9 +166,7 @@ it("img", () => {
       nsidName: "my-nsid-name",
     }
   );
-  expect(attachment.getImg()).toBe(
-    "token/attachment/planet/my-source/my-nsid-name.png"
-  );
+  expect(attachment.getImg()).toBe("token/attachment/planet/my-nsid-name.png");
   expect(attachment.getImgPackageId()).toBe("my-package-id");
 });
 
@@ -186,7 +184,7 @@ it("img face down", () => {
     }
   );
   expect(attachment.getImg()).toBe(
-    "token/attachment/planet/my-source/my-nsid-name.back.png"
+    "token/attachment/planet/my-nsid-name.back.png"
   );
 });
 

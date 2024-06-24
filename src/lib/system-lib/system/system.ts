@@ -67,17 +67,12 @@ export class System {
     const filename: string = `tile-${schema.tile.toString().padStart(3, "0")}${
       useBack ? ".back" : ""
     }.png`;
+    let img: string = `tile/system/${filename}`;
 
-    let img: string = "tile/system";
-
-    // Homebrew puts source first to group all related files.
-    // "Official" puts source deeper in the path to collect in a single
-    // folder for easier Object Library usage.
+    // Homebrew prepends source to group all related files.
     const source: string = sourceAndPackageId.source;
     if (source.startsWith("homebrew")) {
-      img = `${source}/${img}/${filename}`;
-    } else {
-      img = `${img}/${source}/${filename}`;
+      img = `${source}/${img}`;
     }
 
     return img;

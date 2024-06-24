@@ -247,7 +247,7 @@ it("getImg", () => {
       tile: 1000,
     }
   );
-  expect(system.getImg()).toBe("tile/system/my-source/tile-1000.png");
+  expect(system.getImg()).toBe("tile/system/tile-1000.png");
   expect(system.getImgPackageId()).toBe("my-package-id");
 });
 
@@ -263,7 +263,7 @@ it("getImg (face down)", () => {
       imgFaceDown: true,
     }
   );
-  expect(system.getImg()).toBe("tile/system/my-source/tile-1000.back.png");
+  expect(system.getImg()).toBe("tile/system/tile-1000.back.png");
 });
 
 it("getImg (homebrew)", () => {
