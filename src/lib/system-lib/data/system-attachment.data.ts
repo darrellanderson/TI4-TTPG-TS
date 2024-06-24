@@ -64,6 +64,7 @@ export const SOURCE_TO_SYSTEM_ATTACHMENT_DATA: Record<
       name: "Mirage",
       //cardNsid: "card.exploration.frontier:pok/mirage",
       nsidName: "mirage",
+      modelScale: 1.5,
       planets: [
         {
           name: "Mirage",
@@ -71,7 +72,7 @@ export const SOURCE_TO_SYSTEM_ATTACHMENT_DATA: Record<
           resources: 1,
           influence: 2,
           traits: ["cultural"],
-          localPosition: { x: 3, y: -1.88 },
+          //localPosition: { x: 3, y: -1.88 },
           radius: 3,
           isLegendary: true,
           legendaryNsidName: "mirage-flight-academy",

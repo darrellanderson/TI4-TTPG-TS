@@ -51,12 +51,19 @@ for (const [source, systemAttachmentSchemas] of Object.entries(
     // Rewrite some outliers.
     if (nsidName.startsWith("dimensional-tear")) {
       imgFileFace = `token/attachment/system/pok/dimensional-tear.jpg`;
-    }
-    if (nsidName.startsWith("wormhole-") && nsidName.endsWith(".creuss")) {
+    } else if (
+      nsidName.startsWith("wormhole-") &&
+      nsidName.endsWith(".creuss")
+    ) {
       imgFileBack = "";
       modelFileFace = "token/wormhole-creuss.obj";
       modelFileBack = ""; // wormhole.obj has face and back in same image
       modelCollider = "token/wormhole-creuss.col.obj";
+    } else if (systemAttachmentSchema.planets?.length === 1) {
+      imgFileBack = "";
+      modelFileFace = "token/mirage.obj";
+      modelFileBack = "";
+      modelCollider = "token/mirage.col.obj";
     }
 
     const templateFile: string = `token/attachment/system/${source}/${nsidName}.json`;

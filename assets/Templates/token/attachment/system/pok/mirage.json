@@ -27,44 +27,19 @@
   "Blueprint": "",
   "Models": [
     {
-      "Model": "token/round.obj",
+      "Model": "token/mirage.obj",
       "Offset": {
         "X": 0,
         "Y": 0,
         "Z": 0
       },
       "Scale": {
-        "X": 1,
-        "Y": 1,
+        "X": 1.5,
+        "Y": 1.5,
         "Z": 1
       },
       "Rotation": {
         "X": 0,
-        "Y": 0,
-        "Z": 0
-      },
-      "Texture": "token/attachment/system/pok/mirage.jpg",
-      "NormalMap": "",
-      "ExtraMap": "",
-      "IsTransparent": false,
-      "CastShadow": true,
-      "UseOverrides": true,
-      "SurfaceType": "Cardboard"
-    },
-    {
-      "Model": "token/round.obj",
-      "Offset": {
-        "X": 0,
-        "Y": 0,
-        "Z": 0
-      },
-      "Scale": {
-        "X": 1,
-        "Y": 1,
-        "Z": 1
-      },
-      "Rotation": {
-        "X": 180,
         "Y": 0,
         "Z": 0
       },
@@ -79,15 +54,15 @@
   ],
   "Collision": [
     {
-      "Model": "token/round.col.obj",
+      "Model": "token/mirage.col.obj",
       "Offset": {
         "X": 0,
         "Y": 0,
         "Z": 0
       },
       "Scale": {
-        "X": 1,
-        "Y": 1,
+        "X": 1.5,
+        "Y": 1.5,
         "Z": 1
       },
       "Rotation": {
