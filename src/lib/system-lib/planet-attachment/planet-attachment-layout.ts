@@ -8,7 +8,7 @@ export class PlanetAttachmentLayout {
     const steps = Math.floor(index / 3);
     const extra = steps % 2 === 1 ? 0.5 : 0;
     const phi = ((index + extra) * 120 * Math.PI) / 180;
-    const r = 1.05;
+    const r = 1.58;
     return new Vector(-Math.sin(phi) * r, -Math.cos(phi) * r, 0);
   }
 
