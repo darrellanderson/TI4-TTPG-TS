@@ -13,7 +13,7 @@ import path from "path";
 import sharp from "sharp";
 
 import { SOURCE_TO_SYSTEM_DATA } from "../../src/lib/system-lib/data/system.data";
-import { TILE_SYSTEM_TEMPLATE } from "./tile-system.data";
+import { TILE_SYSTEM_TEMPLATE } from "./data/tile-system.template-data";
 
 type TileInfo = {
   guid: string;

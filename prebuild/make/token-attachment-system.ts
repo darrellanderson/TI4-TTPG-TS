@@ -13,7 +13,7 @@ import fs from "fs";
 import path from "path";
 
 import { SOURCE_TO_SYSTEM_ATTACHMENT_DATA } from "../../src/lib/system-lib/data/system-attachment.data";
-import { TOKEN_SYSTEM_ATTACHMENT_TEMPLATE } from "./token-attachment-system.data";
+import { TOKEN_SYSTEM_ATTACHMENT_TEMPLATE } from "./data/token.template-data";
 
 type AttachmentInfo = {
   guid: string;
