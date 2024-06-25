@@ -67,13 +67,6 @@ export const SOURCE_TO_PLANET_ATTACHMENT_DATA: Record<
       resources: 2,
     },
     {
-      name: "Nano Forge",
-      nsidName: "nanoforge",
-      resources: 2,
-      influence: 2,
-      isLegendary: true,
-    },
-    {
       name: "Paradise World",
       nsidName: "paradise-world",
       influence: 2,
@@ -114,6 +107,16 @@ export const SOURCE_TO_PLANET_ATTACHMENT_DATA: Record<
       resourcesFaceDown: 0,
       influenceFaceDown: 0,
       techsFaceDown: ["red"],
+    },
+  ],
+
+  ["codex.affinity"]: [
+    {
+      name: "Nano Forge",
+      nsidName: "nanoforge",
+      resources: 2,
+      influence: 2,
+      isLegendary: true,
     },
   ],
 
