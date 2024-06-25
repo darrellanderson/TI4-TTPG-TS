@@ -48,7 +48,7 @@ for (const [source, genericTokens] of Object.entries(
     const templateFile: string = `token/${nsidName}.json`;
 
     // Exceptions.
-    if (modelBack === "scoreboard") {
+    if (modelBack === "scoreboard" || modelBack === "speaker") {
       modelBack = "";
     }
 
@@ -117,6 +117,7 @@ for (const info of infos) {
   json.Models[0].Scale.Y *= info.modelScale;
   json.Models[1].Scale.X *= info.modelScale;
   json.Models[1].Scale.Y *= info.modelScale;
+  json.Collision[0].Model = `token/${info.modelFace}.col.obj`;
   json.Collision[0].Scale.X *= info.modelScale;
   json.Collision[0].Scale.Y *= info.modelScale;
 

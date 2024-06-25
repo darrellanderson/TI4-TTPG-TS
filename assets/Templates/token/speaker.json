@@ -1,8 +1,8 @@
 {
   "Type": "Generic",
-  "GUID": "BD5684C44D683EDC7CE01761D8A30641",
-  "Name": "Custodians Token",
-  "Metadata": "token:base/custodians",
+  "GUID": "964C88AA246E19D4D744EC4246FC7CB8",
+  "Name": "Speaker",
+  "Metadata": "token:base/speaker",
   "CollisionType": "Regular",
   "Friction": 0.7,
   "Restitution": 0.3,
@@ -27,15 +27,15 @@
   "Blueprint": "",
   "Models": [
     {
-      "Model": "token/round.obj",
+      "Model": "token/speaker.obj",
       "Offset": {
         "X": 0,
         "Y": 0,
         "Z": 0
       },
       "Scale": {
-        "X": 2,
-        "Y": 2,
+        "X": 1,
+        "Y": 1,
         "Z": 1
       },
       "Rotation": {
@@ -43,32 +43,7 @@
         "Y": 0,
         "Z": 0
       },
-      "Texture": "token/custodians.jpg",
-      "NormalMap": "",
-      "ExtraMap": "",
-      "IsTransparent": false,
-      "CastShadow": true,
-      "UseOverrides": true,
-      "SurfaceType": "Cardboard"
-    },
-    {
-      "Model": "token/round.obj",
-      "Offset": {
-        "X": 0,
-        "Y": 0,
-        "Z": 0
-      },
-      "Scale": {
-        "X": 2,
-        "Y": 2,
-        "Z": 1
-      },
-      "Rotation": {
-        "X": 180,
-        "Y": 0,
-        "Z": 0
-      },
-      "Texture": "token/custodians.back.jpg",
+      "Texture": "token/speaker.jpg",
       "NormalMap": "",
       "ExtraMap": "",
       "IsTransparent": false,
@@ -79,15 +54,15 @@
   ],
   "Collision": [
     {
-      "Model": "token/round.col.obj",
+      "Model": "token/speaker.col.obj",
       "Offset": {
         "X": 0,
         "Y": 0,
         "Z": 0
       },
       "Scale": {
-        "X": 2,
-        "Y": 2,
+        "X": 1,
+        "Y": 1,
         "Z": 1
       },
       "Rotation": {

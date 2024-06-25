@@ -11,14 +11,24 @@ export const SOURCE_TO_GENERIC_TOKENS: Record<
   Array<GenericTokenType>
 > = {
   base: [
-    { name: "Custodians Token", nsidName: "custodians", modelScale: 2 },
+    {
+      name: "Custodians Token",
+      nsidName: "custodians",
+      modelScale: 2,
+      imgBack: true,
+    },
     { name: "Fighter x1", nsidName: "fighter-1", modelScale: 0.8 },
     { name: "Fighter x3", nsidName: "fighter-3" },
     { name: "Infantry x1", nsidName: "infantry-1", modelScale: 0.8 },
     { name: "Infantry x3", nsidName: "infantry-3" },
     { name: "Nekro X", nsidName: "nekro-x", model: "rectangle" },
     { name: "Nekro Y", nsidName: "nekro-y", model: "rectangle" },
-    { name: "Naalu Zero", nsidName: "naalu-zero", modelScale: 1.5 },
+    {
+      name: "Naalu Zero",
+      nsidName: "naalu-zero",
+      modelScale: 1.5,
+      imgBack: true,
+    },
     { name: "Nekro Prediction", nsidName: "nekro-prediction", modelScale: 1.5 },
     {
       name: "Scoreboard",
@@ -26,6 +36,7 @@ export const SOURCE_TO_GENERIC_TOKENS: Record<
       modelScale: 6.56,
       model: "scoreboard",
     },
+    { name: "Speaker", nsidName: "speaker", model: "speaker" },
     {
       name: "Tradegood/Commodity x1",
       nsidName: "tradegood-commodity-1",

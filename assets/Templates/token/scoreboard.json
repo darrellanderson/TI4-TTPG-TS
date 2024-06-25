@@ -54,7 +54,7 @@
   ],
   "Collision": [
     {
-      "Model": "token/round.col.obj",
+      "Model": "token/scoreboard.col.obj",
       "Offset": {
         "X": 0,
         "Y": 0,

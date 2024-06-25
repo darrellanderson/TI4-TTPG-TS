@@ -79,7 +79,7 @@
   ],
   "Collision": [
     {
-      "Model": "token/round.col.obj",
+      "Model": "token/rectangle.col.obj",
       "Offset": {
         "X": 0,
         "Y": 0,
