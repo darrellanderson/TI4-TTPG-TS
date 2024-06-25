@@ -91,8 +91,6 @@ if (errors.length > 0) {
   throw new Error(errors.join("\n"));
 }
 
-throw new Error("STOP!");
-
 for (const info of infos) {
   console.log(`Building token: ${info.name}`);
 
