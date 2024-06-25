@@ -16,8 +16,8 @@ export const SOURCE_TO_GENERIC_TOKENS: Record<
     { name: "Fighter x3", nsidName: "fighter-3" },
     { name: "Infantry x1", nsidName: "infantry-1", modelScale: 0.8 },
     { name: "Infantry x3", nsidName: "infantry-3" },
-    //{ name: "Naalu X", nsidName: "naalu-x" },
-    //{ name: "Naalu Y", nsidName: "naalu-y" },
+    { name: "Nekro X", nsidName: "nekro-x", model: "rectangle" },
+    { name: "Nekro Y", nsidName: "nekro-y", model: "rectangle" },
     { name: "Naalu Zero", nsidName: "naalu-zero", modelScale: 1.5 },
     { name: "Nekro Prediction", nsidName: "nekro-prediction", modelScale: 1.5 },
     {

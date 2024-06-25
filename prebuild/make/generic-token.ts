@@ -22,7 +22,8 @@ type GenericTokenInfo = {
   imgFileFace: string;
   imgFileBack: string;
   modelScale: number;
-  model: string;
+  modelFace: string;
+  modelBack: string;
   templateFile: string;
 };
 
@@ -42,8 +43,14 @@ for (const [source, genericTokens] of Object.entries(
       imgFileBack = `token/${nsidName}.back.jpg`;
     }
     const modelScale = genericToken.modelScale ?? 1;
-    const model = genericToken.model ?? "";
+    const modelFace = genericToken.model ?? "round";
+    let modelBack = genericToken.model ?? "round";
     const templateFile: string = `token/${nsidName}.json`;
+
+    // Exceptions.
+    if (modelBack === "scoreboard") {
+      modelBack = "";
+    }
 
     const guid: string = crypto
       .createHash("sha256")
@@ -59,7 +66,8 @@ for (const [source, genericTokens] of Object.entries(
       imgFileFace,
       imgFileBack,
       modelScale,
-      model,
+      modelFace,
+      modelBack,
       templateFile,
     });
   }
@@ -101,6 +109,8 @@ for (const info of infos) {
   json.GUID = info.guid;
   json.Name = info.name;
   json.Metadata = info.nsid;
+  json.Models[0].Model = `token/${info.modelFace}.obj`;
+  json.Models[1].Model = `token/${info.modelBack}.obj`;
   json.Models[0].Texture = info.imgFileFace;
   json.Models[1].Texture = info.imgFileBack;
   json.Models[0].Scale.X *= info.modelScale;
@@ -110,8 +120,7 @@ for (const info of infos) {
   json.Collision[0].Scale.X *= info.modelScale;
   json.Collision[0].Scale.Y *= info.modelScale;
 
-  if (info.model !== "") {
-    json.Models[0].Model = `token/${info.model}.obj`;
+  if (info.modelBack === "") {
     json.Models.pop();
   }
 
