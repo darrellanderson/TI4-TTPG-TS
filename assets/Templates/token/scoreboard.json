@@ -1,0 +1,86 @@
+{
+  "Type": "Generic",
+  "GUID": "B8382644B2189889C1DCD2B726BD7565",
+  "Name": "Scoreboard",
+  "Metadata": "token:base/scoreboard",
+  "CollisionType": "Regular",
+  "Friction": 0.7,
+  "Restitution": 0.3,
+  "Density": 0.93,
+  "SurfaceType": "Cardboard",
+  "Roughness": 1,
+  "Metallic": 0,
+  "PrimaryColor": {
+    "R": 255,
+    "G": 255,
+    "B": 255
+  },
+  "SecondaryColor": {
+    "R": 0,
+    "G": 0,
+    "B": 0
+  },
+  "Flippable": true,
+  "AutoStraighten": false,
+  "ShouldSnap": false,
+  "ScriptName": "",
+  "Blueprint": "",
+  "Models": [
+    {
+      "Model": "token/scoreboard.obj",
+      "Offset": {
+        "X": 0,
+        "Y": 0,
+        "Z": 0
+      },
+      "Scale": {
+        "X": 6.56,
+        "Y": 6.56,
+        "Z": 1
+      },
+      "Rotation": {
+        "X": 0,
+        "Y": 0,
+        "Z": 0
+      },
+      "Texture": "token/scoreboard.jpg",
+      "NormalMap": "",
+      "ExtraMap": "",
+      "IsTransparent": false,
+      "CastShadow": true,
+      "UseOverrides": true,
+      "SurfaceType": "Cardboard"
+    }
+  ],
+  "Collision": [
+    {
+      "Model": "token/round.col.obj",
+      "Offset": {
+        "X": 0,
+        "Y": 0,
+        "Z": 0
+      },
+      "Scale": {
+        "X": 6.56,
+        "Y": 6.56,
+        "Z": 1
+      },
+      "Rotation": {
+        "X": 0,
+        "Y": 0,
+        "Z": 0
+      },
+      "Type": "Convex"
+    }
+  ],
+  "Lights": [],
+  "SnapPointsGlobal": false,
+  "SnapPoints": [],
+  "ZoomViewDirection": {
+    "X": 0,
+    "Y": 0,
+    "Z": 1
+  },
+  "GroundAccessibility": "ZoomAndContext",
+  "Tags": []
+}

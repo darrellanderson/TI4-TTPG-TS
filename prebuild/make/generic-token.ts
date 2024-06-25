@@ -22,6 +22,7 @@ type GenericTokenInfo = {
   imgFileFace: string;
   imgFileBack: string;
   modelScale: number;
+  model: string;
   templateFile: string;
 };
 
@@ -41,6 +42,7 @@ for (const [source, genericTokens] of Object.entries(
       imgFileBack = `token/${nsidName}.back.jpg`;
     }
     const modelScale = genericToken.modelScale ?? 1;
+    const model = genericToken.model ?? "";
     const templateFile: string = `token/${nsidName}.json`;
 
     const guid: string = crypto
@@ -57,6 +59,7 @@ for (const [source, genericTokens] of Object.entries(
       imgFileFace,
       imgFileBack,
       modelScale,
+      model,
       templateFile,
     });
   }
@@ -106,6 +109,11 @@ for (const info of infos) {
   json.Models[1].Scale.Y *= info.modelScale;
   json.Collision[0].Scale.X *= info.modelScale;
   json.Collision[0].Scale.Y *= info.modelScale;
+
+  if (info.model !== "") {
+    json.Models[0].Model = `token/${info.model}.obj`;
+    json.Models.pop();
+  }
 
   const templateFile: string = "./assets/Templates/" + info.templateFile;
   const templateDir: string = path.dirname(templateFile);
