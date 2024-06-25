@@ -43,7 +43,7 @@
         "Y": 0,
         "Z": 0
       },
-      "Texture": "token/naalu-zero.png",
+      "Texture": "token/naalu-zero.jpg",
       "NormalMap": "",
       "ExtraMap": "",
       "IsTransparent": false,
@@ -68,7 +68,7 @@
         "Y": 0,
         "Z": 0
       },
-      "Texture": "token/naalu-zero.png",
+      "Texture": "token/naalu-zero.jpg",
       "NormalMap": "",
       "ExtraMap": "",
       "IsTransparent": false,

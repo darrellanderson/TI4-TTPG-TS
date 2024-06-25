@@ -43,7 +43,7 @@
         "Y": 0,
         "Z": 0
       },
-      "Texture": "token/nekro-x.png",
+      "Texture": "token/nekro-x.jpg",
       "NormalMap": "",
       "ExtraMap": "",
       "IsTransparent": false,
@@ -68,7 +68,7 @@
         "Y": 0,
         "Z": 0
       },
-      "Texture": "token/nekro-x.png",
+      "Texture": "token/nekro-x.jpg",
       "NormalMap": "",
       "ExtraMap": "",
       "IsTransparent": false,

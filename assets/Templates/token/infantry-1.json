@@ -43,7 +43,7 @@
         "Y": 0,
         "Z": 0
       },
-      "Texture": "token/infantry-1.png",
+      "Texture": "token/infantry-1.jpg",
       "NormalMap": "",
       "ExtraMap": "",
       "IsTransparent": false,
@@ -68,7 +68,7 @@
         "Y": 0,
         "Z": 0
       },
-      "Texture": "token/infantry-1.png",
+      "Texture": "token/infantry-1.jpg",
       "NormalMap": "",
       "ExtraMap": "",
       "IsTransparent": false,
