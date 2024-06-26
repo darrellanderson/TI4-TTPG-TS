@@ -5,12 +5,41 @@ export const SOURCE_TO_UNIT_ATTRS_DATA: Record<
   Array<UnitAttrsSchemaType>
 > = {
   base: [
+    // Carrier
+    {
+      name: "Carrier",
+      unit: "carrier",
+      unitCount: 4,
+      isShip: true,
+      cost: 3,
+      spaceCombat: {
+        hit: 9,
+      },
+    },
+    {
+      name: "Carrier II",
+      unit: "carrier",
+      nsidName: "carrier-2",
+    },
+    {
+      name: "Advanced Carrier",
+      unit: "carrier",
+      nsidName: "advanced-carrier",
+    },
+    {
+      name: "Advanced Carrier II",
+      unit: "carrier",
+      nsidName: "advanced-carrier-2",
+      sustainDamage: true,
+    },
+
     // Fighter
     {
       name: "Fighter",
       unit: "fighter",
       unitCount: 10,
       isShip: true,
+      cost: 1,
       producePerCost: 2,
       spaceCombat: {
         hit: 9,
@@ -19,7 +48,6 @@ export const SOURCE_TO_UNIT_ATTRS_DATA: Record<
     {
       name: "Fighter II",
       unit: "fighter",
-      upgradeLevel: 2,
       nsidName: "fighter-2",
       spaceCombat: {
         hit: 8,
@@ -28,7 +56,6 @@ export const SOURCE_TO_UNIT_ATTRS_DATA: Record<
     {
       name: "Hybrid Crystal Fighter",
       unit: "fighter",
-      upgradeLevel: 1,
       nsidName: "hybrid-crystal-fighter",
       spaceCombat: {
         hit: 8,
@@ -37,7 +64,6 @@ export const SOURCE_TO_UNIT_ATTRS_DATA: Record<
     {
       name: "Hybrid Crystal Fighter II",
       unit: "fighter",
-      upgradeLevel: 2,
       nsidName: "hybrid-crystal-fighter-2",
       spaceCombat: {
         hit: 7,
