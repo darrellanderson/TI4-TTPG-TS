@@ -25,10 +25,6 @@ export const CombatAttrsSchema = z
     rerollMisses: z.boolean().optional(),
     crit: z.number().optional(), // crit on N or better, e.g. jol-nar flagship
     critCount: z.number().optional(), // N extra hits on crit
-
-    // TODO: better way to handle these on-offs.
-    destroyInfantryInSpace: z.number().optional(), // AFB argent destroyer
-    diceAsCount: z.boolean().optional(), // SpaceCombat winnu flagship
   })
   .strict()
   .readonly();
