@@ -19,18 +19,12 @@ export type UnitType = z.infer<typeof UnitSchema>;
 
 export const CombatAttrsSchema = z
   .object({
-    dice: z.number().optional(),
-    hit: z.number(),
-    extraDice: z.number().optional(),
+    dice: z.number().optional(), // N dice per object
+    hit: z.number(), // hit in N or better
+    extraDice: z.number().optional(), // N extra dice overall (not per object)
     rerollMisses: z.boolean().optional(),
-    extraHitsOn: z
-      .object({
-        // e.g. jol-nar flagship
-        count: z.number(),
-        hit: z.number(),
-      })
-      .strict()
-      .optional(),
+    crit: z.number().optional(), // crit on N or better, e.g. jol-nar flagship
+    critCount: z.number().optional(), // N extra hits on crit
 
     // TODO: better way to handle these on-offs.
     destroyInfantryInSpace: z.number().optional(), // AFB argent destroyer
@@ -38,14 +32,20 @@ export const CombatAttrsSchema = z
   })
   .strict()
   .readonly();
-export type CombatAttrsType = z.infer<typeof CombatAttrsSchema>;
+export type CombatAttrsSchemaType = z.infer<typeof CombatAttrsSchema>;
 
 export const UnitAttrsSchema = z
   .object({
-    name: z.string().min(1),
-    unit: UnitSchema,
+    name: z.string().min(1), // e.g. "Carrier II"
+    unit: UnitSchema, // base unit type, unit upgrades overrride
+    unitCount: z.number().optional(), // component count, e.g. fighters = 10
     upgradeLevel: z.number().optional(),
+
+    // Faction attr or tech ("card.technology.unit:{source}/{nsidName}").
+    nsidName: z.string().optional(),
+
     cost: z.number().optional(),
+    producePerCost: z.number().optional(), // e.g. 2 for fighters
 
     isShip: z.boolean().optional(),
     isGround: z.boolean().optional(),
@@ -62,4 +62,4 @@ export const UnitAttrsSchema = z
   })
   .strict()
   .readonly();
-export type UnitAttrsType = z.infer<typeof UnitAttrsSchema>;
+export type UnitAttrsSchemaType = z.infer<typeof UnitAttrsSchema>;

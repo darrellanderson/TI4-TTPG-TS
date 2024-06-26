@@ -1,7 +1,7 @@
-import { UnitAttrsSchema, UnitAttrsType } from "./unit-attrs-schema";
+import { UnitAttrsSchema, UnitAttrsSchemaType } from "./unit-attrs-schema";
 
-it("unit schema", () => {
-  const input: UnitAttrsType = {
+it("parse", () => {
+  const input: UnitAttrsSchemaType = {
     name: "my-name",
     unit: "infantry",
   };
