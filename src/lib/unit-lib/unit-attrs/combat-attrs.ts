@@ -58,7 +58,7 @@ export class CombatAttrs {
     return this._dice;
   }
 
-  getExtraDice(): number | undefined {
+  getExtraDice(): number {
     return this._extraDice;
   }
 
@@ -66,7 +66,7 @@ export class CombatAttrs {
     return this._hit;
   }
 
-  getRerollMisses(): boolean | undefined {
+  getRerollMisses(): boolean {
     return this._rerollMisses;
   }
 
