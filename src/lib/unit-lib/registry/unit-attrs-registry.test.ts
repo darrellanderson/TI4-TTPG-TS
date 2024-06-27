@@ -49,8 +49,10 @@ it("loadDefaultData", () => {
   const registry = new UnitAttrsRegistry();
   expect(registry.getBaseAttrs("fighter")).toBeUndefined();
   expect(registry.getOverrideAttrs("hybrid-crystal-fighter")).toBeUndefined();
+  expect(registry.getAllBaseAttrs()).toHaveLength(0);
 
   registry.loadDefaultData();
   expect(registry.getBaseAttrs("fighter")).toBeDefined();
   expect(registry.getOverrideAttrs("hybrid-crystal-fighter")).toBeDefined();
+  expect(registry.getAllBaseAttrs()).not.toHaveLength(0);
 });

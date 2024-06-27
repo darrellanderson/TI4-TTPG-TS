@@ -14,6 +14,10 @@ export class UnitAttrsRegistry {
 
   constructor() {}
 
+  getAllBaseAttrs(): Array<UnitAttrsSchemaType> {
+    return Array.from(this._unitToBaseAttrs.values());
+  }
+
   getBaseAttrs(unit: UnitType): UnitAttrsSchemaType | undefined {
     return this._unitToBaseAttrs.get(unit);
   }

@@ -11,6 +11,7 @@ import {
 import { PlanetAttachmentRegistry } from "../lib/system-lib/registry/planet-attachment-registry";
 import { SystemAttachmentRegistry } from "../lib/system-lib/registry/system-attachment-registry";
 import { SystemRegistry } from "../lib/system-lib/registry/system-registry";
+import { UnitAttrsRegistry } from "../lib/unit-lib/registry/unit-attrs-registry";
 
 export function registerErrorHandler() {
   if (GameWorld.getExecutionReason() !== "unittest") {
@@ -35,6 +36,7 @@ export class TI4Class {
   planetAttachmentRegistry = new PlanetAttachmentRegistry().loadDefaultData();
   systemAttachmentRegistry = new SystemAttachmentRegistry().loadDefaultData();
   systemRegistry = new SystemRegistry().loadDefaultData();
+  unitAttrsRegistry = new UnitAttrsRegistry().loadDefaultData();
 }
 
 // Also place "TI4" in the global namespace.
@@ -44,9 +46,10 @@ declare global {
 
 // Expose a reset function so tests can reset.
 // ttpg-mock resets globalEvents after each test, breaking listeners here.
-export function resetGlobalThisTI4() {
+export function resetGlobalThisTI4(): TI4Class {
   globalThis.TI4 = new TI4Class();
   Object.freeze(globalThis.TI4);
+  return globalThis.TI4;
 }
 resetGlobalThisTI4();
 
