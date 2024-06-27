@@ -220,7 +220,126 @@ export class UnitAttrs {
         this._groundCombat.applyOverride(override.groundCombat);
       }
     }
+    return this;
+  }
 
+  getAntiFighterBarrage(): CombatAttrs | undefined {
+    return this._antiFighterBarrage;
+  }
+
+  getBombardment(): CombatAttrs | undefined {
+    return this._bombardment;
+  }
+
+  getCost(): number | undefined {
+    return this._cost;
+  }
+
+  getDisablePlanetaryShield(): boolean {
+    return this._disablePlanetaryShield;
+  }
+
+  getGroundCombat(): CombatAttrs | undefined {
+    return this._groundCombat;
+  }
+
+  getName(): string {
+    return this._name;
+  }
+
+  getPlanetaryShild(): boolean {
+    return this._planetaryShild;
+  }
+
+  getProducePerCost(): number {
+    return this._producePerCost;
+  }
+
+  getSpaceCannon(): CombatAttrs | undefined {
+    return this._spaceCannon;
+  }
+
+  getSpaceCombat(): CombatAttrs | undefined {
+    return this._spaceCombat;
+  }
+
+  getSustainDamage(): boolean {
+    return this._sustainDamage;
+  }
+
+  getUnit(): UnitType {
+    return this._unit;
+  }
+
+  getUnitCount(): number {
+    return this._unitCount;
+  }
+
+  isGround(): boolean {
+    return this._isGround;
+  }
+
+  isShip(): boolean {
+    return this._isShip;
+  }
+
+  setAntiFighterBarrage(value: CombatAttrs): this {
+    this._antiFighterBarrage = value;
+    return this;
+  }
+
+  setBombardment(value: CombatAttrs): this {
+    this._bombardment = value;
+    return this;
+  }
+
+  setCost(value: number): this {
+    this._cost = value;
+    return this;
+  }
+
+  setDisablePlanetaryShield(value: boolean): this {
+    this._disablePlanetaryShield = value;
+    return this;
+  }
+
+  setGroundCombat(value: CombatAttrs): this {
+    this._groundCombat = value;
+    return this;
+  }
+
+  setIsGround(value: boolean): this {
+    this._isGround = value;
+    return this;
+  }
+
+  setIsShip(value: boolean): this {
+    this._isShip = value;
+    return this;
+  }
+
+  setPlanetaryShild(value: boolean): this {
+    this._planetaryShild = value;
+    return this;
+  }
+
+  setProducePerCost(value: number): this {
+    this._producePerCost = value;
+    return this;
+  }
+
+  setSpaceCannon(value: CombatAttrs): this {
+    this._spaceCannon = value;
+    return this;
+  }
+
+  setSpaceCombat(value: CombatAttrs): this {
+    this._spaceCombat = value;
+    return this;
+  }
+
+  setSustainDamage(value: boolean): this {
+    this._sustainDamage = value;
     return this;
   }
 }
