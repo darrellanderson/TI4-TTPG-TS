@@ -202,7 +202,7 @@ export const SOURCE_TO_UNIT_ATTRS_DATA: Record<
       name: "PDS II",
       unit: "pds",
       nsidName: "pds-2",
-      spaceCannon: { hit: 5 },
+      spaceCannon: { hit: 5, range: 1 },
     },
 
     // Space dock

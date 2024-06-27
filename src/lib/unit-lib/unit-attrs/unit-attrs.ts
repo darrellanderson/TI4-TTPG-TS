@@ -1,6 +1,13 @@
 import { UnitAttrsSchemaType, UnitType } from "../schema/unit-attrs-schema";
 import { CombatAttrs } from "./combat-attrs";
 
+/**
+ * Unit attributes, e.g. cost, combat stats.
+ *
+ * Unlike systems, make unit attributes mutable because unit modifiers
+ * can get very compliated; provide them simpler access to attributes.
+ * This does mean need to regenerate unit attributes for each instance.
+ */
 export class UnitAttrs {
   private readonly _name: string;
   private readonly _unit: UnitType;

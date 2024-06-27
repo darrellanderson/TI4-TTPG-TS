@@ -10,6 +10,7 @@ it("constructor (defaults)", () => {
   expect(combatAttrs.getCrit()).toBe(undefined);
   expect(combatAttrs.getCritCount()).toBe(0);
   expect(combatAttrs.getRerollMisses()).toBe(false);
+  expect(combatAttrs.getRange()).toBe(0);
 });
 
 it("constructor (all)", () => {
@@ -20,6 +21,7 @@ it("constructor (all)", () => {
     crit: 5,
     critCount: 6,
     rerollMisses: true,
+    range: 7,
   });
   expect(combatAttrs.getDice()).toBe(2);
   expect(combatAttrs.getHit()).toBe(3);
@@ -27,6 +29,7 @@ it("constructor (all)", () => {
   expect(combatAttrs.getCrit()).toBe(5);
   expect(combatAttrs.getCritCount()).toBe(6);
   expect(combatAttrs.getRerollMisses()).toBe(true);
+  expect(combatAttrs.getRange()).toBe(7);
 });
 
 it("setters", () => {
@@ -39,13 +42,15 @@ it("setters", () => {
     .setExtraDice(4)
     .setCrit(5)
     .setCritCount(6)
-    .setRerollMisses(true);
+    .setRerollMisses(true)
+    .setRange(7);
   expect(combatAttrs.getDice()).toBe(2);
   expect(combatAttrs.getHit()).toBe(3);
   expect(combatAttrs.getExtraDice()).toBe(4);
   expect(combatAttrs.getCrit()).toBe(5);
   expect(combatAttrs.getCritCount()).toBe(6);
   expect(combatAttrs.getRerollMisses()).toBe(true);
+  expect(combatAttrs.getRange()).toBe(7);
 });
 
 it("override", () => {
@@ -59,6 +64,7 @@ it("override", () => {
     crit: 5,
     critCount: 6,
     rerollMisses: true,
+    range: 7,
   });
   expect(combatAttrs.getDice()).toBe(2);
   expect(combatAttrs.getHit()).toBe(3);
@@ -66,4 +72,5 @@ it("override", () => {
   expect(combatAttrs.getCrit()).toBe(5);
   expect(combatAttrs.getCritCount()).toBe(6);
   expect(combatAttrs.getRerollMisses()).toBe(true);
+  expect(combatAttrs.getRange()).toBe(7);
 });

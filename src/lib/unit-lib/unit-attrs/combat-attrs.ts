@@ -7,6 +7,7 @@ export class CombatAttrs {
   private _extraDice: number;
   private _hit: number;
   private _rerollMisses: boolean;
+  private _range: number;
 
   constructor(params: CombatAttrsSchemaType) {
     this._dice = params.dice ?? 1; // N dice per object
@@ -15,6 +16,7 @@ export class CombatAttrs {
     this._rerollMisses = params.rerollMisses ?? false;
     this._crit = params.crit; // crit on N or better, e.g. jol-nar flagship
     this._critCount = params.critCount ?? 0; // N extra hits on crit
+    this._range = params.range ?? 0; // range in hexes: 0=local, 1=adjacent
   }
 
   /**
@@ -43,6 +45,9 @@ export class CombatAttrs {
     if (override.rerollMisses !== undefined) {
       this._rerollMisses = override.rerollMisses;
     }
+    if (override.range !== undefined) {
+      this._range = override.range;
+    }
     return this;
   }
 
@@ -64,6 +69,10 @@ export class CombatAttrs {
 
   getHit(): number {
     return this._hit;
+  }
+
+  getRange(): number {
+    return this._range;
   }
 
   getRerollMisses(): boolean {
@@ -92,6 +101,11 @@ export class CombatAttrs {
 
   setHit(value: number): this {
     this._hit = value;
+    return this;
+  }
+
+  setRange(value: number): this {
+    this._range = value;
     return this;
   }
 
