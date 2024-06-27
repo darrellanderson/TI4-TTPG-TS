@@ -1,109 +1,5 @@
-import {
-  CombatAttrsSchemaType,
-  UnitAttrsSchemaType,
-  UnitType,
-} from "../schema/unit-attrs-schema";
-
-export class CombatAttrs {
-  private _crit?: number;
-  private _critCount: number;
-  private _dice: number;
-  private _extraDice: number;
-  private _hit: number;
-  private _rerollMisses: boolean;
-
-  constructor(params: CombatAttrsSchemaType) {
-    this._dice = params.dice ?? 1; // N dice per object
-    this._hit = params.hit; // hit in N or better
-    this._extraDice = params.extraDice ?? 0; // N extra dice overall (not per object)
-    this._rerollMisses = params.rerollMisses ?? false;
-    this._crit = params.crit; // crit on N or better, e.g. jol-nar flagship
-    this._critCount = params.critCount ?? 0; // N extra hits on crit
-  }
-
-  /**
-   * Apply overrides to the given attributes.
-   * If an attribute is missing, do not change it.
-   *
-   * @param override
-   * @returns
-   */
-  applyOverride(override: CombatAttrsSchemaType): this {
-    if (override.crit) {
-      this._crit = override.crit;
-    }
-    if (override.critCount) {
-      this._critCount = override.critCount;
-    }
-    if (override.dice) {
-      this._dice = override.dice;
-    }
-    if (override.extraDice) {
-      this._extraDice = override.extraDice;
-    }
-    if (override.hit) {
-      this._hit = override.hit;
-    }
-    if (override.rerollMisses) {
-      this._rerollMisses = override.rerollMisses;
-    }
-    return this;
-  }
-
-  getCrit(): number | undefined {
-    return this._crit;
-  }
-
-  getCritCount(): number {
-    return this._critCount;
-  }
-
-  getDice(): number {
-    return this._dice;
-  }
-
-  getExtraDice(): number | undefined {
-    return this._extraDice;
-  }
-
-  getHit(): number {
-    return this._hit;
-  }
-
-  getRerollMisses(): boolean | undefined {
-    return this._rerollMisses;
-  }
-
-  setCrit(value: number | undefined): this {
-    this._crit = value;
-    return this;
-  }
-
-  setCritCount(value: number): this {
-    this._critCount = value;
-    return this;
-  }
-
-  setDice(value: number): this {
-    this._dice = value;
-    return this;
-  }
-
-  setExtraDice(value: number): this {
-    this._extraDice = value;
-    return this;
-  }
-
-  setHit(value: number): this {
-    this._hit = value;
-    return this;
-  }
-
-  setRerollMisses(value: boolean): this {
-    this._rerollMisses = value;
-    return this;
-  }
-}
+import { UnitAttrsSchemaType, UnitType } from "../schema/unit-attrs-schema";
+import { CombatAttrs } from "./combat-attrs";
 
 export class UnitAttrs {
   private readonly _name: string;
@@ -165,25 +61,25 @@ export class UnitAttrs {
    * @returns
    */
   applyOverride(override: UnitAttrsSchemaType): this {
-    if (override.cost) {
+    if (override.cost !== undefined) {
       this._cost = override.cost;
     }
-    if (override.disablePlanetaryShield) {
+    if (override.disablePlanetaryShield !== undefined) {
       this._disablePlanetaryShield = override.disablePlanetaryShield;
     }
-    if (override.isGround) {
+    if (override.isGround !== undefined) {
       this._isGround = override.isGround;
     }
-    if (override.isShip) {
+    if (override.isShip !== undefined) {
       this._isShip = override.isShip;
     }
-    if (override.planetaryShield) {
+    if (override.planetaryShield !== undefined) {
       this._planetaryShield = override.planetaryShield;
     }
-    if (override.producePerCost) {
+    if (override.producePerCost !== undefined) {
       this._producePerCost = override.producePerCost;
     }
-    if (override.sustainDamage) {
+    if (override.sustainDamage !== undefined) {
       this._sustainDamage = override.sustainDamage;
     }
     if (override.antiFighterBarrage) {

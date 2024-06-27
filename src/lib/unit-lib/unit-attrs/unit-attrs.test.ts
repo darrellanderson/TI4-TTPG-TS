@@ -1,5 +1,5 @@
-import exp from "constants";
-import { CombatAttrs, UnitAttrs } from "./unit-attrs";
+import { CombatAttrs } from "./combat-attrs";
+import { UnitAttrs } from "./unit-attrs";
 
 it("constructor", () => {
   const unitAttrs = new UnitAttrs({
