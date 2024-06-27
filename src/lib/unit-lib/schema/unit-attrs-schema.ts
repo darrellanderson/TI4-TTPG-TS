@@ -26,6 +26,7 @@ export const CombatAttrsSchema = z
     rerollMisses: z.boolean().optional(),
     crit: z.number().optional(), // crit on N or better, e.g. jol-nar flagship
     critCount: z.number().optional(), // N extra hits on crit
+    range: z.number().optional(), // range in hexes: 0=local, 1=adjacent
   })
   .strict()
   .readonly();

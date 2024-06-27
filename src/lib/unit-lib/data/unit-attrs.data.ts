@@ -46,19 +46,6 @@ export const SOURCE_TO_UNIT_ATTRS_DATA: Record<
       nsidName: "cruiser-2",
       spaceCombat: { hit: 6 },
     },
-    {
-      name: "Saturn Engine",
-      unit: "cruiser",
-      nsidName: "saturn-engine",
-    },
-    {
-      name: "Saturn Engine II",
-      unit: "cruiser",
-      nsidName: "saturn-engine-2",
-      spaceCombat: {
-        hit: 6,
-      },
-    },
 
     // Destroyer
     {
@@ -76,19 +63,6 @@ export const SOURCE_TO_UNIT_ATTRS_DATA: Record<
       nsidName: "destroyer-2",
       antiFighterBarrage: { dice: 3, hit: 6 },
       spaceCombat: { hit: 8 },
-    },
-    {
-      name: "String Wing Alpha",
-      unit: "destroyer",
-      nsidName: "strike-wing-alpha",
-      spaceCombat: { hit: 8 },
-    },
-    {
-      name: "Strike Wing Alpha II",
-      unit: "destroyer",
-      nsidName: "strike-wing-alpha-2",
-      spaceCombat: { hit: 7 },
-      afbDestroyInfantryInSpace: 9,
     },
 
     // Dreadnought
@@ -161,6 +135,131 @@ export const SOURCE_TO_UNIT_ATTRS_DATA: Record<
       nsidName: "hybrid-crystal-fighter-2",
       spaceCombat: { hit: 7 },
     },
+
+    // Flagship
+    // TODO
+
+    // Infantry
+    {
+      name: "Infantry",
+      unit: "infantry",
+      unitCount: 12,
+      isGround: true,
+      cost: 1,
+      producePerCost: 2,
+      groundCombat: { hit: 8 },
+    },
+    {
+      name: "Infantry II",
+      unit: "infantry",
+      nsidName: "infantry-2",
+      groundCombat: { hit: 7 },
+    },
+    {
+      name: "Letani Warrior",
+      unit: "infantry",
+      nsidName: "letani-warrior",
+    },
+    {
+      name: "Letani Warrior II",
+      unit: "infantry",
+      nsidName: "letani-warrior-2",
+      groundCombat: { hit: 7 },
+    },
+    {
+      name: "Spec Ops",
+      unit: "infantry",
+      nsidName: "spec-ops",
+      groundCombat: { hit: 7 },
+    },
+    {
+      name: "Spec Ops II",
+      unit: "infantry",
+      nsidName: "spec-ops-2",
+      groundCombat: { hit: 6 },
+    },
+    {
+      name: "Crimsom Legionnaire",
+      unit: "infantry",
+      nsidName: "crimsom-legionnaire",
+    },
+    {
+      name: "Crimsom Legionnaire II",
+      unit: "infantry",
+      nsidName: "crimson-legionnaire-2",
+      groundCombat: { hit: 7 },
+    },
+
+    // PDS
+    {
+      name: "PDS",
+      unit: "pds",
+      unitCount: 6,
+      planetaryShield: true,
+      spaceCannon: { hit: 6 },
+    },
+    {
+      name: "PDS II",
+      unit: "pds",
+      nsidName: "pds-2",
+      spaceCannon: { hit: 5 },
+    },
+
+    // Space dock
+    {
+      name: "Space Dock",
+      unit: "spacedock",
+      unitCount: 3,
+    },
+    {
+      name: "Space Dock II",
+      unit: "spacedock",
+      nsidName: "spacedock-2",
+    },
+    {
+      name: "Floating Factory",
+      unit: "spacedock",
+      nsidName: "floating-factory",
+    },
+    {
+      name: "Floating Factory II",
+      unit: "spacedock",
+      nsidName: "floating-factory-2",
+    },
+
+    // War sun
+    {
+      name: "War Sun",
+      unit: "warsun",
+      unitCount: 2,
+      isShip: true,
+      sustainDamage: true,
+      disablePlanetaryShield: true,
+    },
+    {
+      name: "War Sun II",
+      unit: "warsun",
+      nsidName: "warsun-2",
+      cost: 12,
+      bombardment: { dice: 3, hit: 3 },
+      spaceCombat: { dice: 3, hit: 3 },
+    },
+    {
+      name: "Prototype War Sun",
+      unit: "warsun",
+      nsidName: "prototype-war-sun",
+      cost: 12,
+      bombardment: { dice: 3, hit: 3 },
+      spaceCombat: { dice: 3, hit: 3 },
+    },
+    {
+      name: "Prototype War Sun II",
+      unit: "warsun",
+      nsidName: "prototype-war-sun-2",
+      cost: 10,
+      bombardment: { dice: 3, hit: 3 },
+      spaceCombat: { dice: 3, hit: 3 },
+    },
   ],
 
   "codex.ordinian": [
@@ -170,6 +269,71 @@ export const SOURCE_TO_UNIT_ATTRS_DATA: Record<
       nsidName: "redacted",
       spaceCombat: { dice: 3, hit: 6 },
       afbDestroyInfantryInSpace: 9,
+    },
+  ],
+
+  pok: [
+    // Cruiser
+    {
+      name: "Saturn Engine",
+      unit: "cruiser",
+      nsidName: "saturn-engine",
+    },
+    {
+      name: "Saturn Engine II",
+      unit: "cruiser",
+      nsidName: "saturn-engine-2",
+      spaceCombat: { hit: 6 },
+    },
+
+    // Destroyer
+    {
+      name: "String Wing Alpha",
+      unit: "destroyer",
+      nsidName: "strike-wing-alpha",
+      spaceCombat: { hit: 8 },
+    },
+    {
+      name: "Strike Wing Alpha II",
+      unit: "destroyer",
+      nsidName: "strike-wing-alpha-2",
+      spaceCombat: { hit: 7 },
+      afbDestroyInfantryInSpace: 9,
+    },
+
+    // Flagship
+    // TODO
+
+    // Mech
+    // TODO
+
+    // PDS
+    {
+      name: "Hel Titan",
+      unit: "pds",
+      nsidName: "hel-titan",
+      groundCombat: { hit: 7 },
+      sustainDamage: true,
+    },
+    {
+      name: "Hel Titan II",
+      unit: "pds",
+      nsidName: "hel-titan-2",
+      spaceCannon: { hit: 5, range: 1 },
+      groundCombat: { hit: 6 },
+      sustainDamage: true,
+    },
+
+    // Space dock
+    {
+      name: "Dimensional Tear",
+      unit: "spacedock",
+      nsidName: "dimensional-tear",
+    },
+    {
+      name: "Dimensional Tear II",
+      unit: "spacedock",
+      nsidName: "dimensional-tear-2",
     },
   ],
 };
