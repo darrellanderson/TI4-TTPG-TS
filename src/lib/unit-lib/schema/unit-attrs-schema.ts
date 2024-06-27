@@ -55,6 +55,9 @@ export const UnitAttrsSchema = z
     spaceCannon: CombatAttrsSchema.optional(),
     spaceCombat: CombatAttrsSchema.optional(),
     groundCombat: CombatAttrsSchema.optional(),
+
+    // Destroyer Strike Wing Alpha 2's AFB can destroy infantry in space.
+    afbDestroyInfantryInSpace: z.number().optional(),
   })
   .strict()
   .readonly();
