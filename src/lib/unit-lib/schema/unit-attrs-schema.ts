@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { NsidNameSchema } from "../../system-lib/schema/basic-types-schema";
 
 export const UnitSchema = z
   .enum([
@@ -38,7 +39,7 @@ export const UnitAttrsSchema = z
 
     // Faction attr or tech ("card.technology.unit:{source}/{nsidName}").
     // Missing: base unit, "x": faction base unit, "x-2": unit upgrade.
-    nsidName: z.string().optional(),
+    nsidName: NsidNameSchema.optional(),
 
     cost: z.number().optional(),
     producePerCost: z.number().optional(), // e.g. 2 for fighters

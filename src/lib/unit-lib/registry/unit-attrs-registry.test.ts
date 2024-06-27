@@ -1,5 +1,56 @@
+import exp from "constants";
 import { UnitAttrsRegistry } from "./unit-attrs-registry";
 
 it("constructor", () => {
   new UnitAttrsRegistry();
+});
+
+it("load (empty)", () => {
+  const registry = new UnitAttrsRegistry();
+  registry.load("source", []);
+});
+
+it("load (with data)", () => {
+  const registry = new UnitAttrsRegistry();
+  expect(registry.getBaseAttrs("infantry")).toBeUndefined();
+  expect(registry.getOverrideAttrs("my-nsid-name")).toBeUndefined();
+
+  registry.load("source", [
+    {
+      name: "my-base-name",
+      unit: "infantry",
+    },
+    {
+      name: "my-override-name",
+      unit: "infantry",
+      nsidName: "my-nsid-name",
+    },
+  ]);
+  expect(registry.getBaseAttrs("infantry")?.name).toBe("my-base-name");
+  expect(registry.getOverrideAttrs("my-nsid-name")?.name).toBe(
+    "my-override-name"
+  );
+});
+
+it("load (invalid schema)", () => {
+  const registry = new UnitAttrsRegistry();
+  expect(() => {
+    registry.load("source", [
+      {
+        name: "my-base-name",
+        unit: "infantry",
+        nsidName: "@@invalid",
+      },
+    ]);
+  }).toThrow();
+});
+
+it("loadDefaultData", () => {
+  const registry = new UnitAttrsRegistry();
+  expect(registry.getBaseAttrs("fighter")).toBeUndefined();
+  expect(registry.getOverrideAttrs("hybrid-crystal-fighter")).toBeUndefined();
+
+  registry.loadDefaultData();
+  expect(registry.getBaseAttrs("fighter")).toBeDefined();
+  expect(registry.getOverrideAttrs("hybrid-crystal-fighter")).toBeDefined();
 });

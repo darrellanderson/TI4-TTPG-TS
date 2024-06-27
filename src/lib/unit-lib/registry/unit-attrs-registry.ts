@@ -14,6 +14,14 @@ export class UnitAttrsRegistry {
 
   constructor() {}
 
+  getBaseAttrs(unit: UnitType): UnitAttrsSchemaType | undefined {
+    return this._unitToBaseAttrs.get(unit);
+  }
+
+  getOverrideAttrs(nsidName: string): UnitAttrsSchemaType | undefined {
+    return this._nsidNameToOverrideAttrs.get(nsidName);
+  }
+
   load(source: string, unitAttrsArray: Array<UnitAttrsSchemaType>): this {
     for (const unitAttrs of unitAttrsArray) {
       // Validate schema (oterhwise not validated until used).
