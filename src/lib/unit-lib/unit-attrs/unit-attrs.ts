@@ -108,8 +108,8 @@ export class CombatAttrs {
 export class UnitAttrs {
   private readonly _name: string;
   private readonly _unit: UnitType;
+  private readonly _unitCount: number; // component count, e.g. fighters = 10
 
-  private _unitCount: number; // component count, e.g. fighters = 10
   private _cost: number | undefined;
   private _producePerCost: number; // e.g. 2 for fighters
 
@@ -117,7 +117,7 @@ export class UnitAttrs {
   private _isGround: boolean;
 
   private _sustainDamage: boolean;
-  private _planetaryShild: boolean;
+  private _planetaryShield: boolean;
   private _disablePlanetaryShield: boolean;
 
   private _antiFighterBarrage: CombatAttrs | undefined;
@@ -129,14 +129,15 @@ export class UnitAttrs {
   constructor(params: UnitAttrsSchemaType) {
     this._name = params.name;
     this._unit = params.unit;
-
     this._unitCount = params.unitCount ?? 0;
+
+    this._cost = params.cost;
     this._producePerCost = params.producePerCost ?? 1;
 
     this._isShip = params.isShip ?? false;
     this._isGround = params.isGround ?? false;
     this._sustainDamage = params.sustainDamage ?? false;
-    this._planetaryShild = params.planetaryShild ?? false;
+    this._planetaryShield = params.planetaryShield ?? false;
     this._disablePlanetaryShield = params.disablePlanetaryShield ?? false;
 
     if (params.antiFighterBarrage) {
@@ -167,23 +168,23 @@ export class UnitAttrs {
     if (override.cost) {
       this._cost = override.cost;
     }
+    if (override.disablePlanetaryShield) {
+      this._disablePlanetaryShield = override.disablePlanetaryShield;
+    }
     if (override.isGround) {
       this._isGround = override.isGround;
     }
     if (override.isShip) {
       this._isShip = override.isShip;
     }
-    if (override.planetaryShild) {
-      this._planetaryShild = override.planetaryShild;
+    if (override.planetaryShield) {
+      this._planetaryShield = override.planetaryShield;
     }
     if (override.producePerCost) {
       this._producePerCost = override.producePerCost;
     }
     if (override.sustainDamage) {
       this._sustainDamage = override.sustainDamage;
-    }
-    if (override.unitCount) {
-      this._unitCount = override.unitCount;
     }
     if (override.antiFighterBarrage) {
       if (!this._antiFighterBarrage) {
@@ -248,7 +249,7 @@ export class UnitAttrs {
   }
 
   getPlanetaryShild(): boolean {
-    return this._planetaryShild;
+    return this._planetaryShield;
   }
 
   getProducePerCost(): number {
@@ -318,8 +319,8 @@ export class UnitAttrs {
     return this;
   }
 
-  setPlanetaryShild(value: boolean): this {
-    this._planetaryShild = value;
+  setPlanetaryShield(value: boolean): this {
+    this._planetaryShield = value;
     return this;
   }
 

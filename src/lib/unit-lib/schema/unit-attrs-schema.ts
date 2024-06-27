@@ -47,7 +47,7 @@ export const UnitAttrsSchema = z
     isGround: z.boolean().optional(),
 
     sustainDamage: z.boolean().optional(),
-    planetaryShild: z.boolean().optional(),
+    planetaryShield: z.boolean().optional(),
     disablePlanetaryShield: z.boolean().optional(),
 
     antiFighterBarrage: CombatAttrsSchema.optional(),
