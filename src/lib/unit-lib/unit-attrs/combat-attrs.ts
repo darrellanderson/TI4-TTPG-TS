@@ -42,8 +42,8 @@ export class CombatAttrs {
     if (override.hit !== undefined) {
       this._hit = override.hit;
     }
-    if (override.rerollMisses !== undefined) {
-      this._rerollMisses = override.rerollMisses;
+    if (override.rerollMisses) {
+      this._rerollMisses = true;
     }
     if (override.range !== undefined) {
       this._range = override.range;

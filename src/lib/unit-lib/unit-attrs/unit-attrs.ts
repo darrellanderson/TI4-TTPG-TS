@@ -19,9 +19,11 @@ export class UnitAttrs {
   private _isShip: boolean;
   private _isGround: boolean;
 
-  private _sustainDamage: boolean;
-  private _planetaryShield: boolean;
+  private _hasSustainDamage: boolean;
+  private _hasPlanetaryShield: boolean;
+  private _disableBombardment: boolean;
   private _disablePlanetaryShield: boolean;
+  private _disableSpaceCannonOffsense: boolean;
 
   private _antiFighterBarrage: CombatAttrs | undefined;
   private _bombardment: CombatAttrs | undefined;
@@ -39,9 +41,12 @@ export class UnitAttrs {
 
     this._isShip = params.isShip ?? false;
     this._isGround = params.isGround ?? false;
-    this._sustainDamage = params.sustainDamage ?? false;
-    this._planetaryShield = params.planetaryShield ?? false;
+    this._hasSustainDamage = params.hasSustainDamage ?? false;
+    this._hasPlanetaryShield = params.hasPlanetaryShield ?? false;
+    this._disableBombardment = params.disableBombardment ?? false;
     this._disablePlanetaryShield = params.disablePlanetaryShield ?? false;
+    this._disableSpaceCannonOffsense =
+      params.disableSpaceCannonOffense ?? false;
 
     if (params.antiFighterBarrage) {
       this._antiFighterBarrage = new CombatAttrs(params.antiFighterBarrage);
@@ -71,24 +76,30 @@ export class UnitAttrs {
     if (override.cost !== undefined) {
       this._cost = override.cost;
     }
-    if (override.disablePlanetaryShield !== undefined) {
-      this._disablePlanetaryShield = override.disablePlanetaryShield;
+    if (override.disableBombardment) {
+      this._disableBombardment = true;
     }
-    if (override.isGround !== undefined) {
-      this._isGround = override.isGround;
+    if (override.disablePlanetaryShield) {
+      this._disablePlanetaryShield = true;
     }
-    if (override.isShip !== undefined) {
-      this._isShip = override.isShip;
+    if (override.disableSpaceCannonOffense) {
+      this._disableSpaceCannonOffsense = true;
+    }
+    if (override.hasPlanetaryShield) {
+      this._hasPlanetaryShield = true;
+    }
+    if (override.hasSustainDamage) {
+      this._hasSustainDamage = override.hasSustainDamage;
+    }
+    if (override.isGround) {
+      this._isGround = true;
+    }
+    if (override.isShip) {
+      this._isShip = true;
     }
     this._name = override.name;
-    if (override.planetaryShield !== undefined) {
-      this._planetaryShield = override.planetaryShield;
-    }
-    if (override.producePerCost !== undefined) {
+    if (override.producePerCost) {
       this._producePerCost = override.producePerCost;
-    }
-    if (override.sustainDamage !== undefined) {
-      this._sustainDamage = override.sustainDamage;
     }
     if (override.antiFighterBarrage) {
       if (!this._antiFighterBarrage) {
@@ -144,8 +155,16 @@ export class UnitAttrs {
     return this._cost;
   }
 
+  getDisableBombardment(): boolean {
+    return this._disableBombardment;
+  }
+
   getDisablePlanetaryShield(): boolean {
     return this._disablePlanetaryShield;
+  }
+
+  getDisableSpaceCannonOffense(): boolean {
+    return this._disableSpaceCannonOffsense;
   }
 
   getGroundCombat(): CombatAttrs | undefined {
@@ -154,10 +173,6 @@ export class UnitAttrs {
 
   getName(): string {
     return this._name;
-  }
-
-  getPlanetaryShild(): boolean {
-    return this._planetaryShield;
   }
 
   getProducePerCost(): number {
@@ -172,12 +187,16 @@ export class UnitAttrs {
     return this._spaceCombat;
   }
 
-  getSustainDamage(): boolean {
-    return this._sustainDamage;
-  }
-
   getUnit(): UnitType {
     return this._unit;
+  }
+
+  hasPlanetaryShild(): boolean {
+    return this._hasPlanetaryShield;
+  }
+
+  hasSustainDamage(): boolean {
+    return this._hasSustainDamage;
   }
 
   isGround(): boolean {
@@ -203,13 +222,33 @@ export class UnitAttrs {
     return this;
   }
 
+  setDisableBombardment(value: boolean): this {
+    this._disableBombardment = value;
+    return this;
+  }
+
   setDisablePlanetaryShield(value: boolean): this {
     this._disablePlanetaryShield = value;
     return this;
   }
 
+  setDisableSpaceCannonOffense(value: boolean): this {
+    this._disableSpaceCannonOffsense = value;
+    return this;
+  }
+
   setGroundCombat(value: CombatAttrs): this {
     this._groundCombat = value;
+    return this;
+  }
+
+  setHasPlanetaryShield(value: boolean): this {
+    this._hasPlanetaryShield = value;
+    return this;
+  }
+
+  setHasSustainDamage(value: boolean): this {
+    this._hasSustainDamage = value;
     return this;
   }
 
@@ -220,11 +259,6 @@ export class UnitAttrs {
 
   setIsShip(value: boolean): this {
     this._isShip = value;
-    return this;
-  }
-
-  setPlanetaryShield(value: boolean): this {
-    this._planetaryShield = value;
     return this;
   }
 
@@ -240,11 +274,6 @@ export class UnitAttrs {
 
   setSpaceCombat(value: CombatAttrs): this {
     this._spaceCombat = value;
-    return this;
-  }
-
-  setSustainDamage(value: boolean): this {
-    this._sustainDamage = value;
     return this;
   }
 }

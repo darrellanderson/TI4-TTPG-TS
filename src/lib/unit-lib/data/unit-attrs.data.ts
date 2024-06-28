@@ -28,7 +28,7 @@ export const SOURCE_TO_UNIT_ATTRS_DATA: Record<
       name: "Advanced Carrier II",
       unit: "carrier",
       nsidName: "advanced-carrier-2",
-      sustainDamage: true,
+      hasSustainDamage: true,
     },
 
     // Cruiser
@@ -72,7 +72,7 @@ export const SOURCE_TO_UNIT_ATTRS_DATA: Record<
       componentCount: 5,
       isShip: true,
       cost: 4,
-      sustainDamage: true,
+      hasSustainDamage: true,
       bombardment: { hit: 5 },
       spaceCombat: { hit: 5 },
     },
@@ -195,7 +195,7 @@ export const SOURCE_TO_UNIT_ATTRS_DATA: Record<
       name: "PDS",
       unit: "pds",
       componentCount: 6,
-      planetaryShield: true,
+      hasPlanetaryShield: true,
       spaceCannon: { hit: 6 },
     },
     {
@@ -233,7 +233,7 @@ export const SOURCE_TO_UNIT_ATTRS_DATA: Record<
       unit: "warsun",
       componentCount: 2,
       isShip: true,
-      sustainDamage: true,
+      hasSustainDamage: true,
       disablePlanetaryShield: true,
     },
     {
@@ -313,7 +313,7 @@ export const SOURCE_TO_UNIT_ATTRS_DATA: Record<
       unit: "pds",
       nsidName: "hel-titan",
       groundCombat: { hit: 7 },
-      sustainDamage: true,
+      hasSustainDamage: true,
     },
     {
       name: "Hel Titan II",
@@ -321,7 +321,7 @@ export const SOURCE_TO_UNIT_ATTRS_DATA: Record<
       nsidName: "hel-titan-2",
       spaceCannon: { hit: 5, range: 1 },
       groundCombat: { hit: 6 },
-      sustainDamage: true,
+      hasSustainDamage: true,
     },
 
     // Space dock

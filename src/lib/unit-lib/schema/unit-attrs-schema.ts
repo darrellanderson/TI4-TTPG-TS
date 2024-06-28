@@ -48,9 +48,11 @@ export const UnitAttrsSchema = z
     isShip: z.boolean().optional(),
     isGround: z.boolean().optional(),
 
-    sustainDamage: z.boolean().optional(),
-    planetaryShield: z.boolean().optional(),
+    hasSustainDamage: z.boolean().optional(),
+    hasPlanetaryShield: z.boolean().optional(),
+    disableBombardment: z.boolean().optional(),
     disablePlanetaryShield: z.boolean().optional(),
+    disableSpaceCannonOffense: z.boolean().optional(),
 
     antiFighterBarrage: CombatAttrsSchema.optional(),
     bombardment: CombatAttrsSchema.optional(),

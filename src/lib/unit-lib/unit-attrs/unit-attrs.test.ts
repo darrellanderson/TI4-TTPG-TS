@@ -14,9 +14,11 @@ it("constructor", () => {
   // defaults
   expect(unitAttrs.getCost()).toBe(undefined);
   expect(unitAttrs.getProducePerCost()).toBe(1);
+  expect(unitAttrs.getDisableBombardment()).toBe(false);
   expect(unitAttrs.getDisablePlanetaryShield()).toBe(false);
-  expect(unitAttrs.getPlanetaryShild()).toBe(false);
-  expect(unitAttrs.getSustainDamage()).toBe(false);
+  expect(unitAttrs.getDisableSpaceCannonOffense()).toBe(false);
+  expect(unitAttrs.hasPlanetaryShild()).toBe(false);
+  expect(unitAttrs.hasSustainDamage()).toBe(false);
   expect(unitAttrs.isGround()).toBe(false);
   expect(unitAttrs.isShip()).toBe(false);
 
@@ -132,42 +134,61 @@ it("isGround", () => {
   expect(unitAttrs.isGround()).toBe(true);
 });
 
-it("sustaindDamage", () => {
+it("hasSustaindDamage", () => {
   const unitAttrs = new UnitAttrs({
     name: "my-name",
     unit: "infantry",
-    sustainDamage: true,
+    hasSustainDamage: true,
   });
-  expect(unitAttrs.getSustainDamage()).toBe(true);
+  expect(unitAttrs.hasSustainDamage()).toBe(true);
 
-  unitAttrs.setSustainDamage(false);
-  expect(unitAttrs.getSustainDamage()).toBe(false);
+  unitAttrs.setHasSustainDamage(false);
+  expect(unitAttrs.hasSustainDamage()).toBe(false);
 
   unitAttrs.applyOverride({
     name: "my-name",
     unit: "infantry",
-    sustainDamage: true,
+    hasSustainDamage: true,
   });
-  expect(unitAttrs.getSustainDamage()).toBe(true);
+  expect(unitAttrs.hasSustainDamage()).toBe(true);
 });
 
-it("planetaryShield", () => {
+it("hasPlanetaryShield", () => {
   const unitAttrs = new UnitAttrs({
     name: "my-name",
     unit: "infantry",
-    planetaryShield: true,
+    hasPlanetaryShield: true,
   });
-  expect(unitAttrs.getPlanetaryShild()).toBe(true);
+  expect(unitAttrs.hasPlanetaryShild()).toBe(true);
 
-  unitAttrs.setPlanetaryShield(false);
-  expect(unitAttrs.getPlanetaryShild()).toBe(false);
+  unitAttrs.setHasPlanetaryShield(false);
+  expect(unitAttrs.hasPlanetaryShild()).toBe(false);
 
   unitAttrs.applyOverride({
     name: "my-name",
     unit: "infantry",
-    planetaryShield: true,
+    hasPlanetaryShield: true,
   });
-  expect(unitAttrs.getPlanetaryShild()).toBe(true);
+  expect(unitAttrs.hasPlanetaryShild()).toBe(true);
+});
+
+it("disableBombardment", () => {
+  const unitAttrs = new UnitAttrs({
+    name: "my-name",
+    unit: "infantry",
+    disableBombardment: true,
+  });
+  expect(unitAttrs.getDisableBombardment()).toBe(true);
+
+  unitAttrs.setDisableBombardment(false);
+  expect(unitAttrs.getDisableBombardment()).toBe(false);
+
+  unitAttrs.applyOverride({
+    name: "my-name",
+    unit: "infantry",
+    disableBombardment: true,
+  });
+  expect(unitAttrs.getDisableBombardment()).toBe(true);
 });
 
 it("disablePlanetaryShield", () => {
@@ -187,6 +208,25 @@ it("disablePlanetaryShield", () => {
     disablePlanetaryShield: true,
   });
   expect(unitAttrs.getDisablePlanetaryShield()).toBe(true);
+});
+
+it("disableSpaceCannonOffense", () => {
+  const unitAttrs = new UnitAttrs({
+    name: "my-name",
+    unit: "infantry",
+    disableSpaceCannonOffense: true,
+  });
+  expect(unitAttrs.getDisableSpaceCannonOffense()).toBe(true);
+
+  unitAttrs.setDisableSpaceCannonOffense(false);
+  expect(unitAttrs.getDisableSpaceCannonOffense()).toBe(false);
+
+  unitAttrs.applyOverride({
+    name: "my-name",
+    unit: "infantry",
+    disableSpaceCannonOffense: true,
+  });
+  expect(unitAttrs.getDisableSpaceCannonOffense()).toBe(true);
 });
 
 it("antiFighterBarrage", () => {
