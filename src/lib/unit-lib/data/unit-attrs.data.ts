@@ -137,7 +137,119 @@ export const SOURCE_TO_UNIT_ATTRS_DATA: Record<
     },
 
     // Flagship
-    // TODO
+    {
+      name: "Flagship",
+      unit: "flagship",
+      componentCount: 1,
+      cost: 8,
+      hasSustainDamage: true,
+      isShip: true,
+    },
+    {
+      name: "[0.0.1]", // L1Z1X
+      unit: "flagship",
+      nsidName: "001",
+      spaceCombat: { dice: 2, hit: 5 },
+    },
+    {
+      name: "Arc Secundus", // Letnev
+      unit: "flagship",
+      nsidName: "arc-secundus",
+      bombardment: { dice: 3, hit: 5 },
+      spaceCombat: { dice: 2, hit: 5 },
+    },
+    {
+      name: "C'morran N'orr", // Sardakk
+      unit: "flagship",
+      nsidName: "cmorran-norr",
+      spaceCombat: { dice: 2, hit: 6 },
+    },
+    {
+      name: "Duha Menaimon", // Arborec
+      unit: "flagship",
+      nsidName: "duha-menaimon",
+      spaceCombat: { dice: 2, hit: 7 },
+    },
+    {
+      name: "Fourth Moon", // Mentak
+      unit: "flagship",
+      nsidName: "fourth-moon",
+      spaceCombat: { dice: 2, hit: 7 },
+    },
+    {
+      name: "Genesis", // Sol
+      unit: "flagship",
+      nsidName: "genesis",
+      spaceCombat: { dice: 2, hit: 5 },
+    },
+    {
+      name: "Hil Colish", // Creuss
+      unit: "flagship",
+      nsidName: "hil-colish",
+      spaceCombat: { hit: 5 },
+    },
+    {
+      name: "J.N.S. Hylarim", // Jol-Nar
+      unit: "flagship",
+      nsidName: "jns-hylarim",
+      spaceCombat: { dice: 2, hit: 6, crit: 9, critCount: 2 },
+    },
+    {
+      name: "Loncara Ssodu", // Xxcha
+      unit: "flagship",
+      nsidName: "loncara-ssodu",
+      spaceCannon: { dice: 3, hit: 5, range: 1 },
+      spaceCombat: { dice: 2, hit: 7 },
+    },
+    {
+      name: "Matriarch", // Naalu
+      unit: "flagship",
+      nsidName: "matriarch",
+      spaceCombat: { dice: 2, hit: 9 },
+    },
+    {
+      name: "Salai Sai Corian", // Winnu
+      unit: "flagship",
+      nsidName: "salai-sai-corian",
+      spaceCombat: { hit: 7 },
+    },
+    {
+      name: "Son of Ragh", // Saar
+      unit: "flagship",
+      nsidName: "son-of-ragh",
+      antiFighterBarrage: { dice: 2, hit: 6 },
+      spaceCombat: { dice: 2, hit: 5 },
+    },
+    {
+      name: "The Alastor", // Nekro
+      unit: "flagship",
+      nsidName: "the-alastor",
+      spaceCombat: { dice: 2, hit: 9 },
+    },
+    {
+      name: "The Inferno", // Muaat
+      unit: "flagship",
+      nsidName: "the-inferno",
+      spaceCombat: { dice: 2, hit: 5 },
+    },
+    {
+      name: "Van Hauge", // Yin
+      unit: "flagship",
+      nsidName: "van-hauge",
+      spaceCombat: { dice: 2, hit: 9 },
+    },
+    {
+      name: "Wrath of Kenara", // Hacan
+      unit: "flagship",
+      nsidName: "wrath-of-kenara",
+      spaceCombat: { dice: 2, hit: 7 },
+    },
+    {
+      name: "Ysia Yssrila", // Yssaril
+      unit: "flagship",
+      nsidName: "ysia-yssrila",
+      spaceCombat: { dice: 2, hit: 5 },
+    },
 
     // Infantry
     {
@@ -181,7 +293,7 @@ export const SOURCE_TO_UNIT_ATTRS_DATA: Record<
     {
       name: "Crimsom Legionnaire",
       unit: "infantry",
-      nsidName: "crimsom-legionnaire",
+      nsidName: "crimson-legionnaire",
     },
     {
       name: "Crimsom Legionnaire II",
@@ -208,45 +320,45 @@ export const SOURCE_TO_UNIT_ATTRS_DATA: Record<
     // Space dock
     {
       name: "Space Dock",
-      unit: "spacedock",
+      unit: "space-dock",
       componentCount: 3,
     },
     {
       name: "Space Dock II",
-      unit: "spacedock",
-      nsidName: "spacedock-2",
+      unit: "space-dock",
+      nsidName: "space-dock-2",
     },
     {
       name: "Floating Factory",
-      unit: "spacedock",
+      unit: "space-dock",
       nsidName: "floating-factory",
     },
     {
       name: "Floating Factory II",
-      unit: "spacedock",
+      unit: "space-dock",
       nsidName: "floating-factory-2",
     },
 
     // War sun
     {
       name: "War Sun",
-      unit: "warsun",
+      unit: "war-sun",
       componentCount: 2,
       isShip: true,
       hasSustainDamage: true,
       disablePlanetaryShield: true,
     },
     {
-      name: "War Sun II",
-      unit: "warsun",
-      nsidName: "warsun-2",
+      name: "War Sun",
+      unit: "war-sun",
+      nsidName: "war-sun-2",
       cost: 12,
       bombardment: { dice: 3, hit: 3 },
       spaceCombat: { dice: 3, hit: 3 },
     },
     {
       name: "Prototype War Sun",
-      unit: "warsun",
+      unit: "war-sun",
       nsidName: "prototype-war-sun",
       cost: 12,
       bombardment: { dice: 3, hit: 3 },
@@ -254,7 +366,7 @@ export const SOURCE_TO_UNIT_ATTRS_DATA: Record<
     },
     {
       name: "Prototype War Sun II",
-      unit: "warsun",
+      unit: "war-sun",
       nsidName: "prototype-war-sun-2",
       cost: 10,
       bombardment: { dice: 3, hit: 3 },
@@ -269,6 +381,20 @@ export const SOURCE_TO_UNIT_ATTRS_DATA: Record<
       nsidName: "redacted",
       spaceCombat: { dice: 3, hit: 6 },
       afbDestroyInfantryInSpace: 9,
+    },
+  ],
+
+  "codex.vigil": [
+    {
+      name: "Artemiris", // Keleres
+      unit: "flagship",
+      nsidName: "artemiris",
+      spaceCombat: { dice: 2, hit: 7 },
+    },
+    {
+      name: "Omniopiares",
+      unit: "mech",
+      nsidName: "omniopiares",
     },
   ],
 
@@ -302,10 +428,189 @@ export const SOURCE_TO_UNIT_ATTRS_DATA: Record<
     },
 
     // Flagship
-    // TODO
+    {
+      name: "Arvicon Rex", // Mahact
+      unit: "flagship",
+      nsidName: "arvicon-rex",
+      spaceCombat: { dice: 2, hit: 5 },
+    },
+    {
+      name: "Dynamo", // Empyrean
+      unit: "flagship",
+      nsidName: "dynamo",
+      spaceCombat: { dice: 2, hit: 5 },
+    },
+    {
+      name: "Memoria I", // Nomad
+      unit: "flagship",
+      nsidName: "memoria",
+      antiFighterBarrage: { dice: 3, hit: 8 },
+      spaceCombat: { dice: 2, hit: 7 },
+    },
+    {
+      name: "Memoria II", // Nomad (upgraded)
+      unit: "flagship",
+      nsidName: "memoria-2",
+      antiFighterBarrage: { dice: 3, hit: 5 },
+      spaceCombat: { dice: 2, hit: 5 },
+    },
+    {
+      name: "Ouranos", // Ul
+      unit: "flagship",
+      nsidName: "ouranos",
+      spaceCombat: { dice: 2, hit: 7 },
+    },
+    {
+      name: "Quetzecoatl", // Argent
+      unit: "flagship",
+      nsidName: "quetzecoatl",
+      spaceCombat: { dice: 2, hit: 7 },
+    },
+    {
+      name: "The Terror Between", // Vuilraith
+      unit: "flagship",
+      nsidName: "the-terror-between",
+      bombardment: { hit: 5 },
+      spaceCombat: { dice: 2, hit: 5 },
+    },
+    {
+      name: "Visz El Vir", // Naaz-Rokha
+      unit: "flagship",
+      nsidName: "visz-el-vir",
+      spaceCombat: { dice: 2, hit: 9 },
+    },
 
     // Mech
-    // TODO
+    {
+      name: "Mech",
+      unit: "mech",
+      componentCount: 4,
+      cost: 2,
+      hasSustainDamage: true,
+      isGround: true,
+    },
+    {
+      name: "Aerie Sentinel",
+      unit: "mech",
+      nsidName: "aerie-sentinel",
+    },
+    {
+      name: "Annihilator",
+      unit: "mech",
+      nsidName: "annihilator",
+      bombardment: { hit: 8 },
+    },
+    {
+      name: "Blackshade Infiltrator",
+      unit: "mech",
+      nsidName: "blackshade-infiltrator",
+    },
+    {
+      name: "Dunlain Reaper",
+      unit: "mech",
+      nsidName: "dunlain-reaper",
+    },
+    {
+      name: "Eidolon",
+      unit: "mech",
+      nsidName: "eidolon",
+    },
+    {
+      name: "Ember Colossus",
+      unit: "mech",
+      nsidName: "ember-colossus",
+    },
+    {
+      name: "Hecatoncheires",
+      unit: "mech",
+      nsidName: "hecatoncheires",
+    },
+    {
+      name: "Icarus Drive",
+      unit: "mech",
+      nsidName: "icarus-drive",
+    },
+    {
+      name: "Iconoclast",
+      unit: "mech",
+      nsidName: "iconoclast",
+    },
+    {
+      name: "Indomitus",
+      unit: "mech",
+      nsidName: "indomitus",
+      spaceCannon: { hit: 8, range: 1 },
+    },
+    {
+      name: "Letani Behemoth",
+      unit: "mech",
+      nsidName: "letani-behemoth",
+    },
+    {
+      name: "Moll Terminus",
+      unit: "mech",
+      nsidName: "moll-terminus",
+    },
+    {
+      name: "Mordred",
+      unit: "mech",
+      nsidName: "mordred",
+    },
+    {
+      name: "Moyins Ashes",
+      unit: "mech",
+      nsidName: "moyins-ashes",
+    },
+    {
+      name: "Pride of Kenara",
+      unit: "mech",
+      nsidName: "pride-of-kenara",
+    },
+    {
+      name: "Quantum Manipulator",
+      unit: "mech",
+      nsidName: "quantum-manipulator",
+    },
+    {
+      name: "Reanimator",
+      unit: "mech",
+      nsidName: "reanimator",
+    },
+    {
+      name: "Reclaimer",
+      unit: "mech",
+      nsidName: "reclaimer",
+    },
+    {
+      name: "Scavenger Zeta",
+      unit: "mech",
+      nsidName: "scavenger-zeta",
+    },
+    {
+      name: "Shield Paling",
+      unit: "mech",
+      nsidName: "shield-paling",
+    },
+    {
+      name: "Starlancer",
+      unit: "mech",
+      nsidName: "starlancer",
+    },
+    {
+      name: "Valkyrie Exoskeleton",
+      unit: "mech",
+      nsidName: "valkyrie-exoskeleton",
+    },
+    {
+      name: "Watcher",
+      unit: "mech",
+      nsidName: "watcher",
+    },
+    {
+      name: "Zs Thunderbolt M2",
+      unit: "mech",
+      nsidName: "zs-thunderbolt-m2",
+    },
 
     // PDS
     {
@@ -327,12 +632,12 @@ export const SOURCE_TO_UNIT_ATTRS_DATA: Record<
     // Space dock
     {
       name: "Dimensional Tear",
-      unit: "spacedock",
+      unit: "space-dock",
       nsidName: "dimensional-tear",
     },
     {
       name: "Dimensional Tear II",
-      unit: "spacedock",
+      unit: "space-dock",
       nsidName: "dimensional-tear-2",
     },
   ],

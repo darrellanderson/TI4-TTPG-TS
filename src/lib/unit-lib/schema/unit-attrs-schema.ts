@@ -12,8 +12,8 @@ export const UnitSchema = z
     "infantry",
     "mech",
     "pds",
-    "spacedock",
-    "warsun",
+    "space-dock",
+    "war-sun",
   ])
   .readonly();
 export type UnitType = z.infer<typeof UnitSchema>;
