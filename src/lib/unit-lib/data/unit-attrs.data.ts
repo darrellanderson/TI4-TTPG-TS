@@ -9,7 +9,7 @@ export const SOURCE_TO_UNIT_ATTRS_DATA: Record<
     {
       name: "Carrier",
       unit: "carrier",
-      unitCount: 4,
+      componentCount: 4,
       isShip: true,
       cost: 3,
       spaceCombat: { hit: 9 },
@@ -35,7 +35,7 @@ export const SOURCE_TO_UNIT_ATTRS_DATA: Record<
     {
       name: "Cruiser",
       unit: "cruiser",
-      unitCount: 8,
+      componentCount: 8,
       isShip: true,
       cost: 2,
       spaceCombat: { hit: 7 },
@@ -51,7 +51,7 @@ export const SOURCE_TO_UNIT_ATTRS_DATA: Record<
     {
       name: "Destroyer",
       unit: "destroyer",
-      unitCount: 8,
+      componentCount: 8,
       isShip: true,
       cost: 1,
       antiFighterBarrage: { dice: 2, hit: 9 },
@@ -69,7 +69,7 @@ export const SOURCE_TO_UNIT_ATTRS_DATA: Record<
     {
       name: "Dreadnought",
       unit: "dreadnought",
-      unitCount: 5,
+      componentCount: 5,
       isShip: true,
       cost: 4,
       sustainDamage: true,
@@ -111,7 +111,7 @@ export const SOURCE_TO_UNIT_ATTRS_DATA: Record<
     {
       name: "Fighter",
       unit: "fighter",
-      unitCount: 10,
+      componentCount: 10,
       isShip: true,
       cost: 1,
       producePerCost: 2,
@@ -143,7 +143,7 @@ export const SOURCE_TO_UNIT_ATTRS_DATA: Record<
     {
       name: "Infantry",
       unit: "infantry",
-      unitCount: 12,
+      componentCount: 12,
       isGround: true,
       cost: 1,
       producePerCost: 2,
@@ -194,7 +194,7 @@ export const SOURCE_TO_UNIT_ATTRS_DATA: Record<
     {
       name: "PDS",
       unit: "pds",
-      unitCount: 6,
+      componentCount: 6,
       planetaryShield: true,
       spaceCannon: { hit: 6 },
     },
@@ -209,7 +209,7 @@ export const SOURCE_TO_UNIT_ATTRS_DATA: Record<
     {
       name: "Space Dock",
       unit: "spacedock",
-      unitCount: 3,
+      componentCount: 3,
     },
     {
       name: "Space Dock II",
@@ -231,7 +231,7 @@ export const SOURCE_TO_UNIT_ATTRS_DATA: Record<
     {
       name: "War Sun",
       unit: "warsun",
-      unitCount: 2,
+      componentCount: 2,
       isShip: true,
       sustainDamage: true,
       disablePlanetaryShield: true,

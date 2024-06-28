@@ -5,11 +5,11 @@ it("constructor", () => {
   const unitAttrs = new UnitAttrs({
     name: "my-name",
     unit: "infantry",
-    unitCount: 1,
+    componentCount: 1,
   });
   expect(unitAttrs.getName()).toBe("my-name");
   expect(unitAttrs.getUnit()).toBe("infantry");
-  expect(unitAttrs.getUnitCount()).toBe(1);
+  expect(unitAttrs.getComponentCount()).toBe(1);
 
   // defaults
   expect(unitAttrs.getCost()).toBe(undefined);
@@ -61,16 +61,18 @@ it("cost", () => {
     cost: 1,
   });
   expect(unitAttrs.getCost()).toBe(1);
+  expect(unitAttrs.getName()).toBe("my-name");
 
   unitAttrs.setCost(2);
   expect(unitAttrs.getCost()).toBe(2);
 
   unitAttrs.applyOverride({
-    name: "my-name",
+    name: "my-name-2",
     unit: "infantry",
     cost: 3,
   });
   expect(unitAttrs.getCost()).toBe(3);
+  expect(unitAttrs.getName()).toBe("my-name-2");
 });
 
 it("producePerCost", () => {

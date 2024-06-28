@@ -5,6 +5,8 @@ import {
   UnitType,
 } from "../schema/unit-attrs-schema";
 import { SOURCE_TO_UNIT_ATTRS_DATA } from "../data/unit-attrs.data";
+import { UnitAttrsSet } from "../unit-attrs-set/unit-attrs-set";
+import { UnitAttrs } from "../unit-attrs/unit-attrs";
 
 export class UnitAttrsRegistry {
   private readonly _unitToBaseAttrs: Map<UnitType, UnitAttrsSchemaType> =
@@ -13,6 +15,27 @@ export class UnitAttrsRegistry {
     new Map();
 
   constructor() {}
+
+  createUnitAttrsSet(nsidNames: Array<string>): UnitAttrsSet {
+    const baseAttrs: Array<UnitAttrsSchemaType> = this.getAllBaseAttrs();
+    const unitAttrsSet = new UnitAttrsSet(baseAttrs);
+
+    // Apply in order, level 2 nsids sort after level 1.
+    nsidNames = [...nsidNames].sort();
+
+    for (const nsidName of nsidNames) {
+      const overrideAttrs = this.getOverrideAttrs(nsidName);
+      if (overrideAttrs) {
+        const unitAttrs: UnitAttrs | undefined = unitAttrsSet.get(
+          overrideAttrs.unit
+        );
+        if (unitAttrs) {
+          unitAttrsSet.applyOverride(overrideAttrs);
+        }
+      }
+    }
+    return unitAttrsSet;
+  }
 
   getAllBaseAttrs(): Array<UnitAttrsSchemaType> {
     return Array.from(this._unitToBaseAttrs.values());

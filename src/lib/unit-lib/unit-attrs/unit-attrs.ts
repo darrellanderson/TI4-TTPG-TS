@@ -9,10 +9,10 @@ import { CombatAttrs } from "./combat-attrs";
  * This does mean need to regenerate unit attributes for each instance.
  */
 export class UnitAttrs {
-  private readonly _name: string;
   private readonly _unit: UnitType;
-  private readonly _unitCount: number; // component count, e.g. fighters = 10
+  private readonly _componentCount: number; // component count, e.g. fighters = 10
 
+  private _name: string;
   private _cost: number | undefined;
   private _producePerCost: number; // e.g. 2 for fighters
 
@@ -32,7 +32,7 @@ export class UnitAttrs {
   constructor(params: UnitAttrsSchemaType) {
     this._name = params.name;
     this._unit = params.unit;
-    this._unitCount = params.unitCount ?? 0;
+    this._componentCount = params.componentCount ?? 0;
 
     this._cost = params.cost;
     this._producePerCost = params.producePerCost ?? 1;
@@ -80,6 +80,7 @@ export class UnitAttrs {
     if (override.isShip !== undefined) {
       this._isShip = override.isShip;
     }
+    this._name = override.name;
     if (override.planetaryShield !== undefined) {
       this._planetaryShield = override.planetaryShield;
     }
@@ -135,6 +136,10 @@ export class UnitAttrs {
     return this._bombardment;
   }
 
+  getComponentCount(): number {
+    return this._componentCount;
+  }
+
   getCost(): number | undefined {
     return this._cost;
   }
@@ -173,10 +178,6 @@ export class UnitAttrs {
 
   getUnit(): UnitType {
     return this._unit;
-  }
-
-  getUnitCount(): number {
-    return this._unitCount;
   }
 
   isGround(): boolean {
