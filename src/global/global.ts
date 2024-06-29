@@ -62,3 +62,9 @@ for (const [k, v] of Object.entries(globalThis.TI4)) {
   }
 }
 GlobalInit.runGlobalInit(iGlobals);
+
+if (GameWorld.getExecutionReason() === "unittest") {
+  beforeEach(() => {
+    resetGlobalThisTI4();
+  });
+}
