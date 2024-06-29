@@ -16,6 +16,13 @@ export class UnitAttrsRegistry {
 
   constructor() {}
 
+  /**
+   * Create a new UnitAttrsSet adding any overrides to the base attributes.
+   * Unit modifiers may mutate these, regenerate a fresh set when needed.
+   *
+   * @param nsidNames
+   * @returns
+   */
   createUnitAttrsSet(nsidNames: Array<string>): UnitAttrsSet {
     const baseAttrs: Array<UnitAttrsSchemaType> = this.getAllBaseAttrs();
     const unitAttrsSet = new UnitAttrsSet(baseAttrs);

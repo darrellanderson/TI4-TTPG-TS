@@ -72,6 +72,7 @@ it("createUnitAttrsSet", () => {
 });
 
 it("compare vs old style data", () => {
+  // This "test" is mostly a sanity check that new data agrees with old.
   const registry = new UnitAttrsRegistry().loadDefaultData();
 
   const nsidNameRewrite: Record<string, string> = {
