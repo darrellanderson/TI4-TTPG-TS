@@ -72,3 +72,18 @@ it("getOne (infantry-3 token)", () => {
   expect(entry?.count).toBe(3);
   expect(entry?.owningPlayerSlot).toBe(-1);
 });
+
+it("getAll (empty)", () => {
+  const result: Array<UnitPlasticEntry> = new UnitPlastic().getAll();
+  expect(result).toEqual([]);
+});
+
+it("getAll (single)", () => {
+  const obj: GameObject = new MockGameObject({
+    templateMetadata: "unit:base/infantry",
+  });
+  const result: Array<UnitPlasticEntry> = new UnitPlastic().getAll();
+  expect(result).toHaveLength(1);
+  expect(result[0]?.unit).toBe("infantry");
+  expect(result[0]?.count).toBe(1);
+});

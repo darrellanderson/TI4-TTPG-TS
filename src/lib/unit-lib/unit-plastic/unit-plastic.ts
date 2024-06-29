@@ -1,7 +1,7 @@
 import { HexType, NSID, ParsedNSID } from "ttpg-darrell";
 import { UnitSchema, UnitType } from "../schema/unit-attrs-schema";
 import { Planet } from "lib/system-lib/planet/planet";
-import { GameObject } from "@tabletop-playground/api";
+import { GameObject, world } from "@tabletop-playground/api";
 
 export type UnitPlasticEntry = {
   unit: UnitType;
@@ -57,5 +57,17 @@ export class UnitPlastic {
       hex: TI4.hex.fromPosition(obj.getPosition()),
       owningPlayerSlot,
     };
+  }
+
+  getAll(): Array<UnitPlasticEntry> {
+    const result: Array<UnitPlasticEntry> = [];
+    const skipContained: boolean = true;
+    for (const obj of world.getAllObjects(skipContained)) {
+      const maybeEntry: UnitPlasticEntry | undefined = this.getOne(obj);
+      if (maybeEntry) {
+        result.push(maybeEntry);
+      }
+    }
+    return result;
   }
 }
