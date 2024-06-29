@@ -1,7 +1,8 @@
 import { HexType, NSID, ParsedNSID } from "ttpg-darrell";
 import { UnitSchema, UnitType } from "../schema/unit-attrs-schema";
 import { Planet } from "lib/system-lib/planet/planet";
-import { GameObject, world } from "@tabletop-playground/api";
+import { GameObject, Vector, world } from "@tabletop-playground/api";
+import { System } from "lib/system-lib/system/system";
 
 export type UnitPlasticEntry = {
   unit: UnitType;
@@ -69,5 +70,22 @@ export class UnitPlastic {
       }
     }
     return result;
+  }
+
+  assignPlanets(entries: Array<UnitPlasticEntry>): void {
+    const systems: Array<System> = TI4.systemRegistry.getAllSystemsWithObjs();
+    const hexToSystem: Map<HexType, System> = new Map();
+    for (const system of systems) {
+      const hex: HexType = TI4.hex.fromPosition(system.getObj().getPosition());
+      hexToSystem.set(hex, system);
+    }
+    for (const entry of entries) {
+      const system: System | undefined = hexToSystem.get(entry.hex);
+      if (system) {
+        const pos: Vector = entry.obj.getPosition();
+        entry.planetClosest = system.getPlanetClosest(pos);
+        entry.planetExact = system.getPlanetExact(pos);
+      }
+    }
   }
 }
