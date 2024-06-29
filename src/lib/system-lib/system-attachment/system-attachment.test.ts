@@ -3,7 +3,6 @@ import { MockGameObject, MockPlayer } from "ttpg-mock";
 
 import { System, WormholeWithPosition } from "../system/system";
 import { SystemAttachment } from "./system-attachment";
-import { resetGlobalThisTI4 } from "../../../global/global";
 
 it("static schemaToNsid", () => {
   expect(
@@ -226,9 +225,6 @@ it("wormholesWorldPosition face down", () => {
 });
 
 it("attach/detach", () => {
-  // Reset TI4.systemRegistry because globalEvents gets reset between tests.
-  resetGlobalThisTI4();
-
   const attachment = new SystemAttachment(
     new MockGameObject({
       templateMetadata: "token.attachment.system:my-source/my-nsid-name",
@@ -273,7 +269,6 @@ it("attach/detach", () => {
 });
 
 it("grab/release", () => {
-  resetGlobalThisTI4(); // for TI4.systemRegistry.getByPosition
   const systemTileObj: GameObject = new MockGameObject({
     templateMetadata: "tile.system:base/1",
   });

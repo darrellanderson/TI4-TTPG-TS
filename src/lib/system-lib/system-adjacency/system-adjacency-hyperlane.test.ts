@@ -4,7 +4,6 @@ import { Adjacency, AdjacencyResult, Hex, HexType } from "ttpg-darrell";
 
 import { SystemAdjacencyHyperlane } from "./system-adjacency-hyperlane";
 import { System } from "../system/system";
-import { resetGlobalThisTI4 } from "../../../global/global";
 import { SystemAdjacencyNeighbor } from "./system-adjacency-neighbor";
 
 it("static yawToShift", () => {
@@ -76,7 +75,6 @@ it("static neighborsWithRotAndFlip", () => {
 });
 
 it("addTags", () => {
-  resetGlobalThisTI4();
   const adjacency: Adjacency = new Adjacency();
 
   const dirToHex: Record<string, HexType> = {
@@ -149,7 +147,6 @@ it("addTags", () => {
 });
 
 it("addTags (rotated hyperlane)", () => {
-  resetGlobalThisTI4();
   const hexToSystem: Map<HexType, System> = new Map<HexType, System>();
   const adjacency: Adjacency = new Adjacency();
 

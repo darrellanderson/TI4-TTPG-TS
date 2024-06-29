@@ -4,14 +4,12 @@ import { Adjacency, AdjacencyResult, HexType } from "ttpg-darrell";
 import { System } from "../system/system";
 import { SystemAdjacency } from "./system-adjacency";
 import { SystemAdjacencyNeighbor } from "./system-adjacency-neighbor";
-import { resetGlobalThisTI4 } from "../../../global/global";
 
 it("constructor", () => {
   new SystemAdjacencyNeighbor();
 });
 
 it("addTags", () => {
-  resetGlobalThisTI4();
   new MockGameObject({
     position: TI4.hex.toPosition("<0,0,0>"),
     templateMetadata: "tile.system:base/1",
@@ -60,7 +58,6 @@ it("addTags", () => {
 });
 
 it("hyperlanes are other systems' neighbors", () => {
-  resetGlobalThisTI4();
   new MockGameObject({
     position: TI4.hex.toPosition("<0,0,0>"),
     templateMetadata: "tile.system:base/1",

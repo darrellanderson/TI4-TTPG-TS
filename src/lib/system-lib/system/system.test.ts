@@ -8,7 +8,6 @@ import { System, WormholeWithPosition } from "./system";
 import { SystemAttachment } from "../system-attachment/system-attachment";
 import { SystemDefaults } from "../data/system-defaults";
 import { SystemSchemaType } from "../schema/system-schema";
-import { resetGlobalThisTI4 } from "../../../global/global";
 
 it("static nsidToSystemTileNumber", () => {
   expect(System.nsidToSystemTileNumber("tile.system:my-source/1")).toBe(1);
@@ -98,7 +97,6 @@ it("constructor (invalid nsid)", () => {
 });
 
 it("onReleased", () => {
-  resetGlobalThisTI4(); // not strictly necessary, but including it creates global TI4
   const systemTileObj: MockGameObject = new MockGameObject({
     position: [0.1, 0.1, 0],
     templateMetadata: "tile.system:my-source/1000",

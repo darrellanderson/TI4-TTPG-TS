@@ -7,7 +7,6 @@ import {
 } from "ttpg-mock";
 import { SystemRegistry } from "./system-registry";
 import { GameObject, Package, Vector, world } from "@tabletop-playground/api";
-import { resetGlobalThisTI4 } from "global/global";
 
 it("constructor", () => {
   new SystemRegistry();
@@ -16,19 +15,19 @@ it("constructor", () => {
 it("onObjectCreated/Destroyed", () => {
   const registry = new SystemRegistry().load(
     { source: "my-source", packageId: "my-package-id" },
-    [{ tile: 12 }]
+    [{ tile: 1000 }]
   );
-  expect(registry.rawBySystemTileNumber(12)).toBeDefined();
+  expect(registry.rawBySystemTileNumber(1000)).toBeDefined();
 
   let systemTileObj: GameObject = new MockGameObject({
     id: "my-id",
-    templateMetadata: "tile.system:my-source/12",
+    templateMetadata: "tile.system:my-source/1000",
   });
-  expect(registry.rawBySystemTileNumber(12)).toBeDefined();
+  expect(registry.rawBySystemTileNumber(1000)).toBeDefined();
   expect(registry.getBySystemTileObjId("my-id")).toBeDefined();
 
   systemTileObj.destroy();
-  expect(registry.rawBySystemTileNumber(12)).toBeDefined();
+  expect(registry.rawBySystemTileNumber(1000)).toBeDefined();
   expect(registry.getBySystemTileObjId("my-id")).toBeUndefined();
 
   registry.destroy();
@@ -37,17 +36,17 @@ it("onObjectCreated/Destroyed", () => {
 it("load (system tile obj exists at load time)", () => {
   let systemTileObj: GameObject = new MockGameObject({
     id: "my-id",
-    templateMetadata: "tile.system:my-source/12",
+    templateMetadata: "tile.system:my-source/1000",
   });
   const registry = new SystemRegistry().load(
     { source: "my-source", packageId: "my-package-id" },
-    [{ tile: 12 }]
+    [{ tile: 1000 }]
   );
-  expect(registry.rawBySystemTileNumber(12)).toBeDefined();
+  expect(registry.rawBySystemTileNumber(1000)).toBeDefined();
   expect(registry.getBySystemTileObjId("my-id")).toBeDefined();
 
   systemTileObj.destroy();
-  expect(registry.rawBySystemTileNumber(12)).toBeDefined();
+  expect(registry.rawBySystemTileNumber(1000)).toBeDefined();
   expect(registry.getBySystemTileObjId("my-id")).toBeUndefined();
 
   registry.destroy();
@@ -59,21 +58,21 @@ it("load (duplicate system tile)", () => {
 
   // Add first.
   registry.load({ source: "base", packageId: "my-package-id" }, [
-    { tile: 12, wormholes: ["alpha"] },
+    { tile: 1002, wormholes: ["alpha"] },
   ]);
-  expect(registry.rawBySystemTileNumber(12)?.wormholes).toEqual(["alpha"]);
+  expect(registry.rawBySystemTileNumber(1002)?.wormholes).toEqual(["alpha"]);
 
   // Add duplicate, expect ignored but non-duplicate entries still added.
   expect(() => {
     registry.load({ source: "homebrew", packageId: "my-package-id" }, [
-      { tile: 11, wormholes: ["beta"] },
-      { tile: 12, wormholes: ["beta"] },
-      { tile: 13 },
+      { tile: 1001, wormholes: ["beta"] },
+      { tile: 1002, wormholes: ["beta"] },
+      { tile: 1003 },
     ]);
   }).toThrow();
-  expect(registry.rawBySystemTileNumber(11)?.wormholes).toEqual(["beta"]);
-  expect(registry.rawBySystemTileNumber(12)?.wormholes).toEqual(["alpha"]); // not overwritten
-  expect(registry.rawBySystemTileNumber(13)).toBeUndefined(); // throw before added
+  expect(registry.rawBySystemTileNumber(1001)?.wormholes).toEqual(["beta"]);
+  expect(registry.rawBySystemTileNumber(1002)?.wormholes).toEqual(["alpha"]); // not overwritten
+  expect(registry.rawBySystemTileNumber(1003)).toBeUndefined(); // throw before added
 
   registry.destroy();
 });
@@ -82,7 +81,7 @@ it("load (invalid schema)", () => {
   const registry = new SystemRegistry();
   expect(() => {
     registry.load({ source: "my-source", packageId: "my-package-id" }, [
-      { tile: 12, planets: [{ name: "x", nsidName: "@@" }] },
+      { tile: 1000, planets: [{ name: "x", nsidName: "@@" }] },
     ]);
   }).toThrow();
   registry.destroy();
@@ -90,24 +89,24 @@ it("load (invalid schema)", () => {
 
 it("loadDefaultData", () => {
   const registry = new SystemRegistry();
-  expect(registry.rawBySystemTileNumber(12)).toBeUndefined();
+  expect(registry.rawBySystemTileNumber(1)).toBeUndefined();
   registry.loadDefaultData();
-  expect(registry.rawBySystemTileNumber(12)).toBeDefined();
+  expect(registry.rawBySystemTileNumber(1)).toBeDefined();
   registry.destroy();
 });
 
 it("getAllSystemsWithObjs", () => {
   const registry = new SystemRegistry().load(
     { source: "my-source", packageId: "my-package-id" },
-    [{ tile: 12 }]
+    [{ tile: 1000 }]
   );
   const obj = new MockGameObject({
     id: "my-id-1",
-    templateMetadata: "tile.system:my-source/12",
+    templateMetadata: "tile.system:my-source/1000",
   });
   new MockGameObject({
     id: "my-id-2",
-    templateMetadata: "tile.system:my-source/12",
+    templateMetadata: "tile.system:my-source/1000",
     container: new MockContainer(),
   });
   expect(registry.getAllSystemsWithObjs()).toHaveLength(2);
@@ -123,14 +122,14 @@ it("getByPosition", () => {
   const pos = new Vector(0, 0, z);
   const registry = new SystemRegistry().load(
     { source: "my-source", packageId: "my-package-id" },
-    [{ tile: 12 }]
+    [{ tile: 1000 }]
   );
   expect(registry.getByPosition(pos)).toBeUndefined();
 
   const obj = new MockGameObject({
     id: "my-id",
     position: pos,
-    templateMetadata: "tile.system:my-source/12",
+    templateMetadata: "tile.system:my-source/1000",
   });
   expect(registry.getByPosition(pos)).toBeDefined();
 

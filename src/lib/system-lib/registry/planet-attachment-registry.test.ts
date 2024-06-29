@@ -5,7 +5,6 @@ import { Planet } from "../planet/planet";
 import { PlanetAttachment } from "../planet-attachment/planet-attachment";
 import { PlanetAttachmentRegistry } from "./planet-attachment-registry";
 import { System } from "../system/system";
-import { resetGlobalThisTI4 } from "../../../global/global";
 
 it("constructor", () => {
   new PlanetAttachmentRegistry();
@@ -48,7 +47,6 @@ it("getByPlanetAttachmentObjId", () => {
 });
 
 it("init attaches", () => {
-  resetGlobalThisTI4(); // for TI4.systemRegistry
   new MockGameObject({
     templateMetadata: "tile.system:base/1",
   });

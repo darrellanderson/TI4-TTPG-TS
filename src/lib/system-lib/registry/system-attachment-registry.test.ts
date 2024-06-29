@@ -4,7 +4,6 @@ import { MockGameObject, MockPackage, mockWorld } from "ttpg-mock";
 import { SystemAttachmentRegistry } from "./system-attachment-registry";
 import { System } from "../system/system";
 import { SystemAttachment } from "../system-attachment/system-attachment";
-import { resetGlobalThisTI4 } from "../../../global/global";
 
 it("constuctor", () => {
   new SystemAttachmentRegistry();
@@ -68,8 +67,6 @@ it("load (do not attach)", () => {
 });
 
 it("token existed at load time, not attached until init.", () => {
-  resetGlobalThisTI4();
-
   // Create system (picked up by global TI4.systemRegistry).
   const systemTileObj: GameObject = new MockGameObject({
     templateMetadata: "tile.system:base/1",

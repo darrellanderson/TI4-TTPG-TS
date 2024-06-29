@@ -35,8 +35,8 @@ it("getTier (red, anomalies)", () => {
 
 it("getTier (med)", () => {
   const system: System = new System(
-    new MockGameObject({ templateMetadata: "tile.system:my-source/26" }),
-    { source: "my-source", packageId: "my-package-id" },
+    new MockGameObject({ templateMetadata: "tile.system:base/26" }),
+    { source: "base", packageId: "my-package-id" },
     { tile: 26, planets: [{ name: "my-name", nsidName: "my-nsid-name" }] }
   );
   expect(new SystemTier().getTier(system)).toBe("med");

@@ -1,7 +1,6 @@
 import { GameObject, Player, Vector } from "@tabletop-playground/api";
 import { MockGameObject, MockPlayer } from "ttpg-mock";
 import { PlanetAttachment } from "./planet-attachment";
-import { resetGlobalThisTI4 } from "../../../global/global";
 import { System } from "../system/system";
 import { Planet } from "../planet/planet";
 
@@ -61,8 +60,6 @@ it("constructor (invalid nsid)", () => {
 });
 
 it("attach/detach", () => {
-  resetGlobalThisTI4(); // for TI4.systemRegistry.getByPosition
-
   const planetAttachment = new PlanetAttachment(
     new MockGameObject({
       templateMetadata: "token.attachment.planet:my-source/my-nsid-name",
@@ -117,7 +114,6 @@ it("attach/detach", () => {
 });
 
 it("grab/release", () => {
-  resetGlobalThisTI4(); // for TI4.systemRegistry.getByPosition
   const systemTileObj: GameObject = new MockGameObject({
     templateMetadata: "tile.system:base/1",
   });
