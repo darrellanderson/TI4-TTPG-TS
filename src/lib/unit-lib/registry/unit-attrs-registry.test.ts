@@ -5,7 +5,7 @@ import {
   UnitAttrsSchemaType,
   UnitType,
 } from "../schema/unit-attrs-schema";
-import { NSID } from "ttpg-darrell";
+import { NSID, ParsedNSID } from "ttpg-darrell";
 
 it("constructor", () => {
   new UnitAttrsRegistry();
@@ -82,34 +82,113 @@ it("compare vs old style data", () => {
     "war-sun": "war-sun-2",
   };
 
+  const convertNsidName = (nsid: string | undefined): string | undefined => {
+    if (nsid) {
+      const parsed: ParsedNSID | undefined = NSID.parse(nsid);
+      if (parsed) {
+        let nsidName: string | undefined = parsed.nameParts[0];
+        if (nsidName) {
+          nsidName = nsidName.replace(/_/g, "-");
+          nsidName = nsidNameRewrite[nsidName];
+        }
+        return nsidName;
+      }
+    }
+    return undefined;
+  };
+
   for (const oldStyle of OLD_STYLE_UNIT_ATTRS) {
     const unit: UnitType = oldStyle.unit.replace(/_/g, "-") as UnitType;
-
-    if (unit === "mech") {
-      continue; // skip for now, havent added mechs yet
-    }
+    const nsidName: string | undefined = convertNsidName(oldStyle.triggerNsid);
 
     // Lookup new style data.
     let newStyle: UnitAttrsSchemaType | undefined;
-    if (oldStyle.triggerNsid) {
-      let nsidName: string | undefined = NSID.parse(
-        oldStyle.triggerNsid
-      )?.nameParts[0]?.replace(/_/g, "-");
-      if (nsidName) {
-        nsidName = nsidNameRewrite[nsidName] ?? nsidName;
-        newStyle = registry.getOverrideAttrs(nsidName);
-      }
+    if (nsidName) {
+      newStyle = registry.getOverrideAttrs(nsidName);
     } else {
       newStyle = registry.getBaseAttrs(unit);
     }
 
-    // Verify new style version exists.
-    if (!newStyle) {
-      console.log("Missing new style:", unit, JSON.stringify(oldStyle));
-    }
-    expect(newStyle).toBeDefined();
-
     // Validate.
-    // TODO
+    let antiFighterBarrage: CombatAttrsSchemaType | undefined;
+    if (oldStyle.antiFighterBarrage) {
+      antiFighterBarrage = {
+        dice: oldStyle.antiFighterBarrage.dice,
+        hit: oldStyle.antiFighterBarrage.hit,
+      };
+    }
+
+    let bombardment: CombatAttrsSchemaType | undefined;
+    if (oldStyle.bombardment) {
+      bombardment = {
+        dice: oldStyle.bombardment.dice,
+        hit: oldStyle.bombardment.hit,
+      };
+    }
+
+    let spaceCannon: CombatAttrsSchemaType | undefined;
+    if (oldStyle.spaceCannon) {
+      spaceCannon = {
+        dice: oldStyle.spaceCannon.dice,
+        hit: oldStyle.spaceCannon.hit,
+        range: oldStyle.spaceCannon.range,
+      };
+    }
+
+    let spaceCombat: CombatAttrsSchemaType | undefined;
+    if (oldStyle.spaceCombat) {
+      const crit: number | undefined = oldStyle.spaceCombat.extraHitsOn
+        ? oldStyle.spaceCombat.extraHitsOn.value
+        : undefined;
+      const critCount: number | undefined = oldStyle.spaceCombat.extraHitsOn
+        ? oldStyle.spaceCombat.extraHitsOn.count
+        : undefined;
+      spaceCombat = {
+        dice: oldStyle.spaceCombat.dice,
+        hit: oldStyle.spaceCombat.hit,
+        crit,
+        critCount,
+      };
+    }
+
+    let groundCombat: CombatAttrsSchemaType | undefined;
+    if (oldStyle.groundCombat) {
+      groundCombat = {
+        dice: oldStyle.groundCombat.dice,
+        hit: oldStyle.groundCombat.hit,
+      };
+    }
+
+    // Assert new style exists.
+    if (!newStyle) {
+      throw new Error(
+        "Missing new style: " + unit + " " + JSON.stringify(oldStyle)
+      );
+    }
+    const oldUpdated: UnitAttrsSchemaType = {
+      name: newStyle.name,
+      unit: newStyle.unit,
+      componentCount: oldStyle.unitCount,
+      nsidName,
+      cost: oldStyle.cost,
+      isShip: oldStyle.ship,
+      isGround: oldStyle.ground,
+      antiFighterBarrage,
+      bombardment,
+      spaceCannon,
+      spaceCombat,
+      groundCombat,
+    };
+
+    const scrub = (obj: Record<string, any>) => {
+      for (const [k, v] of [...Object.entries(obj)]) {
+        if (v === undefined) {
+          delete obj[k];
+        } else if (typeof v === "object") {
+          scrub(v);
+        }
+      }
+    };
+    expect(scrub(oldUpdated)).toEqual(scrub(newStyle));
   }
 });
