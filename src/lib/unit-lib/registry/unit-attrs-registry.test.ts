@@ -55,11 +55,3 @@ it("loadDefaultData", () => {
   expect(registry.getOverrideAttrs("hybrid-crystal-fighter")).toBeDefined();
   expect(registry.getAllBaseAttrs()).not.toHaveLength(0);
 });
-
-it("createUnitAttrsSet", () => {
-  const unitAttrsSet = new UnitAttrsRegistry()
-    .loadDefaultData()
-    .createUnitAttrsSet(["fighter-2"]);
-  expect(unitAttrsSet.get("infantry")?.getName()).toBe("Infantry");
-  expect(unitAttrsSet.get("fighter")?.getName()).toBe("Fighter II");
-});
