@@ -6,6 +6,7 @@ import {
   Hex,
   HEX_LAYOUT_POINTY,
   IGlobal,
+  OnCardBecameSingletonOrDeck,
 } from "ttpg-darrell";
 
 import { PlanetAttachmentRegistry } from "../lib/system-lib/registry/planet-attachment-registry";
@@ -30,6 +31,7 @@ registerErrorHandler();
 
 export class TI4Class {
   // Events.
+  onCardBecameSingletonOrDeck = new OnCardBecameSingletonOrDeck();
 
   // Libraries.
   hex = new Hex(HEX_LAYOUT_POINTY, 5.77735 * 1.5);
