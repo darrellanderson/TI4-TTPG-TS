@@ -3,7 +3,7 @@ import { z } from "zod";
 
 export const UnitModifierSchema = z.object({
   name: z.string(),
-  description: z.string(),
+  description: z.string().optional(),
 
   nsidNames: z.array(NsidNameSchema).optional(),
 
