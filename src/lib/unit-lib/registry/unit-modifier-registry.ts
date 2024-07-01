@@ -3,39 +3,46 @@ import {
   UnitModifierSchema,
   UnitModifierSchemaType,
 } from "../schema/unit-modifier-schema";
-import { SOURCE_TO_UNIT_MODIFIER_DATA } from "../data/unit-modifier.data";
 import { UnitModifier } from "../unit-modifier/unit-modifier";
+import { SOURCE_TO_UNIT_MODIFIER_DATA } from "../data/unit-modifier.data";
 
 export class UnitModifierRegistry {
   private readonly _nsidToSchema: Map<string, UnitModifierSchemaType> =
+    new Map();
+  private readonly _nsidNameToSchema: Map<string, UnitModifierSchemaType> =
     new Map();
 
   rawByNsid(nsid: string): UnitModifierSchemaType | undefined {
     return this._nsidToSchema.get(nsid);
   }
 
-  load(source: string, unitAttrsArray: Array<UnitModifierSchemaType>): this {
-    for (const unitAttrs of unitAttrsArray) {
+  rawByNsidName(nsidName: string): UnitModifierSchemaType | undefined {
+    return this._nsidNameToSchema.get(nsidName);
+  }
+
+  load(source: string, unitModifiers: Array<UnitModifierSchemaType>): this {
+    for (const unitModifier of unitModifiers) {
       // Validate schema (oterhwise not validated until used).
       try {
         NsidNameSchema.parse(source);
-        UnitModifierSchema.parse(unitAttrs);
+        UnitModifierSchema.parse(unitModifier);
       } catch (e) {
         const msg = `error: ${e.message}\nparsing: ${JSON.stringify(
-          unitAttrs
+          unitModifier
         )}`;
         throw new Error(msg);
       }
 
       const nsid: string | undefined = UnitModifier.schemaToNsid(
         source,
-        unitAttrs
+        unitModifier
       );
       if (nsid) {
-        this._nsidToSchema.set(nsid, unitAttrs);
+        this._nsidToSchema.set(nsid, unitModifier);
       }
-
-      // TODO XXX
+      if (unitModifier.nsidName) {
+        this._nsidNameToSchema.set(unitModifier.nsidName, unitModifier);
+      }
     }
     return this;
   }

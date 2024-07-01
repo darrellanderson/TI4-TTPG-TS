@@ -24,9 +24,11 @@ it("rawByNsid", () => {
 
   const registry: UnitModifierRegistry = new UnitModifierRegistry();
   expect(registry.rawByNsid(nsid)).toBeUndefined();
+  expect(registry.rawByNsidName("my-nsid-name")).toBeUndefined();
 
   registry.load(source, [schema]);
   expect(registry.rawByNsid(nsid)).toBe(schema);
+  expect(registry.rawByNsidName("my-nsid-name")).toBe(schema);
 });
 
 it("load", () => {
