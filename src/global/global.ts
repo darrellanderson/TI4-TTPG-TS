@@ -13,6 +13,7 @@ import { PlanetAttachmentRegistry } from "../lib/system-lib/registry/planet-atta
 import { SystemAttachmentRegistry } from "../lib/system-lib/registry/system-attachment-registry";
 import { SystemRegistry } from "../lib/system-lib/registry/system-registry";
 import { UnitAttrsRegistry } from "../lib/unit-lib/registry/unit-attrs-registry";
+import { UnitModifierRegistry } from "../lib/unit-lib/registry/unit-modifier-registry";
 
 export function registerErrorHandler() {
   if (GameWorld.getExecutionReason() !== "unittest") {
@@ -39,6 +40,7 @@ export class TI4Class {
   systemAttachmentRegistry = new SystemAttachmentRegistry().loadDefaultData();
   systemRegistry = new SystemRegistry().loadDefaultData();
   unitAttrsRegistry = new UnitAttrsRegistry().loadDefaultData();
+  unitModifierRegistry = new UnitModifierRegistry().loadDefaultData();
 }
 
 // Also place "TI4" in the global namespace.

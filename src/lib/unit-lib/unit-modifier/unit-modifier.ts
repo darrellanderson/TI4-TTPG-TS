@@ -1,4 +1,9 @@
-import { UnitModifierSchemaType } from "../schema/unit-modifier-schema";
+import {
+  UnitModifierCardClassType,
+  UnitModifierOwnerType,
+  UnitModifierPriorityType,
+  UnitModifierSchemaType,
+} from "../schema/unit-modifier-schema";
 
 export class UnitModifier {
   private readonly _params: UnitModifierSchemaType;
@@ -7,23 +12,31 @@ export class UnitModifier {
     this._params = params;
   }
 
+  getCardClass(): UnitModifierCardClassType | undefined {
+    return this._params.cardClass;
+  }
+
   getDescription(): string | undefined {
     return this._params.description;
+  }
+
+  getLinkToNsidName(): string | undefined {
+    return this._params.linkToNsidName;
   }
 
   getName(): string {
     return this._params.name;
   }
 
-  getNsidNames(): string[] {
-    return [...(this._params.nsidNames ?? [])];
+  getNsidName(): string | undefined {
+    return this._params.nsidName;
   }
 
-  getOwner(): "self" | "opponent" | "any" {
+  getOwner(): UnitModifierOwnerType {
     return this._params.owner;
   }
 
-  getPriority(): "mutate" | "adjust" | "choose" {
+  getPriority(): UnitModifierPriorityType {
     return this._params.priority;
   }
 
