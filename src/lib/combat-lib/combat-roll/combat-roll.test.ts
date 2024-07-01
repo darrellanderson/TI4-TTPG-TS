@@ -1,8 +1,9 @@
+import { Card } from "@tabletop-playground/api";
+import { CardUtil } from "ttpg-darrell";
+
 import { MockCard, MockCardHolder } from "ttpg-mock";
 import { CombatRoll, CombatRollParams } from "./combat-roll";
 import { UnitAttrsSet } from "lib/unit-lib/unit-attrs-set/unit-attrs-set";
-import { Card } from "@tabletop-playground/api";
-import { CardUtil } from "ttpg-darrell";
 
 it("constructor", () => {
   const params: CombatRollParams = {
@@ -14,7 +15,6 @@ it("constructor", () => {
   const combatRoll: CombatRoll = new CombatRoll(params);
   expect(combatRoll.getType()).toBe("spaceCombat");
 });
-
 it("_createUnitAttrsSet (standard unit upgrade)", () => {
   // Need a card holder to be closest to assign cards.
   new MockCardHolder({ owningPlayerSlot: 2 });
