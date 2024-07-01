@@ -4,8 +4,16 @@ import {
   UnitModifierSchemaType,
 } from "../schema/unit-modifier-schema";
 import { SOURCE_TO_UNIT_MODIFIER_DATA } from "../data/unit-modifier.data";
+import { UnitModifier } from "../unit-modifier/unit-modifier";
 
 export class UnitModifierRegistry {
+  private readonly _nsidToSchema: Map<string, UnitModifierSchemaType> =
+    new Map();
+
+  rawByNsid(nsid: string): UnitModifierSchemaType | undefined {
+    return this._nsidToSchema.get(nsid);
+  }
+
   load(source: string, unitAttrsArray: Array<UnitModifierSchemaType>): this {
     for (const unitAttrs of unitAttrsArray) {
       // Validate schema (oterhwise not validated until used).
@@ -17,6 +25,14 @@ export class UnitModifierRegistry {
           unitAttrs
         )}`;
         throw new Error(msg);
+      }
+
+      const nsid: string | undefined = UnitModifier.schemaToNsid(
+        source,
+        unitAttrs
+      );
+      if (nsid) {
+        this._nsidToSchema.set(nsid, unitAttrs);
       }
 
       // TODO XXX
