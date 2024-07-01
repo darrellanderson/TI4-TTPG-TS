@@ -1,5 +1,5 @@
 import { Vector, world } from "@tabletop-playground/api";
-import { Find, HexType, NSID, ParsedNSID } from "ttpg-darrell";
+import { CardUtil, Find, HexType, NSID, ParsedNSID } from "ttpg-darrell";
 
 import {
   UnitAttrsSchemaType,
@@ -7,6 +7,7 @@ import {
 } from "lib/unit-lib/schema/unit-attrs-schema";
 import { UnitAttrsSet } from "../../unit-lib/unit-attrs-set/unit-attrs-set";
 import { UnitAttrs } from "../../unit-lib/unit-attrs/unit-attrs";
+import { UnitModifierSchemaType } from "lib/unit-lib/schema/unit-modifier-schema";
 
 export type CombatRollType =
   | "antiFighterBarrage"
@@ -25,13 +26,17 @@ export type CombatRollParams = {
 
 export class CombatRoll {
   private readonly _params: CombatRollParams;
+  private readonly _cardUtil: CardUtil = new CardUtil();
   private readonly _find: Find = new Find();
 
-  _createUnitAttrsSet(playerSlot: number): UnitAttrsSet {
+  _createUnitAttrsSet(): UnitAttrsSet {
     const baseAttrs: Array<UnitAttrsSchemaType> =
       TI4.unitAttrsRegistry.getAllBaseAttrs();
     const unitAttrsSet: UnitAttrsSet = new UnitAttrsSet(baseAttrs);
+    return unitAttrsSet;
+  }
 
+  _applyUnitAttrs(unitAttrsSet: UnitAttrsSet, playerSlot: number): void {
     // Find unit upgrade cards owned by the player.
     const overrideAttrsArray: Array<UnitAttrsSchemaType> = [];
     const skipContained: boolean = true;
@@ -40,10 +45,16 @@ export class CombatRoll {
       const attrs: UnitAttrsSchemaType | undefined =
         TI4.unitAttrsRegistry.rawByNsid(nsid);
       if (attrs) {
-        const pos: Vector = obj.getPosition();
-        const closest: number = this._find.closestOwnedCardHolderOwner(pos);
-        if (closest === playerSlot) {
-          overrideAttrsArray.push(attrs);
+        const allowFaceDown: boolean = false;
+        const rejectSnapPointTags: Array<string> = []; // TODO XXX
+        if (
+          this._cardUtil.isLooseCard(obj, allowFaceDown, rejectSnapPointTags)
+        ) {
+          const pos: Vector = obj.getPosition();
+          const closest: number = this._find.closestOwnedCardHolderOwner(pos);
+          if (closest === playerSlot) {
+            overrideAttrsArray.push(attrs);
+          }
         }
       }
     }
@@ -57,11 +68,31 @@ export class CombatRoll {
         unitAttrs.applyOverride(overrideAttrs);
       }
     }
+  }
 
-    // Unit modifiers.
-    // TODO XXX
-
-    return unitAttrsSet;
+  _applyUnitModifiers(
+    unitAttrsSet: UnitAttrsSet,
+    selfSlot: number,
+    opponentSlot: number
+  ): void {
+    const unitModifiers: Array<UnitModifierSchemaType> = [];
+    const skipContained: boolean = true;
+    for (const obj of world.getAllObjects(skipContained)) {
+      const nsid: string = NSID.get(obj);
+      const modifier: UnitModifierSchemaType | undefined =
+        TI4.unitModifierRegistry.rawByNsid(nsid);
+      if (modifier) {
+        const allowFaceDown: boolean = false;
+        const rejectSnapPointTags: Array<string> = []; // TODO XXX
+        if (
+          !this._cardUtil.isLooseCard(obj, allowFaceDown, rejectSnapPointTags)
+        ) {
+          const pos: Vector = obj.getPosition();
+          const closest: number = this._find.closestOwnedCardHolderOwner(pos);
+          // TODO XXX
+        }
+      }
+    }
   }
 
   constructor(params: CombatRollParams) {
