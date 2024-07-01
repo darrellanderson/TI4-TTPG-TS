@@ -1,5 +1,80 @@
-import exp from "constants";
+import {
+  UnitModifierCardClassType,
+  UnitModifierSchemaType,
+} from "../schema/unit-modifier-schema";
 import { UnitModifier } from "./unit-modifier";
+
+it("schemaToNsid", () => {
+  const makeSchema = (
+    cardClass: UnitModifierCardClassType
+  ): UnitModifierSchemaType => {
+    return {
+      name: "my-name",
+      cardClass,
+      nsidName: "my-nsid-name",
+      owner: "self",
+      priority: "mutate",
+    };
+  };
+  let schema: UnitModifierSchemaType;
+
+  schema = makeSchema("action");
+  expect(UnitModifier.schemaToNsid("my-source", schema)).toBe(
+    "card.action:my-source/my-nsid-name"
+  );
+
+  schema = makeSchema("agenda");
+  expect(UnitModifier.schemaToNsid("my-source", schema)).toBe(
+    "card.agenda:my-source/my-nsid-name"
+  );
+
+  schema = makeSchema("agent");
+  expect(UnitModifier.schemaToNsid("my-source", schema)).toBe(
+    "card.leader.agent:my-source/my-nsid-name"
+  );
+
+  schema = makeSchema("alliance");
+  expect(UnitModifier.schemaToNsid("my-source", schema)).toBe(
+    "card.alliance:my-source/my-nsid-name"
+  );
+
+  schema = makeSchema("commander");
+  expect(UnitModifier.schemaToNsid("my-source", schema)).toBe(
+    "card.leader.commander:my-source/my-nsid-name"
+  );
+
+  schema = makeSchema("hero");
+  expect(UnitModifier.schemaToNsid("my-source", schema)).toBe(
+    "card.leader.hero:my-source/my-nsid-name"
+  );
+
+  schema = makeSchema("legendary");
+  expect(UnitModifier.schemaToNsid("my-source", schema)).toBe(
+    "card.legendary-planet:my-source/my-nsid-name"
+  );
+
+  schema = makeSchema("promissory");
+  expect(UnitModifier.schemaToNsid("my-source", schema)).toBe(
+    "card.promissory:my-source/my-nsid-name"
+  );
+
+  schema = makeSchema("relic");
+  expect(UnitModifier.schemaToNsid("my-source", schema)).toBe(
+    "card.relic:my-source/my-nsid-name"
+  );
+
+  schema = makeSchema("technology");
+  expect(UnitModifier.schemaToNsid("my-source", schema)).toBe(
+    "card.technology:my-source/my-nsid-name"
+  );
+
+  schema = {
+    name: "my-name",
+    owner: "self",
+    priority: "mutate",
+  };
+  expect(UnitModifier.schemaToNsid("my-source", schema)).toBeUndefined();
+});
 
 it("constructor", () => {
   const unitModifier: UnitModifier = new UnitModifier({

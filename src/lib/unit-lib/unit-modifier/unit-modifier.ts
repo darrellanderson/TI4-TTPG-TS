@@ -8,6 +8,35 @@ import {
 export class UnitModifier {
   private readonly _params: UnitModifierSchemaType;
 
+  public static schemaToNsid(
+    source: string,
+    schema: UnitModifierSchemaType
+  ): string | undefined {
+    switch (schema.cardClass) {
+      case "action":
+        return `card.action:${source}/${schema.nsidName}`;
+      case "agenda":
+        return `card.agenda:${source}/${schema.nsidName}`;
+      case "agent":
+        return `card.leader.agent:${source}/${schema.nsidName}`;
+      case "alliance":
+        return `card.alliance:${source}/${schema.nsidName}`;
+      case "commander":
+        return `card.leader.commander:${source}/${schema.nsidName}`;
+      case "hero":
+        return `card.leader.hero:${source}/${schema.nsidName}`;
+      case "legendary":
+        return `card.legendary-planet:${source}/${schema.nsidName}`;
+      case "promissory":
+        return `card.promissory:${source}/${schema.nsidName}`;
+      case "relic":
+        return `card.relic:${source}/${schema.nsidName}`;
+      case "technology":
+        return `card.technology:${source}/${schema.nsidName}`;
+    }
+    return undefined;
+  }
+
   constructor(params: UnitModifierSchemaType) {
     this._params = params;
   }
