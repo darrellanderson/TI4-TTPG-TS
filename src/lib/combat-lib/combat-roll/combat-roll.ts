@@ -1,5 +1,12 @@
 import { Vector, world } from "@tabletop-playground/api";
-import { CardUtil, Find, HexType, NSID, ParsedNSID } from "ttpg-darrell";
+import {
+  Adjacency,
+  CardUtil,
+  Find,
+  HexType,
+  NSID,
+  ParsedNSID,
+} from "ttpg-darrell";
 
 import {
   UnitAttrsSchemaType,
@@ -26,8 +33,22 @@ export type CombatRollParams = {
 
 export class CombatRoll {
   private readonly _params: CombatRollParams;
+  private readonly _adjacency: Adjacency = new Adjacency();
   private readonly _cardUtil: CardUtil = new CardUtil();
   private readonly _find: Find = new Find();
+
+  // Information about units, counts.  Unit modifers may look into
+  // and modify these.
+  public readonly unitAttrsSet: {
+    self: UnitAttrsSet;
+    opponent: UnitAttrsSet;
+  };
+  public readonly unitToHexCount: Map<UnitType, number> = new Map(); // local hex
+  public readonly unitToAdjCount: Map<UnitType, number> = new Map(); // adjacent hexes
+
+  _calculateAdjacency(): void {
+    // TODO
+  }
 
   _createUnitAttrsSet(): UnitAttrsSet {
     const baseAttrs: Array<UnitAttrsSchemaType> =
@@ -97,6 +118,11 @@ export class CombatRoll {
 
   constructor(params: CombatRollParams) {
     this._params = params;
+
+    this.unitAttrsSet = {
+      self: this._createUnitAttrsSet(),
+      opponent: this._createUnitAttrsSet(),
+    };
   }
 
   public getType(): CombatRollType {
