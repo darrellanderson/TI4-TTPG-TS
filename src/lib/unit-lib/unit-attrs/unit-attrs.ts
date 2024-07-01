@@ -31,6 +31,23 @@ export class UnitAttrs {
   private _spaceCombat: CombatAttrs | undefined;
   private _groundCombat: CombatAttrs | undefined;
 
+  public static schemaToNsid(
+    source: string,
+    schema: UnitAttrsSchemaType
+  ): string {
+    return `card.technology.unit-upgrade:${source}/${schema.nsidName}`;
+  }
+
+  public static sortByOverrideOrder(
+    attrs: Array<UnitAttrsSchemaType>
+  ): Array<UnitAttrsSchemaType> {
+    return attrs.sort((a, b) => {
+      const aStr: string = a.nsidName ?? "";
+      const bStr: string = b.nsidName ?? "";
+      return aStr.localeCompare(bStr);
+    });
+  }
+
   constructor(params: UnitAttrsSchemaType) {
     this._name = params.name;
     this._unit = params.unit;

@@ -33,34 +33,28 @@ export class CombatRoll {
     const unitAttrsSet: UnitAttrsSet = new UnitAttrsSet(baseAttrs);
 
     // Find unit upgrade cards owned by the player.
-    const nsidNames: Array<string> = [];
+    const overrideAttrsArray: Array<UnitAttrsSchemaType> = [];
     const skipContained: boolean = true;
     for (const obj of world.getAllObjects(skipContained)) {
       const nsid: string = NSID.get(obj);
-      if (nsid.startsWith("card.technology.unit-upgrade")) {
+      const attrs: UnitAttrsSchemaType | undefined =
+        TI4.unitAttrsRegistry.rawByNsid(nsid);
+      if (attrs) {
         const pos: Vector = obj.getPosition();
         const closest: number = this._find.closestOwnedCardHolderOwner(pos);
         if (closest === playerSlot) {
-          const parsed: ParsedNSID | undefined = NSID.parse(nsid);
-          if (parsed) {
-            const nsidName: string = parsed.nameParts.join(".");
-            nsidNames.push(nsidName);
-          }
+          overrideAttrsArray.push(attrs);
         }
       }
     }
 
     // nsidNames sort in override order, faction override 1 then 2.
-    nsidNames.sort();
-    for (const nsidName of nsidNames) {
-      const override: UnitAttrsSchemaType | undefined =
-        TI4.unitAttrsRegistry.getOverrideAttrs(nsidName);
-      if (override) {
-        const unit: UnitType = override.unit;
-        const unitAttrs: UnitAttrs | undefined = unitAttrsSet.get(unit);
-        if (unitAttrs) {
-          unitAttrs.applyOverride(override);
-        }
+    UnitAttrs.sortByOverrideOrder(overrideAttrsArray);
+    for (const overrideAttrs of overrideAttrsArray) {
+      const unit: UnitType = overrideAttrs.unit;
+      const unitAttrs: UnitAttrs | undefined = unitAttrsSet.get(unit);
+      if (unitAttrs) {
+        unitAttrs.applyOverride(overrideAttrs);
       }
     }
 

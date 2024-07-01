@@ -1,5 +1,28 @@
+import { UnitAttrsSchemaType } from "../schema/unit-attrs-schema";
 import { CombatAttrs } from "./combat-attrs";
 import { UnitAttrs } from "./unit-attrs";
+
+it("static schemaToNsid", () => {
+  const nsid = UnitAttrs.schemaToNsid("my-source", {
+    name: "my-name",
+    unit: "carrier",
+    nsidName: "my-nsid-name",
+  });
+  expect(nsid).toBe("card.technology.unit-upgrade:my-source/my-nsid-name");
+});
+
+it("static sortByOverrideOrder", () => {
+  const attrs: Array<UnitAttrsSchemaType> = [
+    { name: "my-name-b", unit: "carrier", nsidName: "b" },
+    { name: "my-name-a", unit: "carrier", nsidName: "a" },
+    { name: "my-name-c", unit: "carrier", nsidName: "c" },
+    { name: "no-nsid-name", unit: "carrier" },
+    { name: "no-nsid-name", unit: "carrier" },
+  ];
+  const sorted = UnitAttrs.sortByOverrideOrder(attrs);
+  const nsidNames = sorted.map((attrs) => attrs.nsidName);
+  expect(nsidNames).toEqual([undefined, undefined, "a", "b", "c"]);
+});
 
 it("constructor", () => {
   const unitAttrs = new UnitAttrs({
