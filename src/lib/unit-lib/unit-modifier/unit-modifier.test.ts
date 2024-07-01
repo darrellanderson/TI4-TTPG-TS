@@ -4,7 +4,7 @@ import {
 } from "../schema/unit-modifier-schema";
 import { UnitModifier } from "./unit-modifier";
 
-it("schemaToNsid", () => {
+it("static schemaToNsid", () => {
   const makeSchema = (
     cardClass: UnitModifierCardClassType
   ): UnitModifierSchemaType => {
@@ -74,6 +74,41 @@ it("schemaToNsid", () => {
     priority: "mutate",
   };
   expect(UnitModifier.schemaToNsid("my-source", schema)).toBeUndefined();
+});
+
+it("static sortByApplyOrder", () => {
+  const makeSchema = (
+    priority: "mutate" | "adjust" | "choose"
+  ): UnitModifierSchemaType => {
+    return {
+      name: "my-name",
+      cardClass: "agent",
+      nsidName: "my-nsid-name",
+      owner: "self",
+      priority,
+    };
+  };
+  const schemas: Array<UnitModifierSchemaType> = [
+    makeSchema("adjust"),
+    makeSchema("choose"),
+    makeSchema("mutate"),
+    makeSchema("adjust"),
+    makeSchema("choose"),
+    makeSchema("mutate"),
+  ];
+  const sortedSchemas: Array<UnitModifierSchemaType> =
+    UnitModifier.sortByApplyOrder(schemas);
+  const priorities: Array<"mutate" | "adjust" | "choose"> = sortedSchemas.map(
+    (schema) => schema.priority
+  );
+  expect(priorities).toEqual([
+    "mutate",
+    "mutate",
+    "adjust",
+    "adjust",
+    "choose",
+    "choose",
+  ]);
 });
 
 it("constructor", () => {
