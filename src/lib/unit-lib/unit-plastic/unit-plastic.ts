@@ -20,6 +20,24 @@ export class UnitPlastic {
   private _planetExact: Planet | undefined;
 
   /**
+   * Convenience method to count the number of each unit type.
+   * Does not filter by owner/hex/etc, caller should handle that first.
+   *
+   * @param unitPlastics
+   * @returns
+   */
+  public static count(unitPlastics: Array<UnitPlastic>): Map<UnitType, number> {
+    const result: Map<UnitType, number> = new Map();
+    for (const unitPlastic of unitPlastics) {
+      const unit: UnitType = unitPlastic.getUnit();
+      const count: number = unitPlastic.getCount();
+      const existing: number = result.get(unit) ?? 0;
+      result.set(unit, existing + count);
+    }
+    return result;
+  }
+
+  /**
    * Convert a game object to a unit plastic entry (is it applies).
    *
    * @param obj
