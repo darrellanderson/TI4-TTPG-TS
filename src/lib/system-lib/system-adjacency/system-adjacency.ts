@@ -30,7 +30,7 @@ export class SystemAdjacency {
     this._hyperlane.addTags(hexToSystem, adjacency);
     this._neighbor.addTags(hexToSystem, adjacency);
     this._wormhole.addTags(hexToSystem, adjacency);
-    this._neighbor.removeTags(hexToSystem, adjacency);
+    this._neighbor.removeTags(adjacency);
     adjacency.get(hex, 1).forEach((result: AdjacencyResult): void => {
       if (result.distance === 1) {
         // Adjacency downgraded from HexType to string.

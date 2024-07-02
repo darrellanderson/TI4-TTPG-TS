@@ -4,6 +4,7 @@ import { Adjacency, AdjacencyResult, HexType } from "ttpg-darrell";
 import { System } from "../system/system";
 import { SystemAdjacency } from "./system-adjacency";
 import { SystemAdjacencyNeighbor } from "./system-adjacency-neighbor";
+import exp from "constants";
 
 it("constructor", () => {
   new SystemAdjacencyNeighbor();
@@ -200,7 +201,15 @@ it("off-map systems are not neighbors", () => {
 });
 
 it("removeTags", () => {
-  const hexToSystem: Map<HexType, System> = SystemAdjacency.getHexToSystem();
   const adjacency: Adjacency = new Adjacency();
-  new SystemAdjacencyNeighbor().removeTags(hexToSystem, adjacency);
+  const edge: string = "<0,0,0>|<1,0,-1>";
+  adjacency.addLink(edge, edge);
+  expect(adjacency.hasLink(edge, edge)).toBe(true);
+
+  new MockGameObject({
+    templateMetadata: "token:hombrew.demo/neighbor-blocker",
+    position: [1, 0, 0], // closer to <1,0,-1>
+  });
+  new SystemAdjacencyNeighbor().removeTags(adjacency);
+  expect(adjacency.hasLink(edge, edge)).toBe(false);
 });
