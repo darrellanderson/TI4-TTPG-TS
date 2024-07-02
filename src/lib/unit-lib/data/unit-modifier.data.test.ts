@@ -43,6 +43,13 @@ function placeGameObjects(params: {
   }
 }
 
-it("x", () => {
-  expect(1).toBe(2);
+it("placeGameObjects", () => {
+  placeGameObjects({
+    self: ["card.technology.unit-upgrade:base/carrier-2"],
+    selfUnits: new Map([["carrier", 1]]),
+    selfUnitsAdj: new Map([["carrier", 1]]),
+    opponent: ["card.technology.unit-upgrade:base/carrier-2"],
+    opponentUnits: new Map([["carrier", 1]]),
+    opponentUnitsAdj: new Map([["carrier", 1]]),
+  });
 });

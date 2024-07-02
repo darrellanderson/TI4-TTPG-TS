@@ -5,7 +5,7 @@ import { CardUtil } from "ttpg-darrell";
 import { CombatRoll, CombatRollParams } from "./combat-roll";
 import { UnitAttrsSet } from "../../unit-lib/unit-attrs-set/unit-attrs-set";
 import { UnitAttrsSchemaType } from "../../unit-lib/schema/unit-attrs-schema";
-import { UnitModifierSchemaType } from "lib/unit-lib/schema/unit-modifier-schema";
+import { UnitModifier } from "../../unit-lib/unit-modifier/unit-modifier";
 
 it("constructor", () => {
   const params: CombatRollParams = {
@@ -57,7 +57,6 @@ it("_getUnitModifiers", () => {
     rollingPlayerSlot: 3,
   };
   const combatRoll: CombatRoll = new CombatRoll(params);
-  const unitModifiers: Array<UnitModifierSchemaType> =
-    combatRoll._getUnitModifiers(2, 3);
+  const unitModifiers: Array<UnitModifier> = combatRoll._getUnitModifiers(2, 3);
   expect(unitModifiers.length).toBe(0);
 });

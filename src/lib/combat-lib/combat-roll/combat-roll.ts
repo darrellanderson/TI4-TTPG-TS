@@ -95,13 +95,13 @@ export class CombatRoll {
   _getUnitModifiers(
     selfSlot: number,
     opponentSlot: number
-  ): Array<UnitModifierSchemaType> {
-    const unitModifiers: Array<UnitModifierSchemaType> = [];
+  ): Array<UnitModifier> {
+    const unitModifiers: Array<UnitModifier> = [];
     const skipContained: boolean = true;
     for (const obj of world.getAllObjects(skipContained)) {
       const nsid: string = NSID.get(obj);
-      const modifier: UnitModifierSchemaType | undefined =
-        TI4.unitModifierRegistry.rawByNsid(nsid);
+      const modifier: UnitModifier | undefined =
+        TI4.unitModifierRegistry.getByNsid(nsid);
       if (modifier) {
         const allowFaceDown: boolean = false;
         const rejectSnapPointTags: Array<string> = []; // TODO XXX
@@ -110,11 +110,11 @@ export class CombatRoll {
         ) {
           const pos: Vector = obj.getPosition();
           const closest: number = this._find.closestOwnedCardHolderOwner(pos);
-          if (closest === selfSlot && modifier.owner === "self") {
+          if (closest === selfSlot && modifier.getOwner() === "self") {
             unitModifiers.push(modifier);
           } else if (
             closest === opponentSlot &&
-            modifier.owner === "opponent"
+            modifier.getOwner() === "opponent"
           ) {
             unitModifiers.push(modifier);
           }
@@ -126,17 +126,15 @@ export class CombatRoll {
   }
 
   _applyUnitModifiers(
-    unitModifiers: Array<UnitModifierSchemaType>,
+    unitModifiers: Array<UnitModifier>,
     errors: Array<Error>
   ): void {
     for (const modifier of unitModifiers) {
       // Run each modifier in a try/catch block, an error will only suppress
       // one modifier, not the whole set (or the call stack!).
       try {
-        if (modifier.applies && modifier.applies(this)) {
-          if (modifier.apply) {
-            modifier.apply(this);
-          }
+        if (modifier.applies(this)) {
+          modifier.apply(this);
         }
       } catch (e) {
         errors.push(e);

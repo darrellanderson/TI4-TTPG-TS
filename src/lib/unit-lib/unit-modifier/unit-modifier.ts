@@ -1,3 +1,4 @@
+import { CombatRoll } from "lib/combat-lib/combat-roll/combat-roll";
 import {
   UnitModifierOwnerType,
   UnitModifierPriorityType,
@@ -37,23 +38,34 @@ export class UnitModifier {
     return undefined;
   }
 
-  static sortByApplyOrder(
-    modifiers: Array<UnitModifierSchemaType>
-  ): Array<UnitModifierSchemaType> {
+  static sortByApplyOrder(modifiers: Array<UnitModifier>): Array<UnitModifier> {
     const priorityToSortValue = {
       mutate: 1,
       adjust: 2,
       choose: 3,
     };
     return modifiers.sort((a, b) => {
-      const aValue: number = priorityToSortValue[a.priority];
-      const bValue: number = priorityToSortValue[b.priority];
+      const aValue: number = priorityToSortValue[a.getPriority()];
+      const bValue: number = priorityToSortValue[b.getPriority()];
       return aValue - bValue;
     });
   }
 
   constructor(params: UnitModifierSchemaType) {
     this._params = params;
+  }
+
+  applies(combatRoll: CombatRoll): boolean {
+    if (this._params.applies) {
+      return this._params.applies(combatRoll);
+    }
+    return true;
+  }
+
+  apply(combatRoll: CombatRoll): void {
+    if (this._params.apply) {
+      this._params.apply(combatRoll);
+    }
   }
 
   getDescription(): string | undefined {

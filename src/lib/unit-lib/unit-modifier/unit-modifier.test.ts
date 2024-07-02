@@ -1,6 +1,6 @@
+import { CombatRoll } from "../../combat-lib/combat-roll/combat-roll";
 import {
   UnitModifierCardClassType,
-  UnitModifierSchemaType,
   UnitModifierTriggerType,
 } from "../schema/unit-modifier-schema";
 import { UnitModifier } from "./unit-modifier";
@@ -75,10 +75,10 @@ it("static schemaToNsid", () => {
 });
 
 it("static sortByApplyOrder", () => {
-  const makeSchema = (
+  const makeModifier = (
     priority: "mutate" | "adjust" | "choose"
-  ): UnitModifierSchemaType => {
-    return {
+  ): UnitModifier => {
+    return new UnitModifier({
       name: "my-name",
       triggers: [
         {
@@ -88,20 +88,19 @@ it("static sortByApplyOrder", () => {
       ],
       owner: "self",
       priority,
-    };
+    });
   };
-  const schemas: Array<UnitModifierSchemaType> = [
-    makeSchema("adjust"),
-    makeSchema("choose"),
-    makeSchema("mutate"),
-    makeSchema("adjust"),
-    makeSchema("choose"),
-    makeSchema("mutate"),
+  const modifiers: Array<UnitModifier> = [
+    makeModifier("adjust"),
+    makeModifier("choose"),
+    makeModifier("mutate"),
+    makeModifier("adjust"),
+    makeModifier("choose"),
+    makeModifier("mutate"),
   ];
-  const sortedSchemas: Array<UnitModifierSchemaType> =
-    UnitModifier.sortByApplyOrder(schemas);
-  const priorities: Array<"mutate" | "adjust" | "choose"> = sortedSchemas.map(
-    (schema) => schema.priority
+  const sorted: Array<UnitModifier> = UnitModifier.sortByApplyOrder(modifiers);
+  const priorities: Array<"mutate" | "adjust" | "choose"> = sorted.map(
+    (unitModifier) => unitModifier.getPriority()
   );
   expect(priorities).toEqual([
     "mutate",
@@ -148,4 +147,40 @@ it("constructor (with optional fields)", () => {
   expect(unitModifier.getPriority()).toBe("mutate");
   expect(unitModifier.isActiveIdle()).toBe(true);
   expect(unitModifier.isCombat()).toBe(true);
+});
+
+it("applies/apply (empty)", () => {
+  const unitModifier: UnitModifier = new UnitModifier({
+    name: "my-name",
+    owner: "self",
+    priority: "mutate",
+  });
+  const combatRoll: CombatRoll = new CombatRoll({
+    type: "spaceCombat",
+    hex: "<0,0,0>",
+    activatingPlayerSlot: 2,
+    rollingPlayerSlot: 3,
+  });
+  expect(unitModifier.applies(combatRoll)).toBe(true);
+  unitModifier.apply(combatRoll);
+});
+
+it("applies/apply (given)", () => {
+  const unitModifier: UnitModifier = new UnitModifier({
+    name: "my-name",
+    owner: "self",
+    priority: "mutate",
+    applies: (combatRoll: CombatRoll): boolean => {
+      return true;
+    },
+    apply: (combatRoll: CombatRoll): void => {},
+  });
+  const combatRoll: CombatRoll = new CombatRoll({
+    type: "spaceCombat",
+    hex: "<0,0,0>",
+    activatingPlayerSlot: 2,
+    rollingPlayerSlot: 3,
+  });
+  expect(unitModifier.applies(combatRoll)).toBe(true);
+  unitModifier.apply(combatRoll);
 });

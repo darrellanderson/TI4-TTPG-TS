@@ -8,34 +8,37 @@ import { UnitModifier } from "../unit-modifier/unit-modifier";
 import { SOURCE_TO_UNIT_MODIFIER_DATA } from "../data/unit-modifier.data";
 
 export class UnitModifierRegistry {
-  private readonly _nsidToSchema: Map<string, UnitModifierSchemaType> =
-    new Map();
-  private readonly _nsidNameToSchema: Map<string, UnitModifierSchemaType> =
-    new Map();
+  private readonly _nsidToSchema: Map<string, UnitModifier> = new Map();
+  private readonly _nsidNameToSchema: Map<string, UnitModifier> = new Map();
 
-  rawByNsid(nsid: string): UnitModifierSchemaType | undefined {
+  getByNsid(nsid: string): UnitModifier | undefined {
     return this._nsidToSchema.get(nsid);
   }
 
-  rawByNsidName(nsidName: string): UnitModifierSchemaType | undefined {
+  getByNsidName(nsidName: string): UnitModifier | undefined {
     return this._nsidNameToSchema.get(nsidName);
   }
 
-  load(source: string, unitModifiers: Array<UnitModifierSchemaType>): this {
-    for (const unitModifier of unitModifiers) {
+  load(
+    source: string,
+    unitModifierSchemas: Array<UnitModifierSchemaType>
+  ): this {
+    for (const unitModifierSchema of unitModifierSchemas) {
       // Validate schema (oterhwise not validated until used).
       try {
         NsidNameSchema.parse(source);
-        UnitModifierSchema.parse(unitModifier);
+        UnitModifierSchema.parse(unitModifierSchema);
       } catch (e) {
         const msg = `error: ${e.message}\nparsing: ${JSON.stringify(
-          unitModifier
+          unitModifierSchema
         )}`;
         throw new Error(msg);
       }
 
+      const unitModifier = new UnitModifier(unitModifierSchema);
+
       const triggers: Array<UnitModifierTriggerType> =
-        unitModifier.triggers ?? [];
+        unitModifierSchema.triggers ?? [];
       for (const trigger of triggers) {
         const nsid: string | undefined = UnitModifier.schemaTriggerToNsid(
           source,
