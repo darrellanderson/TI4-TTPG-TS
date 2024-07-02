@@ -198,3 +198,9 @@ it("off-map systems are not neighbors", () => {
   expect(adjacency.hasNodeTag("<0,0,0>", "<0,0,0>|<1,0,-1>")).toBe(false);
   expect(adjacency.hasNodeTag("<1,0,-1>", "<0,0,0>|<1,0,-1>")).toBe(false);
 });
+
+it("removeTags", () => {
+  const hexToSystem: Map<HexType, System> = SystemAdjacency.getHexToSystem();
+  const adjacency: Adjacency = new Adjacency();
+  new SystemAdjacencyNeighbor().removeTags(hexToSystem, adjacency);
+});

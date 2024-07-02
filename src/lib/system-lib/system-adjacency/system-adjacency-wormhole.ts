@@ -1,6 +1,6 @@
 import { Adjacency, CardUtil, Find, HexType } from "ttpg-darrell";
 import { System } from "../system/system";
-import { GameObject, Vector } from "@tabletop-playground/api";
+import { Card, GameObject, Vector } from "@tabletop-playground/api";
 import { UnitModifierActiveIdle } from "../../unit-lib/unit-modifier/unit-modifier-active-idle";
 
 export class SystemAdjacencyWormhole {
@@ -51,16 +51,14 @@ export class SystemAdjacencyWormhole {
   }
 
   _applyCards(adjacency: Adjacency): void {
-    let card: GameObject | undefined;
+    let card: Card | undefined;
     const allowFaceDown: boolean = false;
     const rejectSnapPointTags: Array<string> = [
       "discard.card.action",
       "discard.card.agenda",
     ];
 
-    card = this._find.findGameObject(
-      "card.agenda:base/wormhole_reconstruction"
-    );
+    card = this._find.findCard("card.agenda:base/wormhole_reconstruction");
     if (
       card &&
       this._cardUtil.isLooseCard(card, allowFaceDown, rejectSnapPointTags)
@@ -68,7 +66,7 @@ export class SystemAdjacencyWormhole {
       adjacency.addLink("alpha", "beta");
     }
 
-    card = this._find.findGameObject("card.action:base/lost_star_chart");
+    card = this._find.findCard("card.action:base/lost_star_chart");
     if (
       card &&
       this._cardUtil.isLooseCard(card, allowFaceDown, rejectSnapPointTags)
@@ -81,9 +79,7 @@ export class SystemAdjacencyWormhole {
     // wormhole: You may exhaust this card; if you do, that system is
     // adjacent to all other systems that contain a wormhole during
     // this tactical action."
-    card = this._find.findGameObject(
-      "card.leader.agent.creuss:pok/emissary_taivra"
-    );
+    card = this._find.findCard("card.leader.agent.creuss:pok/emissary_taivra");
     if (
       card &&
       this._cardUtil.isLooseCard(card, allowFaceDown, rejectSnapPointTags) &&

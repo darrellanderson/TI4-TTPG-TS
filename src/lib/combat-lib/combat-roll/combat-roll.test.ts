@@ -1,9 +1,9 @@
 import { Card } from "@tabletop-playground/api";
+import { MockCard, MockCardHolder } from "ttpg-mock";
 import { CardUtil } from "ttpg-darrell";
 
-import { MockCard, MockCardHolder } from "ttpg-mock";
 import { CombatRoll, CombatRollParams } from "./combat-roll";
-import { UnitAttrsSet } from "lib/unit-lib/unit-attrs-set/unit-attrs-set";
+import { UnitAttrsSet } from "../../unit-lib/unit-attrs-set/unit-attrs-set";
 
 it("constructor", () => {
   const params: CombatRollParams = {

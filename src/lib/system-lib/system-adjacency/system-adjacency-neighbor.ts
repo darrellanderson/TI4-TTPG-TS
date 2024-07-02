@@ -30,4 +30,11 @@ export class SystemAdjacencyNeighbor {
       }
     }
   }
+
+  public removeTags(
+    hexToSystem: Map<HexType, System>,
+    adjacency: Adjacency
+  ): void {
+    // TODO XXX
+  }
 }

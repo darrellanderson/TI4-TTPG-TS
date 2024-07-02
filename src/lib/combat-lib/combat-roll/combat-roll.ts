@@ -1,21 +1,15 @@
 import { Vector, world } from "@tabletop-playground/api";
-import {
-  Adjacency,
-  CardUtil,
-  Find,
-  HexType,
-  NSID,
-  ParsedNSID,
-} from "ttpg-darrell";
+import { CardUtil, Find, HexType, NSID } from "ttpg-darrell";
 
 import {
   UnitAttrsSchemaType,
   UnitType,
-} from "lib/unit-lib/schema/unit-attrs-schema";
+} from "../../unit-lib/schema/unit-attrs-schema";
 import { UnitAttrsSet } from "../../unit-lib/unit-attrs-set/unit-attrs-set";
 import { UnitAttrs } from "../../unit-lib/unit-attrs/unit-attrs";
-import { UnitModifierSchemaType } from "lib/unit-lib/schema/unit-modifier-schema";
-import { UnitPlastic } from "lib/unit-lib/unit-plastic/unit-plastic";
+import { UnitModifierSchemaType } from "../../unit-lib/schema/unit-modifier-schema";
+import { UnitPlastic } from "../../unit-lib/unit-plastic/unit-plastic";
+import { SystemAdjacency } from "../../system-lib/system-adjacency/system-adjacency";
 
 export type CombatRollType =
   | "antiFighterBarrage"
@@ -34,7 +28,8 @@ export type CombatRollParams = {
 
 export class CombatRoll {
   private readonly _params: CombatRollParams;
-  private readonly _adjacency: Adjacency = new Adjacency();
+  private readonly _adjHexes: Set<HexType>;
+
   private readonly _cardUtil: CardUtil = new CardUtil();
   private readonly _find: Find = new Find();
 
@@ -48,10 +43,6 @@ export class CombatRoll {
   // Convenience summary of counts.
   public readonly unitToHexCount: Map<UnitType, number> = new Map(); // local hex
   public readonly unitToAdjCount: Map<UnitType, number> = new Map(); // adjacent hexes
-
-  _calculateAdjacency(): void {
-    // TODO
-  }
 
   _createUnitAttrsSet(): UnitAttrsSet {
     const baseAttrs: Array<UnitAttrsSchemaType> =
@@ -121,6 +112,7 @@ export class CombatRoll {
 
   constructor(params: CombatRollParams) {
     this._params = params;
+    this._adjHexes = new SystemAdjacency().getAdjHexes(params.hex);
 
     this.unitAttrsSet = {
       self: this._createUnitAttrsSet(),
