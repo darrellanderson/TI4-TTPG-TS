@@ -15,6 +15,7 @@ import {
 import { UnitAttrsSet } from "../../unit-lib/unit-attrs-set/unit-attrs-set";
 import { UnitAttrs } from "../../unit-lib/unit-attrs/unit-attrs";
 import { UnitModifierSchemaType } from "lib/unit-lib/schema/unit-modifier-schema";
+import { UnitPlastic } from "lib/unit-lib/unit-plastic/unit-plastic";
 
 export type CombatRollType =
   | "antiFighterBarrage"
@@ -37,12 +38,14 @@ export class CombatRoll {
   private readonly _cardUtil: CardUtil = new CardUtil();
   private readonly _find: Find = new Find();
 
-  // Information about units, counts.  Unit modifers may look into
-  // and modify these.
+  // Unit modifers may look into and modify unit attributes.
   public readonly unitAttrsSet: {
     self: UnitAttrsSet;
     opponent: UnitAttrsSet;
   };
+  // Units in system and adjacent systems.
+  public readonly unitPlastic: Array<UnitPlastic> = [];
+  // Convenience summary of counts.
   public readonly unitToHexCount: Map<UnitType, number> = new Map(); // local hex
   public readonly unitToAdjCount: Map<UnitType, number> = new Map(); // adjacent hexes
 
