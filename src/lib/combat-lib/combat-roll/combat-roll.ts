@@ -1,15 +1,16 @@
 import { Vector, world } from "@tabletop-playground/api";
 import { CardUtil, Find, HexType, NSID } from "ttpg-darrell";
 
+import { SystemAdjacency } from "../../system-lib/system-adjacency/system-adjacency";
 import {
   UnitAttrsSchemaType,
   UnitType,
 } from "../../unit-lib/schema/unit-attrs-schema";
-import { UnitAttrsSet } from "../../unit-lib/unit-attrs-set/unit-attrs-set";
 import { UnitAttrs } from "../../unit-lib/unit-attrs/unit-attrs";
+import { UnitAttrsSet } from "../../unit-lib/unit-attrs-set/unit-attrs-set";
+import { UnitModifier } from "../../unit-lib/unit-modifier/unit-modifier";
 import { UnitModifierSchemaType } from "../../unit-lib/schema/unit-modifier-schema";
 import { UnitPlastic } from "../../unit-lib/unit-plastic/unit-plastic";
-import { SystemAdjacency } from "../../system-lib/system-adjacency/system-adjacency";
 
 export type CombatRollType =
   | "antiFighterBarrage"
@@ -51,7 +52,7 @@ export class CombatRoll {
     return unitAttrsSet;
   }
 
-  _applyUnitAttrs(unitAttrsSet: UnitAttrsSet, playerSlot: number): void {
+  _getUnitAttrOverrides(playerSlot: number): Array<UnitAttrsSchemaType> {
     // Find unit upgrade cards owned by the player.
     const overrideAttrsArray: Array<UnitAttrsSchemaType> = [];
     const skipContained: boolean = true;
@@ -73,9 +74,15 @@ export class CombatRoll {
         }
       }
     }
-
-    // nsidNames sort in override order, faction override 1 then 2.
     UnitAttrs.sortByOverrideOrder(overrideAttrsArray);
+    return overrideAttrsArray;
+  }
+
+  _applyUnitAttrs(
+    unitAttrsSet: UnitAttrsSet,
+    overrideAttrsArray: Array<UnitAttrsSchemaType>
+  ): void {
+    // nsidNames sort in override order, faction override 1 then 2.
     for (const overrideAttrs of overrideAttrsArray) {
       const unit: UnitType = overrideAttrs.unit;
       const unitAttrs: UnitAttrs | undefined = unitAttrsSet.get(unit);
@@ -85,11 +92,10 @@ export class CombatRoll {
     }
   }
 
-  _applyUnitModifiers(
-    unitAttrsSet: UnitAttrsSet,
+  _getUnitModifiers(
     selfSlot: number,
     opponentSlot: number
-  ): void {
+  ): Array<UnitModifierSchemaType> {
     const unitModifiers: Array<UnitModifierSchemaType> = [];
     const skipContained: boolean = true;
     for (const obj of world.getAllObjects(skipContained)) {
@@ -104,8 +110,36 @@ export class CombatRoll {
         ) {
           const pos: Vector = obj.getPosition();
           const closest: number = this._find.closestOwnedCardHolderOwner(pos);
-          // TODO XXX
+          if (closest === selfSlot && modifier.owner === "self") {
+            unitModifiers.push(modifier);
+          } else if (
+            closest === opponentSlot &&
+            modifier.owner === "opponent"
+          ) {
+            unitModifiers.push(modifier);
+          }
         }
+      }
+    }
+    UnitModifier.sortByApplyOrder(unitModifiers);
+    return unitModifiers;
+  }
+
+  _applyUnitModifiers(
+    unitModifiers: Array<UnitModifierSchemaType>,
+    errors: Array<Error>
+  ): void {
+    for (const modifier of unitModifiers) {
+      // Run each modifier in a try/catch block, an error will only suppress
+      // one modifier, not the whole set (or the call stack!).
+      try {
+        if (modifier.applies && modifier.applies(this)) {
+          if (modifier.apply) {
+            modifier.apply(this);
+          }
+        }
+      } catch (e) {
+        errors.push(e);
       }
     }
   }
