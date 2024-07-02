@@ -9,6 +9,12 @@ it("parse", () => {
     description: "description",
     owner: "self",
     priority: "mutate",
+    triggers: [
+      {
+        cardClass: "technology",
+        nsidName: "my-nsid-name",
+      },
+    ],
     applies: (x: string): boolean => {
       return true;
     },

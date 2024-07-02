@@ -2,6 +2,7 @@ import { NsidNameSchema } from "../../system-lib/schema/basic-types-schema";
 import {
   UnitModifierSchema,
   UnitModifierSchemaType,
+  UnitModifierTriggerType,
 } from "../schema/unit-modifier-schema";
 import { UnitModifier } from "../unit-modifier/unit-modifier";
 import { SOURCE_TO_UNIT_MODIFIER_DATA } from "../data/unit-modifier.data";
@@ -33,15 +34,19 @@ export class UnitModifierRegistry {
         throw new Error(msg);
       }
 
-      const nsid: string | undefined = UnitModifier.schemaToNsid(
-        source,
-        unitModifier
-      );
-      if (nsid) {
-        this._nsidToSchema.set(nsid, unitModifier);
-      }
-      if (unitModifier.nsidName) {
-        this._nsidNameToSchema.set(unitModifier.nsidName, unitModifier);
+      const triggers: Array<UnitModifierTriggerType> =
+        unitModifier.triggers ?? [];
+      for (const trigger of triggers) {
+        const nsid: string | undefined = UnitModifier.schemaTriggerToNsid(
+          source,
+          trigger
+        );
+        if (nsid) {
+          this._nsidToSchema.set(nsid, unitModifier);
+        }
+        if (trigger.nsidName) {
+          this._nsidNameToSchema.set(trigger.nsidName, unitModifier);
+        }
       }
     }
     return this;

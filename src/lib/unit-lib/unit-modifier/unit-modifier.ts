@@ -1,38 +1,38 @@
 import {
-  UnitModifierCardClassType,
   UnitModifierOwnerType,
   UnitModifierPriorityType,
   UnitModifierSchemaType,
+  UnitModifierTriggerType,
 } from "../schema/unit-modifier-schema";
 
 export class UnitModifier {
   private readonly _params: UnitModifierSchemaType;
 
-  public static schemaToNsid(
+  public static schemaTriggerToNsid(
     source: string,
-    schema: UnitModifierSchemaType
+    trigger: UnitModifierTriggerType
   ): string | undefined {
-    switch (schema.cardClass) {
+    switch (trigger.cardClass) {
       case "action":
-        return `card.action:${source}/${schema.nsidName}`;
+        return `card.action:${source}/${trigger.nsidName}`;
       case "agenda":
-        return `card.agenda:${source}/${schema.nsidName}`;
+        return `card.agenda:${source}/${trigger.nsidName}`;
       case "agent":
-        return `card.leader.agent:${source}/${schema.nsidName}`;
+        return `card.leader.agent:${source}/${trigger.nsidName}`;
       case "alliance":
-        return `card.alliance:${source}/${schema.nsidName}`;
+        return `card.alliance:${source}/${trigger.nsidName}`;
       case "commander":
-        return `card.leader.commander:${source}/${schema.nsidName}`;
+        return `card.leader.commander:${source}/${trigger.nsidName}`;
       case "hero":
-        return `card.leader.hero:${source}/${schema.nsidName}`;
+        return `card.leader.hero:${source}/${trigger.nsidName}`;
       case "legendary":
-        return `card.legendary-planet:${source}/${schema.nsidName}`;
+        return `card.legendary-planet:${source}/${trigger.nsidName}`;
       case "promissory":
-        return `card.promissory:${source}/${schema.nsidName}`;
+        return `card.promissory:${source}/${trigger.nsidName}`;
       case "relic":
-        return `card.relic:${source}/${schema.nsidName}`;
+        return `card.relic:${source}/${trigger.nsidName}`;
       case "technology":
-        return `card.technology:${source}/${schema.nsidName}`;
+        return `card.technology:${source}/${trigger.nsidName}`;
     }
     return undefined;
   }
@@ -56,24 +56,12 @@ export class UnitModifier {
     this._params = params;
   }
 
-  getCardClass(): UnitModifierCardClassType | undefined {
-    return this._params.cardClass;
-  }
-
   getDescription(): string | undefined {
     return this._params.description;
   }
 
-  getLinkToNsidName(): string | undefined {
-    return this._params.linkToNsidName;
-  }
-
   getName(): string {
     return this._params.name;
-  }
-
-  getNsidName(): string | undefined {
-    return this._params.nsidName;
   }
 
   getOwner(): UnitModifierOwnerType {

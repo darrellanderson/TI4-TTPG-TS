@@ -17,6 +17,15 @@ export const UnitModifierCardClass = z
   .readonly();
 export type UnitModifierCardClassType = z.infer<typeof UnitModifierCardClass>;
 
+export const UnitModifierTrigger = z
+  .object({
+    cardClass: UnitModifierCardClass.optional(),
+    nsidName: NsidNameSchema,
+  })
+  .strict()
+  .readonly();
+export type UnitModifierTriggerType = z.infer<typeof UnitModifierTrigger>;
+
 export const UnitModifierOwner = z.enum(["self", "opponent", "any"]).readonly();
 export type UnitModifierOwnerType = z.infer<typeof UnitModifierOwner>;
 
@@ -30,9 +39,7 @@ export const UnitModifierSchema = z
     name: z.string(),
     description: z.string().optional(),
 
-    cardClass: UnitModifierCardClass.optional(),
-    nsidName: NsidNameSchema.optional(),
-    linkToNsidName: NsidNameSchema.optional(), // redirect to nsidName
+    triggers: z.array(UnitModifierTrigger).optional(),
 
     isActiveIdle: z.boolean().optional(),
     isCombat: z.boolean().optional(),

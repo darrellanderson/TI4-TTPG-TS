@@ -1,79 +1,77 @@
 import {
   UnitModifierCardClassType,
   UnitModifierSchemaType,
+  UnitModifierTriggerType,
 } from "../schema/unit-modifier-schema";
 import { UnitModifier } from "./unit-modifier";
 
 it("static schemaToNsid", () => {
-  const makeSchema = (
+  const makeTrigger = (
     cardClass: UnitModifierCardClassType
-  ): UnitModifierSchemaType => {
+  ): UnitModifierTriggerType => {
     return {
-      name: "my-name",
       cardClass,
       nsidName: "my-nsid-name",
-      owner: "self",
-      priority: "mutate",
     };
   };
-  let schema: UnitModifierSchemaType;
+  let trigger: UnitModifierTriggerType;
 
-  schema = makeSchema("action");
-  expect(UnitModifier.schemaToNsid("my-source", schema)).toBe(
+  trigger = makeTrigger("action");
+  expect(UnitModifier.schemaTriggerToNsid("my-source", trigger)).toBe(
     "card.action:my-source/my-nsid-name"
   );
 
-  schema = makeSchema("agenda");
-  expect(UnitModifier.schemaToNsid("my-source", schema)).toBe(
+  trigger = makeTrigger("agenda");
+  expect(UnitModifier.schemaTriggerToNsid("my-source", trigger)).toBe(
     "card.agenda:my-source/my-nsid-name"
   );
 
-  schema = makeSchema("agent");
-  expect(UnitModifier.schemaToNsid("my-source", schema)).toBe(
+  trigger = makeTrigger("agent");
+  expect(UnitModifier.schemaTriggerToNsid("my-source", trigger)).toBe(
     "card.leader.agent:my-source/my-nsid-name"
   );
 
-  schema = makeSchema("alliance");
-  expect(UnitModifier.schemaToNsid("my-source", schema)).toBe(
+  trigger = makeTrigger("alliance");
+  expect(UnitModifier.schemaTriggerToNsid("my-source", trigger)).toBe(
     "card.alliance:my-source/my-nsid-name"
   );
 
-  schema = makeSchema("commander");
-  expect(UnitModifier.schemaToNsid("my-source", schema)).toBe(
+  trigger = makeTrigger("commander");
+  expect(UnitModifier.schemaTriggerToNsid("my-source", trigger)).toBe(
     "card.leader.commander:my-source/my-nsid-name"
   );
 
-  schema = makeSchema("hero");
-  expect(UnitModifier.schemaToNsid("my-source", schema)).toBe(
+  trigger = makeTrigger("hero");
+  expect(UnitModifier.schemaTriggerToNsid("my-source", trigger)).toBe(
     "card.leader.hero:my-source/my-nsid-name"
   );
 
-  schema = makeSchema("legendary");
-  expect(UnitModifier.schemaToNsid("my-source", schema)).toBe(
+  trigger = makeTrigger("legendary");
+  expect(UnitModifier.schemaTriggerToNsid("my-source", trigger)).toBe(
     "card.legendary-planet:my-source/my-nsid-name"
   );
 
-  schema = makeSchema("promissory");
-  expect(UnitModifier.schemaToNsid("my-source", schema)).toBe(
+  trigger = makeTrigger("promissory");
+  expect(UnitModifier.schemaTriggerToNsid("my-source", trigger)).toBe(
     "card.promissory:my-source/my-nsid-name"
   );
 
-  schema = makeSchema("relic");
-  expect(UnitModifier.schemaToNsid("my-source", schema)).toBe(
+  trigger = makeTrigger("relic");
+  expect(UnitModifier.schemaTriggerToNsid("my-source", trigger)).toBe(
     "card.relic:my-source/my-nsid-name"
   );
 
-  schema = makeSchema("technology");
-  expect(UnitModifier.schemaToNsid("my-source", schema)).toBe(
+  trigger = makeTrigger("technology");
+  expect(UnitModifier.schemaTriggerToNsid("my-source", trigger)).toBe(
     "card.technology:my-source/my-nsid-name"
   );
 
-  schema = {
-    name: "my-name",
-    owner: "self",
-    priority: "mutate",
+  trigger = {
+    nsidName: "my-nsid-name",
   };
-  expect(UnitModifier.schemaToNsid("my-source", schema)).toBeUndefined();
+  expect(
+    UnitModifier.schemaTriggerToNsid("my-source", trigger)
+  ).toBeUndefined();
 });
 
 it("static sortByApplyOrder", () => {
@@ -82,8 +80,12 @@ it("static sortByApplyOrder", () => {
   ): UnitModifierSchemaType => {
     return {
       name: "my-name",
-      cardClass: "agent",
-      nsidName: "my-nsid-name",
+      triggers: [
+        {
+          cardClass: "agent",
+          nsidName: "my-nsid-name",
+        },
+      ],
       owner: "self",
       priority,
     };
@@ -117,11 +119,8 @@ it("constructor", () => {
     owner: "self",
     priority: "mutate",
   });
-  expect(unitModifier.getCardClass()).toBeUndefined();
   expect(unitModifier.getDescription()).toBeUndefined();
-  expect(unitModifier.getLinkToNsidName()).toBeUndefined();
   expect(unitModifier.getName()).toBe("my-name");
-  expect(unitModifier.getNsidName()).toBeUndefined();
   expect(unitModifier.getOwner()).toBe("self");
   expect(unitModifier.getPriority()).toBe("mutate");
   expect(unitModifier.isActiveIdle()).toBe(false);
@@ -134,17 +133,17 @@ it("constructor (with optional fields)", () => {
     owner: "self",
     priority: "mutate",
     description: "my-description",
-    cardClass: "agent",
-    nsidName: "my-nsid-name",
-    linkToNsidName: "my-link-to-nsid-name",
+    triggers: [
+      {
+        cardClass: "agent",
+        nsidName: "my-nsid-name",
+      },
+    ],
     isActiveIdle: true,
     isCombat: true,
   });
-  expect(unitModifier.getCardClass()).toBe("agent");
   expect(unitModifier.getDescription()).toBe("my-description");
-  expect(unitModifier.getLinkToNsidName()).toBe("my-link-to-nsid-name");
   expect(unitModifier.getName()).toBe("my-name");
-  expect(unitModifier.getNsidName()).toEqual("my-nsid-name");
   expect(unitModifier.getOwner()).toBe("self");
   expect(unitModifier.getPriority()).toBe("mutate");
   expect(unitModifier.isActiveIdle()).toBe(true);
