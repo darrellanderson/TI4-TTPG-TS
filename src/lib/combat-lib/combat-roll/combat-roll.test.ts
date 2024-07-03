@@ -5,6 +5,7 @@ import { CardUtil } from "ttpg-darrell";
 import { CombatRoll, CombatRollParams } from "./combat-roll";
 import { UnitAttrsSchemaType } from "../../unit-lib/schema/unit-attrs-schema";
 import { UnitModifier } from "../../unit-lib/unit-modifier/unit-modifier";
+import exp from "constants";
 
 it("static createCooked", () => {
   const params: CombatRollParams = {
@@ -22,7 +23,7 @@ it("constructor", () => {
     type: "spaceCombat",
     hex: "<0,0,0>",
     activatingPlayerSlot: 1,
-    rollingPlayerSlot: 2,
+    rollingPlayerSlot: 1,
   };
   const combatRoll: CombatRoll = new CombatRoll(params);
   expect(combatRoll.getType()).toBe("spaceCombat");
@@ -150,4 +151,33 @@ it("applyUnitOverrides", () => {
   expect(combatRoll.self.unitAttrsSet.get("carrier")?.getName()).toBe(
     "Carrier II"
   );
+});
+
+it("applyUnitModifiers", () => {
+  // Need a card holder to be closest to assign cards.
+  new MockCardHolder({ owningPlayerSlot: 2 });
+
+  TI4.unitModifierRegistry.load("my-source", [
+    {
+      name: "my-self-modifier",
+      owner: "self",
+      priority: "mutate",
+      triggers: [{ cardClass: "action", nsidName: "my-self-nsid-name" }],
+      apply: (combatRoll: CombatRoll): void => {
+        throw new Error("buggy modifier");
+      },
+    },
+  ]);
+  MockCard.simple("card.action:my-source/my-self-nsid-name");
+
+  const combatRoll: CombatRoll = new CombatRoll({
+    type: "spaceCombat",
+    hex: "<0,0,0>",
+    activatingPlayerSlot: 1,
+    rollingPlayerSlot: 2,
+  });
+
+  expect(() => {
+    combatRoll.applyUnitModifiersOrThrow();
+  }).toThrow();
 });
