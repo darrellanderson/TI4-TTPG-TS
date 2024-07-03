@@ -47,6 +47,11 @@ it("static schemaToNsid", () => {
     "card.leader.hero:my-source/my-nsid-name"
   );
 
+  trigger = makeTrigger("faction-ability");
+  expect(UnitModifier.schemaTriggerToNsid("my-source", trigger)).toBe(
+    "faction-ability:my-source/my-nsid-name"
+  );
+
   trigger = makeTrigger("legendary");
   expect(UnitModifier.schemaTriggerToNsid("my-source", trigger)).toBe(
     "card.legendary-planet:my-source/my-nsid-name"
