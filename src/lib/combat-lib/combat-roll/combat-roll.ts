@@ -9,7 +9,6 @@ import {
 import { UnitAttrs } from "../../unit-lib/unit-attrs/unit-attrs";
 import { UnitAttrsSet } from "../../unit-lib/unit-attrs-set/unit-attrs-set";
 import { UnitModifier } from "../../unit-lib/unit-modifier/unit-modifier";
-import { UnitModifierSchemaType } from "../../unit-lib/schema/unit-modifier-schema";
 import { UnitPlastic } from "../../unit-lib/unit-plastic/unit-plastic";
 
 export type CombatRollType =
@@ -27,29 +26,40 @@ export type CombatRollParams = {
   rollingPlayerSlot: number;
 };
 
-export class CombatRoll {
-  private readonly _params: CombatRollParams;
-  private readonly _adjHexes: Set<HexType>;
+export type CombatRollPerPlayerData = {
+  playerSlot: number;
+  unitAttrsSet: UnitAttrsSet;
+  unitPlasticHex: Array<UnitPlastic>;
+  unitPlasticAdj: Array<UnitPlastic>;
+};
 
+export class CombatRoll {
   private readonly _cardUtil: CardUtil = new CardUtil();
   private readonly _find: Find = new Find();
 
-  // Unit modifers may look into and modify unit attributes.
-  public readonly unitAttrsSet: {
-    self: UnitAttrsSet;
-    opponent: UnitAttrsSet;
-  };
-  // Units in system and adjacent systems.
-  public readonly unitPlastic: Array<UnitPlastic> = [];
-  // Convenience summary of counts.
-  public readonly unitToHexCount: Map<UnitType, number> = new Map(); // local hex
-  public readonly unitToAdjCount: Map<UnitType, number> = new Map(); // adjacent hexes
+  private readonly _params: CombatRollParams;
+  private readonly _adjHexes: Set<HexType>;
 
-  _createUnitAttrsSet(): UnitAttrsSet {
-    const baseAttrs: Array<UnitAttrsSchemaType> =
-      TI4.unitAttrsRegistry.getAllBaseAttrs();
-    const unitAttrsSet: UnitAttrsSet = new UnitAttrsSet(baseAttrs);
-    return unitAttrsSet;
+  // Unit modifers may look into and modify unit attributes.
+  public readonly self: CombatRollPerPlayerData;
+  public readonly opponent: CombatRollPerPlayerData;
+
+  constructor(params: CombatRollParams) {
+    this._params = params;
+    this._adjHexes = new SystemAdjacency().getAdjHexes(params.hex);
+
+    this.self = {
+      playerSlot: -1,
+      unitAttrsSet: TI4.unitAttrsRegistry.defaultUnitAttrsSet(),
+      unitPlasticHex: [],
+      unitPlasticAdj: [],
+    };
+    this.opponent = {
+      playerSlot: -1,
+      unitAttrsSet: TI4.unitAttrsRegistry.defaultUnitAttrsSet(),
+      unitPlasticHex: [],
+      unitPlasticAdj: [],
+    };
   }
 
   _getUnitAttrOverrides(playerSlot: number): Array<UnitAttrsSchemaType> {
@@ -142,14 +152,26 @@ export class CombatRoll {
     }
   }
 
-  constructor(params: CombatRollParams) {
-    this._params = params;
-    this._adjHexes = new SystemAdjacency().getAdjHexes(params.hex);
+  public applyUnitOverries(): this {
+    let unitOverrides: Array<UnitAttrsSchemaType>;
+    unitOverrides = this._getUnitAttrOverrides(this.self.playerSlot);
+    this._applyUnitAttrs(this.self.unitAttrsSet, unitOverrides);
+    unitOverrides = this._getUnitAttrOverrides(this.opponent.playerSlot);
+    this._applyUnitAttrs(this.opponent.unitAttrsSet, unitOverrides);
+    return this;
+  }
 
-    this.unitAttrsSet = {
-      self: this._createUnitAttrsSet(),
-      opponent: this._createUnitAttrsSet(),
-    };
+  public applyUnitModifiers(): this {
+    const errors: Array<Error> = [];
+    const unitModifiers: Array<UnitModifier> = this._getUnitModifiers(
+      this.self.playerSlot,
+      this.opponent.playerSlot
+    );
+    this._applyUnitModifiers(unitModifiers, errors);
+    if (errors.length > 0) {
+      throw errors[0]; // for now, log to console for production release
+    }
+    return this;
   }
 
   public getType(): CombatRollType {

@@ -28,3 +28,14 @@ it("applyOverride", () => {
     })
   ).toBe(false);
 });
+
+it("get, getAll", () => {
+  const unitAttrsSet = new UnitAttrsSet([
+    {
+      unit: "infantry",
+      name: "my-base-name",
+    },
+  ]);
+  expect(unitAttrsSet.get("infantry")).toBeDefined();
+  expect(unitAttrsSet.getAll()[0]?.getUnit()).toBe("infantry");
+});

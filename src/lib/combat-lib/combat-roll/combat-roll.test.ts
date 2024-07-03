@@ -29,7 +29,8 @@ it("_createUnitAttrsSet (standard unit upgrade)", () => {
     rollingPlayerSlot: 3,
   };
   const combatRoll: CombatRoll = new CombatRoll(params);
-  const unitAttrsSet: UnitAttrsSet = combatRoll._createUnitAttrsSet();
+  const unitAttrsSet: UnitAttrsSet =
+    TI4.unitAttrsRegistry.defaultUnitAttrsSet();
   expect(unitAttrsSet.get("carrier")?.getName()).toBe("Carrier");
 
   const nsid: string = "card.technology.unit-upgrade:base/carrier-2";

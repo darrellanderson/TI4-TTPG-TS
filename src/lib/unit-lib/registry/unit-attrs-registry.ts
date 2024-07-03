@@ -6,6 +6,7 @@ import {
 } from "../schema/unit-attrs-schema";
 import { SOURCE_TO_UNIT_ATTRS_DATA } from "../data/unit-attrs.data";
 import { UnitAttrs } from "../unit-attrs/unit-attrs";
+import { UnitAttrsSet } from "../unit-attrs-set/unit-attrs-set";
 
 export class UnitAttrsRegistry {
   private readonly _unitToBaseAttrs: Map<UnitType, UnitAttrsSchemaType> =
@@ -18,6 +19,10 @@ export class UnitAttrsRegistry {
     new Map();
 
   constructor() {}
+
+  defaultUnitAttrsSet(): UnitAttrsSet {
+    return new UnitAttrsSet(this.getAllBaseAttrs());
+  }
 
   getAllBaseAttrs(): Array<UnitAttrsSchemaType> {
     return Array.from(this._unitToBaseAttrs.values());

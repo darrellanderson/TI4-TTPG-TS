@@ -24,4 +24,8 @@ export class UnitAttrsSet {
   get(unit: UnitType): UnitAttrs | undefined {
     return this._unitToAttrs.get(unit);
   }
+
+  getAll(): Array<UnitAttrs> {
+    return Array.from(this._unitToAttrs.values());
+  }
 }
