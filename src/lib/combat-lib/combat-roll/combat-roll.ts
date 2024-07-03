@@ -45,7 +45,9 @@ export class CombatRoll {
   public readonly opponent: CombatRollPerPlayerData;
 
   static createCooked(params: CombatRollParams): CombatRoll {
-    return new CombatRoll(params).applyUnitOverries().applyUnitModifiers();
+    return new CombatRoll(params)
+      .applyUnitOverries()
+      .applyUnitModifiersOrThrow();
   }
 
   constructor(params: CombatRollParams) {
@@ -66,7 +68,7 @@ export class CombatRoll {
     };
   }
 
-  _getUnitAttrOverrides(playerSlot: number): Array<UnitAttrsSchemaType> {
+  _findUnitAttrOverrides(playerSlot: number): Array<UnitAttrsSchemaType> {
     // Find unit upgrade cards owned by the player.
     const overrideAttrsArray: Array<UnitAttrsSchemaType> = [];
     const skipContained: boolean = true;
@@ -92,21 +94,7 @@ export class CombatRoll {
     return overrideAttrsArray;
   }
 
-  _applyUnitAttrs(
-    unitAttrsSet: UnitAttrsSet,
-    overrideAttrsArray: Array<UnitAttrsSchemaType>
-  ): void {
-    // nsidNames sort in override order, faction override 1 then 2.
-    for (const overrideAttrs of overrideAttrsArray) {
-      const unit: UnitType = overrideAttrs.unit;
-      const unitAttrs: UnitAttrs | undefined = unitAttrsSet.get(unit);
-      if (unitAttrs) {
-        unitAttrs.applyOverride(overrideAttrs);
-      }
-    }
-  }
-
-  _getUnitModifiers(
+  _findUnitModifiers(
     selfSlot: number,
     opponentSlot: number
   ): Array<UnitModifier> {
@@ -120,7 +108,7 @@ export class CombatRoll {
         const allowFaceDown: boolean = false;
         const rejectSnapPointTags: Array<string> = []; // TODO XXX
         if (
-          !this._cardUtil.isLooseCard(obj, allowFaceDown, rejectSnapPointTags)
+          this._cardUtil.isLooseCard(obj, allowFaceDown, rejectSnapPointTags)
         ) {
           const pos: Vector = obj.getPosition();
           const closest: number = this._find.closestOwnedCardHolderOwner(pos);
@@ -139,10 +127,26 @@ export class CombatRoll {
     return unitModifiers;
   }
 
-  _applyUnitModifiers(
-    unitModifiers: Array<UnitModifier>,
-    errors: Array<Error>
-  ): void {
+  public applyUnitOverries(): this {
+    for (const data of [this.self, this.opponent]) {
+      const unitOverrides: Array<UnitAttrsSchemaType> =
+        this._findUnitAttrOverrides(this.self.playerSlot);
+      for (const unitOverride of unitOverrides) {
+        const unit: UnitType = unitOverride.unit;
+        const unitAttrs: UnitAttrs | undefined = data.unitAttrsSet.get(unit);
+        if (unitAttrs) {
+          unitAttrs.applyOverride(unitOverride);
+        }
+      }
+    }
+    return this;
+  }
+
+  public applyUnitModifiers(errors: Array<Error>): this {
+    const unitModifiers: Array<UnitModifier> = this._findUnitModifiers(
+      this.self.playerSlot,
+      this.opponent.playerSlot
+    );
     for (const modifier of unitModifiers) {
       // Run each modifier in a try/catch block, an error will only suppress
       // one modifier, not the whole set (or the call stack!).
@@ -154,26 +158,15 @@ export class CombatRoll {
         errors.push(e);
       }
     }
-  }
-
-  public applyUnitOverries(): this {
-    let unitOverrides: Array<UnitAttrsSchemaType>;
-    unitOverrides = this._getUnitAttrOverrides(this.self.playerSlot);
-    this._applyUnitAttrs(this.self.unitAttrsSet, unitOverrides);
-    unitOverrides = this._getUnitAttrOverrides(this.opponent.playerSlot);
-    this._applyUnitAttrs(this.opponent.unitAttrsSet, unitOverrides);
     return this;
   }
 
-  public applyUnitModifiers(): this {
+  public applyUnitModifiersOrThrow(): this {
     const errors: Array<Error> = [];
-    const unitModifiers: Array<UnitModifier> = this._getUnitModifiers(
-      this.self.playerSlot,
-      this.opponent.playerSlot
-    );
-    this._applyUnitModifiers(unitModifiers, errors);
+    this.applyUnitModifiers(errors);
     if (errors.length > 0) {
-      throw errors[0]; // for now, log to console for production release
+      const joined: string = errors.map((e) => e.stack).join("\n");
+      throw new Error(joined);
     }
     return this;
   }

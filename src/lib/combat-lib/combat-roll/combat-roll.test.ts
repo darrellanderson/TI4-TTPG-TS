@@ -18,7 +18,7 @@ it("constructor", () => {
   expect(combatRoll.getType()).toBe("spaceCombat");
 });
 
-it("_createUnitAttrsSet (standard unit upgrade)", () => {
+it("_findUnitAttrOverrides (standard unit upgrade)", () => {
   // Need a card holder to be closest to assign cards.
   new MockCardHolder({ owningPlayerSlot: 2 });
 
@@ -29,9 +29,6 @@ it("_createUnitAttrsSet (standard unit upgrade)", () => {
     rollingPlayerSlot: 3,
   };
   const combatRoll: CombatRoll = new CombatRoll(params);
-  const unitAttrsSet: UnitAttrsSet =
-    TI4.unitAttrsRegistry.defaultUnitAttrsSet();
-  expect(unitAttrsSet.get("carrier")?.getName()).toBe("Carrier");
 
   const nsid: string = "card.technology.unit-upgrade:base/carrier-2";
   expect(TI4.unitAttrsRegistry.rawByNsid(nsid)).toBeDefined();
@@ -45,12 +42,15 @@ it("_createUnitAttrsSet (standard unit upgrade)", () => {
   ).toBe(true);
 
   const overrides: Array<UnitAttrsSchemaType> =
-    combatRoll._getUnitAttrOverrides(2);
-  combatRoll._applyUnitAttrs(unitAttrsSet, overrides);
-  expect(unitAttrsSet.get("carrier")?.getName()).toBe("Carrier II");
+    combatRoll._findUnitAttrOverrides(2);
+  const names: Array<string> = overrides.map((override) => override.name);
+  expect(names).toEqual(["Carrier II"]);
 });
 
-it("_getUnitModifiers", () => {
+it("_findUnitModifiers", () => {
+  // Need a card holder to be closest to assign cards.
+  new MockCardHolder({ owningPlayerSlot: 2 });
+
   const params: CombatRollParams = {
     type: "spaceCombat",
     hex: "<0,0,0>",
@@ -58,6 +58,24 @@ it("_getUnitModifiers", () => {
     rollingPlayerSlot: 3,
   };
   const combatRoll: CombatRoll = new CombatRoll(params);
-  const unitModifiers: Array<UnitModifier> = combatRoll._getUnitModifiers(2, 3);
-  expect(unitModifiers.length).toBe(0);
+
+  const nsid: string = "card.leader.commander:pok/2ram";
+  expect(TI4.unitModifierRegistry.getByNsid(nsid)).toBeDefined();
+
+  const card: Card = MockCard.simple(nsid);
+  expect(card.isFaceUp()).toBe(true);
+  const allowFaceDown: boolean = false;
+  const rejectSnapPointTags: Array<string> = [];
+  expect(
+    new CardUtil().isLooseCard(card, allowFaceDown, rejectSnapPointTags)
+  ).toBe(true);
+
+  const unitModifiers: Array<UnitModifier> = combatRoll._findUnitModifiers(
+    2,
+    3
+  );
+  const names: Array<string> = unitModifiers.map((modifier) =>
+    modifier.getName()
+  );
+  expect(names).toEqual(["2Ram"]);
 });
