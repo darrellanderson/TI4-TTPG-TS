@@ -7,6 +7,27 @@ it("constructor", () => {
   expect(registry).toBeInstanceOf(UnitModifierRegistry);
 });
 
+it("getAll", () => {
+  const source: string = "my-source";
+  const schema: UnitModifierSchemaType = {
+    name: "my-name",
+    owner: "self",
+    priority: "mutate",
+    triggers: [
+      {
+        cardClass: "action",
+        nsidName: "my-nsid-name",
+      },
+    ],
+  };
+
+  const registry: UnitModifierRegistry = new UnitModifierRegistry();
+  expect(registry.getAll().length).toBe(0);
+
+  registry.load(source, [schema]);
+  expect(registry.getAll().length).toBe(1);
+});
+
 it("getByNsid", () => {
   const source: string = "my-source";
   const schema: UnitModifierSchemaType = {
@@ -27,6 +48,7 @@ it("getByNsid", () => {
   expect(registry.getByNsidName("my-nsid-name")).toBeUndefined();
 
   registry.load(source, [schema]);
+  expect(registry.getByNsid(nsid)).toBeDefined();
   expect(registry.getByNsid(nsid)?.getName()).toBe("my-name");
   expect(registry.getByNsidName("my-nsid-name")?.getName()).toBe("my-name");
 });
