@@ -30,7 +30,7 @@ export const UnitModifierOwner = z.enum(["self", "opponent", "any"]).readonly();
 export type UnitModifierOwnerType = z.infer<typeof UnitModifierOwner>;
 
 export const UnitModifierPriority = z
-  .enum(["mutate", "adjust", "choose"])
+  .enum(["mutate", "mutate-late", "adjust", "choose"])
   .readonly();
 export type UnitModifierPriorityType = z.infer<typeof UnitModifierPriority>;
 

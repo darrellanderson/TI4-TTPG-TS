@@ -16,7 +16,7 @@ export const SOURCE_TO_UNIT_MODIFIER_DATA: Record<
       ],
       isCombat: true,
       owner: "self",
-      priority: "adjust",
+      priority: "mutate-late",
       applies: (combatRoll: CombatRoll): boolean => {
         return combatRoll.getType() === "bombardment";
       },

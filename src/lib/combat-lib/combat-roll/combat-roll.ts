@@ -55,7 +55,7 @@ export class CombatRoll {
     this._adjHexes = new SystemAdjacency().getAdjHexes(params.hex);
 
     this.self = {
-      playerSlot: -1,
+      playerSlot: params.rollingPlayerSlot,
       unitAttrsSet: TI4.unitAttrsRegistry.defaultUnitAttrsSet(),
       unitPlasticHex: [],
       unitPlasticAdj: [],

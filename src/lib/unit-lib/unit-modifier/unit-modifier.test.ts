@@ -1,6 +1,7 @@
 import { CombatRoll } from "../../combat-lib/combat-roll/combat-roll";
 import {
   UnitModifierCardClassType,
+  UnitModifierPriorityType,
   UnitModifierTriggerType,
 } from "../schema/unit-modifier-schema";
 import { UnitModifier } from "./unit-modifier";
@@ -75,9 +76,7 @@ it("static schemaToNsid", () => {
 });
 
 it("static sortByApplyOrder", () => {
-  const makeModifier = (
-    priority: "mutate" | "adjust" | "choose"
-  ): UnitModifier => {
+  const makeModifier = (priority: UnitModifierPriorityType): UnitModifier => {
     return new UnitModifier({
       name: "my-name",
       triggers: [
@@ -93,18 +92,22 @@ it("static sortByApplyOrder", () => {
   const modifiers: Array<UnitModifier> = [
     makeModifier("adjust"),
     makeModifier("choose"),
+    makeModifier("mutate-late"),
     makeModifier("mutate"),
     makeModifier("adjust"),
     makeModifier("choose"),
+    makeModifier("mutate-late"),
     makeModifier("mutate"),
   ];
   const sorted: Array<UnitModifier> = UnitModifier.sortByApplyOrder(modifiers);
-  const priorities: Array<"mutate" | "adjust" | "choose"> = sorted.map(
+  const priorities: Array<UnitModifierPriorityType> = sorted.map(
     (unitModifier) => unitModifier.getPriority()
   );
   expect(priorities).toEqual([
     "mutate",
     "mutate",
+    "mutate-late",
+    "mutate-late",
     "adjust",
     "adjust",
     "choose",

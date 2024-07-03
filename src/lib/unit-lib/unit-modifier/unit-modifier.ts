@@ -41,8 +41,9 @@ export class UnitModifier {
   static sortByApplyOrder(modifiers: Array<UnitModifier>): Array<UnitModifier> {
     const priorityToSortValue = {
       mutate: 1,
-      adjust: 2,
-      choose: 3,
+      "mutate-late": 2,
+      adjust: 3,
+      choose: 4,
     };
     return modifiers.sort((a, b) => {
       const aValue: number = priorityToSortValue[a.getPriority()];
