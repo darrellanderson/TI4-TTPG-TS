@@ -61,7 +61,10 @@ export class CombatRoll {
       unitPlasticAdj: [],
     };
     this.opponent = {
-      playerSlot: -1,
+      playerSlot:
+        params.rollingPlayerSlot !== params.activatingPlayerSlot
+          ? params.activatingPlayerSlot
+          : -1,
       unitAttrsSet: TI4.unitAttrsRegistry.defaultUnitAttrsSet(),
       unitPlasticHex: [],
       unitPlasticAdj: [],
@@ -112,12 +115,11 @@ export class CombatRoll {
         ) {
           const pos: Vector = obj.getPosition();
           const closest: number = this._find.closestOwnedCardHolderOwner(pos);
-          if (closest === selfSlot && modifier.getOwner() === "self") {
+          const isSelf: boolean = closest === selfSlot;
+          const isOpponent: boolean = closest === opponentSlot;
+          if (closest === selfSlot && isSelf) {
             unitModifiers.push(modifier);
-          } else if (
-            closest === opponentSlot &&
-            modifier.getOwner() === "opponent"
-          ) {
+          } else if (closest === opponentSlot && isOpponent) {
             unitModifiers.push(modifier);
           }
         }

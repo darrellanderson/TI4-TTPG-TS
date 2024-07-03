@@ -1,10 +1,21 @@
-import { Card } from "@tabletop-playground/api";
+import { Card, Vector } from "@tabletop-playground/api";
 import { MockCard, MockCardHolder } from "ttpg-mock";
 import { CardUtil } from "ttpg-darrell";
 
 import { CombatRoll, CombatRollParams } from "./combat-roll";
 import { UnitAttrsSchemaType } from "../../unit-lib/schema/unit-attrs-schema";
 import { UnitModifier } from "../../unit-lib/unit-modifier/unit-modifier";
+
+it("static createCooked", () => {
+  const params: CombatRollParams = {
+    type: "spaceCombat",
+    hex: "<0,0,0>",
+    activatingPlayerSlot: 1,
+    rollingPlayerSlot: 2,
+  };
+  const combatRoll: CombatRoll = CombatRoll.createCooked(params);
+  expect(combatRoll.getType()).toBe("spaceCombat");
+});
 
 it("constructor", () => {
   const params: CombatRollParams = {
@@ -44,6 +55,47 @@ it("_findUnitAttrOverrides (standard unit upgrade)", () => {
     combatRoll._findUnitAttrOverrides(2);
   const names: Array<string> = overrides.map((override) => override.name);
   expect(names).toEqual(["Carrier II"]);
+});
+
+it("_findUnitModifiers (self, opponent)", () => {
+  // Need a card holder to be closest to assign cards.
+  const opponentPos: Vector = new Vector(9, 0, 0);
+  new MockCardHolder({ owningPlayerSlot: 2 });
+  new MockCardHolder({ owningPlayerSlot: 3, position: opponentPos });
+
+  TI4.unitModifierRegistry.load("my-source", [
+    {
+      name: "my-self-modifier",
+      owner: "self",
+      priority: "mutate",
+      triggers: [{ cardClass: "action", nsidName: "my-self-nsid-name" }],
+    },
+    {
+      name: "my-opponent-modifier",
+      owner: "opponent",
+      priority: "mutate",
+      triggers: [{ cardClass: "action", nsidName: "my-opponent-nsid-name" }],
+    },
+  ]);
+  MockCard.simple("card.action:my-source/my-self-nsid-name");
+  MockCard.simple("card.action:my-source/my-opponent-nsid-name", {
+    position: opponentPos,
+  });
+
+  const combatRoll: CombatRoll = new CombatRoll({
+    type: "spaceCombat",
+    hex: "<0,0,0>",
+    activatingPlayerSlot: 3,
+    rollingPlayerSlot: 2,
+  });
+  const unitModifiers: Array<UnitModifier> = combatRoll._findUnitModifiers(
+    2,
+    3
+  );
+  const names: Array<string> = unitModifiers.map((modifier) =>
+    modifier.getName()
+  );
+  expect(names).toEqual(["my-self-modifier", "my-opponent-modifier"]);
 });
 
 it("_findUnitModifiers", () => {
