@@ -22,6 +22,7 @@ export type CombatRollType =
 export type CombatRollParams = {
   type: CombatRollType;
   hex: HexType;
+  planetName?: string; // for planet-based rolls
   activatingPlayerSlot: number;
   rollingPlayerSlot: number;
 };
@@ -69,6 +70,20 @@ export class CombatRoll {
       unitPlasticHex: [],
       unitPlasticAdj: [],
     };
+  }
+
+  _findUnitPlastics(): Array<UnitPlastic> {
+    const unitPlastics: Array<UnitPlastic> = UnitPlastic.getAll().filter(
+      (unitPlastic): boolean => {
+        return (
+          unitPlastic.getHex() === this._params.hex ||
+          this._adjHexes.has(unitPlastic.getHex())
+        );
+      }
+    );
+    UnitPlastic.assignOwners(unitPlastics);
+    UnitPlastic.assignPlanets(unitPlastics);
+    return unitPlastics;
   }
 
   _findUnitAttrOverrides(playerSlot: number): Array<UnitAttrsSchemaType> {
