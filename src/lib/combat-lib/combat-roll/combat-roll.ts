@@ -44,6 +44,10 @@ export class CombatRoll {
   public readonly self: CombatRollPerPlayerData;
   public readonly opponent: CombatRollPerPlayerData;
 
+  static createCooked(params: CombatRollParams): CombatRoll {
+    return new CombatRoll(params).applyUnitOverries().applyUnitModifiers();
+  }
+
   constructor(params: CombatRollParams) {
     this._params = params;
     this._adjHexes = new SystemAdjacency().getAdjHexes(params.hex);
