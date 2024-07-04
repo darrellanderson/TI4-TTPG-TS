@@ -13,6 +13,7 @@ import {
 } from "../../unit-lib/schema/unit-attrs-schema";
 import { UnitModifier } from "../../unit-lib/unit-modifier/unit-modifier";
 import { UnitPlastic } from "../../unit-lib/unit-plastic/unit-plastic";
+import exp from "constants";
 
 it("data addSyntheticUnit", () => {
   const data: CombatRollPerPlayerData = new CombatRollPerPlayerData();
@@ -214,6 +215,33 @@ it("applyUnitOverrides", () => {
 });
 
 it("applyUnitModifiers", () => {
+  // Need a card holder to be closest to assign cards.
+  new MockCardHolder({ owningPlayerSlot: 2 });
+
+  TI4.unitModifierRegistry.load("my-source", [
+    {
+      name: "my-self-modifier",
+      owner: "self",
+      priority: "mutate",
+      triggers: [{ cardClass: "action", nsidName: "my-self-nsid-name" }],
+    },
+  ]);
+  MockCard.simple("card.action:my-source/my-self-nsid-name");
+
+  const combatRoll: CombatRoll = new CombatRoll({
+    type: "spaceCombat",
+    hex: "<0,0,0>",
+    activatingPlayerSlot: 1,
+    rollingPlayerSlot: 2,
+  });
+  combatRoll.applyUnitModifiersOrThrow();
+
+  expect(combatRoll.getUnitModifiers().map((x) => x.getName())).toEqual([
+    "my-self-modifier",
+  ]);
+});
+
+it("applyUnitModifiers (modifier throws)", () => {
   // Need a card holder to be closest to assign cards.
   new MockCardHolder({ owningPlayerSlot: 2 });
 

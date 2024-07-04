@@ -74,6 +74,7 @@ export class CombatRoll {
 
   private readonly _params: CombatRollParams;
   private readonly _adjHexes: Set<HexType>;
+  private readonly _modifiers: Array<UnitModifier> = [];
 
   // Unit modifers may look into and modify unit attributes.
   public readonly self: CombatRollPerPlayerData;
@@ -263,6 +264,7 @@ export class CombatRoll {
       // one modifier, not the whole set (or the call stack!).
       try {
         if (modifier.applies(this)) {
+          this._modifiers.push(modifier);
           modifier.apply(this);
         }
       } catch (e) {
@@ -280,6 +282,10 @@ export class CombatRoll {
       throw new Error(joined);
     }
     return this;
+  }
+
+  public getUnitModifiers(): Array<UnitModifier> {
+    return this._modifiers;
   }
 
   public getType(): CombatRollType {
