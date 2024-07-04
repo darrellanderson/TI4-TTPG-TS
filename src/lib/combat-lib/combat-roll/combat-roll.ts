@@ -81,6 +81,7 @@ export class CombatRoll {
 
   static createCooked(params: CombatRollParams): CombatRoll {
     return new CombatRoll(params)
+      .applyUnitPlastic()
       .applyUnitOverries()
       .applyUnitModifiersOrThrow();
   }
