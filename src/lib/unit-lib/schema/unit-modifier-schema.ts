@@ -8,6 +8,7 @@ export const UnitModifierCardClass = z
     "agent",
     "alliance",
     "commander",
+    "faction-ability",
     "hero",
     "legendary",
     "promissory",

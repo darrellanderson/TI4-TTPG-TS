@@ -9,14 +9,13 @@ import { SOURCE_TO_UNIT_MODIFIER_DATA } from "../data/unit-modifier.data";
 
 export class UnitModifierRegistry {
   private readonly _nsidToSchema: Map<string, UnitModifier> = new Map();
-  private readonly _nsidNameToSchema: Map<string, UnitModifier> = new Map();
+
+  getAll(): Array<UnitModifier> {
+    return Array.from(this._nsidToSchema.values());
+  }
 
   getByNsid(nsid: string): UnitModifier | undefined {
     return this._nsidToSchema.get(nsid);
-  }
-
-  getByNsidName(nsidName: string): UnitModifier | undefined {
-    return this._nsidNameToSchema.get(nsidName);
   }
 
   load(
@@ -46,9 +45,6 @@ export class UnitModifierRegistry {
         );
         if (nsid) {
           this._nsidToSchema.set(nsid, unitModifier);
-        }
-        if (trigger.nsidName) {
-          this._nsidNameToSchema.set(trigger.nsidName, unitModifier);
         }
       }
     }

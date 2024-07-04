@@ -24,6 +24,8 @@ export class UnitModifier {
         return `card.alliance:${source}/${trigger.nsidName}`;
       case "commander":
         return `card.leader.commander:${source}/${trigger.nsidName}`;
+      case "faction-ability":
+        return `faction-ability:${source}/${trigger.nsidName}`;
       case "hero":
         return `card.leader.hero:${source}/${trigger.nsidName}`;
       case "legendary":
