@@ -1,11 +1,11 @@
 import { Card, Vector } from "@tabletop-playground/api";
-import { MockCard, MockCardHolder } from "ttpg-mock";
+import { MockCard, MockCardHolder, MockGameObject } from "ttpg-mock";
 import { CardUtil } from "ttpg-darrell";
 
 import { CombatRoll, CombatRollParams } from "./combat-roll";
 import { UnitAttrsSchemaType } from "../../unit-lib/schema/unit-attrs-schema";
 import { UnitModifier } from "../../unit-lib/unit-modifier/unit-modifier";
-import exp from "constants";
+import { UnitPlastic } from "lib/unit-lib/unit-plastic/unit-plastic";
 
 it("static createCooked", () => {
   const params: CombatRollParams = {
@@ -27,6 +27,24 @@ it("constructor", () => {
   };
   const combatRoll: CombatRoll = new CombatRoll(params);
   expect(combatRoll.getType()).toBe("spaceCombat");
+});
+
+it("_findUnitPlastic", () => {
+  MockGameObject.simple("unit:base/fighter");
+  MockGameObject.simple("tile.system:base/1");
+  MockGameObject.simple("tile.system:base/1", {
+    position: TI4.hex.toPosition("<1,0,-1>"),
+  });
+
+  const combatRoll: CombatRoll = new CombatRoll({
+    type: "spaceCombat",
+    hex: "<1,0,-1>",
+    activatingPlayerSlot: 1,
+    rollingPlayerSlot: 1,
+  });
+
+  const unitPlastics: Array<UnitPlastic> = combatRoll._findUnitPlastics();
+  expect(unitPlastics[0]?.getUnit()).toBe("fighter");
 });
 
 it("_findUnitAttrOverrides (standard unit upgrade)", () => {
