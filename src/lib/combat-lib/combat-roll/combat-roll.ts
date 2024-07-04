@@ -35,6 +35,8 @@ export class CombatRollPerPlayerData {
     TI4.unitAttrsRegistry.defaultUnitAttrsSet();
   public readonly unitPlasticHex: Array<UnitPlastic> = [];
   public readonly unitPlasticAdj: Array<UnitPlastic> = [];
+  public readonly overrideUnitCountHex: Map<UnitType, number> = new Map();
+  public readonly overrideUnitCountAdj: Map<UnitType, number> = new Map();
 
   /**
    * Try to add a synthetic unit to the player's unit set.
@@ -51,10 +53,8 @@ export class CombatRollPerPlayerData {
     if (!this.unitAttrsSet.addSyntheticUnit(schema)) {
       return false;
     }
-    // Fake object, will not resolve to correct hex so downstream users
-    // need to trust the "unitPlasticHex" is correct.
     const obj: GameObject = new GameObject();
-    this.unitPlasticHex.push(new UnitPlastic(schema.unit, count, obj));
+    this.overrideUnitCountHex.set(schema.unit, count);
     return true;
   }
 

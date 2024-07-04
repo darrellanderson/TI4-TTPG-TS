@@ -37,7 +37,7 @@ it("data addSyntheticUnit", () => {
     1
   );
   expect(success).toBe(true);
-  expect(data.hasUnit("my-unit" as UnitType)).toBe(true);
+  expect(data.overrideUnitCountHex.get("my-unit" as UnitType)).toBe(1);
 });
 
 it("data hasUnit", () => {
