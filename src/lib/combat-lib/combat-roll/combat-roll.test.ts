@@ -7,9 +7,37 @@ import {
   CombatRollParams,
   CombatRollPerPlayerData,
 } from "./combat-roll";
-import { UnitAttrsSchemaType } from "../../unit-lib/schema/unit-attrs-schema";
+import {
+  UnitAttrsSchemaType,
+  UnitType,
+} from "../../unit-lib/schema/unit-attrs-schema";
 import { UnitModifier } from "../../unit-lib/unit-modifier/unit-modifier";
 import { UnitPlastic } from "../../unit-lib/unit-plastic/unit-plastic";
+
+it("data addSyntheticUnit", () => {
+  const data: CombatRollPerPlayerData = new CombatRollPerPlayerData();
+  expect(data.hasUnit("my-unit" as UnitType)).toBe(false);
+
+  let success: boolean;
+  success = data.addSyntheticUnit(
+    {
+      name: "my-name",
+      unit: "infantry",
+    },
+    1
+  );
+  expect(success).toBe(false);
+
+  success = data.addSyntheticUnit(
+    {
+      name: "my-name",
+      unit: "my-unit" as UnitType,
+    },
+    1
+  );
+  expect(success).toBe(true);
+  expect(data.hasUnit("my-unit" as UnitType)).toBe(true);
+});
 
 it("data hasUnit", () => {
   const data: CombatRollPerPlayerData = new CombatRollPerPlayerData();

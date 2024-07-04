@@ -11,6 +11,7 @@ import { UnitAttrsSet } from "../../unit-lib/unit-attrs-set/unit-attrs-set";
 import { UnitModifier } from "../../unit-lib/unit-modifier/unit-modifier";
 import { UnitPlastic } from "../../unit-lib/unit-plastic/unit-plastic";
 import { Planet } from "lib/system-lib/planet/planet";
+import { GameObject } from "ttpg-mock";
 
 export type CombatRollType =
   | "antiFighterBarrage"
@@ -34,6 +35,28 @@ export class CombatRollPerPlayerData {
     TI4.unitAttrsRegistry.defaultUnitAttrsSet();
   public readonly unitPlasticHex: Array<UnitPlastic> = [];
   public readonly unitPlasticAdj: Array<UnitPlastic> = [];
+
+  /**
+   * Try to add a synthetic unit to the player's unit set.
+   * Only works if unit type does not already exist.
+   *
+   * The schema.unit "UnitType" restriction may need to be
+   * violated with a "string as UnitType" cast.
+   *
+   * @param schema
+   * @param count
+   * @returns
+   */
+  addSyntheticUnit(schema: UnitAttrsSchemaType, count: number): boolean {
+    if (!this.unitAttrsSet.addSyntheticUnit(schema)) {
+      return false;
+    }
+    // Fake object, will not resolve to correct hex so downstream users
+    // need to trust the "unitPlasticHex" is correct.
+    const obj: GameObject = new GameObject();
+    this.unitPlasticHex.push(new UnitPlastic(schema.unit, count, obj));
+    return true;
+  }
 
   hasUnit(unit: UnitType): boolean {
     for (const unitPlastic of this.unitPlasticHex) {
