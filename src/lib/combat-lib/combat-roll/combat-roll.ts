@@ -28,12 +28,22 @@ export type CombatRollParams = {
   rollingPlayerSlot: number;
 };
 
-export type CombatRollPerPlayerData = {
-  playerSlot: number;
-  unitAttrsSet: UnitAttrsSet;
-  unitPlasticHex: Array<UnitPlastic>;
-  unitPlasticAdj: Array<UnitPlastic>;
-};
+export class CombatRollPerPlayerData {
+  public playerSlot: number = -1;
+  public readonly unitAttrsSet: UnitAttrsSet =
+    TI4.unitAttrsRegistry.defaultUnitAttrsSet();
+  public readonly unitPlasticHex: Array<UnitPlastic> = [];
+  public readonly unitPlasticAdj: Array<UnitPlastic> = [];
+
+  hasUnit(unit: UnitType): boolean {
+    for (const unitPlastic of this.unitPlasticHex) {
+      if (unitPlastic.getUnit() === unit) {
+        return true;
+      }
+    }
+    return false;
+  }
+}
 
 export class CombatRoll {
   private readonly _cardUtil: CardUtil = new CardUtil();
@@ -56,21 +66,14 @@ export class CombatRoll {
     this._params = params;
     this._adjHexes = new SystemAdjacency().getAdjHexes(params.hex);
 
-    this.self = {
-      playerSlot: params.rollingPlayerSlot,
-      unitAttrsSet: TI4.unitAttrsRegistry.defaultUnitAttrsSet(),
-      unitPlasticHex: [],
-      unitPlasticAdj: [],
-    };
-    this.opponent = {
-      playerSlot:
-        params.rollingPlayerSlot !== params.activatingPlayerSlot
-          ? params.activatingPlayerSlot
-          : -1,
-      unitAttrsSet: TI4.unitAttrsRegistry.defaultUnitAttrsSet(),
-      unitPlasticHex: [],
-      unitPlasticAdj: [],
-    };
+    this.self = new CombatRollPerPlayerData();
+    this.self.playerSlot = params.rollingPlayerSlot;
+
+    this.opponent = new CombatRollPerPlayerData();
+    this.opponent.playerSlot = -1;
+    if (params.rollingPlayerSlot !== params.activatingPlayerSlot) {
+      this.opponent.playerSlot = params.activatingPlayerSlot;
+    }
   }
 
   _findUnitPlastics(): Array<UnitPlastic> {

@@ -2,10 +2,24 @@ import { Card, Vector } from "@tabletop-playground/api";
 import { MockCard, MockCardHolder, MockGameObject } from "ttpg-mock";
 import { CardUtil } from "ttpg-darrell";
 
-import { CombatRoll, CombatRollParams } from "./combat-roll";
+import {
+  CombatRoll,
+  CombatRollParams,
+  CombatRollPerPlayerData,
+} from "./combat-roll";
 import { UnitAttrsSchemaType } from "../../unit-lib/schema/unit-attrs-schema";
 import { UnitModifier } from "../../unit-lib/unit-modifier/unit-modifier";
-import { UnitPlastic } from "lib/unit-lib/unit-plastic/unit-plastic";
+import { UnitPlastic } from "../../unit-lib/unit-plastic/unit-plastic";
+
+it("data hasUnit", () => {
+  const data: CombatRollPerPlayerData = new CombatRollPerPlayerData();
+  expect(data.hasUnit("infantry")).toBe(false);
+
+  data.unitPlasticHex.push(
+    new UnitPlastic("infantry", 1, new MockGameObject())
+  );
+  expect(data.hasUnit("infantry")).toBe(true);
+});
 
 it("static createCooked", () => {
   const params: CombatRollParams = {

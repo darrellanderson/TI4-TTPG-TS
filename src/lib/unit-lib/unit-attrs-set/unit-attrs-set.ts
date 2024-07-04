@@ -10,6 +10,22 @@ export class UnitAttrsSet {
     }
   }
 
+  /**
+   * Unit modifiers can add a new unit type.
+   * The "unit" parameter is a "UnitType" so caller probably needs
+   * to violate it via "<string> as UnitType".
+   *
+   * @param unit
+   * @param schema
+   */
+  addSyntheticUnit(schema: UnitAttrsSchemaType): boolean {
+    if (this._unitToAttrs.has(schema.unit)) {
+      return false;
+    }
+    this._unitToAttrs.set(schema.unit, new UnitAttrs(schema));
+    return true;
+  }
+
   applyOverride(override: UnitAttrsSchemaType): boolean {
     const unitAttrs: UnitAttrs | undefined = this._unitToAttrs.get(
       override.unit
@@ -23,6 +39,14 @@ export class UnitAttrsSet {
 
   get(unit: UnitType): UnitAttrs | undefined {
     return this._unitToAttrs.get(unit);
+  }
+
+  getOrThrow(unit: UnitType): UnitAttrs {
+    const unitAttrs: UnitAttrs | undefined = this._unitToAttrs.get(unit);
+    if (unitAttrs) {
+      return unitAttrs;
+    }
+    throw new Error(`unit not found: ${unit}`);
   }
 
   getAll(): Array<UnitAttrs> {
