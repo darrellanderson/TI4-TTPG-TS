@@ -199,3 +199,80 @@ it("applyUnitModifiers", () => {
     combatRoll.applyUnitModifiersOrThrow();
   }).toThrow();
 });
+
+it("applyUnitPlastic (assign opponent player slot, space)", () => {
+  MockGameObject.simple("unit:base/infantry", { owningPlayerSlot: 4 });
+  MockGameObject.simple("unit:base/carrier", { owningPlayerSlot: 3 });
+
+  const combatRoll: CombatRoll = new CombatRoll({
+    type: "spaceCombat", // only looks at ships
+    hex: "<0,0,0>",
+    activatingPlayerSlot: 1,
+    rollingPlayerSlot: 1, // active player
+  });
+  expect(combatRoll.opponent.playerSlot).toBe(-1);
+
+  combatRoll.applyUnitPlastic();
+  expect(combatRoll.opponent.playerSlot).toBe(3);
+});
+
+it("applyUnitPlastic (assign opponent player slot, ground)", () => {
+  MockGameObject.simple("tile.system:base/1");
+  MockGameObject.simple("unit:base/carrier", { owningPlayerSlot: 3 });
+  MockGameObject.simple("unit:base/infantry", { owningPlayerSlot: 4 });
+
+  const combatRoll: CombatRoll = new CombatRoll({
+    type: "groundCombat", // only looks at ground
+    planetName: "Jord",
+    hex: "<0,0,0>",
+    activatingPlayerSlot: 1,
+    rollingPlayerSlot: 1, // active player
+  });
+  expect(combatRoll.opponent.playerSlot).toBe(-1);
+
+  combatRoll.applyUnitPlastic();
+  expect(combatRoll.opponent.playerSlot).toBe(4);
+});
+
+it("applyUnitPlastic (assign units)", () => {
+  MockGameObject.simple("unit:base/carrier", { owningPlayerSlot: 1 });
+  MockGameObject.simple("unit:base/cruiser", { owningPlayerSlot: 2 });
+  MockGameObject.simple("unit:base/destroyer", {
+    owningPlayerSlot: 1,
+    position: TI4.hex.toPosition("<1,0,-1>"),
+  });
+  MockGameObject.simple("unit:base/dreadnought", {
+    owningPlayerSlot: 2,
+    position: TI4.hex.toPosition("<1,0,-1>"),
+  });
+  MockGameObject.simple("tile.system:base/1");
+  MockGameObject.simple("tile.system:base/1", {
+    position: TI4.hex.toPosition("<1,0,-1>"),
+  });
+
+  const combatRoll: CombatRoll = new CombatRoll({
+    type: "spaceCombat",
+    hex: "<0,0,0>",
+    activatingPlayerSlot: 2,
+    rollingPlayerSlot: 1,
+  });
+
+  expect(combatRoll.self.unitPlasticHex.length).toBe(0);
+  expect(combatRoll.self.unitPlasticAdj.length).toBe(0);
+  expect(combatRoll.opponent.unitPlasticHex.length).toBe(0);
+  expect(combatRoll.opponent.unitPlasticAdj.length).toBe(0);
+
+  combatRoll.applyUnitPlastic();
+  expect(combatRoll.self.unitPlasticHex.map((x) => x.getUnit())).toEqual([
+    "carrier",
+  ]);
+  expect(combatRoll.opponent.unitPlasticHex.map((x) => x.getUnit())).toEqual([
+    "cruiser",
+  ]);
+  expect(combatRoll.self.unitPlasticAdj.map((x) => x.getUnit())).toEqual([
+    "destroyer",
+  ]);
+  expect(combatRoll.opponent.unitPlasticAdj.map((x) => x.getUnit())).toEqual([
+    "dreadnought",
+  ]);
+});

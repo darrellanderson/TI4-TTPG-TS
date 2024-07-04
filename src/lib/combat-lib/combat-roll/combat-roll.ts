@@ -10,6 +10,7 @@ import { UnitAttrs } from "../../unit-lib/unit-attrs/unit-attrs";
 import { UnitAttrsSet } from "../../unit-lib/unit-attrs-set/unit-attrs-set";
 import { UnitModifier } from "../../unit-lib/unit-modifier/unit-modifier";
 import { UnitPlastic } from "../../unit-lib/unit-plastic/unit-plastic";
+import { Planet } from "lib/system-lib/planet/planet";
 
 export type CombatRollType =
   | "antiFighterBarrage"
@@ -142,6 +143,72 @@ export class CombatRoll {
     }
     UnitModifier.sortByApplyOrder(unitModifiers);
     return unitModifiers;
+  }
+
+  public applyUnitPlastic(): this {
+    const unitPlastics: Array<UnitPlastic> = this._findUnitPlastics();
+
+    const isGroundSet: Set<UnitType> = new Set();
+    const isShipSet: Set<UnitType> = new Set();
+    for (const unitAttrs of this.opponent.unitAttrsSet.getAll()) {
+      if (unitAttrs.isGround()) {
+        isGroundSet.add(unitAttrs.getUnit());
+      }
+      if (unitAttrs.isShip()) {
+        isShipSet.add(unitAttrs.getUnit());
+      }
+    }
+
+    // If opponent is not assigned, look for units belonging to another player.
+    // (Look only at units in some "area", space or ground.)
+    if (this.opponent.playerSlot === -1) {
+      let relevant: Array<UnitPlastic> = [];
+      if (this._params.planetName) {
+        relevant = unitPlastics.filter((unitPlastic) => {
+          const planet: Planet | undefined = unitPlastic.getPlanetClosest();
+          return (
+            isGroundSet.has(unitPlastic.getUnit()) &&
+            planet &&
+            planet.getName() === this._params.planetName
+          );
+        });
+      } else {
+        relevant = unitPlastics.filter((unitPlastic) => {
+          return isShipSet.has(unitPlastic.getUnit());
+        });
+      }
+      // For now, pick the first other player in the relevant units.
+      // If there are multiple players, this will need to be refined.
+      for (const unitPlastic of relevant) {
+        const playerSlot: number = unitPlastic.getOwningPlayerSlot();
+        if (playerSlot !== -1 && playerSlot !== this.self.playerSlot) {
+          this.opponent.playerSlot = playerSlot;
+          break;
+        }
+      }
+    }
+
+    // Fill in all units for each player.
+    // Do not prune here, unit modifiers may add attributes.
+    for (const unitPlastic of unitPlastics) {
+      // Self or opponent?
+      const playerSlot: number = unitPlastic.getOwningPlayerSlot();
+      let playerData: CombatRollPerPlayerData | undefined = undefined;
+      if (playerSlot === this.self.playerSlot) {
+        playerData = this.self;
+      } else if (playerSlot === this.opponent.playerSlot) {
+        playerData = this.opponent;
+      }
+      if (playerData) {
+        if (unitPlastic.getHex() === this._params.hex) {
+          playerData.unitPlasticHex.push(unitPlastic);
+        } else {
+          playerData.unitPlasticAdj.push(unitPlastic);
+        }
+      }
+    }
+
+    return this;
   }
 
   public applyUnitOverries(): this {
