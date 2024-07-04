@@ -59,12 +59,16 @@ export class CombatRollPerPlayerData {
   }
 
   hasUnit(unit: UnitType): boolean {
+    const count: number | undefined = this.overrideUnitCountHex.get(unit);
+    if (count === 0) {
+      return false;
+    }
     for (const unitPlastic of this.unitPlasticHex) {
       if (unitPlastic.getUnit() === unit) {
         return true;
       }
     }
-    return false;
+    return count && count > 0 ? true : false;
   }
 }
 

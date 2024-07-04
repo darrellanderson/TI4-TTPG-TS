@@ -38,16 +38,24 @@ it("data addSyntheticUnit", () => {
   );
   expect(success).toBe(true);
   expect(data.overrideUnitCountHex.get("my-unit" as UnitType)).toBe(1);
+  expect(data.hasUnit("my-unit" as UnitType)).toBe(true);
 });
 
 it("data hasUnit", () => {
   const data: CombatRollPerPlayerData = new CombatRollPerPlayerData();
   expect(data.hasUnit("infantry")).toBe(false);
+  expect(data.hasUnit("fighter")).toBe(false);
 
   data.unitPlasticHex.push(
     new UnitPlastic("infantry", 1, new MockGameObject())
   );
   expect(data.hasUnit("infantry")).toBe(true);
+  expect(data.hasUnit("fighter")).toBe(false);
+
+  data.overrideUnitCountHex.set("infantry", 0);
+  data.overrideUnitCountHex.set("fighter", 1);
+  expect(data.hasUnit("infantry")).toBe(false);
+  expect(data.hasUnit("fighter")).toBe(true);
 });
 
 it("static createCooked", () => {
