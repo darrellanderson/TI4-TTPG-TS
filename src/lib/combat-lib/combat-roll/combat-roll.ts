@@ -209,14 +209,19 @@ export class CombatRoll {
           return isShipSet.has(unitPlastic.getUnit());
         });
       }
-      // For now, pick the first other player in the relevant units.
-      // If there are multiple players, this will need to be refined.
+      const candidates: Set<number> = new Set();
       for (const unitPlastic of relevant) {
         const playerSlot: number = unitPlastic.getOwningPlayerSlot();
         if (playerSlot !== -1 && playerSlot !== this.self.playerSlot) {
-          this.opponent.playerSlot = playerSlot;
-          break;
+          candidates.add(playerSlot);
         }
+      }
+      // If only one other player has relevant units, assign them as opponent.
+      // Otherwise either player error with other units there, or some rule
+      // allowing for multiple players to have units in the same area.
+      // Unclear how to resolve that until rules are known.
+      if (candidates.size === 1) {
+        this.opponent.playerSlot = candidates.values().next().value;
       }
     }
 
