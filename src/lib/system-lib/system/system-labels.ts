@@ -23,16 +23,8 @@ export class SystemLabels {
     }
   }
 
-  static getPlanetLine(planet: Planet, z: number): DrawingLine {
-    const points: Array<Vector> = [];
-    const center: Vector = planet.getPosition();
-    const r: number = planet.getRadius();
-    const deltaPhi = (Math.PI * 2) / 16;
-    for (let phi = 0; phi <= Math.PI * 2 + 0.01; phi += deltaPhi) {
-      const p = new Vector(Math.cos(phi) * r, Math.sin(phi) * r, z);
-      points.push(p.add(center));
-    }
-
+  static getPlanetLine(planet: Planet): DrawingLine {
+    const points: Array<Vector> = planet.getPositionAsCircle();
     const line = new DrawingLine();
     line.normals = [new Vector(0, 0, 1)];
     line.points = points;
@@ -59,7 +51,7 @@ export class SystemLabels {
     };
 
     const addLine = (planet: Planet): void => {
-      const line = SystemLabels.getPlanetLine(planet, 0.2);
+      const line = SystemLabels.getPlanetLine(planet);
       world.addDrawingLine(line);
       this._lines.push(line);
     };

@@ -186,6 +186,20 @@ export class Planet {
     return this._obj.localPositionToWorld(localPosition);
   }
 
+  getPositionAsCircle(): Array<Vector> {
+    const points: Array<Vector> = [];
+    const center: Vector = this.getPosition();
+    const r: number = this.getRadius();
+    const numPoints = 32;
+    const localZ = this.getObj().getExtent(false, false).z + 0.01;
+    const deltaPhi = (Math.PI * 2) / numPoints;
+    for (let phi = 0; phi <= Math.PI * 2 + 0.01; phi += deltaPhi) {
+      const p = new Vector(Math.cos(phi) * r, Math.sin(phi) * r, localZ);
+      points.push(p.add(center));
+    }
+    return points;
+  }
+
   /**
    * Get the radius of the planet, in world units.
    *
