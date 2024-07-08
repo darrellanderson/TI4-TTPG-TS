@@ -4,6 +4,7 @@ import { NsidNameSchema } from "../../system-lib/schema/basic-types-schema";
 export const UnitSchema = z
   .enum([
     "carrier",
+    "control-token", // not a unit per-se, but useful to track for control
     "cruiser",
     "destroyer",
     "dreadnought",

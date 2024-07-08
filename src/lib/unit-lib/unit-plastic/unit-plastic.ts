@@ -59,7 +59,6 @@ export class UnitPlastic {
       switch (nsid) {
         case "token:base/infantry-1":
           unit = "infantry";
-          count = 1;
           break;
         case "token:base/infantry-3":
           unit = "infantry";
@@ -67,13 +66,14 @@ export class UnitPlastic {
           break;
         case "token:base/fighter-1":
           unit = "fighter";
-          count = 1;
           break;
         case "token:base/fighter-3":
           unit = "fighter";
           count = 3;
           break;
       }
+    } else if (nsid.startsWith("token.control:")) {
+      unit = "control-token";
     }
 
     if (unit) {

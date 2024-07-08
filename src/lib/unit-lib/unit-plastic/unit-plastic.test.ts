@@ -111,6 +111,21 @@ it("getOne (infantry-3 token)", () => {
   expect(entry?.getUnit()).toBe("infantry");
 });
 
+it("getOne (control-token)", () => {
+  const obj: GameObject = new MockGameObject({
+    templateMetadata: "token.control:base/sol",
+    owningPlayerSlot: 2,
+  });
+  const entry: UnitPlastic | undefined = UnitPlastic.getOne(obj);
+  expect(entry?.getCount()).toBe(1);
+  expect(entry?.getHex()).toBe("<0,0,0>");
+  expect(entry?.getObj()).toBe(obj);
+  expect(entry?.getOwningPlayerSlot()).toBe(2);
+  expect(entry?.getPlanetClosest()).toBeUndefined();
+  expect(entry?.getPlanetExact()).toBeUndefined();
+  expect(entry?.getUnit()).toBe("control-token");
+});
+
 it("getAll (empty)", () => {
   const result: Array<UnitPlastic> = UnitPlastic.getAll();
   expect(result).toEqual([]);
