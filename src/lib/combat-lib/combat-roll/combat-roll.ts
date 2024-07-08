@@ -1,6 +1,7 @@
 import { GameObject, Vector, world } from "@tabletop-playground/api";
 import { CardUtil, DiceParams, Find, HexType, NSID } from "ttpg-darrell";
 
+import { CombatAttrs } from "../../unit-lib/unit-attrs/combat-attrs";
 import { Planet } from "../../system-lib/planet/planet";
 import { SystemAdjacency } from "../../system-lib/system-adjacency/system-adjacency";
 import {
@@ -88,6 +89,41 @@ export class CombatRoll {
       .applyUnitPlastic()
       .applyUnitOverries()
       .applyUnitModifiersOrThrow();
+  }
+
+  _getCombatAttrs(): CombatAttrs | undefined {
+    const type: CombatRollType = this._params.type;
+    let UnitAtts: UnitAttrs | undefined = undefined;
+    switch (type) {
+      case "antiFighterBarrage":
+        return this.self.
+        return this.self.getAntiFighterBarrage();
+      case "bombardment":
+        return unitAttrs.getBombardment();
+      case "groundCombat":
+        return unitAttrs.getGroundCombat();
+      case "spaceCannonDefense":
+        return unitAttrs.getSpaceCannon();
+      case "spaceCannonOffense":
+        return unitAttrs.getSpaceCannon();
+      case "spaceCombat":
+        return unitAttrs.getSpaceCombat();
+    }
+    switch (type) {
+      case "antiFighterBarrage":
+        return this.self.
+        return this.self.getAntiFighterBarrage();
+      case "bombardment":
+        return unitAttrs.getBombardment();
+      case "groundCombat":
+        return unitAttrs.getGroundCombat();
+      case "spaceCannonDefense":
+        return unitAttrs.getSpaceCannon();
+      case "spaceCannonOffense":
+        return unitAttrs.getSpaceCannon();
+      case "spaceCombat":
+        return unitAttrs.getSpaceCombat();
+    }
   }
 
   constructor(params: CombatRollParams) {

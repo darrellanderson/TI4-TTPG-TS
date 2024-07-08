@@ -7,13 +7,14 @@ import {
   CombatRollParams,
   CombatRollPerPlayerData,
 } from "./combat-roll";
+import { UnitAttrs } from "../../unit-lib/unit-attrs/unit-attrs";
 import {
   UnitAttrsSchemaType,
   UnitType,
 } from "../../unit-lib/schema/unit-attrs-schema";
 import { UnitModifier } from "../../unit-lib/unit-modifier/unit-modifier";
 import { UnitPlastic } from "../../unit-lib/unit-plastic/unit-plastic";
-import exp from "constants";
+import { UnitAttrsSet } from "lib/unit-lib/unit-attrs-set/unit-attrs-set";
 
 it("data addSyntheticUnit", () => {
   const data: CombatRollPerPlayerData = new CombatRollPerPlayerData();
@@ -78,6 +79,18 @@ it("constructor", () => {
   };
   const combatRoll: CombatRoll = new CombatRoll(params);
   expect(combatRoll.getType()).toBe("spaceCombat");
+});
+
+it("_getCombatAttrs", () => {
+  const combatRoll: CombatRoll = new CombatRoll({
+    type: "antiFighterBarrage",
+    hex: "<0,0,0>",
+    activatingPlayerSlot: 1,
+    rollingPlayerSlot: 1,
+  });
+  const combatAttrs: UnitAttrs | undefined =
+    combatRoll.self._getCombatAttrs("antiFighterBarrage");
+  expect(combatAttrs).toBeDefined();
 });
 
 it("_findUnitPlastic", () => {
