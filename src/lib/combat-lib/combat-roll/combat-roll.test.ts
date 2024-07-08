@@ -15,6 +15,7 @@ import {
 import { UnitModifier } from "../../unit-lib/unit-modifier/unit-modifier";
 import { UnitPlastic } from "../../unit-lib/unit-plastic/unit-plastic";
 import { UnitAttrsSet } from "lib/unit-lib/unit-attrs-set/unit-attrs-set";
+import { CombatAttrs } from "lib/unit-lib/unit-attrs/combat-attrs";
 
 it("data addSyntheticUnit", () => {
   const data: CombatRollPerPlayerData = new CombatRollPerPlayerData();
@@ -61,36 +62,37 @@ it("data hasUnit", () => {
 
 it("static createCooked", () => {
   const params: CombatRollParams = {
-    type: "spaceCombat",
+    rollType: "spaceCombat",
     hex: "<0,0,0>",
     activatingPlayerSlot: 1,
     rollingPlayerSlot: 2,
   };
   const combatRoll: CombatRoll = CombatRoll.createCooked(params);
-  expect(combatRoll.getType()).toBe("spaceCombat");
+  expect(combatRoll.getRollType()).toBe("spaceCombat");
 });
 
 it("constructor", () => {
   const params: CombatRollParams = {
-    type: "spaceCombat",
+    rollType: "spaceCombat",
     hex: "<0,0,0>",
     activatingPlayerSlot: 1,
     rollingPlayerSlot: 1,
   };
   const combatRoll: CombatRoll = new CombatRoll(params);
-  expect(combatRoll.getType()).toBe("spaceCombat");
+  expect(combatRoll.getRollType()).toBe("spaceCombat");
 });
 
 it("_getCombatAttrs", () => {
   const combatRoll: CombatRoll = new CombatRoll({
-    type: "antiFighterBarrage",
+    rollType: "antiFighterBarrage",
     hex: "<0,0,0>",
     activatingPlayerSlot: 1,
     rollingPlayerSlot: 1,
   });
-  const combatAttrs: UnitAttrs | undefined =
-    combatRoll.self._getCombatAttrs("antiFighterBarrage");
-  expect(combatAttrs).toBeDefined();
+  const unitToCombatAttrs: Map<UnitType, CombatAttrs> =
+    combatRoll._getCombatAttrs();
+  expect(unitToCombatAttrs.get("carrier")).toBeUndefined();
+  expect(unitToCombatAttrs.get("destroyer")).toBeDefined();
 });
 
 it("_findUnitPlastic", () => {
@@ -101,7 +103,7 @@ it("_findUnitPlastic", () => {
   });
 
   const combatRoll: CombatRoll = new CombatRoll({
-    type: "spaceCombat",
+    rollType: "spaceCombat",
     hex: "<1,0,-1>",
     activatingPlayerSlot: 1,
     rollingPlayerSlot: 1,
@@ -116,7 +118,7 @@ it("_findUnitAttrOverrides (standard unit upgrade)", () => {
   new MockCardHolder({ owningPlayerSlot: 2 });
 
   const params: CombatRollParams = {
-    type: "spaceCombat",
+    rollType: "spaceCombat",
     hex: "<0,0,0>",
     activatingPlayerSlot: 1,
     rollingPlayerSlot: 2,
@@ -166,7 +168,7 @@ it("_findUnitModifiers (self, opponent)", () => {
   });
 
   const combatRoll: CombatRoll = new CombatRoll({
-    type: "spaceCombat",
+    rollType: "spaceCombat",
     hex: "<0,0,0>",
     activatingPlayerSlot: 3,
     rollingPlayerSlot: 2,
@@ -186,7 +188,7 @@ it("_findUnitModifiers", () => {
   new MockCardHolder({ owningPlayerSlot: 2 });
 
   const params: CombatRollParams = {
-    type: "spaceCombat",
+    rollType: "spaceCombat",
     hex: "<0,0,0>",
     activatingPlayerSlot: 1,
     rollingPlayerSlot: 2,
@@ -220,7 +222,7 @@ it("applyUnitOverrides", () => {
   MockCard.simple("card.technology.unit-upgrade:base/carrier-2");
 
   const combatRoll: CombatRoll = new CombatRoll({
-    type: "spaceCombat",
+    rollType: "spaceCombat",
     hex: "<0,0,0>",
     activatingPlayerSlot: 1,
     rollingPlayerSlot: 2,
@@ -251,7 +253,7 @@ it("applyUnitModifiers", () => {
   MockCard.simple("card.action:my-source/my-self-nsid-name");
 
   const combatRoll: CombatRoll = new CombatRoll({
-    type: "spaceCombat",
+    rollType: "spaceCombat",
     hex: "<0,0,0>",
     activatingPlayerSlot: 1,
     rollingPlayerSlot: 2,
@@ -282,7 +284,7 @@ it("applyUnitModifiers (modifier throws)", () => {
   MockCard.simple("card.action:my-source/my-self-nsid-name");
 
   const combatRoll: CombatRoll = new CombatRoll({
-    type: "spaceCombat",
+    rollType: "spaceCombat",
     hex: "<0,0,0>",
     activatingPlayerSlot: 1,
     rollingPlayerSlot: 2,
@@ -298,7 +300,7 @@ it("applyUnitPlastic (assign opponent player slot, space)", () => {
   MockGameObject.simple("unit:base/carrier", { owningPlayerSlot: 3 });
 
   const combatRoll: CombatRoll = new CombatRoll({
-    type: "spaceCombat", // only looks at ships
+    rollType: "spaceCombat", // only looks at ships
     hex: "<0,0,0>",
     activatingPlayerSlot: 1,
     rollingPlayerSlot: 1, // active player
@@ -315,7 +317,7 @@ it("applyUnitPlastic (assign opponent player slot, ground)", () => {
   MockGameObject.simple("unit:base/infantry", { owningPlayerSlot: 4 });
 
   const combatRoll: CombatRoll = new CombatRoll({
-    type: "groundCombat", // only looks at ground
+    rollType: "groundCombat", // only looks at ground
     planetName: "Jord",
     hex: "<0,0,0>",
     activatingPlayerSlot: 1,
@@ -344,7 +346,7 @@ it("applyUnitPlastic (assign units)", () => {
   });
 
   const combatRoll: CombatRoll = new CombatRoll({
-    type: "spaceCombat",
+    rollType: "spaceCombat",
     hex: "<0,0,0>",
     activatingPlayerSlot: 2,
     rollingPlayerSlot: 1,

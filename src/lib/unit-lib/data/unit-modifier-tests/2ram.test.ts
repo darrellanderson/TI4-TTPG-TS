@@ -7,7 +7,7 @@ import { placeGameObjects } from "./abstract.test";
 
 it("2ram", () => {
   const params: CombatRollParams = {
-    type: "bombardment",
+    rollType: "bombardment",
     hex: "<0,0,0>",
     activatingPlayerSlot: 1,
     rollingPlayerSlot: 2,

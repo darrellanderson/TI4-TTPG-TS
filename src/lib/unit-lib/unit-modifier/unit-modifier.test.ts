@@ -164,7 +164,7 @@ it("applies/apply (empty)", () => {
     priority: "mutate",
   });
   const combatRoll: CombatRoll = new CombatRoll({
-    type: "spaceCombat",
+    rollType: "spaceCombat",
     hex: "<0,0,0>",
     activatingPlayerSlot: 2,
     rollingPlayerSlot: 3,
@@ -184,7 +184,7 @@ it("applies/apply (given)", () => {
     apply: (combatRoll: CombatRoll): void => {},
   });
   const combatRoll: CombatRoll = new CombatRoll({
-    type: "spaceCombat",
+    rollType: "spaceCombat",
     hex: "<0,0,0>",
     activatingPlayerSlot: 2,
     rollingPlayerSlot: 3,

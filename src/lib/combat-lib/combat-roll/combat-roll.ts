@@ -22,7 +22,7 @@ export type CombatRollType =
   | "groundCombat";
 
 export type CombatRollParams = {
-  type: CombatRollType;
+  rollType: CombatRollType;
   hex: HexType;
   planetName?: string; // for planet-based rolls
   activatingPlayerSlot: number;
@@ -91,39 +91,36 @@ export class CombatRoll {
       .applyUnitModifiersOrThrow();
   }
 
-  _getCombatAttrs(): CombatAttrs | undefined {
-    const type: CombatRollType = this._params.type;
-    let UnitAtts: UnitAttrs | undefined = undefined;
-    switch (type) {
-      case "antiFighterBarrage":
-        return this.self.
-        return this.self.getAntiFighterBarrage();
-      case "bombardment":
-        return unitAttrs.getBombardment();
-      case "groundCombat":
-        return unitAttrs.getGroundCombat();
-      case "spaceCannonDefense":
-        return unitAttrs.getSpaceCannon();
-      case "spaceCannonOffense":
-        return unitAttrs.getSpaceCannon();
-      case "spaceCombat":
-        return unitAttrs.getSpaceCombat();
+  _getCombatAttrs(): Map<UnitType, CombatAttrs> {
+    const result: Map<UnitType, CombatAttrs> = new Map();
+    const rollType: CombatRollType = this._params.rollType;
+    for (const unitAttrs of this.self.unitAttrsSet.getAll()) {
+      let combatAttrs: CombatAttrs | undefined = undefined;
+      switch (rollType) {
+        case "antiFighterBarrage":
+          combatAttrs = unitAttrs.getAntiFighterBarrage();
+          break;
+        case "bombardment":
+          combatAttrs = unitAttrs.getBombardment();
+          break;
+        case "groundCombat":
+          combatAttrs = unitAttrs.getGroundCombat();
+          break;
+        case "spaceCannonDefense":
+          combatAttrs = unitAttrs.getSpaceCannon();
+          break;
+        case "spaceCannonOffense":
+          combatAttrs = unitAttrs.getSpaceCannon();
+          break;
+        case "spaceCombat":
+          combatAttrs = unitAttrs.getSpaceCombat();
+          break;
+      }
+      if (combatAttrs) {
+        result.set(unitAttrs.getUnit(), combatAttrs);
+      }
     }
-    switch (type) {
-      case "antiFighterBarrage":
-        return this.self.
-        return this.self.getAntiFighterBarrage();
-      case "bombardment":
-        return unitAttrs.getBombardment();
-      case "groundCombat":
-        return unitAttrs.getGroundCombat();
-      case "spaceCannonDefense":
-        return unitAttrs.getSpaceCannon();
-      case "spaceCannonOffense":
-        return unitAttrs.getSpaceCannon();
-      case "spaceCombat":
-        return unitAttrs.getSpaceCombat();
-    }
+    return result;
   }
 
   constructor(params: CombatRollParams) {
@@ -353,7 +350,7 @@ export class CombatRoll {
     );
   }
 
-  public getType(): CombatRollType {
-    return this._params.type;
+  public getRollType(): CombatRollType {
+    return this._params.rollType;
   }
 }

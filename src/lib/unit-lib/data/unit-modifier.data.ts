@@ -18,7 +18,7 @@ export const SOURCE_TO_UNIT_MODIFIER_DATA: Record<
       owner: "self",
       priority: "mutate-late",
       applies: (combatRoll: CombatRoll): boolean => {
-        return combatRoll.getType() === "bombardment";
+        return combatRoll.getRollType() === "bombardment";
       },
       apply: (combatRoll: CombatRoll): void => {
         for (const unitAttrs of combatRoll.self.unitAttrsSet.getAll()) {
