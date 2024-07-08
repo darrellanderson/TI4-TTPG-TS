@@ -1,3 +1,4 @@
+import exp from "constants";
 import {
   CombatRoll,
   CombatRollParams,
@@ -24,6 +25,7 @@ it("2ram", () => {
     self: ["card.leader.commander:pok/2ram"],
   });
   combatRoll = CombatRoll.createCooked(params);
+  expect(combatRoll.getUnitModifierNames()).toEqual(["2Ram"]);
   expect(
     combatRoll.self.unitAttrsSet
       .getOrThrow("dreadnought")

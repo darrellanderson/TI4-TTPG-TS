@@ -1,6 +1,7 @@
 import { GameObject, Vector, world } from "@tabletop-playground/api";
-import { CardUtil, Find, HexType, NSID } from "ttpg-darrell";
+import { CardUtil, DiceParams, Find, HexType, NSID } from "ttpg-darrell";
 
+import { Planet } from "../../system-lib/planet/planet";
 import { SystemAdjacency } from "../../system-lib/system-adjacency/system-adjacency";
 import {
   UnitAttrsSchemaType,
@@ -10,8 +11,6 @@ import { UnitAttrs } from "../../unit-lib/unit-attrs/unit-attrs";
 import { UnitAttrsSet } from "../../unit-lib/unit-attrs-set/unit-attrs-set";
 import { UnitModifier } from "../../unit-lib/unit-modifier/unit-modifier";
 import { UnitPlastic } from "../../unit-lib/unit-plastic/unit-plastic";
-import { Planet } from "../../system-lib/planet/planet";
-import { System } from "../../system-lib/system/system";
 
 export type CombatRollType =
   | "antiFighterBarrage"
@@ -291,6 +290,21 @@ export class CombatRoll {
       throw new Error(joined);
     }
     return this;
+  }
+
+  public createDiceParamsArray(): Array<DiceParams> {
+    const result: Array<DiceParams> = [];
+    const unitToHexCount: Map<UnitType, number> = UnitPlastic.count(
+      this.self.unitPlasticHex
+    );
+    const unitToAdjCount: Map<UnitType, number> = UnitPlastic.count(
+      this.self.unitPlasticAdj
+    );
+    for (const unitAttrs of this.self.unitAttrsSet.getAll()) {
+      // TODO calc
+      // TODO get range for thsi combat roll type
+    }
+    return result;
   }
 
   public getUnitModifierNames(): Array<string> {
