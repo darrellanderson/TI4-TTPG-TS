@@ -1,4 +1,4 @@
-import { Vector, world } from "@tabletop-playground/api";
+import { GameObject, Vector, world } from "@tabletop-playground/api";
 import { CardUtil, Find, HexType, NSID } from "ttpg-darrell";
 
 import { SystemAdjacency } from "../../system-lib/system-adjacency/system-adjacency";
@@ -10,8 +10,8 @@ import { UnitAttrs } from "../../unit-lib/unit-attrs/unit-attrs";
 import { UnitAttrsSet } from "../../unit-lib/unit-attrs-set/unit-attrs-set";
 import { UnitModifier } from "../../unit-lib/unit-modifier/unit-modifier";
 import { UnitPlastic } from "../../unit-lib/unit-plastic/unit-plastic";
-import { Planet } from "lib/system-lib/planet/planet";
-import { GameObject } from "ttpg-mock";
+import { Planet } from "../../system-lib/planet/planet";
+import { System } from "../../system-lib/system/system";
 
 export type CombatRollType =
   | "antiFighterBarrage"

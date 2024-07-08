@@ -16,6 +16,7 @@ export class UnitPlastic {
   private readonly _obj: GameObject;
   private readonly _hex: HexType;
   private _owningPlayerSlot: number;
+  private _system: System | undefined;
   private _planetClosest: Planet | undefined;
   private _planetExact: Planet | undefined;
 
@@ -157,6 +158,7 @@ export class UnitPlastic {
       const system: System | undefined = hexToSystem.get(entry._hex);
       if (system) {
         const pos: Vector = entry._obj.getPosition();
+        entry._system = system;
         entry._planetClosest = system.getPlanetClosest(pos);
         entry._planetExact = system.getPlanetExact(pos);
       }
@@ -195,6 +197,10 @@ export class UnitPlastic {
 
   getPlanetExact(): Planet | undefined {
     return this._planetExact;
+  }
+
+  getSystem(): System | undefined {
+    return this._system;
   }
 
   getUnit(): UnitType {

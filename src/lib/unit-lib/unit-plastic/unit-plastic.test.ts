@@ -176,12 +176,14 @@ it("assignPlanets", () => {
   );
   expect(plasticOffPlanet.getHex()).toBe("<0,0,0>");
 
+  expect(plastic.getSystem()).toBeUndefined();
   expect(plastic.getPlanetClosest()).toBeUndefined();
   expect(plastic.getPlanetExact()).toBeUndefined();
   expect(plasticOffPlanet.getPlanetClosest()).toBeUndefined();
   expect(plasticOffPlanet.getPlanetExact()).toBeUndefined();
 
   UnitPlastic.assignPlanets([plastic, plasticOffPlanet]);
+  expect(plastic.getSystem()?.getSystemTileNumber()).toBe(1);
   expect(plastic.getPlanetClosest()).toBeDefined();
   expect(plastic.getPlanetExact()).toBeDefined();
   expect(plasticOffPlanet.getPlanetClosest()).toBeDefined();
