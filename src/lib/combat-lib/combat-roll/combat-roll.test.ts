@@ -229,6 +229,7 @@ it("applyUnitModifiers", () => {
   TI4.unitModifierRegistry.load("my-source", [
     {
       name: "my-self-modifier",
+      description: "my-description",
       owner: "self",
       priority: "mutate",
       triggers: [{ cardClass: "action", nsidName: "my-self-nsid-name" }],
@@ -244,8 +245,9 @@ it("applyUnitModifiers", () => {
   });
   combatRoll.applyUnitModifiersOrThrow();
 
-  expect(combatRoll.getUnitModifiers().map((x) => x.getName())).toEqual([
-    "my-self-modifier",
+  expect(combatRoll.getUnitModifierNames()).toEqual(["my-self-modifier"]);
+  expect(combatRoll.getUnitModifierNamesWithDescriptions()).toEqual([
+    "my-self-modifier (my-description)",
   ]);
 });
 

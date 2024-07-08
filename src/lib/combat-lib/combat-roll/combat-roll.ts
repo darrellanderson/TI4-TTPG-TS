@@ -293,8 +293,14 @@ export class CombatRoll {
     return this;
   }
 
-  public getUnitModifiers(): Array<UnitModifier> {
-    return this._modifiers;
+  public getUnitModifierNames(): Array<string> {
+    return this._modifiers.map((modifier) => modifier.getName());
+  }
+
+  public getUnitModifierNamesWithDescriptions(): Array<string> {
+    return this._modifiers.map(
+      (modifier) => `${modifier.getName()} (${modifier.getDescription()})`
+    );
   }
 
   public getType(): CombatRollType {
