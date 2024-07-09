@@ -91,38 +91,6 @@ export class CombatRoll {
       .applyUnitModifiersOrThrow();
   }
 
-  _getCombatAttrs(): Map<UnitType, CombatAttrs> {
-    const result: Map<UnitType, CombatAttrs> = new Map();
-    const rollType: CombatRollType = this._params.rollType;
-    for (const unitAttrs of this.self.unitAttrsSet.getAll()) {
-      let combatAttrs: CombatAttrs | undefined = undefined;
-      switch (rollType) {
-        case "antiFighterBarrage":
-          combatAttrs = unitAttrs.getAntiFighterBarrage();
-          break;
-        case "bombardment":
-          combatAttrs = unitAttrs.getBombardment();
-          break;
-        case "groundCombat":
-          combatAttrs = unitAttrs.getGroundCombat();
-          break;
-        case "spaceCannonDefense":
-          combatAttrs = unitAttrs.getSpaceCannon();
-          break;
-        case "spaceCannonOffense":
-          combatAttrs = unitAttrs.getSpaceCannon();
-          break;
-        case "spaceCombat":
-          combatAttrs = unitAttrs.getSpaceCombat();
-          break;
-      }
-      if (combatAttrs) {
-        result.set(unitAttrs.getUnit(), combatAttrs);
-      }
-    }
-    return result;
-  }
-
   constructor(params: CombatRollParams) {
     this._params = params;
     this._adjHexes = new SystemAdjacency().getAdjHexes(params.hex);
@@ -209,6 +177,38 @@ export class CombatRoll {
     return unitModifiers;
   }
 
+  _getUnitToCombatAttrs(): Map<UnitType, CombatAttrs> {
+    const result: Map<UnitType, CombatAttrs> = new Map();
+    const rollType: CombatRollType = this._params.rollType;
+    for (const unitAttrs of this.self.unitAttrsSet.getAll()) {
+      let combatAttrs: CombatAttrs | undefined = undefined;
+      switch (rollType) {
+        case "antiFighterBarrage":
+          combatAttrs = unitAttrs.getAntiFighterBarrage();
+          break;
+        case "bombardment":
+          combatAttrs = unitAttrs.getBombardment();
+          break;
+        case "groundCombat":
+          combatAttrs = unitAttrs.getGroundCombat();
+          break;
+        case "spaceCannonDefense":
+          combatAttrs = unitAttrs.getSpaceCannon();
+          break;
+        case "spaceCannonOffense":
+          combatAttrs = unitAttrs.getSpaceCannon();
+          break;
+        case "spaceCombat":
+          combatAttrs = unitAttrs.getSpaceCombat();
+          break;
+      }
+      if (combatAttrs) {
+        result.set(unitAttrs.getUnit(), combatAttrs);
+      }
+    }
+    return result;
+  }
+
   public applyUnitPlastic(): this {
     const unitPlastics: Array<UnitPlastic> = this._findUnitPlastics();
 
@@ -263,6 +263,7 @@ export class CombatRoll {
       // Self or opponent?
       const playerSlot: number = unitPlastic.getOwningPlayerSlot();
       let playerData: CombatRollPerPlayerData | undefined = undefined;
+      let plasticArray: Array<UnitPlastic> | undefined = undefined;
       if (playerSlot === this.self.playerSlot) {
         playerData = this.self;
       } else if (playerSlot === this.opponent.playerSlot) {
@@ -270,10 +271,13 @@ export class CombatRoll {
       }
       if (playerData) {
         if (unitPlastic.getHex() === this._params.hex) {
-          playerData.unitPlasticHex.push(unitPlastic);
+          plasticArray = playerData.unitPlasticHex;
         } else {
-          playerData.unitPlasticAdj.push(unitPlastic);
+          plasticArray = playerData.unitPlasticAdj;
         }
+      }
+      if (plasticArray) {
+        plasticArray.push(unitPlastic);
       }
     }
 
@@ -327,6 +331,27 @@ export class CombatRoll {
 
   public createDiceParamsArray(): Array<DiceParams> {
     const result: Array<DiceParams> = [];
+    const unitToCombatAttrs: Map<UnitType, CombatAttrs> =
+      this._getUnitToCombatAttrs();
+
+    // If appropriate, prune to units on planet.
+    const requirePlanet: boolean =
+      this._params.rollType === "bombardment" ||
+      this._params.rollType === "spaceCannonDefense" ||
+      this._params.rollType === "groundCombat";
+    if (requirePlanet) {
+      for (let i = this.self.unitPlasticHex.length - 1; i >= 0; i--) {
+        const unitPlastic: UnitPlastic | undefined =
+          this.self.unitPlasticHex[i];
+        if (unitPlastic) {
+          const planet: Planet | undefined = unitPlastic.getPlanetClosest();
+          if (planet && planet.getName() !== this._params.planetName) {
+            this.self.unitPlasticHex.splice(i, 1);
+          }
+        }
+      }
+    }
+
     const unitToHexCount: Map<UnitType, number> = UnitPlastic.count(
       this.self.unitPlasticHex
     );
@@ -334,8 +359,31 @@ export class CombatRoll {
       this.self.unitPlasticAdj
     );
     for (const unitAttrs of this.self.unitAttrsSet.getAll()) {
-      // TODO calc
-      // TODO get range for thsi combat roll type
+      const unit: UnitType = unitAttrs.getUnit();
+      const combatAttrs: CombatAttrs | undefined = unitToCombatAttrs.get(unit);
+      if (combatAttrs) {
+        const hexCount: number = unitToHexCount.get(unit) ?? 0;
+        const adjCount: number = unitToAdjCount.get(unit) ?? 0;
+        let count: number = hexCount;
+        if (combatAttrs.getRange() > 0) {
+          count += adjCount;
+        }
+        for (let i = 0; i < count; i++) {
+          const params: DiceParams = {
+            sides: 10,
+            id: unit,
+            name: unitAttrs.getName(),
+            hit: combatAttrs.getHit(),
+            reroll: combatAttrs.getRerollMisses(),
+          };
+          const crit: number | undefined = combatAttrs.getCrit();
+          if (crit !== undefined) {
+            params.crit = crit;
+            params.critCount = combatAttrs.getCritCount();
+          }
+          result.push(params);
+        }
+      }
     }
     return result;
   }

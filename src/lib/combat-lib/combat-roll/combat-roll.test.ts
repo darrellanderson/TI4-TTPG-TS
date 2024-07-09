@@ -1,21 +1,22 @@
 import { Card, Vector } from "@tabletop-playground/api";
 import { MockCard, MockCardHolder, MockGameObject } from "ttpg-mock";
-import { CardUtil } from "ttpg-darrell";
+import { CardUtil, DiceParams } from "ttpg-darrell";
 
+import { CombatAttrs } from "../../unit-lib/unit-attrs/combat-attrs";
 import {
   CombatRoll,
   CombatRollParams,
   CombatRollPerPlayerData,
 } from "./combat-roll";
-import { UnitAttrs } from "../../unit-lib/unit-attrs/unit-attrs";
+import { Planet } from "../../system-lib/planet/planet";
+import { System } from "../../system-lib/system/system";
 import {
   UnitAttrsSchemaType,
   UnitType,
 } from "../../unit-lib/schema/unit-attrs-schema";
+import { UnitAttrs } from "../../unit-lib/unit-attrs/unit-attrs";
 import { UnitModifier } from "../../unit-lib/unit-modifier/unit-modifier";
 import { UnitPlastic } from "../../unit-lib/unit-plastic/unit-plastic";
-import { UnitAttrsSet } from "lib/unit-lib/unit-attrs-set/unit-attrs-set";
-import { CombatAttrs } from "lib/unit-lib/unit-attrs/combat-attrs";
 
 it("data addSyntheticUnit", () => {
   const data: CombatRollPerPlayerData = new CombatRollPerPlayerData();
@@ -82,7 +83,23 @@ it("constructor", () => {
   expect(combatRoll.getRollType()).toBe("spaceCombat");
 });
 
-it("_getCombatAttrs", () => {
+it("_getCombatAttrs (spaceCannonOffense)", () => {
+  const combatRoll: CombatRoll = new CombatRoll({
+    rollType: "spaceCannonOffense",
+    hex: "<0,0,0>",
+    activatingPlayerSlot: 1,
+    rollingPlayerSlot: 1,
+  });
+  const unitToCombatAttrs: Map<UnitType, CombatAttrs> =
+    combatRoll._getUnitToCombatAttrs();
+  expect(unitToCombatAttrs.get("carrier")).toBeUndefined();
+  expect(unitToCombatAttrs.get("destroyer")).toBeUndefined();
+  expect(unitToCombatAttrs.get("dreadnought")).toBeUndefined();
+  expect(unitToCombatAttrs.get("infantry")).toBeUndefined();
+  expect(unitToCombatAttrs.get("pds")).toBeDefined();
+});
+
+it("_getCombatAttrs (antiFighterBarrage)", () => {
   const combatRoll: CombatRoll = new CombatRoll({
     rollType: "antiFighterBarrage",
     hex: "<0,0,0>",
@@ -90,9 +107,77 @@ it("_getCombatAttrs", () => {
     rollingPlayerSlot: 1,
   });
   const unitToCombatAttrs: Map<UnitType, CombatAttrs> =
-    combatRoll._getCombatAttrs();
+    combatRoll._getUnitToCombatAttrs();
   expect(unitToCombatAttrs.get("carrier")).toBeUndefined();
   expect(unitToCombatAttrs.get("destroyer")).toBeDefined();
+  expect(unitToCombatAttrs.get("dreadnought")).toBeUndefined();
+  expect(unitToCombatAttrs.get("infantry")).toBeUndefined();
+  expect(unitToCombatAttrs.get("pds")).toBeUndefined();
+});
+
+it("_getCombatAttrs (spaceCombat)", () => {
+  const combatRoll: CombatRoll = new CombatRoll({
+    rollType: "spaceCombat",
+    hex: "<0,0,0>",
+    activatingPlayerSlot: 1,
+    rollingPlayerSlot: 1,
+  });
+  const unitToCombatAttrs: Map<UnitType, CombatAttrs> =
+    combatRoll._getUnitToCombatAttrs();
+  expect(unitToCombatAttrs.get("carrier")).toBeDefined();
+  expect(unitToCombatAttrs.get("destroyer")).toBeDefined();
+  expect(unitToCombatAttrs.get("dreadnought")).toBeDefined();
+  expect(unitToCombatAttrs.get("infantry")).toBeUndefined();
+  expect(unitToCombatAttrs.get("pds")).toBeUndefined();
+});
+
+it("_getCombatAttrs (bombardment)", () => {
+  const combatRoll: CombatRoll = new CombatRoll({
+    rollType: "bombardment",
+    hex: "<0,0,0>",
+    activatingPlayerSlot: 1,
+    rollingPlayerSlot: 1,
+  });
+  const unitToCombatAttrs: Map<UnitType, CombatAttrs> =
+    combatRoll._getUnitToCombatAttrs();
+  expect(unitToCombatAttrs.get("carrier")).toBeUndefined();
+  expect(unitToCombatAttrs.get("destroyer")).toBeUndefined();
+  expect(unitToCombatAttrs.get("dreadnought")).toBeDefined();
+  expect(unitToCombatAttrs.get("infantry")).toBeUndefined();
+  expect(unitToCombatAttrs.get("pds")).toBeUndefined();
+});
+
+it("_getCombatAttrs (spaceCannonDefense)", () => {
+  const combatRoll: CombatRoll = new CombatRoll({
+    rollType: "spaceCannonDefense",
+    hex: "<0,0,0>",
+    activatingPlayerSlot: 1,
+    rollingPlayerSlot: 1,
+  });
+  const unitToCombatAttrs: Map<UnitType, CombatAttrs> =
+    combatRoll._getUnitToCombatAttrs();
+  expect(unitToCombatAttrs.get("carrier")).toBeUndefined();
+  expect(unitToCombatAttrs.get("destroyer")).toBeUndefined();
+  expect(unitToCombatAttrs.get("dreadnought")).toBeUndefined();
+  expect(unitToCombatAttrs.get("infantry")).toBeUndefined();
+  expect(unitToCombatAttrs.get("pds")).toBeDefined();
+});
+
+it("_getCombatAttrs (groundCombat)", () => {
+  const combatRoll: CombatRoll = new CombatRoll({
+    rollType: "groundCombat",
+    planetName: "Jord",
+    hex: "<0,0,0>",
+    activatingPlayerSlot: 1,
+    rollingPlayerSlot: 1,
+  });
+  const unitToCombatAttrs: Map<UnitType, CombatAttrs> =
+    combatRoll._getUnitToCombatAttrs();
+  expect(unitToCombatAttrs.get("carrier")).toBeUndefined();
+  expect(unitToCombatAttrs.get("destroyer")).toBeUndefined();
+  expect(unitToCombatAttrs.get("dreadnought")).toBeUndefined();
+  expect(unitToCombatAttrs.get("infantry")).toBeDefined();
+  expect(unitToCombatAttrs.get("pds")).toBeUndefined();
 });
 
 it("_findUnitPlastic", () => {
@@ -369,5 +454,142 @@ it("applyUnitPlastic (assign units)", () => {
   ]);
   expect(combatRoll.opponent.unitPlasticAdj.map((x) => x.getUnit())).toEqual([
     "dreadnought",
+  ]);
+});
+
+it("createDiceParamsArray (no units)", () => {
+  const combatRoll: CombatRoll = CombatRoll.createCooked({
+    rollType: "spaceCombat",
+    hex: "<0,0,0>",
+    activatingPlayerSlot: 1,
+    rollingPlayerSlot: 2,
+  });
+  const diceParamsArray: Array<DiceParams> = combatRoll.createDiceParamsArray();
+  expect(diceParamsArray.length).toBe(0);
+});
+
+it("createDiceParamsArray (space)", () => {
+  MockGameObject.simple("tile/system:base/1");
+  MockGameObject.simple("unit:base/carrier", { owningPlayerSlot: 2 });
+  MockGameObject.simple("unit:base/fighter", { owningPlayerSlot: 2 });
+  MockGameObject.simple("unit:base/fighter", { owningPlayerSlot: 2 });
+  MockGameObject.simple("unit:base/infantry", { owningPlayerSlot: 2 });
+  MockGameObject.simple("unit:base/mech", { owningPlayerSlot: 2 });
+  const combatRoll: CombatRoll = CombatRoll.createCooked({
+    rollType: "spaceCombat",
+    hex: "<0,0,0>",
+    activatingPlayerSlot: 1,
+    rollingPlayerSlot: 2,
+  });
+  const diceParamsArray: Array<DiceParams> = combatRoll.createDiceParamsArray();
+  expect(diceParamsArray).toEqual([
+    { hit: 9, id: "carrier", name: "Carrier", reroll: false, sides: 10 },
+    { hit: 9, id: "fighter", name: "Fighter", reroll: false, sides: 10 },
+    { hit: 9, id: "fighter", name: "Fighter", reroll: false, sides: 10 },
+  ]);
+});
+
+it("createDiceParamsArray (ground)", () => {
+  MockGameObject.simple("tile.system:base/9");
+  const system: System | undefined = TI4.systemRegistry.getByPosition(
+    new Vector(0, 0, 0)
+  );
+  if (!system) {
+    throw new Error("system not found"); // TypeScript
+  }
+  const yesPlanet: Planet | undefined = system.getPlanets()[0];
+  const noPlanet: Planet | undefined = system.getPlanets()[1];
+  if (!yesPlanet) {
+    throw new Error("planet not found"); // TypeScript
+  }
+  if (!noPlanet) {
+    throw new Error("planet not found"); // TypeScript
+  }
+
+  MockGameObject.simple("unit:base/carrier", { owningPlayerSlot: 2 });
+  MockGameObject.simple("unit:base/fighter", { owningPlayerSlot: 2 });
+  MockGameObject.simple("unit:base/fighter", { owningPlayerSlot: 2 });
+  MockGameObject.simple("unit:base/infantry", {
+    owningPlayerSlot: 2,
+    position: yesPlanet.getPosition(),
+  });
+  MockGameObject.simple("unit:base/mech", {
+    owningPlayerSlot: 2,
+    position: noPlanet.getPosition(),
+  });
+  const combatRoll: CombatRoll = CombatRoll.createCooked({
+    rollType: "groundCombat",
+    hex: "<0,0,0>",
+    planetName: yesPlanet.getName(),
+    activatingPlayerSlot: 1,
+    rollingPlayerSlot: 2,
+  });
+  const diceParamsArray: Array<DiceParams> = combatRoll.createDiceParamsArray();
+  expect(diceParamsArray).toEqual([
+    { hit: 8, id: "infantry", name: "Infantry", reroll: false, sides: 10 },
+  ]);
+});
+
+it("createDiceParamsArray (range, crit)", () => {
+  TI4.unitModifierRegistry.load("my-source", [
+    {
+      name: "my-modifier",
+      owner: "self",
+      priority: "mutate",
+      triggers: [{ cardClass: "action", nsidName: "my-nsid-name" }],
+      apply: (combatRoll: CombatRoll): void => {
+        const pds: UnitAttrs | undefined =
+          combatRoll.self.unitAttrsSet.get("pds");
+        if (!pds) {
+          throw new Error("missing pds");
+        }
+        const combatAttrs: CombatAttrs | undefined = pds.getSpaceCannon();
+        if (!combatAttrs) {
+          throw new Error("missing combatAttrs");
+        }
+        combatAttrs.setRange(1);
+        combatAttrs.setCrit(9);
+        combatAttrs.setCritCount(4);
+      },
+    },
+  ]);
+  new MockCardHolder({ owningPlayerSlot: 2 });
+  MockCard.simple("card.action:my-source/my-nsid-name");
+  MockGameObject.simple("tile.system:base/1");
+  MockGameObject.simple("tile.system:base/2", {
+    position: TI4.hex.toPosition("<1,0,-1>"),
+  });
+  MockGameObject.simple("unit:base/pds", { owningPlayerSlot: 2 });
+  MockGameObject.simple("unit:base/pds", {
+    owningPlayerSlot: 2,
+    position: TI4.hex.toPosition("<1,0,-1>"),
+  });
+  const combatRoll: CombatRoll = CombatRoll.createCooked({
+    rollType: "spaceCannonOffense",
+    hex: "<1,0,-1>",
+    activatingPlayerSlot: 1,
+    rollingPlayerSlot: 2,
+  });
+  expect(combatRoll.getUnitModifierNames()).toEqual(["my-modifier"]);
+  const diceParamsArray: Array<DiceParams> = combatRoll.createDiceParamsArray();
+  expect(diceParamsArray).toEqual([
+    {
+      crit: 9,
+      critCount: 4,
+      hit: 6,
+      id: "pds",
+      name: "PDS",
+      reroll: false,
+      sides: 10,
+    },
+    {
+      crit: 9,
+      critCount: 4,
+      hit: 6,
+      id: "pds",
+      name: "PDS",
+      reroll: false,
+      sides: 10,
+    },
   ]);
 });
