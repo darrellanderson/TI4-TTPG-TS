@@ -483,9 +483,33 @@ it("createDiceParamsArray (space)", () => {
   });
   const diceParamsArray: Array<DiceParams> = combatRoll.createDiceParamsArray();
   expect(diceParamsArray).toEqual([
-    { hit: 9, id: "carrier", name: "Carrier", reroll: false, sides: 10 },
-    { hit: 9, id: "fighter", name: "Fighter", reroll: false, sides: 10 },
-    { hit: 9, id: "fighter", name: "Fighter", reroll: false, sides: 10 },
+    {
+      hit: 9,
+      id: "carrier",
+      name: "Carrier",
+      primaryColor: { a: 1, b: 0, g: 0, r: 0 },
+      reroll: false,
+      secondaryColor: { a: 1, b: 1, g: 1, r: 1 },
+      sides: 10,
+    },
+    {
+      hit: 9,
+      id: "fighter",
+      name: "Fighter",
+      primaryColor: { a: 1, b: 0, g: 0, r: 0 },
+      reroll: false,
+      secondaryColor: { a: 1, b: 1, g: 1, r: 1 },
+      sides: 10,
+    },
+    {
+      hit: 9,
+      id: "fighter",
+      name: "Fighter",
+      primaryColor: { a: 1, b: 0, g: 0, r: 0 },
+      reroll: false,
+      secondaryColor: { a: 1, b: 1, g: 1, r: 1 },
+      sides: 10,
+    },
   ]);
 });
 
@@ -526,7 +550,15 @@ it("createDiceParamsArray (ground)", () => {
   });
   const diceParamsArray: Array<DiceParams> = combatRoll.createDiceParamsArray();
   expect(diceParamsArray).toEqual([
-    { hit: 8, id: "infantry", name: "Infantry", reroll: false, sides: 10 },
+    {
+      hit: 8,
+      id: "infantry",
+      name: "Infantry",
+      primaryColor: { a: 1, b: 0, g: 0, r: 0 },
+      reroll: false,
+      secondaryColor: { a: 1, b: 1, g: 1, r: 1 },
+      sides: 10,
+    },
   ]);
 });
 
@@ -579,7 +611,9 @@ it("createDiceParamsArray (range, crit)", () => {
       hit: 6,
       id: "pds",
       name: "PDS",
+      primaryColor: { a: 1, b: 0, g: 0, r: 0 },
       reroll: false,
+      secondaryColor: { a: 1, b: 1, g: 1, r: 1 },
       sides: 10,
     },
     {
@@ -588,7 +622,9 @@ it("createDiceParamsArray (range, crit)", () => {
       hit: 6,
       id: "pds",
       name: "PDS",
+      primaryColor: { a: 1, b: 0, g: 0, r: 0 },
       reroll: false,
+      secondaryColor: { a: 1, b: 1, g: 1, r: 1 },
       sides: 10,
     },
   ]);

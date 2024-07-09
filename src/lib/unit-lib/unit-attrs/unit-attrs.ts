@@ -178,8 +178,8 @@ export class UnitAttrs {
     return this._cost;
   }
 
-  getDiceColor(): Color | undefined {
-    return this._diceColor;
+  getDiceColor(): Color {
+    return this._diceColor ?? new Color(0, 0, 0);
   }
 
   getDisableBombardment(): boolean {

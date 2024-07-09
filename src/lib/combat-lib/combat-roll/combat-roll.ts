@@ -375,12 +375,9 @@ export class CombatRoll {
             name: unitAttrs.getName(),
             hit: combatAttrs.getHit(),
             reroll: combatAttrs.getRerollMisses(),
+            primaryColor: unitAttrs.getDiceColor(),
+            secondaryColor: new Color(1, 1, 1),
           };
-          const diceColor: Color | undefined = unitAttrs.getDiceColor();
-          if (diceColor) {
-            params.primaryColor = diceColor;
-            params.secondaryColor = new Color(1, 1, 1);
-          }
           const crit: number | undefined = combatAttrs.getCrit();
           if (crit !== undefined) {
             params.crit = crit;
