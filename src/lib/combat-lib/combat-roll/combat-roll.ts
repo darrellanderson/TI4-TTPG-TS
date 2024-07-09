@@ -1,4 +1,4 @@
-import { GameObject, Vector, world } from "@tabletop-playground/api";
+import { Color, GameObject, Vector, world } from "@tabletop-playground/api";
 import { CardUtil, DiceParams, Find, HexType, NSID } from "ttpg-darrell";
 
 import { CombatAttrs } from "../../unit-lib/unit-attrs/combat-attrs";
@@ -376,6 +376,11 @@ export class CombatRoll {
             hit: combatAttrs.getHit(),
             reroll: combatAttrs.getRerollMisses(),
           };
+          const diceColor: Color | undefined = unitAttrs.getDiceColor();
+          if (diceColor) {
+            params.primaryColor = diceColor;
+            params.secondaryColor = new Color(1, 1, 1);
+          }
           const crit: number | undefined = combatAttrs.getCrit();
           if (crit !== undefined) {
             params.crit = crit;

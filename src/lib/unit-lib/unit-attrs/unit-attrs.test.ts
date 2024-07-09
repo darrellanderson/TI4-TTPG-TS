@@ -1,3 +1,4 @@
+import { Color } from "@tabletop-playground/api";
 import { UnitAttrsSchemaType } from "../schema/unit-attrs-schema";
 import { CombatAttrs } from "./combat-attrs";
 import { UnitAttrs } from "./unit-attrs";
@@ -117,6 +118,23 @@ it("producePerCost", () => {
     producePerCost: 4,
   });
   expect(unitAttrs.getProducePerCost()).toBe(4);
+});
+
+it("diceColor", () => {
+  const unitAttrs = new UnitAttrs({
+    name: "my-name",
+    unit: "infantry",
+    diceColor: "#ff0000",
+  });
+  const diceColor: Color | undefined = unitAttrs.getDiceColor();
+  expect(diceColor?.toHex()).toBe("FF0000FF"); // RGBA
+
+  unitAttrs.applyOverride({
+    name: "my-name",
+    unit: "infantry",
+    diceColor: "#00ff00",
+  });
+  expect(unitAttrs.getDiceColor()).toEqual({ a: 1, b: 0, g: 0, r: 1 });
 });
 
 it("isShip", () => {

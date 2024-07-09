@@ -38,6 +38,10 @@ export const UnitAttrsSchema = z
     name: z.string().min(1), // e.g. "Carrier II"
     unit: UnitSchema, // base unit type, unit upgrades overrride
     componentCount: z.number().optional(), // component count, e.g. fighters = 10
+    diceColor: z
+      .string()
+      .regex(/#[0-9a-fA-F]{6}/)
+      .optional(), // e.g. "#ff0000"
 
     // Faction attr or tech ("card.technology.unit:{source}/{nsidName}").
     // Missing: base unit, "x": faction base unit, "x-2": unit upgrade.
