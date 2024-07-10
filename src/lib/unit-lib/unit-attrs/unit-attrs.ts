@@ -86,6 +86,15 @@ export class UnitAttrs {
     if (params.groundCombat) {
       this._groundCombat = new CombatAttrs(params.groundCombat);
     }
+
+    // Truncate dice color for cleaner printing.
+    if (this._diceColor) {
+      this._diceColor = new Color(
+        Math.round(this._diceColor.r * 100) / 100,
+        Math.round(this._diceColor.g * 100) / 100,
+        Math.round(this._diceColor.b * 100) / 100
+      );
+    }
   }
 
   /**

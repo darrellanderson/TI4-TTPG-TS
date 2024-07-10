@@ -13,6 +13,7 @@ export const SOURCE_TO_UNIT_ATTRS_DATA: Record<
       isShip: true,
       cost: 3,
       spaceCombat: { hit: 9 },
+      diceColor: "#0000ff",
     },
     {
       name: "Carrier II",
@@ -39,6 +40,7 @@ export const SOURCE_TO_UNIT_ATTRS_DATA: Record<
       isShip: true,
       cost: 2,
       spaceCombat: { hit: 7 },
+      diceColor: "#c080ff",
     },
     {
       name: "Cruiser II",
@@ -56,6 +58,7 @@ export const SOURCE_TO_UNIT_ATTRS_DATA: Record<
       cost: 1,
       antiFighterBarrage: { dice: 2, hit: 9 },
       spaceCombat: { hit: 9 },
+      diceColor: "#ff0000",
     },
     {
       name: "Destroyer II",
@@ -75,6 +78,7 @@ export const SOURCE_TO_UNIT_ATTRS_DATA: Record<
       hasSustainDamage: true,
       bombardment: { hit: 5 },
       spaceCombat: { hit: 5 },
+      diceColor: "#804080",
     },
     {
       name: "Dreadnought II",
@@ -116,6 +120,7 @@ export const SOURCE_TO_UNIT_ATTRS_DATA: Record<
       cost: 1,
       producePerCost: 2,
       spaceCombat: { hit: 9 },
+      diceColor: "#00ffff",
     },
     {
       name: "Fighter II",
@@ -144,6 +149,7 @@ export const SOURCE_TO_UNIT_ATTRS_DATA: Record<
       cost: 8,
       hasSustainDamage: true,
       isShip: true,
+      diceColor: "#000000",
     },
     {
       name: "[0.0.1]", // L1Z1X
@@ -260,6 +266,7 @@ export const SOURCE_TO_UNIT_ATTRS_DATA: Record<
       cost: 1,
       producePerCost: 2,
       groundCombat: { hit: 8 },
+      diceColor: "#00ff00",
     },
     {
       name: "Infantry II",
@@ -309,6 +316,7 @@ export const SOURCE_TO_UNIT_ATTRS_DATA: Record<
       componentCount: 6,
       hasPlanetaryShield: true,
       spaceCannon: { hit: 6 },
+      diceColor: "#ff8000",
     },
     {
       name: "PDS II",
@@ -322,6 +330,7 @@ export const SOURCE_TO_UNIT_ATTRS_DATA: Record<
       name: "Space Dock",
       unit: "space-dock",
       componentCount: 3,
+      diceColor: "#ffff00",
     },
     {
       name: "Space Dock II",
@@ -347,6 +356,7 @@ export const SOURCE_TO_UNIT_ATTRS_DATA: Record<
       isShip: true,
       hasSustainDamage: true,
       disablePlanetaryShield: true,
+      diceColor: "#ff8000",
     },
     {
       name: "War Sun",

@@ -1,4 +1,10 @@
-import { Color, GameObject, Vector, world } from "@tabletop-playground/api";
+import {
+  Color,
+  GameObject,
+  Player,
+  Vector,
+  world,
+} from "@tabletop-playground/api";
 import { CardUtil, DiceParams, Find, HexType, NSID } from "ttpg-darrell";
 
 import { CombatAttrs } from "../../unit-lib/unit-attrs/combat-attrs";
@@ -402,5 +408,9 @@ export class CombatRoll {
 
   public getRollType(): CombatRollType {
     return this._params.rollType;
+  }
+
+  public roll(player: Player): void {
+    const diceParamsArray: Array<DiceParams> = this.createDiceParamsArray();
   }
 }
