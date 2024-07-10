@@ -1,9 +1,15 @@
-import { Card, Vector } from "@tabletop-playground/api";
-import { MockCard, MockCardHolder, MockGameObject } from "ttpg-mock";
-import { CardUtil, DiceParams } from "ttpg-darrell";
+import { Card, Player, Vector } from "@tabletop-playground/api";
+import {
+  MockCard,
+  MockCardHolder,
+  MockGameObject,
+  MockPlayer,
+} from "ttpg-mock";
+import { CardUtil, DiceParams, DiceResult } from "ttpg-darrell";
 
 import { CombatAttrs } from "../../unit-lib/unit-attrs/combat-attrs";
 import {
+  _UnitRollsSummary,
   CombatRoll,
   CombatRollParams,
   CombatRollPerPlayerData,
@@ -628,4 +634,94 @@ it("createDiceParamsArray (range, crit)", () => {
       sides: 10,
     },
   ]);
+});
+
+it("roll", () => {
+  const combatRoll: CombatRoll = CombatRoll.createCooked({
+    rollType: "spaceCombat",
+    hex: "<0,0,0>",
+    activatingPlayerSlot: 1,
+    rollingPlayerSlot: 2,
+  });
+  const player: Player = new MockPlayer();
+  const position: Vector = new Vector(0, 0, 0);
+  combatRoll.roll(player, position);
+});
+
+it("_getUnitRollSummaries (no crit)", () => {
+  const combatRoll: CombatRoll = new CombatRoll({
+    rollType: "spaceCombat",
+    hex: "<0,0,0>",
+    activatingPlayerSlot: 1,
+    rollingPlayerSlot: 2,
+  });
+  const diceResults: Array<DiceResult> = [
+    {
+      diceParams: {
+        id: "carrier",
+        sides: 10,
+      },
+      hit: true,
+      value: 9,
+    },
+  ];
+  const summaries: Map<UnitType, _UnitRollsSummary> =
+    combatRoll._getUnitRollsSummaries(diceResults);
+  expect(summaries.get("carrier")).toEqual({
+    diceWithHitsCritsAndRerolls: ["9#"],
+    hits: 1,
+  });
+});
+
+it("_getUnitRollSummaries (crit)", () => {
+  const combatRoll: CombatRoll = new CombatRoll({
+    rollType: "spaceCombat",
+    hex: "<0,0,0>",
+    activatingPlayerSlot: 1,
+    rollingPlayerSlot: 2,
+  });
+  const diceResults: Array<DiceResult> = [
+    {
+      diceParams: {
+        id: "carrier",
+        sides: 10,
+      },
+      hit: true,
+      crit: true,
+      value: 9,
+    },
+  ];
+  const summaries: Map<UnitType, _UnitRollsSummary> =
+    combatRoll._getUnitRollsSummaries(diceResults);
+  expect(summaries.get("carrier")).toEqual({
+    diceWithHitsCritsAndRerolls: ["9##"],
+    hits: 2,
+  });
+});
+
+it("_getUnitRollSummaries (crit with count)", () => {
+  const combatRoll: CombatRoll = new CombatRoll({
+    rollType: "spaceCombat",
+    hex: "<0,0,0>",
+    activatingPlayerSlot: 1,
+    rollingPlayerSlot: 2,
+  });
+  const diceResults: Array<DiceResult> = [
+    {
+      diceParams: {
+        id: "carrier",
+        sides: 10,
+        critCount: 2,
+      },
+      hit: true,
+      crit: true,
+      value: 9,
+    },
+  ];
+  const summaries: Map<UnitType, _UnitRollsSummary> =
+    combatRoll._getUnitRollsSummaries(diceResults);
+  expect(summaries.get("carrier")).toEqual({
+    diceWithHitsCritsAndRerolls: ["9###"],
+    hits: 3,
+  });
 });

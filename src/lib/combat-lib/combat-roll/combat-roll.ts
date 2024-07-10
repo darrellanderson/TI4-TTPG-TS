@@ -1,11 +1,21 @@
 import {
   Color,
   GameObject,
+  GameWorld,
   Player,
   Vector,
   world,
 } from "@tabletop-playground/api";
-import { CardUtil, DiceParams, Find, HexType, NSID } from "ttpg-darrell";
+import {
+  CardUtil,
+  DiceGroup,
+  DiceGroupParams,
+  DiceParams,
+  DiceResult,
+  Find,
+  HexType,
+  NSID,
+} from "ttpg-darrell";
 
 import { CombatAttrs } from "../../unit-lib/unit-attrs/combat-attrs";
 import { Planet } from "../../system-lib/planet/planet";
@@ -33,6 +43,11 @@ export type CombatRollParams = {
   planetName?: string; // for planet-based rolls
   activatingPlayerSlot: number;
   rollingPlayerSlot: number;
+};
+
+export type _UnitRollsSummary = {
+  hits: number;
+  diceWithHitsCritsAndRerolls: Array<string>;
 };
 
 export class CombatRollPerPlayerData {
@@ -410,7 +425,50 @@ export class CombatRoll {
     return this._params.rollType;
   }
 
-  public roll(player: Player): void {
-    const diceParamsArray: Array<DiceParams> = this.createDiceParamsArray();
+  public roll(player: Player, position: Vector): void {
+    const callback = (diceResults: Array<DiceResult>, player: Player): void => {
+      // TODO XXX
+    };
+    const diceParams: Array<DiceParams> = this.createDiceParamsArray();
+    const diceGroupParams: DiceGroupParams = {
+      diceParams,
+      player,
+      position,
+      callback,
+      doFakeRoll: GameWorld.getExecutionReason() === "unittest",
+    };
+    DiceGroup.roll(diceGroupParams);
+  }
+
+  _getUnitRollsSummaries(
+    diceResults: Array<DiceResult>
+  ): Map<UnitType, _UnitRollsSummary> {
+    const result: Map<UnitType, _UnitRollsSummary> = new Map();
+
+    for (const diceResult of diceResults) {
+      const unit: UnitType = diceResult.diceParams.id as UnitType;
+      let unitRollsSummary: _UnitRollsSummary | undefined = result.get(unit);
+      if (!unitRollsSummary) {
+        unitRollsSummary = {
+          hits: 0,
+          diceWithHitsCritsAndRerolls: [],
+        };
+        result.set(unit, unitRollsSummary);
+      }
+
+      // Add hits and crits.
+      if (diceResult.hit) {
+        unitRollsSummary.hits += 1;
+      }
+      if (diceResult.crit) {
+        unitRollsSummary.hits += diceResult.diceParams.critCount ?? 1;
+      }
+
+      // Format.
+      const formatted: string = DiceGroup.format(diceResult);
+      unitRollsSummary.diceWithHitsCritsAndRerolls.push(formatted);
+    }
+
+    return result;
   }
 }

@@ -1,6 +1,7 @@
 import { GameWorld } from "@tabletop-playground/api";
 import {
   BugSplatRemoteReporter,
+  DiceGroupCleanup,
   ErrorHandler,
   GlobalInit,
   Hex,
@@ -59,7 +60,7 @@ resetGlobalThisTI4();
 
 // Run any delayed initialization, things that need globalThis.TI4 to be set.
 // These are "init" functions in the class objects.
-const iGlobals: Array<IGlobal> = [];
+const iGlobals: Array<IGlobal> = [new DiceGroupCleanup()];
 for (const [k, v] of Object.entries(globalThis.TI4)) {
   if (typeof v.init === "function") {
     iGlobals.push(v);

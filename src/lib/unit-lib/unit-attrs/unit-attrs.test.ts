@@ -38,6 +38,7 @@ it("constructor", () => {
   // defaults
   expect(unitAttrs.getCost()).toBe(undefined);
   expect(unitAttrs.getProducePerCost()).toBe(1);
+  expect(unitAttrs.getDiceColor().toHex()).toBe("000000FF");
   expect(unitAttrs.getDisableBombardment()).toBe(false);
   expect(unitAttrs.getDisablePlanetaryShield()).toBe(false);
   expect(unitAttrs.getDisableSpaceCannonOffense()).toBe(false);
