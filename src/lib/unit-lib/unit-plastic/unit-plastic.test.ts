@@ -3,19 +3,6 @@ import { MockGameObject } from "ttpg-mock";
 
 import { UnitPlastic } from "./unit-plastic";
 import { UnitType } from "../schema/unit-attrs-schema";
-import exp from "constants";
-import { HexType } from "ttpg-darrell";
-
-it("static count", () => {
-  const unitPlastics: Array<UnitPlastic> = [
-    new UnitPlastic("infantry", 1, new MockGameObject()),
-    new UnitPlastic("infantry", 1, new MockGameObject()),
-    new UnitPlastic("fighter", 3, new MockGameObject()),
-  ];
-  const result: Map<UnitType, number> = UnitPlastic.count(unitPlastics);
-  expect(result.get("infantry")).toBe(2);
-  expect(result.get("fighter")).toBe(3);
-});
 
 it("constructor", () => {
   const unit: UnitType = "infantry";

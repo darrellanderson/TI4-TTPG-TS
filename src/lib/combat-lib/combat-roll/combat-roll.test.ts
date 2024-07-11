@@ -23,10 +23,13 @@ import {
 import { UnitAttrs } from "../../unit-lib/unit-attrs/unit-attrs";
 import { UnitModifier } from "../../unit-lib/unit-modifier/unit-modifier";
 import { UnitPlastic } from "../../unit-lib/unit-plastic/unit-plastic";
+import exp from "constants";
 
 it("data addSyntheticUnit", () => {
   const data: CombatRollPerPlayerData = new CombatRollPerPlayerData();
+  expect(data.getCount("my-unit" as UnitType)).toBe(0);
   expect(data.hasUnit("my-unit" as UnitType)).toBe(false);
+  expect(data.hasUnitAdj("my-unit" as UnitType)).toBe(false);
 
   let success: boolean;
   success = data.addSyntheticUnit(
@@ -43,11 +46,13 @@ it("data addSyntheticUnit", () => {
       name: "my-name",
       unit: "my-unit" as UnitType,
     },
-    1
+    2
   );
   expect(success).toBe(true);
-  expect(data.overrideUnitCountHex.get("my-unit" as UnitType)).toBe(1);
+  expect(data.overrideUnitCountHex.get("my-unit" as UnitType)).toBe(2);
+  expect(data.getCount("my-unit" as UnitType)).toBe(2);
   expect(data.hasUnit("my-unit" as UnitType)).toBe(true);
+  expect(data.hasUnitAdj("my-unit" as UnitType)).toBe(false);
 });
 
 it("data hasUnit", () => {
@@ -554,8 +559,6 @@ it("_pruneToUnitsClosestToPlanet", () => {
   });
 
   let combatRoll: CombatRoll;
-  let selfUnitToCount: Map<UnitType, number>;
-  let opponentUnitToCount: Map<UnitType, number>;
 
   combatRoll = CombatRoll.createCooked({
     rollType: "groundCombat",
@@ -564,20 +567,56 @@ it("_pruneToUnitsClosestToPlanet", () => {
     activatingPlayerSlot: 1,
     rollingPlayerSlot: 2,
   });
-  selfUnitToCount = UnitPlastic.count(combatRoll.self.unitPlasticHex);
-  opponentUnitToCount = UnitPlastic.count(combatRoll.opponent.unitPlasticHex);
-  expect(selfUnitToCount.get("infantry")).toBe(1);
-  expect(selfUnitToCount.get("mech")).toBe(1);
-  expect(opponentUnitToCount.get("infantry")).toBe(1);
-  expect(opponentUnitToCount.get("mech")).toBe(1);
+  expect(combatRoll.self.getCount("infantry")).toBe(1);
+  expect(combatRoll.self.getCount("mech")).toBe(1);
+  expect(combatRoll.opponent.getCount("infantry")).toBe(1);
+  expect(combatRoll.opponent.getCount("mech")).toBe(1);
 
   combatRoll._pruneToUnitsClosestToPlanet();
-  selfUnitToCount = UnitPlastic.count(combatRoll.self.unitPlasticHex);
-  opponentUnitToCount = UnitPlastic.count(combatRoll.opponent.unitPlasticHex);
-  expect(selfUnitToCount.get("infantry")).toBe(1);
-  expect(selfUnitToCount.get("mech")).toBeUndefined();
-  expect(opponentUnitToCount.get("infantry")).toBeUndefined();
-  expect(opponentUnitToCount.get("mech")).toBe(1);
+  expect(combatRoll.self.getCount("infantry")).toBe(1);
+  expect(combatRoll.self.getCount("mech")).toBe(0);
+  expect(combatRoll.opponent.getCount("infantry")).toBe(0);
+  expect(combatRoll.opponent.getCount("mech")).toBe(1);
+});
+
+it("_checkCancelSpaceCannonOffense", () => {
+  const combatRoll: CombatRoll = new CombatRoll({
+    rollType: "spaceCannonOffense",
+    hex: "<0,0,0>",
+    activatingPlayerSlot: 1,
+    rollingPlayerSlot: 2,
+  });
+  expect(combatRoll._checkCancelSpaceCannonOffense()).toBe(false);
+
+  // Apply disable to flagship, but there isn't one.
+  combatRoll.opponent.unitAttrsSet
+    .getOrThrow("flagship")
+    .setDisableSpaceCannonOffense(true);
+  expect(combatRoll._checkCancelSpaceCannonOffense()).toBe(false);
+
+  // Add a flagship.
+  combatRoll.opponent.overrideUnitCountHex.set("flagship", 1);
+  expect(combatRoll._checkCancelSpaceCannonOffense()).toBe(true);
+  expect(combatRoll.createDiceParamsArray()).toEqual([]);
+});
+
+it("_checkCancelBombardment", () => {
+  const combatRoll: CombatRoll = new CombatRoll({
+    rollType: "bombardment",
+    hex: "<0,0,0>",
+    activatingPlayerSlot: 1,
+    rollingPlayerSlot: 2,
+  });
+  expect(combatRoll._checkCancelBombardment()).toBe(false);
+
+  // PDS grants planetary shield.
+  combatRoll.opponent.overrideUnitCountHex.set("pds", 1);
+  expect(combatRoll._checkCancelBombardment()).toBe(true);
+  expect(combatRoll.createDiceParamsArray()).toEqual([]);
+
+  // War suns disable planetary shield.
+  combatRoll.self.overrideUnitCountHex.set("war-sun", 1);
+  expect(combatRoll._checkCancelBombardment()).toBe(false);
 });
 
 it("createDiceParamsArray (ground xxx)", () => {

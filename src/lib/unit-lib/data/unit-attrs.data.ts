@@ -162,6 +162,7 @@ export const SOURCE_TO_UNIT_ATTRS_DATA: Record<
       name: "Arc Secundus", // Letnev
       unit: "flagship",
       nsidName: "arc-secundus",
+      disablePlanetaryShield: true,
       bombardment: { dice: 3, hit: 5 },
       spaceCombat: { dice: 2, hit: 5 },
     },

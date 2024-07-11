@@ -79,17 +79,36 @@ export class CombatRollPerPlayerData {
     return true;
   }
 
-  hasUnit(unit: UnitType): boolean {
-    const count: number | undefined = this.overrideUnitCountHex.get(unit);
-    if (count === 0) {
-      return false;
+  getCount(unit: UnitType): number {
+    let count: number | undefined = this.overrideUnitCountHex.get(unit);
+    if (count !== undefined) {
+      return count;
     }
+    count = 0;
     for (const unitPlastic of this.unitPlasticHex) {
       if (unitPlastic.getUnit() === unit) {
-        return true;
+        count += unitPlastic.getCount();
       }
     }
-    return count && count > 0 ? true : false;
+    return count;
+  }
+
+  getCountAdj(unit: UnitType): number {
+    let count: number = 0;
+    for (const unitPlastic of this.unitPlasticAdj) {
+      if (unitPlastic.getUnit() === unit) {
+        count += unitPlastic.getCount();
+      }
+    }
+    return count;
+  }
+
+  hasUnit(unit: UnitType): boolean {
+    return this.getCount(unit) > 0;
+  }
+
+  hasUnitAdj(unit: UnitType): boolean {
+    return this.getCountAdj(unit) > 0;
   }
 }
 
@@ -375,42 +394,33 @@ export class CombatRoll {
 
   _checkCancelSpaceCannonOffense(): boolean {
     let hasDisableSpaceCannonOffsense: boolean = false;
-    const opponentUnitToCount: Map<UnitType, number> = UnitPlastic.count(
-      this.opponent.unitPlasticHex
-    );
     for (const unitAttrs of this.opponent.unitAttrsSet.getAll()) {
       const unit: UnitType = unitAttrs.getUnit();
-      const hasUnit: boolean = (opponentUnitToCount.get(unit) ?? 0) > 0;
+      const hasUnit: boolean = this.opponent.hasUnit(unit);
       if (unitAttrs.getDisableSpaceCannonOffense() && hasUnit) {
         hasDisableSpaceCannonOffsense = true;
         break;
       }
     }
+
     return hasDisableSpaceCannonOffsense;
   }
 
   _checkCancelBombardment(): boolean {
     let hasDisablePlanetaryShield: boolean = false;
-    let hasPlanetaryShield: boolean = false;
-
-    const selfunitToHexCount: Map<UnitType, number> = UnitPlastic.count(
-      this.self.unitPlasticHex
-    );
     for (const unitAttrs of this.self.unitAttrsSet.getAll()) {
       const unit: UnitType = unitAttrs.getUnit();
-      const hasUnit: boolean = (selfunitToHexCount.get(unit) ?? 0) > 0;
+      const hasUnit: boolean = this.self.hasUnit(unit);
       if (unitAttrs.getDisablePlanetaryShield() && hasUnit) {
         hasDisablePlanetaryShield = true;
         break;
       }
     }
 
-    const opponentUnitToCount: Map<UnitType, number> = UnitPlastic.count(
-      this.opponent.unitPlasticHex
-    );
+    let hasPlanetaryShield: boolean = false;
     for (const unitAttrs of this.opponent.unitAttrsSet.getAll()) {
       const unit: UnitType = unitAttrs.getUnit();
-      const hasUnit: boolean = (opponentUnitToCount.get(unit) ?? 0) > 0;
+      const hasUnit: boolean = this.opponent.hasUnit(unit);
       if (unitAttrs.hasPlanetaryShild() && hasUnit) {
         hasPlanetaryShield = true;
         break;
@@ -448,19 +458,12 @@ export class CombatRoll {
       return [];
     }
 
-    const unitToHexCount: Map<UnitType, number> = UnitPlastic.count(
-      this.self.unitPlasticHex
-    );
-    const unitToAdjCount: Map<UnitType, number> = UnitPlastic.count(
-      this.self.unitPlasticAdj
-    );
-
     for (const unitAttrs of this.self.unitAttrsSet.getAll()) {
       const unit: UnitType = unitAttrs.getUnit();
       const combatAttrs: CombatAttrs | undefined = unitToCombatAttrs.get(unit);
       if (combatAttrs) {
-        const hexCount: number = unitToHexCount.get(unit) ?? 0;
-        const adjCount: number = unitToAdjCount.get(unit) ?? 0;
+        const hexCount: number = this.self.getCount(unit);
+        const adjCount: number = this.self.getCountAdj(unit);
         let count: number = hexCount;
         if (combatAttrs.getRange() > 0) {
           count += adjCount;
