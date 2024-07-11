@@ -150,6 +150,7 @@ export const SOURCE_TO_UNIT_ATTRS_DATA: Record<
       hasSustainDamage: true,
       isShip: true,
       diceColor: "#000000",
+      spaceCombat: { hit: 11 }, // placeholder, should be overridden
     },
     {
       name: "[0.0.1]", // L1Z1X
@@ -498,6 +499,7 @@ export const SOURCE_TO_UNIT_ATTRS_DATA: Record<
       cost: 2,
       hasSustainDamage: true,
       isGround: true,
+      groundCombat: { hit: 11 }, // placeholder, should be overridden
     },
     {
       name: "Aerie Sentinel",

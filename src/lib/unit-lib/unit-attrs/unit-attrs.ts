@@ -26,7 +26,6 @@ export class UnitAttrs {
 
   private _hasSustainDamage: boolean;
   private _hasPlanetaryShield: boolean;
-  private _disableBombardment: boolean;
   private _disablePlanetaryShield: boolean;
   private _disableSpaceCannonOffsense: boolean;
 
@@ -66,7 +65,6 @@ export class UnitAttrs {
     this._isGround = params.isGround ?? false;
     this._hasSustainDamage = params.hasSustainDamage ?? false;
     this._hasPlanetaryShield = params.hasPlanetaryShield ?? false;
-    this._disableBombardment = params.disableBombardment ?? false;
     this._disablePlanetaryShield = params.disablePlanetaryShield ?? false;
     this._disableSpaceCannonOffsense =
       params.disableSpaceCannonOffense ?? false;
@@ -107,9 +105,6 @@ export class UnitAttrs {
   applyOverride(override: UnitAttrsSchemaType): this {
     if (override.cost !== undefined) {
       this._cost = override.cost;
-    }
-    if (override.disableBombardment) {
-      this._disableBombardment = true;
     }
     if (override.disablePlanetaryShield) {
       this._disablePlanetaryShield = true;
@@ -191,10 +186,6 @@ export class UnitAttrs {
     return this._diceColor ?? new Color(0, 0, 0);
   }
 
-  getDisableBombardment(): boolean {
-    return this._disableBombardment;
-  }
-
   getDisablePlanetaryShield(): boolean {
     return this._disablePlanetaryShield;
   }
@@ -255,11 +246,6 @@ export class UnitAttrs {
 
   setCost(value: number): this {
     this._cost = value;
-    return this;
-  }
-
-  setDisableBombardment(value: boolean): this {
-    this._disableBombardment = value;
     return this;
   }
 

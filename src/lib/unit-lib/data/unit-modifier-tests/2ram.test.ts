@@ -6,6 +6,7 @@ import {
 import { placeGameObjects } from "./abstract.test";
 
 it("2ram", () => {
+  // PLANETARY SHIELD does not prevent BOMBARDMENT
   const params: CombatRollParams = {
     rollType: "bombardment",
     hex: "<0,0,0>",

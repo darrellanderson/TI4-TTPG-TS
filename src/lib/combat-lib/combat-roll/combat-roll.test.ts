@@ -519,7 +519,68 @@ it("createDiceParamsArray (space)", () => {
   ]);
 });
 
-it("createDiceParamsArray (ground)", () => {
+it("_pruneToUnitsClosestToPlanet", () => {
+  MockGameObject.simple("tile.system:base/9");
+  const system: System | undefined = TI4.systemRegistry.getByPosition(
+    new Vector(0, 0, 0)
+  );
+  if (!system) {
+    throw new Error("system not found"); // TypeScript
+  }
+  const yesPlanet: Planet | undefined = system.getPlanets()[0];
+  const noPlanet: Planet | undefined = system.getPlanets()[1];
+  if (!yesPlanet) {
+    throw new Error("planet not found"); // TypeScript
+  }
+  if (!noPlanet) {
+    throw new Error("planet not found"); // TypeScript
+  }
+
+  MockGameObject.simple("unit:base/infantry", {
+    owningPlayerSlot: 2,
+    position: yesPlanet.getPosition(),
+  });
+  MockGameObject.simple("unit:pok/mech", {
+    owningPlayerSlot: 2,
+    position: noPlanet.getPosition(),
+  });
+  MockGameObject.simple("unit:pok/mech", {
+    owningPlayerSlot: 1,
+    position: yesPlanet.getPosition(),
+  });
+  MockGameObject.simple("unit:base/infantry", {
+    owningPlayerSlot: 1,
+    position: noPlanet.getPosition(),
+  });
+
+  let combatRoll: CombatRoll;
+  let selfUnitToCount: Map<UnitType, number>;
+  let opponentUnitToCount: Map<UnitType, number>;
+
+  combatRoll = CombatRoll.createCooked({
+    rollType: "groundCombat",
+    hex: "<0,0,0>",
+    planetName: yesPlanet.getName(),
+    activatingPlayerSlot: 1,
+    rollingPlayerSlot: 2,
+  });
+  selfUnitToCount = UnitPlastic.count(combatRoll.self.unitPlasticHex);
+  opponentUnitToCount = UnitPlastic.count(combatRoll.opponent.unitPlasticHex);
+  expect(selfUnitToCount.get("infantry")).toBe(1);
+  expect(selfUnitToCount.get("mech")).toBe(1);
+  expect(opponentUnitToCount.get("infantry")).toBe(1);
+  expect(opponentUnitToCount.get("mech")).toBe(1);
+
+  combatRoll._pruneToUnitsClosestToPlanet();
+  selfUnitToCount = UnitPlastic.count(combatRoll.self.unitPlasticHex);
+  opponentUnitToCount = UnitPlastic.count(combatRoll.opponent.unitPlasticHex);
+  expect(selfUnitToCount.get("infantry")).toBe(1);
+  expect(selfUnitToCount.get("mech")).toBeUndefined();
+  expect(opponentUnitToCount.get("infantry")).toBeUndefined();
+  expect(opponentUnitToCount.get("mech")).toBe(1);
+});
+
+it("createDiceParamsArray (ground xxx)", () => {
   MockGameObject.simple("tile.system:base/9");
   const system: System | undefined = TI4.systemRegistry.getByPosition(
     new Vector(0, 0, 0)
@@ -543,24 +604,58 @@ it("createDiceParamsArray (ground)", () => {
     owningPlayerSlot: 2,
     position: yesPlanet.getPosition(),
   });
-  MockGameObject.simple("unit:base/mech", {
+  MockGameObject.simple("unit:pok/mech", {
     owningPlayerSlot: 2,
     position: noPlanet.getPosition(),
   });
-  const combatRoll: CombatRoll = CombatRoll.createCooked({
+  MockGameObject.simple("unit:pok/mech", {
+    owningPlayerSlot: 1,
+    position: yesPlanet.getPosition(),
+  });
+  MockGameObject.simple("unit:base/infantry", {
+    owningPlayerSlot: 1,
+    position: noPlanet.getPosition(),
+  });
+
+  let combatRoll: CombatRoll;
+  let diceParamsArray: Array<DiceParams>;
+
+  // Roll 2 vs 1.
+  combatRoll = CombatRoll.createCooked({
     rollType: "groundCombat",
     hex: "<0,0,0>",
     planetName: yesPlanet.getName(),
     activatingPlayerSlot: 1,
     rollingPlayerSlot: 2,
   });
-  const diceParamsArray: Array<DiceParams> = combatRoll.createDiceParamsArray();
+  diceParamsArray = combatRoll.createDiceParamsArray();
   expect(diceParamsArray).toEqual([
     {
       hit: 8,
       id: "infantry",
       name: "Infantry",
       primaryColor: { a: 1, b: 0, g: 1, r: 0 },
+      reroll: false,
+      secondaryColor: { a: 1, b: 1, g: 1, r: 1 },
+      sides: 10,
+    },
+  ]);
+
+  // Roll 1 vs 2.
+  combatRoll = CombatRoll.createCooked({
+    rollType: "groundCombat",
+    hex: "<0,0,0>",
+    planetName: yesPlanet.getName(),
+    activatingPlayerSlot: 2,
+    rollingPlayerSlot: 1,
+  });
+  diceParamsArray = combatRoll.createDiceParamsArray();
+  expect(diceParamsArray).toEqual([
+    {
+      hit: 11,
+      id: "mech",
+      name: "Mech",
+      primaryColor: { a: 1, b: 0, g: 0, r: 0 },
       reroll: false,
       secondaryColor: { a: 1, b: 1, g: 1, r: 1 },
       sides: 10,

@@ -350,6 +350,76 @@ export class CombatRoll {
     return this;
   }
 
+  _pruneToUnitsClosestToPlanet(): this {
+    for (let i = this.self.unitPlasticHex.length - 1; i >= 0; i--) {
+      const unitPlastic: UnitPlastic | undefined = this.self.unitPlasticHex[i];
+      if (unitPlastic) {
+        const planet: Planet | undefined = unitPlastic.getPlanetClosest();
+        if (planet && planet.getName() !== this._params.planetName) {
+          this.self.unitPlasticHex.splice(i, 1);
+        }
+      }
+    }
+    for (let i = this.opponent.unitPlasticHex.length - 1; i >= 0; i--) {
+      const unitPlastic: UnitPlastic | undefined =
+        this.opponent.unitPlasticHex[i];
+      if (unitPlastic) {
+        const planet: Planet | undefined = unitPlastic.getPlanetClosest();
+        if (planet && planet.getName() !== this._params.planetName) {
+          this.opponent.unitPlasticHex.splice(i, 1);
+        }
+      }
+    }
+    return this;
+  }
+
+  _checkCancelSpaceCannonOffense(): boolean {
+    let hasDisableSpaceCannonOffsense: boolean = false;
+    const opponentUnitToCount: Map<UnitType, number> = UnitPlastic.count(
+      this.opponent.unitPlasticHex
+    );
+    for (const unitAttrs of this.opponent.unitAttrsSet.getAll()) {
+      const unit: UnitType = unitAttrs.getUnit();
+      const hasUnit: boolean = (opponentUnitToCount.get(unit) ?? 0) > 0;
+      if (unitAttrs.getDisableSpaceCannonOffense() && hasUnit) {
+        hasDisableSpaceCannonOffsense = true;
+        break;
+      }
+    }
+    return hasDisableSpaceCannonOffsense;
+  }
+
+  _checkCancelBombardment(): boolean {
+    let hasDisablePlanetaryShield: boolean = false;
+    let hasPlanetaryShield: boolean = false;
+
+    const selfunitToHexCount: Map<UnitType, number> = UnitPlastic.count(
+      this.self.unitPlasticHex
+    );
+    for (const unitAttrs of this.self.unitAttrsSet.getAll()) {
+      const unit: UnitType = unitAttrs.getUnit();
+      const hasUnit: boolean = (selfunitToHexCount.get(unit) ?? 0) > 0;
+      if (unitAttrs.getDisablePlanetaryShield() && hasUnit) {
+        hasDisablePlanetaryShield = true;
+        break;
+      }
+    }
+
+    const opponentUnitToCount: Map<UnitType, number> = UnitPlastic.count(
+      this.opponent.unitPlasticHex
+    );
+    for (const unitAttrs of this.opponent.unitAttrsSet.getAll()) {
+      const unit: UnitType = unitAttrs.getUnit();
+      const hasUnit: boolean = (opponentUnitToCount.get(unit) ?? 0) > 0;
+      if (unitAttrs.hasPlanetaryShild() && hasUnit) {
+        hasPlanetaryShield = true;
+        break;
+      }
+    }
+
+    return hasPlanetaryShield && !hasDisablePlanetaryShield;
+  }
+
   public createDiceParamsArray(): Array<DiceParams> {
     const result: Array<DiceParams> = [];
     const unitToCombatAttrs: Map<UnitType, CombatAttrs> =
@@ -361,16 +431,21 @@ export class CombatRoll {
       this._params.rollType === "spaceCannonDefense" ||
       this._params.rollType === "groundCombat";
     if (requirePlanet) {
-      for (let i = this.self.unitPlasticHex.length - 1; i >= 0; i--) {
-        const unitPlastic: UnitPlastic | undefined =
-          this.self.unitPlasticHex[i];
-        if (unitPlastic) {
-          const planet: Planet | undefined = unitPlastic.getPlanetClosest();
-          if (planet && planet.getName() !== this._params.planetName) {
-            this.self.unitPlasticHex.splice(i, 1);
-          }
-        }
-      }
+      this._pruneToUnitsClosestToPlanet();
+    }
+
+    if (
+      this._params.rollType === "spaceCannonOffense" &&
+      this._checkCancelSpaceCannonOffense()
+    ) {
+      return [];
+    }
+
+    if (
+      this._params.rollType === "bombardment" &&
+      this._checkCancelBombardment()
+    ) {
+      return [];
     }
 
     const unitToHexCount: Map<UnitType, number> = UnitPlastic.count(
@@ -379,6 +454,7 @@ export class CombatRoll {
     const unitToAdjCount: Map<UnitType, number> = UnitPlastic.count(
       this.self.unitPlasticAdj
     );
+
     for (const unitAttrs of this.self.unitAttrsSet.getAll()) {
       const unit: UnitType = unitAttrs.getUnit();
       const combatAttrs: CombatAttrs | undefined = unitToCombatAttrs.get(unit);
@@ -389,6 +465,13 @@ export class CombatRoll {
         if (combatAttrs.getRange() > 0) {
           count += adjCount;
         }
+
+        // Account for multi-dice units.
+        count *= combatAttrs.getDice();
+
+        // Account for bonus dice (e.g. plasma scoring).
+        count += combatAttrs.getExtraDice();
+
         for (let i = 0; i < count; i++) {
           const params: DiceParams = {
             sides: 10,

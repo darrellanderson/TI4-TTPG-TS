@@ -39,7 +39,6 @@ it("constructor", () => {
   expect(unitAttrs.getCost()).toBe(undefined);
   expect(unitAttrs.getProducePerCost()).toBe(1);
   expect(unitAttrs.getDiceColor().toHex()).toBe("000000FF");
-  expect(unitAttrs.getDisableBombardment()).toBe(false);
   expect(unitAttrs.getDisablePlanetaryShield()).toBe(false);
   expect(unitAttrs.getDisableSpaceCannonOffense()).toBe(false);
   expect(unitAttrs.hasPlanetaryShild()).toBe(false);
@@ -212,25 +211,6 @@ it("hasPlanetaryShield", () => {
     hasPlanetaryShield: true,
   });
   expect(unitAttrs.hasPlanetaryShild()).toBe(true);
-});
-
-it("disableBombardment", () => {
-  const unitAttrs = new UnitAttrs({
-    name: "my-name",
-    unit: "infantry",
-    disableBombardment: true,
-  });
-  expect(unitAttrs.getDisableBombardment()).toBe(true);
-
-  unitAttrs.setDisableBombardment(false);
-  expect(unitAttrs.getDisableBombardment()).toBe(false);
-
-  unitAttrs.applyOverride({
-    name: "my-name",
-    unit: "infantry",
-    disableBombardment: true,
-  });
-  expect(unitAttrs.getDisableBombardment()).toBe(true);
 });
 
 it("disablePlanetaryShield", () => {

@@ -39,6 +39,14 @@ it("getOne (plastic)", () => {
   expect(entry?.getUnit()).toBe("infantry");
 });
 
+it("getOne (mech)", () => {
+  const obj: GameObject = new MockGameObject({
+    templateMetadata: "unit:pok/mech",
+  });
+  const entry: UnitPlastic | undefined = UnitPlastic.getOne(obj);
+  expect(entry?.getUnit()).toBe("mech");
+});
+
 it("getOne (unknown)", () => {
   const obj: GameObject = new MockGameObject({
     templateMetadata: "unit:base/__unknown__",
@@ -138,6 +146,15 @@ it("getAll (single)", () => {
   const result: Array<UnitPlastic> = UnitPlastic.getAll();
   expect(result).toHaveLength(1);
   expect(result[0]?.getUnit()).toBe("infantry");
+});
+
+it("getAll (single, mech)", () => {
+  const obj: GameObject = new MockGameObject({
+    templateMetadata: "unit:pok/mech",
+  });
+  const result: Array<UnitPlastic> = UnitPlastic.getAll();
+  expect(result).toHaveLength(1);
+  expect(result[0]?.getUnit()).toBe("mech");
 });
 
 it("assignOwners", () => {

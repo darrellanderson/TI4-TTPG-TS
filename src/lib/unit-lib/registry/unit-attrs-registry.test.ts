@@ -51,9 +51,11 @@ it("loadDefaultData", () => {
   expect(registry.rawByNsidName(nsidName)).toBeUndefined();
   expect(registry.rawByNsid(nsid)).toBeUndefined();
   expect(registry.getAllBaseAttrs()).toHaveLength(0);
+  expect(registry.rawByUnit("mech")).toBeUndefined();
 
   registry.loadDefaultData();
   expect(registry.rawByNsidName(nsidName)).toBeDefined();
   expect(registry.rawByNsid(nsid)).toBeDefined();
   expect(registry.getAllBaseAttrs()).not.toHaveLength(0);
+  expect(registry.rawByUnit("mech")).toBeDefined();
 });
