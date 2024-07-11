@@ -121,6 +121,7 @@ export class CombatRoll {
   private readonly _modifiers: Array<UnitModifier> = [];
 
   // Unit modifers may look into and modify unit attributes.
+  public readonly planetName: string | undefined;
   public readonly self: CombatRollPerPlayerData;
   public readonly opponent: CombatRollPerPlayerData;
 
@@ -134,6 +135,8 @@ export class CombatRoll {
   constructor(params: CombatRollParams) {
     this._params = params;
     this._adjHexes = new SystemAdjacency().getAdjHexes(params.hex);
+
+    this.planetName = params.planetName;
 
     this.self = new CombatRollPerPlayerData();
     this.self.playerSlot = params.rollingPlayerSlot;

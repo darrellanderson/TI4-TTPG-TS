@@ -1,9 +1,13 @@
-import exp from "constants";
 import {
   CombatRoll,
   CombatRollParams,
 } from "../../../combat-lib/combat-roll/combat-roll";
 import { placeGameObjects } from "./abstract.test";
+
+it("2ram (registry)", () => {
+  const nsid = "card.leader.commander:pok/2ram";
+  expect(TI4.unitModifierRegistry.getByNsid(nsid)).toBeDefined();
+});
 
 it("2ram", () => {
   // PLANETARY SHIELD does not prevent BOMBARDMENT

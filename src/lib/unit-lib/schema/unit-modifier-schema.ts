@@ -11,6 +11,7 @@ export const UnitModifierCardClass = z
     "faction-ability",
     "hero",
     "legendary",
+    "mech",
     "promissory",
     "relic",
     "technology",

@@ -30,6 +30,8 @@ export class UnitModifier {
         return `card.leader.hero:${source}/${trigger.nsidName}`;
       case "legendary":
         return `card.legendary-planet:${source}/${trigger.nsidName}`;
+      case "mech":
+        return `card.leader.mech:${source}/${trigger.nsidName}`;
       case "promissory":
         return `card.promissory:${source}/${trigger.nsidName}`;
       case "relic":
