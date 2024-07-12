@@ -2,7 +2,7 @@ import {
   CombatRoll,
   CombatRollParams,
 } from "../../../combat-lib/combat-roll/combat-roll";
-import { placeGameObjects } from "./abstract.test";
+import { OPPONENT, placeGameObjects, SELF } from "./abstract.test";
 
 it("annihilator (registry)", () => {
   const nsid = "card.leader.mech:pok/annihilator";
@@ -14,8 +14,8 @@ it("annihilator (bombardment)", () => {
   const params: CombatRollParams = {
     rollType: "bombardment",
     hex: "<0,0,0>",
-    activatingPlayerSlot: 1,
-    rollingPlayerSlot: 2,
+    activatingPlayerSlot: OPPONENT,
+    rollingPlayerSlot: SELF,
   };
   let combatRoll: CombatRoll;
 
