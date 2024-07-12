@@ -52,12 +52,12 @@ export function placeGameObjects(params: {
     } else {
       MockGameObject.simple(nsid, { position: selfPos });
     }
-    for (const nsid of params.opponent ?? []) {
-      if (nsid.startsWith("card.")) {
-        MockCard.simple(nsid, { position: opponentPos });
-      } else {
-        MockGameObject.simple(nsid, { position: opponentPos });
-      }
+  }
+  for (const nsid of params.opponent ?? []) {
+    if (nsid.startsWith("card.")) {
+      MockCard.simple(nsid, { position: opponentPos });
+    } else {
+      MockGameObject.simple(nsid, { position: opponentPos });
     }
   }
 
