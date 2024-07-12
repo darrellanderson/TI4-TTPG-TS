@@ -30,3 +30,32 @@ it("antimass-deflectors (spaceCannonOffense)", () => {
     combatRoll.self.unitAttrsSet.get("pds")?.getSpaceCannon()?.getHit()
   ).toBe(7);
 });
+
+it("antimass-deflectors (spaceCannonDefense)", () => {
+  let combatRoll: CombatRoll;
+
+  combatRoll = CombatRoll.createCooked({
+    rollType: "spaceCannonDefense",
+    hex: "<0,0,0>",
+    activatingPlayerSlot: OPPONENT,
+    rollingPlayerSlot: SELF,
+  });
+  expect(combatRoll.getUnitModifierNames()).toEqual([]);
+  expect(
+    combatRoll.self.unitAttrsSet.get("pds")?.getSpaceCannon()?.getHit()
+  ).toBe(6);
+
+  placeGameObjects({
+    opponent: ["card.technology:base/antimass-deflectors"],
+  });
+  combatRoll = CombatRoll.createCooked({
+    rollType: "spaceCannonOffense",
+    hex: "<0,0,0>",
+    activatingPlayerSlot: OPPONENT,
+    rollingPlayerSlot: SELF,
+  });
+  expect(combatRoll.getUnitModifierNames()).toEqual(["Antimass Deflectors"]);
+  expect(
+    combatRoll.self.unitAttrsSet.get("pds")?.getSpaceCannon()?.getHit()
+  ).toBe(7);
+});

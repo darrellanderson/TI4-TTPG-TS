@@ -34,3 +34,30 @@ it("annihilator (bombardment)", () => {
   expect(combatRoll.self.getCount("mech")).toBe(3);
   expect(combatRoll.getUnitModifierNames()).toEqual(["Annihilator"]);
 });
+
+it("annihilator (groundCombat)", () => {
+  // PLANETARY SHIELD does not prevent BOMBARDMENT
+  const params: CombatRollParams = {
+    rollType: "groundCombat",
+    hex: "<0,0,0>",
+    planetName: "Jord",
+    activatingPlayerSlot: OPPONENT,
+    rollingPlayerSlot: SELF,
+  };
+  let combatRoll: CombatRoll;
+
+  combatRoll = CombatRoll.createCooked(params);
+  expect(combatRoll.self.hasUnit("mech")).toBe(false);
+  expect(combatRoll.self.getCount("mech")).toBe(0);
+  expect(combatRoll.getUnitModifierNames()).toEqual([]);
+
+  placeGameObjects({
+    self: ["card.leader.mech:pok/annihilator"],
+    selfUnits: new Map([["mech", 2]]),
+    selfUnitsOffPlanet: new Map([["mech", 3]]),
+  });
+  combatRoll = CombatRoll.createCooked(params);
+  expect(combatRoll.self.hasUnit("mech")).toBe(true);
+  expect(combatRoll.self.getCount("mech")).toBe(2);
+  expect(combatRoll.getUnitModifierNames()).toEqual(["Annihilator"]);
+});

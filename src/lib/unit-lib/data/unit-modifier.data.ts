@@ -63,6 +63,14 @@ export const SOURCE_TO_UNIT_MODIFIER_DATA: Record<
       owner: "self",
       priority: "mutate",
       applies: (combatRoll: CombatRoll): boolean => {
+        console.log(
+          "combatRoll",
+          combatRoll.getRollType(),
+          combatRoll.self.hasUnit("mech"),
+          combatRoll.self.unitPlasticHex.map((plastic) =>
+            plastic.getPlanetExact()?.getName()
+          )
+        );
         return (
           (combatRoll.getRollType() === "bombardment" ||
             combatRoll.getRollType() === "groundCombat") &&
@@ -70,6 +78,7 @@ export const SOURCE_TO_UNIT_MODIFIER_DATA: Record<
         );
       },
       apply: (combatRoll: CombatRoll): void => {
+        console.log("sssss", combatRoll.getRollType(), combatRoll.planetName);
         if (combatRoll.getRollType() === "bombardment") {
           const spaceCount: number = combatRoll.self.unitPlasticHex.filter(
             (plastic) => plastic.getPlanetExact() === undefined
@@ -79,6 +88,12 @@ export const SOURCE_TO_UNIT_MODIFIER_DATA: Record<
           combatRoll.getRollType() === "groundCombat" &&
           combatRoll.planetName !== undefined
         ) {
+          console.log(
+            "xxxxxx",
+            combatRoll.self.unitPlasticHex.map((plastic) =>
+              plastic.getPlanetExact()?.getName()
+            )
+          );
           const groundCount: number = combatRoll.self.unitPlasticHex.filter(
             (plastic) => plastic.getPlanetExact() === combatRoll.planetName
           ).length;
