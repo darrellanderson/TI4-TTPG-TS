@@ -49,7 +49,7 @@ it("antimass-deflectors (spaceCannonDefense)", () => {
     opponent: ["card.technology:base/antimass-deflectors"],
   });
   combatRoll = CombatRoll.createCooked({
-    rollType: "spaceCannonOffense",
+    rollType: "spaceCannonDefense",
     hex: "<0,0,0>",
     activatingPlayerSlot: OPPONENT,
     rollingPlayerSlot: SELF,
