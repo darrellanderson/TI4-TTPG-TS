@@ -1,8 +1,8 @@
 import {
   CombatRoll,
   CombatRollParams,
-} from "../../../combat-lib/combat-roll/combat-roll";
-import { OPPONENT, placeGameObjects, SELF } from "./abstract.test";
+} from "../../../../combat-lib/combat-roll/combat-roll";
+import { OPPONENT, placeGameObjects, SELF } from "../abstract.test";
 
 it("annihilator (registry)", () => {
   const nsid = "card.leader.mech:pok/annihilator";

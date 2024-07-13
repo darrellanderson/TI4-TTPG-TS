@@ -1,6 +1,6 @@
 import exp from "constants";
-import { CombatRoll } from "../../../combat-lib/combat-roll/combat-roll";
-import { OPPONENT, placeGameObjects, SELF } from "./abstract.test";
+import { CombatRoll } from "../../../../combat-lib/combat-roll/combat-roll";
+import { OPPONENT, placeGameObjects, SELF } from "../abstract.test";
 
 it("antimass-deflectors (spaceCannonOffense)", () => {
   let combatRoll: CombatRoll;
