@@ -2,6 +2,11 @@ import exp from "constants";
 import { CombatRoll } from "../../../../combat-lib/combat-roll/combat-roll";
 import { OPPONENT, placeGameObjects, SELF } from "../abstract.test";
 
+it("registry", () => {
+  const nsid = "card.technology:base/antimass-deflectors";
+  expect(TI4.unitModifierRegistry.getByNsid(nsid)).toBeDefined();
+});
+
 it("antimass-deflectors (spaceCannonOffense)", () => {
   let combatRoll: CombatRoll;
 
