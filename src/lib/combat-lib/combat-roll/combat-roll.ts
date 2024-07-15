@@ -149,26 +149,6 @@ export class CombatRoll {
     }
   }
 
-  _findTokens(): {
-    commandTokens: Array<GameObject>;
-    controlTokens: Array<GameObject>;
-  } {
-    const commandTokens: Array<GameObject> = [];
-    const controlTokens: Array<GameObject> = [];
-    const skipContained: boolean = true;
-    for (const obj of world.getAllObjects(skipContained)) {
-      const nsid: string = NSID.get(obj);
-      if (nsid.startsWith("token:")) {
-        if (nsid.endsWith("/command")) {
-          commandTokens.push(obj);
-        } else if (nsid.endsWith("/control")) {
-          controlTokens.push(obj);
-        }
-      }
-    }
-    return { commandTokens, controlTokens };
-  }
-
   _findUnitPlastics(): Array<UnitPlastic> {
     const unitPlastics: Array<UnitPlastic> = UnitPlastic.getAll().filter(
       (unitPlastic): boolean => {

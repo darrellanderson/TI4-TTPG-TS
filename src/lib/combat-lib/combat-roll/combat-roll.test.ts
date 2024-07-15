@@ -312,6 +312,37 @@ it("_findUnitModifiers", () => {
   expect(names).toEqual(["2Ram"]);
 });
 
+it("_findUnitModifiers (control token)", () => {
+  TI4.unitModifierRegistry.load("my-source", [
+    {
+      name: "my-modifier",
+      owner: "self",
+      priority: "mutate",
+      triggers: [{ cardClass: "agenda", nsidName: "my-nsid-name" }],
+    },
+  ]);
+  MockCard.simple("card.agenda:my-source/my-nsid-name");
+  MockGameObject.simple("token:base/control", { owningPlayerSlot: 2 });
+
+  let combatRoll: CombatRoll;
+
+  combatRoll = CombatRoll.createCooked({
+    rollType: "spaceCombat",
+    hex: "<0,0,0>",
+    activatingPlayerSlot: 1,
+    rollingPlayerSlot: 2,
+  });
+  expect(combatRoll.getUnitModifierNames()).toEqual(["my-modifier"]);
+
+  combatRoll = CombatRoll.createCooked({
+    rollType: "spaceCombat",
+    hex: "<0,0,0>",
+    activatingPlayerSlot: 2,
+    rollingPlayerSlot: 1,
+  });
+  expect(combatRoll.getUnitModifierNames()).toEqual([]);
+});
+
 it("applyUnitOverrides", () => {
   // Need a card holder to be closest to assign cards.
   new MockCardHolder({ owningPlayerSlot: 2 });
