@@ -58,6 +58,8 @@ export class CombatRollPerPlayerData {
   public readonly unitPlasticAdj: Array<UnitPlastic> = [];
   public readonly overrideUnitCountHex: Map<UnitType, number> = new Map();
   public readonly overrideUnitCountAdj: Map<UnitType, number> = new Map();
+  public readonly commandTokens: Array<GameObject> = [];
+  public readonly controlTokens: Array<GameObject> = [];
 
   /**
    * Try to add a synthetic unit to the player's unit set.
@@ -127,7 +129,7 @@ export class CombatRoll {
 
   static createCooked(params: CombatRollParams): CombatRoll {
     return new CombatRoll(params)
-      .applyUnitPlastic()
+      .applyUnitPlasticAndSetOpponentPlayerSlot() // assign opponent player slot early!
       .applyUnitOverries()
       .applyUnitModifiersOrThrow();
   }
@@ -146,6 +148,26 @@ export class CombatRoll {
     if (params.rollingPlayerSlot !== params.activatingPlayerSlot) {
       this.opponent.playerSlot = params.activatingPlayerSlot;
     }
+  }
+
+  _findTokens(): {
+    commandTokens: Array<GameObject>;
+    controlTokens: Array<GameObject>;
+  } {
+    const commandTokens: Array<GameObject> = [];
+    const controlTokens: Array<GameObject> = [];
+    const skipContained: boolean = true;
+    for (const obj of world.getAllObjects(skipContained)) {
+      const nsid: string = NSID.get(obj);
+      if (nsid.startsWith("token:")) {
+        if (nsid.endsWith("/command")) {
+          commandTokens.push(obj);
+        } else if (nsid.endsWith("/control")) {
+          controlTokens.push(obj);
+        }
+      }
+    }
+    return { commandTokens, controlTokens };
   }
 
   _findUnitPlastics(): Array<UnitPlastic> {
@@ -172,7 +194,7 @@ export class CombatRoll {
         TI4.unitAttrsRegistry.rawByNsid(nsid);
       if (attrs) {
         const allowFaceDown: boolean = false;
-        const rejectSnapPointTags: Array<string> = []; // TODO XXX
+        const rejectSnapPointTags: Array<string> = [];
         if (
           this._cardUtil.isLooseCard(obj, allowFaceDown, rejectSnapPointTags)
         ) {
@@ -192,25 +214,58 @@ export class CombatRoll {
     selfSlot: number,
     opponentSlot: number
   ): Array<UnitModifier> {
-    const unitModifiers: Array<UnitModifier> = [];
+    // Some modifiers (e.g. agenda) can be assigned via a control token on them.
     const skipContained: boolean = true;
+    const controlTokens: Array<GameObject> = [];
+    for (const obj of world.getAllObjects(skipContained)) {
+      const nsid: string = NSID.get(obj);
+      if (nsid.startsWith("token.control:")) {
+        controlTokens.push(obj);
+      }
+    }
+    const getControlTokenOwner = (obj: GameObject): number | undefined => {
+      for (const controlToken of controlTokens) {
+        const pos: Vector = controlToken.getPosition();
+        const local: Vector = obj.worldPositionToLocal(pos);
+        const scale: Vector = obj.getScale();
+        const extent: Vector = obj.getExtent(false, false);
+        extent.x /= scale.x;
+        extent.y /= scale.y;
+        if (Math.abs(local.x) < extent.x && Math.abs(local.y) < extent.y) {
+          return controlToken.getOwningPlayerSlot();
+        }
+      }
+      return undefined;
+    };
+
+    const unitModifiers: Array<UnitModifier> = [];
     for (const obj of world.getAllObjects(skipContained)) {
       const nsid: string = NSID.get(obj);
       const modifier: UnitModifier | undefined =
         TI4.unitModifierRegistry.getByNsid(nsid);
       if (modifier) {
         const allowFaceDown: boolean = false;
-        const rejectSnapPointTags: Array<string> = []; // TODO XXX
+        const rejectSnapPointTags: Array<string> = [];
         if (
           this._cardUtil.isLooseCard(obj, allowFaceDown, rejectSnapPointTags)
         ) {
           const pos: Vector = obj.getPosition();
+          const controlTokenOnCardOwningPlaerSlot: number | undefined =
+            getControlTokenOwner(obj);
           const closest: number = this._find.closestOwnedCardHolderOwner(pos);
           const isSelf: boolean = closest === selfSlot;
           const isOpponent: boolean = closest === opponentSlot;
-          if (closest === selfSlot && isSelf) {
-            unitModifiers.push(modifier);
-          } else if (closest === opponentSlot && isOpponent) {
+          if (controlTokenOnCardOwningPlaerSlot !== undefined) {
+            if (
+              (controlTokenOnCardOwningPlaerSlot === selfSlot && isSelf) ||
+              (controlTokenOnCardOwningPlaerSlot === opponentSlot && isOpponent)
+            ) {
+              unitModifiers.push(modifier);
+            }
+          } else if (
+            (closest === selfSlot && isSelf) ||
+            (closest === opponentSlot && isOpponent)
+          ) {
             unitModifiers.push(modifier);
           }
         }
@@ -252,7 +307,7 @@ export class CombatRoll {
     return result;
   }
 
-  public applyUnitPlastic(): this {
+  public applyUnitPlasticAndSetOpponentPlayerSlot(): this {
     const unitPlastics: Array<UnitPlastic> = this._findUnitPlastics();
 
     const isGroundSet: Set<UnitType> = new Set();
@@ -369,6 +424,30 @@ export class CombatRoll {
       const joined: string = errors.map((e) => e.stack).join("\n");
       throw new Error(joined);
     }
+    return this;
+  }
+
+  public applyTokens(): this {
+    const { commandTokens, controlTokens } = this._findTokens();
+
+    for (const commandToken of commandTokens) {
+      const playerSlot: number = commandToken.getOwningPlayerSlot();
+      if (playerSlot === this.self.playerSlot) {
+        this.self.commandTokens.push(commandToken);
+      } else if (playerSlot === this.opponent.playerSlot) {
+        this.opponent.commandTokens.push(commandToken);
+      }
+    }
+
+    for (const controlToken of controlTokens) {
+      const playerSlot: number = controlToken.getOwningPlayerSlot();
+      if (playerSlot === this.self.playerSlot) {
+        this.self.controlTokens.push(controlToken);
+      } else if (playerSlot === this.opponent.playerSlot) {
+        this.opponent.controlTokens.push(controlToken);
+      }
+    }
+
     return this;
   }
 
@@ -515,9 +594,10 @@ export class CombatRoll {
   }
 
   public roll(player: Player, position: Vector): void {
-    const callback = (diceResults: Array<DiceResult>, player: Player): void => {
-      // TODO XXX
-    };
+    const callback = (
+      diceResults: Array<DiceResult>,
+      player: Player
+    ): void => {};
     const diceParams: Array<DiceParams> = this.createDiceParamsArray();
     const diceGroupParams: DiceGroupParams = {
       diceParams,
