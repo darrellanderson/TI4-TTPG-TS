@@ -59,8 +59,6 @@ export class CombatRollPerPlayerData {
   public readonly unitPlasticAdj: Array<UnitPlastic> = [];
   public readonly overrideUnitCountHex: Map<UnitType, number> = new Map();
   public readonly overrideUnitCountAdj: Map<UnitType, number> = new Map();
-  public readonly commandTokens: Array<GameObject> = [];
-  public readonly controlTokens: Array<GameObject> = [];
 
   /**
    * Try to add a synthetic unit to the player's unit set.
@@ -113,16 +111,6 @@ export class CombatRollPerPlayerData {
   hasUnitAdj(unit: UnitType): boolean {
     return this.getCountAdj(unit) > 0;
   }
-
-  isControlTokenAtop(card: GameObject): boolean {
-    const atop: Atop = new Atop(card);
-    for (const controlToken of this.controlTokens) {
-      if (atop.isAtop(controlToken.getPosition())) {
-        return true;
-      }
-    }
-    return false;
-  }
 }
 
 export class CombatRoll {
@@ -142,7 +130,6 @@ export class CombatRoll {
     return new CombatRoll(params)
       .applyUnitPlasticAndSetOpponentPlayerSlot() // assign opponent player slot early!
       .applyUnitOverries()
-      .applyTokens()
       .applyUnitModifiersOrThrow(); // always do this last, reads state others set
   }
 
@@ -228,6 +215,27 @@ export class CombatRoll {
   ): Array<UnitModifier> {
     const unitModifiers: Array<UnitModifier> = [];
     const skipContained: boolean = true;
+
+    // Control tokens on cards take precedence over cards being near players.
+    const controlTokens: Array<GameObject> = [];
+    for (const obj of world.getAllObjects(skipContained)) {
+      const nsid: string = NSID.get(obj);
+      if (nsid.startsWith("token:")) {
+        if (nsid.endsWith("/control")) {
+          controlTokens.push(obj);
+        }
+      }
+    }
+    const getControlTokenOwner = (card: GameObject): number => {
+      const atop: Atop = new Atop(card);
+      for (const controlToken of controlTokens) {
+        if (atop.isAtop(controlToken.getPosition())) {
+          return controlToken.getOwningPlayerSlot();
+        }
+      }
+      return -1;
+    };
+
     for (const obj of world.getAllObjects(skipContained)) {
       const nsid: string = NSID.get(obj);
       const modifier: UnitModifier | undefined =
@@ -238,25 +246,18 @@ export class CombatRoll {
         if (
           this._cardUtil.isLooseCard(obj, allowFaceDown, rejectSnapPointTags)
         ) {
-          const pos: Vector = obj.getPosition();
-          const closest: number = this._find.closestOwnedCardHolderOwner(pos);
-          const isSelf: boolean = closest === selfSlot;
-          const isOpponent: boolean = closest === opponentSlot;
+          // Control token takes precedence for ownership, otherwise closest player.
+          let owner: number = getControlTokenOwner(obj);
+          if (owner < 0) {
+            const pos: Vector = obj.getPosition();
+            owner = this._find.closestOwnedCardHolderOwner(pos);
+          }
+          const isSelf: boolean = owner === selfSlot;
+          const isOpponent: boolean = owner === opponentSlot;
+          const requireSelf = modifier.getOwner() === "self";
+          const requireOpponent = modifier.getOwner() === "opponent";
 
-          if (
-            modifier.getOwner() === "self" &&
-            this.self.isControlTokenAtop(obj)
-          ) {
-            unitModifiers.push(modifier);
-          } else if (
-            modifier.getOwner() === "opponent" &&
-            this.opponent.isControlTokenAtop(obj)
-          ) {
-            unitModifiers.push(modifier);
-          } else if (
-            (closest === selfSlot && isSelf) ||
-            (closest === opponentSlot && isOpponent)
-          ) {
+          if ((isSelf && requireSelf) || (isOpponent && requireOpponent)) {
             unitModifiers.push(modifier);
           }
         }
@@ -415,30 +416,6 @@ export class CombatRoll {
       const joined: string = errors.map((e) => e.stack).join("\n");
       throw new Error(joined);
     }
-    return this;
-  }
-
-  public applyTokens(): this {
-    const { commandTokens, controlTokens } = this._findTokens();
-
-    for (const commandToken of commandTokens) {
-      const playerSlot: number = commandToken.getOwningPlayerSlot();
-      if (playerSlot === this.self.playerSlot) {
-        this.self.commandTokens.push(commandToken);
-      } else if (playerSlot === this.opponent.playerSlot) {
-        this.opponent.commandTokens.push(commandToken);
-      }
-    }
-
-    for (const controlToken of controlTokens) {
-      const playerSlot: number = controlToken.getOwningPlayerSlot();
-      if (playerSlot === this.self.playerSlot) {
-        this.self.controlTokens.push(controlToken);
-      } else if (playerSlot === this.opponent.playerSlot) {
-        this.opponent.controlTokens.push(controlToken);
-      }
-    }
-
     return this;
   }
 

@@ -191,51 +191,6 @@ it("_getCombatAttrs (groundCombat)", () => {
   expect(unitToCombatAttrs.get("pds")).toBeUndefined();
 });
 
-it("_findTokens", () => {
-  const combatRoll: CombatRoll = new CombatRoll({
-    rollType: "spaceCombat",
-    hex: "<0,0,0>",
-    activatingPlayerSlot: 2,
-    rollingPlayerSlot: 1,
-  });
-  combatRoll.opponent.playerSlot = 2;
-
-  let tokens: {
-    commandTokens: Array<GameObject>;
-    controlTokens: Array<GameObject>;
-  };
-  tokens = combatRoll._findTokens();
-  expect(tokens.commandTokens).toEqual([]);
-  expect(tokens.controlTokens).toEqual([]);
-
-  const selfCommandToken: GameObject = MockGameObject.simple(
-    "token:base/command",
-    { id: "selfCmd", owningPlayerSlot: 1 }
-  );
-  const selfControlToken: GameObject = MockGameObject.simple(
-    "token:base/control",
-    { id: "selfCtrl", owningPlayerSlot: 1 }
-  );
-  const opponentCommandToken: GameObject = MockGameObject.simple(
-    "token:base/command",
-    { id: "oppCmd", owningPlayerSlot: 1 }
-  );
-  const opponentControlToken: GameObject = MockGameObject.simple(
-    "token:base/control",
-    { id: "oppCtrl", owningPlayerSlot: 1 }
-  );
-
-  tokens = combatRoll._findTokens();
-  expect(tokens.commandTokens.map((x) => x.getId())).toEqual([
-    "selfCmd",
-    "oppCmd",
-  ]);
-  expect(tokens.controlTokens.map((x) => x.getId())).toEqual([
-    "selfCtrl",
-    "oppCtrl",
-  ]);
-});
-
 it("_findUnitPlastic", () => {
   MockGameObject.simple("unit:base/fighter");
   MockGameObject.simple("tile.system:base/1");
