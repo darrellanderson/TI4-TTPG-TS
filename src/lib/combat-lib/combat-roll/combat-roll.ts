@@ -7,6 +7,7 @@ import {
   world,
 } from "@tabletop-playground/api";
 import {
+  Atop,
   CardUtil,
   DiceGroup,
   DiceGroupParams,
@@ -112,6 +113,16 @@ export class CombatRollPerPlayerData {
   hasUnitAdj(unit: UnitType): boolean {
     return this.getCountAdj(unit) > 0;
   }
+
+  isControlTokenAtop(card: GameObject): boolean {
+    const atop: Atop = new Atop(card);
+    for (const controlToken of this.controlTokens) {
+      if (atop.isAtop(controlToken.getPosition())) {
+        return true;
+      }
+    }
+    return false;
+  }
 }
 
 export class CombatRoll {
@@ -131,7 +142,8 @@ export class CombatRoll {
     return new CombatRoll(params)
       .applyUnitPlasticAndSetOpponentPlayerSlot() // assign opponent player slot early!
       .applyUnitOverries()
-      .applyUnitModifiersOrThrow();
+      .applyTokens()
+      .applyUnitModifiersOrThrow(); // always do this last, reads state others set
   }
 
   constructor(params: CombatRollParams) {
@@ -214,31 +226,8 @@ export class CombatRoll {
     selfSlot: number,
     opponentSlot: number
   ): Array<UnitModifier> {
-    // Some modifiers (e.g. agenda) can be assigned via a control token on them.
-    const skipContained: boolean = true;
-    const controlTokens: Array<GameObject> = [];
-    for (const obj of world.getAllObjects(skipContained)) {
-      const nsid: string = NSID.get(obj);
-      if (nsid.startsWith("token.control:")) {
-        controlTokens.push(obj);
-      }
-    }
-    const getControlTokenOwner = (obj: GameObject): number | undefined => {
-      for (const controlToken of controlTokens) {
-        const pos: Vector = controlToken.getPosition();
-        const local: Vector = obj.worldPositionToLocal(pos);
-        const scale: Vector = obj.getScale();
-        const extent: Vector = obj.getExtent(false, false);
-        extent.x /= scale.x;
-        extent.y /= scale.y;
-        if (Math.abs(local.x) < extent.x && Math.abs(local.y) < extent.y) {
-          return controlToken.getOwningPlayerSlot();
-        }
-      }
-      return undefined;
-    };
-
     const unitModifiers: Array<UnitModifier> = [];
+    const skipContained: boolean = true;
     for (const obj of world.getAllObjects(skipContained)) {
       const nsid: string = NSID.get(obj);
       const modifier: UnitModifier | undefined =
@@ -250,18 +239,20 @@ export class CombatRoll {
           this._cardUtil.isLooseCard(obj, allowFaceDown, rejectSnapPointTags)
         ) {
           const pos: Vector = obj.getPosition();
-          const controlTokenOnCardOwningPlaerSlot: number | undefined =
-            getControlTokenOwner(obj);
           const closest: number = this._find.closestOwnedCardHolderOwner(pos);
           const isSelf: boolean = closest === selfSlot;
           const isOpponent: boolean = closest === opponentSlot;
-          if (controlTokenOnCardOwningPlaerSlot !== undefined) {
-            if (
-              (controlTokenOnCardOwningPlaerSlot === selfSlot && isSelf) ||
-              (controlTokenOnCardOwningPlaerSlot === opponentSlot && isOpponent)
-            ) {
-              unitModifiers.push(modifier);
-            }
+
+          if (
+            modifier.getOwner() === "self" &&
+            this.self.isControlTokenAtop(obj)
+          ) {
+            unitModifiers.push(modifier);
+          } else if (
+            modifier.getOwner() === "opponent" &&
+            this.opponent.isControlTokenAtop(obj)
+          ) {
+            unitModifiers.push(modifier);
           } else if (
             (closest === selfSlot && isSelf) ||
             (closest === opponentSlot && isOpponent)
