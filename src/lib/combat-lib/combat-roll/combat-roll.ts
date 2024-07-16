@@ -173,11 +173,17 @@ export class CombatRoll {
       const attrs: UnitAttrsSchemaType | undefined =
         TI4.unitAttrsRegistry.rawByNsid(nsid);
       if (attrs) {
-        const allowFaceDown: boolean = false;
-        const rejectSnapPointTags: Array<string> = [];
-        if (
-          this._cardUtil.isLooseCard(obj, allowFaceDown, rejectSnapPointTags)
-        ) {
+        let useAttrs: boolean = true;
+        if (obj instanceof Card) {
+          const allowFaceDown: boolean = false;
+          const rejectSnapPointTags: Array<string> = [];
+          useAttrs = this._cardUtil.isLooseCard(
+            obj,
+            allowFaceDown,
+            rejectSnapPointTags
+          );
+        }
+        if (useAttrs) {
           const pos: Vector = obj.getPosition();
           const closest: number = this._find.closestOwnedCardHolderOwner(pos);
           if (closest === playerSlot) {
@@ -198,6 +204,7 @@ export class CombatRoll {
     const skipContained: boolean = true;
 
     // Control tokens on cards take precedence over cards being near players.
+    // Find all control tokens early, reuse when asked.
     const controlTokens: Array<GameObject> = [];
     for (const obj of world.getAllObjects(skipContained)) {
       const nsid: string = NSID.get(obj);

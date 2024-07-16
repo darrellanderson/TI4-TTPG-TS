@@ -39,10 +39,13 @@ export class UnitAttrs {
     source: string,
     schema: UnitAttrsSchemaType
   ): string {
-    if (schema.unit === "mech") {
+    if (schema.unit === "flagship") {
+      return `flagship:${source}/${schema.nsidName}`;
+    } else if (schema.unit === "mech") {
       return `card.leader.mech:${source}/${schema.nsidName}`;
+    } else {
+      return `card.technology.unit-upgrade:${source}/${schema.nsidName}`;
     }
-    return `card.technology.unit-upgrade:${source}/${schema.nsidName}`;
   }
 
   public static sortByOverrideOrder(

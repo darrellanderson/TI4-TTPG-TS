@@ -1,3 +1,4 @@
+import { UnitAttrs } from "lib/unit-lib/unit-attrs/unit-attrs";
 import {
   CombatRoll,
   CombatRollParams,
@@ -10,7 +11,7 @@ it("annihilator (registry)", () => {
 });
 
 it("annihilator (bombardment)", () => {
-  // PLANETARY SHIELD does not prevent BOMBARDMENT
+  // Has BOMBARDMENT when in space.
   const params: CombatRollParams = {
     rollType: "bombardment",
     hex: "<0,0,0>",
@@ -33,10 +34,15 @@ it("annihilator (bombardment)", () => {
   expect(combatRoll.self.hasUnit("mech")).toBe(true);
   expect(combatRoll.self.getCount("mech")).toBe(3);
   expect(combatRoll.getUnitModifierNames()).toEqual(["Annihilator"]);
+
+  const mechAttrs: UnitAttrs | undefined =
+    combatRoll.self.unitAttrsSet.get("mech");
+  expect(mechAttrs?.getName()).toBe("Annihilator");
+  expect(mechAttrs?.getBombardment()).toBeDefined();
 });
 
 it("annihilator (groundCombat)", () => {
-  // PLANETARY SHIELD does not prevent BOMBARDMENT
+  // Has BOMBARDMENT when in space.
   const params: CombatRollParams = {
     rollType: "groundCombat",
     hex: "<0,0,0>",

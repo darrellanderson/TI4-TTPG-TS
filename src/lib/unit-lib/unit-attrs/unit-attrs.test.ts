@@ -12,6 +12,15 @@ it("static schemaToNsid", () => {
   expect(nsid).toBe("card.technology.unit-upgrade:my-source/my-nsid-name");
 });
 
+it("static schemaToNsid (flagship)", () => {
+  const nsid = UnitAttrs.schemaToNsid("my-source", {
+    name: "my-name",
+    unit: "flagship",
+    nsidName: "my-nsid-name",
+  });
+  expect(nsid).toBe("flagship:my-source/my-nsid-name");
+});
+
 it("static schemaToNsid (mech)", () => {
   const nsid = UnitAttrs.schemaToNsid("my-source", {
     name: "my-name",

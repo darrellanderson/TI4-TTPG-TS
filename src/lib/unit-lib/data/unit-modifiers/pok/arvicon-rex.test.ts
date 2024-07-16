@@ -29,10 +29,13 @@ it("arvicon-rex", () => {
   let combatRoll: CombatRoll;
   combatRoll = CombatRoll.createCooked(params);
   expect(combatRoll.self.hasUnit("flagship")).toBe(true);
+  expect(combatRoll.self.unitAttrsSet.get("flagship")?.getName()).toBe(
+    "Arvicon Rex"
+  );
   expect(combatRoll.getUnitModifierNames()).toEqual(["Arvicon Rex"]);
   expect(
     combatRoll.self.unitAttrsSet.get("flagship")?.getSpaceCombat()?.getHit()
-  ).toBe(13); // 13 when flagship attrs not set
+  ).toBe(5);
 
   // Add opponent's token to fleet pool.
   new MockGameObject({
@@ -53,8 +56,11 @@ it("arvicon-rex", () => {
 
   combatRoll = CombatRoll.createCooked(params);
   expect(combatRoll.self.hasUnit("flagship")).toBe(true);
+  expect(combatRoll.self.unitAttrsSet.get("flagship")?.getName()).toBe(
+    "Arvicon Rex"
+  );
   expect(combatRoll.getUnitModifierNames()).toEqual(["Arvicon Rex"]);
   expect(
     combatRoll.self.unitAttrsSet.get("flagship")?.getSpaceCombat()?.getHit()
-  ).toBe(11);
+  ).toBe(3);
 });
