@@ -170,7 +170,21 @@ export class UnitAttrs {
     return this._antiFighterBarrage;
   }
 
+  getAntiFighterBarrageOrThrow(): CombatAttrs {
+    if (!this._antiFighterBarrage) {
+      throw new Error("no antiFighterBarrage");
+    }
+    return this._antiFighterBarrage;
+  }
+
   getBombardment(): CombatAttrs | undefined {
+    return this._bombardment;
+  }
+
+  getBombardmentOrThrow(): CombatAttrs {
+    if (!this._bombardment) {
+      throw new Error("no bombardment");
+    }
     return this._bombardment;
   }
 
@@ -198,6 +212,13 @@ export class UnitAttrs {
     return this._groundCombat;
   }
 
+  getGroundCombatOrThrow(): CombatAttrs {
+    if (!this._groundCombat) {
+      throw new Error("no groundCombat");
+    }
+    return this._groundCombat;
+  }
+
   getName(): string {
     return this._name;
   }
@@ -210,7 +231,21 @@ export class UnitAttrs {
     return this._spaceCannon;
   }
 
+  getSpaceCannonOrThrow(): CombatAttrs {
+    if (!this._spaceCannon) {
+      throw new Error("no spaceCannon");
+    }
+    return this._spaceCannon;
+  }
+
   getSpaceCombat(): CombatAttrs | undefined {
+    return this._spaceCombat;
+  }
+
+  getSpaceCombatOrThrow(): CombatAttrs {
+    if (!this._spaceCombat) {
+      throw new Error("no spaceCombat");
+    }
     return this._spaceCombat;
   }
 
@@ -234,12 +269,12 @@ export class UnitAttrs {
     return this._isShip;
   }
 
-  setAntiFighterBarrage(value: CombatAttrs): this {
+  setAntiFighterBarrage(value: CombatAttrs | undefined): this {
     this._antiFighterBarrage = value;
     return this;
   }
 
-  setBombardment(value: CombatAttrs): this {
+  setBombardment(value: CombatAttrs | undefined): this {
     this._bombardment = value;
     return this;
   }
@@ -259,7 +294,7 @@ export class UnitAttrs {
     return this;
   }
 
-  setGroundCombat(value: CombatAttrs): this {
+  setGroundCombat(value: CombatAttrs | undefined): this {
     this._groundCombat = value;
     return this;
   }
@@ -289,12 +324,12 @@ export class UnitAttrs {
     return this;
   }
 
-  setSpaceCannon(value: CombatAttrs): this {
+  setSpaceCannon(value: CombatAttrs | undefined): this {
     this._spaceCannon = value;
     return this;
   }
 
-  setSpaceCombat(value: CombatAttrs): this {
+  setSpaceCombat(value: CombatAttrs | undefined): this {
     this._spaceCombat = value;
     return this;
   }

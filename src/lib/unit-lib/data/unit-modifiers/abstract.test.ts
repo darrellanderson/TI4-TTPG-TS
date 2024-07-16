@@ -10,6 +10,9 @@ import { UnitType } from "../../schema/unit-attrs-schema";
 export const SELF: number = 1;
 export const OPPONENT: number = 2;
 
+export const SELF_POS = new Vector(100, 0, 0);
+export const OPPONENT_POS = new Vector(-100, 0, 0);
+
 export function placeGameObjects(params: {
   systemNsid?: string; // default is tile 1
   self?: Array<string>;
@@ -21,10 +24,6 @@ export function placeGameObjects(params: {
   opponentUnitsOffPlanet?: Map<UnitType, number>;
   opponentUnitsAdj?: Map<UnitType, number>;
 }) {
-  // Player areas.
-  const selfPos: Vector = new Vector(100, 0, 0);
-  const opponentPos: Vector = new Vector(-100, 0, 0);
-
   // Map positions.
   const hexPos: Vector = TI4.hex.toPosition("<0,0,0>");
   const adjHexPos: Vector = TI4.hex.toPosition("<1,0,-1>");
@@ -38,26 +37,26 @@ export function placeGameObjects(params: {
   // Upgrades and modifiers get assigned to the closest card holder owner.
   new MockCardHolder({
     owningPlayerSlot: SELF,
-    position: selfPos,
+    position: SELF_POS,
   });
   new MockCardHolder({
     owningPlayerSlot: OPPONENT,
-    position: opponentPos,
+    position: OPPONENT_POS,
   });
 
   // Create nsid objects.
   for (const nsid of params.self ?? []) {
     if (nsid.startsWith("card.")) {
-      MockCard.simple(nsid, { position: selfPos });
+      MockCard.simple(nsid, { position: SELF_POS });
     } else {
-      MockGameObject.simple(nsid, { position: selfPos });
+      MockGameObject.simple(nsid, { position: SELF_POS });
     }
   }
   for (const nsid of params.opponent ?? []) {
     if (nsid.startsWith("card.")) {
-      MockCard.simple(nsid, { position: opponentPos });
+      MockCard.simple(nsid, { position: OPPONENT_POS });
     } else {
-      MockGameObject.simple(nsid, { position: opponentPos });
+      MockGameObject.simple(nsid, { position: OPPONENT_POS });
     }
   }
 

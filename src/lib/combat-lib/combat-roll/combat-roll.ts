@@ -1,4 +1,5 @@
 import {
+  Card,
   Color,
   GameObject,
   GameWorld,
@@ -221,11 +222,19 @@ export class CombatRoll {
       const modifier: UnitModifier | undefined =
         TI4.unitModifierRegistry.getByNsid(nsid);
       if (modifier) {
-        const allowFaceDown: boolean = false;
-        const rejectSnapPointTags: Array<string> = [];
-        if (
-          this._cardUtil.isLooseCard(obj, allowFaceDown, rejectSnapPointTags)
-        ) {
+        // Only use cards when face-up.
+        let useModifier: boolean = true;
+        if (obj instanceof Card) {
+          const allowFaceDown: boolean = false;
+          const rejectSnapPointTags: Array<string> = [];
+          useModifier = this._cardUtil.isLooseCard(
+            obj,
+            allowFaceDown,
+            rejectSnapPointTags
+          );
+        }
+
+        if (useModifier) {
           // Control token takes precedence for ownership, otherwise closest player.
           let owner: number = getControlTokenOwner(obj);
           if (owner < 0) {

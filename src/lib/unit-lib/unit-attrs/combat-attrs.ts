@@ -51,6 +51,11 @@ export class CombatAttrs {
     return this;
   }
 
+  addHit(delta: number): this {
+    this._hit += delta;
+    return this;
+  }
+
   getCrit(): number | undefined {
     return this._crit;
   }

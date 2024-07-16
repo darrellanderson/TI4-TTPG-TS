@@ -22,3 +22,9 @@ add("pok", annihilator);
 
 import { antimassDeflectors } from "./unit-modifiers/base/antimass-deflectors";
 add("base", antimassDeflectors);
+
+import { articlesOfWar } from "./unit-modifiers/pok/articles-of-war";
+add("pok", articlesOfWar);
+
+import { arviconRex } from "./unit-modifiers/pok/arvicon-rex";
+add("pok", arviconRex);

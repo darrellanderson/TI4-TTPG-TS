@@ -2,7 +2,7 @@ import { CombatRoll } from "../../../../combat-lib/combat-roll/combat-roll";
 import { UnitAttrs } from "../../../../unit-lib/unit-attrs/unit-attrs";
 import { UnitModifierSchemaType } from "../../../schema/unit-modifier-schema";
 
-export const annihilator: UnitModifierSchemaType = {
+export const articlesOfWar: UnitModifierSchemaType = {
   name: "Articles of War",
   description: "Mechs lose non-SUSTAIN DAMAGE abilities",
   triggers: [{ cardClass: "agenda", nsidName: "articles-of-war" }],
@@ -16,7 +16,10 @@ export const annihilator: UnitModifierSchemaType = {
     const mechAttrs: UnitAttrs | undefined =
       combatRoll.self.unitAttrsSet.get("mech");
     if (mechAttrs) {
-      mechAttrs.setHasSustainDamage(false);
+      mechAttrs.setAntiFighterBarrage(undefined);
+      mechAttrs.setBombardment(undefined);
+      mechAttrs.setSpaceCannon(undefined);
+      mechAttrs.setHasPlanetaryShield(false);
     }
   },
 };
