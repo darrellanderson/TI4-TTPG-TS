@@ -39,6 +39,9 @@ export class UnitAttrs {
     source: string,
     schema: UnitAttrsSchemaType
   ): string {
+    if (schema.unit === "mech") {
+      return `card.leader.mech:${source}/${schema.nsidName}`;
+    }
     return `card.technology.unit-upgrade:${source}/${schema.nsidName}`;
   }
 

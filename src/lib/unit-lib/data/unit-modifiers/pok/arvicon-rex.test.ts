@@ -8,7 +8,6 @@ import {
   CommandTokenAllocation,
   CommandTokenLib,
 } from "../../../../command-token-lib/command-token-lib";
-import exp from "constants";
 
 it("registry", () => {
   const nsid = "flagship:pok/arvicon-rex";

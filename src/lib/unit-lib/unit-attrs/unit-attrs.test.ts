@@ -12,6 +12,15 @@ it("static schemaToNsid", () => {
   expect(nsid).toBe("card.technology.unit-upgrade:my-source/my-nsid-name");
 });
 
+it("static schemaToNsid (mech)", () => {
+  const nsid = UnitAttrs.schemaToNsid("my-source", {
+    name: "my-name",
+    unit: "mech",
+    nsidName: "my-nsid-name",
+  });
+  expect(nsid).toBe("card.leader.mech:my-source/my-nsid-name");
+});
+
 it("static sortByOverrideOrder", () => {
   const attrs: Array<UnitAttrsSchemaType> = [
     { name: "my-name-b", unit: "carrier", nsidName: "b" },
@@ -51,6 +60,22 @@ it("constructor", () => {
   expect(unitAttrs.getSpaceCombat()).toBe(undefined);
   expect(unitAttrs.getSpaceCannon()).toBe(undefined);
   expect(unitAttrs.getGroundCombat()).toBe(undefined);
+
+  expect(() => {
+    unitAttrs.getAntiFighterBarrageOrThrow();
+  }).toThrow();
+  expect(() => {
+    unitAttrs.getBombardmentOrThrow();
+  }).toThrow();
+  expect(() => {
+    unitAttrs.getSpaceCombatOrThrow();
+  }).toThrow();
+  expect(() => {
+    unitAttrs.getSpaceCannonOrThrow();
+  }).toThrow();
+  expect(() => {
+    unitAttrs.getGroundCombatOrThrow();
+  }).toThrow();
 });
 
 it("constructor (with combat attrs)", () => {
@@ -78,6 +103,12 @@ it("constructor (with combat attrs)", () => {
   expect(unitAttrs.getSpaceCombat()?.getHit()).toBe(3);
   expect(unitAttrs.getSpaceCannon()?.getHit()).toBe(4);
   expect(unitAttrs.getGroundCombat()?.getHit()).toBe(5);
+
+  expect(unitAttrs.getAntiFighterBarrageOrThrow().getHit()).toBe(1);
+  expect(unitAttrs.getBombardmentOrThrow().getHit()).toBe(2);
+  expect(unitAttrs.getSpaceCombatOrThrow().getHit()).toBe(3);
+  expect(unitAttrs.getSpaceCannonOrThrow().getHit()).toBe(4);
+  expect(unitAttrs.getGroundCombatOrThrow().getHit()).toBe(5);
 });
 
 it("cost", () => {

@@ -527,6 +527,8 @@ export const SOURCE_TO_UNIT_ATTRS_DATA: Record<
       name: "Eidolon",
       unit: "mech",
       nsidName: "eidolon",
+      spaceCombat: { dice: 2, hit: 8 },
+      groundCombat: { dice: 2, hit: 6 },
     },
     {
       name: "Ember Colossus",
@@ -558,6 +560,7 @@ export const SOURCE_TO_UNIT_ATTRS_DATA: Record<
       name: "Letani Behemoth",
       unit: "mech",
       nsidName: "letani-behemoth",
+      hasPlanetaryShield: true,
     },
     {
       name: "Moll Terminus",

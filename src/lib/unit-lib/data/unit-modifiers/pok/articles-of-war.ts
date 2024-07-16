@@ -7,7 +7,7 @@ export const articlesOfWar: UnitModifierSchemaType = {
   description: "Mechs lose non-SUSTAIN DAMAGE abilities",
   triggers: [{ cardClass: "agenda", nsidName: "articles-of-war" }],
   isCombat: true,
-  owner: "self",
+  owner: "any",
   priority: "mutate",
   applies: (combatRoll: CombatRoll): boolean => {
     return combatRoll.self.hasUnit("mech");

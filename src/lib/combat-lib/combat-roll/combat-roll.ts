@@ -243,10 +243,15 @@ export class CombatRoll {
           }
           const isSelf: boolean = owner === selfSlot;
           const isOpponent: boolean = owner === opponentSlot;
-          const requireSelf = modifier.getOwner() === "self";
-          const requireOpponent = modifier.getOwner() === "opponent";
+          const requireAny: boolean = modifier.getOwner() === "any";
+          const requireSelf: boolean = modifier.getOwner() === "self";
+          const requireOpponent: boolean = modifier.getOwner() === "opponent";
 
-          if ((isSelf && requireSelf) || (isOpponent && requireOpponent)) {
+          if (
+            requireAny ||
+            (isSelf && requireSelf) ||
+            (isOpponent && requireOpponent)
+          ) {
             unitModifiers.push(modifier);
           }
         }
