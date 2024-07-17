@@ -37,7 +37,7 @@ export class UnitModifierRegistry {
       const unitModifier = new UnitModifier(unitModifierSchema);
 
       const triggers: Array<UnitModifierTriggerType> =
-        unitModifierSchema.triggers ?? [];
+        unitModifierSchema.triggers;
       for (const trigger of triggers) {
         const nsid: string | undefined = UnitModifier.schemaTriggerToNsid(
           source,

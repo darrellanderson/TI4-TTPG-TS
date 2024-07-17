@@ -91,6 +91,6 @@ export class UnitModifier {
   }
 
   isCombat(): boolean {
-    return this._params.isCombat ?? false;
+    return this._params.isCombat;
   }
 }
