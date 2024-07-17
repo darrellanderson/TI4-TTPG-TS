@@ -1,4 +1,4 @@
-import { Card, GameObject, Player, Vector } from "@tabletop-playground/api";
+import { Card, Player, Vector } from "@tabletop-playground/api";
 import {
   MockCard,
   MockCardHolder,
@@ -23,7 +23,6 @@ import {
 import { UnitAttrs } from "../../unit-lib/unit-attrs/unit-attrs";
 import { UnitModifier } from "../../unit-lib/unit-modifier/unit-modifier";
 import { UnitPlastic } from "../../unit-lib/unit-plastic/unit-plastic";
-import exp from "constants";
 
 it("data addSyntheticUnit", () => {
   const data: CombatRollPerPlayerData = new CombatRollPerPlayerData();

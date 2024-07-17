@@ -4,7 +4,6 @@ import { Adjacency, AdjacencyResult, HexType } from "ttpg-darrell";
 import { System } from "../system/system";
 import { SystemAdjacency } from "./system-adjacency";
 import { SystemAdjacencyNeighbor } from "./system-adjacency-neighbor";
-import exp from "constants";
 
 it("constructor", () => {
   new SystemAdjacencyNeighbor();

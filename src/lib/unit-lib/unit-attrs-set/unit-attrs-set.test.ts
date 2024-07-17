@@ -1,4 +1,3 @@
-import exp from "constants";
 import { UnitAttrsSet } from "./unit-attrs-set";
 import { UnitType } from "../schema/unit-attrs-schema";
 

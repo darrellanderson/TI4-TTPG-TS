@@ -1,6 +1,5 @@
 import { z } from "zod";
 import { NsidNameSchema, TechSchema, TraitSchema } from "./basic-types-schema";
-import exp from "constants";
 
 export const PlanetAttachmentSchema = z
   .object({
