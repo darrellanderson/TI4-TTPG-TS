@@ -40,22 +40,22 @@ export type UnitModifierPriorityType = z.infer<typeof UnitModifierPriority>;
 export const UnitModifierSchema = z
   .object({
     name: z.string(),
-    description: z.string().optional(),
+    description: z.string(),
 
-    triggers: z.array(UnitModifierTrigger).optional(),
+    triggers: z.array(UnitModifierTrigger),
 
     isActiveIdle: z.boolean().optional(),
-    isCombat: z.boolean().optional(),
+    isCombat: z.boolean(),
     owner: UnitModifierOwner,
     priority: UnitModifierPriority,
 
     // Should this modifier be used?
     // Zod supports z.* argument validation, use z.any() to allow something else.
-    applies: z.function().args(z.any()).returns(z.boolean()).optional(),
+    applies: z.function().args(z.any()).returns(z.boolean()),
 
     // Apply the modifier to the unit attributes.
     // Zod supports z.* argument validation, use z.any() to allow something else.
-    apply: z.function().args(z.any()).returns(z.void()).optional(),
+    apply: z.function().args(z.any()).returns(z.void()),
   })
   .strict()
   .readonly();

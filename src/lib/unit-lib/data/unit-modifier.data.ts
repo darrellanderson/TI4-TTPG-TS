@@ -14,14 +14,14 @@ function add(source: string, modifier: UnitModifierSchemaType) {
   modifiers.push(modifier);
 }
 
+import { AntimassDeflectors } from "./unit-modifiers/base/antimass-deflectors";
+add("base", AntimassDeflectors);
+
 import { _2ram } from "./unit-modifiers/pok/2ram";
 add("pok", _2ram);
 
 import { Annihilator } from "./unit-modifiers/pok/annihilator";
 add("pok", Annihilator);
-
-import { AntimassDeflectors } from "./unit-modifiers/base/antimass-deflectors";
-add("base", AntimassDeflectors);
 
 import { ArticlesOfWar } from "./unit-modifiers/pok/articles-of-war";
 add("pok", ArticlesOfWar);

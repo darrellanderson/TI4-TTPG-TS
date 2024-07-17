@@ -7,6 +7,7 @@ it("parse", () => {
   const params: UnitModifierSchemaType = {
     name: "name",
     description: "description",
+    isCombat: false,
     owner: "self",
     priority: "mutate",
     triggers: [

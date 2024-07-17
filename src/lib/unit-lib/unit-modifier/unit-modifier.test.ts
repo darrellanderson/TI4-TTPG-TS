@@ -94,14 +94,20 @@ it("static sortByApplyOrder", () => {
   const makeModifier = (priority: UnitModifierPriorityType): UnitModifier => {
     return new UnitModifier({
       name: "my-name",
+      description: "my-description",
+      isCombat: false,
+      owner: "self",
+      priority,
       triggers: [
         {
           cardClass: "agent",
           nsidName: "my-nsid-name",
         },
       ],
-      owner: "self",
-      priority,
+      applies: (combatRoll: CombatRoll): boolean => {
+        return true;
+      },
+      apply: (combatRoll: CombatRoll): void => {},
     });
   };
   const modifiers: Array<UnitModifier> = [
@@ -133,11 +139,18 @@ it("static sortByApplyOrder", () => {
 it("constructor", () => {
   const unitModifier: UnitModifier = new UnitModifier({
     name: "my-name",
+    description: "my-description",
+    isCombat: false,
     owner: "self",
     priority: "mutate",
+    triggers: [],
+    applies: (combatRoll: CombatRoll): boolean => {
+      return true;
+    },
+    apply: (combatRoll: CombatRoll): void => {},
   });
-  expect(unitModifier.getDescription()).toBeUndefined();
   expect(unitModifier.getName()).toBe("my-name");
+  expect(unitModifier.getDescription()).toBe("my-description");
   expect(unitModifier.getOwner()).toBe("self");
   expect(unitModifier.getPriority()).toBe("mutate");
   expect(unitModifier.isActiveIdle()).toBe(false);
@@ -147,9 +160,10 @@ it("constructor", () => {
 it("constructor (with optional fields)", () => {
   const unitModifier: UnitModifier = new UnitModifier({
     name: "my-name",
+    description: "my-description",
+    isCombat: true,
     owner: "self",
     priority: "mutate",
-    description: "my-description",
     triggers: [
       {
         cardClass: "agent",
@@ -157,7 +171,10 @@ it("constructor (with optional fields)", () => {
       },
     ],
     isActiveIdle: true,
-    isCombat: true,
+    applies: (combatRoll: CombatRoll): boolean => {
+      return true;
+    },
+    apply: (combatRoll: CombatRoll): void => {},
   });
   expect(unitModifier.getDescription()).toBe("my-description");
   expect(unitModifier.getName()).toBe("my-name");
@@ -170,8 +187,15 @@ it("constructor (with optional fields)", () => {
 it("applies/apply (empty)", () => {
   const unitModifier: UnitModifier = new UnitModifier({
     name: "my-name",
+    description: "my-description",
+    isCombat: true,
     owner: "self",
     priority: "mutate",
+    triggers: [],
+    applies: (combatRoll: CombatRoll): boolean => {
+      return true;
+    },
+    apply: (combatRoll: CombatRoll): void => {},
   });
   const combatRoll: CombatRoll = new CombatRoll({
     rollType: "spaceCombat",
@@ -186,8 +210,11 @@ it("applies/apply (empty)", () => {
 it("applies/apply (given)", () => {
   const unitModifier: UnitModifier = new UnitModifier({
     name: "my-name",
+    description: "my-description",
+    isCombat: true,
     owner: "self",
     priority: "mutate",
+    triggers: [],
     applies: (combatRoll: CombatRoll): boolean => {
       return true;
     },

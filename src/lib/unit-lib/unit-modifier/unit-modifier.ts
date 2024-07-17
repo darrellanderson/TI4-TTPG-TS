@@ -63,16 +63,11 @@ export class UnitModifier {
   }
 
   applies(combatRoll: CombatRoll): boolean {
-    if (this._params.applies) {
-      return this._params.applies(combatRoll);
-    }
-    return true;
+    return this._params.applies(combatRoll);
   }
 
   apply(combatRoll: CombatRoll): void {
-    if (this._params.apply) {
-      this._params.apply(combatRoll);
-    }
+    this._params.apply(combatRoll);
   }
 
   getDescription(): string | undefined {

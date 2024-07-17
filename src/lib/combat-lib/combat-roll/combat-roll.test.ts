@@ -246,15 +246,27 @@ it("_findUnitModifiers (self, opponent)", () => {
   TI4.unitModifierRegistry.load("my-source", [
     {
       name: "my-self-modifier",
+      description: "my-description",
+      isCombat: false,
       owner: "self",
       priority: "mutate",
       triggers: [{ cardClass: "action", nsidName: "my-self-nsid-name" }],
+      applies: (combatRoll: CombatRoll): boolean => {
+        return true;
+      },
+      apply: (combatRoll: CombatRoll): void => {},
     },
     {
       name: "my-opponent-modifier",
+      description: "my-description",
+      isCombat: false,
       owner: "opponent",
       priority: "mutate",
       triggers: [{ cardClass: "action", nsidName: "my-opponent-nsid-name" }],
+      applies: (combatRoll: CombatRoll): boolean => {
+        return true;
+      },
+      apply: (combatRoll: CombatRoll): void => {},
     },
   ]);
   MockCard.simple("card.action:my-source/my-self-nsid-name");
@@ -315,9 +327,15 @@ it("_findUnitModifiers (control token)", () => {
   TI4.unitModifierRegistry.load("my-source", [
     {
       name: "my-modifier",
+      description: "my-description",
+      isCombat: false,
       owner: "self",
       priority: "mutate",
       triggers: [{ cardClass: "agenda", nsidName: "my-nsid-name" }],
+      applies: (combatRoll: CombatRoll): boolean => {
+        return true;
+      },
+      apply: (combatRoll: CombatRoll): void => {},
     },
   ]);
   MockCard.simple("card.agenda:my-source/my-nsid-name");
@@ -371,9 +389,14 @@ it("applyUnitModifiers", () => {
     {
       name: "my-self-modifier",
       description: "my-description",
+      isCombat: false,
       owner: "self",
       priority: "mutate",
       triggers: [{ cardClass: "action", nsidName: "my-self-nsid-name" }],
+      applies: (combatRoll: CombatRoll): boolean => {
+        return true;
+      },
+      apply: (combatRoll: CombatRoll): void => {},
     },
   ]);
   MockCard.simple("card.action:my-source/my-self-nsid-name");
@@ -399,9 +422,14 @@ it("applyUnitModifiers (modifier throws)", () => {
   TI4.unitModifierRegistry.load("my-source", [
     {
       name: "my-self-modifier",
+      description: "my-description",
+      isCombat: false,
       owner: "self",
       priority: "mutate",
       triggers: [{ cardClass: "action", nsidName: "my-self-nsid-name" }],
+      applies: (combatRoll: CombatRoll): boolean => {
+        return true;
+      },
       apply: (combatRoll: CombatRoll): void => {
         throw new Error("buggy modifier");
       },
@@ -736,9 +764,14 @@ it("createDiceParamsArray (range, crit)", () => {
   TI4.unitModifierRegistry.load("my-source", [
     {
       name: "my-modifier",
+      description: "my-description",
+      isCombat: true,
       owner: "self",
       priority: "mutate",
       triggers: [{ cardClass: "action", nsidName: "my-nsid-name" }],
+      applies: (combatRoll: CombatRoll): boolean => {
+        return true;
+      },
       apply: (combatRoll: CombatRoll): void => {
         const pds: UnitAttrs | undefined =
           combatRoll.self.unitAttrsSet.get("pds");

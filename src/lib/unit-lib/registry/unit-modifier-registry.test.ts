@@ -11,6 +11,8 @@ it("getAll", () => {
   const source: string = "my-source";
   const schema: UnitModifierSchemaType = {
     name: "my-name",
+    description: "my-description",
+    isCombat: false,
     owner: "self",
     priority: "mutate",
     triggers: [
@@ -19,6 +21,10 @@ it("getAll", () => {
         nsidName: "my-nsid-name",
       },
     ],
+    applies: (x: string): boolean => {
+      return true;
+    },
+    apply: (x: number): void => {},
   };
 
   const registry: UnitModifierRegistry = new UnitModifierRegistry();
@@ -32,6 +38,8 @@ it("getByNsid", () => {
   const source: string = "my-source";
   const schema: UnitModifierSchemaType = {
     name: "my-name",
+    description: "my-description",
+    isCombat: false,
     owner: "self",
     priority: "mutate",
     triggers: [
@@ -40,6 +48,10 @@ it("getByNsid", () => {
         nsidName: "my-nsid-name",
       },
     ],
+    applies: (x: string): boolean => {
+      return true;
+    },
+    apply: (x: number): void => {},
   };
   const nsid: string = "card.action:my-source/my-nsid-name";
 
@@ -55,7 +67,18 @@ it("load", () => {
   const registry: UnitModifierRegistry = new UnitModifierRegistry();
   expect(
     registry.load("source", [
-      { name: "my-name", owner: "self", priority: "mutate" },
+      {
+        name: "my-name",
+        description: "my-description",
+        isCombat: false,
+        owner: "self",
+        priority: "mutate",
+        triggers: [],
+        applies: (x: string): boolean => {
+          return true;
+        },
+        apply: (x: number): void => {},
+      },
     ])
   ).toBeInstanceOf(UnitModifierRegistry);
 });
@@ -66,9 +89,15 @@ it("load (invalid)", () => {
     registry.load("source", [
       {
         name: "my-name",
+        description: "my-description",
+        isCombat: false,
         triggers: [{ nsidName: "@@invalid" }],
         owner: "self",
         priority: "mutate",
+        applies: (x: string): boolean => {
+          return true;
+        },
+        apply: (x: number): void => {},
       },
     ]);
   }).toThrow();
