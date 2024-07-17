@@ -32,7 +32,7 @@ it("articles-of-war", () => {
   placeGameObjects({
     self: ["card.leader.mech:pok/letani-behemoth"],
     selfUnits: new Map([["mech", 1]]),
-    opponent: ["card.agenda:pok/articles-of-war"], // "any"
+    any: ["card.agenda:pok/articles-of-war"],
   });
   const combatRoll: CombatRoll = CombatRoll.createCooked({
     rollType: "spaceCombat",

@@ -12,6 +12,7 @@ export const OPPONENT: number = 2;
 
 export const SELF_POS = new Vector(100, 0, 0);
 export const OPPONENT_POS = new Vector(-100, 0, 0);
+export const ANY_POS = new Vector(200, 0, 0);
 
 export function placeGameObjects(params: {
   systemNsid?: string; // default is tile 1
@@ -23,6 +24,7 @@ export function placeGameObjects(params: {
   opponentUnits?: Map<UnitType, number>;
   opponentUnitsOffPlanet?: Map<UnitType, number>;
   opponentUnitsAdj?: Map<UnitType, number>;
+  any?: Array<string>; // for "any" unit modifier cards
 }) {
   // Map positions.
   const hexPos: Vector = TI4.hex.toPosition("<0,0,0>");
@@ -57,6 +59,13 @@ export function placeGameObjects(params: {
       MockCard.simple(nsid, { position: OPPONENT_POS });
     } else {
       MockGameObject.simple(nsid, { position: OPPONENT_POS });
+    }
+  }
+  for (const nsid of params.any ?? []) {
+    if (nsid.startsWith("card.")) {
+      MockCard.simple(nsid, { position: ANY_POS });
+    } else {
+      MockGameObject.simple(nsid, { position: ANY_POS });
     }
   }
 
