@@ -7,7 +7,7 @@ import {
 } from "../../../../command-token-lib/command-token-lib";
 import { GameObject } from "@tabletop-playground/api";
 
-export const arviconRex: UnitModifierSchemaType = {
+export const ArviconRex: UnitModifierSchemaType = {
   name: "Arvicon Rex",
   description:
     "+2 flagship COMBAT against opponent with no token in your fleet pool",

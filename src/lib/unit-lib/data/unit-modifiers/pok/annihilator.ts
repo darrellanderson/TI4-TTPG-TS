@@ -1,7 +1,7 @@
 import { CombatRoll } from "../../../../combat-lib/combat-roll/combat-roll";
 import { UnitModifierSchemaType } from "../../../schema/unit-modifier-schema";
 
-export const annihilator: UnitModifierSchemaType = {
+export const Annihilator: UnitModifierSchemaType = {
   name: "Annihilator",
   description: "Mech in the space area gain bombardment",
   triggers: [{ cardClass: "mech", nsidName: "annihilator" }],

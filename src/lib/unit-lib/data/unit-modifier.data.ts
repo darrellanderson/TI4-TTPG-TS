@@ -17,14 +17,14 @@ function add(source: string, modifier: UnitModifierSchemaType) {
 import { _2ram } from "./unit-modifiers/pok/2ram";
 add("pok", _2ram);
 
-import { annihilator } from "./unit-modifiers/pok/annihilator";
-add("pok", annihilator);
+import { Annihilator } from "./unit-modifiers/pok/annihilator";
+add("pok", Annihilator);
 
-import { antimassDeflectors } from "./unit-modifiers/base/antimass-deflectors";
-add("base", antimassDeflectors);
+import { AntimassDeflectors } from "./unit-modifiers/base/antimass-deflectors";
+add("base", AntimassDeflectors);
 
-import { articlesOfWar } from "./unit-modifiers/pok/articles-of-war";
-add("pok", articlesOfWar);
+import { ArticlesOfWar } from "./unit-modifiers/pok/articles-of-war";
+add("pok", ArticlesOfWar);
 
-import { arviconRex } from "./unit-modifiers/pok/arvicon-rex";
-add("pok", arviconRex);
+import { ArviconRex } from "./unit-modifiers/pok/arvicon-rex";
+add("pok", ArviconRex);

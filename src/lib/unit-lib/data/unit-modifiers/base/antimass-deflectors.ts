@@ -5,7 +5,7 @@ import {
 } from "../../../../combat-lib/combat-roll/combat-roll";
 import { UnitModifierSchemaType } from "../../../schema/unit-modifier-schema";
 
-export const antimassDeflectors: UnitModifierSchemaType = {
+export const AntimassDeflectors: UnitModifierSchemaType = {
   name: "Antimass Deflectors",
   description: "-1 to all SPACE CANNON rolls",
   triggers: [{ cardClass: "technology", nsidName: "antimass-deflectors" }],
