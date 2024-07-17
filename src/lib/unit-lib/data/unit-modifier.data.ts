@@ -17,6 +17,9 @@ function add(source: string, modifier: UnitModifierSchemaType) {
 import { AntimassDeflectors } from "./unit-modifiers/base/antimass-deflectors";
 add("base", AntimassDeflectors);
 
+import { Bunker } from "./unit-modifiers/base/bunker";
+add("base", Bunker);
+
 import { _2ram } from "./unit-modifiers/pok/2ram";
 add("pok", _2ram);
 
