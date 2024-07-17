@@ -1,8 +1,5 @@
 import { UnitAttrs } from "../../../../unit-lib/unit-attrs/unit-attrs";
-import {
-  CombatRoll,
-  CombatRollParams,
-} from "../../../../combat-lib/combat-roll/combat-roll";
+import { CombatRoll } from "../../../../combat-lib/combat-roll/combat-roll";
 import { OPPONENT, SELF, placeGameObjects } from "../abstract.test";
 
 it("registry", () => {
