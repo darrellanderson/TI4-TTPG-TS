@@ -30,6 +30,7 @@ import { UnitAttrs } from "../../unit-lib/unit-attrs/unit-attrs";
 import { UnitAttrsSet } from "../../unit-lib/unit-attrs-set/unit-attrs-set";
 import { UnitModifier } from "../../unit-lib/unit-modifier/unit-modifier";
 import { UnitPlastic } from "../../unit-lib/unit-plastic/unit-plastic";
+import { UnitModifierActiveIdle } from "../../unit-lib/unit-modifier/unit-modifier-active-idle";
 
 export type CombatRollType =
   | "antiFighterBarrage"
@@ -240,6 +241,10 @@ export class CombatRoll {
             allowFaceDown,
             rejectSnapPointTags
           );
+        }
+
+        if (modifier.isActiveIdle() && !UnitModifierActiveIdle.isActive(obj)) {
+          useModifier = false;
         }
 
         if (useModifier) {

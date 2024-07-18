@@ -34,3 +34,6 @@ add("pok", ArviconRex);
 
 import { BrotherOmar } from "./unit-modifiers/pok/brother-omar";
 add("pok", BrotherOmar);
+
+import { EmissaryTaivra } from "./unit-modifiers/pok/emissary-taivra";
+add("pok", EmissaryTaivra);

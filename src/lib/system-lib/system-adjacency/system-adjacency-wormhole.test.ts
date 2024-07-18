@@ -93,15 +93,15 @@ it("card lost_star_chart (in discard)", () => {
 });
 
 it("card emissary_taivra (active)", () => {
+  let adjacency: Adjacency;
+  adjacency = new Adjacency();
+  expect(adjacency.hasLink("alpha", "delta")).toBe(false);
+
   const card: Card = MockCard.simple(
     "card.leader.agent.creuss:pok/emissary_taivra"
   );
-
-  let adjacency: Adjacency;
-
-  adjacency = new Adjacency();
-  expect(UnitModifierActiveIdle.isActive(card)).toBe(false);
-  expect(adjacency.hasLink("alpha", "delta")).toBe(false);
+  expect(UnitModifierActiveIdle.isActive(card)).toBe(true);
+  UnitModifierActiveIdle.setActive(card, false);
 
   adjacency = new Adjacency();
   new SystemAdjacencyWormhole()._applyCards(adjacency);

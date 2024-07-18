@@ -22,6 +22,7 @@ import {
 } from "../../unit-lib/schema/unit-attrs-schema";
 import { UnitAttrs } from "../../unit-lib/unit-attrs/unit-attrs";
 import { UnitModifier } from "../../unit-lib/unit-modifier/unit-modifier";
+import { UnitModifierActiveIdle } from "../../unit-lib/unit-modifier/unit-modifier-active-idle";
 import { UnitPlastic } from "../../unit-lib/unit-plastic/unit-plastic";
 
 it("data addSyntheticUnit", () => {
@@ -319,6 +320,41 @@ it("_findUnitModifiers", () => {
     modifier.getName()
   );
   expect(names).toEqual(["2Ram"]);
+});
+
+it("_findUnitModifiers (active/idle)", () => {
+  // Need a card holder to be closest to assign cards.
+  new MockCardHolder({ owningPlayerSlot: 2 });
+
+  const params: CombatRollParams = {
+    rollType: "spaceCannonOffense",
+    hex: "<0,0,0>",
+    activatingPlayerSlot: 1,
+    rollingPlayerSlot: 2,
+  };
+  const combatRoll: CombatRoll = new CombatRoll(params);
+
+  const nsid: string = "card.leader.agent:pok/emissary-taivra";
+  expect(TI4.unitModifierRegistry.getByNsid(nsid)).toBeDefined();
+
+  const card: Card = MockCard.simple(nsid);
+  expect(card.isFaceUp()).toBe(true);
+  const allowFaceDown: boolean = false;
+  const rejectSnapPointTags: Array<string> = [];
+  expect(
+    new CardUtil().isLooseCard(card, allowFaceDown, rejectSnapPointTags)
+  ).toBe(true);
+
+  let unitModifiers: Array<UnitModifier>;
+  let names: Array<string>;
+  unitModifiers = combatRoll._findUnitModifiers(2, 1);
+  names = unitModifiers.map((modifier) => modifier.getName());
+  expect(names).toEqual(["Emissary Taivra"]);
+
+  UnitModifierActiveIdle.setActive(card, false);
+  unitModifiers = combatRoll._findUnitModifiers(2, 1);
+  names = unitModifiers.map((modifier) => modifier.getName());
+  expect(names).toEqual([]);
 });
 
 it("_findUnitModifiers (control token)", () => {

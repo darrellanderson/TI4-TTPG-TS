@@ -5,7 +5,7 @@ export class UnitModifierActiveIdle {
 
   static isActive(obj: GameObject): boolean {
     const value: string = obj.getSavedData(UnitModifierActiveIdle.ACTIVE_KEY);
-    return value === "true";
+    return value === "" || value === "true";
   }
 
   static setActive(obj: GameObject, active: boolean): void {
