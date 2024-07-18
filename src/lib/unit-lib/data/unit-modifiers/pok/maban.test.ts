@@ -3,12 +3,12 @@ import { CombatRoll } from "../../../../combat-lib/combat-roll/combat-roll";
 import { OPPONENT, SELF, placeGameObjects } from "../abstract.test";
 
 it("registry (commander)", () => {
-  const nsid = "card.leader.commander:pok/brother-omar";
+  const nsid = "card.leader.commander:pok/maban";
   expect(TI4.unitModifierRegistry.getByNsid(nsid)).toBeDefined();
 });
 
 it("registry (alliance)", () => {
-  const nsid = "card.alliance:pok/yin";
+  const nsid = "card.alliance:pok/naalu";
   expect(TI4.unitModifierRegistry.getByNsid(nsid)).toBeDefined();
 });
 
@@ -21,17 +21,17 @@ it("no modifier", () => {
     rollingPlayerSlot: SELF,
   });
   expect(combatRoll.getUnitModifierNames()).toEqual([]);
-  const infantryAttrs: UnitAttrs | undefined =
-    combatRoll.self.unitAttrsSet.get("infantry");
-  expect(infantryAttrs?.getProducePerCost()).toBe(2);
+  const fighterAttrs: UnitAttrs | undefined =
+    combatRoll.self.unitAttrsSet.getOrThrow("fighter");
+  expect(fighterAttrs.getProducePerCost()).toBe(2);
   expect(
-    infantryAttrs?.getProduceQuantityDoesNotCountAgainstProductionLimits()
+    fighterAttrs.getProduceQuantityDoesNotCountAgainstProductionLimits()
   ).toBe(0);
 });
 
 it("brother-omar (commander)", () => {
   placeGameObjects({
-    self: ["card.leader.commander:pok/brother-omar"],
+    self: ["card.leader.commander:pok/maban"],
   });
   const combatRoll: CombatRoll = CombatRoll.createCooked({
     rollType: "production",
@@ -39,18 +39,18 @@ it("brother-omar (commander)", () => {
     activatingPlayerSlot: OPPONENT,
     rollingPlayerSlot: SELF,
   });
-  expect(combatRoll.getUnitModifierNames()).toEqual(["Brother Omar"]);
-  const infantryAttrs: UnitAttrs | undefined =
-    combatRoll.self.unitAttrsSet.get("infantry");
-  expect(infantryAttrs?.getProducePerCost()).toBe(3);
+  expect(combatRoll.getUnitModifierNames()).toEqual(["M'aban"]);
+  const fighterAttrs: UnitAttrs | undefined =
+    combatRoll.self.unitAttrsSet.getOrThrow("fighter");
+  expect(fighterAttrs.getProducePerCost()).toBe(3);
   expect(
-    infantryAttrs?.getProduceQuantityDoesNotCountAgainstProductionLimits()
+    fighterAttrs.getProduceQuantityDoesNotCountAgainstProductionLimits()
   ).toBe(1);
 });
 
 it("brother-omar (alliance)", () => {
   placeGameObjects({
-    self: ["card.alliance:pok/yin"],
+    self: ["card.alliance:pok/naalu"],
   });
   const combatRoll: CombatRoll = CombatRoll.createCooked({
     rollType: "production",
@@ -58,11 +58,11 @@ it("brother-omar (alliance)", () => {
     activatingPlayerSlot: OPPONENT,
     rollingPlayerSlot: SELF,
   });
-  expect(combatRoll.getUnitModifierNames()).toEqual(["Brother Omar"]);
-  const infantryAttrs: UnitAttrs | undefined =
-    combatRoll.self.unitAttrsSet.get("infantry");
-  expect(infantryAttrs?.getProducePerCost()).toBe(3);
+  expect(combatRoll.getUnitModifierNames()).toEqual(["M'aban"]);
+  const fighterAttrs: UnitAttrs | undefined =
+    combatRoll.self.unitAttrsSet.getOrThrow("fighter");
+  expect(fighterAttrs.getProducePerCost()).toBe(3);
   expect(
-    infantryAttrs?.getProduceQuantityDoesNotCountAgainstProductionLimits()
+    fighterAttrs.getProduceQuantityDoesNotCountAgainstProductionLimits()
   ).toBe(1);
 });

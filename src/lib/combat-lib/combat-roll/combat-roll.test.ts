@@ -292,8 +292,21 @@ it("_findUnitModifiers (self, opponent)", () => {
 });
 
 it("_findUnitModifiers", () => {
-  // Need a card holder to be closest to assign cards.
-  new MockCardHolder({ owningPlayerSlot: 2 });
+  TI4.unitModifierRegistry.load("my-source", [
+    {
+      name: "my-modifier-name",
+      description: "my-description",
+      owner: "self",
+      priority: "mutate",
+      triggers: [{ cardClass: "action", nsidName: "my-action" }],
+      applies: (combatRoll: CombatRoll): boolean => {
+        return true;
+      },
+      apply: (combatRoll: CombatRoll): void => {},
+    },
+  ]);
+  const nsid: string = "card.action:my-source/my-action";
+  expect(TI4.unitModifierRegistry.getByNsid(nsid)).toBeDefined();
 
   const params: CombatRollParams = {
     rollType: "spaceCombat",
@@ -303,9 +316,8 @@ it("_findUnitModifiers", () => {
   };
   const combatRoll: CombatRoll = new CombatRoll(params);
 
-  const nsid: string = "card.leader.commander:pok/2ram";
-  expect(TI4.unitModifierRegistry.getByNsid(nsid)).toBeDefined();
-
+  // Need a card holder to be closest to assign cards.
+  new MockCardHolder({ owningPlayerSlot: 2 });
   const card: Card = MockCard.simple(nsid);
   expect(card.isFaceUp()).toBe(true);
   const allowFaceDown: boolean = false;
@@ -321,12 +333,26 @@ it("_findUnitModifiers", () => {
   const names: Array<string> = unitModifiers.map((modifier) =>
     modifier.getName()
   );
-  expect(names).toEqual(["2Ram"]);
+  expect(names).toEqual(["my-modifier-name"]);
 });
 
 it("_findUnitModifiers (active/idle)", () => {
-  // Need a card holder to be closest to assign cards.
-  new MockCardHolder({ owningPlayerSlot: 2 });
+  TI4.unitModifierRegistry.load("my-source", [
+    {
+      name: "my-modifier-name",
+      description: "my-description",
+      owner: "self",
+      priority: "mutate",
+      isActiveIdle: true,
+      triggers: [{ cardClass: "action", nsidName: "my-action" }],
+      applies: (combatRoll: CombatRoll): boolean => {
+        return true;
+      },
+      apply: (combatRoll: CombatRoll): void => {},
+    },
+  ]);
+  const nsid: string = "card.action:my-source/my-action";
+  expect(TI4.unitModifierRegistry.getByNsid(nsid)).toBeDefined();
 
   const params: CombatRollParams = {
     rollType: "spaceCannonOffense",
@@ -336,9 +362,8 @@ it("_findUnitModifiers (active/idle)", () => {
   };
   const combatRoll: CombatRoll = new CombatRoll(params);
 
-  const nsid: string = "card.leader.agent:pok/emissary-taivra";
-  expect(TI4.unitModifierRegistry.getByNsid(nsid)).toBeDefined();
-
+  // Need a card holder to be closest to assign cards.
+  new MockCardHolder({ owningPlayerSlot: 2 });
   const card: Card = MockCard.simple(nsid);
   expect(card.isFaceUp()).toBe(true);
   const allowFaceDown: boolean = false;
@@ -351,7 +376,7 @@ it("_findUnitModifiers (active/idle)", () => {
   let names: Array<string>;
   unitModifiers = combatRoll._findUnitModifiers(2, 1);
   names = unitModifiers.map((modifier) => modifier.getName());
-  expect(names).toEqual(["Emissary Taivra"]);
+  expect(names).toEqual(["my-modifier-name"]);
 
   UnitModifierActiveIdle.setActive(card, false);
   unitModifiers = combatRoll._findUnitModifiers(2, 1);

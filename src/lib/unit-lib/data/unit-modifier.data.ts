@@ -40,3 +40,6 @@ add("pok", EmissaryTaivra);
 
 import { EvelynDelouis } from "./unit-modifiers/pok/evelyn-delouis";
 add("pok", EvelynDelouis);
+
+import { Maban } from "./unit-modifiers/pok/maban";
+add("pok", Maban);
