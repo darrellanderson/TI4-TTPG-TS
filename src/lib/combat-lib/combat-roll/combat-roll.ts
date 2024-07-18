@@ -49,6 +49,7 @@ export type CombatRollParams = {
   planetName?: string; // for planet-based rolls
   activatingPlayerSlot: number;
   rollingPlayerSlot: number;
+  overrideRollingFaction?: Faction;
 };
 
 export type BestUnitWithCombatAttrs = {
@@ -402,6 +403,9 @@ export class CombatRoll {
 
   public applyFactions(): this {
     // TODO XXX
+    if (this._params.overrideRollingFaction) {
+      this.self.faction = this._params.overrideRollingFaction;
+    }
     return this;
   }
 

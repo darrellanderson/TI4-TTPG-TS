@@ -15,18 +15,19 @@ export const RickarRickani: UnitModifierSchemaType = {
     { cardClass: "alliance", nsidName: "winnu" },
   ],
   applies: (combatRoll: CombatRoll): boolean => {
+    const system: System | undefined = combatRoll.system;
     if (
-      combatRoll.getRollType() === "spaceCombat" ||
-      combatRoll.getRollType() === "groundCombat"
+      system &&
+      (combatRoll.getRollType() === "spaceCombat" ||
+        combatRoll.getRollType() === "groundCombat")
     ) {
       // Is Mecatol?
-      if (combatRoll.system?.getSystemTileNumber() === 18) {
+      if (system.getSystemTileNumber() === 18) {
         return true;
       }
 
       // Has a legendary planet?
-      const planets: Array<Planet> | undefined =
-        combatRoll.system?.getPlanets();
+      const planets: Array<Planet> | undefined = system.getPlanets();
       if (planets) {
         for (const planet of planets) {
           if (planet.isLegendary()) {
@@ -36,7 +37,6 @@ export const RickarRickani: UnitModifierSchemaType = {
       }
 
       // Is self's home system?
-      const system: System | undefined = combatRoll.system;
       const faction: Faction | undefined = combatRoll.self.faction;
       if (
         system &&
