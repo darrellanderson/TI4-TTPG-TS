@@ -31,3 +31,6 @@ add("pok", ArticlesOfWar);
 
 import { ArviconRex } from "./unit-modifiers/pok/arvicon-rex";
 add("pok", ArviconRex);
+
+import { BrotherOmar } from "./unit-modifiers/pok/brother-omar";
+add("pok", BrotherOmar);

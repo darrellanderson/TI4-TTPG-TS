@@ -19,6 +19,7 @@ export class UnitAttrs {
   private _name: string;
   private _cost: number | undefined;
   private _producePerCost: number; // e.g. 2 for fighters
+  private _produceQuantityDoesNotCountAgainstProductionLimits: number;
   private _diceColor: Color | undefined;
 
   private _isShip: boolean;
@@ -66,6 +67,8 @@ export class UnitAttrs {
 
     this._cost = params.cost;
     this._producePerCost = params.producePerCost ?? 1;
+    this._produceQuantityDoesNotCountAgainstProductionLimits =
+      params.produceQuantityDoesNotCountAgainstProductionLimits ?? 0;
 
     this._isShip = params.isShip ?? false;
     this._isGround = params.isGround ?? false;
@@ -133,6 +136,10 @@ export class UnitAttrs {
     this._name = override.name;
     if (override.producePerCost) {
       this._producePerCost = override.producePerCost;
+    }
+    if (override.produceQuantityDoesNotCountAgainstProductionLimits) {
+      this._produceQuantityDoesNotCountAgainstProductionLimits =
+        override.produceQuantityDoesNotCountAgainstProductionLimits;
     }
     if (override.antiFighterBarrage) {
       if (!this._antiFighterBarrage) {
@@ -233,6 +240,10 @@ export class UnitAttrs {
     return this._producePerCost;
   }
 
+  getProduceQuantityDoesNotCountAgainstProductionLimits(): number {
+    return this._produceQuantityDoesNotCountAgainstProductionLimits;
+  }
+
   getSpaceCannon(): CombatAttrs | undefined {
     return this._spaceCannon;
   }
@@ -327,6 +338,11 @@ export class UnitAttrs {
 
   setProducePerCost(value: number): this {
     this._producePerCost = value;
+    return this;
+  }
+
+  setProduceQuantityDoesNotCountAgainstProductionLimits(value: number): this {
+    this._produceQuantityDoesNotCountAgainstProductionLimits = value;
     return this;
   }
 

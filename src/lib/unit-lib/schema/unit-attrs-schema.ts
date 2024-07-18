@@ -49,6 +49,7 @@ export const UnitAttrsSchema = z
 
     cost: z.number().optional(),
     producePerCost: z.number().optional(), // e.g. 2 for fighters
+    produceQuantityDoesNotCountAgainstProductionLimits: z.number().optional(),
 
     isShip: z.boolean().optional(),
     isGround: z.boolean().optional(),

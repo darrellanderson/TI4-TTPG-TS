@@ -56,6 +56,9 @@ it("constructor", () => {
   // defaults
   expect(unitAttrs.getCost()).toBe(undefined);
   expect(unitAttrs.getProducePerCost()).toBe(1);
+  expect(
+    unitAttrs.getProduceQuantityDoesNotCountAgainstProductionLimits()
+  ).toBe(0);
   expect(unitAttrs.getDiceColor().toHex()).toBe("000000FF");
   expect(unitAttrs.getDisablePlanetaryShield()).toBe(false);
   expect(unitAttrs.getDisableSpaceCannonOffense()).toBe(false);
@@ -158,6 +161,31 @@ it("producePerCost", () => {
     producePerCost: 4,
   });
   expect(unitAttrs.getProducePerCost()).toBe(4);
+});
+
+it("produceQuantityDoesNotCountAgainstProductionLimits", () => {
+  const unitAttrs = new UnitAttrs({
+    name: "my-name",
+    unit: "infantry",
+    produceQuantityDoesNotCountAgainstProductionLimits: 2,
+  });
+  expect(
+    unitAttrs.getProduceQuantityDoesNotCountAgainstProductionLimits()
+  ).toBe(2);
+
+  unitAttrs.setProduceQuantityDoesNotCountAgainstProductionLimits(3);
+  expect(
+    unitAttrs.getProduceQuantityDoesNotCountAgainstProductionLimits()
+  ).toBe(3);
+
+  unitAttrs.applyOverride({
+    name: "my-name",
+    unit: "infantry",
+    produceQuantityDoesNotCountAgainstProductionLimits: 4,
+  });
+  expect(
+    unitAttrs.getProduceQuantityDoesNotCountAgainstProductionLimits()
+  ).toBe(4);
 });
 
 it("diceColor", () => {
