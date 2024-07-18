@@ -43,3 +43,6 @@ add("pok", EvelynDelouis);
 
 import { Maban } from "./unit-modifiers/pok/maban";
 add("pok", Maban);
+
+import { NavarchFeng } from "./unit-modifiers/pok/navarch-feng";
+add("pok", NavarchFeng);

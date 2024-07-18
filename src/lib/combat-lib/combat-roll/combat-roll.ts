@@ -21,16 +21,17 @@ import {
 
 import { CombatAttrs } from "../../unit-lib/unit-attrs/combat-attrs";
 import { Planet } from "../../system-lib/planet/planet";
+import { System } from "../../system-lib/system/system";
 import { SystemAdjacency } from "../../system-lib/system-adjacency/system-adjacency";
+import { UnitAttrs } from "../../unit-lib/unit-attrs/unit-attrs";
 import {
   UnitAttrsSchemaType,
   UnitType,
 } from "../../unit-lib/schema/unit-attrs-schema";
-import { UnitAttrs } from "../../unit-lib/unit-attrs/unit-attrs";
 import { UnitAttrsSet } from "../../unit-lib/unit-attrs-set/unit-attrs-set";
 import { UnitModifier } from "../../unit-lib/unit-modifier/unit-modifier";
-import { UnitPlastic } from "../../unit-lib/unit-plastic/unit-plastic";
 import { UnitModifierActiveIdle } from "../../unit-lib/unit-modifier/unit-modifier-active-idle";
+import { UnitPlastic } from "../../unit-lib/unit-plastic/unit-plastic";
 
 export type CombatRollType =
   | "antiFighterBarrage"
@@ -130,7 +131,8 @@ export class CombatRoll {
   private readonly _modifiers: Array<UnitModifier> = [];
 
   // Unit modifers may look into and modify unit attributes.
-  public readonly planetName: string | undefined;
+  public readonly system: System | undefined;
+  public readonly planet: Planet | undefined;
   public readonly self: CombatRollPerPlayerData;
   public readonly opponent: CombatRollPerPlayerData;
 
@@ -145,7 +147,16 @@ export class CombatRoll {
     this._params = params;
     this._adjHexes = new SystemAdjacency().getAdjHexes(params.hex);
 
-    this.planetName = params.planetName;
+    const pos: Vector = TI4.hex.toPosition(params.hex);
+    this.system = TI4.systemRegistry.getByPosition(pos);
+    if (this.system) {
+      for (const planet of this.system.getPlanets()) {
+        if (planet.getName() === params.planetName) {
+          this.planet = planet;
+          break;
+        }
+      }
+    }
 
     this.self = new CombatRollPerPlayerData();
     this.self.playerSlot = params.rollingPlayerSlot;

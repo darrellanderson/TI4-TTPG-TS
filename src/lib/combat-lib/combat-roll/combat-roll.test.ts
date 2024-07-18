@@ -710,6 +710,7 @@ it("_pruneToUnitsClosestToPlanet", () => {
     activatingPlayerSlot: 1,
     rollingPlayerSlot: 2,
   });
+  expect(combatRoll.planet).toBe(yesPlanet);
   expect(combatRoll.self.getCount("infantry")).toBe(1);
   expect(combatRoll.self.getCount("mech")).toBe(1);
   expect(combatRoll.opponent.getCount("infantry")).toBe(1);

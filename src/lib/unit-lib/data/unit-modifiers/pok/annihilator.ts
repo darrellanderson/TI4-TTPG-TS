@@ -22,11 +22,10 @@ export const Annihilator: UnitModifierSchemaType = {
       combatRoll.self.overrideUnitCountHex.set("mech", spaceCount);
     } else if (
       combatRoll.getRollType() === "groundCombat" &&
-      combatRoll.planetName !== undefined
+      combatRoll.planet !== undefined
     ) {
       const groundCount: number = combatRoll.self.unitPlasticHex.filter(
-        (plastic) =>
-          plastic.getPlanetExact()?.getName() === combatRoll.planetName
+        (plastic) => plastic.getPlanetExact() === combatRoll.planet
       ).length;
       combatRoll.self.overrideUnitCountHex.set("mech", groundCount);
     }

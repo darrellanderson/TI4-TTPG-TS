@@ -7,7 +7,7 @@ export const BrotherOmar: UnitModifierSchemaType = {
   description:
     "Produce an additional Infantry for their cost; it doesn't count towards production limits.",
   owner: "self",
-  priority: "mutate",
+  priority: "adjust",
   triggers: [
     { cardClass: "commander", nsidName: "brother-omar" },
     { cardClass: "alliance", nsidName: "yin" },

@@ -3,12 +3,12 @@ import { CombatRoll } from "../../../../combat-lib/combat-roll/combat-roll";
 import { OPPONENT, SELF, placeGameObjects } from "../abstract.test";
 
 it("registry (commander)", () => {
-  const nsid = "card.leader.commander:pok/maban";
+  const nsid = "card.leader.commander:pok/navarch-feng";
   expect(TI4.unitModifierRegistry.getByNsid(nsid)).toBeDefined();
 });
 
 it("registry (alliance)", () => {
-  const nsid = "card.alliance:pok/naalu";
+  const nsid = "card.alliance:pok/nomad";
   expect(TI4.unitModifierRegistry.getByNsid(nsid)).toBeDefined();
 });
 
@@ -21,17 +21,14 @@ it("no modifier", () => {
     rollingPlayerSlot: SELF,
   });
   expect(combatRoll.getUnitModifierNames()).toEqual([]);
-  const fighterAttrs: UnitAttrs | undefined =
-    combatRoll.self.unitAttrsSet.getOrThrow("fighter");
-  expect(fighterAttrs.getProducePerCost()).toBe(2);
-  expect(
-    fighterAttrs.getProduceQuantityDoesNotCountAgainstProductionLimits()
-  ).toBe(0);
+  const flagshipAttrs: UnitAttrs | undefined =
+    combatRoll.self.unitAttrsSet.getOrThrow("flagship");
+  expect(flagshipAttrs.getCost()).toBe(8);
 });
 
-it("maban (commander)", () => {
+it("navarch-feng (commander)", () => {
   placeGameObjects({
-    self: ["card.leader.commander:pok/maban"],
+    self: ["card.leader.commander:pok/navarch-feng"],
   });
   const combatRoll: CombatRoll = CombatRoll.createCooked({
     rollType: "production",
@@ -39,18 +36,15 @@ it("maban (commander)", () => {
     activatingPlayerSlot: OPPONENT,
     rollingPlayerSlot: SELF,
   });
-  expect(combatRoll.getUnitModifierNames()).toEqual(["M'aban"]);
-  const fighterAttrs: UnitAttrs | undefined =
-    combatRoll.self.unitAttrsSet.getOrThrow("fighter");
-  expect(fighterAttrs.getProducePerCost()).toBe(3);
-  expect(
-    fighterAttrs.getProduceQuantityDoesNotCountAgainstProductionLimits()
-  ).toBe(1);
+  expect(combatRoll.getUnitModifierNames()).toEqual(["Navarch Feng"]);
+  const flagshipAttrs: UnitAttrs | undefined =
+    combatRoll.self.unitAttrsSet.getOrThrow("flagship");
+  expect(flagshipAttrs.getCost()).toBe(0);
 });
 
-it("maban (alliance)", () => {
+it("navarch-feng (alliance)", () => {
   placeGameObjects({
-    self: ["card.alliance:pok/naalu"],
+    self: ["card.alliance:pok/nomad"],
   });
   const combatRoll: CombatRoll = CombatRoll.createCooked({
     rollType: "production",
@@ -58,11 +52,8 @@ it("maban (alliance)", () => {
     activatingPlayerSlot: OPPONENT,
     rollingPlayerSlot: SELF,
   });
-  expect(combatRoll.getUnitModifierNames()).toEqual(["M'aban"]);
-  const fighterAttrs: UnitAttrs | undefined =
-    combatRoll.self.unitAttrsSet.getOrThrow("fighter");
-  expect(fighterAttrs.getProducePerCost()).toBe(3);
-  expect(
-    fighterAttrs.getProduceQuantityDoesNotCountAgainstProductionLimits()
-  ).toBe(1);
+  expect(combatRoll.getUnitModifierNames()).toEqual(["Navarch Feng"]);
+  const flagshipAttrs: UnitAttrs | undefined =
+    combatRoll.self.unitAttrsSet.getOrThrow("flagship");
+  expect(flagshipAttrs.getCost()).toBe(0);
 });
