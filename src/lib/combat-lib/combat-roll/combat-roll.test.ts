@@ -24,6 +24,7 @@ import { UnitAttrs } from "../../unit-lib/unit-attrs/unit-attrs";
 import { UnitModifier } from "../../unit-lib/unit-modifier/unit-modifier";
 import { UnitModifierActiveIdle } from "../../unit-lib/unit-modifier/unit-modifier-active-idle";
 import { UnitPlastic } from "../../unit-lib/unit-plastic/unit-plastic";
+import exp from "constants";
 
 it("data addSyntheticUnit", () => {
   const data: CombatRollPerPlayerData = new CombatRollPerPlayerData();
@@ -555,6 +556,33 @@ it("applyUnitPlastic (assign units)", () => {
   expect(combatRoll.opponent.unitPlasticAdj.map((x) => x.getUnit())).toEqual([
     "dreadnought",
   ]);
+});
+
+it("bestHitCombatAttrs", () => {
+  const combatRoll: CombatRoll = new CombatRoll({
+    rollType: "spaceCombat",
+    hex: "<0,0,0>",
+    activatingPlayerSlot: 1,
+    rollingPlayerSlot: 2,
+  });
+  combatRoll.self.overrideUnitCountHex.set("carrier", 1);
+  combatRoll.self.overrideUnitCountHex.set("dreadnought", 1);
+  const best: { unit: UnitType; combatAttrs: CombatAttrs } | undefined =
+    combatRoll.bestHitCombatAttrs();
+  expect(best?.unit).toBe("dreadnought");
+  expect(best?.combatAttrs.getHit()).toBe(5);
+});
+
+it("bestHitCombatAttrs (none)", () => {
+  const combatRoll: CombatRoll = new CombatRoll({
+    rollType: "spaceCombat",
+    hex: "<0,0,0>",
+    activatingPlayerSlot: 1,
+    rollingPlayerSlot: 2,
+  });
+  const best: { unit: UnitType; combatAttrs: CombatAttrs } | undefined =
+    combatRoll.bestHitCombatAttrs();
+  expect(best).toBeUndefined();
 });
 
 it("createDiceParamsArray (no units)", () => {

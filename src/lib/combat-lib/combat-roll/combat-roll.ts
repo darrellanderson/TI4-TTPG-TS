@@ -426,6 +426,29 @@ export class CombatRoll {
     return this;
   }
 
+  public bestHitCombatAttrs():
+    | { unit: UnitType; combatAttrs: CombatAttrs }
+    | undefined {
+    const unitToCombatAttrs: Map<UnitType, CombatAttrs> =
+      this._getUnitToCombatAttrs();
+    let bestUnit: UnitType | undefined = undefined;
+    let bestCombatAttrs: CombatAttrs | undefined = undefined;
+    let bestHit: number = Number.MAX_SAFE_INTEGER;
+    for (const [unit, combatAttrs] of unitToCombatAttrs.entries()) {
+      const has: boolean = this.self.hasUnit(unit);
+      const hit: number = combatAttrs.getHit();
+      if (has && hit < bestHit) {
+        bestHit = hit;
+        bestUnit = unit;
+        bestCombatAttrs = combatAttrs;
+      }
+    }
+    if (bestUnit && bestCombatAttrs) {
+      return { unit: bestUnit, combatAttrs: bestCombatAttrs };
+    }
+    return undefined;
+  }
+
   _pruneToUnitsClosestToPlanet(): this {
     for (let i = this.self.unitPlasticHex.length - 1; i >= 0; i--) {
       const unitPlastic: UnitPlastic | undefined = this.self.unitPlasticHex[i];
