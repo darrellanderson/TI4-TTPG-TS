@@ -5,7 +5,6 @@ export const Annihilator: UnitModifierSchemaType = {
   name: "Annihilator",
   description: "Mech in the space area gain bombardment",
   triggers: [{ cardClass: "mech", nsidName: "annihilator" }],
-  isCombat: true,
   owner: "self",
   priority: "mutate",
   applies: (combatRoll: CombatRoll): boolean => {

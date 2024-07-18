@@ -247,7 +247,6 @@ it("_findUnitModifiers (self, opponent)", () => {
     {
       name: "my-self-modifier",
       description: "my-description",
-      isCombat: false,
       owner: "self",
       priority: "mutate",
       triggers: [{ cardClass: "action", nsidName: "my-self-nsid-name" }],
@@ -259,7 +258,6 @@ it("_findUnitModifiers (self, opponent)", () => {
     {
       name: "my-opponent-modifier",
       description: "my-description",
-      isCombat: false,
       owner: "opponent",
       priority: "mutate",
       triggers: [{ cardClass: "action", nsidName: "my-opponent-nsid-name" }],
@@ -328,7 +326,6 @@ it("_findUnitModifiers (control token)", () => {
     {
       name: "my-modifier",
       description: "my-description",
-      isCombat: false,
       owner: "self",
       priority: "mutate",
       triggers: [{ cardClass: "agenda", nsidName: "my-nsid-name" }],
@@ -389,7 +386,6 @@ it("applyUnitModifiers", () => {
     {
       name: "my-self-modifier",
       description: "my-description",
-      isCombat: false,
       owner: "self",
       priority: "mutate",
       triggers: [{ cardClass: "action", nsidName: "my-self-nsid-name" }],
@@ -423,7 +419,6 @@ it("applyUnitModifiers (modifier throws)", () => {
     {
       name: "my-self-modifier",
       description: "my-description",
-      isCombat: false,
       owner: "self",
       priority: "mutate",
       triggers: [{ cardClass: "action", nsidName: "my-self-nsid-name" }],
@@ -765,7 +760,6 @@ it("createDiceParamsArray (range, crit)", () => {
     {
       name: "my-modifier",
       description: "my-description",
-      isCombat: true,
       owner: "self",
       priority: "mutate",
       triggers: [{ cardClass: "action", nsidName: "my-nsid-name" }],

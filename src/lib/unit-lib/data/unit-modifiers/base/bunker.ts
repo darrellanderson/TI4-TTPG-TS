@@ -5,7 +5,6 @@ import { UnitModifierSchemaType } from "../../../schema/unit-modifier-schema";
 export const Bunker: UnitModifierSchemaType = {
   name: "Bunker",
   description: "-4 to all BOMBARDMENT rolls",
-  isCombat: true,
   owner: "opponent",
   priority: "adjust",
   triggers: [{ cardClass: "action", nsidName: "bunker" }],

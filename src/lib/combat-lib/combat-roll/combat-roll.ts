@@ -37,7 +37,8 @@ export type CombatRollType =
   | "spaceCannonOffense"
   | "spaceCannonDefense"
   | "spaceCombat"
-  | "groundCombat";
+  | "groundCombat"
+  | "production";
 
 export type CombatRollParams = {
   rollType: CombatRollType;

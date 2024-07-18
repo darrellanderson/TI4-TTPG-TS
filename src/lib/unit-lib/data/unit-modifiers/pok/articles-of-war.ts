@@ -6,7 +6,6 @@ export const ArticlesOfWar: UnitModifierSchemaType = {
   name: "Articles of War",
   description: "Mechs lose non-SUSTAIN DAMAGE abilities",
   triggers: [{ cardClass: "agenda", nsidName: "articles-of-war" }],
-  isCombat: true,
   owner: "any",
   priority: "mutate",
   applies: (combatRoll: CombatRoll): boolean => {

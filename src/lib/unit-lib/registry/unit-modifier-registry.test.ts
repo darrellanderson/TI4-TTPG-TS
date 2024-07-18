@@ -12,7 +12,6 @@ it("getAll", () => {
   const schema: UnitModifierSchemaType = {
     name: "my-name",
     description: "my-description",
-    isCombat: false,
     owner: "self",
     priority: "mutate",
     triggers: [
@@ -39,7 +38,6 @@ it("getByNsid", () => {
   const schema: UnitModifierSchemaType = {
     name: "my-name",
     description: "my-description",
-    isCombat: false,
     owner: "self",
     priority: "mutate",
     triggers: [
@@ -70,7 +68,6 @@ it("load", () => {
       {
         name: "my-name",
         description: "my-description",
-        isCombat: false,
         owner: "self",
         priority: "mutate",
         triggers: [],
@@ -90,7 +87,6 @@ it("load (invalid)", () => {
       {
         name: "my-name",
         description: "my-description",
-        isCombat: false,
         triggers: [{ nsidName: "@@invalid" }],
         owner: "self",
         priority: "mutate",

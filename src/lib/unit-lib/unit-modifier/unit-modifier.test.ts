@@ -95,7 +95,6 @@ it("static sortByApplyOrder", () => {
     return new UnitModifier({
       name: "my-name",
       description: "my-description",
-      isCombat: false,
       owner: "self",
       priority,
       triggers: [
@@ -140,7 +139,6 @@ it("constructor", () => {
   const unitModifier: UnitModifier = new UnitModifier({
     name: "my-name",
     description: "my-description",
-    isCombat: false,
     owner: "self",
     priority: "mutate",
     triggers: [],
@@ -154,14 +152,12 @@ it("constructor", () => {
   expect(unitModifier.getOwner()).toBe("self");
   expect(unitModifier.getPriority()).toBe("mutate");
   expect(unitModifier.isActiveIdle()).toBe(false);
-  expect(unitModifier.isCombat()).toBe(false);
 });
 
 it("constructor (with optional fields)", () => {
   const unitModifier: UnitModifier = new UnitModifier({
     name: "my-name",
     description: "my-description",
-    isCombat: true,
     owner: "self",
     priority: "mutate",
     triggers: [
@@ -181,14 +177,12 @@ it("constructor (with optional fields)", () => {
   expect(unitModifier.getOwner()).toBe("self");
   expect(unitModifier.getPriority()).toBe("mutate");
   expect(unitModifier.isActiveIdle()).toBe(true);
-  expect(unitModifier.isCombat()).toBe(true);
 });
 
 it("applies/apply (empty)", () => {
   const unitModifier: UnitModifier = new UnitModifier({
     name: "my-name",
     description: "my-description",
-    isCombat: true,
     owner: "self",
     priority: "mutate",
     triggers: [],
@@ -211,7 +205,6 @@ it("applies/apply (given)", () => {
   const unitModifier: UnitModifier = new UnitModifier({
     name: "my-name",
     description: "my-description",
-    isCombat: true,
     owner: "self",
     priority: "mutate",
     triggers: [],

@@ -45,7 +45,6 @@ export const UnitModifierSchema = z
     triggers: z.array(UnitModifierTrigger),
 
     isActiveIdle: z.boolean().optional(),
-    isCombat: z.boolean(),
     owner: UnitModifierOwner,
     priority: UnitModifierPriority,
 

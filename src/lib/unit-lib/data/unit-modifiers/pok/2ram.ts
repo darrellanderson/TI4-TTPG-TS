@@ -8,7 +8,6 @@ export const _2ram: UnitModifierSchemaType = {
     { cardClass: "commander", nsidName: "2ram" },
     { cardClass: "alliance", nsidName: "l1z1x" },
   ],
-  isCombat: true,
   owner: "self",
   priority: "mutate-late",
   applies: (combatRoll: CombatRoll): boolean => {

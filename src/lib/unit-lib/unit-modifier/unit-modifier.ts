@@ -89,8 +89,4 @@ export class UnitModifier {
   isActiveIdle(): boolean {
     return this._params.isActiveIdle ?? false;
   }
-
-  isCombat(): boolean {
-    return this._params.isCombat;
-  }
 }
