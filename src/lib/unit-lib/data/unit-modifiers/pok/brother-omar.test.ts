@@ -4,12 +4,16 @@ import { OPPONENT, SELF, placeGameObjects } from "../abstract.test";
 
 it("registry (commander)", () => {
   const nsid = "card.leader.commander:pok/brother-omar";
-  expect(TI4.unitModifierRegistry.getByNsid(nsid)).toBeDefined();
+  expect(TI4.unitModifierRegistry.getByNsid(nsid)?.getName()).toBe(
+    "Brother Omar"
+  );
 });
 
 it("registry (alliance)", () => {
   const nsid = "card.alliance:pok/yin";
-  expect(TI4.unitModifierRegistry.getByNsid(nsid)).toBeDefined();
+  expect(TI4.unitModifierRegistry.getByNsid(nsid)?.getName()).toBe(
+    "Brother Omar"
+  );
 });
 
 it("no modifier", () => {

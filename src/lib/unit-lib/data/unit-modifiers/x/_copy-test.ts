@@ -4,7 +4,7 @@ import { CombatAttrs } from "../../../../unit-lib/unit-attrs/combat-attrs";
 
 it("registry", () => {
   const nsid = "card.";
-  expect(TI4.unitModifierRegistry.getByNsid(nsid)).toBeDefined();
+  expect(TI4.unitModifierRegistry.getByNsid(nsid)?.getName()).toBe("");
 });
 
 it("default", () => {

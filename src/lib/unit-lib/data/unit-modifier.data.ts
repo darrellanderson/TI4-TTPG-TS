@@ -46,3 +46,6 @@ add("pok", Maban);
 
 import { NavarchFeng } from "./unit-modifiers/pok/navarch-feng";
 add("pok", NavarchFeng);
+
+import { RickarRickani } from "./unit-modifiers/pok/rickar-rickani";
+add("pok", RickarRickani);

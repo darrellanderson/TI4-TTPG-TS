@@ -20,6 +20,7 @@ import {
 } from "ttpg-darrell";
 
 import { CombatAttrs } from "../../unit-lib/unit-attrs/combat-attrs";
+import { Faction } from "../../faction-lib/faction/faction";
 import { Planet } from "../../system-lib/planet/planet";
 import { System } from "../../system-lib/system/system";
 import { SystemAdjacency } from "../../system-lib/system-adjacency/system-adjacency";
@@ -61,6 +62,7 @@ export type _UnitRollsSummary = {
 };
 
 export class CombatRollPerPlayerData {
+  public faction: Faction | undefined;
   public playerSlot: number = -1;
   public readonly unitAttrsSet: UnitAttrsSet =
     TI4.unitAttrsRegistry.defaultUnitAttrsSet();
@@ -139,6 +141,7 @@ export class CombatRoll {
   static createCooked(params: CombatRollParams): CombatRoll {
     return new CombatRoll(params)
       .applyUnitPlasticAndSetOpponentPlayerSlot() // assign opponent player slot early!
+      .applyFactions() // assign before overrides, to allow for faction units
       .applyUnitOverries()
       .applyUnitModifiersOrThrow(); // always do this last, reads state others set
   }
@@ -397,7 +400,15 @@ export class CombatRoll {
     return this;
   }
 
+  public applyFactions(): this {
+    // TODO XXX
+    return this;
+  }
+
   public applyUnitOverries(): this {
+    // Apply faction units.
+    // TODO XXX
+
     for (const data of [this.self, this.opponent]) {
       const unitOverrides: Array<UnitAttrsSchemaType> =
         this._findUnitAttrOverrides(this.self.playerSlot);

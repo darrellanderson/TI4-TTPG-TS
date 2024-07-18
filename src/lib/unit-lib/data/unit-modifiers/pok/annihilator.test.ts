@@ -7,7 +7,9 @@ import { OPPONENT, placeGameObjects, SELF } from "../abstract.test";
 
 it("annihilator (registry)", () => {
   const nsid = "card.leader.mech:pok/annihilator";
-  expect(TI4.unitModifierRegistry.getByNsid(nsid)).toBeDefined();
+  expect(TI4.unitModifierRegistry.getByNsid(nsid)?.getName()).toBe(
+    "Annihilator"
+  );
 });
 
 it("annihilator (bombardment)", () => {

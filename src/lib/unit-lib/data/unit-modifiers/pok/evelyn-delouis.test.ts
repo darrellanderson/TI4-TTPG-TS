@@ -4,7 +4,9 @@ import { CombatAttrs } from "../../../../unit-lib/unit-attrs/combat-attrs";
 
 it("registry", () => {
   const nsid = "card.leader.agent:pok/evelyn-delouis";
-  expect(TI4.unitModifierRegistry.getByNsid(nsid)).toBeDefined();
+  expect(TI4.unitModifierRegistry.getByNsid(nsid)?.getName()).toBe(
+    "Evelyn Delouis"
+  );
 });
 
 it("default", () => {

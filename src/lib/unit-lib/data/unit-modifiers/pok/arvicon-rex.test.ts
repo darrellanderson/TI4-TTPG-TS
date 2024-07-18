@@ -11,7 +11,9 @@ import {
 
 it("registry", () => {
   const nsid = "flagship:pok/arvicon-rex";
-  expect(TI4.unitModifierRegistry.getByNsid(nsid)).toBeDefined();
+  expect(TI4.unitModifierRegistry.getByNsid(nsid)?.getName()).toBe(
+    "Arvicon Rex"
+  );
 });
 
 it("arvicon-rex", () => {

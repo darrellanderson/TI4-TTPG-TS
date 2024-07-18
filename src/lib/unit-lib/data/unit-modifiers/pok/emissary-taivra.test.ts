@@ -4,12 +4,9 @@ import { OPPONENT, SELF, placeGameObjects } from "../abstract.test";
 
 it("registry", () => {
   const nsid = "card.leader.agent:pok/emissary-taivra";
-  expect(TI4.unitModifierRegistry.getByNsid(nsid)).toBeDefined();
-});
-
-it("registry (alliance)", () => {
-  const nsid = "card.alliance:pok/yin";
-  expect(TI4.unitModifierRegistry.getByNsid(nsid)).toBeDefined();
+  expect(TI4.unitModifierRegistry.getByNsid(nsid)?.getName()).toBe(
+    "Emissary Taivra"
+  );
 });
 
 it("emissary-taivra (active)", () => {

@@ -6,7 +6,7 @@ import { OPPONENT, placeGameObjects, SELF } from "../abstract.test";
 
 it("2ram (registry)", () => {
   const nsid = "card.leader.commander:pok/2ram";
-  expect(TI4.unitModifierRegistry.getByNsid(nsid)).toBeDefined();
+  expect(TI4.unitModifierRegistry.getByNsid(nsid)?.getName()).toBe("2Ram");
 });
 
 it("2ram", () => {
