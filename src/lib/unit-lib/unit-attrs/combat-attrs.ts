@@ -56,6 +56,16 @@ export class CombatAttrs {
     return this;
   }
 
+  addDice(delta: number): this {
+    this._dice += delta;
+    return this;
+  }
+
+  addExtraDice(delta: number): this {
+    this._extraDice += delta;
+    return this;
+  }
+
   getCrit(): number | undefined {
     return this._crit;
   }

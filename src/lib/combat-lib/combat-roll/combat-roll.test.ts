@@ -10,6 +10,7 @@ import { CardUtil, DiceParams, DiceResult } from "ttpg-darrell";
 import { CombatAttrs } from "../../unit-lib/unit-attrs/combat-attrs";
 import {
   _UnitRollsSummary,
+  BestUnitWithCombatAttrs,
   CombatRoll,
   CombatRollParams,
   CombatRollPerPlayerData,
@@ -558,7 +559,7 @@ it("applyUnitPlastic (assign units)", () => {
   ]);
 });
 
-it("bestHitCombatAttrs", () => {
+it("bestHitUnitWithCombatAttrs", () => {
   const combatRoll: CombatRoll = new CombatRoll({
     rollType: "spaceCombat",
     hex: "<0,0,0>",
@@ -567,8 +568,8 @@ it("bestHitCombatAttrs", () => {
   });
   combatRoll.self.overrideUnitCountHex.set("carrier", 1);
   combatRoll.self.overrideUnitCountHex.set("dreadnought", 1);
-  const best: { unit: UnitType; combatAttrs: CombatAttrs } | undefined =
-    combatRoll.bestHitCombatAttrs();
+  const best: BestUnitWithCombatAttrs | undefined =
+    combatRoll.bestHitUnitWithCombatAttrs();
   expect(best?.unit).toBe("dreadnought");
   expect(best?.combatAttrs.getHit()).toBe(5);
 });
@@ -580,8 +581,8 @@ it("bestHitCombatAttrs (none)", () => {
     activatingPlayerSlot: 1,
     rollingPlayerSlot: 2,
   });
-  const best: { unit: UnitType; combatAttrs: CombatAttrs } | undefined =
-    combatRoll.bestHitCombatAttrs();
+  const best: BestUnitWithCombatAttrs | undefined =
+    combatRoll.bestHitUnitWithCombatAttrs();
   expect(best).toBeUndefined();
 });
 

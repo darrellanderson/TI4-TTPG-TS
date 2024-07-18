@@ -37,3 +37,6 @@ add("pok", BrotherOmar);
 
 import { EmissaryTaivra } from "./unit-modifiers/pok/emissary-taivra";
 add("pok", EmissaryTaivra);
+
+import { EvelynDelouis } from "./unit-modifiers/pok/evelyn-delouis";
+add("pok", EvelynDelouis);

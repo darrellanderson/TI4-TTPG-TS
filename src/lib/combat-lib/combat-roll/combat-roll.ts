@@ -49,6 +49,11 @@ export type CombatRollParams = {
   rollingPlayerSlot: number;
 };
 
+export type BestUnitWithCombatAttrs = {
+  unit: UnitType;
+  combatAttrs: CombatAttrs;
+};
+
 export type _UnitRollsSummary = {
   hits: number;
   diceWithHitsCritsAndRerolls: Array<string>;
@@ -426,9 +431,7 @@ export class CombatRoll {
     return this;
   }
 
-  public bestHitCombatAttrs():
-    | { unit: UnitType; combatAttrs: CombatAttrs }
-    | undefined {
+  public bestHitUnitWithCombatAttrs(): BestUnitWithCombatAttrs | undefined {
     const unitToCombatAttrs: Map<UnitType, CombatAttrs> =
       this._getUnitToCombatAttrs();
     let bestUnit: UnitType | undefined = undefined;

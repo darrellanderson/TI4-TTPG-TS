@@ -1,5 +1,8 @@
 import { CombatAttrs } from "../../../unit-attrs/combat-attrs";
-import { CombatRoll } from "../../../../combat-lib/combat-roll/combat-roll";
+import {
+  BestUnitWithCombatAttrs,
+  CombatRoll,
+} from "../../../../combat-lib/combat-roll/combat-roll";
 import { UnitModifierSchemaType } from "../../../schema/unit-modifier-schema";
 
 export const EvelynDelouis: UnitModifierSchemaType = {
@@ -12,27 +15,11 @@ export const EvelynDelouis: UnitModifierSchemaType = {
     return combatRoll.getRollType() === "groundCombat";
   },
   apply: (combatRoll: CombatRoll): void => {
-    const commandTokenLib = new CommandTokenLib();
-    const playerSlotToCommandTokenAllocations: Map<
-      number,
-      CommandTokenAllocation
-    > = commandTokenLib.getPlayerSlotToCommandTokenAllocations();
-    const commandTokenAllocation: CommandTokenAllocation | undefined =
-      playerSlotToCommandTokenAllocations.get(combatRoll.self.playerSlot);
-    if (commandTokenAllocation) {
-      const fleetTokens: Array<GameObject> = commandTokenAllocation.fleet;
-      for (const fleetToken of fleetTokens) {
-        if (
-          fleetToken.getOwningPlayerSlot() === combatRoll.opponent.playerSlot
-        ) {
-          const combatAttrs: CombatAttrs | undefined =
-            combatRoll.self.unitAttrsSet
-              .getOrThrow("flagship")
-              .getSpaceCombatOrThrow();
-          combatAttrs.addHit(-2);
-        }
-        break;
-      }
+    const unitWithCombatAttrs: BestUnitWithCombatAttrs | undefined =
+      combatRoll.bestHitUnitWithCombatAttrs();
+    if (unitWithCombatAttrs) {
+      const combatAttrs: CombatAttrs = unitWithCombatAttrs.combatAttrs;
+      combatAttrs.addExtraDice(1);
     }
   },
 };
