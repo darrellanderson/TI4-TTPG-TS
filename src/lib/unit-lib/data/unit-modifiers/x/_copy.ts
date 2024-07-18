@@ -8,7 +8,6 @@ import { UnitModifierSchemaType } from "../../../schema/unit-modifier-schema";
 export const X: UnitModifierSchemaType = {
   name: "",
   description: "",
-  isCombat: 0,
   owner: "",
   priority: "",
   triggers: [],
