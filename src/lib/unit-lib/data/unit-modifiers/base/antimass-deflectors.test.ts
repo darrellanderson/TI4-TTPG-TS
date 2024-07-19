@@ -2,7 +2,7 @@ import { CombatRoll } from "../../../../combat-lib/combat-roll/combat-roll";
 import { OPPONENT, placeGameObjects, SELF } from "../abstract.test";
 
 it("registry", () => {
-  const nsid = "card.technology:base/antimass-deflectors";
+  const nsid = "card.technology.blue:base/antimass-deflectors";
   expect(TI4.unitModifierRegistry.getByNsid(nsid)).toBeDefined();
 });
 
@@ -21,7 +21,7 @@ it("antimass-deflectors (spaceCannonOffense)", () => {
   ).toBe(6);
 
   placeGameObjects({
-    opponent: ["card.technology:base/antimass-deflectors"],
+    opponent: ["card.technology.blue:base/antimass-deflectors"],
   });
   combatRoll = CombatRoll.createCooked({
     rollType: "spaceCannonOffense",
@@ -50,7 +50,7 @@ it("antimass-deflectors (spaceCannonDefense)", () => {
   ).toBe(6);
 
   placeGameObjects({
-    opponent: ["card.technology:base/antimass-deflectors"],
+    opponent: ["card.technology.blue:base/antimass-deflectors"],
   });
   combatRoll = CombatRoll.createCooked({
     rollType: "spaceCannonDefense",

@@ -8,7 +8,13 @@ import { UnitModifierSchemaType } from "../../../schema/unit-modifier-schema";
 export const AntimassDeflectors: UnitModifierSchemaType = {
   name: "Antimass Deflectors",
   description: "-1 to all SPACE CANNON rolls",
-  triggers: [{ cardClass: "technology", nsidName: "antimass-deflectors" }],
+  triggers: [
+    {
+      cardClass: "technology",
+      nsidName: "antimass-deflectors",
+      techClass: "blue",
+    },
+  ],
   owner: "opponent",
   priority: "adjust",
   applies: (combatRoll: CombatRoll): boolean => {

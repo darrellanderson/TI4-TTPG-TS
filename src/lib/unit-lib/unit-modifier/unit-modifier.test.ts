@@ -1,93 +1,132 @@
 import { CombatRoll } from "../../combat-lib/combat-roll/combat-roll";
 import {
-  UnitModifierCardClassType,
   UnitModifierPriorityType,
   UnitModifierTriggerType,
 } from "../schema/unit-modifier-schema";
 import { UnitModifier } from "./unit-modifier";
 
 it("static schemaToNsid", () => {
-  const makeTrigger = (
-    cardClass: UnitModifierCardClassType
-  ): UnitModifierTriggerType => {
-    return {
-      cardClass,
-      nsidName: "my-nsid-name",
-    };
-  };
   let trigger: UnitModifierTriggerType;
 
-  trigger = makeTrigger("action");
+  trigger = { cardClass: "action", nsidName: "my-nsid-name" };
   expect(UnitModifier.schemaTriggerToNsid("my-source", trigger)).toBe(
     "card.action:my-source/my-nsid-name"
   );
 
-  trigger = makeTrigger("agenda");
+  trigger = { cardClass: "agenda", nsidName: "my-nsid-name" };
   expect(UnitModifier.schemaTriggerToNsid("my-source", trigger)).toBe(
     "card.agenda:my-source/my-nsid-name"
   );
 
-  trigger = makeTrigger("agent");
+  trigger = {
+    cardClass: "agent",
+    nsidName: "my-nsid-name",
+  };
   expect(UnitModifier.schemaTriggerToNsid("my-source", trigger)).toBe(
     "card.leader.agent:my-source/my-nsid-name"
   );
 
-  trigger = makeTrigger("alliance");
+  trigger = {
+    cardClass: "alliance",
+    nsidName: "my-nsid-name",
+  };
   expect(UnitModifier.schemaTriggerToNsid("my-source", trigger)).toBe(
     "card.alliance:my-source/my-nsid-name"
   );
 
-  trigger = makeTrigger("commander");
+  trigger = {
+    cardClass: "commander",
+    nsidName: "my-nsid-name",
+  };
   expect(UnitModifier.schemaTriggerToNsid("my-source", trigger)).toBe(
     "card.leader.commander:my-source/my-nsid-name"
   );
 
-  trigger = makeTrigger("flagship");
+  trigger = {
+    cardClass: "flagship",
+    nsidName: "my-nsid-name",
+  };
   expect(UnitModifier.schemaTriggerToNsid("my-source", trigger)).toBe(
     "flagship:my-source/my-nsid-name"
   );
 
-  trigger = makeTrigger("hero");
+  trigger = {
+    cardClass: "hero",
+    nsidName: "my-nsid-name",
+  };
   expect(UnitModifier.schemaTriggerToNsid("my-source", trigger)).toBe(
     "card.leader.hero:my-source/my-nsid-name"
   );
 
-  trigger = makeTrigger("faction-ability");
+  trigger = {
+    cardClass: "faction-ability",
+    nsidName: "my-nsid-name",
+  };
   expect(UnitModifier.schemaTriggerToNsid("my-source", trigger)).toBe(
     "faction-ability:my-source/my-nsid-name"
   );
 
-  trigger = makeTrigger("legendary");
+  trigger = { cardClass: "legendary", nsidName: "my-nsid-name" };
   expect(UnitModifier.schemaTriggerToNsid("my-source", trigger)).toBe(
     "card.legendary-planet:my-source/my-nsid-name"
   );
 
-  trigger = makeTrigger("mech");
+  trigger = {
+    cardClass: "mech",
+    nsidName: "my-nsid-name",
+  };
   expect(UnitModifier.schemaTriggerToNsid("my-source", trigger)).toBe(
     "card.leader.mech:my-source/my-nsid-name"
   );
 
-  trigger = makeTrigger("promissory");
+  trigger = {
+    cardClass: "promissory",
+    nsidName: "my-nsid-name",
+  };
   expect(UnitModifier.schemaTriggerToNsid("my-source", trigger)).toBe(
     "card.promissory:my-source/my-nsid-name"
   );
 
-  trigger = makeTrigger("relic");
+  trigger = { cardClass: "relic", nsidName: "my-nsid-name" };
   expect(UnitModifier.schemaTriggerToNsid("my-source", trigger)).toBe(
     "card.relic:my-source/my-nsid-name"
   );
 
-  trigger = makeTrigger("technology");
+  trigger = {
+    cardClass: "technology",
+    nsidName: "my-nsid-name",
+    techClass: "blue",
+  };
   expect(UnitModifier.schemaTriggerToNsid("my-source", trigger)).toBe(
-    "card.technology:my-source/my-nsid-name"
+    "card.technology.blue:my-source/my-nsid-name"
   );
 
   trigger = {
+    cardClass: "technology",
     nsidName: "my-nsid-name",
+    techClass: "green",
   };
-  expect(
-    UnitModifier.schemaTriggerToNsid("my-source", trigger)
-  ).toBeUndefined();
+  expect(UnitModifier.schemaTriggerToNsid("my-source", trigger)).toBe(
+    "card.technology.green:my-source/my-nsid-name"
+  );
+
+  trigger = {
+    cardClass: "technology",
+    nsidName: "my-nsid-name",
+    techClass: "red",
+  };
+  expect(UnitModifier.schemaTriggerToNsid("my-source", trigger)).toBe(
+    "card.technology.red:my-source/my-nsid-name"
+  );
+
+  trigger = {
+    cardClass: "technology",
+    nsidName: "my-nsid-name",
+    techClass: "unit-upgrade",
+  };
+  expect(UnitModifier.schemaTriggerToNsid("my-source", trigger)).toBe(
+    "card.technology.unit-upgrade:my-source/my-nsid-name"
+  );
 });
 
 it("static sortByApplyOrder", () => {

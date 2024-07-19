@@ -20,10 +20,16 @@ export const UnitModifierCardClass = z
   .readonly();
 export type UnitModifierCardClassType = z.infer<typeof UnitModifierCardClass>;
 
+export const UnitModifierTechClass = z
+  .enum(["blue", "green", "red", "unit-upgrade"])
+  .readonly();
+export type UnitModifierTechClassType = z.infer<typeof UnitModifierTechClass>;
+
 export const UnitModifierTrigger = z
   .object({
-    cardClass: UnitModifierCardClass.optional(),
+    cardClass: UnitModifierCardClass,
     nsidName: NsidNameSchema,
+    techClass: UnitModifierTechClass.optional(),
   })
   .strict()
   .readonly();

@@ -12,7 +12,7 @@ export class UnitModifier {
   public static schemaTriggerToNsid(
     source: string,
     trigger: UnitModifierTriggerType
-  ): string | undefined {
+  ): string {
     switch (trigger.cardClass) {
       case "action":
         return `card.action:${source}/${trigger.nsidName}`;
@@ -39,9 +39,8 @@ export class UnitModifier {
       case "relic":
         return `card.relic:${source}/${trigger.nsidName}`;
       case "technology":
-        return `card.technology:${source}/${trigger.nsidName}`;
+        return `card.technology.${trigger.techClass}:${source}/${trigger.nsidName}`;
     }
-    return undefined;
   }
 
   static sortByApplyOrder(modifiers: Array<UnitModifier>): Array<UnitModifier> {

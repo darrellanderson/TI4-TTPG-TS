@@ -87,7 +87,7 @@ it("load (invalid)", () => {
       {
         name: "my-name",
         description: "my-description",
-        triggers: [{ nsidName: "@@invalid" }],
+        triggers: [{ cardClass: "action", nsidName: "@@invalid" }],
         owner: "self",
         priority: "mutate",
         applies: (x: string): boolean => {
