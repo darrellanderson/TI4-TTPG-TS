@@ -55,3 +55,6 @@ add("pok", StrikeWingAbuscade);
 
 import { Supercharge } from "./unit-modifiers/pok/supercharge";
 add("pok", Supercharge);
+
+import { TaZern } from "./unit-modifiers/pok/ta-zern";
+add("pok", TaZern);
