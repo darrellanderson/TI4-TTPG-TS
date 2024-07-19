@@ -167,25 +167,30 @@ it("produceQuantityDoesNotCountAgainstProductionLimits", () => {
   const unitAttrs = new UnitAttrs({
     name: "my-name",
     unit: "infantry",
-    produceQuantityDoesNotCountAgainstProductionLimits: 2,
   });
   expect(
     unitAttrs.getProduceQuantityDoesNotCountAgainstProductionLimits()
-  ).toBe(2);
+  ).toBe(0);
 
   unitAttrs.setProduceQuantityDoesNotCountAgainstProductionLimits(3);
   expect(
     unitAttrs.getProduceQuantityDoesNotCountAgainstProductionLimits()
   ).toBe(3);
+});
 
-  unitAttrs.applyOverride({
+it("sharedProduceQuantityDoesNotCountAgainstProductionLimits", () => {
+  const unitAttrs = new UnitAttrs({
     name: "my-name",
     unit: "infantry",
-    produceQuantityDoesNotCountAgainstProductionLimits: 4,
   });
   expect(
-    unitAttrs.getProduceQuantityDoesNotCountAgainstProductionLimits()
-  ).toBe(4);
+    unitAttrs.getSharedProduceQuantityDoesNotCountAgainstProductionLimits()
+  ).toBe(0);
+
+  unitAttrs.setSharedProduceQuantityDoesNotCountAgainstProductionLimits(3);
+  expect(
+    unitAttrs.getSharedProduceQuantityDoesNotCountAgainstProductionLimits()
+  ).toBe(3);
 });
 
 it("diceColor", () => {

@@ -58,3 +58,6 @@ add("pok", Supercharge);
 
 import { TaZern } from "./unit-modifiers/pok/ta-zern";
 add("pok", TaZern);
+
+import { ThatWhichMoldsFlesh } from "./unit-modifiers/pok/that-which-molds-flesh";
+add("pok", ThatWhichMoldsFlesh);
