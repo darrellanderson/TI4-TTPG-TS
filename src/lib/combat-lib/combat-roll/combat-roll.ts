@@ -459,7 +459,7 @@ export class CombatRoll {
 
   public bestHitUnitWithCombatAttrs(): BestUnitWithCombatAttrs | undefined {
     const unitToCombatAttrs: Map<UnitType, CombatAttrs> =
-      this._getUnitToCombatAttrs();
+      this._getUnitToCombatAttrs(); // the current roll type
     let bestUnit: UnitType | undefined = undefined;
     let bestCombatAttrs: CombatAttrs | undefined = undefined;
     let bestHit: number = Number.MAX_SAFE_INTEGER;

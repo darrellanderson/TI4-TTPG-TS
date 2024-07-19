@@ -49,3 +49,6 @@ add("pok", NavarchFeng);
 
 import { RickarRickani } from "./unit-modifiers/pok/rickar-rickani";
 add("pok", RickarRickani);
+
+import { StrikeWingAbuscade } from "./unit-modifiers/pok/strike-wing-ambuscade";
+add("pok", StrikeWingAbuscade);
