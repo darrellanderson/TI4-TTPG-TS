@@ -61,3 +61,6 @@ add("pok", TaZern);
 
 import { ThatWhichMoldsFlesh } from "./unit-modifiers/pok/that-which-molds-flesh";
 add("pok", ThatWhichMoldsFlesh);
+
+import { TheCavalry } from "./unit-modifiers/pok/the-cavalry";
+add("pok", TheCavalry);
