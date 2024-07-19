@@ -7,7 +7,8 @@ import { UnitModifierSchemaType } from "../../../schema/unit-modifier-schema";
 
 export const X: UnitModifierSchemaType = {
   name: "",
-  description: "",
+  description:
+    "+1 die to a unit ability (anti-fighter barrage, bombardment, space cannon)",
   owner: "",
   priority: "",
   triggers: [],

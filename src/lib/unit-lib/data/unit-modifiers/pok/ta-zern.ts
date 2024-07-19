@@ -7,7 +7,7 @@ import { UnitModifierSchemaType } from "../../../schema/unit-modifier-schema";
 
 export const X: UnitModifierSchemaType = {
   name: "",
-  description: "",
+  description: "You may reroll any dice (when active will reroll all misses)",
   owner: "",
   priority: "",
   triggers: [],

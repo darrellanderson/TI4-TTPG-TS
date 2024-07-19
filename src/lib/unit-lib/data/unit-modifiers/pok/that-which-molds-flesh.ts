@@ -7,7 +7,8 @@ import { UnitModifierSchemaType } from "../../../schema/unit-modifier-schema";
 
 export const X: UnitModifierSchemaType = {
   name: "",
-  description: "",
+  description:
+    "When producing Infantry and/or Fighters, up to 2 do not count against the production limit",
   owner: "",
   priority: "",
   triggers: [],

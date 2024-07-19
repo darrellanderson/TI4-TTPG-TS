@@ -1,4 +1,3 @@
-import { CombatAttrs } from "../../../unit-attrs/combat-attrs";
 import {
   BestUnitWithCombatAttrs,
   CombatRoll,

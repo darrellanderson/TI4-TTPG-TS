@@ -7,7 +7,7 @@ import { UnitModifierSchemaType } from "../../../schema/unit-modifier-schema";
 
 export const X: UnitModifierSchemaType = {
   name: "",
-  description: "",
+  description: "SPACE CANNON 5(x3)",
   owner: "",
   priority: "",
   triggers: [],

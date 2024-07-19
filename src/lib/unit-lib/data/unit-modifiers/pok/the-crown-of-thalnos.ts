@@ -7,7 +7,8 @@ import { UnitModifierSchemaType } from "../../../schema/unit-modifier-schema";
 
 export const X: UnitModifierSchemaType = {
   name: "",
-  description: "",
+  description:
+    "Apply +1 to COMBAT rolls, reroll misses but must destroy any units that do not produce at least one hit",
   owner: "",
   priority: "",
   triggers: [],
