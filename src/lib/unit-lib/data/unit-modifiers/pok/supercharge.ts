@@ -11,10 +11,21 @@ export const Supercharge: UnitModifierSchemaType = {
   owner: "self",
   priority: "adjust",
   isActiveIdle: true,
-  triggers: [{ cardClass: "technology", nsidName: "supercharge" }],
+  triggers: [{ cardClass: "technology.red", nsidName: "supercharge" }],
   applies: (combatRoll: CombatRoll): boolean => {
     const rollType: CombatRollType = combatRoll.getRollType();
     return rollType === "spaceCombat" || rollType === "groundCombat";
   },
-  apply: (combatRoll: CombatRoll): void => {},
+  apply: (combatRoll: CombatRoll): void => {
+    for (const unitAttrs of combatRoll.self.unitAttrsSet.getAll()) {
+      const groundCombat: CombatAttrs | undefined = unitAttrs.getGroundCombat();
+      if (groundCombat) {
+        groundCombat.addHit(-1);
+      }
+      const spaceCombat: CombatAttrs | undefined = unitAttrs.getSpaceCombat();
+      if (spaceCombat) {
+        spaceCombat.addHit(-1);
+      }
+    }
+  },
 };

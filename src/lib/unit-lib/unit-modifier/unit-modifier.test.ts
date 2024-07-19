@@ -93,36 +93,32 @@ it("static schemaToNsid", () => {
   );
 
   trigger = {
-    cardClass: "technology",
+    cardClass: "technology.blue",
     nsidName: "my-nsid-name",
-    techClass: "blue",
   };
   expect(UnitModifier.schemaTriggerToNsid("my-source", trigger)).toBe(
     "card.technology.blue:my-source/my-nsid-name"
   );
 
   trigger = {
-    cardClass: "technology",
+    cardClass: "technology.green",
     nsidName: "my-nsid-name",
-    techClass: "green",
   };
   expect(UnitModifier.schemaTriggerToNsid("my-source", trigger)).toBe(
     "card.technology.green:my-source/my-nsid-name"
   );
 
   trigger = {
-    cardClass: "technology",
+    cardClass: "technology.red",
     nsidName: "my-nsid-name",
-    techClass: "red",
   };
   expect(UnitModifier.schemaTriggerToNsid("my-source", trigger)).toBe(
     "card.technology.red:my-source/my-nsid-name"
   );
 
   trigger = {
-    cardClass: "technology",
+    cardClass: "technology.unit-upgrade",
     nsidName: "my-nsid-name",
-    techClass: "unit-upgrade",
   };
   expect(UnitModifier.schemaTriggerToNsid("my-source", trigger)).toBe(
     "card.technology.unit-upgrade:my-source/my-nsid-name"

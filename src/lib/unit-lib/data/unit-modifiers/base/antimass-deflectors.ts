@@ -10,9 +10,8 @@ export const AntimassDeflectors: UnitModifierSchemaType = {
   description: "-1 to all SPACE CANNON rolls",
   triggers: [
     {
-      cardClass: "technology",
+      cardClass: "technology.blue",
       nsidName: "antimass-deflectors",
-      techClass: "blue",
     },
   ],
   owner: "opponent",

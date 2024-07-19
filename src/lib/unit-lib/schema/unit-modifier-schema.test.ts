@@ -11,7 +11,7 @@ it("parse", () => {
     priority: "mutate",
     triggers: [
       {
-        cardClass: "technology",
+        cardClass: "technology.red",
         nsidName: "my-nsid-name",
       },
     ],

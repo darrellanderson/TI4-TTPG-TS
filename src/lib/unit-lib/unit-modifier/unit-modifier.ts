@@ -15,31 +15,26 @@ export class UnitModifier {
   ): string {
     switch (trigger.cardClass) {
       case "action":
-        return `card.action:${source}/${trigger.nsidName}`;
       case "agenda":
-        return `card.agenda:${source}/${trigger.nsidName}`;
-      case "agent":
-        return `card.leader.agent:${source}/${trigger.nsidName}`;
       case "alliance":
-        return `card.alliance:${source}/${trigger.nsidName}`;
+      case "promissory":
+      case "relic":
+      case "technology.blue":
+      case "technology.green":
+      case "technology.red":
+      case "technology.unit-upgrade":
+        return `card.${trigger.cardClass}:${source}/${trigger.nsidName}`;
+      case "agent":
       case "commander":
-        return `card.leader.commander:${source}/${trigger.nsidName}`;
+      case "hero":
+      case "mech":
+        return `card.leader.${trigger.cardClass}:${source}/${trigger.nsidName}`;
       case "faction-ability":
         return `faction-ability:${source}/${trigger.nsidName}`;
       case "flagship":
         return `flagship:${source}/${trigger.nsidName}`;
-      case "hero":
-        return `card.leader.hero:${source}/${trigger.nsidName}`;
       case "legendary":
         return `card.legendary-planet:${source}/${trigger.nsidName}`;
-      case "mech":
-        return `card.leader.mech:${source}/${trigger.nsidName}`;
-      case "promissory":
-        return `card.promissory:${source}/${trigger.nsidName}`;
-      case "relic":
-        return `card.relic:${source}/${trigger.nsidName}`;
-      case "technology":
-        return `card.technology.${trigger.techClass}:${source}/${trigger.nsidName}`;
     }
   }
 

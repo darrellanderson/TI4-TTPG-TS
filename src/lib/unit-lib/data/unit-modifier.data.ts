@@ -52,3 +52,6 @@ add("pok", RickarRickani);
 
 import { StrikeWingAbuscade } from "./unit-modifiers/pok/strike-wing-ambuscade";
 add("pok", StrikeWingAbuscade);
+
+import { Supercharge } from "./unit-modifiers/pok/supercharge";
+add("pok", Supercharge);
