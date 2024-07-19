@@ -10,11 +10,13 @@ it("load (empty)", () => {
 });
 
 it("load (with data)", () => {
+  const nsid = "card.technology.unit-upgrade:my-source/my-nsid-name";
+
   const registry = new UnitAttrsRegistry();
   expect(registry.rawByUnit("infantry")).toBeUndefined();
-  expect(registry.rawByNsidName("my-nsid-name")).toBeUndefined();
+  expect(registry.rawByNsid(nsid)).toBeUndefined();
 
-  registry.load("source", [
+  registry.load("my-source", [
     {
       name: "my-base-name",
       unit: "infantry",
@@ -26,7 +28,7 @@ it("load (with data)", () => {
     },
   ]);
   expect(registry.rawByUnit("infantry")?.name).toBe("my-base-name");
-  expect(registry.rawByNsidName("my-nsid-name")?.name).toBe("my-override-name");
+  expect(registry.rawByNsid(nsid)?.name).toBe("my-override-name");
 });
 
 it("load (invalid schema)", () => {
@@ -48,13 +50,11 @@ it("loadDefaultData", () => {
 
   const registry = new UnitAttrsRegistry();
   expect(registry.rawByUnit("fighter")).toBeUndefined();
-  expect(registry.rawByNsidName(nsidName)).toBeUndefined();
   expect(registry.rawByNsid(nsid)).toBeUndefined();
   expect(registry.getAllBaseAttrs()).toHaveLength(0);
   expect(registry.rawByUnit("mech")).toBeUndefined();
 
   registry.loadDefaultData();
-  expect(registry.rawByNsidName(nsidName)).toBeDefined();
   expect(registry.rawByNsid(nsid)).toBeDefined();
   expect(registry.getAllBaseAttrs()).not.toHaveLength(0);
   expect(registry.rawByUnit("mech")).toBeDefined();

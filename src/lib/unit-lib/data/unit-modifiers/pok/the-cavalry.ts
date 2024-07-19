@@ -3,7 +3,10 @@ import {
   CombatRollType,
 } from "../../../../combat-lib/combat-roll/combat-roll";
 import { UnitAttrs } from "../../../unit-attrs/unit-attrs";
-import { UnitAttrsSchemaType } from "../../../schema/unit-attrs-schema";
+import {
+  UnitAttrsSchemaType,
+  UnitType,
+} from "../../../schema/unit-attrs-schema";
 import { UnitModifierSchemaType } from "../../../schema/unit-modifier-schema";
 import { Find } from "ttpg-darrell";
 
@@ -20,24 +23,26 @@ export const TheCavalry: UnitModifierSchemaType = {
   },
   apply: (combatRoll: CombatRoll): void => {
     const memoria1: UnitAttrsSchemaType | undefined =
-      TI4.unitAttrsRegistry.rawByNsidName("flagship:pok/memoria");
+      TI4.unitAttrsRegistry.rawByNsid("flagship:pok/memoria");
     const memoria2: UnitAttrsSchemaType | undefined =
-      TI4.unitAttrsRegistry.rawByNsidName(
+      TI4.unitAttrsRegistry.rawByNsid(
         "card.technology.unit-upgrade:pok/memoria-2"
       );
 
     console.log("memoria", memoria1 !== undefined, memoria2 !== undefined);
 
     if (memoria1 && memoria2) {
+      let name: string = "The Cavalry";
       let memoriaWhich: UnitAttrsSchemaType = memoria1;
       const memoria2Nsid = UnitAttrs.schemaToNsid("pok", memoria2);
       if (new Find().findCard(memoria2Nsid) !== undefined) {
+        name = "The Cavalry II";
         memoriaWhich = memoria2;
       }
       const cavalry: UnitAttrsSchemaType = {
         ...memoriaWhich,
-        name: "The Cavalry",
-        nsidName: "the-cavalry",
+        name,
+        unit: "the-cavalry" as UnitType,
       };
       combatRoll.self.addSyntheticUnit(cavalry, 1);
     }

@@ -7,15 +7,15 @@ import {
   UnitType,
 } from "../../../schema/unit-attrs-schema";
 
-it("memoria1", () => {
+it("memoria-1", () => {
   const memoria1: UnitAttrsSchemaType | undefined =
-    TI4.unitAttrsRegistry.rawByNsidName("flagship:pok/memoria");
+    TI4.unitAttrsRegistry.rawByNsid("flagship:pok/memoria");
   expect(memoria1).toBeDefined();
 });
 
-it("memoria2", () => {
+it("memoria-2", () => {
   const memoria2: UnitAttrsSchemaType | undefined =
-    TI4.unitAttrsRegistry.rawByNsidName(
+    TI4.unitAttrsRegistry.rawByNsid(
       "card.technology.unit-upgrade:pok/memoria-2"
     );
   expect(memoria2).toBeDefined();
@@ -50,4 +50,27 @@ it("modifier", () => {
   });
   expect(combatRoll.getUnitModifierNames()).toEqual(["The Cavalry"]);
   expect(combatRoll.self.getCount("the-cavalry" as UnitType)).toBe(1);
+  const cavalry: UnitAttrs = combatRoll.self.unitAttrsSet.getOrThrow(
+    "the-cavalry" as UnitType
+  );
+  expect(cavalry.getName()).toBe("The Cavalry");
+});
+
+it("modifier (memoria-2)", () => {
+  placeGameObjects({
+    self: ["card.promissory:pok/the-cavalry"],
+    any: ["card.technology.unit-upgrade:pok/memoria-2"],
+  });
+  const combatRoll: CombatRoll = CombatRoll.createCooked({
+    rollType: "spaceCombat",
+    hex: "<0,0,0>",
+    activatingPlayerSlot: OPPONENT,
+    rollingPlayerSlot: SELF,
+  });
+  expect(combatRoll.getUnitModifierNames()).toEqual(["The Cavalry"]);
+  expect(combatRoll.self.getCount("the-cavalry" as UnitType)).toBe(1);
+  const cavalry: UnitAttrs = combatRoll.self.unitAttrsSet.getOrThrow(
+    "the-cavalry" as UnitType
+  );
+  expect(cavalry.getName()).toBe("The Cavalry II");
 });

@@ -11,10 +11,8 @@ import { UnitAttrsSet } from "../unit-attrs-set/unit-attrs-set";
 export class UnitAttrsRegistry {
   private readonly _unitToBaseAttrs: Map<UnitType, UnitAttrsSchemaType> =
     new Map();
-  private readonly _nsidNameToOverrideAttrs: Map<string, UnitAttrsSchemaType> =
-    new Map();
 
-  // Same values as above, but indexed with complete NSID.
+  // Some "NSID"s aren't game objects, e.g. "flagship:pok/memoria".
   private readonly _nsidToOverrideAttrs: Map<string, UnitAttrsSchemaType> =
     new Map();
 
@@ -30,10 +28,6 @@ export class UnitAttrsRegistry {
 
   rawByUnit(unit: UnitType): UnitAttrsSchemaType | undefined {
     return this._unitToBaseAttrs.get(unit);
-  }
-
-  rawByNsidName(nsidName: string): UnitAttrsSchemaType | undefined {
-    return this._nsidNameToOverrideAttrs.get(nsidName);
   }
 
   rawByNsid(nsid: string): UnitAttrsSchemaType | undefined {
@@ -54,7 +48,6 @@ export class UnitAttrsRegistry {
       }
 
       if (unitAttrs.nsidName) {
-        this._nsidNameToOverrideAttrs.set(unitAttrs.nsidName, unitAttrs);
         const nsid: string = UnitAttrs.schemaToNsid(source, unitAttrs);
         this._nsidToOverrideAttrs.set(nsid, unitAttrs);
       } else {

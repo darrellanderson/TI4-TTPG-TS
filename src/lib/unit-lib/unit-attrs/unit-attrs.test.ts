@@ -21,6 +21,15 @@ it("static schemaToNsid (flagship)", () => {
   expect(nsid).toBe("flagship:my-source/my-nsid-name");
 });
 
+it("static schemaToNsid (flagship unit upgrade)", () => {
+  const nsid = UnitAttrs.schemaToNsid("my-source", {
+    name: "my-name-2",
+    unit: "flagship",
+    nsidName: "my-nsid-name-2",
+  });
+  expect(nsid).toBe("card.technology.unit-upgrade:my-source/my-nsid-name-2");
+});
+
 it("static schemaToNsid (mech)", () => {
   const nsid = UnitAttrs.schemaToNsid("my-source", {
     name: "my-name",
@@ -28,6 +37,15 @@ it("static schemaToNsid (mech)", () => {
     nsidName: "my-nsid-name",
   });
   expect(nsid).toBe("card.leader.mech:my-source/my-nsid-name");
+});
+
+it("static schemaToNsid (missing nsidName)", () => {
+  expect(() => {
+    const nsid = UnitAttrs.schemaToNsid("my-source", {
+      name: "my-name",
+      unit: "carrier",
+    });
+  }).toThrow();
 });
 
 it("static sortByOverrideOrder", () => {
