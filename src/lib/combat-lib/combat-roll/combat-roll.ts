@@ -33,6 +33,7 @@ import { UnitAttrsSet } from "../../unit-lib/unit-attrs-set/unit-attrs-set";
 import { UnitModifier } from "../../unit-lib/unit-modifier/unit-modifier";
 import { UnitModifierActiveIdle } from "../../unit-lib/unit-modifier/unit-modifier-active-idle";
 import { UnitPlastic } from "../../unit-lib/unit-plastic/unit-plastic";
+import { NsidNameSchemaType } from "lib/system-lib/schema/basic-types-schema";
 
 export type CombatRollType =
   | "antiFighterBarrage"
@@ -225,6 +226,84 @@ export class CombatRoll {
     const unitModifiers: Array<UnitModifier> = [];
     const skipContained: boolean = true;
 
+    // Faction flagship, abilities.
+    if (this.self.faction) {
+      const source: NsidNameSchemaType = this.self.faction.getSource();
+
+      // Faction abilities.
+      for (const ability of this.self.faction.getAbilityNsidNames()) {
+        const nsid = UnitModifier.schemaTriggerToNsid(source, {
+          cardClass: "faction-ability",
+          nsidName: ability,
+        });
+        const modifier: UnitModifier | undefined =
+          TI4.unitModifierRegistry.getByNsid(nsid);
+        if (
+          modifier &&
+          modifier.getOwner() === "self" &&
+          modifier.applies(this)
+        ) {
+          unitModifiers.push(modifier);
+        }
+      }
+
+      // Flagship.
+      for (const flagship of this.self.faction.getFlagshipNsidNames()) {
+        const nsid = UnitModifier.schemaTriggerToNsid(source, {
+          cardClass: "flagship",
+          nsidName: flagship,
+        });
+        const modifier: UnitModifier | undefined =
+          TI4.unitModifierRegistry.getByNsid(nsid);
+        if (
+          modifier &&
+          modifier.getOwner() === "self" &&
+          this.self.hasUnit("flagship") &&
+          modifier.applies(this)
+        ) {
+          unitModifiers.push(modifier);
+        }
+      }
+    }
+    if (this.opponent.faction) {
+      const source: NsidNameSchemaType = this.opponent.faction.getSource();
+
+      // Faction abilities.
+      for (const ability of this.opponent.faction.getAbilityNsidNames()) {
+        const nsid = UnitModifier.schemaTriggerToNsid(source, {
+          cardClass: "faction-ability",
+          nsidName: ability,
+        });
+        const modifier: UnitModifier | undefined =
+          TI4.unitModifierRegistry.getByNsid(nsid);
+        if (
+          modifier &&
+          modifier.getOwner() === "opponent" &&
+          modifier.applies(this)
+        ) {
+          unitModifiers.push(modifier);
+        }
+      }
+
+      // Flagship.
+      for (const flagship of this.opponent.faction.getFlagshipNsidNames()) {
+        const nsid = UnitModifier.schemaTriggerToNsid(source, {
+          cardClass: "flagship",
+          nsidName: flagship,
+        });
+        const modifier: UnitModifier | undefined =
+          TI4.unitModifierRegistry.getByNsid(nsid);
+        if (
+          modifier &&
+          modifier.getOwner() === "opponent" &&
+          this.opponent.hasUnit("flagship") &&
+          modifier.applies(this)
+        ) {
+          unitModifiers.push(modifier);
+        }
+      }
+    }
+
     // Control tokens on cards take precedence over cards being near players.
     // Find all control tokens early, reuse when asked.
     const controlTokens: Array<GameObject> = [];
@@ -246,6 +325,7 @@ export class CombatRoll {
       return -1;
     };
 
+    // Modifiers on table.
     for (const obj of world.getAllObjects(skipContained)) {
       const nsid: string = NSID.get(obj);
       const modifier: UnitModifier | undefined =
@@ -290,6 +370,7 @@ export class CombatRoll {
         }
       }
     }
+
     UnitModifier.sortByApplyOrder(unitModifiers);
     return unitModifiers;
   }

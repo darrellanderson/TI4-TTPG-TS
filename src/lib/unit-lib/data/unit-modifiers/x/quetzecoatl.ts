@@ -11,14 +11,17 @@ export const Quetzecoatl: UnitModifierSchemaType = {
   description:
     "Other players cannot use SPACE CANNON against your ships in this system",
   owner: "opponent",
-  priority: "mutate",
+  priority: "adjust", // mutate may add new space cannons
   triggers: [{ cardClass: "flagship", nsidName: "quetzecoatl" }],
   applies: (combatRoll: CombatRoll): boolean => {
     return combatRoll.getRollType() === "spaceCannonOffense";
   },
   apply: (combatRoll: CombatRoll): void => {
-    const flagship: UnitAttrs =
-      combatRoll.self.unitAttrsSet.getOrThrow("flagship");
-    flagship.setDisableSpaceCannonOffense(true);
+    for (const unitAttrs of combatRoll.opponent.unitAttrsSet.getAll()) {
+      const spaceCannon: CombatAttrs | undefined = unitAttrs.getSpaceCannon();
+      if (spaceCannon) {
+        unitAttrs.setDisableSpaceCannonOffense(true);
+      }
+    }
   },
 };
