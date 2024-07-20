@@ -216,6 +216,26 @@ export class CombatRoll {
         }
       }
     }
+
+    // Faction flagship.
+    let faction: Faction | undefined = undefined;
+    if (playerSlot === this.self.playerSlot) {
+      faction = this.self.faction;
+    } else if (playerSlot === this.opponent.playerSlot) {
+      faction = this.opponent.faction;
+    }
+    if (faction) {
+      const source: NsidNameSchemaType = faction.getSource();
+      for (const flagship of faction.getFlagshipNsidNames()) {
+        const nsid = `flagship:${source}/${flagship}`;
+        const attrs: UnitAttrsSchemaType | undefined =
+          TI4.unitAttrsRegistry.rawByNsid(nsid);
+        if (attrs) {
+          overrideAttrsArray.push(attrs);
+        }
+      }
+    }
+
     UnitAttrs.sortByOverrideOrder(overrideAttrsArray);
     return overrideAttrsArray;
   }
