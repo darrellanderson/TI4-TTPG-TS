@@ -190,6 +190,7 @@ export class CombatRoll {
   _findUnitAttrOverrides(playerSlot: number): Array<UnitAttrsSchemaType> {
     // Find unit upgrade cards owned by the player.
     const overrideAttrsArray: Array<UnitAttrsSchemaType> = [];
+
     const skipContained: boolean = true;
     for (const obj of world.getAllObjects(skipContained)) {
       const nsid: string = NSID.get(obj);
@@ -226,84 +227,6 @@ export class CombatRoll {
     const unitModifiers: Array<UnitModifier> = [];
     const skipContained: boolean = true;
 
-    // Faction flagship, abilities.
-    if (this.self.faction) {
-      const source: NsidNameSchemaType = this.self.faction.getSource();
-
-      // Faction abilities.
-      for (const ability of this.self.faction.getAbilityNsidNames()) {
-        const nsid = UnitModifier.schemaTriggerToNsid(source, {
-          cardClass: "faction-ability",
-          nsidName: ability,
-        });
-        const modifier: UnitModifier | undefined =
-          TI4.unitModifierRegistry.getByNsid(nsid);
-        if (
-          modifier &&
-          modifier.getOwner() === "self" &&
-          modifier.applies(this)
-        ) {
-          unitModifiers.push(modifier);
-        }
-      }
-
-      // Flagship.
-      for (const flagship of this.self.faction.getFlagshipNsidNames()) {
-        const nsid = UnitModifier.schemaTriggerToNsid(source, {
-          cardClass: "flagship",
-          nsidName: flagship,
-        });
-        const modifier: UnitModifier | undefined =
-          TI4.unitModifierRegistry.getByNsid(nsid);
-        if (
-          modifier &&
-          modifier.getOwner() === "self" &&
-          this.self.hasUnit("flagship") &&
-          modifier.applies(this)
-        ) {
-          unitModifiers.push(modifier);
-        }
-      }
-    }
-    if (this.opponent.faction) {
-      const source: NsidNameSchemaType = this.opponent.faction.getSource();
-
-      // Faction abilities.
-      for (const ability of this.opponent.faction.getAbilityNsidNames()) {
-        const nsid = UnitModifier.schemaTriggerToNsid(source, {
-          cardClass: "faction-ability",
-          nsidName: ability,
-        });
-        const modifier: UnitModifier | undefined =
-          TI4.unitModifierRegistry.getByNsid(nsid);
-        if (
-          modifier &&
-          modifier.getOwner() === "opponent" &&
-          modifier.applies(this)
-        ) {
-          unitModifiers.push(modifier);
-        }
-      }
-
-      // Flagship.
-      for (const flagship of this.opponent.faction.getFlagshipNsidNames()) {
-        const nsid = UnitModifier.schemaTriggerToNsid(source, {
-          cardClass: "flagship",
-          nsidName: flagship,
-        });
-        const modifier: UnitModifier | undefined =
-          TI4.unitModifierRegistry.getByNsid(nsid);
-        if (
-          modifier &&
-          modifier.getOwner() === "opponent" &&
-          this.opponent.hasUnit("flagship") &&
-          modifier.applies(this)
-        ) {
-          unitModifiers.push(modifier);
-        }
-      }
-    }
-
     // Control tokens on cards take precedence over cards being near players.
     // Find all control tokens early, reuse when asked.
     const controlTokens: Array<GameObject> = [];
@@ -325,9 +248,13 @@ export class CombatRoll {
       return -1;
     };
 
-    // Modifiers on table.
-    for (const obj of world.getAllObjects(skipContained)) {
-      const nsid: string = NSID.get(obj);
+    // Set owningPlayerSlot = -1 to look for control token or closest player.
+    // Requires an object be given!
+    const maybeAddModifier = (
+      nsid: string,
+      obj: GameObject | undefined,
+      owningPlayerSlot: number
+    ): void => {
       const modifier: UnitModifier | undefined =
         TI4.unitModifierRegistry.getByNsid(nsid);
       if (modifier) {
@@ -343,19 +270,25 @@ export class CombatRoll {
           );
         }
 
-        if (modifier.isActiveIdle() && !UnitModifierActiveIdle.isActive(obj)) {
+        if (
+          modifier.isActiveIdle() &&
+          obj &&
+          !UnitModifierActiveIdle.isActive(obj)
+        ) {
           useModifier = false;
         }
 
         if (useModifier) {
           // Control token takes precedence for ownership, otherwise closest player.
-          let owner: number = getControlTokenOwner(obj);
-          if (owner < 0) {
-            const pos: Vector = obj.getPosition();
-            owner = this._find.closestOwnedCardHolderOwner(pos);
+          if (obj) {
+            owningPlayerSlot = getControlTokenOwner(obj);
+            if (owningPlayerSlot < 0) {
+              const pos: Vector = obj.getPosition();
+              owningPlayerSlot = this._find.closestOwnedCardHolderOwner(pos);
+            }
           }
-          const isSelf: boolean = owner === selfSlot;
-          const isOpponent: boolean = owner === opponentSlot;
+          const isSelf: boolean = owningPlayerSlot === selfSlot;
+          const isOpponent: boolean = owningPlayerSlot === opponentSlot;
           const requireAny: boolean = modifier.getOwner() === "any";
           const requireSelf: boolean = modifier.getOwner() === "self";
           const requireOpponent: boolean = modifier.getOwner() === "opponent";
@@ -366,6 +299,39 @@ export class CombatRoll {
             (isOpponent && requireOpponent)
           ) {
             unitModifiers.push(modifier);
+          }
+        }
+      }
+    };
+
+    // Modifiers on table.
+    for (const obj of world.getAllObjects(skipContained)) {
+      const nsid: string = NSID.get(obj);
+      maybeAddModifier(nsid, obj, -1);
+    }
+
+    // Faction flagship, abilities.
+    const dataArray: Array<CombatRollPerPlayerData> = [
+      this.self,
+      this.opponent,
+    ];
+    for (const data of dataArray) {
+      if (data.faction) {
+        const source: NsidNameSchemaType = data.faction.getSource();
+        for (const ability of data.faction.getAbilityNsidNames()) {
+          const nsid = UnitModifier.schemaTriggerToNsid(source, {
+            cardClass: "faction-ability",
+            nsidName: ability,
+          });
+          maybeAddModifier(nsid, undefined, data.playerSlot);
+        }
+        for (const flagship of data.faction.getFlagshipNsidNames()) {
+          const nsid = UnitModifier.schemaTriggerToNsid(source, {
+            cardClass: "flagship",
+            nsidName: flagship,
+          });
+          if (data.hasUnit("flagship")) {
+            maybeAddModifier(nsid, undefined, data.playerSlot);
           }
         }
       }
