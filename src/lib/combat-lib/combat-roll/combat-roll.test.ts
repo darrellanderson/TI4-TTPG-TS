@@ -723,27 +723,6 @@ it("_pruneToUnitsClosestToPlanet", () => {
   expect(combatRoll.opponent.getCount("mech")).toBe(1);
 });
 
-it("_checkCancelSpaceCannonOffense", () => {
-  const combatRoll: CombatRoll = new CombatRoll({
-    rollType: "spaceCannonOffense",
-    hex: "<0,0,0>",
-    activatingPlayerSlot: 1,
-    rollingPlayerSlot: 2,
-  });
-  expect(combatRoll._checkCancelSpaceCannonOffense()).toBe(false);
-
-  // Apply disable to flagship, but there isn't one.
-  combatRoll.opponent.unitAttrsSet
-    .getOrThrow("flagship")
-    .setDisableSpaceCannonOffense(true);
-  expect(combatRoll._checkCancelSpaceCannonOffense()).toBe(false);
-
-  // Add a flagship.
-  combatRoll.opponent.overrideUnitCountHex.set("flagship", 1);
-  expect(combatRoll._checkCancelSpaceCannonOffense()).toBe(true);
-  expect(combatRoll.createDiceParamsArray()).toEqual([]);
-});
-
 it("_checkCancelBombardment", () => {
   const combatRoll: CombatRoll = new CombatRoll({
     rollType: "bombardment",

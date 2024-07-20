@@ -301,19 +301,27 @@ export class CombatRoll {
       let combatAttrs: CombatAttrs | undefined = undefined;
       switch (rollType) {
         case "antiFighterBarrage":
-          combatAttrs = unitAttrs.getAntiFighterBarrage();
+          if (!unitAttrs.getDisableAntiFighterBarrage()) {
+            combatAttrs = unitAttrs.getAntiFighterBarrage();
+          }
           break;
         case "bombardment":
-          combatAttrs = unitAttrs.getBombardment();
+          if (!unitAttrs.getDisableBombardment()) {
+            combatAttrs = unitAttrs.getBombardment();
+          }
           break;
         case "groundCombat":
           combatAttrs = unitAttrs.getGroundCombat();
           break;
         case "spaceCannonDefense":
-          combatAttrs = unitAttrs.getSpaceCannon();
+          if (!unitAttrs.getDisableSpaceCannonDefense()) {
+            combatAttrs = unitAttrs.getSpaceCannon();
+          }
           break;
         case "spaceCannonOffense":
-          combatAttrs = unitAttrs.getSpaceCannon();
+          if (!unitAttrs.getDisableSpaceCannonOffense()) {
+            combatAttrs = unitAttrs.getSpaceCannon();
+          }
           break;
         case "spaceCombat":
           combatAttrs = unitAttrs.getSpaceCombat();
