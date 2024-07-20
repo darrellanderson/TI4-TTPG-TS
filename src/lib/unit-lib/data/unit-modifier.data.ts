@@ -73,3 +73,6 @@ add("pok", TrrakanAunZulok);
 
 import { UlTheProgenitor } from "./unit-modifiers/pok/ul-the-progenitor";
 add("pok", UlTheProgenitor);
+
+import { ViscountUnlenn } from "./unit-modifiers/pok/viscount-unlenn";
+add("pok", ViscountUnlenn);

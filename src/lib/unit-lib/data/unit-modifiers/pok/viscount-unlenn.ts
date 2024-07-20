@@ -1,18 +1,23 @@
-import { CombatAttrs } from "../../../unit-attrs/combat-attrs";
 import {
+  BestUnitWithCombatAttrs,
   CombatRoll,
-  CombatRollType,
 } from "../../../../combat-lib/combat-roll/combat-roll";
 import { UnitModifierSchemaType } from "../../../schema/unit-modifier-schema";
 
-export const X: UnitModifierSchemaType = {
-  name: "",
+export const ViscountUnlenn: UnitModifierSchemaType = {
+  name: "Viscount Unlenn",
   description: "+1 die to a single SPACE COMBAT roll",
-  owner: "",
-  priority: "",
-  triggers: [],
+  owner: "self",
+  priority: "choose",
+  triggers: [{ cardClass: "agent", nsidName: "viscount-unlenn" }],
   applies: (combatRoll: CombatRoll): boolean => {
-    return false;
+    return combatRoll.getRollType() === "spaceCombat";
   },
-  apply: (combatRoll: CombatRoll): void => {},
+  apply: (combatRoll: CombatRoll): void => {
+    const attrs: BestUnitWithCombatAttrs | undefined =
+      combatRoll.bestHitUnitWithCombatAttrs();
+    if (attrs) {
+      attrs.combatAttrs.addExtraDice(1);
+    }
+  },
 };
