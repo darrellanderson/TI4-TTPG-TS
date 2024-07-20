@@ -5,14 +5,18 @@ import {
   UnitModifierSchemaType,
   UnitModifierTriggerType,
 } from "../schema/unit-modifier-schema";
+import { NsidNameSchemaType } from "lib/system-lib/schema/basic-types-schema";
 
 export class UnitModifier {
   private readonly _params: UnitModifierSchemaType;
 
   public static schemaTriggerToNsid(
-    source: string,
+    source: NsidNameSchemaType,
     trigger: UnitModifierTriggerType
   ): string {
+    if (trigger.overrideSource) {
+      source = trigger.overrideSource;
+    }
     switch (trigger.cardClass) {
       case "action":
       case "agenda":

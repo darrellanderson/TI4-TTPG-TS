@@ -8,6 +8,15 @@ import { UnitModifier } from "./unit-modifier";
 it("static schemaToNsid", () => {
   let trigger: UnitModifierTriggerType;
 
+  trigger = {
+    cardClass: "action",
+    nsidName: "my-nsid-name",
+    overrideSource: "my-override-source",
+  };
+  expect(UnitModifier.schemaTriggerToNsid("my-source", trigger)).toBe(
+    "card.action:my-override-source/my-nsid-name"
+  );
+
   trigger = { cardClass: "action", nsidName: "my-nsid-name" };
   expect(UnitModifier.schemaTriggerToNsid("my-source", trigger)).toBe(
     "card.action:my-source/my-nsid-name"

@@ -27,6 +27,7 @@ export const UnitModifierTrigger = z
   .object({
     cardClass: UnitModifierCardClass,
     nsidName: NsidNameSchema,
+    overrideSource: NsidNameSchema.optional(),
   })
   .strict()
   .readonly();

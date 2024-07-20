@@ -29,8 +29,6 @@ export const TheCavalry: UnitModifierSchemaType = {
         "card.technology.unit-upgrade:pok/memoria-2"
       );
 
-    console.log("memoria", memoria1 !== undefined, memoria2 !== undefined);
-
     if (memoria1 && memoria2) {
       let name: string = "The Cavalry";
       let memoriaWhich: UnitAttrsSchemaType = memoria1;
