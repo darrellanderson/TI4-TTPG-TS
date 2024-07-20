@@ -28,8 +28,16 @@ export class UnitAttrs {
 
   private _hasSustainDamage: boolean;
   private _hasPlanetaryShield: boolean;
+
   private _disablePlanetaryShield: boolean;
-  private _disableSpaceCannonOffsense: boolean;
+
+  // These are (currently) only available for unit modifiers to toggle,
+  // not in the initial constructor params.
+  private _disableAntiFighterBarrage: boolean = false;
+  private _disableBombardment: boolean = false; // different from planetary shield, outright disable always
+  private _disableSpaceCannonDefense: boolean = false;
+  private _disableSpaceCannonOffsense: boolean = false;
+  private _disableSustainDamage: boolean = false;
 
   private _antiFighterBarrage: CombatAttrs | undefined;
   private _bombardment: CombatAttrs | undefined;
@@ -86,8 +94,6 @@ export class UnitAttrs {
     this._hasSustainDamage = params.hasSustainDamage ?? false;
     this._hasPlanetaryShield = params.hasPlanetaryShield ?? false;
     this._disablePlanetaryShield = params.disablePlanetaryShield ?? false;
-    this._disableSpaceCannonOffsense =
-      params.disableSpaceCannonOffense ?? false;
 
     if (params.antiFighterBarrage) {
       this._antiFighterBarrage = new CombatAttrs(params.antiFighterBarrage);
@@ -128,9 +134,6 @@ export class UnitAttrs {
     }
     if (override.disablePlanetaryShield) {
       this._disablePlanetaryShield = true;
-    }
-    if (override.disableSpaceCannonOffense) {
-      this._disableSpaceCannonOffsense = true;
     }
     if (override.hasPlanetaryShield) {
       this._hasPlanetaryShield = true;
@@ -220,12 +223,28 @@ export class UnitAttrs {
     return this._diceColor ?? new Color(0, 0, 0);
   }
 
+  getDisableAntiFighterBarrage(): boolean {
+    return this._disableAntiFighterBarrage;
+  }
+
+  getDisableBombardment(): boolean {
+    return this._disableBombardment;
+  }
+
   getDisablePlanetaryShield(): boolean {
     return this._disablePlanetaryShield;
   }
 
+  getDisableSpaceCannonDefense(): boolean {
+    return this._disableSpaceCannonDefense;
+  }
+
   getDisableSpaceCannonOffense(): boolean {
     return this._disableSpaceCannonOffsense;
+  }
+
+  getDisableSustainDamage(): boolean {
+    return this._disableSustainDamage;
   }
 
   getGroundCombat(): CombatAttrs | undefined {
@@ -312,13 +331,33 @@ export class UnitAttrs {
     return this;
   }
 
+  setDisableAntiFighterBarrage(value: boolean): this {
+    this._disableAntiFighterBarrage = value;
+    return this;
+  }
+
+  setDisableBombardment(value: boolean): this {
+    this._disableBombardment = value;
+    return this;
+  }
+
   setDisablePlanetaryShield(value: boolean): this {
     this._disablePlanetaryShield = value;
     return this;
   }
 
+  setDisableSpaceCannonDefense(value: boolean): this {
+    this._disableSpaceCannonDefense = value;
+    return this;
+  }
+
   setDisableSpaceCannonOffense(value: boolean): this {
     this._disableSpaceCannonOffsense = value;
+    return this;
+  }
+
+  setDisableSustainDamage(value: boolean): this {
+    this._disableSustainDamage = value;
     return this;
   }
 

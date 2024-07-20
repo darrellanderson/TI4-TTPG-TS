@@ -501,31 +501,9 @@ export class CombatRoll {
     return this;
   }
 
-  _checkCancelSpaceCannonOffense(): boolean {
-    let hasDisableSpaceCannonOffsense: boolean = false;
-    for (const unitAttrs of this.opponent.unitAttrsSet.getAll()) {
-      const unit: UnitType = unitAttrs.getUnit();
-      const hasUnit: boolean = this.opponent.hasUnit(unit);
-      if (unitAttrs.getDisableSpaceCannonOffense() && hasUnit) {
-        hasDisableSpaceCannonOffsense = true;
-        break;
-      }
-    }
-
-    return hasDisableSpaceCannonOffsense;
-  }
-
   _checkCancelBombardment(): boolean {
-    let hasDisablePlanetaryShield: boolean = false;
-    for (const unitAttrs of this.self.unitAttrsSet.getAll()) {
-      const unit: UnitType = unitAttrs.getUnit();
-      const hasUnit: boolean = this.self.hasUnit(unit);
-      if (unitAttrs.getDisablePlanetaryShield() && hasUnit) {
-        hasDisablePlanetaryShield = true;
-        break;
-      }
-    }
-
+    // Check if active planetary shield in opponent and no
+    // disable planetary shield in self.
     let hasPlanetaryShield: boolean = false;
     for (const unitAttrs of this.opponent.unitAttrsSet.getAll()) {
       const unit: UnitType = unitAttrs.getUnit();
@@ -535,7 +513,15 @@ export class CombatRoll {
         break;
       }
     }
-
+    let hasDisablePlanetaryShield: boolean = false;
+    for (const unitAttrs of this.self.unitAttrsSet.getAll()) {
+      const unit: UnitType = unitAttrs.getUnit();
+      const hasUnit: boolean = this.self.hasUnit(unit);
+      if (unitAttrs.getDisablePlanetaryShield() && hasUnit) {
+        hasDisablePlanetaryShield = true;
+        break;
+      }
+    }
     return hasPlanetaryShield && !hasDisablePlanetaryShield;
   }
 
@@ -551,13 +537,6 @@ export class CombatRoll {
       this._params.rollType === "groundCombat";
     if (requirePlanet) {
       this._pruneToUnitsClosestToPlanet();
-    }
-
-    if (
-      this._params.rollType === "spaceCannonOffense" &&
-      this._checkCancelSpaceCannonOffense()
-    ) {
-      return [];
     }
 
     if (

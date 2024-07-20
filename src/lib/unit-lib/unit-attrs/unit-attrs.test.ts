@@ -304,6 +304,28 @@ it("hasPlanetaryShield", () => {
   expect(unitAttrs.hasPlanetaryShild()).toBe(true);
 });
 
+it("disableAntiFighterBarrage", () => {
+  const unitAttrs = new UnitAttrs({
+    name: "my-name",
+    unit: "infantry",
+  });
+  expect(unitAttrs.getDisableAntiFighterBarrage()).toBe(false);
+
+  unitAttrs.setDisableAntiFighterBarrage(true);
+  expect(unitAttrs.getDisableAntiFighterBarrage()).toBe(true);
+});
+
+it("disableBombardment", () => {
+  const unitAttrs = new UnitAttrs({
+    name: "my-name",
+    unit: "infantry",
+  });
+  expect(unitAttrs.getDisableBombardment()).toBe(false);
+
+  unitAttrs.setDisableBombardment(true);
+  expect(unitAttrs.getDisableBombardment()).toBe(true);
+});
+
 it("disablePlanetaryShield", () => {
   const unitAttrs = new UnitAttrs({
     name: "my-name",
@@ -323,23 +345,37 @@ it("disablePlanetaryShield", () => {
   expect(unitAttrs.getDisablePlanetaryShield()).toBe(true);
 });
 
+it("disableSpaceCannonDefense", () => {
+  const unitAttrs = new UnitAttrs({
+    name: "my-name",
+    unit: "infantry",
+  });
+  expect(unitAttrs.getDisableSpaceCannonDefense()).toBe(false);
+
+  unitAttrs.setDisableSpaceCannonDefense(true);
+  expect(unitAttrs.getDisableSpaceCannonDefense()).toBe(true);
+});
+
 it("disableSpaceCannonOffense", () => {
   const unitAttrs = new UnitAttrs({
     name: "my-name",
     unit: "infantry",
-    disableSpaceCannonOffense: true,
   });
-  expect(unitAttrs.getDisableSpaceCannonOffense()).toBe(true);
-
-  unitAttrs.setDisableSpaceCannonOffense(false);
   expect(unitAttrs.getDisableSpaceCannonOffense()).toBe(false);
 
-  unitAttrs.applyOverride({
+  unitAttrs.setDisableSpaceCannonOffense(true);
+  expect(unitAttrs.getDisableSpaceCannonOffense()).toBe(true);
+});
+
+it("disableSustainDamage", () => {
+  const unitAttrs = new UnitAttrs({
     name: "my-name",
     unit: "infantry",
-    disableSpaceCannonOffense: true,
   });
-  expect(unitAttrs.getDisableSpaceCannonOffense()).toBe(true);
+  expect(unitAttrs.getDisableSustainDamage()).toBe(false);
+
+  unitAttrs.setDisableSustainDamage(true);
+  expect(unitAttrs.getDisableSustainDamage()).toBe(true);
 });
 
 it("antiFighterBarrage", () => {
