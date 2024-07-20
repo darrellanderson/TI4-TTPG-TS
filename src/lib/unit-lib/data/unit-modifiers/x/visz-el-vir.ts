@@ -7,10 +7,10 @@ import { UnitModifierSchemaType } from "../../../schema/unit-modifier-schema";
 
 export const X: UnitModifierSchemaType = {
   name: "",
-  description: "",
+  description: "Your mechs in this system roll 1 additional die during combat",
   owner: "",
   priority: "",
-  triggers: [],
+  triggers: [{ cardClass: "flagship", nsidName: "visz-el-vir" }],
   applies: (combatRoll: CombatRoll): boolean => {
     return false;
   },

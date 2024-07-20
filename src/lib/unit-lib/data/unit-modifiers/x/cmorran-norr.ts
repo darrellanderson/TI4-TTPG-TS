@@ -7,10 +7,10 @@ import { UnitModifierSchemaType } from "../../../schema/unit-modifier-schema";
 
 export const X: UnitModifierSchemaType = {
   name: "",
-  description: "",
+  description: "+1 to all COMBAT rolls for other ships with the C'morran N'orr",
   owner: "",
   priority: "",
-  triggers: [],
+  triggers: [{ cardClass: "flagship", nsidName: "cmorran-norr" }],
   applies: (combatRoll: CombatRoll): boolean => {
     return false;
   },

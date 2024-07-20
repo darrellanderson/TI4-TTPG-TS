@@ -7,10 +7,11 @@ import { UnitModifierSchemaType } from "../../../schema/unit-modifier-schema";
 
 export const X: UnitModifierSchemaType = {
   name: "",
-  description: "",
+  description:
+    "Rolls number of dice equal to number of opponent's non-fighter ships",
   owner: "",
   priority: "",
-  triggers: [],
+  triggers: [{ cardClass: "flagship", nsidName: "salai-sai-corian" }],
   applies: (combatRoll: CombatRoll): boolean => {
     return false;
   },

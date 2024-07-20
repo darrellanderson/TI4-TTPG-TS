@@ -10,7 +10,7 @@ export const X: UnitModifierSchemaType = {
   description: "",
   owner: "",
   priority: "",
-  triggers: [],
+  triggers: [{ cardClass: "flagship", nsidName: "matriarch" }],
   applies: (combatRoll: CombatRoll): boolean => {
     return false;
   },

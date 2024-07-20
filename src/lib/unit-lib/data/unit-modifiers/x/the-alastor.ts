@@ -7,10 +7,10 @@ import { UnitModifierSchemaType } from "../../../schema/unit-modifier-schema";
 
 export const X: UnitModifierSchemaType = {
   name: "",
-  description: "",
+  description: "Ground forces may participate in space combat",
   owner: "",
   priority: "",
-  triggers: [],
+  triggers: [{ cardClass: "flagship", nsidName: "the-alastor" }],
   applies: (combatRoll: CombatRoll): boolean => {
     return false;
   },

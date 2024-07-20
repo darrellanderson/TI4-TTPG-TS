@@ -7,10 +7,11 @@ import { UnitModifierSchemaType } from "../../../schema/unit-modifier-schema";
 
 export const X: UnitModifierSchemaType = {
   name: "",
-  description: "",
+  description:
+    "Other players cannot use SPACE CANNON against your ships in this system",
   owner: "",
   priority: "",
-  triggers: [],
+  triggers: [{ cardClass: "flagship", nsidName: "quetzecoatl" }],
   applies: (combatRoll: CombatRoll): boolean => {
     return false;
   },

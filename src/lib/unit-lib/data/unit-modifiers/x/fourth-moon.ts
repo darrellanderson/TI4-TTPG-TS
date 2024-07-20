@@ -7,10 +7,10 @@ import { UnitModifierSchemaType } from "../../../schema/unit-modifier-schema";
 
 export const X: UnitModifierSchemaType = {
   name: "",
-  description: "",
-  owner: "",
+  description: "Opponent's ships cannot use SUSTAIN DAMAGE",
+  owner: "opponent",
   priority: "",
-  triggers: [],
+  triggers: [{ cardClass: "flagship", nsidName: "fourth-moon" }],
   applies: (combatRoll: CombatRoll): boolean => {
     return false;
   },

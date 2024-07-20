@@ -7,7 +7,7 @@ import { UnitModifierSchemaType } from "../../../schema/unit-modifier-schema";
 
 export const X: UnitModifierSchemaType = {
   name: "",
-  description: "",
+  description: "+2 mech COMBAT rolls if opponent has fragment",
   owner: "",
   priority: "",
   triggers: [],

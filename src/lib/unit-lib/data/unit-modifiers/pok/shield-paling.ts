@@ -7,10 +7,10 @@ import { UnitModifierSchemaType } from "../../../schema/unit-modifier-schema";
 
 export const X: UnitModifierSchemaType = {
   name: "",
-  description: "",
+  description: "Infantry on planet with mech are not FRAGILE",
   owner: "",
   priority: "",
-  triggers: [],
+  triggers: [{ cardClass: "mech", nsidName: "shield-paling" }],
   applies: (combatRoll: CombatRoll): boolean => {
     return false;
   },

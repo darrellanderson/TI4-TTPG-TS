@@ -20,6 +20,9 @@ add("base", AntimassDeflectors);
 import { Bunker } from "./unit-modifiers/base/bunker";
 add("base", Bunker);
 
+import { CustodiaVigilia } from "./unit-modifiers/codex-vigil/custodia-vigilia";
+add("codex-vigil", CustodiaVigilia);
+
 import { _2ram } from "./unit-modifiers/pok/2ram";
 add("pok", _2ram);
 

@@ -7,10 +7,10 @@ import { UnitModifierSchemaType } from "../../../schema/unit-modifier-schema";
 
 export const X: UnitModifierSchemaType = {
   name: "",
-  description: "",
+  description: "Other's ground forces on planet cannot SUSTAIN DAMAGE",
   owner: "",
   priority: "",
-  triggers: [],
+  triggers: [{ cardClass: "mech", nsidName: "moll-terminus" }],
   applies: (combatRoll: CombatRoll): boolean => {
     return false;
   },

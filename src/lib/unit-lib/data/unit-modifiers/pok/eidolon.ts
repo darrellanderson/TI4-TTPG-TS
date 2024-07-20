@@ -5,12 +5,12 @@ import {
 } from "../../../../combat-lib/combat-roll/combat-roll";
 import { UnitModifierSchemaType } from "../../../schema/unit-modifier-schema";
 
-export const X: UnitModifierSchemaType = {
+export const Eidolon: UnitModifierSchemaType = {
   name: "",
-  description: "",
+  description: "Count as ship when off planet",
   owner: "",
   priority: "",
-  triggers: [],
+  triggers: [{ cardClass: "mech", nsidName: "eidolon" }],
   applies: (combatRoll: CombatRoll): boolean => {
     return false;
   },
