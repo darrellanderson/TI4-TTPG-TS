@@ -4,16 +4,21 @@ import {
   CombatRollType,
 } from "../../../../combat-lib/combat-roll/combat-roll";
 import { UnitModifierSchemaType } from "../../../schema/unit-modifier-schema";
+import { UnitAttrs } from "lib/unit-lib/unit-attrs/unit-attrs";
 
-export const X: UnitModifierSchemaType = {
-  name: "",
+export const Quetzecoatl: UnitModifierSchemaType = {
+  name: "Quetzecoatl",
   description:
     "Other players cannot use SPACE CANNON against your ships in this system",
-  owner: "",
-  priority: "",
+  owner: "opponent",
+  priority: "mutate",
   triggers: [{ cardClass: "flagship", nsidName: "quetzecoatl" }],
   applies: (combatRoll: CombatRoll): boolean => {
-    return false;
+    return combatRoll.getRollType() === "spaceCannonOffense";
   },
-  apply: (combatRoll: CombatRoll): void => {},
+  apply: (combatRoll: CombatRoll): void => {
+    const flagship: UnitAttrs =
+      combatRoll.self.unitAttrsSet.getOrThrow("flagship");
+    flagship.setDisableSpaceCannonOffense(true);
+  },
 };

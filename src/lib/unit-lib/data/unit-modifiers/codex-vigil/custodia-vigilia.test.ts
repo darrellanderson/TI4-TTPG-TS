@@ -40,3 +40,20 @@ it("modifier", () => {
   expect(combatRoll.getUnitModifierNames()).toEqual(["Custodia Vigilia"]);
   expect(combatRoll.self.hasUnit("custodia-vigilia" as UnitType)).toBe(true);
 });
+
+it("modifier (wrong roll type)", () => {
+  placeGameObjects({
+    systemNsid: "tile.system:base/18",
+    self: [
+      "card.legendary-planet:codex-vigil/custodia-vigilia",
+      "card.planet:base/mecatol-rex",
+    ],
+  });
+  const combatRoll: CombatRoll = CombatRoll.createCooked({
+    rollType: "groundCombat",
+    hex: "<0,0,0>",
+    activatingPlayerSlot: OPPONENT,
+    rollingPlayerSlot: SELF,
+  });
+  expect(combatRoll.getUnitModifierNames()).toEqual([]);
+});
