@@ -64,3 +64,6 @@ add("pok", ThatWhichMoldsFlesh);
 
 import { TheCavalry } from "./unit-modifiers/pok/the-cavalry";
 add("pok", TheCavalry);
+
+import { TheCrownOfThalnos } from "./unit-modifiers/pok/the-crown-of-thalnos";
+add("pok", TheCrownOfThalnos);
