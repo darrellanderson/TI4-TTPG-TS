@@ -1,19 +1,38 @@
-import { CombatAttrs } from "../../../unit-attrs/combat-attrs";
 import {
+  BestUnitWithCombatAttrs,
   CombatRoll,
   CombatRollType,
 } from "../../../../combat-lib/combat-roll/combat-roll";
 import { UnitModifierSchemaType } from "../../../schema/unit-modifier-schema";
 
-export const X: UnitModifierSchemaType = {
-  name: "",
+export const TrrakanAunZulok: UnitModifierSchemaType = {
+  name: "Trrakan Aun Zulok",
   description:
     "+1 die to a unit ability (anti-fighter barrage, bombardment, space cannon)",
-  owner: "",
-  priority: "",
-  triggers: [],
+  owner: "self",
+  priority: "choose",
+  isActiveIdle: true,
+  triggers: [
+    {
+      cardClass: "commander",
+      nsidName: "trrakan-aun-zulok",
+    },
+    { cardClass: "alliance", nsidName: "argent" },
+  ],
   applies: (combatRoll: CombatRoll): boolean => {
-    return false;
+    const rollType: CombatRollType = combatRoll.getRollType();
+    return (
+      rollType === "antiFighterBarrage" ||
+      rollType === "bombardment" ||
+      rollType === "spaceCannonDefense" ||
+      rollType === "spaceCannonOffense"
+    );
   },
-  apply: (combatRoll: CombatRoll): void => {},
+  apply: (combatRoll: CombatRoll): void => {
+    const bestUnitWithCombatAttrs: BestUnitWithCombatAttrs | undefined =
+      combatRoll.bestHitUnitWithCombatAttrs();
+    if (bestUnitWithCombatAttrs) {
+      bestUnitWithCombatAttrs.combatAttrs.addExtraDice(1);
+    }
+  },
 };

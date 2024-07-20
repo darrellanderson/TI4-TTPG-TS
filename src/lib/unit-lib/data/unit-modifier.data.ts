@@ -67,3 +67,6 @@ add("pok", TheCavalry);
 
 import { TheCrownOfThalnos } from "./unit-modifiers/pok/the-crown-of-thalnos";
 add("pok", TheCrownOfThalnos);
+
+import { TrrakanAunZulok } from "./unit-modifiers/pok/trrakan-aun-zulok";
+add("pok", TrrakanAunZulok);
