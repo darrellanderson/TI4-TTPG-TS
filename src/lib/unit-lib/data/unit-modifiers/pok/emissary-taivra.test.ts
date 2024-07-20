@@ -11,7 +11,7 @@ it("registry", () => {
 
 it("emissary-taivra (active)", () => {
   placeGameObjects({
-    self: ["card.leader.agent:pok/emissary-taivra"],
+    selfActive: ["card.leader.agent:pok/emissary-taivra"],
   });
   const combatRoll: CombatRoll = CombatRoll.createCooked({
     rollType: "spaceCannonOffense",

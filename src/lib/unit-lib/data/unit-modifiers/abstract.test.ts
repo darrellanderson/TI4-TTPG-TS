@@ -5,6 +5,8 @@
 import { GameObject, Vector } from "@tabletop-playground/api";
 import { MockCard, MockCardHolder, MockGameObject } from "ttpg-mock";
 import { Find } from "ttpg-darrell";
+
+import { UnitModifierActiveIdle } from "../../unit-modifier/unit-modifier-active-idle";
 import { UnitType } from "../../schema/unit-attrs-schema";
 
 export const SELF: number = 1;
@@ -17,6 +19,7 @@ export const ANY_POS = new Vector(200, 0, 0);
 export function placeGameObjects(params: {
   systemNsid?: string; // default is tile 1
   self?: Array<string>;
+  selfActive?: Array<string>;
   selfUnits?: Map<UnitType, number>;
   selfUnitsOffPlanet?: Map<UnitType, number>; // in hex, not over planet
   selfUnitsAdj?: Map<UnitType, number>;
@@ -53,6 +56,15 @@ export function placeGameObjects(params: {
     } else {
       MockGameObject.simple(nsid, { position: SELF_POS });
     }
+  }
+  for (const nsid of params.selfActive ?? []) {
+    let obj: GameObject;
+    if (nsid.startsWith("card.")) {
+      obj = MockCard.simple(nsid, { position: SELF_POS });
+    } else {
+      obj = MockGameObject.simple(nsid, { position: SELF_POS });
+    }
+    UnitModifierActiveIdle.setActive(obj, true);
   }
   for (const nsid of params.opponent ?? []) {
     if (nsid.startsWith("card.")) {

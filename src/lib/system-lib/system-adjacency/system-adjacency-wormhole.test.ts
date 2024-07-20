@@ -100,8 +100,7 @@ it("card emissary_taivra (active)", () => {
   const card: Card = MockCard.simple(
     "card.leader.agent.creuss:pok/emissary_taivra"
   );
-  expect(UnitModifierActiveIdle.isActive(card)).toBe(true);
-  UnitModifierActiveIdle.setActive(card, false);
+  expect(UnitModifierActiveIdle.isActive(card)).toBe(false);
 
   adjacency = new Adjacency();
   new SystemAdjacencyWormhole()._applyCards(adjacency);

@@ -376,12 +376,12 @@ it("_findUnitModifiers (active/idle)", () => {
   let names: Array<string>;
   unitModifiers = combatRoll._findUnitModifiers(2, 1);
   names = unitModifiers.map((modifier) => modifier.getName());
-  expect(names).toEqual(["my-modifier-name"]);
+  expect(names).toEqual([]);
 
-  UnitModifierActiveIdle.setActive(card, false);
+  UnitModifierActiveIdle.setActive(card, true);
   unitModifiers = combatRoll._findUnitModifiers(2, 1);
   names = unitModifiers.map((modifier) => modifier.getName());
-  expect(names).toEqual([]);
+  expect(names).toEqual(["my-modifier-name"]);
 });
 
 it("_findUnitModifiers (control token)", () => {

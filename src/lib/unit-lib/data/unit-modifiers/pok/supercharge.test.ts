@@ -35,7 +35,7 @@ it("default", () => {
 
 it("modifier", () => {
   placeGameObjects({
-    self: ["card.technology.red:pok/supercharge"],
+    selfActive: ["card.technology.red:pok/supercharge"],
   });
   const combatRoll: CombatRoll = CombatRoll.createCooked({
     rollType: "groundCombat",
