@@ -70,3 +70,6 @@ add("pok", TheCrownOfThalnos);
 
 import { TrrakanAunZulok } from "./unit-modifiers/pok/trrakan-aun-zulok";
 add("pok", TrrakanAunZulok);
+
+import { UlTheProgenitor } from "./unit-modifiers/pok/ul-the-progenitor";
+add("pok", UlTheProgenitor);
