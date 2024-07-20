@@ -29,7 +29,7 @@ it("default", () => {
 
 it("evelyn-delouis", () => {
   placeGameObjects({
-    self: ["card.leader.agent:pok/evelyn-delouis"],
+    selfActive: ["card.leader.agent:pok/evelyn-delouis"],
     selfUnits: new Map([["infantry", 1]]),
   });
   const combatRoll: CombatRoll = CombatRoll.createCooked({

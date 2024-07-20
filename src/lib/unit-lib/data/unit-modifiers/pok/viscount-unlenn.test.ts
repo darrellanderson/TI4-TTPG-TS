@@ -30,7 +30,7 @@ it("default", () => {
 
 it("modifier", () => {
   placeGameObjects({
-    self: ["card.leader.agent:pok/viscount-unlenn"],
+    selfActive: ["card.leader.agent:pok/viscount-unlenn"],
     selfUnits: new Map([["carrier", 1]]),
   });
   const combatRoll: CombatRoll = CombatRoll.createCooked({

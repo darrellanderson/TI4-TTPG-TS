@@ -41,7 +41,7 @@ it("default", () => {
 });
 
 it("modifier (antiFighterBarrage)", () => {
-  placeGameObjects({ self: ["card.leader.commander:pok/ta-zern"] });
+  placeGameObjects({ selfActive: ["card.leader.commander:pok/ta-zern"] });
   const combatRoll: CombatRoll = CombatRoll.createCooked({
     rollType: "antiFighterBarrage",
     hex: "<0,0,0>",
@@ -68,7 +68,7 @@ it("modifier (antiFighterBarrage)", () => {
 });
 
 it("modifier (bombardment)", () => {
-  placeGameObjects({ self: ["card.leader.commander:pok/ta-zern"] });
+  placeGameObjects({ selfActive: ["card.leader.commander:pok/ta-zern"] });
   const combatRoll: CombatRoll = CombatRoll.createCooked({
     rollType: "bombardment",
     hex: "<0,0,0>",
@@ -95,7 +95,7 @@ it("modifier (bombardment)", () => {
 });
 
 it("modifier (spaceCannonDefense)", () => {
-  placeGameObjects({ self: ["card.leader.commander:pok/ta-zern"] });
+  placeGameObjects({ selfActive: ["card.leader.commander:pok/ta-zern"] });
   const combatRoll: CombatRoll = CombatRoll.createCooked({
     rollType: "spaceCannonDefense",
     hex: "<0,0,0>",
@@ -122,7 +122,7 @@ it("modifier (spaceCannonDefense)", () => {
 });
 
 it("modifier (spaceCannonOffense)", () => {
-  placeGameObjects({ self: ["card.leader.commander:pok/ta-zern"] });
+  placeGameObjects({ selfActive: ["card.leader.commander:pok/ta-zern"] });
   const combatRoll: CombatRoll = CombatRoll.createCooked({
     rollType: "spaceCannonOffense",
     hex: "<0,0,0>",

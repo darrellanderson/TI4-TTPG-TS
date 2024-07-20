@@ -10,6 +10,7 @@ export const EvelynDelouis: UnitModifierSchemaType = {
   description: "+1 die to a single GROUND COMBAT roll",
   owner: "self",
   priority: "choose",
+  isActiveIdle: true,
   triggers: [{ cardClass: "agent", nsidName: "evelyn-delouis" }],
   applies: (combatRoll: CombatRoll): boolean => {
     return combatRoll.getRollType() === "groundCombat";

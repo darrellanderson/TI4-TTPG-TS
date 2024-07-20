@@ -9,6 +9,7 @@ export const ViscountUnlenn: UnitModifierSchemaType = {
   description: "+1 die to a single SPACE COMBAT roll",
   owner: "self",
   priority: "choose",
+  isActiveIdle: true,
   triggers: [{ cardClass: "agent", nsidName: "viscount-unlenn" }],
   applies: (combatRoll: CombatRoll): boolean => {
     return combatRoll.getRollType() === "spaceCombat";

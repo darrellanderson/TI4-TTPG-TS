@@ -11,6 +11,7 @@ export const TaZern: UnitModifierSchemaType = {
     "You may reroll ability dice (when active will reroll all misses)",
   owner: "self",
   priority: "adjust",
+  isActiveIdle: true,
   triggers: [
     { cardClass: "commander", nsidName: "ta-zern" },
     { cardClass: "alliance", nsidName: "jolnar" },
