@@ -1,18 +1,30 @@
-import { CombatAttrs } from "../../../unit-attrs/combat-attrs";
-import {
-  CombatRoll,
-  CombatRollType,
-} from "../../../../combat-lib/combat-roll/combat-roll";
+import { CombatRoll } from "../../../../combat-lib/combat-roll/combat-roll";
 import { UnitModifierSchemaType } from "../../../schema/unit-modifier-schema";
 
 export const Eidolon: UnitModifierSchemaType = {
-  name: "",
+  name: "Eidolon",
   description: "Count as ship when off planet",
-  owner: "",
-  priority: "",
+  owner: "self",
+  priority: "adjust",
   triggers: [{ cardClass: "mech", nsidName: "eidolon" }],
   applies: (combatRoll: CombatRoll): boolean => {
-    return false;
+    const rollType = combatRoll.getRollType();
+    return (
+      (rollType === "spaceCombat" || rollType === "groundCombat") &&
+      combatRoll.self.hasUnit("mech")
+    );
   },
-  apply: (combatRoll: CombatRoll): void => {},
+  apply: (combatRoll: CombatRoll): void => {
+    let count: number = 0;
+    if (combatRoll.getRollType() === "spaceCombat") {
+      count = combatRoll.self.unitPlasticHex.filter(
+        (plastic): boolean => plastic.getPlanetExact() === undefined
+      ).length;
+    } else if (combatRoll.getRollType() === "groundCombat") {
+      count = combatRoll.self.unitPlasticHex.filter(
+        (plastic): boolean => plastic.getPlanetExact() === combatRoll.planet
+      ).length;
+    }
+    combatRoll.self.overrideUnitCountHex.set("mech", count);
+  },
 };
