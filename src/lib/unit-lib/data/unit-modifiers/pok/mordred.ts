@@ -44,7 +44,7 @@ export const Mordred: UnitModifierSchemaType = {
     if (mechAttrs) {
       const groundCombat: CombatAttrs | undefined = mechAttrs.getGroundCombat();
       if (groundCombat) {
-        groundCombat.addHit(-2);
+        groundCombat.addHit(2);
       }
     }
   },

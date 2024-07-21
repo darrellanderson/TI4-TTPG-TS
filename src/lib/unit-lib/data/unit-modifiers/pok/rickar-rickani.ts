@@ -52,11 +52,11 @@ export const RickarRickani: UnitModifierSchemaType = {
     for (const unitAttrs of combatRoll.self.unitAttrsSet.getAll()) {
       const groundCombat: CombatAttrs | undefined = unitAttrs.getGroundCombat();
       if (groundCombat) {
-        groundCombat.addHit(-2);
+        groundCombat.addHit(2);
       }
       const spaceCombat: CombatAttrs | undefined = unitAttrs.getSpaceCombat();
       if (spaceCombat) {
-        spaceCombat.addHit(-2);
+        spaceCombat.addHit(2);
       }
     }
   },

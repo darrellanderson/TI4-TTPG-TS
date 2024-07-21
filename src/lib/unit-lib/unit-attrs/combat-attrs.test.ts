@@ -101,6 +101,6 @@ it("add", () => {
 
   combatAttrs.addHit(1);
   expect(combatAttrs.getDice()).toBe(21);
-  expect(combatAttrs.getHit()).toBe(31);
+  expect(combatAttrs.getHit()).toBe(29);
   expect(combatAttrs.getExtraDice()).toBe(41);
 });

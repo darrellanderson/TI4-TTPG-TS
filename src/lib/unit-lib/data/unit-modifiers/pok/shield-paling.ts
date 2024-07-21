@@ -23,7 +23,7 @@ export const ShieldPaling: UnitModifierSchemaType = {
       const groundCombat: CombatAttrs | undefined =
         infantryAttrs.getGroundCombat();
       if (groundCombat) {
-        groundCombat.addHit(-1);
+        groundCombat.addHit(1);
       }
     }
   },

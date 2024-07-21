@@ -20,11 +20,11 @@ export const Supercharge: UnitModifierSchemaType = {
     for (const unitAttrs of combatRoll.self.unitAttrsSet.getAll()) {
       const groundCombat: CombatAttrs | undefined = unitAttrs.getGroundCombat();
       if (groundCombat) {
-        groundCombat.addHit(-1);
+        groundCombat.addHit(1);
       }
       const spaceCombat: CombatAttrs | undefined = unitAttrs.getSpaceCombat();
       if (spaceCombat) {
-        spaceCombat.addHit(-1);
+        spaceCombat.addHit(1);
       }
     }
   },

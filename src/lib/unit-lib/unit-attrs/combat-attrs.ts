@@ -52,7 +52,7 @@ export class CombatAttrs {
   }
 
   addHit(delta: number): this {
-    this._hit += delta;
+    this._hit -= delta; // "add" means die hits on a lower number
     return this;
   }
 

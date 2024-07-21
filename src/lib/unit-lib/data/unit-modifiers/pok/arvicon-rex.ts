@@ -35,7 +35,7 @@ export const ArviconRex: UnitModifierSchemaType = {
             combatRoll.self.unitAttrsSet
               .getOrThrow("flagship")
               .getSpaceCombatOrThrow();
-          combatAttrs.addHit(-2);
+          combatAttrs.addHit(2);
         }
         break;
       }

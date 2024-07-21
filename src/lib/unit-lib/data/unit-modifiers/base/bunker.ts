@@ -15,7 +15,7 @@ export const Bunker: UnitModifierSchemaType = {
     for (const unitAttrs of combatRoll.self.unitAttrsSet.getAll()) {
       const bombardment: CombatAttrs | undefined = unitAttrs.getBombardment();
       if (bombardment) {
-        bombardment.addHit(4);
+        bombardment.addHit(-4);
       }
     }
   },
