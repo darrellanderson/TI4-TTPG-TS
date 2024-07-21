@@ -31,7 +31,7 @@ it("modifier", () => {
     opponentUnits: new Map([["flagship", 1]]),
   });
   const combatRoll: CombatRoll = CombatRoll.createCooked({
-    rollType: "groundCombat",
+    rollType: "spaceCannonOffense",
     hex: "<0,0,0>",
     planetName: "Jord",
     activatingPlayerSlot: OPPONENT,
