@@ -1,5 +1,5 @@
 import { world } from "@tabletop-playground/api";
-import { NSID } from "ttpg-darrell";
+import { Find, NSID } from "ttpg-darrell";
 
 import { CombatAttrs } from "../../../unit-attrs/combat-attrs";
 import {
@@ -25,10 +25,15 @@ export const Iconoclast: UnitModifierSchemaType = {
         "card.exploration.hazardous:pok/hazardous-fragment",
         "card.exploration.frontier:pok/frontier-fragment",
       ]);
+      const find: Find = new Find();
       const skipContained: boolean = true;
-      for (const obj of world.getAllObjects()) {
+      for (const obj of world.getAllObjects(skipContained)) {
         const nsid: string = NSID.get(obj);
-        if (fragmentNsids.has(nsid)) {
+        if (
+          fragmentNsids.has(nsid) &&
+          find.closestOwnedCardHolderOwner(obj.getPosition()) ===
+            combatRoll.opponent.playerSlot
+        ) {
           return true;
         }
       }

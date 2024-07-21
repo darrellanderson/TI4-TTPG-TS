@@ -53,6 +53,9 @@ add("pok", Iconoclast);
 import { Maban } from "./unit-modifiers/pok/maban";
 add("pok", Maban);
 
+import { Mordred } from "./unit-modifiers/pok/mordred";
+add("pok", Mordred);
+
 import { NavarchFeng } from "./unit-modifiers/pok/navarch-feng";
 add("pok", NavarchFeng);
 
