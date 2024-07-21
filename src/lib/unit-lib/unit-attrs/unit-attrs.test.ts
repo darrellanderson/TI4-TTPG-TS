@@ -3,13 +3,22 @@ import { UnitAttrsSchemaType } from "../schema/unit-attrs-schema";
 import { CombatAttrs } from "./combat-attrs";
 import { UnitAttrs } from "./unit-attrs";
 
-it("static schemaToNsid", () => {
+it("static schemaToNsid (base unit)", () => {
   const nsid = UnitAttrs.schemaToNsid("my-source", {
     name: "my-name",
     unit: "carrier",
     nsidName: "my-nsid-name",
   });
-  expect(nsid).toBe("card.technology.unit-upgrade:my-source/my-nsid-name");
+  expect(nsid).toBe("carrier:my-source/my-nsid-name");
+});
+
+it("static schemaToNsid (unit upgrade)", () => {
+  const nsid = UnitAttrs.schemaToNsid("my-source", {
+    name: "my-name",
+    unit: "carrier",
+    nsidName: "my-nsid-name-2",
+  });
+  expect(nsid).toBe("card.technology.unit-upgrade:my-source/my-nsid-name-2");
 });
 
 it("static schemaToNsid (flagship)", () => {

@@ -217,7 +217,7 @@ export class CombatRoll {
       }
     }
 
-    // Faction flagship.
+    // Faction flagship, other base unit overrides.
     let faction: Faction | undefined = undefined;
     if (playerSlot === this.self.playerSlot) {
       faction = this.self.faction;
@@ -225,9 +225,10 @@ export class CombatRoll {
       faction = this.opponent.faction;
     }
     if (faction) {
-      for (const flagshipNsid of faction.getFlagshipNsids()) {
+      const unitNsids: Array<string> = [...faction.getFlagshipNsids()];
+      for (const unitNsid of unitNsids) {
         const attrs: UnitAttrsSchemaType | undefined =
-          TI4.unitAttrsRegistry.rawByNsid(flagshipNsid);
+          TI4.unitAttrsRegistry.rawByNsid(unitNsid);
         if (attrs) {
           overrideAttrsArray.push(attrs);
         }
@@ -477,12 +478,9 @@ export class CombatRoll {
   }
 
   public applyUnitOverries(): this {
-    // Apply faction units.
-    // TODO XXX
-
     for (const data of [this.self, this.opponent]) {
       const unitOverrides: Array<UnitAttrsSchemaType> =
-        this._findUnitAttrOverrides(this.self.playerSlot);
+        this._findUnitAttrOverrides(data.playerSlot);
       for (const unitOverride of unitOverrides) {
         const unit: UnitType = unitOverride.unit;
         const unitAttrs: UnitAttrs | undefined = data.unitAttrsSet.get(unit);

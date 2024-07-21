@@ -26,6 +26,7 @@ import { UnitAttrs } from "../../unit-lib/unit-attrs/unit-attrs";
 import { UnitModifier } from "../../unit-lib/unit-modifier/unit-modifier";
 import { UnitModifierActiveIdle } from "../../unit-lib/unit-modifier/unit-modifier-active-idle";
 import { UnitPlastic } from "../../unit-lib/unit-plastic/unit-plastic";
+import exp from "constants";
 
 it("data addSyntheticUnit", () => {
   const data: CombatRollPerPlayerData = new CombatRollPerPlayerData();
@@ -555,6 +556,56 @@ it("applyUnitOverrides", () => {
   );
 });
 
+it("applyUnitOverrides (flagship)", () => {
+  const faction: Faction = new Faction();
+
+  TI4.unitAttrsRegistry.load("my-source", [
+    {
+      unit: "flagship",
+      name: "my-flagship-name",
+      nsidName: "my-flagship",
+    },
+  ]);
+
+  const combatRoll: CombatRoll = CombatRoll.createCooked({
+    rollType: "spaceCombat",
+    hex: "<0,0,0>",
+    activatingPlayerSlot: 1,
+    rollingPlayerSlot: 2,
+    overrideSelfFaction: faction,
+  });
+  expect(combatRoll.self.unitAttrsSet.get("flagship")?.getName()).toBe(
+    "my-flagship-name"
+  );
+});
+
+it("applyUnitOverrides (flagship opponent)", () => {
+  const faction: Faction = new Faction();
+
+  TI4.unitAttrsRegistry.load("my-source", [
+    {
+      unit: "flagship",
+      name: "my-flagship-name",
+      nsidName: "my-flagship",
+    },
+  ]);
+  expect(
+    TI4.unitAttrsRegistry.rawByNsid("flagship:my-source/my-flagship")
+  ).toBeDefined();
+
+  const combatRoll: CombatRoll = CombatRoll.createCooked({
+    rollType: "spaceCombat",
+    hex: "<0,0,0>",
+    activatingPlayerSlot: 1,
+    rollingPlayerSlot: 2,
+    overrideOpponentFaction: faction,
+  });
+  expect(combatRoll.opponent.playerSlot).toBe(1);
+  expect(combatRoll.opponent.unitAttrsSet.get("flagship")?.getName()).toBe(
+    "my-flagship-name"
+  );
+});
+
 it("applyUnitModifiers", () => {
   // Need a card holder to be closest to assign cards.
   new MockCardHolder({ owningPlayerSlot: 2 });
@@ -856,7 +907,7 @@ it("_checkCancelBombardment", () => {
   expect(combatRoll._checkCancelBombardment()).toBe(false);
 });
 
-it("createDiceParamsArray (ground xxx)", () => {
+it("createDiceParamsArray (ground)", () => {
   MockGameObject.simple("tile.system:base/9");
   const system: System | undefined = TI4.systemRegistry.getByPosition(
     new Vector(0, 0, 0)

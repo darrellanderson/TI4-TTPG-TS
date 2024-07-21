@@ -54,17 +54,13 @@ export class UnitAttrs {
       throw new Error("no nsidName");
     }
 
-    if (schema.unit === "flagship") {
-      // Normally flagships use the "flagship:source/name" format, but upgrades
-      // (e.g. memoria-2) need unit upgrade technology format.
-      if (schema.nsidName.endsWith("-2")) {
-        return `card.technology.unit-upgrade:${source}/${schema.nsidName}`;
-      }
-      return `flagship:${source}/${schema.nsidName}`;
+    const nsidNameFirstPart: string | undefined = schema.nsidName.split(".")[0];
+    if (nsidNameFirstPart && nsidNameFirstPart.endsWith("-2")) {
+      return `card.technology.unit-upgrade:${source}/${schema.nsidName}`;
     } else if (schema.unit === "mech") {
       return `card.leader.mech:${source}/${schema.nsidName}`;
     } else {
-      return `card.technology.unit-upgrade:${source}/${schema.nsidName}`;
+      return `${schema.unit}:${source}/${schema.nsidName}`;
     }
   }
 
