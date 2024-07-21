@@ -172,7 +172,7 @@ it("modifier (home)", () => {
     hex: "<0,0,0>",
     activatingPlayerSlot: OPPONENT,
     rollingPlayerSlot: SELF,
-    overrideRollingFaction: new Faction(), // for now uses '1' as home system tile number
+    overrideSelfFaction: new Faction(), // for now uses '1' as home system tile number
   });
   expect(combatRoll.system?.getSystemTileNumber()).toBe(1);
   expect(combatRoll.getUnitModifierNames()).toEqual(["Rickar Rickani"]);

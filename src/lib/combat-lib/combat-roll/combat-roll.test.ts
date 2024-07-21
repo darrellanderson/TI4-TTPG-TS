@@ -15,6 +15,7 @@ import {
   CombatRollParams,
   CombatRollPerPlayerData,
 } from "./combat-roll";
+import { Faction } from "../../faction-lib/faction/faction";
 import { Planet } from "../../system-lib/planet/planet";
 import { System } from "../../system-lib/system/system";
 import {
@@ -25,7 +26,6 @@ import { UnitAttrs } from "../../unit-lib/unit-attrs/unit-attrs";
 import { UnitModifier } from "../../unit-lib/unit-modifier/unit-modifier";
 import { UnitModifierActiveIdle } from "../../unit-lib/unit-modifier/unit-modifier-active-idle";
 import { UnitPlastic } from "../../unit-lib/unit-plastic/unit-plastic";
-import exp from "constants";
 
 it("data addSyntheticUnit", () => {
   const data: CombatRollPerPlayerData = new CombatRollPerPlayerData();
@@ -418,6 +418,120 @@ it("_findUnitModifiers (control token)", () => {
     rollingPlayerSlot: 1,
   });
   expect(combatRoll.getUnitModifierNames()).toEqual([]);
+});
+
+it("_findUnitModifiers (faction ability)", () => {
+  const faction: Faction = new Faction();
+
+  TI4.unitModifierRegistry.load("my-source", [
+    {
+      name: "my-modifier",
+      description: "my-description",
+      owner: "self",
+      priority: "mutate",
+      triggers: [{ cardClass: "faction-ability", nsidName: "my-ability" }],
+      applies: (combatRoll: CombatRoll): boolean => {
+        return true;
+      },
+      apply: (combatRoll: CombatRoll): void => {},
+    },
+  ]);
+
+  const combatRoll = CombatRoll.createCooked({
+    rollType: "spaceCombat",
+    hex: "<0,0,0>",
+    activatingPlayerSlot: 1,
+    rollingPlayerSlot: 2,
+    overrideSelfFaction: faction,
+  });
+  expect(combatRoll.getUnitModifierNames()).toEqual(["my-modifier"]);
+});
+
+it("_findUnitModifiers (faction ability opponent)", () => {
+  const faction: Faction = new Faction();
+
+  TI4.unitModifierRegistry.load("my-source", [
+    {
+      name: "my-modifier",
+      description: "my-description",
+      owner: "opponent",
+      priority: "mutate",
+      triggers: [{ cardClass: "faction-ability", nsidName: "my-ability" }],
+      applies: (combatRoll: CombatRoll): boolean => {
+        return true;
+      },
+      apply: (combatRoll: CombatRoll): void => {},
+    },
+  ]);
+
+  const combatRoll = CombatRoll.createCooked({
+    rollType: "spaceCombat",
+    hex: "<0,0,0>",
+    activatingPlayerSlot: 1,
+    rollingPlayerSlot: 2,
+    overrideOpponentFaction: faction,
+  });
+  expect(combatRoll.getUnitModifierNames()).toEqual(["my-modifier"]);
+});
+
+it("_findUnitModifiers (flagship)", () => {
+  const faction: Faction = new Faction();
+
+  TI4.unitModifierRegistry.load("my-source", [
+    {
+      name: "my-modifier",
+      description: "my-description",
+      owner: "self",
+      priority: "mutate",
+      triggers: [{ cardClass: "flagship", nsidName: "my-flagship" }],
+      applies: (combatRoll: CombatRoll): boolean => {
+        return true;
+      },
+      apply: (combatRoll: CombatRoll): void => {},
+    },
+  ]);
+
+  MockGameObject.simple("tile.system:base/1");
+  MockGameObject.simple("unit:base/flagship", { owningPlayerSlot: 2 });
+
+  const combatRoll = CombatRoll.createCooked({
+    rollType: "spaceCombat",
+    hex: "<0,0,0>",
+    activatingPlayerSlot: 1,
+    rollingPlayerSlot: 2,
+    overrideSelfFaction: faction,
+  });
+  expect(combatRoll.getUnitModifierNames()).toEqual(["my-modifier"]);
+});
+
+it("_findUnitModifiers (flagship opponent)", () => {
+  const faction: Faction = new Faction();
+
+  TI4.unitModifierRegistry.load("my-source", [
+    {
+      name: "my-modifier",
+      description: "my-description",
+      owner: "opponent",
+      priority: "mutate",
+      triggers: [{ cardClass: "flagship", nsidName: "my-flagship" }],
+      applies: (combatRoll: CombatRoll): boolean => {
+        return true;
+      },
+      apply: (combatRoll: CombatRoll): void => {},
+    },
+  ]);
+
+  MockGameObject.simple("tile.system:base/1");
+  MockGameObject.simple("unit:base/flagship", { owningPlayerSlot: 1 });
+
+  const combatRoll = CombatRoll.createCooked({
+    rollType: "spaceCombat",
+    hex: "<0,0,0>",
+    activatingPlayerSlot: 1,
+    rollingPlayerSlot: 2,
+    overrideOpponentFaction: faction,
+  });
+  expect(combatRoll.getUnitModifierNames()).toEqual(["my-modifier"]);
 });
 
 it("applyUnitOverrides", () => {

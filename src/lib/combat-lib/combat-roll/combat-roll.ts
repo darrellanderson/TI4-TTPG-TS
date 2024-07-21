@@ -33,7 +33,6 @@ import { UnitAttrsSet } from "../../unit-lib/unit-attrs-set/unit-attrs-set";
 import { UnitModifier } from "../../unit-lib/unit-modifier/unit-modifier";
 import { UnitModifierActiveIdle } from "../../unit-lib/unit-modifier/unit-modifier-active-idle";
 import { UnitPlastic } from "../../unit-lib/unit-plastic/unit-plastic";
-import { NsidNameSchemaType } from "lib/system-lib/schema/basic-types-schema";
 
 export type CombatRollType =
   | "antiFighterBarrage"
@@ -50,7 +49,8 @@ export type CombatRollParams = {
   planetName?: string; // for planet-based rolls
   activatingPlayerSlot: number;
   rollingPlayerSlot: number;
-  overrideRollingFaction?: Faction;
+  overrideSelfFaction?: Faction;
+  overrideOpponentFaction?: Faction;
 };
 
 export type BestUnitWithCombatAttrs = {
@@ -225,11 +225,9 @@ export class CombatRoll {
       faction = this.opponent.faction;
     }
     if (faction) {
-      const source: NsidNameSchemaType = faction.getSource();
-      for (const flagship of faction.getFlagshipNsidNames()) {
-        const nsid = `flagship:${source}/${flagship}`;
+      for (const flagshipNsid of faction.getFlagshipNsids()) {
         const attrs: UnitAttrsSchemaType | undefined =
-          TI4.unitAttrsRegistry.rawByNsid(nsid);
+          TI4.unitAttrsRegistry.rawByNsid(flagshipNsid);
         if (attrs) {
           overrideAttrsArray.push(attrs);
         }
@@ -337,21 +335,12 @@ export class CombatRoll {
     ];
     for (const data of dataArray) {
       if (data.faction) {
-        const source: NsidNameSchemaType = data.faction.getSource();
-        for (const ability of data.faction.getAbilityNsidNames()) {
-          const nsid = UnitModifier.schemaTriggerToNsid(source, {
-            cardClass: "faction-ability",
-            nsidName: ability,
-          });
-          maybeAddModifier(nsid, undefined, data.playerSlot);
+        for (const abilityNsid of data.faction.getAbilityNsids()) {
+          maybeAddModifier(abilityNsid, undefined, data.playerSlot);
         }
-        for (const flagship of data.faction.getFlagshipNsidNames()) {
-          const nsid = UnitModifier.schemaTriggerToNsid(source, {
-            cardClass: "flagship",
-            nsidName: flagship,
-          });
+        for (const flagshipNsid of data.faction.getFlagshipNsids()) {
           if (data.hasUnit("flagship")) {
-            maybeAddModifier(nsid, undefined, data.playerSlot);
+            maybeAddModifier(flagshipNsid, undefined, data.playerSlot);
           }
         }
       }
@@ -478,8 +467,11 @@ export class CombatRoll {
 
   public applyFactions(): this {
     // TODO XXX
-    if (this._params.overrideRollingFaction) {
-      this.self.faction = this._params.overrideRollingFaction;
+    if (this._params.overrideSelfFaction) {
+      this.self.faction = this._params.overrideSelfFaction;
+    }
+    if (this._params.overrideOpponentFaction) {
+      this.opponent.faction = this._params.overrideOpponentFaction;
     }
     return this;
   }

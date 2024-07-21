@@ -1,19 +1,13 @@
-import { NsidNameSchemaType } from "lib/system-lib/schema/basic-types-schema";
-
 export class Faction {
-  getAbilityNsidNames(): Array<NsidNameSchemaType> {
-    return ["my-ability"];
+  getAbilityNsids(): Array<string> {
+    return ["faction-ability:my-source/my-ability"];
   }
 
-  getFlagshipNsidNames(): Array<NsidNameSchemaType> {
-    return ["my-flagship"];
+  getFlagshipNsids(): Array<string> {
+    return ["flagship:my-source/my-flagship"];
   }
 
   getHomeSystemTileNumber(): number {
     return 1;
-  }
-
-  getSource(): NsidNameSchemaType {
-    return "my-source";
   }
 }
