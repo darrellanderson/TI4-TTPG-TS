@@ -59,6 +59,9 @@ add("pok", Mordred);
 import { NavarchFeng } from "./unit-modifiers/pok/navarch-feng";
 add("pok", NavarchFeng);
 
+import { Quetzecoatl } from "./unit-modifiers/pok/quetzecoatl";
+add("pok", Quetzecoatl);
+
 import { RickarRickani } from "./unit-modifiers/pok/rickar-rickani";
 add("pok", RickarRickani);
 
