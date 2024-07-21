@@ -4,15 +4,27 @@ import {
   CombatRollType,
 } from "../../../../combat-lib/combat-roll/combat-roll";
 import { UnitModifierSchemaType } from "../../../schema/unit-modifier-schema";
+import { UnitAttrs } from "lib/unit-lib/unit-attrs/unit-attrs";
 
-export const X: UnitModifierSchemaType = {
-  name: "",
+export const ShieldPaling: UnitModifierSchemaType = {
+  name: "Shield Paling",
   description: "Infantry on planet with mech are not FRAGILE",
-  owner: "",
-  priority: "",
+  owner: "self",
+  priority: "adjust",
   triggers: [{ cardClass: "mech", nsidName: "shield-paling" }],
   applies: (combatRoll: CombatRoll): boolean => {
-    return false;
+    const rollType: CombatRollType = combatRoll.getRollType();
+    return rollType === "groundCombat" && combatRoll.self.hasUnit("mech");
   },
-  apply: (combatRoll: CombatRoll): void => {},
+  apply: (combatRoll: CombatRoll): void => {
+    const infantryAttrs: UnitAttrs | undefined =
+      combatRoll.self.unitAttrsSet.get("infantry");
+    if (infantryAttrs) {
+      const groundCombat: CombatAttrs | undefined =
+        infantryAttrs.getGroundCombat();
+      if (groundCombat) {
+        groundCombat.addHit(-1);
+      }
+    }
+  },
 };
