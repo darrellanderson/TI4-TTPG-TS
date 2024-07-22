@@ -5,14 +5,20 @@ import {
 } from "../../../../combat-lib/combat-roll/combat-roll";
 import { UnitModifierSchemaType } from "../../../schema/unit-modifier-schema";
 
-export const X: UnitModifierSchemaType = {
-  name: "",
+export const FourthMoon: UnitModifierSchemaType = {
+  name: "Fourth Moon",
   description: "Opponent's ships cannot use SUSTAIN DAMAGE",
   owner: "opponent",
-  priority: "",
+  priority: "adjust",
   triggers: [{ cardClass: "flagship", nsidName: "fourth-moon" }],
   applies: (combatRoll: CombatRoll): boolean => {
-    return false;
+    return combatRoll.opponent.hasUnit("flagship");
   },
-  apply: (combatRoll: CombatRoll): void => {},
+  apply: (combatRoll: CombatRoll): void => {
+    for (const unitAttrs of combatRoll.opponent.unitAttrsSet.getAll()) {
+      if (unitAttrs.hasSustainDamage()) {
+        unitAttrs.setDisableSustainDamage(true);
+      }
+    }
+  },
 };

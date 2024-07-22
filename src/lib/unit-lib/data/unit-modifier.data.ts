@@ -20,6 +20,18 @@ add("base", AntimassDeflectors);
 import { Bunker } from "./unit-modifiers/base/bunker";
 add("base", Bunker);
 
+import { CmorranNorr } from "./unit-modifiers/base/cmorran-norr";
+add("base", CmorranNorr);
+
+import { FourthMoon } from "./unit-modifiers/base/fourth-moon";
+add("base", FourthMoon);
+
+import { Matriarch } from "./unit-modifiers/base/matriarch";
+add("base", Matriarch);
+
+import { Unrelenting } from "./unit-modifiers/base/unrelenting";
+add("base", Unrelenting);
+
 import { CustodiaVigilia } from "./unit-modifiers/codex-vigil/custodia-vigilia";
 add("codex-vigil", CustodiaVigilia);
 
@@ -52,6 +64,9 @@ add("pok", Iconoclast);
 
 import { Maban } from "./unit-modifiers/pok/maban";
 add("pok", Maban);
+
+import { MollTerminus } from "./unit-modifiers/pok/moll-terminus";
+add("pok", MollTerminus);
 
 import { Mordred } from "./unit-modifiers/pok/mordred";
 add("pok", Mordred);
