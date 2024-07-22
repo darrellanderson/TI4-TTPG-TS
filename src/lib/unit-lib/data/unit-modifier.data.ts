@@ -35,6 +35,9 @@ add("base", NebulaDefense);
 import { SalaiSaiCorian } from "./unit-modifiers/base/salai-sai-corian";
 add("base", SalaiSaiCorian);
 
+import { TekklarLegion } from "./unit-modifiers/base/tekklar-legion";
+add("base", TekklarLegion);
+
 import { TheAlastor } from "./unit-modifiers/base/the-alastor";
 add("base", TheAlastor);
 
