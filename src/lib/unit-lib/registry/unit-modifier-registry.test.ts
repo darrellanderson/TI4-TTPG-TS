@@ -1,5 +1,4 @@
 import { UnitModifierSchemaType } from "../schema/unit-modifier-schema";
-import { UnitModifier } from "../unit-modifier/unit-modifier";
 import { UnitModifierRegistry } from "./unit-modifier-registry";
 
 it("constructor", () => {
