@@ -140,6 +140,9 @@ export class CombatRoll {
   public readonly self: CombatRollPerPlayerData;
   public readonly opponent: CombatRollPerPlayerData;
 
+  // Share for unit modifiers.
+  public readonly find: Find = new Find();
+
   static createCooked(params: CombatRollParams): CombatRoll {
     return new CombatRoll(params)
       .applyUnitPlasticAndSetOpponentPlayerSlot() // assign opponent player slot early!
@@ -295,6 +298,16 @@ export class CombatRoll {
           !UnitModifierActiveIdle.isActive(obj)
         ) {
           useModifier = false;
+        }
+
+        // Self-promissory notes are "for sale" and not active.
+        if (nsid.startsWith("card.promissory:") && obj) {
+          const owner: number = this.find.closestOwnedCardHolderOwner(
+            obj.getPosition()
+          );
+          if (owner === selfSlot) {
+            useModifier = false;
+          }
         }
 
         if (useModifier) {
