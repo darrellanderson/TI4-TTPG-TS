@@ -16,12 +16,16 @@
     "watch": "ttpg-scripts watch",
     "postpublish": "ttpg-scripts postpublish",
     "check:prettier": "prettier --check .",
-    "test": "jest"
+    "test": "jest",
+    "lint": "ESLINT_USE_FLAT_CONFIG=false eslint --ext .ts --debug src"
   },
   "devDependencies": {
     "@tabletop-playground/api": "^0.39.0",
     "@types/jest": "^29.5.11",
     "@types/node": "^20.14.2",
+    "@typescript-eslint/eslint-plugin": "^7.17.0",
+    "@typescript-eslint/parser": "^7.17.0",
+    "eslint": "^9.7.0",
     "jest": "^29.7.0",
     "sharp": "^0.33.4",
     "ts-jest": "^29.1.1",

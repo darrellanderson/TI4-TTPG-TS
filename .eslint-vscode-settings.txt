@@ -1,0 +1,4 @@
+In settings.json:
+
+  "eslint.validate": ["javascript", "typescript"],
+  "eslint.useFlatConfig": false
