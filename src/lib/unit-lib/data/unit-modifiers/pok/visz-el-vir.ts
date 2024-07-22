@@ -5,8 +5,8 @@ import {
 } from "../../../../combat-lib/combat-roll/combat-roll";
 import { UnitModifierSchemaType } from "../../../schema/unit-modifier-schema";
 
-export const X: UnitModifierSchemaType = {
-  name: "",
+export const ViszElVir: UnitModifierSchemaType = {
+  name: "Visz El Vir",
   description: "Your mechs in this system roll 1 additional die during combat",
   owner: "",
   priority: "",

@@ -94,3 +94,6 @@ add("pok", UlTheProgenitor);
 
 import { ViscountUnlenn } from "./unit-modifiers/pok/viscount-unlenn";
 add("pok", ViscountUnlenn);
+
+import { ViszElVir } from "./unit-modifiers/pok/visz-el-vir";
+add("pok", ViszElVir);
