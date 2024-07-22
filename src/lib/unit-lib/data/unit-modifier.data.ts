@@ -29,6 +29,12 @@ add("base", FourthMoon);
 import { Matriarch } from "./unit-modifiers/base/matriarch";
 add("base", Matriarch);
 
+import { SalaiSaiCorian } from "./unit-modifiers/base/salai-sai-corian";
+add("base", SalaiSaiCorian);
+
+import { TheAlastor } from "./unit-modifiers/base/the-alastor";
+add("base", TheAlastor);
+
 import { Unrelenting } from "./unit-modifiers/base/unrelenting";
 add("base", Unrelenting);
 
