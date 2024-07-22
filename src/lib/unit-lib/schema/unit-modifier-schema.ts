@@ -46,6 +46,7 @@ export const UnitModifierSchema = z
     name: z.string(),
     description: z.string(),
 
+    triggerAlways: z.boolean().optional(),
     triggers: z.array(UnitModifierTrigger),
 
     isActiveIdle: z.boolean().optional(),

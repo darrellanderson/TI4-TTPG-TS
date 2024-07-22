@@ -347,6 +347,13 @@ export class CombatRoll {
       }
     }
 
+    // "Always" modifiers.
+    for (const modifier of TI4.unitModifierRegistry.getAlways()) {
+      if (modifier.applies(this)) {
+        unitModifiers.push(modifier);
+      }
+    }
+
     UnitModifier.sortByApplyOrder(unitModifiers);
     return unitModifiers;
   }
@@ -435,7 +442,10 @@ export class CombatRoll {
       // allowing for multiple players to have units in the same area.
       // Unclear how to resolve that until rules are known.
       if (candidates.size === 1) {
-        this.opponent.playerSlot = candidates.values().next().value;
+        const value: number | undefined = candidates.values().next().value;
+        if (value !== undefined) {
+          this.opponent.playerSlot = value;
+        }
       }
     }
 
@@ -648,6 +658,10 @@ export class CombatRoll {
       }
     }
     return result;
+  }
+
+  public getActivatingPlayerSlot(): number {
+    return this._params.activatingPlayerSlot;
   }
 
   public getUnitModifierNames(): Array<string> {

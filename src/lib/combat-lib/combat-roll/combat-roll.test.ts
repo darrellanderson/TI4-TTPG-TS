@@ -95,6 +95,7 @@ it("constructor", () => {
   };
   const combatRoll: CombatRoll = new CombatRoll(params);
   expect(combatRoll.getRollType()).toBe("spaceCombat");
+  expect(combatRoll.getActivatingPlayerSlot()).toBe(1);
 });
 
 it("_getCombatAttrs (spaceCannonOffense)", () => {

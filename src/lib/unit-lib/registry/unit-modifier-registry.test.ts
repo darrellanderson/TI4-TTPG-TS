@@ -7,7 +7,7 @@ it("constructor", () => {
   expect(registry).toBeInstanceOf(UnitModifierRegistry);
 });
 
-it("getAll", () => {
+it("getAllWithNsids", () => {
   const source: string = "my-source";
   const schema: UnitModifierSchemaType = {
     name: "my-name",
@@ -27,10 +27,32 @@ it("getAll", () => {
   };
 
   const registry: UnitModifierRegistry = new UnitModifierRegistry();
-  expect(registry.getAll().length).toBe(0);
+  expect(registry.getAllWithNsids().length).toBe(0);
 
   registry.load(source, [schema]);
-  expect(registry.getAll().length).toBe(1);
+  expect(registry.getAllWithNsids().length).toBe(1);
+});
+
+it("getAlways", () => {
+  const source: string = "my-source";
+  const schema: UnitModifierSchemaType = {
+    name: "my-name",
+    description: "my-description",
+    owner: "self",
+    priority: "mutate",
+    triggerAlways: true,
+    triggers: [],
+    applies: (x: string): boolean => {
+      return true;
+    },
+    apply: (x: number): void => {},
+  };
+
+  const registry: UnitModifierRegistry = new UnitModifierRegistry();
+  expect(registry.getAllWithNsids().length).toBe(0);
+
+  registry.load(source, [schema]);
+  expect(registry.getAlways().length).toBe(1);
 });
 
 it("getByNsid", () => {

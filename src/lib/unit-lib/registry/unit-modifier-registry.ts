@@ -9,9 +9,14 @@ import { SOURCE_TO_UNIT_MODIFIER_DATA } from "../data/unit-modifier.data";
 
 export class UnitModifierRegistry {
   private readonly _nsidToSchema: Map<string, UnitModifier> = new Map();
+  private readonly _always: Array<UnitModifier> = [];
 
-  getAll(): Array<UnitModifier> {
+  getAllWithNsids(): Array<UnitModifier> {
     return Array.from(this._nsidToSchema.values());
+  }
+
+  getAlways(): Array<UnitModifier> {
+    return [...this._always];
   }
 
   getByNsid(nsid: string): UnitModifier | undefined {
@@ -46,6 +51,10 @@ export class UnitModifierRegistry {
         if (nsid) {
           this._nsidToSchema.set(nsid, unitModifier);
         }
+      }
+
+      if (unitModifierSchema.triggerAlways) {
+        this._always.push(unitModifier);
       }
     }
     return this;

@@ -29,6 +29,9 @@ add("base", FourthMoon);
 import { Matriarch } from "./unit-modifiers/base/matriarch";
 add("base", Matriarch);
 
+import { NebulaDefense } from "./unit-modifiers/base/nebula-defense";
+add("base", NebulaDefense);
+
 import { SalaiSaiCorian } from "./unit-modifiers/base/salai-sai-corian";
 add("base", SalaiSaiCorian);
 
