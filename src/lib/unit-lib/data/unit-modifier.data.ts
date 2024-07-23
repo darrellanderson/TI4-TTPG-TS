@@ -32,6 +32,15 @@ add("base", Matriarch);
 import { NebulaDefense } from "./unit-modifiers/base/nebula-defense";
 add("base", NebulaDefense);
 
+import { PlasmaScoring } from "./unit-modifiers/base/plasma-scoring";
+add("base", PlasmaScoring);
+
+import { ProphecyOfIxth } from "./unit-modifiers/base/prophecy-of-ixth";
+add("base", ProphecyOfIxth);
+
+import { PublicizeWeaponSchematics } from "./unit-modifiers/base/publicize-weapon-schematics";
+add("base", PublicizeWeaponSchematics);
+
 import { RegulatedConscription } from "./unit-modifiers/base/regulated-conscription";
 add("base", RegulatedConscription);
 

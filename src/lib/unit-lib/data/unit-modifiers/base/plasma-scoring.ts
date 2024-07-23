@@ -1,18 +1,29 @@
-import { CombatAttrs } from "../../../unit-attrs/combat-attrs";
 import {
+  BestUnitWithCombatAttrs,
   CombatRoll,
   CombatRollType,
 } from "../../../../combat-lib/combat-roll/combat-roll";
 import { UnitModifierSchemaType } from "../../../schema/unit-modifier-schema";
 
-export const X: UnitModifierSchemaType = {
-  name: "",
-  description: "+1 die to a single SPACE CANNON or BOMBARDMENT roll",
-  owner: "",
-  priority: "",
-  triggers: [],
+export const PlasmaScoring: UnitModifierSchemaType = {
+  name: "Plasma Scoring",
+  description: "+1 dice to a single SPACE CANNON or BOMBARDMENT roll",
+  owner: "self",
+  priority: "adjust",
+  triggers: [{ cardClass: "technology.red", nsidName: "plasma-scoring" }],
   applies: (combatRoll: CombatRoll): boolean => {
-    return false;
+    const rollType: CombatRollType = combatRoll.getRollType();
+    return (
+      rollType === "spaceCannonDefense" ||
+      rollType === "spaceCannonOffense" ||
+      rollType === "bombardment"
+    );
   },
-  apply: (combatRoll: CombatRoll): void => {},
+  apply: (combatRoll: CombatRoll): void => {
+    const combatAttrs: BestUnitWithCombatAttrs | undefined =
+      combatRoll.bestHitUnitWithCombatAttrs();
+    if (combatAttrs) {
+      combatAttrs.combatAttrs.addExtraDice(1);
+    }
+  },
 };
