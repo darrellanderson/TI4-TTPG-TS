@@ -10,7 +10,7 @@ export const TheAlastor: UnitModifierSchemaType = {
   description: "Ground forces may participate in space combat",
   owner: "self",
   priority: "mutate",
-  triggers: [{ cardClass: "flagship", nsidName: "the-alastor" }],
+  triggers: [{ cardClass: "unit", nsidName: "the-alastor" }],
   applies: (combatRoll: CombatRoll): boolean => {
     const rollType: CombatRollType = combatRoll.getRollType();
     return rollType === "spaceCombat" && combatRoll.self.hasUnit("flagship");

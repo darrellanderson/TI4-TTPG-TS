@@ -4,7 +4,7 @@ import { CombatRoll } from "../../../../combat-lib/combat-roll/combat-roll";
 import { UnitAttrs } from "../../../unit-attrs/unit-attrs";
 
 it("registry", () => {
-  const nsid = "flagship:base/salai-sai-corian";
+  const nsid = "unit:base/salai-sai-corian";
   expect(TI4.unitModifierRegistry.getByNsid(nsid)?.getName()).toBe(
     "Salai Sai Corian"
   );
@@ -29,7 +29,7 @@ it("default", () => {
 
 it("modifier", () => {
   placeGameObjects({
-    self: ["flagship:base/salai-sai-corian"],
+    self: ["unit:base/salai-sai-corian"],
     selfUnits: new Map([["flagship", 1]]),
     opponentUnits: new Map([
       ["carrier", 2],

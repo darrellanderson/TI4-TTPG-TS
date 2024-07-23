@@ -10,7 +10,7 @@ export const CmorranNorr: UnitModifierSchemaType = {
   description: "+1 to all COMBAT rolls for other ships with the C'morran N'orr",
   owner: "self",
   priority: "adjust",
-  triggers: [{ cardClass: "flagship", nsidName: "cmorran-norr" }],
+  triggers: [{ cardClass: "unit", nsidName: "cmorran-norr" }],
   applies: (combatRoll: CombatRoll): boolean => {
     const rollType: CombatRollType = combatRoll.getRollType();
     return (

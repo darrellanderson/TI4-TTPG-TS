@@ -11,7 +11,7 @@ export const ViszElVir: UnitModifierSchemaType = {
   description: "Your mechs in this system roll 1 additional die during combat",
   owner: "self",
   priority: "adjust",
-  triggers: [{ cardClass: "flagship", nsidName: "visz-el-vir" }],
+  triggers: [{ cardClass: "unit", nsidName: "visz-el-vir" }],
   applies: (combatRoll: CombatRoll): boolean => {
     const rollType: CombatRollType = combatRoll.getRollType();
     return (

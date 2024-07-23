@@ -60,7 +60,7 @@ export class UnitAttrs {
     } else if (schema.unit === "mech") {
       return `card.leader.mech:${source}/${schema.nsidName}`;
     } else {
-      return `${schema.unit}:${source}/${schema.nsidName}`;
+      return `unit:${source}/${schema.nsidName}`;
     }
   }
 

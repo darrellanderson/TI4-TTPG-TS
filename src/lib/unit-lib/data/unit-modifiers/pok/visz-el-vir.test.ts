@@ -4,7 +4,7 @@ import { CombatRoll } from "../../../../combat-lib/combat-roll/combat-roll";
 import { UnitAttrs } from "../../../unit-attrs/unit-attrs";
 
 it("registry", () => {
-  const nsid = "flagship:pok/visz-el-vir";
+  const nsid = "unit:pok/visz-el-vir";
   expect(TI4.unitModifierRegistry.getByNsid(nsid)?.getName()).toBe(
     "Visz El Vir"
   );
@@ -29,7 +29,7 @@ it("default", () => {
 
 it("modifier", () => {
   placeGameObjects({
-    self: ["flagship:pok/visz-el-vir", "card.leader.mech:pok/eidolon"],
+    self: ["unit:pok/visz-el-vir", "card.leader.mech:pok/eidolon"],
     selfUnits: new Map([
       ["flagship", 1],
       ["mech", 1],

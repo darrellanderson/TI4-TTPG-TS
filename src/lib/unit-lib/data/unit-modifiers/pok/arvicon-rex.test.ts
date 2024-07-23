@@ -10,7 +10,7 @@ import {
 } from "../../../../command-token-lib/command-token-lib";
 
 it("registry", () => {
-  const nsid = "flagship:pok/arvicon-rex";
+  const nsid = "unit:pok/arvicon-rex";
   expect(TI4.unitModifierRegistry.getByNsid(nsid)?.getName()).toBe(
     "Arvicon Rex"
   );
@@ -18,7 +18,7 @@ it("registry", () => {
 
 it("arvicon-rex", () => {
   placeGameObjects({
-    self: ["flagship:pok/arvicon-rex"], // normally linked via faction, force it here
+    self: ["unit:pok/arvicon-rex"], // normally linked via faction, force it here
     selfUnits: new Map([["flagship", 1]]),
   });
   const params: CombatRollParams = {

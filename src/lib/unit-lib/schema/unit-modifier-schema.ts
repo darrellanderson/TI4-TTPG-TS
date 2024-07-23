@@ -10,7 +10,6 @@ export const UnitModifierCardClass = z
     "alliance",
     "commander",
     "faction-ability", // not a card
-    "flagship", // not a card
     "hero",
     "legendary",
     "mech",
@@ -20,6 +19,7 @@ export const UnitModifierCardClass = z
     "technology.green",
     "technology.red",
     "technology.unit-upgrade",
+    "unit", // not a card
   ])
   .readonly();
 export type UnitModifierCardClassType = z.infer<typeof UnitModifierCardClass>;

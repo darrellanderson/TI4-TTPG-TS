@@ -11,7 +11,7 @@ export const Matriarch: UnitModifierSchemaType = {
   description: "Fighters may participate in ground combat",
   owner: "self",
   priority: "mutate",
-  triggers: [{ cardClass: "flagship", nsidName: "matriarch" }],
+  triggers: [{ cardClass: "unit", nsidName: "matriarch" }],
   applies: (combatRoll: CombatRoll): boolean => {
     const rollType: CombatRollType = combatRoll.getRollType();
     return (

@@ -8,7 +8,7 @@ import {
 
 it("memoria-1", () => {
   const memoria1: UnitAttrsSchemaType | undefined =
-    TI4.unitAttrsRegistry.rawByNsid("flagship:pok/memoria");
+    TI4.unitAttrsRegistry.rawByNsid("unit:pok/memoria");
   expect(memoria1).toBeDefined();
 });
 
@@ -29,7 +29,7 @@ it("registry", () => {
 
 it("registry (memoria-1)", () => {
   const memoria1: UnitAttrsSchemaType | undefined =
-    TI4.unitAttrsRegistry.rawByNsid("flagship:pok/memoria");
+    TI4.unitAttrsRegistry.rawByNsid("unit:pok/memoria");
   expect(memoria1?.name).toBe("Memoria I");
 });
 

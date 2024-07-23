@@ -539,7 +539,7 @@ it("_findUnitModifiers (faction ability opponent)", () => {
 it("_findUnitModifiers (flagship)", () => {
   const faction: Faction = new (class extends Faction {
     getFlagshipNsids(): Array<string> {
-      return ["flagship:my-source/my-flagship"];
+      return ["unit:my-source/my-flagship"];
     }
   })();
 
@@ -549,7 +549,7 @@ it("_findUnitModifiers (flagship)", () => {
       description: "my-description",
       owner: "self",
       priority: "mutate",
-      triggers: [{ cardClass: "flagship", nsidName: "my-flagship" }],
+      triggers: [{ cardClass: "unit", nsidName: "my-flagship" }],
       applies: (_combatRoll: CombatRoll): boolean => {
         return true;
       },
@@ -573,7 +573,7 @@ it("_findUnitModifiers (flagship)", () => {
 it("_findUnitModifiers (flagship opponent)", () => {
   const faction: Faction = new (class extends Faction {
     getFlagshipNsids(): Array<string> {
-      return ["flagship:my-source/my-flagship"];
+      return ["unit:my-source/my-flagship"];
     }
   })();
 
@@ -583,7 +583,7 @@ it("_findUnitModifiers (flagship opponent)", () => {
       description: "my-description",
       owner: "opponent",
       priority: "mutate",
-      triggers: [{ cardClass: "flagship", nsidName: "my-flagship" }],
+      triggers: [{ cardClass: "unit", nsidName: "my-flagship" }],
       applies: (_combatRoll: CombatRoll): boolean => {
         return true;
       },
@@ -628,7 +628,7 @@ it("applyUnitOverrides", () => {
 it("applyUnitOverrides (flagship)", () => {
   const faction: Faction = new (class extends Faction {
     getFlagshipNsids(): Array<string> {
-      return ["flagship:my-source/my-flagship"];
+      return ["unit:my-source/my-flagship"];
     }
   })();
 
@@ -655,7 +655,7 @@ it("applyUnitOverrides (flagship)", () => {
 it("applyUnitOverrides (flagship opponent)", () => {
   const faction: Faction = new (class extends Faction {
     getFlagshipNsids(): Array<string> {
-      return ["flagship:my-source/my-flagship"];
+      return ["unit:my-source/my-flagship"];
     }
   })();
 
@@ -667,7 +667,7 @@ it("applyUnitOverrides (flagship opponent)", () => {
     },
   ]);
   expect(
-    TI4.unitAttrsRegistry.rawByNsid("flagship:my-source/my-flagship")
+    TI4.unitAttrsRegistry.rawByNsid("unit:my-source/my-flagship")
   ).toBeDefined();
 
   const combatRoll: CombatRoll = CombatRoll.createCooked({

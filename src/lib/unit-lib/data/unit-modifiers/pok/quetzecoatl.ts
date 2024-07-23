@@ -8,7 +8,7 @@ export const Quetzecoatl: UnitModifierSchemaType = {
     "Other players cannot use SPACE CANNON against your ships in this system",
   owner: "opponent",
   priority: "adjust", // mutate may add new space cannons
-  triggers: [{ cardClass: "flagship", nsidName: "quetzecoatl" }],
+  triggers: [{ cardClass: "unit", nsidName: "quetzecoatl" }],
   applies: (combatRoll: CombatRoll): boolean => {
     return (
       combatRoll.getRollType() === "spaceCannonOffense" &&

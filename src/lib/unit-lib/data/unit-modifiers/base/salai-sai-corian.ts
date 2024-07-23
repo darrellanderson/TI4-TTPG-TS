@@ -13,7 +13,7 @@ export const SalaiSaiCorian: UnitModifierSchemaType = {
     "Rolls number of dice equal to number of opponent's non-fighter ships",
   owner: "self",
   priority: "adjust",
-  triggers: [{ cardClass: "flagship", nsidName: "salai-sai-corian" }],
+  triggers: [{ cardClass: "unit", nsidName: "salai-sai-corian" }],
   applies: (combatRoll: CombatRoll): boolean => {
     const rollType: CombatRollType = combatRoll.getRollType();
     return rollType === "spaceCombat" && combatRoll.self.hasUnit("flagship");

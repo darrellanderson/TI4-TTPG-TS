@@ -13,7 +13,7 @@ export const ArviconRex: UnitModifierSchemaType = {
     "+2 flagship COMBAT against opponent with no token in your fleet pool",
   owner: "self",
   priority: "adjust",
-  triggers: [{ cardClass: "flagship", nsidName: "arvicon-rex" }],
+  triggers: [{ cardClass: "unit", nsidName: "arvicon-rex" }],
   applies: (combatRoll: CombatRoll): boolean => {
     return combatRoll.self.hasUnit("flagship");
   },

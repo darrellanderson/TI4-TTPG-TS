@@ -9,7 +9,7 @@ it("static schemaToNsid (base unit)", () => {
     unit: "carrier",
     nsidName: "my-nsid-name",
   });
-  expect(nsid).toBe("carrier:my-source/my-nsid-name");
+  expect(nsid).toBe("unit:my-source/my-nsid-name");
 });
 
 it("static schemaToNsid (unit upgrade)", () => {
@@ -27,7 +27,7 @@ it("static schemaToNsid (flagship)", () => {
     unit: "flagship",
     nsidName: "my-nsid-name",
   });
-  expect(nsid).toBe("flagship:my-source/my-nsid-name");
+  expect(nsid).toBe("unit:my-source/my-nsid-name");
 });
 
 it("static schemaToNsid (flagship unit upgrade)", () => {

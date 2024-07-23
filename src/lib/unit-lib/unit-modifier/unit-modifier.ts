@@ -35,10 +35,10 @@ export class UnitModifier {
         return `card.leader.${trigger.cardClass}:${source}/${trigger.nsidName}`;
       case "faction-ability":
         return `faction-ability:${source}/${trigger.nsidName}`;
-      case "flagship":
-        return `flagship:${source}/${trigger.nsidName}`;
       case "legendary":
         return `card.legendary-planet:${source}/${trigger.nsidName}`;
+      case "unit":
+        return `unit:${source}/${trigger.nsidName}`;
     }
   }
 

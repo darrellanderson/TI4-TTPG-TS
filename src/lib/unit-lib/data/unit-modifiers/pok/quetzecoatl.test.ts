@@ -3,7 +3,7 @@ import { CombatRoll } from "../../../../combat-lib/combat-roll/combat-roll";
 import { UnitAttrs } from "../../../unit-attrs/unit-attrs";
 
 it("registry", () => {
-  const nsid = "flagship:pok/quetzecoatl";
+  const nsid = "unit:pok/quetzecoatl";
   expect(TI4.unitModifierRegistry.getByNsid(nsid)?.getName()).toBe(
     "Quetzecoatl"
   );
@@ -26,7 +26,7 @@ it("default", () => {
 
 it("modifier", () => {
   placeGameObjects({
-    opponent: ["flagship:pok/quetzecoatl"],
+    opponent: ["unit:pok/quetzecoatl"],
     opponentUnits: new Map([["flagship", 1]]),
   });
   const combatRoll: CombatRoll = CombatRoll.createCooked({

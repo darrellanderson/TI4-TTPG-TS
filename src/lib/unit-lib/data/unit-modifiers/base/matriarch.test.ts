@@ -3,7 +3,7 @@ import { CombatRoll } from "../../../../combat-lib/combat-roll/combat-roll";
 import { UnitAttrs } from "../../../unit-attrs/unit-attrs";
 
 it("registry", () => {
-  const nsid = "flagship:base/matriarch";
+  const nsid = "unit:base/matriarch";
   expect(TI4.unitModifierRegistry.getByNsid(nsid)?.getName()).toBe("Matriarch");
 });
 
@@ -24,7 +24,7 @@ it("default", () => {
 
 it("modifier", () => {
   placeGameObjects({
-    self: ["flagship:base/matriarch"],
+    self: ["unit:base/matriarch"],
     selfUnits: new Map([
       ["flagship", 1],
       ["fighter", 1],

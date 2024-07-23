@@ -8,7 +8,7 @@ import {
 } from "lib/unit-lib/schema/unit-attrs-schema";
 
 it("registry", () => {
-  const nsid = "flagship:base/cmorran-norr";
+  const nsid = "unit:base/cmorran-norr";
   expect(TI4.unitModifierRegistry.getByNsid(nsid)?.getName()).toBe(
     "C'morran N'orr"
   );
@@ -33,7 +33,7 @@ it("default", () => {
 
 it("modifier", () => {
   placeGameObjects({
-    self: ["flagship:base/cmorran-norr"],
+    self: ["unit:base/cmorran-norr"],
     selfUnits: new Map([["flagship", 1]]),
   });
   const combatRoll: CombatRoll = CombatRoll.createCooked({
@@ -74,7 +74,7 @@ it("modifier (synthetic ship with ground combat)", () => {
   ]);
 
   placeGameObjects({
-    self: ["flagship:base/cmorran-norr", "card.action:my-source/my-action"],
+    self: ["unit:base/cmorran-norr", "card.action:my-source/my-action"],
     selfUnits: new Map([["flagship", 1]]),
   });
   const combatRoll: CombatRoll = CombatRoll.createCooked({

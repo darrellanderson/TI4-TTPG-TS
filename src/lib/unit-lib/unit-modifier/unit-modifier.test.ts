@@ -52,11 +52,11 @@ it("static schemaToNsid", () => {
   );
 
   trigger = {
-    cardClass: "flagship",
+    cardClass: "unit",
     nsidName: "my-nsid-name",
   };
   expect(UnitModifier.schemaTriggerToNsid("my-source", trigger)).toBe(
-    "flagship:my-source/my-nsid-name"
+    "unit:my-source/my-nsid-name"
   );
 
   trigger = {

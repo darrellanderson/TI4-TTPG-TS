@@ -3,7 +3,7 @@ import { CombatRoll } from "../../../../combat-lib/combat-roll/combat-roll";
 import { UnitAttrs } from "../../../unit-attrs/unit-attrs";
 
 it("registry", () => {
-  const nsid = "flagship:base/the-alastor";
+  const nsid = "unit:base/the-alastor";
   expect(TI4.unitModifierRegistry.getByNsid(nsid)?.getName()).toBe(
     "The Alastor"
   );
@@ -26,7 +26,7 @@ it("default", () => {
 
 it("modifier", () => {
   placeGameObjects({
-    self: ["flagship:base/the-alastor"],
+    self: ["unit:base/the-alastor"],
     selfUnits: new Map([["flagship", 1]]),
   });
   const combatRoll: CombatRoll = CombatRoll.createCooked({

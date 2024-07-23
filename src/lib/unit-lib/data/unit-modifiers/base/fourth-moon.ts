@@ -1,8 +1,4 @@
-import { CombatAttrs } from "../../../unit-attrs/combat-attrs";
-import {
-  CombatRoll,
-  CombatRollType,
-} from "../../../../combat-lib/combat-roll/combat-roll";
+import { CombatRoll } from "../../../../combat-lib/combat-roll/combat-roll";
 import { UnitModifierSchemaType } from "../../../schema/unit-modifier-schema";
 
 export const FourthMoon: UnitModifierSchemaType = {
@@ -10,7 +6,7 @@ export const FourthMoon: UnitModifierSchemaType = {
   description: "Opponent's ships cannot use SUSTAIN DAMAGE",
   owner: "opponent",
   priority: "adjust",
-  triggers: [{ cardClass: "flagship", nsidName: "fourth-moon" }],
+  triggers: [{ cardClass: "unit", nsidName: "fourth-moon" }],
   applies: (combatRoll: CombatRoll): boolean => {
     return combatRoll.opponent.hasUnit("flagship");
   },

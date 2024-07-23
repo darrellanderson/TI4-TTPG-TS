@@ -23,7 +23,7 @@ export const TheCavalry: UnitModifierSchemaType = {
   },
   apply: (combatRoll: CombatRoll): void => {
     const memoria1: UnitAttrsSchemaType | undefined =
-      TI4.unitAttrsRegistry.rawByNsid("flagship:pok/memoria");
+      TI4.unitAttrsRegistry.rawByNsid("unit:pok/memoria");
     const memoria2: UnitAttrsSchemaType | undefined =
       TI4.unitAttrsRegistry.rawByNsid(
         "card.technology.unit-upgrade:pok/memoria-2"
