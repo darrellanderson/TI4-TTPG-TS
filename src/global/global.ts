@@ -46,6 +46,7 @@ export class TI4Class {
 
 // Also place "TI4" in the global namespace.
 declare global {
+  // eslint-disable-next-line no-var
   var TI4: TI4Class;
 }
 
@@ -61,7 +62,7 @@ resetGlobalThisTI4();
 // Run any delayed initialization, things that need globalThis.TI4 to be set.
 // These are "init" functions in the class objects.
 const iGlobals: Array<IGlobal> = [new DiceGroupCleanup()];
-for (const [k, v] of Object.entries(globalThis.TI4)) {
+for (const v of Object.values(globalThis.TI4)) {
   if (typeof v.init === "function") {
     iGlobals.push(v);
   }

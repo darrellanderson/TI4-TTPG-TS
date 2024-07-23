@@ -133,6 +133,7 @@ it("getAll (single)", () => {
   const result: Array<UnitPlastic> = UnitPlastic.getAll();
   expect(result).toHaveLength(1);
   expect(result[0]?.getUnit()).toBe("infantry");
+  expect(result[0]?.getObj()).toBe(obj);
 });
 
 it("getAll (single, mech)", () => {
@@ -142,6 +143,7 @@ it("getAll (single, mech)", () => {
   const result: Array<UnitPlastic> = UnitPlastic.getAll();
   expect(result).toHaveLength(1);
   expect(result[0]?.getUnit()).toBe("mech");
+  expect(result[0]?.getObj()).toBe(obj);
 });
 
 it("assignOwners", () => {

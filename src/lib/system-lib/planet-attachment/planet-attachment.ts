@@ -123,7 +123,6 @@ export class PlanetAttachment {
    * @returns {boolean} True if the attachment was removed from a system.
    */
   detach(): boolean {
-    const pos: Vector = this._obj.getPosition();
     if (this._planet) {
       if (this._planet.delAttachment(this)) {
         this._planet = undefined;

@@ -29,7 +29,6 @@ export class UnitPlastic {
   public static getOne(obj: GameObject): UnitPlastic | undefined {
     let unit: UnitType | undefined = undefined;
     let count: number = 1;
-    let owningPlayerSlot: number = obj.getOwningPlayerSlot(); // -1 for tokens
 
     const nsid: string = NSID.get(obj);
     if (nsid.startsWith("unit:")) {

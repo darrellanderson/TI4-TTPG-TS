@@ -1,4 +1,4 @@
-import { MapStringEntry, MapStringParser } from "./map-string-parser";
+import { MapStringParser } from "./map-string-parser";
 
 it("parseEntry (tile only)", () => {
   const entry = new MapStringParser().parseEntry("-1");

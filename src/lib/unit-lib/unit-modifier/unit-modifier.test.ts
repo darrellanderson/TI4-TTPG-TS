@@ -147,10 +147,10 @@ it("static sortByApplyOrder", () => {
           nsidName: "my-nsid-name",
         },
       ],
-      applies: (combatRoll: CombatRoll): boolean => {
+      applies: (_combatRoll: CombatRoll): boolean => {
         return true;
       },
-      apply: (combatRoll: CombatRoll): void => {},
+      apply: (_combatRoll: CombatRoll): void => {},
     });
   };
   const modifiers: Array<UnitModifier> = [
@@ -186,10 +186,10 @@ it("constructor", () => {
     owner: "self",
     priority: "mutate",
     triggers: [],
-    applies: (combatRoll: CombatRoll): boolean => {
+    applies: (_combatRoll: CombatRoll): boolean => {
       return true;
     },
-    apply: (combatRoll: CombatRoll): void => {},
+    apply: (_combatRoll: CombatRoll): void => {},
   });
   expect(unitModifier.getName()).toBe("my-name");
   expect(unitModifier.getDescription()).toBe("my-description");
@@ -211,10 +211,10 @@ it("constructor (with optional fields)", () => {
       },
     ],
     isActiveIdle: true,
-    applies: (combatRoll: CombatRoll): boolean => {
+    applies: (_combatRoll: CombatRoll): boolean => {
       return true;
     },
-    apply: (combatRoll: CombatRoll): void => {},
+    apply: (_combatRoll: CombatRoll): void => {},
   });
   expect(unitModifier.getDescription()).toBe("my-description");
   expect(unitModifier.getName()).toBe("my-name");
@@ -230,10 +230,10 @@ it("applies/apply (empty)", () => {
     owner: "self",
     priority: "mutate",
     triggers: [],
-    applies: (combatRoll: CombatRoll): boolean => {
+    applies: (_combatRoll: CombatRoll): boolean => {
       return true;
     },
-    apply: (combatRoll: CombatRoll): void => {},
+    apply: (_combatRoll: CombatRoll): void => {},
   });
   const combatRoll: CombatRoll = new CombatRoll({
     rollType: "spaceCombat",
@@ -252,10 +252,10 @@ it("applies/apply (given)", () => {
     owner: "self",
     priority: "mutate",
     triggers: [],
-    applies: (combatRoll: CombatRoll): boolean => {
+    applies: (_combatRoll: CombatRoll): boolean => {
       return true;
     },
-    apply: (combatRoll: CombatRoll): void => {},
+    apply: (_combatRoll: CombatRoll): void => {},
   });
   const combatRoll: CombatRoll = new CombatRoll({
     rollType: "spaceCombat",

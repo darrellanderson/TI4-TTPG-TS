@@ -1,7 +1,6 @@
 import {
   MockContainer,
   MockGameObject,
-  MockGameWorld,
   MockPackage,
   mockWorld,
 } from "ttpg-mock";
@@ -19,7 +18,7 @@ it("onObjectCreated/Destroyed", () => {
   );
   expect(registry.rawBySystemTileNumber(1000)).toBeDefined();
 
-  let systemTileObj: GameObject = new MockGameObject({
+  const systemTileObj: GameObject = new MockGameObject({
     id: "my-id",
     templateMetadata: "tile.system:my-source/1000",
   });
@@ -34,7 +33,7 @@ it("onObjectCreated/Destroyed", () => {
 });
 
 it("load (system tile obj exists at load time)", () => {
-  let systemTileObj: GameObject = new MockGameObject({
+  const systemTileObj: GameObject = new MockGameObject({
     id: "my-id",
     templateMetadata: "tile.system:my-source/1000",
   });

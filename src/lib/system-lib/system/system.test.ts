@@ -98,7 +98,7 @@ it("constructor (invalid nsid)", () => {
 
 it("onReleased", () => {
   const systemTileObj: MockGameObject = new MockGameObject({
-    position: [0.1, 0.1, 0],
+    position: [0.1, 0.1, 0], // slightly off-hex position, will snap to hex
     templateMetadata: "tile.system:my-source/1000",
   });
   const system = new System(
@@ -109,6 +109,7 @@ it("onReleased", () => {
   const player: Player = new MockPlayer();
   systemTileObj._releaseAsPlayer(player, false);
   expect(systemTileObj.getPosition().toString()).toEqual("(X=0,Y=0,Z=0)");
+  expect(system.getAttachments()).toEqual([]);
 });
 
 it("attachment management", () => {

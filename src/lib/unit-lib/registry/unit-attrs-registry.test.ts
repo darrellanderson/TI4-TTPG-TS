@@ -45,7 +45,6 @@ it("load (invalid schema)", () => {
 });
 
 it("loadDefaultData", () => {
-  const nsidName = "hybrid-crystal-fighter";
   const nsid1 = "fighter:base/hybrid-crystal-fighter";
   const nsid2 = "card.technology.unit-upgrade:base/hybrid-crystal-fighter-2";
 

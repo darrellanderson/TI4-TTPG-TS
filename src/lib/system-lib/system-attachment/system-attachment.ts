@@ -127,7 +127,6 @@ export class SystemAttachment {
    * @returns {boolean} True if the attachment was removed from a system.
    */
   detach(): boolean {
-    const pos: Vector = this._obj.getPosition();
     if (this._system && this._system.hasAttachment(this)) {
       if (this._system.delAttachment(this)) {
         this._system = undefined;
@@ -221,7 +220,7 @@ export class SystemAttachment {
    * @returns {Array<string>} The wormholes of the system attachment.
    */
   getWormholes(): Array<string> {
-    let result: Array<string> = [];
+    const result: Array<string> = [];
     if (this._params.wormholesFaceDown && !Facing.isFaceUp(this._obj)) {
       result.push(...this._params.wormholesFaceDown);
     } else if (this._params.wormholes) {

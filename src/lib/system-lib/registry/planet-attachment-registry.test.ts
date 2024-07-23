@@ -39,7 +39,7 @@ it("getByPlanetAttachmentObjId", () => {
     { source: "my-source", packageId: "my-package-id" },
     [{ name: "my-name", nsidName: "my-nsid-name" }]
   );
-  const token: GameObject = new MockGameObject({
+  new MockGameObject({
     id: "my-id",
     templateMetadata: "token.attachment.planet:my-source/my-nsid-name",
   });
