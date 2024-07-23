@@ -1,3 +1,4 @@
+import { CombatRoll } from "../../combat-lib/combat-roll/combat-roll";
 import { NsidNameSchema } from "../../system-lib/schema/basic-types-schema";
 import { z } from "zod";
 
@@ -55,12 +56,20 @@ export const UnitModifierSchema = z
 
     // Should this modifier be used?
     // Zod supports z.* argument validation, use z.any() to allow something else.
+    // Argument is CombatRoll (see lib/combat-lib/combat-roll/combat-roll.ts).
     applies: z.function().args(z.any()).returns(z.boolean()),
 
     // Apply the modifier to the unit attributes.
     // Zod supports z.* argument validation, use z.any() to allow something else.
+    // Argument is CombatRoll (see lib/combat-lib/combat-roll/combat-roll.ts).
     apply: z.function().args(z.any()).returns(z.void()),
   })
   .strict()
   .readonly();
-export type UnitModifierSchemaType = z.infer<typeof UnitModifierSchema>;
+export type UnitModifierSchemaType = Omit<
+  z.infer<typeof UnitModifierSchema>,
+  "apply" | "applies"
+> & {
+  applies: (combatRoll: CombatRoll) => boolean;
+  apply: (combatRoll: CombatRoll) => void;
+};

@@ -26,7 +26,6 @@ import { UnitAttrs } from "../../unit-lib/unit-attrs/unit-attrs";
 import { UnitModifier } from "../../unit-lib/unit-modifier/unit-modifier";
 import { UnitModifierActiveIdle } from "../../unit-lib/unit-modifier/unit-modifier-active-idle";
 import { UnitPlastic } from "../../unit-lib/unit-plastic/unit-plastic";
-import exp from "constants";
 
 it("data addSyntheticUnit", () => {
   const data: CombatRollPerPlayerData = new CombatRollPerPlayerData();
@@ -255,10 +254,10 @@ it("_findUnitModifiers (self, opponent)", () => {
       owner: "self",
       priority: "mutate",
       triggers: [{ cardClass: "action", nsidName: "my-self-nsid-name" }],
-      applies: (combatRoll: CombatRoll): boolean => {
+      applies: (_combatRoll: CombatRoll): boolean => {
         return true;
       },
-      apply: (combatRoll: CombatRoll): void => {},
+      apply: (_combatRoll: CombatRoll): void => {},
     },
     {
       name: "my-opponent-modifier",
@@ -266,10 +265,10 @@ it("_findUnitModifiers (self, opponent)", () => {
       owner: "opponent",
       priority: "mutate",
       triggers: [{ cardClass: "action", nsidName: "my-opponent-nsid-name" }],
-      applies: (combatRoll: CombatRoll): boolean => {
+      applies: (_combatRoll: CombatRoll): boolean => {
         return true;
       },
-      apply: (combatRoll: CombatRoll): void => {},
+      apply: (_combatRoll: CombatRoll): void => {},
     },
   ]);
   MockCard.simple("card.action:my-source/my-self-nsid-name");
@@ -301,10 +300,10 @@ it("_findUnitModifiers", () => {
       owner: "self",
       priority: "mutate",
       triggers: [{ cardClass: "action", nsidName: "my-action" }],
-      applies: (combatRoll: CombatRoll): boolean => {
+      applies: (_combatRoll: CombatRoll): boolean => {
         return true;
       },
-      apply: (combatRoll: CombatRoll): void => {},
+      apply: (_combatRoll: CombatRoll): void => {},
     },
   ]);
   const nsid: string = "card.action:my-source/my-action";
@@ -347,10 +346,10 @@ it("_findUnitModifiers (active/idle)", () => {
       priority: "mutate",
       isActiveIdle: true,
       triggers: [{ cardClass: "action", nsidName: "my-action" }],
-      applies: (combatRoll: CombatRoll): boolean => {
+      applies: (_combatRoll: CombatRoll): boolean => {
         return true;
       },
-      apply: (combatRoll: CombatRoll): void => {},
+      apply: (_combatRoll: CombatRoll): void => {},
     },
   ]);
   const nsid: string = "card.action:my-source/my-action";
@@ -394,10 +393,10 @@ it("_findUnitModifiers (control token)", () => {
       owner: "self",
       priority: "mutate",
       triggers: [{ cardClass: "agenda", nsidName: "my-nsid-name" }],
-      applies: (combatRoll: CombatRoll): boolean => {
+      applies: (_combatRoll: CombatRoll): boolean => {
         return true;
       },
-      apply: (combatRoll: CombatRoll): void => {},
+      apply: (_combatRoll: CombatRoll): void => {},
     },
   ]);
   MockCard.simple("card.agenda:my-source/my-nsid-name");
@@ -432,10 +431,10 @@ it("_findUnitModifiers (faction ability)", () => {
       owner: "self",
       priority: "mutate",
       triggers: [{ cardClass: "faction-ability", nsidName: "my-ability" }],
-      applies: (combatRoll: CombatRoll): boolean => {
+      applies: (_combatRoll: CombatRoll): boolean => {
         return true;
       },
-      apply: (combatRoll: CombatRoll): void => {},
+      apply: (_combatRoll: CombatRoll): void => {},
     },
   ]);
 
@@ -459,10 +458,10 @@ it("_findUnitModifiers (faction ability opponent)", () => {
       owner: "opponent",
       priority: "mutate",
       triggers: [{ cardClass: "faction-ability", nsidName: "my-ability" }],
-      applies: (combatRoll: CombatRoll): boolean => {
+      applies: (_combatRoll: CombatRoll): boolean => {
         return true;
       },
-      apply: (combatRoll: CombatRoll): void => {},
+      apply: (_combatRoll: CombatRoll): void => {},
     },
   ]);
 
@@ -486,10 +485,10 @@ it("_findUnitModifiers (flagship)", () => {
       owner: "self",
       priority: "mutate",
       triggers: [{ cardClass: "flagship", nsidName: "my-flagship" }],
-      applies: (combatRoll: CombatRoll): boolean => {
+      applies: (_combatRoll: CombatRoll): boolean => {
         return true;
       },
-      apply: (combatRoll: CombatRoll): void => {},
+      apply: (_combatRoll: CombatRoll): void => {},
     },
   ]);
 
@@ -516,10 +515,10 @@ it("_findUnitModifiers (flagship opponent)", () => {
       owner: "opponent",
       priority: "mutate",
       triggers: [{ cardClass: "flagship", nsidName: "my-flagship" }],
-      applies: (combatRoll: CombatRoll): boolean => {
+      applies: (_combatRoll: CombatRoll): boolean => {
         return true;
       },
-      apply: (combatRoll: CombatRoll): void => {},
+      apply: (_combatRoll: CombatRoll): void => {},
     },
   ]);
 
@@ -618,10 +617,10 @@ it("applyUnitModifiers", () => {
       owner: "self",
       priority: "mutate",
       triggers: [{ cardClass: "action", nsidName: "my-self-nsid-name" }],
-      applies: (combatRoll: CombatRoll): boolean => {
+      applies: (_combatRoll: CombatRoll): boolean => {
         return true;
       },
-      apply: (combatRoll: CombatRoll): void => {},
+      apply: (_combatRoll: CombatRoll): void => {},
     },
   ]);
   MockCard.simple("card.action:my-source/my-self-nsid-name");
@@ -651,10 +650,10 @@ it("applyUnitModifiers (modifier throws)", () => {
       owner: "self",
       priority: "mutate",
       triggers: [{ cardClass: "action", nsidName: "my-self-nsid-name" }],
-      applies: (combatRoll: CombatRoll): boolean => {
+      applies: (_combatRoll: CombatRoll): boolean => {
         return true;
       },
-      apply: (combatRoll: CombatRoll): void => {
+      apply: (_combatRoll: CombatRoll): void => {
         throw new Error("buggy modifier");
       },
     },
@@ -867,9 +866,7 @@ it("_pruneToUnitsClosestToPlanet", () => {
     position: noPlanet.getPosition(),
   });
 
-  let combatRoll: CombatRoll;
-
-  combatRoll = CombatRoll.createCooked({
+  const combatRoll: CombatRoll = CombatRoll.createCooked({
     rollType: "groundCombat",
     hex: "<0,0,0>",
     planetName: yesPlanet.getName(),
@@ -999,7 +996,7 @@ it("createDiceParamsArray (range, crit)", () => {
       owner: "self",
       priority: "mutate",
       triggers: [{ cardClass: "action", nsidName: "my-nsid-name" }],
-      applies: (combatRoll: CombatRoll): boolean => {
+      applies: (_combatRoll: CombatRoll): boolean => {
         return true;
       },
       apply: (combatRoll: CombatRoll): void => {

@@ -1,3 +1,4 @@
+import { CombatRoll } from "../../combat-lib/combat-roll/combat-roll";
 import {
   UnitModifierSchema,
   UnitModifierSchemaType,
@@ -15,10 +16,10 @@ it("parse", () => {
         nsidName: "my-nsid-name",
       },
     ],
-    applies: (x: string): boolean => {
+    applies: (_x: CombatRoll): boolean => {
       return true;
     },
-    apply: (x: number): void => {},
+    apply: (_x: CombatRoll): void => {},
   };
   const parsed = UnitModifierSchema.parse(params);
   expect(parsed).toBeDefined(); // toEqual fails for function values, just check exists

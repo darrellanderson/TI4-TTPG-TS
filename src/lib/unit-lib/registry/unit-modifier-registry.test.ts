@@ -1,3 +1,4 @@
+import { CombatRoll } from "../../combat-lib/combat-roll/combat-roll";
 import { UnitModifierSchemaType } from "../schema/unit-modifier-schema";
 import { UnitModifierRegistry } from "./unit-modifier-registry";
 
@@ -19,10 +20,10 @@ it("getAllWithNsids", () => {
         nsidName: "my-nsid-name",
       },
     ],
-    applies: (x: string): boolean => {
+    applies: (_x: CombatRoll): boolean => {
       return true;
     },
-    apply: (x: number): void => {},
+    apply: (_x: CombatRoll): void => {},
   };
 
   const registry: UnitModifierRegistry = new UnitModifierRegistry();
@@ -41,10 +42,10 @@ it("getAlways", () => {
     priority: "mutate",
     triggerAlways: true,
     triggers: [],
-    applies: (x: string): boolean => {
+    applies: (_x: CombatRoll): boolean => {
       return true;
     },
-    apply: (x: number): void => {},
+    apply: (_x: CombatRoll): void => {},
   };
 
   const registry: UnitModifierRegistry = new UnitModifierRegistry();
@@ -67,10 +68,10 @@ it("getByNsid", () => {
         nsidName: "my-nsid-name",
       },
     ],
-    applies: (x: string): boolean => {
+    applies: (_x: CombatRoll): boolean => {
       return true;
     },
-    apply: (x: number): void => {},
+    apply: (_x: CombatRoll): void => {},
   };
   const nsid: string = "card.action:my-source/my-nsid-name";
 
@@ -92,10 +93,10 @@ it("load", () => {
         owner: "self",
         priority: "mutate",
         triggers: [],
-        applies: (x: string): boolean => {
+        applies: (_x: CombatRoll): boolean => {
           return true;
         },
-        apply: (x: number): void => {},
+        apply: (_x: CombatRoll): void => {},
       },
     ])
   ).toBeInstanceOf(UnitModifierRegistry);
@@ -111,10 +112,10 @@ it("load (invalid)", () => {
         triggers: [{ cardClass: "action", nsidName: "@@invalid" }],
         owner: "self",
         priority: "mutate",
-        applies: (x: string): boolean => {
+        applies: (_x: CombatRoll): boolean => {
           return true;
         },
-        apply: (x: number): void => {},
+        apply: (_x: CombatRoll): void => {},
       },
     ]);
   }).toThrow();
