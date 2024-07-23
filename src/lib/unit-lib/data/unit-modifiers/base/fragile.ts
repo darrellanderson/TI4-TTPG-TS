@@ -5,14 +5,27 @@ import {
 } from "../../../../combat-lib/combat-roll/combat-roll";
 import { UnitModifierSchemaType } from "../../../schema/unit-modifier-schema";
 
-export const X: UnitModifierSchemaType = {
-  name: "",
+export const Fragile: UnitModifierSchemaType = {
+  name: "Fragile",
   description: "-1 to all COMBAT rolls",
-  owner: "",
-  priority: "",
-  triggers: [],
+  owner: "self",
+  priority: "adjust",
+  triggers: [{ cardClass: "faction-ability", nsidName: "fragile" }],
   applies: (combatRoll: CombatRoll): boolean => {
-    return false;
+    const rollType: CombatRollType = combatRoll.getRollType();
+    return rollType === "spaceCombat" || rollType === "groundCombat";
   },
-  apply: (combatRoll: CombatRoll): void => {},
+  apply: (combatRoll: CombatRoll): void => {
+    for (const unitAttrs of combatRoll.self.unitAttrsSet.getAll()) {
+      const spaceCombat: CombatAttrs | undefined = unitAttrs.getSpaceCombat();
+      if (spaceCombat) {
+        spaceCombat.addHit(-1);
+      }
+
+      const groundCombat: CombatAttrs | undefined = unitAttrs.getGroundCombat();
+      if (groundCombat) {
+        groundCombat.addHit(-1);
+      }
+    }
+  },
 };

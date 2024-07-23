@@ -26,8 +26,17 @@ add("base", CmorranNorr);
 import { FourthMoon } from "./unit-modifiers/base/fourth-moon";
 add("base", FourthMoon);
 
+import { Fragile } from "./unit-modifiers/base/fragile";
+add("base", Fragile);
+
 import { Matriarch } from "./unit-modifiers/base/matriarch";
 add("base", Matriarch);
+
+import { MoraleBoost } from "./unit-modifiers/base/morale-boost";
+add("base", MoraleBoost);
+
+import { MunitionsReserves } from "./unit-modifiers/base/munitions-reserves";
+add("base", MunitionsReserves);
 
 import { NebulaDefense } from "./unit-modifiers/base/nebula-defense";
 add("base", NebulaDefense);

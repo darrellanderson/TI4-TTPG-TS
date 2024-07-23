@@ -1,19 +1,23 @@
 import { CombatAttrs } from "../../../unit-attrs/combat-attrs";
-import {
-  CombatRoll,
-  CombatRollType,
-} from "../../../../combat-lib/combat-roll/combat-roll";
+import { CombatRoll } from "../../../../combat-lib/combat-roll/combat-roll";
 import { UnitModifierSchemaType } from "../../../schema/unit-modifier-schema";
 
-export const X: UnitModifierSchemaType = {
-  name: "",
+export const MunitionsReserves: UnitModifierSchemaType = {
+  name: "Munitions Reserves",
   description: "Spend 2 TGs to reroll space combat misses",
-  owner: "",
-  priority: "",
-  triggers: [],
+  owner: "self",
+  priority: "adjust",
+  triggers: [{ cardClass: "faction-ability", nsidName: "munitions-reserves" }],
   isActiveIdle: true,
   applies: (combatRoll: CombatRoll): boolean => {
-    return false;
+    return combatRoll.getRollType() === "spaceCombat";
   },
-  apply: (combatRoll: CombatRoll): void => {},
+  apply: (combatRoll: CombatRoll): void => {
+    for (const unitAttrs of combatRoll.self.unitAttrsSet.getAll()) {
+      const spaceCombat: CombatAttrs | undefined = unitAttrs.getSpaceCombat();
+      if (spaceCombat) {
+        spaceCombat.setRerollMisses(true);
+      }
+    }
+  },
 };

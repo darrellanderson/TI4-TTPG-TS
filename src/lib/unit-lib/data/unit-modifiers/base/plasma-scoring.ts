@@ -9,7 +9,7 @@ export const PlasmaScoring: UnitModifierSchemaType = {
   name: "Plasma Scoring",
   description: "+1 dice to a single SPACE CANNON or BOMBARDMENT roll",
   owner: "self",
-  priority: "adjust",
+  priority: "choose",
   triggers: [{ cardClass: "technology.red", nsidName: "plasma-scoring" }],
   applies: (combatRoll: CombatRoll): boolean => {
     const rollType: CombatRollType = combatRoll.getRollType();
