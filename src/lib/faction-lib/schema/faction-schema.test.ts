@@ -2,8 +2,9 @@ import { FactionSchema, FactionSchemaType } from "./faction-schema";
 
 it("parse", () => {
   const schema: FactionSchemaType = {
-    name: "my-name",
     nsidName: "my-nsid-name",
+    name: "my-name",
+    abbr: "my-abbr",
     abilities: [],
     commodities: 0,
     home: 0,
@@ -13,7 +14,7 @@ it("parse", () => {
       heroes: [],
       mechs: [],
     },
-    promssoryNotes: [],
+    promissoryNotes: [],
     startingTechs: [],
     startingUnits: { carrier: 0 },
     techs: [],

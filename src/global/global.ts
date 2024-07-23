@@ -10,6 +10,7 @@ import {
   OnCardBecameSingletonOrDeck,
 } from "ttpg-darrell";
 
+import { FactionRegistry } from "../lib/faction-lib/registry/faction-registry";
 import { PlanetAttachmentRegistry } from "../lib/system-lib/registry/planet-attachment-registry";
 import { SystemAttachmentRegistry } from "../lib/system-lib/registry/system-attachment-registry";
 import { SystemRegistry } from "../lib/system-lib/registry/system-registry";
@@ -37,6 +38,7 @@ export class TI4Class {
 
   // Libraries.
   hex = new Hex(HEX_LAYOUT_POINTY, 5.77735 * 1.5);
+  factionRegistry = new FactionRegistry().loadDefaultData();
   planetAttachmentRegistry = new PlanetAttachmentRegistry().loadDefaultData();
   systemAttachmentRegistry = new SystemAttachmentRegistry().loadDefaultData();
   systemRegistry = new SystemRegistry().loadDefaultData();

@@ -4,8 +4,10 @@ import { NsidNameSchema } from "../../system-lib/schema/basic-types-schema";
 
 export const FactionSchema = z
   .object({
-    name: z.string().min(1),
     nsidName: NsidNameSchema,
+
+    name: z.string().min(1), // human-readable name
+    abbr: z.string().min(1), // abbreviation
 
     abilities: z.array(NsidNameSchema),
     commodities: z.number().int().min(0),
@@ -20,7 +22,7 @@ export const FactionSchema = z
       })
       .strict()
       .readonly(),
-    promssoryNotes: z.array(NsidNameSchema),
+    promissoryNotes: z.array(NsidNameSchema),
     startingTechs: z.array(NsidNameSchema),
     startingUnits: z
       .object({
