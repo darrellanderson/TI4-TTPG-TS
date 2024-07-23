@@ -7,7 +7,8 @@ import { UnitModifierSchemaType } from "../../../schema/unit-modifier-schema";
 
 export const X: UnitModifierSchemaType = {
   name: "",
-  description: "",
+  description:
+    "Players cannot use BOMBARDMENT against units that are on cultural planets",
   owner: "",
   priority: "",
   triggers: [],

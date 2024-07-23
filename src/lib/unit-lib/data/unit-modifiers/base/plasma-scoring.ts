@@ -7,7 +7,7 @@ import { UnitModifierSchemaType } from "../../../schema/unit-modifier-schema";
 
 export const X: UnitModifierSchemaType = {
   name: "",
-  description: "",
+  description: "+1 die to a single SPACE CANNON or BOMBARDMENT roll",
   owner: "",
   priority: "",
   triggers: [],

@@ -32,6 +32,9 @@ add("base", Matriarch);
 import { NebulaDefense } from "./unit-modifiers/base/nebula-defense";
 add("base", NebulaDefense);
 
+import { RegulatedConscription } from "./unit-modifiers/base/regulated-conscription";
+add("base", RegulatedConscription);
+
 import { SalaiSaiCorian } from "./unit-modifiers/base/salai-sai-corian";
 add("base", SalaiSaiCorian);
 
@@ -44,8 +47,11 @@ add("base", TheAlastor);
 import { Unrelenting } from "./unit-modifiers/base/unrelenting";
 add("base", Unrelenting);
 
+import { Blitz } from "./unit-modifiers/codex-ordinian/blitz";
+add("codex.ordinian", Blitz);
+
 import { CustodiaVigilia } from "./unit-modifiers/codex-vigil/custodia-vigilia";
-add("codex-vigil", CustodiaVigilia);
+add("codex.vigil", CustodiaVigilia);
 
 import { _2ram } from "./unit-modifiers/pok/2ram";
 add("pok", _2ram);

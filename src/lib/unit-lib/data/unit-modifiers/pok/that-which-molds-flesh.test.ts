@@ -1,5 +1,4 @@
 import { OPPONENT, placeGameObjects, SELF } from "../abstract.test";
-import { CombatAttrs } from "../../../unit-attrs/combat-attrs";
 import { CombatRoll } from "../../../../combat-lib/combat-roll/combat-roll";
 import { UnitAttrs } from "../../../unit-attrs/unit-attrs";
 

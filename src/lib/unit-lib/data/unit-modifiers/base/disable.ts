@@ -7,7 +7,7 @@ import { UnitModifierSchemaType } from "../../../schema/unit-modifier-schema";
 
 export const X: UnitModifierSchemaType = {
   name: "",
-  description: "",
+  description: "Opponent PDS lose PLANETARY SHIELD and SPACE CANNON DEFENSE",
   owner: "",
   priority: "",
   triggers: [],

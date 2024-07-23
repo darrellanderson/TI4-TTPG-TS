@@ -26,6 +26,7 @@ it("default", () => {
     activatingPlayerSlot: OPPONENT,
     rollingPlayerSlot: SELF,
   });
+  expect(combatRoll.getUnitModifierNames()).toEqual([]);
 });
 
 it("modifier", () => {

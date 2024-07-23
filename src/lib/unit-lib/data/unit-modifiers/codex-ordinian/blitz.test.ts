@@ -4,10 +4,8 @@ import { CombatRoll } from "../../../../combat-lib/combat-roll/combat-roll";
 import { UnitAttrs } from "../../../unit-attrs/unit-attrs";
 
 it("registry", () => {
-  const nsid = "card.leader.mech:pok/shield-paling";
-  expect(TI4.unitModifierRegistry.getByNsid(nsid)?.getName()).toBe(
-    "Shield Paling"
-  );
+  const nsid = "card.action:codex.ordinian/blitz";
+  expect(TI4.unitModifierRegistry.getByNsid(nsid)?.getName()).toBe("Blitz");
 });
 
 it("default", () => {
@@ -19,29 +17,29 @@ it("default", () => {
     activatingPlayerSlot: OPPONENT,
     rollingPlayerSlot: SELF,
   });
+
   expect(combatRoll.getUnitModifierNames()).toEqual([]);
-  const infantryAttrs: UnitAttrs =
-    combatRoll.self.unitAttrsSet.getOrThrow("infantry");
-  const groundCombat: CombatAttrs = infantryAttrs.getGroundCombatOrThrow();
-  expect(groundCombat.getHit()).toBe(8);
+
+  const carrier: UnitAttrs =
+    combatRoll.self.unitAttrsSet.getOrThrow("carrier")!;
+  const carrierBombardment: CombatAttrs | undefined = carrier.getBombardment();
+  expect(carrierBombardment).toBeUndefined();
 });
 
 it("modifier", () => {
-  placeGameObjects({
-    self: ["card.leader.mech:pok/shield-paling"],
-    selfUnits: new Map([["mech", 1]]),
-  });
+  placeGameObjects({ self: ["card.action:codex.ordinian/blitz"] });
   const combatRoll: CombatRoll = CombatRoll.createCooked({
-    rollType: "groundCombat",
+    rollType: "bombardment",
     hex: "<0,0,0>",
     planetName: "Jord",
     activatingPlayerSlot: OPPONENT,
     rollingPlayerSlot: SELF,
   });
 
-  expect(combatRoll.getUnitModifierNames()).toEqual(["Shield Paling"]);
-  const infantryAttrs: UnitAttrs =
-    combatRoll.self.unitAttrsSet.getOrThrow("infantry");
-  const groundCombat: CombatAttrs = infantryAttrs.getGroundCombatOrThrow();
-  expect(groundCombat.getHit()).toBe(7);
+  expect(combatRoll.getUnitModifierNames()).toEqual(["Blitz"]);
+
+  const carrier: UnitAttrs =
+    combatRoll.self.unitAttrsSet.getOrThrow("carrier")!;
+  const carrierBombardment: CombatAttrs = carrier.getBombardmentOrThrow();
+  expect(carrierBombardment.getHit()).toBe(6);
 });

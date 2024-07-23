@@ -3,41 +3,47 @@ import { CombatRoll } from "../../../../combat-lib/combat-roll/combat-roll";
 import { UnitAttrs } from "../../../unit-attrs/unit-attrs";
 
 it("registry", () => {
-  const nsid = "flagship:base/the-alastor";
+  const nsid = "card.agenda:base/regulated-conscription";
   expect(TI4.unitModifierRegistry.getByNsid(nsid)?.getName()).toBe(
-    "The Alastor"
+    "Regulated Conscription"
   );
 });
 
 it("default", () => {
   placeGameObjects({});
   const combatRoll: CombatRoll = CombatRoll.createCooked({
-    rollType: "spaceCombat",
+    rollType: "production",
     hex: "<0,0,0>",
+    planetName: "Jord",
     activatingPlayerSlot: OPPONENT,
     rollingPlayerSlot: SELF,
   });
   expect(combatRoll.getUnitModifierNames()).toEqual([]);
 
+  const fighter: UnitAttrs = combatRoll.self.unitAttrsSet.getOrThrow("fighter");
+  expect(fighter.getProducePerCost()).toBe(2);
+
   const infantry: UnitAttrs =
     combatRoll.self.unitAttrsSet.getOrThrow("infantry");
-  expect(infantry.getSpaceCombat()).toBeUndefined();
+  expect(infantry.getProducePerCost()).toBe(2);
 });
 
 it("modifier", () => {
-  placeGameObjects({
-    self: ["flagship:base/the-alastor"],
-    selfUnits: new Map([["flagship", 1]]),
-  });
+  placeGameObjects({ any: ["card.agenda:base/regulated-conscription"] });
   const combatRoll: CombatRoll = CombatRoll.createCooked({
-    rollType: "spaceCombat",
+    rollType: "production",
     hex: "<0,0,0>",
+    planetName: "Jord",
     activatingPlayerSlot: OPPONENT,
     rollingPlayerSlot: SELF,
   });
-  expect(combatRoll.getUnitModifierNames()).toEqual(["The Alastor"]);
+
+  expect(combatRoll.getUnitModifierNames()).toEqual(["Regulated Conscription"]);
+
+  const fighter: UnitAttrs = combatRoll.self.unitAttrsSet.getOrThrow("fighter");
+  expect(fighter.getProducePerCost()).toBe(1);
 
   const infantry: UnitAttrs =
     combatRoll.self.unitAttrsSet.getOrThrow("infantry");
-  expect(infantry.getSpaceCombat()?.getHit()).toBe(8);
+  expect(infantry.getProducePerCost()).toBe(1);
 });

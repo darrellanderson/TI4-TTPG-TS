@@ -11,7 +11,7 @@ export const EmissaryTaivra: UnitModifierSchemaType = {
   applies: (combatRoll: CombatRoll): boolean => {
     return combatRoll.getRollType() === "spaceCannonOffense";
   },
-  apply: (combatRoll: CombatRoll): void => {
+  apply: (_combatRoll: CombatRoll): void => {
     // nop: adjaceny lib handles this
   },
 };

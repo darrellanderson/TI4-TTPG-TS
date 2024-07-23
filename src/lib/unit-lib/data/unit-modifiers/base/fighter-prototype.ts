@@ -7,7 +7,7 @@ import { UnitModifierSchemaType } from "../../../schema/unit-modifier-schema";
 
 export const X: UnitModifierSchemaType = {
   name: "",
-  description: "",
+  description: "+2 to fighters' COMBAT rolls",
   owner: "",
   priority: "",
   triggers: [],

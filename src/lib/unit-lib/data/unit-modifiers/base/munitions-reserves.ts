@@ -7,10 +7,11 @@ import { UnitModifierSchemaType } from "../../../schema/unit-modifier-schema";
 
 export const X: UnitModifierSchemaType = {
   name: "",
-  description: "",
+  description: "Spend 2 TGs to reroll space combat misses",
   owner: "",
   priority: "",
   triggers: [],
+  isActiveIdle: true,
   applies: (combatRoll: CombatRoll): boolean => {
     return false;
   },
