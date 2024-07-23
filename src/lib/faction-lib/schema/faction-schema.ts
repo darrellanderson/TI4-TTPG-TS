@@ -1,7 +1,6 @@
 import { z } from "zod";
 
 import { NsidNameSchema } from "../../system-lib/schema/basic-types-schema";
-import { UnitSchema } from "../../unit-lib/schema/unit-attrs-schema";
 
 export const FactionSchema = z
   .object({
