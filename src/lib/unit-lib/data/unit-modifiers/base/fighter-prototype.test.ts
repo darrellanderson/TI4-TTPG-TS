@@ -4,9 +4,9 @@ import { CombatRoll } from "../../../../combat-lib/combat-roll/combat-roll";
 import { UnitAttrs } from "../../../unit-attrs/unit-attrs";
 
 it("registry", () => {
-  const nsid = "card.agenda:base/prophecy-of-ixth";
+  const nsid = "card.action:base/fighter-prototype";
   expect(TI4.unitModifierRegistry.getByNsid(nsid)?.getName()).toBe(
-    "Prophecy of Ixth"
+    "Fighter Prototype"
   );
 });
 
@@ -26,18 +26,19 @@ it("default", () => {
 });
 
 it("modifier", () => {
-  placeGameObjects({ self: ["card.agenda:base/prophecy-of-ixth"] });
+  placeGameObjects({ self: ["card.action:base/fighter-prototype"] });
   const combatRoll: CombatRoll = CombatRoll.createCooked({
     rollType: "spaceCombat",
     hex: "<0,0,0>",
     activatingPlayerSlot: OPPONENT,
     rollingPlayerSlot: SELF,
   });
-  expect(combatRoll.getUnitModifierNames()).toEqual(["Prophecy of Ixth"]);
+
+  expect(combatRoll.getUnitModifierNames()).toEqual(["Fighter Prototype"]);
 
   const fighter: UnitAttrs = combatRoll.self.unitAttrsSet.getOrThrow("fighter");
   const spaceCombat: CombatAttrs = fighter.getSpaceCombatOrThrow();
-  expect(spaceCombat.getHit()).toBe(8);
+  expect(spaceCombat.getHit()).toBe(7);
 });
 
 it("modifier (fighter with ground combat)", () => {
@@ -63,7 +64,7 @@ it("modifier (fighter with ground combat)", () => {
 
   placeGameObjects({
     self: [
-      "card.agenda:base/prophecy-of-ixth",
+      "card.action:base/fighter-prototype",
       "card.action:my-source/fighter-with-ground-combat",
     ],
   });
@@ -76,12 +77,12 @@ it("modifier (fighter with ground combat)", () => {
 
   expect(combatRoll.getUnitModifierNames()).toEqual([
     "fighter-with-ground-combat",
-    "Prophecy of Ixth",
+    "Fighter Prototype",
   ]);
 
   const fighter: UnitAttrs = combatRoll.self.unitAttrsSet.getOrThrow("fighter");
   const spaceCombat: CombatAttrs = fighter.getSpaceCombatOrThrow();
-  expect(spaceCombat.getHit()).toBe(8);
+  expect(spaceCombat.getHit()).toBe(7);
   const groundCombat: CombatAttrs = fighter.getGroundCombatOrThrow();
-  expect(groundCombat.getHit()).toBe(8);
+  expect(groundCombat.getHit()).toBe(7);
 });
