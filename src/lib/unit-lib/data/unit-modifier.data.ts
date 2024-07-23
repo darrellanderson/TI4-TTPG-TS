@@ -23,6 +23,9 @@ add("base", Bunker);
 import { CmorranNorr } from "./unit-modifiers/base/cmorran-norr";
 add("base", CmorranNorr);
 
+import { ExperimentalBattlestation } from "./unit-modifiers/base/experimental-battlestation";
+add("base", ExperimentalBattlestation);
+
 import { FighterPrototype } from "./unit-modifiers/base/fighter-prototype";
 add("base", FighterPrototype);
 
