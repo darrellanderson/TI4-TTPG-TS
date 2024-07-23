@@ -2,18 +2,22 @@ import { NsidNameSchemaType } from "lib/system-lib/schema/basic-types-schema";
 
 export class Faction {
   getAbilityNsids(): Array<string> {
-    return ["faction-ability:my-source/my-ability"];
+    return [];
   }
 
   getFlagshipNsids(): Array<string> {
-    return ["flagship:my-source/my-flagship"];
+    return [];
   }
 
   getHomeSystemTileNumber(): number {
-    return 1;
+    return 0;
   }
 
   getNsid(): NsidNameSchemaType {
-    return "faction:my-source/my-faction";
+    return "";
+  }
+
+  getPromissoryNsids(): Array<string> {
+    return [];
   }
 }

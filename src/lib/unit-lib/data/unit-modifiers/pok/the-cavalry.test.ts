@@ -27,6 +27,20 @@ it("registry", () => {
   );
 });
 
+it("registry (memoria-1)", () => {
+  const memoria1: UnitAttrsSchemaType | undefined =
+    TI4.unitAttrsRegistry.rawByNsid("flagship:pok/memoria");
+  expect(memoria1?.name).toBe("Memoria I");
+});
+
+it("registry (memoria-2)", () => {
+  const memoria2: UnitAttrsSchemaType | undefined =
+    TI4.unitAttrsRegistry.rawByNsid(
+      "card.technology.unit-upgrade:pok/memoria-2"
+    );
+  expect(memoria2?.name).toBe("Memoria II");
+});
+
 it("default", () => {
   placeGameObjects({});
   const combatRoll: CombatRoll = CombatRoll.createCooked({

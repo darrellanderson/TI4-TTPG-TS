@@ -385,6 +385,60 @@ it("_findUnitModifiers (active/idle)", () => {
   expect(names).toEqual(["my-modifier-name"]);
 });
 
+it("_findUnitModifiers (self faction promissory)", () => {
+  TI4.unitModifierRegistry.load("my-source", [
+    {
+      name: "my-modifier-name",
+      description: "my-description",
+      owner: "self",
+      priority: "mutate",
+      triggers: [{ cardClass: "promissory", nsidName: "my-test-promissory" }],
+      applies: (_combatRoll: CombatRoll): boolean => {
+        return true;
+      },
+      apply: (_combatRoll: CombatRoll): void => {},
+    },
+  ]);
+  const nsid: string = "card.promissory:my-source/my-test-promissory";
+  expect(TI4.unitModifierRegistry.getByNsid(nsid)).toBeDefined();
+
+  const faction: Faction = new (class extends Faction {
+    getPromissoryNsids(): Array<string> {
+      return [nsid];
+    }
+  })();
+  expect(faction.getPromissoryNsids().includes(nsid)).toBe(true);
+
+  const params: CombatRollParams = {
+    rollType: "spaceCannonOffense",
+    hex: "<0,0,0>",
+    activatingPlayerSlot: 1,
+    rollingPlayerSlot: 2,
+    overrideSelfFaction: faction,
+  };
+  const combatRoll: CombatRoll = new CombatRoll(params).applyFactions();
+  expect(combatRoll.self.faction).toBe(faction);
+
+  // Need a card holder to be closest to assign cards.
+  new MockCardHolder({ owningPlayerSlot: 2 });
+  const card: Card = MockCard.simple(nsid);
+  expect(card.isFaceUp()).toBe(true);
+  const allowFaceDown: boolean = false;
+  const rejectSnapPointTags: Array<string> = [];
+  expect(
+    new CardUtil().isLooseCard(card, allowFaceDown, rejectSnapPointTags)
+  ).toBe(true);
+
+  const unitModifiers: Array<UnitModifier> = combatRoll._findUnitModifiers(
+    2,
+    1
+  );
+  const names: Array<string> = unitModifiers.map((modifier) =>
+    modifier.getName()
+  );
+  expect(names).toEqual([]);
+});
+
 it("_findUnitModifiers (control token)", () => {
   TI4.unitModifierRegistry.load("my-source", [
     {
@@ -422,7 +476,11 @@ it("_findUnitModifiers (control token)", () => {
 });
 
 it("_findUnitModifiers (faction ability)", () => {
-  const faction: Faction = new Faction();
+  const faction: Faction = new (class extends Faction {
+    getAbilityNsids(): Array<string> {
+      return ["faction-ability:my-source/my-ability"];
+    }
+  })();
 
   TI4.unitModifierRegistry.load("my-source", [
     {
@@ -449,8 +507,11 @@ it("_findUnitModifiers (faction ability)", () => {
 });
 
 it("_findUnitModifiers (faction ability opponent)", () => {
-  const faction: Faction = new Faction();
-
+  const faction: Faction = new (class extends Faction {
+    getAbilityNsids(): Array<string> {
+      return ["faction-ability:my-source/my-ability"];
+    }
+  })();
   TI4.unitModifierRegistry.load("my-source", [
     {
       name: "my-modifier",
@@ -476,7 +537,11 @@ it("_findUnitModifiers (faction ability opponent)", () => {
 });
 
 it("_findUnitModifiers (flagship)", () => {
-  const faction: Faction = new Faction();
+  const faction: Faction = new (class extends Faction {
+    getFlagshipNsids(): Array<string> {
+      return ["flagship:my-source/my-flagship"];
+    }
+  })();
 
   TI4.unitModifierRegistry.load("my-source", [
     {
@@ -506,7 +571,11 @@ it("_findUnitModifiers (flagship)", () => {
 });
 
 it("_findUnitModifiers (flagship opponent)", () => {
-  const faction: Faction = new Faction();
+  const faction: Faction = new (class extends Faction {
+    getFlagshipNsids(): Array<string> {
+      return ["flagship:my-source/my-flagship"];
+    }
+  })();
 
   TI4.unitModifierRegistry.load("my-source", [
     {
@@ -557,7 +626,11 @@ it("applyUnitOverrides", () => {
 });
 
 it("applyUnitOverrides (flagship)", () => {
-  const faction: Faction = new Faction();
+  const faction: Faction = new (class extends Faction {
+    getFlagshipNsids(): Array<string> {
+      return ["flagship:my-source/my-flagship"];
+    }
+  })();
 
   TI4.unitAttrsRegistry.load("my-source", [
     {
@@ -580,7 +653,11 @@ it("applyUnitOverrides (flagship)", () => {
 });
 
 it("applyUnitOverrides (flagship opponent)", () => {
-  const faction: Faction = new Faction();
+  const faction: Faction = new (class extends Faction {
+    getFlagshipNsids(): Array<string> {
+      return ["flagship:my-source/my-flagship"];
+    }
+  })();
 
   TI4.unitAttrsRegistry.load("my-source", [
     {

@@ -163,6 +163,12 @@ it("modifier (legendary)", () => {
 });
 
 it("modifier (home)", () => {
+  const faction: Faction = new (class extends Faction {
+    getHomeSystemTileNumber(): number {
+      return 1;
+    }
+  })();
+
   placeGameObjects({
     systemNsid: "tile.system:base/1",
     self: ["card.leader.commander:pok/rickar-rickani"],
@@ -172,7 +178,7 @@ it("modifier (home)", () => {
     hex: "<0,0,0>",
     activatingPlayerSlot: OPPONENT,
     rollingPlayerSlot: SELF,
-    overrideSelfFaction: new Faction(), // for now uses '1' as home system tile number
+    overrideSelfFaction: faction,
   });
   expect(combatRoll.system?.getSystemTileNumber()).toBe(1);
   expect(combatRoll.getUnitModifierNames()).toEqual(["Rickar Rickani"]);

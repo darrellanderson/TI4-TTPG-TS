@@ -50,7 +50,7 @@ it("static schemaToNsid (mech)", () => {
 
 it("static schemaToNsid (missing nsidName)", () => {
   expect(() => {
-    const nsid = UnitAttrs.schemaToNsid("my-source", {
+    UnitAttrs.schemaToNsid("my-source", {
       name: "my-name",
       unit: "carrier",
     });

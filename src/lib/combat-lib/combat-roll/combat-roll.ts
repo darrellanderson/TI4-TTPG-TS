@@ -88,7 +88,6 @@ export class CombatRollPerPlayerData {
     if (!this.unitAttrsSet.addSyntheticUnit(schema)) {
       return false;
     }
-    const obj: GameObject = new GameObject();
     this.overrideUnitCountHex.set(schema.unit, count);
     return true;
   }
@@ -301,11 +300,8 @@ export class CombatRoll {
         }
 
         // Self-promissory notes are "for sale" and not active.
-        if (nsid.startsWith("card.promissory:") && obj) {
-          const owner: number = this.find.closestOwnedCardHolderOwner(
-            obj.getPosition()
-          );
-          if (owner === selfSlot) {
+        if (nsid.startsWith("card.promissory:") && obj && this.self.faction) {
+          if (this.self.faction.getPromissoryNsids().includes(nsid)) {
             useModifier = false;
           }
         }
@@ -693,8 +689,8 @@ export class CombatRoll {
 
   public roll(player: Player, position: Vector): void {
     const callback = (
-      diceResults: Array<DiceResult>,
-      player: Player
+      _diceResults: Array<DiceResult>,
+      _player: Player
     ): void => {};
     const diceParams: Array<DiceParams> = this.createDiceParamsArray();
     const diceGroupParams: DiceGroupParams = {
