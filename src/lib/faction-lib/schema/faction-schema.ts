@@ -5,16 +5,56 @@ import { UnitSchema } from "../../unit-lib/schema/unit-attrs-schema";
 
 export const FactionSchema = z
   .object({
-    name: z.string(),
+    name: z.string().min(1),
     nsidName: NsidNameSchema,
 
-    // Automatic units (flagship, carrier, etc), NOT mech or upgrades.
-    unitOverrides: z.array(NsidNameSchema),
-
     abilities: z.array(NsidNameSchema),
-    techs: z.array(NsidNameSchema),
+    commodities: z.number().int().min(0),
+    home: z.number().int().min(0),
+    homeSurrogate: z.number().int().min(0).optional(), // home is off-map, place this tile in home pos
+    leaders: z
+      .object({
+        agents: z.array(NsidNameSchema),
+        commanders: z.array(NsidNameSchema),
+        heroes: z.array(NsidNameSchema),
+        mechs: z.array(NsidNameSchema),
+      })
+      .strict()
+      .readonly(),
+    promssoryNotes: z.array(NsidNameSchema),
     startingTechs: z.array(NsidNameSchema),
-    startingUnits: z.map(UnitSchema, z.number().int().min(0)),
+    startingUnits: z
+      .object({
+        carrier: z.number().int().min(0).optional(),
+        cruiser: z.number().int().min(0).optional(),
+        destroyer: z.number().int().min(0).optional(),
+        dreadnought: z.number().int().min(0).optional(),
+        fighter: z.number().int().min(0).optional(),
+        flagship: z.number().int().min(0).optional(),
+        infantry: z.number().int().min(0).optional(),
+        mech: z.number().int().min(0).optional(),
+        pds: z.number().int().min(0).optional(),
+        spaceDock: z.number().int().min(0).optional(),
+        warsun: z.number().int().min(0).optional(),
+      })
+      .strict()
+      .readonly(),
+    techs: z.array(NsidNameSchema),
+    unitOverrides: z.array(NsidNameSchema), // automatic units (flagship, etc), NOT mech or upgrades (those have cards)
+
+    extras: z
+      .array(
+        z
+          .object({
+            nsid: z.string(),
+            count: z.number().int().min(0).optional(),
+          })
+          .strict()
+          .readonly()
+      )
+      .optional(),
   })
   .strict()
   .readonly();
+
+export type FactionSchemaType = z.infer<typeof FactionSchema>;
