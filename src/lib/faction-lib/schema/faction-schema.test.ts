@@ -17,7 +17,7 @@ it("parse", () => {
     promissoryNotes: [],
     startingTechs: [],
     startingUnits: { carrier: 0 },
-    techs: [],
+    techs: ["one", "two"],
     unitOverrides: [],
   };
   FactionSchema.parse(schema);
@@ -40,7 +40,7 @@ it("parse (invalid schema)", () => {
       promssoryNotes: [],
       startingTechs: [],
       startingUnits: { carrier: 0 },
-      techs: [],
+      techs: ["one", "two"],
       unitOverrides: [],
       extras: [{ nsid: "extra-nsid", count: 0 }],
     });

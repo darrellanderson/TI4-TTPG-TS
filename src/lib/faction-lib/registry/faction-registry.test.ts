@@ -27,7 +27,7 @@ it("load (with data)", () => {
     promissoryNotes: [],
     startingTechs: [],
     startingUnits: {},
-    techs: [],
+    techs: ["one", "two"],
     unitOverrides: [],
   };
 
