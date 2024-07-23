@@ -4,7 +4,7 @@ import { SystemSummary } from "./system-summary";
 
 it("constructor", () => {
   const systems: Array<System> = [];
-  const systemSummary: SystemSummary = new SystemSummary(systems);
+  new SystemSummary(systems);
 });
 
 it("getSummaryRaw", () => {
