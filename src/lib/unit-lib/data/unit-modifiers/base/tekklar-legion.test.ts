@@ -46,6 +46,23 @@ it("modifier (self)", () => {
   expect(groundCombat.getHit()).toBe(7);
 });
 
+it("modifier (self, bad roll type)", () => {
+  placeGameObjects({ self: ["card.promissory:base/tekklar-legion"] });
+  const combatRoll: CombatRoll = CombatRoll.createCooked({
+    rollType: "spaceCombat", // only applies to ground combat
+    hex: "<0,0,0>",
+    planetName: "Jord",
+    activatingPlayerSlot: OPPONENT,
+    rollingPlayerSlot: SELF,
+  });
+  expect(combatRoll.getUnitModifierNames()).toEqual([]);
+
+  const infantry: UnitAttrs =
+    combatRoll.self.unitAttrsSet.getOrThrow("infantry");
+  const groundCombat: CombatAttrs = infantry.getGroundCombatOrThrow();
+  expect(groundCombat.getHit()).toBe(8);
+});
+
 it("modifier (opponent)", () => {
   const norrFaction: Faction = new (class extends Faction {
     getNsid(): NsidNameSchemaType {
