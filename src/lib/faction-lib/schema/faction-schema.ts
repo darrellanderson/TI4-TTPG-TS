@@ -38,8 +38,8 @@ export const FactionSchema = z
         spaceDock: z.number().int().min(0).optional(),
         warSun: z.number().int().min(0).optional(),
       })
-      .strict(),
-    //.readonly(),
+      .strict()
+      .readonly(),
     techs: z.array(NsidNameSchema).length(2),
     unitOverrides: z.array(NsidNameSchema), // automatic units (flagship, etc), NOT mech or upgrades (those have cards)
 
@@ -55,7 +55,7 @@ export const FactionSchema = z
       )
       .optional(),
   })
-  .strict();
-//.readonly();
+  .strict()
+  .readonly();
 
 export type FactionSchemaType = z.infer<typeof FactionSchema>;

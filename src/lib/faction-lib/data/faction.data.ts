@@ -55,6 +55,11 @@ export const SOURCE_TO_FACTION_DATA: Record<
       },
       techs: ["wormhole-generator", "dimensional-splicer"],
       unitOverrides: ["hil-colish", "icarus-drive"],
+      extras: [
+        { nsid: "token.wormhole.creuss:base/alpha" },
+        { nsid: "token.wormhole.creuss:base/beta" },
+        { nsid: "token.wormhole.creuss:pok/gamma" },
+      ],
     },
     {
       nsidName: "hacan",
@@ -163,6 +168,7 @@ export const SOURCE_TO_FACTION_DATA: Record<
       },
       techs: ["l4-disruptors", "noneuclidean-shielding"],
       unitOverrides: ["arc-secundus", "dunlain-reaper"],
+      extras: [{ nsid: "faction-ability:base/munitions-reserves" }],
     },
     {
       nsidName: "mentak",
@@ -208,6 +214,7 @@ export const SOURCE_TO_FACTION_DATA: Record<
       startingUnits: { fighter: 2, infantry: 4, spaceDock: 1, warSun: 1 },
       techs: ["magmus-reactor", "prototype-war-sun-2"],
       unitOverrides: ["the-inferno", "prototype-war-sun", "ember-colossus"],
+      extras: [{ nsid: "tile.system:pok/81" }],
     },
     {
       nsidName: "naalu",
@@ -235,6 +242,7 @@ export const SOURCE_TO_FACTION_DATA: Record<
       },
       techs: ["neuroglaive", "hybrid-crystal-fighter-2"],
       unitOverrides: ["matriarch", "hybrid-crystal-fighter", "iconoclast"],
+      extras: [{ nsid: "token:base/naalu-zero" }],
     },
     {
       nsidName: "nekro",
@@ -269,6 +277,15 @@ export const SOURCE_TO_FACTION_DATA: Record<
       },
       techs: ["valefar-assimilator-x", "valefar-assimilator-y"],
       unitOverrides: ["the-alastor", "mordred"],
+      extras: [
+        { nsid: "token:base/nekro-prediction" },
+        { nsid: "token:base/nekro-x" },
+        { nsid: "token:base/nekro-y" },
+        {
+          nsid: "token.attachment.system:pok/dimensional-tear.nekro",
+          count: 3,
+        },
+      ],
     },
     {
       nsidName: "norr",
@@ -617,6 +634,11 @@ export const SOURCE_TO_FACTION_DATA: Record<
         "hel-titan",
         "hecatoncheires",
       ],
+      extras: [
+        { nsid: "token.attachment.planet:pok/geoform" },
+        { nsid: "token.attachment.planet:pok/terraform" },
+        { nsid: "token.attachment.planet:pok/sleeper-token", count: 5 },
+      ],
     },
     {
       nsidName: "vuilraith",
@@ -643,6 +665,12 @@ export const SOURCE_TO_FACTION_DATA: Record<
       },
       techs: ["vortex", "dimensional-tear-2"],
       unitOverrides: ["the-terror-between", "dimensional-tear", "reanimator"],
+      extras: [
+        {
+          nsid: "token.attachment.system:pok/dimensional-tear.vuilraith",
+          count: 3,
+        },
+      ],
     },
   ],
   "codex.vigil": [
@@ -670,6 +698,7 @@ export const SOURCE_TO_FACTION_DATA: Record<
       },
       techs: ["iihq-modernization", "agency-supply-network"],
       unitOverrides: ["artemiris", "omniopiares"],
+      extras: [{ nsid: "token.keleres:codex.vigil/custodia_vigilia" }],
     },
     {
       nsidName: "keleres-mentak",
@@ -695,6 +724,7 @@ export const SOURCE_TO_FACTION_DATA: Record<
       },
       techs: ["iihq-modernization", "agency-supply-network"],
       unitOverrides: ["artemiris", "omniopiares"],
+      extras: [{ nsid: "token.keleres:codex.vigil/custodia_vigilia" }],
     },
     {
       nsidName: "keleres-xxcha",
@@ -720,6 +750,7 @@ export const SOURCE_TO_FACTION_DATA: Record<
       },
       techs: ["iihq-modernization", "agency-supply-network"],
       unitOverrides: ["artemiris", "omniopiares"],
+      extras: [{ nsid: "token.keleres:codex.vigil/custodia_vigilia" }],
     },
   ],
 };
