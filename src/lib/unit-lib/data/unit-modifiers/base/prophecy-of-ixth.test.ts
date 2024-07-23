@@ -68,8 +68,9 @@ it("modifier (fighter with ground combat)", () => {
     ],
   });
   const combatRoll: CombatRoll = CombatRoll.createCooked({
-    rollType: "spaceCombat",
+    rollType: "groundCombat",
     hex: "<0,0,0>",
+    planetName: "Jord",
     activatingPlayerSlot: OPPONENT,
     rollingPlayerSlot: SELF,
   });
