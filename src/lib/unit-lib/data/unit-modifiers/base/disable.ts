@@ -1,18 +1,25 @@
-import { CombatAttrs } from "../../../unit-attrs/combat-attrs";
 import {
   CombatRoll,
   CombatRollType,
 } from "../../../../combat-lib/combat-roll/combat-roll";
+import { UnitAttrs } from "../../../unit-attrs/unit-attrs";
 import { UnitModifierSchemaType } from "../../../schema/unit-modifier-schema";
 
-export const X: UnitModifierSchemaType = {
-  name: "",
+export const Disable: UnitModifierSchemaType = {
+  name: "Disable",
   description: "Opponent PDS lose PLANETARY SHIELD and SPACE CANNON DEFENSE",
-  owner: "",
-  priority: "",
-  triggers: [],
+  owner: "opponent",
+  priority: "adjust",
+  triggers: [{ cardClass: "action", nsidName: "disable" }],
   applies: (combatRoll: CombatRoll): boolean => {
-    return false;
+    const rollType: CombatRollType = combatRoll.getRollType();
+    return rollType === "bombardment" || rollType === "spaceCannonDefense";
   },
-  apply: (combatRoll: CombatRoll): void => {},
+  apply: (combatRoll: CombatRoll): void => {
+    const pds: UnitAttrs | undefined = combatRoll.self.unitAttrsSet.get("pds");
+    if (pds) {
+      pds.setDisablePlanetaryShield(true);
+      pds.setDisableSpaceCannonDefense(true);
+    }
+  },
 };
