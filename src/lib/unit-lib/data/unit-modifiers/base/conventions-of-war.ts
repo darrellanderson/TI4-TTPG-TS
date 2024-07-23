@@ -1,19 +1,25 @@
-import { CombatAttrs } from "../../../unit-attrs/combat-attrs";
-import {
-  CombatRoll,
-  CombatRollType,
-} from "../../../../combat-lib/combat-roll/combat-roll";
+import { CombatRoll } from "../../../../combat-lib/combat-roll/combat-roll";
 import { UnitModifierSchemaType } from "../../../schema/unit-modifier-schema";
 
-export const X: UnitModifierSchemaType = {
-  name: "",
+export const ConventionsOfWar: UnitModifierSchemaType = {
+  name: "Conventions of War",
   description:
     "Players cannot use BOMBARDMENT against units that are on cultural planets",
-  owner: "",
-  priority: "",
-  triggers: [],
+  owner: "any",
+  priority: "adjust",
+  triggers: [{ cardClass: "agenda", nsidName: "conventions-of-war" }],
   applies: (combatRoll: CombatRoll): boolean => {
-    return false;
+    return (
+      combatRoll.getRollType() === "bombardment" &&
+      combatRoll.planet !== undefined &&
+      combatRoll.planet.getTraits().includes("cultural")
+    );
   },
-  apply: (combatRoll: CombatRoll): void => {},
+  apply: (combatRoll: CombatRoll): void => {
+    for (const unitAttrs of combatRoll.self.unitAttrsSet.getAll()) {
+      if (unitAttrs.getBombardment() !== undefined) {
+        unitAttrs.setDisableBombardment(true);
+      }
+    }
+  },
 };

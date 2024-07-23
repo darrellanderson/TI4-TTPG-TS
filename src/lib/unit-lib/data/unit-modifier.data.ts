@@ -23,6 +23,9 @@ add("base", Bunker);
 import { CmorranNorr } from "./unit-modifiers/base/cmorran-norr";
 add("base", CmorranNorr);
 
+import { ConventionsOfWar } from "./unit-modifiers/base/conventions-of-war";
+add("base", ConventionsOfWar);
+
 import { Disable } from "./unit-modifiers/base/disable";
 add("base", Disable);
 

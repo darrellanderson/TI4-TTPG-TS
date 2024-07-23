@@ -3,7 +3,7 @@ import { OPPONENT, placeGameObjects, SELF } from "../abstract.test";
 
 it("registry", () => {
   const nsid = "card.action:base/bunker";
-  expect(TI4.unitModifierRegistry.getByNsid(nsid)).toBeDefined();
+  expect(TI4.unitModifierRegistry.getByNsid(nsid)?.getName()).toBe("Bunker");
 });
 
 it("bunker", () => {
