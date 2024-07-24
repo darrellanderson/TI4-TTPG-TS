@@ -17,7 +17,7 @@ it("constructor", () => {
     },
     promissories: ["my-promissory"],
     startingTechs: ["dreadnought-2"], // techs must be registered
-    startingUnits: { carrier: 0 },
+    startingUnits: { carrier: 3 },
     factionTechs: ["carrier-2", "cruiser-2"],
     unitOverrides: ["my-unit-override", "my-mech"],
   };
@@ -51,6 +51,7 @@ it("constructor", () => {
   expect(faction.getPromissoryNsids()).toEqual([
     "card.promissory:my-source/my-promissory",
   ]);
+  expect(faction.getStartingUnits()).toEqual({ carrier: 3 });
   expect(faction.getStartingTechNsids()).toEqual([
     "card.technology.unit-upgrade:base/dreadnought-2",
   ]);
@@ -88,4 +89,36 @@ it("constructor (base source get pok mech)", () => {
     "unit:base/my-unit-override",
     "card.leader.mech:pok/my-mech",
   ]);
+});
+
+it("invalid tech", () => {
+  const schema: FactionSchemaType = {
+    nsidName: "my-nsid-name",
+    name: "my-name",
+    abbr: "my-abbr",
+    abilities: ["my-ability"],
+    commodities: 1,
+    home: 2,
+    homeSurrogate: 3,
+    leaders: {
+      agents: ["my-agent"],
+      commanders: ["my-commander"],
+      heroes: ["my-hero"],
+      mechs: ["my-mech"],
+    },
+    promissories: ["my-promissory"],
+    startingTechs: ["my-starting-tech"],
+    startingUnits: { carrier: 0 },
+    factionTechs: ["one", "two"],
+    unitOverrides: ["my-unit-override", "my-mech"],
+  };
+  const faction: Faction = new Faction("base", schema);
+
+  expect(() => {
+    faction.getFactionTechNsids();
+  }).toThrow();
+
+  expect(() => {
+    faction.getStartingTechNsids();
+  }).toThrow();
 });
