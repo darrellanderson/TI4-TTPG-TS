@@ -301,7 +301,12 @@ export class CombatRoll {
 
         // Self-promissory notes are "for sale" and not active.
         if (nsid.startsWith("card.promissory:") && obj && this.self.faction) {
-          if (this.self.faction.getPromissoryNsids().includes(nsid)) {
+          const pos: Vector = obj.getPosition();
+          const closest: number = this._find.closestOwnedCardHolderOwner(pos);
+          if (
+            closest === selfSlot &&
+            this.self.faction.getPromissoryNsids().includes(nsid)
+          ) {
             useModifier = false;
           }
         }

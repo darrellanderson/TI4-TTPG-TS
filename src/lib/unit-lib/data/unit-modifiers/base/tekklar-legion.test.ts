@@ -90,8 +90,8 @@ it("modifier (opponent)", () => {
     overrideSelfFaction: norrFaction,
   });
   expect(combatRoll.getUnitModifierNames()).toEqual([
-    "Unrelenting",
     "Tekklar Legion",
+    "Unrelenting",
   ]);
 
   const infantry: UnitAttrs =
