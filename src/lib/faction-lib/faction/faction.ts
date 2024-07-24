@@ -10,9 +10,35 @@ export class Faction {
     this._params = params;
   }
 
+  getAbbr(): string {
+    return this._params.abbr;
+  }
+
   getAbilityNsids(): Array<string> {
     return this._params.abilities.map((ability): string => {
       return `faction-ability:${this._source}/${ability}`;
+    });
+  }
+
+  getAgentNsids(): Array<string> {
+    return this._params.leaders.agents.map((agent): string => {
+      return `card.leader.agent:${this._source}/${agent}`;
+    });
+  }
+
+  getCommanderNsids(): Array<string> {
+    return this._params.leaders.commanders.map((commander): string => {
+      return `card.leader.commander:${this._source}/${commander}`;
+    });
+  }
+
+  getCommodities(): number {
+    return this._params.commodities;
+  }
+
+  getHeroNsids(): Array<string> {
+    return this._params.leaders.heroes.map((hero): string => {
+      return `card.leader.hero:${this._source}/${hero}`;
     });
   }
 
@@ -22,6 +48,12 @@ export class Faction {
 
   getHomeSystemTileNumber(): number {
     return this._params.home;
+  }
+
+  getMechNsids(): Array<string> {
+    return this._params.leaders.mechs.map((mech): string => {
+      return `card.leader.mech:${this._source}/${mech}`;
+    });
   }
 
   getName(): string {
@@ -41,15 +73,13 @@ export class Faction {
   getUnitOverrideNsids(): Array<string> {
     return this._params.unitOverrides.map((unitOverride): string => {
       // Mech got added in PoK so base factions can have pok mech.
-      // Check a mech exists with either the faction source or pok.
-      const nsids: Array<string> = [
-        `card.leader.mech:${this._source}/${unitOverride}`,
-        `card.leader.mech:pok/${unitOverride}`,
-      ];
-      for (const nsid of nsids) {
-        if (TI4.unitAttrsRegistry.rawByNsid(nsid)) {
-          return nsid;
+      // If mech use that format, and if base swap to pok for it.
+      if (this._params.leaders.mechs.includes(unitOverride)) {
+        let source = this._source;
+        if (source === "base") {
+          source = "pok";
         }
+        return `card.leader.mech:${source}/${unitOverride}`;
       }
       return `unit:${this._source}/${unitOverride}`;
     });
