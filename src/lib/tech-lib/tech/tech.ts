@@ -13,4 +13,8 @@ export class Tech {
   getNsid(): string {
     return `card.technology.${this._params.color}:${this._source}/${this._params.nsidName}`;
   }
+
+  getNsidName(): string {
+    return this._params.nsidName;
+  }
 }
