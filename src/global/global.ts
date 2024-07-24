@@ -14,6 +14,7 @@ import { FactionRegistry } from "../lib/faction-lib/registry/faction-registry";
 import { PlanetAttachmentRegistry } from "../lib/system-lib/registry/planet-attachment-registry";
 import { SystemAttachmentRegistry } from "../lib/system-lib/registry/system-attachment-registry";
 import { SystemRegistry } from "../lib/system-lib/registry/system-registry";
+import { TechRegistry } from "../lib/tech-lib/registry/tech-registry";
 import { UnitAttrsRegistry } from "../lib/unit-lib/registry/unit-attrs-registry";
 import { UnitModifierRegistry } from "../lib/unit-lib/registry/unit-modifier-registry";
 
@@ -42,6 +43,7 @@ export class TI4Class {
   planetAttachmentRegistry = new PlanetAttachmentRegistry().loadDefaultData();
   systemAttachmentRegistry = new SystemAttachmentRegistry().loadDefaultData();
   systemRegistry = new SystemRegistry().loadDefaultData();
+  techRegistry = new TechRegistry().loadDefaultData();
   unitAttrsRegistry = new UnitAttrsRegistry().loadDefaultData();
   unitModifierRegistry = new UnitModifierRegistry().loadDefaultData();
 }

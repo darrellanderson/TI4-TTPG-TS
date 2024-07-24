@@ -21,6 +21,7 @@ export const TechSchema = z
         .strict()
         .readonly()
     ),
+    isFactionTech: z.boolean().optional(),
   })
   .strict()
   .readonly();
