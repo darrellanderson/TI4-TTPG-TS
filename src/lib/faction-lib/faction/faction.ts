@@ -70,6 +70,18 @@ export class Faction {
     });
   }
 
+  getStartingTechNsids(): Array<string> {
+    throw new Error("need to know tech color, source");
+  }
+
+  getStartingUnits(): { [unit: string]: number } {
+    return this._params.startingUnits;
+  }
+
+  getTechNsids(): Array<string> {
+    throw new Error("need to know tech color, source");
+  }
+
   getUnitOverrideNsids(): Array<string> {
     return this._params.unitOverrides.map((unitOverride): string => {
       // Mech got added in PoK so base factions can have pok mech.
