@@ -6,10 +6,10 @@ it("tech", () => {
     nsidName: "my-nsid-name",
     name: "my-name",
     color: "blue",
-    prerequisites: [
-      { color: "green", count: 1 },
-      { color: "red", count: 2 },
-    ],
+    prerequisites: {
+      green: 1,
+      red: 2,
+    },
   };
   const tech: Tech = new Tech("my-source", schema);
   expect(tech.getNsid()).toEqual("card.technology.blue:my-source/my-nsid-name");

@@ -7,6 +7,7 @@ export const TechColorSchema = z.enum([
   "red",
   "yellow",
   "unit-upgrade",
+  "none", // valefar assimilator (nekro faction tech)
 ]);
 export type TechColorType = z.infer<typeof TechColorSchema>;
 
@@ -14,15 +15,18 @@ export const TechSchema = z
   .object({
     nsidName: NsidNameSchema,
     name: z.string().min(1),
+    abbr: z.string().min(1).optional(), // shorter name
     color: TechColorSchema,
-    prerequisites: z.array(
-      z
-        .object({ color: TechColorSchema, count: z.number().int().min(0) })
-        .strict()
-        .readonly()
-    ),
+    prerequisites: z
+      .object({
+        blue: z.number().int().min(0).optional(),
+        green: z.number().int().min(0).optional(),
+        red: z.number().int().min(0).optional(),
+        yellow: z.number().int().min(0).optional(),
+      })
+      .strict(),
     isFactionTech: z.boolean().optional(),
   })
-  .strict()
-  .readonly();
+  .strict();
+// .readonly();
 export type TechSchemaType = z.infer<typeof TechSchema>;
