@@ -27,7 +27,7 @@ it("load (with data)", () => {
     promissories: [],
     startingTechs: [],
     startingUnits: {},
-    techs: ["one", "two"],
+    factionTechs: ["one", "two"],
     unitOverrides: [],
   };
 
@@ -58,7 +58,7 @@ it("load (invalid schema)", () => {
         promissories: [],
         startingTechs: [],
         startingUnits: {},
-        techs: [],
+        factionTechs: [],
         unitOverrides: [],
         extras: [{ nsid: "extra-nsid", count: 0 }],
       },

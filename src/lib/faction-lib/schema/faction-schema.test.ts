@@ -7,6 +7,7 @@ it("parse", () => {
     abbr: "my-abbr",
     abilities: [],
     commodities: 0,
+    factionTechs: ["one", "two"],
     home: 0,
     leaders: {
       agents: [],
@@ -17,7 +18,6 @@ it("parse", () => {
     promissories: [],
     startingTechs: [],
     startingUnits: { carrier: 0 },
-    techs: ["one", "two"],
     unitOverrides: [],
   };
   FactionSchema.parse(schema);
@@ -30,6 +30,7 @@ it("parse (invalid schema)", () => {
       nsidName: "@@invalid!!",
       abilities: [],
       commodities: 0,
+      factionTechs: ["one", "two"],
       home: 0,
       leaders: {
         agents: [],
@@ -40,7 +41,6 @@ it("parse (invalid schema)", () => {
       promssories: [],
       startingTechs: [],
       startingUnits: { carrier: 0 },
-      techs: ["one", "two"],
       unitOverrides: [],
       extras: [{ nsid: "extra-nsid", count: 0 }],
     });

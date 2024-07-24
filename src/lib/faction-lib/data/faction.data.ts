@@ -28,7 +28,7 @@ export const SOURCE_TO_FACTION_DATA: Record<
         pds: 1,
         spaceDock: 1,
       },
-      techs: ["bioplasmosis", "letani-warrior-2"],
+      factionTechs: ["bioplasmosis", "letani-warrior-2"],
       unitOverrides: ["duha-menaimon", "letani-warrior", "letani-behemoth"],
     },
     {
@@ -53,7 +53,7 @@ export const SOURCE_TO_FACTION_DATA: Record<
         infantry: 4,
         spaceDock: 1,
       },
-      techs: ["wormhole-generator", "dimensional-splicer"],
+      factionTechs: ["wormhole-generator", "dimensional-splicer"],
       unitOverrides: ["hil-colish", "icarus-drive"],
       extras: [
         { nsid: "token.wormhole.creuss:base/alpha" },
@@ -83,7 +83,7 @@ export const SOURCE_TO_FACTION_DATA: Record<
         infantry: 4,
         spaceDock: 1,
       },
-      techs: ["quantum-datahub-node", "production-biomes"],
+      factionTechs: ["quantum-datahub-node", "production-biomes"],
       unitOverrides: ["wrath-of-kenara", "pride-of-kenara"],
     },
     {
@@ -114,7 +114,7 @@ export const SOURCE_TO_FACTION_DATA: Record<
         pds: 2,
         spaceDock: 1,
       },
-      techs: ["spacial-conduit-cylinder", "eres-siphons"],
+      factionTechs: ["spacial-conduit-cylinder", "eres-siphons"],
       unitOverrides: ["jns-hylarim", "shield-paling"],
     },
     {
@@ -140,7 +140,7 @@ export const SOURCE_TO_FACTION_DATA: Record<
         pds: 1,
         spaceDock: 1,
       },
-      techs: ["inheritance-systems", "superdreadnought-2"],
+      factionTechs: ["inheritance-systems", "superdreadnought-2"],
       unitOverrides: ["001", "superdreadnought", "annihilator"],
     },
     {
@@ -166,7 +166,7 @@ export const SOURCE_TO_FACTION_DATA: Record<
         infantry: 3,
         spaceDock: 1,
       },
-      techs: ["l4-disruptors", "noneuclidean-shielding"],
+      factionTechs: ["l4-disruptors", "noneuclidean-shielding"],
       unitOverrides: ["arc-secundus", "dunlain-reaper"],
       extras: [{ nsid: "faction-ability:base/munitions-reserves" }],
     },
@@ -193,7 +193,7 @@ export const SOURCE_TO_FACTION_DATA: Record<
         pds: 1,
         spaceDock: 1,
       },
-      techs: ["mirror-computing", "salvage-operations"],
+      factionTechs: ["mirror-computing", "salvage-operations"],
       unitOverrides: ["fourth-moon", "moll-terminus"],
     },
     {
@@ -212,7 +212,7 @@ export const SOURCE_TO_FACTION_DATA: Record<
       promissories: ["fires-of-the-gashlai"],
       startingTechs: ["plasma-scoring"],
       startingUnits: { fighter: 2, infantry: 4, spaceDock: 1, warSun: 1 },
-      techs: ["magmus-reactor", "prototype-war-sun-2"],
+      factionTechs: ["magmus-reactor", "prototype-war-sun-2"],
       unitOverrides: ["the-inferno", "prototype-war-sun", "ember-colossus"],
       extras: [{ nsid: "tile.system:pok/81" }],
     },
@@ -240,7 +240,7 @@ export const SOURCE_TO_FACTION_DATA: Record<
         pds: 1,
         spaceDock: 1,
       },
-      techs: ["neuroglaive", "hybrid-crystal-fighter-2"],
+      factionTechs: ["neuroglaive", "hybrid-crystal-fighter-2"],
       unitOverrides: ["matriarch", "hybrid-crystal-fighter", "iconoclast"],
       extras: [{ nsid: "token:base/naalu-zero" }],
     },
@@ -275,7 +275,7 @@ export const SOURCE_TO_FACTION_DATA: Record<
         infantry: 2,
         spaceDock: 1,
       },
-      techs: ["valefar-assimilator-x", "valefar-assimilator-y"],
+      factionTechs: ["valefar-assimilator-x", "valefar-assimilator-y"],
       unitOverrides: ["the-alastor", "mordred"],
       extras: [
         { nsid: "token:base/nekro-prediction" },
@@ -309,7 +309,7 @@ export const SOURCE_TO_FACTION_DATA: Record<
         pds: 1,
         spaceDock: 1,
       },
-      techs: ["valkyrie-particle-weave", "exotrireme-2"],
+      factionTechs: ["valkyrie-particle-weave", "exotrireme-2"],
       unitOverrides: ["cmorran-norr", "exotrireme", "valkyrie-exoskeleton"],
     },
     {
@@ -334,7 +334,7 @@ export const SOURCE_TO_FACTION_DATA: Record<
         infantry: 4,
         spaceDock: 1,
       },
-      techs: ["chaos-mapping", "floating-factory-2"],
+      factionTechs: ["chaos-mapping", "floating-factory-2"],
       unitOverrides: ["son-of-ragh", "floating-factory", "scavenger-zeta"],
     },
     {
@@ -359,7 +359,7 @@ export const SOURCE_TO_FACTION_DATA: Record<
         infantry: 5,
         spaceDock: 1,
       },
-      techs: ["advanced-carrier-2", "spec-ops-2"],
+      factionTechs: ["advanced-carrier-2", "spec-ops-2"],
       unitOverrides: [
         "genesis",
         "advanced-carrier",
@@ -390,7 +390,7 @@ export const SOURCE_TO_FACTION_DATA: Record<
         pds: 1,
         spaceDock: 1,
       },
-      techs: ["lazax-gate-folding", "hegemonic-trade-policy"],
+      factionTechs: ["lazax-gate-folding", "hegemonic-trade-policy"],
       unitOverrides: ["salai-sai-corian", "reclaimer"],
     },
     {
@@ -416,7 +416,7 @@ export const SOURCE_TO_FACTION_DATA: Record<
         pds: 1,
         spaceDock: 1,
       },
-      techs: ["instinct-training", "nullification-field"],
+      factionTechs: ["instinct-training", "nullification-field"],
       unitOverrides: ["loncara-ssodu", "indomitus"],
     },
     {
@@ -441,7 +441,7 @@ export const SOURCE_TO_FACTION_DATA: Record<
         infantry: 4,
         spaceDock: 1,
       },
-      techs: ["yin-spinner", "impulse-core"],
+      factionTechs: ["yin-spinner", "impulse-core"],
       unitOverrides: ["van-hauge", "moyins-ashes"],
     },
     {
@@ -467,7 +467,7 @@ export const SOURCE_TO_FACTION_DATA: Record<
         pds: 1,
         spaceDock: 1,
       },
-      techs: ["mageon-implants", "transparasteel-plating"],
+      factionTechs: ["mageon-implants", "transparasteel-plating"],
       unitOverrides: ["ysia-yssrila", "blackshade-infiltrator"],
     },
   ],
@@ -495,7 +495,7 @@ export const SOURCE_TO_FACTION_DATA: Record<
         pds: 1,
         spaceDock: 1,
       },
-      techs: ["aerie-hololattice", "strike-wing-alpha-2"],
+      factionTechs: ["aerie-hololattice", "strike-wing-alpha-2"],
       unitOverrides: ["quetzecoatl", "strike-wing-alpha", "aerie-sentinel"],
     },
     {
@@ -520,7 +520,7 @@ export const SOURCE_TO_FACTION_DATA: Record<
         infantry: 4,
         spaceDock: 1,
       },
-      techs: ["aetherstream", "voidwatch"],
+      factionTechs: ["aetherstream", "voidwatch"],
       unitOverrides: ["dynamo", "watcher"],
     },
     {
@@ -546,7 +546,7 @@ export const SOURCE_TO_FACTION_DATA: Record<
         infantry: 3,
         spaceDock: 1,
       },
-      techs: ["genetic-recombination", "crimson-legionnaire-2"],
+      factionTechs: ["genetic-recombination", "crimson-legionnaire-2"],
       unitOverrides: ["arvicon-rex", "crimson-legionnaire", "starlancer"],
     },
     {
@@ -572,7 +572,7 @@ export const SOURCE_TO_FACTION_DATA: Record<
         mech: 1,
         spaceDock: 1,
       },
-      techs: ["supercharge", "prefab-arcologies"],
+      factionTechs: ["supercharge", "prefab-arcologies"],
       unitOverrides: ["visz-el-vir", "eidolon"],
     },
     {
@@ -602,7 +602,7 @@ export const SOURCE_TO_FACTION_DATA: Record<
         infantry: 4,
         spaceDock: 1,
       },
-      techs: ["temporal-command-suite", "memoria-2"],
+      factionTechs: ["temporal-command-suite", "memoria-2"],
       unitOverrides: ["memoria", "quantum-manipulator"],
     },
     {
@@ -627,7 +627,7 @@ export const SOURCE_TO_FACTION_DATA: Record<
         infantry: 3,
         spaceDock: 1,
       },
-      techs: ["saturn-engine-2", "hel-titan-2"],
+      factionTechs: ["saturn-engine-2", "hel-titan-2"],
       unitOverrides: [
         "ouranos",
         "saturn-engine",
@@ -663,7 +663,7 @@ export const SOURCE_TO_FACTION_DATA: Record<
         infantry: 3,
         spaceDock: 1,
       },
-      techs: ["vortex", "dimensional-tear-2"],
+      factionTechs: ["vortex", "dimensional-tear-2"],
       unitOverrides: ["the-terror-between", "dimensional-tear", "reanimator"],
       extras: [
         {
@@ -696,7 +696,7 @@ export const SOURCE_TO_FACTION_DATA: Record<
         infantry: 2,
         spaceDock: 1,
       },
-      techs: ["iihq-modernization", "agency-supply-network"],
+      factionTechs: ["iihq-modernization", "agency-supply-network"],
       unitOverrides: ["artemiris", "omniopiares"],
       extras: [{ nsid: "token.keleres:codex.vigil/custodia_vigilia" }],
     },
@@ -722,7 +722,7 @@ export const SOURCE_TO_FACTION_DATA: Record<
         infantry: 2,
         spaceDock: 1,
       },
-      techs: ["iihq-modernization", "agency-supply-network"],
+      factionTechs: ["iihq-modernization", "agency-supply-network"],
       unitOverrides: ["artemiris", "omniopiares"],
       extras: [{ nsid: "token.keleres:codex.vigil/custodia_vigilia" }],
     },
@@ -748,7 +748,7 @@ export const SOURCE_TO_FACTION_DATA: Record<
         infantry: 2,
         spaceDock: 1,
       },
-      techs: ["iihq-modernization", "agency-supply-network"],
+      factionTechs: ["iihq-modernization", "agency-supply-network"],
       unitOverrides: ["artemiris", "omniopiares"],
       extras: [{ nsid: "token.keleres:codex.vigil/custodia_vigilia" }],
     },

@@ -418,7 +418,7 @@ it("_findUnitModifiers (self faction promissory)", () => {
     promissories: ["my-test-promissory"],
     startingTechs: ["one", "two"],
     startingUnits: {},
-    techs: [],
+    factionTechs: [],
     unitOverrides: [],
   });
   expect(faction.getPromissoryNsids().includes(nsid)).toBe(true);
@@ -506,7 +506,7 @@ it("_findUnitModifiers (faction ability)", () => {
     promissories: [],
     startingTechs: ["one", "two"],
     startingUnits: {},
-    techs: [],
+    factionTechs: [],
     unitOverrides: [],
   });
 
@@ -551,7 +551,7 @@ it("_findUnitModifiers (faction ability opponent)", () => {
     promissories: [""],
     startingTechs: ["one", "two"],
     startingUnits: {},
-    techs: [],
+    factionTechs: [],
     unitOverrides: [],
   });
 
@@ -596,7 +596,7 @@ it("_findUnitModifiers (flagship)", () => {
     promissories: ["my-test-promissory"],
     startingTechs: ["one", "two"],
     startingUnits: {},
-    techs: [],
+    factionTechs: [],
     unitOverrides: ["my-flagship"],
   });
   TI4.unitAttrsRegistry.load("my-source", [
@@ -647,7 +647,7 @@ it("_findUnitModifiers (flagship opponent)", () => {
     promissories: [],
     startingTechs: ["one", "two"],
     startingUnits: {},
-    techs: [],
+    factionTechs: [],
     unitOverrides: ["my-flagship"],
   });
   TI4.unitAttrsRegistry.load("my-source", [
@@ -719,7 +719,7 @@ it("applyUnitOverrides (flagship)", () => {
     promissories: [],
     startingTechs: ["one", "two"],
     startingUnits: {},
-    techs: [],
+    factionTechs: [],
     unitOverrides: ["my-flagship"],
   });
 
@@ -760,7 +760,7 @@ it("applyUnitOverrides (flagship opponent)", () => {
     promissories: [],
     startingTechs: ["one", "two"],
     startingUnits: {},
-    techs: [],
+    factionTechs: [],
     unitOverrides: ["my-flagship"],
   });
 

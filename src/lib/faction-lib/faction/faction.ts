@@ -1,5 +1,6 @@
-import { NsidNameSchemaType } from "lib/system-lib/schema/basic-types-schema";
 import { FactionSchemaType } from "../schema/faction-schema";
+import { NsidNameSchemaType } from "../../system-lib/schema/basic-types-schema";
+import { Tech } from "../../tech-lib/tech/tech";
 
 export class Faction {
   private readonly _source: NsidNameSchemaType;
@@ -34,6 +35,18 @@ export class Faction {
 
   getCommodities(): number {
     return this._params.commodities;
+  }
+
+  getFactionTechNsids(): Array<string> {
+    return this._params.factionTechs.map((factionTech): string => {
+      const tech: Tech | undefined =
+        TI4.techRegistry.getByNsidName(factionTech);
+      if (tech) {
+        return tech.getNsid();
+      } else {
+        throw new Error(`Tech ${factionTech} not found`);
+      }
+    });
   }
 
   getHeroNsids(): Array<string> {
@@ -71,15 +84,19 @@ export class Faction {
   }
 
   getStartingTechNsids(): Array<string> {
-    throw new Error("need to know tech color, source");
+    return this._params.startingTechs.map((startingTech): string => {
+      const tech: Tech | undefined =
+        TI4.techRegistry.getByNsidName(startingTech);
+      if (tech) {
+        return tech.getNsid();
+      } else {
+        throw new Error(`Tech ${startingTech} not found`);
+      }
+    });
   }
 
   getStartingUnits(): { [unit: string]: number } {
     return this._params.startingUnits;
-  }
-
-  getTechNsids(): Array<string> {
-    throw new Error("need to know tech color, source");
   }
 
   getUnitOverrideNsids(): Array<string> {

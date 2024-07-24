@@ -16,9 +16,9 @@ it("constructor", () => {
       mechs: ["my-mech"],
     },
     promissories: ["my-promissory"],
-    startingTechs: ["my-starting-tech"],
+    startingTechs: ["dreadnought-2"], // techs must be registered
     startingUnits: { carrier: 0 },
-    techs: ["one", "two"],
+    factionTechs: ["carrier-2", "cruiser-2"],
     unitOverrides: ["my-unit-override", "my-mech"],
   };
   const faction: Faction = new Faction("my-source", schema);
@@ -34,6 +34,10 @@ it("constructor", () => {
     "card.leader.commander:my-source/my-commander",
   ]);
   expect(faction.getCommodities()).toEqual(1);
+  expect(faction.getFactionTechNsids()).toEqual([
+    "card.technology.unit-upgrade:base/carrier-2",
+    "card.technology.unit-upgrade:base/cruiser-2",
+  ]);
   expect(faction.getHeroNsids()).toEqual([
     "card.leader.hero:my-source/my-hero",
   ]);
@@ -46,6 +50,9 @@ it("constructor", () => {
   expect(faction.getNsid()).toEqual("faction:my-source/my-nsid-name");
   expect(faction.getPromissoryNsids()).toEqual([
     "card.promissory:my-source/my-promissory",
+  ]);
+  expect(faction.getStartingTechNsids()).toEqual([
+    "card.technology.unit-upgrade:base/dreadnought-2",
   ]);
   expect(faction.getUnitOverrideNsids()).toEqual([
     "unit:my-source/my-unit-override",
@@ -71,7 +78,7 @@ it("constructor (base source get pok mech)", () => {
     promissories: ["my-promissory"],
     startingTechs: ["my-starting-tech"],
     startingUnits: { carrier: 0 },
-    techs: ["one", "two"],
+    factionTechs: ["one", "two"],
     unitOverrides: ["my-unit-override", "my-mech"],
   };
   const faction: Faction = new Faction("base", schema);
