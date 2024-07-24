@@ -22,7 +22,7 @@ export const FactionSchema = z
       })
       .strict()
       .readonly(),
-    promissoryNotes: z.array(NsidNameSchema),
+    promissories: z.array(NsidNameSchema),
     startingTechs: z.array(NsidNameSchema),
     startingUnits: z
       .object({

@@ -30,6 +30,7 @@ export const TekklarLegion: UnitModifierSchemaType = {
           selfFactionIsNorr =
             combatRoll.self.faction.getNsid() === "faction:base/norr";
         }
+
         return (
           owner === combatRoll.self.playerSlot ||
           (owner === combatRoll.opponent.playerSlot && selfFactionIsNorr)
@@ -47,6 +48,7 @@ export const TekklarLegion: UnitModifierSchemaType = {
     if (tekklarCard) {
       const pos: Vector = tekklarCard.getPosition();
       const owner: number = find.closestOwnedCardHolderOwner(pos);
+
       if (owner === combatRoll.self.playerSlot) {
         delta = 1;
       } else if (owner === combatRoll.opponent.playerSlot) {

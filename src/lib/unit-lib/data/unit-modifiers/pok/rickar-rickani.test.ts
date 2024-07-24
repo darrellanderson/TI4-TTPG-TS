@@ -163,14 +163,13 @@ it("modifier (legendary)", () => {
 });
 
 it("modifier (home)", () => {
-  const faction: Faction = new (class extends Faction {
-    getHomeSystemTileNumber(): number {
-      return 1;
-    }
-  })();
+  const arborecFaction: Faction | undefined = TI4.factionRegistry.getByNsid(
+    "faction:base/arborec"
+  );
+  expect(arborecFaction?.getName()).toBe("The Arborec");
 
   placeGameObjects({
-    systemNsid: "tile.system:base/1",
+    systemNsid: "tile.system:base/5",
     self: ["card.leader.commander:pok/rickar-rickani"],
   });
   const combatRoll: CombatRoll = CombatRoll.createCooked({
@@ -178,9 +177,9 @@ it("modifier (home)", () => {
     hex: "<0,0,0>",
     activatingPlayerSlot: OPPONENT,
     rollingPlayerSlot: SELF,
-    overrideSelfFaction: faction,
+    overrideSelfFaction: arborecFaction,
   });
-  expect(combatRoll.system?.getSystemTileNumber()).toBe(1);
+  expect(combatRoll.system?.getSystemTileNumber()).toBe(5);
   expect(combatRoll.getUnitModifierNames()).toEqual(["Rickar Rickani"]);
 
   const fighterAttrs: UnitAttrs =

@@ -1,6 +1,8 @@
 import { FactionSchema, FactionSchemaType } from "../schema/faction-schema";
 import { NsidNameSchema } from "../../system-lib/schema/basic-types-schema";
 import { SOURCE_TO_FACTION_DATA } from "../data/faction.data";
+import { Faction } from "../faction/faction";
+import { NSID, ParsedNSID } from "ttpg-darrell";
 
 export class FactionRegistry {
   private readonly _nsidNameToFaction: Map<string, FactionSchemaType> =
@@ -10,6 +12,19 @@ export class FactionRegistry {
 
   getAllFactions(): Array<FactionSchemaType> {
     return Array.from(this._nsidNameToFaction.values());
+  }
+
+  getByNsid(nsid: string): Faction | undefined {
+    const parsedNsid: ParsedNSID | undefined = NSID.parse(nsid);
+    if (parsedNsid) {
+      const nsidName: string = parsedNsid.nameParts.join(".");
+      const source: string = parsedNsid.sourceParts.join(".");
+      const schema: FactionSchemaType | undefined =
+        this.rawByNsidName(nsidName);
+      if (schema) {
+        return new Faction(source, schema);
+      }
+    }
   }
 
   rawByNsidName(nsidName: string): FactionSchemaType | undefined {

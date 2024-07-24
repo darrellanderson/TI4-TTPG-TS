@@ -227,7 +227,7 @@ export class CombatRoll {
       faction = this.opponent.faction;
     }
     if (faction) {
-      const unitNsids: Array<string> = [...faction.getFlagshipNsids()];
+      const unitNsids: Array<string> = [...faction.getUnitOverrideNsids()];
       for (const unitNsid of unitNsids) {
         const attrs: UnitAttrsSchemaType | undefined =
           TI4.unitAttrsRegistry.rawByNsid(unitNsid);
@@ -348,9 +348,16 @@ export class CombatRoll {
         for (const abilityNsid of data.faction.getAbilityNsids()) {
           maybeAddModifier(abilityNsid, undefined, data.playerSlot);
         }
-        for (const flagshipNsid of data.faction.getFlagshipNsids()) {
-          if (data.hasUnit("flagship")) {
-            maybeAddModifier(flagshipNsid, undefined, data.playerSlot);
+        // Add flagship (other unit-based modifiers are on cards).
+        for (const nsid of data.faction.getUnitOverrideNsids()) {
+          const unitAttrsSchema: UnitAttrsSchemaType | undefined =
+            TI4.unitAttrsRegistry.rawByNsid(nsid);
+          if (
+            unitAttrsSchema !== undefined &&
+            unitAttrsSchema.unit === "flagship" &&
+            data.hasUnit("flagship")
+          ) {
+            maybeAddModifier(nsid, undefined, data.playerSlot);
           }
         }
       }

@@ -3,7 +3,7 @@ import { CombatAttrs } from "../../../unit-attrs/combat-attrs";
 import { CombatRoll } from "../../../../combat-lib/combat-roll/combat-roll";
 import { Faction } from "../../../../faction-lib/faction/faction";
 import { UnitAttrs } from "../../../unit-attrs/unit-attrs";
-import { NsidNameSchemaType } from "lib/system-lib/schema/basic-types-schema";
+import { UnitModifier } from "../../../unit-modifier/unit-modifier";
 
 it("registry", () => {
   const nsid = "card.promissory:base/tekklar-legion";
@@ -64,12 +64,23 @@ it("modifier (self, bad roll type)", () => {
 });
 
 it("modifier (opponent)", () => {
-  const norrFaction: Faction = new (class extends Faction {
-    getNsid(): NsidNameSchemaType {
-      return "faction:base/norr";
-    }
-  })();
-  placeGameObjects({ opponent: ["card.promissory:base/tekklar-legion"] });
+  const norrFaction: Faction | undefined =
+    TI4.factionRegistry.getByNsid("faction:base/norr");
+  expect(norrFaction?.getName()).toBe("Sardakk N'orr");
+  expect(norrFaction?.getNsid()).toBe("faction:base/norr");
+  expect(norrFaction?.getPromissoryNsids()).toEqual([
+    "card.promissory:base/tekklar-legion",
+  ]);
+
+  const modifier: UnitModifier | undefined = TI4.unitModifierRegistry.getByNsid(
+    "card.promissory:base/tekklar-legion"
+  );
+  expect(modifier?.getName()).toBe("Tekklar Legion");
+  expect(modifier?.getOwner()).toBe("any");
+
+  placeGameObjects({
+    opponent: ["card.promissory:base/tekklar-legion"],
+  });
   const combatRoll: CombatRoll = CombatRoll.createCooked({
     rollType: "groundCombat",
     hex: "<0,0,0>",
@@ -78,10 +89,13 @@ it("modifier (opponent)", () => {
     rollingPlayerSlot: SELF,
     overrideSelfFaction: norrFaction,
   });
-  expect(combatRoll.getUnitModifierNames()).toEqual(["Tekklar Legion"]);
+  expect(combatRoll.getUnitModifierNames()).toEqual([
+    "Unrelenting",
+    "Tekklar Legion",
+  ]);
 
   const infantry: UnitAttrs =
     combatRoll.self.unitAttrsSet.getOrThrow("infantry");
   const groundCombat: CombatAttrs = infantry.getGroundCombatOrThrow();
-  expect(groundCombat.getHit()).toBe(9);
+  expect(groundCombat.getHit()).toBe(8); // -1 from tekklar, but still +1 from unrelenting
 });

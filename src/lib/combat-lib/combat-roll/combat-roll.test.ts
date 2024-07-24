@@ -402,11 +402,25 @@ it("_findUnitModifiers (self faction promissory)", () => {
   const nsid: string = "card.promissory:my-source/my-test-promissory";
   expect(TI4.unitModifierRegistry.getByNsid(nsid)).toBeDefined();
 
-  const faction: Faction = new (class extends Faction {
-    getPromissoryNsids(): Array<string> {
-      return [nsid];
-    }
-  })();
+  const faction: Faction = new Faction("my-source", {
+    nsidName: "my-faction",
+    name: "My Faction",
+    abbr: "MF",
+    abilities: [],
+    commodities: 0,
+    home: 0,
+    leaders: {
+      agents: [],
+      commanders: [],
+      heroes: [],
+      mechs: [],
+    },
+    promissories: ["my-test-promissory"],
+    startingTechs: ["one", "two"],
+    startingUnits: {},
+    techs: [],
+    unitOverrides: [],
+  });
   expect(faction.getPromissoryNsids().includes(nsid)).toBe(true);
 
   const params: CombatRollParams = {
@@ -476,11 +490,25 @@ it("_findUnitModifiers (control token)", () => {
 });
 
 it("_findUnitModifiers (faction ability)", () => {
-  const faction: Faction = new (class extends Faction {
-    getAbilityNsids(): Array<string> {
-      return ["faction-ability:my-source/my-ability"];
-    }
-  })();
+  const faction: Faction = new Faction("my-source", {
+    nsidName: "my-faction",
+    name: "My Faction",
+    abbr: "MF",
+    abilities: ["my-ability"],
+    commodities: 0,
+    home: 0,
+    leaders: {
+      agents: [],
+      commanders: [],
+      heroes: [],
+      mechs: [],
+    },
+    promissories: [],
+    startingTechs: ["one", "two"],
+    startingUnits: {},
+    techs: [],
+    unitOverrides: [],
+  });
 
   TI4.unitModifierRegistry.load("my-source", [
     {
@@ -507,11 +535,26 @@ it("_findUnitModifiers (faction ability)", () => {
 });
 
 it("_findUnitModifiers (faction ability opponent)", () => {
-  const faction: Faction = new (class extends Faction {
-    getAbilityNsids(): Array<string> {
-      return ["faction-ability:my-source/my-ability"];
-    }
-  })();
+  const faction: Faction = new Faction("my-source", {
+    nsidName: "my-faction",
+    name: "My Faction",
+    abbr: "MF",
+    abilities: ["my-ability"],
+    commodities: 0,
+    home: 0,
+    leaders: {
+      agents: [],
+      commanders: [],
+      heroes: [],
+      mechs: [],
+    },
+    promissories: [""],
+    startingTechs: ["one", "two"],
+    startingUnits: {},
+    techs: [],
+    unitOverrides: [],
+  });
+
   TI4.unitModifierRegistry.load("my-source", [
     {
       name: "my-modifier",
@@ -537,11 +580,28 @@ it("_findUnitModifiers (faction ability opponent)", () => {
 });
 
 it("_findUnitModifiers (flagship)", () => {
-  const faction: Faction = new (class extends Faction {
-    getFlagshipNsids(): Array<string> {
-      return ["unit:my-source/my-flagship"];
-    }
-  })();
+  const faction: Faction = new Faction("my-source", {
+    nsidName: "my-faction",
+    name: "My Faction",
+    abbr: "MF",
+    abilities: [],
+    commodities: 0,
+    home: 0,
+    leaders: {
+      agents: [],
+      commanders: [],
+      heroes: [],
+      mechs: [],
+    },
+    promissories: ["my-test-promissory"],
+    startingTechs: ["one", "two"],
+    startingUnits: {},
+    techs: [],
+    unitOverrides: ["my-flagship"],
+  });
+  TI4.unitAttrsRegistry.load("my-source", [
+    { unit: "flagship", name: "my-flagship-name", nsidName: "my-flagship" },
+  ]);
 
   TI4.unitModifierRegistry.load("my-source", [
     {
@@ -571,11 +631,28 @@ it("_findUnitModifiers (flagship)", () => {
 });
 
 it("_findUnitModifiers (flagship opponent)", () => {
-  const faction: Faction = new (class extends Faction {
-    getFlagshipNsids(): Array<string> {
-      return ["unit:my-source/my-flagship"];
-    }
-  })();
+  const faction: Faction = new Faction("my-source", {
+    nsidName: "my-faction",
+    name: "My Faction",
+    abbr: "MF",
+    abilities: [],
+    commodities: 0,
+    home: 0,
+    leaders: {
+      agents: [],
+      commanders: [],
+      heroes: [],
+      mechs: [],
+    },
+    promissories: [],
+    startingTechs: ["one", "two"],
+    startingUnits: {},
+    techs: [],
+    unitOverrides: ["my-flagship"],
+  });
+  TI4.unitAttrsRegistry.load("my-source", [
+    { unit: "flagship", name: "my-flagship-name", nsidName: "my-flagship" },
+  ]);
 
   TI4.unitModifierRegistry.load("my-source", [
     {
@@ -626,11 +703,25 @@ it("applyUnitOverrides", () => {
 });
 
 it("applyUnitOverrides (flagship)", () => {
-  const faction: Faction = new (class extends Faction {
-    getFlagshipNsids(): Array<string> {
-      return ["unit:my-source/my-flagship"];
-    }
-  })();
+  const faction: Faction = new Faction("my-source", {
+    nsidName: "my-faction",
+    name: "My Faction",
+    abbr: "MF",
+    abilities: [],
+    commodities: 0,
+    home: 0,
+    leaders: {
+      agents: [],
+      commanders: [],
+      heroes: [],
+      mechs: [],
+    },
+    promissories: [],
+    startingTechs: ["one", "two"],
+    startingUnits: {},
+    techs: [],
+    unitOverrides: ["my-flagship"],
+  });
 
   TI4.unitAttrsRegistry.load("my-source", [
     {
@@ -653,11 +744,25 @@ it("applyUnitOverrides (flagship)", () => {
 });
 
 it("applyUnitOverrides (flagship opponent)", () => {
-  const faction: Faction = new (class extends Faction {
-    getFlagshipNsids(): Array<string> {
-      return ["unit:my-source/my-flagship"];
-    }
-  })();
+  const faction: Faction = new Faction("my-source", {
+    nsidName: "my-faction",
+    name: "My Faction",
+    abbr: "MF",
+    abilities: [],
+    commodities: 0,
+    home: 0,
+    leaders: {
+      agents: [],
+      commanders: [],
+      heroes: [],
+      mechs: [],
+    },
+    promissories: [],
+    startingTechs: ["one", "two"],
+    startingUnits: {},
+    techs: [],
+    unitOverrides: ["my-flagship"],
+  });
 
   TI4.unitAttrsRegistry.load("my-source", [
     {

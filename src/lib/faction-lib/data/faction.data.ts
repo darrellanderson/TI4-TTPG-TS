@@ -18,7 +18,7 @@ export const SOURCE_TO_FACTION_DATA: Record<
         heroes: ["letani-miasmiala"],
         mechs: ["letani-behemoth"],
       },
-      promissoryNotes: ["stymie"],
+      promissories: ["stymie"],
       startingTechs: ["magen-defense-grid"],
       startingUnits: {
         carrier: 1,
@@ -44,7 +44,7 @@ export const SOURCE_TO_FACTION_DATA: Record<
         heroes: ["riftwalker-meian"],
         mechs: ["icarus-drive"],
       },
-      promissoryNotes: ["creuss-iff"],
+      promissories: ["creuss-iff"],
       startingTechs: ["gravity-drive"],
       startingUnits: {
         carrier: 1,
@@ -74,7 +74,7 @@ export const SOURCE_TO_FACTION_DATA: Record<
         heroes: ["harrugh-gefhara"],
         mechs: ["pride-of-kenara"],
       },
-      promissoryNotes: ["trade-convoys"],
+      promissories: ["trade-convoys"],
       startingTechs: ["antimass-deflectors", "sarween-tools"],
       startingUnits: {
         carrier: 2,
@@ -99,7 +99,7 @@ export const SOURCE_TO_FACTION_DATA: Record<
         heroes: ["rin-the-masters-legacy"],
         mechs: ["shield-paling"],
       },
-      promissoryNotes: ["research-agreement"],
+      promissories: ["research-agreement"],
       startingTechs: [
         "antimass-deflectors",
         "neural-motivator",
@@ -130,7 +130,7 @@ export const SOURCE_TO_FACTION_DATA: Record<
         heroes: ["the-helmsman"],
         mechs: ["annihilator"],
       },
-      promissoryNotes: ["cybernetic-enhancements"],
+      promissories: ["cybernetic-enhancements"],
       startingTechs: ["neural-motivator", "plasma-scoring"],
       startingUnits: {
         carrier: 1,
@@ -156,7 +156,7 @@ export const SOURCE_TO_FACTION_DATA: Record<
         heroes: ["darktalon-treilla"],
         mechs: ["dunlain-reaper"],
       },
-      promissoryNotes: ["war-funding"],
+      promissories: ["war-funding"],
       startingTechs: ["antimass-deflectors", "plasma-scoring"],
       startingUnits: {
         carrier: 1,
@@ -183,7 +183,7 @@ export const SOURCE_TO_FACTION_DATA: Record<
         heroes: ["ipswitch-loose-cannon"],
         mechs: ["moll-terminus"],
       },
-      promissoryNotes: ["promise-of-protection"],
+      promissories: ["promise-of-protection"],
       startingTechs: ["sarween-tools", "plasma-scoring"],
       startingUnits: {
         carrier: 1,
@@ -209,7 +209,7 @@ export const SOURCE_TO_FACTION_DATA: Record<
         heroes: ["adjudicator-baal"],
         mechs: ["ember-colossus"],
       },
-      promissoryNotes: ["fires-of-the-gashlai"],
+      promissories: ["fires-of-the-gashlai"],
       startingTechs: ["plasma-scoring"],
       startingUnits: { fighter: 2, infantry: 4, spaceDock: 1, warSun: 1 },
       techs: ["magmus-reactor", "prototype-war-sun-2"],
@@ -229,7 +229,7 @@ export const SOURCE_TO_FACTION_DATA: Record<
         heroes: ["the-oracle"],
         mechs: ["iconoclast"],
       },
-      promissoryNotes: ["gift-of-prescience"],
+      promissories: ["gift-of-prescience"],
       startingTechs: ["neural-motivator", "sarween-tools"],
       startingUnits: {
         carrier: 1,
@@ -261,7 +261,7 @@ export const SOURCE_TO_FACTION_DATA: Record<
         heroes: ["unitdsgnflayesh"],
         mechs: ["mordred"],
       },
-      promissoryNotes: ["antivirus"],
+      promissories: ["antivirus"],
       startingTechs: [
         "dacxive-animators",
         "valefar-assimilator-x",
@@ -300,7 +300,7 @@ export const SOURCE_TO_FACTION_DATA: Record<
         heroes: ["shval-harbinger"],
         mechs: ["valkyrie-exoskeleton"],
       },
-      promissoryNotes: ["tekklar-legion"],
+      promissories: ["tekklar-legion"],
       startingTechs: [],
       startingUnits: {
         carrier: 2,
@@ -325,7 +325,7 @@ export const SOURCE_TO_FACTION_DATA: Record<
         heroes: ["gurno-aggero"],
         mechs: ["scavenger-zeta"],
       },
-      promissoryNotes: ["raghs-call"],
+      promissories: ["raghs-call"],
       startingTechs: ["antimass-deflectors"],
       startingUnits: {
         carrier: 2,
@@ -350,7 +350,7 @@ export const SOURCE_TO_FACTION_DATA: Record<
         heroes: ["jace-x-4th-air-legion"],
         mechs: ["zs-thunderbolt-m2"],
       },
-      promissoryNotes: ["military-support"],
+      promissories: ["military-support"],
       startingTechs: ["antimass-deflectors", "neural-motivator"],
       startingUnits: {
         carrier: 2,
@@ -380,7 +380,7 @@ export const SOURCE_TO_FACTION_DATA: Record<
         heroes: ["mathis-mathinus"],
         mechs: ["reclaimer"],
       },
-      promissoryNotes: ["acquiescence"],
+      promissories: ["acquiescence"],
       startingTechs: [],
       startingUnits: {
         carrier: 1,
@@ -406,7 +406,7 @@ export const SOURCE_TO_FACTION_DATA: Record<
         heroes: ["xxekir-grom"],
         mechs: ["indomitus"],
       },
-      promissoryNotes: ["political-favor"],
+      promissories: ["political-favor"],
       startingTechs: ["graviton-laser-system"],
       startingUnits: {
         carrier: 1,
@@ -432,7 +432,7 @@ export const SOURCE_TO_FACTION_DATA: Record<
         heroes: ["dannel-of-the-tenth"],
         mechs: ["moyins-ashes"],
       },
-      promissoryNotes: ["greyfire-mutagen"],
+      promissories: ["greyfire-mutagen"],
       startingTechs: ["sarween-tools"],
       startingUnits: {
         carrier: 2,
@@ -457,7 +457,7 @@ export const SOURCE_TO_FACTION_DATA: Record<
         heroes: ["kyver-blade-and-key"],
         mechs: ["blackshade-infiltrator"],
       },
-      promissoryNotes: ["spy-net"],
+      promissories: ["spy-net"],
       startingTechs: ["neural-motivator"],
       startingUnits: {
         carrier: 2,
@@ -485,7 +485,7 @@ export const SOURCE_TO_FACTION_DATA: Record<
         heroes: ["mirik-aun-sissiri"],
         mechs: ["aerie-sentinel"],
       },
-      promissoryNotes: ["strike-wing-ambuscade"],
+      promissories: ["strike-wing-ambuscade"],
       startingTechs: [],
       startingUnits: {
         carrier: 1,
@@ -511,7 +511,7 @@ export const SOURCE_TO_FACTION_DATA: Record<
         heroes: ["conservator-procyon"],
         mechs: ["watcher"],
       },
-      promissoryNotes: ["blood-pact", "dark-pact"],
+      promissories: ["blood-pact", "dark-pact"],
       startingTechs: ["dark-energy-tap"],
       startingUnits: {
         carrier: 2,
@@ -536,7 +536,7 @@ export const SOURCE_TO_FACTION_DATA: Record<
         heroes: ["airo-shir-aur"],
         mechs: ["starlancer"],
       },
-      promissoryNotes: ["scepter-of-dominion"],
+      promissories: ["scepter-of-dominion"],
       startingTechs: ["predictive-intelligence", "biostims"],
       startingUnits: {
         carrier: 1,
@@ -562,7 +562,7 @@ export const SOURCE_TO_FACTION_DATA: Record<
         heroes: ["hesh-and-prit"],
         mechs: ["eidolon"],
       },
-      promissoryNotes: ["black-market-forgery"],
+      promissories: ["black-market-forgery"],
       startingTechs: ["psychoarchaeology", "ai-development-algorithm"],
       startingUnits: {
         carrier: 2,
@@ -592,7 +592,7 @@ export const SOURCE_TO_FACTION_DATA: Record<
         heroes: ["ahksyl-siven"],
         mechs: ["quantum-manipulator"],
       },
-      promissoryNotes: ["the-cavalry"],
+      promissories: ["the-cavalry"],
       startingTechs: ["sling-relay"],
       startingUnits: {
         carrier: 1,
@@ -618,7 +618,7 @@ export const SOURCE_TO_FACTION_DATA: Record<
         heroes: ["ul-the-progenitor"],
         mechs: ["hecatoncheires"],
       },
-      promissoryNotes: ["terraform"],
+      promissories: ["terraform"],
       startingTechs: ["antimass-deflectors", "scanlink-drone-network"],
       startingUnits: {
         cruiser: 2,
@@ -653,7 +653,7 @@ export const SOURCE_TO_FACTION_DATA: Record<
         heroes: ["it-feeds-on-carrion"],
         mechs: ["reanimator"],
       },
-      promissoryNotes: ["crucible"],
+      promissories: ["crucible"],
       startingTechs: ["self-assembly-routines"],
       startingUnits: {
         carrier: 1,
@@ -687,7 +687,7 @@ export const SOURCE_TO_FACTION_DATA: Record<
         heroes: ["kuuasi-aun-jalatai"],
         mechs: ["omniopiares"],
       },
-      promissoryNotes: ["keleres-rider"],
+      promissories: ["keleres-rider"],
       startingTechs: [],
       startingUnits: {
         carrier: 2,
@@ -713,7 +713,7 @@ export const SOURCE_TO_FACTION_DATA: Record<
         heroes: ["harka-leeds"],
         mechs: ["omniopiares"],
       },
-      promissoryNotes: ["keleres-rider"],
+      promissories: ["keleres-rider"],
       startingTechs: [],
       startingUnits: {
         carrier: 2,
@@ -739,7 +739,7 @@ export const SOURCE_TO_FACTION_DATA: Record<
         heroes: ["odlynn-myrr"],
         mechs: ["omniopiares"],
       },
-      promissoryNotes: ["keleres-rider"],
+      promissories: ["keleres-rider"],
       startingTechs: [],
       startingUnits: {
         carrier: 2,
