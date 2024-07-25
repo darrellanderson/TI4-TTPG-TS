@@ -2,8 +2,11 @@ import { Faction } from "../faction/faction";
 import { FactionSchema, FactionSchemaType } from "../schema/faction-schema";
 import { NsidNameSchema } from "../../system-lib/schema/basic-types-schema";
 import { SOURCE_TO_FACTION_DATA } from "../data/faction.data";
+import { Vector, world } from "@tabletop-playground/api";
+import { Find, NSID } from "ttpg-darrell";
 
 export class FactionRegistry {
+  private readonly _find: Find = new Find();
   private readonly _nsidToFaction: Map<string, Faction> = new Map();
 
   constructor() {}
@@ -14,6 +17,24 @@ export class FactionRegistry {
 
   getByNsid(nsid: string): Faction | undefined {
     return this._nsidToFaction.get(nsid);
+  }
+
+  getPlayerSlotToFaction(): Map<number, Faction> {
+    const playerSlotToFaction: Map<number, Faction> = new Map();
+    const skipContained: boolean = true;
+    for (const obj of world.getAllObjects(skipContained)) {
+      let nsid: string = NSID.get(obj);
+      if (nsid.startsWith("sheet.faction:")) {
+        nsid = nsid.replace("sheet.faction:", "faction:");
+      }
+      const faction: Faction | undefined = this.getByNsid(nsid);
+      if (faction) {
+        const pos: Vector = obj.getPosition();
+        const playerSlot: number = this._find.closestOwnedCardHolderOwner(pos);
+        playerSlotToFaction.set(playerSlot, faction);
+      }
+    }
+    return playerSlotToFaction;
   }
 
   load(source: string, factions: Array<FactionSchemaType>): this {

@@ -497,7 +497,13 @@ export class CombatRoll {
   }
 
   public applyFactions(): this {
-    // TODO XXX
+    // Get actual factions.
+    const playerSlotToFaction: Map<number, Faction> =
+      TI4.factionRegistry.getPlayerSlotToFaction();
+    this.self.faction = playerSlotToFaction.get(this.self.playerSlot);
+    this.opponent.faction = playerSlotToFaction.get(this.opponent.playerSlot);
+
+    // Let params override (for testing).
     if (this._params.overrideSelfFaction) {
       this.self.faction = this._params.overrideSelfFaction;
     }

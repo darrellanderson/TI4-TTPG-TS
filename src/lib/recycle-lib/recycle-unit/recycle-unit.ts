@@ -2,6 +2,8 @@ import { Container, GameObject } from "@tabletop-playground/api";
 import { Find, GarbageHandler, NSID } from "ttpg-darrell";
 
 export class RecycleUnit extends GarbageHandler {
+  private readonly _find: Find = new Find();
+
   canRecycle(obj: GameObject): boolean {
     const nsid: string = NSID.get(obj);
     return nsid.startsWith("unit:");
@@ -13,7 +15,7 @@ export class RecycleUnit extends GarbageHandler {
     const playerSlot: number = obj.getOwningPlayerSlot();
 
     const skipContained: boolean = true;
-    const container: Container | undefined = new Find().findContainer(
+    const container: Container | undefined = this._find.findContainer(
       containerNsid,
       playerSlot,
       skipContained

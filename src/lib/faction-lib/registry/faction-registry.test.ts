@@ -1,8 +1,31 @@
-import { FactionSchemaType } from "../schema/faction-schema";
+import { MockCardHolder, MockGameObject } from "ttpg-mock";
+
+import { Faction } from "../faction/faction";
 import { FactionRegistry } from "./faction-registry";
+import { FactionSchemaType } from "../schema/faction-schema";
 
 it("constructor", () => {
   new FactionRegistry();
+});
+
+it("getPlayerSlotToFaction", () => {
+  new MockCardHolder({ position: [10, 0, 0], owningPlayerSlot: 1 });
+  new MockCardHolder({ position: [20, 0, 0], owningPlayerSlot: 2 });
+  new MockGameObject({
+    position: [10, 0, 0],
+    templateMetadata: "sheet.faction:base/arborec",
+  });
+  new MockGameObject({
+    position: [20, 0, 0],
+    templateMetadata: "sheet.faction:pok/argent",
+  });
+
+  const registry: FactionRegistry = new FactionRegistry().loadDefaultData();
+  const playerSlotToFaction: Map<number, Faction> =
+    registry.getPlayerSlotToFaction();
+
+  expect(playerSlotToFaction.get(1)?.getName()).toBe("The Arborec");
+  expect(playerSlotToFaction.get(2)?.getName()).toBe("The Argent Flight");
 });
 
 it("load (empty)", () => {
