@@ -201,7 +201,7 @@ export class CombatRoll {
         let useAttrs: boolean = true;
         if (obj instanceof Card) {
           const allowFaceDown: boolean = false;
-          const rejectSnapPointTags: Array<string> = [];
+          const rejectSnapPointTags: Array<string> = ["discard"];
           useAttrs = this._cardUtil.isLooseCard(
             obj,
             allowFaceDown,
@@ -282,7 +282,7 @@ export class CombatRoll {
         let useModifier: boolean = true;
         if (obj instanceof Card) {
           const allowFaceDown: boolean = false;
-          const rejectSnapPointTags: Array<string> = [];
+          const rejectSnapPointTags: Array<string> = ["discard"];
           useModifier = this._cardUtil.isLooseCard(
             obj,
             allowFaceDown,

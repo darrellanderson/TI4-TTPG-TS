@@ -53,10 +53,7 @@ export class SystemAdjacencyWormhole {
   _applyCards(adjacency: Adjacency): void {
     let card: Card | undefined;
     const allowFaceDown: boolean = false;
-    const rejectSnapPointTags: Array<string> = [
-      "discard.card.action",
-      "discard.card.agenda",
-    ];
+    const rejectSnapPointTags: Array<string> = ["discard"];
 
     card = this._find.findCard("card.agenda:base/wormhole_reconstruction");
     if (

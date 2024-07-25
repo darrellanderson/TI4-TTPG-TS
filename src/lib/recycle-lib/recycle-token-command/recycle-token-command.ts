@@ -1,6 +1,6 @@
 import { SimpleToContainerHandler } from "ttpg-darrell";
 
-export class RecycleCommandToken extends SimpleToContainerHandler {
+export class RecycleTokenCommand extends SimpleToContainerHandler {
   constructor() {
     super();
     this.addRecycleObjectNsid("token:base/command")

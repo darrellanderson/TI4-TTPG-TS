@@ -56,7 +56,7 @@ it("card wormhole_reconstruction (face down)", () => {
 
 it("card wormhole_reconstruction (in discard)", () => {
   MockCard.simple("card.agenda:base/wormhole_reconstruction", {
-    snappedToPoint: new MockSnapPoint({ tags: ["discard.card.agenda"] }),
+    snappedToPoint: new MockSnapPoint({ tags: ["discard"] }),
   });
   const adjacency: Adjacency = new Adjacency();
   expect(adjacency.hasLink("alpha", "beta")).toBe(false);
@@ -84,7 +84,7 @@ it("card lost_star_chart (face down)", () => {
 
 it("card lost_star_chart (in discard)", () => {
   MockCard.simple("card.action:base/lost_star_chart", {
-    snappedToPoint: new MockSnapPoint({ tags: ["discard.card.action"] }),
+    snappedToPoint: new MockSnapPoint({ tags: ["discard"] }),
   });
   const adjacency: Adjacency = new Adjacency();
   expect(adjacency.hasLink("alpha", "beta")).toBe(false);
