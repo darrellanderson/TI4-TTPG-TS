@@ -1,5 +1,4 @@
 import { TechSchemaType } from "../schema/tech-schema";
-import { Tech } from "../tech/tech";
 import { TechRegistry } from "./tech-registry";
 
 it("constructor", () => {

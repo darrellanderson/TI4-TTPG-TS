@@ -125,3 +125,7 @@ it("loadDefaultData", () => {
   const registry: UnitModifierRegistry = new UnitModifierRegistry();
   registry.loadDefaultData();
 });
+
+it("validateOrThrow", () => {
+  TI4.unitModifierRegistry.validateOrThrow();
+});

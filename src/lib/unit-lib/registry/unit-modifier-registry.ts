@@ -6,6 +6,7 @@ import {
 } from "../schema/unit-modifier-schema";
 import { UnitModifier } from "../unit-modifier/unit-modifier";
 import { SOURCE_TO_UNIT_MODIFIER_DATA } from "../data/unit-modifier.data";
+import { NSID, ParsedNSID } from "ttpg-darrell";
 
 export class UnitModifierRegistry {
   private readonly _nsidToSchema: Map<string, UnitModifier> = new Map();
@@ -70,6 +71,54 @@ export class UnitModifierRegistry {
       SOURCE_TO_UNIT_MODIFIER_DATA
     )) {
       this.load(source, unitAttrsArray);
+    }
+    return this;
+  }
+
+  /**
+   * Verify modifiers with tech or unit based triggers link to a known tech
+   * or unit.
+   *
+   * @param errors
+   * @returns
+   */
+  validate(errors: Array<string>): this {
+    const nsids: Array<string> = [...this._nsidToSchema.keys()];
+    for (const nsid of nsids) {
+      // Make sure NSID is valid.
+      const parsed: ParsedNSID | undefined = NSID.parse(nsid);
+      if (!parsed) {
+        errors.push(`Invalid NSID: "${nsid}"`);
+        continue;
+      }
+
+      // If tech, make sure tech is registered.
+      if (nsid.startsWith("card.technology")) {
+        const nsidName = parsed.nameParts.join(".");
+        if (!TI4.techRegistry.getByNsidName(nsidName)) {
+          errors.push(`Tech not found: "${nsidName}"`);
+        }
+      }
+
+      // In unit, make sure unit is registered.
+      if (
+        nsid.startsWith("unit:") ||
+        nsid.startsWith("card.technology.unit-upgrade:") ||
+        nsid.startsWith("card.leader.mech:")
+      ) {
+        if (!TI4.unitAttrsRegistry.rawByNsid(nsid)) {
+          errors.push(`Unit not found: "${nsid}"`);
+        }
+      }
+    }
+    return this;
+  }
+
+  validateOrThrow(): this {
+    const errors: Array<string> = [];
+    this.validate(errors);
+    if (errors.length > 0) {
+      throw new Error(errors.join("\n"));
     }
     return this;
   }
