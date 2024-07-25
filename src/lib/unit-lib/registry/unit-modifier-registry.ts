@@ -87,27 +87,24 @@ export class UnitModifierRegistry {
     for (const nsid of nsids) {
       // Make sure NSID is valid.
       const parsed: ParsedNSID | undefined = NSID.parse(nsid);
-      if (!parsed) {
-        errors.push(`Invalid NSID: "${nsid}"`);
-        continue;
-      }
-
-      // If tech, make sure tech is registered.
-      if (nsid.startsWith("card.technology")) {
-        const nsidName = parsed.nameParts.join(".");
-        if (!TI4.techRegistry.getByNsidName(nsidName)) {
-          errors.push(`Tech not found: "${nsidName}"`);
+      if (parsed) {
+        // If tech, make sure tech is registered.
+        if (nsid.startsWith("card.technology")) {
+          const nsidName = parsed.nameParts.join(".");
+          if (!TI4.techRegistry.getByNsidName(nsidName)) {
+            errors.push(`Tech not found: "${nsidName}"`);
+          }
         }
-      }
 
-      // In unit, make sure unit is registered.
-      if (
-        nsid.startsWith("unit:") ||
-        nsid.startsWith("card.technology.unit-upgrade:") ||
-        nsid.startsWith("card.leader.mech:")
-      ) {
-        if (!TI4.unitAttrsRegistry.rawByNsid(nsid)) {
-          errors.push(`Unit not found: "${nsid}"`);
+        // If unit, make sure unit is registered.
+        if (
+          nsid.startsWith("unit:") ||
+          nsid.startsWith("card.technology.unit-upgrade:") ||
+          nsid.startsWith("card.leader.mech:")
+        ) {
+          if (!TI4.unitAttrsRegistry.rawByNsid(nsid)) {
+            errors.push(`Unit not found: "${nsid}"`);
+          }
         }
       }
     }

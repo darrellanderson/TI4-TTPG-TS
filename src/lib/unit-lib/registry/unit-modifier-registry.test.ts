@@ -126,6 +126,50 @@ it("loadDefaultData", () => {
   registry.loadDefaultData();
 });
 
-it("validateOrThrow", () => {
+it("validate (global)", () => {
   TI4.unitModifierRegistry.validateOrThrow();
+});
+
+it("validate (missing tech)", () => {
+  const registry: UnitModifierRegistry = new UnitModifierRegistry().load(
+    "source",
+    [
+      {
+        name: "my-name",
+        description: "my-description",
+        triggers: [{ cardClass: "technology.red", nsidName: "my-nsid-name-2" }],
+        owner: "self",
+        priority: "mutate",
+        applies: (_x: CombatRoll): boolean => {
+          return true;
+        },
+        apply: (_x: CombatRoll): void => {},
+      },
+    ]
+  );
+  expect(() => {
+    registry.validateOrThrow();
+  }).toThrow();
+});
+
+it("validate (missing unit)", () => {
+  const registry: UnitModifierRegistry = new UnitModifierRegistry().load(
+    "source",
+    [
+      {
+        name: "my-name",
+        description: "my-description",
+        triggers: [{ cardClass: "unit", nsidName: "my-nsid-name-2" }],
+        owner: "self",
+        priority: "mutate",
+        applies: (_x: CombatRoll): boolean => {
+          return true;
+        },
+        apply: (_x: CombatRoll): void => {},
+      },
+    ]
+  );
+  expect(() => {
+    registry.validateOrThrow();
+  }).toThrow();
 });

@@ -62,6 +62,19 @@ it("loadDefaultData", () => {
   expect(registry.rawByUnit("mech")).toBeDefined();
 });
 
-it("validate", () => {
+it("validate (global)", () => {
   TI4.unitAttrsRegistry.validateOrThrow();
+});
+
+it("validate (missing tech)", () => {
+  const registry: UnitAttrsRegistry = new UnitAttrsRegistry().load("source", [
+    {
+      name: "my-name",
+      unit: "infantry",
+      nsidName: "my-nsid-name-2",
+    },
+  ]);
+  expect(() => {
+    registry.validateOrThrow();
+  }).toThrow();
 });
