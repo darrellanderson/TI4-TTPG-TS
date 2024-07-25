@@ -1,10 +1,10 @@
 import { SimpleCardGarbageHandler } from "ttpg-darrell";
 
-export class RecycleCardAction extends SimpleCardGarbageHandler {
+export class RecycleCardSecret extends SimpleCardGarbageHandler {
   constructor() {
     super();
     this.setCardNsidPrefix("card.secret:")
-      .setSnapPointTag("discard-secret")
+      .setSnapPointTag("deck-secret")
       .setFaceUp(false)
       .setShuffleAfterDiscard(true);
   }
