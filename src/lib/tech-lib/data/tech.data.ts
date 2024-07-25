@@ -621,14 +621,14 @@ export const SOURCE_TO_TECH_DATA: Record<string, Array<TechSchemaType>> = {
   "codex.ordinian": [
     {
       nsidName: "magen-defense-grid.omega",
-      name: "Magen Defense Grid",
+      name: "Magen Defense Grid (Ω)",
       color: "red",
       prerequisites: { red: 1 },
       abbr: "Magen",
     },
     {
       nsidName: "magmus-reactor.omega",
-      name: "Magmus Reactor",
+      name: "Magmus Reactor (Ω)",
       color: "red",
       prerequisites: { red: 2 },
       abbr: "Magmus",
@@ -636,7 +636,7 @@ export const SOURCE_TO_TECH_DATA: Record<string, Array<TechSchemaType>> = {
     },
     {
       nsidName: "wormhole-generator.omega",
-      name: "Wormhole Generator",
+      name: "Wormhole Generator (Ω)",
       color: "blue",
       prerequisites: { blue: 2 },
       abbr: "Wormhole Gen",
@@ -644,14 +644,14 @@ export const SOURCE_TO_TECH_DATA: Record<string, Array<TechSchemaType>> = {
     },
     {
       nsidName: "x89-bacterial-weapon.omega",
-      name: "X-89 Bacterial Weapon",
+      name: "X-89 Bacterial Weapon (Ω)",
       color: "green",
       prerequisites: { green: 3 },
       abbr: "X-89 B.W.",
     },
     {
       nsidName: "yin-spinner.omega",
-      name: "Yin Spinner",
+      name: "Yin Spinner (Ω)",
       color: "green",
       prerequisites: { green: 2 },
       abbr: "Yin Spin",
