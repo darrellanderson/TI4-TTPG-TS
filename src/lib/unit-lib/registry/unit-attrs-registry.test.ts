@@ -61,3 +61,7 @@ it("loadDefaultData", () => {
   expect(registry.getAllBaseAttrs()).not.toHaveLength(0);
   expect(registry.rawByUnit("mech")).toBeDefined();
 });
+
+it("validate", () => {
+  TI4.unitAttrsRegistry.validateOrThrow();
+});

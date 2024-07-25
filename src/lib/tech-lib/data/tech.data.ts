@@ -418,7 +418,7 @@ export const SOURCE_TO_TECH_DATA: Record<string, Array<TechSchemaType>> = {
       isFactionTech: true,
     },
     {
-      nsidName: "war-sun",
+      nsidName: "war-sun-2",
       name: "War Sun",
       color: "unit-upgrade",
       prerequisites: { red: 3, yellow: 1 },

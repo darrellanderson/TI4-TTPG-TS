@@ -1,3 +1,5 @@
+import { NSID, ParsedNSID } from "ttpg-darrell";
+
 import { NsidNameSchema } from "../../system-lib/schema/basic-types-schema";
 import {
   UnitAttrsSchema,
@@ -67,6 +69,43 @@ export class UnitAttrsRegistry {
       SOURCE_TO_UNIT_ATTRS_DATA
     )) {
       this.load(source, unitAttrsArray);
+    }
+    return this;
+  }
+
+  /**
+   * Verify modifiers with tech or unit based triggers link to a known tech
+   * or unit.
+   *
+   * @param errors
+   * @returns
+   */
+  validate(errors: Array<string>): this {
+    const nsids: Array<string> = [...this._nsidToOverrideAttrs.keys()];
+    for (const nsid of nsids) {
+      // Make sure NSID is valid.
+      const parsed: ParsedNSID | undefined = NSID.parse(nsid);
+      if (!parsed) {
+        errors.push(`Invalid NSID: "${nsid}"`);
+        continue;
+      }
+
+      // If tech, make sure tech is registered.
+      if (nsid.startsWith("card.technology")) {
+        const nsidName = parsed.nameParts.join(".");
+        if (!TI4.techRegistry.getByNsidName(nsidName)) {
+          errors.push(`Tech not found: "${nsidName}"`);
+        }
+      }
+    }
+    return this;
+  }
+
+  validateOrThrow(): this {
+    const errors: Array<string> = [];
+    this.validate(errors);
+    if (errors.length > 0) {
+      throw new Error(errors.join("\n"));
     }
     return this;
   }
