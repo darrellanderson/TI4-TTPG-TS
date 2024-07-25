@@ -1,25 +1,42 @@
-import { SnapPoint, StaticObject } from "@tabletop-playground/api";
-import { MockCard, MockGameObject, MockSnapPoint } from "ttpg-mock";
+import { Card, GameObject, SnapPoint } from "@tabletop-playground/api";
+import {
+  MockCard,
+  MockCardDetails,
+  MockGameObject,
+  MockSnapPoint,
+} from "ttpg-mock";
 import { RecycleCardAgenda } from "./recycle-card-agenda";
 
 it("recycle", () => {
-  const card = MockCard.simple("card.agenda:my-source/my-name");
-  new MockGameObject({
-    id: "discard-mat",
-    snapPoints: [new MockSnapPoint({ tags: ["discard-agenda"] })],
+  const card: Card = new MockCard({
+    cardDetails: [
+      new MockCardDetails({
+        metadata: "card.agenda:my-source/my-name",
+        tags: ["card-agenda"],
+      }),
+    ],
+  });
+  const mat: GameObject = new MockGameObject({
+    position: [10, 0, 0],
+    snapPoints: [
+      new MockSnapPoint({ tags: ["discard-agenda", "card-agenda"] }),
+    ],
   });
 
-  expect(card.getSnappedToPoint()).toBeUndefined();
+  let snapPoint: SnapPoint | undefined;
+  let distance: number;
+
+  snapPoint = card.getSnappedToPoint();
+  distance = card.getPosition().distance(mat.getPosition());
+  expect(snapPoint).toBeUndefined();
+  expect(distance).toBeCloseTo(10);
 
   const recycle = new RecycleCardAgenda();
   expect(recycle.canRecycle(card)).toBe(true);
   expect(recycle.recycle(card)).toBe(true);
 
-  const snapPoint: SnapPoint | undefined = card.getSnappedToPoint();
+  snapPoint = card.getSnappedToPoint();
+  distance = card.getPosition().distance(mat.getPosition());
   expect(snapPoint).toBeDefined();
-
-  const mat: StaticObject | undefined = snapPoint?.getParentObject();
-  expect(mat).toBeDefined();
-
-  expect(mat?.getId()).toEqual("discard-mat");
+  expect(distance).toBeCloseTo(0);
 });
