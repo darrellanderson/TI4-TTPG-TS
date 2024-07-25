@@ -114,7 +114,7 @@ export const SOURCE_TO_FACTION_DATA: Record<
         pds: 2,
         spaceDock: 1,
       },
-      factionTechs: ["spacial-conduit-cylinder", "eres-siphons"],
+      factionTechs: ["spacial-conduit-cylinder", "e-res-siphons"],
       unitOverrides: ["jns-hylarim", "shield-paling"],
     },
     {
@@ -140,8 +140,8 @@ export const SOURCE_TO_FACTION_DATA: Record<
         pds: 1,
         spaceDock: 1,
       },
-      factionTechs: ["inheritance-systems", "superdreadnought-2"],
-      unitOverrides: ["001", "superdreadnought", "annihilator"],
+      factionTechs: ["inheritance-systems", "super-dreadnought-2"],
+      unitOverrides: ["001", "super-dreadnought", "annihilator"],
     },
     {
       nsidName: "letnev",
@@ -572,7 +572,7 @@ export const SOURCE_TO_FACTION_DATA: Record<
         mech: 1,
         spaceDock: 1,
       },
-      factionTechs: ["supercharge", "prefab-arcologies"],
+      factionTechs: ["supercharge", "pre-fab-arcologies"],
       unitOverrides: ["visz-el-vir", "eidolon"],
     },
     {

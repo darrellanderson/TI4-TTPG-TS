@@ -60,6 +60,11 @@ export class FactionRegistry {
           errors.push(`starting tech nsidName not found: "${nsidName}"`);
         }
       }
+      for (const nsid of faction.getUnitOverrideNsids()) {
+        if (!TI4.unitAttrsRegistry.rawByNsid(nsid)) {
+          errors.push(`unit override nsid not found: "${nsid}"`);
+        }
+      }
     }
     return this;
   }
