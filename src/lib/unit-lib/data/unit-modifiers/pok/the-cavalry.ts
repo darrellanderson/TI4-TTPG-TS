@@ -8,7 +8,6 @@ import {
   UnitType,
 } from "../../../schema/unit-attrs-schema";
 import { UnitModifierSchemaType } from "../../../schema/unit-modifier-schema";
-import { Find } from "ttpg-darrell";
 
 export const TheCavalry: UnitModifierSchemaType = {
   name: "The Cavalry",
@@ -33,7 +32,7 @@ export const TheCavalry: UnitModifierSchemaType = {
       let name: string = "The Cavalry";
       let memoriaWhich: UnitAttrsSchemaType = memoria1;
       const memoria2Nsid = UnitAttrs.schemaToNsid("pok", memoria2);
-      if (new Find().findCard(memoria2Nsid) !== undefined) {
+      if (combatRoll.find.findCard(memoria2Nsid) !== undefined) {
         name = "The Cavalry II";
         memoriaWhich = memoria2;
       }

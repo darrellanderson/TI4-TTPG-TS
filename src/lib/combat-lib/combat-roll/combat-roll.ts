@@ -127,7 +127,6 @@ export class CombatRollPerPlayerData {
 
 export class CombatRoll {
   private readonly _cardUtil: CardUtil = new CardUtil();
-  private readonly _find: Find = new Find();
 
   private readonly _params: CombatRollParams;
   private readonly _adjHexes: Set<HexType>;
@@ -211,7 +210,7 @@ export class CombatRoll {
         }
         if (useAttrs) {
           const pos: Vector = obj.getPosition();
-          const closest: number = this._find.closestOwnedCardHolderOwner(pos);
+          const closest: number = this.find.closestOwnedCardHolderOwner(pos);
           if (closest === playerSlot) {
             overrideAttrsArray.push(attrs);
           }
@@ -302,7 +301,7 @@ export class CombatRoll {
         // Self-promissory notes are "for sale" and not active.
         if (nsid.startsWith("card.promissory:") && obj && this.self.faction) {
           const pos: Vector = obj.getPosition();
-          const closest: number = this._find.closestOwnedCardHolderOwner(pos);
+          const closest: number = this.find.closestOwnedCardHolderOwner(pos);
           if (
             closest === selfSlot &&
             this.self.faction.getPromissoryNsids().includes(nsid)
@@ -317,7 +316,7 @@ export class CombatRoll {
             owningPlayerSlot = getControlTokenOwner(obj);
             if (owningPlayerSlot < 0) {
               const pos: Vector = obj.getPosition();
-              owningPlayerSlot = this._find.closestOwnedCardHolderOwner(pos);
+              owningPlayerSlot = this.find.closestOwnedCardHolderOwner(pos);
             }
           }
           const isSelf: boolean = owningPlayerSlot === selfSlot;

@@ -1,5 +1,4 @@
 import { Card, Vector } from "@tabletop-playground/api";
-import { Find } from "ttpg-darrell";
 
 import { CombatAttrs } from "../../../unit-attrs/combat-attrs";
 import {
@@ -18,13 +17,12 @@ export const TekklarLegion: UnitModifierSchemaType = {
   applies: (combatRoll: CombatRoll): boolean => {
     const rollType: CombatRollType = combatRoll.getRollType();
     if (rollType === "groundCombat") {
-      const find: Find = new Find();
-      const tekklarCard: Card | undefined = find.findCard(
+      const tekklarCard: Card | undefined = combatRoll.find.findCard(
         "card.promissory:base/tekklar-legion"
       );
       if (tekklarCard) {
         const pos: Vector = tekklarCard.getPosition();
-        const owner: number = find.closestOwnedCardHolderOwner(pos);
+        const owner: number = combatRoll.find.closestOwnedCardHolderOwner(pos);
         let selfFactionIsNorr: boolean = false;
         if (combatRoll.self.faction) {
           selfFactionIsNorr =
@@ -40,14 +38,13 @@ export const TekklarLegion: UnitModifierSchemaType = {
     return false;
   },
   apply: (combatRoll: CombatRoll): void => {
-    const find: Find = new Find();
-    const tekklarCard: Card | undefined = find.findCard(
+    const tekklarCard: Card | undefined = combatRoll.find.findCard(
       "card.promissory:base/tekklar-legion"
     );
     let delta: number = 0;
     if (tekklarCard) {
       const pos: Vector = tekklarCard.getPosition();
-      const owner: number = find.closestOwnedCardHolderOwner(pos);
+      const owner: number = combatRoll.find.closestOwnedCardHolderOwner(pos);
 
       if (owner === combatRoll.self.playerSlot) {
         delta = 1;

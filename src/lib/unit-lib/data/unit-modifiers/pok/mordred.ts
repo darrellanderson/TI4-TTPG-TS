@@ -1,5 +1,5 @@
 import { world } from "@tabletop-playground/api";
-import { Find, NSID } from "ttpg-darrell";
+import { NSID } from "ttpg-darrell";
 
 import { CombatAttrs } from "../../../unit-attrs/combat-attrs";
 import {
@@ -23,13 +23,12 @@ export const Mordred: UnitModifierSchemaType = {
         "token:base/nekro-x",
         "token:base/nekro-y",
       ]);
-      const find: Find = new Find();
       const skipContained: boolean = true;
       for (const obj of world.getAllObjects(skipContained)) {
         const nsid: string = NSID.get(obj);
         if (
           nekroTokenNsids.has(nsid) &&
-          find.closestOwnedCardHolderOwner(obj.getPosition()) ===
+          combatRoll.find.closestOwnedCardHolderOwner(obj.getPosition()) ===
             combatRoll.opponent.playerSlot
         ) {
           return true;

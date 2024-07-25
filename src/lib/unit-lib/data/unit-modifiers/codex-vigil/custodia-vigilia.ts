@@ -1,5 +1,4 @@
 import { Card, Vector } from "@tabletop-playground/api";
-import { Find } from "ttpg-darrell";
 
 import {
   CombatRoll,
@@ -28,13 +27,12 @@ export const CustodiaVigilia: UnitModifierSchemaType = {
       system.getSystemTileNumber() === 18
     ) {
       // Does player control Mecatol Rex?
-      const find: Find = new Find();
-      const planetCard: Card | undefined = find.findCard(
+      const planetCard: Card | undefined = combatRoll.find.findCard(
         "card.planet:base/mecatol-rex"
       );
       if (planetCard) {
         const pos: Vector = planetCard.getPosition();
-        const owner: number = find.closestOwnedCardHolderOwner(pos);
+        const owner: number = combatRoll.find.closestOwnedCardHolderOwner(pos);
         return owner === combatRoll.self.playerSlot;
       }
     }
