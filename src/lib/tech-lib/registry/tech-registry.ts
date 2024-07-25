@@ -7,10 +7,18 @@ import { TechSchema, TechSchemaType } from "../schema/tech-schema";
 import { Tech } from "../tech/tech";
 
 export class TechRegistry {
-  private readonly _nsidNameToTech: Map<NsidNameSchemaType, Tech> = new Map();
+  private readonly _nsidToTech: Map<string, Tech> = new Map();
+  private readonly _nsidNameToTechSchemaType: Map<
+    NsidNameSchemaType,
+    TechSchemaType
+  > = new Map();
 
-  getByNsidName(nsidName: NsidNameSchemaType): Tech | undefined {
-    return this._nsidNameToTech.get(nsidName);
+  getByNsid(nsid: string): Tech | undefined {
+    return this._nsidToTech.get(nsid);
+  }
+
+  rawByNsidName(nsidName: NsidNameSchemaType): TechSchemaType | undefined {
+    return this._nsidNameToTechSchemaType.get(nsidName);
   }
 
   load(source: NsidNameSchemaType, techSchemas: Array<TechSchemaType>): this {
@@ -26,13 +34,14 @@ export class TechRegistry {
         throw new Error(msg);
       }
 
-      const nsidName: string = techSchema.nsidName;
       const tech: Tech = new Tech(source, techSchema);
+      const nsid: string = tech.getNsid();
 
-      if (this._nsidNameToTech.has(nsidName)) {
-        throw new Error(`duplicate nsidName: ${nsidName}`);
+      if (this._nsidToTech.has(nsid)) {
+        throw new Error(`duplicate nsid: ${nsid}`);
       }
-      this._nsidNameToTech.set(nsidName, tech);
+      this._nsidToTech.set(nsid, tech);
+      this._nsidNameToTechSchemaType.set(tech.getNsidName(), techSchema);
     }
     return this;
   }

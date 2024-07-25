@@ -299,17 +299,6 @@ export const SOURCE_TO_UNIT_ATTRS_DATA: Record<
       nsidName: "spec-ops-2",
       groundCombat: { hit: 6 },
     },
-    {
-      name: "Crimsom Legionnaire",
-      unit: "infantry",
-      nsidName: "crimson-legionnaire",
-    },
-    {
-      name: "Crimsom Legionnaire II",
-      unit: "infantry",
-      nsidName: "crimson-legionnaire-2",
-      groundCombat: { hit: 7 },
-    },
 
     // PDS
     {
@@ -490,6 +479,19 @@ export const SOURCE_TO_UNIT_ATTRS_DATA: Record<
       unit: "flagship",
       nsidName: "visz-el-vir",
       spaceCombat: { dice: 2, hit: 9 },
+    },
+
+    // Infantry
+    {
+      name: "Crimsom Legionnaire",
+      unit: "infantry",
+      nsidName: "crimson-legionnaire",
+    },
+    {
+      name: "Crimsom Legionnaire II",
+      unit: "infantry",
+      nsidName: "crimson-legionnaire-2",
+      groundCombat: { hit: 7 },
     },
 
     // Mech

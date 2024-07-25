@@ -89,22 +89,21 @@ export class UnitModifierRegistry {
       const parsed: ParsedNSID | undefined = NSID.parse(nsid);
       if (parsed) {
         // If tech, make sure tech is registered.
-        if (nsid.startsWith("card.technology")) {
-          const nsidName = parsed.nameParts.join(".");
-          if (!TI4.techRegistry.getByNsidName(nsidName)) {
-            errors.push(`Tech not found: "${nsidName}"`);
-          }
+        if (
+          nsid.startsWith("card.technology") &&
+          !TI4.techRegistry.getByNsid(nsid)
+        ) {
+          errors.push(`Tech not found: "${nsid}"`);
         }
 
         // If unit, make sure unit is registered.
         if (
-          nsid.startsWith("unit:") ||
-          nsid.startsWith("card.technology.unit-upgrade:") ||
-          nsid.startsWith("card.leader.mech:")
+          (nsid.startsWith("unit:") ||
+            nsid.startsWith("card.technology.unit-upgrade:") ||
+            nsid.startsWith("card.leader.mech:")) &&
+          !TI4.unitAttrsRegistry.rawByNsid(nsid)
         ) {
-          if (!TI4.unitAttrsRegistry.rawByNsid(nsid)) {
-            errors.push(`Unit not found: "${nsid}"`);
-          }
+          errors.push(`Unit not found: "${nsid}"`);
         }
       }
     }

@@ -1,4 +1,5 @@
 import { TechSchemaType } from "../schema/tech-schema";
+import { Tech } from "../tech/tech";
 import { TechRegistry } from "./tech-registry";
 
 it("constructor", () => {
@@ -22,12 +23,20 @@ it("load (with data)", () => {
   };
 
   const registry = new TechRegistry();
-  expect(registry.getByNsidName("my-nsid-name")).toBeUndefined();
+  let raw: TechSchemaType | undefined;
+  let tech: Tech | undefined;
+
+  raw = registry.rawByNsidName("my-nsid-name");
+  tech = registry.getByNsid("card.technology.blue:my-source/my-nsid-name");
+  expect(raw).toBeUndefined();
+  expect(tech).toBeUndefined();
 
   registry.load("my-source", [schema]);
-  expect(registry.getByNsidName("my-nsid-name")?.getNsidName()).toBe(
-    "my-nsid-name"
-  );
+
+  raw = registry.rawByNsidName("my-nsid-name");
+  tech = registry.getByNsid("card.technology.blue:my-source/my-nsid-name");
+  expect(raw?.nsidName).toBe("my-nsid-name");
+  expect(tech?.getName()).toBe("my-name");
 });
 
 it("load (invalid schema)", () => {
@@ -67,8 +76,18 @@ it("load (duplicate)", () => {
 
 it("loadDefaultData", () => {
   const registry = new TechRegistry();
-  expect(registry.getByNsidName("plasma-scoring")).toBeUndefined();
+  let raw: TechSchemaType | undefined;
+  let tech: Tech | undefined;
+
+  raw = registry.rawByNsidName("plasma-scoring");
+  tech = registry.getByNsid("card.technology.red:base/plasma-scoring");
+  expect(raw).toBeUndefined();
+  expect(tech).toBeUndefined();
 
   registry.loadDefaultData();
-  expect(registry.getByNsidName("plasma-scoring")).toBeDefined();
+
+  raw = registry.rawByNsidName("plasma-scoring");
+  tech = registry.getByNsid("card.technology.red:base/plasma-scoring");
+  expect(raw?.nsidName).toBe("plasma-scoring");
+  expect(tech?.getName()).toBe("Plasma Scoring");
 });

@@ -1,5 +1,3 @@
-import { NSID, ParsedNSID } from "ttpg-darrell";
-
 import { NsidNameSchema } from "../../system-lib/schema/basic-types-schema";
 import {
   UnitAttrsSchema,
@@ -84,15 +82,11 @@ export class UnitAttrsRegistry {
     const nsids: Array<string> = [...this._nsidToOverrideAttrs.keys()];
     for (const nsid of nsids) {
       // Make sure NSID is valid.
-      const parsed: ParsedNSID | undefined = NSID.parse(nsid);
-      if (parsed) {
-        // If tech, make sure tech is registered.
-        if (nsid.startsWith("card.technology")) {
-          const nsidName = parsed.nameParts.join(".");
-          if (!TI4.techRegistry.getByNsidName(nsidName)) {
-            errors.push(`Tech not found: "${nsidName}"`);
-          }
-        }
+      if (
+        nsid.startsWith("card.technology") &&
+        !TI4.techRegistry.getByNsid(nsid)
+      ) {
+        errors.push(`Tech not found: "${nsid}"`);
       }
     }
     return this;

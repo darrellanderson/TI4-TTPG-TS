@@ -10,6 +10,10 @@ export class Tech {
     this._params = params;
   }
 
+  getName(): string {
+    return this._params.name;
+  }
+
   getNsid(): string {
     return `card.technology.${this._params.color}:${this._source}/${this._params.nsidName}`;
   }

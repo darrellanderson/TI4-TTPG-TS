@@ -1,6 +1,5 @@
 import { FactionSchemaType } from "../schema/faction-schema";
 import { NsidNameSchemaType } from "../../system-lib/schema/basic-types-schema";
-import { Tech } from "../../tech-lib/tech/tech";
 
 export class Faction {
   private readonly _source: NsidNameSchemaType;
@@ -37,16 +36,8 @@ export class Faction {
     return this._params.commodities;
   }
 
-  getFactionTechNsids(): Array<string> {
-    return this._params.factionTechs.map((factionTech): string => {
-      const tech: Tech | undefined =
-        TI4.techRegistry.getByNsidName(factionTech);
-      if (tech) {
-        return tech.getNsid();
-      } else {
-        throw new Error(`Tech ${factionTech} not found`);
-      }
-    });
+  getFactionTechNsidNames(): Array<string> {
+    return this._params.factionTechs; // need color to form full nsid
   }
 
   getHeroNsids(): Array<string> {
@@ -83,16 +74,8 @@ export class Faction {
     });
   }
 
-  getStartingTechNsids(): Array<string> {
-    return this._params.startingTechs.map((startingTech): string => {
-      const tech: Tech | undefined =
-        TI4.techRegistry.getByNsidName(startingTech);
-      if (tech) {
-        return tech.getNsid();
-      } else {
-        throw new Error(`Tech ${startingTech} not found`);
-      }
-    });
+  getStartingTechNsidNames(): Array<string> {
+    return this._params.startingTechs;
   }
 
   getStartingUnits(): { [unit: string]: number } {

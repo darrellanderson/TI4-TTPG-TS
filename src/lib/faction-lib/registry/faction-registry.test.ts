@@ -32,10 +32,12 @@ it("load (with data)", () => {
   };
 
   const registry = new FactionRegistry();
-  expect(registry.rawByNsidName("my-nsid-name")).toBeUndefined();
+  expect(registry.getByNsid("faction:my-source/my-nsid-name")).toBeUndefined();
 
   registry.load("my-source", [schema]);
-  expect(registry.rawByNsidName("my-nsid-name")?.name).toBe("my-name");
+  expect(registry.getByNsid("faction:my-source/my-nsid-name")?.getName()).toBe(
+    "my-name"
+  );
 });
 
 it("load (invalid schema)", () => {
@@ -68,10 +70,10 @@ it("load (invalid schema)", () => {
 
 it("loadDefaultData", () => {
   const registry = new FactionRegistry();
-  expect(registry.rawByNsidName("arborec")).toBeUndefined();
+  expect(registry.getByNsid("faction:base/arborec")).toBeUndefined();
   expect(registry.getAllFactions()).toHaveLength(0);
 
   registry.loadDefaultData();
-  expect(registry.rawByNsidName("arborec")).toBeDefined();
+  expect(registry.getByNsid("faction:base/arborec")).toBeDefined();
   expect(registry.getAllFactions()).not.toHaveLength(0);
 });
