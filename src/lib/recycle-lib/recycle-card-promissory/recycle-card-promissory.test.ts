@@ -61,3 +61,9 @@ it("recycle", () => {
     "card.promissory:my-source/my-promissory.omega",
   ]);
 });
+
+it("recycle (not a card)", () => {
+  const recycle = new RecycleCardPromissory();
+  expect(recycle.canRecycle(new MockGameObject())).toBe(false);
+  expect(recycle.recycle(new MockGameObject())).toBe(false);
+});
