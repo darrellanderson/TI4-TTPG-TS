@@ -6,7 +6,7 @@ import {
   MockGameObject,
 } from "ttpg-mock";
 
-import { Faction } from "../../faction-lib/faction/faction";
+import { Faction } from "../../../../faction-lib/faction/faction";
 import { RecycleCardPromissory } from "./recycle-card-promissory";
 import { NSID } from "ttpg-darrell";
 

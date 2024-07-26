@@ -1,7 +1,7 @@
 import { Card, GameObject } from "@tabletop-playground/api";
 import { CardUtil, GarbageHandler, NSID } from "ttpg-darrell";
 
-import { Faction } from "../../faction-lib/faction/faction";
+import { Faction } from "../../../../faction-lib/faction/faction";
 
 export class RecycleCardPromissory extends GarbageHandler {
   private readonly _cardUtil: CardUtil = new CardUtil();
