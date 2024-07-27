@@ -10,6 +10,9 @@ export class RecycleTokenAttachment extends GarbageHandler {
 
   canRecycle(obj: GameObject): boolean {
     const nsid: string = NSID.get(obj);
+    if (nsid === "token.attachment.system:pok/frontier") {
+      return false; // custom recycler exists
+    }
     return nsid.startsWith("token.attachment.");
   }
 
