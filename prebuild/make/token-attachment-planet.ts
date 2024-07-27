@@ -35,7 +35,7 @@ for (const [source, planetAttachmentSchemas] of Object.entries(
     const nsidName: string = planetAttachmentSchema.nsidName;
     const nsid: string = `token.attachment.planet:${source}/${nsidName}`;
 
-    let imgFileFace: string = `token/attachment/planet/${nsidName}.jpg`;
+    const imgFileFace: string = `token/attachment/planet/${nsidName}.jpg`;
     let imgFileBack: string = imgFileFace;
     if (planetAttachmentSchema.imgFaceDown) {
       imgFileBack = `token/attachment/planet/${nsidName}.back.jpg`;
