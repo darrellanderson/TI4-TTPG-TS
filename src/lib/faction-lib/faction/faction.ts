@@ -26,6 +26,14 @@ export class Faction {
     });
   }
 
+  getAllianceNsid(): string {
+    let source: string = this._source;
+    if (source === "base") {
+      source = "pok"; // aliance got added in PoK
+    }
+    return `card.alliance:${source}/${this._params.nsidName}`;
+  }
+
   getCommanderNsids(): Array<string> {
     return this._params.leaders.commanders.map((commander): string => {
       return `card.leader.commander:${this._source}/${commander}`;

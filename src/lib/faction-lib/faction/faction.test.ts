@@ -30,6 +30,9 @@ it("constructor", () => {
   expect(faction.getAgentNsids()).toEqual([
     "card.leader.agent:my-source/my-agent",
   ]);
+  expect(faction.getAllianceNsid()).toEqual(
+    "card.alliance:my-source/my-nsid-name"
+  );
   expect(faction.getCommanderNsids()).toEqual([
     "card.leader.commander:my-source/my-commander",
   ]);
@@ -84,4 +87,7 @@ it("constructor (base source get pok mech)", () => {
     "unit:base/my-unit-override",
     "card.leader.mech:pok/my-mech",
   ]);
+
+  // Alliance is also a PoK addition.
+  expect(faction.getAllianceNsid()).toEqual("card.alliance:pok/my-nsid-name");
 });
