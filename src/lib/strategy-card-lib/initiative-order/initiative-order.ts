@@ -32,11 +32,11 @@ export class InitiativeOrder {
     const nsid: string = NSID.get(obj);
     if (nsid.startsWith("tile.strategy:")) {
       const parsed: ParsedNSID | undefined = NSID.parse(nsid);
-      const nameFirst: string | undefined = parsed?.nameParts[0];
-      const known: boolean =
-        nameFirst !== undefined && nameFirst in STRATEGY_CARD_TO_INITIATIVE;
-      if (known) {
-        return nameFirst;
+      if (parsed) {
+        const nameFirst: string | undefined = parsed.nameParts[0];
+        if (nameFirst && nameFirst in STRATEGY_CARD_TO_INITIATIVE) {
+          return nameFirst;
+        }
       }
     }
     return undefined;
@@ -76,25 +76,22 @@ export class InitiativeOrder {
       }
     };
 
+    let initiative: number | undefined;
     const skipContained: boolean = true;
     for (const obj of world.getAllObjects(skipContained)) {
       // Check if strategy card.
-      const strategyCardNsidNameFirst: NsidNameSchemaType | undefined =
-        InitiativeOrder.getStrategyCardNsidNameFirst(obj);
-      if (strategyCardNsidNameFirst) {
-        const initiative: number | undefined =
-          STRATEGY_CARD_TO_INITIATIVE[strategyCardNsidNameFirst];
-        if (initiative) {
-          const pos: Vector = obj.getPosition();
-          const playerSlot: number =
-            this._find.closestOwnedCardHolderOwner(pos);
-          addToEntry(playerSlot, initiative, obj);
-        }
+      const strategyCardNsidNameFirst: NsidNameSchemaType =
+        InitiativeOrder.getStrategyCardNsidNameFirst(obj) ?? "";
+      initiative = STRATEGY_CARD_TO_INITIATIVE[strategyCardNsidNameFirst];
+      if (initiative !== undefined && !this._isAtopStrategyCardMat(obj)) {
+        const pos: Vector = obj.getPosition();
+        const playerSlot: number = this._find.closestOwnedCardHolderOwner(pos);
+        addToEntry(playerSlot, initiative, obj);
       }
 
       // Check if other.
       const nsid: string = NSID.get(obj);
-      const initiative: number | undefined = OTHER_NSID_TO_INITIATIVE[nsid];
+      initiative = OTHER_NSID_TO_INITIATIVE[nsid];
       if (initiative !== undefined) {
         const pos: Vector = obj.getPosition();
         const playerSlot: number = this._find.closestOwnedCardHolderOwner(pos);
