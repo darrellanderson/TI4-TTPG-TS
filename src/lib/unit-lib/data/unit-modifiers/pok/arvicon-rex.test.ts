@@ -4,10 +4,6 @@ import {
   CombatRollParams,
 } from "../../../../combat-lib/combat-roll/combat-roll";
 import { OPPONENT, placeGameObjects, SELF, SELF_POS } from "../abstract.test";
-import {
-  CommandTokenAllocation,
-  CommandTokenLib,
-} from "../../../../command-token-lib/command-token-lib";
 
 it("registry", () => {
   const nsid = "unit:pok/arvicon-rex";
@@ -50,11 +46,6 @@ it("arvicon-rex", () => {
     position: SELF_POS.add([1, 1, 0]),
     owningPlayerSlot: OPPONENT,
   });
-
-  const commandTokenAllocation: CommandTokenAllocation | undefined =
-    new CommandTokenLib().getPlayerSlotToCommandTokenAllocations().get(SELF);
-  expect(commandTokenAllocation).toBeDefined();
-  expect(commandTokenAllocation?.fleet.length).toBe(1);
 
   combatRoll = CombatRoll.createCooked(params);
   expect(combatRoll.self.hasUnit("flagship")).toBe(true);

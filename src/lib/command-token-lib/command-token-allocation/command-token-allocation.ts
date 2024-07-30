@@ -1,23 +1,18 @@
 import { GameObject, Vector, world } from "@tabletop-playground/api";
 import { Find, NSID } from "ttpg-darrell";
 
-export type CommandTokenAllocation = {
+export type CommandTokenTypes = {
   tactic: Array<GameObject>;
   fleet: Array<GameObject>;
   strategy: Array<GameObject>;
 };
 
-export class CommandTokenLib {
+export class CommandTokenAllocation {
   // Value that lets token be a little off sheet.
   private static readonly ON_SHEET_DISTANCE_SQ = 200;
   private _find: Find = new Find();
 
-  constructor() {}
-
-  public getPlayerSlotToCommandTokenAllocations(): Map<
-    number,
-    CommandTokenAllocation
-  > {
+  public getPlayerSlotToCommandTokenTypes(): Map<number, CommandTokenTypes> {
     // Gather relevant objects.
     const commandSheets: Array<GameObject> = [];
     const commandTokens: Array<GameObject> = [];
@@ -41,12 +36,10 @@ export class CommandTokenLib {
     }
 
     // Create command token allocations.
-    const playerSlotToCommandTokenAllocation: Map<
-      number,
-      CommandTokenAllocation
-    > = new Map();
+    const playerSlotToCommandTokenTypes: Map<number, CommandTokenTypes> =
+      new Map();
     for (const playerSlot of playerSlotToCommandSheet.keys()) {
-      playerSlotToCommandTokenAllocation.set(playerSlot, {
+      playerSlotToCommandTokenTypes.set(playerSlot, {
         tactic: [],
         fleet: [],
         strategy: [],
@@ -58,12 +51,12 @@ export class CommandTokenLib {
       const playerSlot: number = this._find.closestOwnedCardHolderOwner(
         commandToken.getPosition()
       );
-      const commandTokenAllocation: CommandTokenAllocation | undefined =
-        playerSlotToCommandTokenAllocation.get(playerSlot);
+      const commandTokenTypes: CommandTokenTypes | undefined =
+        playerSlotToCommandTokenTypes.get(playerSlot);
       const commandSheet: GameObject | undefined =
         playerSlotToCommandSheet.get(playerSlot);
 
-      if (commandTokenAllocation && commandSheet) {
+      if (commandTokenTypes && commandSheet) {
         const worldPos: Vector = commandToken.getPosition();
         const localPos: Vector = commandSheet.worldPositionToLocal(worldPos);
 
@@ -75,19 +68,19 @@ export class CommandTokenLib {
         const angle = (Math.atan2(localPos.y, localPos.x) * 180) / Math.PI;
         const dSq = localPos.magnitudeSquared();
 
-        if (dSq <= CommandTokenLib.ON_SHEET_DISTANCE_SQ) {
+        if (dSq <= CommandTokenAllocation.ON_SHEET_DISTANCE_SQ) {
           // Which region?
           if (-30 < angle && angle <= 30) {
-            commandTokenAllocation.tactic.push(commandToken);
+            commandTokenTypes.tactic.push(commandToken);
           } else if (30 < angle && angle <= 90) {
-            commandTokenAllocation.fleet.push(commandToken);
+            commandTokenTypes.fleet.push(commandToken);
           } else if (90 < angle && angle <= 150) {
-            commandTokenAllocation.strategy.push(commandToken);
+            commandTokenTypes.strategy.push(commandToken);
           }
         }
       }
     }
 
-    return playerSlotToCommandTokenAllocation;
+    return playerSlotToCommandTokenTypes;
   }
 }
