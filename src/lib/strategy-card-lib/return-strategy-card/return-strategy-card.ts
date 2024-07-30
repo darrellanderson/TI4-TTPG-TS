@@ -1,6 +1,6 @@
 import { GameObject, Vector, world } from "@tabletop-playground/api";
-import { RecycleStrategyCard } from "../../recycle-lib/handlers/strategy-card/recycle-strategy-card";
 import { Find, NSID } from "ttpg-darrell";
+import { RecycleStrategyCard } from "../../recycle-lib/handlers/strategy-card/recycle-strategy-card";
 
 export class ReturnStrategyCard {
   private readonly _find: Find = new Find();
@@ -11,6 +11,7 @@ export class ReturnStrategyCard {
     // If a player has "political stability" they keep their strategy card.
     const strategyCards: Array<GameObject> = [];
     let politicalStabilityOwner: number = -1;
+
     const skipContained: boolean = true;
     for (const obj of world.getAllObjects(skipContained)) {
       const nsid: string = NSID.get(obj);
