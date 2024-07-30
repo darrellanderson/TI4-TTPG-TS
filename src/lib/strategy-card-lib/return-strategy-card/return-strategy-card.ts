@@ -1,55 +1,11 @@
-import { GameObject, SnapPoint, Vector, world } from "@tabletop-playground/api";
-import { Find, NSID, ParsedNSID } from "ttpg-darrell";
+import { GameObject, Vector, world } from "@tabletop-playground/api";
+import { RecycleStrategyCard } from "../../recycle-lib/handlers/strategy-card/recycle-strategy-card";
+import { Find, NSID } from "ttpg-darrell";
 
 export class ReturnStrategyCard {
   private readonly _find: Find = new Find();
-
-  returnOneStrategyCard(obj: GameObject): boolean {
-    const nsid: string = NSID.get(obj);
-    if (!nsid.startsWith("tile.strategy:")) {
-      return false;
-    }
-
-    const names: Array<string> = [
-      "leadership",
-      "diplomacy",
-      "politics",
-      "construction",
-      "trade",
-      "warfare",
-      "technology",
-      "imperial",
-    ];
-
-    const parsed: ParsedNSID | undefined = NSID.parse(nsid);
-    const nameFirst: string | undefined = parsed?.nameParts[0];
-    const strategyCardIndex: number = nameFirst ? names.indexOf(nameFirst) : -1;
-    if (strategyCardIndex === -1) {
-      return false; // not a valid strategy card
-    }
-
-    const mat: GameObject | undefined =
-      this._find.findGameObject("mat:base/strategy");
-    if (!mat) {
-      return false;
-    }
-
-    const snapPoint: SnapPoint | undefined =
-      mat.getAllSnapPoints()[strategyCardIndex];
-    if (!snapPoint) {
-      return false;
-    }
-
-    const above: Vector = snapPoint
-      .getGlobalPosition()
-      .add(new Vector(0, 0, 10));
-
-    obj.setPosition(above);
-    obj.snapToGround();
-    obj.snap();
-
-    return true;
-  }
+  private readonly _recycleStrateydCard: RecycleStrategyCard =
+    new RecycleStrategyCard();
 
   returnAllStrategyCardsRespecingPoliticalStability(): void {
     // If a player has "political stability" they keep their strategy card.
@@ -69,8 +25,11 @@ export class ReturnStrategyCard {
     for (const obj of strategyCards) {
       const pos: Vector = obj.getPosition();
       const owner: number = this._find.closestOwnedCardHolderOwner(pos);
-      if (owner !== politicalStabilityOwner) {
-        this.returnOneStrategyCard(obj);
+      if (
+        owner !== politicalStabilityOwner &&
+        this._recycleStrateydCard.canRecycle(obj)
+      ) {
+        this._recycleStrateydCard.recycle(obj);
       }
     }
   }
