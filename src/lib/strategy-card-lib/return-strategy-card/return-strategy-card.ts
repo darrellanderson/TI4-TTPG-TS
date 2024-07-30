@@ -1,21 +1,12 @@
-import { GameObject, SnapPoint, Vector } from "@tabletop-playground/api";
+import { GameObject, SnapPoint, Vector, world } from "@tabletop-playground/api";
 import { Find, NSID, ParsedNSID } from "ttpg-darrell";
 
 export class ReturnStrategyCard {
   private readonly _find: Find = new Find();
 
-  returnStrategyCard(obj: GameObject): boolean {
+  returnOneStrategyCard(obj: GameObject): boolean {
     const nsid: string = NSID.get(obj);
     if (!nsid.startsWith("tile.strategy:")) {
-      return false;
-    }
-
-    const parsed: ParsedNSID | undefined = NSID.parse(nsid);
-    if (!parsed) {
-      return false;
-    }
-    const nameFirst: string | undefined = parsed.nameParts[0];
-    if (!nameFirst) {
       return false;
     }
 
@@ -29,9 +20,12 @@ export class ReturnStrategyCard {
       "technology",
       "imperial",
     ];
-    const strategyCardIndex: number = names.indexOf(nameFirst);
+
+    const parsed: ParsedNSID | undefined = NSID.parse(nsid);
+    const nameFirst: string | undefined = parsed?.nameParts[0];
+    const strategyCardIndex: number = nameFirst ? names.indexOf(nameFirst) : -1;
     if (strategyCardIndex === -1) {
-      return false;
+      return false; // not a valid strategy card
     }
 
     const mat: GameObject | undefined =
@@ -55,5 +49,29 @@ export class ReturnStrategyCard {
     obj.snap();
 
     return true;
+  }
+
+  returnAllStrategyCardsRespecingPoliticalStability(): void {
+    // If a player has "political stability" they keep their strategy card.
+    const strategyCards: Array<GameObject> = [];
+    let politicalStabilityOwner: number = -1;
+    const skipContained: boolean = true;
+    for (const obj of world.getAllObjects(skipContained)) {
+      const nsid: string = NSID.get(obj);
+      if (nsid === "card.action:base/political-stability") {
+        const pos: Vector = obj.getPosition();
+        politicalStabilityOwner = this._find.closestOwnedCardHolderOwner(pos);
+      } else if (nsid.startsWith("tile.strategy:")) {
+        strategyCards.push(obj);
+      }
+    }
+
+    for (const obj of strategyCards) {
+      const pos: Vector = obj.getPosition();
+      const owner: number = this._find.closestOwnedCardHolderOwner(pos);
+      if (owner !== politicalStabilityOwner) {
+        this.returnOneStrategyCard(obj);
+      }
+    }
   }
 }

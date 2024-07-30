@@ -13,6 +13,6 @@ export class RecycleStrategyCard extends GarbageHandler {
   }
 
   recycle(obj: GameObject): boolean {
-    return this._returnStrategyCard.returnStrategyCard(obj);
+    return this._returnStrategyCard.returnOneStrategyCard(obj);
   }
 }
