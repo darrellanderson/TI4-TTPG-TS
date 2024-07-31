@@ -46,6 +46,18 @@ it("getPlayerSlotToCommandTokenCount", () => {
   );
 });
 
+it("addAllCommandTokens", () => {
+  new MockGameObject({
+    templateMetadata: "sheet.faction:base/sol", // versatile
+    position: [10, 0, 0],
+    owningPlayerSlot: 1,
+  });
+
+  const tooFewTokens: Set<number> =
+    new AddCommandTokens().addAllCommandTokens();
+  expect(tooFewTokens.size).toBe(1);
+});
+
 it("addCommandTokens", () => {
   const token1: GameObject = new MockGameObject({
     id: "token1",

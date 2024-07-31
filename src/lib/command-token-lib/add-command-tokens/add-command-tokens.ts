@@ -78,6 +78,24 @@ export class AddCommandTokens {
   }
 
   /**
+   * Add command tokens for each player.
+   *
+   * @returns Set of player slots where not all tokens were added (too few).
+   */
+  addAllCommandTokens(): Set<number> {
+    const tooFewTokens: Set<number> = new Set();
+    const slotToCount: Map<number, number> =
+      this.getPlayerSlotToCommandTokenCount();
+    for (const [slot, count] of slotToCount) {
+      const success: boolean = this.addCommandTokens(slot, count);
+      if (!success) {
+        tooFewTokens.add(slot);
+      }
+    }
+    return tooFewTokens;
+  }
+
+  /**
    * Move command tokens from the container to above the command sheet.
    *
    * @param playerSlot

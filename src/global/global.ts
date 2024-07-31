@@ -1,6 +1,9 @@
 import { GameWorld } from "@tabletop-playground/api";
 import {
+  BugCardHolderAssignment,
+  BugForceTransformUpdates,
   BugSplatRemoteReporter,
+  BugUniqueCards,
   DiceGroupCleanup,
   ErrorHandler,
   GlobalInit,
@@ -73,8 +76,16 @@ for (const v of Object.values(globalThis.TI4)) {
 }
 GlobalInit.runGlobalInit(iGlobals);
 
+// Unittests reset the globalThis.TI4 object before each test.
 if (GameWorld.getExecutionReason() === "unittest") {
   beforeEach(() => {
     resetGlobalThisTI4();
   });
+}
+
+// Register some bug workarounds.
+if (GameWorld.getExecutionReason() !== "unittest") {
+  new BugCardHolderAssignment("card-holder:base/player-hand").init();
+  new BugForceTransformUpdates().init();
+  new BugUniqueCards().init();
 }
