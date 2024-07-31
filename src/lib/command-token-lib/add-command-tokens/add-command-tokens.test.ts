@@ -1,9 +1,49 @@
-import { GameObject } from "@tabletop-playground/api";
-import { MockContainer, MockGameObject } from "ttpg-mock";
+import { Card, CardHolder, GameObject } from "@tabletop-playground/api";
+import {
+  MockCard,
+  MockCardHolder,
+  MockContainer,
+  MockGameObject,
+} from "ttpg-mock";
 import { AddCommandTokens } from "./add-command-tokens";
 
 it("constructor", () => {
   new AddCommandTokens();
+});
+
+it("getPlayerSlotToCommandTokenCount", () => {
+  new MockCardHolder({ owningPlayerSlot: 1, position: [10, 0, 0] });
+  new MockGameObject({
+    templateMetadata: "sheet.faction:base/sol", // versatile
+    position: [10, 0, 0],
+    owningPlayerSlot: 1,
+  });
+  MockCard.simple("card.technology.green:base/hyper-metabolism", {
+    position: [10, 0, 0],
+  });
+  const cyberneticEnhancements: Card = MockCard.simple(
+    "card.promissory:base/cybernetic-enhancements",
+    {
+      position: [10, 0, 0],
+    }
+  );
+
+  const l1zixCardHolder: CardHolder = new MockCardHolder({
+    owningPlayerSlot: 2,
+    position: [20, 0, 0],
+  });
+  new MockGameObject({
+    templateMetadata: "sheet.faction:base/l1z1x",
+    position: [20, 0, 0],
+    owningPlayerSlot: 2,
+  });
+
+  const slotToCount: Map<number, number> =
+    new AddCommandTokens().getPlayerSlotToCommandTokenCount();
+  expect(slotToCount.get(1)).toBe(5);
+  expect(l1zixCardHolder.getCards().includes(cyberneticEnhancements)).toBe(
+    true
+  );
 });
 
 it("addCommandTokens", () => {
