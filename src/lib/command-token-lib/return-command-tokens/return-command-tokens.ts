@@ -3,6 +3,9 @@ import { HexType, NSID } from "ttpg-darrell";
 
 import { RecycleTokenCommand } from "../../recycle-lib/handlers/token/recycle-token-command/recycle-token-command";
 
+/**
+ * Return command tokens on system tiles to players' supplies.
+ */
 export class ReturnCommandTokens {
   private readonly _recycleCommandToken: RecycleTokenCommand =
     new RecycleTokenCommand();
