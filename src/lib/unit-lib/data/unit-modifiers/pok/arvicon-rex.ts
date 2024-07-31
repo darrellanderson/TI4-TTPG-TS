@@ -4,7 +4,7 @@ import { UnitModifierSchemaType } from "../../../schema/unit-modifier-schema";
 import {
   CommandTokenCounter,
   CommandTokenCounts,
-} from "../../../../command-token-lib/command-token-allocation/command-token-counter";
+} from "../../../../command-token-lib/command-token-counter/command-token-counter";
 import { GameObject } from "@tabletop-playground/api";
 
 export const ArviconRex: UnitModifierSchemaType = {
