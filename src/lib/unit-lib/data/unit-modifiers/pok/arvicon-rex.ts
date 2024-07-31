@@ -2,9 +2,9 @@ import { CombatAttrs } from "../../../unit-attrs/combat-attrs";
 import { CombatRoll } from "../../../../combat-lib/combat-roll/combat-roll";
 import { UnitModifierSchemaType } from "../../../schema/unit-modifier-schema";
 import {
-  CommandTokenAllocation,
-  CommandTokenTypes,
-} from "../../../../command-token-lib/command-token-allocation/command-token-allocation";
+  CommandTokenCounter,
+  CommandTokenCounts,
+} from "../../../../command-token-lib/command-token-allocation/command-token-counter";
 import { GameObject } from "@tabletop-playground/api";
 
 export const ArviconRex: UnitModifierSchemaType = {
@@ -18,13 +18,13 @@ export const ArviconRex: UnitModifierSchemaType = {
     return combatRoll.self.hasUnit("flagship");
   },
   apply: (combatRoll: CombatRoll): void => {
-    const commandTokenAllocation = new CommandTokenAllocation();
-    const playerSlotToCommandTokenTypes: Map<number, CommandTokenTypes> =
-      commandTokenAllocation.getPlayerSlotToCommandTokenTypes();
-    const commandTokenTypes: CommandTokenTypes | undefined =
-      playerSlotToCommandTokenTypes.get(combatRoll.self.playerSlot);
-    if (commandTokenTypes) {
-      const fleetTokens: Array<GameObject> = commandTokenTypes.fleet;
+    const commandTokenCounter = new CommandTokenCounter();
+    const playerSlotToCommandTokenCounts: Map<number, CommandTokenCounts> =
+      commandTokenCounter.getPlayerSlotToCommandTokenCounts();
+    const commandTokenCounts: CommandTokenCounts | undefined =
+      playerSlotToCommandTokenCounts.get(combatRoll.self.playerSlot);
+    if (commandTokenCounts) {
+      const fleetTokens: Array<GameObject> = commandTokenCounts.fleet;
       for (const fleetToken of fleetTokens) {
         if (
           fleetToken.getOwningPlayerSlot() === combatRoll.opponent.playerSlot

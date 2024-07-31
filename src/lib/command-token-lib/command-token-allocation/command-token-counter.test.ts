@@ -1,11 +1,11 @@
 import { MockCardHolder, MockGameObject } from "ttpg-mock";
 import {
-  CommandTokenAllocation,
-  CommandTokenTypes,
-} from "./command-token-allocation";
+  CommandTokenCounter,
+  CommandTokenCounts,
+} from "./command-token-counter";
 
 it("constructor", () => {
-  new CommandTokenAllocation();
+  new CommandTokenCounter();
 });
 
 it("getPlayerSlotToCommandTokenTypes", () => {
@@ -33,14 +33,14 @@ it("getPlayerSlotToCommandTokenTypes", () => {
     position: [-1, 1, 0],
   });
 
-  const commandTokenAllocation = new CommandTokenAllocation();
-  const playerSlotToCommandTokenTypes: Map<number, CommandTokenTypes> =
-    commandTokenAllocation.getPlayerSlotToCommandTokenTypes();
-  const commandTokenTypes: CommandTokenTypes | undefined =
+  const commandTokenCounter = new CommandTokenCounter();
+  const playerSlotToCommandTokenTypes: Map<number, CommandTokenCounts> =
+    commandTokenCounter.getPlayerSlotToCommandTokenCounts();
+  const commandTokenCounts: CommandTokenCounts | undefined =
     playerSlotToCommandTokenTypes.get(3);
-  expect(commandTokenTypes?.tactic.map((x) => x.getId())).toEqual(["tactic"]);
-  expect(commandTokenTypes?.fleet.map((x) => x.getId())).toEqual(["fleet"]);
-  expect(commandTokenTypes?.strategy.map((x) => x.getId())).toEqual([
+  expect(commandTokenCounts?.tactic.map((x) => x.getId())).toEqual(["tactic"]);
+  expect(commandTokenCounts?.fleet.map((x) => x.getId())).toEqual(["fleet"]);
+  expect(commandTokenCounts?.strategy.map((x) => x.getId())).toEqual([
     "strategy",
   ]);
 });
