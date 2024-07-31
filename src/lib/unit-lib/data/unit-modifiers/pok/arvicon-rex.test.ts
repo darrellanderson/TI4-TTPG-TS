@@ -42,7 +42,7 @@ it("arvicon-rex", () => {
   });
   new MockGameObject({
     id: "fleet",
-    templateMetadata: "token:base/command",
+    templateMetadata: "token.command:base/sol",
     position: SELF_POS.add([1, 1, 0]),
     owningPlayerSlot: OPPONENT,
   });

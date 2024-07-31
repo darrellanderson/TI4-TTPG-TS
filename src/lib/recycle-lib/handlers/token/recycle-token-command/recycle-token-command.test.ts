@@ -6,11 +6,11 @@ import { RecycleTokenCommand } from "./recycle-token-command";
 it("recycle", () => {
   const token: GameObject = new MockGameObject({
     id: "my-token-id",
-    templateMetadata: "token:base/command",
+    templateMetadata: "token.command:base/sol",
     owningPlayerSlot: 1,
   });
   const container: Container = new MockContainer({
-    templateMetadata: "container.token:base/command",
+    templateMetadata: "container.token.command:base/generic",
     owningPlayerSlot: 1,
   });
 
@@ -23,11 +23,11 @@ it("recycle", () => {
 it("recycle (container owner mismatch)", () => {
   const token: GameObject = new MockGameObject({
     id: "my-token-id",
-    templateMetadata: "token:base/command",
+    templateMetadata: "token.command:base/sol",
     owningPlayerSlot: 1,
   });
   const container: Container = new MockContainer({
-    templateMetadata: "container.token:base/command",
+    templateMetadata: "container.token.command:base/generic",
     owningPlayerSlot: 2,
   });
 

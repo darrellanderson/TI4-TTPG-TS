@@ -6,11 +6,11 @@ import { GarbageHandler } from "ttpg-darrell";
 it("recycle", () => {
   const token: GameObject = new MockGameObject({
     id: "my-token-id",
-    templateMetadata: "token:base/control",
+    templateMetadata: "token.control:base/sol",
     owningPlayerSlot: 1,
   });
   const container: Container = new MockContainer({
-    templateMetadata: "container.token:base/control",
+    templateMetadata: "container.token.control:base/generic",
     owningPlayerSlot: 1,
   });
 
@@ -23,11 +23,11 @@ it("recycle", () => {
 it("recycle (container owner mismatch)", () => {
   const token: GameObject = new MockGameObject({
     id: "my-token-id",
-    templateMetadata: "token:base/control",
+    templateMetadata: "token.control:base/sol",
     owningPlayerSlot: 1,
   });
   const container: Container = new MockContainer({
-    templateMetadata: "container.token:base/control",
+    templateMetadata: "container.token.control:base/generic",
     owningPlayerSlot: 2,
   });
 

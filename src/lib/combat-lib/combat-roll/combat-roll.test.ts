@@ -468,7 +468,7 @@ it("_findUnitModifiers (control token)", () => {
     },
   ]);
   MockCard.simple("card.agenda:my-source/my-nsid-name");
-  MockGameObject.simple("token:base/control", { owningPlayerSlot: 2 });
+  MockGameObject.simple("token.control:base/sol", { owningPlayerSlot: 2 });
 
   let combatRoll: CombatRoll;
 

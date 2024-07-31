@@ -19,17 +19,17 @@ it("getPlayerSlotToCommandTokenTypes", () => {
 
   new MockGameObject({
     id: "tactic",
-    templateMetadata: "token:base/command",
+    templateMetadata: "token.command:base/sol",
     position: [1, 0, 0],
   });
   new MockGameObject({
     id: "fleet",
-    templateMetadata: "token:base/command",
+    templateMetadata: "token.command:base/sol",
     position: [1, 1, 0],
   });
   new MockGameObject({
     id: "strategy",
-    templateMetadata: "token:base/command",
+    templateMetadata: "token.command:base/sol",
     position: [-1, 1, 0],
   });
 

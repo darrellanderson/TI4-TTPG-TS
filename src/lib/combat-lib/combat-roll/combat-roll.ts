@@ -252,10 +252,8 @@ export class CombatRoll {
     const controlTokens: Array<GameObject> = [];
     for (const obj of world.getAllObjects(skipContained)) {
       const nsid: string = NSID.get(obj);
-      if (nsid.startsWith("token:")) {
-        if (nsid.endsWith("/control")) {
-          controlTokens.push(obj);
-        }
+      if (nsid.startsWith("token.control:")) {
+        controlTokens.push(obj);
       }
     }
     const getControlTokenOwner = (card: GameObject): number => {

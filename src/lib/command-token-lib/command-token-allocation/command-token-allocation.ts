@@ -21,7 +21,7 @@ export class CommandTokenAllocation {
       const nsid: string = NSID.get(obj);
       if (nsid === "sheet:base/command") {
         commandSheets.push(obj);
-      } else if (nsid === "token:base/command") {
+      } else if (nsid.startsWith("token.command:")) {
         commandTokens.push(obj);
       }
     }
@@ -48,6 +48,7 @@ export class CommandTokenAllocation {
 
     // Assign command tokens to command token allocations.
     for (const commandToken of commandTokens) {
+      // Tokens owned by other players may be on another player's sheet.
       const playerSlot: number = this._find.closestOwnedCardHolderOwner(
         commandToken.getPosition()
       );

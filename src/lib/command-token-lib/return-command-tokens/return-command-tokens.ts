@@ -22,7 +22,7 @@ export class ReturnCommandTokens {
         hexes.add(hex);
       }
 
-      if (nsid.startsWith("token:base/command")) {
+      if (nsid.startsWith("token.command:")) {
         commandTokens.push(obj);
       }
     }

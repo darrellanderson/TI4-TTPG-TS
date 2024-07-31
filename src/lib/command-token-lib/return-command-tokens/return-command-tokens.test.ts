@@ -7,17 +7,17 @@ it("constructor", () => {
 
 it("returnAllCommandTokens", () => {
   new MockContainer({
-    templateMetadata: "container.token:base/command",
+    templateMetadata: "container.token.command:base/generic",
     owningPlayerSlot: 1,
   });
 
   MockGameObject.simple("tile.system:base/1", { position: [10, 0, 0] });
-  const onMap = MockGameObject.simple("token:base/command", {
+  const onMap = MockGameObject.simple("token.command:base/sol", {
     owningPlayerSlot: 1,
     position: [10, 0, 0],
   });
 
-  const offMap = MockGameObject.simple("token:base/command", {
+  const offMap = MockGameObject.simple("token.command:base/sol", {
     owningPlayerSlot: 1,
     position: [50, 0, 0],
   });
