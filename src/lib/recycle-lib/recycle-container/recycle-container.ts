@@ -1,0 +1,46 @@
+import { GarbageContainer } from "ttpg-darrell";
+import { RecycleCardAction } from "../handlers/card/action/recycle-card-action";
+import { RecycleCardAgenda } from "../handlers/card/agenda/recycle-card-agenda";
+import { RecycleCardAlliance } from "../handlers/card/alliance/recycle-card-alliance";
+import { RecycleCardExplorationCultural } from "../handlers/card/exploration/cultural/recycle-card-exploration-cultural";
+import { RecycleCardExplorationFrontier } from "../handlers/card/exploration/frontier/recycle-card-exploration-frontier";
+import { RecycleCardExplorationHazardous } from "../handlers/card/exploration/hazardous/recycle-card-exploration-hazardous";
+import { RecycleCardExplorationIndustrial } from "../handlers/card/exploration/industrial/recycle-card-exploration-industrial";
+import { RecycleCardFactionReference } from "../handlers/card/faction-reference/recycle-card-faction-reference";
+import { RecycleCardLeader } from "../handlers/card/leader/recycle-card-leader";
+import { RecycleCardLegendaryPlanet } from "../handlers/card/legendary-planet/recycle-card-legendary-planet";
+import { RecycleCardObjectiveStage1 } from "../handlers/card/objective/stage-1/recycle-card-objective-stage-1";
+import { RecycleCardObjectiveStage2 } from "../handlers/card/objective/stage-2/recycle-card-objective-stage-2";
+import { RecycleStrategyCard } from "../handlers/strategy-card/recycle-strategy-card";
+import { RecycleTokenAttachment } from "../handlers/token/recycle-token-attachment/recycle-token-attachment";
+import { RecycleTokenCommand } from "../handlers/token/recycle-token-command/recycle-token-command";
+import { RecycleTokenControl } from "../handlers/token/recycle-token-control/recycle-token-control";
+import { RecycleTokenFighter } from "../handlers/token/recycle-token-fighter/recycle-token-fighter";
+import { RecycleTokenFrontier } from "../handlers/token/recycle-token-frontier/recycle-token-frontier";
+import { RecycleTokenInfantry } from "../handlers/token/recycle-token-infantry/recycle-token-infantry";
+import { RecycleTokenTradegood } from "../handlers/token/recycle-token-tradegood/recycle-token-tradegood";
+import { RecycleUnit } from "../handlers/unit/recycle-unit";
+
+export class RecycleContainer extends GarbageContainer {}
+
+RecycleContainer.addHandler(new RecycleCardAction());
+RecycleContainer.addHandler(new RecycleCardAgenda());
+RecycleContainer.addHandler(new RecycleCardAlliance());
+RecycleContainer.addHandler(new RecycleCardExplorationCultural());
+RecycleContainer.addHandler(new RecycleCardExplorationFrontier());
+RecycleContainer.addHandler(new RecycleCardExplorationHazardous());
+RecycleContainer.addHandler(new RecycleCardExplorationIndustrial());
+RecycleContainer.addHandler(new RecycleCardFactionReference());
+RecycleContainer.addHandler(new RecycleCardLeader());
+RecycleContainer.addHandler(new RecycleCardLegendaryPlanet());
+RecycleContainer.addHandler(new RecycleCardObjectiveStage1());
+RecycleContainer.addHandler(new RecycleCardObjectiveStage2());
+RecycleContainer.addHandler(new RecycleStrategyCard());
+RecycleContainer.addHandler(new RecycleTokenAttachment());
+RecycleContainer.addHandler(new RecycleTokenCommand());
+RecycleContainer.addHandler(new RecycleTokenControl());
+RecycleContainer.addHandler(new RecycleTokenFighter());
+RecycleContainer.addHandler(new RecycleTokenFrontier());
+RecycleContainer.addHandler(new RecycleTokenInfantry());
+RecycleContainer.addHandler(new RecycleTokenTradegood());
+RecycleContainer.addHandler(new RecycleUnit());

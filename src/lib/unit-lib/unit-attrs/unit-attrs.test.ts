@@ -1,4 +1,6 @@
 import { Color } from "@tabletop-playground/api";
+import { refPackageId } from "ttpg-mock";
+
 import { UnitAttrsSchemaType } from "../schema/unit-attrs-schema";
 import { CombatAttrs } from "./combat-attrs";
 import { UnitAttrs } from "./unit-attrs";
@@ -560,4 +562,13 @@ it("groundCombat", () => {
     },
   });
   expect(unitAttrs.getGroundCombat()?.getHit()).toBe(3);
+});
+
+it("img", () => {
+  const unitAttrs = new UnitAttrs({
+    name: "my-name",
+    unit: "infantry",
+  });
+  expect(unitAttrs.getImg()).toBe("unit/outlined/infantry.png");
+  expect(unitAttrs.getImgPackageId()).toBe(refPackageId);
 });

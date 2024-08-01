@@ -1,4 +1,4 @@
-import { Color } from "@tabletop-playground/api";
+import { Color, refPackageId } from "@tabletop-playground/api";
 import { ParseColor } from "ttpg-darrell";
 import { UnitAttrsSchemaType, UnitType } from "../schema/unit-attrs-schema";
 import { CombatAttrs } from "./combat-attrs";
@@ -252,6 +252,14 @@ export class UnitAttrs {
       throw new Error("no groundCombat");
     }
     return this._groundCombat;
+  }
+
+  getImg(): string {
+    return `unit/outlined/${this._unit}.png`;
+  }
+
+  getImgPackageId(): string {
+    return refPackageId;
   }
 
   getName(): string {
