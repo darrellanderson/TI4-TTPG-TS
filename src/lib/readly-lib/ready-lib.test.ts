@@ -1,9 +1,13 @@
 import { GameObject } from "@tabletop-playground/api";
-import { Facing } from "ttpg-darrell";
+import { ReadyLib } from "./ready-lib";
 import { MockGameObject } from "ttpg-mock";
-import { ReadyUnits } from "./ready-units";
+import { Facing } from "ttpg-darrell";
 
-it("readyAllUnits", () => {
+it("constructor", () => {
+  new ReadyLib();
+});
+
+it("ready units", () => {
   const faceUp: GameObject = new MockGameObject({
     templateMetadata: "unit:base/dreadnought",
   });
@@ -15,7 +19,7 @@ it("readyAllUnits", () => {
   expect(Facing.isFaceUp(faceUp)).toBe(true);
   expect(Facing.isFaceUp(faceDown)).toBe(false);
 
-  new ReadyUnits().readyAllUnits();
+  new ReadyLib().readyAll();
 
   expect(Facing.isFaceUp(faceUp)).toBe(true);
   expect(Facing.isFaceUp(faceDown)).toBe(true);
