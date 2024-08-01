@@ -13,6 +13,13 @@ it("constructor", () => {
 
 it("getPlayerSlotToCommandTokenCount", () => {
   new MockCardHolder({ owningPlayerSlot: 1, position: [10, 0, 0] });
+  const slotToCount: Map<number, number> =
+    new AddCommandTokens().getPlayerSlotToCommandTokenCount();
+  expect(slotToCount.get(1)).toBe(2);
+});
+
+it("getPlayerSlotToCommandTokenCount (versatile, hyper-metabolism, cybernetic-enhancements)", () => {
+  new MockCardHolder({ owningPlayerSlot: 1, position: [10, 0, 0] });
   new MockGameObject({
     templateMetadata: "sheet.faction:base/sol", // versatile
     position: [10, 0, 0],
@@ -47,6 +54,7 @@ it("getPlayerSlotToCommandTokenCount", () => {
 });
 
 it("addAllCommandTokens", () => {
+  new MockCardHolder({ owningPlayerSlot: 1, position: [10, 0, 0] });
   new MockGameObject({
     templateMetadata: "sheet.faction:base/sol", // versatile
     position: [10, 0, 0],

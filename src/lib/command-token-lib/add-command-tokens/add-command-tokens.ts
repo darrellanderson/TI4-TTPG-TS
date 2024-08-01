@@ -2,23 +2,28 @@ import { Container, GameObject, Vector, world } from "@tabletop-playground/api";
 import { CardUtil, Find, GarbageHandler, NSID } from "ttpg-darrell";
 
 import { Faction } from "../../faction-lib/faction/faction";
+import { PlayerSeats } from "../../player-lib/player-seats/player-seats";
 import { RecycleCardPromissory } from "../../recycle-lib/handlers/card/promissory/recycle-card-promissory";
 
 export class AddCommandTokens {
   private readonly _cardUtil: CardUtil = new CardUtil();
   private readonly _find: Find = new Find();
+  private readonly _playerSeats: PlayerSeats = new PlayerSeats();
   private readonly _recycleCardPromissory: GarbageHandler =
     new RecycleCardPromissory();
 
   getPlayerSlotToCommandTokenCount(): Map<number, number> {
     const slotToCount: Map<number, number> = new Map();
 
-    // Seed each slot with 2, add one if "versatile" faction ability.
+    // Seed each slot with 2.
+    for (const seatEntry of this._playerSeats.getAllSeats()) {
+      slotToCount.set(seatEntry.playerSlot, 2);
+    }
+
+    // "Versatile" faction ability adds a token.
     const slotToFaction: Map<number, Faction> =
       TI4.factionRegistry.getPlayerSlotToFaction();
     for (const [slot, faction] of slotToFaction) {
-      slotToCount.set(slot, 2);
-
       if (
         faction.getAbilityNsids().includes("faction-ability:base/versatile")
       ) {
