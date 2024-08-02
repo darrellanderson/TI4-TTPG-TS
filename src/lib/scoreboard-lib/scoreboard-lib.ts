@@ -1,0 +1,145 @@
+import { GameObject, Rotator, Vector, world } from "@tabletop-playground/api";
+import { Atop, Facing, Find } from "ttpg-darrell";
+
+import {
+  PlayerSeats,
+  PlayerSeatType,
+} from "../player-lib/player-seats/player-seats";
+
+const SCOREBOARD_LOCAL_WIDTH = 43;
+
+export class ScoreboardLib {
+  private readonly _find: Find = new Find();
+
+  _getPlayerSlotToControlTokens(): Map<number, Array<GameObject>> {
+    const playerSlotToControlTokens: Map<number, Array<GameObject>> = new Map();
+
+    const scoreboard: GameObject | undefined = this.getScoreboard();
+    if (scoreboard) {
+      const atop: Atop = new Atop(scoreboard);
+      const skipContained: boolean = true;
+      for (const obj of world.getAllObjects(skipContained)) {
+        const pos: Vector = obj.getPosition();
+        if (atop.isAtop(pos)) {
+          const playerSlot: number = obj.getOwningPlayerSlot();
+          let controlTokens: Array<GameObject> | undefined =
+            playerSlotToControlTokens.get(playerSlot);
+          if (!controlTokens) {
+            controlTokens = [];
+            playerSlotToControlTokens.set(playerSlot, controlTokens);
+          }
+          controlTokens.push(obj);
+        }
+      }
+    }
+
+    return playerSlotToControlTokens;
+  }
+
+  _getLocalCenter(score: number): Vector | undefined {
+    const scoreboard: GameObject | undefined = this.getScoreboard();
+    if (!scoreboard) {
+      return undefined;
+    }
+
+    let dir: number = -1;
+    let slotCount: number = 15;
+    if (Facing.isFaceUp(scoreboard)) {
+      dir = 1;
+      slotCount = 11;
+    }
+
+    // Tweak values very slighly for more precise centers, accounting
+    // for one side of the scoreboard extending slightly.
+    const slotWidth: number = (SCOREBOARD_LOCAL_WIDTH - 0.5) / slotCount;
+    let mid: number = (slotCount - 1) / 2;
+    mid -= 0.03;
+
+    const dLeft: number = (mid - score) * slotWidth * dir;
+    return new Vector(dLeft, 0, 0);
+  }
+
+  getControlTokenRotation(): Rotator | undefined {
+    const scoreboard: GameObject | undefined = this.getScoreboard();
+    if (!scoreboard) {
+      return undefined;
+    }
+
+    return new Rotator(0, 90, 0).compose(scoreboard.getRotation());
+  }
+
+  getScoreboard(): GameObject | undefined {
+    const playerSlot: number | undefined = undefined;
+    const skipContained: boolean = true;
+    return this._find.findGameObject(
+      "tile:base/scoreboard",
+      playerSlot,
+      skipContained
+    );
+  }
+
+  posToScore(pos: Vector): number | undefined {
+    const scoreboard: GameObject | undefined = this.getScoreboard();
+    if (!scoreboard) {
+      return undefined;
+    }
+    let dir: number = 1;
+    let slotCount: number = 15;
+    if (Facing.isFaceUp(scoreboard)) {
+      dir = -1;
+      slotCount = 11;
+    }
+
+    const slotWidth: number = SCOREBOARD_LOCAL_WIDTH / slotCount;
+    const localPos: Vector = scoreboard.worldPositionToLocal(pos);
+    const leftOffset: number = localPos.x * dir + SCOREBOARD_LOCAL_WIDTH / 2;
+    const score: number = Math.floor(leftOffset / slotWidth);
+    return score;
+  }
+
+  scoreToPos(score: number, playerSlot: number): Vector | undefined {
+    const scoreboard: GameObject | undefined = this.getScoreboard();
+    if (!scoreboard) {
+      return undefined;
+    }
+
+    const playerSeats: Array<PlayerSeatType> = new PlayerSeats().getAllSeats();
+    const playerIndex: number = playerSeats.findIndex((playerSeat) => {
+      return playerSeat.playerSlot === playerSlot;
+    });
+    if (playerIndex === -1) {
+      return undefined;
+    }
+
+    const localCenter: Vector | undefined = this._getLocalCenter(score);
+    if (!localCenter) {
+      return undefined;
+    }
+
+    const playerCount = playerSeats.length;
+    const numRows = Math.floor(playerCount / 2);
+    let col: number = 0;
+    let row: number = numRows - 1 - playerIndex;
+    if (row < 0) {
+      row = numRows - 1 - (numRows + row); // swap order
+      col = 1;
+    }
+
+    // Fix for face down.
+    if (!Facing.isFaceUp(scoreboard)) {
+      col = 1 - col;
+    }
+
+    // Make relative to center of score slot.
+    row -= (numRows - 1) / 2;
+    col -= 0.5;
+
+    const x: number = localCenter.x - col * 1.5;
+    const y: number = localCenter.y - row * 2.3;
+    let pos: Vector = new Vector(x, y, 0);
+    pos = scoreboard.localPositionToWorld(pos);
+    pos.z = scoreboard.getPosition().z + 5;
+
+    return scoreboard.localPositionToWorld(pos);
+  }
+}
