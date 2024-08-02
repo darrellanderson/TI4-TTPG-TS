@@ -20,7 +20,7 @@ const OTHER_NSID_TO_INITIATIVE: Record<string, number> = {
 export type InitiativeEntry = {
   playerSlot: number;
   initiative: number;
-  strategyCards: Array<GameObject>;
+  strategyCards: Array<GameObject>; // all strategy cards in player area
 };
 
 export class InitiativeOrder {
