@@ -1,17 +1,14 @@
 import { GameObject, Rotator, Vector, world } from "@tabletop-playground/api";
-import { Atop, Facing, Find } from "ttpg-darrell";
+import { Atop, Facing, Find, NSID } from "ttpg-darrell";
 
-import {
-  PlayerSeats,
-  PlayerSeatType,
-} from "../player-lib/player-seats/player-seats";
+import { PlayerSeatType } from "../player-lib/player-seats/player-seats";
 
 const SCOREBOARD_LOCAL_WIDTH = 43;
 
 export class ScoreboardLib {
   private readonly _find: Find = new Find();
 
-  _getPlayerSlotToControlTokens(): Map<number, Array<GameObject>> {
+  _getPlayerSlotToAtopControlTokens(): Map<number, Array<GameObject>> {
     const playerSlotToControlTokens: Map<number, Array<GameObject>> = new Map();
 
     const scoreboard: GameObject | undefined = this.getScoreboard();
@@ -19,8 +16,9 @@ export class ScoreboardLib {
       const atop: Atop = new Atop(scoreboard);
       const skipContained: boolean = true;
       for (const obj of world.getAllObjects(skipContained)) {
+        const nsid: string = NSID.get(obj);
         const pos: Vector = obj.getPosition();
-        if (atop.isAtop(pos)) {
+        if (nsid.startsWith("token.control:") && atop.isAtop(pos)) {
           const playerSlot: number = obj.getOwningPlayerSlot();
           let controlTokens: Array<GameObject> | undefined =
             playerSlotToControlTokens.get(playerSlot);
@@ -55,8 +53,8 @@ export class ScoreboardLib {
     let mid: number = (slotCount - 1) / 2;
     mid -= 0.03;
 
-    const dLeft: number = (mid - score) * slotWidth * dir;
-    return new Vector(dLeft, 0, 0);
+    const dLeft: number = (score - mid) * slotWidth * dir;
+    return new Vector(0, dLeft, 0);
   }
 
   getControlTokenRotation(): Rotator | undefined {
@@ -72,7 +70,7 @@ export class ScoreboardLib {
     const playerSlot: number | undefined = undefined;
     const skipContained: boolean = true;
     return this._find.findGameObject(
-      "tile:base/scoreboard",
+      "token:base/scoreboard",
       playerSlot,
       skipContained
     );
@@ -83,37 +81,37 @@ export class ScoreboardLib {
     if (!scoreboard) {
       return undefined;
     }
-    let dir: number = 1;
+
+    let dir: number = -1;
     let slotCount: number = 15;
     if (Facing.isFaceUp(scoreboard)) {
-      dir = -1;
+      dir = 1;
       slotCount = 11;
     }
 
     const slotWidth: number = SCOREBOARD_LOCAL_WIDTH / slotCount;
     const localPos: Vector = scoreboard.worldPositionToLocal(pos);
-    const leftOffset: number = localPos.x * dir + SCOREBOARD_LOCAL_WIDTH / 2;
-    const score: number = Math.floor(leftOffset / slotWidth);
+    const leftOffset: number = localPos.y * dir + SCOREBOARD_LOCAL_WIDTH / 2;
+    let score: number = Math.floor(leftOffset / slotWidth);
+    score = Math.max(score, 0);
+    score = Math.min(score, slotCount - 1); // clamp
     return score;
   }
 
   scoreToPos(score: number, playerSlot: number): Vector | undefined {
     const scoreboard: GameObject | undefined = this.getScoreboard();
-    if (!scoreboard) {
+    const localCenter: Vector | undefined = this._getLocalCenter(score);
+    if (!scoreboard || !localCenter) {
       return undefined;
     }
 
-    const playerSeats: Array<PlayerSeatType> = new PlayerSeats().getAllSeats();
+    const playerSeats: Array<PlayerSeatType> = TI4.playerSeats.getAllSeats();
     const playerIndex: number = playerSeats.findIndex((playerSeat) => {
       return playerSeat.playerSlot === playerSlot;
     });
     if (playerIndex === -1) {
-      return undefined;
-    }
-
-    const localCenter: Vector | undefined = this._getLocalCenter(score);
-    if (!localCenter) {
-      return undefined;
+      // Unknown player, use the center position.
+      return scoreboard.localPositionToWorld(localCenter);
     }
 
     const playerCount = playerSeats.length;
@@ -138,7 +136,6 @@ export class ScoreboardLib {
     const y: number = localCenter.y - row * 2.3;
     let pos: Vector = new Vector(x, y, 0);
     pos = scoreboard.localPositionToWorld(pos);
-    pos.z = scoreboard.getPosition().z + 5;
 
     return scoreboard.localPositionToWorld(pos);
   }

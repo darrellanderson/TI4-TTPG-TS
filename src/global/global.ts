@@ -15,6 +15,7 @@ import {
 
 import { FactionRegistry } from "../lib/faction-lib/registry/faction-registry";
 import { PlanetAttachmentRegistry } from "../lib/system-lib/registry/planet-attachment-registry";
+import { PlayerSeats } from "../lib/player-lib/player-seats/player-seats";
 import { SystemAttachmentRegistry } from "../lib/system-lib/registry/system-attachment-registry";
 import { SystemRegistry } from "../lib/system-lib/registry/system-registry";
 import { TechRegistry } from "../lib/tech-lib/registry/tech-registry";
@@ -44,6 +45,7 @@ export class TI4Class {
   hex = new Hex(HEX_LAYOUT_POINTY, 5.77735 * 1.5);
   factionRegistry = new FactionRegistry().loadDefaultData();
   planetAttachmentRegistry = new PlanetAttachmentRegistry().loadDefaultData();
+  playerSeats = new PlayerSeats();
   systemAttachmentRegistry = new SystemAttachmentRegistry().loadDefaultData();
   systemRegistry = new SystemRegistry().loadDefaultData();
   techRegistry = new TechRegistry().loadDefaultData();
