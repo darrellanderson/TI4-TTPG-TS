@@ -676,8 +676,8 @@ export const SOURCE_TO_FACTION_DATA: Record<
   "codex.vigil": [
     {
       nsidName: "keleres-argent",
-      name: "The Council Keleres",
-      abbr: "Keleres",
+      name: "The Council Keleres (Argent)",
+      abbr: "Keleres (Argent)",
       abilities: ["the-tribunii", "council-patronage", "laws-order"],
       commodities: 2,
       home: 58,
@@ -702,8 +702,8 @@ export const SOURCE_TO_FACTION_DATA: Record<
     },
     {
       nsidName: "keleres-mentak",
-      name: "The Council Keleres",
-      abbr: "Keleres",
+      name: "The Council Keleres (Mentak)",
+      abbr: "Keleres (Mentak)",
       abilities: ["the-tribunii", "council-patronage", "laws-order"],
       commodities: 2,
       home: 2,
@@ -728,8 +728,8 @@ export const SOURCE_TO_FACTION_DATA: Record<
     },
     {
       nsidName: "keleres-xxcha",
-      name: "The Council Keleres",
-      abbr: "Keleres",
+      name: "The Council Keleres (Xxcha)",
+      abbr: "Keleres (Xxcha)",
       abilities: ["the-tribunii", "council-patronage", "laws-order"],
       commodities: 2,
       home: 14,
