@@ -11,6 +11,7 @@ import {
   HEX_LAYOUT_POINTY,
   IGlobal,
   OnCardBecameSingletonOrDeck,
+  Spawn,
 } from "ttpg-darrell";
 
 import { FactionRegistry } from "../lib/faction-lib/registry/faction-registry";
@@ -21,6 +22,9 @@ import { SystemRegistry } from "../lib/system-lib/registry/system-registry";
 import { TechRegistry } from "../lib/tech-lib/registry/tech-registry";
 import { UnitAttrsRegistry } from "../lib/unit-lib/registry/unit-attrs-registry";
 import { UnitModifierRegistry } from "../lib/unit-lib/registry/unit-modifier-registry";
+
+import * as NSID_TO_TEMPLATE_ID from "../nsid-to-template-id.json";
+Spawn.inject(NSID_TO_TEMPLATE_ID);
 
 export function registerErrorHandler() {
   if (GameWorld.getExecutionReason() !== "unittest") {
