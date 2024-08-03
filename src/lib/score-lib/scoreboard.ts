@@ -5,7 +5,7 @@ import { PlayerSeatType } from "../player-lib/player-seats/player-seats";
 
 const SCOREBOARD_LOCAL_WIDTH = 43;
 
-export class ScoreboardLib {
+export class Scoreboard {
   private readonly _find: Find = new Find();
 
   _getPlayerSlotToAtopControlTokens(): Map<number, Array<GameObject>> {

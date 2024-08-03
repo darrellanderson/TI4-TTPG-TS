@@ -6,7 +6,7 @@ import {
   world,
 } from "@tabletop-playground/api";
 import { Spawn } from "ttpg-darrell";
-import { ScoreboardLib } from "./scoreboard-lib";
+import { Scoreboard } from "./scoreboard";
 
 for (const obj of world.getAllObjects()) {
   if (obj !== refObject) {
@@ -33,7 +33,7 @@ let obj: GameObject;
 obj = Spawn.spawnOrThrow("token:base/scoreboard", [0, 0, z]);
 obj.setRotation(new Rotator(0, 0, 180));
 obj.snapToGround();
-const scoreboardLib: ScoreboardLib = new ScoreboardLib();
+const scoreboardLib: Scoreboard = new Scoreboard();
 
 posArray.forEach((pos: Vector, index: number) => {
   obj = Spawn.spawnOrThrow("card-holder:base/player-hand", pos);

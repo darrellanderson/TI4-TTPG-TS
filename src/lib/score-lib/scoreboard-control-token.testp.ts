@@ -1,7 +1,7 @@
 import { refObject, Vector, world } from "@tabletop-playground/api";
-import { ScoreboardLib } from "./scoreboard-lib";
+import { Scoreboard } from "./scoreboard";
 
-const _scoreboardLib = new ScoreboardLib();
+const _scoreboardLib = new Scoreboard();
 
 refObject.onReleased.add((obj): void => {
   const pos: Vector = obj.getPosition();
