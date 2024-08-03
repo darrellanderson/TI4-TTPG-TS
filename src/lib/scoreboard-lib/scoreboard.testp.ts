@@ -30,7 +30,9 @@ const posArray: Array<Vector> = [
 
 let obj: GameObject;
 
-Spawn.spawnOrThrow("token:base/scoreboard", [0, 0, z]);
+obj = Spawn.spawnOrThrow("token:base/scoreboard", [0, 0, z]);
+obj.setRotation(new Rotator(0, 0, 180));
+obj.snapToGround();
 const scoreboardLib: ScoreboardLib = new ScoreboardLib();
 
 posArray.forEach((pos: Vector, index: number) => {
@@ -45,7 +47,8 @@ for (let i = 0; i < posArray.length; i++) {
   const pos: Vector = scoreboardLib.scoreToPos(1, i + 1) ?? new Vector(0, 0, 0);
   const rot: Rotator =
     scoreboardLib.getControlTokenRotation() ?? new Rotator(0, 0, 0);
-  obj.setPosition(pos);
+  console.log(pos.toString(), world.getTableHeight());
+  obj.setPosition(pos.add([0, 0, 5]));
   obj.setRotation(rot);
   obj.snapToGround();
 }

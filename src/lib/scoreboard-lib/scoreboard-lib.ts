@@ -54,7 +54,7 @@ export class ScoreboardLib {
     mid -= 0.03;
 
     const dLeft: number = (score - mid) * slotWidth * dir;
-    return new Vector(0, dLeft, 0);
+    return new Vector(0.2, dLeft, 0);
   }
 
   getControlTokenRotation(): Rotator | undefined {
@@ -132,11 +132,10 @@ export class ScoreboardLib {
     row -= (numRows - 1) / 2;
     col -= 0.5;
 
-    const x: number = localCenter.x - col * 1.5;
-    const y: number = localCenter.y - row * 2.3;
-    let pos: Vector = new Vector(x, y, 0);
-    pos = scoreboard.localPositionToWorld(pos);
+    const y: number = localCenter.y - col * 1.5;
+    const x: number = localCenter.x - row * 2.3;
+    const localPos: Vector = new Vector(x, y, 0);
 
-    return scoreboard.localPositionToWorld(pos);
+    return scoreboard.localPositionToWorld(localPos);
   }
 }

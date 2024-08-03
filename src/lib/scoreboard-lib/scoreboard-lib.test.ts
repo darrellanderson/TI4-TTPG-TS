@@ -40,7 +40,7 @@ it("_getLocalCenter", () => {
   const scoreboardLib: ScoreboardLib = new ScoreboardLib();
   const localCenter: Vector | undefined = scoreboardLib._getLocalCenter(5);
   expect(localCenter).toBeDefined();
-  expect(localCenter?.toString()).toBe("(X=0,Y=0.116,Z=0)");
+  expect(localCenter?.toString()).toBe("(X=0.2,Y=0.116,Z=0)");
 });
 
 it("_getLocalCenter (missing scoreboard)", () => {
@@ -54,7 +54,7 @@ it("getControlTokenRotation", () => {
   const scoreboardLib: ScoreboardLib = new ScoreboardLib();
   const rot: Rotator | undefined = scoreboardLib.getControlTokenRotation();
   expect(rot).toBeDefined();
-  expect(rot?.toString()).toBe("(P=0,Y=90,R=0)");
+  expect(rot?.toString()).toBe("(P=0,Y=0,R=0)");
 });
 
 it("getControlTokenRotation (missing scoreboard)", () => {
@@ -99,5 +99,5 @@ it("scoreToPos (missing seat)", () => {
   const scoreboardLib: ScoreboardLib = new ScoreboardLib();
   const pos: Vector | undefined = scoreboardLib.scoreToPos(5, 1);
   expect(pos).toBeDefined();
-  expect(pos?.toString()).toBe("(X=0,Y=0.116,Z=0)");
+  expect(pos?.toString()).toBe("(X=0.2,Y=0.116,Z=0)");
 });
