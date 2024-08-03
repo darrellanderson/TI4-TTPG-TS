@@ -3,6 +3,7 @@ import { MockCardHolder, MockGameObject } from "ttpg-mock";
 import { Faction } from "../faction/faction";
 import { FactionRegistry } from "./faction-registry";
 import { FactionSchemaType } from "../schema/faction-schema";
+import { SourceAndPackageIdSchemaType } from "../../system-lib/schema/basic-types-schema";
 
 it("constructor", () => {
   new FactionRegistry();
@@ -30,10 +31,18 @@ it("getPlayerSlotToFaction", () => {
 
 it("load (empty)", () => {
   const registry = new FactionRegistry();
-  registry.load("source", []);
+  const sourceAndPackageId: SourceAndPackageIdSchemaType = {
+    source: "my-source",
+    packageId: "my-package-id",
+  };
+  registry.load(sourceAndPackageId, []);
 });
 
 it("load (with data)", () => {
+  const sourceAndPackageId: SourceAndPackageIdSchemaType = {
+    source: "my-source",
+    packageId: "my-package-id",
+  };
   const schema: FactionSchemaType = {
     name: "my-name",
     nsidName: "my-nsid-name",
@@ -57,16 +66,20 @@ it("load (with data)", () => {
   const registry = new FactionRegistry();
   expect(registry.getByNsid("faction:my-source/my-nsid-name")).toBeUndefined();
 
-  registry.load("my-source", [schema]);
+  registry.load(sourceAndPackageId, [schema]);
   expect(registry.getByNsid("faction:my-source/my-nsid-name")?.getName()).toBe(
     "my-name"
   );
 });
 
 it("load (invalid schema)", () => {
+  const sourceAndPackageId: SourceAndPackageIdSchemaType = {
+    source: "my-source",
+    packageId: "my-package-id",
+  };
   const registry = new FactionRegistry();
   expect(() => {
-    registry.load("source", [
+    registry.load(sourceAndPackageId, [
       {
         nsidName: "@@invalid!!",
         name: "my-name",
@@ -106,7 +119,11 @@ it("validate (global)", () => {
 });
 
 it("validate (missing faction tech)", () => {
-  const registry = new FactionRegistry().load("my-source", [
+  const sourceAndPackageId: SourceAndPackageIdSchemaType = {
+    source: "my-source",
+    packageId: "my-package-id",
+  };
+  const registry = new FactionRegistry().load(sourceAndPackageId, [
     {
       name: "my-name",
       nsidName: "my-nsid-name",
@@ -133,7 +150,11 @@ it("validate (missing faction tech)", () => {
 });
 
 it("validate (missing starting tech)", () => {
-  const registry = new FactionRegistry().load("my-source", [
+  const sourceAndPackageId: SourceAndPackageIdSchemaType = {
+    source: "my-source",
+    packageId: "my-package-id",
+  };
+  const registry = new FactionRegistry().load(sourceAndPackageId, [
     {
       name: "my-name",
       nsidName: "my-nsid-name",
@@ -160,7 +181,11 @@ it("validate (missing starting tech)", () => {
 });
 
 it("validate (missing unit override)", () => {
-  const registry = new FactionRegistry().load("my-source", [
+  const sourceAndPackageId: SourceAndPackageIdSchemaType = {
+    source: "my-source",
+    packageId: "my-package-id",
+  };
+  const registry = new FactionRegistry().load(sourceAndPackageId, [
     {
       name: "my-name",
       nsidName: "my-nsid-name",

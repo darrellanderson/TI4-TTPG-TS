@@ -1,12 +1,18 @@
 import { FactionSchemaType } from "../schema/faction-schema";
-import { NsidNameSchemaType } from "../../system-lib/schema/basic-types-schema";
+import {
+  NsidNameSchemaType,
+  SourceAndPackageIdSchemaType,
+} from "../../system-lib/schema/basic-types-schema";
 
 export class Faction {
-  private readonly _source: NsidNameSchemaType;
+  private readonly _sourceAndPackageId: SourceAndPackageIdSchemaType;
   private readonly _params: FactionSchemaType;
 
-  constructor(source: NsidNameSchemaType, params: FactionSchemaType) {
-    this._source = source;
+  constructor(
+    sourceAndPackageId: SourceAndPackageIdSchemaType,
+    params: FactionSchemaType
+  ) {
+    this._sourceAndPackageId = sourceAndPackageId;
     this._params = params;
   }
 
@@ -15,19 +21,21 @@ export class Faction {
   }
 
   getAbilityNsids(): Array<string> {
+    const source: string = this._sourceAndPackageId.source;
     return this._params.abilities.map((ability): string => {
-      return `faction-ability:${this._source}/${ability}`;
+      return `faction-ability:${source}/${ability}`;
     });
   }
 
   getAgentNsids(): Array<string> {
+    const source: string = this._sourceAndPackageId.source;
     return this._params.leaders.agents.map((agent): string => {
-      return `card.leader.agent:${this._source}/${agent}`;
+      return `card.leader.agent:${source}/${agent}`;
     });
   }
 
   getAllianceNsid(): string {
-    let source: string = this._source;
+    let source: string = this._sourceAndPackageId.source;
     if (source === "base") {
       source = "pok"; // aliance got added in PoK
     }
@@ -35,8 +43,9 @@ export class Faction {
   }
 
   getCommanderNsids(): Array<string> {
+    const source: string = this._sourceAndPackageId.source;
     return this._params.leaders.commanders.map((commander): string => {
-      return `card.leader.commander:${this._source}/${commander}`;
+      return `card.leader.commander:${source}/${commander}`;
     });
   }
 
@@ -49,8 +58,9 @@ export class Faction {
   }
 
   getHeroNsids(): Array<string> {
+    const source: string = this._sourceAndPackageId.source;
     return this._params.leaders.heroes.map((hero): string => {
-      return `card.leader.hero:${this._source}/${hero}`;
+      return `card.leader.hero:${source}/${hero}`;
     });
   }
 
@@ -62,9 +72,18 @@ export class Faction {
     return this._params.home;
   }
 
+  getIcon(): string {
+    return `icon/faction/${this._params.nsidName}.png`;
+  }
+
+  getIconPackageId(): string {
+    return this._sourceAndPackageId.packageId;
+  }
+
   getMechNsids(): Array<string> {
+    const source: string = this._sourceAndPackageId.source;
     return this._params.leaders.mechs.map((mech): string => {
-      return `card.leader.mech:${this._source}/${mech}`;
+      return `card.leader.mech:${source}/${mech}`;
     });
   }
 
@@ -73,12 +92,14 @@ export class Faction {
   }
 
   getNsid(): NsidNameSchemaType {
-    return `faction:${this._source}/${this._params.nsidName}`;
+    const source: string = this._sourceAndPackageId.source;
+    return `faction:${source}/${this._params.nsidName}`;
   }
 
   getPromissoryNsids(): Array<string> {
+    const source: string = this._sourceAndPackageId.source;
     return this._params.promissories.map((promissory): string => {
-      return `card.promissory:${this._source}/${promissory}`;
+      return `card.promissory:${source}/${promissory}`;
     });
   }
 
@@ -92,16 +113,16 @@ export class Faction {
 
   getUnitOverrideNsids(): Array<string> {
     return this._params.unitOverrides.map((unitOverride): string => {
+      let source: string = this._sourceAndPackageId.source;
       // Mech got added in PoK so base factions can have pok mech.
       // If mech use that format, and if base swap to pok for it.
       if (this._params.leaders.mechs.includes(unitOverride)) {
-        let source = this._source;
         if (source === "base") {
           source = "pok";
         }
         return `card.leader.mech:${source}/${unitOverride}`;
       }
-      return `unit:${this._source}/${unitOverride}`;
+      return `unit:${source}/${unitOverride}`;
     });
   }
 }

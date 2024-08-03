@@ -121,7 +121,7 @@ export class PlanetAttachmentRegistry {
         continue;
       }
 
-      // Register (create temporary attachment for nsid generation).
+      // Register.
       const nsid: string = PlanetAttachment.schemaToNsid(
         sourceAndPackageId.source,
         planetAttachmentSchemaType

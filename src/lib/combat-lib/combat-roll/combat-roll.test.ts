@@ -17,6 +17,7 @@ import {
 } from "./combat-roll";
 import { Faction } from "../../faction-lib/faction/faction";
 import { Planet } from "../../system-lib/planet/planet";
+import { SourceAndPackageIdSchemaType } from "../../system-lib/schema/basic-types-schema";
 import { System } from "../../system-lib/system/system";
 import {
   UnitAttrsSchemaType,
@@ -402,7 +403,11 @@ it("_findUnitModifiers (self faction promissory)", () => {
   const nsid: string = "card.promissory:my-source/my-test-promissory";
   expect(TI4.unitModifierRegistry.getByNsid(nsid)).toBeDefined();
 
-  const faction: Faction = new Faction("my-source", {
+  const sourceAndPackageId: SourceAndPackageIdSchemaType = {
+    source: "my-source",
+    packageId: "my-package-id",
+  };
+  const faction: Faction = new Faction(sourceAndPackageId, {
     nsidName: "my-faction",
     name: "My Faction",
     abbr: "MF",
@@ -490,7 +495,11 @@ it("_findUnitModifiers (control token)", () => {
 });
 
 it("_findUnitModifiers (faction ability)", () => {
-  const faction: Faction = new Faction("my-source", {
+  const sourceAndPackageId: SourceAndPackageIdSchemaType = {
+    source: "my-source",
+    packageId: "my-package-id",
+  };
+  const faction: Faction = new Faction(sourceAndPackageId, {
     nsidName: "my-faction",
     name: "My Faction",
     abbr: "MF",
@@ -535,7 +544,11 @@ it("_findUnitModifiers (faction ability)", () => {
 });
 
 it("_findUnitModifiers (faction ability opponent)", () => {
-  const faction: Faction = new Faction("my-source", {
+  const sourceAndPackageId: SourceAndPackageIdSchemaType = {
+    source: "my-source",
+    packageId: "my-package-id",
+  };
+  const faction: Faction = new Faction(sourceAndPackageId, {
     nsidName: "my-faction",
     name: "My Faction",
     abbr: "MF",
@@ -580,7 +593,11 @@ it("_findUnitModifiers (faction ability opponent)", () => {
 });
 
 it("_findUnitModifiers (flagship)", () => {
-  const faction: Faction = new Faction("my-source", {
+  const sourceAndPackageId: SourceAndPackageIdSchemaType = {
+    source: "my-source",
+    packageId: "my-package-id",
+  };
+  const faction: Faction = new Faction(sourceAndPackageId, {
     nsidName: "my-faction",
     name: "My Faction",
     abbr: "MF",
@@ -631,7 +648,11 @@ it("_findUnitModifiers (flagship)", () => {
 });
 
 it("_findUnitModifiers (flagship opponent)", () => {
-  const faction: Faction = new Faction("my-source", {
+  const sourceAndPackageId: SourceAndPackageIdSchemaType = {
+    source: "my-source",
+    packageId: "my-package-id",
+  };
+  const faction: Faction = new Faction(sourceAndPackageId, {
     nsidName: "my-faction",
     name: "My Faction",
     abbr: "MF",
@@ -703,7 +724,11 @@ it("applyUnitOverrides", () => {
 });
 
 it("applyUnitOverrides (flagship)", () => {
-  const faction: Faction = new Faction("my-source", {
+  const sourceAndPackageId: SourceAndPackageIdSchemaType = {
+    source: "my-source",
+    packageId: "my-package-id",
+  };
+  const faction: Faction = new Faction(sourceAndPackageId, {
     nsidName: "my-faction",
     name: "My Faction",
     abbr: "MF",
@@ -744,7 +769,11 @@ it("applyUnitOverrides (flagship)", () => {
 });
 
 it("applyUnitOverrides (flagship opponent)", () => {
-  const faction: Faction = new Faction("my-source", {
+  const sourceAndPackageId: SourceAndPackageIdSchemaType = {
+    source: "my-source",
+    packageId: "my-package-id",
+  };
+  const faction: Faction = new Faction(sourceAndPackageId, {
     nsidName: "my-faction",
     name: "My Faction",
     abbr: "MF",

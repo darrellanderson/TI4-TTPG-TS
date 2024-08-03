@@ -1,8 +1,11 @@
 import { Faction } from "../faction/faction";
 import { FactionSchema, FactionSchemaType } from "../schema/faction-schema";
-import { NsidNameSchema } from "../../system-lib/schema/basic-types-schema";
+import {
+  SourceAndPackageIdSchema,
+  SourceAndPackageIdSchemaType,
+} from "../../system-lib/schema/basic-types-schema";
 import { SOURCE_TO_FACTION_DATA } from "../data/faction.data";
-import { Vector, world } from "@tabletop-playground/api";
+import { refPackageId, Vector, world } from "@tabletop-playground/api";
 import { Find, NSID } from "ttpg-darrell";
 
 export class FactionRegistry {
@@ -37,11 +40,14 @@ export class FactionRegistry {
     return playerSlotToFaction;
   }
 
-  load(source: string, factions: Array<FactionSchemaType>): this {
+  load(
+    sourceAndPackageId: SourceAndPackageIdSchemaType,
+    factions: Array<FactionSchemaType>
+  ): this {
     for (const factionSchemaType of factions) {
       // Validate schema (oterhwise not validated until used).
       try {
-        NsidNameSchema.parse(source);
+        SourceAndPackageIdSchema.parse(sourceAndPackageId);
         FactionSchema.parse(factionSchemaType);
       } catch (e) {
         const msg = `error: ${e.message}\nparsing: ${JSON.stringify(
@@ -49,7 +55,10 @@ export class FactionRegistry {
         )}`;
         throw new Error(msg);
       }
-      const faction: Faction = new Faction(source, factionSchemaType);
+      const faction: Faction = new Faction(
+        sourceAndPackageId,
+        factionSchemaType
+      );
       this._nsidToFaction.set(faction.getNsid(), faction);
     }
     return this;
@@ -57,7 +66,11 @@ export class FactionRegistry {
 
   loadDefaultData(): this {
     for (const [source, factions] of Object.entries(SOURCE_TO_FACTION_DATA)) {
-      this.load(source, factions);
+      const sourceAndPackageId: SourceAndPackageIdSchemaType = {
+        source,
+        packageId: refPackageId,
+      };
+      this.load(sourceAndPackageId, factions);
     }
     return this;
   }

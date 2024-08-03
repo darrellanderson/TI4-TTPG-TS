@@ -5,10 +5,11 @@ import {
   MockCardHolder,
   MockGameObject,
 } from "ttpg-mock";
+import { NSID } from "ttpg-darrell";
 
 import { Faction } from "../../../../faction-lib/faction/faction";
 import { RecycleCardPromissory } from "./recycle-card-promissory";
-import { NSID } from "ttpg-darrell";
+import { SourceAndPackageIdSchemaType } from "../../../../system-lib/schema/basic-types-schema";
 
 it("recycle", () => {
   const card: Card = new MockCard({
@@ -19,7 +20,11 @@ it("recycle", () => {
     ],
   });
 
-  TI4.factionRegistry.load("my-source", [
+  const sourceAndPackageId: SourceAndPackageIdSchemaType = {
+    source: "my-source",
+    packageId: "my-package-id",
+  };
+  TI4.factionRegistry.load(sourceAndPackageId, [
     {
       nsidName: "my-faction",
       name: "my-faction-name",

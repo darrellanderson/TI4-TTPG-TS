@@ -1,7 +1,12 @@
+import { SourceAndPackageIdSchemaType } from "lib/system-lib/schema/basic-types-schema";
 import { FactionSchemaType } from "../schema/faction-schema";
 import { Faction } from "./faction";
 
 it("constructor", () => {
+  const sourceAndPackageId: SourceAndPackageIdSchemaType = {
+    source: "my-source",
+    packageId: "my-package-id",
+  };
   const schema: FactionSchemaType = {
     nsidName: "my-nsid-name",
     name: "my-name",
@@ -21,7 +26,7 @@ it("constructor", () => {
     factionTechs: ["my-faction-tech"],
     unitOverrides: ["my-unit-override", "my-mech"],
   };
-  const faction: Faction = new Faction("my-source", schema);
+  const faction: Faction = new Faction(sourceAndPackageId, schema);
 
   expect(faction.getAbbr()).toEqual("my-abbr");
   expect(faction.getAbilityNsids()).toEqual([
@@ -43,6 +48,8 @@ it("constructor", () => {
   ]);
   expect(faction.getHomeSurrogateTileNumber()).toEqual(-1);
   expect(faction.getHomeSystemTileNumber()).toEqual(2);
+  expect(faction.getIcon()).toEqual("icon/faction/my-nsid-name.png");
+  expect(faction.getIconPackageId()).toEqual("my-package-id");
   expect(faction.getMechNsids()).toEqual([
     "card.leader.mech:my-source/my-mech",
   ]);
@@ -60,6 +67,10 @@ it("constructor", () => {
 });
 
 it("constructor (base source get pok mech)", () => {
+  const sourceAndPackageId: SourceAndPackageIdSchemaType = {
+    source: "base",
+    packageId: "my-package-id",
+  };
   const schema: FactionSchemaType = {
     nsidName: "my-nsid-name",
     name: "my-name",
@@ -80,7 +91,7 @@ it("constructor (base source get pok mech)", () => {
     factionTechs: ["one", "two"],
     unitOverrides: ["my-unit-override", "my-mech"],
   };
-  const faction: Faction = new Faction("base", schema);
+  const faction: Faction = new Faction(sourceAndPackageId, schema);
 
   expect(faction.getHomeSurrogateTileNumber()).toEqual(3);
   expect(faction.getUnitOverrideNsids()).toEqual([
