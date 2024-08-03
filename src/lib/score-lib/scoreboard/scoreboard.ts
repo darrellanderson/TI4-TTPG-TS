@@ -1,13 +1,18 @@
 import { GameObject, Rotator, Vector, world } from "@tabletop-playground/api";
 import { Atop, Facing, Find, NSID } from "ttpg-darrell";
 
-import { PlayerSeatType } from "../player-lib/player-seats/player-seats";
+import { PlayerSeatType } from "../../player-lib/player-seats/player-seats";
 
 const SCOREBOARD_LOCAL_WIDTH = 43;
 
 export class Scoreboard {
   private readonly _find: Find = new Find();
 
+  /**
+   * Get all control tokens on the scoreboard (normally just one).
+   *
+   * @returns
+   */
   _getPlayerSlotToAtopControlTokens(): Map<number, Array<GameObject>> {
     const playerSlotToControlTokens: Map<number, Array<GameObject>> = new Map();
 
@@ -32,6 +37,53 @@ export class Scoreboard {
     }
 
     return playerSlotToControlTokens;
+  }
+
+  /**
+   * Get player slot to leading control token on the scoreboard (highest score).
+   *
+   * @returns
+   */
+  _getPlayerSlotToLeadControlToken(): Map<number, GameObject> {
+    const playerSlotToToken: Map<number, GameObject> = new Map();
+
+    const playerSlotToControlTokens: Map<
+      number,
+      Array<GameObject>
+    > = this._getPlayerSlotToAtopControlTokens();
+    for (const [
+      playerSlot,
+      controlTokens,
+    ] of playerSlotToControlTokens.entries()) {
+      for (const controlToken of controlTokens) {
+        const existingToken: GameObject | undefined =
+          playerSlotToToken.get(playerSlot);
+
+        let useNewToken: boolean = true;
+        if (existingToken) {
+          const existingPos: Vector = existingToken.getPosition();
+          const existingScore: number | undefined =
+            this.posToScore(existingPos);
+
+          const newPos: Vector = controlToken.getPosition();
+          const newScore: number | undefined = this.posToScore(newPos);
+
+          if (
+            existingScore !== undefined &&
+            newScore !== undefined &&
+            newScore < existingScore
+          ) {
+            useNewToken = false;
+          }
+        }
+
+        if (useNewToken) {
+          playerSlotToToken.set(playerSlot, controlToken);
+        }
+      }
+    }
+
+    return playerSlotToToken;
   }
 
   _getLocalCenter(score: number): Vector | undefined {

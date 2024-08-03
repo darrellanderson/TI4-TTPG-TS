@@ -31,6 +31,32 @@ it("_getPlayerSlotToAtopControlTokens", () => {
   expect(tokens?.map((token) => token.getId())).toEqual(["on"]);
 });
 
+it("_getPlayerSlotToLeadControlToken", () => {
+  // "atop" needs the model size to reflect scoreToPos results.
+  MockGameObject.simple("token:base/scoreboard", { _modelSize: [100, 100, 1] });
+  const scoreboardLib: Scoreboard = new Scoreboard();
+  MockGameObject.simple("token.control:base/sol", {
+    id: "one",
+    owningPlayerSlot: 1,
+    position: scoreboardLib.scoreToPos(1, 1),
+  });
+  MockGameObject.simple("token.control:base/sol", {
+    id: "three",
+    owningPlayerSlot: 1,
+    position: scoreboardLib.scoreToPos(3, 1),
+  });
+  MockGameObject.simple("token.control:base/sol", {
+    id: "two",
+    owningPlayerSlot: 1,
+    position: scoreboardLib.scoreToPos(2, 1),
+  });
+
+  const playerSlotToToken: Map<number, GameObject> =
+    scoreboardLib._getPlayerSlotToLeadControlToken();
+  expect(playerSlotToToken.size).toBe(1);
+  expect(playerSlotToToken.get(1)?.getId()).toBe("three");
+});
+
 it("_getLocalCenter", () => {
   MockGameObject.simple("token:base/scoreboard");
   MockGameObject.simple("token.control:base/sol", {
