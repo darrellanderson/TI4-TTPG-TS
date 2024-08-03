@@ -8,6 +8,29 @@ const SCOREBOARD_LOCAL_WIDTH = 43;
 export class Scoreboard {
   private readonly _find: Find = new Find();
 
+  _getLocalCenter(score: number): Vector | undefined {
+    const scoreboard: GameObject | undefined = this.getScoreboard();
+    if (!scoreboard) {
+      return undefined;
+    }
+
+    let dir: number = -1;
+    let slotCount: number = 15;
+    if (Facing.isFaceUp(scoreboard)) {
+      dir = 1;
+      slotCount = 11;
+    }
+
+    // Tweak values very slighly for more precise centers, accounting
+    // for one side of the scoreboard extending slightly.
+    const slotWidth: number = (SCOREBOARD_LOCAL_WIDTH - 0.5) / slotCount;
+    let mid: number = (slotCount - 1) / 2;
+    mid -= 0.03;
+
+    const dLeft: number = (score - mid) * slotWidth * dir;
+    return new Vector(0.2, dLeft, 0);
+  }
+
   /**
    * Get all control tokens on the scoreboard (normally just one).
    *
@@ -44,7 +67,7 @@ export class Scoreboard {
    *
    * @returns
    */
-  _getPlayerSlotToLeadControlToken(): Map<number, GameObject> {
+  getPlayerSlotToLeadControlToken(): Map<number, GameObject> {
     const playerSlotToToken: Map<number, GameObject> = new Map();
 
     const playerSlotToControlTokens: Map<
@@ -82,31 +105,13 @@ export class Scoreboard {
         }
       }
     }
-
     return playerSlotToToken;
   }
 
-  _getLocalCenter(score: number): Vector | undefined {
-    const scoreboard: GameObject | undefined = this.getScoreboard();
-    if (!scoreboard) {
-      return undefined;
-    }
-
-    let dir: number = -1;
-    let slotCount: number = 15;
-    if (Facing.isFaceUp(scoreboard)) {
-      dir = 1;
-      slotCount = 11;
-    }
-
-    // Tweak values very slighly for more precise centers, accounting
-    // for one side of the scoreboard extending slightly.
-    const slotWidth: number = (SCOREBOARD_LOCAL_WIDTH - 0.5) / slotCount;
-    let mid: number = (slotCount - 1) / 2;
-    mid -= 0.03;
-
-    const dLeft: number = (score - mid) * slotWidth * dir;
-    return new Vector(0.2, dLeft, 0);
+  getLeadControlToken(playerSlot: number): GameObject | undefined {
+    const playerSlotToToken: Map<number, GameObject> =
+      this.getPlayerSlotToLeadControlToken();
+    return playerSlotToToken.get(playerSlot);
   }
 
   getControlTokenRotation(): Rotator | undefined {
