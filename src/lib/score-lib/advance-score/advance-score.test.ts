@@ -1,5 +1,5 @@
 import { MockGameObject } from "ttpg-mock";
-import { AddToScore } from "./add-to-score";
+import { AdvanceScore } from "./advance-score";
 import { GameObject } from "@tabletop-playground/api";
 import { Scoreboard } from "../scoreboard/scoreboard";
 
@@ -13,7 +13,7 @@ it("addToScore", () => {
   const scoreboardLib: Scoreboard = new Scoreboard();
   expect(scoreboardLib.posToScore(token.getPosition())).toBe(5);
 
-  const addToScore: AddToScore = new AddToScore();
+  const addToScore: AdvanceScore = new AdvanceScore();
   const playerSlot: number = 1;
   const delta: number = 2;
   const success: boolean = addToScore.addToScore(playerSlot, delta);
@@ -23,7 +23,7 @@ it("addToScore", () => {
 });
 
 it("addToScore (no scoreboard)", () => {
-  const addToScore: AddToScore = new AddToScore();
+  const addToScore: AdvanceScore = new AdvanceScore();
   const playerSlot: number = 1;
   const delta: number = 2;
   const success: boolean = addToScore.addToScore(playerSlot, delta);

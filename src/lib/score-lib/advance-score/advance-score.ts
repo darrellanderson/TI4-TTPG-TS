@@ -1,7 +1,7 @@
 import { GameObject, Vector } from "@tabletop-playground/api";
 import { Scoreboard } from "../scoreboard/scoreboard";
 
-export class AddToScore {
+export class AdvanceScore {
   private readonly _scoreboard: Scoreboard = new Scoreboard();
 
   public addToScore(playerSlot: number, delta: number): boolean {
