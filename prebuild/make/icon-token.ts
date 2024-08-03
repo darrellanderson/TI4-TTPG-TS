@@ -5,10 +5,12 @@
  *
  * Output:
  * - assets/Textures/icon/token/*.png
+ * - assets/Textures/icon/token/*.jpg (white background)
  */
 
 import fs from "fs";
 import path from "path";
+import { outlineFeatheredAsJpg } from "./lib/outline-feathered";
 
 const TOKENS: Array<string> = ["command", "control"];
 
@@ -23,4 +25,7 @@ for (const token of TOKENS) {
   const dstDir: string = path.dirname(dst);
   fs.mkdirSync(dstDir, { recursive: true });
   fs.cpSync(src, dst);
+
+  // Also create an opaque version for container icons.
+  outlineFeatheredAsJpg(dst);
 }

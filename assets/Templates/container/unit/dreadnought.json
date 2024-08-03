@@ -1,0 +1,68 @@
+{
+  "Type": "Container",
+  "GUID": "429C6386DC7BCB3AECE4EE48695A5AC5",
+  "Name": "dreadnought",
+  "Metadata": "container.unit:base/dreadnought",
+  "CollisionType": "Regular",
+  "Friction": 0.7,
+  "Restitution": 0.3,
+  "Density": 1,
+  "SurfaceType": "Plastic",
+  "Roughness": 1,
+  "Metallic": 0,
+  "PrimaryColor": {
+    "R": 255,
+    "G": 255,
+    "B": 255
+  },
+  "SecondaryColor": {
+    "R": 0,
+    "G": 0,
+    "B": 0
+  },
+  "Flippable": false,
+  "AutoStraighten": true,
+  "ShouldSnap": false,
+  "ScriptName": "",
+  "Blueprint": "",
+  "Models": [
+    {
+      "Model": "uv-cube.obj",
+      "Offset": {
+        "X": 0,
+        "Y": 0,
+        "Z": 0
+      },
+      "Scale": {
+        "X": 4,
+        "Y": 4,
+        "Z": 1
+      },
+      "Rotation": {
+        "X": 0,
+        "Y": 0,
+        "Z": 0
+      },
+      "Texture": "icon/unit/dreadnought.png",
+      "NormalMap": "",
+      "ExtraMap": "",
+      "ExtraMap2": "",
+      "IsTransparent": false,
+      "CastShadow": true,
+      "IsTwoSided": false,
+      "UseOverrides": true,
+      "SurfaceType": "Plastic"
+    }
+  ],
+  "Collision": [],
+  "Lights": [],
+  "SnapPointsGlobal": false,
+  "SnapPoints": [],
+  "ZoomViewDirection": {
+    "X": 0,
+    "Y": 0,
+    "Z": 0
+  },
+  "GroundAccessibility": "ZoomAndContext",
+  "Tags": []
+}
