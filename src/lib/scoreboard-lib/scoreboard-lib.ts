@@ -63,7 +63,7 @@ export class ScoreboardLib {
       return undefined;
     }
 
-    return new Rotator(0, 90, 0).compose(scoreboard.getRotation());
+    return new Rotator(0, 0, 0).compose(scoreboard.getRotation());
   }
 
   getScoreboard(): GameObject | undefined {
