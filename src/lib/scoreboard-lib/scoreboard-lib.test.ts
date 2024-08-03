@@ -101,3 +101,11 @@ it("scoreToPos (missing seat)", () => {
   expect(pos).toBeDefined();
   expect(pos?.toString()).toBe("(X=0.2,Y=0.116,Z=0)");
 });
+
+it("scoreToPos (flipped scoreboard)", () => {
+  new MockCardHolder({ owningPlayerSlot: 1 });
+  MockGameObject.simple("token:base/scoreboard", { rotation: [0, 0, 180] });
+  const scoreboardLib: ScoreboardLib = new ScoreboardLib();
+  const pos: Vector | undefined = scoreboardLib.scoreToPos(5, 1);
+  expect(pos).toBeDefined();
+});
