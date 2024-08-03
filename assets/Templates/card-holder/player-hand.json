@@ -1,0 +1,83 @@
+{
+	"Type": "Card Holder",
+	"GUID": "C93CE175DC4EA3679EE718A49B4C1744",
+	"Name": "Player Hand",
+	"Metadata": "card-holder:base/player-hand",
+	"CollisionType": "Regular",
+	"Friction": 0.7,
+	"Restitution": 0.3,
+	"Density": 1,
+	"SurfaceType": "Plastic",
+	"Roughness": 1,
+	"Metallic": 0.4,
+	"PrimaryColor":
+	{
+		"R": 255,
+		"G": 255,
+		"B": 255
+	},
+	"SecondaryColor":
+	{
+		"R": 0,
+		"G": 0,
+		"B": 0
+	},
+	"Flippable": false,
+	"AutoStraighten": false,
+	"ShouldSnap": false,
+	"ScriptName": "",
+	"Blueprint": "",
+	"Models": [
+		{
+			"Model": "card-holder.obj",
+			"Offset":
+			{
+				"X": 0,
+				"Y": 0,
+				"Z": 0
+			},
+			"Scale":
+			{
+				"X": 1,
+				"Y": 1,
+				"Z": 1
+			},
+			"Rotation":
+			{
+				"X": -0,
+				"Y": 0,
+				"Z": 0
+			},
+			"Texture": "card-holder/card-holder.png",
+			"NormalMap": "",
+			"ExtraMap": "card-holder/card-holder-mask.png",
+			"ExtraMap2": "",
+			"IsTransparent": false,
+			"CastShadow": true,
+			"IsTwoSided": false,
+			"UseOverrides": true,
+			"SurfaceType": "Plastic"
+		}
+	],
+	"Collision": [],
+	"Lights": [],
+	"SnapPointsGlobal": false,
+	"SnapPoints": [],
+	"ZoomViewDirection":
+	{
+		"X": 0,
+		"Y": 0,
+		"Z": 0
+	},
+	"GroundAccessibility": "Nothing",
+	"Tags": [],
+	"CardsCenter":
+	{
+		"X": 0,
+		"Y": 0,
+		"Z": 1.5
+	},
+	"CardsWidth": 50,
+	"MaxCards": 50,
+	"MaxCardHeight": 10
+}
