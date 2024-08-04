@@ -2,7 +2,7 @@
   "Type": "Container",
   "GUID": "678DA8ACEF751AB046D297B2FD0A9D4D",
   "Name": "command",
-  "Metadata": "container.token:base/command",
+  "Metadata": "container.token.command:base/generic",
   "CollisionType": "Regular",
   "Friction": 0.7,
   "Restitution": 0.3,

@@ -2,7 +2,7 @@
   "Type": "Container",
   "GUID": "62DA5A62DA9AE70F4E06709CBAEB25EB",
   "Name": "control",
-  "Metadata": "container.token:base/control",
+  "Metadata": "container.token.control:base/generic",
   "CollisionType": "Regular",
   "Friction": 0.7,
   "Restitution": 0.3,

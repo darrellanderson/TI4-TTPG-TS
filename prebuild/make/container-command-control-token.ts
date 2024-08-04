@@ -25,7 +25,7 @@ for (const token of ["command", "control"]) {
 
   template.GUID = guid;
   template.Name = `${token}`;
-  template.Metadata = `container.token:base/${token}`;
+  template.Metadata = `container.token.${token}:base/generic`;
   template.Models[0].Texture = `icon/token/${token}.jpg`;
   template.Models[0].ExtraMap = `icon/token/${token}-mask.png`;
 
