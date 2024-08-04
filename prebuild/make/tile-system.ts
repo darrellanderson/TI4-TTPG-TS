@@ -26,12 +26,17 @@ type TileInfo = {
   templateFile: string;
 };
 
+// Generate a "tile 0" blank tile.
+SOURCE_TO_SYSTEM_DATA["base"]?.push({
+  tile: 0,
+});
+
 // Assemble tile info records.
 const infos: Array<TileInfo> = [];
 for (const [source, systemSchemas] of Object.entries(SOURCE_TO_SYSTEM_DATA)) {
   for (const systemSchema of systemSchemas) {
     const tile: number = systemSchema.tile;
-    if (tile <= 0) {
+    if (tile < 0) {
       continue;
     }
 
