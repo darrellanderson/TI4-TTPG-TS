@@ -1,5 +1,30 @@
 import sharp, { Metadata } from "sharp";
 
+export async function center(pngFilename: string) {
+  const metadata: Metadata = await sharp(pngFilename).metadata();
+  const width: number = metadata.width || 1;
+  const height: number = metadata.height || 1;
+
+  const trimmed: Buffer = await sharp(pngFilename)
+    .trim({
+      threshold: 0,
+    })
+    .toBuffer();
+  await sharp({
+    create: {
+      width,
+      height,
+      channels: 4,
+      background: { r: 255, g: 255, b: 255, alpha: 0 },
+    },
+  })
+    .composite([{ input: trimmed, gravity: "center" }])
+    .png()
+    .toFile(pngFilename);
+
+  console.log(`Overwrote: ${pngFilename}`);
+}
+
 /**
  * Create an opaque version of a PNG with a white background.
  *

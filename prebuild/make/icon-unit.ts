@@ -13,7 +13,7 @@ import path from "path";
 import { SOURCE_TO_UNIT_ATTRS_DATA } from "../../src/lib/unit-lib/data/unit-attrs.data";
 import { UnitType } from "../../src/lib/unit-lib/schema/unit-attrs-schema";
 
-import { opaqueJpg, outlineMask } from "./lib/outline-mask";
+import { center, opaqueJpg, outlineMask } from "./lib/outline-mask";
 
 const units: Set<UnitType> = new Set();
 
@@ -23,20 +23,28 @@ for (const unitAttrsDataArray of Object.values(SOURCE_TO_UNIT_ATTRS_DATA)) {
     units.add(unit);
   }
 }
-for (const unit of units) {
+
+async function processUnit(unit: UnitType) {
   const src: string = `./prebuild/icon/unit/${unit}.png`;
   const dst: string = `./assets/Textures/icon/unit/${unit}.png`;
 
   if (!fs.existsSync(src)) {
     throw new Error(`File not found: "${src}"`);
   }
-  console.log(`Copying ${src} to ${dst}`);
 
+  console.log(`Copying ${src} to ${dst}`);
   const dstDir: string = path.dirname(dst);
   fs.mkdirSync(dstDir, { recursive: true });
   fs.cpSync(src, dst);
 
+  console.log(`Centering ${dst}`);
+  await center(dst);
+
   // Also create an opaque version for container icons.
-  opaqueJpg(dst);
-  outlineMask(dst);
+  await opaqueJpg(dst);
+  await outlineMask(dst);
+}
+
+for (const unit of units) {
+  processUnit(unit);
 }
