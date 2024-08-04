@@ -1,10 +1,8 @@
 /**
- * Create icon PNGs with transparency.
- *
- * Input: prebuild/icon/unit/*.png
+ * Create unit containers, assumes icons and masks are already created.
  *
  * Output:
- * - assets/Textures/icon/unit/*.png
+ * - assets/Templates/containers/unit/*.json
  */
 
 import crypto from "crypto";

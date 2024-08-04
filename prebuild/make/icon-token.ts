@@ -10,11 +10,11 @@
 
 import fs from "fs";
 import path from "path";
-import { outlineMask } from "./lib/outline-mask";
+import { opaqueJpg, outlineFeathered } from "./lib/outline-mask";
 
 const TOKENS: Array<string> = ["command", "control"];
 
-for (const token of TOKENS) {
+async function process(token: string) {
   const src: string = `./prebuild/icon/token/${token}.png`;
   const dst: string = `./assets/Textures/icon/token/${token}.png`;
 
@@ -27,5 +27,10 @@ for (const token of TOKENS) {
   fs.cpSync(src, dst);
 
   // Also create an opaque version for container icons.
-  outlineMask(dst);
+  await opaqueJpg(dst);
+  await outlineFeathered(dst);
+}
+
+for (const token of TOKENS) {
+  process(token);
 }
