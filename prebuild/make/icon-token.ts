@@ -10,7 +10,7 @@
 
 import fs from "fs";
 import path from "path";
-import { outlineFeatheredAsJpg } from "./lib/outline-feathered";
+import { outlineMask } from "./lib/outline-mask";
 
 const TOKENS: Array<string> = ["command", "control"];
 
@@ -27,5 +27,5 @@ for (const token of TOKENS) {
   fs.cpSync(src, dst);
 
   // Also create an opaque version for container icons.
-  outlineFeatheredAsJpg(dst);
+  outlineMask(dst);
 }

@@ -7,7 +7,7 @@ import sharp, { Metadata } from "sharp";
  *
  * @param pngFilename
  */
-export async function outlineFeatheredAsJpg(pngFilename: string) {
+export async function outlineMask(pngFilename: string) {
   const src: string = pngFilename;
   const dst: string = pngFilename.replace(/.png$/, "-mask.png");
   if (src === dst) {
