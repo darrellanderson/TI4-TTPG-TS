@@ -45,7 +45,7 @@
       },
       "Texture": "icon/unit/pds.png",
       "NormalMap": "",
-      "ExtraMap": "",
+      "ExtraMap": "icon/unit/pds-mask.png",
       "ExtraMap2": "",
       "IsTransparent": false,
       "CastShadow": true,

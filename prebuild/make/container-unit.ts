@@ -35,7 +35,8 @@ for (const [source, unitAttrsDataArray] of Object.entries(
     template.GUID = guid;
     template.Name = `${unit}`;
     template.Metadata = `container.unit:${source}/${unit}`;
-    template.Models[0].Texture = `icon/unit/${unit}.png`;
+    template.Models[0].Texture = `icon/unit/${unit}.jpg`;
+    template.Models[0].ExtraMap = `icon/unit/${unit}-mask.png`;
 
     templateFile = "./assets/Templates/" + templateFile;
     const templateDir = path.dirname(templateFile);

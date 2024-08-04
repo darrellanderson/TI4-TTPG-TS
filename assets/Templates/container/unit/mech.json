@@ -45,7 +45,7 @@
       },
       "Texture": "icon/unit/mech.png",
       "NormalMap": "",
-      "ExtraMap": "",
+      "ExtraMap": "icon/unit/mech-mask.png",
       "ExtraMap2": "",
       "IsTransparent": false,
       "CastShadow": true,

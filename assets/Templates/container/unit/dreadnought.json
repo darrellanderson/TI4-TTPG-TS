@@ -45,7 +45,7 @@
       },
       "Texture": "icon/unit/dreadnought.png",
       "NormalMap": "",
-      "ExtraMap": "",
+      "ExtraMap": "icon/unit/dreadnought-mask.png",
       "ExtraMap2": "",
       "IsTransparent": false,
       "CastShadow": true,

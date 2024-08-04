@@ -1,6 +1,26 @@
 import sharp, { Metadata } from "sharp";
 
 /**
+ * Create an opaque version of a PNG with a white background.
+ *
+ * @param pngFilename
+ */
+export async function opaqueJpg(pngFilename: string) {
+  const src: string = pngFilename;
+  const dst: string = pngFilename.replace(/.png$/, ".jpg");
+  if (src === dst) {
+    throw new Error("src is dst???");
+  }
+
+  await sharp(src)
+    .flatten({ background: { r: 255, g: 255, b: 255 } })
+    .jpeg()
+    .toFile(dst);
+
+  console.log(`Created: ${dst}`);
+}
+
+/**
  * Create an outlined version of a PNG with a feathered edge and white background.
  *
  * See https://github.com/lovell/sharp/issues/3759

@@ -45,7 +45,7 @@
       },
       "Texture": "icon/unit/war-sun.png",
       "NormalMap": "",
-      "ExtraMap": "",
+      "ExtraMap": "icon/unit/war-sun-mask.png",
       "ExtraMap2": "",
       "IsTransparent": false,
       "CastShadow": true,

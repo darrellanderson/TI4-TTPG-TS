@@ -45,7 +45,7 @@
       },
       "Texture": "icon/unit/space-dock.png",
       "NormalMap": "",
-      "ExtraMap": "",
+      "ExtraMap": "icon/unit/space-dock-mask.png",
       "ExtraMap2": "",
       "IsTransparent": false,
       "CastShadow": true,

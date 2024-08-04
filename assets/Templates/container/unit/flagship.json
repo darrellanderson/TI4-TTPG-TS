@@ -45,7 +45,7 @@
       },
       "Texture": "icon/unit/flagship.png",
       "NormalMap": "",
-      "ExtraMap": "",
+      "ExtraMap": "icon/unit/flagship-mask.png",
       "ExtraMap2": "",
       "IsTransparent": false,
       "CastShadow": true,

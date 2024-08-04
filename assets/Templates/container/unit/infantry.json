@@ -45,7 +45,7 @@
       },
       "Texture": "icon/unit/infantry.png",
       "NormalMap": "",
-      "ExtraMap": "",
+      "ExtraMap": "icon/unit/infantry-mask.png",
       "ExtraMap2": "",
       "IsTransparent": false,
       "CastShadow": true,

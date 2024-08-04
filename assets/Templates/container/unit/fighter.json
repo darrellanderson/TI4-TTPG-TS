@@ -45,7 +45,7 @@
       },
       "Texture": "icon/unit/fighter.png",
       "NormalMap": "",
-      "ExtraMap": "",
+      "ExtraMap": "icon/unit/fighter-mask.png",
       "ExtraMap2": "",
       "IsTransparent": false,
       "CastShadow": true,

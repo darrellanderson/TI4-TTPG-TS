@@ -45,7 +45,7 @@
       },
       "Texture": "icon/unit/carrier.png",
       "NormalMap": "",
-      "ExtraMap": "",
+      "ExtraMap": "icon/unit/carrier-mask.png",
       "ExtraMap2": "",
       "IsTransparent": false,
       "CastShadow": true,

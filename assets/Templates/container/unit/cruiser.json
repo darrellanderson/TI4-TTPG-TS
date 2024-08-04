@@ -45,7 +45,7 @@
       },
       "Texture": "icon/unit/cruiser.png",
       "NormalMap": "",
-      "ExtraMap": "",
+      "ExtraMap": "icon/unit/cruiser-mask.png",
       "ExtraMap2": "",
       "IsTransparent": false,
       "CastShadow": true,

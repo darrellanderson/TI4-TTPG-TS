@@ -45,7 +45,7 @@
       },
       "Texture": "icon/unit/destroyer.png",
       "NormalMap": "",
-      "ExtraMap": "",
+      "ExtraMap": "icon/unit/destroyer-mask.png",
       "ExtraMap2": "",
       "IsTransparent": false,
       "CastShadow": true,
