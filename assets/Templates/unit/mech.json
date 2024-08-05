@@ -1,0 +1,127 @@
+{
+  "Type": "Generic",
+  "GUID": "0DD223987D0E248F597A54E4973C7DFF",
+  "Name": "mech",
+  "Metadata": "unit:codex.vigil/mech",
+  "CollisionType": "Regular",
+  "Friction": 0.7,
+  "Restitution": 0.1,
+  "Density": 1,
+  "SurfaceType": "Plastic",
+  "Roughness": 1,
+  "Metallic": 0,
+  "PrimaryColor": {
+    "R": 255,
+    "G": 255,
+    "B": 255
+  },
+  "SecondaryColor": {
+    "R": 0,
+    "G": 0,
+    "B": 0
+  },
+  "Flippable": true,
+  "AutoStraighten": false,
+  "ShouldSnap": false,
+  "ScriptName": "",
+  "Blueprint": "",
+  "Models": [
+    {
+      "Model": "/unit/mech.shared.obj",
+      "Offset": {
+        "X": 0,
+        "Y": 0,
+        "Z": 0
+      },
+      "Scale": {
+        "X": 1.1,
+        "Y": 1.1,
+        "Z": 1.1
+      },
+      "Rotation": {
+        "X": 0,
+        "Y": 0,
+        "Z": 0
+      },
+      "Texture": "unit/shared.jpg",
+      "NormalMap": "",
+      "ExtraMap": "",
+      "ExtraMap2": "",
+      "IsTransparent": false,
+      "CastShadow": true,
+      "IsTwoSided": false,
+      "UseOverrides": true,
+      "SurfaceType": "Plastic"
+    },
+    {
+      "Model": "unit/flatsquare.obj",
+      "Offset": {
+        "X": 0,
+        "Y": 0,
+        "Z": 0
+      },
+      "Scale": {
+        "X": 2,
+        "Y": 2,
+        "Z": 2
+      },
+      "Rotation": {
+        "X": -180,
+        "Y": 0,
+        "Z": 0
+      },
+      "Texture": "unit/sustained-wrench.png",
+      "NormalMap": "",
+      "ExtraMap": "",
+      "ExtraMap2": "",
+      "IsTransparent": false,
+      "CastShadow": true,
+      "IsTwoSided": false,
+      "UseOverrides": false,
+      "Roughness": 1,
+      "Metallic": 0,
+      "PrimaryColor": {
+        "R": 255,
+        "G": 255,
+        "B": 255
+      },
+      "SecondaryColor": {
+        "R": 0,
+        "G": 0,
+        "B": 0
+      },
+      "SurfaceType": "Plastic"
+    }
+  ],
+  "Collision": [
+    {
+      "Model": "/unit/mech.col.obj",
+      "Offset": {
+        "X": 0,
+        "Y": 0,
+        "Z": 0.55
+      },
+      "Scale": {
+        "X": 1.1,
+        "Y": 1.1,
+        "Z": 1.1
+      },
+      "Rotation": {
+        "X": 0,
+        "Y": 0,
+        "Z": 0
+      },
+      "Type": "Convex"
+    }
+  ],
+  "Lights": [],
+  "SnapPointsGlobal": false,
+  "SnapPoints": [],
+  "ZoomViewDirection": {
+    "X": 0,
+    "Y": 0,
+    "Z": 0
+  },
+  "GroundAccessibility": "Nothing",
+  "Tags": []
+}
