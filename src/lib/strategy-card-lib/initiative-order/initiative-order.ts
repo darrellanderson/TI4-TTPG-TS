@@ -80,13 +80,16 @@ export class InitiativeOrder {
     const skipContained: boolean = true;
     for (const obj of world.getAllObjects(skipContained)) {
       // Check if strategy card.
-      const strategyCardNsidNameFirst: NsidNameSchemaType =
-        InitiativeOrder.getStrategyCardNsidNameFirst(obj) ?? "";
-      initiative = STRATEGY_CARD_TO_INITIATIVE[strategyCardNsidNameFirst];
-      if (initiative !== undefined && !this._isAtopStrategyCardMat(obj)) {
-        const pos: Vector = obj.getPosition();
-        const playerSlot: number = this._find.closestOwnedCardHolderOwner(pos);
-        addToEntry(playerSlot, initiative, obj);
+      const strategyCardNsidNameFirst: NsidNameSchemaType | undefined =
+        InitiativeOrder.getStrategyCardNsidNameFirst(obj);
+      if (strategyCardNsidNameFirst) {
+        initiative = STRATEGY_CARD_TO_INITIATIVE[strategyCardNsidNameFirst];
+        if (initiative !== undefined && !this._isAtopStrategyCardMat(obj)) {
+          const pos: Vector = obj.getPosition();
+          const playerSlot: number =
+            this._find.closestOwnedCardHolderOwner(pos);
+          addToEntry(playerSlot, initiative, obj);
+        }
       }
 
       // Check if other.
