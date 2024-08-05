@@ -34,8 +34,10 @@ export class InitiativeOrder {
       const parsed: ParsedNSID | undefined = NSID.parse(nsid);
       if (parsed) {
         const nameFirst: string | undefined = parsed.nameParts[0];
-        if (nameFirst && nameFirst in STRATEGY_CARD_TO_INITIATIVE) {
-          return nameFirst;
+        if (nameFirst !== undefined) {
+          if (nameFirst in STRATEGY_CARD_TO_INITIATIVE) {
+            return nameFirst;
+          }
         }
       }
     }
@@ -84,11 +86,13 @@ export class InitiativeOrder {
         InitiativeOrder.getStrategyCardNsidNameFirst(obj);
       if (strategyCardNsidNameFirst) {
         initiative = STRATEGY_CARD_TO_INITIATIVE[strategyCardNsidNameFirst];
-        if (initiative !== undefined && !this._isAtopStrategyCardMat(obj)) {
-          const pos: Vector = obj.getPosition();
-          const playerSlot: number =
-            this._find.closestOwnedCardHolderOwner(pos);
-          addToEntry(playerSlot, initiative, obj);
+        if (initiative !== undefined) {
+          if (!this._isAtopStrategyCardMat(obj)) {
+            const pos: Vector = obj.getPosition();
+            const playerSlot: number =
+              this._find.closestOwnedCardHolderOwner(pos);
+            addToEntry(playerSlot, initiative, obj);
+          }
         }
       }
 
