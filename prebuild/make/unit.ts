@@ -20,13 +20,21 @@ import { SOURCE_TO_UNIT_ATTRS_DATA } from "../../src/lib/unit-lib/data/unit-attr
 import { UnitType } from "../../src/lib/unit-lib/schema/unit-attrs-schema";
 import { UNIT_TEMPLATE_DATA } from "./data/unit.template-data";
 
-// TODO set wrench Z to fit model
-
 function getWrenchZ(model: string): number {
   if (!fs.existsSync(model)) {
     throw new Error(`File not found: "${model}"`);
   }
-  return 0;
+
+  let minZ = 0;
+  const lines: Array<string> = fs.readFileSync(model, "utf8").split("\n");
+  for (const line of lines) {
+    if (line.startsWith("v ")) {
+      const values: Array<string> = line.split(" ");
+      const z: number = parseFloat(values[3] ?? "9999");
+      minZ = Math.min(minZ, z);
+    }
+  }
+  return minZ;
 }
 
 const seen: Set<UnitType> = new Set();
@@ -56,9 +64,9 @@ for (const [source, unitAttrsDataArray] of Object.entries(
     template.Metadata = `unit:${source}/${unit}`;
     template.Models[0].Model = `/unit/${unit}.shared.obj`;
     template.Collision[0].Model = `/unit/${unit}.col.obj`;
-    template.Models[1].Offset.Z = getWrenchZ(
-      `assets/Models/unit/${unit}.shared.obj`
-    );
+
+    template.Models[1].Offset.Z =
+      getWrenchZ(`assets/Models/unit/${unit}.shared.obj`) * 0.8;
 
     if (unit === "mech") {
       template.Models[0].Scale = {
@@ -66,7 +74,14 @@ for (const [source, unitAttrsDataArray] of Object.entries(
         Y: 1.1,
         Z: 1.1,
       };
+      template.Collision[0].Scale = {
+        X: 1.1,
+        Y: 1.1,
+        Z: 1.1,
+      };
+      template.Models[1].Offset.Z *= 1.1 / 0.8;
     }
+    template.Models[1].Offset.Z -= 0.01;
 
     templateFile = "./assets/Templates/" + templateFile;
     const templateDir = path.dirname(templateFile);
