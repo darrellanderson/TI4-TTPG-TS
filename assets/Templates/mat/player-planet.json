@@ -1,8 +1,8 @@
 {
     "Type": "Generic",
-    "GUID": "E85D1DAEA9FABB77192531282EB4F06F",
-    "Name": "Exploration Mat",
-    "Metadata": "mat:base/exploration",
+    "GUID": "9C996996289CFA52D50DE72183B2BD14",
+    "Name": "Planet Mat",
+    "Metadata": "mat.player:base/planet",
     "CollisionType": "Regular",
     "Friction": 0.7,
     "Restitution": 0.1,
@@ -34,8 +34,8 @@
                 "Z": 0
             },
             "Scale": {
-                "X": 16.036363636363635,
-                "Y": 25.445454545454545,
+                "X": 27.654545454545456,
+                "Y": 20.454545454545453,
                 "Z": 0.25
             },
             "Rotation": {
@@ -43,7 +43,7 @@
                 "Y": 0,
                 "Z": 0
             },
-            "Texture": "mat/exploration/exploration.jpg",
+            "Texture": "mat/player-planet/player-planet.jpg",
             "NormalMap": "",
             "ExtraMap": "",
             "ExtraMap2": "",
@@ -58,8 +58,8 @@
     "SnapPointsGlobal": false,
     "SnapPoints": [
         {
-            "X": 4.377272727272727,
-            "Y": -9.98181818181818,
+            "X": 10.186363636363637,
+            "Y": -7.486363636363636,
             "Z": 0.125,
             "Range": 3,
             "SnapRotation": 2,
@@ -67,13 +67,25 @@
             "Shape": 0,
             "FlipValidity": 0,
             "Tags": [
-                "deck-relic",
-                "card-relic"
+                "card-planet"
+            ]
+        },
+        {
+            "X": 3.3954545454545464,
+            "Y": -7.486363636363636,
+            "Z": 0.125,
+            "Range": 3,
+            "SnapRotation": 2,
+            "RotationOffset": 0,
+            "Shape": 0,
+            "FlipValidity": 0,
+            "Tags": [
+                "card-planet"
             ]
         },
         {
             "X": -3.3954545454545446,
-            "Y": -9.98181818181818,
+            "Y": -7.486363636363636,
             "Z": 0.125,
             "Range": 3,
             "SnapRotation": 2,
@@ -81,13 +93,12 @@
             "Shape": 0,
             "FlipValidity": 0,
             "Tags": [
-                "deck-legendary-planet",
-                "card-legendary-planet"
+                "card-planet"
             ]
         },
         {
-            "X": 4.377272727272727,
-            "Y": -4.99090909090909,
+            "X": -10.186363636363634,
+            "Y": -7.486363636363636,
             "Z": 0.125,
             "Range": 3,
             "SnapRotation": 2,
@@ -95,13 +106,12 @@
             "Shape": 0,
             "FlipValidity": 0,
             "Tags": [
-                "deck-cultural",
-                "card-cultural"
+                "card-planet"
             ]
         },
         {
-            "X": -3.3954545454545446,
-            "Y": -4.99090909090909,
+            "X": 10.186363636363637,
+            "Y": -2.495454545454545,
             "Z": 0.125,
             "Range": 3,
             "SnapRotation": 2,
@@ -109,13 +119,12 @@
             "Shape": 0,
             "FlipValidity": 0,
             "Tags": [
-                "discard-cultural",
-                "card-cultural"
+                "card-planet"
             ]
         },
         {
-            "X": 4.377272727272727,
-            "Y": 3.552713678800501e-15,
+            "X": 3.3954545454545464,
+            "Y": -2.495454545454545,
             "Z": 0.125,
             "Range": 3,
             "SnapRotation": 2,
@@ -123,13 +132,12 @@
             "Shape": 0,
             "FlipValidity": 0,
             "Tags": [
-                "deck-industrial",
-                "card-industrial"
+                "card-planet"
             ]
         },
         {
             "X": -3.3954545454545446,
-            "Y": 3.552713678800501e-15,
+            "Y": -2.495454545454545,
             "Z": 0.125,
             "Range": 3,
             "SnapRotation": 2,
@@ -137,13 +145,12 @@
             "Shape": 0,
             "FlipValidity": 0,
             "Tags": [
-                "discard-industrial",
-                "card-industrial"
+                "card-planet"
             ]
         },
         {
-            "X": 4.377272727272727,
-            "Y": 4.990909090909092,
+            "X": -10.186363636363634,
+            "Y": -2.495454545454545,
             "Z": 0.125,
             "Range": 3,
             "SnapRotation": 2,
@@ -151,13 +158,12 @@
             "Shape": 0,
             "FlipValidity": 0,
             "Tags": [
-                "deck-hazardous",
-                "card-hazardous"
+                "card-planet"
             ]
         },
         {
-            "X": -3.3954545454545446,
-            "Y": 4.990909090909092,
+            "X": 10.186363636363637,
+            "Y": 2.495454545454546,
             "Z": 0.125,
             "Range": 3,
             "SnapRotation": 2,
@@ -165,13 +171,12 @@
             "Shape": 0,
             "FlipValidity": 0,
             "Tags": [
-                "discard-hazardous",
-                "card-hazardous"
+                "card-planet"
             ]
         },
         {
-            "X": 4.377272727272727,
-            "Y": 9.981818181818184,
+            "X": 3.3954545454545464,
+            "Y": 2.495454545454546,
             "Z": 0.125,
             "Range": 3,
             "SnapRotation": 2,
@@ -179,13 +184,12 @@
             "Shape": 0,
             "FlipValidity": 0,
             "Tags": [
-                "deck-frontier",
-                "card-frontier"
+                "card-planet"
             ]
         },
         {
             "X": -3.3954545454545446,
-            "Y": 9.981818181818184,
+            "Y": 2.495454545454546,
             "Z": 0.125,
             "Range": 3,
             "SnapRotation": 2,
@@ -193,8 +197,72 @@
             "Shape": 0,
             "FlipValidity": 0,
             "Tags": [
-                "discard-frontier",
-                "card-frontier"
+                "card-planet"
+            ]
+        },
+        {
+            "X": -10.186363636363634,
+            "Y": 2.495454545454546,
+            "Z": 0.125,
+            "Range": 3,
+            "SnapRotation": 2,
+            "RotationOffset": 0,
+            "Shape": 0,
+            "FlipValidity": 0,
+            "Tags": [
+                "card-planet"
+            ]
+        },
+        {
+            "X": 10.186363636363637,
+            "Y": 7.4863636363636346,
+            "Z": 0.125,
+            "Range": 3,
+            "SnapRotation": 2,
+            "RotationOffset": 0,
+            "Shape": 0,
+            "FlipValidity": 0,
+            "Tags": [
+                "card-planet"
+            ]
+        },
+        {
+            "X": 3.3954545454545464,
+            "Y": 7.4863636363636346,
+            "Z": 0.125,
+            "Range": 3,
+            "SnapRotation": 2,
+            "RotationOffset": 0,
+            "Shape": 0,
+            "FlipValidity": 0,
+            "Tags": [
+                "card-planet"
+            ]
+        },
+        {
+            "X": -3.3954545454545446,
+            "Y": 7.4863636363636346,
+            "Z": 0.125,
+            "Range": 3,
+            "SnapRotation": 2,
+            "RotationOffset": 0,
+            "Shape": 0,
+            "FlipValidity": 0,
+            "Tags": [
+                "card-planet"
+            ]
+        },
+        {
+            "X": -10.186363636363634,
+            "Y": 7.4863636363636346,
+            "Z": 0.125,
+            "Range": 3,
+            "SnapRotation": 2,
+            "RotationOffset": 0,
+            "Shape": 0,
+            "FlipValidity": 0,
+            "Tags": [
+                "card-planet"
             ]
         }
     ],

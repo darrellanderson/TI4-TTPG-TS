@@ -156,9 +156,9 @@ function deckMat(): ZPaddedCell {
 }
 
 const params: CreateBoardParams = {
-  templateName: "Exploration Mat",
-  assetFilename: "mat/exploration",
-  templateMetadata: "mat:base/exploration",
+  templateName: "Exploration Decks Mat",
+  assetFilename: "mat/deck-exploration",
+  templateMetadata: "mat.deck:pok/exploration",
   srcImage: deckMat(),
   topDownWorldSize: {
     autoWidthHeight: { pixel: H, world: H_WORLD },

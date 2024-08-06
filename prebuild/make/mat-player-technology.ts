@@ -86,9 +86,9 @@ function technologyMat(): ZPaddedCell {
 }
 
 const params: CreateBoardParams = {
-  templateName: "Technology Mat",
-  assetFilename: "mat/technology",
-  templateMetadata: "mat:base/technology",
+  templateName: "Player Technology Mat",
+  assetFilename: "mat/player-technology",
+  templateMetadata: "mat.player:base/technology",
   srcImage: technologyMat(),
   topDownWorldSize: {
     autoWidthHeight: { pixel: W, world: W_WORLD },

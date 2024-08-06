@@ -1,8 +1,8 @@
 {
     "Type": "Generic",
-    "GUID": "E6B31986CFA92F31097B9C9EDF052A74",
+    "GUID": "68A815D9B13D82440940204D2177899E",
     "Name": "Technology Mat",
-    "Metadata": "mat:base/technology",
+    "Metadata": "mat.player:base/technology",
     "CollisionType": "Regular",
     "Friction": 0.7,
     "Restitution": 0.1,
@@ -43,7 +43,7 @@
                 "Y": 0,
                 "Z": 0
             },
-            "Texture": "mat/technology/technology.jpg",
+            "Texture": "mat/player-technology/player-technology.jpg",
             "NormalMap": "",
             "ExtraMap": "",
             "ExtraMap2": "",

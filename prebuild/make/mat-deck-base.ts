@@ -126,9 +126,9 @@ function deckMat(): ZPaddedCell {
 }
 
 const params: CreateBoardParams = {
-  templateName: "Deck Mat",
-  assetFilename: "mat/deck",
-  templateMetadata: "mat:base/deck",
+  templateName: "Base Decks Mat",
+  assetFilename: "mat/deck-base",
+  templateMetadata: "mat.deck:base/base",
   srcImage: deckMat(),
   topDownWorldSize: {
     autoWidthHeight: { pixel: H, world: H_WORLD },

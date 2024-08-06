@@ -90,9 +90,9 @@ function planetMat(): ZPaddedCell {
 }
 
 const params: CreateBoardParams = {
-  templateName: "Planet Mat",
-  assetFilename: "mat/planet",
-  templateMetadata: "mat:base/planet",
+  templateName: "Player Planet Mat",
+  assetFilename: "mat/player-planet",
+  templateMetadata: "mat.player:base/planet",
   srcImage: planetMat(),
   topDownWorldSize: {
     autoWidthHeight: { pixel: H, world: H_WORLD },

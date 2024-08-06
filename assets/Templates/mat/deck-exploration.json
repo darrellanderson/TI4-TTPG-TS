@@ -1,8 +1,8 @@
 {
     "Type": "Generic",
-    "GUID": "8D63164AA4BDEDD5EC85F3DAECBC6F4D",
-    "Name": "Deck Mat",
-    "Metadata": "mat:base/deck",
+    "GUID": "4561A42CBA80FB9D4936EBE61FC57DF3",
+    "Name": "Exploration Mat",
+    "Metadata": "mat.deck:pok/exploration",
     "CollisionType": "Regular",
     "Friction": 0.7,
     "Restitution": 0.1,
@@ -35,7 +35,7 @@
             },
             "Scale": {
                 "X": 16.036363636363635,
-                "Y": 15.463636363636365,
+                "Y": 25.445454545454545,
                 "Z": 0.25
             },
             "Rotation": {
@@ -43,7 +43,7 @@
                 "Y": 0,
                 "Z": 0
             },
-            "Texture": "mat/deck/deck.jpg",
+            "Texture": "mat/deck-exploration/deck-exploration.jpg",
             "NormalMap": "",
             "ExtraMap": "",
             "ExtraMap2": "",
@@ -59,7 +59,7 @@
     "SnapPoints": [
         {
             "X": 4.377272727272727,
-            "Y": -4.990909090909092,
+            "Y": -9.98181818181818,
             "Z": 0.125,
             "Range": 3,
             "SnapRotation": 2,
@@ -67,13 +67,13 @@
             "Shape": 0,
             "FlipValidity": 0,
             "Tags": [
-                "deck-secret",
-                "card-secret"
+                "deck-relic",
+                "card-relic"
             ]
         },
         {
-            "X": -3.3954545454545464,
-            "Y": -4.990909090909092,
+            "X": -3.3954545454545446,
+            "Y": -9.98181818181818,
             "Z": 0.125,
             "Range": 3,
             "SnapRotation": 2,
@@ -81,13 +81,13 @@
             "Shape": 0,
             "FlipValidity": 0,
             "Tags": [
-                "deck-planet",
-                "card-planet"
+                "deck-legendary-planet",
+                "card-legendary-planet"
             ]
         },
         {
             "X": 4.377272727272727,
-            "Y": 0,
+            "Y": -4.99090909090909,
             "Z": 0.125,
             "Range": 3,
             "SnapRotation": 2,
@@ -95,13 +95,13 @@
             "Shape": 0,
             "FlipValidity": 0,
             "Tags": [
-                "deck-agenda",
-                "card-agenda"
+                "deck-cultural",
+                "card-cultural"
             ]
         },
         {
-            "X": -3.3954545454545464,
-            "Y": 0,
+            "X": -3.3954545454545446,
+            "Y": -4.99090909090909,
             "Z": 0.125,
             "Range": 3,
             "SnapRotation": 2,
@@ -109,8 +109,36 @@
             "Shape": 0,
             "FlipValidity": 0,
             "Tags": [
-                "discard-agenda",
-                "card-agenda"
+                "discard-cultural",
+                "card-cultural"
+            ]
+        },
+        {
+            "X": 4.377272727272727,
+            "Y": 3.552713678800501e-15,
+            "Z": 0.125,
+            "Range": 3,
+            "SnapRotation": 2,
+            "RotationOffset": 0,
+            "Shape": 0,
+            "FlipValidity": 0,
+            "Tags": [
+                "deck-industrial",
+                "card-industrial"
+            ]
+        },
+        {
+            "X": -3.3954545454545446,
+            "Y": 3.552713678800501e-15,
+            "Z": 0.125,
+            "Range": 3,
+            "SnapRotation": 2,
+            "RotationOffset": 0,
+            "Shape": 0,
+            "FlipValidity": 0,
+            "Tags": [
+                "discard-industrial",
+                "card-industrial"
             ]
         },
         {
@@ -123,12 +151,12 @@
             "Shape": 0,
             "FlipValidity": 0,
             "Tags": [
-                "deck-action",
-                "card-action"
+                "deck-hazardous",
+                "card-hazardous"
             ]
         },
         {
-            "X": -3.3954545454545464,
+            "X": -3.3954545454545446,
             "Y": 4.990909090909092,
             "Z": 0.125,
             "Range": 3,
@@ -137,8 +165,36 @@
             "Shape": 0,
             "FlipValidity": 0,
             "Tags": [
-                "discard-action",
-                "card-action"
+                "discard-hazardous",
+                "card-hazardous"
+            ]
+        },
+        {
+            "X": 4.377272727272727,
+            "Y": 9.981818181818184,
+            "Z": 0.125,
+            "Range": 3,
+            "SnapRotation": 2,
+            "RotationOffset": 0,
+            "Shape": 0,
+            "FlipValidity": 0,
+            "Tags": [
+                "deck-frontier",
+                "card-frontier"
+            ]
+        },
+        {
+            "X": -3.3954545454545446,
+            "Y": 9.981818181818184,
+            "Z": 0.125,
+            "Range": 3,
+            "SnapRotation": 2,
+            "RotationOffset": 0,
+            "Shape": 0,
+            "FlipValidity": 0,
+            "Tags": [
+                "discard-frontier",
+                "card-frontier"
             ]
         }
     ],
