@@ -1,7 +1,7 @@
 {
     "Type": "Generic",
     "GUID": "8A8C2AC3DD9B2535B9105C7C95F83DA2",
-    "Name": "Deck Mat",
+    "Name": "Base Decks Mat",
     "Metadata": "mat.deck:base/base",
     "CollisionType": "Regular",
     "Friction": 0.7,

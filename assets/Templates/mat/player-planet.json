@@ -1,7 +1,7 @@
 {
     "Type": "Generic",
     "GUID": "9C996996289CFA52D50DE72183B2BD14",
-    "Name": "Planet Mat",
+    "Name": "Player Planet Mat",
     "Metadata": "mat.player:base/planet",
     "CollisionType": "Regular",
     "Friction": 0.7,

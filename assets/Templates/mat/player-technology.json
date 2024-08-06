@@ -1,7 +1,7 @@
 {
     "Type": "Generic",
     "GUID": "68A815D9B13D82440940204D2177899E",
-    "Name": "Technology Mat",
+    "Name": "Player Technology Mat",
     "Metadata": "mat.player:base/technology",
     "CollisionType": "Regular",
     "Friction": 0.7,
