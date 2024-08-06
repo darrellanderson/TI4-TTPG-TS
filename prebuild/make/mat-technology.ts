@@ -11,7 +11,11 @@ import {
 const W: number = 308;
 const H: number = 220;
 const SYMBOL_SIZE: number = 200;
-const SPACING: number = 10;
+
+const W_WORLD: number = 6.3;
+const SPACING: number = Math.round((0.5 * W) / W_WORLD);
+
+console.log("SPACING", SPACING);
 
 function baseCell(): ZImageCell {
   return {
@@ -89,7 +93,7 @@ const params: CreateBoardParams = {
   templateMetadata: "mat:base/technology",
   srcImage: technologyMat(),
   topDownWorldSize: {
-    autoWidthHeight: { pixel: 308, world: 6.3 },
+    autoWidthHeight: { pixel: W, world: W_WORLD },
     depth: 0.25,
   },
 };
