@@ -8,20 +8,20 @@ import {
   ZRowCell,
 } from "../../../ttpg-darrell/src/index-ext";
 
-const W: number = 308;
-const H: number = 220;
+const W: number = 220;
+const H: number = 308;
 const SYMBOL_SIZE: number = 200;
 
-const W_WORLD: number = 6.3;
-const SPACING: number = Math.round((0.5 * W) / W_WORLD);
+const H_WORLD: number = 6.3;
+const SPACING: number = Math.round((0.5 * H) / H_WORLD);
 
 function baseCell(): ZImageCell {
   return {
     type: "ImageCell",
     width: W,
     height: H,
-    imageFile: "prebuild/mat/slot/slot-landscape.jpg",
-    snapPoints: [{ tags: ["card-technology"] }],
+    imageFile: "prebuild/mat/slot/slot-portrait.jpg",
+    snapPoints: [{ tags: ["card-planet"] }],
   };
 }
 
@@ -54,44 +54,48 @@ function symbolCell(symbolFile: string): ZCanvasCell {
   };
 }
 
-function technologyColumn(symbolFile: string): ZColCell {
+function planetColumn(symbolFile?: string): ZColCell {
   return {
     type: "ColCell",
     spacing: SPACING,
-    children: [baseCell(), baseCell(), baseCell(), symbolCell(symbolFile)],
-  };
-}
-
-function technologyGrid(): ZRowCell {
-  return {
-    type: "RowCell",
-    spacing: SPACING,
     children: [
-      technologyColumn("prebuild/mat/slot/symbol-tech-blue.png"),
-      technologyColumn("prebuild/mat/slot/symbol-tech-green.png"),
-      technologyColumn("prebuild/mat/slot/symbol-tech-red.png"),
-      technologyColumn("prebuild/mat/slot/symbol-tech-yellow.png"),
-      technologyColumn("prebuild/mat/slot/symbol-tech-unit.png"),
+      baseCell(),
+      baseCell(),
+      baseCell(),
+      symbolFile ? symbolCell(symbolFile) : baseCell(),
     ],
   };
 }
 
-function technologyMat(): ZPaddedCell {
+function planetGrid(): ZRowCell {
+  return {
+    type: "RowCell",
+    spacing: SPACING,
+    children: [
+      planetColumn("prebuild/mat/slot/symbol-planet.png"),
+      planetColumn(),
+      planetColumn(),
+      planetColumn(),
+    ],
+  };
+}
+
+function planetMat(): ZPaddedCell {
   return {
     type: "PaddedCell",
     padding: SPACING,
-    child: technologyGrid(),
+    child: planetGrid(),
     background: "#171717",
   };
 }
 
 const params: CreateBoardParams = {
-  templateName: "Technology Mat",
-  assetFilename: "mat/technology",
-  templateMetadata: "mat:base/technology",
-  srcImage: technologyMat(),
+  templateName: "Planet Mat",
+  assetFilename: "mat/planet",
+  templateMetadata: "mat:base/planet",
+  srcImage: planetMat(),
   topDownWorldSize: {
-    autoWidthHeight: { pixel: W, world: W_WORLD },
+    autoWidthHeight: { pixel: H, world: H_WORLD },
     depth: 0.25,
   },
   preshrink: 1024,

@@ -1,8 +1,8 @@
 {
     "Type": "Generic",
-    "GUID": "E6B31986CFA92F31097B9C9EDF052A74",
-    "Name": "Technology Mat",
-    "Metadata": "mat:base/technology",
+    "GUID": "667BC3DBB173675636D5FF4DE198E3E4",
+    "Name": "Planet Mat",
+    "Metadata": "mat:base/planet",
     "CollisionType": "Regular",
     "Friction": 0.7,
     "Restitution": 0.1,
@@ -34,8 +34,8 @@
                 "Z": 0
             },
             "Scale": {
-                "X": 20.454545454545453,
-                "Y": 34.445454545454545,
+                "X": 27.654545454545456,
+                "Y": 20.454545454545453,
                 "Z": 0.25
             },
             "Rotation": {
@@ -43,7 +43,7 @@
                 "Y": 0,
                 "Z": 0
             },
-            "Texture": "mat/technology/technology.jpg",
+            "Texture": "mat/planet/planet.jpg",
             "NormalMap": "",
             "ExtraMap": "",
             "ExtraMap2": "",
@@ -58,8 +58,8 @@
     "SnapPointsGlobal": false,
     "SnapPoints": [
         {
-            "X": 7.486363636363636,
-            "Y": -13.581818181818182,
+            "X": 10.186363636363637,
+            "Y": -7.486363636363636,
             "Z": 0.125,
             "Range": 3,
             "SnapRotation": 2,
@@ -67,12 +67,12 @@
             "Shape": 0,
             "FlipValidity": 0,
             "Tags": [
-                "card-technology"
+                "card-planet"
             ]
         },
         {
-            "X": 2.495454545454546,
-            "Y": -13.581818181818182,
+            "X": 3.3954545454545464,
+            "Y": -7.486363636363636,
             "Z": 0.125,
             "Range": 3,
             "SnapRotation": 2,
@@ -80,12 +80,12 @@
             "Shape": 0,
             "FlipValidity": 0,
             "Tags": [
-                "card-technology"
+                "card-planet"
             ]
         },
         {
-            "X": -2.495454545454546,
-            "Y": -13.581818181818182,
+            "X": -3.3954545454545446,
+            "Y": -7.486363636363636,
             "Z": 0.125,
             "Range": 3,
             "SnapRotation": 2,
@@ -93,12 +93,12 @@
             "Shape": 0,
             "FlipValidity": 0,
             "Tags": [
-                "card-technology"
+                "card-planet"
             ]
         },
         {
-            "X": -7.4863636363636346,
-            "Y": -13.581818181818182,
+            "X": -10.186363636363637,
+            "Y": -7.486363636363636,
             "Z": 0.125,
             "Range": 3,
             "SnapRotation": 2,
@@ -106,12 +106,12 @@
             "Shape": 0,
             "FlipValidity": 0,
             "Tags": [
-                "card-technology"
+                "card-planet"
             ]
         },
         {
-            "X": 7.486363636363636,
-            "Y": -6.790909090909091,
+            "X": 10.186363636363637,
+            "Y": -2.495454545454545,
             "Z": 0.125,
             "Range": 3,
             "SnapRotation": 2,
@@ -119,12 +119,12 @@
             "Shape": 0,
             "FlipValidity": 0,
             "Tags": [
-                "card-technology"
+                "card-planet"
             ]
         },
         {
-            "X": 2.495454545454546,
-            "Y": -6.790909090909091,
+            "X": 3.3954545454545464,
+            "Y": -2.495454545454545,
             "Z": 0.125,
             "Range": 3,
             "SnapRotation": 2,
@@ -132,12 +132,12 @@
             "Shape": 0,
             "FlipValidity": 0,
             "Tags": [
-                "card-technology"
+                "card-planet"
             ]
         },
         {
-            "X": -2.495454545454546,
-            "Y": -6.790909090909091,
+            "X": -3.3954545454545446,
+            "Y": -2.495454545454545,
             "Z": 0.125,
             "Range": 3,
             "SnapRotation": 2,
@@ -145,12 +145,12 @@
             "Shape": 0,
             "FlipValidity": 0,
             "Tags": [
-                "card-technology"
+                "card-planet"
             ]
         },
         {
-            "X": -7.4863636363636346,
-            "Y": -6.790909090909091,
+            "X": -10.186363636363637,
+            "Y": -2.495454545454545,
             "Z": 0.125,
             "Range": 3,
             "SnapRotation": 2,
@@ -158,12 +158,12 @@
             "Shape": 0,
             "FlipValidity": 0,
             "Tags": [
-                "card-technology"
+                "card-planet"
             ]
         },
         {
-            "X": 7.486363636363636,
-            "Y": 0,
+            "X": 10.186363636363637,
+            "Y": 2.495454545454546,
             "Z": 0.125,
             "Range": 3,
             "SnapRotation": 2,
@@ -171,12 +171,12 @@
             "Shape": 0,
             "FlipValidity": 0,
             "Tags": [
-                "card-technology"
+                "card-planet"
             ]
         },
         {
-            "X": 2.495454545454546,
-            "Y": 0,
+            "X": 3.3954545454545464,
+            "Y": 2.495454545454546,
             "Z": 0.125,
             "Range": 3,
             "SnapRotation": 2,
@@ -184,12 +184,12 @@
             "Shape": 0,
             "FlipValidity": 0,
             "Tags": [
-                "card-technology"
+                "card-planet"
             ]
         },
         {
-            "X": -2.495454545454546,
-            "Y": 0,
+            "X": -3.3954545454545446,
+            "Y": 2.495454545454546,
             "Z": 0.125,
             "Range": 3,
             "SnapRotation": 2,
@@ -197,12 +197,12 @@
             "Shape": 0,
             "FlipValidity": 0,
             "Tags": [
-                "card-technology"
+                "card-planet"
             ]
         },
         {
-            "X": -7.4863636363636346,
-            "Y": 0,
+            "X": -10.186363636363637,
+            "Y": 2.495454545454546,
             "Z": 0.125,
             "Range": 3,
             "SnapRotation": 2,
@@ -210,12 +210,12 @@
             "Shape": 0,
             "FlipValidity": 0,
             "Tags": [
-                "card-technology"
+                "card-planet"
             ]
         },
         {
-            "X": 7.486363636363636,
-            "Y": 6.790909090909089,
+            "X": 10.186363636363637,
+            "Y": 7.4863636363636346,
             "Z": 0.125,
             "Range": 3,
             "SnapRotation": 2,
@@ -223,12 +223,12 @@
             "Shape": 0,
             "FlipValidity": 0,
             "Tags": [
-                "card-technology"
+                "card-planet"
             ]
         },
         {
-            "X": 2.495454545454546,
-            "Y": 6.790909090909089,
+            "X": 3.3954545454545464,
+            "Y": 7.4863636363636346,
             "Z": 0.125,
             "Range": 3,
             "SnapRotation": 2,
@@ -236,12 +236,12 @@
             "Shape": 0,
             "FlipValidity": 0,
             "Tags": [
-                "card-technology"
+                "card-planet"
             ]
         },
         {
-            "X": -2.495454545454546,
-            "Y": 6.790909090909089,
+            "X": -3.3954545454545446,
+            "Y": 7.4863636363636346,
             "Z": 0.125,
             "Range": 3,
             "SnapRotation": 2,
@@ -249,12 +249,12 @@
             "Shape": 0,
             "FlipValidity": 0,
             "Tags": [
-                "card-technology"
+                "card-planet"
             ]
         },
         {
-            "X": -7.4863636363636346,
-            "Y": 6.790909090909089,
+            "X": -10.186363636363637,
+            "Y": 7.4863636363636346,
             "Z": 0.125,
             "Range": 3,
             "SnapRotation": 2,
@@ -262,59 +262,7 @@
             "Shape": 0,
             "FlipValidity": 0,
             "Tags": [
-                "card-technology"
-            ]
-        },
-        {
-            "X": 7.486363636363636,
-            "Y": 13.581818181818186,
-            "Z": 0.125,
-            "Range": 3,
-            "SnapRotation": 2,
-            "RotationOffset": 0,
-            "Shape": 0,
-            "FlipValidity": 0,
-            "Tags": [
-                "card-technology"
-            ]
-        },
-        {
-            "X": 2.495454545454546,
-            "Y": 13.581818181818186,
-            "Z": 0.125,
-            "Range": 3,
-            "SnapRotation": 2,
-            "RotationOffset": 0,
-            "Shape": 0,
-            "FlipValidity": 0,
-            "Tags": [
-                "card-technology"
-            ]
-        },
-        {
-            "X": -2.495454545454546,
-            "Y": 13.581818181818186,
-            "Z": 0.125,
-            "Range": 3,
-            "SnapRotation": 2,
-            "RotationOffset": 0,
-            "Shape": 0,
-            "FlipValidity": 0,
-            "Tags": [
-                "card-technology"
-            ]
-        },
-        {
-            "X": -7.4863636363636346,
-            "Y": 13.581818181818186,
-            "Z": 0.125,
-            "Range": 3,
-            "SnapRotation": 2,
-            "RotationOffset": 0,
-            "Shape": 0,
-            "FlipValidity": 0,
-            "Tags": [
-                "card-technology"
+                "card-planet"
             ]
         }
     ],
