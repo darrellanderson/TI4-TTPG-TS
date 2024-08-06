@@ -78,7 +78,7 @@ function objectiveRow(): ZRowCell {
     type: "RowCell",
     spacing: SPACING,
     children: [
-      labeledCell("Stage I", true),
+      labeledCell("Stage II", true),
       gapCell(),
       labeledCell("V", false),
       labeledCell("VI", false),
