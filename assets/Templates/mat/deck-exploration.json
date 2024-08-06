@@ -34,7 +34,7 @@
                 "Z": 0
             },
             "Scale": {
-                "X": 16.036363636363635,
+                "X": 15.054545454545455,
                 "Y": 25.445454545454545,
                 "Z": 0.25
             },
@@ -58,7 +58,7 @@
     "SnapPointsGlobal": false,
     "SnapPoints": [
         {
-            "X": 4.377272727272727,
+            "X": 3.8863636363636362,
             "Y": -9.98181818181818,
             "Z": 0.125,
             "Range": 3,
@@ -72,21 +72,7 @@
             ]
         },
         {
-            "X": -3.3954545454545446,
-            "Y": -9.98181818181818,
-            "Z": 0.125,
-            "Range": 3,
-            "SnapRotation": 2,
-            "RotationOffset": 0,
-            "Shape": 0,
-            "FlipValidity": 0,
-            "Tags": [
-                "deck-legendary-planet",
-                "card-legendary-planet"
-            ]
-        },
-        {
-            "X": 4.377272727272727,
+            "X": 3.8863636363636362,
             "Y": -4.99090909090909,
             "Z": 0.125,
             "Range": 3,
@@ -95,12 +81,12 @@
             "Shape": 0,
             "FlipValidity": 0,
             "Tags": [
-                "deck-cultural",
-                "card-cultural"
+                "deck-exploration-cultural",
+                "card-exploration-cultural"
             ]
         },
         {
-            "X": -3.3954545454545446,
+            "X": -2.9045454545454525,
             "Y": -4.99090909090909,
             "Z": 0.125,
             "Range": 3,
@@ -109,12 +95,12 @@
             "Shape": 0,
             "FlipValidity": 0,
             "Tags": [
-                "discard-cultural",
-                "card-cultural"
+                "discard-exploration-cultural",
+                "card-exploration-cultural"
             ]
         },
         {
-            "X": 4.377272727272727,
+            "X": 3.8863636363636362,
             "Y": 3.552713678800501e-15,
             "Z": 0.125,
             "Range": 3,
@@ -123,12 +109,12 @@
             "Shape": 0,
             "FlipValidity": 0,
             "Tags": [
-                "deck-industrial",
-                "card-industrial"
+                "deck-exploration-industrial",
+                "card-exploration-industrial"
             ]
         },
         {
-            "X": -3.3954545454545446,
+            "X": -2.9045454545454525,
             "Y": 3.552713678800501e-15,
             "Z": 0.125,
             "Range": 3,
@@ -137,12 +123,12 @@
             "Shape": 0,
             "FlipValidity": 0,
             "Tags": [
-                "discard-industrial",
-                "card-industrial"
+                "discard-exploration-industrial",
+                "card-exploration-industrial"
             ]
         },
         {
-            "X": 4.377272727272727,
+            "X": 3.8863636363636362,
             "Y": 4.990909090909092,
             "Z": 0.125,
             "Range": 3,
@@ -151,12 +137,12 @@
             "Shape": 0,
             "FlipValidity": 0,
             "Tags": [
-                "deck-hazardous",
-                "card-hazardous"
+                "deck-exploration-hazardous",
+                "card-exploration-hazardous"
             ]
         },
         {
-            "X": -3.3954545454545446,
+            "X": -2.9045454545454525,
             "Y": 4.990909090909092,
             "Z": 0.125,
             "Range": 3,
@@ -165,12 +151,12 @@
             "Shape": 0,
             "FlipValidity": 0,
             "Tags": [
-                "discard-hazardous",
-                "card-hazardous"
+                "discard-exploration-hazardous",
+                "card-exploration-hazardous"
             ]
         },
         {
-            "X": 4.377272727272727,
+            "X": 3.8863636363636362,
             "Y": 9.981818181818184,
             "Z": 0.125,
             "Range": 3,
@@ -179,12 +165,12 @@
             "Shape": 0,
             "FlipValidity": 0,
             "Tags": [
-                "deck-frontier",
-                "card-frontier"
+                "deck-exploration-frontier",
+                "card-exploration-frontier"
             ]
         },
         {
-            "X": -3.3954545454545446,
+            "X": -2.9045454545454525,
             "Y": 9.981818181818184,
             "Z": 0.125,
             "Range": 3,
@@ -193,8 +179,8 @@
             "Shape": 0,
             "FlipValidity": 0,
             "Tags": [
-                "discard-frontier",
-                "card-frontier"
+                "discard-exploration-frontier",
+                "card-exploration-frontier"
             ]
         }
     ],

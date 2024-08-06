@@ -1,8 +1,8 @@
 {
     "Type": "Generic",
-    "GUID": "8A8C2AC3DD9B2535B9105C7C95F83DA2",
-    "Name": "Base Decks Mat",
-    "Metadata": "mat.deck:base/base",
+    "GUID": "70A88157408F86657D89276AA8E718BD",
+    "Name": "Planet Decks Mat",
+    "Metadata": "mat.deck:base/planet",
     "CollisionType": "Regular",
     "Friction": 0.7,
     "Restitution": 0.1,
@@ -35,7 +35,7 @@
             },
             "Scale": {
                 "X": 15.054545454545455,
-                "Y": 15.463636363636365,
+                "Y": 7.281818181818181,
                 "Z": 0.25
             },
             "Rotation": {
@@ -43,7 +43,7 @@
                 "Y": 0,
                 "Z": 0
             },
-            "Texture": "mat/deck-base/deck-base.jpg",
+            "Texture": "mat/deck-planet/deck-planet.jpg",
             "NormalMap": "",
             "ExtraMap": "",
             "ExtraMap2": "",
@@ -59,7 +59,7 @@
     "SnapPoints": [
         {
             "X": 3.8863636363636367,
-            "Y": -4.990909090909091,
+            "Y": 8.881784197001252e-16,
             "Z": 0.125,
             "Range": 3,
             "SnapRotation": 2,
@@ -67,13 +67,12 @@
             "Shape": 0,
             "FlipValidity": 0,
             "Tags": [
-                "deck-objective-secret",
-                "card-objective-secret"
+                "deck-planet"
             ]
         },
         {
-            "X": 3.8863636363636367,
-            "Y": 0,
+            "X": -2.9045454545454543,
+            "Y": 8.881784197001252e-16,
             "Z": 0.125,
             "Range": 3,
             "SnapRotation": 2,
@@ -81,50 +80,7 @@
             "Shape": 0,
             "FlipValidity": 0,
             "Tags": [
-                "deck-agenda",
-                "card-agenda"
-            ]
-        },
-        {
-            "X": -2.9045454545454525,
-            "Y": 0,
-            "Z": 0.125,
-            "Range": 3,
-            "SnapRotation": 2,
-            "RotationOffset": 0,
-            "Shape": 0,
-            "FlipValidity": 0,
-            "Tags": [
-                "discard-agenda",
-                "card-agenda"
-            ]
-        },
-        {
-            "X": 3.8863636363636367,
-            "Y": 4.99090909090909,
-            "Z": 0.125,
-            "Range": 3,
-            "SnapRotation": 2,
-            "RotationOffset": 0,
-            "Shape": 0,
-            "FlipValidity": 0,
-            "Tags": [
-                "deck-action",
-                "card-action"
-            ]
-        },
-        {
-            "X": -2.9045454545454525,
-            "Y": 4.99090909090909,
-            "Z": 0.125,
-            "Range": 3,
-            "SnapRotation": 2,
-            "RotationOffset": 0,
-            "Shape": 0,
-            "FlipValidity": 0,
-            "Tags": [
-                "discard-action",
-                "card-action"
+                "deck-legendary-planet"
             ]
         }
     ],

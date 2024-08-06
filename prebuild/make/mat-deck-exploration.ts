@@ -1,12 +1,10 @@
 import {
   CreateBoard,
   CreateBoardParams,
-  ZCanvasCell,
-  ZColCell,
+  ZBaseCell,
   ZImageCell,
   ZPaddedCell,
   ZRowCell,
-  ZTextCell,
 } from "../../../ttpg-darrell/src/index-ext";
 
 const W: number = 220;
@@ -16,11 +14,9 @@ const SYMBOL_SIZE: number = 200;
 const H_WORLD: number = 6.3;
 const SPACING: number = Math.round((0.5 * H) / H_WORLD);
 
-function labeledCell(
-  labelText: string,
-  symbolFile: string,
-  tags: Array<string>
-): ZColCell {
+const COLOR: string = "#171717";
+
+function getSymbolSlot(symbolFile: string, tags: Array<string>): ZBaseCell {
   const slot: ZImageCell = {
     type: "ImageCell",
     width: W,
@@ -34,7 +30,7 @@ function labeledCell(
     height: SYMBOL_SIZE,
     imageFile: symbolFile,
   };
-  const slotWithSymbol: ZCanvasCell = {
+  return {
     type: "CanvasCell",
     width: W,
     height: H,
@@ -47,7 +43,19 @@ function labeledCell(
       },
     ],
   };
-  const label: ZTextCell = {
+}
+
+function getEmptySlot(): ZBaseCell {
+  return {
+    type: "SolidCell",
+    width: W,
+    height: H,
+    color: COLOR,
+  };
+}
+
+function getLabel(labelText: string): ZBaseCell {
+  return {
     type: "TextCell",
     width: W,
     height: 24,
@@ -56,93 +64,78 @@ function labeledCell(
     fontSize: 24,
     font: "Handel Gothic", // font installed on system
   };
+}
+
+function deckAndDiscard(
+  cardNsidName: string,
+  labelText: string,
+  symbolFile: string
+): ZBaseCell {
+  const deckSlot: ZBaseCell = getSymbolSlot(symbolFile, [
+    `deck-${cardNsidName}`,
+    `card-${cardNsidName}`,
+  ]);
+  const discardSlot: ZBaseCell = getSymbolSlot(symbolFile, [
+    `discard-${cardNsidName}`,
+    `card-${cardNsidName}`,
+  ]);
+  const labelCell: ZBaseCell = getLabel(labelText);
   return {
     type: "ColCell",
     spacing: SPACING,
-    children: [slotWithSymbol, label],
+    children: [deckSlot, discardSlot, labelCell],
+  };
+}
+
+function deckNoDiscard(
+  cardNsidName: string,
+  labelText: string,
+  symbolFile: string
+): ZBaseCell {
+  const deckSlot: ZBaseCell = getSymbolSlot(symbolFile, [
+    `deck-${cardNsidName}`,
+    `card-${cardNsidName}`,
+  ]);
+  const emptySlot: ZBaseCell = getEmptySlot();
+  const labelCell: ZBaseCell = getLabel(labelText);
+  return {
+    type: "ColCell",
+    spacing: SPACING,
+    children: [deckSlot, emptySlot, labelCell],
   };
 }
 
 function deckGrid(): ZRowCell {
-  const col1: ZColCell = {
-    type: "ColCell",
-    spacing: SPACING,
-    children: [
-      labeledCell("Relic", "prebuild/mat/slot/symbol-relic.png", [
-        "deck-relic",
-        "card-relic",
-      ]),
-      labeledCell("Legendary", "prebuild/mat/slot/symbol-planet.png", [
-        "deck-legendary-planet",
-        "card-legendary-planet",
-      ]),
-    ],
-  };
-
-  const col2: ZColCell = {
-    type: "ColCell",
-    spacing: SPACING,
-    children: [
-      labeledCell("Cultural", "prebuild/mat/slot/symbol-cultural.png", [
-        "deck-cultural",
-        "card-cultural",
-      ]),
-      labeledCell("Discard", "prebuild/mat/slot/symbol-cultural.png", [
-        "discard-cultural",
-        "card-cultural",
-      ]),
-    ],
-  };
-
-  const col3: ZColCell = {
-    type: "ColCell",
-    spacing: SPACING,
-    children: [
-      labeledCell("Industrial", "prebuild/mat/slot/symbol-industrial.png", [
-        "deck-industrial",
-        "card-industrial",
-      ]),
-      labeledCell("Discard", "prebuild/mat/slot/symbol-industrial.png", [
-        "discard-industrial",
-        "card-industrial",
-      ]),
-    ],
-  };
-
-  const col4: ZColCell = {
-    type: "ColCell",
-    spacing: SPACING,
-    children: [
-      labeledCell("Industrial", "prebuild/mat/slot/symbol-hazardous.png", [
-        "deck-hazardous",
-        "card-hazardous",
-      ]),
-      labeledCell("Discard", "prebuild/mat/slot/symbol-hazardous.png", [
-        "discard-hazardous",
-        "card-hazardous",
-      ]),
-    ],
-  };
-
-  const col5: ZColCell = {
-    type: "ColCell",
-    spacing: SPACING,
-    children: [
-      labeledCell("Frontier", "prebuild/mat/slot/symbol-frontier.png", [
-        "deck-frontier",
-        "card-frontier",
-      ]),
-      labeledCell("Discard", "prebuild/mat/slot/symbol-frontier.png", [
-        "discard-frontier",
-        "card-frontier",
-      ]),
-    ],
-  };
-
   return {
     type: "RowCell",
     spacing: SPACING,
-    children: [col1, col2, col3, col4, col5],
+    children: [
+      deckNoDiscard(
+        "relic", // no exploration prefix
+        "Relic",
+        "prebuild/mat/slot/symbol-relic.png"
+      ),
+      deckAndDiscard(
+        "exploration-cultural",
+        "Cultural",
+        "prebuild/mat/slot/symbol-cultural.png"
+      ),
+      deckAndDiscard(
+        "exploration-industrial",
+        "Industrial",
+        "prebuild/mat/slot/symbol-industrial.png"
+      ),
+      deckAndDiscard(
+        "exploration-hazardous",
+        "Hazardous",
+        "prebuild/mat/slot/symbol-hazardous.png"
+      ),
+      deckAndDiscard(
+        "exploration-frontier",
+        "Frontier",
+        "prebuild/mat/slot/symbol-frontier.png"
+      ),
+    ],
   };
 }
 
@@ -151,7 +144,7 @@ function deckMat(): ZPaddedCell {
     type: "PaddedCell",
     padding: SPACING,
     child: deckGrid(),
-    background: "#171717",
+    background: COLOR,
   };
 }
 
