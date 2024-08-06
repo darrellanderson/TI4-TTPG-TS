@@ -1,8 +1,8 @@
 {
     "Type": "Generic",
-    "GUID": "70A88157408F86657D89276AA8E718BD",
-    "Name": "Planet Decks Mat",
-    "Metadata": "mat.deck:base/planet",
+    "GUID": "CCB447B80C21CCFBCC62B45F13E0699C",
+    "Name": "Player Build Mat",
+    "Metadata": "mat.player:base/build",
     "CollisionType": "Regular",
     "Friction": 0.7,
     "Restitution": 0.1,
@@ -34,8 +34,8 @@
                 "Z": 0
             },
             "Scale": {
-                "X": 15.054545454545455,
-                "Y": 7.281818181818181,
+                "X": 18.4,
+                "Y": 18.4,
                 "Z": 0.25
             },
             "Rotation": {
@@ -43,7 +43,7 @@
                 "Y": 0,
                 "Z": 0
             },
-            "Texture": "mat/deck-planet/deck-planet.jpg",
+            "Texture": "mat/player-build/player-build.jpg",
             "NormalMap": "",
             "ExtraMap": "",
             "ExtraMap2": "",
@@ -56,34 +56,7 @@
     ],
     "Lights": [],
     "SnapPointsGlobal": false,
-    "SnapPoints": [
-        {
-            "X": 3.8863636363636367,
-            "Y": 0,
-            "Z": 0.125,
-            "Range": 3,
-            "SnapRotation": 2,
-            "RotationOffset": 0,
-            "Shape": 0,
-            "FlipValidity": 0,
-            "Tags": [
-                "deck-planet"
-            ]
-        },
-        {
-            "X": -2.9045454545454543,
-            "Y": 0,
-            "Z": 0.125,
-            "Range": 3,
-            "SnapRotation": 2,
-            "RotationOffset": 0,
-            "Shape": 0,
-            "FlipValidity": 0,
-            "Tags": [
-                "deck-legendary-planet"
-            ]
-        }
-    ],
+    "SnapPoints": [],
     "ZoomViewDirection": {
         "X": 0,
         "Y": 0,
