@@ -77,11 +77,11 @@ function objectiveRow(): ZRowCell {
     children: [
       labeledCell("Agenda"),
       gapCell(),
-      labeledCell("Law"),
-      labeledCell("Law"),
-      labeledCell("Law"),
-      labeledCell("Law"),
-      labeledCell("Law"),
+      labeledCell("Laws"),
+      labeledCell(""),
+      labeledCell(""),
+      labeledCell(""),
+      labeledCell(""),
     ],
   };
 }
