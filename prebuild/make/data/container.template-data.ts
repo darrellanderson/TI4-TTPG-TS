@@ -23,7 +23,7 @@ export const CONTAINER_TEMPLATE_DATA = {
   Flippable: false,
   AutoStraighten: true,
   ShouldSnap: false,
-  ScriptName: "",
+  ScriptName: "obj/unit-container-obj.js",
   Blueprint: "",
   Models: [
     {
