@@ -38,15 +38,15 @@ function getWrenchZ(model: string): number {
 }
 
 const seen: Set<UnitType> = new Set();
-for (const [source, unitAttrsDataArray] of Object.entries(
-  SOURCE_TO_UNIT_ATTRS_DATA
-)) {
+for (const unitAttrsDataArray of Object.values(SOURCE_TO_UNIT_ATTRS_DATA)) {
   for (const unitAttrsData of unitAttrsDataArray) {
     const unit: UnitType = unitAttrsData.unit;
     if (seen.has(unit)) {
       continue;
     }
     seen.add(unit);
+
+    const sourceOverride: string = unit === "mech" ? "pok" : "base";
 
     const template = JSON.parse(JSON.stringify(UNIT_TEMPLATE_DATA));
 
@@ -61,7 +61,7 @@ for (const [source, unitAttrsDataArray] of Object.entries(
 
     template.GUID = guid;
     template.Name = `${unit}`;
-    template.Metadata = `unit:${source}/${unit}`;
+    template.Metadata = `unit:${sourceOverride}/${unit}`;
     template.Models[0].Model = `/unit/${unit}.shared.obj`;
     template.Collision[0].Model = `/unit/${unit}.col.obj`;
 

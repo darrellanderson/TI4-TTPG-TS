@@ -2,7 +2,7 @@
   "Type": "Generic",
   "GUID": "0DD223987D0E248F597A54E4973C7DFF",
   "Name": "mech",
-  "Metadata": "unit:codex.vigil/mech",
+  "Metadata": "unit:pok/mech",
   "CollisionType": "Regular",
   "Friction": 0.7,
   "Restitution": 0.1,
