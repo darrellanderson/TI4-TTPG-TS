@@ -15,6 +15,20 @@ it("moveCard", () => {
 
   new MockCardHolder({
     templateMetadata: "card-holder:base/player-scoring",
+    savedData: { owner: playerSlot.toString() },
+  });
+
+  expect(moveCardToPlayerScored.moveCard(card, playerSlot)).toBe(true);
+});
+
+it("moveCard (no card holder)", () => {
+  const moveCardToPlayerScored: MoveCardToPlayerScored =
+    new MoveCardToPlayerScored();
+  const card: Card = new MockCard();
+  const playerSlot: number = 1;
+
+  new MockCardHolder({
+    templateMetadata: "card-holder:base/player-scoring",
   });
 
   expect(moveCardToPlayerScored.moveCard(card, playerSlot)).toBe(false);
