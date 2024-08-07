@@ -1,5 +1,5 @@
 import { LayoutUnitBoxes } from "./layout-unit-boxes";
 
 it("constructor", () => {
-  new LayoutUnitBoxes();
+  new LayoutUnitBoxes(1);
 });

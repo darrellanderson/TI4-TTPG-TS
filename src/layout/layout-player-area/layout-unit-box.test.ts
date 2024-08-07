@@ -20,7 +20,7 @@ it("constructor (infantry)", () => {
     },
   });
 
-  new LayoutUnitBox("infantry");
+  new LayoutUnitBox("infantry", 1);
 });
 
 it("constructor (mech)", () => {
@@ -41,5 +41,5 @@ it("constructor (mech)", () => {
   expect(Spawn.has("unit:pok/mech")).toBe(true);
   expect(Spawn.spawn("unit:pok/mech")).toBeDefined();
 
-  new LayoutUnitBox("mech");
+  new LayoutUnitBox("mech", 1);
 });
