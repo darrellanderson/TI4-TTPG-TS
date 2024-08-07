@@ -46,7 +46,7 @@ for (const unitAttrsDataArray of Object.values(SOURCE_TO_UNIT_ATTRS_DATA)) {
     }
     seen.add(unit);
 
-    const sourceOverride: string = unit === "mech" ? "pok" : "base";
+    const source: string = unit === "mech" ? "pok" : "base";
 
     const template = JSON.parse(JSON.stringify(UNIT_TEMPLATE_DATA));
 
@@ -61,7 +61,7 @@ for (const unitAttrsDataArray of Object.values(SOURCE_TO_UNIT_ATTRS_DATA)) {
 
     template.GUID = guid;
     template.Name = `${unit}`;
-    template.Metadata = `unit:${sourceOverride}/${unit}`;
+    template.Metadata = `unit:${source}/${unit}`;
     template.Models[0].Model = `/unit/${unit}.shared.obj`;
     template.Collision[0].Model = `/unit/${unit}.col.obj`;
 

@@ -2,7 +2,7 @@
   "Type": "Container",
   "GUID": "508ED146F9E9914101424028A8296EC3",
   "Name": "space-dock",
-  "Metadata": "container.unit:pok/space-dock",
+  "Metadata": "container.unit:base/space-dock",
   "CollisionType": "Regular",
   "Friction": 0.7,
   "Restitution": 0.3,

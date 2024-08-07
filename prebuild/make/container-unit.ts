@@ -14,15 +14,15 @@ import { UnitType } from "../../src/lib/unit-lib/schema/unit-attrs-schema";
 import { CONTAINER_TEMPLATE_DATA } from "./data/container.template-data";
 
 const seen: Set<UnitType> = new Set();
-for (const [source, unitAttrsDataArray] of Object.entries(
-  SOURCE_TO_UNIT_ATTRS_DATA
-)) {
+for (const unitAttrsDataArray of Object.values(SOURCE_TO_UNIT_ATTRS_DATA)) {
   for (const unitAttrsData of unitAttrsDataArray) {
     const unit: UnitType = unitAttrsData.unit;
     if (seen.has(unit)) {
       continue;
     }
     seen.add(unit);
+
+    const source: string = unit === "mech" ? "pok" : "base";
 
     const template = JSON.parse(JSON.stringify(CONTAINER_TEMPLATE_DATA));
 

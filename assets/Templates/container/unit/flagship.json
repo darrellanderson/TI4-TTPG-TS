@@ -2,7 +2,7 @@
   "Type": "Container",
   "GUID": "5521032F6A22ED8B86C9157A1AA153A3",
   "Name": "flagship",
-  "Metadata": "container.unit:pok/flagship",
+  "Metadata": "container.unit:base/flagship",
   "CollisionType": "Regular",
   "Friction": 0.7,
   "Restitution": 0.3,

@@ -2,7 +2,7 @@
   "Type": "Container",
   "GUID": "4928F3C106C5719DDC0D88CE801458B2",
   "Name": "pds",
-  "Metadata": "container.unit:pok/pds",
+  "Metadata": "container.unit:base/pds",
   "CollisionType": "Regular",
   "Friction": 0.7,
   "Restitution": 0.3,
