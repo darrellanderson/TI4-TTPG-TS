@@ -1,7 +1,8 @@
 import { Color, Container, GameObject, world } from "@tabletop-playground/api";
-import { UnitType } from "lib/unit-lib/schema/unit-attrs-schema";
-import { UnitAttrs } from "lib/unit-lib/unit-attrs/unit-attrs";
 import { LayoutObjects, Spawn } from "ttpg-darrell";
+
+import { UnitType } from "../../lib/unit-lib/schema/unit-attrs-schema";
+import { UnitAttrs } from "../../lib/unit-lib/unit-attrs/unit-attrs";
 
 export class LayoutUnitBox extends LayoutObjects {
   constructor(unit: UnitType, playerSlot: number) {

@@ -1,45 +1,34 @@
 import { LayoutUnitBox } from "./layout-unit-box";
 
-import * as NSID_TO_TEMPLATE_ID from "../../nsid-to-template-id.json";
-import { mockWorld } from "ttpg-mock";
+import { MockGameObjectParams, mockWorld } from "ttpg-mock";
 import { Spawn } from "ttpg-darrell";
 
-it("constructor (infantry)", () => {
-  const unitTemplateId: string | undefined =
-    NSID_TO_TEMPLATE_ID["unit:base/infantry"];
-  expect(unitTemplateId).toBeDefined();
-
-  const containerTemplateId: string | undefined =
-    NSID_TO_TEMPLATE_ID["container.unit:base/infantry"];
-  expect(containerTemplateId).toBeDefined();
-
+beforeEach(() => {
+  const _templateIdToMockGameObjectParams: {
+    [k: string]: MockGameObjectParams;
+  } = {};
+  for (const nsid of Spawn.getAllNsids()) {
+    const templateId: string = Spawn.getTemplateIdOrThrow(nsid);
+    if (nsid.startsWith("unit:")) {
+      _templateIdToMockGameObjectParams[templateId] = {
+        _objType: "GameObject",
+      };
+    }
+    if (nsid.startsWith("container.unit:")) {
+      _templateIdToMockGameObjectParams[templateId] = {
+        _objType: "Container",
+      };
+    }
+  }
   mockWorld._reset({
-    _templateIdToMockGameObjectParams: {
-      [unitTemplateId]: { _objType: "GameObject" },
-      [containerTemplateId]: { _objType: "Container" },
-    },
+    _templateIdToMockGameObjectParams,
   });
+});
 
+it("constructor (infantry)", () => {
   new LayoutUnitBox("infantry", 1);
 });
 
 it("constructor (mech)", () => {
-  const unitTemplateId: string | undefined =
-    NSID_TO_TEMPLATE_ID["unit:pok/mech"];
-  expect(unitTemplateId).toBeDefined();
-
-  const containerTemplateId: string | undefined =
-    NSID_TO_TEMPLATE_ID["container.unit:pok/mech"];
-  expect(containerTemplateId).toBeDefined();
-
-  mockWorld._reset({
-    _templateIdToMockGameObjectParams: {
-      [unitTemplateId]: { _objType: "GameObject" },
-      [containerTemplateId]: { _objType: "Container" },
-    },
-  });
-  expect(Spawn.has("unit:pok/mech")).toBe(true);
-  expect(Spawn.spawn("unit:pok/mech")).toBeDefined();
-
   new LayoutUnitBox("mech", 1);
 });

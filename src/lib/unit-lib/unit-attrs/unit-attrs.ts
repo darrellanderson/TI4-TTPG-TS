@@ -1,9 +1,9 @@
 import { Color, refPackageId } from "@tabletop-playground/api";
-import { ParseColor } from "ttpg-darrell";
+import { ColorLib } from "ttpg-darrell";
 import { UnitAttrsSchemaType, UnitType } from "../schema/unit-attrs-schema";
 import { CombatAttrs } from "./combat-attrs";
 
-const _parseColor = new ParseColor();
+const _colorLib: ColorLib = new ColorLib();
 
 /**
  * Unit attributes, e.g. cost, combat stats.
@@ -78,7 +78,7 @@ export class UnitAttrs {
     this._name = params.name;
     this._unit = params.unit;
     this._componentCount = params.componentCount ?? 0;
-    this._diceColor = _parseColor.parseColor(params.diceColor ?? "");
+    this._diceColor = _colorLib.parseColor(params.diceColor ?? "");
 
     this._cost = params.cost;
     this._producePerCost = params.producePerCost ?? 1;

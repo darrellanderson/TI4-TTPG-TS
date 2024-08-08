@@ -1,6 +1,7 @@
-import { LayoutConfig } from "layout/layout-config";
-import { UnitType } from "lib/unit-lib/schema/unit-attrs-schema";
 import { LayoutObjects } from "ttpg-darrell";
+
+import { LayoutConfig } from "../layout-config";
+import { UnitType } from "../../lib/unit-lib/schema/unit-attrs-schema";
 import { LayoutUnitBox } from "./layout-unit-box";
 
 export class LayoutUnitBoxes extends LayoutObjects {

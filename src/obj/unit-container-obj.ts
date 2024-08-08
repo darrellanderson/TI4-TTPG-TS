@@ -25,7 +25,5 @@ ui.scale = 1 / SCALE;
 ui.widget = widget;
 
 const obj: GameObject = refObject;
-process.nextTick(() => {
-  widget.setTintColor(obj.getPrimaryColor());
-  obj.addUI(ui);
-});
+widget.setTintColor(obj.getPrimaryColor());
+obj.addUI(ui);
