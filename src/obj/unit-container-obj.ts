@@ -1,12 +1,14 @@
 import {
+  Color,
   GameObject,
   ImageWidget,
   refObject,
   UIElement,
   UIPresentationStyle,
   Vector,
+  world,
 } from "@tabletop-playground/api";
-import { NSID, ParsedNSID } from "ttpg-darrell";
+import { ColorLib, NSID, ParsedNSID } from "ttpg-darrell";
 
 const SCALE: number = 4;
 
@@ -24,6 +26,12 @@ ui.presentationStyle = UIPresentationStyle.ViewAligned;
 ui.scale = 1 / SCALE;
 ui.widget = widget;
 
+// Owner not set at creation time, wait a frame.
 const obj: GameObject = refObject;
-widget.setTintColor(obj.getPrimaryColor());
-obj.addUI(ui);
+process.nextTick(() => {
+  const owner: number = obj.getOwningPlayerSlot();
+  const slotColor: Color = world.getSlotColor(owner);
+  const widgetColor: Color = new ColorLib().colorToWidgetColor(slotColor);
+  widget.setTintColor(widgetColor);
+  obj.addUI(ui);
+});
