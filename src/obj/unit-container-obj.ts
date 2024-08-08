@@ -21,10 +21,18 @@ const widget: ImageWidget = new ImageWidget()
   .setImageSize(128, 128);
 
 const ui: UIElement = new UIElement();
-ui.position = new Vector(0, 0, 1.7);
+ui.position = new Vector(0, 0, -1.7);
 ui.presentationStyle = UIPresentationStyle.ViewAligned;
 ui.scale = 1 / SCALE;
 ui.widget = widget;
+
+const outline: UIElement = new UIElement();
+outline.position = ui.position;
+outline.presentationStyle = ui.presentationStyle;
+outline.scale = ui.scale;
+outline.widget = new ImageWidget()
+  .setImage(`icon/unit/${unit}-outline-only.png`)
+  .setImageSize(128, 128);
 
 // Owner not set at creation time, wait a frame.
 const obj: GameObject = refObject;
@@ -34,4 +42,5 @@ process.nextTick(() => {
   const widgetColor: Color = new ColorLib().colorToWidgetColor(slotColor);
   widget.setTintColor(widgetColor);
   obj.addUI(ui);
+  obj.addUI(outline);
 });

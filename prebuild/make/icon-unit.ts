@@ -13,7 +13,12 @@ import path from "path";
 import { SOURCE_TO_UNIT_ATTRS_DATA } from "../../src/lib/unit-lib/data/unit-attrs.data";
 import { UnitType } from "../../src/lib/unit-lib/schema/unit-attrs-schema";
 
-import { center, opaqueJpg, outlineFeathered } from "./lib/outline-mask";
+import {
+  center,
+  opaqueJpg,
+  outlineFeathered,
+  outlineOnly,
+} from "./lib/outline-mask";
 
 const units: Set<UnitType> = new Set();
 
@@ -43,6 +48,9 @@ async function processUnit(unit: UnitType) {
   // Also create an opaque version for container icons.
   await opaqueJpg(dst);
   await outlineFeathered(dst);
+
+  // Version which is only the outline.
+  await outlineOnly(dst);
 }
 
 for (const unit of units) {

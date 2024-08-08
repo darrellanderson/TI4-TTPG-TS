@@ -24,6 +24,7 @@ export class LayoutUnitBox extends LayoutObjects {
     const container: GameObject = Spawn.spawnOrThrow(containerNsid);
     container.setOwningPlayerSlot(playerSlot);
     container.setPrimaryColor(objColor);
+    container.setRotation([0, 0, 180]); // image on top, flip because using UI instead
     if (container instanceof Container) {
       for (let i = 0; i < componentCount; i++) {
         const unit: GameObject = Spawn.spawnOrThrow(unitNsid);

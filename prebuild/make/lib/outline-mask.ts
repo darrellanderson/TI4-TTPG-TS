@@ -149,3 +149,38 @@ export async function outlineFeathered(pngFilename: string) {
 
   console.log(`Created: ${dst}`);
 }
+
+export async function outlineOnly(pngFilename: string) {
+  const src: string = pngFilename;
+  const dst: string = pngFilename.replace(/.png$/, "-outline-only.png");
+  if (src === dst) {
+    throw new Error("src is dst???");
+  }
+
+  // White ship, black background.
+  const inner: Buffer = await sharp(src).extractChannel("alpha").toBuffer();
+
+  // White ship + outline, black outer background.
+  // Need two steps to remove blurred alpha.
+  const blurredInnerMask: Buffer = await sharp(inner)
+    .blur(OUTLINE_WIDTH)
+    .flatten(true)
+    .toColorspace("b-w")
+    .toBuffer();
+  const outerMask: Buffer = await sharp(blurredInnerMask)
+    .threshold(1)
+    .unflatten()
+    .negate()
+    .extractChannel("alpha")
+    .png()
+    .toBuffer();
+
+  await sharp(outerMask)
+    .unflatten()
+    .composite([{ input: pngFilename, blend: "multiply" }])
+    .negate()
+    .png()
+    .toFile(dst);
+
+  console.log(`Created: ${dst}`);
+}
