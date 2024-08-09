@@ -24,6 +24,6 @@ beforeEach(() => {
   });
 });
 
-it("constructor", () => {
-  new LayoutUnitBoxes(1);
+it("getLayout", () => {
+  new LayoutUnitBoxes(1).getLayout();
 });

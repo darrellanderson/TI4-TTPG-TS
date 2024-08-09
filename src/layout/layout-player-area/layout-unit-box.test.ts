@@ -32,3 +32,7 @@ it("constructor (infantry)", () => {
 it("constructor (mech)", () => {
   new LayoutUnitBox("mech", 1);
 });
+
+it("getLayout", () => {
+  new LayoutUnitBox("infantry", 1).getLayout();
+});

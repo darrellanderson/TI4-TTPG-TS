@@ -4,10 +4,10 @@ import { ColorLib, LayoutObjects, Spawn } from "ttpg-darrell";
 import { UnitType } from "../../lib/unit-lib/schema/unit-attrs-schema";
 import { UnitAttrs } from "../../lib/unit-lib/unit-attrs/unit-attrs";
 
-export class LayoutUnitBox extends LayoutObjects {
-  constructor(unit: UnitType, playerSlot: number) {
-    super();
+export class LayoutUnitBox {
+  private readonly _layout: LayoutObjects = new LayoutObjects();
 
+  constructor(unit: UnitType, playerSlot: number) {
     const slotColor: Color = world.getSlotColor(playerSlot);
     const objColor: Color = new ColorLib().colorToObjectColor(slotColor);
 
@@ -34,6 +34,10 @@ export class LayoutUnitBox extends LayoutObjects {
       }
     }
 
-    this.add(container);
+    this._layout.add(container);
+  }
+
+  getLayout(): LayoutObjects {
+    return this._layout;
   }
 }

@@ -2,7 +2,7 @@
 	"Type": "Generic",
 	"GUID": "D6A29419454841F196F7D8A22E7ACDFA",
 	"Name": "Leader Sheet",
-	"Metadata": "sheet:base/leader",
+	"Metadata": "sheet:pok/leader",
 	"CollisionType": "Regular",
 	"Friction": 0.7,
 	"Restitution": 0.3,
@@ -13,8 +13,8 @@
 	"PrimaryColor":
 	{
 		"R": 255,
-		"G": 255,
-		"B": 255
+		"G": 0,
+		"B": 0
 	},
 	"SecondaryColor":
 	{
