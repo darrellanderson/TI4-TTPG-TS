@@ -2,6 +2,7 @@ import { LayoutUnitBox } from "./layout-unit-box";
 
 import { MockGameObjectParams, mockWorld } from "ttpg-mock";
 import { Spawn } from "ttpg-darrell";
+import { Vector } from "@tabletop-playground/api";
 
 beforeEach(() => {
   const _templateIdToMockGameObjectParams: {
@@ -34,5 +35,7 @@ it("constructor (mech)", () => {
 });
 
 it("getLayout", () => {
-  new LayoutUnitBox("infantry", 1).getLayout();
+  const pos: Vector = new Vector(0, 0, 0);
+  const yaw: number = 0;
+  new LayoutUnitBox("infantry", 1).getLayout().doLayoutAtPoint(pos, yaw);
 });

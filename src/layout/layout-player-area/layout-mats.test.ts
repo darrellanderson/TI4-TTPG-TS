@@ -1,6 +1,7 @@
-import { MockGameObjectParams, mockWorld, Vector } from "ttpg-mock";
-import { LayoutSheets } from "./layout-sheets";
+import { MockGameObjectParams, mockWorld } from "ttpg-mock";
+import { LayoutMats } from "./layout-mats";
 import { Spawn } from "ttpg-darrell";
+import { Vector } from "@tabletop-playground/api";
 
 beforeEach(() => {
   const _templateIdToMockGameObjectParams: {
@@ -9,17 +10,17 @@ beforeEach(() => {
 
   let templateId: string;
 
-  templateId = Spawn.getTemplateIdOrThrow("sheet:pok/leader");
+  templateId = Spawn.getTemplateIdOrThrow("mat.player:base/build");
   _templateIdToMockGameObjectParams[templateId] = {
     _objType: "GameObject",
   };
 
-  templateId = Spawn.getTemplateIdOrThrow("sheet.faction:base/generic");
+  templateId = Spawn.getTemplateIdOrThrow("mat.player:base/planet");
   _templateIdToMockGameObjectParams[templateId] = {
     _objType: "GameObject",
   };
 
-  templateId = Spawn.getTemplateIdOrThrow("sheet:base/command");
+  templateId = Spawn.getTemplateIdOrThrow("mat.player:base/technology");
   _templateIdToMockGameObjectParams[templateId] = {
     _objType: "GameObject",
   };
@@ -30,8 +31,8 @@ beforeEach(() => {
 });
 
 it("getLayout", () => {
-  expect(Spawn.has("sheet:pok/leader")).toBe(true);
+  expect(Spawn.has("mat.player:base/build")).toBe(true);
   const pos: Vector = new Vector(0, 0, 0);
   const yaw: number = 0;
-  new LayoutSheets().getLayout().doLayoutAtPoint(pos, yaw);
+  new LayoutMats().getLayout().doLayoutAtPoint(pos, yaw);
 });

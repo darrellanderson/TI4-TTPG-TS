@@ -1,5 +1,8 @@
+import { Vector } from "@tabletop-playground/api";
 import { LayoutPlayerArea } from "./layout-player-area";
 
-it("constructor", () => {
-  new LayoutPlayerArea();
+it("layout", () => {
+  const pos: Vector = new Vector(0, 0, 0);
+  const yaw: number = 0;
+  new LayoutPlayerArea().getLayout().doLayoutAtPoint(pos, yaw);
 });
