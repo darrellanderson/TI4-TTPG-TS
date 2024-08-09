@@ -7,13 +7,15 @@ export class LayoutSheets {
   constructor() {
     const leaderSheet: GameObject = Spawn.spawnOrThrow("sheet:pok/leader");
     const factionSheet: GameObject = Spawn.spawnOrThrow(
-      "faction-sheet:base/generic"
+      "sheet.faction:base/generic"
     );
     const commandSheet: GameObject = Spawn.spawnOrThrow("sheet:base/command");
 
+    const leaderLayout: LayoutObjects = new LayoutObjects().add(leaderSheet);
+
     this._layout
-      .setChildDistance(-5)
-      .add(leaderSheet)
+      .setChildDistance(-6)
+      .add(leaderLayout)
       .add(factionSheet)
       .add(commandSheet);
 
