@@ -3,7 +3,7 @@
   "GUID": "6D3AC586E9AECF0A8E610EC8F883CCBB",
   "Name": "Xxcha",
   "Metadata": "sheet.faction:base/xxcha",
-  "CollisionType": "Ground",
+  "CollisionType": "Regular",
   "Friction": 0.7,
   "Restitution": 0.3,
   "Density": 1,

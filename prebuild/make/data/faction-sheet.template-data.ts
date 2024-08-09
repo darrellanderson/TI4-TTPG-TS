@@ -3,7 +3,7 @@ export const FACTION_SHEET_TEMPLATE_DATA = {
   GUID: "$",
   Name: "Faction Sheet ($)",
   Metadata: "sheet.faction:$/$",
-  CollisionType: "Ground",
+  CollisionType: "Regular",
   Friction: 0.7,
   Restitution: 0.3,
   Density: 1,

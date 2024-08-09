@@ -3,7 +3,7 @@
   "GUID": "31FA1B52C613AF68BB90D284745D3F7E",
   "Name": "Muaat",
   "Metadata": "sheet.faction:base/muaat",
-  "CollisionType": "Ground",
+  "CollisionType": "Regular",
   "Friction": 0.7,
   "Restitution": 0.3,
   "Density": 1,

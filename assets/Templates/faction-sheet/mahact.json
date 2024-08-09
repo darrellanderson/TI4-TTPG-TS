@@ -3,7 +3,7 @@
   "GUID": "6AEAD3AD63527BA64BB23E51954089C1",
   "Name": "Mahact",
   "Metadata": "sheet.faction:pok/mahact",
-  "CollisionType": "Ground",
+  "CollisionType": "Regular",
   "Friction": 0.7,
   "Restitution": 0.3,
   "Density": 1,

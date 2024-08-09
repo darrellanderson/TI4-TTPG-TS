@@ -3,7 +3,7 @@
   "GUID": "BCB8354B9AB22328285B192E49C7A923",
   "Name": "Ul",
   "Metadata": "sheet.faction:pok/ul",
-  "CollisionType": "Ground",
+  "CollisionType": "Regular",
   "Friction": 0.7,
   "Restitution": 0.3,
   "Density": 1,

@@ -3,7 +3,7 @@
   "GUID": "423E1D703A2A3DD5A5BD99C7A8B2309E",
   "Name": "N'orr",
   "Metadata": "sheet.faction:base/norr",
-  "CollisionType": "Ground",
+  "CollisionType": "Regular",
   "Friction": 0.7,
   "Restitution": 0.3,
   "Density": 1,

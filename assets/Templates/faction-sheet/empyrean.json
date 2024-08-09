@@ -3,7 +3,7 @@
   "GUID": "8654742072F222AE0F62150674B345DE",
   "Name": "Empyrean",
   "Metadata": "sheet.faction:pok/empyrean",
-  "CollisionType": "Ground",
+  "CollisionType": "Regular",
   "Friction": 0.7,
   "Restitution": 0.3,
   "Density": 1,

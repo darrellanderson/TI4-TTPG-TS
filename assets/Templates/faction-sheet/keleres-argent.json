@@ -3,7 +3,7 @@
   "GUID": "3F383778A847BA0E1911D9A3F70A3897",
   "Name": "Keleres (Argent)",
   "Metadata": "sheet.faction:codex.vigil/keleres-argent",
-  "CollisionType": "Ground",
+  "CollisionType": "Regular",
   "Friction": 0.7,
   "Restitution": 0.3,
   "Density": 1,

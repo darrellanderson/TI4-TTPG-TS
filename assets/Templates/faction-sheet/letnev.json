@@ -3,7 +3,7 @@
   "GUID": "277D97C8997C7F57839AAB6D7B3A1A02",
   "Name": "Letnev",
   "Metadata": "sheet.faction:base/letnev",
-  "CollisionType": "Ground",
+  "CollisionType": "Regular",
   "Friction": 0.7,
   "Restitution": 0.3,
   "Density": 1,

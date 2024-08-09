@@ -3,7 +3,7 @@
   "GUID": "7593C11F2339AE75FBBB14851C28BB0B",
   "Name": "Jol-Nar",
   "Metadata": "sheet.faction:base/jolnar",
-  "CollisionType": "Ground",
+  "CollisionType": "Regular",
   "Friction": 0.7,
   "Restitution": 0.3,
   "Density": 1,

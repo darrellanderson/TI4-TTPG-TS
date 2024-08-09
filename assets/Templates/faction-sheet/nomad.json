@@ -3,7 +3,7 @@
   "GUID": "5583CF64D97A2E8CB876BC0C071D7258",
   "Name": "Nomad",
   "Metadata": "sheet.faction:pok/nomad",
-  "CollisionType": "Ground",
+  "CollisionType": "Regular",
   "Friction": 0.7,
   "Restitution": 0.3,
   "Density": 1,

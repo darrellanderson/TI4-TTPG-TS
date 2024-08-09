@@ -3,7 +3,7 @@
   "GUID": "81F0959805FE7A98390607730444542F",
   "Name": "Nekro",
   "Metadata": "sheet.faction:base/nekro",
-  "CollisionType": "Ground",
+  "CollisionType": "Regular",
   "Friction": 0.7,
   "Restitution": 0.3,
   "Density": 1,

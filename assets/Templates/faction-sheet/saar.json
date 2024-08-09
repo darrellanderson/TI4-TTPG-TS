@@ -3,7 +3,7 @@
   "GUID": "49B172D9ABE3EA66A35F128F97C4CB94",
   "Name": "Saar",
   "Metadata": "sheet.faction:base/saar",
-  "CollisionType": "Ground",
+  "CollisionType": "Regular",
   "Friction": 0.7,
   "Restitution": 0.3,
   "Density": 1,

@@ -3,7 +3,7 @@
   "GUID": "8D2EF0675F2B6A6387A18B31C74E4244",
   "Name": "Argent",
   "Metadata": "sheet.faction:pok/argent",
-  "CollisionType": "Ground",
+  "CollisionType": "Regular",
   "Friction": 0.7,
   "Restitution": 0.3,
   "Density": 1,

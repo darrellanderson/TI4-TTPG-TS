@@ -3,7 +3,7 @@
   "GUID": "6CDB034E74302AFC79FE7E77405AE1F9",
   "Name": "Vuil'raith",
   "Metadata": "sheet.faction:pok/vuilraith",
-  "CollisionType": "Ground",
+  "CollisionType": "Regular",
   "Friction": 0.7,
   "Restitution": 0.3,
   "Density": 1,

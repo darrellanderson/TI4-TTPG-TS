@@ -3,7 +3,7 @@
   "GUID": "F02E537C60A2A43D52E234EDD5F28217",
   "Name": "Naalu",
   "Metadata": "sheet.faction:base/naalu",
-  "CollisionType": "Ground",
+  "CollisionType": "Regular",
   "Friction": 0.7,
   "Restitution": 0.3,
   "Density": 1,
