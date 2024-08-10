@@ -41,9 +41,6 @@ for (const unitAttrsDataArray of Object.values(SOURCE_TO_UNIT_ATTRS_DATA)) {
     template.Models[0].Texture = `icon/unit/${unit}.jpg`;
     template.Models[0].ExtraMap = `icon/unit/${unit}-mask.png`;
 
-    // "Top" has the unit icon, script attaches icon as billboard UI.
-    template.Flippable = true;
-
     templateFile = "./assets/Templates/" + templateFile;
     const templateDir = path.dirname(templateFile);
     const templateData = Buffer.from(JSON.stringify(template, null, 2));

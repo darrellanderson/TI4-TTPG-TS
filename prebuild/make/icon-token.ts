@@ -10,7 +10,7 @@
 
 import fs from "fs";
 import path from "path";
-import { opaqueJpg, outlineFeathered } from "./lib/outline-mask";
+import { opaqueJpg, outlineFeathered, outlineOnly } from "./lib/outline-mask";
 
 const TOKENS: Array<string> = ["command", "control"];
 
@@ -29,6 +29,9 @@ async function process(token: string) {
   // Also create an opaque version for container icons.
   await opaqueJpg(dst);
   await outlineFeathered(dst);
+
+  // Version which is only the outline.
+  await outlineOnly(dst);
 }
 
 for (const token of TOKENS) {

@@ -23,7 +23,7 @@
   "Flippable": true,
   "AutoStraighten": true,
   "ShouldSnap": false,
-  "ScriptName": "obj/unit-container-obj.js",
+  "ScriptName": "obj/icon-container-obj.js",
   "Blueprint": "",
   "Models": [
     {
