@@ -1,6 +1,6 @@
 import sharp, { Metadata } from "sharp";
 
-const OUTLINE_WIDTH: number = 3;
+const OUTLINE_WIDTH: number = 5;
 
 export async function center(pngFilename: string) {
   const metadata: Metadata = await sharp(pngFilename).metadata();
