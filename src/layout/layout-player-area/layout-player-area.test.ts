@@ -4,5 +4,5 @@ import { LayoutPlayerArea } from "./layout-player-area";
 it("layout", () => {
   const pos: Vector = new Vector(0, 0, 0);
   const yaw: number = 0;
-  new LayoutPlayerArea().getLayout().doLayoutAtPoint(pos, yaw);
+  new LayoutPlayerArea(1).getLayout().doLayoutAtPoint(pos, yaw);
 });
