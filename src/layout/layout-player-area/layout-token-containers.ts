@@ -15,6 +15,7 @@ export class LayoutTokenContainers {
 
     this._layout = new LayoutObjects()
       .setChildDistance(LayoutConfig.spacing)
+      .setIsVertical(true)
       .add(commandTokenContainer)
       .add(controlTokenContainer);
   }
