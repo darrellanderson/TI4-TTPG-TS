@@ -1,29 +1,9 @@
+import { Vector } from "@tabletop-playground/api";
 import { LayoutUnitBox } from "./layout-unit-box";
 
-import { MockGameObjectParams, mockWorld } from "ttpg-mock";
-import { Spawn } from "ttpg-darrell";
-import { Vector } from "@tabletop-playground/api";
-
+import { addObjectTemplatesToMockWorld } from "../../nsid/nsid-to-template-id.test";
 beforeEach(() => {
-  const _templateIdToMockGameObjectParams: {
-    [k: string]: MockGameObjectParams;
-  } = {};
-  for (const nsid of Spawn.getAllNsids()) {
-    const templateId: string = Spawn.getTemplateIdOrThrow(nsid);
-    if (nsid.startsWith("unit:")) {
-      _templateIdToMockGameObjectParams[templateId] = {
-        _objType: "GameObject",
-      };
-    }
-    if (nsid.startsWith("container.unit:")) {
-      _templateIdToMockGameObjectParams[templateId] = {
-        _objType: "Container",
-      };
-    }
-  }
-  mockWorld._reset({
-    _templateIdToMockGameObjectParams,
-  });
+  addObjectTemplatesToMockWorld();
 });
 
 it("constructor (infantry)", () => {

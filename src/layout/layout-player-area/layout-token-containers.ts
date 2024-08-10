@@ -7,10 +7,10 @@ export class LayoutTokenContainers {
 
   constructor() {
     const commandTokenContainer: GameObject = Spawn.spawnOrThrow(
-      "container.token:base/command"
+      "container.token.command:base/generic"
     );
     const controlTokenContainer: GameObject = Spawn.spawnOrThrow(
-      "container.token:base/command"
+      "container.token.control:base/generic"
     );
 
     this._layout = new LayoutObjects()

@@ -15,7 +15,7 @@ import * as path from "path";
 
 const args = {
   i: "assets/Templates",
-  o: "src/nsid-to-template-id.json",
+  o: "src/nsid/nsid-to-template-id.json",
 };
 
 async function main() {

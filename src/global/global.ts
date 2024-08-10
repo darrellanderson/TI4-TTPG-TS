@@ -23,7 +23,7 @@ import { TechRegistry } from "../lib/tech-lib/registry/tech-registry";
 import { UnitAttrsRegistry } from "../lib/unit-lib/registry/unit-attrs-registry";
 import { UnitModifierRegistry } from "../lib/unit-lib/registry/unit-modifier-registry";
 
-import * as NSID_TO_TEMPLATE_ID from "../nsid-to-template-id.json";
+import * as NSID_TO_TEMPLATE_ID from "../nsid/nsid-to-template-id.json";
 Spawn.inject(NSID_TO_TEMPLATE_ID);
 
 export function registerErrorHandler() {

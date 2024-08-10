@@ -22,7 +22,7 @@ export class LayoutPlayerArea {
     // Center top to bottom.
     const layoutSheets = new LayoutSheets();
     const layoutMats = new LayoutMats();
-    const cardHolder = Spawn.spawnOrThrow("card-holder:base/hand");
+    const cardHolder = Spawn.spawnOrThrow("card-holder:base/player-hand");
     const center = new LayoutObjects()
       .setChildDistance(LayoutConfig.spacing)
       .setIsVertical(true)

@@ -4,12 +4,17 @@ import {
   GameObject,
   LayoutBox,
   refObject,
+  Text,
+  TextJustification,
   UIElement,
   Vector,
   world,
 } from "@tabletop-playground/api";
+import { ColorLib } from "ttpg-darrell";
 
 console.log("color-thing");
+
+const CORRECT: boolean = true;
 
 for (const obj of world.getAllObjects()) {
   if (obj !== refObject) {
@@ -21,15 +26,7 @@ const templateId: string = refObject.getTemplateId();
 const z: number = world.getTableHeight() + 4;
 const allColors = [];
 for (let i = 0; i < 20; i++) {
-  let color: Color = world.getSlotColor(i);
-  if (i === -1) {
-    console.log("override color");
-    color = new Color(
-      Number.parseInt("7a", 16) / 255,
-      Number.parseInt("0", 16) / 255,
-      Number.parseInt("b2", 16) / 255
-    );
-  }
+  const color: Color = world.getSlotColor(i);
   allColors.push([
     Math.round(color.r * 255),
     Math.round(color.g * 255),
@@ -56,8 +53,27 @@ for (let i = 0; i < 20; i++) {
     ui.position = new Vector(-4, 0, 2);
     ui.widget = new Border()
       .setColor(color)
-      .setChild(new LayoutBox().setOverrideWidth(25).setOverrideHeight(25));
+      .setChild(
+        new LayoutBox()
+          .setOverrideWidth(25)
+          .setOverrideHeight(25)
+          .setChild(
+            new Text().setText("UI").setJustification(TextJustification.Center)
+          )
+      );
     obj.addUI(ui);
+
+    if (CORRECT) {
+      const colorLib: ColorLib = new ColorLib();
+
+      const objColor: Color = colorLib.colorToObjectColor(color);
+      obj.setPrimaryColor(objColor);
+
+      const widgetColor: Color = colorLib.colorToWidgetColor(color);
+      (ui.widget as Border).setColor(widgetColor);
+
+      console.log(i, color.toHex(), objColor.toHex(), widgetColor.toHex());
+    }
   }
 
   console.log("XXX");

@@ -1,28 +1,9 @@
-import { Spawn } from "ttpg-darrell";
-import { LayoutUnitBoxes } from "./layout-unit-boxes";
-import { MockGameObjectParams, mockWorld } from "ttpg-mock";
 import { Vector } from "@tabletop-playground/api";
+import { LayoutUnitBoxes } from "./layout-unit-boxes";
 
+import { addObjectTemplatesToMockWorld } from "../../nsid/nsid-to-template-id.test";
 beforeEach(() => {
-  const _templateIdToMockGameObjectParams: {
-    [k: string]: MockGameObjectParams;
-  } = {};
-  for (const nsid of Spawn.getAllNsids()) {
-    const templateId: string = Spawn.getTemplateIdOrThrow(nsid);
-    if (nsid.startsWith("unit:")) {
-      _templateIdToMockGameObjectParams[templateId] = {
-        _objType: "GameObject",
-      };
-    }
-    if (nsid.startsWith("container.unit:")) {
-      _templateIdToMockGameObjectParams[templateId] = {
-        _objType: "Container",
-      };
-    }
-  }
-  mockWorld._reset({
-    _templateIdToMockGameObjectParams,
-  });
+  addObjectTemplatesToMockWorld();
 });
 
 it("getLayout", () => {
