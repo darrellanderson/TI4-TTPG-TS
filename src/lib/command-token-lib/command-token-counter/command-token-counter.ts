@@ -63,6 +63,7 @@ export class CommandTokenCounter {
 
         // COMMAND SHEET IS NOT CENTERED AT THE REGION CENTER.
         // Get the position of the token regions center.
+        throw new Error("SHEET CENTER MOVED, TEST THIS");
         localPos.y -= 0.96;
         localPos.z = 0;
 

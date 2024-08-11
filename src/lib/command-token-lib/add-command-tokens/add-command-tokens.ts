@@ -130,6 +130,7 @@ export class AddCommandTokens {
       return false;
     }
 
+    throw new Error("SHEET CENTER MOVED, TEST THIS");
     let pos: Vector = new Vector(33, 16, 5);
     const commandTokens: Array<GameObject> = container.getItems();
     let successCount: number = 0;
