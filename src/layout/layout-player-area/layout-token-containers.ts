@@ -13,6 +13,10 @@ export class LayoutTokenContainers {
       "container.token.control:base/generic"
     );
 
+    // Image flat on top of box, flip for floating UI instead.
+    commandTokenContainer.setRotation([0, 0, 180]);
+    controlTokenContainer.setRotation([0, 0, 180]);
+
     this._layout = new LayoutObjects()
       .setChildDistance(LayoutConfig.spacing)
       .setIsVertical(true)

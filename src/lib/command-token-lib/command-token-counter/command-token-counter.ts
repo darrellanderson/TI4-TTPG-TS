@@ -13,7 +13,7 @@ export class CommandTokenCounter {
   private _find: Find = new Find();
 
   public getPlayerSlotToCommandTokenCounts(): Map<number, CommandTokenCounts> {
-    // Gather relevant objects.
+    // Gather relevant objects in a single pass.
     const commandSheets: Array<GameObject> = [];
     const commandTokens: Array<GameObject> = [];
     const skipContained = true;
@@ -27,6 +27,7 @@ export class CommandTokenCounter {
     }
 
     // Organize command sheets, create a command token allocation for each.
+    // Assumes only one command sheet per player.
     const playerSlotToCommandSheet: Map<number, GameObject> = new Map();
     for (const commandSheet of commandSheets) {
       const playerSlot: number = this._find.closestOwnedCardHolderOwner(
@@ -61,9 +62,7 @@ export class CommandTokenCounter {
         const worldPos: Vector = commandToken.getPosition();
         const localPos: Vector = commandSheet.worldPositionToLocal(worldPos);
 
-        // COMMAND SHEET IS NOT CENTERED AT THE REGION CENTER.
         // Get the position of the token regions center.
-        throw new Error("SHEET CENTER MOVED, TEST THIS");
         localPos.y -= 0.96;
         localPos.z = 0;
 
