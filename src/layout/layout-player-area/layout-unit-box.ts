@@ -1,5 +1,11 @@
-import { Color, Container, GameObject, world } from "@tabletop-playground/api";
-import { ColorLib, LayoutObjects, Spawn } from "ttpg-darrell";
+import {
+  Color,
+  Container,
+  GameObject,
+  ObjectType,
+  world,
+} from "@tabletop-playground/api";
+import { ColorLib, ColorsType, LayoutObjects, Spawn } from "ttpg-darrell";
 
 import { UnitType } from "../../lib/unit-lib/schema/unit-attrs-schema";
 import { UnitAttrs } from "../../lib/unit-lib/unit-attrs/unit-attrs";
@@ -8,8 +14,12 @@ export class LayoutUnitBox {
   private readonly _layout: LayoutObjects = new LayoutObjects();
 
   constructor(unit: UnitType, playerSlot: number) {
-    const slotColor: Color = world.getSlotColor(playerSlot);
-    const objColor: Color = new ColorLib().colorToObjectColor(slotColor);
+    const colorLib: ColorLib = new ColorLib();
+    const slotColorHex: string =
+      "#" + world.getSlotColor(playerSlot).toHex().substring(0, 6);
+    const colorsType: ColorsType =
+      colorLib.getColorsByTargetOrThrow(slotColorHex);
+    const objColor: Color = colorLib.parseColorOrThrow(colorsType.plastic);
 
     const source: string = unit === "mech" ? "pok" : "base";
     const containerNsid: string = `container.unit:${source}/${unit}`;
@@ -35,6 +45,10 @@ export class LayoutUnitBox {
     }
 
     this._layout.add(container);
+
+    this._layout.addAfterLayout(() => {
+      container.setObjectType(ObjectType.Ground);
+    });
   }
 
   getLayout(): LayoutObjects {

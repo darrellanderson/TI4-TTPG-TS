@@ -46,7 +46,7 @@
 		"liftOverRegular": true,
 		"gravityMultiplier": 1,
 		"slotIds": [
-			"00025ed2c1654b7ba9c51097e28a35c8",
+			"0002d7bd8b804990817978a0cf46dc09",
 			"",
 			"",
 			"",
@@ -75,10 +75,6 @@
 		{
 			"name": "ti4-ttpg-ts (Dev)",
 			"guid": "F5DD9DEDA6C64881A2EEBBC273224D01"
-		},
-		{
-			"name": "General",
-			"guid": "D74C7D5D6745CD565913DAA5FB3E9C93"
 		}
 	],
 	"storedCameraSetups": [ false, false, false, false, false, false, false, false, false, false ],
@@ -147,216 +143,6 @@
 	},
 	"objects": [
 		{
-			"objectType": "DynamicObject",
-			"transform":
-			{
-				"rotation":
-				{
-					"x": 2.0964735618632997e-11,
-					"y": 1.3261249135433196e-10,
-					"z": 0.00036978377812784525,
-					"w": 0.99999993162997636
-				},
-				"translation":
-				{
-					"x": 0.0022062492340531661,
-					"y": -0.0046357657893508833,
-					"z": 77.618094969022735
-				},
-				"scale3D":
-				{
-					"x": 1,
-					"y": 1,
-					"z": 1
-				}
-			},
-			"simulatingPhysics": true,
-			"primaryColor":
-			{
-				"b": 255,
-				"g": 255,
-				"r": 255,
-				"a": 255
-			},
-			"secondaryColor":
-			{
-				"b": 0,
-				"g": 0,
-				"r": 0,
-				"a": 255
-			},
-			"metallic": 0,
-			"roughness": 1,
-			"friction": 0.69999998807907104,
-			"restitution": 0.30000001192092896,
-			"density": 1,
-			"surfaceType": "SurfaceType1",
-			"objectName": "",
-			"objectDescription": "",
-			"collisionType": "CB_Regular",
-			"templateId": "C2C570021D4DB4DC9BB08FB858282161",
-			"shouldSnap": false,
-			"previousPosition":
-			{
-				"x": 0,
-				"y": 0,
-				"z": 0
-			},
-			"objectScriptPackage": "F5DD9DEDA6C64881A2EEBBC273224D01",
-			"objectScriptName": "",
-			"persistentData": "",
-			"persistentKeyData":
-			{
-			},
-			"uniqueId": "0tq",
-			"drawingLines": [],
-			"objectTags": [],
-			"objectGroupId": -1,
-			"ownerIndex": -1,
-			"lightsOn": true,
-			"bCanBeDamaged": false
-		},
-		{
-			"objectType": "DynamicObject",
-			"transform":
-			{
-				"rotation":
-				{
-					"x": -1.9640090366795618e-09,
-					"y": 2.861046806546266e-09,
-					"z": -2.2505517498292979e-05,
-					"w": 0.9999999997467508
-				},
-				"translation":
-				{
-					"x": -0.26476752258671266,
-					"y": 23.131325563682591,
-					"z": 77.618094946591043
-				},
-				"scale3D":
-				{
-					"x": 1,
-					"y": 1,
-					"z": 1
-				}
-			},
-			"simulatingPhysics": true,
-			"primaryColor":
-			{
-				"b": 255,
-				"g": 255,
-				"r": 255,
-				"a": 255
-			},
-			"secondaryColor":
-			{
-				"b": 0,
-				"g": 0,
-				"r": 0,
-				"a": 255
-			},
-			"metallic": 0,
-			"roughness": 1,
-			"friction": 0.69999998807907104,
-			"restitution": 0.30000001192092896,
-			"density": 1,
-			"surfaceType": "SurfaceType1",
-			"objectName": "",
-			"objectDescription": "",
-			"collisionType": "CB_Regular",
-			"templateId": "C2C570021D4DB4DC9BB08FB858282161",
-			"shouldSnap": false,
-			"previousPosition":
-			{
-				"x": 0,
-				"y": 0,
-				"z": 0
-			},
-			"objectScriptPackage": "F5DD9DEDA6C64881A2EEBBC273224D01",
-			"objectScriptName": "",
-			"persistentData": "",
-			"persistentKeyData":
-			{
-			},
-			"uniqueId": "kb3",
-			"drawingLines": [],
-			"objectTags": [],
-			"objectGroupId": -1,
-			"ownerIndex": -1,
-			"lightsOn": true,
-			"bCanBeDamaged": false
-		},
-		{
-			"objectType": "DynamicObject",
-			"transform":
-			{
-				"rotation":
-				{
-					"x": 3.4838492411264273e-09,
-					"y": 4.7126711302904929e-09,
-					"z": 2.0681961921423351e-05,
-					"w": 0.99999999978612819
-				},
-				"translation":
-				{
-					"x": -7.5057627488521419,
-					"y": 13.000394400691281,
-					"z": 77.618094959483287
-				},
-				"scale3D":
-				{
-					"x": 1,
-					"y": 1,
-					"z": 1
-				}
-			},
-			"simulatingPhysics": true,
-			"primaryColor":
-			{
-				"b": 255,
-				"g": 255,
-				"r": 255,
-				"a": 255
-			},
-			"secondaryColor":
-			{
-				"b": 0,
-				"g": 0,
-				"r": 0,
-				"a": 255
-			},
-			"metallic": 0,
-			"roughness": 1,
-			"friction": 0.69999998807907104,
-			"restitution": 0.30000001192092896,
-			"density": 1,
-			"surfaceType": "SurfaceType1",
-			"objectName": "",
-			"objectDescription": "",
-			"collisionType": "CB_Regular",
-			"templateId": "C2C570021D4DB4DC9BB08FB858282161",
-			"shouldSnap": false,
-			"previousPosition":
-			{
-				"x": 0,
-				"y": 0,
-				"z": 0
-			},
-			"objectScriptPackage": "F5DD9DEDA6C64881A2EEBBC273224D01",
-			"objectScriptName": "",
-			"persistentData": "",
-			"persistentKeyData":
-			{
-			},
-			"uniqueId": "cj6",
-			"drawingLines": [],
-			"objectTags": [],
-			"objectGroupId": -1,
-			"ownerIndex": -1,
-			"lightsOn": true,
-			"bCanBeDamaged": false
-		},
-		{
 			"objectType": "Table",
 			"transform":
 			{
@@ -400,25 +186,25 @@
 			"friction": 0.69999998807907104,
 			"restitution": 0.30000001192092896,
 			"density": 1,
-			"surfaceType": "SurfaceType1",
+			"surfaceType": "SurfaceType5",
 			"objectName": "",
 			"objectDescription": "",
 			"collisionType": "CB_Static",
-			"templateId": "8AE07E7B48579A67325DB28ABC2CB7F4",
-			"shouldSnap": true,
+			"templateId": "868B3EDB1B44338A963BAFB126DFB3C4",
+			"shouldSnap": false,
 			"previousPosition":
 			{
 				"x": 0,
 				"y": 0,
 				"z": 0
 			},
-			"objectScriptPackage": "D74C7D5D6745CD565913DAA5FB3E9C93",
+			"objectScriptPackage": "F5DD9DEDA6C64881A2EEBBC273224D01",
 			"objectScriptName": "",
 			"persistentData": "",
 			"persistentKeyData":
 			{
 			},
-			"uniqueId": "96j",
+			"uniqueId": "dgo",
 			"drawingLines": [],
 			"objectTags": [],
 			"objectGroupId": -1,

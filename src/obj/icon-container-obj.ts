@@ -8,7 +8,7 @@ import {
   Vector,
   world,
 } from "@tabletop-playground/api";
-import { ColorLib, NSID, ParsedNSID } from "ttpg-darrell";
+import { ColorLib, ColorsType, NSID, ParsedNSID } from "ttpg-darrell";
 
 const SCALE: number = 4;
 
@@ -51,8 +51,12 @@ const obj: GameObject = refObject;
 process.nextTick(() => {
   const owner: number = obj.getOwningPlayerSlot();
   if (owner >= 0) {
-    const slotColor: Color = world.getSlotColor(owner);
-    const widgetColor: Color = new ColorLib().colorToWidgetColor(slotColor);
+    const colorLib: ColorLib = new ColorLib();
+    const slotColorHex: string =
+      "#" + world.getSlotColor(owner).toHex().substring(0, 6);
+    const colorsType: ColorsType =
+      colorLib.getColorsByTargetOrThrow(slotColorHex);
+    const widgetColor: Color = colorLib.parseColorOrThrow(colorsType.plastic);
     widget.setTintColor(widgetColor);
   }
   obj.addUI(ui);

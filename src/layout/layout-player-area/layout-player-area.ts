@@ -1,4 +1,8 @@
-import { GameObject, VerticalAlignment } from "@tabletop-playground/api";
+import {
+  GameObject,
+  ObjectType,
+  VerticalAlignment,
+} from "@tabletop-playground/api";
 import { LayoutObjects, Spawn } from "ttpg-darrell";
 
 import { LayoutConfig } from "../layout-config";
@@ -42,6 +46,10 @@ export class LayoutPlayerArea {
       .add(cardHolder);
 
     this._layout.add(layoutUnitBoxes).add(center);
+
+    this._layout.addAfterLayout(() => {
+      cardHolder.setObjectType(ObjectType.Ground);
+    });
   }
 
   getLayout(): LayoutObjects {

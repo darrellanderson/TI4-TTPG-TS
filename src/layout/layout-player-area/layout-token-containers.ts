@@ -1,4 +1,4 @@
-import { GameObject } from "@tabletop-playground/api";
+import { GameObject, ObjectType } from "@tabletop-playground/api";
 import { LayoutConfig } from "../layout-config";
 import { LayoutObjects, Spawn } from "ttpg-darrell";
 
@@ -22,6 +22,11 @@ export class LayoutTokenContainers {
       .setIsVertical(true)
       .add(commandTokenContainer)
       .add(controlTokenContainer);
+
+    this._layout.addAfterLayout(() => {
+      commandTokenContainer.setObjectType(ObjectType.Ground);
+      controlTokenContainer.setObjectType(ObjectType.Ground);
+    });
   }
 
   getLayout(): LayoutObjects {

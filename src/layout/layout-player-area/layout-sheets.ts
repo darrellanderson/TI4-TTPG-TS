@@ -1,4 +1,4 @@
-import { GameObject, Vector } from "@tabletop-playground/api";
+import { GameObject, ObjectType, Vector } from "@tabletop-playground/api";
 import { LayoutObjects, Spawn } from "ttpg-darrell";
 
 export class LayoutSheets {
@@ -23,7 +23,14 @@ export class LayoutSheets {
       const pos: Vector = factionSheet.getPosition();
       const above: Vector = pos.add(new Vector(0, 0, 1));
       factionSheet.setPosition(above);
+
+      leaderSheet.snapToGround();
       factionSheet.snapToGround();
+      commandSheet.snapToGround();
+
+      leaderSheet.setObjectType(ObjectType.Ground);
+      factionSheet.setObjectType(ObjectType.Ground);
+      commandSheet.setObjectType(ObjectType.Ground);
     });
   }
 

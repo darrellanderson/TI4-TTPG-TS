@@ -1,4 +1,8 @@
-import { VerticalAlignment } from "@tabletop-playground/api";
+import {
+  GameObject,
+  ObjectType,
+  VerticalAlignment,
+} from "@tabletop-playground/api";
 import { LayoutObjects, Spawn } from "ttpg-darrell";
 
 import { LayoutConfig } from "../layout-config";
@@ -7,12 +11,24 @@ export class LayoutMats {
   private readonly _layout: LayoutObjects;
 
   constructor() {
+    const buildMat: GameObject = Spawn.spawnOrThrow("mat.player:base/build");
+    const planetMat: GameObject = Spawn.spawnOrThrow("mat.player:base/planet");
+    const techMat: GameObject = Spawn.spawnOrThrow(
+      "mat.player:base/technology"
+    );
+
     this._layout = new LayoutObjects()
       .setChildDistance(LayoutConfig.spacing)
       .setVerticalAlignment(VerticalAlignment.Top)
-      .add(Spawn.spawnOrThrow("mat.player:base/build"))
-      .add(Spawn.spawnOrThrow("mat.player:base/planet"))
-      .add(Spawn.spawnOrThrow("mat.player:base/technology"));
+      .add(buildMat)
+      .add(planetMat)
+      .add(techMat);
+
+    this._layout.addAfterLayout(() => {
+      buildMat.setObjectType(ObjectType.Ground);
+      planetMat.setObjectType(ObjectType.Ground);
+      techMat.setObjectType(ObjectType.Ground);
+    });
   }
 
   getLayout(): LayoutObjects {
