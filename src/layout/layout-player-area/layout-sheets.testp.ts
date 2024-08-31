@@ -9,4 +9,4 @@ for (const obj of world.getAllObjects(true)) {
 const z: number = world.getTableHeight();
 const pos: Vector = new Vector(0, 0, z + 3);
 const yaw: number = 0;
-new LayoutSheets().getLayout().doLayoutAtPoint(pos, yaw);
+new LayoutSheets(1).getLayout().doLayoutAtPoint(pos, yaw);

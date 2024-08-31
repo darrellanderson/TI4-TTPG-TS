@@ -1,15 +1,30 @@
-import { GameObject, ObjectType, Vector } from "@tabletop-playground/api";
-import { LayoutObjects, Spawn } from "ttpg-darrell";
+import {
+  Color,
+  GameObject,
+  ObjectType,
+  Vector,
+} from "@tabletop-playground/api";
+import { ColorLib, ColorsType, LayoutObjects, Spawn } from "ttpg-darrell";
 
 export class LayoutSheets {
   private readonly _layout: LayoutObjects = new LayoutObjects();
 
-  constructor() {
+  constructor(playerSlot: number) {
+    const colorLib: ColorLib = new ColorLib();
+    const colorsType: ColorsType =
+      colorLib.getColorsByPlayerSlotOrThrow(playerSlot);
+    const objColor: Color = colorLib.parseColorOrThrow(colorsType.plastic);
+
     const leaderSheet: GameObject = Spawn.spawnOrThrow("sheet:pok/leader");
     const factionSheet: GameObject = Spawn.spawnOrThrow(
       "sheet.faction:base/generic"
     );
     const commandSheet: GameObject = Spawn.spawnOrThrow("sheet:base/command");
+
+    leaderSheet.setOwningPlayerSlot(playerSlot);
+    leaderSheet.setPrimaryColor(objColor);
+    commandSheet.setOwningPlayerSlot(playerSlot);
+    commandSheet.setPrimaryColor(objColor);
 
     const leaderLayout: LayoutObjects = new LayoutObjects().add(leaderSheet);
 

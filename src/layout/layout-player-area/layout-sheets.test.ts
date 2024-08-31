@@ -9,5 +9,5 @@ beforeEach(() => {
 it("getLayout", () => {
   const pos: Vector = new Vector(0, 0, 0);
   const yaw: number = 0;
-  new LayoutSheets().getLayout().doLayoutAtPoint(pos, yaw);
+  new LayoutSheets(1).getLayout().doLayoutAtPoint(pos, yaw);
 });

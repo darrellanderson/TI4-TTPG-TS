@@ -9,5 +9,5 @@ beforeEach(() => {
 it("layout", () => {
   const pos: Vector = new Vector(0, 0, 0);
   const yaw: number = 0;
-  new LayoutTokenContainers().getLayout().doLayoutAtPoint(pos, yaw);
+  new LayoutTokenContainers(1).getLayout().doLayoutAtPoint(pos, yaw);
 });

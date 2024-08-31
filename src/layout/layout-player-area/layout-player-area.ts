@@ -25,9 +25,12 @@ export class LayoutPlayerArea {
     ).getLayout();
 
     // Center top to bottom.
-    const layoutSheets: LayoutObjects = new LayoutSheets().getLayout();
-    const layoutTokenContainers: LayoutObjects =
-      new LayoutTokenContainers().getLayout();
+    const layoutSheets: LayoutObjects = new LayoutSheets(
+      playerSlot
+    ).getLayout();
+    const layoutTokenContainers: LayoutObjects = new LayoutTokenContainers(
+      playerSlot
+    ).getLayout();
     const layoutSheetsAndTokenContainers: LayoutObjects = new LayoutObjects()
       .setChildDistance(LayoutConfig.spacingWide)
       .add(layoutSheets)

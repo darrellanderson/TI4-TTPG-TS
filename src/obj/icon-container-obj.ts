@@ -6,7 +6,6 @@ import {
   UIElement,
   UIPresentationStyle,
   Vector,
-  world,
 } from "@tabletop-playground/api";
 import { ColorLib, ColorsType, NSID, ParsedNSID } from "ttpg-darrell";
 
@@ -52,10 +51,7 @@ process.nextTick(() => {
   const owner: number = obj.getOwningPlayerSlot();
   if (owner >= 0) {
     const colorLib: ColorLib = new ColorLib();
-    const slotColorHex: string =
-      "#" + world.getSlotColor(owner).toHex().substring(0, 6);
-    const colorsType: ColorsType =
-      colorLib.getColorsByTargetOrThrow(slotColorHex);
+    const colorsType: ColorsType = colorLib.getColorsByPlayerSlotOrThrow(owner);
     const widgetColor: Color = colorLib.parseColorOrThrow(colorsType.plastic);
     widget.setTintColor(widgetColor);
   }

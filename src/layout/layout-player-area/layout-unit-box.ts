@@ -3,7 +3,6 @@ import {
   Container,
   GameObject,
   ObjectType,
-  world,
 } from "@tabletop-playground/api";
 import { ColorLib, ColorsType, LayoutObjects, Spawn } from "ttpg-darrell";
 
@@ -15,10 +14,8 @@ export class LayoutUnitBox {
 
   constructor(unit: UnitType, playerSlot: number) {
     const colorLib: ColorLib = new ColorLib();
-    const slotColorHex: string =
-      "#" + world.getSlotColor(playerSlot).toHex().substring(0, 6);
     const colorsType: ColorsType =
-      colorLib.getColorsByTargetOrThrow(slotColorHex);
+      colorLib.getColorsByPlayerSlotOrThrow(playerSlot);
     const objColor: Color = colorLib.parseColorOrThrow(colorsType.plastic);
 
     const source: string = unit === "mech" ? "pok" : "base";
