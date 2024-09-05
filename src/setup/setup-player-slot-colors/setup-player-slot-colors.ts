@@ -1,16 +1,17 @@
 import { Color, world } from "@tabletop-playground/api";
-import { ColorLib } from "ttpg-darrell";
+import { ColorLib, ColorsType } from "ttpg-darrell";
 
 /**
- * Player color names in seat order, lower-right then clockwise.
+ * Player color names in seat order, top-left to top-right
+ * then bottom-left to bottom-right.
  */
 export const ALL_PLAYER_COLOR_NAMES: Array<string> = [
-  "white",
-  "blue",
-  "purple",
   "green",
   "red",
   "yellow",
+  "purple",
+  "blue",
+  "white",
   "orange",
   "pink",
 ];
@@ -76,6 +77,8 @@ export class SetupPlayerSlotColors {
       (slot) => !origColorSlots.includes(slot)
     );
 
+    // Swap so the player colors are assigned to the player slots.
+    // This does NOT set them in the correct order, do that next.
     const colorLib: ColorLib = new ColorLib();
     for (let i = 0; i < reassignSlots.length; i++) {
       const oldSlot: number | undefined = reassignSlots[i];
@@ -89,6 +92,20 @@ export class SetupPlayerSlotColors {
           world.setSlotColor(newSlot, oldColor);
           world.setSlotColor(oldSlot, newColor);
         }
+      }
+    }
+
+    for (let i = 0; i < ALL_PLAYER_COLOR_NAMES.length; i++) {
+      const colorName: string | undefined = ALL_PLAYER_COLOR_NAMES[i];
+      if (colorName !== undefined) {
+        const colorsType: ColorsType = colorLib.getColorsByNameOrThrow(
+          colorName,
+          0
+        );
+        const colorHex: string = colorsType.slot;
+        const color: Color = colorLib.parseColorOrThrow(colorHex);
+        const slot: number = 10 + i;
+        world.setSlotColor(slot, color);
       }
     }
   }

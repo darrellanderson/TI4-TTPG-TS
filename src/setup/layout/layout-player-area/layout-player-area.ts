@@ -1,7 +1,10 @@
 import {
+  CardHolder,
   GameObject,
   ObjectType,
+  Player,
   VerticalAlignment,
+  world,
 } from "@tabletop-playground/api";
 import { LayoutObjects, Spawn } from "ttpg-darrell";
 
@@ -40,6 +43,7 @@ export class LayoutPlayerArea {
     const cardHolder: GameObject = Spawn.spawnOrThrow(
       "card-holder:base/player-hand"
     );
+    cardHolder.setOwningPlayerSlot(playerSlot);
 
     const center: LayoutObjects = new LayoutObjects()
       .setChildDistance(LayoutConfig.spacingWide)
@@ -52,6 +56,11 @@ export class LayoutPlayerArea {
 
     this._layout.addAfterLayout(() => {
       cardHolder.setObjectType(ObjectType.Ground);
+
+      const player: Player | undefined = world.getPlayerBySlot(playerSlot);
+      if (player && cardHolder instanceof CardHolder) {
+        player.setHandHolder(cardHolder);
+      }
     });
   }
 
