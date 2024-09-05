@@ -2,7 +2,7 @@ import { VerticalAlignment } from "@tabletop-playground/api";
 import { LayoutObjects } from "ttpg-darrell";
 
 import { LayoutPlayerArea } from "./layout-player-area";
-import { LayoutConfig } from "layout/layout-config";
+import { LayoutConfig } from "../layout-config";
 
 export class LayoutPlayerAreas {
   private readonly _layout: LayoutObjects;
