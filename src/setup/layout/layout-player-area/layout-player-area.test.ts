@@ -1,7 +1,7 @@
 import { Vector } from "@tabletop-playground/api";
 import { LayoutPlayerArea } from "./layout-player-area";
 
-import { addObjectTemplatesToMockWorld } from "../../nsid/nsid-to-template-id.test";
+import { addObjectTemplatesToMockWorld } from "../../../nsid/nsid-to-template-id.test";
 beforeEach(() => {
   addObjectTemplatesToMockWorld();
 });

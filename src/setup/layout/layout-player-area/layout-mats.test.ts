@@ -1,7 +1,7 @@
 import { LayoutMats } from "./layout-mats";
 import { Vector } from "@tabletop-playground/api";
 
-import { addObjectTemplatesToMockWorld } from "../../nsid/nsid-to-template-id.test";
+import { addObjectTemplatesToMockWorld } from "../../../nsid/nsid-to-template-id.test";
 beforeEach(() => {
   addObjectTemplatesToMockWorld();
 });

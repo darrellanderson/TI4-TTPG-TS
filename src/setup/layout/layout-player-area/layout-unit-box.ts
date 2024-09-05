@@ -6,8 +6,8 @@ import {
 } from "@tabletop-playground/api";
 import { ColorLib, ColorsType, LayoutObjects, Spawn } from "ttpg-darrell";
 
-import { UnitType } from "../../lib/unit-lib/schema/unit-attrs-schema";
-import { UnitAttrs } from "../../lib/unit-lib/unit-attrs/unit-attrs";
+import { UnitType } from "../../../lib/unit-lib/schema/unit-attrs-schema";
+import { UnitAttrs } from "../../../lib/unit-lib/unit-attrs/unit-attrs";
 
 export class LayoutUnitBox {
   private readonly _layout: LayoutObjects = new LayoutObjects();
