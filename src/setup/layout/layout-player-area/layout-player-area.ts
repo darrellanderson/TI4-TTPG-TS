@@ -1,8 +1,10 @@
 import {
   CardHolder,
+  DrawingLine,
   GameObject,
   ObjectType,
   Player,
+  Vector,
   VerticalAlignment,
   world,
 } from "@tabletop-playground/api";
@@ -61,6 +63,21 @@ export class LayoutPlayerArea {
       if (player && cardHolder instanceof CardHolder) {
         player.setHandHolder(cardHolder);
       }
+    });
+
+    this._layout.addAfterLayout(() => {
+      const center: Vector = this._layout.getCenter();
+      const wh: { w: number; h: number } = this._layout.calculateSize();
+      const extent: Vector = new Vector(wh.h, wh.w, 0).multiply(0.5);
+      const topLeft: Vector = center.subtract(extent);
+      const topRight: Vector = center.add(new Vector(extent.x, -extent.y, 0));
+      const botRight: Vector = center.add(extent);
+      const botLeft: Vector = center.add(new Vector(-extent.x, extent.y, 0));
+
+      const line: DrawingLine = new DrawingLine();
+      line.points = [topLeft, topRight, botRight, botLeft, topLeft];
+      line.thickness = 1;
+      world.addDrawingLine(line);
     });
   }
 
