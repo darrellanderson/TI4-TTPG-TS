@@ -13,7 +13,7 @@ export class LayoutPlayerAreas {
       .setIsVertical(false)
       .setVerticalAlignment(VerticalAlignment.Bottom);
 
-    const middle: LayoutObjects = new LayoutObjects().setOverrideHeight(100);
+    const middle: LayoutObjects = new LayoutObjects().setOverrideHeight(0);
 
     const bottom: LayoutObjects = new LayoutObjects()
       .setChildDistance(LayoutConfig.spacingExtraWide)

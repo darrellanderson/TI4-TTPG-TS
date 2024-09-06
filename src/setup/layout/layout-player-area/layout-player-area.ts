@@ -22,7 +22,8 @@ export class LayoutPlayerArea {
   constructor(playerSlot: number) {
     this._layout = new LayoutObjects()
       .setChildDistance(LayoutConfig.spacingWide)
-      .setVerticalAlignment(VerticalAlignment.Top);
+      .setVerticalAlignment(VerticalAlignment.Top)
+      .setPadding(6);
 
     // Left.
     const layoutUnitBoxes: LayoutObjects = new LayoutUnitBoxes(
@@ -66,7 +67,16 @@ export class LayoutPlayerArea {
     });
 
     this._layout.addAfterLayout(() => {
+      const lineTag: string = "player-area-" + playerSlot;
+
+      for (const line of world.getDrawingLines()) {
+        if (line.tag === lineTag) {
+          world.removeDrawingLineObject(line);
+        }
+      }
+
       const center: Vector = this._layout.getCenter();
+      center.z = world.getTableHeight() + 0.01;
       const wh: { w: number; h: number } = this._layout.calculateSize();
       const extent: Vector = new Vector(wh.h, wh.w, 0).multiply(0.5);
       const topLeft: Vector = center.subtract(extent);
@@ -77,6 +87,8 @@ export class LayoutPlayerArea {
       const line: DrawingLine = new DrawingLine();
       line.points = [topLeft, topRight, botRight, botLeft, topLeft];
       line.thickness = 1;
+      line.color = world.getSlotColor(playerSlot);
+      line.tag = lineTag;
       world.addDrawingLine(line);
     });
   }
