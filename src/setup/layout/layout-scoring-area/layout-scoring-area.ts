@@ -1,0 +1,25 @@
+import { LayoutObjects } from "ttpg-darrell";
+import { LayoutConfig } from "../layout-config";
+import { LayoutObjectives } from "./layout-objectives";
+import { LayoutPlayerSecrets } from "./layout-player-secrets";
+
+export class LayoutScoringArea {
+  private readonly _layout: LayoutObjects;
+
+  constructor(playerCount: number) {
+    const layoutObjectives: LayoutObjectives = new LayoutObjectives();
+    const layoutPlayerSecrets: LayoutPlayerSecrets = new LayoutPlayerSecrets(
+      playerCount
+    );
+
+    this._layout = new LayoutObjects()
+      .setChildDistance(LayoutConfig.spacingWide)
+      .setIsVertical(true)
+      .add(layoutObjectives.getLayout())
+      .add(layoutPlayerSecrets.getLayout());
+  }
+
+  getLayout(): LayoutObjects {
+    return this._layout;
+  }
+}
