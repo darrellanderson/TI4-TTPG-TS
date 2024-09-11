@@ -1,167 +1,178 @@
 {
-  "Type": "Generic",
-  "GUID": "4C0919205F49EA482B06719B3330CF77",
-  "Name": "Strategy Card Mat",
-  "Metadata": "mat:base/strategy-card",
-  "CollisionType": "Ground",
-  "Friction": 0.7,
-  "Restitution": 0.3,
-  "Density": 1,
-  "SurfaceType": "Cardboard",
-  "Roughness": 1,
-  "Metallic": 0,
-  "PrimaryColor": {
-    "R": 255,
-    "G": 255,
-    "B": 255
-  },
-  "SecondaryColor": {
-    "R": 0,
-    "G": 0,
-    "B": 0
-  },
-  "Flippable": false,
-  "AutoStraighten": false,
-  "ShouldSnap": false,
-  "ScriptName": "",
-  "Blueprint": "",
-  "Models": [
-    {
-      "Model": "mat/strategy-card-mat.obj",
-      "Offset": {
-        "X": 0,
-        "Y": 0,
-        "Z": 0
-      },
-      "Scale": {
-        "X": 1.9802,
-        "Y": 1.9803,
-        "Z": 1.23762
-      },
-      "Rotation": {
-        "X": 0,
-        "Y": 0,
-        "Z": 0
-      },
-      "Texture": "mat/merged.jpg",
-      "NormalMap": "",
-      "ExtraMap": "",
-      "ExtraMap2": "",
-      "IsTransparent": false,
-      "CastShadow": true,
-      "IsTwoSided": false,
-      "UseOverrides": true,
-      "SurfaceType": "Plastic"
-    }
-  ],
-  "Collision": [
-    {
-      "Model": "mat/strategy-card-mat.col.obj",
-      "Offset": {
-        "X": 0,
-        "Y": 0,
-        "Z": 0
-      },
-      "Scale": {
-        "X": 1.9802,
-        "Y": 1.9803,
-        "Z": 1.23762
-      },
-      "Rotation": {
-        "X": 0,
-        "Y": 0,
-        "Z": 0
-      },
-      "Type": "Convex"
-    }
-  ],
-  "SnapPointsGlobal": false,
-  "SnapPoints": [
-    {
-      "X": 16.92,
-      "Y": -10.4,
-      "Z": 0,
-      "Range": 3,
-      "SnapRotation": 2,
-      "RotationOffset": 15.2,
-      "Shape": 0,
-      "FlipValidity": 0
-    },
-    {
-      "X": 13.52,
-      "Y": -4.79,
-      "Z": 0,
-      "Range": 3,
-      "SnapRotation": 2,
-      "RotationOffset": 36.2,
-      "Shape": 0,
-      "FlipValidity": 0
-    },
-    {
-      "X": 8.41,
-      "Y": -0.73,
-      "Z": 0,
-      "Range": 3,
-      "SnapRotation": 2,
-      "RotationOffset": 56.8,
-      "Shape": 0,
-      "FlipValidity": 0
-    },
-    {
-      "X": 2.21,
-      "Y": 1.24,
-      "Z": 0,
-      "Range": 3,
-      "SnapRotation": 2,
-      "RotationOffset": 77.1,
-      "Shape": 0,
-      "FlipValidity": 0
-    },
-    {
-      "X": -4.26,
-      "Y": 0.91,
-      "Z": 0,
-      "Range": 3,
-      "SnapRotation": 2,
-      "RotationOffset": 97.4,
-      "Shape": 0,
-      "FlipValidity": 0
-    },
-    {
-      "X": -10.24,
-      "Y": -1.67,
-      "Z": 0,
-      "Range": 3,
-      "SnapRotation": 2,
-      "RotationOffset": 117.8,
-      "Shape": 0,
-      "FlipValidity": 0
-    },
-    {
-      "X": -14.96,
-      "Y": -6.2,
-      "Z": 0,
-      "Range": 3,
-      "SnapRotation": 2,
-      "RotationOffset": 138.7,
-      "Shape": 0,
-      "FlipValidity": 0
-    },
-    {
-      "X": -17.7,
-      "Y": -12.1,
-      "Z": 0,
-      "Range": 3,
-      "SnapRotation": 2,
-      "RotationOffset": 160.1,
-      "Shape": 0,
-      "FlipValidity": 0
-    }
-  ],
-  "ZoomViewDirection": {
-    "X": 0,
-    "Y": 0,
-    "Z": 0
-  },
-  "Tags": []
+	"Type": "Generic",
+	"GUID": "4C0919205F49EA482B06719B3330CF77",
+	"Name": "Strategy Card Mat",
+	"Metadata": "mat:base/strategy-card",
+	"CollisionType": "Ground",
+	"Friction": 0.7,
+	"Restitution": 0.3,
+	"Density": 1,
+	"SurfaceType": "Cardboard",
+	"Roughness": 1,
+	"Metallic": 0,
+	"PrimaryColor":
+	{
+		"R": 255,
+		"G": 255,
+		"B": 255
+	},
+	"SecondaryColor":
+	{
+		"R": 0,
+		"G": 0,
+		"B": 0
+	},
+	"Flippable": false,
+	"AutoStraighten": false,
+	"ShouldSnap": false,
+	"ScriptName": "",
+	"Blueprint": "",
+	"Models": [
+		{
+			"Model": "mat/strategy-card-mat.obj",
+			"Offset":
+			{
+				"X": 0,
+				"Y": 0,
+				"Z": 0
+			},
+			"Scale":
+			{
+				"X": 1.9802,
+				"Y": 1.9802999999999999,
+				"Z": 1.2376199999999999
+			},
+			"Rotation":
+			{
+				"X": -0,
+				"Y": 0,
+				"Z": 0
+			},
+			"Texture": "mat/merged.jpg",
+			"NormalMap": "",
+			"ExtraMap": "",
+			"ExtraMap2": "",
+			"IsTransparent": false,
+			"CastShadow": true,
+			"IsTwoSided": false,
+			"UseOverrides": true,
+			"SurfaceType": "Plastic"
+		}
+	],
+	"Collision": [
+		{
+			"Model": "mat/strategy-card-mat.col.obj",
+			"Offset":
+			{
+				"X": 0,
+				"Y": 0,
+				"Z": 0
+			},
+			"Scale":
+			{
+				"X": 1.9802,
+				"Y": 1.9802999999999999,
+				"Z": 1.2376199999999999
+			},
+			"Rotation":
+			{
+				"X": -0,
+				"Y": 0,
+				"Z": 0
+			},
+			"Type": "Convex"
+		}
+	],
+	"Lights": [],
+	"SnapPointsGlobal": false,
+	"SnapPoints": [
+		{
+			"X": 16.920000000000002,
+			"Y": -10.4,
+			"Z": 0,
+			"Range": 3,
+			"SnapRotation": 2,
+			"RotationOffset": 15.2,
+			"Shape": 0,
+			"FlipValidity": 0
+		},
+		{
+			"X": 13.52,
+			"Y": -4.79,
+			"Z": 0,
+			"Range": 3,
+			"SnapRotation": 2,
+			"RotationOffset": 36.2,
+			"Shape": 0,
+			"FlipValidity": 0
+		},
+		{
+			"X": 8.4100000000000001,
+			"Y": -0.72999999999999998,
+			"Z": 0,
+			"Range": 3,
+			"SnapRotation": 2,
+			"RotationOffset": 56.8,
+			"Shape": 0,
+			"FlipValidity": 0
+		},
+		{
+			"X": 2.21,
+			"Y": 1.24,
+			"Z": 0,
+			"Range": 3,
+			"SnapRotation": 2,
+			"RotationOffset": 77.1,
+			"Shape": 0,
+			"FlipValidity": 0
+		},
+		{
+			"X": -4.2599999999999998,
+			"Y": 0.91000000000000003,
+			"Z": 0,
+			"Range": 3,
+			"SnapRotation": 2,
+			"RotationOffset": 97.4,
+			"Shape": 0,
+			"FlipValidity": 0
+		},
+		{
+			"X": -10.24,
+			"Y": -1.6699999999999999,
+			"Z": 0,
+			"Range": 3,
+			"SnapRotation": 2,
+			"RotationOffset": 117.8,
+			"Shape": 0,
+			"FlipValidity": 0
+		},
+		{
+			"X": -14.960000000000001,
+			"Y": -6.2000000000000002,
+			"Z": 0,
+			"Range": 3,
+			"SnapRotation": 2,
+			"RotationOffset": 138.7,
+			"Shape": 0,
+			"FlipValidity": 0
+		},
+		{
+			"X": -17.699999999999999,
+			"Y": -12.1,
+			"Z": 0,
+			"Range": 3,
+			"SnapRotation": 2,
+			"RotationOffset": 160.1,
+			"Shape": 0,
+			"FlipValidity": 0
+		}
+	],
+	"ZoomViewDirection":
+	{
+		"X": 0,
+		"Y": 0,
+		"Z": 0
+	},
+	"GroundAccessibility": "Nothing",
+	"Tags": []
 }
