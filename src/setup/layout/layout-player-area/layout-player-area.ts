@@ -76,7 +76,7 @@ export class LayoutPlayerArea {
       }
 
       const center: Vector = this._layout.getCenter();
-      center.z = world.getTableHeight() + 0.01;
+      center.z = world.getTableHeight() + 0.02;
       const wh: { w: number; h: number } = this._layout.calculateSize();
       const extent: Vector = new Vector(wh.h, wh.w, 0).multiply(0.5);
       const topLeft: Vector = center.subtract(extent);
