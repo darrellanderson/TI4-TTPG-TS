@@ -50,8 +50,13 @@
       "IsTransparent": false,
       "CastShadow": true,
       "IsTwoSided": false,
-      "UseOverrides": true,
-      "SurfaceType": "Plastic"
+      "UseOverrides": false,
+      "SurfaceType": "Plastic",
+      "PrimaryColor": {
+        "R": 55,
+        "G": 149,
+        "B": 255
+      }
     }
   ],
   "Collision": [],
