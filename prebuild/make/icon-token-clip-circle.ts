@@ -10,13 +10,21 @@
 
 import fs from "fs";
 import path from "path";
-import { opaqueJpg, outlineFeathered, outlineOnly } from "./lib/outline-mask";
+import { clipCircle, outlineOnly } from "./lib/outline-mask";
 
-const CLIP_CIRCLE_TOKENS: Array<string> = [""];
+const CLIP_CIRCLE_TOKENS: Array<string> = [
+  "fighter-1",
+  "fighter-3",
+  "infantry-1",
+  "infantry-3",
+  "tradegood-commodity-1",
+  "tradegood-commodity-3",
+];
 
 async function process(token: string) {
   const src: string = `./prebuild/token/${token}.jpg`;
   const dst: string = `./assets/Textures/icon/token/${token}.png`;
+  const circleFileName: string = `./assets/Textures/icon/token/circle.png`;
 
   if (!fs.existsSync(src)) {
     throw new Error(`File not found: "${src}"`);
@@ -24,16 +32,13 @@ async function process(token: string) {
 
   const dstDir: string = path.dirname(dst);
   fs.mkdirSync(dstDir, { recursive: true });
-  /*
-  fs.cpSync(src, dst);
+  await clipCircle(src, dst);
 
-  // Also create an opaque version for container icons.
-  await opaqueJpg(dst);
-  await outlineFeathered(dst);
-
-  // Version which is only the outline.
-  await outlineOnly(dst);
-  */
+  // These are all the same shape, create a single outline version.
+  if (token === CLIP_CIRCLE_TOKENS[0]) {
+    fs.cpSync(dst, circleFileName);
+    await outlineOnly(circleFileName);
+  }
 }
 
 for (const token of CLIP_CIRCLE_TOKENS) {

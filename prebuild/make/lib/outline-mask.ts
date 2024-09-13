@@ -184,3 +184,27 @@ export async function outlineOnly(pngFilename: string) {
 
   console.log(`Created: ${dst}`);
 }
+
+export async function clipCircle(inFilename: string, pngFilename: string) {
+  const src: string = inFilename;
+  const dst: string = pngFilename;
+  if (src === dst) {
+    throw new Error("src is dst???");
+  }
+
+  const x: number = 16;
+  const w: number = 256 - x * 2;
+  const r: number = Math.floor(w / 2);
+  const circle = Buffer.from(
+    `<svg viewBox="0 0 256 256"><rect x="${x}" y="${x}" width="${w}" height="${w}" rx="${r}" ry="${r}"/></svg>`
+  );
+
+  // Clip circle (circle not to edge).
+  await sharp(src)
+    .png()
+    .ensureAlpha(1)
+    .composite([{ input: circle, blend: "dest-in" }])
+    .toFile(dst);
+
+  console.log(`Created: ${dst}`);
+}
