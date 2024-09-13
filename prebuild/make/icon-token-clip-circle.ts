@@ -10,7 +10,12 @@
 
 import fs from "fs";
 import path from "path";
-import { clipCircle, outlineOnly } from "./lib/outline-mask";
+import {
+  clipCircle,
+  opaqueJpg,
+  outlineFeathered,
+  outlineOnly,
+} from "./lib/outline-mask";
 
 const CLIP_CIRCLE_TOKENS: Array<string> = [
   "fighter-1",
@@ -34,10 +39,15 @@ async function process(token: string) {
   fs.mkdirSync(dstDir, { recursive: true });
   await clipCircle(src, dst);
 
+  // Also create an opaque version for container icons.
+  // Use a shared mask created later.
+  await opaqueJpg(dst, true);
+
   // These are all the same shape, create a single outline version.
   if (token === CLIP_CIRCLE_TOKENS[0]) {
     fs.cpSync(dst, circleFileName);
     await outlineOnly(circleFileName);
+    await outlineFeathered(circleFileName);
   }
 }
 

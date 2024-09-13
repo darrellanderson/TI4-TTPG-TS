@@ -35,8 +35,8 @@ for (const token of CLIP_CIRCLE_TOKENS) {
   template.GUID = guid;
   template.Name = `${token}`;
   template.Metadata = `container.token:base/${token}`;
-  template.Models[0].Texture = `icon/token/${token}.png`;
-  // Token icon image already has color, use that (no border though).
+  template.Models[0].Texture = `icon/token/${token}.jpg`;
+  template.Models[0].ExtraMap = `icon/token/circle-mask.png`;
 
   templateFile = "./assets/Templates/" + templateFile;
   const templateDir = path.dirname(templateFile);

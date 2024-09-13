@@ -32,7 +32,10 @@ export async function center(pngFilename: string) {
  *
  * @param pngFilename
  */
-export async function opaqueJpg(pngFilename: string) {
+export async function opaqueJpg(
+  pngFilename: string,
+  grayscale: boolean = false
+) {
   const src: string = pngFilename;
   const dst: string = pngFilename.replace(/.png$/, ".jpg");
   if (src === dst) {
@@ -41,6 +44,7 @@ export async function opaqueJpg(pngFilename: string) {
 
   await sharp(src)
     .flatten({ background: { r: 255, g: 255, b: 255 } })
+    .grayscale(grayscale)
     .jpeg()
     .toFile(dst);
 
