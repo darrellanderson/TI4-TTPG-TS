@@ -1,4 +1,4 @@
-import { LayoutObjects, NSID, ParsedNSID, Spawn } from "ttpg-darrell";
+import { LayoutObjects, NSID, Spawn } from "ttpg-darrell";
 import { LayoutConfig } from "../layout-config";
 import { Container, GameObject, ObjectType } from "@tabletop-playground/api";
 
@@ -7,8 +7,8 @@ export class LayoutFighterInfTgContainers {
 
   constructor() {
     this._layout = new LayoutObjects()
-      .setChildDistance(LayoutConfig.spacing)
-      .setIsVertical(false);
+      .setChildDistance(LayoutConfig.spacingExtraWide)
+      .setIsVertical(true);
 
     const left: LayoutObjects = new LayoutObjects()
       .setChildDistance(LayoutConfig.spacing)
@@ -16,6 +16,11 @@ export class LayoutFighterInfTgContainers {
     const right: LayoutObjects = new LayoutObjects()
       .setChildDistance(LayoutConfig.spacing)
       .setIsVertical(true);
+    const leftAndRight = new LayoutObjects()
+      .setChildDistance(LayoutConfig.spacing)
+      .setIsVertical(false)
+      .add(left)
+      .add(right);
 
     const containers: Array<GameObject> = [
       Spawn.spawnOrThrow("container.token:base/fighter-1"),
@@ -56,12 +61,19 @@ export class LayoutFighterInfTgContainers {
       }
     });
 
-    this._layout.add(left).add(right);
+    const topGarbage: GameObject = Spawn.spawnOrThrow("container:base/garbage");
+    const bottompGarbage: GameObject = Spawn.spawnOrThrow(
+      "container:base/garbage"
+    );
+
+    this._layout.add(topGarbage).add(leftAndRight).add(bottompGarbage);
 
     this._layout.addAfterLayout(() => {
       containers.forEach((container) => {
         container.setObjectType(ObjectType.Ground);
       });
+      topGarbage.setObjectType(ObjectType.Ground);
+      bottompGarbage.setObjectType(ObjectType.Ground);
     });
   }
 
