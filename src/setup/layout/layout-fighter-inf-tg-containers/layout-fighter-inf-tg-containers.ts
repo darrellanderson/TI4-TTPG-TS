@@ -1,4 +1,4 @@
-import { LayoutObjects, NSID, Spawn } from "ttpg-darrell";
+import { LayoutObjects, Spawn } from "ttpg-darrell";
 import { LayoutConfig } from "../layout-config";
 import { Container, GameObject, ObjectType } from "@tabletop-playground/api";
 
@@ -22,6 +22,15 @@ export class LayoutFighterInfTgContainers {
       .add(left)
       .add(right);
 
+    const nsidNames: Array<string> = [
+      "fighter-1",
+      "fighter-3",
+      "infantry-1",
+      "infantry-3",
+      "tradegood-commodity-1",
+      "tradegood-commodity-3",
+    ];
+
     const containers: Array<GameObject> = [
       Spawn.spawnOrThrow("container.token:base/fighter-1"),
       Spawn.spawnOrThrow("container.token:base/fighter-3"),
@@ -30,28 +39,24 @@ export class LayoutFighterInfTgContainers {
       Spawn.spawnOrThrow("container.token:base/tradegood-commodity-1"),
       Spawn.spawnOrThrow("container.token:base/tradegood-commodity-3"),
     ];
-    containers.forEach((container, index) => {
-      const contentNsid: string = NSID.get(container).substring(
-        "container.".length
-      );
-      const namePart: string | undefined =
-        NSID.parse(contentNsid)?.nameParts[0];
+    nsidNames.forEach((nsidName, index) => {
+      const tokenNsid: string = `token:base/${nsidName}`;
+      const containerNsid: string = `container.${tokenNsid}`;
 
-      const token: GameObject = Spawn.spawnOrThrow(contentNsid);
+      const token: GameObject = Spawn.spawnOrThrow(tokenNsid);
       let tags: Array<string> = token.getTags();
-      if (namePart && !tags.includes(namePart)) {
-        tags.push(namePart);
-        token.setTags(tags);
-      }
+      tags.push(nsidName);
+      token.setTags(tags);
+
+      const container: GameObject = Spawn.spawnOrThrow(containerNsid);
+      containers.push(container);
 
       if (container instanceof Container) {
         container.setType(1); // infinite
         container.insert([token]);
         tags = container.getContainerTags();
-        if (namePart && !tags.includes(namePart)) {
-          tags.push(namePart);
-          container.setContainerTags(tags);
-        }
+        tags.push(nsidName);
+        container.setContainerTags(tags);
       }
       container.setRotation([0, 0, 180]);
       if (index % 2 === 0) {

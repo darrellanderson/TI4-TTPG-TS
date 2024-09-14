@@ -1,6 +1,6 @@
 import { refObject, Vector, world } from "@tabletop-playground/api";
 
-import { LayoutFighterInfTgContainers } from "./layout-fighter-inf-tg-contaienrs";
+import { LayoutFighterInfTgContainers } from "./layout-fighter-inf-tg-containers";
 
 for (const obj of world.getAllObjects(true)) {
   if (obj !== refObject) {

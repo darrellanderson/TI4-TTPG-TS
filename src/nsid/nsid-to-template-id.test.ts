@@ -27,7 +27,7 @@ export function addObjectTemplatesToMockWorld(): void {
       };
     }
 
-    if (nsid.startsWith("container.")) {
+    if (nsid.startsWith("container")) {
       _templateIdToMockGameObjectParams[templateId] = {
         _objType: "Container",
       };
