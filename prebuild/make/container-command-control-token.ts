@@ -11,6 +11,15 @@ import path from "path";
 
 import { CONTAINER_TEMPLATE_DATA } from "./data/container.template-data";
 
+function capitalizeFirstLetterHypenated(s: string): string {
+  return s
+    .split("-")
+    .map((word) => {
+      return word.substring(0, 1).toUpperCase() + word.substring(1);
+    })
+    .join(" ");
+}
+
 for (const token of ["command", "control"]) {
   const template = JSON.parse(JSON.stringify(CONTAINER_TEMPLATE_DATA));
 
@@ -24,7 +33,7 @@ for (const token of ["command", "control"]) {
     .toUpperCase();
 
   template.GUID = guid;
-  template.Name = `${token}`;
+  template.Name = capitalizeFirstLetterHypenated(token);
   template.Metadata = `container.token.${token}:base/generic`;
   template.Models[0].Texture = `icon/token/${token}.jpg`;
   template.Models[0].ExtraMap = `icon/token/${token}-mask.png`;

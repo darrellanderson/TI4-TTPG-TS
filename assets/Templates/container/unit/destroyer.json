@@ -1,7 +1,7 @@
 {
   "Type": "Container",
   "GUID": "0A605D9E58B4002E3327F03E106E7AE4",
-  "Name": "destroyer",
+  "Name": "Destroyer",
   "Metadata": "container.unit:base/destroyer",
   "CollisionType": "Regular",
   "Friction": 0.7,
@@ -21,7 +21,7 @@
     "B": 0
   },
   "Flippable": true,
-  "AutoStraighten": true,
+  "AutoStraighten": false,
   "ShouldSnap": false,
   "ScriptName": "obj/icon-container-obj.js",
   "Blueprint": "",

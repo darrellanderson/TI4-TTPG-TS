@@ -1,7 +1,7 @@
 {
   "Type": "Container",
   "GUID": "429C6386DC7BCB3AECE4EE48695A5AC5",
-  "Name": "dreadnought",
+  "Name": "Dreadnought",
   "Metadata": "container.unit:base/dreadnought",
   "CollisionType": "Regular",
   "Friction": 0.7,
@@ -21,7 +21,7 @@
     "B": 0
   },
   "Flippable": true,
-  "AutoStraighten": true,
+  "AutoStraighten": false,
   "ShouldSnap": false,
   "ScriptName": "obj/icon-container-obj.js",
   "Blueprint": "",

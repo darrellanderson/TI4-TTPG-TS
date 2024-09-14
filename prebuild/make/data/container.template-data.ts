@@ -21,7 +21,7 @@ export const CONTAINER_TEMPLATE_DATA = {
     B: 0,
   },
   Flippable: true,
-  AutoStraighten: true,
+  AutoStraighten: false,
   ShouldSnap: false,
   ScriptName: "obj/icon-container-obj.js",
   Blueprint: "",

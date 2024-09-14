@@ -1,7 +1,7 @@
 {
   "Type": "Container",
   "GUID": "BA6CB87350ABE69F180C974D9582B533",
-  "Name": "infantry",
+  "Name": "Infantry",
   "Metadata": "container.unit:base/infantry",
   "CollisionType": "Regular",
   "Friction": 0.7,
@@ -21,7 +21,7 @@
     "B": 0
   },
   "Flippable": true,
-  "AutoStraighten": true,
+  "AutoStraighten": false,
   "ShouldSnap": false,
   "ScriptName": "obj/icon-container-obj.js",
   "Blueprint": "",

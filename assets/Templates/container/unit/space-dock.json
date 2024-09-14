@@ -1,7 +1,7 @@
 {
   "Type": "Container",
   "GUID": "508ED146F9E9914101424028A8296EC3",
-  "Name": "space-dock",
+  "Name": "Space Dock",
   "Metadata": "container.unit:base/space-dock",
   "CollisionType": "Regular",
   "Friction": 0.7,
@@ -21,7 +21,7 @@
     "B": 0
   },
   "Flippable": true,
-  "AutoStraighten": true,
+  "AutoStraighten": false,
   "ShouldSnap": false,
   "ScriptName": "obj/icon-container-obj.js",
   "Blueprint": "",

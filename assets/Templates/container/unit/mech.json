@@ -1,7 +1,7 @@
 {
   "Type": "Container",
   "GUID": "64EBC91B55C67EA6C055306AAA0F6C93",
-  "Name": "mech",
+  "Name": "Mech",
   "Metadata": "container.unit:pok/mech",
   "CollisionType": "Regular",
   "Friction": 0.7,
@@ -21,7 +21,7 @@
     "B": 0
   },
   "Flippable": true,
-  "AutoStraighten": true,
+  "AutoStraighten": false,
   "ShouldSnap": false,
   "ScriptName": "obj/icon-container-obj.js",
   "Blueprint": "",

@@ -1,7 +1,7 @@
 {
   "Type": "Container",
   "GUID": "4928F3C106C5719DDC0D88CE801458B2",
-  "Name": "pds",
+  "Name": "Pds",
   "Metadata": "container.unit:base/pds",
   "CollisionType": "Regular",
   "Friction": 0.7,
@@ -21,7 +21,7 @@
     "B": 0
   },
   "Flippable": true,
-  "AutoStraighten": true,
+  "AutoStraighten": false,
   "ShouldSnap": false,
   "ScriptName": "obj/icon-container-obj.js",
   "Blueprint": "",

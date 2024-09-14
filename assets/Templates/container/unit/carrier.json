@@ -1,7 +1,7 @@
 {
   "Type": "Container",
   "GUID": "5CC0D8AC8BE47DE2838790259850FA1B",
-  "Name": "carrier",
+  "Name": "Carrier",
   "Metadata": "container.unit:base/carrier",
   "CollisionType": "Regular",
   "Friction": 0.7,
@@ -21,7 +21,7 @@
     "B": 0
   },
   "Flippable": true,
-  "AutoStraighten": true,
+  "AutoStraighten": false,
   "ShouldSnap": false,
   "ScriptName": "obj/icon-container-obj.js",
   "Blueprint": "",

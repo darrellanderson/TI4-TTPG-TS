@@ -20,6 +20,15 @@ const CLIP_CIRCLE_TOKENS: Array<string> = [
   "tradegood-commodity-3",
 ];
 
+function capitalizeFirstLetterHypenated(s: string): string {
+  return s
+    .split("-")
+    .map((word) => {
+      return word.substring(0, 1).toUpperCase() + word.substring(1);
+    })
+    .join(" ");
+}
+
 for (const token of CLIP_CIRCLE_TOKENS) {
   const template = JSON.parse(JSON.stringify(CONTAINER_TEMPLATE_DATA));
 
@@ -33,7 +42,7 @@ for (const token of CLIP_CIRCLE_TOKENS) {
     .toUpperCase();
 
   template.GUID = guid;
-  template.Name = `${token}`;
+  template.Name = capitalizeFirstLetterHypenated(token);
   template.Metadata = `container.token:base/${token}`;
   template.Models[0].Texture = `icon/token/${token}.jpg`;
   template.Models[0].ExtraMap = `icon/token/circle-mask.png`;

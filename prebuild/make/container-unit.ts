@@ -13,6 +13,15 @@ import { SOURCE_TO_UNIT_ATTRS_DATA } from "../../src/lib/unit-lib/data/unit-attr
 import { UnitType } from "../../src/lib/unit-lib/schema/unit-attrs-schema";
 import { CONTAINER_TEMPLATE_DATA } from "./data/container.template-data";
 
+function capitalizeFirstLetterHypenated(s: string): string {
+  return s
+    .split("-")
+    .map((word) => {
+      return word.substring(0, 1).toUpperCase() + word.substring(1);
+    })
+    .join(" ");
+}
+
 const seen: Set<UnitType> = new Set();
 for (const unitAttrsDataArray of Object.values(SOURCE_TO_UNIT_ATTRS_DATA)) {
   for (const unitAttrsData of unitAttrsDataArray) {
@@ -36,7 +45,7 @@ for (const unitAttrsDataArray of Object.values(SOURCE_TO_UNIT_ATTRS_DATA)) {
       .toUpperCase();
 
     template.GUID = guid;
-    template.Name = `${unit}`;
+    template.Name = capitalizeFirstLetterHypenated(unit);
     template.Metadata = `container.unit:${source}/${unit}`;
     template.Models[0].Texture = `icon/unit/${unit}.jpg`;
     template.Models[0].ExtraMap = `icon/unit/${unit}-mask.png`;

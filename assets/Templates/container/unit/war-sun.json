@@ -1,7 +1,7 @@
 {
   "Type": "Container",
   "GUID": "03171450E2F47458CD45CB7E662FA5A2",
-  "Name": "war-sun",
+  "Name": "War Sun",
   "Metadata": "container.unit:base/war-sun",
   "CollisionType": "Regular",
   "Friction": 0.7,
@@ -21,7 +21,7 @@
     "B": 0
   },
   "Flippable": true,
-  "AutoStraighten": true,
+  "AutoStraighten": false,
   "ShouldSnap": false,
   "ScriptName": "obj/icon-container-obj.js",
   "Blueprint": "",

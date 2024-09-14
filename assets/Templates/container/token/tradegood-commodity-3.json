@@ -1,7 +1,7 @@
 {
   "Type": "Container",
   "GUID": "163DB3FA43C6B34A7926B343B0CB8E6E",
-  "Name": "tradegood-commodity-3",
+  "Name": "Tradegood Commodity 3",
   "Metadata": "container.token:base/tradegood-commodity-3",
   "CollisionType": "Regular",
   "Friction": 0.7,
@@ -21,7 +21,7 @@
     "B": 0
   },
   "Flippable": true,
-  "AutoStraighten": true,
+  "AutoStraighten": false,
   "ShouldSnap": false,
   "ScriptName": "obj/icon-container-obj.js",
   "Blueprint": "",

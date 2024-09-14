@@ -1,7 +1,7 @@
 {
   "Type": "Container",
   "GUID": "6F89F5D0922E50D0A12B2A7DF04EBBB9",
-  "Name": "cruiser",
+  "Name": "Cruiser",
   "Metadata": "container.unit:base/cruiser",
   "CollisionType": "Regular",
   "Friction": 0.7,
@@ -21,7 +21,7 @@
     "B": 0
   },
   "Flippable": true,
-  "AutoStraighten": true,
+  "AutoStraighten": false,
   "ShouldSnap": false,
   "ScriptName": "obj/icon-container-obj.js",
   "Blueprint": "",

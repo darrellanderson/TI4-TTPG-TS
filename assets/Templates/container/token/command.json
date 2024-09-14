@@ -1,7 +1,7 @@
 {
   "Type": "Container",
   "GUID": "678DA8ACEF751AB046D297B2FD0A9D4D",
-  "Name": "command",
+  "Name": "Command",
   "Metadata": "container.token.command:base/generic",
   "CollisionType": "Regular",
   "Friction": 0.7,
@@ -21,7 +21,7 @@
     "B": 0
   },
   "Flippable": true,
-  "AutoStraighten": true,
+  "AutoStraighten": false,
   "ShouldSnap": false,
   "ScriptName": "obj/icon-container-obj.js",
   "Blueprint": "",

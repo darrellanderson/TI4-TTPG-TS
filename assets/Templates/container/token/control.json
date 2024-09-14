@@ -1,7 +1,7 @@
 {
   "Type": "Container",
   "GUID": "62DA5A62DA9AE70F4E06709CBAEB25EB",
-  "Name": "control",
+  "Name": "Control",
   "Metadata": "container.token.control:base/generic",
   "CollisionType": "Regular",
   "Friction": 0.7,
@@ -21,7 +21,7 @@
     "B": 0
   },
   "Flippable": true,
-  "AutoStraighten": true,
+  "AutoStraighten": false,
   "ShouldSnap": false,
   "ScriptName": "obj/icon-container-obj.js",
   "Blueprint": "",

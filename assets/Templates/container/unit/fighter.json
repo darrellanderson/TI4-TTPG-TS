@@ -1,7 +1,7 @@
 {
   "Type": "Container",
   "GUID": "8B3347A75BB0AED81DE45D080DA77EAF",
-  "Name": "fighter",
+  "Name": "Fighter",
   "Metadata": "container.unit:base/fighter",
   "CollisionType": "Regular",
   "Friction": 0.7,
@@ -21,7 +21,7 @@
     "B": 0
   },
   "Flippable": true,
-  "AutoStraighten": true,
+  "AutoStraighten": false,
   "ShouldSnap": false,
   "ScriptName": "obj/icon-container-obj.js",
   "Blueprint": "",
