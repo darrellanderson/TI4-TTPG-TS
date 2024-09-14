@@ -1,5 +1,8 @@
 import { LayoutObjects } from "ttpg-darrell";
 
+/**
+ * Misc containers.
+ */
 export class LayoutTableContainers {
   private readonly _layout: LayoutObjects;
 
