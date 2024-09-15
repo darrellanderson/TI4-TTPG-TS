@@ -14,6 +14,7 @@ import {
   clipCircle,
   opaqueJpg,
   outlineFeathered,
+  outlineFeatheredNoCenter,
   outlineOnly,
 } from "./lib/outline-mask";
 
@@ -24,12 +25,17 @@ const CLIP_CIRCLE_TOKENS: Array<string> = [
   "infantry-3",
   "tradegood-commodity-1",
   "tradegood-commodity-3",
+  "frontier",
 ];
 
 async function process(token: string) {
-  const src: string = `./prebuild/token/${token}.jpg`;
+  let src: string = `./prebuild/token/${token}.jpg`;
   const dst: string = `./assets/Textures/icon/token/${token}.png`;
   const circleFileName: string = `./assets/Textures/icon/token/circle.png`;
+
+  if (token === "frontier") {
+    src = `./prebuild/token/attachment/system/frontier.jpg`;
+  }
 
   if (!fs.existsSync(src)) {
     throw new Error(`File not found: "${src}"`);
@@ -48,6 +54,7 @@ async function process(token: string) {
     fs.cpSync(dst, circleFileName);
     await outlineOnly(circleFileName);
     await outlineFeathered(circleFileName);
+    await outlineFeatheredNoCenter(circleFileName);
   }
 }
 

@@ -17,6 +17,12 @@ export class LayoutTokenContainers {
     const controlTokenContainer: GameObject = Spawn.spawnOrThrow(
       "container.token.control:base/generic"
     );
+    const tradegood1Container: GameObject = Spawn.spawnOrThrow(
+      "container.token:base/tradegood-commodity-1"
+    );
+    const tradegood3Container: GameObject = Spawn.spawnOrThrow(
+      "container.token:base/tradegood-commodity-3"
+    );
 
     commandTokenContainer.setOwningPlayerSlot(playerSlot);
     commandTokenContainer.setPrimaryColor(objColor);
@@ -26,15 +32,31 @@ export class LayoutTokenContainers {
     controlTokenContainer.setPrimaryColor(objColor);
     controlTokenContainer.setRotation([0, 0, 180]);
 
-    this._layout = new LayoutObjects()
+    tradegood1Container.setRotation([0, 0, 180]);
+    tradegood3Container.setRotation([0, 0, 180]);
+
+    const col1 = new LayoutObjects()
       .setChildDistance(LayoutConfig.spacing)
       .setIsVertical(true)
       .add(commandTokenContainer)
       .add(controlTokenContainer);
+    const col2 = new LayoutObjects()
+      .setChildDistance(LayoutConfig.spacing)
+      .setIsVertical(true)
+      .add(tradegood1Container)
+      .add(tradegood3Container);
+
+    this._layout = new LayoutObjects()
+      .setChildDistance(LayoutConfig.spacing)
+      .setIsVertical(false)
+      .add(col1)
+      .add(col2);
 
     this._layout.addAfterLayout(() => {
       commandTokenContainer.setObjectType(ObjectType.Ground);
       controlTokenContainer.setObjectType(ObjectType.Ground);
+      tradegood1Container.setObjectType(ObjectType.Ground);
+      tradegood3Container.setObjectType(ObjectType.Ground);
     });
   }
 
