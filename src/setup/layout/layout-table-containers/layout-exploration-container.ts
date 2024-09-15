@@ -33,11 +33,28 @@ export class LayoutExplorationContainer {
       "token.attachment.system:pok/mirage",
       "token.attachment.system:pok/wormhole-gamma",
     ];
-    const tokens: Array<GameObject> = tokenNsids.map((tokenNsid) =>
-      Spawn.spawnOrThrow(tokenNsid)
-    );
+
+    const tag: string = "exploration";
+    let tags: Array<string>;
+
+    const tokens: Array<GameObject> = tokenNsids.map((tokenNsid) => {
+      const token: GameObject = Spawn.spawnOrThrow(tokenNsid);
+      tags = token.getTags();
+      if (!tags.includes(tag)) {
+        tags.push(tag);
+        token.setTags(tags);
+      }
+      return token;
+    });
     if (container instanceof Container) {
       container.insert(tokens);
+
+      // Apply tag to restrict what can enter.
+      tags = container.getContainerTags();
+      if (!tags.includes(tag)) {
+        tags.push(tag);
+        container.setContainerTags(tags);
+      }
     }
 
     this._layout.add(container).addAfterLayout(() => {

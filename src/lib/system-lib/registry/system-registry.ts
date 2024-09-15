@@ -154,6 +154,17 @@ export class SystemRegistry {
   }
 
   /**
+   * Get all registered system tile numbers.
+   *
+   * @returns
+   */
+  public getAllSystemTileNumbers(): Array<number> {
+    return Array.from(this._systemTileNumberToSchemaAndSource.keys()).filter(
+      (tileNumber) => tileNumber > 0
+    );
+  }
+
+  /**
    * Get systems for system tile objects on the table (skip contained).
    *
    * @returns
