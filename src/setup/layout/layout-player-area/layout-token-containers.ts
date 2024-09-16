@@ -1,6 +1,8 @@
 import { Color, GameObject, ObjectType } from "@tabletop-playground/api";
-import { LayoutConfig } from "../layout-config";
 import { ColorLib, ColorsType, LayoutObjects, Spawn } from "ttpg-darrell";
+
+import { LayoutConfig } from "../layout-config";
+import { LayoutTradegoodContainers } from "../layout-fighter-inf-tg-containers/layout-tradegood-containers";
 
 export class LayoutTokenContainers {
   private readonly _layout: LayoutObjects;
@@ -17,12 +19,6 @@ export class LayoutTokenContainers {
     const controlTokenContainer: GameObject = Spawn.spawnOrThrow(
       "container.token.control:base/generic"
     );
-    const tradegood1Container: GameObject = Spawn.spawnOrThrow(
-      "container.token:base/tradegood-commodity-1"
-    );
-    const tradegood3Container: GameObject = Spawn.spawnOrThrow(
-      "container.token:base/tradegood-commodity-3"
-    );
 
     commandTokenContainer.setOwningPlayerSlot(playerSlot);
     commandTokenContainer.setPrimaryColor(objColor);
@@ -32,19 +28,15 @@ export class LayoutTokenContainers {
     controlTokenContainer.setPrimaryColor(objColor);
     controlTokenContainer.setRotation([0, 0, 180]);
 
-    tradegood1Container.setRotation([0, 0, 180]);
-    tradegood3Container.setRotation([0, 0, 180]);
-
     const col1 = new LayoutObjects()
       .setChildDistance(LayoutConfig.spacing)
       .setIsVertical(true)
       .add(commandTokenContainer)
       .add(controlTokenContainer);
-    const col2 = new LayoutObjects()
+    const col2 = new LayoutTradegoodContainers()
+      .getLayout()
       .setChildDistance(LayoutConfig.spacing)
-      .setIsVertical(true)
-      .add(tradegood1Container)
-      .add(tradegood3Container);
+      .setIsVertical(true);
 
     this._layout = new LayoutObjects()
       .setChildDistance(LayoutConfig.spacing)
@@ -55,8 +47,6 @@ export class LayoutTokenContainers {
     this._layout.addAfterLayout(() => {
       commandTokenContainer.setObjectType(ObjectType.Ground);
       controlTokenContainer.setObjectType(ObjectType.Ground);
-      tradegood1Container.setObjectType(ObjectType.Ground);
-      tradegood3Container.setObjectType(ObjectType.Ground);
     });
   }
 
