@@ -21,24 +21,23 @@ export class LayoutPlayerArea {
 
   constructor(playerSlot: number) {
     this._layout = new LayoutObjects()
-      .setChildDistance(LayoutConfig.spacingWide)
-      .setVerticalAlignment(VerticalAlignment.Top)
-      .setPadding(6);
+      .setChildDistance(LayoutConfig.spacingExtraWide)
+      .setIsVertical(true)
+      .setVerticalAlignment(VerticalAlignment.Top);
 
-    // Left.
+    // Center top to bottom.
     const layoutUnitBoxes: LayoutObjects = new LayoutUnitBoxes(
       playerSlot
     ).getLayout();
-
-    // Center top to bottom.
     const layoutSheets: LayoutObjects = new LayoutSheets(
       playerSlot
     ).getLayout();
     const layoutTokenContainers: LayoutObjects = new LayoutTokenContainers(
       playerSlot
     ).getLayout();
-    const layoutSheetsAndTokenContainers: LayoutObjects = new LayoutObjects()
+    const topRow: LayoutObjects = new LayoutObjects()
       .setChildDistance(LayoutConfig.spacingWide)
+      .add(layoutUnitBoxes)
       .add(layoutSheets)
       .add(layoutTokenContainers);
 
@@ -48,14 +47,7 @@ export class LayoutPlayerArea {
     );
     cardHolder.setOwningPlayerSlot(playerSlot);
 
-    const center: LayoutObjects = new LayoutObjects()
-      .setChildDistance(LayoutConfig.spacingWide)
-      .setIsVertical(true)
-      .add(layoutSheetsAndTokenContainers)
-      .add(layoutMats)
-      .add(cardHolder);
-
-    this._layout.add(layoutUnitBoxes).add(center);
+    this._layout.add(topRow).add(layoutMats).add(cardHolder);
 
     this._layout.addAfterLayout(() => {
       cardHolder.setObjectType(ObjectType.Ground);
@@ -79,10 +71,16 @@ export class LayoutPlayerArea {
       center.z = world.getTableHeight() + 0.02;
       const wh: { w: number; h: number } = this._layout.calculateSize();
       const extent: Vector = new Vector(wh.h, wh.w, 0).multiply(0.5);
-      const topLeft: Vector = center.subtract(extent);
-      const topRight: Vector = center.add(new Vector(extent.x, -extent.y, 0));
-      const botRight: Vector = center.add(extent);
-      const botLeft: Vector = center.add(new Vector(-extent.x, extent.y, 0));
+      let topLeft: Vector = center.add(new Vector(extent.x, -extent.y, 0));
+      let topRight: Vector = center.add(new Vector(extent.x, extent.y, 0));
+      let botRight: Vector = center.add(new Vector(-extent.x, extent.y, 0));
+      let botLeft: Vector = center.add(new Vector(-extent.x, -extent.y, 0));
+
+      const d = 6;
+      topLeft = topLeft.add(new Vector(d, -d, 0));
+      topRight = topRight.add(new Vector(d, d, 0));
+      botLeft = botLeft.add(new Vector(-d, -d, 0));
+      botRight = botRight.add(new Vector(-d, d, 0));
 
       const line: DrawingLine = new DrawingLine();
       line.points = [topLeft, topRight, botRight, botLeft, topLeft];

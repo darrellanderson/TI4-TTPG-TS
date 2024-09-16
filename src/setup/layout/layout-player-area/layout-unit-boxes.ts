@@ -10,6 +10,7 @@ export class LayoutUnitBoxes {
   constructor(playerSlot: number) {
     this._layout.setChildDistance(LayoutConfig.spacing).setIsVertical(true);
 
+    /*
     const units: Array<UnitType> = [
       "war-sun",
       "flagship",
@@ -28,6 +29,39 @@ export class LayoutUnitBoxes {
       const unitBox: LayoutUnitBox = new LayoutUnitBox(unit, playerSlot);
       this._layout.add(unitBox.getLayout());
     }
+      */
+
+    const units: Array<UnitType> = [
+      "war-sun",
+      "flagship",
+
+      "dreadnought",
+      "cruiser",
+
+      "destroyer",
+      "carrier",
+
+      "pds",
+      "space-dock",
+
+      "fighter",
+      "infantry",
+
+      "mech",
+    ];
+
+    let row: LayoutObjects;
+    units.forEach((unit, index) => {
+      if (index % 4 === 0) {
+        row = new LayoutObjects()
+          .setChildDistance(LayoutConfig.spacing)
+          .setIsVertical(false);
+        this._layout.add(row);
+      }
+
+      const unitBox: LayoutUnitBox = new LayoutUnitBox(unit, playerSlot);
+      row.add(unitBox.getLayout());
+    });
   }
 
   getLayout(): LayoutObjects {
