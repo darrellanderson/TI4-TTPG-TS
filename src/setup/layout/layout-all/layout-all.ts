@@ -1,11 +1,14 @@
-import { LayoutObjects } from "ttpg-darrell";
+import { LayoutObjects, LayoutObjectsSize } from "ttpg-darrell";
+
 import { LayoutConfig } from "../layout-config";
+import { LayoutFighterInfTgContainers } from "../layout-fighter-inf-tg-containers/layout-fighter-inf-tg-containers";
+import { LayoutMapArea } from "../layout-map-area/layout-map-area";
 import { LayoutPlayerArea } from "../layout-player-area/layout-player-area";
 import { LayoutScoringArea } from "../layout-scoring-area/layout-scoring-area";
+import { LayoutStrategyCards } from "../layout-strategy-cards/layout-strategy-cards";
 import { LayoutTableContainers } from "../layout-table-containers/layout-table-containers";
 import { LayoutTableDecks } from "../layout-table-decks/layout-table-decks";
-import { LayoutMapArea } from "../layout-map-area/layout-map-area";
-import { LayoutStrategyCards } from "../layout-strategy-cards/layout-strategy-cards";
+import { LayoutCombatArena } from "../layout-combat-arena/layout-combat-arena";
 
 export class LayoutAll {
   private readonly _layout: LayoutObjects;
@@ -18,12 +21,19 @@ export class LayoutAll {
     const top: LayoutObjects = new LayoutObjects().setChildDistance(
       LayoutConfig.spacingWide
     );
+    const left: LayoutObjects = new LayoutObjects().setChildDistance(
+      LayoutConfig.spacingExtraWide
+    );
     const middle: LayoutObjects = new LayoutObjects().setChildDistance(
-      LayoutConfig.spacingWide
+      LayoutConfig.spacingExtraWide
+    );
+    const right: LayoutObjects = new LayoutObjects().setChildDistance(
+      LayoutConfig.spacingExtraWide
     );
     const bottom: LayoutObjects = new LayoutObjects().setChildDistance(
       LayoutConfig.spacingWide
     );
+
     this._layout.add(top).add(middle).add(bottom);
 
     const topCount: number = Math.floor(playerCount / 2);
@@ -32,14 +42,28 @@ export class LayoutAll {
       whichLayout.add(new LayoutPlayerArea(10 + i).getLayout());
     }
 
-    middle
+    left
       .add(new LayoutTableContainers().getLayout())
       .add(new LayoutScoringArea(playerCount).getLayout())
       .add(new LayoutTableDecks().getLayout())
-      .add(new LayoutMapArea().getLayout())
+      .add(new LayoutFighterInfTgContainers().getLayout());
+    right
+      .add(new LayoutFighterInfTgContainers().getLayout())
+      .add(new LayoutCombatArena().getLayout())
       .add(new LayoutStrategyCards().getLayout());
 
+    // Top player areas invert vertical layout.
     top.flip(false, true);
+
+    // Add left, middle, right to the middle section.
+    // Pad hack to center on "middle" area (assumes left is wider).
+    const leftSize: LayoutObjectsSize = left.calculateSize();
+    const rightSize: LayoutObjectsSize = right.calculateSize();
+    const pad: number =
+      leftSize.w - rightSize.w - LayoutConfig.spacingExtraWide;
+    right.add(new LayoutObjects().setOverrideWidth(pad));
+
+    middle.add(left).add(new LayoutMapArea().getLayout()).add(right);
   }
 
   getLayout(): LayoutObjects {
