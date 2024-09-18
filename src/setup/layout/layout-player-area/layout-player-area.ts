@@ -19,7 +19,7 @@ export class LayoutPlayerArea {
 
   constructor(playerSlot: number) {
     const innerLayout: LayoutObjects = new LayoutObjects()
-      .setChildDistance(LayoutConfig.spacingExtraWide)
+      .setChildDistance(LayoutConfig.spacingWide)
       .setIsVertical(true)
       .setVerticalAlignment(VerticalAlignment.Top);
 
