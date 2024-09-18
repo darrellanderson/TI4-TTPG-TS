@@ -10,6 +10,7 @@ import {
   Hex,
   HEX_LAYOUT_POINTY,
   IGlobal,
+  LeaveSeat,
   OnCardBecameSingletonOrDeck,
   Spawn,
 } from "ttpg-darrell";
@@ -74,7 +75,7 @@ resetGlobalThisTI4();
 
 // Run any delayed initialization, things that need globalThis.TI4 to be set.
 // These are "init" functions in the class objects.
-const iGlobals: Array<IGlobal> = [new DiceGroupCleanup()];
+const iGlobals: Array<IGlobal> = [new DiceGroupCleanup(), new LeaveSeat()];
 for (const v of Object.values(globalThis.TI4)) {
   if (typeof v.init === "function") {
     iGlobals.push(v);

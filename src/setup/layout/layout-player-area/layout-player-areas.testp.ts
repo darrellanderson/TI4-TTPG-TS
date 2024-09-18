@@ -11,6 +11,10 @@ for (const obj of world.getAllObjects(true)) {
     obj.destroy();
   }
 }
+for (const line of world.getDrawingLines()) {
+  world.removeDrawingLineObject(line);
+}
+
 const z: number = world.getTableHeight();
 const pos: Vector = new Vector(0, 0, z + 3);
 const yaw: number = 0;
