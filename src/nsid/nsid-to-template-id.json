@@ -33,6 +33,7 @@
     "mat.player:base/build": "CCB447B80C21CCFBCC62B45F13E0699C",
     "mat.player:base/planet": "9C996996289CFA52D50DE72183B2BD14",
     "mat.player:base/technology": "68A815D9B13D82440940204D2177899E",
+    "mat.player:base/technology-deck": "B73F07EFDF172B2BAA3213E95DA70250",
     "mat:base/agenda-laws": "D11D18C157D2800F512D0E9C61105884",
     "mat:base/custodians": "C57729056C98584015FAB61A91E7A21F",
     "mat:base/objective-1": "6E0E5CA87C8C85476BCE62BB6DB2A8F5",

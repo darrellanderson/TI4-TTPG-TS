@@ -1,0 +1,81 @@
+{
+    "Type": "Generic",
+    "GUID": "B73F07EFDF172B2BAA3213E95DA70250",
+    "Name": "Player Technology Deck Mat",
+    "Metadata": "mat.player:base/technology-deck",
+    "CollisionType": "Regular",
+    "Friction": 0.7,
+    "Restitution": 0.1,
+    "Density": 1,
+    "SurfaceType": "Cardboard",
+    "Roughness": 1,
+    "Metallic": 0,
+    "PrimaryColor": {
+        "R": 255,
+        "G": 255,
+        "B": 255
+    },
+    "SecondaryColor": {
+        "R": 0,
+        "G": 0,
+        "B": 0
+    },
+    "Flippable": false,
+    "AutoStraighten": false,
+    "ShouldSnap": false,
+    "ScriptName": "",
+    "Blueprint": "",
+    "Models": [
+        {
+            "Model": "uv-cube.obj",
+            "Offset": {
+                "X": 0,
+                "Y": 0,
+                "Z": 0
+            },
+            "Scale": {
+                "X": 8.263636363636364,
+                "Y": 5.4818181818181815,
+                "Z": 0.25
+            },
+            "Rotation": {
+                "X": 0,
+                "Y": 0,
+                "Z": 0
+            },
+            "Texture": "mat/player-technology-deck/player-technology-deck.jpg",
+            "NormalMap": "",
+            "ExtraMap": "",
+            "ExtraMap2": "",
+            "IsTransparent": false,
+            "CastShadow": true,
+            "IsTwoSided": false,
+            "UseOverrides": true,
+            "SurfaceType": "Cardboard"
+        }
+    ],
+    "Lights": [],
+    "SnapPointsGlobal": false,
+    "SnapPoints": [
+        {
+            "X": 0.49090909090909074,
+            "Y": 0,
+            "Z": 0.125,
+            "Range": 3,
+            "SnapRotation": 2,
+            "RotationOffset": 0,
+            "Shape": 0,
+            "FlipValidity": 0,
+            "Tags": [
+                "card-technology"
+            ]
+        }
+    ],
+    "ZoomViewDirection": {
+        "X": 0,
+        "Y": 0,
+        "Z": 1
+    },
+    "GroundAccessibility": "Zoom",
+    "Tags": []
+}

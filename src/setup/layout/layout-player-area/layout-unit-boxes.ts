@@ -1,4 +1,4 @@
-import { LayoutObjects } from "ttpg-darrell";
+import { LayoutObjects, Spawn } from "ttpg-darrell";
 
 import { LayoutConfig } from "../layout-config";
 import { UnitType } from "../../../lib/unit-lib/schema/unit-attrs-schema";
@@ -50,7 +50,7 @@ export class LayoutUnitBoxes {
       "mech",
     ];
 
-    let row: LayoutObjects;
+    let row: LayoutObjects | undefined;
     units.forEach((unit, index) => {
       if (index % 4 === 0) {
         row = new LayoutObjects()
@@ -59,9 +59,15 @@ export class LayoutUnitBoxes {
         this._layout.add(row);
       }
 
-      const unitBox: LayoutUnitBox = new LayoutUnitBox(unit, playerSlot);
-      row.add(unitBox.getLayout());
+      if (row) {
+        const unitBox: LayoutUnitBox = new LayoutUnitBox(unit, playerSlot);
+        row.add(unitBox.getLayout());
+      }
     });
+
+    if (row) {
+      row.add(Spawn.spawnOrThrow("container:base/garbage"));
+    }
   }
 
   getLayout(): LayoutObjects {

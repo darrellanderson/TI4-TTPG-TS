@@ -16,18 +16,23 @@ export class LayoutMats {
     const techMat: GameObject = Spawn.spawnOrThrow(
       "mat.player:base/technology"
     );
+    const techDeckMat: GameObject = Spawn.spawnOrThrow(
+      "mat.player:base/technology-deck"
+    );
 
     this._layout = new LayoutObjects()
       .setChildDistance(LayoutConfig.spacing)
       .setVerticalAlignment(VerticalAlignment.Top)
       .add(buildMat)
       .add(planetMat)
-      .add(techMat);
+      .add(techMat)
+      .add(techDeckMat);
 
     this._layout.addAfterLayout(() => {
       buildMat.setObjectType(ObjectType.Ground);
       planetMat.setObjectType(ObjectType.Ground);
       techMat.setObjectType(ObjectType.Ground);
+      techDeckMat.setObjectType(ObjectType.Ground);
     });
   }
 
