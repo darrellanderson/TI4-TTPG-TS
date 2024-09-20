@@ -20,6 +20,7 @@ import { LayoutMats } from "./layout-mats";
 import { LayoutSheets } from "./layout-sheets";
 import { LayoutTokenContainers } from "./layout-token-containers";
 import { LayoutUnitBoxes } from "./layout-unit-boxes";
+import { LayoutStatusPad } from "./layout-status-pad";
 
 export class LayoutPlayerArea {
   private readonly _layout: LayoutBorder;
@@ -29,6 +30,11 @@ export class LayoutPlayerArea {
       .setChildDistance(LayoutConfig.spacingWide)
       .setIsVertical(true)
       .setVerticalAlignment(VerticalAlignment.Top);
+
+    // Status pad alone at very top, gives players' a little space too.
+    const statusPad: LayoutObjects = new LayoutStatusPad(
+      playerSlot
+    ).getLayout();
 
     // Center top to bottom.
     const layoutUnitBoxes: LayoutObjects = new LayoutUnitBoxes(
@@ -52,7 +58,7 @@ export class LayoutPlayerArea {
     );
     cardHolder.setOwningPlayerSlot(playerSlot);
 
-    innerLayout.add(topRow).add(layoutMats).add(cardHolder);
+    innerLayout.add(statusPad).add(topRow).add(layoutMats).add(cardHolder);
 
     innerLayout.addAfterLayout(() => {
       cardHolder.setObjectType(ObjectType.Ground);

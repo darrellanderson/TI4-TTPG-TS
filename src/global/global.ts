@@ -13,6 +13,7 @@ import {
   LeaveSeat,
   OnCardBecameSingletonOrDeck,
   Spawn,
+  TurnOrder,
 } from "ttpg-darrell";
 
 import { FactionRegistry } from "../lib/faction-lib/registry/faction-registry";
@@ -44,18 +45,23 @@ registerErrorHandler();
 
 export class TI4Class {
   // Events.
-  onCardBecameSingletonOrDeck = new OnCardBecameSingletonOrDeck();
+  public readonly onCardBecameSingletonOrDeck =
+    new OnCardBecameSingletonOrDeck();
 
   // Libraries.
-  hex = new Hex(HEX_LAYOUT_POINTY, 5.77735 * 1.5);
-  factionRegistry = new FactionRegistry().loadDefaultData();
-  planetAttachmentRegistry = new PlanetAttachmentRegistry().loadDefaultData();
-  playerSeats = new PlayerSeats();
-  systemAttachmentRegistry = new SystemAttachmentRegistry().loadDefaultData();
-  systemRegistry = new SystemRegistry().loadDefaultData();
-  techRegistry = new TechRegistry().loadDefaultData();
-  unitAttrsRegistry = new UnitAttrsRegistry().loadDefaultData();
-  unitModifierRegistry = new UnitModifierRegistry().loadDefaultData();
+  public readonly hex = new Hex(HEX_LAYOUT_POINTY, 5.77735 * 1.5);
+  public readonly factionRegistry = new FactionRegistry().loadDefaultData();
+  public readonly planetAttachmentRegistry =
+    new PlanetAttachmentRegistry().loadDefaultData();
+  public readonly playerSeats = new PlayerSeats();
+  public readonly systemAttachmentRegistry =
+    new SystemAttachmentRegistry().loadDefaultData();
+  public readonly systemRegistry = new SystemRegistry().loadDefaultData();
+  public readonly techRegistry = new TechRegistry().loadDefaultData();
+  public readonly turnOrder = new TurnOrder("@ti4/turn-order");
+  public readonly unitAttrsRegistry = new UnitAttrsRegistry().loadDefaultData();
+  public readonly unitModifierRegistry =
+    new UnitModifierRegistry().loadDefaultData();
 }
 
 // Also place "TI4" in the global namespace.
