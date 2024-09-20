@@ -37,19 +37,26 @@ export class LayoutStrategyCards {
       const snapPoints: Array<SnapPoint> = mat.getAllSnapPoints();
       strategyCards.forEach((strategyCard, index) => {
         const snapPoint: SnapPoint | undefined = snapPoints[index];
-        if (snapPoint) {
-          const above: Vector = snapPoint
-            .getGlobalPosition()
-            .add(new Vector(0, 0, 1));
-          strategyCard.setPosition(above);
-          strategyCard.snapToGround();
-          strategyCard.snap();
-        }
+        this._placeStrategyCard(strategyCard, snapPoint);
       });
     });
   }
 
   getLayout(): LayoutObjects {
     return this._layout;
+  }
+
+  _placeStrategyCard(
+    strategyCard: GameObject,
+    snapPoint: SnapPoint | undefined
+  ) {
+    if (snapPoint) {
+      const above: Vector = snapPoint
+        .getGlobalPosition()
+        .add(new Vector(0, 0, 1));
+      strategyCard.setPosition(above);
+      strategyCard.snapToGround();
+      strategyCard.snap();
+    }
   }
 }
