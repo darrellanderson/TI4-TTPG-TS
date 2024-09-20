@@ -1,13 +1,13 @@
 {
-	"Type": "Table",
-	"GUID": "868B3EDB1B44338A963BAFB126DFB3C4",
-	"Name": "Table",
-	"Metadata": "",
-	"CollisionType": "Static",
+	"Type": "Generic",
+	"GUID": "CCE415BC7748EC5EA790E7819E8DEB2E",
+	"Name": "Timer",
+	"Metadata": "mat:base/timer",
+	"CollisionType": "Regular",
 	"Friction": 0.7,
 	"Restitution": 0.3,
 	"Density": 1,
-	"SurfaceType": "Cloth",
+	"SurfaceType": "Plastic",
 	"Roughness": 1,
 	"Metallic": 0,
 	"PrimaryColor":
@@ -24,23 +24,23 @@
 	},
 	"Flippable": false,
 	"AutoStraighten": false,
-	"ShouldSnap": false,
-	"ScriptName": "",
+	"ShouldSnap": true,
+	"ScriptName": "obj/timer-obj.js",
 	"Blueprint": "",
 	"Models": [
 		{
-			"Model": "uv-cube-tiled.obj",
+			"Model": "uv-cube.obj",
 			"Offset":
 			{
 				"X": 0,
 				"Y": 0,
-				"Z": 20
+				"Z": 0
 			},
 			"Scale":
 			{
-				"X": 350,
-				"Y": 550,
-				"Z": 10
+				"X": 6,
+				"Y": 18.199999999999999,
+				"Z": 0.25
 			},
 			"Rotation":
 			{
@@ -48,7 +48,7 @@
 				"Y": 0,
 				"Z": 0
 			},
-			"Texture": "table/table-tiled-512.jpg",
+			"Texture": "",
 			"NormalMap": "",
 			"ExtraMap": "",
 			"ExtraMap2": "",
@@ -60,9 +60,9 @@
 			"Metallic": 0,
 			"PrimaryColor":
 			{
-				"R": 44,
-				"G": 44,
-				"B": 44
+				"R": 23,
+				"G": 23,
+				"B": 23
 			},
 			"SecondaryColor":
 			{
@@ -83,6 +83,6 @@
 		"Y": 0,
 		"Z": 0
 	},
-	"GroundAccessibility": "Nothing",
+	"GroundAccessibility": "ZoomAndContext",
 	"Tags": []
 }

@@ -7,9 +7,7 @@ export class LayoutQuickRoller {
   constructor() {
     this._layout = new LayoutObjects();
 
-    const quickRoller: GameObject = Spawn.spawnOrThrow(
-      "quick-roller:base/quick-roller"
-    );
+    const quickRoller: GameObject = Spawn.spawnOrThrow("mat:base/quick-roller");
 
     this._layout.add(quickRoller).addAfterLayout(() => {
       quickRoller.setObjectType(ObjectType.Ground);

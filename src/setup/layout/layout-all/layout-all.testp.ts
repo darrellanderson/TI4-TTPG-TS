@@ -18,5 +18,6 @@ const z: number = world.getTableHeight();
 const pos: Vector = new Vector(0, 0, z + 3);
 const yaw: number = 0;
 
-const layout: LayoutAll = new LayoutAll(8);
+const playerCount: number = 6;
+const layout: LayoutAll = new LayoutAll(playerCount);
 layout.getLayout().doLayoutAtPoint(pos, yaw);

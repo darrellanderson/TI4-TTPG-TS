@@ -7,7 +7,7 @@ export class LayoutTimer {
   constructor() {
     this._layout = new LayoutObjects();
 
-    const timer: GameObject = Spawn.spawnOrThrow("timer:base/timer");
+    const timer: GameObject = Spawn.spawnOrThrow("mat:base/timer");
 
     this._layout.add(timer).addAfterLayout(() => {
       timer.setObjectType(ObjectType.Ground);

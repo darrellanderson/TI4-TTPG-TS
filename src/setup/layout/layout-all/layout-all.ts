@@ -9,6 +9,7 @@ import { LayoutStrategyCards } from "../layout-strategy-cards/layout-strategy-ca
 import { LayoutTableContainers } from "../layout-table-containers/layout-table-containers";
 import { LayoutTableDecks } from "../layout-table-decks/layout-table-decks";
 import { LayoutCombatArena } from "../layout-combat-arena/layout-combat-arena";
+import { LayoutQuickRoller } from "../layout-quick-roller/layout-quick-roller";
 
 export class LayoutAll {
   private readonly _layout: LayoutObjects;
@@ -51,7 +52,13 @@ export class LayoutAll {
     right
       .add(new LayoutFighterInfTgContainers().getLayout())
       .add(new LayoutCombatArena().getLayout())
-      .add(new LayoutStrategyCards().getLayout());
+      .add(
+        new LayoutObjects()
+          .setChildDistance(LayoutConfig.spacingExtraWide)
+          .setIsVertical(true)
+          .add(new LayoutStrategyCards().getLayout())
+          .add(new LayoutQuickRoller().getLayout())
+      );
 
     // Top player areas invert vertical layout.
     top.flip(false, true);
@@ -64,7 +71,8 @@ export class LayoutAll {
       leftSize.w - rightSize.w - LayoutConfig.spacingExtraWide;
     right.add(new LayoutObjects().setOverrideWidth(pad));
 
-    middle.add(left).add(new LayoutMapArea(3).getLayout()).add(right);
+    const numMapRings: number = playerCount <= 6 ? 3 : 4;
+    middle.add(left).add(new LayoutMapArea(numMapRings).getLayout()).add(right);
   }
 
   getLayout(): LayoutObjects {

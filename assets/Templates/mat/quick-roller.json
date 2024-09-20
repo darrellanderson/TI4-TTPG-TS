@@ -1,0 +1,155 @@
+{
+	"Type": "Generic",
+	"GUID": "6A6FE49288463E90C14DBA9BE856CF27",
+	"Name": "Quick Roller",
+	"Metadata": "mat:base/quick-roller",
+	"CollisionType": "Regular",
+	"Friction": 0.7,
+	"Restitution": 0.3,
+	"Density": 1,
+	"SurfaceType": "Plastic",
+	"Roughness": 1,
+	"Metallic": 0,
+	"PrimaryColor":
+	{
+		"R": 255,
+		"G": 255,
+		"B": 255
+	},
+	"SecondaryColor":
+	{
+		"R": 0,
+		"G": 0,
+		"B": 0
+	},
+	"Flippable": true,
+	"AutoStraighten": false,
+	"ShouldSnap": true,
+	"ScriptName": "obj/quick-roller-obj.js",
+	"Blueprint": "",
+	"Models": [
+		{
+			"Model": "token/round.obj",
+			"Offset":
+			{
+				"X": 0,
+				"Y": 0,
+				"Z": 0
+			},
+			"Scale":
+			{
+				"X": 4,
+				"Y": 4,
+				"Z": 1
+			},
+			"Rotation":
+			{
+				"X": -0,
+				"Y": 0,
+				"Z": 0
+			},
+			"Texture": "",
+			"NormalMap": "",
+			"ExtraMap": "",
+			"ExtraMap2": "",
+			"IsTransparent": false,
+			"CastShadow": true,
+			"IsTwoSided": false,
+			"UseOverrides": false,
+			"Roughness": 1,
+			"Metallic": 0,
+			"PrimaryColor":
+			{
+				"R": 23,
+				"G": 23,
+				"B": 23
+			},
+			"SecondaryColor":
+			{
+				"R": 0,
+				"G": 0,
+				"B": 0
+			},
+			"SurfaceType": "Plastic"
+		},
+		{
+			"Model": "token/round.obj",
+			"Offset":
+			{
+				"X": 0,
+				"Y": 0,
+				"Z": 0
+			},
+			"Scale":
+			{
+				"X": 4,
+				"Y": 4,
+				"Z": 1
+			},
+			"Rotation":
+			{
+				"X": 180,
+				"Y": 0,
+				"Z": 0
+			},
+			"Texture": "",
+			"NormalMap": "",
+			"ExtraMap": "",
+			"ExtraMap2": "",
+			"IsTransparent": false,
+			"CastShadow": true,
+			"IsTwoSided": false,
+			"UseOverrides": false,
+			"Roughness": 1,
+			"Metallic": 0,
+			"PrimaryColor":
+			{
+				"R": 23,
+				"G": 23,
+				"B": 23
+			},
+			"SecondaryColor":
+			{
+				"R": 0,
+				"G": 0,
+				"B": 0
+			},
+			"SurfaceType": "Plastic"
+		}
+	],
+	"Collision": [
+		{
+			"Model": "token/round.obj",
+			"Offset":
+			{
+				"X": 0,
+				"Y": 0,
+				"Z": 0
+			},
+			"Scale":
+			{
+				"X": 4,
+				"Y": 4,
+				"Z": 1
+			},
+			"Rotation":
+			{
+				"X": -0,
+				"Y": 0,
+				"Z": 0
+			},
+			"Type": "Convex"
+		}
+	],
+	"Lights": [],
+	"SnapPointsGlobal": false,
+	"SnapPoints": [],
+	"ZoomViewDirection":
+	{
+		"X": 0,
+		"Y": 0,
+		"Z": 0
+	},
+	"GroundAccessibility": "ZoomAndContext",
+	"Tags": []
+}

@@ -3,6 +3,7 @@ import { LayoutConfig } from "../layout-config";
 import { LayoutObjectives } from "./layout-objectives";
 import { LayoutPlayerSecrets } from "./layout-player-secrets";
 import { LayoutAgendaLawsMat } from "./layout-agenda-laws-mat";
+import { LayoutTimer } from "./layout-timer";
 
 export class LayoutScoringArea {
   private readonly _layout: LayoutObjects;
@@ -17,6 +18,7 @@ export class LayoutScoringArea {
     this._layout = new LayoutObjects()
       .setChildDistance(LayoutConfig.spacingWide)
       .setIsVertical(true)
+      .add(new LayoutTimer().getLayout())
       .add(layoutObjectives.getLayout())
       .add(layoutPlayerSecrets.getLayout())
       .add(layoutAgendaLawsMat.getLayout());

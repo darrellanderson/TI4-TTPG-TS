@@ -16,7 +16,8 @@
     "baseUrl": "./src",
     "outDir": "./build",
     "moduleResolution": "Node",
-    "target": "ES6"
+    "target": "ES6",
+    "sourceMap": true
   },
   "include": ["./src/**/*.ts", "./src/**/*.tsx"]
 }
