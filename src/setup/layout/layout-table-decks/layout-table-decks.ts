@@ -17,17 +17,24 @@ export class LayoutTableDecks {
     );
     const planetMat: GameObject = Spawn.spawnOrThrow("mat.deck:base/planet");
 
+    const topRow: LayoutObjects = new LayoutObjects()
+      .setChildDistance(LayoutConfig.spacingWide)
+      .add(planetMat)
+      .add(baseMat)
+      .addAfterLayout(() => {
+        planetMat.setObjectType(ObjectType.Ground);
+        baseMat.setObjectType(ObjectType.Ground);
+      });
+
     this._layout
       .setChildDistance(LayoutConfig.spacingWide)
-      .add(baseMat)
-      .add(planetMat)
+      .setIsVertical(true)
+      .add(topRow)
       .add(explorationMat)
       .add(factionReferenceMat)
       .addAfterLayout(() => {
-        baseMat.setObjectType(ObjectType.Ground);
         explorationMat.setObjectType(ObjectType.Ground);
         factionReferenceMat.setObjectType(ObjectType.Ground);
-        planetMat.setObjectType(ObjectType.Ground);
       });
   }
 
