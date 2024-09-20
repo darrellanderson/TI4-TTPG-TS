@@ -18,5 +18,5 @@ const z: number = world.getTableHeight();
 const pos: Vector = new Vector(0, 0, z + 3);
 const yaw: number = 0;
 
-const layout: LayoutAll = new LayoutAll(7);
+const layout: LayoutAll = new LayoutAll(8);
 layout.getLayout().doLayoutAtPoint(pos, yaw);

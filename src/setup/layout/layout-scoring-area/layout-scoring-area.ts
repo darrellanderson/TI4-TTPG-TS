@@ -2,6 +2,7 @@ import { LayoutObjects } from "ttpg-darrell";
 import { LayoutConfig } from "../layout-config";
 import { LayoutObjectives } from "./layout-objectives";
 import { LayoutPlayerSecrets } from "./layout-player-secrets";
+import { LayoutAgendaLawsMat } from "./layout-agenda-laws-mat";
 
 export class LayoutScoringArea {
   private readonly _layout: LayoutObjects;
@@ -11,12 +12,14 @@ export class LayoutScoringArea {
     const layoutPlayerSecrets: LayoutPlayerSecrets = new LayoutPlayerSecrets(
       playerCount
     );
+    const layoutAgendaLawsMat: LayoutAgendaLawsMat = new LayoutAgendaLawsMat();
 
     this._layout = new LayoutObjects()
       .setChildDistance(LayoutConfig.spacingWide)
       .setIsVertical(true)
       .add(layoutObjectives.getLayout())
-      .add(layoutPlayerSecrets.getLayout());
+      .add(layoutPlayerSecrets.getLayout())
+      .add(layoutAgendaLawsMat.getLayout());
   }
 
   getLayout(): LayoutObjects {

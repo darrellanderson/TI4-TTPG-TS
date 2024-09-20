@@ -3,6 +3,7 @@ import { LayoutObjects, Spawn } from "ttpg-darrell";
 import { LayoutConfig } from "../layout-config";
 import { UnitType } from "../../../lib/unit-lib/schema/unit-attrs-schema";
 import { LayoutUnitBox } from "./layout-unit-box";
+import { GameObject, ObjectType } from "@tabletop-playground/api";
 
 export class LayoutUnitBoxes {
   private readonly _layout: LayoutObjects = new LayoutObjects();
@@ -66,7 +67,13 @@ export class LayoutUnitBoxes {
     });
 
     if (row) {
-      row.add(Spawn.spawnOrThrow("container:base/garbage"));
+      const garbageContainer: GameObject = Spawn.spawnOrThrow(
+        "container:base/garbage"
+      );
+      row.add(garbageContainer);
+      this._layout.addAfterLayout(() => {
+        garbageContainer.setObjectType(ObjectType.Ground);
+      });
     }
   }
 

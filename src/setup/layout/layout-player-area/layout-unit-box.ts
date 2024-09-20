@@ -18,6 +18,10 @@ export class LayoutUnitBox {
       colorLib.getColorsByPlayerSlotOrThrow(playerSlot);
     const objColor: Color = colorLib.parseColorOrThrow(colorsType.plastic);
 
+    console.log(
+      `unit: ${unit}, playerSlot: ${playerSlot}, color: ${objColor.toHex()}`
+    );
+
     const source: string = unit === "mech" ? "pok" : "base";
     const containerNsid: string = `container.unit:${source}/${unit}`;
     const unitNsid: string = `unit:${source}/${unit}`;

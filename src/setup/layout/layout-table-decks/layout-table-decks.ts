@@ -17,7 +17,7 @@ export class LayoutTableDecks {
     );
     const planetMat: GameObject = Spawn.spawnOrThrow("mat.deck:base/planet");
 
-    const topRow: LayoutObjects = new LayoutObjects()
+    const planetsAndBase: LayoutObjects = new LayoutObjects()
       .setChildDistance(LayoutConfig.spacingWide)
       .add(planetMat)
       .add(baseMat)
@@ -29,8 +29,8 @@ export class LayoutTableDecks {
     this._layout
       .setChildDistance(LayoutConfig.spacingWide)
       .setIsVertical(true)
-      .add(topRow)
       .add(explorationMat)
+      .add(planetsAndBase)
       .add(factionReferenceMat)
       .addAfterLayout(() => {
         explorationMat.setObjectType(ObjectType.Ground);

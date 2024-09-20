@@ -1,12 +1,19 @@
 import {
   CardHolder,
+  Color,
   GameObject,
   ObjectType,
   Player,
   VerticalAlignment,
   world,
 } from "@tabletop-playground/api";
-import { LayoutBorder, LayoutObjects, Spawn } from "ttpg-darrell";
+import {
+  ColorLib,
+  ColorsType,
+  LayoutBorder,
+  LayoutObjects,
+  Spawn,
+} from "ttpg-darrell";
 
 import { LayoutConfig } from "../layout-config";
 import { LayoutMats } from "./layout-mats";
@@ -57,10 +64,15 @@ export class LayoutPlayerArea {
     });
 
     // Inner layout must be complete to measure size correctly.
+    const colorLib: ColorLib = new ColorLib();
+    const colorsType: ColorsType =
+      colorLib.getColorsByPlayerSlotOrThrow(playerSlot);
+    const color: Color = colorLib.parseColorOrThrow(colorsType.widget);
     const padding: number = LayoutConfig.spacingWide;
     this._layout = new LayoutBorder(innerLayout, padding)
-      .setPlayerSlot(playerSlot)
-      .setOutlineWidth(1);
+      .setColor(color)
+      .setOutlineWidth(1)
+      .setTag(`player-area-${playerSlot}`);
   }
 
   getLayout(): LayoutObjects {

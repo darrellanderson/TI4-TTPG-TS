@@ -62,7 +62,7 @@ process.nextTick(() => {
   if (owner >= 0) {
     const colorLib: ColorLib = new ColorLib();
     const colorsType: ColorsType = colorLib.getColorsByPlayerSlotOrThrow(owner);
-    const widgetColor: Color = colorLib.parseColorOrThrow(colorsType.plastic);
+    const widgetColor: Color = colorLib.parseColorOrThrow(colorsType.widget);
     widget.setTintColor(widgetColor);
   }
   obj.addUI(ui);
