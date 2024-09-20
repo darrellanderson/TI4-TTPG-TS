@@ -43,6 +43,7 @@ export class LayoutAll {
     }
 
     left
+      .add(new LayoutObjects().setOverrideWidth(50)) // force left to be wider than right
       .add(new LayoutTableContainers().getLayout())
       .add(new LayoutScoringArea(playerCount).getLayout())
       .add(new LayoutTableDecks().getLayout())
@@ -63,7 +64,7 @@ export class LayoutAll {
       leftSize.w - rightSize.w - LayoutConfig.spacingExtraWide;
     right.add(new LayoutObjects().setOverrideWidth(pad));
 
-    middle.add(left).add(new LayoutMapArea().getLayout()).add(right);
+    middle.add(left).add(new LayoutMapArea(3).getLayout()).add(right);
   }
 
   getLayout(): LayoutObjects {

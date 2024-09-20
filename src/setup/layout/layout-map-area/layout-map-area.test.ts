@@ -9,5 +9,5 @@ beforeEach(() => {
 it("constructor", () => {
   const pos: Vector = new Vector(0, 0, 0);
   const yaw: number = 0;
-  new LayoutMapArea().getLayout().doLayoutAtPoint(pos, yaw);
+  new LayoutMapArea(3).getLayout().doLayoutAtPoint(pos, yaw);
 });
