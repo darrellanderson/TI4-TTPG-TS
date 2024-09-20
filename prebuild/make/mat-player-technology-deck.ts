@@ -11,20 +11,20 @@ import {
   ZTextCell,
 } from "../../../ttpg-darrell/src/index-ext";
 
-const PORTRAIT_W: number = 220;
-const PORTRAIT_H: number = 308;
+const LANDSCAPE_H: number = 220;
+const LANDSCAPE_W: number = 308;
 
-const H_WORLD: number = 6.3;
-const SPACING: number = Math.round((0.5 * PORTRAIT_H) / H_WORLD);
+const W_WORLD: number = 6.3;
+const SPACING: number = Math.round((0.5 * LANDSCAPE_W) / W_WORLD);
 
 const COLOR: string = "#171717";
 
 function getSlotPortrait(tags: Array<string>): ZImageCell {
   const slotCell: ZImageCell = {
     type: "ImageCell",
-    width: PORTRAIT_W,
-    height: PORTRAIT_H,
-    imageFile: "prebuild/mat/slot/slot-portrait.jpg",
+    width: LANDSCAPE_W,
+    height: LANDSCAPE_H,
+    imageFile: "prebuild/mat/slot/slot-landscape.jpg",
     snapPoints: [{ tags }],
   };
   return slotCell;
@@ -33,7 +33,7 @@ function getSlotPortrait(tags: Array<string>): ZImageCell {
 function getLabel(labelText: string): ZTextCell {
   return {
     type: "TextCell",
-    width: PORTRAIT_W,
+    width: LANDSCAPE_W,
     height: 24,
     text: labelText.toUpperCase(),
     textColor: "#ffffff",
@@ -65,7 +65,7 @@ const params: CreateBoardParams = {
   templateMetadata: "mat.player:base/technology-deck",
   srcImage: getMat(),
   topDownWorldSize: {
-    autoWidthHeight: { pixel: PORTRAIT_H, world: H_WORLD },
+    autoWidthHeight: { pixel: LANDSCAPE_W, world: W_WORLD },
     depth: 0.25,
   },
   preshrink: 1024,

@@ -22,6 +22,9 @@ export class LayoutUnitBox {
     const containerNsid: string = `container.unit:${source}/${unit}`;
     const unitNsid: string = `unit:${source}/${unit}`;
 
+    const unitTag: string = `${unit}(${playerSlot})`;
+    let tags: Array<string>;
+
     const unitAttrs: UnitAttrs = TI4.unitAttrsRegistry
       .defaultUnitAttrsSet()
       .getOrThrow(unit);
@@ -33,10 +36,23 @@ export class LayoutUnitBox {
     container.setPrimaryColor(objColor);
     container.setRotation([0, 0, 180]); // image on top, flip because using UI instead
     if (container instanceof Container) {
+      tags = container.getContainerTags();
+      if (!tags.includes(unitTag)) {
+        tags.push(unitTag);
+        container.setContainerTags(tags);
+      }
+    }
+    if (container instanceof Container) {
       for (let i = 0; i < componentCount; i++) {
         const unit: GameObject = Spawn.spawnOrThrow(unitNsid);
         unit.setOwningPlayerSlot(playerSlot);
         unit.setPrimaryColor(objColor);
+        tags = unit.getTags();
+        if (!tags.includes(unitTag)) {
+          tags.push(unitTag);
+          unit.setTags(tags);
+        }
+
         container.insert([unit]);
       }
     }
