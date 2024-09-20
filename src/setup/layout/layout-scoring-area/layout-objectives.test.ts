@@ -11,3 +11,7 @@ it("constructor", () => {
   const yaw: number = 0;
   new LayoutObjectives().getLayout().doLayoutAtPoint(pos, yaw);
 });
+
+it("getScoreboard", () => {
+  new LayoutObjectives().getScoreboard();
+});
