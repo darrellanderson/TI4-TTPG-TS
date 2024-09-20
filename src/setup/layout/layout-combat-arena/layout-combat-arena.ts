@@ -1,4 +1,4 @@
-import { GameObject } from "@tabletop-playground/api";
+import { GameObject, ObjectType } from "@tabletop-playground/api";
 import { LayoutObjects, Spawn } from "ttpg-darrell";
 
 export class LayoutCombatArena {
@@ -7,9 +7,13 @@ export class LayoutCombatArena {
   constructor() {
     this._layout = new LayoutObjects();
 
-    const arena: GameObject = Spawn.spawnOrThrow("tile.system:base/0");
+    const arena: GameObject = Spawn.spawnOrThrow("mat:base/combat-arena");
 
     this._layout.add(arena);
+
+    this._layout.addAfterLayout(() => {
+      arena.setObjectType(ObjectType.Ground);
+    });
   }
 
   getLayout(): LayoutObjects {
