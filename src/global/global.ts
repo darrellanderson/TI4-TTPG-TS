@@ -13,6 +13,7 @@ import {
   LeaveSeat,
   OnCardBecameSingletonOrDeck,
   Spawn,
+  Timer,
   TurnOrder,
 } from "ttpg-darrell";
 
@@ -58,7 +59,8 @@ export class TI4Class {
     new SystemAttachmentRegistry().loadDefaultData();
   public readonly systemRegistry = new SystemRegistry().loadDefaultData();
   public readonly techRegistry = new TechRegistry().loadDefaultData();
-  public readonly turnOrder = new TurnOrder("@ti4/turn-order");
+  public readonly timer = new Timer("@timer/ti4");
+  public readonly turnOrder = new TurnOrder("@turn-order/ti4");
   public readonly unitAttrsRegistry = new UnitAttrsRegistry().loadDefaultData();
   public readonly unitModifierRegistry =
     new UnitModifierRegistry().loadDefaultData();
