@@ -69,7 +69,7 @@ function getLabel(labelText: string): ZBaseCell {
 function deckAndDiscard(
   cardNsidName: string,
   labelText: string,
-  symbolFile: string
+  symbolFile: string,
 ): ZBaseCell {
   const deckSlot: ZBaseCell = getSymbolSlot(symbolFile, [
     `deck-${cardNsidName}`,
@@ -90,7 +90,7 @@ function deckAndDiscard(
 function deckNoDiscard(
   cardNsidName: string,
   labelText: string,
-  symbolFile: string
+  symbolFile: string,
 ): ZBaseCell {
   const deckSlot: ZBaseCell = getSymbolSlot(symbolFile, [
     `deck-${cardNsidName}`,
@@ -113,27 +113,27 @@ function deckGrid(): ZRowCell {
       deckNoDiscard(
         "relic", // no exploration prefix
         "Relic",
-        "prebuild/mat/slot/symbol-relic.png"
+        "prebuild/mat/slot/symbol-relic.png",
       ),
       deckAndDiscard(
         "exploration-cultural",
         "Cultural",
-        "prebuild/mat/slot/symbol-cultural.png"
+        "prebuild/mat/slot/symbol-cultural.png",
       ),
       deckAndDiscard(
         "exploration-industrial",
         "Industrial",
-        "prebuild/mat/slot/symbol-industrial.png"
+        "prebuild/mat/slot/symbol-industrial.png",
       ),
       deckAndDiscard(
         "exploration-hazardous",
         "Hazardous",
-        "prebuild/mat/slot/symbol-hazardous.png"
+        "prebuild/mat/slot/symbol-hazardous.png",
       ),
       deckAndDiscard(
         "exploration-frontier",
         "Frontier",
-        "prebuild/mat/slot/symbol-frontier.png"
+        "prebuild/mat/slot/symbol-frontier.png",
       ),
     ],
   };

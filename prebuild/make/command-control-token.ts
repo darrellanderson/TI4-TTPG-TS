@@ -18,7 +18,7 @@ import { COMMAND_TOKEN_TEMPLATE } from "./data/command.data";
 import { CONTROL_TOKEN_TEMPLATE } from "./data/control.data";
 
 for (const [source, factionDataArray] of Object.entries(
-  SOURCE_TO_FACTION_DATA
+  SOURCE_TO_FACTION_DATA,
 )) {
   for (const factionData of factionDataArray) {
     let templateFile: string;
@@ -43,7 +43,7 @@ for (const [source, factionDataArray] of Object.entries(
     fs.mkdirSync(textureDir, { recursive: true });
     fs.cpSync(
       `./prebuild/token/command-control/${textureNsidName}.jpg`,
-      textureFile
+      textureFile,
     );
 
     const commandToken = JSON.parse(JSON.stringify(COMMAND_TOKEN_TEMPLATE));
@@ -85,5 +85,5 @@ for (const [source, factionDataArray] of Object.entries(
 
 fs.cpSync(
   "./prebuild/token/command-control/token-mask.png",
-  "./assets/Textures/token/command-control/token-mask.png"
+  "./assets/Textures/token/command-control/token-mask.png",
 );

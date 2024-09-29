@@ -34,7 +34,7 @@ export async function center(pngFilename: string) {
  */
 export async function opaqueJpg(
   pngFilename: string,
-  grayscale: boolean = false
+  grayscale: boolean = false,
 ) {
   const src: string = pngFilename;
   const dst: string = pngFilename.replace(/.png$/, ".jpg");
@@ -249,7 +249,7 @@ export async function clipCircle(inFilename: string, pngFilename: string) {
   const w: number = 256 - x * 2;
   const r: number = Math.floor(w / 2);
   const circle = Buffer.from(
-    `<svg viewBox="0 0 256 256"><rect x="${x}" y="${x}" width="${w}" height="${w}" rx="${r}" ry="${r}"/></svg>`
+    `<svg viewBox="0 0 256 256"><rect x="${x}" y="${x}" width="${w}" height="${w}" rx="${r}" ry="${r}"/></svg>`,
   );
 
   // Clip circle (circle not to edge).

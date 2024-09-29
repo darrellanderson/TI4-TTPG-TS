@@ -22,7 +22,7 @@ const modelFile: string = path.join(
   "assets",
   "Models",
   "token",
-  "mirage.obj"
+  "mirage.obj",
 );
 if (!fs.existsSync(modelFile)) {
   throw new Error(`missing "${modelFile}`);

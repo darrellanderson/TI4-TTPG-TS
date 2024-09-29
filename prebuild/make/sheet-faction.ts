@@ -18,7 +18,7 @@ import path from "path";
 import { SOURCE_TO_FACTION_DATA } from "../../src/lib/faction-lib/data/faction.data";
 import { FACTION_SHEET_TEMPLATE_DATA } from "./data/faction-sheet.template-data";
 for (const [source, factionDataArray] of Object.entries(
-  SOURCE_TO_FACTION_DATA
+  SOURCE_TO_FACTION_DATA,
 )) {
   for (const factionData of factionDataArray) {
     console.log(`processing ${factionData.abbr}`);

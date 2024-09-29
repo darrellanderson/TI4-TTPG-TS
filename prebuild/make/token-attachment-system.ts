@@ -31,7 +31,7 @@ type AttachmentInfo = {
 // Assemble info records.
 const infos: Array<AttachmentInfo> = [];
 for (const [source, systemAttachmentSchemas] of Object.entries(
-  SOURCE_TO_SYSTEM_ATTACHMENT_DATA
+  SOURCE_TO_SYSTEM_ATTACHMENT_DATA,
 )) {
   for (const systemAttachmentSchema of systemAttachmentSchemas) {
     const name: string = systemAttachmentSchema.name;
@@ -142,12 +142,12 @@ for (const info of infos) {
 
   fs.cpSync(
     "./prebuild/" + info.imgFileFace,
-    "./assets/Textures/" + info.imgFileFace
+    "./assets/Textures/" + info.imgFileFace,
   );
   if (info.imgFileFace !== info.imgFileBack && info.imgFileBack !== "") {
     fs.cpSync(
       "./prebuild/" + info.imgFileBack,
-      "./assets/Textures/" + info.imgFileBack
+      "./assets/Textures/" + info.imgFileBack,
     );
   }
 }

@@ -28,7 +28,7 @@ type AttachmentInfo = {
 // Assemble info records.
 const infos: Array<AttachmentInfo> = [];
 for (const [source, planetAttachmentSchemas] of Object.entries(
-  SOURCE_TO_PLANET_ATTACHMENT_DATA
+  SOURCE_TO_PLANET_ATTACHMENT_DATA,
 )) {
   for (const planetAttachmentSchema of planetAttachmentSchemas) {
     const name: string = planetAttachmentSchema.name;
@@ -117,12 +117,12 @@ for (const info of infos) {
 
   fs.cpSync(
     "./prebuild/" + info.imgFileFace,
-    "./assets/Textures/" + info.imgFileFace
+    "./assets/Textures/" + info.imgFileFace,
   );
   if (info.imgFileFace !== info.imgFileBack && info.imgFileBack !== "") {
     fs.cpSync(
       "./prebuild/" + info.imgFileBack,
-      "./assets/Textures/" + info.imgFileBack
+      "./assets/Textures/" + info.imgFileBack,
     );
   }
 }

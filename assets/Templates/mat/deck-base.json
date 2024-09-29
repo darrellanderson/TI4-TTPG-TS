@@ -1,138 +1,123 @@
 {
-    "Type": "Generic",
-    "GUID": "8A8C2AC3DD9B2535B9105C7C95F83DA2",
-    "Name": "Base Decks Mat",
-    "Metadata": "mat.deck:base/base",
-    "CollisionType": "Regular",
-    "Friction": 0.7,
-    "Restitution": 0.1,
-    "Density": 1,
-    "SurfaceType": "Cardboard",
-    "Roughness": 1,
-    "Metallic": 0,
-    "PrimaryColor": {
-        "R": 255,
-        "G": 255,
-        "B": 255
-    },
-    "SecondaryColor": {
-        "R": 0,
-        "G": 0,
-        "B": 0
-    },
-    "Flippable": false,
-    "AutoStraighten": false,
-    "ShouldSnap": false,
-    "ScriptName": "",
-    "Blueprint": "",
-    "Models": [
-        {
-            "Model": "uv-cube.obj",
-            "Offset": {
-                "X": 0,
-                "Y": 0,
-                "Z": 0
-            },
-            "Scale": {
-                "X": 15.054545454545455,
-                "Y": 15.463636363636365,
-                "Z": 0.25
-            },
-            "Rotation": {
-                "X": 0,
-                "Y": 0,
-                "Z": 0
-            },
-            "Texture": "mat/deck-base/deck-base.jpg",
-            "NormalMap": "",
-            "ExtraMap": "",
-            "ExtraMap2": "",
-            "IsTransparent": false,
-            "CastShadow": true,
-            "IsTwoSided": false,
-            "UseOverrides": true,
-            "SurfaceType": "Cardboard"
-        }
-    ],
-    "Lights": [],
-    "SnapPointsGlobal": false,
-    "SnapPoints": [
-        {
-            "X": 3.8863636363636362,
-            "Y": -4.990909090909091,
-            "Z": 0.125,
-            "Range": 3,
-            "SnapRotation": 2,
-            "RotationOffset": 0,
-            "Shape": 0,
-            "FlipValidity": 0,
-            "Tags": [
-                "deck-objective-secret",
-                "card-objective-secret"
-            ]
-        },
-        {
-            "X": 3.8863636363636362,
-            "Y": 0,
-            "Z": 0.125,
-            "Range": 3,
-            "SnapRotation": 2,
-            "RotationOffset": 0,
-            "Shape": 0,
-            "FlipValidity": 0,
-            "Tags": [
-                "deck-agenda",
-                "card-agenda"
-            ]
-        },
-        {
-            "X": -2.9045454545454543,
-            "Y": 0,
-            "Z": 0.125,
-            "Range": 3,
-            "SnapRotation": 2,
-            "RotationOffset": 0,
-            "Shape": 0,
-            "FlipValidity": 0,
-            "Tags": [
-                "discard-agenda",
-                "card-agenda"
-            ]
-        },
-        {
-            "X": 3.8863636363636362,
-            "Y": 4.99090909090909,
-            "Z": 0.125,
-            "Range": 3,
-            "SnapRotation": 2,
-            "RotationOffset": 0,
-            "Shape": 0,
-            "FlipValidity": 0,
-            "Tags": [
-                "deck-action",
-                "card-action"
-            ]
-        },
-        {
-            "X": -2.9045454545454543,
-            "Y": 4.99090909090909,
-            "Z": 0.125,
-            "Range": 3,
-            "SnapRotation": 2,
-            "RotationOffset": 0,
-            "Shape": 0,
-            "FlipValidity": 0,
-            "Tags": [
-                "discard-action",
-                "card-action"
-            ]
-        }
-    ],
-    "ZoomViewDirection": {
+  "Type": "Generic",
+  "GUID": "8A8C2AC3DD9B2535B9105C7C95F83DA2",
+  "Name": "Base Decks Mat",
+  "Metadata": "mat.deck:base/base",
+  "CollisionType": "Regular",
+  "Friction": 0.7,
+  "Restitution": 0.1,
+  "Density": 1,
+  "SurfaceType": "Cardboard",
+  "Roughness": 1,
+  "Metallic": 0,
+  "PrimaryColor": {
+    "R": 255,
+    "G": 255,
+    "B": 255
+  },
+  "SecondaryColor": {
+    "R": 0,
+    "G": 0,
+    "B": 0
+  },
+  "Flippable": false,
+  "AutoStraighten": false,
+  "ShouldSnap": false,
+  "ScriptName": "",
+  "Blueprint": "",
+  "Models": [
+    {
+      "Model": "uv-cube.obj",
+      "Offset": {
         "X": 0,
         "Y": 0,
-        "Z": 1
+        "Z": 0
+      },
+      "Scale": {
+        "X": 15.054545454545455,
+        "Y": 15.463636363636365,
+        "Z": 0.25
+      },
+      "Rotation": {
+        "X": 0,
+        "Y": 0,
+        "Z": 0
+      },
+      "Texture": "mat/deck-base/deck-base.jpg",
+      "NormalMap": "",
+      "ExtraMap": "",
+      "ExtraMap2": "",
+      "IsTransparent": false,
+      "CastShadow": true,
+      "IsTwoSided": false,
+      "UseOverrides": true,
+      "SurfaceType": "Cardboard"
+    }
+  ],
+  "Lights": [],
+  "SnapPointsGlobal": false,
+  "SnapPoints": [
+    {
+      "X": 3.8863636363636362,
+      "Y": -4.990909090909091,
+      "Z": 0.125,
+      "Range": 3,
+      "SnapRotation": 2,
+      "RotationOffset": 0,
+      "Shape": 0,
+      "FlipValidity": 0,
+      "Tags": ["deck-objective-secret", "card-objective-secret"]
     },
-    "GroundAccessibility": "Zoom",
-    "Tags": []
+    {
+      "X": 3.8863636363636362,
+      "Y": 0,
+      "Z": 0.125,
+      "Range": 3,
+      "SnapRotation": 2,
+      "RotationOffset": 0,
+      "Shape": 0,
+      "FlipValidity": 0,
+      "Tags": ["deck-agenda", "card-agenda"]
+    },
+    {
+      "X": -2.9045454545454543,
+      "Y": 0,
+      "Z": 0.125,
+      "Range": 3,
+      "SnapRotation": 2,
+      "RotationOffset": 0,
+      "Shape": 0,
+      "FlipValidity": 0,
+      "Tags": ["discard-agenda", "card-agenda"]
+    },
+    {
+      "X": 3.8863636363636362,
+      "Y": 4.99090909090909,
+      "Z": 0.125,
+      "Range": 3,
+      "SnapRotation": 2,
+      "RotationOffset": 0,
+      "Shape": 0,
+      "FlipValidity": 0,
+      "Tags": ["deck-action", "card-action"]
+    },
+    {
+      "X": -2.9045454545454543,
+      "Y": 4.99090909090909,
+      "Z": 0.125,
+      "Range": 3,
+      "SnapRotation": 2,
+      "RotationOffset": 0,
+      "Shape": 0,
+      "FlipValidity": 0,
+      "Tags": ["discard-action", "card-action"]
+    }
+  ],
+  "ZoomViewDirection": {
+    "X": 0,
+    "Y": 0,
+    "Z": 1
+  },
+  "GroundAccessibility": "Zoom",
+  "Tags": []
 }

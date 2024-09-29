@@ -1,88 +1,80 @@
 {
-	"Type": "Container",
-	"GUID": "3FA00E7B684B47125D6B50982EDD368D",
-	"Name": "Frontier",
-	"Metadata": "container.token:pok/frontier",
-	"CollisionType": "Regular",
-	"Friction": 0.7,
-	"Restitution": 0.3,
-	"Density": 1,
-	"SurfaceType": "Plastic",
-	"Roughness": 1,
-	"Metallic": 0,
-	"PrimaryColor":
-	{
-		"R": 255,
-		"G": 255,
-		"B": 255
-	},
-	"SecondaryColor":
-	{
-		"R": 0,
-		"G": 0,
-		"B": 0
-	},
-	"Flippable": true,
-	"AutoStraighten": false,
-	"ShouldSnap": false,
-	"ScriptName": "obj/icon-container-obj.js",
-	"Blueprint": "",
-	"Models": [
-		{
-			"Model": "uv-cube.obj",
-			"Offset":
-			{
-				"X": 0,
-				"Y": 0,
-				"Z": 0
-			},
-			"Scale":
-			{
-				"X": 4,
-				"Y": 4,
-				"Z": 1
-			},
-			"Rotation":
-			{
-				"X": -0,
-				"Y": 0,
-				"Z": 0
-			},
-			"Texture": "icon/token/frontier.jpg",
-			"NormalMap": "",
-			"ExtraMap": "icon/token/circle-mask-no-center.png",
-			"ExtraMap2": "",
-			"IsTransparent": false,
-			"CastShadow": true,
-			"IsTwoSided": false,
-			"UseOverrides": false,
-			"Roughness": 1,
-			"Metallic": 0,
-			"PrimaryColor":
-			{
-				"R": 80,
-				"G": 84,
-				"B": 87
-			},
-			"SecondaryColor":
-			{
-				"R": 0,
-				"G": 0,
-				"B": 0
-			},
-			"SurfaceType": "Plastic"
-		}
-	],
-	"Collision": [],
-	"Lights": [],
-	"SnapPointsGlobal": false,
-	"SnapPoints": [],
-	"ZoomViewDirection":
-	{
-		"X": 0,
-		"Y": 0,
-		"Z": 0
-	},
-	"GroundAccessibility": "ZoomAndContext",
-	"Tags": []
+  "Type": "Container",
+  "GUID": "3FA00E7B684B47125D6B50982EDD368D",
+  "Name": "Frontier",
+  "Metadata": "container.token:pok/frontier",
+  "CollisionType": "Regular",
+  "Friction": 0.7,
+  "Restitution": 0.3,
+  "Density": 1,
+  "SurfaceType": "Plastic",
+  "Roughness": 1,
+  "Metallic": 0,
+  "PrimaryColor": {
+    "R": 255,
+    "G": 255,
+    "B": 255
+  },
+  "SecondaryColor": {
+    "R": 0,
+    "G": 0,
+    "B": 0
+  },
+  "Flippable": true,
+  "AutoStraighten": false,
+  "ShouldSnap": false,
+  "ScriptName": "obj/icon-container-obj.js",
+  "Blueprint": "",
+  "Models": [
+    {
+      "Model": "uv-cube.obj",
+      "Offset": {
+        "X": 0,
+        "Y": 0,
+        "Z": 0
+      },
+      "Scale": {
+        "X": 4,
+        "Y": 4,
+        "Z": 1
+      },
+      "Rotation": {
+        "X": -0,
+        "Y": 0,
+        "Z": 0
+      },
+      "Texture": "icon/token/frontier.jpg",
+      "NormalMap": "",
+      "ExtraMap": "icon/token/circle-mask-no-center.png",
+      "ExtraMap2": "",
+      "IsTransparent": false,
+      "CastShadow": true,
+      "IsTwoSided": false,
+      "UseOverrides": false,
+      "Roughness": 1,
+      "Metallic": 0,
+      "PrimaryColor": {
+        "R": 80,
+        "G": 84,
+        "B": 87
+      },
+      "SecondaryColor": {
+        "R": 0,
+        "G": 0,
+        "B": 0
+      },
+      "SurfaceType": "Plastic"
+    }
+  ],
+  "Collision": [],
+  "Lights": [],
+  "SnapPointsGlobal": false,
+  "SnapPoints": [],
+  "ZoomViewDirection": {
+    "X": 0,
+    "Y": 0,
+    "Z": 0
+  },
+  "GroundAccessibility": "ZoomAndContext",
+  "Tags": []
 }

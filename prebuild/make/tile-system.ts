@@ -126,11 +126,11 @@ for (const info of infos) {
 
   fs.cpSync(
     "./prebuild/" + info.imgFileFace,
-    "./assets/Textures/" + info.imgFileFace
+    "./assets/Textures/" + info.imgFileFace,
   );
   fs.cpSync(
     "./prebuild/" + info.imgFileBack,
-    "./assets/Textures/" + info.imgFileBack
+    "./assets/Textures/" + info.imgFileBack,
   );
 
   transformFiles.push("./assets/Textures/" + info.imgFileFace);

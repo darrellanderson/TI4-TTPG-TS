@@ -53,9 +53,7 @@
   "AllowFlippedInStack": false,
   "MirrorBack": true,
   "Model": "Square",
-  "Indices": [
-    0
-  ],
+  "Indices": [0],
   "CardNames": {
     "0": "L1Z1X"
   },

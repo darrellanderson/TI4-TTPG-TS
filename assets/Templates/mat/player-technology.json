@@ -1,328 +1,288 @@
 {
-    "Type": "Generic",
-    "GUID": "68A815D9B13D82440940204D2177899E",
-    "Name": "Player Technology Mat",
-    "Metadata": "mat.player:base/technology",
-    "CollisionType": "Regular",
-    "Friction": 0.7,
-    "Restitution": 0.1,
-    "Density": 1,
-    "SurfaceType": "Cardboard",
-    "Roughness": 1,
-    "Metallic": 0,
-    "PrimaryColor": {
-        "R": 255,
-        "G": 255,
-        "B": 255
-    },
-    "SecondaryColor": {
-        "R": 0,
-        "G": 0,
-        "B": 0
-    },
-    "Flippable": false,
-    "AutoStraighten": false,
-    "ShouldSnap": false,
-    "ScriptName": "",
-    "Blueprint": "",
-    "Models": [
-        {
-            "Model": "uv-cube.obj",
-            "Offset": {
-                "X": 0,
-                "Y": 0,
-                "Z": 0
-            },
-            "Scale": {
-                "X": 20.454545454545453,
-                "Y": 34.445454545454545,
-                "Z": 0.25
-            },
-            "Rotation": {
-                "X": 0,
-                "Y": 0,
-                "Z": 0
-            },
-            "Texture": "mat/player-technology/player-technology.jpg",
-            "NormalMap": "",
-            "ExtraMap": "",
-            "ExtraMap2": "",
-            "IsTransparent": false,
-            "CastShadow": true,
-            "IsTwoSided": false,
-            "UseOverrides": true,
-            "SurfaceType": "Cardboard"
-        }
-    ],
-    "Lights": [],
-    "SnapPointsGlobal": false,
-    "SnapPoints": [
-        {
-            "X": 7.486363636363636,
-            "Y": -13.581818181818182,
-            "Z": 0.125,
-            "Range": 3,
-            "SnapRotation": 2,
-            "RotationOffset": 0,
-            "Shape": 0,
-            "FlipValidity": 0,
-            "Tags": [
-                "card-technology"
-            ]
-        },
-        {
-            "X": 2.495454545454546,
-            "Y": -13.581818181818182,
-            "Z": 0.125,
-            "Range": 3,
-            "SnapRotation": 2,
-            "RotationOffset": 0,
-            "Shape": 0,
-            "FlipValidity": 0,
-            "Tags": [
-                "card-technology"
-            ]
-        },
-        {
-            "X": -2.4954545454545425,
-            "Y": -13.581818181818182,
-            "Z": 0.125,
-            "Range": 3,
-            "SnapRotation": 2,
-            "RotationOffset": 0,
-            "Shape": 0,
-            "FlipValidity": 0,
-            "Tags": [
-                "card-technology"
-            ]
-        },
-        {
-            "X": -7.4863636363636346,
-            "Y": -13.581818181818182,
-            "Z": 0.125,
-            "Range": 3,
-            "SnapRotation": 2,
-            "RotationOffset": 0,
-            "Shape": 0,
-            "FlipValidity": 0,
-            "Tags": [
-                "card-technology"
-            ]
-        },
-        {
-            "X": 7.486363636363636,
-            "Y": -6.790909090909091,
-            "Z": 0.125,
-            "Range": 3,
-            "SnapRotation": 2,
-            "RotationOffset": 0,
-            "Shape": 0,
-            "FlipValidity": 0,
-            "Tags": [
-                "card-technology"
-            ]
-        },
-        {
-            "X": 2.495454545454546,
-            "Y": -6.790909090909091,
-            "Z": 0.125,
-            "Range": 3,
-            "SnapRotation": 2,
-            "RotationOffset": 0,
-            "Shape": 0,
-            "FlipValidity": 0,
-            "Tags": [
-                "card-technology"
-            ]
-        },
-        {
-            "X": -2.4954545454545425,
-            "Y": -6.790909090909091,
-            "Z": 0.125,
-            "Range": 3,
-            "SnapRotation": 2,
-            "RotationOffset": 0,
-            "Shape": 0,
-            "FlipValidity": 0,
-            "Tags": [
-                "card-technology"
-            ]
-        },
-        {
-            "X": -7.4863636363636346,
-            "Y": -6.790909090909091,
-            "Z": 0.125,
-            "Range": 3,
-            "SnapRotation": 2,
-            "RotationOffset": 0,
-            "Shape": 0,
-            "FlipValidity": 0,
-            "Tags": [
-                "card-technology"
-            ]
-        },
-        {
-            "X": 7.486363636363636,
-            "Y": 0,
-            "Z": 0.125,
-            "Range": 3,
-            "SnapRotation": 2,
-            "RotationOffset": 0,
-            "Shape": 0,
-            "FlipValidity": 0,
-            "Tags": [
-                "card-technology"
-            ]
-        },
-        {
-            "X": 2.495454545454546,
-            "Y": 0,
-            "Z": 0.125,
-            "Range": 3,
-            "SnapRotation": 2,
-            "RotationOffset": 0,
-            "Shape": 0,
-            "FlipValidity": 0,
-            "Tags": [
-                "card-technology"
-            ]
-        },
-        {
-            "X": -2.4954545454545425,
-            "Y": 0,
-            "Z": 0.125,
-            "Range": 3,
-            "SnapRotation": 2,
-            "RotationOffset": 0,
-            "Shape": 0,
-            "FlipValidity": 0,
-            "Tags": [
-                "card-technology"
-            ]
-        },
-        {
-            "X": -7.4863636363636346,
-            "Y": 0,
-            "Z": 0.125,
-            "Range": 3,
-            "SnapRotation": 2,
-            "RotationOffset": 0,
-            "Shape": 0,
-            "FlipValidity": 0,
-            "Tags": [
-                "card-technology"
-            ]
-        },
-        {
-            "X": 7.486363636363636,
-            "Y": 6.790909090909089,
-            "Z": 0.125,
-            "Range": 3,
-            "SnapRotation": 2,
-            "RotationOffset": 0,
-            "Shape": 0,
-            "FlipValidity": 0,
-            "Tags": [
-                "card-technology"
-            ]
-        },
-        {
-            "X": 2.495454545454546,
-            "Y": 6.790909090909089,
-            "Z": 0.125,
-            "Range": 3,
-            "SnapRotation": 2,
-            "RotationOffset": 0,
-            "Shape": 0,
-            "FlipValidity": 0,
-            "Tags": [
-                "card-technology"
-            ]
-        },
-        {
-            "X": -2.4954545454545425,
-            "Y": 6.790909090909089,
-            "Z": 0.125,
-            "Range": 3,
-            "SnapRotation": 2,
-            "RotationOffset": 0,
-            "Shape": 0,
-            "FlipValidity": 0,
-            "Tags": [
-                "card-technology"
-            ]
-        },
-        {
-            "X": -7.4863636363636346,
-            "Y": 6.790909090909089,
-            "Z": 0.125,
-            "Range": 3,
-            "SnapRotation": 2,
-            "RotationOffset": 0,
-            "Shape": 0,
-            "FlipValidity": 0,
-            "Tags": [
-                "card-technology"
-            ]
-        },
-        {
-            "X": 7.486363636363636,
-            "Y": 13.581818181818186,
-            "Z": 0.125,
-            "Range": 3,
-            "SnapRotation": 2,
-            "RotationOffset": 0,
-            "Shape": 0,
-            "FlipValidity": 0,
-            "Tags": [
-                "card-technology"
-            ]
-        },
-        {
-            "X": 2.495454545454546,
-            "Y": 13.581818181818186,
-            "Z": 0.125,
-            "Range": 3,
-            "SnapRotation": 2,
-            "RotationOffset": 0,
-            "Shape": 0,
-            "FlipValidity": 0,
-            "Tags": [
-                "card-technology"
-            ]
-        },
-        {
-            "X": -2.4954545454545425,
-            "Y": 13.581818181818186,
-            "Z": 0.125,
-            "Range": 3,
-            "SnapRotation": 2,
-            "RotationOffset": 0,
-            "Shape": 0,
-            "FlipValidity": 0,
-            "Tags": [
-                "card-technology"
-            ]
-        },
-        {
-            "X": -7.4863636363636346,
-            "Y": 13.581818181818186,
-            "Z": 0.125,
-            "Range": 3,
-            "SnapRotation": 2,
-            "RotationOffset": 0,
-            "Shape": 0,
-            "FlipValidity": 0,
-            "Tags": [
-                "card-technology"
-            ]
-        }
-    ],
-    "ZoomViewDirection": {
+  "Type": "Generic",
+  "GUID": "68A815D9B13D82440940204D2177899E",
+  "Name": "Player Technology Mat",
+  "Metadata": "mat.player:base/technology",
+  "CollisionType": "Regular",
+  "Friction": 0.7,
+  "Restitution": 0.1,
+  "Density": 1,
+  "SurfaceType": "Cardboard",
+  "Roughness": 1,
+  "Metallic": 0,
+  "PrimaryColor": {
+    "R": 255,
+    "G": 255,
+    "B": 255
+  },
+  "SecondaryColor": {
+    "R": 0,
+    "G": 0,
+    "B": 0
+  },
+  "Flippable": false,
+  "AutoStraighten": false,
+  "ShouldSnap": false,
+  "ScriptName": "",
+  "Blueprint": "",
+  "Models": [
+    {
+      "Model": "uv-cube.obj",
+      "Offset": {
         "X": 0,
         "Y": 0,
-        "Z": 1
+        "Z": 0
+      },
+      "Scale": {
+        "X": 20.454545454545453,
+        "Y": 34.445454545454545,
+        "Z": 0.25
+      },
+      "Rotation": {
+        "X": 0,
+        "Y": 0,
+        "Z": 0
+      },
+      "Texture": "mat/player-technology/player-technology.jpg",
+      "NormalMap": "",
+      "ExtraMap": "",
+      "ExtraMap2": "",
+      "IsTransparent": false,
+      "CastShadow": true,
+      "IsTwoSided": false,
+      "UseOverrides": true,
+      "SurfaceType": "Cardboard"
+    }
+  ],
+  "Lights": [],
+  "SnapPointsGlobal": false,
+  "SnapPoints": [
+    {
+      "X": 7.486363636363636,
+      "Y": -13.581818181818182,
+      "Z": 0.125,
+      "Range": 3,
+      "SnapRotation": 2,
+      "RotationOffset": 0,
+      "Shape": 0,
+      "FlipValidity": 0,
+      "Tags": ["card-technology"]
     },
-    "GroundAccessibility": "Zoom",
-    "Tags": []
+    {
+      "X": 2.495454545454546,
+      "Y": -13.581818181818182,
+      "Z": 0.125,
+      "Range": 3,
+      "SnapRotation": 2,
+      "RotationOffset": 0,
+      "Shape": 0,
+      "FlipValidity": 0,
+      "Tags": ["card-technology"]
+    },
+    {
+      "X": -2.4954545454545425,
+      "Y": -13.581818181818182,
+      "Z": 0.125,
+      "Range": 3,
+      "SnapRotation": 2,
+      "RotationOffset": 0,
+      "Shape": 0,
+      "FlipValidity": 0,
+      "Tags": ["card-technology"]
+    },
+    {
+      "X": -7.4863636363636346,
+      "Y": -13.581818181818182,
+      "Z": 0.125,
+      "Range": 3,
+      "SnapRotation": 2,
+      "RotationOffset": 0,
+      "Shape": 0,
+      "FlipValidity": 0,
+      "Tags": ["card-technology"]
+    },
+    {
+      "X": 7.486363636363636,
+      "Y": -6.790909090909091,
+      "Z": 0.125,
+      "Range": 3,
+      "SnapRotation": 2,
+      "RotationOffset": 0,
+      "Shape": 0,
+      "FlipValidity": 0,
+      "Tags": ["card-technology"]
+    },
+    {
+      "X": 2.495454545454546,
+      "Y": -6.790909090909091,
+      "Z": 0.125,
+      "Range": 3,
+      "SnapRotation": 2,
+      "RotationOffset": 0,
+      "Shape": 0,
+      "FlipValidity": 0,
+      "Tags": ["card-technology"]
+    },
+    {
+      "X": -2.4954545454545425,
+      "Y": -6.790909090909091,
+      "Z": 0.125,
+      "Range": 3,
+      "SnapRotation": 2,
+      "RotationOffset": 0,
+      "Shape": 0,
+      "FlipValidity": 0,
+      "Tags": ["card-technology"]
+    },
+    {
+      "X": -7.4863636363636346,
+      "Y": -6.790909090909091,
+      "Z": 0.125,
+      "Range": 3,
+      "SnapRotation": 2,
+      "RotationOffset": 0,
+      "Shape": 0,
+      "FlipValidity": 0,
+      "Tags": ["card-technology"]
+    },
+    {
+      "X": 7.486363636363636,
+      "Y": 0,
+      "Z": 0.125,
+      "Range": 3,
+      "SnapRotation": 2,
+      "RotationOffset": 0,
+      "Shape": 0,
+      "FlipValidity": 0,
+      "Tags": ["card-technology"]
+    },
+    {
+      "X": 2.495454545454546,
+      "Y": 0,
+      "Z": 0.125,
+      "Range": 3,
+      "SnapRotation": 2,
+      "RotationOffset": 0,
+      "Shape": 0,
+      "FlipValidity": 0,
+      "Tags": ["card-technology"]
+    },
+    {
+      "X": -2.4954545454545425,
+      "Y": 0,
+      "Z": 0.125,
+      "Range": 3,
+      "SnapRotation": 2,
+      "RotationOffset": 0,
+      "Shape": 0,
+      "FlipValidity": 0,
+      "Tags": ["card-technology"]
+    },
+    {
+      "X": -7.4863636363636346,
+      "Y": 0,
+      "Z": 0.125,
+      "Range": 3,
+      "SnapRotation": 2,
+      "RotationOffset": 0,
+      "Shape": 0,
+      "FlipValidity": 0,
+      "Tags": ["card-technology"]
+    },
+    {
+      "X": 7.486363636363636,
+      "Y": 6.790909090909089,
+      "Z": 0.125,
+      "Range": 3,
+      "SnapRotation": 2,
+      "RotationOffset": 0,
+      "Shape": 0,
+      "FlipValidity": 0,
+      "Tags": ["card-technology"]
+    },
+    {
+      "X": 2.495454545454546,
+      "Y": 6.790909090909089,
+      "Z": 0.125,
+      "Range": 3,
+      "SnapRotation": 2,
+      "RotationOffset": 0,
+      "Shape": 0,
+      "FlipValidity": 0,
+      "Tags": ["card-technology"]
+    },
+    {
+      "X": -2.4954545454545425,
+      "Y": 6.790909090909089,
+      "Z": 0.125,
+      "Range": 3,
+      "SnapRotation": 2,
+      "RotationOffset": 0,
+      "Shape": 0,
+      "FlipValidity": 0,
+      "Tags": ["card-technology"]
+    },
+    {
+      "X": -7.4863636363636346,
+      "Y": 6.790909090909089,
+      "Z": 0.125,
+      "Range": 3,
+      "SnapRotation": 2,
+      "RotationOffset": 0,
+      "Shape": 0,
+      "FlipValidity": 0,
+      "Tags": ["card-technology"]
+    },
+    {
+      "X": 7.486363636363636,
+      "Y": 13.581818181818186,
+      "Z": 0.125,
+      "Range": 3,
+      "SnapRotation": 2,
+      "RotationOffset": 0,
+      "Shape": 0,
+      "FlipValidity": 0,
+      "Tags": ["card-technology"]
+    },
+    {
+      "X": 2.495454545454546,
+      "Y": 13.581818181818186,
+      "Z": 0.125,
+      "Range": 3,
+      "SnapRotation": 2,
+      "RotationOffset": 0,
+      "Shape": 0,
+      "FlipValidity": 0,
+      "Tags": ["card-technology"]
+    },
+    {
+      "X": -2.4954545454545425,
+      "Y": 13.581818181818186,
+      "Z": 0.125,
+      "Range": 3,
+      "SnapRotation": 2,
+      "RotationOffset": 0,
+      "Shape": 0,
+      "FlipValidity": 0,
+      "Tags": ["card-technology"]
+    },
+    {
+      "X": -7.4863636363636346,
+      "Y": 13.581818181818186,
+      "Z": 0.125,
+      "Range": 3,
+      "SnapRotation": 2,
+      "RotationOffset": 0,
+      "Shape": 0,
+      "FlipValidity": 0,
+      "Tags": ["card-technology"]
+    }
+  ],
+  "ZoomViewDirection": {
+    "X": 0,
+    "Y": 0,
+    "Z": 1
+  },
+  "GroundAccessibility": "Zoom",
+  "Tags": []
 }

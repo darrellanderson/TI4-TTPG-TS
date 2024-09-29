@@ -30,7 +30,7 @@ type GenericTokenInfo = {
 // Assemble info records.
 const infos: Array<GenericTokenInfo> = [];
 for (const [source, genericTokens] of Object.entries(
-  SOURCE_TO_GENERIC_TOKENS
+  SOURCE_TO_GENERIC_TOKENS,
 )) {
   for (const genericToken of genericTokens) {
     const name: string = genericToken.name;
@@ -134,12 +134,12 @@ for (const info of infos) {
 
   fs.cpSync(
     "./prebuild/" + info.imgFileFace,
-    "./assets/Textures/" + info.imgFileFace
+    "./assets/Textures/" + info.imgFileFace,
   );
   if (info.imgFileFace !== info.imgFileBack && info.imgFileBack !== "") {
     fs.cpSync(
       "./prebuild/" + info.imgFileBack,
-      "./assets/Textures/" + info.imgFileBack
+      "./assets/Textures/" + info.imgFileBack,
     );
   }
 }

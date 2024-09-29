@@ -1,97 +1,88 @@
 {
-	"Type": "Generic",
-	"GUID": "D6A29419454841F196F7D8A22E7ACDFA",
-	"Name": "Leader Sheet",
-	"Metadata": "sheet:pok/leader",
-	"CollisionType": "Regular",
-	"Friction": 0.7,
-	"Restitution": 0.3,
-	"Density": 1,
-	"SurfaceType": "Plastic",
-	"Roughness": 1,
-	"Metallic": 0,
-	"PrimaryColor":
-	{
-		"R": 255,
-		"G": 0,
-		"B": 0
-	},
-	"SecondaryColor":
-	{
-		"R": 0,
-		"G": 0,
-		"B": 0
-	},
-	"Flippable": true,
-	"AutoStraighten": false,
-	"ShouldSnap": true,
-	"ScriptName": "",
-	"Blueprint": "",
-	"Models": [
-		{
-			"Model": "sheet/leader.obj",
-			"Offset":
-			{
-				"X": 0,
-				"Y": -2.9140000000000001,
-				"Z": 0
-			},
-			"Scale":
-			{
-				"X": 1,
-				"Y": 1,
-				"Z": 0.080000000000000002
-			},
-			"Rotation":
-			{
-				"X": -0,
-				"Y": 0,
-				"Z": 0
-			},
-			"Texture": "sheet/leader.jpg",
-			"NormalMap": "",
-			"ExtraMap": "sheet/leader.mask.png",
-			"ExtraMap2": "",
-			"IsTransparent": false,
-			"CastShadow": true,
-			"IsTwoSided": false,
-			"UseOverrides": true,
-			"SurfaceType": "Plastic"
-		}
-	],
-	"Collision": [
-		{
-			"Model": "sheet/leader.obj",
-			"Offset":
-			{
-				"X": 0,
-				"Y": -2.9140000000000001,
-				"Z": 0
-			},
-			"Scale":
-			{
-				"X": 1,
-				"Y": 1,
-				"Z": 0.080000000000000002
-			},
-			"Rotation":
-			{
-				"X": -0,
-				"Y": 0,
-				"Z": 0
-			},
-			"Type": "Convex"
-		}
-	],
-	"Lights": [],
-	"SnapPointsGlobal": false,
-	"SnapPoints": [],
-	"ZoomViewDirection":
-	{
-		"X": 0,
-		"Y": 0,
-		"Z": 1
-	},
-	"GroundAccessibility": "Nothing",
-	"Tags": []
+  "Type": "Generic",
+  "GUID": "D6A29419454841F196F7D8A22E7ACDFA",
+  "Name": "Leader Sheet",
+  "Metadata": "sheet:pok/leader",
+  "CollisionType": "Regular",
+  "Friction": 0.7,
+  "Restitution": 0.3,
+  "Density": 1,
+  "SurfaceType": "Plastic",
+  "Roughness": 1,
+  "Metallic": 0,
+  "PrimaryColor": {
+    "R": 255,
+    "G": 0,
+    "B": 0
+  },
+  "SecondaryColor": {
+    "R": 0,
+    "G": 0,
+    "B": 0
+  },
+  "Flippable": true,
+  "AutoStraighten": false,
+  "ShouldSnap": true,
+  "ScriptName": "",
+  "Blueprint": "",
+  "Models": [
+    {
+      "Model": "sheet/leader.obj",
+      "Offset": {
+        "X": 0,
+        "Y": -2.9140000000000001,
+        "Z": 0
+      },
+      "Scale": {
+        "X": 1,
+        "Y": 1,
+        "Z": 0.080000000000000002
+      },
+      "Rotation": {
+        "X": -0,
+        "Y": 0,
+        "Z": 0
+      },
+      "Texture": "sheet/leader.jpg",
+      "NormalMap": "",
+      "ExtraMap": "sheet/leader.mask.png",
+      "ExtraMap2": "",
+      "IsTransparent": false,
+      "CastShadow": true,
+      "IsTwoSided": false,
+      "UseOverrides": true,
+      "SurfaceType": "Plastic"
+    }
+  ],
+  "Collision": [
+    {
+      "Model": "sheet/leader.obj",
+      "Offset": {
+        "X": 0,
+        "Y": -2.9140000000000001,
+        "Z": 0
+      },
+      "Scale": {
+        "X": 1,
+        "Y": 1,
+        "Z": 0.080000000000000002
+      },
+      "Rotation": {
+        "X": -0,
+        "Y": 0,
+        "Z": 0
+      },
+      "Type": "Convex"
+    }
+  ],
+  "Lights": [],
+  "SnapPointsGlobal": false,
+  "SnapPoints": [],
+  "ZoomViewDirection": {
+    "X": 0,
+    "Y": 0,
+    "Z": 1
+  },
+  "GroundAccessibility": "Nothing",
+  "Tags": []
 }

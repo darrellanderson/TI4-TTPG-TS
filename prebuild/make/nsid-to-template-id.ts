@@ -61,7 +61,7 @@ async function main() {
         const newNsid = cardNsids[0];
         if (nsid !== newNsid) {
           console.log(
-            `REPLACING SINGLETON "${nsid}" with "${newNsid}" (${jsonFilename})`
+            `REPLACING SINGLETON "${nsid}" with "${newNsid}" (${jsonFilename})`,
           );
           nsid = newNsid;
         }
@@ -100,7 +100,7 @@ async function main() {
         const newNsid = `${type}:${source}/*`;
         if (nsid !== newNsid) {
           console.log(
-            `REPLACING DECK "${nsid}" with "${newNsid}" (${jsonFilename})`
+            `REPLACING DECK "${nsid}" with "${newNsid}" (${jsonFilename})`,
           );
           nsid = newNsid;
         }
