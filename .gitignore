@@ -3,8 +3,6 @@ dev
 .DS_Store
 assets/Thumbnails
 
-yarn.lock
-
 # Logs
 logs
 *.log
