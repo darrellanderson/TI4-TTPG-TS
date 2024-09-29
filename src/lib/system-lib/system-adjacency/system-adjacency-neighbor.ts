@@ -9,7 +9,7 @@ export class SystemAdjacencyNeighbor {
 
   public addTags(
     hexToSystem: Map<HexType, System>,
-    adjacency: Adjacency
+    adjacency: Adjacency,
   ): void {
     // Add tags for each edge where systems are in the same class.
     // Do not use a single tag for the system, allows for an edge to be blocked.

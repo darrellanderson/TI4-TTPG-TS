@@ -29,7 +29,7 @@ export class TechRegistry {
         TechSchema.parse(techSchema);
       } catch (e) {
         const msg = `error: ${e.message}\nparsing: ${JSON.stringify(
-          techSchema
+          techSchema,
         )}`;
         throw new Error(msg);
       }

@@ -20,19 +20,19 @@ export class LayoutAll {
       .setIsVertical(true);
 
     const top: LayoutObjects = new LayoutObjects().setChildDistance(
-      LayoutConfig.spacingWide
+      LayoutConfig.spacingWide,
     );
     const left: LayoutObjects = new LayoutObjects().setChildDistance(
-      LayoutConfig.spacingExtraWide
+      LayoutConfig.spacingExtraWide,
     );
     const middle: LayoutObjects = new LayoutObjects().setChildDistance(
-      LayoutConfig.spacingExtraWide
+      LayoutConfig.spacingExtraWide,
     );
     const right: LayoutObjects = new LayoutObjects().setChildDistance(
-      LayoutConfig.spacingExtraWide
+      LayoutConfig.spacingExtraWide,
     );
     const bottom: LayoutObjects = new LayoutObjects().setChildDistance(
-      LayoutConfig.spacingWide
+      LayoutConfig.spacingWide,
     );
 
     this._layout.add(top).add(middle).add(bottom);
@@ -57,7 +57,7 @@ export class LayoutAll {
           .setChildDistance(LayoutConfig.spacingExtraWide)
           .setIsVertical(true)
           .add(new LayoutStrategyCards().getLayout())
-          .add(new LayoutQuickRoller().getLayout())
+          .add(new LayoutQuickRoller().getLayout()),
       );
 
     // Top player areas invert vertical layout.

@@ -10,10 +10,10 @@ export class LayoutTableDecks {
 
     const baseMat: GameObject = Spawn.spawnOrThrow("mat.deck:base/base");
     const explorationMat: GameObject = Spawn.spawnOrThrow(
-      "mat.deck:pok/exploration"
+      "mat.deck:pok/exploration",
     );
     const factionReferenceMat: GameObject = Spawn.spawnOrThrow(
-      "mat.deck:base/faction-reference"
+      "mat.deck:base/faction-reference",
     );
     const planetMat: GameObject = Spawn.spawnOrThrow("mat.deck:base/planet");
 

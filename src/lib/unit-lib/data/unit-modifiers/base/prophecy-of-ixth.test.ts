@@ -6,7 +6,7 @@ import { UnitAttrs } from "../../../unit-attrs/unit-attrs";
 it("registry", () => {
   const nsid = "card.agenda:base/prophecy-of-ixth";
   expect(TI4.unitModifierRegistry.getByNsid(nsid)?.getName()).toBe(
-    "Prophecy of Ixth"
+    "Prophecy of Ixth",
   );
 });
 

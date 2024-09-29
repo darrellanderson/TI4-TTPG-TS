@@ -23,7 +23,7 @@ export const BrotherOmar: UnitModifierSchemaType = {
     const quantity: number =
       infantryAttrs.getProduceQuantityDoesNotCountAgainstProductionLimits();
     infantryAttrs.setProduceQuantityDoesNotCountAgainstProductionLimits(
-      quantity + 1
+      quantity + 1,
     );
   },
 };

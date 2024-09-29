@@ -23,7 +23,7 @@ export const Maban: UnitModifierSchemaType = {
     const quantity: number =
       fighterAttrs.getProduceQuantityDoesNotCountAgainstProductionLimits();
     fighterAttrs.setProduceQuantityDoesNotCountAgainstProductionLimits(
-      quantity + 1
+      quantity + 1,
     );
   },
 };

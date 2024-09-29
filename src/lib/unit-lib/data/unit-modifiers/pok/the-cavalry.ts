@@ -25,7 +25,7 @@ export const TheCavalry: UnitModifierSchemaType = {
       TI4.unitAttrsRegistry.rawByNsid("unit:pok/memoria");
     const memoria2: UnitAttrsSchemaType | undefined =
       TI4.unitAttrsRegistry.rawByNsid(
-        "card.technology.unit-upgrade:pok/memoria-2"
+        "card.technology.unit-upgrade:pok/memoria-2",
       );
 
     if (memoria1 && memoria2) {

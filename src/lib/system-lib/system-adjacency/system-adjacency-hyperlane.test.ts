@@ -31,12 +31,12 @@ it("static neighborsWithRotAndFlip", () => {
   const system: System = new System(
     systemTileObj,
     { source: "my-source", packageId: "my-package-id" },
-    { tile: 1000 }
+    { tile: 1000 },
   );
   // First is "above", winding counterclockwise.
   neighbors = SystemAdjacencyHyperlane.neighborsWithRotAndFlip(
     "<0,0,0>",
-    system
+    system,
   );
   expect(neighbors[0]).toEqual(defaultNeighbors[0]);
   expect(neighbors[1]).toEqual(defaultNeighbors[1]);
@@ -44,7 +44,7 @@ it("static neighborsWithRotAndFlip", () => {
   systemTileObj.setRotation([0, 60, 0]);
   neighbors = SystemAdjacencyHyperlane.neighborsWithRotAndFlip(
     "<0,0,0>",
-    system
+    system,
   );
   expect(neighbors[0]).toEqual(defaultNeighbors[1]);
   expect(neighbors[1]).toEqual(defaultNeighbors[2]);
@@ -52,7 +52,7 @@ it("static neighborsWithRotAndFlip", () => {
   systemTileObj.setRotation([0, 60, -180]);
   neighbors = SystemAdjacencyHyperlane.neighborsWithRotAndFlip(
     "<0,0,0>",
-    system
+    system,
   );
   expect(neighbors[0]).toEqual(defaultNeighbors[5]);
   expect(neighbors[1]).toEqual(defaultNeighbors[0]);
@@ -60,7 +60,7 @@ it("static neighborsWithRotAndFlip", () => {
   systemTileObj.setRotation([0, 300, 0]);
   neighbors = SystemAdjacencyHyperlane.neighborsWithRotAndFlip(
     "<0,0,0>",
-    system
+    system,
   );
   expect(neighbors[0]).toEqual(defaultNeighbors[5]);
   expect(neighbors[1]).toEqual(defaultNeighbors[0]);
@@ -68,7 +68,7 @@ it("static neighborsWithRotAndFlip", () => {
   systemTileObj.setRotation([0, 300, -180]);
   neighbors = SystemAdjacencyHyperlane.neighborsWithRotAndFlip(
     "<0,0,0>",
-    system
+    system,
   );
   expect(neighbors[0]).toEqual(defaultNeighbors[1]);
   expect(neighbors[1]).toEqual(defaultNeighbors[2]);
@@ -97,8 +97,8 @@ it("addTags", () => {
           templateMetadata: `tile.system:my-source/${tile}`,
         }),
         { source: "my-source", packageId: "my-package-id" },
-        { tile }
-      )
+        { tile },
+      ),
     );
   }
 
@@ -108,7 +108,7 @@ it("addTags", () => {
     templateMetadata: "tile.system:pok/83",
   });
   const hyperlaneSystem: System | undefined = TI4.systemRegistry.getByPosition(
-    new Vector(0, 0, 0)
+    new Vector(0, 0, 0),
   );
   if (hyperlaneSystem) {
     hexToSystem.set("<0,0,0>", hyperlaneSystem);
@@ -156,7 +156,7 @@ it("addTags (rotated hyperlane)", () => {
     rotation: [0, 60, 0],
   });
   const hyperlaneSystem: System | undefined = TI4.systemRegistry.getByPosition(
-    new Vector(0, 0, 0)
+    new Vector(0, 0, 0),
   );
   if (hyperlaneSystem) {
     hexToSystem.set("<0,0,0>", hyperlaneSystem);

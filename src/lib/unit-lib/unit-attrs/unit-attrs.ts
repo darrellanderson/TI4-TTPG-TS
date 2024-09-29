@@ -47,7 +47,7 @@ export class UnitAttrs {
 
   public static schemaToNsid(
     source: string,
-    schema: UnitAttrsSchemaType
+    schema: UnitAttrsSchemaType,
   ): string {
     // Should only be called for schema with nsidName.
     if (!schema.nsidName) {
@@ -65,7 +65,7 @@ export class UnitAttrs {
   }
 
   public static sortByOverrideOrder(
-    attrs: Array<UnitAttrsSchemaType>
+    attrs: Array<UnitAttrsSchemaType>,
   ): Array<UnitAttrsSchemaType> {
     return attrs.sort((a, b) => {
       const aStr: string = a.nsidName ?? "";
@@ -112,7 +112,7 @@ export class UnitAttrs {
       this._diceColor = new Color(
         Math.round(this._diceColor.r * 100) / 100,
         Math.round(this._diceColor.g * 100) / 100,
-        Math.round(this._diceColor.b * 100) / 100
+        Math.round(this._diceColor.b * 100) / 100,
       );
     }
   }
@@ -401,7 +401,7 @@ export class UnitAttrs {
   }
 
   setSharedProduceQuantityDoesNotCountAgainstProductionLimits(
-    value: number
+    value: number,
   ): this {
     this._sharedProduceQuantityDoesNotCountAgainstProductionLimits = value;
     return this;

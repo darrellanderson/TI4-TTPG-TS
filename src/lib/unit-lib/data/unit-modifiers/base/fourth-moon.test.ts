@@ -5,7 +5,7 @@ import { UnitAttrs } from "../../../unit-attrs/unit-attrs";
 it("registry", () => {
   const nsid = "unit:base/fourth-moon";
   expect(TI4.unitModifierRegistry.getByNsid(nsid)?.getName()).toBe(
-    "Fourth Moon"
+    "Fourth Moon",
   );
 });
 

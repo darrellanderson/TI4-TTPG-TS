@@ -71,7 +71,7 @@ export class MapStringParser {
    */
   parse(
     mapString: string,
-    invalidEntries: Array<string>
+    invalidEntries: Array<string>,
   ): Array<MapStringEntry> {
     const result: Array<MapStringEntry> = [];
 
@@ -85,7 +85,7 @@ export class MapStringParser {
     const firstEntry: string | undefined = rawEntries[0];
     if (firstEntry) {
       const m: RegExpMatchArray | null = firstEntry.match(
-        this._overrideFirstRegExp
+        this._overrideFirstRegExp,
       );
       const strippedFirst: string | undefined = m?.[1];
       if (strippedFirst) {
@@ -118,7 +118,7 @@ export class MapStringParser {
     const result: Array<MapStringEntry> = this.parse(mapString, invalidEntries);
     if (invalidEntries.length > 0) {
       throw new Error(
-        `Invalid map string entries: ${invalidEntries.join(", ")}`
+        `Invalid map string entries: ${invalidEntries.join(", ")}`,
       );
     }
     return result;

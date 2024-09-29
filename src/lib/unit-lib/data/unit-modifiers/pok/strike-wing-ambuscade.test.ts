@@ -6,7 +6,7 @@ import { UnitAttrs } from "../../../unit-attrs/unit-attrs";
 it("registry", () => {
   const nsid = "card.promissory:pok/strike_wing_ambuscade";
   expect(TI4.unitModifierRegistry.getByNsid(nsid)?.getName()).toBe(
-    "Strike Wing Ambuscade"
+    "Strike Wing Ambuscade",
   );
 });
 

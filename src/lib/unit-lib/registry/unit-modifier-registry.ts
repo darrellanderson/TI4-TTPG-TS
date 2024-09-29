@@ -26,7 +26,7 @@ export class UnitModifierRegistry {
 
   load(
     source: string,
-    unitModifierSchemas: Array<UnitModifierSchemaType>
+    unitModifierSchemas: Array<UnitModifierSchemaType>,
   ): this {
     for (const unitModifierSchema of unitModifierSchemas) {
       // Validate schema (oterhwise not validated until used).
@@ -35,7 +35,7 @@ export class UnitModifierRegistry {
         UnitModifierSchema.parse(unitModifierSchema);
       } catch (e) {
         const msg = `error: ${e.message}\nparsing: ${JSON.stringify(
-          unitModifierSchema
+          unitModifierSchema,
         )}`;
         throw new Error(msg);
       }
@@ -47,7 +47,7 @@ export class UnitModifierRegistry {
       for (const trigger of triggers) {
         const nsid: string | undefined = UnitModifier.schemaTriggerToNsid(
           source,
-          trigger
+          trigger,
         );
         if (nsid) {
           this._nsidToSchema.set(nsid, unitModifier);
@@ -68,7 +68,7 @@ export class UnitModifierRegistry {
    */
   public loadDefaultData(): this {
     for (const [source, unitAttrsArray] of Object.entries(
-      SOURCE_TO_UNIT_MODIFIER_DATA
+      SOURCE_TO_UNIT_MODIFIER_DATA,
     )) {
       this.load(source, unitAttrsArray);
     }

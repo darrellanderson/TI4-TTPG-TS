@@ -15,7 +15,7 @@ export class ValidateImages {
       const packageId: string = packageRef.getUniqueId();
       packageIdToImgFiles.set(
         packageId,
-        new Set<string>(packageRef.getTextureFiles())
+        new Set<string>(packageRef.getTextureFiles()),
       );
     }
 

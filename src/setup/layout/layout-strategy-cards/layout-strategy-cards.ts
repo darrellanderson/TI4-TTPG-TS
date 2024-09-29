@@ -48,7 +48,7 @@ export class LayoutStrategyCards {
 
   _placeStrategyCard(
     strategyCard: GameObject,
-    snapPoint: SnapPoint | undefined
+    snapPoint: SnapPoint | undefined,
   ) {
     if (snapPoint) {
       const above: Vector = snapPoint

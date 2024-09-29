@@ -4,7 +4,7 @@ import { OPPONENT, placeGameObjects, SELF } from "../abstract.test";
 it("registry", () => {
   const nsid = "card.agenda:base/conventions-of-war";
   expect(TI4.unitModifierRegistry.getByNsid(nsid)?.getName()).toBe(
-    "Conventions of War"
+    "Conventions of War",
   );
 });
 
@@ -26,6 +26,6 @@ it("modifier", () => {
 
   expect(combatRoll.getUnitModifierNames()).toEqual(["Conventions of War"]);
   expect(
-    combatRoll.self.unitAttrsSet.get("dreadnought")?.getDisableBombardment()
+    combatRoll.self.unitAttrsSet.get("dreadnought")?.getDisableBombardment(),
   ).toBe(true);
 });

@@ -17,7 +17,7 @@ export class LayoutSheets {
 
     const leaderSheet: GameObject = Spawn.spawnOrThrow("sheet:pok/leader");
     const factionSheet: GameObject = Spawn.spawnOrThrow(
-      "sheet.faction:base/generic"
+      "sheet.faction:base/generic",
     );
     const commandSheet: GameObject = Spawn.spawnOrThrow("sheet:base/command");
 

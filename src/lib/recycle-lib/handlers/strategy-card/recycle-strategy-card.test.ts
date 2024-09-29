@@ -6,7 +6,7 @@ import { RecycleStrategyCard } from "./recycle-strategy-card";
 
 it("recycle", () => {
   const obj: GameObject = MockGameObject.simple(
-    "tile.strategy:base/leadership"
+    "tile.strategy:base/leadership",
   );
   new MockGameObject({
     templateMetadata: "mat:base/strategy",
@@ -33,7 +33,7 @@ it("recycle (invalid nsid)", () => {
 
 it("recycle (unknown card)", () => {
   const obj: GameObject = MockGameObject.simple(
-    "tile.strategy:base/__unknown__"
+    "tile.strategy:base/__unknown__",
   );
   new MockGameObject({
     templateMetadata: "mat:base/strategy",
@@ -46,7 +46,7 @@ it("recycle (unknown card)", () => {
 
 it("recycle (missing mat)", () => {
   const obj: GameObject = MockGameObject.simple(
-    "tile.strategy:base/leadership"
+    "tile.strategy:base/leadership",
   );
   const recycle: GarbageHandler = new RecycleStrategyCard();
   expect(recycle.canRecycle(obj)).toBe(true);
@@ -55,7 +55,7 @@ it("recycle (missing mat)", () => {
 
 it("recycle (missing snap point)", () => {
   const obj: GameObject = MockGameObject.simple(
-    "tile.strategy:base/leadership"
+    "tile.strategy:base/leadership",
   );
   new MockGameObject({
     templateMetadata: "mat:base/strategy",

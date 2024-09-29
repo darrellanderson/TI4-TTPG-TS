@@ -42,7 +42,7 @@ export class SystemLabels {
     const addText = (text: string, pos: Vector): void => {
       const ui: UIElement = new UIElement();
       ui.widget = new Border().setChild(
-        new Text().setFontSize(7 * SystemLabels.SCALE).setText(` ${text} `)
+        new Text().setFontSize(7 * SystemLabels.SCALE).setText(` ${text} `),
       );
       ui.position = pos.add([0, 0, 0.2]);
       ui.scale = 1 / SystemLabels.SCALE;
@@ -58,7 +58,7 @@ export class SystemLabels {
 
     addText(
       `System ${this._system.getSystemTileNumber()}`,
-      this._system.getObj().getPosition().add([-1.5, 0, 0])
+      this._system.getObj().getPosition().add([-1.5, 0, 0]),
     );
 
     for (const planet of this._system.getPlanets()) {
@@ -72,14 +72,14 @@ export class SystemLabels {
     for (const getWormholesWithPositions of this._system.getWormholesWithPositions()) {
       addText(
         getWormholesWithPositions.wormhole,
-        getWormholesWithPositions.position
+        getWormholesWithPositions.position,
       );
     }
 
     for (const attachment of this._system.getAttachments()) {
       addText(
         attachment.getName(),
-        attachment.getObj().getPosition().add([1.5, 0, 0])
+        attachment.getObj().getPosition().add([1.5, 0, 0]),
       );
     }
 

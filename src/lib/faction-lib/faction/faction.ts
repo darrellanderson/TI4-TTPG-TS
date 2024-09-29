@@ -10,7 +10,7 @@ export class Faction {
 
   constructor(
     sourceAndPackageId: SourceAndPackageIdSchemaType,
-    params: FactionSchemaType
+    params: FactionSchemaType,
   ) {
     this._sourceAndPackageId = sourceAndPackageId;
     this._params = params;

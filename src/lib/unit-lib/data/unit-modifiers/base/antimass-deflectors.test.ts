@@ -17,7 +17,7 @@ it("antimass-deflectors (spaceCannonOffense)", () => {
   });
   expect(combatRoll.getUnitModifierNames()).toEqual([]);
   expect(
-    combatRoll.self.unitAttrsSet.get("pds")?.getSpaceCannon()?.getHit()
+    combatRoll.self.unitAttrsSet.get("pds")?.getSpaceCannon()?.getHit(),
   ).toBe(6);
 
   placeGameObjects({
@@ -31,7 +31,7 @@ it("antimass-deflectors (spaceCannonOffense)", () => {
   });
   expect(combatRoll.getUnitModifierNames()).toEqual(["Antimass Deflectors"]);
   expect(
-    combatRoll.self.unitAttrsSet.get("pds")?.getSpaceCannon()?.getHit()
+    combatRoll.self.unitAttrsSet.get("pds")?.getSpaceCannon()?.getHit(),
   ).toBe(7);
 });
 
@@ -46,7 +46,7 @@ it("antimass-deflectors (spaceCannonDefense)", () => {
   });
   expect(combatRoll.getUnitModifierNames()).toEqual([]);
   expect(
-    combatRoll.self.unitAttrsSet.get("pds")?.getSpaceCannon()?.getHit()
+    combatRoll.self.unitAttrsSet.get("pds")?.getSpaceCannon()?.getHit(),
   ).toBe(6);
 
   placeGameObjects({
@@ -60,6 +60,6 @@ it("antimass-deflectors (spaceCannonDefense)", () => {
   });
   expect(combatRoll.getUnitModifierNames()).toEqual(["Antimass Deflectors"]);
   expect(
-    combatRoll.self.unitAttrsSet.get("pds")?.getSpaceCannon()?.getHit()
+    combatRoll.self.unitAttrsSet.get("pds")?.getSpaceCannon()?.getHit(),
   ).toBe(7);
 });

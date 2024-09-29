@@ -18,7 +18,7 @@ export class LayoutTableContainers {
       .setIsVertical(true);
 
     const deletedItems: GameObject = Spawn.spawnOrThrow(
-      "container:base/deleted-items"
+      "container:base/deleted-items",
     );
     const purgedItems: GameObject = Spawn.spawnOrThrow("container:base/purged");
 

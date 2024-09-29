@@ -12,13 +12,13 @@ import { MapStringHex } from "./map-string-hex";
 
 export class MapStringLoad {
   _parseAndValidateMapString(
-    mapString: string
+    mapString: string,
   ): Array<MapStringEntry> | undefined {
     const parser: MapStringParser = new MapStringParser();
     const invalidEntries: Array<string> = [];
     const entries: Array<MapStringEntry> = parser.parse(
       mapString,
-      invalidEntries
+      invalidEntries,
     );
     if (invalidEntries.length > 0) {
       locale.inject({
@@ -105,7 +105,7 @@ export class MapStringLoad {
     systemTileNumber: number,
     pos: Vector,
     rot: Rotator,
-    systemsSnapshot: Map<number, Array<System>>
+    systemsSnapshot: Map<number, Array<System>>,
   ): boolean {
     // The snapshot tracks unused systems.  Check if we have one, if yes
     // remove it from the snapshot and use it.
@@ -129,7 +129,7 @@ export class MapStringLoad {
         systemTileObj,
         pos,
         showAnimation,
-        keep
+        keep,
       );
       if (!success) {
         return false;
@@ -143,7 +143,7 @@ export class MapStringLoad {
   _trySpawnNewSystemTileObj(
     systemTileNumber: number,
     pos: Vector,
-    rot: Rotator
+    rot: Rotator,
   ): boolean {
     const nsid: string | undefined =
       TI4.systemRegistry.tileNumberToSystemTileObjNsid(systemTileNumber);
@@ -182,7 +182,7 @@ export class MapStringLoad {
         const rot: Rotator = new Rotator(
           0,
           entry.rot ? entry.rot * 60 : 0,
-          entry.side === "b" ? 180 : 0
+          entry.side === "b" ? 180 : 0,
         );
 
         if (
@@ -190,7 +190,7 @@ export class MapStringLoad {
             entry.tile,
             pos,
             rot,
-            systemsSnapshot
+            systemsSnapshot,
           )
         ) {
           continue; // success, moved an existing tile

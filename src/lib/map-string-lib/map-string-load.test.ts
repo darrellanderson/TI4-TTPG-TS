@@ -63,7 +63,7 @@ it("_tryMoveExistingSystemTileObj (existing system)", () => {
     1,
     pos,
     rot,
-    systemsSnapshot
+    systemsSnapshot,
   );
   expect(success).toBe(true);
   expect(systemTileObj.getPosition().toString()).toBe("(X=1,Y=2,Z=3)");
@@ -93,7 +93,7 @@ it("_tryMoveExistingSystemTileObj (existing system in container)", () => {
     1,
     pos,
     rot,
-    systemsSnapshot
+    systemsSnapshot,
   );
   expect(success).toBe(true);
   expect(container.getItems().includes(systemTileObj)).toBe(false);
@@ -128,7 +128,7 @@ it("_tryMoveExistingSystemTileObj (container take failure)", () => {
     1,
     pos,
     rot,
-    systemsSnapshot
+    systemsSnapshot,
   );
   expect(success).toBe(false);
 });
@@ -147,7 +147,7 @@ it("_tryMoveExistingSystemTileObj (missing system array)", () => {
     1,
     pos,
     rot,
-    systemsSnapshot
+    systemsSnapshot,
   );
   expect(success).toBe(false);
 });
@@ -174,7 +174,7 @@ it("_tryMoveExistingSystemTileObj (empty system array)", () => {
     1,
     pos,
     rot,
-    systemsSnapshot
+    systemsSnapshot,
   );
   expect(success).toBe(false);
 });

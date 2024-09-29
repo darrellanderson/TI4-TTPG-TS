@@ -6,7 +6,7 @@ import { UnitAttrs } from "../../../unit-attrs/unit-attrs";
 it("registry", () => {
   const nsid = "card.leader.mech:pok/iconoclast";
   expect(TI4.unitModifierRegistry.getByNsid(nsid)?.getName()).toBe(
-    "Iconoclast"
+    "Iconoclast",
   );
 });
 

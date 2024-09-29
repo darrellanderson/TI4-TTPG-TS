@@ -6,7 +6,7 @@ import { UnitAttrs } from "../../../unit-attrs/unit-attrs";
 it("registry", () => {
   const nsid = "unit:pok/visz-el-vir";
   expect(TI4.unitModifierRegistry.getByNsid(nsid)?.getName()).toBe(
-    "Visz El Vir"
+    "Visz El Vir",
   );
 });
 

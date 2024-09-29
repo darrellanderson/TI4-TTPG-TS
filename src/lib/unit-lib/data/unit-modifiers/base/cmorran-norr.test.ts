@@ -10,7 +10,7 @@ import {
 it("registry", () => {
   const nsid = "unit:base/cmorran-norr";
   expect(TI4.unitModifierRegistry.getByNsid(nsid)?.getName()).toBe(
-    "C'morran N'orr"
+    "C'morran N'orr",
   );
 });
 
@@ -91,7 +91,7 @@ it("modifier (synthetic ship with ground combat)", () => {
   ]);
 
   const myUnit: UnitAttrs = combatRoll.self.unitAttrsSet.getOrThrow(
-    "my-unit-type" as UnitType
+    "my-unit-type" as UnitType,
   );
   const groundCombat: CombatAttrs = myUnit.getGroundCombatOrThrow();
   expect(groundCombat.getHit()).toBe(7);

@@ -51,7 +51,7 @@ export const FactionSchema = z
             count: z.number().int().min(0).optional(),
           })
           .strict()
-          .readonly()
+          .readonly(),
       )
       .optional(),
   })

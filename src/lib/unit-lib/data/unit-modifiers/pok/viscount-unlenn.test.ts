@@ -6,7 +6,7 @@ import { UnitAttrs } from "../../../unit-attrs/unit-attrs";
 it("registry", () => {
   const nsid = "card.leader.agent:pok/viscount-unlenn";
   expect(TI4.unitModifierRegistry.getByNsid(nsid)?.getName()).toBe(
-    "Viscount Unlenn"
+    "Viscount Unlenn",
   );
 });
 

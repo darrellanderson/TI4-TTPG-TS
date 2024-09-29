@@ -8,7 +8,7 @@ import { OPPONENT, placeGameObjects, SELF, SELF_POS } from "../abstract.test";
 it("registry", () => {
   const nsid = "unit:pok/arvicon-rex";
   expect(TI4.unitModifierRegistry.getByNsid(nsid)?.getName()).toBe(
-    "Arvicon Rex"
+    "Arvicon Rex",
   );
 });
 
@@ -28,11 +28,11 @@ it("arvicon-rex", () => {
   combatRoll = CombatRoll.createCooked(params);
   expect(combatRoll.self.hasUnit("flagship")).toBe(true);
   expect(combatRoll.self.unitAttrsSet.get("flagship")?.getName()).toBe(
-    "Arvicon Rex"
+    "Arvicon Rex",
   );
   expect(combatRoll.getUnitModifierNames()).toEqual(["Arvicon Rex"]);
   expect(
-    combatRoll.self.unitAttrsSet.get("flagship")?.getSpaceCombat()?.getHit()
+    combatRoll.self.unitAttrsSet.get("flagship")?.getSpaceCombat()?.getHit(),
   ).toBe(5);
 
   // Add opponent's token to fleet pool.
@@ -50,10 +50,10 @@ it("arvicon-rex", () => {
   combatRoll = CombatRoll.createCooked(params);
   expect(combatRoll.self.hasUnit("flagship")).toBe(true);
   expect(combatRoll.self.unitAttrsSet.get("flagship")?.getName()).toBe(
-    "Arvicon Rex"
+    "Arvicon Rex",
   );
   expect(combatRoll.getUnitModifierNames()).toEqual(["Arvicon Rex"]);
   expect(
-    combatRoll.self.unitAttrsSet.get("flagship")?.getSpaceCombat()?.getHit()
+    combatRoll.self.unitAttrsSet.get("flagship")?.getSpaceCombat()?.getHit(),
   ).toBe(3);
 });

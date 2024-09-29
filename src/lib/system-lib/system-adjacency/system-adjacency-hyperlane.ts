@@ -30,7 +30,7 @@ export class SystemAdjacencyHyperlane {
 
   public addTags(
     hexToSystem: Map<HexType, System>,
-    adjacency: Adjacency
+    adjacency: Adjacency,
   ): void {
     for (const [hex, system] of hexToSystem.entries()) {
       if (!system.isHyperlane()) {

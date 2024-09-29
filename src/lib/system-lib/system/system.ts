@@ -62,7 +62,7 @@ export class System {
   static schemaToImg(
     sourceAndPackageId: SourceAndPackageIdSchemaType,
     schema: SystemSchemaType,
-    useBack: boolean
+    useBack: boolean,
   ): string {
     const filename: string = `tile-${schema.tile.toString().padStart(3, "0")}${
       useBack ? ".back" : ""
@@ -102,7 +102,7 @@ export class System {
   public static standardLocalPosition(
     entityIndex: number,
     entityCount: number,
-    isHome: boolean
+    isHome: boolean,
   ): Vector {
     // Apply standard position.
     const map: { [key: string]: Vector } = isHome
@@ -119,7 +119,7 @@ export class System {
   constructor(
     obj: GameObject,
     sourceAndPackageId: SourceAndPackageIdSchemaType,
-    params: SystemSchemaType
+    params: SystemSchemaType,
   ) {
     try {
       SourceAndPackageIdSchema.parse(sourceAndPackageId); // validate the schema
@@ -153,13 +153,13 @@ export class System {
           const planet: Planet = new Planet(
             this._obj,
             this._sourceAndPackageId,
-            planetParams
+            planetParams,
           );
           if (!planetParams.localPosition) {
             const pos: Vector = System.standardLocalPosition(
               i,
               numPositionEntities,
-              this.isHome()
+              this.isHome(),
             );
             planet.setLocalPosition(pos);
           }
@@ -178,7 +178,7 @@ export class System {
           const localPosition: Vector = System.standardLocalPosition(
             i + numPlanets,
             numPositionEntities,
-            this.isHome()
+            this.isHome(),
           );
           const wormholeWithLocalPosition: WormholeWithLocalPosition = {
             wormhole,
@@ -193,7 +193,7 @@ export class System {
         const localPosition: Vector = new Vector(
           wormholeWithPosition.localPosition.x,
           wormholeWithPosition.localPosition.y,
-          0
+          0,
         );
         const wormholeWithLocalPosition: WormholeWithLocalPosition = {
           wormhole: wormholeWithPosition.wormhole,
@@ -219,7 +219,7 @@ export class System {
         const localPosition: Vector = new Vector(
           wormholeWithPosition.localPosition.x,
           wormholeWithPosition.localPosition.y,
-          0
+          0,
         );
         const wormholeWithLocalPosition: WormholeWithLocalPosition = {
           wormhole: wormholeWithPosition.wormhole,
@@ -470,7 +470,7 @@ export class System {
     }
     for (const localWormhole of thisLocalWormholes) {
       const position: Vector = this._obj.localPositionToWorld(
-        localWormhole.localPosition
+        localWormhole.localPosition,
       );
       const wormholeWithPosition: WormholeWithPosition = {
         wormhole: localWormhole.wormhole,

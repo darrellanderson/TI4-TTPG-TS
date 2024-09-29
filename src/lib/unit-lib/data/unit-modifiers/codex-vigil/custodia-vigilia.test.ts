@@ -5,7 +5,7 @@ import { UnitType } from "../../../schema/unit-attrs-schema";
 it("registry", () => {
   const nsid = "card.legendary-planet:codex.vigil/custodia-vigilia";
   expect(TI4.unitModifierRegistry.getByNsid(nsid)?.getName()).toBe(
-    "Custodia Vigilia"
+    "Custodia Vigilia",
   );
 });
 

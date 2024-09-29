@@ -47,7 +47,7 @@ export class SystemRegistry {
         const system: System = new System(
           obj,
           schemaAndSource.sourceAndPackageId,
-          schemaAndSource.schema
+          schemaAndSource.schema,
         );
         this._systemTileObjIdToSystem.set(obj.getId(), system);
       }
@@ -79,7 +79,7 @@ export class SystemRegistry {
    */
   public load(
     sourceAndPackageId: SourceAndPackageIdSchemaType,
-    systemSchemaTypes: Array<SystemSchemaType>
+    systemSchemaTypes: Array<SystemSchemaType>,
   ): this {
     // Find all system tile objects.
     const tileToObjs: Map<number, Array<GameObject>> = new Map();
@@ -107,7 +107,7 @@ export class SystemRegistry {
         SourceAndPackageIdSchema.parse(sourceAndPackageId);
       } catch (e) {
         const msg = `error: ${e.message}\nparsing: ${JSON.stringify(
-          systemSchemaType
+          systemSchemaType,
         )}`;
         throw new Error(msg);
       }
@@ -142,7 +142,7 @@ export class SystemRegistry {
    */
   public loadDefaultData(): this {
     for (const [source, systemSchemas] of Object.entries(
-      SOURCE_TO_SYSTEM_DATA
+      SOURCE_TO_SYSTEM_DATA,
     )) {
       const sourceAndPackageId: SourceAndPackageIdSchemaType = {
         source,
@@ -160,7 +160,7 @@ export class SystemRegistry {
    */
   public getAllSystemTileNumbers(): Array<number> {
     return Array.from(this._systemTileNumberToSchemaAndSource.keys()).filter(
-      (tileNumber) => tileNumber > 0
+      (tileNumber) => tileNumber > 0,
     );
   }
 
@@ -177,7 +177,7 @@ export class SystemRegistry {
           return false;
         }
         return true;
-      }
+      },
     );
   }
 
@@ -222,7 +222,7 @@ export class SystemRegistry {
    * @returns
    */
   public rawBySystemTileNumber(
-    tileNumber: number
+    tileNumber: number,
   ): SystemSchemaType | undefined {
     const schemaAndSource =
       this._systemTileNumberToSchemaAndSource.get(tileNumber);

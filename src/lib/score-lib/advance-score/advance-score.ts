@@ -14,7 +14,7 @@ export class AdvanceScore {
         const newScore: number = score + delta;
         const newPos: Vector | undefined = this._scoreboard.scoreToPos(
           newScore,
-          playerSlot
+          playerSlot,
         );
         if (newPos !== undefined) {
           const animationSpeed: number = 1;

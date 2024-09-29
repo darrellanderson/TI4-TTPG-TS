@@ -69,12 +69,12 @@ export class SetupPlayerSlotColors {
 
     // Slots outside the player slot range using a player slot color.
     const reassignSlots: Array<number> = origColorSlots.filter(
-      (slot) => !playerSlots.includes(slot)
+      (slot) => !playerSlots.includes(slot),
     );
 
     // Slots inside the player slot range NOT using a player slot color.
     const availableSlots: Array<number> = playerSlots.filter(
-      (slot) => !origColorSlots.includes(slot)
+      (slot) => !origColorSlots.includes(slot),
     );
 
     // Swap so the player colors are assigned to the player slots.
@@ -100,7 +100,7 @@ export class SetupPlayerSlotColors {
       if (colorName !== undefined) {
         const colorsType: ColorsType = colorLib.getColorsByNameOrThrow(
           colorName,
-          0
+          0,
         );
         const colorHex: string = colorsType.slot;
         const color: Color = colorLib.parseColorOrThrow(colorHex);

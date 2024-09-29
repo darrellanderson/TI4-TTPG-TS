@@ -8,7 +8,7 @@ export class LayoutExplorationContainer {
     this._layout = new LayoutObjects();
 
     const container: GameObject = Spawn.spawnOrThrow(
-      "container:pok/exploration"
+      "container:pok/exploration",
     );
 
     const tokenNsids: Array<string> = [

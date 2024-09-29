@@ -9,7 +9,7 @@ it("static schemaToNsid", () => {
     SystemAttachment.schemaToNsid("my-source", {
       name: "my-name",
       nsidName: "my-nsid-name",
-    })
+    }),
   ).toBe("token.attachment.system:my-source/my-nsid-name");
 });
 
@@ -27,11 +27,11 @@ it("constructor", () => {
       planets: [],
       wormholes: ["alpha"],
       wormholesFaceDown: ["beta"],
-    }
+    },
   );
   expect(attachment.getAnomalies()).toEqual(["asteroid-field"]);
   expect(attachment.getImg()).toEqual(
-    "token/attachment/system/my-nsid-name.png"
+    "token/attachment/system/my-nsid-name.png",
   );
   expect(attachment.getImgPackageId()).toEqual("my-package-id");
   expect(attachment.getName()).toEqual("my-name");
@@ -50,7 +50,7 @@ it("constructor (invalid params)", () => {
       {
         name: "my-name",
         nsidName: "@@invalid??",
-      }
+      },
     );
   }).toThrow();
 });
@@ -62,10 +62,10 @@ it("constructor (invalid nsid)", () => {
         templateMetadata: "nope",
       }),
       { source: "my-source", packageId: "my-package-id" },
-      { name: "my-name", nsidName: "my-nsid-name" }
+      { name: "my-name", nsidName: "my-nsid-name" },
     );
   }).toThrow(
-    'NSID mismatch: expected "token.attachment.system:my-source/my-nsid-name", got "nope"'
+    'NSID mismatch: expected "token.attachment.system:my-source/my-nsid-name", got "nope"',
   );
 });
 
@@ -78,7 +78,7 @@ it("anomalies empty", () => {
     {
       name: "my-name",
       nsidName: "my-nsid-name",
-    }
+    },
   );
   expect(attachment.getAnomalies()).toEqual([]);
 });
@@ -92,7 +92,7 @@ it("img", () => {
     {
       name: "my-name",
       nsidName: "my-nsid-name",
-    }
+    },
   );
   expect(attachment.getImg()).toBe("token/attachment/system/my-nsid-name.png");
 });
@@ -108,10 +108,10 @@ it("img face down", () => {
       name: "my-name",
       nsidName: "my-nsid-name",
       imgFaceDown: true,
-    }
+    },
   );
   expect(attachment.getImg()).toBe(
-    `token/attachment/system/my-nsid-name.back.png`
+    `token/attachment/system/my-nsid-name.back.png`,
   );
 });
 
@@ -124,10 +124,10 @@ it("img homebrew", () => {
     {
       name: "my-name",
       nsidName: "my-nsid-name",
-    }
+    },
   );
   expect(attachment.getImg()).toBe(
-    "homebrew-x/token/attachment/system/my-nsid-name.png"
+    "homebrew-x/token/attachment/system/my-nsid-name.png",
   );
 });
 
@@ -146,7 +146,7 @@ it("planets", () => {
           nsidName: "my-planet-nsid",
         },
       ],
-    }
+    },
   );
   expect(attachment.getPlanets().length).toEqual(1);
   expect(attachment.getPlanets()[0]?.getName()).toEqual("my-planet-name");
@@ -161,7 +161,7 @@ it("wormholes empty", () => {
     {
       name: "my-name",
       nsidName: "my-nsid-name",
-    }
+    },
   );
   expect(attachment.getWormholes()).toEqual([]);
 });
@@ -178,7 +178,7 @@ it("wormholesFaceDown", () => {
       nsidName: "my-nsid-name",
       wormholes: ["alpha"],
       wormholesFaceDown: ["beta"],
-    }
+    },
   );
   expect(attachment.getWormholes()).toEqual(["beta"]);
 });
@@ -195,7 +195,7 @@ it("wormholesGlobalPosition", () => {
       nsidName: "my-nsid-name",
       wormholes: ["alpha"],
       wormholesFaceDown: ["beta"],
-    }
+    },
   );
   const out: Array<WormholeWithPosition> =
     attachment.getWormholesWithPositions();
@@ -216,7 +216,7 @@ it("wormholesWorldPosition face down", () => {
       nsidName: "my-nsid-name",
       wormholes: ["alpha"],
       wormholesFaceDown: ["beta"],
-    }
+    },
   );
   const out: Array<WormholeWithPosition> =
     attachment.getWormholesWithPositions();
@@ -233,7 +233,7 @@ it("attach/detach", () => {
     {
       name: "my-name",
       nsidName: "my-nsid-name",
-    }
+    },
   );
   let success: boolean = false;
 
@@ -243,7 +243,7 @@ it("attach/detach", () => {
   // Create system tile object, TI4.systemRegistry picks it up.
   new MockGameObject({ templateMetadata: `tile.system:base/1` });
   const system: System | undefined = TI4.systemRegistry.getByPosition(
-    new Vector(0, 0, 0)
+    new Vector(0, 0, 0),
   );
   expect(system).toBeDefined();
   if (!system) {
@@ -273,7 +273,7 @@ it("grab/release", () => {
     templateMetadata: "tile.system:base/1",
   });
   const system: System | undefined = TI4.systemRegistry.getBySystemTileObjId(
-    systemTileObj.getId()
+    systemTileObj.getId(),
   );
   expect(system).toBeDefined();
   if (!system) {
@@ -289,7 +289,7 @@ it("grab/release", () => {
     {
       name: "my-name",
       nsidName: "my-nsid-name",
-    }
+    },
   );
 
   const player: Player = new MockPlayer();
@@ -311,7 +311,7 @@ it("isDestroyWormhole", () => {
       name: "my-name",
       nsidName: "my-nsid-name",
       isDestroyWormhole: true,
-    }
+    },
   );
   expect(attachment.isDestroyWormhole()).toBe(true);
 });
@@ -325,7 +325,7 @@ it("isDestroyWormhole (default)", () => {
     {
       name: "my-name",
       nsidName: "my-nsid-name",
-    }
+    },
   );
   expect(attachment.isDestroyWormhole()).toBe(false);
 });

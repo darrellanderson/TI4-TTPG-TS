@@ -52,10 +52,10 @@ it("custom center (generic home)", () => {
 
 it("map string (empty slot)", () => {
   new MockGameObject({ templateMetadata: "tile.system:base/1" }).setPosition(
-    TI4.hex.toPosition("<1,0,-1>")
+    TI4.hex.toPosition("<1,0,-1>"),
   );
   new MockGameObject({ templateMetadata: "tile.system:base/1" }).setPosition(
-    TI4.hex.toPosition("<-1,0,1>")
+    TI4.hex.toPosition("<-1,0,1>"),
   );
   const mapString: string = new MapStringSave().save();
   expect(mapString).toEqual("{-1} 1 -1 -1 1");

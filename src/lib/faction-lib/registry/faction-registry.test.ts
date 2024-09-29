@@ -68,7 +68,7 @@ it("load (with data)", () => {
 
   registry.load(sourceAndPackageId, [schema]);
   expect(registry.getByNsid("faction:my-source/my-nsid-name")?.getName()).toBe(
-    "my-name"
+    "my-name",
   );
 });
 

@@ -36,7 +36,7 @@ it("constructor", () => {
     "card.leader.agent:my-source/my-agent",
   ]);
   expect(faction.getAllianceNsid()).toEqual(
-    "card.alliance:my-source/my-nsid-name"
+    "card.alliance:my-source/my-nsid-name",
   );
   expect(faction.getCommanderNsids()).toEqual([
     "card.leader.commander:my-source/my-commander",

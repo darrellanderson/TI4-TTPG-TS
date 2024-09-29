@@ -42,7 +42,7 @@ export class FactionRegistry {
 
   load(
     sourceAndPackageId: SourceAndPackageIdSchemaType,
-    factions: Array<FactionSchemaType>
+    factions: Array<FactionSchemaType>,
   ): this {
     for (const factionSchemaType of factions) {
       // Validate schema (oterhwise not validated until used).
@@ -51,13 +51,13 @@ export class FactionRegistry {
         FactionSchema.parse(factionSchemaType);
       } catch (e) {
         const msg = `error: ${e.message}\nparsing: ${JSON.stringify(
-          factionSchemaType
+          factionSchemaType,
         )}`;
         throw new Error(msg);
       }
       const faction: Faction = new Faction(
         sourceAndPackageId,
-        factionSchemaType
+        factionSchemaType,
       );
       this._nsidToFaction.set(faction.getNsid(), faction);
     }

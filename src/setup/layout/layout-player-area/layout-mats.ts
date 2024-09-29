@@ -14,10 +14,10 @@ export class LayoutMats {
     const buildMat: GameObject = Spawn.spawnOrThrow("mat.player:base/build");
     const planetMat: GameObject = Spawn.spawnOrThrow("mat.player:base/planet");
     const techMat: GameObject = Spawn.spawnOrThrow(
-      "mat.player:base/technology"
+      "mat.player:base/technology",
     );
     const techDeckMat: GameObject = Spawn.spawnOrThrow(
-      "mat.player:base/technology-deck"
+      "mat.player:base/technology-deck",
     );
 
     this._layout = new LayoutObjects()

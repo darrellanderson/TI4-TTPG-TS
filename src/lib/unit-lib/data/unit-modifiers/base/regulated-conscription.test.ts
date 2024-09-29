@@ -5,7 +5,7 @@ import { UnitAttrs } from "../../../unit-attrs/unit-attrs";
 it("registry", () => {
   const nsid = "card.agenda:base/regulated-conscription";
   expect(TI4.unitModifierRegistry.getByNsid(nsid)?.getName()).toBe(
-    "Regulated Conscription"
+    "Regulated Conscription",
   );
 });
 

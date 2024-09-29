@@ -6,7 +6,7 @@ import { UnitType } from "lib/unit-lib/schema/unit-attrs-schema";
 it("registry", () => {
   const nsid = "card.action:base/experimental-battlestation";
   expect(TI4.unitModifierRegistry.getByNsid(nsid)?.getName()).toBe(
-    "Experimental Battlestation"
+    "Experimental Battlestation",
   );
 });
 

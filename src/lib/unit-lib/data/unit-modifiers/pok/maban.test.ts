@@ -25,7 +25,7 @@ it("no modifier", () => {
     combatRoll.self.unitAttrsSet.getOrThrow("fighter");
   expect(fighterAttrs.getProducePerCost()).toBe(2);
   expect(
-    fighterAttrs.getProduceQuantityDoesNotCountAgainstProductionLimits()
+    fighterAttrs.getProduceQuantityDoesNotCountAgainstProductionLimits(),
   ).toBe(0);
 });
 
@@ -44,7 +44,7 @@ it("maban (commander)", () => {
     combatRoll.self.unitAttrsSet.getOrThrow("fighter");
   expect(fighterAttrs.getProducePerCost()).toBe(3);
   expect(
-    fighterAttrs.getProduceQuantityDoesNotCountAgainstProductionLimits()
+    fighterAttrs.getProduceQuantityDoesNotCountAgainstProductionLimits(),
   ).toBe(1);
 });
 
@@ -63,6 +63,6 @@ it("maban (alliance)", () => {
     combatRoll.self.unitAttrsSet.getOrThrow("fighter");
   expect(fighterAttrs.getProducePerCost()).toBe(3);
   expect(
-    fighterAttrs.getProduceQuantityDoesNotCountAgainstProductionLimits()
+    fighterAttrs.getProduceQuantityDoesNotCountAgainstProductionLimits(),
   ).toBe(1);
 });

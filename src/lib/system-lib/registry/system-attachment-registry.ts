@@ -43,11 +43,11 @@ export class SystemAttachmentRegistry {
       const systemAttachment: SystemAttachment = new SystemAttachment(
         obj,
         schemaAndSource.sourceAndPackageId,
-        schemaAndSource.schema
+        schemaAndSource.schema,
       );
       this._attachmentObjIdToSystemAttachment.set(
         obj.getId(),
-        systemAttachment
+        systemAttachment,
       );
     }
   };
@@ -95,7 +95,7 @@ export class SystemAttachmentRegistry {
    */
   public load(
     sourceAndPackageId: SourceAndPackageIdSchemaType,
-    systemAttachmentSchemaTypes: Array<SystemAttachmentSchemaType>
+    systemAttachmentSchemaTypes: Array<SystemAttachmentSchemaType>,
   ): this {
     // Find all system attachment objects.
     const nsidToObjIds: Map<string, Array<string>> = new Map();
@@ -119,7 +119,7 @@ export class SystemAttachmentRegistry {
         SystemAttachmentSchema.parse(systemAttachmentSchemaType);
       } catch (e) {
         const msg = `error: ${e.message}\nparsing: ${JSON.stringify(
-          systemAttachmentSchemaType
+          systemAttachmentSchemaType,
         )}`;
         throw new Error(msg);
       }
@@ -132,7 +132,7 @@ export class SystemAttachmentRegistry {
       // Register (create temporary attachment for nsid generation).
       const nsid: string = SystemAttachment.schemaToNsid(
         sourceAndPackageId.source,
-        systemAttachmentSchemaType
+        systemAttachmentSchemaType,
       );
       this._nsidToSchemaAndSource.set(nsid, {
         sourceAndPackageId,
@@ -147,7 +147,7 @@ export class SystemAttachmentRegistry {
           const attachment = new SystemAttachment(
             obj,
             sourceAndPackageId,
-            systemAttachmentSchemaType
+            systemAttachmentSchemaType,
           );
           this._attachmentObjIdToSystemAttachment.set(objId, attachment);
         }
@@ -163,7 +163,7 @@ export class SystemAttachmentRegistry {
    */
   public loadDefaultData(): this {
     for (const [source, systemAttachmentSchemas] of Object.entries(
-      SOURCE_TO_SYSTEM_ATTACHMENT_DATA
+      SOURCE_TO_SYSTEM_ATTACHMENT_DATA,
     )) {
       const sourceAndPackageId: SourceAndPackageIdSchemaType = {
         source,
@@ -182,7 +182,7 @@ export class SystemAttachmentRegistry {
    * @returns
    */
   public getBySystemAttachmentObjId(
-    objId: string
+    objId: string,
   ): SystemAttachment | undefined {
     return this._attachmentObjIdToSystemAttachment.get(objId);
   }

@@ -32,7 +32,7 @@ it("getPlayerSlotToCommandTokenCount (versatile, hyper-metabolism, cybernetic-en
     "card.promissory:base/cybernetic-enhancements",
     {
       position: [10, 0, 0],
-    }
+    },
   );
 
   const l1zixCardHolder: CardHolder = new MockCardHolder({
@@ -49,7 +49,7 @@ it("getPlayerSlotToCommandTokenCount (versatile, hyper-metabolism, cybernetic-en
     new AddCommandTokens().getPlayerSlotToCommandTokenCount();
   expect(slotToCount.get(1)).toBe(5);
   expect(l1zixCardHolder.getCards().includes(cyberneticEnhancements)).toBe(
-    true
+    true,
   );
 });
 

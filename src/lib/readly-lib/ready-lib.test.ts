@@ -11,7 +11,7 @@ it("ready leader-agent card", () => {
   const faceUp: Card = MockCard.simple("card.leader.agent:my-source/my-name");
   const faceDown: Card = MockCard.simple(
     "card.leader.agent:my-source/my-name",
-    { isFaceUp: false }
+    { isFaceUp: false },
   );
 
   expect(Facing.isFaceUp(faceUp)).toBe(true);
@@ -25,18 +25,18 @@ it("ready leader-agent card", () => {
 
 it("ready legendary-planet card", () => {
   const faceUp: Card = MockCard.simple(
-    "card.legendary-planet:my-source/my-name"
+    "card.legendary-planet:my-source/my-name",
   );
   const faceDown: Card = MockCard.simple(
     "card.legendary-planet:my-source/my-name",
-    { isFaceUp: false }
+    { isFaceUp: false },
   );
   const deck: Card = MockCard.simple(
     "card.legendary-planet:my-source/my-name",
     {
       isFaceUp: false,
       snappedToPoint: new MockSnapPoint({ tags: ["deck-legendary-planet"] }),
-    }
+    },
   );
 
   expect(Facing.isFaceUp(faceUp)).toBe(true);
@@ -95,7 +95,7 @@ it("ready technology card", () => {
   const faceUp: Card = MockCard.simple("card.technology.red:my-source/my-name");
   const faceDown: Card = MockCard.simple(
     "card.technology.red:my-source/my-name",
-    { isFaceUp: false }
+    { isFaceUp: false },
   );
 
   expect(Facing.isFaceUp(faceUp)).toBe(true);

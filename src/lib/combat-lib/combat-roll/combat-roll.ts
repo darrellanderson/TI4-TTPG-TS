@@ -181,7 +181,7 @@ export class CombatRoll {
           unitPlastic.getHex() === this._params.hex ||
           this._adjHexes.has(unitPlastic.getHex())
         );
-      }
+      },
     );
     UnitPlastic.assignOwners(unitPlastics);
     UnitPlastic.assignPlanets(unitPlastics);
@@ -205,7 +205,7 @@ export class CombatRoll {
           useAttrs = this._cardUtil.isLooseCard(
             obj,
             allowFaceDown,
-            rejectSnapPointTags
+            rejectSnapPointTags,
           );
         }
         if (useAttrs) {
@@ -242,7 +242,7 @@ export class CombatRoll {
 
   _findUnitModifiers(
     selfSlot: number,
-    opponentSlot: number
+    opponentSlot: number,
   ): Array<UnitModifier> {
     const unitModifiers: Array<UnitModifier> = [];
     const skipContained: boolean = true;
@@ -271,7 +271,7 @@ export class CombatRoll {
     const maybeAddModifier = (
       nsid: string,
       obj: GameObject | undefined,
-      owningPlayerSlot: number
+      owningPlayerSlot: number,
     ): void => {
       const modifier: UnitModifier | undefined =
         TI4.unitModifierRegistry.getByNsid(nsid);
@@ -284,7 +284,7 @@ export class CombatRoll {
           useModifier = this._cardUtil.isLooseCard(
             obj,
             allowFaceDown,
-            rejectSnapPointTags
+            rejectSnapPointTags,
           );
         }
 
@@ -529,7 +529,7 @@ export class CombatRoll {
   public applyUnitModifiers(errors: Array<Error>): this {
     const unitModifiers: Array<UnitModifier> = this._findUnitModifiers(
       this.self.playerSlot,
-      this.opponent.playerSlot
+      this.opponent.playerSlot,
     );
     for (const modifier of unitModifiers) {
       // Run each modifier in a try/catch block, an error will only suppress
@@ -694,7 +694,7 @@ export class CombatRoll {
 
   public getUnitModifierNamesWithDescriptions(): Array<string> {
     return this._modifiers.map(
-      (modifier) => `${modifier.getName()} (${modifier.getDescription()})`
+      (modifier) => `${modifier.getName()} (${modifier.getDescription()})`,
     );
   }
 
@@ -705,7 +705,7 @@ export class CombatRoll {
   public roll(player: Player, position: Vector): void {
     const callback = (
       _diceResults: Array<DiceResult>,
-      _player: Player
+      _player: Player,
     ): void => {};
     const diceParams: Array<DiceParams> = this.createDiceParamsArray();
     const diceGroupParams: DiceGroupParams = {
@@ -719,7 +719,7 @@ export class CombatRoll {
   }
 
   _getUnitRollsSummaries(
-    diceResults: Array<DiceResult>
+    diceResults: Array<DiceResult>,
   ): Map<UnitType, _UnitRollsSummary> {
     const result: Map<UnitType, _UnitRollsSummary> = new Map();
 

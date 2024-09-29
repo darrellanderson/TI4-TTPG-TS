@@ -23,7 +23,7 @@ it("2ram", () => {
   expect(
     combatRoll.self.unitAttrsSet
       .getOrThrow("dreadnought")
-      .getDisablePlanetaryShield()
+      .getDisablePlanetaryShield(),
   ).toBe(false);
 
   placeGameObjects({
@@ -34,6 +34,6 @@ it("2ram", () => {
   expect(
     combatRoll.self.unitAttrsSet
       .getOrThrow("dreadnought")
-      .getDisablePlanetaryShield()
+      .getDisablePlanetaryShield(),
   ).toBe(true);
 });

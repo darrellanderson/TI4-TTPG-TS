@@ -5,7 +5,7 @@ import { OPPONENT, SELF, placeGameObjects } from "../abstract.test";
 it("registry", () => {
   const nsid = "card.agenda:pok/articles-of-war";
   expect(TI4.unitModifierRegistry.getByNsid(nsid)?.getName()).toBe(
-    "Articles of War"
+    "Articles of War",
   );
 });
 

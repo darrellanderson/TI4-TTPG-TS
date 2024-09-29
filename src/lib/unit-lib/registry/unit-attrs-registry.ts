@@ -42,7 +42,7 @@ export class UnitAttrsRegistry {
         UnitAttrsSchema.parse(unitAttrs);
       } catch (e) {
         const msg = `error: ${e.message}\nparsing: ${JSON.stringify(
-          unitAttrs
+          unitAttrs,
         )}`;
         throw new Error(msg);
       }
@@ -64,7 +64,7 @@ export class UnitAttrsRegistry {
    */
   public loadDefaultData(): this {
     for (const [source, unitAttrsArray] of Object.entries(
-      SOURCE_TO_UNIT_ATTRS_DATA
+      SOURCE_TO_UNIT_ATTRS_DATA,
     )) {
       this.load(source, unitAttrsArray);
     }

@@ -96,7 +96,7 @@ it("posToScore", () => {
   MockGameObject.simple("token:base/scoreboard");
   const scoreboardLib: Scoreboard = new Scoreboard();
   const score: number | undefined = scoreboardLib.posToScore(
-    new Vector(0, 0, 0)
+    new Vector(0, 0, 0),
   );
   expect(score).toBe(5);
 });
@@ -104,7 +104,7 @@ it("posToScore", () => {
 it("posToScore (missing scoreboard)", () => {
   const scoreboardLib: Scoreboard = new Scoreboard();
   const score: number | undefined = scoreboardLib.posToScore(
-    new Vector(0, 0, 0)
+    new Vector(0, 0, 0),
   );
   expect(score).toBeUndefined();
 });

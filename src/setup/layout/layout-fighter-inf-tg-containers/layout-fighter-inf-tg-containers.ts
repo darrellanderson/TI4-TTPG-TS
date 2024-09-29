@@ -15,7 +15,7 @@ export class LayoutFighterInfTgContainers {
 
     const topGarbage: GameObject = Spawn.spawnOrThrow("container:base/garbage");
     const bottompGarbage: GameObject = Spawn.spawnOrThrow(
-      "container:base/garbage"
+      "container:base/garbage",
     );
 
     this._layout

@@ -29,7 +29,7 @@ export const Matriarch: UnitModifierSchemaType = {
         fighter.setGroundCombat(
           new CombatAttrs({
             hit: spaceCombat.getHit(),
-          })
+          }),
         );
       }
     }

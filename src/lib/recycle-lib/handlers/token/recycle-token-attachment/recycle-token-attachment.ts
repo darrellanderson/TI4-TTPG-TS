@@ -23,7 +23,7 @@ export class RecycleTokenAttachment extends GarbageHandler {
     const container = this._find.findContainer(
       containerNsid,
       playerSlot,
-      skipContained
+      skipContained,
     );
 
     if (!container) {

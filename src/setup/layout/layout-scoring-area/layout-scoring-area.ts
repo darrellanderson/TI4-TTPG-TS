@@ -11,7 +11,7 @@ export class LayoutScoringArea {
   constructor(playerCount: number) {
     const layoutObjectives: LayoutObjectives = new LayoutObjectives();
     const layoutPlayerSecrets: LayoutPlayerSecrets = new LayoutPlayerSecrets(
-      playerCount
+      playerCount,
     );
     const layoutAgendaLawsMat: LayoutAgendaLawsMat = new LayoutAgendaLawsMat();
 

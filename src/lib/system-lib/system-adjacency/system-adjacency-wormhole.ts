@@ -17,7 +17,7 @@ export class SystemAdjacencyWormhole {
 
   public addTags(
     hexToSystem: Map<HexType, System>,
-    adjacency: Adjacency
+    adjacency: Adjacency,
   ): void {
     for (const wormhole of SystemAdjacencyWormhole.WORMHOMES) {
       adjacency.addLink(wormhole, wormhole);
@@ -41,7 +41,7 @@ export class SystemAdjacencyWormhole {
     const creussFlagship: GameObject | undefined = this._find.findGameObject(
       nsid,
       playerSlot,
-      skipContained
+      skipContained,
     );
     if (creussFlagship) {
       const pos: Vector = creussFlagship.getPosition();

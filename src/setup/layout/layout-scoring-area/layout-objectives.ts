@@ -8,11 +8,11 @@ export class LayoutObjectives {
 
   constructor() {
     const objectivesMat1: GameObject = Spawn.spawnOrThrow(
-      "mat:base/objective-1"
+      "mat:base/objective-1",
     );
     this._scoreboard = Spawn.spawnOrThrow("token:base/scoreboard");
     const objectivesMat2: GameObject = Spawn.spawnOrThrow(
-      "mat:base/objective-2"
+      "mat:base/objective-2",
     );
 
     this._layout = new LayoutObjects()

@@ -5,7 +5,7 @@ import { UnitAttrs } from "../../../unit-attrs/unit-attrs";
 it("registry", () => {
   const nsid = "unit:pok/quetzecoatl";
   expect(TI4.unitModifierRegistry.getByNsid(nsid)?.getName()).toBe(
-    "Quetzecoatl"
+    "Quetzecoatl",
   );
 });
 
@@ -37,7 +37,7 @@ it("modifier", () => {
     rollingPlayerSlot: SELF,
   });
   expect(
-    combatRoll.opponent.unitAttrsSet.getOrThrow("flagship")!.getName()
+    combatRoll.opponent.unitAttrsSet.getOrThrow("flagship")!.getName(),
   ).toBe("Quetzecoatl");
   expect(combatRoll.getUnitModifierNames()).toEqual(["Quetzecoatl"]);
 

@@ -12,7 +12,7 @@ export class UnitModifier {
 
   public static schemaTriggerToNsid(
     source: NsidNameSchemaType,
-    trigger: UnitModifierTriggerType
+    trigger: UnitModifierTriggerType,
   ): string {
     if (trigger.overrideSource) {
       source = trigger.overrideSource;

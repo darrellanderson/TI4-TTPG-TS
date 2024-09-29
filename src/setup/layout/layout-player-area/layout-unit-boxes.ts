@@ -68,7 +68,7 @@ export class LayoutUnitBoxes {
 
     if (row) {
       const garbageContainer: GameObject = Spawn.spawnOrThrow(
-        "container:base/garbage"
+        "container:base/garbage",
       );
       row.add(garbageContainer);
       this._layout.addAfterLayout(() => {

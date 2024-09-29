@@ -38,7 +38,7 @@ export class SystemAttachment {
    */
   static schemaToNsid(
     source: string,
-    schema: SystemAttachmentSchemaType
+    schema: SystemAttachmentSchemaType,
   ): string {
     return `token.attachment.system:${source}/${schema.nsidName}`;
   }
@@ -46,7 +46,7 @@ export class SystemAttachment {
   static schemaToImg(
     sourceAndPackageId: SourceAndPackageIdSchemaType,
     schema: SystemAttachmentSchemaType,
-    useBack: boolean
+    useBack: boolean,
   ): string {
     const filename: string = `${schema.nsidName}${useBack ? ".back" : ""}.png`;
     let img = `token/attachment/system/${filename}`;
@@ -68,7 +68,7 @@ export class SystemAttachment {
   constructor(
     obj: GameObject,
     sourceAndPackageId: SourceAndPackageIdSchemaType,
-    params: SystemAttachmentSchemaType
+    params: SystemAttachmentSchemaType,
   ) {
     try {
       SystemAttachmentSchema.parse(params); // validate the schema
@@ -80,7 +80,7 @@ export class SystemAttachment {
 
     const nsid: string = SystemAttachment.schemaToNsid(
       sourceAndPackageId.source,
-      params
+      params,
     );
     const objNsid: string = NSID.get(obj);
     if (nsid !== objNsid) {
@@ -92,7 +92,7 @@ export class SystemAttachment {
     this._params = params;
     if (params.planets) {
       this._planets = params.planets.map(
-        (planet) => new Planet(this._obj, this._sourceAndPackageId, planet)
+        (planet) => new Planet(this._obj, this._sourceAndPackageId, planet),
       );
     }
 
@@ -173,7 +173,7 @@ export class SystemAttachment {
     return SystemAttachment.schemaToImg(
       this._sourceAndPackageId,
       this._params,
-      useBack
+      useBack,
     );
   }
 

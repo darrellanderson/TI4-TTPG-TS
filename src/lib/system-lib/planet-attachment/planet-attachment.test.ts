@@ -9,7 +9,7 @@ it("static schemaToNsid", () => {
     PlanetAttachment.schemaToNsid("my-source", {
       name: "my-name",
       nsidName: "my-nsid-name",
-    })
+    }),
   ).toBe("token.attachment.planet:my-source/my-nsid-name");
 });
 
@@ -23,7 +23,7 @@ it("constructor", () => {
     {
       name: "my-name",
       nsidName: "my-nsid-name",
-    }
+    },
   );
   expect(planetAttachment.getName()).toBe("my-name");
   expect(planetAttachment.getObj()).toBe(attachmentTokenObj);
@@ -39,7 +39,7 @@ it("constructor (invalid params)", () => {
       {
         name: "my-name",
         nsidName: "@@invalid??",
-      }
+      },
     );
   }).toThrow();
 });
@@ -52,10 +52,10 @@ it("constructor (invalid nsid)", () => {
       {
         name: "my-name",
         nsidName: "invalid",
-      }
+      },
     );
   }).toThrow(
-    'NSID mismatch: expected "token.attachment.planet:my-source/invalid", got "nope"'
+    'NSID mismatch: expected "token.attachment.planet:my-source/invalid", got "nope"',
   );
 });
 
@@ -68,7 +68,7 @@ it("attach/detach", () => {
     {
       name: "my-name",
       nsidName: "my-nsid-name",
-    }
+    },
   );
 
   let success: boolean = false;
@@ -81,14 +81,14 @@ it("attach/detach", () => {
   // Create system tile obj, TI4.systemRegistry picks it up.
   new MockGameObject({ templateMetadata: "tile.system:base/1" });
   const system: System | undefined = TI4.systemRegistry.getByPosition(
-    new Vector(0, 0, 0)
+    new Vector(0, 0, 0),
   );
   expect(system).toBeDefined();
   if (!system) {
     throw new Error("system not found"); // for TypeScript
   }
   const planet: Planet | undefined = system.getPlanetClosest(
-    new Vector(0, 0, 0)
+    new Vector(0, 0, 0),
   );
   expect(planet).toBeDefined();
   if (!planet) {
@@ -118,7 +118,7 @@ it("grab/release", () => {
     templateMetadata: "tile.system:base/1",
   });
   const system: System | undefined = TI4.systemRegistry.getBySystemTileObjId(
-    systemTileObj.getId()
+    systemTileObj.getId(),
   );
   expect(system).toBeDefined();
   if (!system) {
@@ -139,7 +139,7 @@ it("grab/release", () => {
     {
       name: "my-name",
       nsidName: "my-nsid-name",
-    }
+    },
   );
 
   const player: Player = new MockPlayer();
@@ -160,7 +160,7 @@ it("img", () => {
     {
       name: "my-name",
       nsidName: "my-nsid-name",
-    }
+    },
   );
   expect(attachment.getImg()).toBe("token/attachment/planet/my-nsid-name.png");
   expect(attachment.getImgPackageId()).toBe("my-package-id");
@@ -177,10 +177,10 @@ it("img face down", () => {
       name: "my-name",
       nsidName: "my-nsid-name",
       imgFaceDown: true,
-    }
+    },
   );
   expect(attachment.getImg()).toBe(
-    "token/attachment/planet/my-nsid-name.back.png"
+    "token/attachment/planet/my-nsid-name.back.png",
   );
 });
 
@@ -193,10 +193,10 @@ it("img homebrew", () => {
     {
       name: "my-name",
       nsidName: "my-nsid-name",
-    }
+    },
   );
   expect(attachment.getImg()).toBe(
-    "homebrew-x/token/attachment/planet/my-nsid-name.png"
+    "homebrew-x/token/attachment/planet/my-nsid-name.png",
   );
 });
 
@@ -210,7 +210,7 @@ it("getInfluence", () => {
       name: "my-name",
       nsidName: "my-nsid-name",
       influence: 3,
-    }
+    },
   );
   expect(planetAttachment.getInfluence()).toBe(3);
 });
@@ -224,7 +224,7 @@ it("getInfluence (default)", () => {
     {
       name: "my-name",
       nsidName: "my-nsid-name",
-    }
+    },
   );
   expect(planetAttachment.getInfluence()).toBe(0);
 });
@@ -241,7 +241,7 @@ it("getInfluence (face down)", () => {
       nsidName: "my-nsid-name",
       influence: 3,
       influenceFaceDown: 5,
-    }
+    },
   );
   expect(planetAttachment.getInfluence()).toBe(5);
 });
@@ -257,10 +257,10 @@ it("getLegendaryCardNsid", () => {
       name: "my-name",
       nsidName: "my-nsid-name",
       legendaryNsidName: "legendary-1",
-    }
+    },
   );
   expect(planetAttachment.getLegendaryCardNsid()).toBe(
-    "card.legendary_planet:my-source/legendary-1"
+    "card.legendary_planet:my-source/legendary-1",
   );
 });
 
@@ -274,7 +274,7 @@ it("getName", () => {
     {
       name: "my-name",
       nsidName: "my-nsid-name",
-    }
+    },
   );
   expect(planetAttachment.getName()).toBe("my-name");
 });
@@ -290,7 +290,7 @@ it("getResources", () => {
       name: "my-name",
       nsidName: "my-nsid-name",
       resources: 3,
-    }
+    },
   );
   expect(planetAttachment.getResources()).toBe(3);
 });
@@ -304,7 +304,7 @@ it("getResources (default)", () => {
     {
       name: "my-name",
       nsidName: "my-nsid-name",
-    }
+    },
   );
   expect(planetAttachment.getResources()).toBe(0);
 });
@@ -321,7 +321,7 @@ it("getResources (face down)", () => {
       nsidName: "my-nsid-name",
       resources: 3,
       resourcesFaceDown: 5,
-    }
+    },
   );
   expect(planetAttachment.getResources()).toBe(5);
 });
@@ -336,7 +336,7 @@ it("getTechs", () => {
       name: "my-name",
       nsidName: "my-nsid-name",
       techs: ["blue", "red"],
-    }
+    },
   );
   expect(planetAttachment.getTechs()).toEqual(["blue", "red"]);
 });
@@ -353,7 +353,7 @@ it("getTechs (face down)", () => {
       nsidName: "my-nsid-name",
       techs: ["blue", "red"],
       techsFaceDown: ["yellow"],
-    }
+    },
   );
   expect(planetAttachment.getTechs()).toEqual(["yellow"]);
 });
@@ -368,7 +368,7 @@ it("getTraits", () => {
       name: "my-name",
       nsidName: "my-nsid-name",
       traits: ["cultural", "industrial"],
-    }
+    },
   );
   expect(planetAttachment.getTraits()).toEqual(["cultural", "industrial"]);
 });
@@ -385,7 +385,7 @@ it("getTraits (face down)", () => {
       nsidName: "my-nsid-name",
       traits: ["cultural", "industrial"],
       traitsFaceDown: ["hazardous"],
-    }
+    },
   );
   expect(planetAttachment.getTraits()).toEqual(["hazardous"]);
 });
@@ -400,7 +400,7 @@ it("isDestroyPlanet", () => {
       name: "my-name",
       nsidName: "my-nsid-name",
       isDestroyPlanet: true,
-    }
+    },
   );
   expect(planetAttachment.isDestroyPlanet()).toBe(true);
 });
@@ -414,7 +414,7 @@ it("isDestroyPlanet (default)", () => {
     {
       name: "my-name",
       nsidName: "my-nsid-name",
-    }
+    },
   );
   expect(planetAttachment.isDestroyPlanet()).toBe(false);
 });
@@ -429,7 +429,7 @@ it("isLegendary", () => {
       name: "my-name",
       nsidName: "my-nsid-name",
       isLegendary: true,
-    }
+    },
   );
   expect(planetAttachment.isLegendary()).toBe(true);
 });
@@ -444,7 +444,7 @@ it("isLegendary (default)", () => {
     {
       name: "my-name",
       nsidName: "my-nsid-name",
-    }
+    },
   );
   expect(planetAttachment.isLegendary()).toBe(false);
 });

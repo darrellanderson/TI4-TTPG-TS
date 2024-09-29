@@ -31,7 +31,7 @@ export class CommandTokenCounter {
     const playerSlotToCommandSheet: Map<number, GameObject> = new Map();
     for (const commandSheet of commandSheets) {
       const playerSlot: number = this._find.closestOwnedCardHolderOwner(
-        commandSheet.getPosition()
+        commandSheet.getPosition(),
       );
       playerSlotToCommandSheet.set(playerSlot, commandSheet);
     }
@@ -51,7 +51,7 @@ export class CommandTokenCounter {
     for (const commandToken of commandTokens) {
       // Tokens owned by other players may be on another player's sheet.
       const playerSlot: number = this._find.closestOwnedCardHolderOwner(
-        commandToken.getPosition()
+        commandToken.getPosition(),
       );
       const commandTokenCounts: CommandTokenCounts | undefined =
         playerSlotToCommandTokenCounts.get(playerSlot);

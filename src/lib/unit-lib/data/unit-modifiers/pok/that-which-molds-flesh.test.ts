@@ -5,14 +5,14 @@ import { UnitAttrs } from "../../../unit-attrs/unit-attrs";
 it("registry (commander)", () => {
   const nsid = "card.leader.commander:pok/that-which-molds-flesh";
   expect(TI4.unitModifierRegistry.getByNsid(nsid)?.getName()).toBe(
-    "That Which Molds Flesh"
+    "That Which Molds Flesh",
   );
 });
 
 it("registry (alliance)", () => {
   const nsid = "card.alliance:pok/vuilraith";
   expect(TI4.unitModifierRegistry.getByNsid(nsid)?.getName()).toBe(
-    "That Which Molds Flesh"
+    "That Which Molds Flesh",
   );
 });
 
@@ -29,12 +29,12 @@ it("default", () => {
   const infantry: UnitAttrs =
     combatRoll.self.unitAttrsSet.getOrThrow("infantry");
   expect(
-    infantry.getSharedProduceQuantityDoesNotCountAgainstProductionLimits()
+    infantry.getSharedProduceQuantityDoesNotCountAgainstProductionLimits(),
   ).toBe(0);
 
   const fighter: UnitAttrs = combatRoll.self.unitAttrsSet.getOrThrow("fighter");
   expect(
-    fighter.getSharedProduceQuantityDoesNotCountAgainstProductionLimits()
+    fighter.getSharedProduceQuantityDoesNotCountAgainstProductionLimits(),
   ).toBe(0);
 });
 
@@ -54,11 +54,11 @@ it("modifier", () => {
   const infantry: UnitAttrs =
     combatRoll.self.unitAttrsSet.getOrThrow("infantry");
   expect(
-    infantry.getSharedProduceQuantityDoesNotCountAgainstProductionLimits()
+    infantry.getSharedProduceQuantityDoesNotCountAgainstProductionLimits(),
   ).toBe(2);
 
   const fighter: UnitAttrs = combatRoll.self.unitAttrsSet.getOrThrow("fighter");
   expect(
-    fighter.getSharedProduceQuantityDoesNotCountAgainstProductionLimits()
+    fighter.getSharedProduceQuantityDoesNotCountAgainstProductionLimits(),
   ).toBe(2);
 });

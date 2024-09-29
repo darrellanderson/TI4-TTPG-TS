@@ -20,7 +20,7 @@ export const ThatWhichMoldsFlesh: UnitModifierSchemaType = {
       combatRoll.self.unitAttrsSet.get("infantry");
     if (infantryAttrs) {
       infantryAttrs.setSharedProduceQuantityDoesNotCountAgainstProductionLimits(
-        2
+        2,
       );
     }
 
@@ -28,7 +28,7 @@ export const ThatWhichMoldsFlesh: UnitModifierSchemaType = {
       combatRoll.self.unitAttrsSet.get("fighter");
     if (fighterAttrs) {
       fighterAttrs.setSharedProduceQuantityDoesNotCountAgainstProductionLimits(
-        2
+        2,
       );
     }
   },
