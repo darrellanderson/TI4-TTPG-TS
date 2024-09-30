@@ -50,7 +50,7 @@ class QuickRoller {
     ui.widget = canvas;
     gameObject.addUI(ui);
 
-    const r = (w / 2 - buttonW / 2) * 0.95;
+    const r: number = (w / 2 - buttonW / 2) * 0.95;
     for (let i = 1; i <= 10; i++) {
       const phi: number = (Math.PI / 5) * i;
       const x: number = Math.sin(phi) * r + w / 2 - buttonW / 2;
