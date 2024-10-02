@@ -19,16 +19,16 @@ export class AbstractCopyCards {
   constructor(cardType: string) {
     this._cardType = cardType;
 
-    let root: string = "/Users/darrell/ttpg";
+    let root: string = "/Users/darrell/ttpg/TI4-TTPG";
     if (!fs.existsSync(root)) {
-      root = "/Users/darrell/TI4-Online";
+      root = "/Users/darrell/TI4-Online/TI4-TTPG";
     }
     if (!fs.existsSync(root)) {
       throw new Error("Root directory not found");
     }
     this._srcRoot = path.join(
       root,
-      "TI4-TTPG/prebuild/Textures/en/card",
+      "prebuild/Textures/en/card",
       this._cardType
     );
     this._dstRoot = path.join(
