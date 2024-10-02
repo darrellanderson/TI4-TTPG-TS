@@ -8,12 +8,12 @@
  * - assets/Textures/token/*.jpg
  */
 
-import crypto from "crypto";
 import fs from "fs";
 import path from "path";
 
 import { SOURCE_TO_GENERIC_TOKENS } from "./data/generic-tokens.data";
 import { TOKEN_SYSTEM_ATTACHMENT_TEMPLATE } from "./data/token.template-data";
+import { getGuid } from "./lib/guid";
 
 type GenericTokenInfo = {
   guid: string;
@@ -30,7 +30,7 @@ type GenericTokenInfo = {
 // Assemble info records.
 const infos: Array<GenericTokenInfo> = [];
 for (const [source, genericTokens] of Object.entries(
-  SOURCE_TO_GENERIC_TOKENS,
+  SOURCE_TO_GENERIC_TOKENS
 )) {
   for (const genericToken of genericTokens) {
     const name: string = genericToken.name;
@@ -52,12 +52,7 @@ for (const [source, genericTokens] of Object.entries(
       modelBack = "";
     }
 
-    const guid: string = crypto
-      .createHash("sha256")
-      .update(templateFile)
-      .digest("hex")
-      .substring(0, 32)
-      .toUpperCase();
+    const guid: string = getGuid(templateFile);
 
     infos.push({
       guid,
@@ -134,12 +129,12 @@ for (const info of infos) {
 
   fs.cpSync(
     "./prebuild/" + info.imgFileFace,
-    "./assets/Textures/" + info.imgFileFace,
+    "./assets/Textures/" + info.imgFileFace
   );
   if (info.imgFileFace !== info.imgFileBack && info.imgFileBack !== "") {
     fs.cpSync(
       "./prebuild/" + info.imgFileBack,
-      "./assets/Textures/" + info.imgFileBack,
+      "./assets/Textures/" + info.imgFileBack
     );
   }
 }

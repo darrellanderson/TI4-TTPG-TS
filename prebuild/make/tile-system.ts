@@ -7,13 +7,13 @@
  * - assets/Textures/tile/system/tile-{tile}.jpg
  */
 
-import crypto from "crypto";
 import fs from "fs";
 import path from "path";
 import sharp from "sharp";
 
 import { SOURCE_TO_SYSTEM_DATA } from "../../src/lib/system-lib/data/system.data";
 import { TILE_SYSTEM_TEMPLATE } from "./data/tile-system.template-data";
+import { getGuid } from "./lib/guid";
 
 type TileInfo = {
   guid: string;
@@ -55,12 +55,7 @@ for (const [source, systemSchemas] of Object.entries(SOURCE_TO_SYSTEM_DATA)) {
 
     const templateFile: string = `tile/system/tile-${tileStr}.json`;
 
-    const guid: string = crypto
-      .createHash("sha256")
-      .update(templateFile)
-      .digest("hex")
-      .substring(0, 32)
-      .toUpperCase();
+    const guid: string = getGuid(templateFile);
 
     // Back will vary.
     let imgFileBack: string = "";
@@ -126,11 +121,11 @@ for (const info of infos) {
 
   fs.cpSync(
     "./prebuild/" + info.imgFileFace,
-    "./assets/Textures/" + info.imgFileFace,
+    "./assets/Textures/" + info.imgFileFace
   );
   fs.cpSync(
     "./prebuild/" + info.imgFileBack,
-    "./assets/Textures/" + info.imgFileBack,
+    "./assets/Textures/" + info.imgFileBack
   );
 
   transformFiles.push("./assets/Textures/" + info.imgFileFace);

@@ -11,14 +11,14 @@
  * - assets/Templates/faction-sheet/*.json
  */
 
-import crypto from "crypto";
 import fs from "fs";
 import path from "path";
 
 import { SOURCE_TO_FACTION_DATA } from "../../src/lib/faction-lib/data/faction.data";
 import { FACTION_SHEET_TEMPLATE_DATA } from "./data/faction-sheet.template-data";
+import { getGuid } from "./lib/guid";
 for (const [source, factionDataArray] of Object.entries(
-  SOURCE_TO_FACTION_DATA,
+  SOURCE_TO_FACTION_DATA
 )) {
   for (const factionData of factionDataArray) {
     console.log(`processing ${factionData.abbr}`);
@@ -41,12 +41,7 @@ for (const [source, factionDataArray] of Object.entries(
 
     let templateFile: string = `faction-sheet/${factionData.nsidName}.json`;
 
-    const guid: string = crypto
-      .createHash("sha256")
-      .update(templateFile)
-      .digest("hex")
-      .substring(0, 32)
-      .toUpperCase();
+    const guid: string = getGuid(templateFile);
 
     template.GUID = guid;
     template.Name = `${factionData.abbr}`;

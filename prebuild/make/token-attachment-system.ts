@@ -8,12 +8,12 @@
  * - assets/Textures/token/attachment/system/*.jpg
  */
 
-import crypto from "crypto";
 import fs from "fs";
 import path from "path";
 
 import { SOURCE_TO_SYSTEM_ATTACHMENT_DATA } from "../../src/lib/system-lib/data/system-attachment.data";
 import { TOKEN_SYSTEM_ATTACHMENT_TEMPLATE } from "./data/token.template-data";
+import { getGuid } from "./lib/guid";
 
 type AttachmentInfo = {
   guid: string;
@@ -31,7 +31,7 @@ type AttachmentInfo = {
 // Assemble info records.
 const infos: Array<AttachmentInfo> = [];
 for (const [source, systemAttachmentSchemas] of Object.entries(
-  SOURCE_TO_SYSTEM_ATTACHMENT_DATA,
+  SOURCE_TO_SYSTEM_ATTACHMENT_DATA
 )) {
   for (const systemAttachmentSchema of systemAttachmentSchemas) {
     const name: string = systemAttachmentSchema.name;
@@ -68,12 +68,7 @@ for (const [source, systemAttachmentSchemas] of Object.entries(
 
     const templateFile: string = `token/attachment/system/${nsidName}.json`;
 
-    const guid: string = crypto
-      .createHash("sha256")
-      .update(templateFile)
-      .digest("hex")
-      .substring(0, 32)
-      .toUpperCase();
+    const guid: string = getGuid(templateFile);
 
     infos.push({
       guid,
@@ -142,12 +137,12 @@ for (const info of infos) {
 
   fs.cpSync(
     "./prebuild/" + info.imgFileFace,
-    "./assets/Textures/" + info.imgFileFace,
+    "./assets/Textures/" + info.imgFileFace
   );
   if (info.imgFileFace !== info.imgFileBack && info.imgFileBack !== "") {
     fs.cpSync(
       "./prebuild/" + info.imgFileBack,
-      "./assets/Textures/" + info.imgFileBack,
+      "./assets/Textures/" + info.imgFileBack
     );
   }
 }

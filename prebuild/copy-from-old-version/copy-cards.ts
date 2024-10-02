@@ -1,5 +1,7 @@
 import { AbstractCopyCards } from "./abstract-copy-cards";
 
+// TI4-TTPG still has Discordant Stars art assets in it.
+// Do not copy those.
 import { SOURCE_TO_FACTION_DATA } from "../../src/lib/faction-lib/data/faction.data";
 import path from "path";
 const factionNsidNames: Array<string> = [];
@@ -60,4 +62,5 @@ new AbstractCopyCards("technology/red").setFilter(filterTech).go();
 new AbstractCopyCards("technology/blue").setFilter(filterTech).go();
 new AbstractCopyCards("technology/yellow").setFilter(filterTech).go();
 new AbstractCopyCards("technology/unit_upgrade").setFilter(filterTech).go();
+new AbstractCopyCards("technology/unknown").setFilter(filterTech).go();
 new AbstractCopyCards("unknown").go();

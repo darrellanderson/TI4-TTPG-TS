@@ -9,16 +9,16 @@
  * - assets/Textures/token/command-control/*.jpg
  */
 
-import crypto from "crypto";
 import fs from "fs";
 import path from "path";
 
 import { SOURCE_TO_FACTION_DATA } from "../../src/lib/faction-lib/data/faction.data";
 import { COMMAND_TOKEN_TEMPLATE } from "./data/command.data";
 import { CONTROL_TOKEN_TEMPLATE } from "./data/control.data";
+import { getGuid } from "./lib/guid";
 
 for (const [source, factionDataArray] of Object.entries(
-  SOURCE_TO_FACTION_DATA,
+  SOURCE_TO_FACTION_DATA
 )) {
   for (const factionData of factionDataArray) {
     let templateFile: string;
@@ -27,12 +27,7 @@ for (const [source, factionDataArray] of Object.entries(
     let templateData: Buffer;
 
     templateFile = `token/command/${factionData.nsidName}.json`;
-    guid = crypto
-      .createHash("sha256")
-      .update(templateFile)
-      .digest("hex")
-      .substring(0, 32)
-      .toUpperCase();
+    guid = getGuid(templateFile);
     console.log(factionData.nsidName, "command", guid);
 
     const textureNsidName: string = factionData.nsidName.includes("keleres")
@@ -43,7 +38,7 @@ for (const [source, factionDataArray] of Object.entries(
     fs.mkdirSync(textureDir, { recursive: true });
     fs.cpSync(
       `./prebuild/token/command-control/${textureNsidName}.jpg`,
-      textureFile,
+      textureFile
     );
 
     const commandToken = JSON.parse(JSON.stringify(COMMAND_TOKEN_TEMPLATE));
@@ -60,12 +55,7 @@ for (const [source, factionDataArray] of Object.entries(
     fs.writeFileSync(templateFile, templateData);
 
     templateFile = `token/control/${factionData.nsidName}.json`;
-    guid = crypto
-      .createHash("sha256")
-      .update(templateFile)
-      .digest("hex")
-      .substring(0, 32)
-      .toUpperCase();
+    guid = getGuid(templateFile);
     console.log(factionData.nsidName, "control", guid);
 
     const controlToken = JSON.parse(JSON.stringify(CONTROL_TOKEN_TEMPLATE));
@@ -85,5 +75,5 @@ for (const [source, factionDataArray] of Object.entries(
 
 fs.cpSync(
   "./prebuild/token/command-control/token-mask.png",
-  "./assets/Textures/token/command-control/token-mask.png",
+  "./assets/Textures/token/command-control/token-mask.png"
 );

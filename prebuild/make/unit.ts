@@ -12,13 +12,13 @@
  * - assets/Templates/unit/${unit}.json
  */
 
-import crypto from "crypto";
 import fs from "fs";
 import path from "path";
 
 import { SOURCE_TO_UNIT_ATTRS_DATA } from "../../src/lib/unit-lib/data/unit-attrs.data";
 import { UnitType } from "../../src/lib/unit-lib/schema/unit-attrs-schema";
 import { UNIT_TEMPLATE_DATA } from "./data/unit.template-data";
+import { getGuid } from "./lib/guid";
 
 function getWrenchZ(model: string): number {
   if (!fs.existsSync(model)) {
@@ -52,12 +52,7 @@ for (const unitAttrsDataArray of Object.values(SOURCE_TO_UNIT_ATTRS_DATA)) {
 
     let templateFile: string = `unit/${unit}.json`;
 
-    const guid: string = crypto
-      .createHash("sha256")
-      .update(templateFile)
-      .digest("hex")
-      .substring(0, 32)
-      .toUpperCase();
+    const guid: string = getGuid(templateFile);
 
     template.GUID = guid;
     template.Name = `${unit}`;

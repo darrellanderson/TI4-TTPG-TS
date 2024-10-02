@@ -5,11 +5,11 @@
  * - assets/Templates/containers/token/{command, control}.json
  */
 
-import crypto from "crypto";
 import fs from "fs";
 import path from "path";
 
 import { CONTAINER_TEMPLATE_DATA } from "./data/container.template-data";
+import { getGuid } from "./lib/guid";
 
 const CLIP_CIRCLE_TOKENS: Array<string> = [
   "fighter-1",
@@ -34,12 +34,7 @@ for (const token of CLIP_CIRCLE_TOKENS) {
 
   let templateFile: string = `container/token/${token}.json`;
 
-  const guid: string = crypto
-    .createHash("sha256")
-    .update(templateFile)
-    .digest("hex")
-    .substring(0, 32)
-    .toUpperCase();
+  const guid: string = getGuid(templateFile);
 
   template.GUID = guid;
   template.Name = capitalizeFirstLetterHypenated(token);
