@@ -2,7 +2,13 @@ import fs from "fs";
 import klawSync from "klaw-sync";
 import path from "path";
 
-import { CreateCardsheetParams } from "../../../ttpg-darrell/src/lib-ext/create-assets/create-cardsheets/create-cardsheet-params";
+type CardPlan = {
+  src: string; // absolute path
+  dst: string; // relative path
+  name: string; // card name (not filename)
+  nsid: string;
+  desc: string;
+};
 
 export class AbstractCopyCards {
   private readonly _cardType: string;
@@ -35,18 +41,8 @@ export class AbstractCopyCards {
     return entries.map((item) => item.path);
   }
 
-  getCardPlan(): Array<{
-    src: string;
-    dst: string;
-    name: string;
-    nsid: string;
-  }> {
-    const result: Array<{
-      src: string;
-      dst: string;
-      name: string;
-      nsid: string;
-    }> = [];
+  getCardPlans(): Array<CardPlan> {
+    const result: Array<CardPlan> = [];
 
     const cardJsonFiles: Array<string> = this.getCardJsonFiles();
     for (const cardJsonFile of cardJsonFiles) {
@@ -54,26 +50,43 @@ export class AbstractCopyCards {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const cardJson: any = JSON.parse(data);
 
-      const cardName: string = cardJson.name;
-      const oldNsid: string = cardJson.id;
-      //const cardDesc: string = cardJson.desc;
+      const src: string = cardJsonFile.replace(".json", ".jpg");
+      const dst: string = `prebuild/card/${this._cardType}/${path.basename(src).replace(/_/g, "-")}`;
+      const name: string = cardJson.name;
+      const nsid: string = cardJson.id.replace(/_/g, "-");
+      const desc: string = cardJson.desc;
 
-      const newNsid: string = oldNsid.replace(/_/g, "-");
-      const oldFilename: string = path.basename(cardJsonFile);
-      const newFilename: string = oldFilename.replace(/_/g, "-");
-
-      result.push({
-        src: cardJsonFile,
-        dst: `prebuild/card/${this._cardType}/${newFilename}`,
-        name: cardName,
-        nsid: newNsid,
-      });
+      const plan: CardPlan = {
+        src,
+        dst,
+        name,
+        nsid,
+        desc,
+      };
+      result.push(plan);
     }
     return result;
   }
 
-  getCreateCardsheetParams(): CreateCardsheetParams {
-    const plan = this.getCardPlan();
+  /*
+  getCreateCardsheetParamsArray(): Array<CreateCardsheetParams> {
+    const plans: Array<CardPlan> = this.getCardPlan();
+    const sourceToPlans: Map<string, Array<CardPlan>> = new Map();
+
+    for (const plan of plans) {
+      const nsid: string = plan.nsid;
+      const parsed: ParsedNSID | undefined = NSID.parse(nsid);
+      if (parsed === undefined) {
+        throw new Error(`Invalid NSID: ${nsid}`);
+      }
+      const source: string = parsed.sourceParts.join("-");
+      let plans: Array<CardPlan> | undefined = sourceToPlans.get(source);
+      if (plans === undefined) {
+        plans = [];
+        sourceToPlans.set(source, plans);
+      }
+      plans.push(plan);
+    }
 
     return {
       assetFilename: `card/${this._cardType}`,
@@ -82,8 +95,9 @@ export class AbstractCopyCards {
       cardSizePixel: { width: 340, height: 510 },
       cardSizeWorld: { width: 4.2, height: 6.3 },
 
-      back: `card/shared-back/${this._cardType}.jpg`,
+      back: `prebuild/card/shared-back/${this._cardType}.jpg`,
       cards: plan.map((item) => {
+        fs.copyFileSync(item.src, item.dst);
         return {
           face: item.dst,
           name: item.name,
@@ -91,5 +105,29 @@ export class AbstractCopyCards {
         };
       }),
     };
+  }
+*/
+
+  go(): void {
+    const plans: Array<CardPlan> = this.getCardPlans();
+    for (const plan of plans) {
+      // Copy card image file (keep same size).
+      fs.copyFileSync(plan.src, plan.dst);
+
+      // Write the metadata file.
+      const jsonFilename: string = plan.dst.replace(".jpg", ".json");
+      const buffer: Buffer = Buffer.from(
+        JSON.stringify(
+          {
+            name: plan.name,
+            nsid: plan.nsid,
+            desc: plan.desc,
+          },
+          null,
+          2
+        )
+      );
+      fs.writeFileSync(jsonFilename, buffer);
+    }
   }
 }
