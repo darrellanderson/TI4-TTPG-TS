@@ -51,7 +51,12 @@ export class AbstractCopyCards {
       const cardJson: any = JSON.parse(data);
 
       const src: string = cardJsonFile.replace(".json", ".jpg");
-      const dst: string = `prebuild/card/${this._cardType}/${path.basename(src).replace(/_/g, "-")}`;
+      const dst: string = path.join(
+        "prebuild",
+        "card",
+        this._cardType.replace(/_/g, "-"),
+        path.basename(src).replace(/_/g, "-")
+      );
       const name: string = cardJson.name;
       const nsid: string = cardJson.id.replace(/_/g, "-");
       const desc: string = cardJson.desc;
@@ -111,8 +116,25 @@ export class AbstractCopyCards {
   go(): void {
     const plans: Array<CardPlan> = this.getCardPlans();
     for (const plan of plans) {
+      // Directory.
+      const dir: string = path.dirname(plan.dst);
+      if (!fs.existsSync(dir)) {
+        fs.mkdirSync(dir, { recursive: true });
+      }
+
       // Copy card image file (keep same size).
-      fs.copyFileSync(plan.src, plan.dst);
+      if (fs.existsSync(plan.src)) {
+        fs.copyFileSync(plan.src, plan.dst);
+        console.log("wrote", plan.dst);
+      } else {
+        const srcFace: string = plan.src.replace(".jpg", ".face.jpg");
+        const srcBack: string = plan.src.replace(".jpg", ".back.jpg");
+        const dstFace: string = plan.dst.replace(".jpg", ".face.jpg");
+        const dstBack: string = plan.dst.replace(".jpg", ".back.jpg");
+        fs.copyFileSync(srcFace, dstFace);
+        fs.copyFileSync(srcBack, dstBack);
+        console.log("wrote", dstFace, dstBack);
+      }
 
       // Write the metadata file.
       const jsonFilename: string = plan.dst.replace(".jpg", ".json");
@@ -128,6 +150,8 @@ export class AbstractCopyCards {
         )
       );
       fs.writeFileSync(jsonFilename, buffer);
+
+      console.log("wrote", jsonFilename);
     }
   }
 }

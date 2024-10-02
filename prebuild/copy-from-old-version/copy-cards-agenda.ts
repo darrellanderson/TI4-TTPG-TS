@@ -1,3 +1,3 @@
 import { AbstractCopyCards } from "./abstract-copy-cards";
 
-new AbstractCopyCards("action").go();
+new AbstractCopyCards("agenda").go();
