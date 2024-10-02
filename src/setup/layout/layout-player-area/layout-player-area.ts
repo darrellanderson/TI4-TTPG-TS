@@ -2,6 +2,7 @@ import {
   CardHolder,
   Color,
   GameObject,
+  HiddenCardsType,
   ObjectType,
   Player,
   VerticalAlignment,
@@ -33,18 +34,18 @@ export class LayoutPlayerArea {
 
     // Status pad alone at very top, gives players' a little space too.
     const statusPad: LayoutObjects = new LayoutStatusPad(
-      playerSlot,
+      playerSlot
     ).getLayout();
 
     // Center top to bottom.
     const layoutUnitBoxes: LayoutObjects = new LayoutUnitBoxes(
-      playerSlot,
+      playerSlot
     ).getLayout();
     const layoutSheets: LayoutObjects = new LayoutSheets(
-      playerSlot,
+      playerSlot
     ).getLayout();
     const layoutTokenContainers: LayoutObjects = new LayoutTokenContainers(
-      playerSlot,
+      playerSlot
     ).getLayout();
     const topRow: LayoutObjects = new LayoutObjects()
       .setChildDistance(LayoutConfig.spacingWide)
@@ -54,9 +55,12 @@ export class LayoutPlayerArea {
 
     const layoutMats: LayoutObjects = new LayoutMats().getLayout();
     const cardHolder: GameObject = Spawn.spawnOrThrow(
-      "card-holder:base/player-hand",
+      "card-holder:base/player-hand"
     );
     cardHolder.setOwningPlayerSlot(playerSlot);
+    if (cardHolder instanceof CardHolder) {
+      cardHolder.setHiddenCardsType(HiddenCardsType.Back);
+    }
 
     innerLayout.add(statusPad).add(topRow).add(layoutMats).add(cardHolder);
 
