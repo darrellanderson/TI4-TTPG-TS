@@ -1,3 +1,0 @@
-import { AbstractCopyCards } from "./abstract-copy-cards";
-
-new AbstractCopyCards("action").go();

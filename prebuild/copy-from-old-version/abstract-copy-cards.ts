@@ -12,33 +12,50 @@ type CardPlan = {
 
 export class AbstractCopyCards {
   private readonly _cardType: string;
+  private readonly _srcRoot: string;
+  private readonly _dstRoot: string;
+  private _filter: (srcFilename: string) => boolean;
 
   constructor(cardType: string) {
     this._cardType = cardType;
-  }
 
-  getCardJsonRoot(): string {
-    const suffix: string =
-      "TI4-TTPG/prebuild/Textures/en/card/" + this._cardType;
-    let root: string = "/Users/darrell/ttpg/" + suffix;
+    let root: string = "/Users/darrell/ttpg";
     if (!fs.existsSync(root)) {
-      root = "/Users/darrell/TI4-Online/" + suffix;
+      root = "/Users/darrell/TI4-Online";
     }
     if (!fs.existsSync(root)) {
       throw new Error("Root directory not found");
     }
-    return root;
+    this._srcRoot = path.join(
+      root,
+      "TI4-TTPG/prebuild/Textures/en/card",
+      this._cardType
+    );
+    this._dstRoot = path.join(
+      "prebuild/card",
+      this._cardType.replace(/_/g, "-")
+    );
+
+    this._filter = () => true;
+  }
+
+  setFilter(filter: (srcFilename: string) => boolean): this {
+    this._filter = filter;
+    return this;
   }
 
   getCardJsonFiles(): Array<string> {
-    const root: string = this.getCardJsonRoot();
+    const root: string = this._srcRoot;
     const entries: readonly klawSync.Item[] = klawSync(root, {
       nodir: true,
+      traverseAll: true,
       filter: (item) => {
         return item.path.endsWith(".json");
       },
     });
-    return entries.map((item) => item.path);
+    let result: Array<string> = entries.map((item) => item.path);
+    result = result.filter((x) => this._filter(x));
+    return result;
   }
 
   getCardPlans(): Array<CardPlan> {
@@ -52,9 +69,7 @@ export class AbstractCopyCards {
 
       const src: string = cardJsonFile.replace(".json", ".jpg");
       const dst: string = path.join(
-        "prebuild",
-        "card",
-        this._cardType.replace(/_/g, "-"),
+        this._dstRoot,
         path.basename(src).replace(/_/g, "-")
       );
       const name: string = cardJson.name;
