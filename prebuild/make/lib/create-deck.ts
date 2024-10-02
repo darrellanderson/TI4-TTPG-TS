@@ -49,12 +49,28 @@ export class CreateDeck {
         cards = [];
         result.set(source, cards);
       }
+
+      // Get face (and if not a shared image, back).
+      // Make a relative path starting with prebuild.
       let face: string = jsonFile.replace(".json", ".jpg");
       let back: string | undefined = undefined;
       if (!fs.existsSync(face)) {
         face = jsonFile.replace(".json", ".face.jpg");
         back = jsonFile.replace(".json", ".back.jpg");
       }
+      const faceParts: Array<string> = face.split("/");
+      while (faceParts[0] !== "prebuild") {
+        faceParts.shift();
+      }
+      face = faceParts.join("/");
+      if (back) {
+        const backParts: Array<string> = back.split("/");
+        while (backParts[0] !== "prebuild") {
+          backParts.shift();
+        }
+        back = backParts.join("/");
+      }
+
       let card: CardsheetCardType | undefined = undefined;
       if (back === undefined) {
         card = {
@@ -112,7 +128,6 @@ export class CreateDeck {
         cards,
       };
     }
-    console.log("xxx", JSON.stringify(result, null, 2));
     return result;
   }
 
