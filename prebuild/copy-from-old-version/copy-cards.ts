@@ -13,10 +13,22 @@ for (const factionDataArray of Object.values(SOURCE_TO_FACTION_DATA)) {
 
 const filterFaction = (srcFilename: string): boolean => {
   const nsidName: string = path.basename(srcFilename).split(".")[0] ?? "n/a";
-  if (factionNsidNames.includes(nsidName)) {
-    return true;
+  const result: boolean = factionNsidNames.includes(nsidName);
+  if (!result) {
+    console.log("xxx", nsidName);
   }
-  return false;
+  return result;
+};
+
+const filterLeader = (srcFilename: string): boolean => {
+  const dirName: string = path.dirname(srcFilename);
+  const dirParts: Array<string> = dirName.split("/");
+  const last: string = dirParts.pop() ?? "n/a";
+  const result: boolean = factionNsidNames.includes(last);
+  if (!result) {
+    console.log("xxx", last);
+  }
+  return result;
 };
 
 const filterTech = (srcFilename: string): boolean => {
@@ -48,12 +60,14 @@ new AbstractCopyCards("exploration/hazardous").go();
 new AbstractCopyCards("exploration/frontier").go();
 new AbstractCopyCards("faction_reference").setFilter(filterFaction).go();
 new AbstractCopyCards("faction_token").setFilter(filterFaction).go();
-new AbstractCopyCards("leader/agent").setFilter(filterFaction).go();
-new AbstractCopyCards("leader/commander").setFilter(filterFaction).go();
-new AbstractCopyCards("leader/hero").setFilter(filterFaction).go();
-new AbstractCopyCards("leader/mech").setFilter(filterFaction).go();
+new AbstractCopyCards("leader/agent").setFilter(filterLeader).go();
+new AbstractCopyCards("leader/commander").setFilter(filterLeader).go();
+new AbstractCopyCards("leader/hero").setFilter(filterLeader).go();
+new AbstractCopyCards("leader/mech").setFilter(filterLeader).go();
 new AbstractCopyCards("legendary_planet").go();
-new AbstractCopyCards("objective").go();
+new AbstractCopyCards("objective/public_1").go();
+new AbstractCopyCards("objective/public_2").go();
+new AbstractCopyCards("objective/secret").go();
 new AbstractCopyCards("other").go();
 new AbstractCopyCards("planet").go();
 new AbstractCopyCards("promissory").go();
