@@ -6,12 +6,12 @@ export class RecycleStrategyCard extends GarbageHandler {
 
   canRecycle(obj: GameObject): boolean {
     const nsid: string = NSID.get(obj);
-    return nsid.startsWith("tile.strategy:");
+    return nsid.startsWith("tile.strategy-card:");
   }
 
   recycle(obj: GameObject): boolean {
     const nsid: string = NSID.get(obj);
-    if (!nsid.startsWith("tile.strategy:")) {
+    if (!nsid.startsWith("tile.strategy-card:")) {
       return false;
     }
 
@@ -33,8 +33,9 @@ export class RecycleStrategyCard extends GarbageHandler {
       return false; // not a valid strategy card
     }
 
-    const mat: GameObject | undefined =
-      this._find.findGameObject("mat:base/strategy");
+    const mat: GameObject | undefined = this._find.findGameObject(
+      "mat:base/strategy-card"
+    );
     if (!mat) {
       return false;
     }
