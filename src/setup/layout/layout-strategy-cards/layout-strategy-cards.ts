@@ -48,12 +48,12 @@ export class LayoutStrategyCards {
 
   _placeStrategyCard(
     strategyCard: GameObject,
-    snapPoint: SnapPoint | undefined,
+    snapPoint: SnapPoint | undefined
   ) {
     if (snapPoint) {
       const above: Vector = snapPoint
         .getGlobalPosition()
-        .add(new Vector(0, 0, 1));
+        .add(new Vector(0, 0, 10));
       strategyCard.setPosition(above);
       strategyCard.snapToGround();
       strategyCard.snap();
