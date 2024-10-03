@@ -26,6 +26,8 @@ import { TechRegistry } from "../lib/tech-lib/registry/tech-registry";
 import { UnitAttrsRegistry } from "../lib/unit-lib/registry/unit-attrs-registry";
 import { UnitModifierRegistry } from "../lib/unit-lib/registry/unit-modifier-registry";
 
+import { createSwapSplitCombine } from "./r-swap-split-combine";
+
 import * as NSID_TO_TEMPLATE_ID from "../nsid/nsid-to-template-id.json";
 Spawn.inject(NSID_TO_TEMPLATE_ID);
 
@@ -83,7 +85,11 @@ resetGlobalThisTI4();
 
 // Run any delayed initialization, things that need globalThis.TI4 to be set.
 // These are "init" functions in the class objects.
-const iGlobals: Array<IGlobal> = [new DiceGroupCleanup(), new LeaveSeat()];
+const iGlobals: Array<IGlobal> = [
+  new DiceGroupCleanup(),
+  new LeaveSeat(),
+  createSwapSplitCombine(),
+];
 for (const v of Object.values(globalThis.TI4)) {
   if (typeof v.init === "function") {
     iGlobals.push(v);
