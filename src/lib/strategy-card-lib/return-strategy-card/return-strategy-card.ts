@@ -18,7 +18,7 @@ export class ReturnStrategyCard {
       if (nsid === "card.action:base/political-stability") {
         const pos: Vector = obj.getPosition();
         politicalStabilityOwner = this._find.closestOwnedCardHolderOwner(pos);
-      } else if (nsid.startsWith("tile.strategy:")) {
+      } else if (nsid.startsWith("tile.strategy-card:")) {
         strategyCards.push(obj);
       }
     }

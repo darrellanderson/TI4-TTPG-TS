@@ -13,11 +13,11 @@ it("consttructor", () => {
 
 it("returnAllStrategyCardsRespecingPoliticalStability (without political stability)", () => {
   const strategyCard: GameObject = MockGameObject.simple(
-    "tile.strategy:base/leadership",
+    "tile.strategy-card:base/leadership",
     { position: [-10, 0, 0] }
   );
   new MockGameObject({
-    templateMetadata: "mat:base/strategy",
+    templateMetadata: "mat:base/strategy-card",
     position: [10, 0, 0],
     snapPoints: [new MockSnapPoint()],
   });
@@ -31,11 +31,11 @@ it("returnAllStrategyCardsRespecingPoliticalStability (without political stabili
 
 it("returnAllStrategyCardsRespecingPoliticalStability (with political stability)", () => {
   const strategyCard: GameObject = MockGameObject.simple(
-    "tile.strategy:base/leadership",
+    "tile.strategy-card:base/leadership",
     { position: [-10, 0, 0] }
   );
   new MockGameObject({
-    templateMetadata: "mat:base/strategy",
+    templateMetadata: "mat:base/strategy-card",
     position: [10, 0, 0],
     snapPoints: [new MockSnapPoint()],
   });
