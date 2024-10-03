@@ -15,7 +15,7 @@
     "libpack": "ttpg-scripts libpack",
     "watch": "ttpg-scripts watch",
     "postpublish": "ttpg-scripts postpublish",
-    "check:prettier": "prettier --check .",
+    "check:prettier": "prettier --check src",
     "test": "jest",
     "lint": "ESLINT_USE_FLAT_CONFIG=false eslint --ext .ts --debug src"
   },
