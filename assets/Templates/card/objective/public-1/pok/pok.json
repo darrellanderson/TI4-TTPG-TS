@@ -90,38 +90,38 @@
     },
     "CardTags": {
         "0": [
-            "card-objective/public-1"
+            "card-objective-public-1"
         ],
         "1": [
-            "card-objective/public-1"
+            "card-objective-public-1"
         ],
         "2": [
-            "card-objective/public-1"
+            "card-objective-public-1"
         ],
         "3": [
-            "card-objective/public-1"
+            "card-objective-public-1"
         ],
         "4": [
-            "card-objective/public-1"
+            "card-objective-public-1"
         ],
         "5": [
-            "card-objective/public-1"
+            "card-objective-public-1"
         ],
         "6": [
-            "card-objective/public-1"
+            "card-objective-public-1"
         ],
         "7": [
-            "card-objective/public-1"
+            "card-objective-public-1"
         ],
         "8": [
-            "card-objective/public-1"
+            "card-objective-public-1"
         ],
         "9": [
-            "card-objective/public-1"
+            "card-objective-public-1"
         ]
     },
     "GroundAccessibility": "ZoomAndContext",
     "Tags": [
-        "card-objective/public-1"
+        "card-objective-public-1"
     ]
 }

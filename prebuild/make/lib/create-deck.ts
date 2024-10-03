@@ -128,7 +128,12 @@ export class CreateDeck {
 
     const assetFilename: string = `card/${cardType}/${source}`;
     const templateName: string = cardType;
-    const applyAllTags: Array<string> = [`card-${this._cardType}`];
+    const applyAllTags: Array<string> = [
+      `card-${this._cardType.replace(/\//g, "-")}`,
+    ];
+    if (this._cardType.startsWith("technology")) {
+      applyAllTags.push("card-technology");
+    }
     const cardSizePixel: { width: number; height: number } = {
       width: this._portrait ? this._wPx : this._hPx,
       height: this._portrait ? this._hPx : this._wPx,

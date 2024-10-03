@@ -120,68 +120,68 @@
     },
     "CardTags": {
         "0": [
-            "card-exploration/industrial"
+            "card-exploration-industrial"
         ],
         "1": [
-            "card-exploration/industrial"
+            "card-exploration-industrial"
         ],
         "2": [
-            "card-exploration/industrial"
+            "card-exploration-industrial"
         ],
         "3": [
-            "card-exploration/industrial"
+            "card-exploration-industrial"
         ],
         "4": [
-            "card-exploration/industrial"
+            "card-exploration-industrial"
         ],
         "5": [
-            "card-exploration/industrial"
+            "card-exploration-industrial"
         ],
         "6": [
-            "card-exploration/industrial"
+            "card-exploration-industrial"
         ],
         "7": [
-            "card-exploration/industrial"
+            "card-exploration-industrial"
         ],
         "8": [
-            "card-exploration/industrial"
+            "card-exploration-industrial"
         ],
         "9": [
-            "card-exploration/industrial"
+            "card-exploration-industrial"
         ],
         "10": [
-            "card-exploration/industrial"
+            "card-exploration-industrial"
         ],
         "11": [
-            "card-exploration/industrial"
+            "card-exploration-industrial"
         ],
         "12": [
-            "card-exploration/industrial"
+            "card-exploration-industrial"
         ],
         "13": [
-            "card-exploration/industrial"
+            "card-exploration-industrial"
         ],
         "14": [
-            "card-exploration/industrial"
+            "card-exploration-industrial"
         ],
         "15": [
-            "card-exploration/industrial"
+            "card-exploration-industrial"
         ],
         "16": [
-            "card-exploration/industrial"
+            "card-exploration-industrial"
         ],
         "17": [
-            "card-exploration/industrial"
+            "card-exploration-industrial"
         ],
         "18": [
-            "card-exploration/industrial"
+            "card-exploration-industrial"
         ],
         "19": [
-            "card-exploration/industrial"
+            "card-exploration-industrial"
         ]
     },
     "GroundAccessibility": "ZoomAndContext",
     "Tags": [
-        "card-exploration/industrial"
+        "card-exploration-industrial"
     ]
 }

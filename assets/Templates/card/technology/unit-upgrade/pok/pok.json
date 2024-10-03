@@ -78,26 +78,33 @@
     },
     "CardTags": {
         "0": [
-            "card-technology/unit-upgrade"
+            "card-technology-unit-upgrade",
+            "card-technology"
         ],
         "1": [
-            "card-technology/unit-upgrade"
+            "card-technology-unit-upgrade",
+            "card-technology"
         ],
         "2": [
-            "card-technology/unit-upgrade"
+            "card-technology-unit-upgrade",
+            "card-technology"
         ],
         "3": [
-            "card-technology/unit-upgrade"
+            "card-technology-unit-upgrade",
+            "card-technology"
         ],
         "4": [
-            "card-technology/unit-upgrade"
+            "card-technology-unit-upgrade",
+            "card-technology"
         ],
         "5": [
-            "card-technology/unit-upgrade"
+            "card-technology-unit-upgrade",
+            "card-technology"
         ]
     },
     "GroundAccessibility": "ZoomAndContext",
     "Tags": [
-        "card-technology/unit-upgrade"
+        "card-technology-unit-upgrade",
+        "card-technology"
     ]
 }

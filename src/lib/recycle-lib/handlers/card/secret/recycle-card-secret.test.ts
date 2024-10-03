@@ -11,14 +11,18 @@ it("recycle", () => {
   const card: Card = new MockCard({
     cardDetails: [
       new MockCardDetails({
-        metadata: "card.secret:my-source/my-name",
-        tags: ["card-secret"],
+        metadata: "card.objective.secret:my-source/my-name",
+        tags: ["card-objective-secret"],
       }),
     ],
   });
   const mat: GameObject = new MockGameObject({
     position: [10, 0, 0],
-    snapPoints: [new MockSnapPoint({ tags: ["deck-secret", "card-secret"] })],
+    snapPoints: [
+      new MockSnapPoint({
+        tags: ["deck-objective-secret", "card-objective-secret"],
+      }),
+    ],
   });
 
   let snapPoint: SnapPoint | undefined;

@@ -111,59 +111,77 @@
     },
     "CardTags": {
         "0": [
-            "card-technology/unit-upgrade"
+            "card-technology-unit-upgrade",
+            "card-technology"
         ],
         "1": [
-            "card-technology/unit-upgrade"
+            "card-technology-unit-upgrade",
+            "card-technology"
         ],
         "2": [
-            "card-technology/unit-upgrade"
+            "card-technology-unit-upgrade",
+            "card-technology"
         ],
         "3": [
-            "card-technology/unit-upgrade"
+            "card-technology-unit-upgrade",
+            "card-technology"
         ],
         "4": [
-            "card-technology/unit-upgrade"
+            "card-technology-unit-upgrade",
+            "card-technology"
         ],
         "5": [
-            "card-technology/unit-upgrade"
+            "card-technology-unit-upgrade",
+            "card-technology"
         ],
         "6": [
-            "card-technology/unit-upgrade"
+            "card-technology-unit-upgrade",
+            "card-technology"
         ],
         "7": [
-            "card-technology/unit-upgrade"
+            "card-technology-unit-upgrade",
+            "card-technology"
         ],
         "8": [
-            "card-technology/unit-upgrade"
+            "card-technology-unit-upgrade",
+            "card-technology"
         ],
         "9": [
-            "card-technology/unit-upgrade"
+            "card-technology-unit-upgrade",
+            "card-technology"
         ],
         "10": [
-            "card-technology/unit-upgrade"
+            "card-technology-unit-upgrade",
+            "card-technology"
         ],
         "11": [
-            "card-technology/unit-upgrade"
+            "card-technology-unit-upgrade",
+            "card-technology"
         ],
         "12": [
-            "card-technology/unit-upgrade"
+            "card-technology-unit-upgrade",
+            "card-technology"
         ],
         "13": [
-            "card-technology/unit-upgrade"
+            "card-technology-unit-upgrade",
+            "card-technology"
         ],
         "14": [
-            "card-technology/unit-upgrade"
+            "card-technology-unit-upgrade",
+            "card-technology"
         ],
         "15": [
-            "card-technology/unit-upgrade"
+            "card-technology-unit-upgrade",
+            "card-technology"
         ],
         "16": [
-            "card-technology/unit-upgrade"
+            "card-technology-unit-upgrade",
+            "card-technology"
         ]
     },
     "GroundAccessibility": "ZoomAndContext",
     "Tags": [
-        "card-technology/unit-upgrade"
+        "card-technology-unit-upgrade",
+        "card-technology"
     ]
 }

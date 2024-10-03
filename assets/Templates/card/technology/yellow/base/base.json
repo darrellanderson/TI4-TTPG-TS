@@ -99,47 +99,61 @@
     },
     "CardTags": {
         "0": [
-            "card-technology/yellow"
+            "card-technology-yellow",
+            "card-technology"
         ],
         "1": [
-            "card-technology/yellow"
+            "card-technology-yellow",
+            "card-technology"
         ],
         "2": [
-            "card-technology/yellow"
+            "card-technology-yellow",
+            "card-technology"
         ],
         "3": [
-            "card-technology/yellow"
+            "card-technology-yellow",
+            "card-technology"
         ],
         "4": [
-            "card-technology/yellow"
+            "card-technology-yellow",
+            "card-technology"
         ],
         "5": [
-            "card-technology/yellow"
+            "card-technology-yellow",
+            "card-technology"
         ],
         "6": [
-            "card-technology/yellow"
+            "card-technology-yellow",
+            "card-technology"
         ],
         "7": [
-            "card-technology/yellow"
+            "card-technology-yellow",
+            "card-technology"
         ],
         "8": [
-            "card-technology/yellow"
+            "card-technology-yellow",
+            "card-technology"
         ],
         "9": [
-            "card-technology/yellow"
+            "card-technology-yellow",
+            "card-technology"
         ],
         "10": [
-            "card-technology/yellow"
+            "card-technology-yellow",
+            "card-technology"
         ],
         "11": [
-            "card-technology/yellow"
+            "card-technology-yellow",
+            "card-technology"
         ],
         "12": [
-            "card-technology/yellow"
+            "card-technology-yellow",
+            "card-technology"
         ]
     },
     "GroundAccessibility": "ZoomAndContext",
     "Tags": [
-        "card-technology/yellow"
+        "card-technology-yellow",
+        "card-technology"
     ]
 }

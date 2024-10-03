@@ -135,83 +135,109 @@
     },
     "CardTags": {
         "0": [
-            "card-technology/unit-upgrade"
+            "card-technology-unit-upgrade",
+            "card-technology"
         ],
         "1": [
-            "card-technology/unit-upgrade"
+            "card-technology-unit-upgrade",
+            "card-technology"
         ],
         "2": [
-            "card-technology/unit-upgrade"
+            "card-technology-unit-upgrade",
+            "card-technology"
         ],
         "3": [
-            "card-technology/unit-upgrade"
+            "card-technology-unit-upgrade",
+            "card-technology"
         ],
         "4": [
-            "card-technology/unit-upgrade"
+            "card-technology-unit-upgrade",
+            "card-technology"
         ],
         "5": [
-            "card-technology/unit-upgrade"
+            "card-technology-unit-upgrade",
+            "card-technology"
         ],
         "6": [
-            "card-technology/unit-upgrade"
+            "card-technology-unit-upgrade",
+            "card-technology"
         ],
         "7": [
-            "card-technology/unit-upgrade"
+            "card-technology-unit-upgrade",
+            "card-technology"
         ],
         "8": [
-            "card-technology/unit-upgrade"
+            "card-technology-unit-upgrade",
+            "card-technology"
         ],
         "9": [
-            "card-technology/unit-upgrade"
+            "card-technology-unit-upgrade",
+            "card-technology"
         ],
         "10": [
-            "card-technology/unit-upgrade"
+            "card-technology-unit-upgrade",
+            "card-technology"
         ],
         "11": [
-            "card-technology/unit-upgrade"
+            "card-technology-unit-upgrade",
+            "card-technology"
         ],
         "12": [
-            "card-technology/unit-upgrade"
+            "card-technology-unit-upgrade",
+            "card-technology"
         ],
         "13": [
-            "card-technology/unit-upgrade"
+            "card-technology-unit-upgrade",
+            "card-technology"
         ],
         "14": [
-            "card-technology/unit-upgrade"
+            "card-technology-unit-upgrade",
+            "card-technology"
         ],
         "15": [
-            "card-technology/unit-upgrade"
+            "card-technology-unit-upgrade",
+            "card-technology"
         ],
         "16": [
-            "card-technology/unit-upgrade"
+            "card-technology-unit-upgrade",
+            "card-technology"
         ],
         "17": [
-            "card-technology/unit-upgrade"
+            "card-technology-unit-upgrade",
+            "card-technology"
         ],
         "18": [
-            "card-technology/unit-upgrade"
+            "card-technology-unit-upgrade",
+            "card-technology"
         ],
         "19": [
-            "card-technology/unit-upgrade"
+            "card-technology-unit-upgrade",
+            "card-technology"
         ],
         "20": [
-            "card-technology/unit-upgrade"
+            "card-technology-unit-upgrade",
+            "card-technology"
         ],
         "21": [
-            "card-technology/unit-upgrade"
+            "card-technology-unit-upgrade",
+            "card-technology"
         ],
         "22": [
-            "card-technology/unit-upgrade"
+            "card-technology-unit-upgrade",
+            "card-technology"
         ],
         "23": [
-            "card-technology/unit-upgrade"
+            "card-technology-unit-upgrade",
+            "card-technology"
         ],
         "24": [
-            "card-technology/unit-upgrade"
+            "card-technology-unit-upgrade",
+            "card-technology"
         ]
     },
     "GroundAccessibility": "ZoomAndContext",
     "Tags": [
-        "card-technology/unit-upgrade"
+        "card-technology-unit-upgrade",
+        "card-technology"
     ]
 }

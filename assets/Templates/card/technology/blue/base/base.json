@@ -84,32 +84,41 @@
     },
     "CardTags": {
         "0": [
-            "card-technology/blue"
+            "card-technology-blue",
+            "card-technology"
         ],
         "1": [
-            "card-technology/blue"
+            "card-technology-blue",
+            "card-technology"
         ],
         "2": [
-            "card-technology/blue"
+            "card-technology-blue",
+            "card-technology"
         ],
         "3": [
-            "card-technology/blue"
+            "card-technology-blue",
+            "card-technology"
         ],
         "4": [
-            "card-technology/blue"
+            "card-technology-blue",
+            "card-technology"
         ],
         "5": [
-            "card-technology/blue"
+            "card-technology-blue",
+            "card-technology"
         ],
         "6": [
-            "card-technology/blue"
+            "card-technology-blue",
+            "card-technology"
         ],
         "7": [
-            "card-technology/blue"
+            "card-technology-blue",
+            "card-technology"
         ]
     },
     "GroundAccessibility": "ZoomAndContext",
     "Tags": [
-        "card-technology/blue"
+        "card-technology-blue",
+        "card-technology"
     ]
 }

@@ -78,26 +78,26 @@
     },
     "CardTags": {
         "0": [
-            "card-exploration/frontier"
+            "card-exploration-frontier"
         ],
         "1": [
-            "card-exploration/frontier"
+            "card-exploration-frontier"
         ],
         "2": [
-            "card-exploration/frontier"
+            "card-exploration-frontier"
         ],
         "3": [
-            "card-exploration/frontier"
+            "card-exploration-frontier"
         ],
         "4": [
-            "card-exploration/frontier"
+            "card-exploration-frontier"
         ],
         "5": [
-            "card-exploration/frontier"
+            "card-exploration-frontier"
         ]
     },
     "GroundAccessibility": "ZoomAndContext",
     "Tags": [
-        "card-exploration/frontier"
+        "card-exploration-frontier"
     ]
 }

@@ -21,6 +21,12 @@ export function addObjectTemplatesToMockWorld(): void {
       };
     }
 
+    if (nsid.startsWith("card.")) {
+      _templateIdToMockGameObjectParams[templateId] = {
+        _objType: "Card",
+      };
+    }
+
     if (nsid.startsWith("card-holder")) {
       _templateIdToMockGameObjectParams[templateId] = {
         _objType: "CardHolder",

@@ -66,14 +66,17 @@
     },
     "CardTags": {
         "0": [
-            "card-technology/red"
+            "card-technology-red",
+            "card-technology"
         ],
         "1": [
-            "card-technology/red"
+            "card-technology-red",
+            "card-technology"
         ]
     },
     "GroundAccessibility": "ZoomAndContext",
     "Tags": [
-        "card-technology/red"
+        "card-technology-red",
+        "card-technology"
     ]
 }

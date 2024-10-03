@@ -1,6 +1,8 @@
 import {
   GameObject,
   ObjectType,
+  SnapPoint,
+  Vector,
   VerticalAlignment,
 } from "@tabletop-playground/api";
 import { LayoutObjects, Spawn } from "ttpg-darrell";
@@ -14,10 +16,10 @@ export class LayoutMats {
     const buildMat: GameObject = Spawn.spawnOrThrow("mat.player:base/build");
     const planetMat: GameObject = Spawn.spawnOrThrow("mat.player:base/planet");
     const techMat: GameObject = Spawn.spawnOrThrow(
-      "mat.player:base/technology",
+      "mat.player:base/technology"
     );
     const techDeckMat: GameObject = Spawn.spawnOrThrow(
-      "mat.player:base/technology-deck",
+      "mat.player:base/technology-deck"
     );
 
     this._layout = new LayoutObjects()
@@ -34,9 +36,28 @@ export class LayoutMats {
       techMat.setObjectType(ObjectType.Ground);
       techDeckMat.setObjectType(ObjectType.Ground);
     });
+
+    this._layout.addAfterLayout(() => {
+      const snapPoints: Array<SnapPoint> = techDeckMat.getAllSnapPoints();
+      const snapPoint: SnapPoint | undefined = snapPoints[0];
+      if (snapPoint) {
+        this._spawnTechDeck(snapPoint);
+      }
+    });
   }
 
   getLayout(): LayoutObjects {
     return this._layout;
+  }
+
+  _spawnTechDeck(snapPoint: SnapPoint): void {
+    const nsids: Array<string> = Spawn.getAllNsids().filter((nsid: string) =>
+      nsid.startsWith("card.technology")
+    );
+    const pos: Vector = snapPoint.getGlobalPosition().add([0, 0, 10]);
+
+    const deck: GameObject = Spawn.spawnMergeDecksOrThrow(nsids, pos);
+    deck.snapToGround();
+    deck.snap();
   }
 }

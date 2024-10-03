@@ -102,50 +102,50 @@
     },
     "CardTags": {
         "0": [
-            "card-exploration/frontier"
+            "card-exploration-frontier"
         ],
         "1": [
-            "card-exploration/frontier"
+            "card-exploration-frontier"
         ],
         "2": [
-            "card-exploration/frontier"
+            "card-exploration-frontier"
         ],
         "3": [
-            "card-exploration/frontier"
+            "card-exploration-frontier"
         ],
         "4": [
-            "card-exploration/frontier"
+            "card-exploration-frontier"
         ],
         "5": [
-            "card-exploration/frontier"
+            "card-exploration-frontier"
         ],
         "6": [
-            "card-exploration/frontier"
+            "card-exploration-frontier"
         ],
         "7": [
-            "card-exploration/frontier"
+            "card-exploration-frontier"
         ],
         "8": [
-            "card-exploration/frontier"
+            "card-exploration-frontier"
         ],
         "9": [
-            "card-exploration/frontier"
+            "card-exploration-frontier"
         ],
         "10": [
-            "card-exploration/frontier"
+            "card-exploration-frontier"
         ],
         "11": [
-            "card-exploration/frontier"
+            "card-exploration-frontier"
         ],
         "12": [
-            "card-exploration/frontier"
+            "card-exploration-frontier"
         ],
         "13": [
-            "card-exploration/frontier"
+            "card-exploration-frontier"
         ]
     },
     "GroundAccessibility": "ZoomAndContext",
     "Tags": [
-        "card-exploration/frontier"
+        "card-exploration-frontier"
     ]
 }

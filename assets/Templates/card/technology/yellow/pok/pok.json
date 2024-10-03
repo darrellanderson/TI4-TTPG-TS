@@ -72,20 +72,25 @@
     },
     "CardTags": {
         "0": [
-            "card-technology/yellow"
+            "card-technology-yellow",
+            "card-technology"
         ],
         "1": [
-            "card-technology/yellow"
+            "card-technology-yellow",
+            "card-technology"
         ],
         "2": [
-            "card-technology/yellow"
+            "card-technology-yellow",
+            "card-technology"
         ],
         "3": [
-            "card-technology/yellow"
+            "card-technology-yellow",
+            "card-technology"
         ]
     },
     "GroundAccessibility": "ZoomAndContext",
     "Tags": [
-        "card-technology/yellow"
+        "card-technology-yellow",
+        "card-technology"
     ]
 }

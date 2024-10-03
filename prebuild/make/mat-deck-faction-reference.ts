@@ -22,7 +22,9 @@ function getSlot(): ZCanvasCell {
     width: 308,
     height: 220,
     imageFile: "prebuild/mat/slot/slot-landscape.jpg",
-    snapPoints: [{ tags: ["card-faction-reference"] }],
+    snapPoints: [
+      { tags: ["card-faction-reference", "deck-faction-reference"] },
+    ],
   };
   return {
     type: "CanvasCell",

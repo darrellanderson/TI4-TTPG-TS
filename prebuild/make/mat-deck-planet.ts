@@ -23,7 +23,7 @@ const COLOR: string = "#171717";
 
 function getSymbolSlotPortrait(
   symbolFile: string,
-  tags: Array<string>,
+  tags: Array<string>
 ): ZCanvasCell {
   const slotCell: ZImageCell = {
     type: "ImageCell",
@@ -55,7 +55,7 @@ function getSymbolSlotPortrait(
 
 function getSymbolSlotLandscape(
   symbolFile: string,
-  tags: Array<string>,
+  tags: Array<string>
 ): ZCanvasCell {
   const slotCell: ZImageCell = {
     type: "ImageCell",
@@ -104,9 +104,11 @@ function getGrid(): ZColCell {
     children: [
       getSymbolSlotPortrait("prebuild/mat/slot/symbol-planet.png", [
         "deck-planet",
+        "card-planet",
       ]),
       getSymbolSlotLandscape("prebuild/mat/slot/symbol-planet.png", [
         "deck-legendary-planet",
+        "card-legendary-planet",
       ]),
       getLabel("Planet"),
     ],

@@ -11,8 +11,8 @@ it("recycle", () => {
   const card: Card = new MockCard({
     cardDetails: [
       new MockCardDetails({
-        metadata: "card.objective.stage-2:my-source/my-name",
-        tags: ["card-objective-stage-2"],
+        metadata: "card.objective.public-2:my-source/my-name",
+        tags: ["card-objective-2"],
       }),
     ],
   });
@@ -20,7 +20,7 @@ it("recycle", () => {
     position: [10, 0, 0],
     snapPoints: [
       new MockSnapPoint({
-        tags: ["deck-objective-stage-2", "card-objective-stage-2"],
+        tags: ["deck-objective-2", "card-objective-2"],
       }),
     ],
   });
