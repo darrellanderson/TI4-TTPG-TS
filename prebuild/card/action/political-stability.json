@@ -1,0 +1,5 @@
+{
+  "name": "Political Stability",
+  "nsid": "card.action:base/political-stability",
+  "desc": "-This card is played during the Return Strategy Cards step of the Status Phase. You must discard down to your hand size limit before being able to play this card"
+}

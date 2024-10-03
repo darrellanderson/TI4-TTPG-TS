@@ -1,0 +1,5 @@
+{
+  "name": "Intercept",
+  "nsid": "card.action:base/intercept",
+  "desc": "-Does not affect Skilled Retreat\n-Only works on a single combat round"
+}

@@ -1,0 +1,5 @@
+{
+  "name": "Parley",
+  "nsid": "card.action:base/parley",
+  "desc": "-Any units returned to space by this card may not be re-allocated to other planets in this system"
+}

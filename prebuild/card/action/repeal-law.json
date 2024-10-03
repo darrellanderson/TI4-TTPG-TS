@@ -1,0 +1,5 @@
+{
+  "name": "Repeal Law",
+  "nsid": "card.action:base/repeal-law",
+  "desc": "-In base game only, if you repeal a law that grants a VP, that VP is not lost by that player"
+}

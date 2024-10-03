@@ -9,10 +9,31 @@ import {
 
 export class CreateDeck {
   private readonly _cardType: string;
-  private readonly _portrait: boolean = true;
+  private _portrait: boolean = true;
+  private _wPx: number = 340;
+  private _hPx: number = 510;
+  private _wWorld: number = 4.2;
+  private _hWorld: number = 6.3;
 
   constructor(cardType: string) {
     this._cardType = cardType;
+  }
+
+  setIsPortrait(portrait: boolean): this {
+    this._portrait = portrait;
+    return this;
+  }
+
+  setSizePx(w: number, h: number): this {
+    this._wPx = w;
+    this._hPx = h;
+    return this;
+  }
+
+  setSizeWorld(w: number, h: number): this {
+    this._wWorld = w;
+    this._hWorld = h;
+    return this;
   }
 
   getCardJsonFiles(): Array<string> {
@@ -36,6 +57,9 @@ export class CreateDeck {
       const data: string = fs.readFileSync(jsonFile, "utf8");
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const cardJson: any = JSON.parse(data);
+      if (!cardJson) {
+        throw new Error("error readong " + jsonFile);
+      }
 
       const nsid: string = cardJson.nsid.replace(/_/g, "-");
       const parts: Array<string> = nsid.split(/[:/]/);
@@ -102,55 +126,69 @@ export class CreateDeck {
     }
     const hasBack: boolean = first.back === undefined;
 
-    const wPx: number = this._portrait ? 340 : 510;
-    const hPx: number = this._portrait ? 510 : 340;
-    const wWorld: number = this._portrait ? 4.2 : 6.3;
-    const hWorld: number = this._portrait ? 6.3 : 4.2;
+    const assetFilename: string = `card/${cardType}/${source}`;
+    const templateName: string = cardType;
+    const applyAllTags: Array<string> = [`card-${this._cardType}`];
+    const cardSizePixel: { width: number; height: number } = {
+      width: this._portrait ? this._wPx : this._hPx,
+      height: this._portrait ? this._hPx : this._wPx,
+    };
+    const cardSizeWorld: { width: number; height: number } = {
+      width: this._portrait ? this._wWorld : this._hWorld,
+      height: this._portrait ? this._hWorld : this._wWorld,
+    };
 
     let result: CreateCardsheetParams | undefined = undefined;
     if (hasBack) {
       result = {
-        assetFilename: `card/${cardType}/${source}`,
-        templateName: source,
-        applyAllTags: [`card-${this._cardType}`],
-        cardSizePixel: { width: wPx, height: hPx },
-        cardSizeWorld: { width: wWorld, height: hWorld },
-        back: `prebuild/card/shared-back/${cardType}.jpg`,
+        assetFilename,
+        templateName,
+        applyAllTags,
+        cardSizePixel,
+        cardSizeWorld,
+        back: `prebuild/card/shared-back/${cardType.replace(/\//g, "-")}.back.jpg`,
         cards,
       };
     } else {
       result = {
-        assetFilename: `card/${cardType}/${source}`,
-        templateName: source,
-        applyAllTags: [`card-${this._cardType}`],
-        cardSizePixel: { width: wPx, height: hPx },
-        cardSizeWorld: { width: wWorld, height: hWorld },
+        assetFilename,
+        templateName,
+        applyAllTags,
+        cardSizePixel,
+        cardSizeWorld,
         cards,
       };
     }
     return result;
   }
 
-  createDeck(params: CreateCardsheetParams): void {
-    const create = new CreateCardsheet(params);
-    create.clean().then(() => {
-      create.writeFiles();
+  async createDeck(params: CreateCardsheetParams): Promise<void> {
+    return new Promise<void>((resolve, reject) => {
+      const create = new CreateCardsheet(params);
+      create
+        .clean()
+        .then(() => {
+          create.writeFiles().then(resolve).catch(reject);
+        })
+        .catch(reject);
     });
   }
 
-  go(): void {
+  async go(): Promise<void[]> {
     const jsonFiles: Array<string> = this.getCardJsonFiles();
     const sourceToCards: Map<
       string,
       Array<CardsheetCardType>
     > = this.getSourceToCards(jsonFiles);
+    const promises: Array<Promise<void>> = [];
     for (const [source, cards] of sourceToCards) {
       const params: CreateCardsheetParams = this.getParams(
         this._cardType,
         source,
         cards
       );
-      this.createDeck(params);
+      promises.push(this.createDeck(params));
     }
+    return Promise.all(promises);
   }
 }

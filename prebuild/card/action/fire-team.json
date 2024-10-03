@@ -1,0 +1,5 @@
+{
+  "name": "Fire Team",
+  "nsid": "card.action:base/fire-team",
+  "desc": "-If this is played after a round where Morale Boost or Tekklar Legion were used, those modifiers count for the re-roll"
+}
