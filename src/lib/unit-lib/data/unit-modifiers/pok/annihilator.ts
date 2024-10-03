@@ -17,7 +17,7 @@ export const Annihilator: UnitModifierSchemaType = {
   apply: (combatRoll: CombatRoll): void => {
     if (combatRoll.getRollType() === "bombardment") {
       const spaceCount: number = combatRoll.self.unitPlasticHex.filter(
-        (plastic) => plastic.getPlanetExact() === undefined,
+        (plastic) => plastic.getPlanetExact() === undefined
       ).length;
       combatRoll.self.overrideUnitCountHex.set("mech", spaceCount);
     } else if (
@@ -25,7 +25,7 @@ export const Annihilator: UnitModifierSchemaType = {
       combatRoll.planet !== undefined
     ) {
       const groundCount: number = combatRoll.self.unitPlasticHex.filter(
-        (plastic) => plastic.getPlanetExact() === combatRoll.planet,
+        (plastic) => plastic.getPlanetExact() === combatRoll.planet
       ).length;
       combatRoll.self.overrideUnitCountHex.set("mech", groundCount);
     }

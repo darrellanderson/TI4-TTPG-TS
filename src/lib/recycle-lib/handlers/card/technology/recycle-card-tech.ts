@@ -23,7 +23,7 @@ export class RecycleCardTech extends GarbageHandler {
         deckTag,
         discardTag,
         shuffleDiscard,
-        playerSlot,
+        playerSlot
       );
       if (deck) {
         return deck.addCards(card);

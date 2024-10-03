@@ -5,7 +5,7 @@ import { UnitAttrs } from "../../../unit-attrs/unit-attrs";
 it("registry", () => {
   const nsid = "card.agenda:base/publicize-weapon-schematics";
   expect(TI4.unitModifierRegistry.getByNsid(nsid)?.getName()).toBe(
-    "Publicize Weapon Schematics",
+    "Publicize Weapon Schematics"
   );
 });
 

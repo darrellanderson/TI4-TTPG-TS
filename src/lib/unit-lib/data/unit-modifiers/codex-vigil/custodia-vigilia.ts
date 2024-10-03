@@ -28,7 +28,7 @@ export const CustodiaVigilia: UnitModifierSchemaType = {
     ) {
       // Does player control Mecatol Rex?
       const planetCard: Card | undefined = combatRoll.find.findCard(
-        "card.planet:base/mecatol-rex",
+        "card.planet:base/mecatol-rex"
       );
       if (planetCard) {
         const pos: Vector = planetCard.getPosition();

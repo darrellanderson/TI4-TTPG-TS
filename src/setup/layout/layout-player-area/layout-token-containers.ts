@@ -23,10 +23,10 @@ export class LayoutTokenContainers {
     const objColor: Color = colorLib.parseColorOrThrow(colorsType.plastic);
 
     const commandTokenContainer: GameObject = Spawn.spawnOrThrow(
-      "container.token.command:base/generic",
+      "container.token.command:base/generic"
     );
     const controlTokenContainer: GameObject = Spawn.spawnOrThrow(
-      "container.token.control:base/generic",
+      "container.token.control:base/generic"
     );
 
     commandTokenContainer.setOwningPlayerSlot(playerSlot);

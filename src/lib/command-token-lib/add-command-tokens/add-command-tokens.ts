@@ -45,7 +45,7 @@ export class AddCommandTokens {
       // Add one if "Hyper Metabolism" technology.
       if (nsid === "card.technology.green:base/hyper-metabolism") {
         const owner: number = this._find.closestOwnedCardHolderOwner(
-          obj.getPosition(),
+          obj.getPosition()
         );
         let count: number | undefined = slotToCount.get(owner);
         if (count !== undefined) {
@@ -60,7 +60,7 @@ export class AddCommandTokens {
         nsid.includes("/cybernetic-enhancements")
       ) {
         const owner: number = this._find.closestOwnedCardHolderOwner(
-          obj.getPosition(),
+          obj.getPosition()
         );
         const faction: Faction | undefined = slotToFaction.get(owner);
         if (
@@ -115,7 +115,7 @@ export class AddCommandTokens {
     const container: Container | undefined = this._find.findContainer(
       nsid,
       playerSlot,
-      skipContained,
+      skipContained
     );
     if (!container) {
       return false;
@@ -124,7 +124,7 @@ export class AddCommandTokens {
     nsid = "sheet:base/command";
     const sheet: GameObject | undefined = this._find.findGameObject(
       nsid,
-      playerSlot,
+      playerSlot
     );
     if (!sheet) {
       return false;

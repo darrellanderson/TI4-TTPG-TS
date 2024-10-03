@@ -18,7 +18,7 @@ export const TekklarLegion: UnitModifierSchemaType = {
     const rollType: CombatRollType = combatRoll.getRollType();
     if (rollType === "groundCombat") {
       const tekklarCard: Card | undefined = combatRoll.find.findCard(
-        "card.promissory:base/tekklar-legion",
+        "card.promissory:base/tekklar-legion"
       );
       if (tekklarCard) {
         const pos: Vector = tekklarCard.getPosition();
@@ -39,7 +39,7 @@ export const TekklarLegion: UnitModifierSchemaType = {
   },
   apply: (combatRoll: CombatRoll): void => {
     const tekklarCard: Card | undefined = combatRoll.find.findCard(
-      "card.promissory:base/tekklar-legion",
+      "card.promissory:base/tekklar-legion"
     );
     let delta: number = 0;
     if (tekklarCard) {

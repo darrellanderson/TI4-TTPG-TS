@@ -86,7 +86,7 @@ it("constructor", () => {
   expect(unitAttrs.getCost()).toBe(undefined);
   expect(unitAttrs.getProducePerCost()).toBe(1);
   expect(
-    unitAttrs.getProduceQuantityDoesNotCountAgainstProductionLimits(),
+    unitAttrs.getProduceQuantityDoesNotCountAgainstProductionLimits()
   ).toBe(0);
   expect(unitAttrs.getDiceColor().toHex()).toBe("000000FF");
   expect(unitAttrs.getDisablePlanetaryShield()).toBe(false);
@@ -198,12 +198,12 @@ it("produceQuantityDoesNotCountAgainstProductionLimits", () => {
     unit: "infantry",
   });
   expect(
-    unitAttrs.getProduceQuantityDoesNotCountAgainstProductionLimits(),
+    unitAttrs.getProduceQuantityDoesNotCountAgainstProductionLimits()
   ).toBe(0);
 
   unitAttrs.setProduceQuantityDoesNotCountAgainstProductionLimits(3);
   expect(
-    unitAttrs.getProduceQuantityDoesNotCountAgainstProductionLimits(),
+    unitAttrs.getProduceQuantityDoesNotCountAgainstProductionLimits()
   ).toBe(3);
 });
 
@@ -213,12 +213,12 @@ it("sharedProduceQuantityDoesNotCountAgainstProductionLimits", () => {
     unit: "infantry",
   });
   expect(
-    unitAttrs.getSharedProduceQuantityDoesNotCountAgainstProductionLimits(),
+    unitAttrs.getSharedProduceQuantityDoesNotCountAgainstProductionLimits()
   ).toBe(0);
 
   unitAttrs.setSharedProduceQuantityDoesNotCountAgainstProductionLimits(3);
   expect(
-    unitAttrs.getSharedProduceQuantityDoesNotCountAgainstProductionLimits(),
+    unitAttrs.getSharedProduceQuantityDoesNotCountAgainstProductionLimits()
   ).toBe(3);
 });
 

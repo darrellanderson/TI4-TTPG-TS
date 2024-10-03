@@ -5,7 +5,7 @@ import { InitiativeEntry, InitiativeOrder } from "./initiative-order";
 
 it("static getStrategyCardNsidNameFirst", () => {
   const obj: GameObject = MockGameObject.simple(
-    "tile.strategy:base/leadership",
+    "tile.strategy:base/leadership"
   );
   const nameFirst: string | undefined =
     InitiativeOrder.getStrategyCardNsidNameFirst(obj);
@@ -21,7 +21,7 @@ it("static getStrategyCardNsidNameFirst (not strategy card)", () => {
 
 it("static getStrategyCardNsidNameFirst (invalid nsid)", () => {
   const obj: GameObject = MockGameObject.simple(
-    "tile.strategy:base/@@invalid!!",
+    "tile.strategy:base/@@invalid!!"
   );
   const nameFirst: string | undefined =
     InitiativeOrder.getStrategyCardNsidNameFirst(obj);
@@ -30,7 +30,7 @@ it("static getStrategyCardNsidNameFirst (invalid nsid)", () => {
 
 it("static getStrategyCardNsidNameFirst (unknown name)", () => {
   const obj: GameObject = MockGameObject.simple(
-    "tile.strategy:base/__unknown__",
+    "tile.strategy:base/__unknown__"
   );
   const nameFirst: string | undefined =
     InitiativeOrder.getStrategyCardNsidNameFirst(obj);
@@ -43,7 +43,7 @@ it("constructor", () => {
 
 it("_isAtopStrategyCardMat", () => {
   const obj: GameObject = MockGameObject.simple(
-    "tile.strategy:base/leadership",
+    "tile.strategy:base/leadership"
   );
   MockGameObject.simple("mat:base/strategy");
   const initiativeOrder: InitiativeOrder = new InitiativeOrder();
@@ -53,7 +53,7 @@ it("_isAtopStrategyCardMat", () => {
 
 it("_isAtopStrategyCardMat (missing mat)", () => {
   const obj: GameObject = MockGameObject.simple(
-    "tile.strategy:base/leadership",
+    "tile.strategy:base/leadership"
   );
   const initiativeOrder: InitiativeOrder = new InitiativeOrder();
   const atop: boolean = initiativeOrder._isAtopStrategyCardMat(obj);
@@ -63,7 +63,7 @@ it("_isAtopStrategyCardMat (missing mat)", () => {
 it("_isAtopStrategyCardMat (off mat)", () => {
   const obj: GameObject = MockGameObject.simple(
     "tile.strategy:base/leadership",
-    { position: [100, 0, 0] },
+    { position: [100, 0, 0] }
   );
   MockGameObject.simple("mat:base/strategy");
   const initiativeOrder: InitiativeOrder = new InitiativeOrder();

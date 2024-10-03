@@ -3,7 +3,7 @@ import { RecycleTokenAttachment } from "./recycle-token-attachment";
 
 it("recycle", () => {
   const token = MockGameObject.simple(
-    "token.attachment.planet:my-source/my-name",
+    "token.attachment.planet:my-source/my-name"
   );
   new MockContainer({
     id: "my-container-id",
@@ -21,7 +21,7 @@ it("recycle", () => {
 
 it("recycle (no container)", () => {
   const token = MockGameObject.simple(
-    "token.attachment.planet:my-source/my-name",
+    "token.attachment.planet:my-source/my-name"
   );
   expect(token.getContainer()).toBeUndefined();
 

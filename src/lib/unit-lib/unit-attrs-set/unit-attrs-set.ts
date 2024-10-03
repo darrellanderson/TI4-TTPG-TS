@@ -28,7 +28,7 @@ export class UnitAttrsSet {
 
   applyOverride(override: UnitAttrsSchemaType): boolean {
     const unitAttrs: UnitAttrs | undefined = this._unitToAttrs.get(
-      override.unit,
+      override.unit
     );
     if (unitAttrs) {
       unitAttrs.applyOverride(override);

@@ -40,7 +40,7 @@ it("data addSyntheticUnit", () => {
       name: "my-name",
       unit: "infantry",
     },
-    1,
+    1
   );
   expect(success).toBe(false);
 
@@ -49,7 +49,7 @@ it("data addSyntheticUnit", () => {
       name: "my-name",
       unit: "my-unit" as UnitType,
     },
-    2,
+    2
   );
   expect(success).toBe(true);
   expect(data.overrideUnitCountHex.get("my-unit" as UnitType)).toBe(2);
@@ -64,7 +64,7 @@ it("data hasUnit", () => {
   expect(data.hasUnit("fighter")).toBe(false);
 
   data.unitPlasticHex.push(
-    new UnitPlastic("infantry", 1, new MockGameObject()),
+    new UnitPlastic("infantry", 1, new MockGameObject())
   );
   expect(data.hasUnit("infantry")).toBe(true);
   expect(data.hasUnit("fighter")).toBe(false);
@@ -233,7 +233,7 @@ it("_findUnitAttrOverrides (standard unit upgrade)", () => {
   const allowFaceDown: boolean = false;
   const rejectSnapPointTags: Array<string> = [];
   expect(
-    new CardUtil().isLooseCard(card, allowFaceDown, rejectSnapPointTags),
+    new CardUtil().isLooseCard(card, allowFaceDown, rejectSnapPointTags)
   ).toBe(true);
 
   const overrides: Array<UnitAttrsSchemaType> =
@@ -285,10 +285,10 @@ it("_findUnitModifiers (self, opponent)", () => {
   });
   const unitModifiers: Array<UnitModifier> = combatRoll._findUnitModifiers(
     2,
-    3,
+    3
   );
   const names: Array<string> = unitModifiers.map((modifier) =>
-    modifier.getName(),
+    modifier.getName()
   );
   expect(names).toEqual(["my-self-modifier", "my-opponent-modifier"]);
 });
@@ -325,15 +325,15 @@ it("_findUnitModifiers", () => {
   const allowFaceDown: boolean = false;
   const rejectSnapPointTags: Array<string> = [];
   expect(
-    new CardUtil().isLooseCard(card, allowFaceDown, rejectSnapPointTags),
+    new CardUtil().isLooseCard(card, allowFaceDown, rejectSnapPointTags)
   ).toBe(true);
 
   const unitModifiers: Array<UnitModifier> = combatRoll._findUnitModifiers(
     2,
-    1,
+    1
   );
   const names: Array<string> = unitModifiers.map((modifier) =>
-    modifier.getName(),
+    modifier.getName()
   );
   expect(names).toEqual(["my-modifier-name"]);
 });
@@ -371,7 +371,7 @@ it("_findUnitModifiers (active/idle)", () => {
   const allowFaceDown: boolean = false;
   const rejectSnapPointTags: Array<string> = [];
   expect(
-    new CardUtil().isLooseCard(card, allowFaceDown, rejectSnapPointTags),
+    new CardUtil().isLooseCard(card, allowFaceDown, rejectSnapPointTags)
   ).toBe(true);
 
   let unitModifiers: Array<UnitModifier>;
@@ -445,15 +445,15 @@ it("_findUnitModifiers (self faction promissory)", () => {
   const allowFaceDown: boolean = false;
   const rejectSnapPointTags: Array<string> = [];
   expect(
-    new CardUtil().isLooseCard(card, allowFaceDown, rejectSnapPointTags),
+    new CardUtil().isLooseCard(card, allowFaceDown, rejectSnapPointTags)
   ).toBe(true);
 
   const unitModifiers: Array<UnitModifier> = combatRoll._findUnitModifiers(
     2,
-    1,
+    1
   );
   const names: Array<string> = unitModifiers.map((modifier) =>
-    modifier.getName(),
+    modifier.getName()
   );
   expect(names).toEqual([]);
 });
@@ -714,12 +714,12 @@ it("applyUnitOverrides", () => {
     rollingPlayerSlot: 2,
   });
   expect(combatRoll.self.unitAttrsSet.get("carrier")?.getName()).toBe(
-    "Carrier",
+    "Carrier"
   );
 
   combatRoll.applyUnitOverries();
   expect(combatRoll.self.unitAttrsSet.get("carrier")?.getName()).toBe(
-    "Carrier II",
+    "Carrier II"
   );
 });
 
@@ -764,7 +764,7 @@ it("applyUnitOverrides (flagship)", () => {
     overrideSelfFaction: faction,
   });
   expect(combatRoll.self.unitAttrsSet.get("flagship")?.getName()).toBe(
-    "my-flagship-name",
+    "my-flagship-name"
   );
 });
 
@@ -801,7 +801,7 @@ it("applyUnitOverrides (flagship opponent)", () => {
     },
   ]);
   expect(
-    TI4.unitAttrsRegistry.rawByNsid("unit:my-source/my-flagship"),
+    TI4.unitAttrsRegistry.rawByNsid("unit:my-source/my-flagship")
   ).toBeDefined();
 
   const combatRoll: CombatRoll = CombatRoll.createCooked({
@@ -813,7 +813,7 @@ it("applyUnitOverrides (flagship opponent)", () => {
   });
   expect(combatRoll.opponent.playerSlot).toBe(1);
   expect(combatRoll.opponent.unitAttrsSet.get("flagship")?.getName()).toBe(
-    "my-flagship-name",
+    "my-flagship-name"
   );
 });
 
@@ -1046,7 +1046,7 @@ it("createDiceParamsArray (space)", () => {
 it("_pruneToUnitsClosestToPlanet", () => {
   MockGameObject.simple("tile.system:base/9");
   const system: System | undefined = TI4.systemRegistry.getByPosition(
-    new Vector(0, 0, 0),
+    new Vector(0, 0, 0)
   );
   if (!system) {
     throw new Error("system not found"); // TypeScript
@@ -1119,7 +1119,7 @@ it("_checkCancelBombardment", () => {
 it("createDiceParamsArray (ground)", () => {
   MockGameObject.simple("tile.system:base/9");
   const system: System | undefined = TI4.systemRegistry.getByPosition(
-    new Vector(0, 0, 0),
+    new Vector(0, 0, 0)
   );
   if (!system) {
     throw new Error("system not found"); // TypeScript

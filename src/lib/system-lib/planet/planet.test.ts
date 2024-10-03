@@ -17,7 +17,7 @@ it("constructor", () => {
   const planet = new Planet(
     systemTileObj,
     { source: "my-source", packageId: "my-package-id" },
-    params,
+    params
   );
   expect(planet.getName()).toBe("my-planet-name");
   expect(planet.getObj()).toBe(systemTileObj);
@@ -34,7 +34,7 @@ it("constructor (invalid params)", () => {
         templateMetadata: "tile.system:my-source/1000",
       }),
       { source: "my-source", packageId: "my-package-id" },
-      params,
+      params
     );
   }).toThrow();
 });
@@ -50,10 +50,10 @@ it("constructor (invalid nsid)", () => {
         templateMetadata: "not-a-system-tile-or-attachment",
       }),
       { source: "my-source", packageId: "my-package-id" },
-      params,
+      params
     );
   }).toThrow(
-    'invalid object: "not-a-system-tile-or-attachment", expect either "tile.system:" or "token.attachment.system:" prefix',
+    'invalid object: "not-a-system-tile-or-attachment", expect either "tile.system:" or "token.attachment.system:" prefix'
   );
 });
 
@@ -66,7 +66,7 @@ it("attachment management", () => {
     {
       name: "my-planet-name",
       nsidName: "my-planet-card-nsid",
-    },
+    }
   );
   const attachment = new PlanetAttachment(
     new MockGameObject({
@@ -77,7 +77,7 @@ it("attachment management", () => {
     {
       name: "my-attachment-name",
       nsidName: "my-attachment-nsid-name",
-    },
+    }
   );
   let success: boolean = false;
   expect(planet.hasAttachment(attachment)).toEqual(false);
@@ -111,7 +111,7 @@ it("getInfluence", () => {
       name: "my-planet-name",
       nsidName: "my-planet-card-nsid",
       influence: 2,
-    },
+    }
   );
   const attachment = new PlanetAttachment(
     new MockGameObject({
@@ -123,7 +123,7 @@ it("getInfluence", () => {
       name: "my-attachment-name",
       nsidName: "my-attachment-nsid-name",
       influence: 3,
-    },
+    }
   );
   planet.addAttachment(attachment);
   expect(planet.getInfluence()).toEqual(5);
@@ -138,7 +138,7 @@ it("getInfluence (default)", () => {
     {
       name: "my-planet-name",
       nsidName: "my-planet-card-nsid",
-    },
+    }
   );
   expect(planet.getInfluence()).toEqual(0);
 });
@@ -153,7 +153,7 @@ it("getLegendarynsidNames", () => {
       name: "my-planet-name",
       nsidName: "my-planet-card-nsid",
       legendaryNsidName: "my-planet-legendary-card-nsid",
-    },
+    }
   );
   const attachment = new PlanetAttachment(
     new MockGameObject({
@@ -165,7 +165,7 @@ it("getLegendarynsidNames", () => {
       name: "my-attachment-name",
       nsidName: "my-attachment-nsid-name",
       legendaryNsidName: "my-attachment-legendary-card-nsid",
-    },
+    }
   );
   planet.addAttachment(attachment);
   expect(planet.getLegendaryCardNsids()).toEqual([
@@ -183,7 +183,7 @@ it("getLegendarynsidNames (default)", () => {
     {
       name: "my-planet-name",
       nsidName: "my-planet-card-nsid",
-    },
+    }
   );
   expect(planet.getLegendaryCardNsids()).toEqual([]);
 });
@@ -197,7 +197,7 @@ it("getName", () => {
     {
       name: "my-planet-name",
       nsidName: "my-planet-card-nsid",
-    },
+    }
   );
   expect(planet.getName()).toEqual("my-planet-name");
 });
@@ -211,10 +211,10 @@ it("getPlanetCardNsid", () => {
     {
       name: "my-planet-name",
       nsidName: "my-planet-card-nsid-name",
-    },
+    }
   );
   expect(planet.getPlanetCardNsid()).toEqual(
-    "card.planet:my-source/my-planet-card-nsid-name",
+    "card.planet:my-source/my-planet-card-nsid-name"
   );
 });
 
@@ -228,7 +228,7 @@ it("getPosition", () => {
       name: "my-planet-name",
       nsidName: "my-planet-card-nsid",
       localPosition: { x: 1, y: 2 },
-    },
+    }
   );
   expect(planet.getPosition().toString()).toEqual("(X=1,Y=2,Z=0)");
 });
@@ -242,7 +242,7 @@ it("getPosition (default)", () => {
     {
       name: "my-planet-name",
       nsidName: "my-planet-card-nsid",
-    },
+    }
   );
   expect(planet.getPosition().toString()).toEqual("(X=0,Y=0,Z=0)");
 });
@@ -258,7 +258,7 @@ it("getRadius", () => {
       name: "my-planet-name",
       nsidName: "my-planet-card-nsid",
       radius: 2,
-    },
+    }
   );
   expect(planet.getRadius()).toEqual(6);
 });
@@ -272,7 +272,7 @@ it("getRadius (default)", () => {
     {
       name: "my-planet-name",
       nsidName: "my-planet-card-nsid",
-    },
+    }
   );
   expect(planet.getRadius()).toEqual(SystemDefaults.PLANET_RADIUS);
 });
@@ -287,7 +287,7 @@ it("getResources", () => {
       name: "my-planet-name",
       nsidName: "my-planet-card-nsid",
       resources: 2,
-    },
+    }
   );
   const attachment = new PlanetAttachment(
     new MockGameObject({
@@ -299,7 +299,7 @@ it("getResources", () => {
       name: "my-attachment-name",
       nsidName: "my-attachment-nsid-name",
       resources: 3,
-    },
+    }
   );
   planet.addAttachment(attachment);
   expect(planet.getResources()).toEqual(5);
@@ -314,7 +314,7 @@ it("getResources (default)", () => {
     {
       name: "my-planet-name",
       nsidName: "my-planet-card-nsid",
-    },
+    }
   );
   expect(planet.getResources()).toEqual(0);
 });
@@ -329,7 +329,7 @@ it("getTechs", () => {
       name: "my-planet-name",
       nsidName: "my-planet-card-nsid",
       techs: ["red"],
-    },
+    }
   );
   const attachment = new PlanetAttachment(
     new MockGameObject({
@@ -341,7 +341,7 @@ it("getTechs", () => {
       name: "my-attachment-name",
       nsidName: "my-attachment-nsid-name",
       techs: ["blue"],
-    },
+    }
   );
   planet.addAttachment(attachment);
   expect(planet.getTechs()).toEqual(["red", "blue"]);
@@ -356,7 +356,7 @@ it("getTechs (default)", () => {
     {
       name: "my-planet-name",
       nsidName: "my-planet-card-nsid",
-    },
+    }
   );
   expect(planet.getTechs()).toEqual([]);
 });
@@ -371,7 +371,7 @@ it("getTraits", () => {
       name: "my-planet-name",
       nsidName: "my-planet-card-nsid",
       traits: ["cultural"],
-    },
+    }
   );
   const attachment = new PlanetAttachment(
     new MockGameObject({
@@ -383,7 +383,7 @@ it("getTraits", () => {
       name: "my-attachment-name",
       nsidName: "my-attachment-nsid-name",
       traits: ["industrial"],
-    },
+    }
   );
   planet.addAttachment(attachment);
   expect(planet.getTraits()).toEqual(["cultural", "industrial"]);
@@ -398,7 +398,7 @@ it("getTraits (default)", () => {
     {
       name: "my-planet-name",
       nsidName: "my-planet-card-nsid",
-    },
+    }
   );
   expect(planet.getTraits()).toEqual([]);
 });
@@ -412,7 +412,7 @@ it("isDestroyedPlanet", () => {
     {
       name: "my-planet-name",
       nsidName: "my-planet-card-nsid",
-    },
+    }
   );
   const attachment = new PlanetAttachment(
     new MockGameObject({
@@ -424,7 +424,7 @@ it("isDestroyedPlanet", () => {
       name: "my-attachment-name",
       nsidName: "my-attachment-nsid-name",
       isDestroyPlanet: true,
-    },
+    }
   );
   planet.addAttachment(attachment);
   expect(planet.isDestroyedPlanet()).toEqual(true);
@@ -439,7 +439,7 @@ it("isDestroyedPlanet (default)", () => {
     {
       name: "my-planet-name",
       nsidName: "my-planet-card-nsid",
-    },
+    }
   );
   expect(planet.isDestroyedPlanet()).toEqual(false);
 });
@@ -454,7 +454,7 @@ it("isLegendaryPlanet", () => {
       name: "my-planet-name",
       nsidName: "my-planet-card-nsid",
       isLegendary: true,
-    },
+    }
   );
   expect(planet.isLegendary()).toEqual(true);
 });
@@ -468,7 +468,7 @@ it("isLegendaryPlanet (attachment)", () => {
     {
       name: "my-planet-name",
       nsidName: "my-planet-card-nsid",
-    },
+    }
   );
   const attachment = new PlanetAttachment(
     new MockGameObject({
@@ -480,7 +480,7 @@ it("isLegendaryPlanet (attachment)", () => {
       name: "my-attachment-name",
       nsidName: "my-attachment-nsid-name",
       isLegendary: true,
-    },
+    }
   );
   planet.addAttachment(attachment);
   expect(planet.isLegendary()).toEqual(true);
@@ -495,7 +495,7 @@ it("isLegendaryPlanet (default)", () => {
     {
       name: "my-planet-name",
       nsidName: "my-planet-card-nsid",
-    },
+    }
   );
   expect(planet.isLegendary()).toEqual(false);
 });
@@ -509,7 +509,7 @@ it("setLocalPosition", () => {
     {
       name: "my-planet-name",
       nsidName: "my-planet-card-nsid",
-    },
+    }
   );
   expect(planet.getPosition().toString()).toEqual("(X=0,Y=0,Z=0)");
 
@@ -528,7 +528,7 @@ it("localPositionFaceDown", () => {
       nsidName: "my-planet-card-nsid",
       localPosition: { x: 1, y: 2 },
       localPositionFaceDown: { x: 3, y: 4 },
-    },
+    }
   );
   expect(planet.getPosition().toString()).toEqual("(X=1,Y=2,Z=0)");
 

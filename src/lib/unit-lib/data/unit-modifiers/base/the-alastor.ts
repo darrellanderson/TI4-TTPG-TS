@@ -23,7 +23,7 @@ export const TheAlastor: UnitModifierSchemaType = {
           new CombatAttrs({
             dice: groundCombat.getDice(),
             hit: groundCombat.getHit(),
-          }),
+          })
         );
       }
     }

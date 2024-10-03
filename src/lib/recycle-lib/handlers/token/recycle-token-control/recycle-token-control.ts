@@ -17,7 +17,7 @@ export class RecycleTokenControl extends GarbageHandler {
     const container: Container | undefined = this._find.findContainer(
       containerNsid,
       owner,
-      skipContained,
+      skipContained
     );
 
     if (container) {

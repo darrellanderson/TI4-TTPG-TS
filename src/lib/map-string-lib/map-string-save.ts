@@ -11,7 +11,7 @@ export class MapStringSave {
 
     const skipContained: boolean = true;
     for (const system of TI4.systemRegistry.getAllSystemsWithObjs(
-      skipContained,
+      skipContained
     )) {
       // Ignore off-map systems.
       if (system.getClass() === "off-map") {

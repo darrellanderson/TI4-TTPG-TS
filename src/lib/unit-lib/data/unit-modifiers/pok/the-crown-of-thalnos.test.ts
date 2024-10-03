@@ -6,14 +6,14 @@ import { UnitAttrs } from "../../../unit-attrs/unit-attrs";
 it("registry (agenda)", () => {
   const nsid = "card.agenda:base.only/the-crown-of-thalnos";
   expect(TI4.unitModifierRegistry.getByNsid(nsid)?.getName()).toBe(
-    "The Crown of Thalnos",
+    "The Crown of Thalnos"
   );
 });
 
 it("registry (relic)", () => {
   const nsid = "card.relic:pok/the-crown-of-thalnos";
   expect(TI4.unitModifierRegistry.getByNsid(nsid)?.getName()).toBe(
-    "The Crown of Thalnos",
+    "The Crown of Thalnos"
   );
 });
 

@@ -155,7 +155,9 @@ class QuickRoller {
       }
     });
 
-    const summary: string = `Target ${value}: ${formatted.join(", ")} (${hits} hits)`;
+    const summary: string = `Target ${value}: ${formatted.join(
+      ", "
+    )} (${hits} hits)`;
     Broadcast.broadcastAll(summary);
   }
 }

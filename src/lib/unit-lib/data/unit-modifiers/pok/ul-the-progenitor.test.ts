@@ -5,7 +5,7 @@ import { UnitType } from "lib/unit-lib/schema/unit-attrs-schema";
 it("registry", () => {
   const nsid = "card.leader.hero:pok/ul-the-progenitor";
   expect(TI4.unitModifierRegistry.getByNsid(nsid)?.getName()).toBe(
-    "Ul the Progenitor",
+    "Ul the Progenitor"
   );
 });
 

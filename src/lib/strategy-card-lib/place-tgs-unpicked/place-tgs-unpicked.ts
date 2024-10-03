@@ -34,7 +34,7 @@ export class PlaceTgsUnpicked {
     const noise = new Vector(
       Math.random() * noiseD * 2 - noiseD,
       Math.random() * noiseD * 2 - noiseD,
-      5, // above
+      5 // above
     );
     const pos: Vector = strategyCard.getPosition().add(noise);
     const rot: Rotator = new Rotator(0, 0, 180);
@@ -42,7 +42,7 @@ export class PlaceTgsUnpicked {
     const tradeGood: GameObject | undefined = Spawn.spawn(
       "token:base/tradegood-commodity-1",
       pos,
-      rot,
+      rot
     );
 
     if (tradeGood) {

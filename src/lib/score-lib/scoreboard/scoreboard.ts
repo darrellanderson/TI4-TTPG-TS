@@ -129,7 +129,7 @@ export class Scoreboard {
     return this._find.findGameObject(
       "token:base/scoreboard",
       playerSlot,
-      skipContained,
+      skipContained
     );
   }
 

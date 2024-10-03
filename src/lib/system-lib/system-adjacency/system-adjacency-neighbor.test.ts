@@ -41,7 +41,7 @@ it("addTags", () => {
   expect(adjacency.hasNodeTag("<1,0,-1>", "<1,0,-1>|<2,0,-2>")).toBe(true);
   expect(adjacency.hasNodeTag("<2,0,-2>", "<1,0,-1>|<2,0,-2>")).toBe(true);
   expect(adjacency.hasLink("<1,0,-1>|<2,0,-2>", "<1,0,-1>|<2,0,-2>")).toBe(
-    true,
+    true
   );
 
   // Verify adjacency is being used correctly.
@@ -85,32 +85,32 @@ it("neighbors must share same system class", () => {
     new System(
       new MockGameObject({ templateMetadata: "tile.system:my-source/1000" }),
       { source: "my-source", packageId: "my-package-id" },
-      { tile: 1000 },
-    ),
+      { tile: 1000 }
+    )
   );
   hexToSystem.set(
     "<1,0,-1>",
     new System(
       new MockGameObject({ templateMetadata: "tile.system:my-source/1001" }),
       { source: "my-source", packageId: "my-package-id" },
-      { tile: 1001 },
-    ),
+      { tile: 1001 }
+    )
   );
   hexToSystem.set(
     "<2,0,-2>",
     new System(
       new MockGameObject({ templateMetadata: "tile.system:my-source/1002" }),
       { source: "my-source", packageId: "my-package-id" },
-      { tile: 1002 },
-    ),
+      { tile: 1002 }
+    )
   );
   hexToSystem.set(
     "<3,0,-3>",
     new System(
       new MockGameObject({ templateMetadata: "tile.system:my-source/1003" }),
       { source: "my-source", packageId: "my-package-id" },
-      { tile: 1003 },
-    ),
+      { tile: 1003 }
+    )
   );
 
   let adjacency: Adjacency = new Adjacency();
@@ -127,16 +127,16 @@ it("neighbors must share same system class", () => {
     new System(
       new MockGameObject({ templateMetadata: "tile.system:my-source/1002" }),
       { source: "my-source", packageId: "my-package-id" },
-      { tile: 1002, class: "alt" },
-    ),
+      { tile: 1002, class: "alt" }
+    )
   );
   hexToSystem.set(
     "<3,0,-3>",
     new System(
       new MockGameObject({ templateMetadata: "tile.system:my-source/1003" }),
       { source: "my-source", packageId: "my-package-id" },
-      { tile: 1003, class: "alt" },
-    ),
+      { tile: 1003, class: "alt" }
+    )
   );
 
   adjacency = new Adjacency();
@@ -155,16 +155,16 @@ it("off-map systems are not neighbors", () => {
     new System(
       new MockGameObject({ templateMetadata: "tile.system:my-source/1000" }),
       { source: "my-source", packageId: "my-package-id" },
-      { tile: 1000 },
-    ),
+      { tile: 1000 }
+    )
   );
   hexToSystem.set(
     "<1,0,-1>",
     new System(
       new MockGameObject({ templateMetadata: "tile.system:my-source/1001" }),
       { source: "my-source", packageId: "my-package-id" },
-      { tile: 1001 },
-    ),
+      { tile: 1001 }
+    )
   );
 
   let adjacency: Adjacency = new Adjacency();
@@ -179,16 +179,16 @@ it("off-map systems are not neighbors", () => {
     new System(
       new MockGameObject({ templateMetadata: "tile.system:my-source/1000" }),
       { source: "my-source", packageId: "my-package-id" },
-      { tile: 1000, class: "off-map" },
-    ),
+      { tile: 1000, class: "off-map" }
+    )
   );
   hexToSystem.set(
     "<1,0,-1>",
     new System(
       new MockGameObject({ templateMetadata: "tile.system:my-source/1001" }),
       { source: "my-source", packageId: "my-package-id" },
-      { tile: 1001, class: "off-map" },
-    ),
+      { tile: 1001, class: "off-map" }
+    )
   );
 
   adjacency = new Adjacency();

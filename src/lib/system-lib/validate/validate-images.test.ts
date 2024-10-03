@@ -17,7 +17,7 @@ it("validateOrThrow (missing package)", () => {
   const validateImages = new ValidateImages();
   validateImages.add("my-img", "my-package-id");
   expect(() => validateImages.validateOrThrow()).toThrow(
-    "Package id my-package-id not found",
+    "Package id my-package-id not found"
   );
 });
 
@@ -30,6 +30,6 @@ it("validateOrThrow (has package, missing img)", () => {
   const validateImages = new ValidateImages();
   validateImages.add("my-img", "my-package-id");
   expect(() => validateImages.validateOrThrow()).toThrow(
-    "Image my-img not found in package my-package-id",
+    "Image my-img not found in package my-package-id"
   );
 });

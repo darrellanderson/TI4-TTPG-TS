@@ -40,7 +40,7 @@ export class DealActionCards {
       // Add one if "Neural Motivator" technology.
       if (nsid === "card.technology.green:base/neural-motivator") {
         const owner: number = this._find.closestOwnedCardHolderOwner(
-          obj.getPosition(),
+          obj.getPosition()
         );
         let count: number | undefined = slotToCount.get(owner);
         if (count !== undefined) {
@@ -83,7 +83,7 @@ export class DealActionCards {
       let deck: Card | undefined = this._find.findDeckOrDiscard(
         deckSnapPointTag,
         discardSnapPointTag,
-        shuffleDiscard,
+        shuffleDiscard
       );
       if (deck === undefined) {
         return false;

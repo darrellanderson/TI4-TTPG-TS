@@ -7,14 +7,14 @@ import { UnitAttrs } from "../../../unit-attrs/unit-attrs";
 it("registry (commander)", () => {
   const nsid = "card.leader.commander:pok/rickar-rickani";
   expect(TI4.unitModifierRegistry.getByNsid(nsid)?.getName()).toBe(
-    "Rickar Rickani",
+    "Rickar Rickani"
   );
 });
 
 it("registry (alliance)", () => {
   const nsid = "card.alliance:pok/winnu";
   expect(TI4.unitModifierRegistry.getByNsid(nsid)?.getName()).toBe(
-    "Rickar Rickani",
+    "Rickar Rickani"
   );
 });
 
@@ -164,7 +164,7 @@ it("modifier (legendary)", () => {
 
 it("modifier (home)", () => {
   const arborecFaction: Faction | undefined = TI4.factionRegistry.getByNsid(
-    "faction:base/arborec",
+    "faction:base/arborec"
   );
   expect(arborecFaction?.getName()).toBe("The Arborec");
 

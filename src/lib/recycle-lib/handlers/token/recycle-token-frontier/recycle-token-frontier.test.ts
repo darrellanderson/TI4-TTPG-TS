@@ -5,7 +5,7 @@ import { RecycleTokenFrontier } from "./recycle-token-frontier";
 
 it("recycle", () => {
   const obj: GameObject = MockGameObject.simple(
-    "token.attachment.system:pok/frontier",
+    "token.attachment.system:pok/frontier"
   );
 
   const recycle: GarbageHandler = new RecycleTokenFrontier();

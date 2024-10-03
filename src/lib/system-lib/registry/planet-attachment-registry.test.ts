@@ -18,7 +18,7 @@ it("object create/desroy", () => {
         name: "my-name",
         nsidName: "my-nsid-name",
       },
-    ],
+    ]
   );
   expect(registry.getByPlanetAttachmentObjId("my-id")).toBeUndefined();
 
@@ -37,7 +37,7 @@ it("object create/desroy", () => {
 it("getByPlanetAttachmentObjId", () => {
   const registry = new PlanetAttachmentRegistry().load(
     { source: "my-source", packageId: "my-package-id" },
-    [{ name: "my-name", nsidName: "my-nsid-name" }],
+    [{ name: "my-name", nsidName: "my-nsid-name" }]
   );
   new MockGameObject({
     id: "my-id",
@@ -51,7 +51,7 @@ it("init attaches", () => {
     templateMetadata: "tile.system:base/1",
   });
   const system: System | undefined = TI4.systemRegistry.getByPosition(
-    new Vector(0, 0, 0),
+    new Vector(0, 0, 0)
   );
   expect(system).toBeDefined();
   if (!system) {
@@ -75,10 +75,10 @@ it("init attaches", () => {
         name: "my-name",
         nsidName: "my-nsid-name",
       },
-    ],
+    ]
   );
   expect(
-    registry.rawByNsid("token.attachment.planet:my-source/my-nsid-name"),
+    registry.rawByNsid("token.attachment.planet:my-source/my-nsid-name")
   ).toBeDefined();
   const attachment: PlanetAttachment | undefined =
     registry.getByPlanetAttachmentObjId("my-id");
@@ -99,7 +99,7 @@ it("load (corrupt data)", () => {
   expect(() => {
     new PlanetAttachmentRegistry().load(
       { source: "my-source", packageId: "my-package-id" },
-      [{ name: "my-name", nsidName: "@@invalid" }],
+      [{ name: "my-name", nsidName: "@@invalid" }]
     );
   }).toThrow();
 });
@@ -113,10 +113,10 @@ it("load (do not attach)", () => {
         nsidName: "my-nsid-name",
         doNotAttach: true,
       },
-    ],
+    ]
   );
   expect(
-    registry.rawByNsid("token.attachment.planet:my-source/my-nsid-name"),
+    registry.rawByNsid("token.attachment.planet:my-source/my-nsid-name")
   ).toBeUndefined();
   registry.destroy();
 });
@@ -133,7 +133,7 @@ it("loadDefaultData", () => {
 it("validateImages", () => {
   const registry = new PlanetAttachmentRegistry().load(
     { source: "my-source", packageId: "my-package-id" },
-    [{ name: "my-name", nsidName: "my-nsid-name", imgFaceDown: true }],
+    [{ name: "my-name", nsidName: "my-nsid-name", imgFaceDown: true }]
   );
   const myPackage: Package = new MockPackage({
     textureFiles: [

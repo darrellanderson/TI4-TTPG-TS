@@ -27,7 +27,7 @@ it("addTags", () => {
 
 it("creuss flagship", () => {
   const flagship: GameObject = MockGameObject.simple(
-    "unit.flagship:base/creuss",
+    "unit.flagship:base/creuss"
   );
   const hex: HexType = TI4.hex.fromPosition(flagship.getPosition());
   const adjacency: Adjacency = new Adjacency();
@@ -98,7 +98,7 @@ it("card emissary_taivra (active)", () => {
   expect(adjacency.hasLink("alpha", "delta")).toBe(false);
 
   const card: Card = MockCard.simple(
-    "card.leader.agent.creuss:pok/emissary_taivra",
+    "card.leader.agent.creuss:pok/emissary_taivra"
   );
   expect(UnitModifierActiveIdle.isActive(card)).toBe(false);
 

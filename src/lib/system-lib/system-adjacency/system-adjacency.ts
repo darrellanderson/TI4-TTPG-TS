@@ -14,7 +14,7 @@ export class SystemAdjacency {
     const hexToSystem: Map<HexType, System> = new Map();
     const skipContained: boolean = true;
     for (const system of TI4.systemRegistry.getAllSystemsWithObjs(
-      skipContained,
+      skipContained
     )) {
       const pos: Vector = system.getObj().getPosition();
       const hex: HexType = TI4.hex.fromPosition(pos);

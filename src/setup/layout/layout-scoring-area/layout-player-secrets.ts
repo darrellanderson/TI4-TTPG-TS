@@ -7,17 +7,17 @@ export class LayoutPlayerSecrets {
 
   constructor(playerCount: number) {
     const secrets1: LayoutObjects = new LayoutObjects().setChildDistance(
-      LayoutConfig.spacing,
+      LayoutConfig.spacing
     );
     const secrets2: LayoutObjects = new LayoutObjects().setChildDistance(
-      LayoutConfig.spacing,
+      LayoutConfig.spacing
     );
 
     const secretsArray: Array<GameObject> = [];
     const topCount: number = Math.floor(playerCount / 2);
     for (let i = 0; i < playerCount; i++) {
       const secrets: GameObject = Spawn.spawnOrThrow(
-        "card-holder:base/player-scoring",
+        "card-holder:base/player-scoring"
       );
       secrets.setOwningPlayerSlot(10 + i);
       const whichLayout: LayoutObjects = i < topCount ? secrets1 : secrets2;

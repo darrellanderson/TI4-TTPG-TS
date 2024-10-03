@@ -20,6 +20,6 @@ it("bunker", () => {
 
   expect(combatRoll.getUnitModifierNames()).toEqual(["Bunker"]);
   expect(
-    combatRoll.self.unitAttrsSet.get("dreadnought")?.getBombardment()?.getHit(),
+    combatRoll.self.unitAttrsSet.get("dreadnought")?.getBombardment()?.getHit()
   ).toBe(9);
 });

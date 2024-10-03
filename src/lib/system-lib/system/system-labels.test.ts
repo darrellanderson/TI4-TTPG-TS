@@ -8,7 +8,7 @@ it("constructor", () => {
   const system = new System(
     new MockGameObject({ templateMetadata: "tile.system:my-source/1000" }),
     { source: "my-source", packageId: "my-package-id" },
-    { tile: 1000 },
+    { tile: 1000 }
   );
   const systemLabels = new SystemLabels(system);
   expect(systemLabels).toBeDefined();
@@ -22,7 +22,7 @@ it("attach/detach", () => {
       tile: 1000,
       planets: [{ name: "my-planet", nsidName: "my-plnaet-nsid-name" }],
       wormholes: ["alpha"],
-    },
+    }
   );
 
   system.addAttachment(
@@ -31,8 +31,8 @@ it("attach/detach", () => {
         templateMetadata: "token.attachment.system:my-source/my-nsid-name",
       }),
       { source: "my-source", packageId: "my-package-id" },
-      { name: "my-name", nsidName: "my-nsid-name" },
-    ),
+      { name: "my-name", nsidName: "my-nsid-name" }
+    )
   );
 
   system.getPlanets()[0]?.addAttachment(
@@ -42,8 +42,8 @@ it("attach/detach", () => {
           "token.attachment.planet:my-source/my-planet-nsid-name",
       }),
       { source: "my-source", packageId: "my-package-id" },
-      { name: "my-planet-name", nsidName: "my-planet-nsid-name" },
-    ),
+      { name: "my-planet-name", nsidName: "my-planet-nsid-name" }
+    )
   );
 
   const systemLabels = new SystemLabels(system);

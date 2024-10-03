@@ -150,12 +150,12 @@ it("assignOwners", () => {
   const plastic: UnitPlastic = new UnitPlastic(
     "infantry",
     1,
-    new MockGameObject({ owningPlayerSlot: 2 }),
+    new MockGameObject({ owningPlayerSlot: 2 })
   );
   const token: UnitPlastic = new UnitPlastic(
     "infantry",
     1,
-    new MockGameObject(),
+    new MockGameObject()
   );
   expect(plastic.getOwningPlayerSlot()).toBe(2);
   expect(token.getOwningPlayerSlot()).toBe(-1);
@@ -170,7 +170,7 @@ it("assignPlanets", () => {
   const plastic: UnitPlastic = new UnitPlastic(
     "infantry",
     1,
-    new MockGameObject(),
+    new MockGameObject()
   );
 
   // Compute a position still inside the hex, but off the planet.
@@ -178,7 +178,7 @@ it("assignPlanets", () => {
   const plasticOffPlanet: UnitPlastic = new UnitPlastic(
     "infantry",
     1,
-    new MockGameObject({ position: pos }),
+    new MockGameObject({ position: pos })
   );
   expect(plasticOffPlanet.getHex()).toBe("<0,0,0>");
 

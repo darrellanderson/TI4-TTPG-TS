@@ -17,10 +17,10 @@ it("object create/desroy", () => {
         name: "my-name",
         nsidName: "my-nsid-name",
       },
-    ],
+    ]
   );
   expect(
-    registry.rawByNsid("token.attachment.system:my-source/my-nsid-name"),
+    registry.rawByNsid("token.attachment.system:my-source/my-nsid-name")
   ).toBeDefined();
   expect(registry.getBySystemAttachmentObjId("my-id")).toBeUndefined();
 
@@ -58,10 +58,10 @@ it("load (do not attach)", () => {
         nsidName: "my-nsid-name",
         doNotAttach: true,
       },
-    ],
+    ]
   );
   expect(
-    registry.rawByNsid("token.attachment.system:my-source/my-nsid-name"),
+    registry.rawByNsid("token.attachment.system:my-source/my-nsid-name")
   ).toBeUndefined();
   registry.destroy();
 });
@@ -72,7 +72,7 @@ it("token existed at load time, not attached until init.", () => {
     templateMetadata: "tile.system:base/1",
   });
   const system: System | undefined = TI4.systemRegistry.getBySystemTileObjId(
-    systemTileObj.getId(),
+    systemTileObj.getId()
   );
   expect(system).toBeDefined();
   if (!system) {
@@ -123,7 +123,7 @@ it("loadDefaultData", () => {
 it("validateImages", () => {
   const registry = new SystemAttachmentRegistry().load(
     { source: "my-source", packageId: "my-package-id" },
-    [{ name: "my-name", nsidName: "my-nsid-name", imgFaceDown: true }],
+    [{ name: "my-name", nsidName: "my-nsid-name", imgFaceDown: true }]
   );
   const myPackage: Package = new MockPackage({
     textureFiles: [

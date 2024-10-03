@@ -8,7 +8,7 @@ export class LayoutFrontierContainer {
     this._layout = new LayoutObjects();
 
     const container: GameObject = Spawn.spawnOrThrow(
-      "container.token:pok/frontier",
+      "container.token:pok/frontier"
     );
     container.setRotation([0, 0, 180]);
     this._layout.add(container).addAfterLayout(() => {

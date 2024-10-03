@@ -18,7 +18,7 @@ export class RecycleUnit extends GarbageHandler {
     const container: Container | undefined = this._find.findContainer(
       containerNsid,
       playerSlot,
-      skipContained,
+      skipContained
     );
 
     if (!container) {

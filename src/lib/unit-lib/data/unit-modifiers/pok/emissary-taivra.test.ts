@@ -4,7 +4,7 @@ import { OPPONENT, SELF, placeGameObjects } from "../abstract.test";
 it("registry", () => {
   const nsid = "card.leader.agent:pok/emissary-taivra";
   expect(TI4.unitModifierRegistry.getByNsid(nsid)?.getName()).toBe(
-    "Emissary Taivra",
+    "Emissary Taivra"
   );
 });
 

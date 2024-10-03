@@ -42,13 +42,13 @@ it("applyOverride", () => {
     unitAttrsSet.applyOverride({
       unit: "infantry",
       name: "my-override-name",
-    }),
+    })
   ).toBe(true);
   expect(
     unitAttrsSet.applyOverride({
       unit: "fighter",
       name: "my-override-name",
-    }),
+    })
   ).toBe(false);
 });
 

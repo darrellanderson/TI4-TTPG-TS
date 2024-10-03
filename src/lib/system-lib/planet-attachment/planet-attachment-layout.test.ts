@@ -22,7 +22,7 @@ it("layout", () => {
   const planet = new Planet(
     new MockGameObject({ templateMetadata: "tile.system:my-source/1000" }),
     { source: "my-source", packageId: "my-package-id" },
-    { name: "my-planet", nsidName: "my-planet-nsid-name" },
+    { name: "my-planet", nsidName: "my-planet-nsid-name" }
   );
   for (let i = 0; i < 6; i++) {
     const attachment = new PlanetAttachment(
@@ -31,7 +31,7 @@ it("layout", () => {
           "token.attachment.planet:my-source/my-attachment-nsid-name",
       }),
       { source: "my-source", packageId: "my-package-id" },
-      { name: "my-attachment", nsidName: "my-attachment-nsid-name" },
+      { name: "my-attachment", nsidName: "my-attachment-nsid-name" }
     );
     planet.addAttachment(attachment);
   }

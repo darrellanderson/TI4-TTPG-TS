@@ -98,7 +98,7 @@ it("load", () => {
         },
         apply: (_x: CombatRoll): void => {},
       },
-    ]),
+    ])
   ).toBeInstanceOf(UnitModifierRegistry);
 });
 
@@ -145,7 +145,7 @@ it("validate (missing tech)", () => {
         },
         apply: (_x: CombatRoll): void => {},
       },
-    ],
+    ]
   );
   expect(() => {
     registry.validateOrThrow();
@@ -167,7 +167,7 @@ it("validate (missing unit)", () => {
         },
         apply: (_x: CombatRoll): void => {},
       },
-    ],
+    ]
   );
   expect(() => {
     registry.validateOrThrow();

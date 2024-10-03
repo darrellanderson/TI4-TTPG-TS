@@ -15,7 +15,7 @@ it("memoria-1", () => {
 it("memoria-2", () => {
   const memoria2: UnitAttrsSchemaType | undefined =
     TI4.unitAttrsRegistry.rawByNsid(
-      "card.technology.unit-upgrade:pok/memoria-2",
+      "card.technology.unit-upgrade:pok/memoria-2"
     );
   expect(memoria2).toBeDefined();
 });
@@ -23,7 +23,7 @@ it("memoria-2", () => {
 it("registry", () => {
   const nsid = "card.promissory:pok/the-cavalry";
   expect(TI4.unitModifierRegistry.getByNsid(nsid)?.getName()).toBe(
-    "The Cavalry",
+    "The Cavalry"
   );
 });
 
@@ -36,7 +36,7 @@ it("registry (memoria-1)", () => {
 it("registry (memoria-2)", () => {
   const memoria2: UnitAttrsSchemaType | undefined =
     TI4.unitAttrsRegistry.rawByNsid(
-      "card.technology.unit-upgrade:pok/memoria-2",
+      "card.technology.unit-upgrade:pok/memoria-2"
     );
   expect(memoria2?.name).toBe("Memoria II");
 });
@@ -64,7 +64,7 @@ it("modifier", () => {
   expect(combatRoll.getUnitModifierNames()).toEqual(["The Cavalry"]);
   expect(combatRoll.self.getCount("the-cavalry" as UnitType)).toBe(1);
   const cavalry: UnitAttrs = combatRoll.self.unitAttrsSet.getOrThrow(
-    "the-cavalry" as UnitType,
+    "the-cavalry" as UnitType
   );
   expect(cavalry.getName()).toBe("The Cavalry");
 });
@@ -83,7 +83,7 @@ it("modifier (memoria-2)", () => {
   expect(combatRoll.getUnitModifierNames()).toEqual(["The Cavalry"]);
   expect(combatRoll.self.getCount("the-cavalry" as UnitType)).toBe(1);
   const cavalry: UnitAttrs = combatRoll.self.unitAttrsSet.getOrThrow(
-    "the-cavalry" as UnitType,
+    "the-cavalry" as UnitType
   );
   expect(cavalry.getName()).toBe("The Cavalry II");
 });

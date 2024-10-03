@@ -18,11 +18,11 @@ export const Eidolon: UnitModifierSchemaType = {
     let count: number = 0;
     if (combatRoll.getRollType() === "spaceCombat") {
       count = combatRoll.self.unitPlasticHex.filter(
-        (plastic): boolean => plastic.getPlanetExact() === undefined,
+        (plastic): boolean => plastic.getPlanetExact() === undefined
       ).length;
     } else if (combatRoll.getRollType() === "groundCombat") {
       count = combatRoll.self.unitPlasticHex.filter(
-        (plastic): boolean => plastic.getPlanetExact() === combatRoll.planet,
+        (plastic): boolean => plastic.getPlanetExact() === combatRoll.planet
       ).length;
     }
     combatRoll.self.overrideUnitCountHex.set("mech", count);

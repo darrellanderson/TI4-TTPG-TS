@@ -43,11 +43,11 @@ export class PlanetAttachmentRegistry {
       const planetAttachment: PlanetAttachment = new PlanetAttachment(
         obj,
         schemaAndSource.sourceAndPackageId,
-        schemaAndSource.schema,
+        schemaAndSource.schema
       );
       this._attachmentObjIdToPlanetAttachment.set(
         obj.getId(),
-        planetAttachment,
+        planetAttachment
       );
     }
   };
@@ -87,7 +87,7 @@ export class PlanetAttachmentRegistry {
 
   public load(
     sourceAndPackageId: SourceAndPackageIdSchemaType,
-    planetAttachmentSchemaTypes: Array<PlanetAttachmentSchemaType>,
+    planetAttachmentSchemaTypes: Array<PlanetAttachmentSchemaType>
   ): this {
     // Find all system attachment objects.
     const nsidToObjIds: Map<string, Array<string>> = new Map();
@@ -111,7 +111,7 @@ export class PlanetAttachmentRegistry {
         PlanetAttachmentSchema.parse(planetAttachmentSchemaType);
       } catch (e) {
         const msg = `error: ${e.message}\nparsing: ${JSON.stringify(
-          planetAttachmentSchemaType,
+          planetAttachmentSchemaType
         )}`;
         throw new Error(msg);
       }
@@ -124,7 +124,7 @@ export class PlanetAttachmentRegistry {
       // Register.
       const nsid: string = PlanetAttachment.schemaToNsid(
         sourceAndPackageId.source,
-        planetAttachmentSchemaType,
+        planetAttachmentSchemaType
       );
       this._nsidToSchemaAndSource.set(nsid, {
         sourceAndPackageId,
@@ -139,7 +139,7 @@ export class PlanetAttachmentRegistry {
           const attachment = new PlanetAttachment(
             obj,
             sourceAndPackageId,
-            planetAttachmentSchemaType,
+            planetAttachmentSchemaType
           );
           this._attachmentObjIdToPlanetAttachment.set(objId, attachment);
         }
@@ -155,7 +155,7 @@ export class PlanetAttachmentRegistry {
    */
   public loadDefaultData(): this {
     for (const [source, planetAttachmentSchemas] of Object.entries(
-      SOURCE_TO_PLANET_ATTACHMENT_DATA,
+      SOURCE_TO_PLANET_ATTACHMENT_DATA
     )) {
       const sourceAndPackageId: SourceAndPackageIdSchemaType = {
         source,
@@ -174,7 +174,7 @@ export class PlanetAttachmentRegistry {
    * @returns
    */
   public getByPlanetAttachmentObjId(
-    objId: string,
+    objId: string
   ): PlanetAttachment | undefined {
     return this._attachmentObjIdToPlanetAttachment.get(objId);
   }

@@ -39,7 +39,7 @@ export class ReadyLib {
         const isLooseCard: boolean = this._cardUtil.isLooseCard(
           obj,
           allowFaceDown,
-          rejectSnapPointTags,
+          rejectSnapPointTags
         );
         if (!isLooseCard || obj.getStackSize() > 1) {
           continue; // in deck location and/or has multiple cards

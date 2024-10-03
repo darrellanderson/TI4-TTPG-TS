@@ -5,14 +5,14 @@ import { OPPONENT, SELF, placeGameObjects } from "../abstract.test";
 it("registry (commander)", () => {
   const nsid = "card.leader.commander:pok/brother-omar";
   expect(TI4.unitModifierRegistry.getByNsid(nsid)?.getName()).toBe(
-    "Brother Omar",
+    "Brother Omar"
   );
 });
 
 it("registry (alliance)", () => {
   const nsid = "card.alliance:pok/yin";
   expect(TI4.unitModifierRegistry.getByNsid(nsid)?.getName()).toBe(
-    "Brother Omar",
+    "Brother Omar"
   );
 });
 
@@ -29,7 +29,7 @@ it("no modifier", () => {
     combatRoll.self.unitAttrsSet.get("infantry");
   expect(infantryAttrs?.getProducePerCost()).toBe(2);
   expect(
-    infantryAttrs?.getProduceQuantityDoesNotCountAgainstProductionLimits(),
+    infantryAttrs?.getProduceQuantityDoesNotCountAgainstProductionLimits()
   ).toBe(0);
 });
 
@@ -48,7 +48,7 @@ it("brother-omar (commander)", () => {
     combatRoll.self.unitAttrsSet.get("infantry");
   expect(infantryAttrs?.getProducePerCost()).toBe(3);
   expect(
-    infantryAttrs?.getProduceQuantityDoesNotCountAgainstProductionLimits(),
+    infantryAttrs?.getProduceQuantityDoesNotCountAgainstProductionLimits()
   ).toBe(1);
 });
 
@@ -67,6 +67,6 @@ it("brother-omar (alliance)", () => {
     combatRoll.self.unitAttrsSet.get("infantry");
   expect(infantryAttrs?.getProducePerCost()).toBe(3);
   expect(
-    infantryAttrs?.getProduceQuantityDoesNotCountAgainstProductionLimits(),
+    infantryAttrs?.getProduceQuantityDoesNotCountAgainstProductionLimits()
   ).toBe(1);
 });

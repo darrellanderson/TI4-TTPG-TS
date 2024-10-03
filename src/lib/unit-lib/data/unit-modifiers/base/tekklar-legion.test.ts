@@ -8,7 +8,7 @@ import { UnitModifier } from "../../../unit-modifier/unit-modifier";
 it("registry", () => {
   const nsid = "card.promissory:base/tekklar-legion";
   expect(TI4.unitModifierRegistry.getByNsid(nsid)?.getName()).toBe(
-    "Tekklar Legion",
+    "Tekklar Legion"
   );
 });
 
@@ -73,7 +73,7 @@ it("modifier (opponent)", () => {
   ]);
 
   const modifier: UnitModifier | undefined = TI4.unitModifierRegistry.getByNsid(
-    "card.promissory:base/tekklar-legion",
+    "card.promissory:base/tekklar-legion"
   );
   expect(modifier?.getName()).toBe("Tekklar Legion");
   expect(modifier?.getOwner()).toBe("any");

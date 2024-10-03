@@ -14,17 +14,17 @@ it("static schemaToNsid", () => {
     overrideSource: "my-override-source",
   };
   expect(UnitModifier.schemaTriggerToNsid("my-source", trigger)).toBe(
-    "card.action:my-override-source/my-nsid-name",
+    "card.action:my-override-source/my-nsid-name"
   );
 
   trigger = { cardClass: "action", nsidName: "my-nsid-name" };
   expect(UnitModifier.schemaTriggerToNsid("my-source", trigger)).toBe(
-    "card.action:my-source/my-nsid-name",
+    "card.action:my-source/my-nsid-name"
   );
 
   trigger = { cardClass: "agenda", nsidName: "my-nsid-name" };
   expect(UnitModifier.schemaTriggerToNsid("my-source", trigger)).toBe(
-    "card.agenda:my-source/my-nsid-name",
+    "card.agenda:my-source/my-nsid-name"
   );
 
   trigger = {
@@ -32,7 +32,7 @@ it("static schemaToNsid", () => {
     nsidName: "my-nsid-name",
   };
   expect(UnitModifier.schemaTriggerToNsid("my-source", trigger)).toBe(
-    "card.leader.agent:my-source/my-nsid-name",
+    "card.leader.agent:my-source/my-nsid-name"
   );
 
   trigger = {
@@ -40,7 +40,7 @@ it("static schemaToNsid", () => {
     nsidName: "my-nsid-name",
   };
   expect(UnitModifier.schemaTriggerToNsid("my-source", trigger)).toBe(
-    "card.alliance:my-source/my-nsid-name",
+    "card.alliance:my-source/my-nsid-name"
   );
 
   trigger = {
@@ -48,7 +48,7 @@ it("static schemaToNsid", () => {
     nsidName: "my-nsid-name",
   };
   expect(UnitModifier.schemaTriggerToNsid("my-source", trigger)).toBe(
-    "card.leader.commander:my-source/my-nsid-name",
+    "card.leader.commander:my-source/my-nsid-name"
   );
 
   trigger = {
@@ -56,7 +56,7 @@ it("static schemaToNsid", () => {
     nsidName: "my-nsid-name",
   };
   expect(UnitModifier.schemaTriggerToNsid("my-source", trigger)).toBe(
-    "unit:my-source/my-nsid-name",
+    "unit:my-source/my-nsid-name"
   );
 
   trigger = {
@@ -64,7 +64,7 @@ it("static schemaToNsid", () => {
     nsidName: "my-nsid-name",
   };
   expect(UnitModifier.schemaTriggerToNsid("my-source", trigger)).toBe(
-    "card.leader.hero:my-source/my-nsid-name",
+    "card.leader.hero:my-source/my-nsid-name"
   );
 
   trigger = {
@@ -72,12 +72,12 @@ it("static schemaToNsid", () => {
     nsidName: "my-nsid-name",
   };
   expect(UnitModifier.schemaTriggerToNsid("my-source", trigger)).toBe(
-    "faction-ability:my-source/my-nsid-name",
+    "faction-ability:my-source/my-nsid-name"
   );
 
   trigger = { cardClass: "legendary", nsidName: "my-nsid-name" };
   expect(UnitModifier.schemaTriggerToNsid("my-source", trigger)).toBe(
-    "card.legendary-planet:my-source/my-nsid-name",
+    "card.legendary-planet:my-source/my-nsid-name"
   );
 
   trigger = {
@@ -85,7 +85,7 @@ it("static schemaToNsid", () => {
     nsidName: "my-nsid-name",
   };
   expect(UnitModifier.schemaTriggerToNsid("my-source", trigger)).toBe(
-    "card.leader.mech:my-source/my-nsid-name",
+    "card.leader.mech:my-source/my-nsid-name"
   );
 
   trigger = {
@@ -93,12 +93,12 @@ it("static schemaToNsid", () => {
     nsidName: "my-nsid-name",
   };
   expect(UnitModifier.schemaTriggerToNsid("my-source", trigger)).toBe(
-    "card.promissory:my-source/my-nsid-name",
+    "card.promissory:my-source/my-nsid-name"
   );
 
   trigger = { cardClass: "relic", nsidName: "my-nsid-name" };
   expect(UnitModifier.schemaTriggerToNsid("my-source", trigger)).toBe(
-    "card.relic:my-source/my-nsid-name",
+    "card.relic:my-source/my-nsid-name"
   );
 
   trigger = {
@@ -106,7 +106,7 @@ it("static schemaToNsid", () => {
     nsidName: "my-nsid-name",
   };
   expect(UnitModifier.schemaTriggerToNsid("my-source", trigger)).toBe(
-    "card.technology.blue:my-source/my-nsid-name",
+    "card.technology.blue:my-source/my-nsid-name"
   );
 
   trigger = {
@@ -114,7 +114,7 @@ it("static schemaToNsid", () => {
     nsidName: "my-nsid-name",
   };
   expect(UnitModifier.schemaTriggerToNsid("my-source", trigger)).toBe(
-    "card.technology.green:my-source/my-nsid-name",
+    "card.technology.green:my-source/my-nsid-name"
   );
 
   trigger = {
@@ -122,7 +122,7 @@ it("static schemaToNsid", () => {
     nsidName: "my-nsid-name",
   };
   expect(UnitModifier.schemaTriggerToNsid("my-source", trigger)).toBe(
-    "card.technology.red:my-source/my-nsid-name",
+    "card.technology.red:my-source/my-nsid-name"
   );
 
   trigger = {
@@ -130,7 +130,7 @@ it("static schemaToNsid", () => {
     nsidName: "my-nsid-name",
   };
   expect(UnitModifier.schemaTriggerToNsid("my-source", trigger)).toBe(
-    "card.technology.unit-upgrade:my-source/my-nsid-name",
+    "card.technology.unit-upgrade:my-source/my-nsid-name"
   );
 });
 
@@ -165,7 +165,7 @@ it("static sortByApplyOrder", () => {
   ];
   const sorted: Array<UnitModifier> = UnitModifier.sortByApplyOrder(modifiers);
   const priorities: Array<UnitModifierPriorityType> = sorted.map(
-    (unitModifier) => unitModifier.getPriority(),
+    (unitModifier) => unitModifier.getPriority()
   );
   expect(priorities).toEqual([
     "mutate",

@@ -14,7 +14,7 @@ it("constructor", () => {
 it("onObjectCreated/Destroyed", () => {
   const registry = new SystemRegistry().load(
     { source: "my-source", packageId: "my-package-id" },
-    [{ tile: 1000 }],
+    [{ tile: 1000 }]
   );
   expect(registry.rawBySystemTileNumber(1000)).toBeDefined();
 
@@ -39,7 +39,7 @@ it("load (system tile obj exists at load time)", () => {
   });
   const registry = new SystemRegistry().load(
     { source: "my-source", packageId: "my-package-id" },
-    [{ tile: 1000 }],
+    [{ tile: 1000 }]
   );
   expect(registry.rawBySystemTileNumber(1000)).toBeDefined();
   expect(registry.getBySystemTileObjId("my-id")).toBeDefined();
@@ -97,7 +97,7 @@ it("loadDefaultData", () => {
 it("getAllSystemsWithObjs", () => {
   const registry = new SystemRegistry().load(
     { source: "my-source", packageId: "my-package-id" },
-    [{ tile: 1000 }],
+    [{ tile: 1000 }]
   );
   const obj = new MockGameObject({
     id: "my-id-1",
@@ -121,7 +121,7 @@ it("getByPosition", () => {
   const pos = new Vector(0, 0, z);
   const registry = new SystemRegistry().load(
     { source: "my-source", packageId: "my-package-id" },
-    [{ tile: 1000 }],
+    [{ tile: 1000 }]
   );
   expect(registry.getByPosition(pos)).toBeUndefined();
 
@@ -140,7 +140,7 @@ it("getByPosition", () => {
 it("tileNumberToSystemTileObjNsid", () => {
   const registry = new SystemRegistry().load(
     { source: "my-source", packageId: "my-package-id" },
-    [{ tile: 1000 }],
+    [{ tile: 1000 }]
   );
   let nsid: string | undefined;
 
@@ -156,7 +156,7 @@ it("tileNumberToSystemTileObjNsid", () => {
 it("validateImages", () => {
   const registry = new SystemRegistry().load(
     { source: "my-source", packageId: "my-package-id" },
-    [{ tile: 12, imgFaceDown: true }, { tile: -1 }],
+    [{ tile: 12, imgFaceDown: true }, { tile: -1 }]
   );
   const myPackage: Package = new MockPackage({
     textureFiles: [

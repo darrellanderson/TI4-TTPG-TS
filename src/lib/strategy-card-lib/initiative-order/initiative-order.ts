@@ -27,7 +27,7 @@ export class InitiativeOrder {
   private readonly _find: Find = new Find();
 
   static getStrategyCardNsidNameFirst(
-    obj: GameObject,
+    obj: GameObject
   ): NsidNameSchemaType | undefined {
     const nsid: string = NSID.get(obj);
     if (nsid.startsWith("tile.strategy:")) {
@@ -60,7 +60,7 @@ export class InitiativeOrder {
     const addToEntry = (
       playerSlot: number,
       initiative: number,
-      strategyCard: GameObject | undefined,
+      strategyCard: GameObject | undefined
     ): void => {
       let entry: InitiativeEntry | undefined =
         playerSlotToEntry.get(playerSlot);

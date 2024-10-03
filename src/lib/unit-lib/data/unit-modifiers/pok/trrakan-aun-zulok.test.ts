@@ -6,14 +6,14 @@ import { UnitAttrs } from "../../../unit-attrs/unit-attrs";
 it("registry (commander)", () => {
   const nsid = "card.leader.commander:pok/trrakan-aun-zulok";
   expect(TI4.unitModifierRegistry.getByNsid(nsid)?.getName()).toBe(
-    "Trrakan Aun Zulok",
+    "Trrakan Aun Zulok"
   );
 });
 
 it("registry (alliance)", () => {
   const nsid = "card.alliance:pok/argent";
   expect(TI4.unitModifierRegistry.getByNsid(nsid)?.getName()).toBe(
-    "Trrakan Aun Zulok",
+    "Trrakan Aun Zulok"
   );
 });
 

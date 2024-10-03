@@ -27,7 +27,7 @@ export class Planet {
   constructor(
     obj: GameObject,
     sourceAndPackageId: SourceAndPackageIdSchemaType,
-    params: PlanetSchemaType,
+    params: PlanetSchemaType
   ) {
     try {
       PlanetSchema.parse(params); // validate the schema
@@ -43,7 +43,7 @@ export class Planet {
       !objNsid.startsWith("token.attachment.system:")
     ) {
       throw new Error(
-        `invalid object: "${objNsid}", expect either "tile.system:" or "token.attachment.system:" prefix`,
+        `invalid object: "${objNsid}", expect either "tile.system:" or "token.attachment.system:" prefix`
       );
     }
 
@@ -55,14 +55,14 @@ export class Planet {
       this._localPosition = new Vector(
         params.localPosition.x,
         params.localPosition.y,
-        0,
+        0
       );
     }
     if (params.localPositionFaceDown) {
       this._localPositionFaceDown = new Vector(
         params.localPositionFaceDown.x,
         params.localPositionFaceDown.y,
-        0,
+        0
       );
     }
   }

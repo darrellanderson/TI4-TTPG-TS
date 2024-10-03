@@ -14,7 +14,7 @@ it("consttructor", () => {
 it("returnAllStrategyCardsRespecingPoliticalStability (without political stability)", () => {
   const strategyCard: GameObject = MockGameObject.simple(
     "tile.strategy:base/leadership",
-    { position: [-10, 0, 0] },
+    { position: [-10, 0, 0] }
   );
   new MockGameObject({
     templateMetadata: "mat:base/strategy",
@@ -32,7 +32,7 @@ it("returnAllStrategyCardsRespecingPoliticalStability (without political stabili
 it("returnAllStrategyCardsRespecingPoliticalStability (with political stability)", () => {
   const strategyCard: GameObject = MockGameObject.simple(
     "tile.strategy:base/leadership",
-    { position: [-10, 0, 0] },
+    { position: [-10, 0, 0] }
   );
   new MockGameObject({
     templateMetadata: "mat:base/strategy",

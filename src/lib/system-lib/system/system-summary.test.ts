@@ -26,7 +26,7 @@ it("getSummaryRaw", () => {
             traits: ["industrial", "cultural"],
           },
         ],
-      },
+      }
     ),
     new System(
       new MockGameObject({ templateMetadata: "tile.system:my-source/1001" }),
@@ -42,7 +42,7 @@ it("getSummaryRaw", () => {
             resources: 10,
           },
         ],
-      },
+      }
     ),
     new System(
       new MockGameObject({ templateMetadata: "tile.system:my-source/1002" }),
@@ -57,7 +57,7 @@ it("getSummaryRaw", () => {
             resources: 100,
           },
         ],
-      },
+      }
     ),
   ];
   const systemSummary: SystemSummary = new SystemSummary(systems);
