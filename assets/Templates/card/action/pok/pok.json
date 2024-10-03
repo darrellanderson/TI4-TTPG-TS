@@ -1,7 +1,7 @@
 {
     "Type": "Card",
     "GUID": "77B5D3AF82D9D67694B66C0AADB0DF66",
-    "Name": "pok",
+    "Name": "action",
     "Metadata": "",
     "CollisionType": "Regular",
     "Friction": 0.7,

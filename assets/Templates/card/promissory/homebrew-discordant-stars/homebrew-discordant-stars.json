@@ -1,0 +1,229 @@
+{
+    "Type": "Card",
+    "GUID": "C5E95B9B064BDCA71ED81C4CD462CF9F",
+    "Name": "promissory",
+    "Metadata": "",
+    "CollisionType": "Regular",
+    "Friction": 0.7,
+    "Restitution": 0,
+    "Density": 0.5,
+    "SurfaceType": "Cardboard",
+    "Roughness": 1,
+    "Metallic": 0,
+    "PrimaryColor": {
+        "R": 255,
+        "G": 255,
+        "B": 255
+    },
+    "SecondaryColor": {
+        "R": 0,
+        "G": 0,
+        "B": 0
+    },
+    "Flippable": true,
+    "AutoStraighten": false,
+    "ShouldSnap": true,
+    "ScriptName": "",
+    "Blueprint": "",
+    "Models": [],
+    "Collision": [],
+    "SnapPointsGlobal": false,
+    "SnapPoints": [],
+    "ZoomViewDirection": {
+        "X": 0,
+        "Y": 0,
+        "Z": 0
+    },
+    "FrontTexture": "card/promissory/homebrew-discordant-stars/homebrew-discordant-stars.face.jpg",
+    "BackTexture": "card/promissory/homebrew-discordant-stars/homebrew-discordant-stars.back.jpg",
+    "HiddenTexture": "",
+    "BackIndex": -2,
+    "HiddenIndex": -1,
+    "NumHorizontal": 12,
+    "NumVertical": 3,
+    "Width": 4.2,
+    "Height": 6.3,
+    "Thickness": 0.05,
+    "HiddenInHand": true,
+    "UsedWithCardHolders": true,
+    "CanStack": true,
+    "UsePrimaryColorForSide": false,
+    "FrontTextureOverrideExposed": false,
+    "AllowFlippedInStack": false,
+    "MirrorBack": true,
+    "Model": "Rounded",
+    "Indices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26
+    ],
+    "CardNames": {
+        "0": "AI Survey",
+        "1": "Algorithmic Replication",
+        "2": "Automatons",
+        "3": "Blessing of the Queens",
+        "4": "Branch Office - Broadcast Hub",
+        "5": "Branch Office - Orbital Shipyard",
+        "6": "Branch Office - Reserve Bank",
+        "7": "Branch Office - Tax Haven",
+        "8": "Broadcast Teams",
+        "9": "Clan's Favor",
+        "10": "Combat Drills",
+        "11": "Favor of Rhodun",
+        "12": "Gift of Insight",
+        "13": "Hyperkinetic Ordinance",
+        "14": "Incite Revolution",
+        "15": "Industry Secrets",
+        "16": "Nivyn Guidance",
+        "17": "Plots Within Plots",
+        "18": "Raid Leaders",
+        "19": "Rapid Excavation",
+        "20": "Read the Fates",
+        "21": "Secrets of the Weave",
+        "22": "Stone Speakers",
+        "23": "Trade Alliance",
+        "24": "Trusted Counselor",
+        "25": "Underground Market",
+        "26": "Vaden Handshake"
+    },
+    "CardMetadata": {
+        "0": "card.promissory.kollecc:homebrew.discordant-stars/ai-survey",
+        "1": "card.promissory.cymiae:homebrew.discordant-stars/algorithmic-replication",
+        "2": "card.promissory.rohdhna:homebrew.discordant-stars/automatons",
+        "3": "card.promissory.kortali:homebrew.discordant-stars/blessing-of-the-queens",
+        "4": "card.promissory.veldyr:homebrew.discordant-stars/branch-office-broadcast-hub",
+        "5": "card.promissory.veldyr:homebrew.discordant-stars/branch-office-orbital-shipyard",
+        "6": "card.promissory.veldyr:homebrew.discordant-stars/branch-office-reserve-bank",
+        "7": "card.promissory.veldyr:homebrew.discordant-stars/branch-office-tax-haven",
+        "8": "card.promissory.free-systems:homebrew.discordant-stars/broadcast-teams",
+        "9": "card.promissory.vaylerian:homebrew.discordant-stars/clans-favor",
+        "10": "card.promissory.dihmohn:homebrew.discordant-stars/combat-drills",
+        "11": "card.promissory.rhodun:homebrew.discordant-stars/favor-of-rhodun",
+        "12": "card.promissory.mori:homebrew.discordant-stars/gift-of-insight",
+        "13": "card.promissory.zelian:homebrew.discordant-stars/hyperkinetic-ordinance",
+        "14": "card.promissory.olradin:homebrew.discordant-stars/incite-revolution",
+        "15": "card.promissory.axis:homebrew.discordant-stars/industry-secrets",
+        "16": "card.promissory.nivyn:homebrew.discordant-stars/nivyn-guidance",
+        "17": "card.promissory.tnelis:homebrew.discordant-stars/plots-within-plots",
+        "18": "card.promissory.ghemina:homebrew.discordant-stars/raid-leaders",
+        "19": "card.promissory.mirveda:homebrew.discordant-stars/rapid-excavation",
+        "20": "card.promissory.ilyxum:homebrew.discordant-stars/read-the-fates",
+        "21": "card.promissory.mortheus:homebrew.discordant-stars/secrets-of-the-weave",
+        "22": "card.promissory.khrask:homebrew.discordant-stars/stone-speakers",
+        "23": "card.promissory.celdauri:homebrew.discordant-stars/trade-alliance",
+        "24": "card.promissory.lizho:homebrew.discordant-stars/trusted-counselor",
+        "25": "card.promissory.florzen:homebrew.discordant-stars/underground-market",
+        "26": "card.promissory.vaden:homebrew.discordant-stars/vaden-handshake"
+    },
+    "CardTags": {
+        "0": [
+            "card-promissory"
+        ],
+        "1": [
+            "card-promissory"
+        ],
+        "2": [
+            "card-promissory"
+        ],
+        "3": [
+            "card-promissory"
+        ],
+        "4": [
+            "card-promissory"
+        ],
+        "5": [
+            "card-promissory"
+        ],
+        "6": [
+            "card-promissory"
+        ],
+        "7": [
+            "card-promissory"
+        ],
+        "8": [
+            "card-promissory"
+        ],
+        "9": [
+            "card-promissory"
+        ],
+        "10": [
+            "card-promissory"
+        ],
+        "11": [
+            "card-promissory"
+        ],
+        "12": [
+            "card-promissory"
+        ],
+        "13": [
+            "card-promissory"
+        ],
+        "14": [
+            "card-promissory"
+        ],
+        "15": [
+            "card-promissory"
+        ],
+        "16": [
+            "card-promissory"
+        ],
+        "17": [
+            "card-promissory"
+        ],
+        "18": [
+            "card-promissory"
+        ],
+        "19": [
+            "card-promissory"
+        ],
+        "20": [
+            "card-promissory"
+        ],
+        "21": [
+            "card-promissory"
+        ],
+        "22": [
+            "card-promissory"
+        ],
+        "23": [
+            "card-promissory"
+        ],
+        "24": [
+            "card-promissory"
+        ],
+        "25": [
+            "card-promissory"
+        ],
+        "26": [
+            "card-promissory"
+        ]
+    },
+    "GroundAccessibility": "ZoomAndContext",
+    "Tags": [
+        "card-promissory"
+    ]
+}

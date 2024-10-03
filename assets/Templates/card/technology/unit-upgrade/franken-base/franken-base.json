@@ -1,0 +1,217 @@
+{
+    "Type": "Card",
+    "GUID": "04252DE69D92D4164FF8186E32A659D8",
+    "Name": "technology/unit-upgrade",
+    "Metadata": "",
+    "CollisionType": "Regular",
+    "Friction": 0.7,
+    "Restitution": 0,
+    "Density": 0.5,
+    "SurfaceType": "Cardboard",
+    "Roughness": 1,
+    "Metallic": 0,
+    "PrimaryColor": {
+        "R": 255,
+        "G": 255,
+        "B": 255
+    },
+    "SecondaryColor": {
+        "R": 0,
+        "G": 0,
+        "B": 0
+    },
+    "Flippable": true,
+    "AutoStraighten": false,
+    "ShouldSnap": true,
+    "ScriptName": "",
+    "Blueprint": "",
+    "Models": [],
+    "Collision": [],
+    "SnapPointsGlobal": false,
+    "SnapPoints": [],
+    "ZoomViewDirection": {
+        "X": 0,
+        "Y": 0,
+        "Z": 0
+    },
+    "FrontTexture": "card/technology/unit-upgrade/franken-base/franken-base.face.jpg",
+    "BackTexture": "card/technology/unit-upgrade/franken-base/franken-base.back.jpg",
+    "HiddenTexture": "",
+    "BackIndex": -2,
+    "HiddenIndex": -1,
+    "NumHorizontal": 8,
+    "NumVertical": 4,
+    "Width": 6.3,
+    "Height": 4.2,
+    "Thickness": 0.05,
+    "HiddenInHand": true,
+    "UsedWithCardHolders": true,
+    "CanStack": true,
+    "UsePrimaryColorForSide": false,
+    "FrontTextureOverrideExposed": false,
+    "AllowFlippedInStack": false,
+    "MirrorBack": true,
+    "Model": "Rounded",
+    "Indices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24
+    ],
+    "CardNames": {
+        "0": "[​0.0.1]",
+        "1": "Advanced Carrier I",
+        "2": "Arc Secundus",
+        "3": "C'morran N'orr",
+        "4": "Duha Menaimon",
+        "5": "Exotrireme I",
+        "6": "Floating Factory I",
+        "7": "Fourth Moon",
+        "8": "Genesis",
+        "9": "Hil Colish",
+        "10": "Hybrid Crystal Fighter I",
+        "11": "J.N.S. Hylarim",
+        "12": "Letani Warrior I",
+        "13": "Loncara Ssodu",
+        "14": "Matriarch",
+        "15": "Prototype War Sun I",
+        "16": "Salai Sai Corian",
+        "17": "Son of Ragh",
+        "18": "Spec Ops I",
+        "19": "Super-Dreadnought I",
+        "20": "The Alastor",
+        "21": "The Inferno",
+        "22": "Van Hauge",
+        "23": "Wrath of Kenara",
+        "24": "Y'sia Y'ssrila"
+    },
+    "CardMetadata": {
+        "0": "card.technology.unit-upgrade.l1z1x:franken.base/001",
+        "1": "card.technology.unit-upgrade.sol:franken.base/advanced-carrier",
+        "2": "card.technology.unit-upgrade.letnev:franken.base/arc-secundus",
+        "3": "card.technology.unit-upgrade.norr:franken.base/cmorran-norr",
+        "4": "card.technology.unit-upgrade.arborec:franken.base/duha-menaimon",
+        "5": "card.technology.unit-upgrade.norr:franken.base/exotrireme",
+        "6": "card.technology.unit-upgrade.saar:franken.base/floating-factory",
+        "7": "card.technology.unit-upgrade.mentak:franken.base/fourth-moon",
+        "8": "card.technology.unit-upgrade.sol:franken.base/genesis",
+        "9": "card.technology.unit-upgrade.creuss:franken.base/hil-colish",
+        "10": "card.technology.unit-upgrade.naalu:franken.base/hybrid-crystal-fighter",
+        "11": "card.technology.unit-upgrade.jolnar:franken.base/jns-hylarim",
+        "12": "card.technology.unit-upgrade.arborec:franken.base/letani-warrior",
+        "13": "card.technology.unit-upgrade.xxcha:franken.base/loncara-ssodu",
+        "14": "card.technology.unit-upgrade.naalu:franken.base/matriarch",
+        "15": "card.technology.unit-upgrade.muaat:franken.base/prototype-war-sun",
+        "16": "card.technology.unit-upgrade.winnu:franken.base/salai-sai-corian",
+        "17": "card.technology.unit-upgrade.saar:franken.base/son-of-ragh",
+        "18": "card.technology.unit-upgrade.sol:franken.base/spec-ops",
+        "19": "card.technology.unit-upgrade.l1z1x:franken.base/superdreadnought",
+        "20": "card.technology.unit-upgrade.nekro:franken.base/the-alastor",
+        "21": "card.technology.unit-upgrade.muaat:franken.base/the-inferno",
+        "22": "card.technology.unit-upgrade.yin:franken.base/van-hauge",
+        "23": "card.technology.unit-upgrade.hacan:franken.base/wrath-of-kenara",
+        "24": "card.technology.unit-upgrade.yssaril:franken.base/ysia-yssrila"
+    },
+    "CardTags": {
+        "0": [
+            "card-technology/unit-upgrade"
+        ],
+        "1": [
+            "card-technology/unit-upgrade"
+        ],
+        "2": [
+            "card-technology/unit-upgrade"
+        ],
+        "3": [
+            "card-technology/unit-upgrade"
+        ],
+        "4": [
+            "card-technology/unit-upgrade"
+        ],
+        "5": [
+            "card-technology/unit-upgrade"
+        ],
+        "6": [
+            "card-technology/unit-upgrade"
+        ],
+        "7": [
+            "card-technology/unit-upgrade"
+        ],
+        "8": [
+            "card-technology/unit-upgrade"
+        ],
+        "9": [
+            "card-technology/unit-upgrade"
+        ],
+        "10": [
+            "card-technology/unit-upgrade"
+        ],
+        "11": [
+            "card-technology/unit-upgrade"
+        ],
+        "12": [
+            "card-technology/unit-upgrade"
+        ],
+        "13": [
+            "card-technology/unit-upgrade"
+        ],
+        "14": [
+            "card-technology/unit-upgrade"
+        ],
+        "15": [
+            "card-technology/unit-upgrade"
+        ],
+        "16": [
+            "card-technology/unit-upgrade"
+        ],
+        "17": [
+            "card-technology/unit-upgrade"
+        ],
+        "18": [
+            "card-technology/unit-upgrade"
+        ],
+        "19": [
+            "card-technology/unit-upgrade"
+        ],
+        "20": [
+            "card-technology/unit-upgrade"
+        ],
+        "21": [
+            "card-technology/unit-upgrade"
+        ],
+        "22": [
+            "card-technology/unit-upgrade"
+        ],
+        "23": [
+            "card-technology/unit-upgrade"
+        ],
+        "24": [
+            "card-technology/unit-upgrade"
+        ]
+    },
+    "GroundAccessibility": "ZoomAndContext",
+    "Tags": [
+        "card-technology/unit-upgrade"
+    ]
+}

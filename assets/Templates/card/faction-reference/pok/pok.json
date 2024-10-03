@@ -1,0 +1,109 @@
+{
+    "Type": "Card",
+    "GUID": "2D799EB4068A41E37D03028AECFEA3F4",
+    "Name": "faction-reference",
+    "Metadata": "",
+    "CollisionType": "Regular",
+    "Friction": 0.7,
+    "Restitution": 0,
+    "Density": 0.5,
+    "SurfaceType": "Cardboard",
+    "Roughness": 1,
+    "Metallic": 0,
+    "PrimaryColor": {
+        "R": 255,
+        "G": 255,
+        "B": 255
+    },
+    "SecondaryColor": {
+        "R": 0,
+        "G": 0,
+        "B": 0
+    },
+    "Flippable": true,
+    "AutoStraighten": false,
+    "ShouldSnap": true,
+    "ScriptName": "",
+    "Blueprint": "",
+    "Models": [],
+    "Collision": [],
+    "SnapPointsGlobal": false,
+    "SnapPoints": [],
+    "ZoomViewDirection": {
+        "X": 0,
+        "Y": 0,
+        "Z": 0
+    },
+    "FrontTexture": "card/faction-reference/pok/pok.face.jpg",
+    "BackTexture": "card/faction-reference/pok/pok.back.jpg",
+    "HiddenTexture": "",
+    "BackIndex": -2,
+    "HiddenIndex": -1,
+    "NumHorizontal": 3,
+    "NumVertical": 3,
+    "Width": 8.8,
+    "Height": 6.3,
+    "Thickness": 0.05,
+    "HiddenInHand": true,
+    "UsedWithCardHolders": true,
+    "CanStack": true,
+    "UsePrimaryColorForSide": false,
+    "FrontTextureOverrideExposed": false,
+    "AllowFlippedInStack": false,
+    "MirrorBack": true,
+    "Model": "Rounded",
+    "Indices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+    ],
+    "CardNames": {
+        "0": "Argent Flight Faction Token",
+        "1": "Empyrean Faction Token",
+        "2": "Mahact Gene-Sorcerers Faction Token",
+        "3": "Naaz-Rokha Alliance Faction Token",
+        "4": "Nomad Faction Token",
+        "5": "Titans of Ul Faction Token",
+        "6": "Vuil'raith Cabal Faction Token"
+    },
+    "CardMetadata": {
+        "0": "card.faction-reference:pok/argent",
+        "1": "card.faction-reference:pok/empyrean",
+        "2": "card.faction-reference:pok/mahact",
+        "3": "card.faction-reference:pok/naazrokha",
+        "4": "card.faction-reference:pok/nomad",
+        "5": "card.faction-reference:pok/ul",
+        "6": "card.faction-reference:pok/vuilraith"
+    },
+    "CardTags": {
+        "0": [
+            "card-faction-reference"
+        ],
+        "1": [
+            "card-faction-reference"
+        ],
+        "2": [
+            "card-faction-reference"
+        ],
+        "3": [
+            "card-faction-reference"
+        ],
+        "4": [
+            "card-faction-reference"
+        ],
+        "5": [
+            "card-faction-reference"
+        ],
+        "6": [
+            "card-faction-reference"
+        ]
+    },
+    "GroundAccessibility": "ZoomAndContext",
+    "Tags": [
+        "card-faction-reference"
+    ]
+}

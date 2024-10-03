@@ -1,0 +1,115 @@
+{
+    "Type": "Card",
+    "GUID": "97492100788EE5D38B5E2A067F8C06C7",
+    "Name": "technology/blue",
+    "Metadata": "",
+    "CollisionType": "Regular",
+    "Friction": 0.7,
+    "Restitution": 0,
+    "Density": 0.5,
+    "SurfaceType": "Cardboard",
+    "Roughness": 1,
+    "Metallic": 0,
+    "PrimaryColor": {
+        "R": 255,
+        "G": 255,
+        "B": 255
+    },
+    "SecondaryColor": {
+        "R": 0,
+        "G": 0,
+        "B": 0
+    },
+    "Flippable": true,
+    "AutoStraighten": false,
+    "ShouldSnap": true,
+    "ScriptName": "",
+    "Blueprint": "",
+    "Models": [],
+    "Collision": [],
+    "SnapPointsGlobal": false,
+    "SnapPoints": [],
+    "ZoomViewDirection": {
+        "X": 0,
+        "Y": 0,
+        "Z": 0
+    },
+    "FrontTexture": "card/technology/blue/base/base.face.jpg",
+    "BackTexture": "card/technology/blue/base/base.back.jpg",
+    "HiddenTexture": "",
+    "BackIndex": -2,
+    "HiddenIndex": -1,
+    "NumHorizontal": 3,
+    "NumVertical": 3,
+    "Width": 6.3,
+    "Height": 4.2,
+    "Thickness": 0.05,
+    "HiddenInHand": true,
+    "UsedWithCardHolders": true,
+    "CanStack": true,
+    "UsePrimaryColorForSide": false,
+    "FrontTextureOverrideExposed": false,
+    "AllowFlippedInStack": false,
+    "MirrorBack": true,
+    "Model": "Rounded",
+    "Indices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+    ],
+    "CardNames": {
+        "0": "Antimass Deflectors",
+        "1": "Chaos Mapping",
+        "2": "Fleet Logistics",
+        "3": "Gravity Drive",
+        "4": "Lazax Gate Folding",
+        "5": "Light-Wave Deflector",
+        "6": "Spacial Conduit Cylinder",
+        "7": "Wormhole Generator"
+    },
+    "CardMetadata": {
+        "0": "card.technology.blue:base/antimass-deflectors",
+        "1": "card.technology.blue.saar:base/chaos-mapping",
+        "2": "card.technology.blue:base/fleet-logistics",
+        "3": "card.technology.blue:base/gravity-drive",
+        "4": "card.technology.blue.winnu:base/lazax-gate-folding",
+        "5": "card.technology.blue:base/lightwave-deflector",
+        "6": "card.technology.blue.jolnar:base/spacial-conduit-cylinder",
+        "7": "card.technology.blue.creuss:base/wormhole-generator"
+    },
+    "CardTags": {
+        "0": [
+            "card-technology/blue"
+        ],
+        "1": [
+            "card-technology/blue"
+        ],
+        "2": [
+            "card-technology/blue"
+        ],
+        "3": [
+            "card-technology/blue"
+        ],
+        "4": [
+            "card-technology/blue"
+        ],
+        "5": [
+            "card-technology/blue"
+        ],
+        "6": [
+            "card-technology/blue"
+        ],
+        "7": [
+            "card-technology/blue"
+        ]
+    },
+    "GroundAccessibility": "ZoomAndContext",
+    "Tags": [
+        "card-technology/blue"
+    ]
+}

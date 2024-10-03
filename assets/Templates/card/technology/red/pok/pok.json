@@ -1,0 +1,91 @@
+{
+    "Type": "Card",
+    "GUID": "440334C6E42D709D33B2B21076B839D2",
+    "Name": "technology/red",
+    "Metadata": "",
+    "CollisionType": "Regular",
+    "Friction": 0.7,
+    "Restitution": 0,
+    "Density": 0.5,
+    "SurfaceType": "Cardboard",
+    "Roughness": 1,
+    "Metallic": 0,
+    "PrimaryColor": {
+        "R": 255,
+        "G": 255,
+        "B": 255
+    },
+    "SecondaryColor": {
+        "R": 0,
+        "G": 0,
+        "B": 0
+    },
+    "Flippable": true,
+    "AutoStraighten": false,
+    "ShouldSnap": true,
+    "ScriptName": "",
+    "Blueprint": "",
+    "Models": [],
+    "Collision": [],
+    "SnapPointsGlobal": false,
+    "SnapPoints": [],
+    "ZoomViewDirection": {
+        "X": 0,
+        "Y": 0,
+        "Z": 0
+    },
+    "FrontTexture": "card/technology/red/pok/pok.face.jpg",
+    "BackTexture": "card/technology/red/pok/pok.back.jpg",
+    "HiddenTexture": "",
+    "BackIndex": -2,
+    "HiddenIndex": -1,
+    "NumHorizontal": 1,
+    "NumVertical": 4,
+    "Width": 6.3,
+    "Height": 4.2,
+    "Thickness": 0.05,
+    "HiddenInHand": true,
+    "UsedWithCardHolders": true,
+    "CanStack": true,
+    "UsePrimaryColorForSide": false,
+    "FrontTextureOverrideExposed": false,
+    "AllowFlippedInStack": false,
+    "MirrorBack": true,
+    "Model": "Rounded",
+    "Indices": [
+        0,
+        1,
+        2,
+        3
+    ],
+    "CardNames": {
+        "0": "AI Development Algorithm",
+        "1": "Self Assembly Routines",
+        "2": "Supercharge",
+        "3": "Vortex"
+    },
+    "CardMetadata": {
+        "0": "card.technology.red:pok/ai-development-algorithm",
+        "1": "card.technology.red:pok/self-assembly-routines",
+        "2": "card.technology.red.naazrokha:pok/supercharge",
+        "3": "card.technology.red.vuilraith:pok/vortex"
+    },
+    "CardTags": {
+        "0": [
+            "card-technology/red"
+        ],
+        "1": [
+            "card-technology/red"
+        ],
+        "2": [
+            "card-technology/red"
+        ],
+        "3": [
+            "card-technology/red"
+        ]
+    },
+    "GroundAccessibility": "ZoomAndContext",
+    "Tags": [
+        "card-technology/red"
+    ]
+}

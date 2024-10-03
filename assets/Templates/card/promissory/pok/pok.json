@@ -1,0 +1,121 @@
+{
+    "Type": "Card",
+    "GUID": "88442040C0A43675D7C7B0530BBB68E9",
+    "Name": "promissory",
+    "Metadata": "",
+    "CollisionType": "Regular",
+    "Friction": 0.7,
+    "Restitution": 0,
+    "Density": 0.5,
+    "SurfaceType": "Cardboard",
+    "Roughness": 1,
+    "Metallic": 0,
+    "PrimaryColor": {
+        "R": 255,
+        "G": 255,
+        "B": 255
+    },
+    "SecondaryColor": {
+        "R": 0,
+        "G": 0,
+        "B": 0
+    },
+    "Flippable": true,
+    "AutoStraighten": false,
+    "ShouldSnap": true,
+    "ScriptName": "",
+    "Blueprint": "",
+    "Models": [],
+    "Collision": [],
+    "SnapPointsGlobal": false,
+    "SnapPoints": [],
+    "ZoomViewDirection": {
+        "X": 0,
+        "Y": 0,
+        "Z": 0
+    },
+    "FrontTexture": "card/promissory/pok/pok.face.jpg",
+    "BackTexture": "card/promissory/pok/pok.back.jpg",
+    "HiddenTexture": "",
+    "BackIndex": -2,
+    "HiddenIndex": -1,
+    "NumHorizontal": 6,
+    "NumVertical": 2,
+    "Width": 4.2,
+    "Height": 6.3,
+    "Thickness": 0.05,
+    "HiddenInHand": true,
+    "UsedWithCardHolders": true,
+    "CanStack": true,
+    "UsePrimaryColorForSide": false,
+    "FrontTextureOverrideExposed": false,
+    "AllowFlippedInStack": false,
+    "MirrorBack": true,
+    "Model": "Rounded",
+    "Indices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8
+    ],
+    "CardNames": {
+        "0": "Alliance (Yellow)",
+        "1": "Black Market Forgery",
+        "2": "Blood Pact",
+        "3": "Crucible",
+        "4": "Dark Pact",
+        "5": "Scepter of Dominion",
+        "6": "Strike Wing Ambuscade",
+        "7": "Terraform",
+        "8": "The Cavalry"
+    },
+    "CardMetadata": {
+        "0": "card.promissory.yellow:pok/alliance",
+        "1": "card.promissory.naazrokha:pok/black-market-forgery",
+        "2": "card.promissory.empyrean:pok/blood-pact",
+        "3": "card.promissory.vuilraith:pok/crucible",
+        "4": "card.promissory.empyrean:pok/dark-pact",
+        "5": "card.promissory.mahact:pok/scepter-of-dominion",
+        "6": "card.promissory.argent:pok/strike-wing-ambuscade",
+        "7": "card.promissory.ul:pok/terraform",
+        "8": "card.promissory.nomad:pok/the-cavalry"
+    },
+    "CardTags": {
+        "0": [
+            "card-promissory"
+        ],
+        "1": [
+            "card-promissory"
+        ],
+        "2": [
+            "card-promissory"
+        ],
+        "3": [
+            "card-promissory"
+        ],
+        "4": [
+            "card-promissory"
+        ],
+        "5": [
+            "card-promissory"
+        ],
+        "6": [
+            "card-promissory"
+        ],
+        "7": [
+            "card-promissory"
+        ],
+        "8": [
+            "card-promissory"
+        ]
+    },
+    "GroundAccessibility": "ZoomAndContext",
+    "Tags": [
+        "card-promissory"
+    ]
+}

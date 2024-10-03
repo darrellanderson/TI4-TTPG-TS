@@ -1,0 +1,85 @@
+{
+    "Type": "Card",
+    "GUID": "657E7D6B356CEE9B0FEFFC44887387DE",
+    "Name": "faction-reference",
+    "Metadata": "",
+    "CollisionType": "Regular",
+    "Friction": 0.7,
+    "Restitution": 0,
+    "Density": 0.5,
+    "SurfaceType": "Cardboard",
+    "Roughness": 1,
+    "Metallic": 0,
+    "PrimaryColor": {
+        "R": 255,
+        "G": 255,
+        "B": 255
+    },
+    "SecondaryColor": {
+        "R": 0,
+        "G": 0,
+        "B": 0
+    },
+    "Flippable": true,
+    "AutoStraighten": false,
+    "ShouldSnap": true,
+    "ScriptName": "",
+    "Blueprint": "",
+    "Models": [],
+    "Collision": [],
+    "SnapPointsGlobal": false,
+    "SnapPoints": [],
+    "ZoomViewDirection": {
+        "X": 0,
+        "Y": 0,
+        "Z": 0
+    },
+    "FrontTexture": "card/faction-reference/codex-vigil/codex-vigil.face.jpg",
+    "BackTexture": "card/faction-reference/codex-vigil/codex-vigil.back.jpg",
+    "HiddenTexture": "",
+    "BackIndex": -2,
+    "HiddenIndex": -1,
+    "NumHorizontal": 1,
+    "NumVertical": 3,
+    "Width": 8.8,
+    "Height": 6.3,
+    "Thickness": 0.05,
+    "HiddenInHand": true,
+    "UsedWithCardHolders": true,
+    "CanStack": true,
+    "UsePrimaryColorForSide": false,
+    "FrontTextureOverrideExposed": false,
+    "AllowFlippedInStack": false,
+    "MirrorBack": true,
+    "Model": "Rounded",
+    "Indices": [
+        0,
+        1,
+        2
+    ],
+    "CardNames": {
+        "0": "Keleres-Argent Faction Token",
+        "1": "Keleres-Mentak Faction Token",
+        "2": "Keleres-Xxcha Faction Token"
+    },
+    "CardMetadata": {
+        "0": "card.faction-reference:codex.vigil/keleres-argent",
+        "1": "card.faction-reference:codex.vigil/keleres-mentak",
+        "2": "card.faction-reference:codex.vigil/keleres-xxcha"
+    },
+    "CardTags": {
+        "0": [
+            "card-faction-reference"
+        ],
+        "1": [
+            "card-faction-reference"
+        ],
+        "2": [
+            "card-faction-reference"
+        ]
+    },
+    "GroundAccessibility": "ZoomAndContext",
+    "Tags": [
+        "card-faction-reference"
+    ]
+}

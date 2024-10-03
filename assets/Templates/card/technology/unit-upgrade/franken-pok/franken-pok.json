@@ -1,0 +1,139 @@
+{
+    "Type": "Card",
+    "GUID": "B29C024DABC8E635CF771A3AC44AFFDA",
+    "Name": "technology/unit-upgrade",
+    "Metadata": "",
+    "CollisionType": "Regular",
+    "Friction": 0.7,
+    "Restitution": 0,
+    "Density": 0.5,
+    "SurfaceType": "Cardboard",
+    "Roughness": 1,
+    "Metallic": 0,
+    "PrimaryColor": {
+        "R": 255,
+        "G": 255,
+        "B": 255
+    },
+    "SecondaryColor": {
+        "R": 0,
+        "G": 0,
+        "B": 0
+    },
+    "Flippable": true,
+    "AutoStraighten": false,
+    "ShouldSnap": true,
+    "ScriptName": "",
+    "Blueprint": "",
+    "Models": [],
+    "Collision": [],
+    "SnapPointsGlobal": false,
+    "SnapPoints": [],
+    "ZoomViewDirection": {
+        "X": 0,
+        "Y": 0,
+        "Z": 0
+    },
+    "FrontTexture": "card/technology/unit-upgrade/franken-pok/franken-pok.face.jpg",
+    "BackTexture": "card/technology/unit-upgrade/franken-pok/franken-pok.back.jpg",
+    "HiddenTexture": "",
+    "BackIndex": -2,
+    "HiddenIndex": -1,
+    "NumHorizontal": 1,
+    "NumVertical": 12,
+    "Width": 6.3,
+    "Height": 4.2,
+    "Thickness": 0.05,
+    "HiddenInHand": true,
+    "UsedWithCardHolders": true,
+    "CanStack": true,
+    "UsePrimaryColorForSide": false,
+    "FrontTextureOverrideExposed": false,
+    "AllowFlippedInStack": false,
+    "MirrorBack": true,
+    "Model": "Rounded",
+    "Indices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11
+    ],
+    "CardNames": {
+        "0": "Arvicon Rex",
+        "1": "Crimson Legionnaire I",
+        "2": "Dimensional Tear I",
+        "3": "Dynamo",
+        "4": "Hel-Titan I",
+        "5": "Memoria I",
+        "6": "Ouranos",
+        "7": "Quetzecoatl",
+        "8": "Saturn Engine I",
+        "9": "Strike Wing Alpha I",
+        "10": "The Terror Between",
+        "11": "Visz El Vir"
+    },
+    "CardMetadata": {
+        "0": "card.technology.unit-upgrade.mahact:franken.pok/arvicon-rex",
+        "1": "card.technology.unit-upgrade.mahact:franken.pok/crimson-legionnaire",
+        "2": "card.technology.unit-upgrade.vuilraith:franken.pok/dimensional-tear",
+        "3": "card.technology.unit-upgrade.empyrean:franken.pok/dynamo",
+        "4": "card.technology.unit-upgrade.ul:franken.pok/heltitan",
+        "5": "card.technology.unit-upgrade.nomad:franken.pok/memoria",
+        "6": "card.technology.unit-upgrade.ul:franken.pok/ouranos",
+        "7": "card.technology.unit-upgrade.argent:franken.pok/quetzecoatl",
+        "8": "card.technology.unit-upgrade.ul:franken.pok/saturn-engine",
+        "9": "card.technology.unit-upgrade.argent:franken.pok/strike-wing-alpha",
+        "10": "card.technology.unit-upgrade.vuilraith:franken.pok/the-terror-between",
+        "11": "card.technology.unit-upgrade.naazrokha:franken.pok/visz-el-vir"
+    },
+    "CardTags": {
+        "0": [
+            "card-technology/unit-upgrade"
+        ],
+        "1": [
+            "card-technology/unit-upgrade"
+        ],
+        "2": [
+            "card-technology/unit-upgrade"
+        ],
+        "3": [
+            "card-technology/unit-upgrade"
+        ],
+        "4": [
+            "card-technology/unit-upgrade"
+        ],
+        "5": [
+            "card-technology/unit-upgrade"
+        ],
+        "6": [
+            "card-technology/unit-upgrade"
+        ],
+        "7": [
+            "card-technology/unit-upgrade"
+        ],
+        "8": [
+            "card-technology/unit-upgrade"
+        ],
+        "9": [
+            "card-technology/unit-upgrade"
+        ],
+        "10": [
+            "card-technology/unit-upgrade"
+        ],
+        "11": [
+            "card-technology/unit-upgrade"
+        ]
+    },
+    "GroundAccessibility": "ZoomAndContext",
+    "Tags": [
+        "card-technology/unit-upgrade"
+    ]
+}

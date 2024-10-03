@@ -1,0 +1,187 @@
+{
+    "Type": "Card",
+    "GUID": "30A6C390BC4CF2A79D1C9813BE05310E",
+    "Name": "exploration/hazardous",
+    "Metadata": "",
+    "CollisionType": "Regular",
+    "Friction": 0.7,
+    "Restitution": 0,
+    "Density": 0.5,
+    "SurfaceType": "Cardboard",
+    "Roughness": 1,
+    "Metallic": 0,
+    "PrimaryColor": {
+        "R": 255,
+        "G": 255,
+        "B": 255
+    },
+    "SecondaryColor": {
+        "R": 0,
+        "G": 0,
+        "B": 0
+    },
+    "Flippable": true,
+    "AutoStraighten": false,
+    "ShouldSnap": true,
+    "ScriptName": "",
+    "Blueprint": "",
+    "Models": [],
+    "Collision": [],
+    "SnapPointsGlobal": false,
+    "SnapPoints": [],
+    "ZoomViewDirection": {
+        "X": 0,
+        "Y": 0,
+        "Z": 0
+    },
+    "FrontTexture": "card/exploration/hazardous/pok/pok.face.jpg",
+    "BackTexture": "card/exploration/hazardous/pok/pok.back.jpg",
+    "HiddenTexture": "",
+    "BackIndex": -2,
+    "HiddenIndex": -1,
+    "NumHorizontal": 6,
+    "NumVertical": 4,
+    "Width": 4.2,
+    "Height": 6.3,
+    "Thickness": 0.05,
+    "HiddenInHand": true,
+    "UsedWithCardHolders": true,
+    "CanStack": true,
+    "UsePrimaryColorForSide": false,
+    "FrontTextureOverrideExposed": false,
+    "AllowFlippedInStack": false,
+    "MirrorBack": true,
+    "Model": "Rounded",
+    "Indices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19
+    ],
+    "CardNames": {
+        "0": "Core Mine (1)",
+        "1": "Core Mine (2)",
+        "2": "Core Mine (3)",
+        "3": "Expedition (1)",
+        "4": "Expedition (2)",
+        "5": "Expedition (3)",
+        "6": "Hazardous Relic Fragment (1)",
+        "7": "Hazardous Relic Fragment (2)",
+        "8": "Hazardous Relic Fragment (3)",
+        "9": "Hazardous Relic Fragment (4)",
+        "10": "Hazardous Relic Fragment (5)",
+        "11": "Hazardous Relic Fragment (6)",
+        "12": "Hazardous Relic Fragment (7)",
+        "13": "Lazax Survivors",
+        "14": "Mining World",
+        "15": "Rich World",
+        "16": "Volatile Fuel Source (1)",
+        "17": "Volatile Fuel Source (2)",
+        "18": "Volatile Fuel Source (3)",
+        "19": "Warfare Research Facility"
+    },
+    "CardMetadata": {
+        "0": "card.exploration.hazardous:pok/core-mine.1",
+        "1": "card.exploration.hazardous:pok/core-mine.2",
+        "2": "card.exploration.hazardous:pok/core-mine.3",
+        "3": "card.exploration.hazardous:pok/expedition.1",
+        "4": "card.exploration.hazardous:pok/expedition.2",
+        "5": "card.exploration.hazardous:pok/expedition.3",
+        "6": "card.exploration.hazardous:pok/hazardous-relic-fragment.1",
+        "7": "card.exploration.hazardous:pok/hazardous-relic-fragment.2",
+        "8": "card.exploration.hazardous:pok/hazardous-relic-fragment.3",
+        "9": "card.exploration.hazardous:pok/hazardous-relic-fragment.4",
+        "10": "card.exploration.hazardous:pok/hazardous-relic-fragment.5",
+        "11": "card.exploration.hazardous:pok/hazardous-relic-fragment.6",
+        "12": "card.exploration.hazardous:pok/hazardous-relic-fragment.7",
+        "13": "card.exploration.hazardous:pok/lazax-survivors",
+        "14": "card.exploration.hazardous:pok/mining-world",
+        "15": "card.exploration.hazardous:pok/rich-world",
+        "16": "card.exploration.hazardous:pok/volatile-fuel-source.1",
+        "17": "card.exploration.hazardous:pok/volatile-fuel-source.2",
+        "18": "card.exploration.hazardous:pok/volatile-fuel-source.3",
+        "19": "card.exploration.hazardous:pok/warfare-research-facility"
+    },
+    "CardTags": {
+        "0": [
+            "card-exploration/hazardous"
+        ],
+        "1": [
+            "card-exploration/hazardous"
+        ],
+        "2": [
+            "card-exploration/hazardous"
+        ],
+        "3": [
+            "card-exploration/hazardous"
+        ],
+        "4": [
+            "card-exploration/hazardous"
+        ],
+        "5": [
+            "card-exploration/hazardous"
+        ],
+        "6": [
+            "card-exploration/hazardous"
+        ],
+        "7": [
+            "card-exploration/hazardous"
+        ],
+        "8": [
+            "card-exploration/hazardous"
+        ],
+        "9": [
+            "card-exploration/hazardous"
+        ],
+        "10": [
+            "card-exploration/hazardous"
+        ],
+        "11": [
+            "card-exploration/hazardous"
+        ],
+        "12": [
+            "card-exploration/hazardous"
+        ],
+        "13": [
+            "card-exploration/hazardous"
+        ],
+        "14": [
+            "card-exploration/hazardous"
+        ],
+        "15": [
+            "card-exploration/hazardous"
+        ],
+        "16": [
+            "card-exploration/hazardous"
+        ],
+        "17": [
+            "card-exploration/hazardous"
+        ],
+        "18": [
+            "card-exploration/hazardous"
+        ],
+        "19": [
+            "card-exploration/hazardous"
+        ]
+    },
+    "GroundAccessibility": "ZoomAndContext",
+    "Tags": [
+        "card-exploration/hazardous"
+    ]
+}

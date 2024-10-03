@@ -1,0 +1,103 @@
+{
+    "Type": "Card",
+    "GUID": "4E0BA21A5256EA1A3DE776422ED1EEE9",
+    "Name": "exploration/frontier",
+    "Metadata": "",
+    "CollisionType": "Regular",
+    "Friction": 0.7,
+    "Restitution": 0,
+    "Density": 0.5,
+    "SurfaceType": "Cardboard",
+    "Roughness": 1,
+    "Metallic": 0,
+    "PrimaryColor": {
+        "R": 255,
+        "G": 255,
+        "B": 255
+    },
+    "SecondaryColor": {
+        "R": 0,
+        "G": 0,
+        "B": 0
+    },
+    "Flippable": true,
+    "AutoStraighten": false,
+    "ShouldSnap": true,
+    "ScriptName": "",
+    "Blueprint": "",
+    "Models": [],
+    "Collision": [],
+    "SnapPointsGlobal": false,
+    "SnapPoints": [],
+    "ZoomViewDirection": {
+        "X": 0,
+        "Y": 0,
+        "Z": 0
+    },
+    "FrontTexture": "card/exploration/frontier/codex-vigil/codex-vigil.face.jpg",
+    "BackTexture": "card/exploration/frontier/codex-vigil/codex-vigil.back.jpg",
+    "HiddenTexture": "",
+    "BackIndex": -2,
+    "HiddenIndex": -1,
+    "NumHorizontal": 3,
+    "NumVertical": 2,
+    "Width": 4.2,
+    "Height": 6.3,
+    "Thickness": 0.05,
+    "HiddenInHand": true,
+    "UsedWithCardHolders": true,
+    "CanStack": true,
+    "UsePrimaryColorForSide": false,
+    "FrontTextureOverrideExposed": false,
+    "AllowFlippedInStack": false,
+    "MirrorBack": true,
+    "Model": "Rounded",
+    "Indices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+    ],
+    "CardNames": {
+        "0": "Dead World",
+        "1": "Entropic Field",
+        "2": "Keleres Ship (1)",
+        "3": "Keleres Ship (2)",
+        "4": "Major Entropic Field",
+        "5": "Minor Entropic Field"
+    },
+    "CardMetadata": {
+        "0": "card.exploration.frontier:codex.vigil/dead-world",
+        "1": "card.exploration.frontier:codex.vigil/entropic-field",
+        "2": "card.exploration.frontier:codex.vigil/keleres-ship.1",
+        "3": "card.exploration.frontier:codex.vigil/keleres-ship.2",
+        "4": "card.exploration.frontier:codex.vigil/major-entropic-field",
+        "5": "card.exploration.frontier:codex.vigil/minor-entropic-field"
+    },
+    "CardTags": {
+        "0": [
+            "card-exploration/frontier"
+        ],
+        "1": [
+            "card-exploration/frontier"
+        ],
+        "2": [
+            "card-exploration/frontier"
+        ],
+        "3": [
+            "card-exploration/frontier"
+        ],
+        "4": [
+            "card-exploration/frontier"
+        ],
+        "5": [
+            "card-exploration/frontier"
+        ]
+    },
+    "GroundAccessibility": "ZoomAndContext",
+    "Tags": [
+        "card-exploration/frontier"
+    ]
+}

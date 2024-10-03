@@ -1,0 +1,127 @@
+{
+    "Type": "Card",
+    "GUID": "E49A7354EB7F1E571FAD96EEB2C39FB0",
+    "Name": "objective/public-1",
+    "Metadata": "",
+    "CollisionType": "Regular",
+    "Friction": 0.7,
+    "Restitution": 0,
+    "Density": 0.5,
+    "SurfaceType": "Cardboard",
+    "Roughness": 1,
+    "Metallic": 0,
+    "PrimaryColor": {
+        "R": 255,
+        "G": 255,
+        "B": 255
+    },
+    "SecondaryColor": {
+        "R": 0,
+        "G": 0,
+        "B": 0
+    },
+    "Flippable": true,
+    "AutoStraighten": false,
+    "ShouldSnap": true,
+    "ScriptName": "",
+    "Blueprint": "",
+    "Models": [],
+    "Collision": [],
+    "SnapPointsGlobal": false,
+    "SnapPoints": [],
+    "ZoomViewDirection": {
+        "X": 0,
+        "Y": 0,
+        "Z": 0
+    },
+    "FrontTexture": "card/objective/public-1/pok/pok.face.jpg",
+    "BackTexture": "card/objective/public-1/pok/pok.back.jpg",
+    "HiddenTexture": "",
+    "BackIndex": -2,
+    "HiddenIndex": -1,
+    "NumHorizontal": 3,
+    "NumVertical": 4,
+    "Width": 4.2,
+    "Height": 6.3,
+    "Thickness": 0.05,
+    "HiddenInHand": true,
+    "UsedWithCardHolders": true,
+    "CanStack": true,
+    "UsePrimaryColorForSide": false,
+    "FrontTextureOverrideExposed": false,
+    "AllowFlippedInStack": false,
+    "MirrorBack": true,
+    "Model": "Rounded",
+    "Indices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+    ],
+    "CardNames": {
+        "0": "Amass Wealth",
+        "1": "Build Defenses",
+        "2": "Discover Lost Outposts",
+        "3": "Engineer a Marvel",
+        "4": "Explore Deep Space",
+        "5": "Improve Infrastructure",
+        "6": "Make History",
+        "7": "Populate the Outer Rim",
+        "8": "Push Boundaries",
+        "9": "Raise a Fleet"
+    },
+    "CardMetadata": {
+        "0": "card.objective.public-1:pok/amass-wealth",
+        "1": "card.objective.public-1:pok/build-defenses",
+        "2": "card.objective.public-1:pok/discover-lost-outposts",
+        "3": "card.objective.public-1:pok/engineer-a-marvel",
+        "4": "card.objective.public-1:pok/explore-deep-space",
+        "5": "card.objective.public-1:pok/improve-infrastructure",
+        "6": "card.objective.public-1:pok/make-history",
+        "7": "card.objective.public-1:pok/populate-the-outer-rim",
+        "8": "card.objective.public-1:pok/push-boundaries",
+        "9": "card.objective.public-1:pok/raise-a-fleet"
+    },
+    "CardTags": {
+        "0": [
+            "card-objective/public-1"
+        ],
+        "1": [
+            "card-objective/public-1"
+        ],
+        "2": [
+            "card-objective/public-1"
+        ],
+        "3": [
+            "card-objective/public-1"
+        ],
+        "4": [
+            "card-objective/public-1"
+        ],
+        "5": [
+            "card-objective/public-1"
+        ],
+        "6": [
+            "card-objective/public-1"
+        ],
+        "7": [
+            "card-objective/public-1"
+        ],
+        "8": [
+            "card-objective/public-1"
+        ],
+        "9": [
+            "card-objective/public-1"
+        ]
+    },
+    "GroundAccessibility": "ZoomAndContext",
+    "Tags": [
+        "card-objective/public-1"
+    ]
+}

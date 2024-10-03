@@ -1,0 +1,97 @@
+{
+    "Type": "Card",
+    "GUID": "3371A0E51A3FE4E26DC457CCB569933D",
+    "Name": "promissory",
+    "Metadata": "",
+    "CollisionType": "Regular",
+    "Friction": 0.7,
+    "Restitution": 0,
+    "Density": 0.5,
+    "SurfaceType": "Cardboard",
+    "Roughness": 1,
+    "Metallic": 0,
+    "PrimaryColor": {
+        "R": 255,
+        "G": 255,
+        "B": 255
+    },
+    "SecondaryColor": {
+        "R": 0,
+        "G": 0,
+        "B": 0
+    },
+    "Flippable": true,
+    "AutoStraighten": false,
+    "ShouldSnap": true,
+    "ScriptName": "",
+    "Blueprint": "",
+    "Models": [],
+    "Collision": [],
+    "SnapPointsGlobal": false,
+    "SnapPoints": [],
+    "ZoomViewDirection": {
+        "X": 0,
+        "Y": 0,
+        "Z": 0
+    },
+    "FrontTexture": "card/promissory/codex-ordinian/codex-ordinian.face.jpg",
+    "BackTexture": "card/promissory/codex-ordinian/codex-ordinian.back.jpg",
+    "HiddenTexture": "",
+    "BackIndex": -2,
+    "HiddenIndex": -1,
+    "NumHorizontal": 3,
+    "NumVertical": 2,
+    "Width": 4.2,
+    "Height": 6.3,
+    "Thickness": 0.05,
+    "HiddenInHand": true,
+    "UsedWithCardHolders": true,
+    "CanStack": true,
+    "UsePrimaryColorForSide": false,
+    "FrontTextureOverrideExposed": false,
+    "AllowFlippedInStack": false,
+    "MirrorBack": true,
+    "Model": "Rounded",
+    "Indices": [
+        0,
+        1,
+        2,
+        3,
+        4
+    ],
+    "CardNames": {
+        "0": "Acquiescence Ω",
+        "1": "Cybernetic Enhancements Ω",
+        "2": "Greyfire Mutagen Ω",
+        "3": "Stymie Ω",
+        "4": "War Funding Ω"
+    },
+    "CardMetadata": {
+        "0": "card.promissory.winnu:codex.ordinian/acquiescence.omega",
+        "1": "card.promissory.l1z1x:codex.ordinian/cybernetic-enhancements.omega",
+        "2": "card.promissory.yin:codex.ordinian/greyfire-mutagen.omega",
+        "3": "card.promissory.arborec:codex.ordinian/stymie.omega",
+        "4": "card.promissory.letnev:codex.ordinian/war-funding.omega"
+    },
+    "CardTags": {
+        "0": [
+            "card-promissory"
+        ],
+        "1": [
+            "card-promissory"
+        ],
+        "2": [
+            "card-promissory"
+        ],
+        "3": [
+            "card-promissory"
+        ],
+        "4": [
+            "card-promissory"
+        ]
+    },
+    "GroundAccessibility": "ZoomAndContext",
+    "Tags": [
+        "card-promissory"
+    ]
+}

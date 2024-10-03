@@ -1,0 +1,103 @@
+{
+    "Type": "Card",
+    "GUID": "ADE1DBE999BA7A8CA9BE390CD029AF88",
+    "Name": "technology/unit-upgrade",
+    "Metadata": "",
+    "CollisionType": "Regular",
+    "Friction": 0.7,
+    "Restitution": 0,
+    "Density": 0.5,
+    "SurfaceType": "Cardboard",
+    "Roughness": 1,
+    "Metallic": 0,
+    "PrimaryColor": {
+        "R": 255,
+        "G": 255,
+        "B": 255
+    },
+    "SecondaryColor": {
+        "R": 0,
+        "G": 0,
+        "B": 0
+    },
+    "Flippable": true,
+    "AutoStraighten": false,
+    "ShouldSnap": true,
+    "ScriptName": "",
+    "Blueprint": "",
+    "Models": [],
+    "Collision": [],
+    "SnapPointsGlobal": false,
+    "SnapPoints": [],
+    "ZoomViewDirection": {
+        "X": 0,
+        "Y": 0,
+        "Z": 0
+    },
+    "FrontTexture": "card/technology/unit-upgrade/pok/pok.face.jpg",
+    "BackTexture": "card/technology/unit-upgrade/pok/pok.back.jpg",
+    "HiddenTexture": "",
+    "BackIndex": -2,
+    "HiddenIndex": -1,
+    "NumHorizontal": 1,
+    "NumVertical": 6,
+    "Width": 6.3,
+    "Height": 4.2,
+    "Thickness": 0.05,
+    "HiddenInHand": true,
+    "UsedWithCardHolders": true,
+    "CanStack": true,
+    "UsePrimaryColorForSide": false,
+    "FrontTextureOverrideExposed": false,
+    "AllowFlippedInStack": false,
+    "MirrorBack": true,
+    "Model": "Rounded",
+    "Indices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+    ],
+    "CardNames": {
+        "0": "Crimson Legionnaire II",
+        "1": "Dimensional Tear II",
+        "2": "Hel-Titan II",
+        "3": "Memoria II",
+        "4": "Saturn Engine II",
+        "5": "Strike Wing Alpha II"
+    },
+    "CardMetadata": {
+        "0": "card.technology.unit-upgrade.mahact:pok/crimson-legionnaire-2",
+        "1": "card.technology.unit-upgrade.vuilraith:pok/dimensional-tear-2",
+        "2": "card.technology.unit-upgrade.ul:pok/heltitan-2",
+        "3": "card.technology.unit-upgrade.nomad:pok/memoria-2",
+        "4": "card.technology.unit-upgrade.ul:pok/saturn-engine-2",
+        "5": "card.technology.unit-upgrade.argent:pok/strike-wing-alpha-2"
+    },
+    "CardTags": {
+        "0": [
+            "card-technology/unit-upgrade"
+        ],
+        "1": [
+            "card-technology/unit-upgrade"
+        ],
+        "2": [
+            "card-technology/unit-upgrade"
+        ],
+        "3": [
+            "card-technology/unit-upgrade"
+        ],
+        "4": [
+            "card-technology/unit-upgrade"
+        ],
+        "5": [
+            "card-technology/unit-upgrade"
+        ]
+    },
+    "GroundAccessibility": "ZoomAndContext",
+    "Tags": [
+        "card-technology/unit-upgrade"
+    ]
+}

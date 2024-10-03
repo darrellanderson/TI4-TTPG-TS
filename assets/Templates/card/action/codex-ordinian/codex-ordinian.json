@@ -1,7 +1,7 @@
 {
     "Type": "Card",
     "GUID": "8CBA05A886407B3DDF4F33DFB3B54CD6",
-    "Name": "codex-ordinian",
+    "Name": "action",
     "Metadata": "",
     "CollisionType": "Regular",
     "Friction": 0.7,

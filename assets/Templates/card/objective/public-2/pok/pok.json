@@ -1,0 +1,127 @@
+{
+    "Type": "Card",
+    "GUID": "78AB03C05DB6EA635D12923BEC268F79",
+    "Name": "objective/public-2",
+    "Metadata": "",
+    "CollisionType": "Regular",
+    "Friction": 0.7,
+    "Restitution": 0,
+    "Density": 0.5,
+    "SurfaceType": "Cardboard",
+    "Roughness": 1,
+    "Metallic": 0,
+    "PrimaryColor": {
+        "R": 255,
+        "G": 255,
+        "B": 255
+    },
+    "SecondaryColor": {
+        "R": 0,
+        "G": 0,
+        "B": 0
+    },
+    "Flippable": true,
+    "AutoStraighten": false,
+    "ShouldSnap": true,
+    "ScriptName": "",
+    "Blueprint": "",
+    "Models": [],
+    "Collision": [],
+    "SnapPointsGlobal": false,
+    "SnapPoints": [],
+    "ZoomViewDirection": {
+        "X": 0,
+        "Y": 0,
+        "Z": 0
+    },
+    "FrontTexture": "card/objective/public-2/pok/pok.face.jpg",
+    "BackTexture": "card/objective/public-2/pok/pok.back.jpg",
+    "HiddenTexture": "",
+    "BackIndex": -2,
+    "HiddenIndex": -1,
+    "NumHorizontal": 3,
+    "NumVertical": 4,
+    "Width": 4.2,
+    "Height": 6.3,
+    "Thickness": 0.05,
+    "HiddenInHand": true,
+    "UsedWithCardHolders": true,
+    "CanStack": true,
+    "UsePrimaryColorForSide": false,
+    "FrontTextureOverrideExposed": false,
+    "AllowFlippedInStack": false,
+    "MirrorBack": true,
+    "Model": "Rounded",
+    "Indices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+    ],
+    "CardNames": {
+        "0": "Achieve Supremacy",
+        "1": "Become a Legend",
+        "2": "Command an Armada",
+        "3": "Construct Massive Cities",
+        "4": "Control the Borderlands",
+        "5": "Hold Vast Reserves",
+        "6": "Patrol Vast Territories",
+        "7": "Protect the Border",
+        "8": "Reclaim Ancient Monuments",
+        "9": "Rule Distant Lands"
+    },
+    "CardMetadata": {
+        "0": "card.objective.public-2:pok/achieve-supremacy",
+        "1": "card.objective.public-2:pok/become-a-legend",
+        "2": "card.objective.public-2:pok/command-an-armada",
+        "3": "card.objective.public-2:pok/construct-massive-cities",
+        "4": "card.objective.public-2:pok/control-the-borderlands",
+        "5": "card.objective.public-2:pok/hold-vast-reserves",
+        "6": "card.objective.public-2:pok/patrol-vast-territories",
+        "7": "card.objective.public-2:pok/protect-the-border",
+        "8": "card.objective.public-2:pok/reclaim-ancient-monuments",
+        "9": "card.objective.public-2:pok/rule-distant-lands"
+    },
+    "CardTags": {
+        "0": [
+            "card-objective/public-2"
+        ],
+        "1": [
+            "card-objective/public-2"
+        ],
+        "2": [
+            "card-objective/public-2"
+        ],
+        "3": [
+            "card-objective/public-2"
+        ],
+        "4": [
+            "card-objective/public-2"
+        ],
+        "5": [
+            "card-objective/public-2"
+        ],
+        "6": [
+            "card-objective/public-2"
+        ],
+        "7": [
+            "card-objective/public-2"
+        ],
+        "8": [
+            "card-objective/public-2"
+        ],
+        "9": [
+            "card-objective/public-2"
+        ]
+    },
+    "GroundAccessibility": "ZoomAndContext",
+    "Tags": [
+        "card-objective/public-2"
+    ]
+}

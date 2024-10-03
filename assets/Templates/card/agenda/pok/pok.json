@@ -1,0 +1,145 @@
+{
+    "Type": "Card",
+    "GUID": "AB8C73271D8C565B888343D103C057E7",
+    "Name": "agenda",
+    "Metadata": "",
+    "CollisionType": "Regular",
+    "Friction": 0.7,
+    "Restitution": 0,
+    "Density": 0.5,
+    "SurfaceType": "Cardboard",
+    "Roughness": 1,
+    "Metallic": 0,
+    "PrimaryColor": {
+        "R": 255,
+        "G": 255,
+        "B": 255
+    },
+    "SecondaryColor": {
+        "R": 0,
+        "G": 0,
+        "B": 0
+    },
+    "Flippable": true,
+    "AutoStraighten": false,
+    "ShouldSnap": true,
+    "ScriptName": "",
+    "Blueprint": "",
+    "Models": [],
+    "Collision": [],
+    "SnapPointsGlobal": false,
+    "SnapPoints": [],
+    "ZoomViewDirection": {
+        "X": 0,
+        "Y": 0,
+        "Z": 0
+    },
+    "FrontTexture": "card/agenda/pok/pok.face.jpg",
+    "BackTexture": "card/agenda/pok/pok.back.jpg",
+    "HiddenTexture": "",
+    "BackIndex": -2,
+    "HiddenIndex": -1,
+    "NumHorizontal": 12,
+    "NumVertical": 2,
+    "Width": 4.2,
+    "Height": 6.3,
+    "Thickness": 0.05,
+    "HiddenInHand": true,
+    "UsedWithCardHolders": true,
+    "CanStack": true,
+    "UsePrimaryColorForSide": false,
+    "FrontTextureOverrideExposed": false,
+    "AllowFlippedInStack": false,
+    "MirrorBack": true,
+    "Model": "Rounded",
+    "Indices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+    ],
+    "CardNames": {
+        "0": "Armed Forces Standardization",
+        "1": "Articles of War",
+        "2": "Checks and Balances",
+        "3": "Clandestine Operations",
+        "4": "Covert Legislation",
+        "5": "Galactic Crisis Pact",
+        "6": "Minister of Antiquities",
+        "7": "Nexus Sovereignty",
+        "8": "Political Censure",
+        "9": "Rearmament Agreement",
+        "10": "Representative Government",
+        "11": "Research Grant Reallocation",
+        "12": "Search Warrant"
+    },
+    "CardMetadata": {
+        "0": "card.agenda:pok/armed-forces-standardization",
+        "1": "card.agenda:pok/articles-of-war",
+        "2": "card.agenda:pok/checks-and-balances",
+        "3": "card.agenda:pok/clandestine-operations",
+        "4": "card.agenda:pok/covert-legislation",
+        "5": "card.agenda:pok/galactic-crisis-pact",
+        "6": "card.agenda:pok/minister-of-antiquities",
+        "7": "card.agenda:pok/nexus-sovereignty",
+        "8": "card.agenda:pok/political-censure",
+        "9": "card.agenda:pok/rearmament-agreement",
+        "10": "card.agenda:pok/representative-government",
+        "11": "card.agenda:pok/research-grant-reallocation",
+        "12": "card.agenda:pok/search-warrant"
+    },
+    "CardTags": {
+        "0": [
+            "card-agenda"
+        ],
+        "1": [
+            "card-agenda"
+        ],
+        "2": [
+            "card-agenda"
+        ],
+        "3": [
+            "card-agenda"
+        ],
+        "4": [
+            "card-agenda"
+        ],
+        "5": [
+            "card-agenda"
+        ],
+        "6": [
+            "card-agenda"
+        ],
+        "7": [
+            "card-agenda"
+        ],
+        "8": [
+            "card-agenda"
+        ],
+        "9": [
+            "card-agenda"
+        ],
+        "10": [
+            "card-agenda"
+        ],
+        "11": [
+            "card-agenda"
+        ],
+        "12": [
+            "card-agenda"
+        ]
+    },
+    "GroundAccessibility": "ZoomAndContext",
+    "Tags": [
+        "card-agenda"
+    ]
+}

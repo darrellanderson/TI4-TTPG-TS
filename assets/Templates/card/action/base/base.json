@@ -1,7 +1,7 @@
 {
     "Type": "Card",
     "GUID": "E40D32DCEC6F2D304C270B80B4CD5E50",
-    "Name": "base",
+    "Name": "action",
     "Metadata": "",
     "CollisionType": "Regular",
     "Friction": 0.7,

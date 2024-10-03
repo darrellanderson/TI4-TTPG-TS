@@ -1,0 +1,187 @@
+{
+    "Type": "Card",
+    "GUID": "BFAB03503468BFFE4959A88446C68074",
+    "Name": "exploration/industrial",
+    "Metadata": "",
+    "CollisionType": "Regular",
+    "Friction": 0.7,
+    "Restitution": 0,
+    "Density": 0.5,
+    "SurfaceType": "Cardboard",
+    "Roughness": 1,
+    "Metallic": 0,
+    "PrimaryColor": {
+        "R": 255,
+        "G": 255,
+        "B": 255
+    },
+    "SecondaryColor": {
+        "R": 0,
+        "G": 0,
+        "B": 0
+    },
+    "Flippable": true,
+    "AutoStraighten": false,
+    "ShouldSnap": true,
+    "ScriptName": "",
+    "Blueprint": "",
+    "Models": [],
+    "Collision": [],
+    "SnapPointsGlobal": false,
+    "SnapPoints": [],
+    "ZoomViewDirection": {
+        "X": 0,
+        "Y": 0,
+        "Z": 0
+    },
+    "FrontTexture": "card/exploration/industrial/pok/pok.face.jpg",
+    "BackTexture": "card/exploration/industrial/pok/pok.back.jpg",
+    "HiddenTexture": "",
+    "BackIndex": -2,
+    "HiddenIndex": -1,
+    "NumHorizontal": 6,
+    "NumVertical": 4,
+    "Width": 4.2,
+    "Height": 6.3,
+    "Thickness": 0.05,
+    "HiddenInHand": true,
+    "UsedWithCardHolders": true,
+    "CanStack": true,
+    "UsePrimaryColorForSide": false,
+    "FrontTextureOverrideExposed": false,
+    "AllowFlippedInStack": false,
+    "MirrorBack": true,
+    "Model": "Rounded",
+    "Indices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19
+    ],
+    "CardNames": {
+        "0": "Abandoned Warehouses (1)",
+        "1": "Abandoned Warehouses (2)",
+        "2": "Abandoned Warehouses (3)",
+        "3": "Abandoned Warehouses (4)",
+        "4": "Biotic Research Facility",
+        "5": "Cybernetic Research Facility",
+        "6": "Functioning Base (1)",
+        "7": "Functioning Base (2)",
+        "8": "Functioning Base (3)",
+        "9": "Functioning Base (4)",
+        "10": "Industrial Relic Fragment (1)",
+        "11": "Industrial Relic Fragment (2)",
+        "12": "Industrial Relic Fragment (3)",
+        "13": "Industrial Relic Fragment (4)",
+        "14": "Industrial Relic Fragment (5)",
+        "15": "Local Fabricators (1)",
+        "16": "Local Fabricators (2)",
+        "17": "Local Fabricators (3)",
+        "18": "Local Fabricators (4)",
+        "19": "Propulsion Research Facility"
+    },
+    "CardMetadata": {
+        "0": "card.exploration.industrial:pok/abandoned-warehouses.1",
+        "1": "card.exploration.industrial:pok/abandoned-warehouses.2",
+        "2": "card.exploration.industrial:pok/abandoned-warehouses.3",
+        "3": "card.exploration.industrial:pok/abandoned-warehouses.4",
+        "4": "card.exploration.industrial:pok/biotic-research-facility",
+        "5": "card.exploration.industrial:pok/cybernetic-research-facility",
+        "6": "card.exploration.industrial:pok/functioning-base.1",
+        "7": "card.exploration.industrial:pok/functioning-base.2",
+        "8": "card.exploration.industrial:pok/functioning-base.3",
+        "9": "card.exploration.industrial:pok/functioning-base.4",
+        "10": "card.exploration.industrial:pok/industrial-relic-fragment.1",
+        "11": "card.exploration.industrial:pok/industrial-relic-fragment.2",
+        "12": "card.exploration.industrial:pok/industrial-relic-fragment.3",
+        "13": "card.exploration.industrial:pok/industrial-relic-fragment.4",
+        "14": "card.exploration.industrial:pok/industrial-relic-fragment.5",
+        "15": "card.exploration.industrial:pok/local-fabricators.1",
+        "16": "card.exploration.industrial:pok/local-fabricators.2",
+        "17": "card.exploration.industrial:pok/local-fabricators.3",
+        "18": "card.exploration.industrial:pok/local-fabricators.4",
+        "19": "card.exploration.industrial:pok/propulsion-research-facility"
+    },
+    "CardTags": {
+        "0": [
+            "card-exploration/industrial"
+        ],
+        "1": [
+            "card-exploration/industrial"
+        ],
+        "2": [
+            "card-exploration/industrial"
+        ],
+        "3": [
+            "card-exploration/industrial"
+        ],
+        "4": [
+            "card-exploration/industrial"
+        ],
+        "5": [
+            "card-exploration/industrial"
+        ],
+        "6": [
+            "card-exploration/industrial"
+        ],
+        "7": [
+            "card-exploration/industrial"
+        ],
+        "8": [
+            "card-exploration/industrial"
+        ],
+        "9": [
+            "card-exploration/industrial"
+        ],
+        "10": [
+            "card-exploration/industrial"
+        ],
+        "11": [
+            "card-exploration/industrial"
+        ],
+        "12": [
+            "card-exploration/industrial"
+        ],
+        "13": [
+            "card-exploration/industrial"
+        ],
+        "14": [
+            "card-exploration/industrial"
+        ],
+        "15": [
+            "card-exploration/industrial"
+        ],
+        "16": [
+            "card-exploration/industrial"
+        ],
+        "17": [
+            "card-exploration/industrial"
+        ],
+        "18": [
+            "card-exploration/industrial"
+        ],
+        "19": [
+            "card-exploration/industrial"
+        ]
+    },
+    "GroundAccessibility": "ZoomAndContext",
+    "Tags": [
+        "card-exploration/industrial"
+    ]
+}

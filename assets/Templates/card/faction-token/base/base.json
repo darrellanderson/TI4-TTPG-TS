@@ -1,0 +1,169 @@
+{
+    "Type": "Card",
+    "GUID": "38CC4192D29DD0676BAA2B10C11343C9",
+    "Name": "faction-token",
+    "Metadata": "",
+    "CollisionType": "Regular",
+    "Friction": 0.7,
+    "Restitution": 0,
+    "Density": 0.5,
+    "SurfaceType": "Cardboard",
+    "Roughness": 1,
+    "Metallic": 0,
+    "PrimaryColor": {
+        "R": 255,
+        "G": 255,
+        "B": 255
+    },
+    "SecondaryColor": {
+        "R": 0,
+        "G": 0,
+        "B": 0
+    },
+    "Flippable": true,
+    "AutoStraighten": false,
+    "ShouldSnap": true,
+    "ScriptName": "",
+    "Blueprint": "",
+    "Models": [],
+    "Collision": [],
+    "SnapPointsGlobal": false,
+    "SnapPoints": [],
+    "ZoomViewDirection": {
+        "X": 0,
+        "Y": 0,
+        "Z": 0
+    },
+    "FrontTexture": "card/faction-token/base/base.face.jpg",
+    "BackTexture": "card/faction-token/base/base.back.jpg",
+    "HiddenTexture": "",
+    "BackIndex": -2,
+    "HiddenIndex": -1,
+    "NumHorizontal": 12,
+    "NumVertical": 2,
+    "Width": 4.2,
+    "Height": 6.3,
+    "Thickness": 0.05,
+    "HiddenInHand": true,
+    "UsedWithCardHolders": true,
+    "CanStack": true,
+    "UsePrimaryColorForSide": false,
+    "FrontTextureOverrideExposed": false,
+    "AllowFlippedInStack": false,
+    "MirrorBack": true,
+    "Model": "Rounded",
+    "Indices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16
+    ],
+    "CardNames": {
+        "0": "Arborec Faction Token",
+        "1": "Ghosts of Creuss Faction Token",
+        "2": "Emirates of Hacan Faction Token",
+        "3": "Universities of Jol-Nar Faction Token",
+        "4": "L1Z1X Mindnet Faction Token",
+        "5": "Barony of Letnev Faction Token",
+        "6": "Mentak Coalition Faction Token",
+        "7": "Embers of Muaat Faction Token",
+        "8": "Naalu Collective Faction Token",
+        "9": "Nekro Virus Faction Token",
+        "10": "Sardakk N'orr Faction Token",
+        "11": "Clan of Saar Faction Token",
+        "12": "Federation of Sol Faction Token",
+        "13": "Winnu Faction Token",
+        "14": "Xxcha Kingdom Faction Token",
+        "15": "Yin Brotherhood Faction Token",
+        "16": "Yssaril Tribes Faction Token"
+    },
+    "CardMetadata": {
+        "0": "card.faction-token:base/arborec",
+        "1": "card.faction-token:base/creuss",
+        "2": "card.faction-token:base/hacan",
+        "3": "card.faction-token:base/jolnar",
+        "4": "card.faction-token:base/l1z1x",
+        "5": "card.faction-token:base/letnev",
+        "6": "card.faction-token:base/mentak",
+        "7": "card.faction-token:base/muaat",
+        "8": "card.faction-token:base/naalu",
+        "9": "card.faction-token:base/nekro",
+        "10": "card.faction-token:base/norr",
+        "11": "card.faction-token:base/saar",
+        "12": "card.faction-token:base/sol",
+        "13": "card.faction-token:base/winnu",
+        "14": "card.faction-token:base/xxcha",
+        "15": "card.faction-token:base/yin",
+        "16": "card.faction-token:base/yssaril"
+    },
+    "CardTags": {
+        "0": [
+            "card-faction-token"
+        ],
+        "1": [
+            "card-faction-token"
+        ],
+        "2": [
+            "card-faction-token"
+        ],
+        "3": [
+            "card-faction-token"
+        ],
+        "4": [
+            "card-faction-token"
+        ],
+        "5": [
+            "card-faction-token"
+        ],
+        "6": [
+            "card-faction-token"
+        ],
+        "7": [
+            "card-faction-token"
+        ],
+        "8": [
+            "card-faction-token"
+        ],
+        "9": [
+            "card-faction-token"
+        ],
+        "10": [
+            "card-faction-token"
+        ],
+        "11": [
+            "card-faction-token"
+        ],
+        "12": [
+            "card-faction-token"
+        ],
+        "13": [
+            "card-faction-token"
+        ],
+        "14": [
+            "card-faction-token"
+        ],
+        "15": [
+            "card-faction-token"
+        ],
+        "16": [
+            "card-faction-token"
+        ]
+    },
+    "GroundAccessibility": "ZoomAndContext",
+    "Tags": [
+        "card-faction-token"
+    ]
+}

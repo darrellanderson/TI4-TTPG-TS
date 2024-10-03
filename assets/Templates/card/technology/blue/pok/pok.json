@@ -1,0 +1,85 @@
+{
+    "Type": "Card",
+    "GUID": "552AF200DA462843514F5FD0BD00AC28",
+    "Name": "technology/blue",
+    "Metadata": "",
+    "CollisionType": "Regular",
+    "Friction": 0.7,
+    "Restitution": 0,
+    "Density": 0.5,
+    "SurfaceType": "Cardboard",
+    "Roughness": 1,
+    "Metallic": 0,
+    "PrimaryColor": {
+        "R": 255,
+        "G": 255,
+        "B": 255
+    },
+    "SecondaryColor": {
+        "R": 0,
+        "G": 0,
+        "B": 0
+    },
+    "Flippable": true,
+    "AutoStraighten": false,
+    "ShouldSnap": true,
+    "ScriptName": "",
+    "Blueprint": "",
+    "Models": [],
+    "Collision": [],
+    "SnapPointsGlobal": false,
+    "SnapPoints": [],
+    "ZoomViewDirection": {
+        "X": 0,
+        "Y": 0,
+        "Z": 0
+    },
+    "FrontTexture": "card/technology/blue/pok/pok.face.jpg",
+    "BackTexture": "card/technology/blue/pok/pok.back.jpg",
+    "HiddenTexture": "",
+    "BackIndex": -2,
+    "HiddenIndex": -1,
+    "NumHorizontal": 1,
+    "NumVertical": 3,
+    "Width": 6.3,
+    "Height": 4.2,
+    "Thickness": 0.05,
+    "HiddenInHand": true,
+    "UsedWithCardHolders": true,
+    "CanStack": true,
+    "UsePrimaryColorForSide": false,
+    "FrontTextureOverrideExposed": false,
+    "AllowFlippedInStack": false,
+    "MirrorBack": true,
+    "Model": "Rounded",
+    "Indices": [
+        0,
+        1,
+        2
+    ],
+    "CardNames": {
+        "0": "Aetherstream",
+        "1": "Dark Energy Tap",
+        "2": "Sling Relay"
+    },
+    "CardMetadata": {
+        "0": "card.technology.blue.empyrean:pok/aetherstream",
+        "1": "card.technology.blue:pok/dark-energy-tap",
+        "2": "card.technology.blue:pok/sling-relay"
+    },
+    "CardTags": {
+        "0": [
+            "card-technology/blue"
+        ],
+        "1": [
+            "card-technology/blue"
+        ],
+        "2": [
+            "card-technology/blue"
+        ]
+    },
+    "GroundAccessibility": "ZoomAndContext",
+    "Tags": [
+        "card-technology/blue"
+    ]
+}

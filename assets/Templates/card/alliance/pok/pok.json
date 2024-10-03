@@ -1,0 +1,211 @@
+{
+    "Type": "Card",
+    "GUID": "5E88420A7B8538E3A407DE096E8D9559",
+    "Name": "alliance",
+    "Metadata": "",
+    "CollisionType": "Regular",
+    "Friction": 0.7,
+    "Restitution": 0,
+    "Density": 0.5,
+    "SurfaceType": "Cardboard",
+    "Roughness": 1,
+    "Metallic": 0,
+    "PrimaryColor": {
+        "R": 255,
+        "G": 255,
+        "B": 255
+    },
+    "SecondaryColor": {
+        "R": 0,
+        "G": 0,
+        "B": 0
+    },
+    "Flippable": true,
+    "AutoStraighten": false,
+    "ShouldSnap": true,
+    "ScriptName": "",
+    "Blueprint": "",
+    "Models": [],
+    "Collision": [],
+    "SnapPointsGlobal": false,
+    "SnapPoints": [],
+    "ZoomViewDirection": {
+        "X": 0,
+        "Y": 0,
+        "Z": 0
+    },
+    "FrontTexture": "card/alliance/pok/pok.face.jpg",
+    "BackTexture": "card/alliance/pok/pok.back.jpg",
+    "HiddenTexture": "",
+    "BackIndex": -3,
+    "HiddenIndex": -1,
+    "NumHorizontal": 3,
+    "NumVertical": 8,
+    "Width": 4.2,
+    "Height": 6.3,
+    "Thickness": 0.05,
+    "HiddenInHand": true,
+    "UsedWithCardHolders": true,
+    "CanStack": true,
+    "UsePrimaryColorForSide": false,
+    "FrontTextureOverrideExposed": false,
+    "AllowFlippedInStack": false,
+    "MirrorBack": true,
+    "Model": "Rounded",
+    "Indices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23
+    ],
+    "CardNames": {
+        "0": "Arborec Alliance",
+        "1": "Argent Alliance",
+        "2": "Creuss Alliance",
+        "3": "Empyrean Alliance",
+        "4": "Hacan Alliance",
+        "5": "Jol-Nar Alliance",
+        "6": "L1Z1X Alliance",
+        "7": "Letnev Alliance",
+        "8": "Mahact Alliance",
+        "9": "Mentak Alliance",
+        "10": "Muaat Alliance",
+        "11": "Naalu Alliance",
+        "12": "Naaz-Rokha Alliance",
+        "13": "Nekro Alliance",
+        "14": "Nomad Alliance",
+        "15": "N'orr Alliance",
+        "16": "Saar Alliance",
+        "17": "Sol Alliance",
+        "18": "Ul Alliance",
+        "19": "Vuil'raith Alliance",
+        "20": "Winnu Alliance",
+        "21": "Xxcha Alliance",
+        "22": "Yin Alliance",
+        "23": "Yssaril Alliance"
+    },
+    "CardMetadata": {
+        "0": "card.alliance:pok/arborec",
+        "1": "card.alliance:pok/argent",
+        "2": "card.alliance:pok/creuss",
+        "3": "card.alliance:pok/empyrean",
+        "4": "card.alliance:pok/hacan",
+        "5": "card.alliance:pok/jolnar",
+        "6": "card.alliance:pok/l1z1x",
+        "7": "card.alliance:pok/letnev",
+        "8": "card.alliance:pok/mahact",
+        "9": "card.alliance:pok/mentak",
+        "10": "card.alliance:pok/muaat",
+        "11": "card.alliance:pok/naalu",
+        "12": "card.alliance:pok/naazrokha",
+        "13": "card.alliance:pok/nekro",
+        "14": "card.alliance:pok/nomad",
+        "15": "card.alliance:pok/norr",
+        "16": "card.alliance:pok/saar",
+        "17": "card.alliance:pok/sol",
+        "18": "card.alliance:pok/ul",
+        "19": "card.alliance:pok/vuilraith",
+        "20": "card.alliance:pok/winnu",
+        "21": "card.alliance:pok/xxcha",
+        "22": "card.alliance:pok/yin",
+        "23": "card.alliance:pok/yssaril"
+    },
+    "CardTags": {
+        "0": [
+            "card-alliance"
+        ],
+        "1": [
+            "card-alliance"
+        ],
+        "2": [
+            "card-alliance"
+        ],
+        "3": [
+            "card-alliance"
+        ],
+        "4": [
+            "card-alliance"
+        ],
+        "5": [
+            "card-alliance"
+        ],
+        "6": [
+            "card-alliance"
+        ],
+        "7": [
+            "card-alliance"
+        ],
+        "8": [
+            "card-alliance"
+        ],
+        "9": [
+            "card-alliance"
+        ],
+        "10": [
+            "card-alliance"
+        ],
+        "11": [
+            "card-alliance"
+        ],
+        "12": [
+            "card-alliance"
+        ],
+        "13": [
+            "card-alliance"
+        ],
+        "14": [
+            "card-alliance"
+        ],
+        "15": [
+            "card-alliance"
+        ],
+        "16": [
+            "card-alliance"
+        ],
+        "17": [
+            "card-alliance"
+        ],
+        "18": [
+            "card-alliance"
+        ],
+        "19": [
+            "card-alliance"
+        ],
+        "20": [
+            "card-alliance"
+        ],
+        "21": [
+            "card-alliance"
+        ],
+        "22": [
+            "card-alliance"
+        ],
+        "23": [
+            "card-alliance"
+        ]
+    },
+    "GroundAccessibility": "ZoomAndContext",
+    "Tags": [
+        "card-alliance"
+    ]
+}

@@ -1,0 +1,169 @@
+{
+    "Type": "Card",
+    "GUID": "D73E8B922C2F861A41E39492A6B2ED11",
+    "Name": "faction-reference",
+    "Metadata": "",
+    "CollisionType": "Regular",
+    "Friction": 0.7,
+    "Restitution": 0,
+    "Density": 0.5,
+    "SurfaceType": "Cardboard",
+    "Roughness": 1,
+    "Metallic": 0,
+    "PrimaryColor": {
+        "R": 255,
+        "G": 255,
+        "B": 255
+    },
+    "SecondaryColor": {
+        "R": 0,
+        "G": 0,
+        "B": 0
+    },
+    "Flippable": true,
+    "AutoStraighten": false,
+    "ShouldSnap": true,
+    "ScriptName": "",
+    "Blueprint": "",
+    "Models": [],
+    "Collision": [],
+    "SnapPointsGlobal": false,
+    "SnapPoints": [],
+    "ZoomViewDirection": {
+        "X": 0,
+        "Y": 0,
+        "Z": 0
+    },
+    "FrontTexture": "card/faction-reference/base/base.face.jpg",
+    "BackTexture": "card/faction-reference/base/base.back.jpg",
+    "HiddenTexture": "",
+    "BackIndex": -2,
+    "HiddenIndex": -1,
+    "NumHorizontal": 4,
+    "NumVertical": 5,
+    "Width": 8.8,
+    "Height": 6.3,
+    "Thickness": 0.05,
+    "HiddenInHand": true,
+    "UsedWithCardHolders": true,
+    "CanStack": true,
+    "UsePrimaryColorForSide": false,
+    "FrontTextureOverrideExposed": false,
+    "AllowFlippedInStack": false,
+    "MirrorBack": true,
+    "Model": "Rounded",
+    "Indices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16
+    ],
+    "CardNames": {
+        "0": "Arborec Faction Token",
+        "1": "Ghosts of Creuss Faction Token",
+        "2": "Emirates of Hacan Faction Token",
+        "3": "Universities of Jol-Nar Faction Token",
+        "4": "L1Z1X Mindnet Faction Token",
+        "5": "Barony of Letnev Faction Token",
+        "6": "Mentak Coalition Faction Token",
+        "7": "Embers of Muaat Faction Token",
+        "8": "Naalu Collective Faction Token",
+        "9": "Nekro Virus Faction Token",
+        "10": "Sardakk N'orr Faction Token",
+        "11": "Clan of Saar Faction Token",
+        "12": "Federation of Sol Faction Token",
+        "13": "Winnu Faction Token",
+        "14": "Xxcha Kingdom Faction Token",
+        "15": "Yin Brotherhood Faction Token",
+        "16": "Yssaril Tribes Faction Token"
+    },
+    "CardMetadata": {
+        "0": "card.faction-reference:base/arborec",
+        "1": "card.faction-reference:base/creuss",
+        "2": "card.faction-reference:base/hacan",
+        "3": "card.faction-reference:base/jolnar",
+        "4": "card.faction-reference:base/l1z1x",
+        "5": "card.faction-reference:base/letnev",
+        "6": "card.faction-reference:base/mentak",
+        "7": "card.faction-reference:base/muaat",
+        "8": "card.faction-reference:base/naalu",
+        "9": "card.faction-reference:base/nekro",
+        "10": "card.faction-reference:base/norr",
+        "11": "card.faction-reference:base/saar",
+        "12": "card.faction-reference:base/sol",
+        "13": "card.faction-reference:base/winnu",
+        "14": "card.faction-reference:base/xxcha",
+        "15": "card.faction-reference:base/yin",
+        "16": "card.faction-reference:base/yssaril"
+    },
+    "CardTags": {
+        "0": [
+            "card-faction-reference"
+        ],
+        "1": [
+            "card-faction-reference"
+        ],
+        "2": [
+            "card-faction-reference"
+        ],
+        "3": [
+            "card-faction-reference"
+        ],
+        "4": [
+            "card-faction-reference"
+        ],
+        "5": [
+            "card-faction-reference"
+        ],
+        "6": [
+            "card-faction-reference"
+        ],
+        "7": [
+            "card-faction-reference"
+        ],
+        "8": [
+            "card-faction-reference"
+        ],
+        "9": [
+            "card-faction-reference"
+        ],
+        "10": [
+            "card-faction-reference"
+        ],
+        "11": [
+            "card-faction-reference"
+        ],
+        "12": [
+            "card-faction-reference"
+        ],
+        "13": [
+            "card-faction-reference"
+        ],
+        "14": [
+            "card-faction-reference"
+        ],
+        "15": [
+            "card-faction-reference"
+        ],
+        "16": [
+            "card-faction-reference"
+        ]
+    },
+    "GroundAccessibility": "ZoomAndContext",
+    "Tags": [
+        "card-faction-reference"
+    ]
+}

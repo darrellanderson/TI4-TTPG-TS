@@ -1,0 +1,127 @@
+{
+    "Type": "Card",
+    "GUID": "83C79B830E213A4DD73455CBA82288F1",
+    "Name": "relic",
+    "Metadata": "",
+    "CollisionType": "Regular",
+    "Friction": 0.7,
+    "Restitution": 0,
+    "Density": 0.5,
+    "SurfaceType": "Cardboard",
+    "Roughness": 1,
+    "Metallic": 0,
+    "PrimaryColor": {
+        "R": 255,
+        "G": 255,
+        "B": 255
+    },
+    "SecondaryColor": {
+        "R": 0,
+        "G": 0,
+        "B": 0
+    },
+    "Flippable": true,
+    "AutoStraighten": false,
+    "ShouldSnap": true,
+    "ScriptName": "",
+    "Blueprint": "",
+    "Models": [],
+    "Collision": [],
+    "SnapPointsGlobal": false,
+    "SnapPoints": [],
+    "ZoomViewDirection": {
+        "X": 0,
+        "Y": 0,
+        "Z": 0
+    },
+    "FrontTexture": "card/relic/pok/pok.face.jpg",
+    "BackTexture": "card/relic/pok/pok.back.jpg",
+    "HiddenTexture": "",
+    "BackIndex": -2,
+    "HiddenIndex": -1,
+    "NumHorizontal": 3,
+    "NumVertical": 4,
+    "Width": 4.2,
+    "Height": 6.3,
+    "Thickness": 0.05,
+    "HiddenInHand": true,
+    "UsedWithCardHolders": true,
+    "CanStack": true,
+    "UsePrimaryColorForSide": false,
+    "FrontTextureOverrideExposed": false,
+    "AllowFlippedInStack": false,
+    "MirrorBack": true,
+    "Model": "Rounded",
+    "Indices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+    ],
+    "CardNames": {
+        "0": "Dominus Orb",
+        "1": "Maw of Worlds",
+        "2": "Scepter of Emelpar",
+        "3": "Shard of the Throne (PoK)",
+        "4": "Stellar Converter",
+        "5": "The Codex",
+        "6": "The Crown of Emphidia (PoK)",
+        "7": "The Crown of Thalnos (PoK)",
+        "8": "The Obsidian",
+        "9": "The Prophet's Tears"
+    },
+    "CardMetadata": {
+        "0": "card.relic:pok/dominus-orb",
+        "1": "card.relic:pok/maw-of-worlds",
+        "2": "card.relic:pok/scepter-of-emelpar",
+        "3": "card.relic:pok/shard-of-the-throne",
+        "4": "card.relic:pok/stellar-converter",
+        "5": "card.relic:pok/the-codex",
+        "6": "card.relic:pok/the-crown-of-emphidia",
+        "7": "card.relic:pok/the-crown-of-thalnos",
+        "8": "card.relic:pok/the-obsidian",
+        "9": "card.relic:pok/the-prophets-tears"
+    },
+    "CardTags": {
+        "0": [
+            "card-relic"
+        ],
+        "1": [
+            "card-relic"
+        ],
+        "2": [
+            "card-relic"
+        ],
+        "3": [
+            "card-relic"
+        ],
+        "4": [
+            "card-relic"
+        ],
+        "5": [
+            "card-relic"
+        ],
+        "6": [
+            "card-relic"
+        ],
+        "7": [
+            "card-relic"
+        ],
+        "8": [
+            "card-relic"
+        ],
+        "9": [
+            "card-relic"
+        ]
+    },
+    "GroundAccessibility": "ZoomAndContext",
+    "Tags": [
+        "card-relic"
+    ]
+}

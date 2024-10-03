@@ -1,0 +1,187 @@
+{
+    "Type": "Card",
+    "GUID": "632B13637A59A19C43DD769EC9DDA63B",
+    "Name": "exploration/cultural",
+    "Metadata": "",
+    "CollisionType": "Regular",
+    "Friction": 0.7,
+    "Restitution": 0,
+    "Density": 0.5,
+    "SurfaceType": "Cardboard",
+    "Roughness": 1,
+    "Metallic": 0,
+    "PrimaryColor": {
+        "R": 255,
+        "G": 255,
+        "B": 255
+    },
+    "SecondaryColor": {
+        "R": 0,
+        "G": 0,
+        "B": 0
+    },
+    "Flippable": true,
+    "AutoStraighten": false,
+    "ShouldSnap": true,
+    "ScriptName": "",
+    "Blueprint": "",
+    "Models": [],
+    "Collision": [],
+    "SnapPointsGlobal": false,
+    "SnapPoints": [],
+    "ZoomViewDirection": {
+        "X": 0,
+        "Y": 0,
+        "Z": 0
+    },
+    "FrontTexture": "card/exploration/cultural/pok/pok.face.jpg",
+    "BackTexture": "card/exploration/cultural/pok/pok.back.jpg",
+    "HiddenTexture": "",
+    "BackIndex": -2,
+    "HiddenIndex": -1,
+    "NumHorizontal": 6,
+    "NumVertical": 4,
+    "Width": 4.2,
+    "Height": 6.3,
+    "Thickness": 0.05,
+    "HiddenInHand": true,
+    "UsedWithCardHolders": true,
+    "CanStack": true,
+    "UsePrimaryColorForSide": false,
+    "FrontTextureOverrideExposed": false,
+    "AllowFlippedInStack": false,
+    "MirrorBack": true,
+    "Model": "Rounded",
+    "Indices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19
+    ],
+    "CardNames": {
+        "0": "Cultural Relic Fragment (1)",
+        "1": "Cultural Relic Fragment (2)",
+        "2": "Cultural Relic Fragment (3)",
+        "3": "Cultural Relic Fragment (4)",
+        "4": "Cultural Relic Fragment (5)",
+        "5": "Cultural Relic Fragment (6)",
+        "6": "Cultural Relic Fragment (7)",
+        "7": "Cultural Relic Fragment (8)",
+        "8": "Cultural Relic Fragment (9)",
+        "9": "Demilitarized Zone (PoK)",
+        "10": "Dyson Sphere",
+        "11": "Freelancers (1)",
+        "12": "Freelancers (2)",
+        "13": "Freelancers (3)",
+        "14": "Gamma Wormhole",
+        "15": "Mercenary Outfit (1)",
+        "16": "Mercenary Outfit (2)",
+        "17": "Mercenary Outfit (3)",
+        "18": "Paradise World",
+        "19": "Tomb of Emphidia"
+    },
+    "CardMetadata": {
+        "0": "card.exploration.cultural:pok/cultural-relic-fragment.1",
+        "1": "card.exploration.cultural:pok/cultural-relic-fragment.2",
+        "2": "card.exploration.cultural:pok/cultural-relic-fragment.3",
+        "3": "card.exploration.cultural:pok/cultural-relic-fragment.4",
+        "4": "card.exploration.cultural:pok/cultural-relic-fragment.5",
+        "5": "card.exploration.cultural:pok/cultural-relic-fragment.6",
+        "6": "card.exploration.cultural:pok/cultural-relic-fragment.7",
+        "7": "card.exploration.cultural:pok/cultural-relic-fragment.8",
+        "8": "card.exploration.cultural:pok/cultural-relic-fragment.9",
+        "9": "card.exploration.cultural:pok/demilitarized-zone",
+        "10": "card.exploration.cultural:pok/dyson-sphere",
+        "11": "card.exploration.cultural:pok/freelancers.1",
+        "12": "card.exploration.cultural:pok/freelancers.2",
+        "13": "card.exploration.cultural:pok/freelancers.3",
+        "14": "card.exploration.cultural:pok/gamma-wormhole",
+        "15": "card.exploration.cultural:pok/mercenary-outfit.1",
+        "16": "card.exploration.cultural:pok/mercenary-outfit.2",
+        "17": "card.exploration.cultural:pok/mercenary-outfit.3",
+        "18": "card.exploration.cultural:pok/paradise-world",
+        "19": "card.exploration.cultural:pok/tomb-of-emphidia"
+    },
+    "CardTags": {
+        "0": [
+            "card-exploration/cultural"
+        ],
+        "1": [
+            "card-exploration/cultural"
+        ],
+        "2": [
+            "card-exploration/cultural"
+        ],
+        "3": [
+            "card-exploration/cultural"
+        ],
+        "4": [
+            "card-exploration/cultural"
+        ],
+        "5": [
+            "card-exploration/cultural"
+        ],
+        "6": [
+            "card-exploration/cultural"
+        ],
+        "7": [
+            "card-exploration/cultural"
+        ],
+        "8": [
+            "card-exploration/cultural"
+        ],
+        "9": [
+            "card-exploration/cultural"
+        ],
+        "10": [
+            "card-exploration/cultural"
+        ],
+        "11": [
+            "card-exploration/cultural"
+        ],
+        "12": [
+            "card-exploration/cultural"
+        ],
+        "13": [
+            "card-exploration/cultural"
+        ],
+        "14": [
+            "card-exploration/cultural"
+        ],
+        "15": [
+            "card-exploration/cultural"
+        ],
+        "16": [
+            "card-exploration/cultural"
+        ],
+        "17": [
+            "card-exploration/cultural"
+        ],
+        "18": [
+            "card-exploration/cultural"
+        ],
+        "19": [
+            "card-exploration/cultural"
+        ]
+    },
+    "GroundAccessibility": "ZoomAndContext",
+    "Tags": [
+        "card-exploration/cultural"
+    ]
+}

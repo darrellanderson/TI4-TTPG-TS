@@ -1,0 +1,643 @@
+{
+    "Type": "Card",
+    "GUID": "CA4A2F259E3CCE4EB371325BF2D415C5",
+    "Name": "leader 1/2",
+    "Metadata": "",
+    "CollisionType": "Regular",
+    "Friction": 0.7,
+    "Restitution": 0,
+    "Density": 0.5,
+    "SurfaceType": "Cardboard",
+    "Roughness": 1,
+    "Metallic": 0,
+    "PrimaryColor": {
+        "R": 255,
+        "G": 255,
+        "B": 255
+    },
+    "SecondaryColor": {
+        "R": 0,
+        "G": 0,
+        "B": 0
+    },
+    "Flippable": true,
+    "AutoStraighten": false,
+    "ShouldSnap": true,
+    "ScriptName": "",
+    "Blueprint": "",
+    "Models": [],
+    "Collision": [],
+    "SnapPointsGlobal": false,
+    "SnapPoints": [],
+    "ZoomViewDirection": {
+        "X": 0,
+        "Y": 0,
+        "Z": 0
+    },
+    "FrontTexture": "card/leader/pok/pok.face.0.jpg",
+    "BackTexture": "card/leader/pok/pok.back.0.jpg",
+    "HiddenTexture": "",
+    "BackIndex": -3,
+    "HiddenIndex": -1,
+    "NumHorizontal": 8,
+    "NumVertical": 12,
+    "Width": 6.3,
+    "Height": 4.2,
+    "Thickness": 0.05,
+    "HiddenInHand": true,
+    "UsedWithCardHolders": true,
+    "CanStack": true,
+    "UsePrimaryColorForSide": false,
+    "FrontTextureOverrideExposed": false,
+    "AllowFlippedInStack": false,
+    "MirrorBack": true,
+    "Model": "Rounded",
+    "Indices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49,
+        50,
+        51,
+        52,
+        53,
+        54,
+        55,
+        56,
+        57,
+        58,
+        59,
+        60,
+        61,
+        62,
+        63,
+        64,
+        65,
+        66,
+        67,
+        68,
+        69,
+        70,
+        71,
+        72,
+        73,
+        74,
+        75,
+        76,
+        77,
+        78,
+        79,
+        80,
+        81,
+        82,
+        83,
+        84,
+        85,
+        86,
+        87,
+        88,
+        89,
+        90,
+        91,
+        92,
+        93,
+        94,
+        95
+    ],
+    "CardNames": {
+        "0": "Acamar",
+        "1": "Artuno the Betrayer",
+        "2": "Berekar Berekon",
+        "3": "Brother Milor",
+        "4": "Captain Mendosa",
+        "5": "Carth of Golden Sands",
+        "6": "Doctor Sucaban",
+        "7": "Emissary Taivra",
+        "8": "Evelyn Delouis",
+        "9": "Field Marshal Mercer",
+        "10": "Garv and Gunn",
+        "11": "Ggrocuto Rinn",
+        "12": "I48S",
+        "13": "Jae Mir Kan",
+        "14": "Letani Ospha",
+        "15": "Nekro Malleon",
+        "16": "Ssruu",
+        "17": "Suffi An",
+        "18": "Tellurian",
+        "19": "The Stillness of Stars",
+        "20": "The Thundarian",
+        "21": "Trilossa Aun Mirik",
+        "22": "T'ro",
+        "23": "Umbat",
+        "24": "Viscount Unlenn",
+        "25": "Z'eu",
+        "26": "2RAM",
+        "27": "Brother Omar",
+        "28": "Claire Gibson",
+        "29": "Dart and Tai",
+        "30": "Dirzuga Rophal",
+        "31": "Elder Qanoj",
+        "32": "G'hom Sek'kus",
+        "33": "Gila the Silvertongue",
+        "34": "Il Na Viroset",
+        "35": "M'aban",
+        "36": "Magmus",
+        "37": "Navarch Feng",
+        "38": "Nekro Acidos",
+        "39": "Rear Admiral Farran",
+        "40": "Rickar Rickani",
+        "41": "Rowl Sarrig",
+        "42": "Sai Seravus",
+        "43": "So Ata",
+        "44": "S'ula Mentarion",
+        "45": "Ta Zern",
+        "46": "That Which Molds Flesh",
+        "47": "Trrakan Aun Zulok",
+        "48": "Tungstantus",
+        "49": "Xuange",
+        "50": "Adjudicator Ba'al",
+        "51": "Ahk-Syl Siven",
+        "52": "Airo Shir Aur",
+        "53": "Conservator Procyon",
+        "54": "Dannel of the Tenth",
+        "55": "Darktalon Treilla",
+        "56": "Gurno Aggero",
+        "57": "Harrugh Gefhara",
+        "58": "Hesh and Prit",
+        "59": "Ipswitch, Loose Cannon",
+        "60": "It Feeds on Carrion",
+        "61": "Jace X, 4th Air Legion",
+        "62": "Kyver, Blade and Key",
+        "63": "Letani Miasmiala",
+        "64": "Mathis Mathinus",
+        "65": "Mirik Aun Sissiri",
+        "66": "Riftwalker Meian",
+        "67": "Rin, the Master's Legacy",
+        "68": "Sh'val, Harbinger",
+        "69": "The Helmsman",
+        "70": "The Oracle",
+        "71": "Ul the Progenitor",
+        "72": "Unit.dsgn.FLAYESH",
+        "73": "Xxekir Grom",
+        "74": "Aerie Sentinel",
+        "75": "Annihilator",
+        "76": "Blackshade Infiltrator",
+        "77": "Dunlain Reaper",
+        "78": "Eidolon",
+        "79": "Ember Colossus",
+        "80": "Hecatoncheires",
+        "81": "Icarus Drive",
+        "82": "Iconoclast",
+        "83": "Indomitus",
+        "84": "Letani Behemoth",
+        "85": "Moll Terminus",
+        "86": "Mordred",
+        "87": "Moyin's Ashes",
+        "88": "Pride of Kenara",
+        "89": "Quantum Manipulator",
+        "90": "Reanimator",
+        "91": "Reclaimer",
+        "92": "Scavenger Zeta",
+        "93": "Shield Paling",
+        "94": "Starlancer",
+        "95": "Valkyrie Exoskeleton"
+    },
+    "CardMetadata": {
+        "0": "card.leader.agent.empyrean:pok/acamar",
+        "1": "card.leader.agent.nomad:pok/artuno-the-betrayer",
+        "2": "card.leader.agent.winnu:pok/berekar-berekon",
+        "3": "card.leader.agent.yin:pok/brother-milor",
+        "4": "card.leader.agent.saar:pok/captain-mendosa",
+        "5": "card.leader.agent.hacan:pok/carth-of-golden-sands",
+        "6": "card.leader.agent.jolnar:pok/doctor-sucaban",
+        "7": "card.leader.agent.creuss:pok/emissary-taivra",
+        "8": "card.leader.agent.sol:pok/evelyn-delouis",
+        "9": "card.leader.agent.nomad:pok/field-marshal-mercer",
+        "10": "card.leader.agent.naazrokha:pok/garv-and-gunn",
+        "11": "card.leader.agent.xxcha:pok/ggrocuto-rinn",
+        "12": "card.leader.agent.l1z1x:pok/i48s",
+        "13": "card.leader.agent.mahact:pok/jae-mir-kan",
+        "14": "card.leader.agent.arborec:pok/letani-ospha",
+        "15": "card.leader.agent.nekro:pok/nekro-malleon",
+        "16": "card.leader.agent.yssaril:pok/ssruu",
+        "17": "card.leader.agent.mentak:pok/suffi-an",
+        "18": "card.leader.agent.ul:pok/tellurian",
+        "19": "card.leader.agent.vuilraith:pok/the-stillness-of-stars",
+        "20": "card.leader.agent.nomad:pok/the-thundarian",
+        "21": "card.leader.agent.argent:pok/trilossa-aun-mirik",
+        "22": "card.leader.agent.norr:pok/tro",
+        "23": "card.leader.agent.muaat:pok/umbat",
+        "24": "card.leader.agent.letnev:pok/viscount-unlenn",
+        "25": "card.leader.agent.naalu:pok/zeu",
+        "26": "card.leader.commander.l1z1x:pok/2ram",
+        "27": "card.leader.commander.yin:pok/brother-omar",
+        "28": "card.leader.commander.sol:pok/claire-gibson",
+        "29": "card.leader.commander.naazrokha:pok/dart-and-tai",
+        "30": "card.leader.commander.arborec:pok/dirzuga-rophal",
+        "31": "card.leader.commander.xxcha:pok/elder-qanoj",
+        "32": "card.leader.commander.norr:pok/ghom-sekkus",
+        "33": "card.leader.commander.hacan:pok/gila-the-silvertongue",
+        "34": "card.leader.commander.mahact:pok/il-na-viroset",
+        "35": "card.leader.commander.naalu:pok/maban",
+        "36": "card.leader.commander.muaat:pok/magmus",
+        "37": "card.leader.commander.nomad:pok/navarch-feng",
+        "38": "card.leader.commander.nekro:pok/nekro-acidos",
+        "39": "card.leader.commander.letnev:pok/rear-admiral-farran",
+        "40": "card.leader.commander.winnu:pok/rickar-rickani",
+        "41": "card.leader.commander.saar:pok/rowl-sarrig",
+        "42": "card.leader.commander.creuss:pok/sai-seravus",
+        "43": "card.leader.commander.yssaril:pok/so-ata",
+        "44": "card.leader.commander.mentak:pok/sula-mentarion",
+        "45": "card.leader.commander.jolnar:pok/ta-zern",
+        "46": "card.leader.commander.vuilraith:pok/that-which-molds-flesh",
+        "47": "card.leader.commander.argent:pok/trrakan-aun-zulok",
+        "48": "card.leader.commander.ul:pok/tungstantus",
+        "49": "card.leader.commander.empyrean:pok/xuange",
+        "50": "card.leader.hero.muaat:pok/adjudicator-baal",
+        "51": "card.leader.hero.nomad:pok/ahksyl-siven",
+        "52": "card.leader.hero.mahact:pok/airo-shir-aur",
+        "53": "card.leader.hero.empyrean:pok/conservator-procyon",
+        "54": "card.leader.hero.yin:pok/dannel-of-the-tenth",
+        "55": "card.leader.hero.letnev:pok/darktalon-treilla",
+        "56": "card.leader.hero.saar:pok/gurno-aggero",
+        "57": "card.leader.hero.hacan:pok/harrugh-gefhara",
+        "58": "card.leader.hero.naazrokha:pok/hesh-and-prit",
+        "59": "card.leader.hero.mentak:pok/ipswitch-loose-cannon",
+        "60": "card.leader.hero.vuilraith:pok/it-feeds-on-carrion",
+        "61": "card.leader.hero.sol:pok/jace-x-4th-air-legion",
+        "62": "card.leader.hero.yssaril:pok/kyver-blade-and-key",
+        "63": "card.leader.hero.arborec:pok/letani-miasmiala",
+        "64": "card.leader.hero.winnu:pok/mathis-mathinus",
+        "65": "card.leader.hero.argent:pok/mirik-aun-sissiri",
+        "66": "card.leader.hero.creuss:pok/riftwalker-meian",
+        "67": "card.leader.hero.jolnar:pok/rin-the-masters-legacy",
+        "68": "card.leader.hero.norr:pok/shval-harbinger",
+        "69": "card.leader.hero.l1z1x:pok/the-helmsman",
+        "70": "card.leader.hero.naalu:pok/the-oracle",
+        "71": "card.leader.hero.ul:pok/ul-the-progenitor",
+        "72": "card.leader.hero.nekro:pok/unitdsgnflayesh",
+        "73": "card.leader.hero.xxcha:pok/xxekir-grom",
+        "74": "card.leader.mech.argent:pok/aerie-sentinel",
+        "75": "card.leader.mech.l1z1x:pok/annihilator",
+        "76": "card.leader.mech.yssaril:pok/blackshade-infiltrator",
+        "77": "card.leader.mech.letnev:pok/dunlain-reaper",
+        "78": "card.leader.mech.naazrokha:pok/eidolon",
+        "79": "card.leader.mech.muaat:pok/ember-colossus",
+        "80": "card.leader.mech.ul:pok/hecatoncheires",
+        "81": "card.leader.mech.creuss:pok/icarus-drive",
+        "82": "card.leader.mech.naalu:pok/iconoclast",
+        "83": "card.leader.mech.xxcha:pok/indomitus",
+        "84": "card.leader.mech.arborec:pok/letani-behemoth",
+        "85": "card.leader.mech.mentak:pok/moll-terminus",
+        "86": "card.leader.mech.nekro:pok/mordred",
+        "87": "card.leader.mech.yin:pok/moyins-ashes",
+        "88": "card.leader.mech.hacan:pok/pride-of-kenara",
+        "89": "card.leader.mech.nomad:pok/quantum-manipulator",
+        "90": "card.leader.mech.vuilraith:pok/reanimator",
+        "91": "card.leader.mech.winnu:pok/reclaimer",
+        "92": "card.leader.mech.saar:pok/scavenger-zeta",
+        "93": "card.leader.mech.jolnar:pok/shield-paling",
+        "94": "card.leader.mech.mahact:pok/starlancer",
+        "95": "card.leader.mech.norr:pok/valkyrie-exoskeleton"
+    },
+    "CardTags": {
+        "0": [
+            "card-leader"
+        ],
+        "1": [
+            "card-leader"
+        ],
+        "2": [
+            "card-leader"
+        ],
+        "3": [
+            "card-leader"
+        ],
+        "4": [
+            "card-leader"
+        ],
+        "5": [
+            "card-leader"
+        ],
+        "6": [
+            "card-leader"
+        ],
+        "7": [
+            "card-leader"
+        ],
+        "8": [
+            "card-leader"
+        ],
+        "9": [
+            "card-leader"
+        ],
+        "10": [
+            "card-leader"
+        ],
+        "11": [
+            "card-leader"
+        ],
+        "12": [
+            "card-leader"
+        ],
+        "13": [
+            "card-leader"
+        ],
+        "14": [
+            "card-leader"
+        ],
+        "15": [
+            "card-leader"
+        ],
+        "16": [
+            "card-leader"
+        ],
+        "17": [
+            "card-leader"
+        ],
+        "18": [
+            "card-leader"
+        ],
+        "19": [
+            "card-leader"
+        ],
+        "20": [
+            "card-leader"
+        ],
+        "21": [
+            "card-leader"
+        ],
+        "22": [
+            "card-leader"
+        ],
+        "23": [
+            "card-leader"
+        ],
+        "24": [
+            "card-leader"
+        ],
+        "25": [
+            "card-leader"
+        ],
+        "26": [
+            "card-leader"
+        ],
+        "27": [
+            "card-leader"
+        ],
+        "28": [
+            "card-leader"
+        ],
+        "29": [
+            "card-leader"
+        ],
+        "30": [
+            "card-leader"
+        ],
+        "31": [
+            "card-leader"
+        ],
+        "32": [
+            "card-leader"
+        ],
+        "33": [
+            "card-leader"
+        ],
+        "34": [
+            "card-leader"
+        ],
+        "35": [
+            "card-leader"
+        ],
+        "36": [
+            "card-leader"
+        ],
+        "37": [
+            "card-leader"
+        ],
+        "38": [
+            "card-leader"
+        ],
+        "39": [
+            "card-leader"
+        ],
+        "40": [
+            "card-leader"
+        ],
+        "41": [
+            "card-leader"
+        ],
+        "42": [
+            "card-leader"
+        ],
+        "43": [
+            "card-leader"
+        ],
+        "44": [
+            "card-leader"
+        ],
+        "45": [
+            "card-leader"
+        ],
+        "46": [
+            "card-leader"
+        ],
+        "47": [
+            "card-leader"
+        ],
+        "48": [
+            "card-leader"
+        ],
+        "49": [
+            "card-leader"
+        ],
+        "50": [
+            "card-leader"
+        ],
+        "51": [
+            "card-leader"
+        ],
+        "52": [
+            "card-leader"
+        ],
+        "53": [
+            "card-leader"
+        ],
+        "54": [
+            "card-leader"
+        ],
+        "55": [
+            "card-leader"
+        ],
+        "56": [
+            "card-leader"
+        ],
+        "57": [
+            "card-leader"
+        ],
+        "58": [
+            "card-leader"
+        ],
+        "59": [
+            "card-leader"
+        ],
+        "60": [
+            "card-leader"
+        ],
+        "61": [
+            "card-leader"
+        ],
+        "62": [
+            "card-leader"
+        ],
+        "63": [
+            "card-leader"
+        ],
+        "64": [
+            "card-leader"
+        ],
+        "65": [
+            "card-leader"
+        ],
+        "66": [
+            "card-leader"
+        ],
+        "67": [
+            "card-leader"
+        ],
+        "68": [
+            "card-leader"
+        ],
+        "69": [
+            "card-leader"
+        ],
+        "70": [
+            "card-leader"
+        ],
+        "71": [
+            "card-leader"
+        ],
+        "72": [
+            "card-leader"
+        ],
+        "73": [
+            "card-leader"
+        ],
+        "74": [
+            "card-leader"
+        ],
+        "75": [
+            "card-leader"
+        ],
+        "76": [
+            "card-leader"
+        ],
+        "77": [
+            "card-leader"
+        ],
+        "78": [
+            "card-leader"
+        ],
+        "79": [
+            "card-leader"
+        ],
+        "80": [
+            "card-leader"
+        ],
+        "81": [
+            "card-leader"
+        ],
+        "82": [
+            "card-leader"
+        ],
+        "83": [
+            "card-leader"
+        ],
+        "84": [
+            "card-leader"
+        ],
+        "85": [
+            "card-leader"
+        ],
+        "86": [
+            "card-leader"
+        ],
+        "87": [
+            "card-leader"
+        ],
+        "88": [
+            "card-leader"
+        ],
+        "89": [
+            "card-leader"
+        ],
+        "90": [
+            "card-leader"
+        ],
+        "91": [
+            "card-leader"
+        ],
+        "92": [
+            "card-leader"
+        ],
+        "93": [
+            "card-leader"
+        ],
+        "94": [
+            "card-leader"
+        ],
+        "95": [
+            "card-leader"
+        ]
+    },
+    "GroundAccessibility": "ZoomAndContext",
+    "Tags": [
+        "card-leader"
+    ]
+}

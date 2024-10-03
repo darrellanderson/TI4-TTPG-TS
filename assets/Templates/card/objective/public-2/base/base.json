@@ -1,0 +1,127 @@
+{
+    "Type": "Card",
+    "GUID": "63008325B29F76CBE5A488F04AB0234E",
+    "Name": "objective/public-2",
+    "Metadata": "",
+    "CollisionType": "Regular",
+    "Friction": 0.7,
+    "Restitution": 0,
+    "Density": 0.5,
+    "SurfaceType": "Cardboard",
+    "Roughness": 1,
+    "Metallic": 0,
+    "PrimaryColor": {
+        "R": 255,
+        "G": 255,
+        "B": 255
+    },
+    "SecondaryColor": {
+        "R": 0,
+        "G": 0,
+        "B": 0
+    },
+    "Flippable": true,
+    "AutoStraighten": false,
+    "ShouldSnap": true,
+    "ScriptName": "",
+    "Blueprint": "",
+    "Models": [],
+    "Collision": [],
+    "SnapPointsGlobal": false,
+    "SnapPoints": [],
+    "ZoomViewDirection": {
+        "X": 0,
+        "Y": 0,
+        "Z": 0
+    },
+    "FrontTexture": "card/objective/public-2/base/base.face.jpg",
+    "BackTexture": "card/objective/public-2/base/base.back.jpg",
+    "HiddenTexture": "",
+    "BackIndex": -2,
+    "HiddenIndex": -1,
+    "NumHorizontal": 3,
+    "NumVertical": 4,
+    "Width": 4.2,
+    "Height": 6.3,
+    "Thickness": 0.05,
+    "HiddenInHand": true,
+    "UsedWithCardHolders": true,
+    "CanStack": true,
+    "UsePrimaryColorForSide": false,
+    "FrontTextureOverrideExposed": false,
+    "AllowFlippedInStack": false,
+    "MirrorBack": true,
+    "Model": "Rounded",
+    "Indices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+    ],
+    "CardNames": {
+        "0": "Centralize Galactic Trade",
+        "1": "Conquer the Weak",
+        "2": "Form Galactic Brain Trust",
+        "3": "Found a Golden Age",
+        "4": "Galvanize the People",
+        "5": "Manipulate Galactic Law",
+        "6": "Master the Sciences",
+        "7": "Revolutionize Warfare",
+        "8": "Subdue the Galaxy",
+        "9": "Unify the Colonies"
+    },
+    "CardMetadata": {
+        "0": "card.objective.public-2:base/centralize-galactic-trade",
+        "1": "card.objective.public-2:base/conquer-the-weak",
+        "2": "card.objective.public-2:base/form-galactic-brain-trust",
+        "3": "card.objective.public-2:base/found-a-golden-age",
+        "4": "card.objective.public-2:base/galvanize-the-people",
+        "5": "card.objective.public-2:base/manipulate-galactic-law",
+        "6": "card.objective.public-2:base/master-the-sciences",
+        "7": "card.objective.public-2:base/revolutionize-warfare",
+        "8": "card.objective.public-2:base/subdue-the-galaxy",
+        "9": "card.objective.public-2:base/unify-the-colonies"
+    },
+    "CardTags": {
+        "0": [
+            "card-objective/public-2"
+        ],
+        "1": [
+            "card-objective/public-2"
+        ],
+        "2": [
+            "card-objective/public-2"
+        ],
+        "3": [
+            "card-objective/public-2"
+        ],
+        "4": [
+            "card-objective/public-2"
+        ],
+        "5": [
+            "card-objective/public-2"
+        ],
+        "6": [
+            "card-objective/public-2"
+        ],
+        "7": [
+            "card-objective/public-2"
+        ],
+        "8": [
+            "card-objective/public-2"
+        ],
+        "9": [
+            "card-objective/public-2"
+        ]
+    },
+    "GroundAccessibility": "ZoomAndContext",
+    "Tags": [
+        "card-objective/public-2"
+    ]
+}

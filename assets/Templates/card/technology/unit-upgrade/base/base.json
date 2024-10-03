@@ -1,0 +1,169 @@
+{
+    "Type": "Card",
+    "GUID": "653DC6546B321AA2B54E6614C5701382",
+    "Name": "technology/unit-upgrade",
+    "Metadata": "",
+    "CollisionType": "Regular",
+    "Friction": 0.7,
+    "Restitution": 0,
+    "Density": 0.5,
+    "SurfaceType": "Cardboard",
+    "Roughness": 1,
+    "Metallic": 0,
+    "PrimaryColor": {
+        "R": 255,
+        "G": 255,
+        "B": 255
+    },
+    "SecondaryColor": {
+        "R": 0,
+        "G": 0,
+        "B": 0
+    },
+    "Flippable": true,
+    "AutoStraighten": false,
+    "ShouldSnap": true,
+    "ScriptName": "",
+    "Blueprint": "",
+    "Models": [],
+    "Collision": [],
+    "SnapPointsGlobal": false,
+    "SnapPoints": [],
+    "ZoomViewDirection": {
+        "X": 0,
+        "Y": 0,
+        "Z": 0
+    },
+    "FrontTexture": "card/technology/unit-upgrade/base/base.face.jpg",
+    "BackTexture": "card/technology/unit-upgrade/base/base.back.jpg",
+    "HiddenTexture": "",
+    "BackIndex": -2,
+    "HiddenIndex": -1,
+    "NumHorizontal": 8,
+    "NumVertical": 3,
+    "Width": 6.3,
+    "Height": 4.2,
+    "Thickness": 0.05,
+    "HiddenInHand": true,
+    "UsedWithCardHolders": true,
+    "CanStack": true,
+    "UsePrimaryColorForSide": false,
+    "FrontTextureOverrideExposed": false,
+    "AllowFlippedInStack": false,
+    "MirrorBack": true,
+    "Model": "Rounded",
+    "Indices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16
+    ],
+    "CardNames": {
+        "0": "Advanced Carrier II",
+        "1": "Carrier II",
+        "2": "Cruiser II",
+        "3": "Destroyer II",
+        "4": "Dreadnought II",
+        "5": "Exotrireme II",
+        "6": "Fighter II",
+        "7": "Floating Factory II",
+        "8": "Hybrid Crystal Fighter II",
+        "9": "Infantry II",
+        "10": "Letani Warrior II",
+        "11": "PDS II",
+        "12": "Prototype War Sun II",
+        "13": "Space Dock II",
+        "14": "Spec Ops II",
+        "15": "Super-Dreadnought II",
+        "16": "War Sun"
+    },
+    "CardMetadata": {
+        "0": "card.technology.unit-upgrade.sol:base/advanced-carrier-2",
+        "1": "card.technology.unit-upgrade:base/carrier-2",
+        "2": "card.technology.unit-upgrade:base/cruiser-2",
+        "3": "card.technology.unit-upgrade:base/destroyer-2",
+        "4": "card.technology.unit-upgrade:base/dreadnought-2",
+        "5": "card.technology.unit-upgrade.norr:base/exotrireme-2",
+        "6": "card.technology.unit-upgrade:base/fighter-2",
+        "7": "card.technology.unit-upgrade.saar:base/floating-factory-2",
+        "8": "card.technology.unit-upgrade.naalu:base/hybrid-crystal-fighter-2",
+        "9": "card.technology.unit-upgrade:base/infantry-2",
+        "10": "card.technology.unit-upgrade.arborec:base/letani-warrior-2",
+        "11": "card.technology.unit-upgrade:base/pds-2",
+        "12": "card.technology.unit-upgrade.muaat:base/prototype-war-sun-2",
+        "13": "card.technology.unit-upgrade:base/space-dock-2",
+        "14": "card.technology.unit-upgrade.sol:base/spec-ops-2",
+        "15": "card.technology.unit-upgrade.l1z1x:base/superdreadnought-2",
+        "16": "card.technology.unit-upgrade:base/war-sun"
+    },
+    "CardTags": {
+        "0": [
+            "card-technology/unit-upgrade"
+        ],
+        "1": [
+            "card-technology/unit-upgrade"
+        ],
+        "2": [
+            "card-technology/unit-upgrade"
+        ],
+        "3": [
+            "card-technology/unit-upgrade"
+        ],
+        "4": [
+            "card-technology/unit-upgrade"
+        ],
+        "5": [
+            "card-technology/unit-upgrade"
+        ],
+        "6": [
+            "card-technology/unit-upgrade"
+        ],
+        "7": [
+            "card-technology/unit-upgrade"
+        ],
+        "8": [
+            "card-technology/unit-upgrade"
+        ],
+        "9": [
+            "card-technology/unit-upgrade"
+        ],
+        "10": [
+            "card-technology/unit-upgrade"
+        ],
+        "11": [
+            "card-technology/unit-upgrade"
+        ],
+        "12": [
+            "card-technology/unit-upgrade"
+        ],
+        "13": [
+            "card-technology/unit-upgrade"
+        ],
+        "14": [
+            "card-technology/unit-upgrade"
+        ],
+        "15": [
+            "card-technology/unit-upgrade"
+        ],
+        "16": [
+            "card-technology/unit-upgrade"
+        ]
+    },
+    "GroundAccessibility": "ZoomAndContext",
+    "Tags": [
+        "card-technology/unit-upgrade"
+    ]
+}
