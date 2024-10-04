@@ -24,11 +24,15 @@ export class OnSystemActivated implements IGlobal {
     _grabPosition: Vector | [x: number, y: number, z: number],
     _grabRotation: Rotator | [pitch: number, yaw: number, roll: number]
   ): void => {
-    const pos: Vector = object.getPosition();
-    const system: System | undefined = TI4.systemRegistry.getByPosition(pos);
-    if (system) {
-      OnSystemActivated._lastActivatedSystem = system;
-      TI4.onSystemActivated.trigger(system, player);
+    const playerSlot: number = TI4.turnOrder.getCurrentTurn();
+    const isActivePlayer: boolean = playerSlot === player.getSlot();
+    if (isActivePlayer) {
+      const pos: Vector = object.getPosition();
+      const system: System | undefined = TI4.systemRegistry.getByPosition(pos);
+      if (system) {
+        OnSystemActivated._lastActivatedSystem = system;
+        TI4.onSystemActivated.trigger(system, player);
+      }
     }
   };
 

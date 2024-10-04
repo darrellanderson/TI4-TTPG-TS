@@ -27,6 +27,8 @@ it("trigger", () => {
   expect(triggerCount).toBe(0);
 
   const player = new MockPlayer({ name: "my-player" });
+  TI4.turnOrder.setCurrentTurn(player.getSlot());
+
   const thrown = false;
   commandToken._releaseAsPlayer(player, thrown);
 
