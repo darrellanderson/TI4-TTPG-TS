@@ -6,7 +6,7 @@ import {
   Vector,
   world,
 } from "@tabletop-playground/api";
-import { IGlobal, NSID } from "ttpg-darrell";
+import { Broadcast, IGlobal, NSID } from "ttpg-darrell";
 
 import { System } from "lib/system-lib/system/system";
 
@@ -40,6 +40,13 @@ export class OnSystemActivated implements IGlobal {
     for (const obj of world.getAllObjects(skipContained)) {
       this._maybeLinkCommandToken(obj);
     }
+
+    TI4.onSystemActivated.add((system: System, player: Player): void => {
+      const name: string = player.getName();
+      const systemSummary: string = system.getName();
+      const message: string = `${name} activated ${systemSummary}`;
+      Broadcast.broadcastAll(message);
+    });
   }
 
   _maybeLinkCommandToken(obj: GameObject): void {
