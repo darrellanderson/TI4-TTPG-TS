@@ -120,6 +120,11 @@ for (const info of infos) {
     json.Models.pop();
   }
 
+  if (info.nsid === "token:base/custodians") {
+    json.Tags = ["token-custodians"];
+    json.ShouldSnap = true;
+  }
+
   const templateFile: string = "./assets/Templates/" + info.templateFile;
   const templateDir: string = path.dirname(templateFile);
   const templateData: Buffer = Buffer.from(JSON.stringify(json, null, 2));

@@ -6,7 +6,7 @@ import {
   Vector,
   world,
 } from "@tabletop-playground/api";
-import { Find, LayoutObjects } from "ttpg-darrell";
+import { Find, LayoutObjects, Spawn } from "ttpg-darrell";
 
 export class LayoutTableSystemTiles {
   private readonly _layout: LayoutObjects;
@@ -14,6 +14,10 @@ export class LayoutTableSystemTiles {
 
   constructor() {
     this._layout = new LayoutObjects();
+
+    const custudiansToken: GameObject = Spawn.spawnOrThrow(
+      "token:base/custodians"
+    );
 
     this._layout.addAfterLayout(() => {
       let tileNumber: number;
@@ -29,6 +33,10 @@ export class LayoutTableSystemTiles {
       pos = TI4.hex.toPosition("<0,-5,5>");
       rot = new Rotator(0, 0, 180);
       this._moveSystemTileFromContainer(tileNumber, pos, rot);
+
+      // Place custodians token.
+      custudiansToken.setPosition([0, 0, world.getTableHeight() + 10]);
+      custudiansToken.snapToGround();
     });
   }
 
