@@ -97,6 +97,17 @@ export class LayoutTableDecks {
         "deck-faction-reference"
       );
     });
+
+    const speakerToken: GameObject = Spawn.spawnOrThrow("token:base/speaker");
+    this._layout.addAfterLayout(() => {
+      const center: Vector = this._layout.getCenter();
+      const { h } = this._layout.calculateSize();
+      const extent: Vector = speakerToken.getExtent(false, false);
+      const dx: number = h / 2 + LayoutConfig.spacingWide + extent.x;
+      const pos: Vector = center.add([-dx, 0, 10]);
+      speakerToken.setPosition(pos);
+      speakerToken.snapToGround();
+    });
   }
 
   getLayout(): LayoutObjects {
