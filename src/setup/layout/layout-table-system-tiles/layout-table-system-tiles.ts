@@ -19,23 +19,16 @@ export class LayoutTableSystemTiles {
       let tileNumber: number;
       let pos: Vector;
       let rot: Rotator;
-      let success: boolean;
 
       tileNumber = 18;
       pos = new Vector(0, 0, 0);
       rot = new Rotator(0, 0, 0);
-      success = this._moveSystemTileFromContainer(tileNumber, pos, rot);
-      if (!success) {
-        throw new Error("failed to load tile " + tileNumber);
-      }
+      this._moveSystemTileFromContainer(tileNumber, pos, rot);
 
       tileNumber = 82;
       pos = TI4.hex.toPosition("<0,-5,5>");
       rot = new Rotator(0, 0, 180);
-      success = this._moveSystemTileFromContainer(tileNumber, pos, rot);
-      if (!success) {
-        throw new Error("failed to load tile " + tileNumber);
-      }
+      this._moveSystemTileFromContainer(tileNumber, pos, rot);
     });
   }
 
