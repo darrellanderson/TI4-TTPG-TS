@@ -33,7 +33,7 @@ export class LayoutMapArea {
       y = Math.max(y, corner.y);
     }
     this._layout
-      .setOverrideWidth(y * 2 * (numRings + 0.5))
+      .setOverrideWidth(y * 2 * (numRings + 1.5)) // extra space for mallice, etc
       .setOverrideHeight(x * 2 * (numRings + 0.5));
 
     this._layout.addAfterLayout(() => {

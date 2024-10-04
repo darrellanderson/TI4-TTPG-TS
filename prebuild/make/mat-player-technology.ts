@@ -58,7 +58,13 @@ function technologyColumn(symbolFile: string): ZColCell {
   return {
     type: "ColCell",
     spacing: SPACING,
-    children: [baseCell(), baseCell(), baseCell(), symbolCell(symbolFile)],
+    children: [
+      baseCell(),
+      baseCell(),
+      baseCell(),
+      baseCell(), // one extra column compared to old version
+      symbolCell(symbolFile),
+    ],
   };
 }
 

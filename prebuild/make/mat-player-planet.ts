@@ -76,6 +76,7 @@ function planetGrid(): ZRowCell {
       planetColumn(),
       planetColumn(),
       planetColumn(),
+      planetColumn(), // add an extra column than old version
     ],
   };
 }
