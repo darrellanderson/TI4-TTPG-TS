@@ -1,4 +1,4 @@
-import { GameWorld } from "@tabletop-playground/api";
+import { GameWorld, Player } from "@tabletop-playground/api";
 import {
   BugCardHolderAssignment,
   BugForceTransformUpdates,
@@ -14,6 +14,7 @@ import {
   OnCardBecameSingletonOrDeck,
   Spawn,
   Timer,
+  TriggerableMulticastDelegate,
   TurnOrder,
 } from "ttpg-darrell";
 
@@ -29,6 +30,7 @@ import { UnitModifierRegistry } from "../lib/unit-lib/registry/unit-modifier-reg
 import { createSwapSplitCombine } from "./r-swap-split-combine";
 
 import * as NSID_TO_TEMPLATE_ID from "../nsid/nsid-to-template-id.json";
+import { System } from "lib/system-lib/system/system";
 Spawn.inject(NSID_TO_TEMPLATE_ID);
 
 export function registerErrorHandler() {
@@ -50,6 +52,9 @@ export class TI4Class {
   // Events.
   public readonly onCardBecameSingletonOrDeck =
     new OnCardBecameSingletonOrDeck();
+  public readonly onSystemActivated = new TriggerableMulticastDelegate<
+    (system: System, player: Player) => void
+  >();
 
   // Libraries.
   public readonly hex = new Hex(HEX_LAYOUT_POINTY, 5.77735 * 1.5);
