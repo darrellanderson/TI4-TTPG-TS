@@ -1,5 +1,7 @@
 import { Color, world } from "@tabletop-playground/api";
-import { ColorLib, ColorsType } from "ttpg-darrell";
+import { ColorLib } from "ttpg-darrell";
+
+import { PlayerColor } from "../../lib/player-lib/player-color/player-color";
 
 /**
  * Player color names in seat order, top-left to top-right
@@ -95,17 +97,11 @@ export class SetupPlayerSlotColors {
       }
     }
 
+    const playerColor: PlayerColor = new PlayerColor();
     for (let i = 0; i < ALL_PLAYER_COLOR_NAMES.length; i++) {
       const colorName: string | undefined = ALL_PLAYER_COLOR_NAMES[i];
       if (colorName !== undefined) {
-        const colorsType: ColorsType = colorLib.getColorsByNameOrThrow(
-          colorName,
-          0
-        );
-        const colorHex: string = colorsType.slot;
-        const color: Color = colorLib.parseColorOrThrow(colorHex);
-        const slot: number = 10 + i;
-        world.setSlotColor(slot, color);
+        playerColor.setSlotColor(10 + i, colorName);
       }
     }
   }
