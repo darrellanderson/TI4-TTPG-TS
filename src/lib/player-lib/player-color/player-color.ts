@@ -35,9 +35,11 @@ export class PlayerColor {
     const json: string = world.getSavedData(PlayerColor.KEY);
     if (json && json.length > 0) {
       const parsed = JSON.parse(json);
-      const colorName: string | undefined = parsed[slot]?.name;
-      if (colorName) {
-        return colorName;
+      if (parsed) {
+        const colorName: string | undefined = parsed[slot].name;
+        if (colorName) {
+          return colorName;
+        }
       }
     }
     return undefined;
@@ -47,9 +49,11 @@ export class PlayerColor {
     const json: string = world.getSavedData(PlayerColor.KEY);
     if (json && json.length > 0) {
       const parsed = JSON.parse(json);
-      const colorHex: string | undefined = parsed[slot]?.widget;
-      if (colorHex) {
-        return this._colorLib.parseColorOrThrow(colorHex);
+      if (parsed) {
+        const colorHex: string | undefined = parsed[slot].widget;
+        if (colorHex) {
+          return this._colorLib.parseColorOrThrow(colorHex);
+        }
       }
     }
     return new Color(1, 1, 1, 1);
@@ -59,9 +63,11 @@ export class PlayerColor {
     const json: string = world.getSavedData(PlayerColor.KEY);
     if (json && json.length > 0) {
       const parsed = JSON.parse(json);
-      const colorHex: string | undefined = parsed[slot]?.plastic;
-      if (colorHex) {
-        return this._colorLib.parseColorOrThrow(colorHex);
+      if (parsed) {
+        const colorHex: string | undefined = parsed[slot].plastic;
+        if (colorHex) {
+          return this._colorLib.parseColorOrThrow(colorHex);
+        }
       }
     }
     return new Color(1, 1, 1, 1);

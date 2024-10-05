@@ -6,6 +6,7 @@ it("constructor", () => {
 });
 
 it("trigger", () => {
+  new MockGameObject(); // so an object is present for checking
   new OnSystemActivated().init();
 
   new MockGameObject({
