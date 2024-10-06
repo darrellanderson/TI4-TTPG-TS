@@ -12,7 +12,7 @@ import { LayoutConfig } from "../layout-config";
 export class LayoutMats {
   private readonly _layout: LayoutObjects;
 
-  constructor() {
+  constructor(playerSlot: number) {
     const buildMat: GameObject = Spawn.spawnOrThrow("mat.player:base/build");
     const planetMat: GameObject = Spawn.spawnOrThrow("mat.player:base/planet");
     const techMat: GameObject = Spawn.spawnOrThrow(
@@ -31,6 +31,11 @@ export class LayoutMats {
       .add(techDeckMat);
 
     this._layout.addAfterLayout(() => {
+      buildMat.setOwningPlayerSlot(playerSlot);
+      planetMat.setOwningPlayerSlot(playerSlot);
+      techMat.setOwningPlayerSlot(playerSlot);
+      techDeckMat.setOwningPlayerSlot(playerSlot);
+
       buildMat.setObjectType(ObjectType.Ground);
       planetMat.setObjectType(ObjectType.Ground);
       techMat.setObjectType(ObjectType.Ground);

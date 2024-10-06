@@ -68,6 +68,9 @@ add("base", RegulatedConscription);
 import { SalaiSaiCorian } from "./unit-modifiers/base/salai-sai-corian";
 add("base", SalaiSaiCorian);
 
+import { SarweenTools } from "./unit-modifiers/base/sarween-tools";
+add("base", SarweenTools);
+
 import { TekklarLegion } from "./unit-modifiers/base/tekklar-legion";
 add("base", TekklarLegion);
 

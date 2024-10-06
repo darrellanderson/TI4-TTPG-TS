@@ -18,6 +18,7 @@ export const UnitModifierCardClass = z
     "technology.blue",
     "technology.green",
     "technology.red",
+    "technology.yellow",
     "technology.unit-upgrade",
     "unit", // not a card
   ])

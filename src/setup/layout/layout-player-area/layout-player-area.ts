@@ -53,7 +53,7 @@ export class LayoutPlayerArea {
       .add(layoutSheets)
       .add(layoutTokenContainers);
 
-    const layoutMats: LayoutObjects = new LayoutMats().getLayout();
+    const layoutMats: LayoutObjects = new LayoutMats(playerSlot).getLayout();
     const cardHolder: GameObject = Spawn.spawnOrThrow(
       "card-holder:base/player-hand"
     );

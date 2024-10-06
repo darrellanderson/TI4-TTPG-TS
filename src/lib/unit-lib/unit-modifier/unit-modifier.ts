@@ -26,6 +26,7 @@ export class UnitModifier {
       case "technology.blue":
       case "technology.green":
       case "technology.red":
+      case "technology.yellow":
       case "technology.unit-upgrade":
         return `card.${trigger.cardClass}:${source}/${trigger.nsidName}`;
       case "agent":

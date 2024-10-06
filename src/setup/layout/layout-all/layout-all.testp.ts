@@ -11,6 +11,9 @@ for (const obj of world.getAllObjects(true)) {
 for (const line of world.getDrawingLines()) {
   world.removeDrawingLineObject(line);
 }
+for (const zone of world.getAllZones()) {
+  zone.destroy();
+}
 
 new SetupPlayerSlotColors().setup();
 

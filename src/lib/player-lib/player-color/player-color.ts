@@ -1,9 +1,45 @@
 import { Color, world } from "@tabletop-playground/api";
-import { ColorLib, ColorsType } from "ttpg-darrell";
+import { ColorLib, ColorsType, NamespaceId } from "ttpg-darrell";
+
+type PlayerColorEntry = {
+  colorName: string; // "red"
+  target: string; // hex colors
+  plastic: string;
+  widget: string;
+};
 
 export class PlayerColor {
-  private static readonly KEY: string = "player-colors";
+  private readonly _namespaceId: NamespaceId;
   private readonly _colorLib: ColorLib = new ColorLib();
+
+  constructor(namespaceId: NamespaceId) {
+    this._namespaceId = namespaceId;
+  }
+
+  _getPlayerColorEntry(slot: number): PlayerColorEntry | undefined {
+    const json: string = world.getSavedData(this._namespaceId);
+    if (json && json.length > 0) {
+      const parsed = JSON.parse(json);
+      if (parsed) {
+        const entry: PlayerColorEntry | undefined = parsed[slot];
+        if (entry) {
+          return entry;
+        }
+      }
+    }
+    return undefined;
+  }
+
+  _setPlayerColorEntry(slot: number, entry: PlayerColorEntry): void {
+    let json: string = world.getSavedData(this._namespaceId);
+    if (!json || json.length === 0) {
+      json = "{}";
+    }
+    const parsed = JSON.parse(json);
+    parsed[slot] = entry;
+    json = JSON.stringify(parsed);
+    world.setSavedData(json, this._namespaceId);
+  }
 
   setSlotColor(slot: number, colorName: string, colorHex?: string): void {
     let colorsType: ColorsType = this._colorLib.getColorsByNameOrThrow(
@@ -16,60 +52,62 @@ export class PlayerColor {
     const slotColor: Color = this._colorLib.parseColorOrThrow(colorsType.slot);
     world.setSlotColor(slot, slotColor);
 
-    let json: string = world.getSavedData(PlayerColor.KEY);
-    if (!json || json.length === 0) {
-      json = "{}";
-    }
-    const parsed = JSON.parse(json);
-    parsed[slot] = {
-      name: colorName,
+    const entry: PlayerColorEntry = {
+      colorName: colorName,
       target: colorsType.target,
-      widget: colorsType.widget,
       plastic: colorsType.plastic,
+      widget: colorsType.widget,
     };
-    json = JSON.stringify(parsed);
-    world.setSavedData(json, PlayerColor.KEY);
+    this._setPlayerColorEntry(slot, entry);
   }
 
   getSlotColorName(slot: number): string | undefined {
-    const json: string = world.getSavedData(PlayerColor.KEY);
-    if (json && json.length > 0) {
-      const parsed = JSON.parse(json);
-      if (parsed) {
-        const colorName: string | undefined = parsed[slot].name;
-        if (colorName) {
-          return colorName;
-        }
-      }
+    const entry: PlayerColorEntry | undefined = this._getPlayerColorEntry(slot);
+    if (entry) {
+      return entry.colorName;
     }
     return undefined;
   }
 
-  getSlotWidgetColor(slot: number): Color {
-    const json: string = world.getSavedData(PlayerColor.KEY);
-    if (json && json.length > 0) {
-      const parsed = JSON.parse(json);
-      if (parsed) {
-        const colorHex: string | undefined = parsed[slot].widget;
-        if (colorHex) {
-          return this._colorLib.parseColorOrThrow(colorHex);
-        }
-      }
+  getSlotColorNameOrThrow(slot: number): string {
+    const colorName: string | undefined = this.getSlotColorName(slot);
+    if (!colorName) {
+      throw new Error(`No color name for slot ${slot}`);
     }
-    return new Color(1, 1, 1, 1);
+    return colorName;
   }
 
-  getSlotPlasticColor(slot: number): Color {
-    const json: string = world.getSavedData(PlayerColor.KEY);
-    if (json && json.length > 0) {
-      const parsed = JSON.parse(json);
-      if (parsed) {
-        const colorHex: string | undefined = parsed[slot].plastic;
-        if (colorHex) {
-          return this._colorLib.parseColorOrThrow(colorHex);
-        }
-      }
+  getSlotPlasticColor(slot: number): Color | undefined {
+    const entry: PlayerColorEntry | undefined = this._getPlayerColorEntry(slot);
+    if (entry) {
+      const hexColor: string = entry.plastic;
+      return this._colorLib.parseColor(hexColor);
     }
-    return new Color(1, 1, 1, 1);
+    return undefined;
+  }
+
+  getSlotPlasticColorOrThrow(slot: number): Color {
+    const color: Color | undefined = this.getSlotPlasticColor(slot);
+    if (!color) {
+      throw new Error(`No plastic color for slot ${slot}`);
+    }
+    return color;
+  }
+
+  getSlotWidgetColor(slot: number): Color | undefined {
+    const entry: PlayerColorEntry | undefined = this._getPlayerColorEntry(slot);
+    if (entry) {
+      const hexColor: string = entry.widget;
+      return this._colorLib.parseColor(hexColor);
+    }
+    return undefined;
+  }
+
+  getSlotWidgetColorOrThrow(slot: number): Color {
+    const color: Color | undefined = this.getSlotWidgetColor(slot);
+    if (!color) {
+      throw new Error(`No widget color for slot ${slot}`);
+    }
+    return color;
   }
 }

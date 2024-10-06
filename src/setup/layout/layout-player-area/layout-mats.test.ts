@@ -10,10 +10,10 @@ beforeEach(() => {
 it("getLayout", () => {
   const pos: Vector = new Vector(0, 0, 0);
   const yaw: number = 0;
-  new LayoutMats().getLayout().doLayoutAtPoint(pos, yaw);
+  new LayoutMats(1).getLayout().doLayoutAtPoint(pos, yaw);
 });
 
 it("_spawnTechDeck", () => {
   const snapPoint = new MockSnapPoint();
-  new LayoutMats()._spawnTechDeck(snapPoint);
+  new LayoutMats(1)._spawnTechDeck(snapPoint);
 });

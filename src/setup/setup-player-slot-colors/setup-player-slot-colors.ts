@@ -1,8 +1,6 @@
 import { Color, world } from "@tabletop-playground/api";
 import { ColorLib } from "ttpg-darrell";
 
-import { PlayerColor } from "../../lib/player-lib/player-color/player-color";
-
 /**
  * Player color names in seat order, top-left to top-right
  * then bottom-left to bottom-right.
@@ -97,11 +95,10 @@ export class SetupPlayerSlotColors {
       }
     }
 
-    const playerColor: PlayerColor = new PlayerColor();
     for (let i = 0; i < ALL_PLAYER_COLOR_NAMES.length; i++) {
       const colorName: string | undefined = ALL_PLAYER_COLOR_NAMES[i];
       if (colorName !== undefined) {
-        playerColor.setSlotColor(10 + i, colorName);
+        TI4.playerColor.setSlotColor(10 + i, colorName);
       }
     }
   }
