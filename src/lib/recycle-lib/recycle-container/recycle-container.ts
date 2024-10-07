@@ -30,8 +30,7 @@ export class RecycleContainer extends GarbageContainer {}
 const nameToCount: Map<string, number> = new Map<string, number>();
 let reportPending: boolean = false;
 
-GarbageContainer.onRecycled.add((obj: GameObject): void => {
-  let name: string = obj.getName();
+GarbageContainer.onRecycled.add((obj: GameObject, name: string): void => {
   name = name.replace(/ \(\d\)$/, ""); // strip off card number ("morale boost (2)")
 
   const nsid: string = NSID.get(obj);
@@ -49,8 +48,12 @@ GarbageContainer.onRecycled.add((obj: GameObject): void => {
       const names: Array<string> = Array.from(nameToCount.keys()).sort();
       const items: Array<string> = names.map((name: string) => {
         const count: number = nameToCount.get(name) || 0;
-        return `${name}: ${count}`;
+        if (count === 1) {
+          return name;
+        }
+        return `${name} (${count})`;
       });
+      nameToCount.clear();
       const msg: string = "Recycled: " + items.join(", ");
       Broadcast.chatAll(msg);
     });
