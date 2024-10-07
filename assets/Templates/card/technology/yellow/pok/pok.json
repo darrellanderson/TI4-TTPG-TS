@@ -65,10 +65,10 @@
         "3": "Temporal Command Suite"
     },
     "CardMetadata": {
-        "0": "card.technology.yellow.argent:pok/aerie-hololattice",
+        "0": "card.technology.yellow:pok/aerie-hololattice",
         "1": "card.technology.yellow:pok/predictive-intelligence",
         "2": "card.technology.yellow:pok/scanlink-drone-network",
-        "3": "card.technology.yellow.nomad:pok/temporal-command-suite"
+        "3": "card.technology.yellow:pok/temporal-command-suite"
     },
     "CardTags": {
         "0": [

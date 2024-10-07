@@ -63,7 +63,7 @@
         "2": "Sling Relay"
     },
     "CardMetadata": {
-        "0": "card.technology.blue.empyrean:pok/aetherstream",
+        "0": "card.technology.blue:pok/aetherstream",
         "1": "card.technology.blue:pok/dark-energy-tap",
         "2": "card.technology.blue:pok/sling-relay"
     },

@@ -61,8 +61,8 @@
         "1": "ZS Thunderbolt M2"
     },
     "CardMetadata": {
-        "0": "card.leader.mech.empyrean:pok/watcher",
-        "1": "card.leader.mech.sol:pok/zs-thunderbolt-m2"
+        "0": "card.leader.mech:pok/watcher",
+        "1": "card.leader.mech:pok/zs-thunderbolt-m2"
     },
     "CardTags": {
         "0": [

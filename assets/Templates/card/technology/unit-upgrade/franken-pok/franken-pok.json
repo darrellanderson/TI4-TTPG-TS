@@ -81,18 +81,18 @@
         "11": "Visz El Vir"
     },
     "CardMetadata": {
-        "0": "card.technology.unit-upgrade.mahact:franken.pok/arvicon-rex",
-        "1": "card.technology.unit-upgrade.mahact:franken.pok/crimson-legionnaire",
-        "2": "card.technology.unit-upgrade.vuilraith:franken.pok/dimensional-tear",
-        "3": "card.technology.unit-upgrade.empyrean:franken.pok/dynamo",
-        "4": "card.technology.unit-upgrade.ul:franken.pok/heltitan",
-        "5": "card.technology.unit-upgrade.nomad:franken.pok/memoria",
-        "6": "card.technology.unit-upgrade.ul:franken.pok/ouranos",
-        "7": "card.technology.unit-upgrade.argent:franken.pok/quetzecoatl",
-        "8": "card.technology.unit-upgrade.ul:franken.pok/saturn-engine",
-        "9": "card.technology.unit-upgrade.argent:franken.pok/strike-wing-alpha",
-        "10": "card.technology.unit-upgrade.vuilraith:franken.pok/the-terror-between",
-        "11": "card.technology.unit-upgrade.naazrokha:franken.pok/visz-el-vir"
+        "0": "card.technology.unit-upgrade:franken.pok/arvicon-rex",
+        "1": "card.technology.unit-upgrade:franken.pok/crimson-legionnaire",
+        "2": "card.technology.unit-upgrade:franken.pok/dimensional-tear",
+        "3": "card.technology.unit-upgrade:franken.pok/dynamo",
+        "4": "card.technology.unit-upgrade:franken.pok/heltitan",
+        "5": "card.technology.unit-upgrade:franken.pok/memoria",
+        "6": "card.technology.unit-upgrade:franken.pok/ouranos",
+        "7": "card.technology.unit-upgrade:franken.pok/quetzecoatl",
+        "8": "card.technology.unit-upgrade:franken.pok/saturn-engine",
+        "9": "card.technology.unit-upgrade:franken.pok/strike-wing-alpha",
+        "10": "card.technology.unit-upgrade:franken.pok/the-terror-between",
+        "11": "card.technology.unit-upgrade:franken.pok/visz-el-vir"
     },
     "CardTags": {
         "0": [

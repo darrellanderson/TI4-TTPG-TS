@@ -71,13 +71,13 @@
         "6": "Iconoclast Ω"
     },
     "CardMetadata": {
-        "0": "card.leader.agent.yin:codex.vigil/brother-milor.omega",
-        "1": "card.leader.agent.naalu:codex.vigil/zeu.omega",
-        "2": "card.leader.commander.yin:codex.vigil/brother-omar.omega",
-        "3": "card.leader.commander.naalu:codex.vigil/maban.omega",
-        "4": "card.leader.hero.yin:codex.vigil/dannel-of-the-tenth.omega",
-        "5": "card.leader.hero.xxcha:codex.vigil/xxekir-grom.omega",
-        "6": "card.leader.mech.naalu:codex.vigil/iconoclast.omega"
+        "0": "card.leader.agent:codex.vigil/brother-milor.omega",
+        "1": "card.leader.agent:codex.vigil/zeu.omega",
+        "2": "card.leader.commander:codex.vigil/brother-omar.omega",
+        "3": "card.leader.commander:codex.vigil/maban.omega",
+        "4": "card.leader.hero:codex.vigil/dannel-of-the-tenth.omega",
+        "5": "card.leader.hero:codex.vigil/xxekir-grom.omega",
+        "6": "card.leader.mech:codex.vigil/iconoclast.omega"
     },
     "CardTags": {
         "0": [

@@ -62,7 +62,7 @@
     },
     "CardMetadata": {
         "0": "card.technology.red:codex.ordinian/magen-defense-grid.omega",
-        "1": "card.technology.red.muaat:codex.ordinian/magmus-reactor.omega"
+        "1": "card.technology.red:codex.ordinian/magmus-reactor.omega"
     },
     "CardTags": {
         "0": [

@@ -74,13 +74,13 @@
     },
     "CardMetadata": {
         "0": "card.technology.red:base/assault-cannon",
-        "1": "card.technology.red.creuss:base/dimensional-splicer",
+        "1": "card.technology.red:base/dimensional-splicer",
         "2": "card.technology.red:base/duranium-armor",
         "3": "card.technology.red:base/magen-defense-grid",
-        "4": "card.technology.red.muaat:base/magmus-reactor",
-        "5": "card.technology.red.letnev:base/noneuclidean-shielding",
+        "4": "card.technology.red:base/magmus-reactor",
+        "5": "card.technology.red:base/noneuclidean-shielding",
         "6": "card.technology.red:base/plasma-scoring",
-        "7": "card.technology.red.norr:base/valkyrie-particle-weave"
+        "7": "card.technology.red:base/valkyrie-particle-weave"
     },
     "CardTags": {
         "0": [

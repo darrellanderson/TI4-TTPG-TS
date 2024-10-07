@@ -74,13 +74,13 @@
     },
     "CardMetadata": {
         "0": "card.technology.blue:base/antimass-deflectors",
-        "1": "card.technology.blue.saar:base/chaos-mapping",
+        "1": "card.technology.blue:base/chaos-mapping",
         "2": "card.technology.blue:base/fleet-logistics",
         "3": "card.technology.blue:base/gravity-drive",
-        "4": "card.technology.blue.winnu:base/lazax-gate-folding",
+        "4": "card.technology.blue:base/lazax-gate-folding",
         "5": "card.technology.blue:base/lightwave-deflector",
-        "6": "card.technology.blue.jolnar:base/spacial-conduit-cylinder",
-        "7": "card.technology.blue.creuss:base/wormhole-generator"
+        "6": "card.technology.blue:base/spacial-conduit-cylinder",
+        "7": "card.technology.blue:base/wormhole-generator"
     },
     "CardTags": {
         "0": [
