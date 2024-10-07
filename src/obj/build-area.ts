@@ -1,13 +1,17 @@
 import {
   Color,
   GameObject,
+  GameWorld,
   refObject,
   Vector,
   world,
   Zone,
   ZonePermission,
 } from "@tabletop-playground/api";
+import { Find } from "ttpg-darrell";
+
 import { CombatRoll } from "lib/combat-lib/combat-roll/combat-roll";
+import { Faction } from "lib/faction-lib/faction/faction";
 
 const HEIGHT: number = 4;
 
@@ -15,12 +19,16 @@ export class BuildArea {
   private readonly _obj: GameObject;
   private readonly _zone: Zone;
 
+  private readonly _find: Find = new Find();
+
   constructor(obj: GameObject) {
     this._obj = obj;
     this._zone = this._findOrCreateZone();
 
     this._obj.onReleased.add(() => {
-      this._moveZone;
+      const pos: Vector = this._obj.getPosition();
+      pos.z = world.getTableHeight() + HEIGHT / 2;
+      this._zone.setPosition(pos);
     });
 
     this._zone.onBeginOverlap.add(() => {
@@ -61,10 +69,22 @@ export class BuildArea {
     return zone;
   }
 
-  _moveZone() {
-    const pos: Vector = this._obj.getPosition();
-    pos.z = world.getTableHeight() + HEIGHT / 2;
-    this._zone.setPosition(pos);
+  _getHomeSystemTile(): GameObject | undefined {
+    const playerSlot: number = this._obj.getOwningPlayerSlot();
+
+    const faction: Faction | undefined = TI4.factionRegistry
+      .getPlayerSlotToFaction()
+      .get(playerSlot);
+    if (faction) {
+      const tileNumber: number = faction.getHomeSystemTileNumber();
+      const nsid: string | undefined =
+        TI4.systemRegistry.tileNumberToSystemTileObjNsid(tileNumber);
+      if (nsid) {
+        const skipContained: boolean = true;
+        return this._find.findGameObject(nsid, playerSlot, skipContained);
+      }
+    }
+    return undefined;
   }
 
   update() {
@@ -81,7 +101,9 @@ export class BuildArea {
   }
 }
 
-const obj: GameObject = refObject;
-process.nextTick(() => {
-  new BuildArea(obj);
-});
+if (GameWorld.getExecutionReason() !== "unittest") {
+  const obj: GameObject = refObject;
+  process.nextTick(() => {
+    new BuildArea(obj);
+  });
+}
