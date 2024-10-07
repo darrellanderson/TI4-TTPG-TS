@@ -73,8 +73,40 @@ export class AbstractCopyCards {
         path.basename(src).replace(/_/g, "-")
       );
       const name: string = cardJson.name;
-      const nsid: string = cardJson.id.replace(/_/g, "-");
+      let nsid: string = cardJson.id.replace(/_/g, "-");
       const desc: string = cardJson.desc;
+
+      // Remove faction from nsid type.
+      const parts: Array<string> = nsid.split(":");
+
+      if (parts[0]?.startsWith("card.technology.red")) {
+        parts[0] = "card.technology.red";
+      }
+      if (parts[0]?.startsWith("card.technology.green")) {
+        parts[0] = "card.technology.green";
+      }
+      if (parts[0]?.startsWith("card.technology.yellow")) {
+        parts[0] = "card.technology.yellow";
+      }
+      if (parts[0]?.startsWith("card.technology.blue")) {
+        parts[0] = "card.technology.blue";
+      }
+      if (parts[0]?.startsWith("card.technology.unit-upgrade")) {
+        parts[0] = "card.technology.unit-upgrade";
+      }
+      if (parts[0]?.startsWith("card.leader.agent")) {
+        parts[0] = "card.leader.agent";
+      }
+      if (parts[0]?.startsWith("card.leader.commander")) {
+        parts[0] = "card.leader.commander";
+      }
+      if (parts[0]?.startsWith("card.leader.hero")) {
+        parts[0] = "card.leader.hero";
+      }
+      if (parts[0]?.startsWith("card.leader.mech")) {
+        parts[0] = "card.leader.mech";
+      }
+      nsid = parts.join(":");
 
       const plan: CardPlan = {
         src,
