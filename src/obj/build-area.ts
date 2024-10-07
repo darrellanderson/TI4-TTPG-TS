@@ -10,8 +10,8 @@ import {
 } from "@tabletop-playground/api";
 import { Find } from "ttpg-darrell";
 
-import { CombatRoll } from "lib/combat-lib/combat-roll/combat-roll";
-import { Faction } from "lib/faction-lib/faction/faction";
+import { CombatRoll } from "../lib/combat-lib/combat-roll/combat-roll";
+import { Faction } from "../lib/faction-lib/faction/faction";
 
 const HEIGHT: number = 4;
 
