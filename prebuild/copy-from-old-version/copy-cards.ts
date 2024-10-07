@@ -15,7 +15,7 @@ const filterFaction = (srcFilename: string): boolean => {
   const nsidName: string = path.basename(srcFilename).split(".")[0] ?? "n/a";
   const result: boolean = factionNsidNames.includes(nsidName);
   if (!result) {
-    console.log("xxx", nsidName);
+    console.log("xxx filterFaction", nsidName, srcFilename);
   }
   return result;
 };
@@ -26,7 +26,7 @@ const filterLeader = (srcFilename: string): boolean => {
   const last: string = dirParts.pop() ?? "n/a";
   const result: boolean = factionNsidNames.includes(last);
   if (!result) {
-    console.log("xxx", last);
+    console.log("xxx filterLeader", last, srcFilename);
   }
   return result;
 };
@@ -44,7 +44,7 @@ const filterTech = (srcFilename: string): boolean => {
   ) {
     const result: boolean = factionNsidNames.includes(last);
     if (!result) {
-      console.log("xxx", last);
+      console.log("xxx filterTech", last, srcFilename);
     }
     return result;
   }

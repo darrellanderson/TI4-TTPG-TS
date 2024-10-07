@@ -109,7 +109,7 @@ export class AbstractCopyCards {
       nsid = parts.join(":");
 
       // Remove homebrew.
-      if (nsid.includes(":homebrew")) {
+      if (nsid.includes(":homebrew") || nsid.includes(":franken.homebrew")) {
         console.log("XXXXXX", nsid);
         const dstBase: string = dst.replace(".jpg", "");
         const candidates: Array<string> = [
