@@ -1,6 +1,6 @@
 import { Container, GameObject, Vector } from "@tabletop-playground/api";
-import { Spawn } from "ttpg-darrell";
-import { MockContainer } from "ttpg-mock";
+import { Find } from "ttpg-darrell";
+import { MockContainer, MockGameObject } from "ttpg-mock";
 
 import { LayoutTableSystemTiles } from "./layout-table-system-tiles";
 
@@ -16,9 +16,19 @@ it("layout", () => {
 });
 
 it("move tile from container", () => {
-  const mecatol: GameObject = Spawn.spawnOrThrow("tile.system:base/18");
+  const mecatol: GameObject = MockGameObject.simple("tile.system:base/18");
   const container: Container = new MockContainer({ items: [mecatol] });
   expect(mecatol.getContainer()).toBe(container);
+  expect(container.getItems()).toContain(mecatol);
+
+  const skipContained: boolean = false;
+  const found: GameObject | undefined = new Find().findGameObject(
+    "tile.system:base/18",
+    undefined,
+    skipContained
+  );
+  expect(found).toBeDefined();
+  expect(found?.getId()).toEqual(mecatol.getId());
 
   const pos: Vector = new Vector(0, 0, 0);
   const yaw: number = 0;
