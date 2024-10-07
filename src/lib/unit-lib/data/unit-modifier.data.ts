@@ -44,6 +44,9 @@ add("base", Fragile);
 import { Matriarch } from "./unit-modifiers/base/matriarch";
 add("base", Matriarch);
 
+import { MirrorComputing } from "./unit-modifiers/base/mirror-computing";
+add("base", MirrorComputing);
+
 import { MoraleBoost } from "./unit-modifiers/base/morale-boost";
 add("base", MoraleBoost);
 
@@ -85,6 +88,9 @@ add("codex.ordinian", Blitz);
 
 import { CustodiaVigilia } from "./unit-modifiers/codex-vigil/custodia-vigilia";
 add("codex.vigil", CustodiaVigilia);
+
+import { XxekirGrom } from "./unit-modifiers/codex-vigil/xxekir-grom";
+add("codex.vigil", XxekirGrom);
 
 import { _2ram } from "./unit-modifiers/pok/2ram";
 add("pok", _2ram);
@@ -163,3 +169,6 @@ add("pok", ViscountUnlenn);
 
 import { ViszElVir } from "./unit-modifiers/pok/visz-el-vir";
 add("pok", ViszElVir);
+
+import { WarMachine } from "./unit-modifiers/pok/war-machine";
+add("pok", WarMachine);
