@@ -108,6 +108,24 @@ export class AbstractCopyCards {
       }
       nsid = parts.join(":");
 
+      // Remove homebrew.
+      if (nsid.includes(":homebrew")) {
+        console.log("XXXXXX", nsid);
+        const dstBase: string = dst.replace(".jpg", "");
+        const candidates: Array<string> = [
+          dstBase + ".jpg",
+          dstBase + ".face.jpg",
+          dstBase + ".back.jpg",
+          dstBase + ".json",
+        ];
+        for (const candidate of candidates) {
+          if (fs.existsSync(candidate)) {
+            fs.unlinkSync(candidate);
+          }
+        }
+        continue;
+      }
+
       const plan: CardPlan = {
         src,
         dst,
