@@ -47,11 +47,16 @@ GarbageContainer.onRecycled.add((obj: GameObject, name: string): void => {
       reportPending = false;
       const names: Array<string> = Array.from(nameToCount.keys()).sort();
       const items: Array<string> = names.map((name: string) => {
-        const count: number = nameToCount.get(name) || 0;
-        if (count === 1) {
-          return name;
+        const count: number | undefined = nameToCount.get(name);
+        let result: string = "";
+        if (count !== undefined) {
+          if (count === 1) {
+            result = name;
+          } else {
+            result = `${name} (${count})`;
+          }
         }
-        return `${name} (${count})`;
+        return result;
       });
       nameToCount.clear();
       const msg: string = "Recycled: " + items.join(", ");

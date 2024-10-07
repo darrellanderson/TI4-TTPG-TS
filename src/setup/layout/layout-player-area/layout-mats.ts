@@ -45,9 +45,7 @@ export class LayoutMats {
     this._layout.addAfterLayout(() => {
       const snapPoints: Array<SnapPoint> = techDeckMat.getAllSnapPoints();
       const snapPoint: SnapPoint | undefined = snapPoints[0];
-      if (snapPoint) {
-        this._spawnTechDeck(snapPoint);
-      }
+      this._spawnTechDeck(snapPoint);
     });
   }
 
@@ -55,14 +53,16 @@ export class LayoutMats {
     return this._layout;
   }
 
-  _spawnTechDeck(snapPoint: SnapPoint): void {
-    const nsids: Array<string> = Spawn.getAllNsids().filter((nsid: string) =>
-      nsid.startsWith("card.technology")
-    );
-    const pos: Vector = snapPoint.getGlobalPosition().add([0, 0, 10]);
+  _spawnTechDeck(snapPoint: SnapPoint | undefined): void {
+    if (snapPoint) {
+      const nsids: Array<string> = Spawn.getAllNsids().filter((nsid: string) =>
+        nsid.startsWith("card.technology")
+      );
+      const pos: Vector = snapPoint.getGlobalPosition().add([0, 0, 10]);
 
-    const deck: GameObject = Spawn.spawnMergeDecksOrThrow(nsids, pos);
-    deck.snapToGround();
-    deck.snap();
+      const deck: GameObject = Spawn.spawnMergeDecksOrThrow(nsids, pos);
+      deck.snapToGround();
+      deck.snap();
+    }
   }
 }

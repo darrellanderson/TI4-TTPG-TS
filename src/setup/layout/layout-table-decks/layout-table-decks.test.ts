@@ -1,8 +1,8 @@
 import { Vector } from "@tabletop-playground/api";
+import { MockGameObject, MockSnapPoint } from "ttpg-mock";
 import { LayoutTableDecks } from "./layout-table-decks";
 
 import { addObjectTemplatesToMockWorld } from "../../../nsid/nsid-to-template-id.test";
-import { MockGameObject, MockSnapPoint } from "ttpg-mock";
 beforeEach(() => {
   addObjectTemplatesToMockWorld();
 });
