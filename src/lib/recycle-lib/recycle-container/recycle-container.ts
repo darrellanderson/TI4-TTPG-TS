@@ -1,4 +1,4 @@
-import { Broadcast, GarbageContainer, NSID } from "ttpg-darrell";
+import { Broadcast, GarbageContainer } from "ttpg-darrell";
 import { RecycleCardAction } from "../handlers/card/action/recycle-card-action";
 import { RecycleCardAgenda } from "../handlers/card/agenda/recycle-card-agenda";
 import { RecycleCardAlliance } from "../handlers/card/alliance/recycle-card-alliance";
@@ -23,47 +23,57 @@ import { RecycleTokenFrontier } from "../handlers/token/recycle-token-frontier/r
 import { RecycleTokenInfantry } from "../handlers/token/recycle-token-infantry/recycle-token-infantry";
 import { RecycleTokenTradegood } from "../handlers/token/recycle-token-tradegood/recycle-token-tradegood";
 import { RecycleUnit } from "../handlers/unit/recycle-unit";
-import { GameObject } from "@tabletop-playground/api";
+import { Player } from "@tabletop-playground/api";
 
 export class RecycleContainer extends GarbageContainer {}
 
 const nameToCount: Map<string, number> = new Map<string, number>();
 let reportPending: boolean = false;
 
-GarbageContainer.onRecycled.add((obj: GameObject, name: string): void => {
-  name = name.replace(/ \(\d\)$/, ""); // strip off card number ("morale boost (2)")
+GarbageContainer.onRecycled.add(
+  (objName: string, objMetadata: string, player: Player | undefined): void => {
+    objName = objName.replace(/ \(\d\)$/, ""); // strip off card number ("morale boost (2)")
 
-  const nsid: string = NSID.get(obj);
-  if (nsid.startsWith("card.objective.secret")) {
-    name = "(Secret Objective)";
-  }
+    // Only report player-linked recycles.
+    if (!player) {
+      return;
+    }
 
-  const count: number = nameToCount.get(name) || 0;
-  nameToCount.set(name, count + 1);
+    if (objMetadata.startsWith("card.objective.secret")) {
+      objName = "(Secret Objective)";
+    }
 
-  if (!reportPending) {
-    reportPending = true;
-    process.nextTick(() => {
-      reportPending = false;
-      const names: Array<string> = Array.from(nameToCount.keys()).sort();
-      const items: Array<string> = names.map((name: string) => {
-        const count: number | undefined = nameToCount.get(name);
-        let result: string = "";
-        if (count !== undefined) {
-          if (count === 1) {
-            result = name;
-          } else {
-            result = `${name} (${count})`;
+    const count: number = nameToCount.get(objName) || 0;
+    nameToCount.set(objName, count + 1);
+
+    if (!reportPending) {
+      reportPending = true;
+      process.nextTick(() => {
+        reportPending = false;
+        const names: Array<string> = Array.from(nameToCount.keys()).sort();
+        const items: Array<string> = names.map((name: string) => {
+          const count: number | undefined = nameToCount.get(name);
+          let result: string = "";
+          if (count !== undefined) {
+            if (count === 1) {
+              result = name;
+            } else {
+              result = `${name} (${count})`;
+            }
           }
-        }
-        return result;
+          return result;
+        });
+        nameToCount.clear();
+        const msg: string = [
+          player.getName(),
+          "recycled:",
+          items.join(", "),
+        ].join(" ");
+        Broadcast.chatAll(msg);
       });
-      nameToCount.clear();
-      const msg: string = "Recycled: " + items.join(", ");
-      Broadcast.chatAll(msg);
-    });
+    }
   }
-});
+);
 
 RecycleContainer.addHandler(new RecycleCardAction());
 RecycleContainer.addHandler(new RecycleCardAgenda());

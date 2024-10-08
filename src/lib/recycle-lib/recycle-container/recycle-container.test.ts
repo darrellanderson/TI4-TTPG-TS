@@ -1,6 +1,6 @@
-import { Container } from "@tabletop-playground/api";
+import { Container, Player } from "@tabletop-playground/api";
 import { RecycleContainer } from "./recycle-container";
-import { GameObject, MockCard, MockContainer, MockGameObject } from "ttpg-mock";
+import { MockContainer, MockPlayer } from "ttpg-mock";
 import { GarbageContainer } from "ttpg-darrell";
 
 it("constructor", () => {
@@ -9,22 +9,31 @@ it("constructor", () => {
 });
 
 it("exercise recycle handler", () => {
-  const obj: GameObject = new MockGameObject();
-  const name: string = "test";
+  const objName: string = "my-name";
+  const objMetadata: string = "my-metadata";
+  const player: Player | undefined = new MockPlayer();
 
   // Singleton.
-  GarbageContainer.onRecycled.trigger(obj, name);
+  GarbageContainer.onRecycled.trigger(objName, objMetadata, player);
   process.flushTicks();
 
   // Multiple.
-  GarbageContainer.onRecycled.trigger(obj, name);
-  GarbageContainer.onRecycled.trigger(obj, name);
+  GarbageContainer.onRecycled.trigger(objName, objMetadata, player);
+  GarbageContainer.onRecycled.trigger(objName, objMetadata, player);
   process.flushTicks();
 
   // Secret objective.
-  const secret: GameObject = MockCard.simple(
-    "card.objective.secret:my-source/my-name"
-  );
-  GarbageContainer.onRecycled.trigger(secret, name);
+  const secret: string = "card.objective.secret:my-source/my-name";
+  GarbageContainer.onRecycled.trigger(objName, secret, player);
+  process.flushTicks();
+});
+
+it("recycle without player", () => {
+  const objName: string = "my-name";
+  const objMetadata: string = "my-metadata";
+  const player: Player | undefined = undefined;
+
+  // Singleton.
+  GarbageContainer.onRecycled.trigger(objName, objMetadata, player);
   process.flushTicks();
 });
