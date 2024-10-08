@@ -31,4 +31,7 @@ it("getters", () => {
   expect(buildConsume.getEntries().length).toBe(4);
   expect(buildConsume.getTradegoodValue()).toBe(5);
   expect(buildConsume.getPlanetValue()).toBe(1);
+
+  const report: string = buildConsume.report(["Mirror Computing"]);
+  expect(report).toBe("consuming 10 tradegoods, Mecatol Rex (1)");
 });

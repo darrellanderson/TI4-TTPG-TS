@@ -18,4 +18,10 @@ it("getters", () => {
 
   const buildProduce = new BuildProduce(objs);
   expect(buildProduce.getEntries().length).toBe(5);
+
+  const systemTileObj: GameObject = new MockGameObject();
+  buildProduce.moveToSystemTile(systemTileObj);
+
+  const report: string = buildProduce.report();
+  expect(report).toBe("producing 4 fighter, 5 infantry");
 });

@@ -8,6 +8,7 @@ export type BuildConsumeType = "tradegood" | "planet";
 export type BuildConsumeEntry = {
   obj: GameObject;
   type: BuildConsumeType;
+  name: string;
   value: number;
 };
 
@@ -19,6 +20,7 @@ export class BuildConsume {
       const nsid: string = NSID.get(obj);
       let type: BuildConsumeType | undefined = undefined;
       let value: number = 0;
+      let name: string = "tradegood";
       if (nsid === "token:base/tradegood-commodity-1") {
         type = "tradegood";
         value = 1;
@@ -30,6 +32,7 @@ export class BuildConsume {
           TI4.systemRegistry.getPlanetByPlanetCardNsid(nsid);
         if (planet) {
           type = "planet";
+          name = planet.getName();
           value = planet.getResources();
         }
       }
@@ -38,6 +41,7 @@ export class BuildConsume {
         this._entries.push({
           obj: obj,
           type,
+          name,
           value,
         });
       }
@@ -58,5 +62,25 @@ export class BuildConsume {
     return this._entries
       .filter((entry) => entry.type === "planet")
       .reduce((acc, entry) => acc + entry.value, 0);
+  }
+
+  report(unitModifierNames: Array<string>): string {
+    let tradegoods: number = this.getTradegoodValue();
+    if (unitModifierNames.includes("Mirror Computing")) {
+      tradegoods *= 2;
+    }
+
+    const result: Array<string> = [];
+    if (tradegoods > 0) {
+      result.push(`${tradegoods} tradegoods`);
+    }
+
+    for (const entry of this._entries) {
+      if (entry.type === "planet") {
+        result.push(`${entry.name} (${entry.value})`);
+      }
+    }
+
+    return `consuming ${result.join(", ")}`;
   }
 }
