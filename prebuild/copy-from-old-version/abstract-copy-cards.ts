@@ -68,7 +68,7 @@ export class AbstractCopyCards {
       const cardJson: any = JSON.parse(data);
 
       const src: string = cardJsonFile.replace(".json", ".jpg");
-      const dst: string = path.join(
+      let dst: string = path.join(
         this._dstRoot,
         path.basename(src).replace(/_/g, "-")
       );
@@ -114,7 +114,6 @@ export class AbstractCopyCards {
 
       if (nsid.includes(":homebrew") || nsid.includes(":franken.homebrew")) {
         // Remove homebrew.
-        console.log("XXXXXX", nsid);
         const dstBase: string = dst.replace(".jpg", "");
         const candidates: Array<string> = [
           dstBase + ".jpg",
@@ -130,6 +129,11 @@ export class AbstractCopyCards {
         continue;
       }
 
+      dst = dst.replace("superdreadnought", "super-dreadnought");
+      dst = dst.replace("heltitan", "hel-titan");
+      nsid = nsid.replace("superdreadnought", "super-dreadnought");
+      nsid = nsid.replace("heltitan", "hel-titan");
+
       const plan: CardPlan = {
         src,
         dst,
@@ -137,6 +141,7 @@ export class AbstractCopyCards {
         nsid,
         desc,
       };
+
       result.push(plan);
     }
     return result;

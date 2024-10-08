@@ -26,6 +26,10 @@ export class UnitAttrsRegistry {
     return Array.from(this._unitToBaseAttrs.values());
   }
 
+  getAllNsids(): Array<string> {
+    return Array.from(this._nsidToOverrideAttrs.keys());
+  }
+
   rawByUnit(unit: UnitType): UnitAttrsSchemaType | undefined {
     return this._unitToBaseAttrs.get(unit);
   }
@@ -89,6 +93,7 @@ export class UnitAttrsRegistry {
         errors.push(`Tech not found: "${nsid}"`);
       }
     }
+
     return this;
   }
 
