@@ -108,8 +108,12 @@ export class AbstractCopyCards {
       }
       nsid = parts.join(":");
 
-      // Remove homebrew.
+      if (nsid === "card.technology.unit-upgrade:base/war-sun") {
+        nsid = "card.technology.unit-upgrade:base/war-sun-2";
+      }
+
       if (nsid.includes(":homebrew") || nsid.includes(":franken.homebrew")) {
+        // Remove homebrew.
         console.log("XXXXXX", nsid);
         const dstBase: string = dst.replace(".jpg", "");
         const candidates: Array<string> = [

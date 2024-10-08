@@ -78,3 +78,10 @@ it("validate (missing tech)", () => {
     registry.validateOrThrow();
   }).toThrow();
 });
+
+it("war sun", () => {
+  const registry: UnitAttrsRegistry = new UnitAttrsRegistry().loadDefaultData();
+  expect(
+    registry.rawByNsid("card.technology.unit-upgrade:base/war-sun-2")?.unit
+  ).toBe("war-sun");
+});

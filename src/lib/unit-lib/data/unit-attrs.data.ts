@@ -352,7 +352,7 @@ export const SOURCE_TO_UNIT_ATTRS_DATA: Record<
     {
       name: "War Sun",
       unit: "war-sun",
-      nsidName: "war-sun-2",
+      nsidName: "war-sun-2", // must have -2 suffix to be tech card
       cost: 12,
       bombardment: { dice: 3, hit: 3 },
       spaceCombat: { dice: 3, hit: 3 },
