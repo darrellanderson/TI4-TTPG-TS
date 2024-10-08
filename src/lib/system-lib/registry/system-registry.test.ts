@@ -17,6 +17,7 @@ import { SystemRegistry } from "./system-registry";
 import { GameObject, Package, Vector, world } from "@tabletop-playground/api";
 import { SystemSchemaType } from "../schema/system-schema";
 import { NSID, ParsedNSID } from "ttpg-darrell";
+import { Planet } from "../planet/planet";
 
 it("constructor", () => {
   new SystemRegistry();
@@ -108,7 +109,12 @@ it("loadDefaultData", () => {
 it("getAllSystemsWithObjs", () => {
   const registry = new SystemRegistry().load(
     { source: "my-source", packageId: "my-package-id" },
-    [{ tile: 1000 }]
+    [
+      {
+        tile: 1000,
+        planets: [{ name: "my-planet-name", nsidName: "my-planet-nsid" }],
+      },
+    ]
   );
   const obj = new MockGameObject({
     id: "my-id-1",
@@ -121,6 +127,15 @@ it("getAllSystemsWithObjs", () => {
   });
   expect(registry.getAllSystemsWithObjs()).toHaveLength(2);
   expect(registry.getAllSystemsWithObjs(true)).toHaveLength(1); // skip contained
+
+  let planet: Planet | undefined;
+  planet = registry.getPlanetByPlanetCardNsid(
+    "card.planet:my-source/my-planet-nsid"
+  );
+  expect(planet).toBeDefined();
+  planet = registry.getPlanetByPlanetCardNsid("card.planet:my-source/invalid");
+  expect(planet).toBeUndefined();
+
   obj.destroy();
   expect(obj.isValid()).toBeFalsy();
   expect(registry.getAllSystemsWithObjs()).toHaveLength(1);

@@ -8,6 +8,7 @@ import {
 } from "@tabletop-playground/api";
 import { NSID } from "ttpg-darrell";
 
+import { Planet } from "../planet/planet";
 import { SystemSchema, SystemSchemaType } from "../schema/system-schema";
 import { System } from "../system/system";
 import { SOURCE_TO_SYSTEM_DATA } from "../data/system.data";
@@ -213,6 +214,25 @@ export class SystemRegistry {
    */
   public getBySystemTileObjId(objId: string): System | undefined {
     return this._systemTileObjIdToSystem.get(objId);
+  }
+
+  /**
+   * Get planet by planet card nsid.
+   *
+   * @param nsid
+   * @returns
+   */
+  public getPlanetByPlanetCardNsid(nsid: string): Planet | undefined {
+    const systems: Array<System> = this.getAllSystemsWithObjs();
+    for (const system of systems) {
+      const planets: Array<Planet> = system.getPlanets();
+      for (const planet of planets) {
+        if (planet.getPlanetCardNsid() === nsid) {
+          return planet;
+        }
+      }
+    }
+    return undefined;
   }
 
   /**
