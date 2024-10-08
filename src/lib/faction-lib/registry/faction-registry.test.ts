@@ -36,6 +36,8 @@ it("getPlayerSlotToFaction", () => {
 
   expect(playerSlotToFaction.get(1)?.getName()).toBe("The Arborec");
   expect(playerSlotToFaction.get(2)?.getName()).toBe("The Argent Flight");
+
+  expect(registry.getByPlayerSlot(1)?.getName()).toBe("The Arborec");
 });
 
 it("load (empty)", () => {

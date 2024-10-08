@@ -22,6 +22,12 @@ export class FactionRegistry {
     return this._nsidToFaction.get(nsid);
   }
 
+  getByPlayerSlot(playerSlot: number): Faction | undefined {
+    const playerSlotToFaction: Map<number, Faction> =
+      this.getPlayerSlotToFaction();
+    return playerSlotToFaction.get(playerSlot);
+  }
+
   getPlayerSlotToFaction(): Map<number, Faction> {
     const playerSlotToFaction: Map<number, Faction> = new Map();
     const skipContained: boolean = true;

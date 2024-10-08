@@ -102,3 +102,61 @@ it("constructor (base source get pok mech)", () => {
   // Alliance is also a PoK addition.
   expect(faction.getAllianceNsid()).toEqual("card.alliance:pok/my-nsid-name");
 });
+
+it("getHomeSystemTileObj", () => {
+  const sourceAndPackageId: SourceAndPackageIdSchemaType = {
+    source: "base",
+    packageId: "my-package-id",
+  };
+  const schema: FactionSchemaType = {
+    nsidName: "my-nsid-name",
+    name: "my-name",
+    abbr: "my-abbr",
+    abilities: ["my-ability"],
+    commodities: 1,
+    home: 2,
+    homeSurrogate: 3,
+    leaders: {
+      agents: ["my-agent"],
+      commanders: ["my-commander"],
+      heroes: ["my-hero"],
+      mechs: ["my-mech"],
+    },
+    promissories: ["my-promissory"],
+    startingTechs: ["my-starting-tech"],
+    startingUnits: { carrier: 0 },
+    factionTechs: ["one", "two"],
+    unitOverrides: ["my-unit-override", "my-mech"],
+  };
+  const faction: Faction = new Faction(sourceAndPackageId, schema);
+  expect(faction.getHomeSystemTileObj(4)).toBeUndefined();
+});
+
+it("getHomeSystemTileObj (bad tile number)", () => {
+  const sourceAndPackageId: SourceAndPackageIdSchemaType = {
+    source: "base",
+    packageId: "my-package-id",
+  };
+  const schema: FactionSchemaType = {
+    nsidName: "my-nsid-name",
+    name: "my-name",
+    abbr: "my-abbr",
+    abilities: ["my-ability"],
+    commodities: 1,
+    home: -123456789,
+    homeSurrogate: 3,
+    leaders: {
+      agents: ["my-agent"],
+      commanders: ["my-commander"],
+      heroes: ["my-hero"],
+      mechs: ["my-mech"],
+    },
+    promissories: ["my-promissory"],
+    startingTechs: ["my-starting-tech"],
+    startingUnits: { carrier: 0 },
+    factionTechs: ["one", "two"],
+    unitOverrides: ["my-unit-override", "my-mech"],
+  };
+  const faction: Faction = new Faction(sourceAndPackageId, schema);
+  expect(faction.getHomeSystemTileObj(4)).toBeUndefined();
+});

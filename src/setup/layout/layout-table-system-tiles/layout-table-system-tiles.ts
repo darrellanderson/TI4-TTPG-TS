@@ -59,9 +59,7 @@ export class LayoutTableSystemTiles {
         undefined,
         skipContained
       );
-      console.log("xxxxx1");
       if (obj) {
-        console.log("xxxxx2");
         const container: Container | undefined = obj.getContainer();
         if (container) {
           if (container.take(obj, above, false)) {

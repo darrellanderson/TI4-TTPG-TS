@@ -3,10 +3,13 @@ import {
   NsidNameSchemaType,
   SourceAndPackageIdSchemaType,
 } from "../../system-lib/schema/basic-types-schema";
+import { GameObject } from "@tabletop-playground/api";
+import { Find } from "ttpg-darrell";
 
 export class Faction {
   private readonly _sourceAndPackageId: SourceAndPackageIdSchemaType;
   private readonly _params: FactionSchemaType;
+  private readonly _find: Find = new Find();
 
   constructor(
     sourceAndPackageId: SourceAndPackageIdSchemaType,
@@ -70,6 +73,17 @@ export class Faction {
 
   getHomeSystemTileNumber(): number {
     return this._params.home;
+  }
+
+  getHomeSystemTileObj(playerSlot: number): GameObject | undefined {
+    const tileNumber: number = this.getHomeSystemTileNumber();
+    const nsid: string | undefined =
+      TI4.systemRegistry.tileNumberToSystemTileObjNsid(tileNumber);
+    if (nsid) {
+      const skipContained: boolean = true;
+      return this._find.findGameObject(nsid, playerSlot, skipContained);
+    }
+    return undefined;
   }
 
   getIcon(): string {
