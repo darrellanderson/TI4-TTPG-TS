@@ -75,15 +75,15 @@
         "8": "The Cavalry"
     },
     "CardMetadata": {
-        "0": "card.promissory.yellow:pok/alliance",
-        "1": "card.promissory.naazrokha:pok/black-market-forgery",
-        "2": "card.promissory.empyrean:pok/blood-pact",
-        "3": "card.promissory.vuilraith:pok/crucible",
-        "4": "card.promissory.empyrean:pok/dark-pact",
-        "5": "card.promissory.mahact:pok/scepter-of-dominion",
-        "6": "card.promissory.argent:pok/strike-wing-ambuscade",
-        "7": "card.promissory.ul:pok/terraform",
-        "8": "card.promissory.nomad:pok/the-cavalry"
+        "0": "card.promissory:pok/alliance",
+        "1": "card.promissory:pok/black-market-forgery",
+        "2": "card.promissory:pok/blood-pact",
+        "3": "card.promissory:pok/crucible",
+        "4": "card.promissory:pok/dark-pact",
+        "5": "card.promissory:pok/scepter-of-dominion",
+        "6": "card.promissory:pok/strike-wing-ambuscade",
+        "7": "card.promissory:pok/terraform",
+        "8": "card.promissory:pok/the-cavalry"
     },
     "CardTags": {
         "0": [

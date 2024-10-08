@@ -12,6 +12,10 @@ export class UnitModifierRegistry {
   private readonly _nsidToSchema: Map<string, UnitModifier> = new Map();
   private readonly _always: Array<UnitModifier> = [];
 
+  getAllNsids(): Array<string> {
+    return Array.from(this._nsidToSchema.keys());
+  }
+
   getAllWithNsids(): Array<UnitModifier> {
     return Array.from(this._nsidToSchema.values());
   }

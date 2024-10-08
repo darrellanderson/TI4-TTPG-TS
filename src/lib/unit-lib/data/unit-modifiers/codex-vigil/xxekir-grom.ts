@@ -9,7 +9,7 @@ export const XxekirGrom: UnitModifierSchemaType = {
   description: "Combine planet resources and influence",
   owner: "self",
   priority: "adjust",
-  triggers: [{ cardClass: "hero", nsidName: "xxekir-grom" }],
+  triggers: [{ cardClass: "hero", nsidName: "xxekir-grom.omega" }],
   applies: (combatRoll: CombatRoll): boolean => {
     const rollType: CombatRollType = combatRoll.getRollType();
     return rollType === "production";

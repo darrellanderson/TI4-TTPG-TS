@@ -106,6 +106,12 @@ export class AbstractCopyCards {
       if (parts[0]?.startsWith("card.leader.mech")) {
         parts[0] = "card.leader.mech";
       }
+      if (parts[0]?.startsWith("card.leader.mech")) {
+        parts[0] = "card.leader.mech";
+      }
+      if (parts[0]?.startsWith("card.promissory")) {
+        parts[0] = "card.promissory";
+      }
       nsid = parts.join(":");
 
       if (nsid === "card.technology.unit-upgrade:base/war-sun") {

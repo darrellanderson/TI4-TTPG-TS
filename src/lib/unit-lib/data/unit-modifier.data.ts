@@ -86,6 +86,9 @@ add("base", Unrelenting);
 import { Blitz } from "./unit-modifiers/codex-ordinian/blitz";
 add("codex.ordinian", Blitz);
 
+import { WarMachine } from "./unit-modifiers/codex-ordinian/war-machine";
+add("codex.ordinian", WarMachine);
+
 import { CustodiaVigilia } from "./unit-modifiers/codex-vigil/custodia-vigilia";
 add("codex.vigil", CustodiaVigilia);
 
@@ -169,6 +172,3 @@ add("pok", ViscountUnlenn);
 
 import { ViszElVir } from "./unit-modifiers/pok/visz-el-vir";
 add("pok", ViszElVir);
-
-import { WarMachine } from "./unit-modifiers/pok/war-machine";
-add("pok", WarMachine);

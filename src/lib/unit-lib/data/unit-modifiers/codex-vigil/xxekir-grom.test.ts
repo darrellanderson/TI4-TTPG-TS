@@ -2,7 +2,7 @@ import { CombatRoll } from "../../../../combat-lib/combat-roll/combat-roll";
 import { OPPONENT, placeGameObjects, SELF } from "../abstract.test";
 
 it("registry", () => {
-  const nsid = "card.leader.hero:codex.vigil/xxekir-grom";
+  const nsid = "card.leader.hero:codex.vigil/xxekir-grom.omega";
   expect(TI4.unitModifierRegistry.getByNsid(nsid)?.getName()).toBe(
     "Xxekir Grom"
   );
@@ -10,7 +10,7 @@ it("registry", () => {
 
 it("modifier", () => {
   placeGameObjects({
-    self: ["card.leader.hero:codex.vigil/xxekir-grom"],
+    self: ["card.leader.hero:codex.vigil/xxekir-grom.omega"],
   });
   const combatRoll: CombatRoll = CombatRoll.createCooked({
     rollType: "production",

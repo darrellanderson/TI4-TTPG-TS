@@ -2,7 +2,7 @@ import { CombatRoll } from "../../../../combat-lib/combat-roll/combat-roll";
 import { OPPONENT, placeGameObjects, SELF } from "../abstract.test";
 
 it("registry", () => {
-  const nsid = "card.action:pok/war-machine";
+  const nsid = "card.action:codex.ordinian/war-machine";
   expect(TI4.unitModifierRegistry.getByNsid(nsid)).toBeDefined();
 });
 
@@ -18,7 +18,7 @@ it("sarween-tools", () => {
   expect(combatRoll.getUnitModifierNames()).toEqual([]);
 
   placeGameObjects({
-    self: ["card.action:pok/war-machine"],
+    self: ["card.action:codex.ordinian/war-machine"],
   });
   combatRoll = CombatRoll.createCooked({
     rollType: "production",

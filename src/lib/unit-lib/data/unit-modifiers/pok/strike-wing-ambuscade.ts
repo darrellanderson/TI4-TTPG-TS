@@ -11,7 +11,7 @@ export const StrikeWingAbuscade: UnitModifierSchemaType = {
     "+1 die to a unit ability (anti-fighter barrage, bombardment, space cannon)",
   owner: "self",
   priority: "choose",
-  triggers: [{ cardClass: "promissory", nsidName: "strike_wing_ambuscade" }],
+  triggers: [{ cardClass: "promissory", nsidName: "strike-wing-ambuscade" }],
   applies: (combatRoll: CombatRoll): boolean => {
     const rollType: CombatRollType = combatRoll.getRollType();
     return (

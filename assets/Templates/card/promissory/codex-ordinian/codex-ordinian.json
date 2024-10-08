@@ -67,11 +67,11 @@
         "4": "War Funding Ω"
     },
     "CardMetadata": {
-        "0": "card.promissory.winnu:codex.ordinian/acquiescence.omega",
-        "1": "card.promissory.l1z1x:codex.ordinian/cybernetic-enhancements.omega",
-        "2": "card.promissory.yin:codex.ordinian/greyfire-mutagen.omega",
-        "3": "card.promissory.arborec:codex.ordinian/stymie.omega",
-        "4": "card.promissory.letnev:codex.ordinian/war-funding.omega"
+        "0": "card.promissory:codex.ordinian/acquiescence.omega",
+        "1": "card.promissory:codex.ordinian/cybernetic-enhancements.omega",
+        "2": "card.promissory:codex.ordinian/greyfire-mutagen.omega",
+        "3": "card.promissory:codex.ordinian/stymie.omega",
+        "4": "card.promissory:codex.ordinian/war-funding.omega"
     },
     "CardTags": {
         "0": [

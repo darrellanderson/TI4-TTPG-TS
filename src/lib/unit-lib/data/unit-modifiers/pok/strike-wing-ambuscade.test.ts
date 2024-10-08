@@ -4,7 +4,7 @@ import { CombatRoll } from "../../../../combat-lib/combat-roll/combat-roll";
 import { UnitAttrs } from "../../../unit-attrs/unit-attrs";
 
 it("registry", () => {
-  const nsid = "card.promissory:pok/strike_wing_ambuscade";
+  const nsid = "card.promissory:pok/strike-wing-ambuscade";
   expect(TI4.unitModifierRegistry.getByNsid(nsid)?.getName()).toBe(
     "Strike Wing Ambuscade"
   );
@@ -45,7 +45,7 @@ it("default", () => {
 
 it("modifier (antiFighterBarrage)", () => {
   placeGameObjects({
-    self: ["card.promissory:pok/strike_wing_ambuscade"],
+    self: ["card.promissory:pok/strike-wing-ambuscade"],
     selfUnits: new Map([
       ["destroyer", 1],
       ["dreadnought", 1],
@@ -80,7 +80,7 @@ it("modifier (antiFighterBarrage)", () => {
 
 it("modifier (bombardment)", () => {
   placeGameObjects({
-    self: ["card.promissory:pok/strike_wing_ambuscade"],
+    self: ["card.promissory:pok/strike-wing-ambuscade"],
     selfUnits: new Map([
       ["destroyer", 1],
       ["dreadnought", 1],
@@ -115,7 +115,7 @@ it("modifier (bombardment)", () => {
 
 it("modifier (spaceCannonDefense)", () => {
   placeGameObjects({
-    self: ["card.promissory:pok/strike_wing_ambuscade"],
+    self: ["card.promissory:pok/strike-wing-ambuscade"],
     selfUnits: new Map([
       ["destroyer", 1],
       ["dreadnought", 1],
@@ -150,7 +150,7 @@ it("modifier (spaceCannonDefense)", () => {
 
 it("modifier (spaceCannonOffense)", () => {
   placeGameObjects({
-    self: ["card.promissory:pok/strike_wing_ambuscade"],
+    self: ["card.promissory:pok/strike-wing-ambuscade"],
     selfUnits: new Map([
       ["destroyer", 1],
       ["dreadnought", 1],
