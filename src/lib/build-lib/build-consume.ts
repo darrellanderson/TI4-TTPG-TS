@@ -14,8 +14,11 @@ export type BuildConsumeEntry = {
 
 export class BuildConsume {
   private readonly _entries: Array<BuildConsumeEntry> = [];
+  private readonly _unitModifierNames: Array<string>;
 
-  constructor(objs: Array<GameObject>) {
+  constructor(objs: Array<GameObject>, unitModifierNames: Array<string>) {
+    this._unitModifierNames = unitModifierNames;
+
     for (const obj of objs) {
       const nsid: string = NSID.get(obj);
       let type: BuildConsumeType | undefined = undefined;
@@ -53,9 +56,15 @@ export class BuildConsume {
   }
 
   getTradegoodValue(): number {
-    return this._entries
+    let value: number = this._entries
       .filter((entry) => entry.type === "tradegood")
       .reduce((acc, entry) => acc + entry.value, 0);
+
+    if (this._unitModifierNames.includes("Mirror Computing")) {
+      value *= 2;
+    }
+
+    return value;
   }
 
   getPlanetValue(): number {
@@ -64,13 +73,10 @@ export class BuildConsume {
       .reduce((acc, entry) => acc + entry.value, 0);
   }
 
-  report(unitModifierNames: Array<string>): string {
-    let tradegoods: number = this.getTradegoodValue();
-    if (unitModifierNames.includes("Mirror Computing")) {
-      tradegoods *= 2;
-    }
-
+  report(): string {
     const result: Array<string> = [];
+
+    const tradegoods: number = this.getTradegoodValue();
     if (tradegoods > 0) {
       result.push(`${tradegoods} tradegoods`);
     }

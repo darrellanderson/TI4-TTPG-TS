@@ -2,7 +2,7 @@ import { MockGameObject } from "ttpg-mock";
 import { BuildConsume } from "./build-consume";
 
 it("constructor", () => {
-  new BuildConsume([]);
+  new BuildConsume([], []);
 });
 
 it("getters", () => {
@@ -27,11 +27,13 @@ it("getters", () => {
     }),
   ];
 
-  const buildConsume: BuildConsume = new BuildConsume(objs);
+  const buildConsume: BuildConsume = new BuildConsume(objs, [
+    "Mirror Computing",
+  ]);
   expect(buildConsume.getEntries().length).toBe(4);
-  expect(buildConsume.getTradegoodValue()).toBe(5);
+  expect(buildConsume.getTradegoodValue()).toBe(10);
   expect(buildConsume.getPlanetValue()).toBe(1);
 
-  const report: string = buildConsume.report(["Mirror Computing"]);
+  const report: string = buildConsume.report();
   expect(report).toBe("consuming 10 tradegoods, Mecatol Rex (1)");
 });
