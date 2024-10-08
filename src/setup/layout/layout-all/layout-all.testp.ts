@@ -3,6 +3,8 @@ import { refObject, Vector, world } from "@tabletop-playground/api";
 import { LayoutAll } from "./layout-all";
 import { SetupPlayerSlotColors } from "setup/setup-player-slot-colors/setup-player-slot-colors";
 
+console.log("LAYOUT-ALL.TESTP");
+
 for (const obj of world.getAllObjects(true)) {
   if (obj !== refObject) {
     obj.destroy();

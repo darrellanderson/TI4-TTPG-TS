@@ -22,6 +22,7 @@ import { FactionRegistry } from "../lib/faction-lib/registry/faction-registry";
 import { PlanetAttachmentRegistry } from "../lib/system-lib/registry/planet-attachment-registry";
 import { PlayerColor } from "../lib/player-lib/player-color/player-color";
 import { PlayerSeats } from "../lib/player-lib/player-seats/player-seats";
+import { RSwapSplitCombine } from "./r-swap-split-combine";
 import { SetupPlayerSlotColors } from "../setup/setup-player-slot-colors/setup-player-slot-colors";
 import { System } from "lib/system-lib/system/system";
 import { SystemAttachmentRegistry } from "../lib/system-lib/registry/system-attachment-registry";
@@ -30,9 +31,8 @@ import { TechRegistry } from "../lib/tech-lib/registry/tech-registry";
 import { UnitAttrsRegistry } from "../lib/unit-lib/registry/unit-attrs-registry";
 import { UnitModifierRegistry } from "../lib/unit-lib/registry/unit-modifier-registry";
 
-import { createSwapSplitCombine } from "./r-swap-split-combine";
-
 import * as NSID_TO_TEMPLATE_ID from "../nsid/nsid-to-template-id.json";
+import { ShuffleDecks } from "./shuffle-decks";
 Spawn.inject(NSID_TO_TEMPLATE_ID);
 
 export function registerErrorHandler() {
@@ -96,7 +96,8 @@ resetGlobalThisTI4();
 const iGlobals: Array<IGlobal> = [
   new DiceGroupCleanup(),
   new LeaveSeat(),
-  createSwapSplitCombine(),
+  new RSwapSplitCombine(),
+  new ShuffleDecks(),
 ];
 for (const v of Object.values(globalThis.TI4)) {
   if (typeof v.init === "function") {
