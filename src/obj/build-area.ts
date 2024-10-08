@@ -10,8 +10,12 @@ import {
 } from "@tabletop-playground/api";
 import { Find } from "ttpg-darrell";
 
-import { CombatRoll } from "../lib/combat-lib/combat-roll/combat-roll";
+import {
+  CombatRoll,
+  CombatRollPerPlayerData,
+} from "../lib/combat-lib/combat-roll/combat-roll";
 import { Faction } from "../lib/faction-lib/faction/faction";
+import { UnitType } from "lib/unit-lib/schema/unit-attrs-schema";
 
 const HEIGHT: number = 4;
 
@@ -98,6 +102,13 @@ export class BuildArea {
 
     console.log("------ Build Area update " + this._obj.getOwningPlayerSlot());
     console.log(combatRoll.getUnitModifierNamesWithDescriptions().join("\n"));
+
+    const self: CombatRollPerPlayerData = combatRoll.self;
+    for (const unitAttrs of self.unitAttrsSet.getAll()) {
+      const unitType: UnitType = unitAttrs.getUnit();
+      const cost: number | undefined = unitAttrs.getCost();
+      console.log(`${unitType} ${cost}`);
+    }
   }
 }
 
