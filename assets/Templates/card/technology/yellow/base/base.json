@@ -83,7 +83,7 @@
         "12": "Transit Diodes"
     },
     "CardMetadata": {
-        "0": "card.technology.yellow:base/eres-siphons",
+        "0": "card.technology.yellow:base/e-res-siphons",
         "1": "card.technology.yellow:base/graviton-laser-system",
         "2": "card.technology.yellow:base/hegemonic-trade-policy",
         "3": "card.technology.yellow:base/impulse-core",

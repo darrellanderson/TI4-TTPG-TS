@@ -1,3 +1,12 @@
+// klawSync needs process.{env,version} to be defined.
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+(process as any).env = {};
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+(process as any).version = "0";
+
+import fs from "fs";
+import klawSync from "klaw-sync";
+
 import {
   MockContainer,
   MockGameObject,
@@ -6,6 +15,8 @@ import {
 } from "ttpg-mock";
 import { SystemRegistry } from "./system-registry";
 import { GameObject, Package, Vector, world } from "@tabletop-playground/api";
+import { SystemSchemaType } from "../schema/system-schema";
+import { NSID, ParsedNSID } from "ttpg-darrell";
 
 it("constructor", () => {
   new SystemRegistry();
@@ -171,4 +182,69 @@ it("validateImages", () => {
   registry.validateImages();
   registry.validateImages(true);
   registry.destroy();
+});
+
+it("validate NSIDs appear in assets/Templates", () => {
+  // Scan templates for NSIDs.
+  const templateNsids: Set<string> = new Set();
+  const entries: readonly klawSync.Item[] = klawSync("assets/Templates/", {
+    nodir: true,
+    traverseAll: true,
+    filter: (item) => {
+      return item.path.endsWith(".json");
+    },
+  });
+  const regex: RegExp = /"(card\.planet:.*|tile\.system:.*)"/;
+  for (const entry of entries) {
+    const data: Buffer = fs.readFileSync(entry.path);
+    const lines: Array<string> = data.toString().split("\n");
+    for (const line of lines) {
+      const match: RegExpMatchArray | null = line.match(regex);
+      const nsid: string | undefined = match?.[1];
+      if (nsid) {
+        templateNsids.add(nsid);
+      }
+    }
+  }
+
+  const registry = new SystemRegistry().loadDefaultData();
+  const tileNumbers: Array<number> = registry.getAllSystemTileNumbers();
+  const nsids: Array<string> = [];
+  for (const tileNumber of tileNumbers) {
+    const nsid: string | undefined =
+      registry.tileNumberToSystemTileObjNsid(tileNumber);
+    if (!nsid) {
+      throw new Error(`No NSID for tile number ${tileNumber}`);
+    }
+
+    // System tile nsids.
+    nsids.push(nsid);
+
+    // Planet card nsids.
+    const schema: SystemSchemaType | undefined =
+      registry.rawBySystemTileNumber(tileNumber);
+    if (!schema) {
+      throw new Error(`No schema for tile number ${tileNumber}`);
+    }
+    const parsed: ParsedNSID | undefined = NSID.parse(nsid);
+    if (!parsed) {
+      throw new Error(`Invalid NSID: ${nsid}`);
+    }
+    const source: string = parsed.sourceParts.join("-");
+    for (const planet of schema.planets ?? []) {
+      const nsid: string = `card.planet:${source}/${planet.nsidName}`;
+      nsids.push(nsid);
+    }
+
+    const missing: Array<string> = [];
+    for (const nsid of nsids) {
+      if (!templateNsids.has(nsid) && !templateNsids.has(nsid + ".1")) {
+        missing.push(nsid);
+      }
+    }
+    if (missing.length > 0) {
+      console.log("missing", missing.join("\n"));
+    }
+    expect(missing).toHaveLength(0);
+  }
 });

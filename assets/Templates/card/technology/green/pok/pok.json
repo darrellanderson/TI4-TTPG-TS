@@ -1,0 +1,103 @@
+{
+    "Type": "Card",
+    "GUID": "A31F6210B3E6ED5C08929B559DAD90F5",
+    "Name": "technology/green",
+    "Metadata": "",
+    "CollisionType": "Regular",
+    "Friction": 0.7,
+    "Restitution": 0,
+    "Density": 0.5,
+    "SurfaceType": "Cardboard",
+    "Roughness": 1,
+    "Metallic": 0,
+    "PrimaryColor": {
+        "R": 255,
+        "G": 255,
+        "B": 255
+    },
+    "SecondaryColor": {
+        "R": 0,
+        "G": 0,
+        "B": 0
+    },
+    "Flippable": true,
+    "AutoStraighten": false,
+    "ShouldSnap": true,
+    "ScriptName": "",
+    "Blueprint": "",
+    "Models": [],
+    "Collision": [],
+    "SnapPointsGlobal": false,
+    "SnapPoints": [],
+    "ZoomViewDirection": {
+        "X": 0,
+        "Y": 0,
+        "Z": 0
+    },
+    "FrontTexture": "card/technology/green/pok/pok.face.jpg",
+    "BackTexture": "card/technology/green/pok/pok.back.jpg",
+    "HiddenTexture": "",
+    "BackIndex": -2,
+    "HiddenIndex": -1,
+    "NumHorizontal": 2,
+    "NumVertical": 3,
+    "Width": 6.3,
+    "Height": 4.2,
+    "Thickness": 0.05,
+    "HiddenInHand": true,
+    "UsedWithCardHolders": true,
+    "CanStack": true,
+    "UsePrimaryColorForSide": false,
+    "FrontTextureOverrideExposed": false,
+    "AllowFlippedInStack": false,
+    "MirrorBack": true,
+    "Model": "Rounded",
+    "Indices": [
+        0,
+        1,
+        2,
+        3,
+        4
+    ],
+    "CardNames": {
+        "0": "Bio-Stims",
+        "1": "Genetic Recombination",
+        "2": "Pre-Fab Arcologies",
+        "3": "Psychoarchaeology",
+        "4": "Voidwatch"
+    },
+    "CardMetadata": {
+        "0": "card.technology.green:pok/biostims",
+        "1": "card.technology.green:pok/genetic-recombination",
+        "2": "card.technology.green:pok/pre-fab-arcologies",
+        "3": "card.technology.green:pok/psychoarchaeology",
+        "4": "card.technology.green:pok/voidwatch"
+    },
+    "CardTags": {
+        "0": [
+            "card-technology-green",
+            "card-technology"
+        ],
+        "1": [
+            "card-technology-green",
+            "card-technology"
+        ],
+        "2": [
+            "card-technology-green",
+            "card-technology"
+        ],
+        "3": [
+            "card-technology-green",
+            "card-technology"
+        ],
+        "4": [
+            "card-technology-green",
+            "card-technology"
+        ]
+    },
+    "GroundAccessibility": "ZoomAndContext",
+    "Tags": [
+        "card-technology-green",
+        "card-technology"
+    ]
+}

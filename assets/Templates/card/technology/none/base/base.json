@@ -1,7 +1,7 @@
 {
     "Type": "Card",
-    "GUID": "9539BB0B1E3740B9042CCE7412728F4C",
-    "Name": "technology/unknown",
+    "GUID": "943DCF5A480C5BC2D8D4C9EB1A432161",
+    "Name": "technology/none",
     "Metadata": "",
     "CollisionType": "Regular",
     "Friction": 0.7,
@@ -34,8 +34,8 @@
         "Y": 0,
         "Z": 0
     },
-    "FrontTexture": "card/technology/unknown/base/base.face.jpg",
-    "BackTexture": "card/technology/unknown/base/base.back.jpg",
+    "FrontTexture": "card/technology/none/base/base.face.jpg",
+    "BackTexture": "card/technology/none/base/base.back.jpg",
     "HiddenTexture": "",
     "BackIndex": -2,
     "HiddenIndex": -1,
@@ -61,22 +61,22 @@
         "1": "Valefar Assimilator Y"
     },
     "CardMetadata": {
-        "0": "card.technology.unknown.nekro:base/valefar-assimilator-x",
-        "1": "card.technology.unknown.nekro:base/valefar-assimilator-y"
+        "0": "card.technology.none:base/valefar-assimilator-x",
+        "1": "card.technology.none:base/valefar-assimilator-y"
     },
     "CardTags": {
         "0": [
-            "card-technology-unknown",
+            "card-technology-none",
             "card-technology"
         ],
         "1": [
-            "card-technology-unknown",
+            "card-technology-none",
             "card-technology"
         ]
     },
     "GroundAccessibility": "ZoomAndContext",
     "Tags": [
-        "card-technology-unknown",
+        "card-technology-none",
         "card-technology"
     ]
 }

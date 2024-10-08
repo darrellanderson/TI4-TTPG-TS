@@ -1,0 +1,82 @@
+{
+    "Type": "Card",
+    "GUID": "F783BE5E12E8B8F2FDAB9AE87D91DFBE",
+    "Name": "technology/yellow",
+    "Metadata": "",
+    "CollisionType": "Regular",
+    "Friction": 0.7,
+    "Restitution": 0,
+    "Density": 0.5,
+    "SurfaceType": "Cardboard",
+    "Roughness": 1,
+    "Metallic": 0,
+    "PrimaryColor": {
+        "R": 255,
+        "G": 255,
+        "B": 255
+    },
+    "SecondaryColor": {
+        "R": 0,
+        "G": 0,
+        "B": 0
+    },
+    "Flippable": true,
+    "AutoStraighten": false,
+    "ShouldSnap": true,
+    "ScriptName": "",
+    "Blueprint": "",
+    "Models": [],
+    "Collision": [],
+    "SnapPointsGlobal": false,
+    "SnapPoints": [],
+    "ZoomViewDirection": {
+        "X": 0,
+        "Y": 0,
+        "Z": 0
+    },
+    "FrontTexture": "card/technology/yellow/codex-vigil/codex-vigil.face.jpg",
+    "BackTexture": "card/technology/yellow/codex-vigil/codex-vigil.back.jpg",
+    "HiddenTexture": "",
+    "BackIndex": -2,
+    "HiddenIndex": -1,
+    "NumHorizontal": 1,
+    "NumVertical": 2,
+    "Width": 6.3,
+    "Height": 4.2,
+    "Thickness": 0.05,
+    "HiddenInHand": true,
+    "UsedWithCardHolders": true,
+    "CanStack": true,
+    "UsePrimaryColorForSide": false,
+    "FrontTextureOverrideExposed": false,
+    "AllowFlippedInStack": false,
+    "MirrorBack": true,
+    "Model": "Rounded",
+    "Indices": [
+        0,
+        1
+    ],
+    "CardNames": {
+        "0": "Agency Supply Network",
+        "1": "I.I.H.Q. Modernization"
+    },
+    "CardMetadata": {
+        "0": "card.technology.yellow:codex.vigil/agency-supply-network",
+        "1": "card.technology.yellow:codex.vigil/iihq-modernization"
+    },
+    "CardTags": {
+        "0": [
+            "card-technology-yellow",
+            "card-technology"
+        ],
+        "1": [
+            "card-technology-yellow",
+            "card-technology"
+        ]
+    },
+    "GroundAccessibility": "ZoomAndContext",
+    "Tags": [
+        "card-technology-yellow",
+        "card-technology"
+    ]
+}

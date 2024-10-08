@@ -13,6 +13,10 @@ export class TechRegistry {
     TechSchemaType
   > = new Map();
 
+  getAllNsids(): Array<string> {
+    return Array.from(this._nsidToTech.keys());
+  }
+
   getByNsid(nsid: string): Tech | undefined {
     return this._nsidToTech.get(nsid);
   }

@@ -94,6 +94,9 @@ export class AbstractCopyCards {
       if (parts[0]?.startsWith("card.technology.unit-upgrade")) {
         parts[0] = "card.technology.unit-upgrade";
       }
+      if (parts[0]?.startsWith("card.technology.unknown")) {
+        parts[0] = "card.technology.none";
+      }
       if (parts[0]?.startsWith("card.leader.agent")) {
         parts[0] = "card.leader.agent";
       }
@@ -135,10 +138,16 @@ export class AbstractCopyCards {
         continue;
       }
 
-      dst = dst.replace("superdreadnought", "super-dreadnought");
+      dst = dst.replace("eres-siphons", "e-res-siphon");
       dst = dst.replace("heltitan", "hel-titan");
-      nsid = nsid.replace("superdreadnought", "super-dreadnought");
+      dst = dst.replace("prefab-arcologies", "pre-fab-arcologies");
+      dst = dst.replace("superdreadnought", "super-dreadnought");
+      dst = dst.replace("technology/unknown", "technology/none");
+
+      nsid = nsid.replace("eres-siphons", "e-res-siphons");
       nsid = nsid.replace("heltitan", "hel-titan");
+      nsid = nsid.replace("prefab-arcologies", "pre-fab-arcologies");
+      nsid = nsid.replace("superdreadnought", "super-dreadnought");
 
       const plan: CardPlan = {
         src,

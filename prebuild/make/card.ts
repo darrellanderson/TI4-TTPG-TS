@@ -22,11 +22,12 @@ async function go() {
   await new CreateDeck("planet").go();
   await new CreateDeck("promissory").go();
   await new CreateDeck("relic").go();
-  await new CreateDeck("technology/red").setIsPortrait(false).go();
   await new CreateDeck("technology/blue").setIsPortrait(false).go();
+  await new CreateDeck("technology/green").setIsPortrait(false).go();
+  await new CreateDeck("technology/red").setIsPortrait(false).go();
   await new CreateDeck("technology/yellow").setIsPortrait(false).go();
   await new CreateDeck("technology/unit-upgrade").setIsPortrait(false).go();
-  await new CreateDeck("technology/unknown").setIsPortrait(false).go();
+  await new CreateDeck("technology/none").setIsPortrait(false).go();
   await new CreateDeck("unknown").go();
 }
 go();

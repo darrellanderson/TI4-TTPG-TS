@@ -4,7 +4,7 @@ import { AbstractCopyCards } from "./abstract-copy-cards";
 // Do not copy those.
 import { SOURCE_TO_FACTION_DATA } from "../../src/lib/faction-lib/data/faction.data";
 import path from "path";
-const factionNsidNames: Array<string> = [];
+const factionNsidNames: Array<string> = ["keleres"];
 for (const factionDataArray of Object.values(SOURCE_TO_FACTION_DATA)) {
   for (const factionData of factionDataArray) {
     factionNsidNames.push(factionData.nsidName);
@@ -72,8 +72,9 @@ new AbstractCopyCards("other").go();
 new AbstractCopyCards("planet").go();
 new AbstractCopyCards("promissory").go();
 new AbstractCopyCards("relic").go();
-new AbstractCopyCards("technology/red").setFilter(filterTech).go();
 new AbstractCopyCards("technology/blue").setFilter(filterTech).go();
+new AbstractCopyCards("technology/green").setFilter(filterTech).go();
+new AbstractCopyCards("technology/red").setFilter(filterTech).go();
 new AbstractCopyCards("technology/yellow").setFilter(filterTech).go();
 new AbstractCopyCards("technology/unit_upgrade").setFilter(filterTech).go();
 new AbstractCopyCards("technology/unknown").setFilter(filterTech).go();
