@@ -14,8 +14,8 @@ import { Find } from "ttpg-darrell";
 import { CombatRoll } from "../lib/combat-lib/combat-roll/combat-roll";
 import { Faction } from "../lib/faction-lib/faction/faction";
 import { System } from "../lib/system-lib/system/system";
-import { BuildConsume } from "lib/build-lib/build-consume";
-import { BuildProduce } from "lib/build-lib/build-produce";
+import { BuildConsume } from "../lib/build-lib/build-consume";
+import { BuildProduce } from "../lib/build-lib/build-produce";
 
 const HEIGHT: number = 4;
 
@@ -30,6 +30,10 @@ export class BuildArea {
   constructor(obj: GameObject) {
     this._obj = obj;
     this._zone = this._findOrCreateZone();
+
+    if (this._obj.getOwningPlayerSlot() === -1) {
+      throw new Error("BuildArea must have an owning player slot.");
+    }
 
     this._obj.onReleased.add(() => {
       const pos: Vector = this._obj.getPosition();

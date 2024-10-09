@@ -25,6 +25,14 @@ export class UnitModifierRegistry {
   }
 
   getByNsid(nsid: string): UnitModifier | undefined {
+    if (
+      nsid.endsWith(".1") ||
+      nsid.endsWith(".2") ||
+      nsid.endsWith(".3") ||
+      nsid.endsWith(".4")
+    ) {
+      nsid = nsid.slice(0, nsid.length - 2);
+    }
     return this._nsidToSchema.get(nsid);
   }
 

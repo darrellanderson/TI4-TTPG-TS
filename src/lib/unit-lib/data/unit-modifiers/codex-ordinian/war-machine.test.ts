@@ -2,7 +2,7 @@ import { CombatRoll } from "../../../../combat-lib/combat-roll/combat-roll";
 import { OPPONENT, placeGameObjects, SELF } from "../abstract.test";
 
 it("registry", () => {
-  const nsid = "card.action:codex.ordinian/war-machine";
+  const nsid = "card.action:codex.ordinian/war-machine.1";
   expect(TI4.unitModifierRegistry.getByNsid(nsid)).toBeDefined();
 });
 
