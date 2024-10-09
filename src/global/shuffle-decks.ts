@@ -19,16 +19,7 @@ export class ShuffleDecks implements IGlobal {
     for (const deckSnapPointTag of deckSnapPointTags) {
       const deck: Card | undefined = find.findDeckOrDiscard(deckSnapPointTag);
       if (deck) {
-        if (GameWorld.getExecutionReason() !== "unittest") {
-          console.log(
-            `ShuffleDecks: shuffling: "${deckSnapPointTag}" (${deck.getId()})`
-          );
-        }
         deck.shuffle();
-      } else {
-        if (GameWorld.getExecutionReason() !== "unittest") {
-          console.log(`ShuffleDecks: missing deck: "${deckSnapPointTag}"`);
-        }
       }
     }
   }
