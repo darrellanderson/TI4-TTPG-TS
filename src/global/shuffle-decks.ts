@@ -1,4 +1,4 @@
-import { Card, GameWorld } from "@tabletop-playground/api";
+import { Card } from "@tabletop-playground/api";
 import { Find, IGlobal } from "ttpg-darrell";
 
 export class ShuffleDecks implements IGlobal {
