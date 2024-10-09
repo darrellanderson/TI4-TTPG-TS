@@ -2,6 +2,7 @@ import {
   Color,
   GameObject,
   GameWorld,
+  Player,
   refObject,
   Vector,
   world,
@@ -10,12 +11,11 @@ import {
 } from "@tabletop-playground/api";
 import { Find } from "ttpg-darrell";
 
-import {
-  CombatRoll,
-  CombatRollPerPlayerData,
-} from "../lib/combat-lib/combat-roll/combat-roll";
+import { CombatRoll } from "../lib/combat-lib/combat-roll/combat-roll";
 import { Faction } from "../lib/faction-lib/faction/faction";
-import { UnitType } from "lib/unit-lib/schema/unit-attrs-schema";
+import { System } from "../lib/system-lib/system/system";
+import { BuildConsume } from "lib/build-lib/build-consume";
+import { BuildProduce } from "lib/build-lib/build-produce";
 
 const HEIGHT: number = 4;
 
@@ -24,6 +24,8 @@ export class BuildArea {
   private readonly _zone: Zone;
 
   private readonly _find: Find = new Find();
+
+  private _lastActivatedSystemTileObj: GameObject | undefined;
 
   constructor(obj: GameObject) {
     this._obj = obj;
@@ -40,6 +42,12 @@ export class BuildArea {
     });
     this._zone.onEndOverlap.add(() => {
       this.update();
+    });
+
+    TI4.onSystemActivated.add((system: System, player: Player) => {
+      if (player.getSlot() === this._obj.getOwningPlayerSlot()) {
+        this._lastActivatedSystemTileObj = system.getObj();
+      }
     });
   }
 
@@ -73,22 +81,18 @@ export class BuildArea {
     return zone;
   }
 
-  _getHomeSystemTile(): GameObject | undefined {
+  _getSystemTileHome(): GameObject | undefined {
     const playerSlot: number = this._obj.getOwningPlayerSlot();
-
-    const faction: Faction | undefined = TI4.factionRegistry
-      .getPlayerSlotToFaction()
-      .get(playerSlot);
+    const faction: Faction | undefined =
+      TI4.factionRegistry.getByPlayerSlot(playerSlot);
     if (faction) {
-      const tileNumber: number = faction.getHomeSystemTileNumber();
-      const nsid: string | undefined =
-        TI4.systemRegistry.tileNumberToSystemTileObjNsid(tileNumber);
-      if (nsid) {
-        const skipContained: boolean = true;
-        return this._find.findGameObject(nsid, playerSlot, skipContained);
-      }
+      return faction.getHomeSystemTileObj(playerSlot);
     }
     return undefined;
+  }
+
+  _getSystemTileLastActivated(): GameObject | undefined {
+    return this._lastActivatedSystemTileObj;
   }
 
   update() {
@@ -100,15 +104,20 @@ export class BuildArea {
       rollingPlayerSlot: this._obj.getOwningPlayerSlot(),
     });
 
+    const objs: Array<GameObject> = this._zone.getOverlappingObjects();
+    const buildConsume: BuildConsume = new BuildConsume(
+      objs,
+      combatRoll.getUnitModifierNames()
+    );
+    const buildProduce: BuildProduce = new BuildProduce(
+      objs,
+      combatRoll.self.unitAttrsSet
+    );
+
     console.log("------ Build Area update " + this._obj.getOwningPlayerSlot());
     console.log(combatRoll.getUnitModifierNamesWithDescriptions().join("\n"));
-
-    const self: CombatRollPerPlayerData = combatRoll.self;
-    for (const unitAttrs of self.unitAttrsSet.getAll()) {
-      const unitType: UnitType = unitAttrs.getUnit();
-      const cost: number | undefined = unitAttrs.getCost();
-      console.log(`${unitType} ${cost}`);
-    }
+    console.log(buildConsume.report());
+    console.log(buildProduce.report());
   }
 }
 
