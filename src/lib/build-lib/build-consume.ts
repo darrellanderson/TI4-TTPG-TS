@@ -3,6 +3,11 @@ import { NSID } from "ttpg-darrell";
 
 import { Planet } from "../system-lib/planet/planet";
 
+import { MirrorComputing } from "../unit-lib/data/unit-modifiers/base/mirror-computing";
+import { SarweenTools } from "../unit-lib/data/unit-modifiers/base/sarween-tools";
+import { WarMachine } from "../unit-lib/data/unit-modifiers/codex-ordinian/war-machine";
+import { XxekirGrom } from "../unit-lib/data/unit-modifiers/codex-vigil/xxekir-grom";
+
 export type BuildConsumeType = "tradegood" | "planet";
 
 export type BuildConsumeEntry = {
@@ -27,9 +32,15 @@ export class BuildConsume {
       if (nsid === "token:base/tradegood-commodity-1") {
         type = "tradegood";
         value = 1;
+        if (unitModifierNames.includes(MirrorComputing.name)) {
+          value *= 2;
+        }
       } else if (nsid === "token:base/tradegood-commodity-3") {
         type = "tradegood";
         value = 3;
+        if (unitModifierNames.includes(MirrorComputing.name)) {
+          value *= 2;
+        }
       } else if (nsid.startsWith("card.planet:")) {
         const planet: Planet | undefined =
           TI4.systemRegistry.getPlanetByPlanetCardNsid(nsid);
@@ -37,6 +48,9 @@ export class BuildConsume {
           type = "planet";
           name = planet.getName();
           value = planet.getResources();
+          if (unitModifierNames.includes(XxekirGrom.name)) {
+            value += planet.getInfluence();
+          }
         }
       }
 
@@ -56,15 +70,9 @@ export class BuildConsume {
   }
 
   getTradegoodValue(): number {
-    let value: number = this._entries
+    return this._entries
       .filter((entry) => entry.type === "tradegood")
       .reduce((acc, entry) => acc + entry.value, 0);
-
-    if (this._unitModifierNames.includes("Mirror Computing")) {
-      value *= 2;
-    }
-
-    return value;
   }
 
   getPlanetValue(): number {
@@ -73,12 +81,16 @@ export class BuildConsume {
       .reduce((acc, entry) => acc + entry.value, 0);
   }
 
+  getTotalValue(): number {
+    return this.getTradegoodValue() + this.getPlanetValue();
+  }
+
   report(): string {
     const result: Array<string> = [];
 
     const tradegoods: number = this.getTradegoodValue();
     if (tradegoods > 0) {
-      result.push(`${tradegoods} tradegoods`);
+      result.push(`tradegoods (${tradegoods})`);
     }
 
     for (const entry of this._entries) {
@@ -87,6 +99,15 @@ export class BuildConsume {
       }
     }
 
-    return `consuming ${result.join(", ")}`;
+    let extras: string = "";
+    if (this._unitModifierNames.includes(SarweenTools.name)) {
+      extras += "+ST";
+    }
+    if (this._unitModifierNames.includes(WarMachine.name)) {
+      extras += "+WM";
+    }
+
+    const total: number = this.getTotalValue();
+    return `consuming $${total}${extras}: ${result.join(", ")}`;
   }
 }

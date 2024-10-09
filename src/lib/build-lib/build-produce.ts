@@ -1,8 +1,10 @@
 import { GameObject, Rotator, Vector } from "@tabletop-playground/api";
 import { NSID } from "ttpg-darrell";
 
-import { UnitType } from "../unit-lib/schema/unit-attrs-schema";
+import { UnitAttrs } from "../unit-lib/unit-attrs/unit-attrs";
+import { UnitAttrsSet } from "../unit-lib/unit-attrs-set/unit-attrs-set";
 import { UnitPlastic } from "../unit-lib/unit-plastic/unit-plastic";
+import { UnitType } from "../unit-lib/schema/unit-attrs-schema";
 
 export type BuildProduceEntry = {
   obj: GameObject;
@@ -12,8 +14,11 @@ export type BuildProduceEntry = {
 
 export class BuildProduce {
   private readonly _entries: Array<BuildProduceEntry> = [];
+  private readonly _unitAttrsSet: UnitAttrsSet;
 
-  constructor(objs: Array<GameObject>) {
+  constructor(objs: Array<GameObject>, unitAttrsSet: UnitAttrsSet) {
+    this._unitAttrsSet = unitAttrsSet;
+
     for (const obj of objs) {
       let unit: UnitType | undefined = undefined;
       let count: number = 1;
@@ -72,14 +77,31 @@ export class BuildProduce {
       const prevCount: number = unitToCount.get(unit) ?? 0;
       unitToCount.set(unit, prevCount + count);
     });
+
     const units: Array<UnitType> = Array.from(unitToCount.keys()).sort();
     const result: Array<string> = [];
+    let totalCost: number = 0;
     for (const unit of units) {
       const count: number | undefined = unitToCount.get(unit);
       if (count !== undefined) {
-        result.push(`${count} ${unit}`);
+        let name: string = unit;
+        if (count > 1 && unit !== "infantry") {
+          name += "s";
+        }
+        result.push(`${count} ${name}`);
+
+        const unitAttrs: UnitAttrs | undefined = this._unitAttrsSet.get(unit);
+        if (unitAttrs) {
+          const produceCount: number = Math.ceil(
+            count / unitAttrs.getProducePerCost()
+          );
+          const produceCost: number | undefined = unitAttrs.getCost();
+          if (produceCost !== undefined) {
+            totalCost += produceCount * produceCost;
+          }
+        }
       }
     }
-    return `producing ${result.join(", ")}`;
+    return `producing $${totalCost}: ${result.join(", ")}`;
   }
 }

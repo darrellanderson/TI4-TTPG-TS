@@ -29,11 +29,15 @@ it("getters", () => {
 
   const buildConsume: BuildConsume = new BuildConsume(objs, [
     "Mirror Computing",
+    "Sarween Tools",
+    "Xxekir Grom",
+    "War Machine",
   ]);
   expect(buildConsume.getEntries().length).toBe(4);
   expect(buildConsume.getTradegoodValue()).toBe(10);
-  expect(buildConsume.getPlanetValue()).toBe(1);
+  expect(buildConsume.getPlanetValue()).toBe(7);
+  expect(buildConsume.getTotalValue()).toBe(17);
 
   const report: string = buildConsume.report();
-  expect(report).toBe("consuming 10 tradegoods, Mecatol Rex (1)");
+  expect(report).toBe("consuming $17+ST+WM: tradegoods (10), Mecatol Rex (7)");
 });

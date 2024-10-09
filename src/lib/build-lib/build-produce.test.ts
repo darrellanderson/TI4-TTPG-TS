@@ -2,9 +2,12 @@ import { GameObject } from "@tabletop-playground/api";
 import { MockGameObject } from "ttpg-mock";
 
 import { BuildProduce } from "./build-produce";
+import { UnitAttrsSet } from "lib/unit-lib/unit-attrs-set/unit-attrs-set";
 
 it("constructor", () => {
-  new BuildProduce([]);
+  const unitAttrsSet: UnitAttrsSet =
+    TI4.unitAttrsRegistry.defaultUnitAttrsSet();
+  new BuildProduce([], unitAttrsSet);
 });
 
 it("getters", () => {
@@ -15,13 +18,15 @@ it("getters", () => {
     new MockGameObject({ templateMetadata: "token:base/fighter-3" }),
     new MockGameObject({ templateMetadata: "unit:base/infantry" }),
   ];
+  const unitAttrsSet: UnitAttrsSet =
+    TI4.unitAttrsRegistry.defaultUnitAttrsSet();
 
-  const buildProduce = new BuildProduce(objs);
+  const buildProduce = new BuildProduce(objs, unitAttrsSet);
   expect(buildProduce.getEntries().length).toBe(5);
 
   const systemTileObj: GameObject = new MockGameObject();
   buildProduce.moveToSystemTile(systemTileObj);
 
   const report: string = buildProduce.report();
-  expect(report).toBe("producing 4 fighter, 5 infantry");
+  expect(report).toBe("producing $5: 4 fighters, 5 infantry");
 });
