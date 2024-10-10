@@ -29,5 +29,5 @@ it("getters", () => {
   buildProduce.moveToSystemTile(systemTileObj);
 
   const report: string = buildProduce.report();
-  expect(report).toBe("producing $5: 4 fighters, 5 infantry");
+  expect(report).toBe("producing $10: 4 fighters, 5 infantry");
 });

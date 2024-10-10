@@ -97,6 +97,17 @@ export class BuildArea {
     return this._lastActivatedSystemTileObj;
   }
 
+  getSummary(objs: Array<GameObject>, combatRoll: CombatRoll): string {
+    const produce = new BuildProduce(objs, combatRoll.self.unitAttrsSet);
+    const consume = new BuildConsume(objs, combatRoll.getUnitModifierNames());
+
+    const cost: number = 0;
+    const spend: number = 0;
+    const unitCount: number = 0;
+
+    return `Cost: ${cost}   Resources: ${spend}  #Units: ${unitCount}`;
+  }
+
   update() {
     // CombatRoll finds and applies unit modifiers.
     const combatRoll: CombatRoll = CombatRoll.createCooked({

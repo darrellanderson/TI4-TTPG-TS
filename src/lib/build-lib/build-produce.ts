@@ -51,6 +51,35 @@ export class BuildProduce {
     }
   }
 
+  getCost(): number {
+    const unitToCount: Map<UnitType, number> = new Map();
+    this._entries.forEach((entry) => {
+      const unit: UnitType = entry.unit;
+      const count: number = entry.count;
+      const prevCount: number = unitToCount.get(unit) ?? 0;
+      unitToCount.set(unit, prevCount + count);
+    });
+
+    const units: Array<UnitType> = Array.from(unitToCount.keys()).sort();
+    let totalCost: number = 0;
+    for (const unit of units) {
+      const count: number | undefined = unitToCount.get(unit);
+      if (count !== undefined) {
+        const unitAttrs: UnitAttrs | undefined = this._unitAttrsSet.get(unit);
+        if (unitAttrs) {
+          const produceCount: number = Math.ceil(
+            count / unitAttrs.getProducePerCost()
+          );
+          const produceCost: number | undefined = unitAttrs.getCost();
+          if (produceCost !== undefined) {
+            totalCost += produceCount * produceCost;
+          }
+        }
+      }
+    }
+    return totalCost;
+  }
+
   getEntries(): Array<BuildProduceEntry> {
     return this._entries;
   }
@@ -88,7 +117,7 @@ export class BuildProduce {
 
     const units: Array<UnitType> = Array.from(unitToCount.keys()).sort();
     const result: Array<string> = [];
-    let totalCost: number = 0;
+    let totalCost: number = this.getCost();
     for (const unit of units) {
       const count: number | undefined = unitToCount.get(unit);
       if (count !== undefined) {
