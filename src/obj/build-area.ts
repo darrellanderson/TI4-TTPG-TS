@@ -31,6 +31,7 @@ export class BuildArea {
   private readonly _summaryText: Text;
 
   private _lastActivatedSystemTileObj: GameObject | undefined;
+  private _lastActivatedActionName: string | undefined;
 
   // public for testing
   _onUpdateHandler: () => void = () => {
@@ -58,6 +59,15 @@ export class BuildArea {
     TI4.onSystemActivated.add((system: System, player: Player) => {
       if (player.getSlot() === this._obj.getOwningPlayerSlot()) {
         this._lastActivatedSystemTileObj = system.getObj();
+        if (this._lastActivatedActionName) {
+          this._obj.removeCustomAction(this._lastActivatedActionName);
+          this._lastActivatedActionName = undefined;
+        }
+        let name: string = system.getName();
+        if (name.length > 25) {
+          name = name.substring(0, 25) + "...";
+        }
+        this._lastActivatedActionName = "*Warp to " + name;
       }
     });
 
@@ -69,6 +79,9 @@ export class BuildArea {
     const reportActionName: string = "*Report";
     this._obj.addCustomAction(reportActionName);
 
+    const warpToHomeActionName: string = "*Warp to Home";
+    this._obj.addCustomAction(warpToHomeActionName);
+
     this._obj.onCustomAction.add(
       (_obj: GameObject, _player: Player, action: string) => {
         if (action === togglePrivacyActionName) {
@@ -76,6 +89,12 @@ export class BuildArea {
         }
         if (action === reportActionName) {
           this.report();
+        }
+        if (action === warpToHomeActionName) {
+          this._warpToHome();
+        }
+        if (action === this._lastActivatedActionName) {
+          this._warpToLastActivated();
         }
       }
     );
@@ -164,9 +183,39 @@ export class BuildArea {
     return this._lastActivatedSystemTileObj;
   }
 
-  getSummary(objs: Array<GameObject>, combatRoll: CombatRoll): string {
+  _getProduceAndConsume(): { produce: BuildProduce; consume: BuildConsume } {
+    // CombatRoll finds and applies unit modifiers.
+    const combatRoll: CombatRoll = CombatRoll.createCooked({
+      rollType: "production",
+      hex: "<0,0,0>",
+      activatingPlayerSlot: this._obj.getOwningPlayerSlot(),
+      rollingPlayerSlot: this._obj.getOwningPlayerSlot(),
+    });
+    const objs: Array<GameObject> = this._zone.getOverlappingObjects();
     const produce = new BuildProduce(objs, combatRoll.self.unitAttrsSet);
     const consume = new BuildConsume(objs, combatRoll.getUnitModifierNames());
+    return { produce, consume };
+  }
+
+  _warpToHome() {
+    const { produce } = this._getProduceAndConsume();
+    const home: GameObject | undefined = this._getSystemTileHome();
+    if (home) {
+      produce.moveToSystemTile(home);
+    }
+  }
+
+  _warpToLastActivated() {
+    const { produce } = this._getProduceAndConsume();
+    const lastActivated: GameObject | undefined =
+      this._getSystemTileLastActivated();
+    if (lastActivated) {
+      produce.moveToSystemTile(lastActivated);
+    }
+  }
+
+  getSummary(): string {
+    const { produce, consume } = this._getProduceAndConsume();
 
     const cost: number = produce.getCost();
     const spend: string = consume.getTotalValueWithModifiers();
@@ -186,33 +235,12 @@ export class BuildArea {
   }
 
   update() {
-    // CombatRoll finds and applies unit modifiers.
-    const combatRoll: CombatRoll = CombatRoll.createCooked({
-      rollType: "production",
-      hex: "<0,0,0>",
-      activatingPlayerSlot: this._obj.getOwningPlayerSlot(),
-      rollingPlayerSlot: this._obj.getOwningPlayerSlot(),
-    });
-
-    const objs: Array<GameObject> = this._zone.getOverlappingObjects();
-
-    const summary: string = this.getSummary(objs, combatRoll);
+    const summary: string = this.getSummary();
     this._summaryText.setText(summary);
   }
 
   report() {
-    // CombatRoll finds and applies unit modifiers.
-    const combatRoll: CombatRoll = CombatRoll.createCooked({
-      rollType: "production",
-      hex: "<0,0,0>",
-      activatingPlayerSlot: this._obj.getOwningPlayerSlot(),
-      rollingPlayerSlot: this._obj.getOwningPlayerSlot(),
-    });
-
-    const objs: Array<GameObject> = this._zone.getOverlappingObjects();
-
-    const produce = new BuildProduce(objs, combatRoll.self.unitAttrsSet);
-    const consume = new BuildConsume(objs, combatRoll.getUnitModifierNames());
+    const { produce, consume } = this._getProduceAndConsume();
 
     const playerSlot: number = this._obj.getOwningPlayerSlot();
     const name: string = TI4.playerColor.getSlotColorNameOrThrow(playerSlot);

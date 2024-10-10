@@ -60,6 +60,12 @@ it("_getSystemTileHome", () => {
 
   found = buildArea._getSystemTileHome();
   expect(found?.getId()).toBe("my-home");
+
+  buildArea._warpToHome();
+
+  // Again, via custom action.
+  const player = new MockPlayer();
+  mat._customActionAsPlayer(player, "*Warp to Home");
 });
 
 it("_getSystemTileLastActivated", () => {
@@ -80,9 +86,15 @@ it("_getSystemTileLastActivated", () => {
   }
   const player = new MockPlayer({ slot: 10 });
   TI4.onSystemActivated.trigger(system, player);
+  TI4.onSystemActivated.trigger(system, player); // repeat to test removal of old action
 
   found = buildArea._getSystemTileLastActivated();
   expect(found?.getId()).toBe("my-last-activated");
+
+  buildArea._warpToLastActivated();
+
+  // Again, via custom action.
+  mat._customActionAsPlayer(player, "*Warp to System 18: Mecatol Rex");
 });
 
 it("togglePrivacy", () => {
@@ -90,6 +102,10 @@ it("togglePrivacy", () => {
   const buildArea = new BuildArea(mat);
   buildArea.togglePrivacyMode();
   buildArea.togglePrivacyMode();
+
+  // Again, via custom action.
+  const player = new MockPlayer();
+  mat._customActionAsPlayer(player, "*Toggle Privacy");
 });
 
 it("update", () => {
@@ -98,4 +114,14 @@ it("update", () => {
   buildArea.update();
 
   buildArea._onUpdateHandler(); // exercise the handler
+});
+
+it("report", () => {
+  const mat = new MockGameObject({ owningPlayerSlot: 10 });
+  const buildArea = new BuildArea(mat);
+  buildArea.report();
+
+  // Again, via custom action.
+  const player = new MockPlayer();
+  mat._customActionAsPlayer(player, "*Report");
 });

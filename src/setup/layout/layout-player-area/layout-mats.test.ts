@@ -17,3 +17,7 @@ it("_spawnTechDeck", () => {
   const snapPoint = new MockSnapPoint();
   new LayoutMats(1)._spawnTechDeck(snapPoint);
 });
+
+it("missing owner", () => {
+  expect(() => new LayoutMats(-1)).toThrow();
+});
