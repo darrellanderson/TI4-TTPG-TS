@@ -24,6 +24,11 @@ export class BuildArea {
 
   private _lastActivatedSystemTileObj: GameObject | undefined;
 
+  // public for testing
+  _onUpdateHandler: () => void = () => {
+    this.update();
+  };
+
   constructor(obj: GameObject) {
     if (obj.getOwningPlayerSlot() === -1) {
       throw new Error("BuildArea must have an owning player slot.");
@@ -38,12 +43,8 @@ export class BuildArea {
       this._zone.setPosition(pos);
     });
 
-    this._zone.onBeginOverlap.add(() => {
-      this.update();
-    });
-    this._zone.onEndOverlap.add(() => {
-      this.update();
-    });
+    this._zone.onBeginOverlap.add(this._onUpdateHandler);
+    this._zone.onEndOverlap.add(this._onUpdateHandler);
 
     TI4.onSystemActivated.add((system: System, player: Player) => {
       if (player.getSlot() === this._obj.getOwningPlayerSlot()) {
@@ -122,9 +123,14 @@ export class BuildArea {
   }
 }
 
-if (GameWorld.getExecutionReason() !== "unittest") {
-  const obj: GameObject = refObject;
-  process.nextTick(() => {
-    new BuildArea(obj);
-  });
+export function delayedCreateBuildArea(
+  obj: GameObject,
+  executionReason: string
+): void {
+  if (executionReason !== "unittest") {
+    process.nextTick(() => {
+      new BuildArea(obj);
+    });
+  }
 }
+delayedCreateBuildArea(refObject, GameWorld.getExecutionReason());

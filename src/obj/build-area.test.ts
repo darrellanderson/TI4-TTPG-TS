@@ -2,8 +2,14 @@ import { GameObject, Vector } from "@tabletop-playground/api";
 import { Find } from "ttpg-darrell";
 import { MockCardHolder, MockGameObject, MockPlayer } from "ttpg-mock";
 
-import { BuildArea } from "./build-area";
+import { BuildArea, delayedCreateBuildArea } from "./build-area";
 import { System } from "../lib/system-lib/system/system";
+
+it("delayedCreateBuildArea", () => {
+  const obj = new MockGameObject({ owningPlayerSlot: 10 });
+  delayedCreateBuildArea(obj, "definitely real");
+  process.flushTicks();
+});
 
 it("constructor", () => {
   const obj = new MockGameObject();
@@ -83,4 +89,6 @@ it("update", () => {
   const mat = new MockGameObject({ owningPlayerSlot: 10 });
   const buildArea = new BuildArea(mat);
   buildArea.update();
+
+  buildArea._onUpdateHandler(); // exercise the handler
 });
