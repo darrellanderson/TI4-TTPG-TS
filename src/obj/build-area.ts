@@ -9,7 +9,6 @@ import {
   Zone,
   ZonePermission,
 } from "@tabletop-playground/api";
-import { Find } from "ttpg-darrell";
 
 import { CombatRoll } from "../lib/combat-lib/combat-roll/combat-roll";
 import { Faction } from "../lib/faction-lib/faction/faction";
@@ -23,17 +22,15 @@ export class BuildArea {
   private readonly _obj: GameObject;
   private readonly _zone: Zone;
 
-  private readonly _find: Find = new Find();
-
   private _lastActivatedSystemTileObj: GameObject | undefined;
 
   constructor(obj: GameObject) {
-    this._obj = obj;
-    this._zone = this._findOrCreateZone();
-
-    if (this._obj.getOwningPlayerSlot() === -1) {
+    if (obj.getOwningPlayerSlot() === -1) {
       throw new Error("BuildArea must have an owning player slot.");
     }
+
+    this._obj = obj;
+    this._zone = this._findOrCreateZone();
 
     this._obj.onReleased.add(() => {
       const pos: Vector = this._obj.getPosition();
