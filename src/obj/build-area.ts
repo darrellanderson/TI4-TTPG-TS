@@ -1,10 +1,16 @@
 import {
+  Border,
   Color,
   GameObject,
   GameWorld,
+  LayoutBox,
   Player,
   refObject,
+  Text,
+  TextJustification,
+  UIElement,
   Vector,
+  VerticalAlignment,
   world,
   Zone,
   ZonePermission,
@@ -15,12 +21,14 @@ import { Faction } from "../lib/faction-lib/faction/faction";
 import { System } from "../lib/system-lib/system/system";
 import { BuildConsume } from "../lib/build-lib/build-consume";
 import { BuildProduce } from "../lib/build-lib/build-produce";
+import { Broadcast } from "ttpg-darrell";
 
 const HEIGHT: number = 4;
 
 export class BuildArea {
   private readonly _obj: GameObject;
   private readonly _zone: Zone;
+  private readonly _summaryText: Text;
 
   private _lastActivatedSystemTileObj: GameObject | undefined;
 
@@ -36,6 +44,7 @@ export class BuildArea {
 
     this._obj = obj;
     this._zone = this._findOrCreateZone();
+    this._summaryText = new Text();
 
     this._obj.onReleased.add(() => {
       const pos: Vector = this._obj.getPosition();
@@ -51,6 +60,64 @@ export class BuildArea {
         this._lastActivatedSystemTileObj = system.getObj();
       }
     });
+
+    this._addUI();
+
+    const togglePrivacyActionName: string = "*Toggle Privacy";
+    this._obj.addCustomAction(togglePrivacyActionName);
+
+    const reportActionName: string = "*Report";
+    this._obj.addCustomAction(reportActionName);
+
+    this._obj.onCustomAction.add(
+      (_obj: GameObject, _player: Player, action: string) => {
+        if (action === togglePrivacyActionName) {
+          this.togglePrivacyMode();
+        }
+        if (action === reportActionName) {
+          this.report();
+        }
+      }
+    );
+
+    this.update();
+  }
+
+  _addUI() {
+    const extent: Vector = this._obj.getExtent(false, false);
+
+    // Get layout position and size.
+    const scale: number = 4;
+    const pad: number = 0.35;
+    const fontSize: number = 5.8 * scale;
+    const size = {
+      w: (extent.y * 2 * 10 - pad * 20) * scale, // ui is 10x
+      h: 15 * scale,
+    };
+    const pos: Vector = new Vector(
+      extent.x - pad,
+      -extent.y + pad,
+      extent.z + 0.02
+    );
+
+    this._summaryText
+      .setFontSize(fontSize)
+      .setJustification(TextJustification.Center);
+
+    const border: Border = new Border().setChild(this._summaryText);
+    const box: LayoutBox = new LayoutBox()
+      .setOverrideWidth(size.w)
+      .setOverrideHeight(size.h)
+      .setVerticalAlignment(VerticalAlignment.Center)
+      .setChild(border);
+
+    const ui: UIElement = new UIElement();
+    ui.anchorX = 0;
+    ui.anchorY = 0;
+    ui.position = pos;
+    ui.scale = 1 / scale;
+    ui.widget = box;
+    this._obj.addUI(ui);
   }
 
   _findOrCreateZone(): Zone {
@@ -70,7 +137,6 @@ export class BuildArea {
       color.a = 0.1;
 
       zone = world.createZone(pos);
-      zone.setAlwaysVisible(true);
       zone.setColor(color);
       zone.setId(zoneId);
       zone.setScale(scale);
@@ -80,6 +146,7 @@ export class BuildArea {
       zone.setInserting(ZonePermission.Everybody);
     }
 
+    zone.setAlwaysVisible(false);
     return zone;
   }
 
@@ -101,11 +168,21 @@ export class BuildArea {
     const produce = new BuildProduce(objs, combatRoll.self.unitAttrsSet);
     const consume = new BuildConsume(objs, combatRoll.getUnitModifierNames());
 
-    const cost: number = 0;
-    const spend: number = 0;
-    const unitCount: number = 0;
+    const cost: number = produce.getCost();
+    const spend: string = consume.getTotalValueWithModifiers();
+    const unitCount: number = produce.getPlasticCount();
 
     return `Cost: ${cost}   Resources: ${spend}  #Units: ${unitCount}`;
+  }
+
+  togglePrivacyMode(): this {
+    const oldIsPrivate: boolean = this._zone.isAlwaysVisible();
+    const newIsPrivate: boolean = !oldIsPrivate;
+    this._zone.setAlwaysVisible(newIsPrivate);
+    this._zone.setObjectVisibility(
+      newIsPrivate ? ZonePermission.OwnersOnly : ZonePermission.Everybody
+    );
+    return this;
   }
 
   update() {
@@ -118,19 +195,38 @@ export class BuildArea {
     });
 
     const objs: Array<GameObject> = this._zone.getOverlappingObjects();
-    const buildConsume: BuildConsume = new BuildConsume(
-      objs,
-      combatRoll.getUnitModifierNames()
-    );
-    const buildProduce: BuildProduce = new BuildProduce(
-      objs,
-      combatRoll.self.unitAttrsSet
-    );
 
-    console.log("------ Build Area update " + this._obj.getOwningPlayerSlot());
-    console.log(combatRoll.getUnitModifierNamesWithDescriptions().join("\n"));
-    console.log(buildConsume.report());
-    console.log(buildProduce.report());
+    const summary: string = this.getSummary(objs, combatRoll);
+    this._summaryText.setText(summary);
+  }
+
+  report() {
+    // CombatRoll finds and applies unit modifiers.
+    const combatRoll: CombatRoll = CombatRoll.createCooked({
+      rollType: "production",
+      hex: "<0,0,0>",
+      activatingPlayerSlot: this._obj.getOwningPlayerSlot(),
+      rollingPlayerSlot: this._obj.getOwningPlayerSlot(),
+    });
+
+    const objs: Array<GameObject> = this._zone.getOverlappingObjects();
+
+    const produce = new BuildProduce(objs, combatRoll.self.unitAttrsSet);
+    const consume = new BuildConsume(objs, combatRoll.getUnitModifierNames());
+
+    const playerSlot: number = this._obj.getOwningPlayerSlot();
+    const name: string = TI4.playerColor.getSlotColorNameOrThrow(playerSlot);
+    const color: Color = world.getSlotColor(playerSlot);
+
+    const msg: string =
+      name +
+      " " +
+      [
+        produce.report(),
+        consume.report(),
+        `#Units: ${produce.getPlasticCount()}`,
+      ].join("\n");
+    Broadcast.chatAll(msg, color);
   }
 }
 

@@ -1,167 +1,194 @@
 {
-  "Type": "Generic",
-  "GUID": "4561A42CBA80FB9D4936EBE61FC57DF3",
-  "Name": "Exploration Decks Mat",
-  "Metadata": "mat.deck:pok/exploration",
-  "CollisionType": "Regular",
-  "Friction": 0.7,
-  "Restitution": 0.1,
-  "Density": 1,
-  "SurfaceType": "Cardboard",
-  "Roughness": 1,
-  "Metallic": 0,
-  "PrimaryColor": {
-    "R": 255,
-    "G": 255,
-    "B": 255
-  },
-  "SecondaryColor": {
-    "R": 0,
-    "G": 0,
-    "B": 0
-  },
-  "Flippable": false,
-  "AutoStraighten": false,
-  "ShouldSnap": false,
-  "ScriptName": "",
-  "Blueprint": "",
-  "Models": [
-    {
-      "Model": "uv-cube.obj",
-      "Offset": {
+    "Type": "Generic",
+    "GUID": "4561A42CBA80FB9D4936EBE61FC57DF3",
+    "Name": "Exploration Decks Mat",
+    "Metadata": "mat.deck:pok/exploration",
+    "CollisionType": "Regular",
+    "Friction": 0.7,
+    "Restitution": 0.1,
+    "Density": 1,
+    "SurfaceType": "Cardboard",
+    "Roughness": 1,
+    "Metallic": 0,
+    "PrimaryColor": {
+        "R": 255,
+        "G": 255,
+        "B": 255
+    },
+    "SecondaryColor": {
+        "R": 0,
+        "G": 0,
+        "B": 0
+    },
+    "Flippable": false,
+    "AutoStraighten": false,
+    "ShouldSnap": false,
+    "ScriptName": "",
+    "Blueprint": "",
+    "Models": [
+        {
+            "Model": "uv-cube.obj",
+            "Offset": {
+                "X": 0,
+                "Y": 0,
+                "Z": 0
+            },
+            "Scale": {
+                "X": 15.054545454545455,
+                "Y": 25.445454545454545,
+                "Z": 0.25
+            },
+            "Rotation": {
+                "X": 0,
+                "Y": 0,
+                "Z": 0
+            },
+            "Texture": "mat/deck-exploration/deck-exploration.jpg",
+            "NormalMap": "",
+            "ExtraMap": "",
+            "ExtraMap2": "",
+            "IsTransparent": false,
+            "CastShadow": true,
+            "IsTwoSided": false,
+            "UseOverrides": true,
+            "SurfaceType": "Cardboard"
+        }
+    ],
+    "Lights": [],
+    "SnapPointsGlobal": false,
+    "SnapPoints": [
+        {
+            "X": 3.8863636363636362,
+            "Y": -9.98181818181818,
+            "Z": 0.125,
+            "Range": 3,
+            "SnapRotation": 2,
+            "RotationOffset": 0,
+            "Shape": 0,
+            "FlipValidity": 0,
+            "Tags": [
+                "deck-relic",
+                "card-relic"
+            ]
+        },
+        {
+            "X": 3.8863636363636362,
+            "Y": -4.99090909090909,
+            "Z": 0.125,
+            "Range": 3,
+            "SnapRotation": 2,
+            "RotationOffset": 0,
+            "Shape": 0,
+            "FlipValidity": 0,
+            "Tags": [
+                "deck-exploration-cultural",
+                "card-exploration-cultural"
+            ]
+        },
+        {
+            "X": -2.9045454545454543,
+            "Y": -4.99090909090909,
+            "Z": 0.125,
+            "Range": 3,
+            "SnapRotation": 2,
+            "RotationOffset": 0,
+            "Shape": 0,
+            "FlipValidity": 0,
+            "Tags": [
+                "discard-exploration-cultural",
+                "card-exploration-cultural"
+            ]
+        },
+        {
+            "X": 3.8863636363636362,
+            "Y": 3.552713678800501e-15,
+            "Z": 0.125,
+            "Range": 3,
+            "SnapRotation": 2,
+            "RotationOffset": 0,
+            "Shape": 0,
+            "FlipValidity": 0,
+            "Tags": [
+                "deck-exploration-industrial",
+                "card-exploration-industrial"
+            ]
+        },
+        {
+            "X": -2.9045454545454543,
+            "Y": 3.552713678800501e-15,
+            "Z": 0.125,
+            "Range": 3,
+            "SnapRotation": 2,
+            "RotationOffset": 0,
+            "Shape": 0,
+            "FlipValidity": 0,
+            "Tags": [
+                "discard-exploration-industrial",
+                "card-exploration-industrial"
+            ]
+        },
+        {
+            "X": 3.8863636363636362,
+            "Y": 4.990909090909092,
+            "Z": 0.125,
+            "Range": 3,
+            "SnapRotation": 2,
+            "RotationOffset": 0,
+            "Shape": 0,
+            "FlipValidity": 0,
+            "Tags": [
+                "deck-exploration-hazardous",
+                "card-exploration-hazardous"
+            ]
+        },
+        {
+            "X": -2.9045454545454543,
+            "Y": 4.990909090909092,
+            "Z": 0.125,
+            "Range": 3,
+            "SnapRotation": 2,
+            "RotationOffset": 0,
+            "Shape": 0,
+            "FlipValidity": 0,
+            "Tags": [
+                "discard-exploration-hazardous",
+                "card-exploration-hazardous"
+            ]
+        },
+        {
+            "X": 3.8863636363636362,
+            "Y": 9.981818181818184,
+            "Z": 0.125,
+            "Range": 3,
+            "SnapRotation": 2,
+            "RotationOffset": 0,
+            "Shape": 0,
+            "FlipValidity": 0,
+            "Tags": [
+                "deck-exploration-frontier",
+                "card-exploration-frontier"
+            ]
+        },
+        {
+            "X": -2.9045454545454543,
+            "Y": 9.981818181818184,
+            "Z": 0.125,
+            "Range": 3,
+            "SnapRotation": 2,
+            "RotationOffset": 0,
+            "Shape": 0,
+            "FlipValidity": 0,
+            "Tags": [
+                "discard-exploration-frontier",
+                "card-exploration-frontier"
+            ]
+        }
+    ],
+    "ZoomViewDirection": {
         "X": 0,
         "Y": 0,
-        "Z": 0
-      },
-      "Scale": {
-        "X": 15.054545454545455,
-        "Y": 25.445454545454545,
-        "Z": 0.25
-      },
-      "Rotation": {
-        "X": 0,
-        "Y": 0,
-        "Z": 0
-      },
-      "Texture": "mat/deck-exploration/deck-exploration.jpg",
-      "NormalMap": "",
-      "ExtraMap": "",
-      "ExtraMap2": "",
-      "IsTransparent": false,
-      "CastShadow": true,
-      "IsTwoSided": false,
-      "UseOverrides": true,
-      "SurfaceType": "Cardboard"
-    }
-  ],
-  "Lights": [],
-  "SnapPointsGlobal": false,
-  "SnapPoints": [
-    {
-      "X": 3.8863636363636362,
-      "Y": -9.98181818181818,
-      "Z": 0.125,
-      "Range": 3,
-      "SnapRotation": 2,
-      "RotationOffset": 0,
-      "Shape": 0,
-      "FlipValidity": 0,
-      "Tags": ["deck-relic", "card-relic"]
+        "Z": 1
     },
-    {
-      "X": 3.8863636363636362,
-      "Y": -4.99090909090909,
-      "Z": 0.125,
-      "Range": 3,
-      "SnapRotation": 2,
-      "RotationOffset": 0,
-      "Shape": 0,
-      "FlipValidity": 0,
-      "Tags": ["deck-exploration-cultural", "card-exploration-cultural"]
-    },
-    {
-      "X": -2.9045454545454543,
-      "Y": -4.99090909090909,
-      "Z": 0.125,
-      "Range": 3,
-      "SnapRotation": 2,
-      "RotationOffset": 0,
-      "Shape": 0,
-      "FlipValidity": 0,
-      "Tags": ["discard-exploration-cultural", "card-exploration-cultural"]
-    },
-    {
-      "X": 3.8863636363636362,
-      "Y": 3.552713678800501e-15,
-      "Z": 0.125,
-      "Range": 3,
-      "SnapRotation": 2,
-      "RotationOffset": 0,
-      "Shape": 0,
-      "FlipValidity": 0,
-      "Tags": ["deck-exploration-industrial", "card-exploration-industrial"]
-    },
-    {
-      "X": -2.9045454545454543,
-      "Y": 3.552713678800501e-15,
-      "Z": 0.125,
-      "Range": 3,
-      "SnapRotation": 2,
-      "RotationOffset": 0,
-      "Shape": 0,
-      "FlipValidity": 0,
-      "Tags": ["discard-exploration-industrial", "card-exploration-industrial"]
-    },
-    {
-      "X": 3.8863636363636362,
-      "Y": 4.990909090909092,
-      "Z": 0.125,
-      "Range": 3,
-      "SnapRotation": 2,
-      "RotationOffset": 0,
-      "Shape": 0,
-      "FlipValidity": 0,
-      "Tags": ["deck-exploration-hazardous", "card-exploration-hazardous"]
-    },
-    {
-      "X": -2.9045454545454543,
-      "Y": 4.990909090909092,
-      "Z": 0.125,
-      "Range": 3,
-      "SnapRotation": 2,
-      "RotationOffset": 0,
-      "Shape": 0,
-      "FlipValidity": 0,
-      "Tags": ["discard-exploration-hazardous", "card-exploration-hazardous"]
-    },
-    {
-      "X": 3.8863636363636362,
-      "Y": 9.981818181818184,
-      "Z": 0.125,
-      "Range": 3,
-      "SnapRotation": 2,
-      "RotationOffset": 0,
-      "Shape": 0,
-      "FlipValidity": 0,
-      "Tags": ["deck-exploration-frontier", "card-exploration-frontier"]
-    },
-    {
-      "X": -2.9045454545454543,
-      "Y": 9.981818181818184,
-      "Z": 0.125,
-      "Range": 3,
-      "SnapRotation": 2,
-      "RotationOffset": 0,
-      "Shape": 0,
-      "FlipValidity": 0,
-      "Tags": ["discard-exploration-frontier", "card-exploration-frontier"]
-    }
-  ],
-  "ZoomViewDirection": {
-    "X": 0,
-    "Y": 0,
-    "Z": 1
-  },
-  "GroundAccessibility": "Zoom",
-  "Tags": []
+    "GroundAccessibility": "ZoomAndContext",
+    "Tags": []
 }

@@ -13,6 +13,10 @@ export class LayoutMats {
   private readonly _layout: LayoutObjects;
 
   constructor(playerSlot: number) {
+    if (playerSlot < 0) {
+      throw new Error("must have a player slot");
+    }
+
     const buildMat: GameObject = Spawn.spawnOrThrow("mat.player:base/build");
     const planetMat: GameObject = Spawn.spawnOrThrow("mat.player:base/planet");
     const techMat: GameObject = Spawn.spawnOrThrow(
@@ -21,6 +25,11 @@ export class LayoutMats {
     const techDeckMat: GameObject = Spawn.spawnOrThrow(
       "mat.player:base/technology-deck"
     );
+
+    buildMat.setOwningPlayerSlot(playerSlot);
+    planetMat.setOwningPlayerSlot(playerSlot);
+    techMat.setOwningPlayerSlot(playerSlot);
+    techDeckMat.setOwningPlayerSlot(playerSlot);
 
     this._layout = new LayoutObjects()
       .setChildDistance(LayoutConfig.spacing)
@@ -31,11 +40,6 @@ export class LayoutMats {
       .add(techDeckMat);
 
     this._layout.addAfterLayout(() => {
-      buildMat.setOwningPlayerSlot(playerSlot);
-      planetMat.setOwningPlayerSlot(playerSlot);
-      techMat.setOwningPlayerSlot(playerSlot);
-      techDeckMat.setOwningPlayerSlot(playerSlot);
-
       buildMat.setObjectType(ObjectType.Ground);
       planetMat.setObjectType(ObjectType.Ground);
       techMat.setObjectType(ObjectType.Ground);

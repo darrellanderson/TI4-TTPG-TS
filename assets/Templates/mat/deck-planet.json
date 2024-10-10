@@ -91,6 +91,6 @@
         "Y": 0,
         "Z": 1
     },
-    "GroundAccessibility": "Zoom",
+    "GroundAccessibility": "ZoomAndContext",
     "Tags": []
 }

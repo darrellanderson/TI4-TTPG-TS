@@ -117,7 +117,6 @@ export class BuildProduce {
 
     const units: Array<UnitType> = Array.from(unitToCount.keys()).sort();
     const result: Array<string> = [];
-    let totalCost: number = this.getCost();
     for (const unit of units) {
       const count: number | undefined = unitToCount.get(unit);
       if (count !== undefined) {
@@ -126,19 +125,9 @@ export class BuildProduce {
           name += "s";
         }
         result.push(`${count} ${name}`);
-
-        const unitAttrs: UnitAttrs | undefined = this._unitAttrsSet.get(unit);
-        if (unitAttrs) {
-          const produceCount: number = Math.ceil(
-            count / unitAttrs.getProducePerCost()
-          );
-          const produceCost: number | undefined = unitAttrs.getCost();
-          if (produceCost !== undefined) {
-            totalCost += produceCount * produceCost;
-          }
-        }
       }
     }
+    const totalCost: number = this.getCost();
     return `producing $${totalCost}: ${result.join(", ")}`;
   }
 }

@@ -85,6 +85,13 @@ it("_getSystemTileLastActivated", () => {
   expect(found?.getId()).toBe("my-last-activated");
 });
 
+it("togglePrivacy", () => {
+  const mat = new MockGameObject({ owningPlayerSlot: 10 });
+  const buildArea = new BuildArea(mat);
+  buildArea.togglePrivacyMode();
+  buildArea.togglePrivacyMode();
+});
+
 it("update", () => {
   const mat = new MockGameObject({ owningPlayerSlot: 10 });
   const buildArea = new BuildArea(mat);

@@ -1,134 +1,147 @@
 {
-  "Type": "Generic",
-  "GUID": "6E0E5CA87C8C85476BCE62BB6DB2A8F5",
-  "Name": "Objective 1 Mat",
-  "Metadata": "mat:base/objective-1",
-  "CollisionType": "Regular",
-  "Friction": 0.7,
-  "Restitution": 0.1,
-  "Density": 1,
-  "SurfaceType": "Cardboard",
-  "Roughness": 1,
-  "Metallic": 0,
-  "PrimaryColor": {
-    "R": 255,
-    "G": 255,
-    "B": 255
-  },
-  "SecondaryColor": {
-    "R": 0,
-    "G": 0,
-    "B": 0
-  },
-  "Flippable": false,
-  "AutoStraighten": false,
-  "ShouldSnap": false,
-  "ScriptName": "",
-  "Blueprint": "",
-  "Models": [
-    {
-      "Model": "uv-cube.obj",
-      "Offset": {
+    "Type": "Generic",
+    "GUID": "6E0E5CA87C8C85476BCE62BB6DB2A8F5",
+    "Name": "Objective 1 Mat",
+    "Metadata": "mat:base/objective-1",
+    "CollisionType": "Regular",
+    "Friction": 0.7,
+    "Restitution": 0.1,
+    "Density": 1,
+    "SurfaceType": "Cardboard",
+    "Roughness": 1,
+    "Metallic": 0,
+    "PrimaryColor": {
+        "R": 255,
+        "G": 255,
+        "B": 255
+    },
+    "SecondaryColor": {
+        "R": 0,
+        "G": 0,
+        "B": 0
+    },
+    "Flippable": false,
+    "AutoStraighten": false,
+    "ShouldSnap": false,
+    "ScriptName": "",
+    "Blueprint": "",
+    "Models": [
+        {
+            "Model": "uv-cube.obj",
+            "Offset": {
+                "X": 0,
+                "Y": 0,
+                "Z": 0
+            },
+            "Scale": {
+                "X": 8.263636363636364,
+                "Y": 31.418181818181814,
+                "Z": 0.25
+            },
+            "Rotation": {
+                "X": 0,
+                "Y": 0,
+                "Z": 0
+            },
+            "Texture": "mat/objective-1/objective-1.jpg",
+            "NormalMap": "",
+            "ExtraMap": "",
+            "ExtraMap2": "",
+            "IsTransparent": false,
+            "CastShadow": true,
+            "IsTwoSided": false,
+            "UseOverrides": true,
+            "SurfaceType": "Cardboard"
+        }
+    ],
+    "Lights": [],
+    "SnapPointsGlobal": false,
+    "SnapPoints": [
+        {
+            "X": 0.49090909090909074,
+            "Y": -12.968181818181817,
+            "Z": 0.125,
+            "Range": 3,
+            "SnapRotation": 2,
+            "RotationOffset": 0,
+            "Shape": 0,
+            "FlipValidity": 0,
+            "Tags": [
+                "card-objective-1",
+                "deck-objective-1"
+            ]
+        },
+        {
+            "X": 0.49090909090909074,
+            "Y": -6.995454545454544,
+            "Z": 0.125,
+            "Range": 3,
+            "SnapRotation": 2,
+            "RotationOffset": 0,
+            "Shape": 0,
+            "FlipValidity": 0,
+            "Tags": [
+                "card-objective-1"
+            ]
+        },
+        {
+            "X": 0.49090909090909074,
+            "Y": -2.004545454545454,
+            "Z": 0.125,
+            "Range": 3,
+            "SnapRotation": 2,
+            "RotationOffset": 0,
+            "Shape": 0,
+            "FlipValidity": 0,
+            "Tags": [
+                "card-objective-1"
+            ]
+        },
+        {
+            "X": 0.49090909090909074,
+            "Y": 2.986363636363638,
+            "Z": 0.125,
+            "Range": 3,
+            "SnapRotation": 2,
+            "RotationOffset": 0,
+            "Shape": 0,
+            "FlipValidity": 0,
+            "Tags": [
+                "card-objective-1"
+            ]
+        },
+        {
+            "X": 0.49090909090909074,
+            "Y": 7.977272727272727,
+            "Z": 0.125,
+            "Range": 3,
+            "SnapRotation": 2,
+            "RotationOffset": 0,
+            "Shape": 0,
+            "FlipValidity": 0,
+            "Tags": [
+                "card-objective-1"
+            ]
+        },
+        {
+            "X": 0.49090909090909074,
+            "Y": 12.968181818181819,
+            "Z": 0.125,
+            "Range": 3,
+            "SnapRotation": 2,
+            "RotationOffset": 0,
+            "Shape": 0,
+            "FlipValidity": 0,
+            "Tags": [
+                "card-objective-1"
+            ]
+        }
+    ],
+    "ZoomViewDirection": {
         "X": 0,
         "Y": 0,
-        "Z": 0
-      },
-      "Scale": {
-        "X": 8.263636363636364,
-        "Y": 31.418181818181814,
-        "Z": 0.25
-      },
-      "Rotation": {
-        "X": 0,
-        "Y": 0,
-        "Z": 0
-      },
-      "Texture": "mat/objective-1/objective-1.jpg",
-      "NormalMap": "",
-      "ExtraMap": "",
-      "ExtraMap2": "",
-      "IsTransparent": false,
-      "CastShadow": true,
-      "IsTwoSided": false,
-      "UseOverrides": true,
-      "SurfaceType": "Cardboard"
-    }
-  ],
-  "Lights": [],
-  "SnapPointsGlobal": false,
-  "SnapPoints": [
-    {
-      "X": 0.49090909090909074,
-      "Y": -12.968181818181817,
-      "Z": 0.125,
-      "Range": 3,
-      "SnapRotation": 2,
-      "RotationOffset": 0,
-      "Shape": 0,
-      "FlipValidity": 0,
-      "Tags": ["card-objective-1", "deck-objective-1"]
+        "Z": 1
     },
-    {
-      "X": 0.49090909090909074,
-      "Y": -6.995454545454544,
-      "Z": 0.125,
-      "Range": 3,
-      "SnapRotation": 2,
-      "RotationOffset": 0,
-      "Shape": 0,
-      "FlipValidity": 0,
-      "Tags": ["card-objective-1"]
-    },
-    {
-      "X": 0.49090909090909074,
-      "Y": -2.004545454545454,
-      "Z": 0.125,
-      "Range": 3,
-      "SnapRotation": 2,
-      "RotationOffset": 0,
-      "Shape": 0,
-      "FlipValidity": 0,
-      "Tags": ["card-objective-1"]
-    },
-    {
-      "X": 0.49090909090909074,
-      "Y": 2.986363636363638,
-      "Z": 0.125,
-      "Range": 3,
-      "SnapRotation": 2,
-      "RotationOffset": 0,
-      "Shape": 0,
-      "FlipValidity": 0,
-      "Tags": ["card-objective-1"]
-    },
-    {
-      "X": 0.49090909090909074,
-      "Y": 7.977272727272727,
-      "Z": 0.125,
-      "Range": 3,
-      "SnapRotation": 2,
-      "RotationOffset": 0,
-      "Shape": 0,
-      "FlipValidity": 0,
-      "Tags": ["card-objective-1"]
-    },
-    {
-      "X": 0.49090909090909074,
-      "Y": 12.968181818181819,
-      "Z": 0.125,
-      "Range": 3,
-      "SnapRotation": 2,
-      "RotationOffset": 0,
-      "Shape": 0,
-      "FlipValidity": 0,
-      "Tags": ["card-objective-1"]
-    }
-  ],
-  "ZoomViewDirection": {
-    "X": 0,
-    "Y": 0,
-    "Z": 1
-  },
-  "GroundAccessibility": "Zoom",
-  "Tags": []
+    "GroundAccessibility": "ZoomAndContext",
+    "Tags": []
 }
