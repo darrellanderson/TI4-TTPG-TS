@@ -23,6 +23,7 @@ it("getters", () => {
 
   const buildProduce = new BuildProduce(objs, unitAttrsSet);
   expect(buildProduce.getEntries().length).toBe(5);
+  expect(buildProduce.getPlasticCount()).toBe(9);
 
   const systemTileObj: GameObject = new MockGameObject();
   buildProduce.moveToSystemTile(systemTileObj);

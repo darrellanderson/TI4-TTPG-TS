@@ -55,6 +55,14 @@ export class BuildProduce {
     return this._entries;
   }
 
+  getPlasticCount(): number {
+    let count: number = 0;
+    this._entries.forEach((entry) => {
+      count += entry.count;
+    });
+    return count;
+  }
+
   moveToSystemTile(systemTileObj: GameObject): void {
     const r: number = 3.5;
     const dPhi: number = (Math.PI * 2) / this._entries.length;
