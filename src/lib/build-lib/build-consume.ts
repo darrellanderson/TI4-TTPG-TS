@@ -85,6 +85,17 @@ export class BuildConsume {
     return this.getTradegoodValue() + this.getPlanetValue();
   }
 
+  getTotalValueWithModifiers(): string {
+    let total: string = this.getTotalValue().toString();
+    if (this._unitModifierNames.includes(SarweenTools.name)) {
+      total += "+ST";
+    }
+    if (this._unitModifierNames.includes(WarMachine.name)) {
+      total += "+WM";
+    }
+    return total;
+  }
+
   report(): string {
     const result: Array<string> = [];
 
@@ -99,15 +110,7 @@ export class BuildConsume {
       }
     }
 
-    let extras: string = "";
-    if (this._unitModifierNames.includes(SarweenTools.name)) {
-      extras += "+ST";
-    }
-    if (this._unitModifierNames.includes(WarMachine.name)) {
-      extras += "+WM";
-    }
-
-    const total: number = this.getTotalValue();
-    return `consuming $${total}${extras}: ${result.join(", ")}`;
+    const total: string = this.getTotalValueWithModifiers();
+    return `consuming $${total}: ${result.join(", ")}`;
   }
 }

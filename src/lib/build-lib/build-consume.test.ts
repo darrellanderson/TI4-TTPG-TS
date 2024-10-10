@@ -37,6 +37,7 @@ it("getters", () => {
   expect(buildConsume.getTradegoodValue()).toBe(10);
   expect(buildConsume.getPlanetValue()).toBe(7);
   expect(buildConsume.getTotalValue()).toBe(17);
+  expect(buildConsume.getTotalValueWithModifiers()).toBe("17+ST+WM");
 
   const report: string = buildConsume.report();
   expect(report).toBe("consuming $17+ST+WM: tradegoods (10), Mecatol Rex (7)");
