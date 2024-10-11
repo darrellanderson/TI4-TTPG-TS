@@ -125,3 +125,20 @@ it("report", () => {
   const player = new MockPlayer();
   mat._customActionAsPlayer(player, "*Report");
 });
+
+it("activate long system name", () => {
+  const mat = new MockGameObject({ owningPlayerSlot: 10 });
+  const player = new MockPlayer({ slot: 10 });
+  new BuildArea(mat);
+
+  const systemTileObj = new MockGameObject({
+    templateMetadata: "tile.system:pok/76",
+  });
+  const system: System | undefined = TI4.systemRegistry.getBySystemTileObjId(
+    systemTileObj.getId()
+  );
+  if (!system) {
+    throw new Error("System not found");
+  }
+  TI4.onSystemActivated.trigger(system, player);
+});

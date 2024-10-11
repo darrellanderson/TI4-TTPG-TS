@@ -64,8 +64,9 @@ export class BuildArea {
           this._lastActivatedActionName = undefined;
         }
         let name: string = system.getName();
-        if (name.length > 25) {
-          name = name.substring(0, 25) + "...";
+        const maxLength: number = 30;
+        if (name.length > maxLength) {
+          name = name.substring(0, maxLength - 3) + "...";
         }
         this._lastActivatedActionName = "*Warp to " + name;
       }

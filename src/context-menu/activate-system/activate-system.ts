@@ -1,5 +1,11 @@
-import { GameObject, Player, Vector, world } from "@tabletop-playground/api";
-import { IGlobal, NSID } from "ttpg-darrell";
+import {
+  GameObject,
+  globalEvents,
+  Player,
+  Vector,
+  world,
+} from "@tabletop-playground/api";
+import { Broadcast, IGlobal, NSID } from "ttpg-darrell";
 
 import {
   CommandTokenCounter,
@@ -24,6 +30,9 @@ export class ActivateSystem implements IGlobal {
     for (const obj of world.getAllObjects(skipContained)) {
       this._maybeAddContextMenuItem(obj);
     }
+    globalEvents.onObjectCreated.add((obj: GameObject) => {
+      this._maybeAddContextMenuItem(obj);
+    });
   }
 
   _maybeAddContextMenuItem(obj: GameObject) {
@@ -49,8 +58,10 @@ export class ActivateSystem implements IGlobal {
       playerSlotToCommandTokenCounts.get(player.getSlot());
     const token: GameObject | undefined = commandTokenCounts?.tactic.pop();
     if (!token) {
+      Broadcast.broadcastOne(player, "No command tokens available");
       return false;
     }
+
     const pos: Vector = systemTileObj.getPosition().add([0, 0, 10]);
     token.setPosition(pos, 1);
     token.snapToGround();
