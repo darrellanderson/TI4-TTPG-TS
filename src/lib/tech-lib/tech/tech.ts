@@ -21,4 +21,8 @@ export class Tech {
   getNsidName(): string {
     return this._params.nsidName;
   }
+
+  isFactionTech(): boolean {
+    return this._params.isFactionTech ? true : false;
+  }
 }

@@ -1,8 +1,10 @@
+import { Card, Vector } from "@tabletop-playground/api";
+import { MockCard, MockSnapPoint } from "ttpg-mock";
+
 import { LayoutMats } from "./layout-mats";
-import { Vector } from "@tabletop-playground/api";
+import { Tech } from "../../../lib/tech-lib/tech/tech";
 
 import { addObjectTemplatesToMockWorld } from "../../../nsid/nsid-to-template-id.test";
-import { MockSnapPoint } from "ttpg-mock";
 beforeEach(() => {
   addObjectTemplatesToMockWorld();
 });
@@ -20,4 +22,14 @@ it("_spawnTechDeck", () => {
 
 it("missing owner", () => {
   expect(() => new LayoutMats(-1)).toThrow();
+});
+
+it("_filterTechDeck", () => {
+  const nsid: string = "card.technology.unit-upgrade:base/advanced-carrier-2";
+  const tech: Tech | undefined = TI4.techRegistry.getByNsid(nsid);
+  expect(tech).toBeDefined();
+  expect(tech?.isFactionTech()).toBe(true);
+
+  const deck: Card = MockCard.simple(nsid);
+  new LayoutMats(1)._filterTechDeck(deck);
 });
