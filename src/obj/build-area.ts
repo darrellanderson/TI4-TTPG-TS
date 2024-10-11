@@ -5,6 +5,7 @@ import {
   GameWorld,
   LayoutBox,
   Player,
+  PlayerPermission,
   refObject,
   Text,
   TextJustification,
@@ -15,13 +16,13 @@ import {
   Zone,
   ZonePermission,
 } from "@tabletop-playground/api";
+import { Broadcast } from "ttpg-darrell";
 
 import { CombatRoll } from "../lib/combat-lib/combat-roll/combat-roll";
 import { Faction } from "../lib/faction-lib/faction/faction";
 import { System } from "../lib/system-lib/system/system";
 import { BuildConsume } from "../lib/build-lib/build-consume";
 import { BuildProduce } from "../lib/build-lib/build-produce";
-import { Broadcast } from "ttpg-darrell";
 
 const HEIGHT: number = 4;
 
@@ -29,6 +30,7 @@ export class BuildArea {
   private readonly _obj: GameObject;
   private readonly _zone: Zone;
   private readonly _summaryText: Text;
+  private readonly _ui: UIElement;
 
   private _lastActivatedSystemTileObj: GameObject | undefined;
   private _lastActivatedActionName: string | undefined;
@@ -39,13 +41,22 @@ export class BuildArea {
   };
 
   constructor(obj: GameObject) {
+    if (!obj.isValid()) {
+      this._obj = obj;
+      this._zone = new Zone();
+      this._summaryText = new Text();
+      this._ui = new UIElement();
+      return;
+    }
     if (obj.getOwningPlayerSlot() === -1) {
+      console.log("obj", obj.getId());
       throw new Error("BuildArea must have an owning player slot.");
     }
 
     this._obj = obj;
     this._zone = this._findOrCreateZone();
     this._summaryText = new Text();
+    this._ui = this._addUI();
 
     this._obj.onReleased.add(() => {
       const pos: Vector = this._obj.getPosition();
@@ -71,8 +82,6 @@ export class BuildArea {
         this._lastActivatedActionName = "*Warp to " + name;
       }
     });
-
-    this._addUI();
 
     const togglePrivacyActionName: string = "*Toggle Privacy";
     this._obj.addCustomAction(togglePrivacyActionName);
@@ -103,7 +112,7 @@ export class BuildArea {
     this.update();
   }
 
-  _addUI() {
+  _addUI(): UIElement {
     const extent: Vector = this._obj.getExtent(false, false);
 
     // Get layout position and size.
@@ -138,6 +147,7 @@ export class BuildArea {
     ui.scale = 1 / scale;
     ui.widget = box;
     this._obj.addUI(ui);
+    return ui;
   }
 
   _findOrCreateZone(): Zone {
@@ -149,6 +159,8 @@ export class BuildArea {
       pos.z = world.getTableHeight() + HEIGHT / 2;
 
       const scale: Vector = this._obj.getExtent(false, false).multiply(2);
+      scale.x = scale.x - 0.1; // inset slightly to prefent "z fighting" on edges
+      scale.y = scale.y - 0.1;
       scale.z = HEIGHT;
 
       const playerSlot: number = this._obj.getOwningPlayerSlot();
@@ -228,10 +240,17 @@ export class BuildArea {
   togglePrivacyMode(): this {
     const oldIsPrivate: boolean = this._zone.isAlwaysVisible();
     const newIsPrivate: boolean = !oldIsPrivate;
+
     this._zone.setAlwaysVisible(newIsPrivate);
     this._zone.setObjectVisibility(
       newIsPrivate ? ZonePermission.OwnersOnly : ZonePermission.Everybody
     );
+
+    this._ui.players = new PlayerPermission().setPlayerSlots(
+      newIsPrivate ? [this._obj.getOwningPlayerSlot()] : []
+    );
+    this._obj.updateUI(this._ui);
+
     return this;
   }
 
