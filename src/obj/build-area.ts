@@ -49,7 +49,6 @@ export class BuildArea {
       return;
     }
     if (obj.getOwningPlayerSlot() === -1) {
-      console.log("obj", obj.getId());
       throw new Error("BuildArea must have an owning player slot.");
     }
 

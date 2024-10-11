@@ -6,7 +6,12 @@ import {
   Vector,
   VerticalAlignment,
 } from "@tabletop-playground/api";
-import { CardUtil, LayoutObjects, Spawn } from "ttpg-darrell";
+import {
+  CardUtil,
+  DeletedItemsContainer,
+  LayoutObjects,
+  Spawn,
+} from "ttpg-darrell";
 
 import { LayoutConfig } from "../layout-config";
 import { Tech } from "lib/tech-lib/tech/tech";
@@ -78,13 +83,20 @@ export class LayoutMats {
   }
 
   _filterTechDeck(deck: Card): void {
-    new CardUtil().filterCards(deck, (nsid: string): boolean => {
-      let result: boolean = true;
-      const tech: Tech | undefined = TI4.techRegistry.getByNsid(nsid);
-      if (tech && tech.isFactionTech()) {
-        result = false;
+    deck.setName("Technology");
+    const filtered: Card | undefined = new CardUtil().filterCards(
+      deck,
+      (nsid: string): boolean => {
+        let result: boolean = false;
+        const tech: Tech | undefined = TI4.techRegistry.getByNsid(nsid);
+        if (!tech || tech.isFactionTech()) {
+          result = true;
+        }
+        return result;
       }
-      return result;
-    });
+    );
+    if (filtered) {
+      DeletedItemsContainer.destroyWithoutCopying(filtered);
+    }
   }
 }
