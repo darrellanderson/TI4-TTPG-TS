@@ -665,6 +665,7 @@ export const SOURCE_TO_TECH_DATA: Record<string, Array<TechSchemaType>> = {
       color: "yellow",
       prerequisites: { yellow: 2 },
       abbr: "Agency Supply",
+      isFactionTech: true,
     },
     {
       nsidName: "iihq-modernization",
@@ -672,6 +673,7 @@ export const SOURCE_TO_TECH_DATA: Record<string, Array<TechSchemaType>> = {
       color: "yellow",
       prerequisites: { yellow: 1 },
       abbr: "IIQH Modern",
+      isFactionTech: true,
     },
   ],
 };
