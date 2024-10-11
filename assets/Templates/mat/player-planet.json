@@ -23,7 +23,7 @@
     "Flippable": false,
     "AutoStraighten": false,
     "ShouldSnap": false,
-    "ScriptName": "",
+    "ScriptName": "obj/planet-mat.js",
     "Blueprint": "",
     "Models": [
         {

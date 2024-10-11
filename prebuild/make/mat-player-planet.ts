@@ -94,6 +94,7 @@ const params: CreateBoardParams = {
   templateName: "Player Planet Mat",
   assetFilename: "mat/player-planet",
   templateMetadata: "mat.player:base/planet",
+  scriptName: "obj/planet-mat.js",
   srcImage: planetMat(),
   topDownWorldSize: {
     autoWidthHeight: { pixel: H, world: H_WORLD },
