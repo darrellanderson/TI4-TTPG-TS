@@ -18,12 +18,15 @@ import {
   TurnOrder,
 } from "ttpg-darrell";
 
+import { ActivateSystem } from "../context-menu/activate-system/activate-system";
+import { DiplomacySystem } from "../context-menu/diplomacy-system/diplomacy-system";
 import { FactionRegistry } from "../lib/faction-lib/registry/faction-registry";
 import { PlanetAttachmentRegistry } from "../lib/system-lib/registry/planet-attachment-registry";
 import { PlayerColor } from "../lib/player-lib/player-color/player-color";
 import { PlayerSeats } from "../lib/player-lib/player-seats/player-seats";
 import { RSwapSplitCombine } from "./r-swap-split-combine";
 import { SetupPlayerSlotColors } from "../setup/setup-player-slot-colors/setup-player-slot-colors";
+import { ShuffleDecks } from "./shuffle-decks";
 import { System } from "lib/system-lib/system/system";
 import { SystemAttachmentRegistry } from "../lib/system-lib/registry/system-attachment-registry";
 import { SystemRegistry } from "../lib/system-lib/registry/system-registry";
@@ -32,7 +35,6 @@ import { UnitAttrsRegistry } from "../lib/unit-lib/registry/unit-attrs-registry"
 import { UnitModifierRegistry } from "../lib/unit-lib/registry/unit-modifier-registry";
 
 import * as NSID_TO_TEMPLATE_ID from "../nsid/nsid-to-template-id.json";
-import { ShuffleDecks } from "./shuffle-decks";
 Spawn.inject(NSID_TO_TEMPLATE_ID);
 
 export function registerErrorHandler() {
@@ -94,7 +96,9 @@ resetGlobalThisTI4();
 // Run any delayed initialization, things that need globalThis.TI4 to be set.
 // These are "init" functions in the class objects.
 const iGlobals: Array<IGlobal> = [
+  new ActivateSystem(),
   new DiceGroupCleanup(),
+  new DiplomacySystem(),
   new LeaveSeat(),
   new RSwapSplitCombine(),
   new ShuffleDecks(),
