@@ -41,13 +41,6 @@ export class BuildArea {
   };
 
   constructor(obj: GameObject) {
-    if (!obj.isValid()) {
-      this._obj = obj;
-      this._zone = new Zone();
-      this._summaryText = new Text();
-      this._ui = new UIElement();
-      return;
-    }
     if (obj.getOwningPlayerSlot() === -1) {
       throw new Error("BuildArea must have an owning player slot.");
     }
@@ -283,7 +276,9 @@ export function delayedCreateBuildArea(
 ): void {
   if (executionReason !== "unittest") {
     process.nextTick(() => {
-      new BuildArea(obj);
+      if (obj.isValid()) {
+        new BuildArea(obj);
+      }
     });
   }
 }
