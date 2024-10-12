@@ -250,16 +250,16 @@ it("validate NSIDs appear in assets/Templates", () => {
       const nsid: string = `card.planet:${source}/${planet.nsidName}`;
       nsids.push(nsid);
     }
-
-    const missing: Array<string> = [];
-    for (const nsid of nsids) {
-      if (!templateNsids.has(nsid) && !templateNsids.has(nsid + ".1")) {
-        missing.push(nsid);
-      }
-    }
-    if (missing.length > 0) {
-      console.log("missing", missing.join("\n"));
-    }
-    expect(missing).toHaveLength(0);
   }
+
+  const missing: Array<string> = [];
+  for (const nsid of nsids) {
+    if (!templateNsids.has(nsid) && !templateNsids.has(nsid + ".1")) {
+      missing.push(nsid);
+    }
+  }
+  if (missing.length > 0) {
+    console.log("missing", missing.join("\n"));
+  }
+  expect(missing).toHaveLength(0);
 });

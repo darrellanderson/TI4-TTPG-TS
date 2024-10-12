@@ -2,7 +2,7 @@
  * When including a given source, remove the linked NSIDs (e.g., with PoK
  * remove some base game agendas).
  */
-export const SOURCE_TO_REMOVE_NSIDS: Record<string, string[]> = {
+export const SOURCE_TO_REMOVE_NSIDS: Record<string, Array<string>> = {
   pok: [
     "card.agenda:base/research-team-warfare",
     "card.agenda:base/holy-planet-of-ixth",
