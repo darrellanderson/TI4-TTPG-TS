@@ -1,4 +1,10 @@
-import { Card, GameObject, Player, Vector } from "@tabletop-playground/api";
+import {
+  Card,
+  GameObject,
+  Player,
+  refObject,
+  Vector,
+} from "@tabletop-playground/api";
 import { System } from "../lib/system-lib/system/system";
 import { CardUtil } from "ttpg-darrell";
 
@@ -37,3 +43,5 @@ export class PlanetMat {
     });
   }
 }
+
+new PlanetMat(refObject);

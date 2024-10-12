@@ -6,5 +6,7 @@ import { CardHolderPlayerName } from "ttpg-darrell";
 // (2) let player data become valid if (re)loading.
 const obj = refHolder; // ref* gets cleared end of frame
 process.nextTick(() => {
-  new CardHolderPlayerName(obj).setFontSizeAndPosition(64);
+  if (obj.isValid()) {
+    new CardHolderPlayerName(obj).setFontSizeAndPosition(64);
+  }
 });
