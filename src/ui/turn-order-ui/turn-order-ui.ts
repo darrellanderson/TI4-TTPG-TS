@@ -5,7 +5,13 @@ import {
 } from "ttpg-darrell";
 
 export class TurnOrderUI {
-  private readonly _params: TurnOrderWidgetParams = {};
+  private readonly _params: TurnOrderWidgetParams = {
+    entryWidth: 220,
+    entryHeight: 58,
+    reserveSlots: 8,
+    toggleEliminated: true,
+    togglePassed: true,
+  };
 
   setPlayerCount(playerCount: number): this {
     this._params.reserveSlots = playerCount;
