@@ -13,4 +13,5 @@ it("tech", () => {
   };
   const tech: Tech = new Tech("my-source", schema);
   expect(tech.getNsid()).toEqual("card.technology.blue:my-source/my-nsid-name");
+  expect(tech.isFactionTech()).toBe(false);
 });

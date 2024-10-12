@@ -4,6 +4,10 @@ import { NSID } from "ttpg-darrell";
 import { MockCard, MockCardDetails, MockGameObject } from "ttpg-mock";
 import { RemoveByNsidOrSource } from "./remove-by-nsid-or-source";
 
+it("static createFromRegistry", () => {
+  RemoveByNsidOrSource.createFromRegistry(["pok"]);
+});
+
 it("constructor", () => {
   new RemoveByNsidOrSource();
 });

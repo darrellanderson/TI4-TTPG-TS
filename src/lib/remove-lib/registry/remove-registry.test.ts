@@ -7,7 +7,30 @@
 import fs from "fs";
 import klawSync from "klaw-sync";
 
-import { SOURCE_TO_REMOVE_NSIDS } from "./remove.data";
+import { RemoveRegistry } from "./remove-registry";
+
+it("constructor", () => {
+  new RemoveRegistry();
+});
+
+it("load duplicate source", () => {
+  const removeRegistry = new RemoveRegistry();
+  removeRegistry.load("source", ["nsid"]);
+  expect(() => {
+    removeRegistry.load("source", ["nsid"]);
+  }).toThrow(/Source already exists/);
+});
+
+it("getBySource", () => {
+  const removeRegistry = new RemoveRegistry().loadDefaultData();
+  let nsids: Array<string>;
+
+  nsids = removeRegistry.getRemoveBySource("pok");
+  expect(nsids.length).toBeGreaterThan(0);
+
+  nsids = removeRegistry.getRemoveBySource("__no_such_source__");
+  expect(nsids.length).toBe(0);
+});
 
 it("validate NSIDs appear in assets/Templates", () => {
   // Scan templates for NSIDs.
@@ -32,12 +55,10 @@ it("validate NSIDs appear in assets/Templates", () => {
     }
   }
 
-  const nsids: Array<string> = [];
-  for (const removeNsids of Object.values(SOURCE_TO_REMOVE_NSIDS)) {
-    for (const nsid of removeNsids) {
-      nsids.push(nsid);
-    }
-  }
+  const nsids: Array<string> = new RemoveRegistry()
+    .loadDefaultData()
+    .getAllNsids();
+  expect(nsids.length).toBeGreaterThan(0);
 
   const missing: Array<string> = [];
   for (const nsid of nsids) {

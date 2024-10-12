@@ -24,6 +24,7 @@ import { FactionRegistry } from "../lib/faction-lib/registry/faction-registry";
 import { PlanetAttachmentRegistry } from "../lib/system-lib/registry/planet-attachment-registry";
 import { PlayerColor } from "../lib/player-lib/player-color/player-color";
 import { PlayerSeats } from "../lib/player-lib/player-seats/player-seats";
+import { RemoveRegistry } from "../lib/remove-lib/registry/remove-registry";
 import { RSwapSplitCombine } from "./r-swap-split-combine";
 import { SetupPlayerSlotColors } from "../setup/setup-player-slot-colors/setup-player-slot-colors";
 import { ShuffleDecks } from "./shuffle-decks";
@@ -67,6 +68,7 @@ export class TI4Class {
     new PlanetAttachmentRegistry().loadDefaultData();
   public readonly playerColor = new PlayerColor("@player-color/ti4");
   public readonly playerSeats = new PlayerSeats();
+  public readonly removeRegistry = new RemoveRegistry().loadDefaultData();
   public readonly systemAttachmentRegistry =
     new SystemAttachmentRegistry().loadDefaultData();
   public readonly systemRegistry = new SystemRegistry().loadDefaultData();
