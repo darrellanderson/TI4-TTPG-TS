@@ -115,6 +115,10 @@ export class AbstractCopyCards {
       if (parts[0]?.startsWith("card.promissory")) {
         parts[0] = "card.promissory";
       }
+      if (parts[1]?.startsWith("base.only")) {
+        const sourceParts = parts[1].split("/");
+        parts[1] = "base/" + sourceParts[1];
+      }
       nsid = parts.join(":");
 
       if (nsid === "card.technology.unit-upgrade:base/war-sun") {
