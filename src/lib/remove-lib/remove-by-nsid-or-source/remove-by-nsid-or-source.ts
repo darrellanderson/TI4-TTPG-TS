@@ -14,6 +14,10 @@ export class RemoveByNsidOrSource {
     const remove: RemoveByNsidOrSource = new RemoveByNsidOrSource();
     for (const source of sources) {
       remove.addSource(source);
+      const nsids: Array<string> = TI4.removeRegistry.getRemoveBySource(source);
+      for (const nsid of nsids) {
+        remove.addNsid(nsid);
+      }
     }
     return remove;
   }
@@ -37,6 +41,14 @@ export class RemoveByNsidOrSource {
   addNsid(nsid: string): this {
     this._removeNsids.add(nsid);
     return this;
+  }
+
+  hasSource(source: string): boolean {
+    return this._removeSources.has(source);
+  }
+
+  hasNsid(nsid: string): boolean {
+    return this._removeNsids.has(nsid);
   }
 
   remove(): void {
