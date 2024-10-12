@@ -4,7 +4,7 @@ import { CombatRoll } from "../../../../combat-lib/combat-roll/combat-roll";
 import { UnitAttrs } from "../../../unit-attrs/unit-attrs";
 
 it("registry (agenda)", () => {
-  const nsid = "card.agenda:base.only/the-crown-of-thalnos";
+  const nsid = "card.agenda:base/the-crown-of-thalnos";
   expect(TI4.unitModifierRegistry.getByNsid(nsid)?.getName()).toBe(
     "The Crown of Thalnos"
   );

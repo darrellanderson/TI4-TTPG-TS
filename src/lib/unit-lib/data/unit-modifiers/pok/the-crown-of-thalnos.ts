@@ -15,7 +15,7 @@ export const TheCrownOfThalnos: UnitModifierSchemaType = {
     {
       cardClass: "agenda",
       nsidName: "the-crown-of-thalnos",
-      overrideSource: "base.only",
+      overrideSource: "base",
     },
     { cardClass: "relic", nsidName: "the-crown-of-thalnos" },
   ],
