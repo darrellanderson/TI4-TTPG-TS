@@ -1,9 +1,10 @@
 import { Vector } from "@tabletop-playground/api";
 import { LayoutAll } from "./layout-all";
 
-import { addObjectTemplatesToMockWorld } from "../../../nsid/nsid-to-template-id.test";
 import { setupTestTableDeckSnapPoints } from "../layout-table-decks/layout-table-decks.test";
 import { setupTestObjectivesSnapPoints } from "../layout-scoring-area/layout-objectives.test";
+
+import { addObjectTemplatesToMockWorld } from "../../../nsid/nsid-to-template-id.test";
 beforeEach(() => {
   addObjectTemplatesToMockWorld();
 });
