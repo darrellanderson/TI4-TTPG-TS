@@ -11,6 +11,10 @@ export class RemoveRegistry {
     return result;
   }
 
+  public getAllSources(): Array<string> {
+    return [...this._sourceToRemoveNsids.keys()];
+  }
+
   public getRemoveBySource(source: string): Array<string> {
     const result: Array<string> | undefined =
       this._sourceToRemoveNsids.get(source);

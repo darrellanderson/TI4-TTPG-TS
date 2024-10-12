@@ -6,7 +6,8 @@ import { RemoveByNsidOrSource } from "./remove-by-nsid-or-source";
 
 it("static createFromRegistry", () => {
   const remove = RemoveByNsidOrSource.createFromRegistry(["pok"]);
-  expect(remove.hasSource("pok")).toBe(true);
+  expect(remove.hasSource("pok")).toBe(false);
+  expect(remove.hasSource("codex.vigil")).toBe(true);
   expect(remove.hasNsid("card.agenda:base/research-team-warfare")).toBe(true);
 });
 
