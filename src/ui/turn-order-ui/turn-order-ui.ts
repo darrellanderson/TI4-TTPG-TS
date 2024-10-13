@@ -32,8 +32,9 @@ export class TurnOrderUI {
     return this;
   }
 
-  attachToScreen(): void {
+  attachToScreen(): this {
     const turnOrder: TurnOrder = TI4.turnOrder;
     new TurnOrderWidget(turnOrder, this._params).attachToScreen();
+    return this;
   }
 }

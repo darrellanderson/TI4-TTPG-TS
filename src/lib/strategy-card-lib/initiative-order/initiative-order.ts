@@ -88,7 +88,6 @@ export class InitiativeOrder {
       if (strategyCardNsidNameFirst) {
         initiative = STRATEGY_CARD_TO_INITIATIVE[strategyCardNsidNameFirst];
         if (initiative !== undefined) {
-          console.log("xxx", initiative, strategyCardNsidNameFirst);
           if (!this._isAtopStrategyCardMat(obj)) {
             const pos: Vector = obj.getPosition();
             const playerSlot: number =

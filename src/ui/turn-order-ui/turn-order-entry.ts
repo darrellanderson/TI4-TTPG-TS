@@ -14,6 +14,9 @@ import {
   InitiativeOrder,
 } from "../../lib/strategy-card-lib/initiative-order/initiative-order";
 
+// Shared map, resets when updating the first entry in the turn order list.
+const __playerSlotToStrategyCards: Map<number, Array<GameObject>> = new Map();
+
 export class TurnOrderEntry extends TurnEntryWart {
   private readonly _factionIcon: ImageWidget;
   private readonly _factionName: Text;
@@ -74,6 +77,19 @@ export class TurnOrderEntry extends TurnEntryWart {
   destroy(): void {}
 
   update(playerSlot: number, fgColor: Color, _bgColor: Color): void {
+    // Reset shared state when updating the first entry in the turn order list.
+    if (playerSlot === TI4.turnOrder.getTurnOrder()[0]) {
+      __playerSlotToStrategyCards.clear();
+      const initiativeEntries: Array<InitiativeEntry> =
+        new InitiativeOrder().get();
+      for (const initiativeEntry of initiativeEntries) {
+        __playerSlotToStrategyCards.set(
+          initiativeEntry.playerSlot,
+          initiativeEntry.strategyCards
+        );
+      }
+    }
+
     this._factionName.setTextColor(fgColor);
     this._score.setTextColor(fgColor);
     this._strategyCardSolo.setTextColor(fgColor);
@@ -90,27 +106,20 @@ export class TurnOrderEntry extends TurnEntryWart {
     this._strategyCardLeftOverLay.setVisible(false);
     this._strategyCardRightOverLay.setVisible(false);
 
-    const initiativeEntries: Array<InitiativeEntry> =
-      new InitiativeOrder().get();
-    let strategyCards: Array<GameObject> = [];
+    const strategyCards: Array<GameObject> | undefined =
+      __playerSlotToStrategyCards.get(playerSlot);
 
-    for (const initiativeEntry of initiativeEntries) {
-      if (initiativeEntry.playerSlot === playerSlot) {
-        strategyCards = initiativeEntry.strategyCards;
-      }
-    }
+    const strategyCard1: GameObject | undefined = strategyCards?.[0];
+    const strategyCard2: GameObject | undefined = strategyCards?.[1];
 
-    const strategyCard1: GameObject | undefined = strategyCards[0];
-    const strategyCard2: GameObject | undefined = strategyCards[1];
-
-    if (strategyCards.length === 1 && strategyCard1) {
+    if (strategyCards?.length === 1 && strategyCard1) {
       const name: string = strategyCard1.getName().toUpperCase();
       const active: boolean = Facing.isFaceUp(strategyCard1);
       this._strategyCardSolo.setText(name);
       this._strategyCardSolo.setVisible(true);
       this._strategyCardSoloOverlay.setVisible(!active);
     }
-    if (strategyCards.length === 2 && strategyCard1 && strategyCard2) {
+    if (strategyCards?.length === 2 && strategyCard1 && strategyCard2) {
       const name1: string = strategyCard1.getName().toUpperCase();
       const name2: string = strategyCard2.getName().toUpperCase();
       const active1: boolean = Facing.isFaceUp(strategyCard1);
