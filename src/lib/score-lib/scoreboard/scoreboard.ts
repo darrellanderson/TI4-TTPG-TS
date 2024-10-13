@@ -114,6 +114,20 @@ export class Scoreboard {
     return playerSlotToToken.get(playerSlot);
   }
 
+  getPlayerSlotToScore(): Map<number, number> {
+    const playerSlotToScore: Map<number, number> = new Map();
+    const playerSlotToToken: Map<number, GameObject> =
+      this.getPlayerSlotToLeadControlToken();
+    for (const [playerSlot, controlToken] of playerSlotToToken.entries()) {
+      const pos: Vector = controlToken.getPosition();
+      const score: number | undefined = this.posToScore(pos);
+      if (score !== undefined) {
+        playerSlotToScore.set(playerSlot, score);
+      }
+    }
+    return playerSlotToScore;
+  }
+
   getControlTokenRotation(): Rotator | undefined {
     const scoreboard: GameObject | undefined = this.getScoreboard();
     if (!scoreboard) {

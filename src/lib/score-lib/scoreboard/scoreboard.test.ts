@@ -138,3 +138,16 @@ it("scoreToPos (flipped scoreboard)", () => {
   const pos: Vector | undefined = scoreboardLib.scoreToPos(5, 1);
   expect(pos?.toString()).toBe("(X=-0.95,Y=-6.332,Z=0)");
 });
+
+it("getPlayerSlotToScore", () => {
+  MockGameObject.simple("token:base/scoreboard");
+  MockGameObject.simple("token.control:base/sol", {
+    owningPlayerSlot: 1,
+    position: [0, 0, 0],
+  });
+  const scoreboardLib: Scoreboard = new Scoreboard();
+  const playerSlotToScore: Map<number, number> =
+    scoreboardLib.getPlayerSlotToScore();
+  expect(playerSlotToScore.size).toBe(1);
+  expect(playerSlotToScore.get(1)).toBe(5);
+});

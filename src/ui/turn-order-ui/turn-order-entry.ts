@@ -94,16 +94,8 @@ export class TurnOrderEntry extends TurnEntryWart {
 
   _updatePlayerSlotToScore(): void {
     __playerSlotToScore.clear();
-
-    const playerSlotToToken: Map<number, GameObject> =
-      this._scoreboard.getPlayerSlotToLeadControlToken();
-    for (const [playerSlot, controlToken] of playerSlotToToken) {
-      const score: number | undefined = this._scoreboard.posToScore(
-        controlToken.getPosition()
-      );
-      if (score !== undefined) {
-        __playerSlotToScore.set(playerSlot, score);
-      }
+    for (const [playerSlot, score] of this._scoreboard.getPlayerSlotToScore()) {
+      __playerSlotToScore.set(playerSlot, score);
     }
   }
 
