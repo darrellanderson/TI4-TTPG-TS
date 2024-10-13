@@ -12,10 +12,7 @@ export class PlayerSeats {
     // Find all seats.
     const skipContained: boolean = true;
     for (const obj of world.getAllObjects(skipContained)) {
-      if (
-        obj instanceof CardHolder &&
-        obj.getOwningPlayerSlot() !== undefined
-      ) {
+      if (obj instanceof CardHolder && obj.getOwningPlayerSlot() >= 0) {
         seats.push({
           cardHolder: obj,
           playerSlot: obj.getOwningPlayerSlot(),

@@ -104,13 +104,13 @@ export class TurnOrderEntry extends TurnEntryWart {
     const strategyCard2: GameObject | undefined = strategyCards[1];
 
     if (strategyCards.length === 1 && strategyCard1) {
-      const name: string = strategyCard1.getName();
+      const name: string = strategyCard1.getName().toUpperCase();
       this._strategyCardSolo.setText(name);
       this._strategyCardSolo.setVisible(true);
     }
     if (strategyCards.length === 2 && strategyCard1 && strategyCard2) {
-      const name1: string = strategyCard1.getName();
-      const name2: string = strategyCard2.getName();
+      const name1: string = strategyCard1.getName().toUpperCase();
+      const name2: string = strategyCard2.getName().toUpperCase();
       this._strategyCardLeft.setText(name1);
       this._strategyCardLeft.setVisible(true);
       this._strategyCardRight.setText(name2);

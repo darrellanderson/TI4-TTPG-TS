@@ -5,7 +5,7 @@ import { InitiativeEntry, InitiativeOrder } from "./initiative-order";
 
 it("static getStrategyCardNsidNameFirst", () => {
   const obj: GameObject = MockGameObject.simple(
-    "tile.strategy:base/leadership"
+    "tile.strategy-card:base/leadership"
   );
   const nameFirst: string | undefined =
     InitiativeOrder.getStrategyCardNsidNameFirst(obj);
@@ -21,7 +21,7 @@ it("static getStrategyCardNsidNameFirst (not strategy card)", () => {
 
 it("static getStrategyCardNsidNameFirst (invalid nsid)", () => {
   const obj: GameObject = MockGameObject.simple(
-    "tile.strategy:base/@@invalid!!"
+    "tile.strategy-card:base/@@invalid!!"
   );
   const nameFirst: string | undefined =
     InitiativeOrder.getStrategyCardNsidNameFirst(obj);
@@ -30,7 +30,7 @@ it("static getStrategyCardNsidNameFirst (invalid nsid)", () => {
 
 it("static getStrategyCardNsidNameFirst (unknown name)", () => {
   const obj: GameObject = MockGameObject.simple(
-    "tile.strategy:base/__unknown__"
+    "tile.strategy-card:base/__unknown__"
   );
   const nameFirst: string | undefined =
     InitiativeOrder.getStrategyCardNsidNameFirst(obj);
@@ -43,9 +43,9 @@ it("constructor", () => {
 
 it("_isAtopStrategyCardMat", () => {
   const obj: GameObject = MockGameObject.simple(
-    "tile.strategy:base/leadership"
+    "tile.strategy-card:base/leadership"
   );
-  MockGameObject.simple("mat:base/strategy");
+  MockGameObject.simple("mat:base/strategy-card");
   const initiativeOrder: InitiativeOrder = new InitiativeOrder();
   const atop: boolean = initiativeOrder._isAtopStrategyCardMat(obj);
   expect(atop).toBe(true);
@@ -53,7 +53,7 @@ it("_isAtopStrategyCardMat", () => {
 
 it("_isAtopStrategyCardMat (missing mat)", () => {
   const obj: GameObject = MockGameObject.simple(
-    "tile.strategy:base/leadership"
+    "tile.strategy-card:base/leadership"
   );
   const initiativeOrder: InitiativeOrder = new InitiativeOrder();
   const atop: boolean = initiativeOrder._isAtopStrategyCardMat(obj);
@@ -62,7 +62,7 @@ it("_isAtopStrategyCardMat (missing mat)", () => {
 
 it("_isAtopStrategyCardMat (off mat)", () => {
   const obj: GameObject = MockGameObject.simple(
-    "tile.strategy:base/leadership",
+    "tile.strategy-card:base/leadership",
     { position: [100, 0, 0] }
   );
   MockGameObject.simple("mat:base/strategy");
@@ -72,9 +72,9 @@ it("_isAtopStrategyCardMat (off mat)", () => {
 });
 
 it("get", () => {
-  MockGameObject.simple("mat:base/strategy");
-  MockGameObject.simple("tile.strategy:base/leadership"); // on mat
-  MockGameObject.simple("tile.strategy:base/diplomacy", {
+  MockGameObject.simple("mat:base/strategy-card");
+  MockGameObject.simple("tile.strategy-card:base/leadership"); // on mat
+  MockGameObject.simple("tile.strategy-card:base/diplomacy", {
     position: [100, 0, 0],
   });
   new MockCardHolder({ owningPlayerSlot: 1, position: [100, 0, 0] });

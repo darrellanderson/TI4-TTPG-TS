@@ -30,7 +30,7 @@ export class InitiativeOrder {
     obj: GameObject
   ): NsidNameSchemaType | undefined {
     const nsid: string = NSID.get(obj);
-    if (nsid.startsWith("tile.strategy:")) {
+    if (nsid.startsWith("tile.strategy-card:")) {
       const parsed: ParsedNSID | undefined = NSID.parse(nsid);
       if (parsed) {
         const nameFirst: string | undefined = parsed.nameParts[0];
@@ -45,8 +45,9 @@ export class InitiativeOrder {
   }
 
   _isAtopStrategyCardMat(strategyCard: GameObject): boolean {
-    const mat: GameObject | undefined =
-      this._find.findGameObject("mat:base/strategy");
+    const mat: GameObject | undefined = this._find.findGameObject(
+      "mat:base/strategy-card"
+    );
     if (mat) {
       const atop: Atop = new Atop(mat);
       const pos: Vector = strategyCard.getPosition();
@@ -87,6 +88,7 @@ export class InitiativeOrder {
       if (strategyCardNsidNameFirst) {
         initiative = STRATEGY_CARD_TO_INITIATIVE[strategyCardNsidNameFirst];
         if (initiative !== undefined) {
+          console.log("xxx", initiative, strategyCardNsidNameFirst);
           if (!this._isAtopStrategyCardMat(obj)) {
             const pos: Vector = obj.getPosition();
             const playerSlot: number =
