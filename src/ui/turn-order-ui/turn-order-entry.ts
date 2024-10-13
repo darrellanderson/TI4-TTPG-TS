@@ -7,7 +7,7 @@ import {
   Text,
   TextJustification,
 } from "@tabletop-playground/api";
-import { TurnEntryWart, TurnEntryWidget } from "ttpg-darrell";
+import { Facing, TurnEntryWart, TurnEntryWidget } from "ttpg-darrell";
 
 import {
   InitiativeEntry,
@@ -105,16 +105,22 @@ export class TurnOrderEntry extends TurnEntryWart {
 
     if (strategyCards.length === 1 && strategyCard1) {
       const name: string = strategyCard1.getName().toUpperCase();
+      const active: boolean = Facing.isFaceUp(strategyCard1);
       this._strategyCardSolo.setText(name);
       this._strategyCardSolo.setVisible(true);
+      this._strategyCardSoloOverlay.setVisible(!active);
     }
     if (strategyCards.length === 2 && strategyCard1 && strategyCard2) {
       const name1: string = strategyCard1.getName().toUpperCase();
       const name2: string = strategyCard2.getName().toUpperCase();
+      const active1: boolean = Facing.isFaceUp(strategyCard1);
+      const active2: boolean = Facing.isFaceUp(strategyCard2);
       this._strategyCardLeft.setText(name1);
       this._strategyCardLeft.setVisible(true);
       this._strategyCardRight.setText(name2);
       this._strategyCardRight.setVisible(true);
+      this._strategyCardLeftOverLay.setVisible(!active1);
+      this._strategyCardRightOverLay.setVisible(!active2);
     }
   }
 }
