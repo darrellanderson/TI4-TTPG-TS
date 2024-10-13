@@ -26,6 +26,7 @@ export class TurnOrderUI {
       },
     ],
   };
+  private _turnOrderWidget: TurnOrderWidget | undefined;
 
   setPlayerCount(playerCount: number): this {
     this._params.reserveSlots = playerCount;
@@ -33,8 +34,22 @@ export class TurnOrderUI {
   }
 
   attachToScreen(): this {
+    if (this._turnOrderWidget) {
+      this.destroy();
+    }
+
     const turnOrder: TurnOrder = TI4.turnOrder;
-    new TurnOrderWidget(turnOrder, this._params).attachToScreen();
+    this._turnOrderWidget = new TurnOrderWidget(
+      turnOrder,
+      this._params
+    ).attachToScreen();
     return this;
+  }
+
+  destroy(): void {
+    if (this._turnOrderWidget) {
+      this._turnOrderWidget.destroy();
+      this._turnOrderWidget = undefined;
+    }
   }
 }

@@ -13,11 +13,15 @@ import {
   InitiativeEntry,
   InitiativeOrder,
 } from "../../lib/strategy-card-lib/initiative-order/initiative-order";
+import { Scoreboard } from "../../lib/score-lib/scoreboard/scoreboard";
 
 // Shared map, resets when updating the first entry in the turn order list.
 const __playerSlotToStrategyCards: Map<number, Array<GameObject>> = new Map();
+const __playerSlotToScore: Map<number, number> = new Map();
 
 export class TurnOrderEntry extends TurnEntryWart {
+  private readonly _scoreboard: Scoreboard = new Scoreboard();
+
   private readonly _factionIcon: ImageWidget;
   private readonly _factionName: Text;
   private readonly _score: Text;
@@ -76,18 +80,38 @@ export class TurnOrderEntry extends TurnEntryWart {
 
   destroy(): void {}
 
+  _updatePlayerSlotToStrategyCards(): void {
+    __playerSlotToStrategyCards.clear();
+    const initiativeEntries: Array<InitiativeEntry> =
+      new InitiativeOrder().get();
+    for (const initiativeEntry of initiativeEntries) {
+      __playerSlotToStrategyCards.set(
+        initiativeEntry.playerSlot,
+        initiativeEntry.strategyCards
+      );
+    }
+  }
+
+  _updatePlayerSlotToScore(): void {
+    __playerSlotToScore.clear();
+
+    const playerSlotToToken: Map<number, GameObject> =
+      this._scoreboard.getPlayerSlotToLeadControlToken();
+    for (const [playerSlot, controlToken] of playerSlotToToken) {
+      const score: number | undefined = this._scoreboard.posToScore(
+        controlToken.getPosition()
+      );
+      if (score !== undefined) {
+        __playerSlotToScore.set(playerSlot, score);
+      }
+    }
+  }
+
   update(playerSlot: number, fgColor: Color, _bgColor: Color): void {
     // Reset shared state when updating the first entry in the turn order list.
     if (playerSlot === TI4.turnOrder.getTurnOrder()[0]) {
-      __playerSlotToStrategyCards.clear();
-      const initiativeEntries: Array<InitiativeEntry> =
-        new InitiativeOrder().get();
-      for (const initiativeEntry of initiativeEntries) {
-        __playerSlotToStrategyCards.set(
-          initiativeEntry.playerSlot,
-          initiativeEntry.strategyCards
-        );
-      }
+      this._updatePlayerSlotToStrategyCards();
+      this._updatePlayerSlotToScore();
     }
 
     this._factionName.setTextColor(fgColor);

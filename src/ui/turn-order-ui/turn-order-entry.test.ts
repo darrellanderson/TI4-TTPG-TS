@@ -1,8 +1,9 @@
+import { Color, GameObject } from "@tabletop-playground/api";
 import { TurnEntryWidget, TurnOrderWidgetParams } from "ttpg-darrell";
-
-import { TurnOrderEntry } from "./turn-order-entry";
-import { Color } from "@tabletop-playground/api";
 import { MockCardHolder, MockGameObject } from "ttpg-mock";
+
+import { Scoreboard } from "../../lib/score-lib/scoreboard/scoreboard";
+import { TurnOrderEntry } from "./turn-order-entry";
 
 it("constructor", () => {
   const params: TurnOrderWidgetParams = {};
@@ -10,9 +11,27 @@ it("constructor", () => {
   new TurnOrderEntry(turnEntryWidget);
 });
 
-it("update (zero strategy cards)", () => {
+it("update (zero strategy cards, scoreboard)", () => {
   TI4.turnOrder.setTurnOrder([3], "forward", 3);
   expect(TI4.turnOrder.getTurnOrder()[0]).toBe(3);
+
+  MockGameObject.simple("token:base/scoreboard");
+  const controlToken: GameObject = MockGameObject.simple(
+    "token.control:base/sol",
+    {
+      owningPlayerSlot: 3,
+    }
+  );
+
+  const scoreboard = new Scoreboard();
+  const found: GameObject | undefined = scoreboard
+    .getPlayerSlotToLeadControlToken()
+    .get(3);
+  expect(found?.getId()).toBe(controlToken.getId());
+  const score: number | undefined = scoreboard.posToScore(
+    controlToken.getPosition()
+  );
+  expect(score).toBe(5);
 
   const params: TurnOrderWidgetParams = {};
   const turnEntryWidget = new TurnEntryWidget(params);
