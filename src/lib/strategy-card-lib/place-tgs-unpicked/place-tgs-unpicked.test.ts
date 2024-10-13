@@ -8,9 +8,9 @@ it("constructor", () => {
 });
 
 it("_getUnpickedStrategyCards", () => {
-  MockGameObject.simple("mat:base/strategy");
-  MockGameObject.simple("tile.strategy:base/leadership");
-  MockGameObject.simple("tile.strategy:base/diplomacy", {
+  MockGameObject.simple("mat:base/strategy-card");
+  MockGameObject.simple("tile.strategy-card:base/leadership");
+  MockGameObject.simple("tile.strategy-card:base/diplomacy", {
     position: [10, 0, 0],
   });
 
@@ -19,7 +19,7 @@ it("_getUnpickedStrategyCards", () => {
     placeTgsUnpicked._getUnpickedStrategyCards();
 
   expect(unpicked.map((strategyCard) => NSID.get(strategyCard))).toEqual([
-    "tile.strategy:base/leadership",
+    "tile.strategy-card:base/leadership",
   ]);
 });
 
@@ -42,7 +42,7 @@ it("_placeTradeGood", () => {
     "token:base/tradegood-commodity-1": "__tg__",
   });
 
-  const diplomacy = MockGameObject.simple("tile.strategy:base/diplomacy");
+  const diplomacy = MockGameObject.simple("tile.strategy-card:base/diplomacy");
 
   const placeTgsUnpicked = new PlaceTgsUnpicked();
   const success: boolean = placeTgsUnpicked._placeTradeGood(diplomacy);
@@ -56,8 +56,8 @@ it("_placeTradeGood", () => {
 });
 
 it("placeTgsUnpicked", () => {
-  MockGameObject.simple("mat:base/strategy");
-  MockGameObject.simple("tile.strategy:base/leadership");
+  MockGameObject.simple("mat:base/strategy-card");
+  MockGameObject.simple("tile.strategy-card:base/leadership");
   const placeTgsUnpicked = new PlaceTgsUnpicked();
   placeTgsUnpicked.placeTgsUnpicked();
 });

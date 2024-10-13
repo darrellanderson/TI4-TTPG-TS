@@ -11,9 +11,9 @@ export class PlaceTgsUnpicked {
     const skipContained: boolean = true;
     for (const obj of world.getAllObjects(skipContained)) {
       const nsid: string = NSID.get(obj);
-      if (nsid.startsWith("tile.strategy:")) {
+      if (nsid.startsWith("tile.strategy-card:")) {
         strategyCards.push(obj);
-      } else if (nsid === "mat:base/strategy") {
+      } else if (nsid === "mat:base/strategy-card") {
         strategyCardMat = obj;
       }
     }
