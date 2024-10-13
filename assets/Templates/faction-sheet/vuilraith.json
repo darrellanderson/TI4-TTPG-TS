@@ -5,8 +5,8 @@
   "Metadata": "sheet.faction:pok/vuilraith",
   "CollisionType": "Regular",
   "Friction": 0.7,
-  "Restitution": 0.3,
-  "Density": 1,
+  "Restitution": 0,
+  "Density": 0.5,
   "SurfaceType": "Cardboard",
   "Roughness": 1,
   "Metallic": 0,
@@ -27,23 +27,136 @@
   "Blueprint": "",
   "Models": [],
   "Collision": [],
+  "Lights": [],
   "SnapPointsGlobal": false,
+  "SnapPoints": [
+    {
+      "X": -7.05,
+      "Y": -10.5,
+      "Z": 0,
+      "Range": 2.39998,
+      "SnapRotation": 2,
+      "RotationOffset": 0,
+      "Shape": 0,
+      "FlipValidity": 0
+    },
+    {
+      "X": -7.05,
+      "Y": -3.5,
+      "Z": 0,
+      "Range": 2.39998,
+      "SnapRotation": 2,
+      "RotationOffset": 0,
+      "Shape": 0,
+      "FlipValidity": 0
+    },
+    {
+      "X": -2.35,
+      "Y": -3.5,
+      "Z": 0,
+      "Range": 2.39998,
+      "SnapRotation": 2,
+      "RotationOffset": 0,
+      "Shape": 0,
+      "FlipValidity": 0
+    },
+    {
+      "X": -7.05,
+      "Y": 3.5,
+      "Z": 0,
+      "Range": 2.39998,
+      "SnapRotation": 2,
+      "RotationOffset": 0,
+      "Shape": 0,
+      "FlipValidity": 0
+    },
+    {
+      "X": -2.35,
+      "Y": 3.5,
+      "Z": 0,
+      "Range": 2.39998,
+      "SnapRotation": 2,
+      "RotationOffset": 0,
+      "Shape": 0,
+      "FlipValidity": 0
+    },
+    {
+      "X": -7.05,
+      "Y": 10.5,
+      "Z": 0,
+      "Range": 2.39998,
+      "SnapRotation": 2,
+      "RotationOffset": 0,
+      "Shape": 0,
+      "FlipValidity": 0
+    },
+    {
+      "X": 2.35,
+      "Y": -10.5,
+      "Z": 0,
+      "Range": 2.39998,
+      "SnapRotation": 2,
+      "RotationOffset": 0,
+      "Shape": 0,
+      "FlipValidity": 0
+    },
+    {
+      "X": -2.35,
+      "Y": -10.5,
+      "Z": 0,
+      "Range": 2.39998,
+      "SnapRotation": 2,
+      "RotationOffset": 0,
+      "Shape": 0,
+      "FlipValidity": 0
+    },
+    {
+      "X": 7.05,
+      "Y": -10.5,
+      "Z": 0,
+      "Range": 2.39998,
+      "SnapRotation": 2,
+      "RotationOffset": 0,
+      "Shape": 0,
+      "FlipValidity": 0
+    },
+    {
+      "X": -2.35,
+      "Y": -10.5,
+      "Z": 0,
+      "Range": 2.39998,
+      "SnapRotation": 2,
+      "RotationOffset": 0,
+      "Shape": 0,
+      "FlipValidity": 0
+    },
+    {
+      "X": 2.35,
+      "Y": -3.5,
+      "Z": 0,
+      "Range": 2.39998,
+      "SnapRotation": 2,
+      "RotationOffset": 0,
+      "Shape": 0,
+      "FlipValidity": 0
+    }
+  ],
   "ZoomViewDirection": {
     "X": 0,
     "Y": 0,
-    "Z": 0
+    "Z": 1
   },
+  "GroundAccessibility": "ZoomAndContext",
   "Tags": [],
-  "GroundAccessibility": "Zoom",
-  "FrontTexture": "faction-sheet/vuilraith.face.jpg",
-  "BackTexture": "faction-sheet/vuilraith.back.jpg",
+  "FrontTexture": "faction-sheet/vuilraith.back.jpg",
+  "BackTexture": "faction-sheet/vuilraith.face.jpg",
   "HiddenTexture": "",
   "BackIndex": -2,
   "HiddenIndex": -1,
   "NumHorizontal": 1,
   "NumVertical": 1,
   "Width": 28,
-  "Height": 19.002,
+  "Height": 19,
   "Thickness": 0.1,
   "HiddenInHand": false,
   "UsedWithCardHolders": false,
@@ -52,103 +165,16 @@
   "FrontTextureOverrideExposed": false,
   "AllowFlippedInStack": false,
   "MirrorBack": true,
+  "EmissiveFront": false,
   "Model": "Square",
-  "Indices": [0],
+  "Indices": [
+    0
+  ],
   "CardNames": {
     "0": "Vuil'raith"
   },
   "CardMetadata": {
     "0": "sheet.faction:pok/vuilraith"
   },
-  "CardTags": {},
-  "SnapPoints": [
-    {
-      "X": -7.05,
-      "Y": 10.5,
-      "Z": 0.0999961,
-      "Range": 2.39998,
-      "SnapRotation": true,
-      "RotationOffset": 0
-    },
-    {
-      "X": -7.05,
-      "Y": 3.5,
-      "Z": 0.0999961,
-      "Range": 2.39998,
-      "SnapRotation": true,
-      "RotationOffset": 0
-    },
-    {
-      "X": -2.35,
-      "Y": 3.5,
-      "Z": 0.0999961,
-      "Range": 2.39998,
-      "SnapRotation": true,
-      "RotationOffset": 0
-    },
-    {
-      "X": -7.05,
-      "Y": -3.5,
-      "Z": 0.0999961,
-      "Range": 2.39998,
-      "SnapRotation": true,
-      "RotationOffset": 0
-    },
-    {
-      "X": -2.35,
-      "Y": -3.5,
-      "Z": 0.0999961,
-      "Range": 2.39998,
-      "SnapRotation": true,
-      "RotationOffset": 0
-    },
-    {
-      "X": -7.05,
-      "Y": -10.5,
-      "Z": 0.0999961,
-      "Range": 2.39998,
-      "SnapRotation": true,
-      "RotationOffset": 0
-    },
-    {
-      "X": 2.35,
-      "Y": 10.5,
-      "Z": 0.0999961,
-      "Range": 2.39998,
-      "SnapRotation": true,
-      "RotationOffset": 0
-    },
-    {
-      "X": -2.35,
-      "Y": 10.5,
-      "Z": 0.0999961,
-      "Range": 2.39998,
-      "SnapRotation": true,
-      "RotationOffset": 0
-    },
-    {
-      "X": 7.05,
-      "Y": 10.5,
-      "Z": 0.0999961,
-      "Range": 2.39998,
-      "SnapRotation": true,
-      "RotationOffset": 0
-    },
-    {
-      "X": -2.35,
-      "Y": 10.5,
-      "Z": 0.0999961,
-      "Range": 2.39998,
-      "SnapRotation": true,
-      "RotationOffset": 0
-    },
-    {
-      "X": 2.35,
-      "Y": 3.5,
-      "Z": 0.0999961,
-      "Range": 2.39998,
-      "SnapRotation": true,
-      "RotationOffset": 0
-    }
-  ]
+  "CardTags": {}
 }

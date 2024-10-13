@@ -28,8 +28,9 @@ for (const [source, factionDataArray] of Object.entries(
       srcNsidName = "keleres";
     }
 
-    const face: string = `faction-sheet/${srcNsidName}.face.jpg`;
-    const back: string = `faction-sheet/${srcNsidName}.back.jpg`;
+    // Token spawns face-down, swap face/back so no need to flip.
+    const face: string = `faction-sheet/${srcNsidName}.back.jpg`;
+    const back: string = `faction-sheet/${srcNsidName}.face.jpg`;
     if (!fs.existsSync(`./assets/Textures/${face}`)) {
       throw new Error(`Missing faction sheet: ${face}`);
     }
