@@ -39,7 +39,7 @@ export class TurnOrderEntry extends TurnEntryWart {
     this._factionName = new Text()
       .setFontSize(6)
       .setJustification(TextJustification.Center)
-      .setText("N/A");
+      .setText("FACTION");
     this._score = new Text()
       .setFontSize(26)
       .setJustification(TextJustification.Center)

@@ -19,6 +19,8 @@ import {
 } from "ttpg-darrell";
 
 import { ActivateSystem } from "../context-menu/activate-system/activate-system";
+import { CreateAndAttachEndTurnButtonUI } from "../ui/end-turn-button-ui/create-and-attach-end-turn-button-ui";
+import { CreateAndAttachTurnOrderUI } from "../ui/turn-order-ui/create-and-attach-turn-order-ui";
 import { DiplomacySystem } from "../context-menu/diplomacy-system/diplomacy-system";
 import { FactionRegistry } from "../lib/faction-lib/registry/faction-registry";
 import { PlanetAttachmentRegistry } from "../lib/system-lib/registry/planet-attachment-registry";
@@ -99,6 +101,8 @@ resetGlobalThisTI4();
 // These are "init" functions in the class objects.
 const iGlobals: Array<IGlobal> = [
   new ActivateSystem(),
+  new CreateAndAttachEndTurnButtonUI(),
+  new CreateAndAttachTurnOrderUI(),
   new DiceGroupCleanup(),
   new DiplomacySystem(),
   new LeaveSeat(),
