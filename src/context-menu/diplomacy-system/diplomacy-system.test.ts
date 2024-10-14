@@ -53,6 +53,11 @@ it("diplomacySystem", () => {
     items: [grabToken],
   });
 
+  const _emptyContainer: Container = new MockContainer({
+    templateMetadata: "container.token.command:base/generic",
+    owningPlayerSlot: 10, // linked to a color name
+  });
+
   expect(myContainer.getNumItems()).toBe(1);
   expect(otherContainer.getNumItems()).toBe(1);
   expect(grabContainer.getNumItems()).toBe(1);

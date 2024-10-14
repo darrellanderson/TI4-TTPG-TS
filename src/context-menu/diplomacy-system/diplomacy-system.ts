@@ -51,7 +51,6 @@ export class DiplomacySystem implements IGlobal {
       if (
         nsid === "container.token.command:base/generic" &&
         obj instanceof Container &&
-        obj.getNumItems() > 0 &&
         obj.getOwningPlayerSlot() >= 0 &&
         !skipPlayerSlots.has(obj.getOwningPlayerSlot())
       ) {
