@@ -1,7 +1,6 @@
 import { GameWorld, Player } from "@tabletop-playground/api";
 import {
   BugCardHolderAssignment,
-  BugForceTransformUpdates,
   BugSplatRemoteReporter,
   BugUniqueCards,
   DiceGroupCleanup,
@@ -101,14 +100,23 @@ resetGlobalThisTI4();
 // These are "init" functions in the class objects.
 const iGlobals: Array<IGlobal> = [
   new ActivateSystem(),
-  new CreateAndAttachEndTurnButtonUI(),
-  new CreateAndAttachTurnOrderUI(),
   new DiceGroupCleanup(),
   new DiplomacySystem(),
   new LeaveSeat(),
   new RSwapSplitCombine(),
   new ShuffleDecks(),
 ];
+if (GameWorld.getExecutionReason() !== "unittest") {
+  iGlobals.push(
+    ...[
+      new BugCardHolderAssignment("card-holder:base/player-hand"),
+      //new BugForceTransformUpdates(),
+      new BugUniqueCards(),
+      new CreateAndAttachEndTurnButtonUI(),
+      new CreateAndAttachTurnOrderUI(),
+    ]
+  );
+}
 for (const v of Object.values(globalThis.TI4)) {
   if (typeof v.init === "function") {
     iGlobals.push(v);
@@ -122,11 +130,4 @@ if (GameWorld.getExecutionReason() === "unittest") {
     resetGlobalThisTI4();
     new SetupPlayerSlotColors().setup();
   });
-}
-
-// Register some bug workarounds.
-if (GameWorld.getExecutionReason() !== "unittest") {
-  new BugCardHolderAssignment("card-holder:base/player-hand").init();
-  new BugForceTransformUpdates().init();
-  new BugUniqueCards().init();
 }

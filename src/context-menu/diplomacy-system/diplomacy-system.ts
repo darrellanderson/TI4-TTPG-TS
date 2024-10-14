@@ -6,7 +6,7 @@ import {
   Vector,
   world,
 } from "@tabletop-playground/api";
-import { HexType, IGlobal, NSID } from "ttpg-darrell";
+import { Broadcast, HexType, IGlobal, NSID } from "ttpg-darrell";
 
 export class DiplomacySystem implements IGlobal {
   private readonly _actionName: string = "*Diplomacy System";
@@ -39,6 +39,7 @@ export class DiplomacySystem implements IGlobal {
   }
 
   diplomacySystem(systemTileObj: GameObject, player: Player): boolean {
+    let success: boolean = true;
     const skipPlayerSlots: Set<number> =
       this._getExistingCommandTokenOwners(systemTileObj);
     skipPlayerSlots.add(player.getSlot());
@@ -51,6 +52,7 @@ export class DiplomacySystem implements IGlobal {
         nsid === "container.token.command:base/generic" &&
         obj instanceof Container &&
         obj.getNumItems() > 0 &&
+        obj.getOwningPlayerSlot() >= 0 &&
         !skipPlayerSlots.has(obj.getOwningPlayerSlot())
       ) {
         commandTokenContainers.push(obj);
@@ -58,15 +60,30 @@ export class DiplomacySystem implements IGlobal {
     }
 
     for (const container of commandTokenContainers) {
-      const r: number = 2;
-      const pos: Vector = systemTileObj
-        .getPosition()
-        .add([0, 0, 10])
-        .add([r * Math.random(), r * Math.random(), 0]);
-      container.takeAt(0, pos);
+      let token: GameObject | undefined = undefined;
+      if (container.getNumItems() > 0) {
+        const r: number = 2;
+        const pos: Vector = systemTileObj
+          .getPosition()
+          .add([0, 0, 10])
+          .add([r * Math.random(), r * Math.random(), 0]);
+        token = container.takeAt(0, pos);
+      }
+      if (!token) {
+        const playerSlot: number = container.getOwningPlayerSlot();
+        const colorName: string | undefined =
+          TI4.playerColor.getSlotColorName(playerSlot);
+        if (colorName) {
+          Broadcast.broadcastAll(
+            `No command tokens available for ${colorName}`,
+            Broadcast.ERROR
+          );
+        }
+        success = false;
+      }
     }
 
-    return true;
+    return success;
   }
 
   _getExistingCommandTokenOwners(systemTileObj: GameObject): Set<number> {

@@ -9,14 +9,14 @@ export class CreateAndAttachTurnOrderUI implements IGlobal {
   constructor() {}
 
   init() {
-    this._turnOrderUI.setPlayerCount(6).attachToScreen();
-
     if (TI4.turnOrder.getTurnOrder().length === 0) {
       const order: Array<number> = new PlayerSeats()
         .getAllSeats()
         .map((playerSeat) => playerSeat.playerSlot);
       TI4.turnOrder.setTurnOrder(order, "forward", -1);
     }
+
+    this._turnOrderUI.setPlayerCount(6).attachToScreen();
   }
 
   destroy(): void {
