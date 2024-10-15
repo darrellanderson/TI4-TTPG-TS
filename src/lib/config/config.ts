@@ -27,7 +27,7 @@ export class Config {
       this._config = ConfigSchema.parse(JSON.parse(json));
     } else {
       this._config = {
-        playerCount: 0,
+        playerCount: 6,
         timestamp: 0,
       };
     }
