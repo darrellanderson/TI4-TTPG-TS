@@ -205,17 +205,21 @@ it("assignPlanets", () => {
 });
 
 it("combat arena", () => {
-  new MockGameObject({
+  const arena: GameObject = new MockGameObject({
     templateMetadata: "mat:base/combat-arena",
     position: [10, 0, 0],
-    _modelSize: [1, 1, 1],
+    _modelSize: [4, 4, 4],
   });
+  expect(arena.getExtent(false, false).toString()).toBe("(X=2,Y=2,Z=2)");
 
   const systemTileObj: GameObject = new MockGameObject({
     templateMetadata: "tile.system:base/1",
     position: [-10, 0, 0],
-    _modelSize: [1, 1, 1],
+    _modelSize: [2, 2, 2],
   });
+  expect(systemTileObj.getExtent(false, false).toString()).toBe(
+    "(X=1,Y=1,Z=1)"
+  );
   const system: System | undefined = TI4.systemRegistry.getBySystemTileObjId(
     systemTileObj.getId()
   );
@@ -234,9 +238,9 @@ it("combat arena", () => {
 
   const unitObj: GameObject = new MockGameObject({
     templateMetadata: "unit:base/infantry",
-    position: [10, 0, 0],
+    position: [11, 1, 0],
     _modelSize: [1, 1, 1],
   });
   const plastic: UnitPlastic = UnitPlastic.getOne(unitObj)!;
-  expect(plastic.getPos().toString()).toBe("(X=-10,Y=0,Z=0)");
+  expect(plastic.getPos().toString()).toBe("(X=-9.5,Y=0.5,Z=0)");
 });

@@ -81,6 +81,9 @@ export class UnitPlastic {
           Math.abs(localPos.y) < extent.y
         ) {
           const systemTileObj = system.getObj();
+          const tileExtent: Vector = systemTileObj.getExtent(false, false);
+          localPos.x *= tileExtent.x / extent.x;
+          localPos.y *= tileExtent.y / extent.y;
           pos = systemTileObj.localPositionToWorld(localPos);
         }
       }
