@@ -73,7 +73,6 @@ export class UnitPlastic {
       );
       const system: System | undefined =
         OnSystemActivated.getLastActivatedSystem();
-
       if (combatArena && system) {
         const localPos: Vector = combatArena.worldPositionToLocal(pos);
         const extent: Vector = combatArena.getExtent(false, false);

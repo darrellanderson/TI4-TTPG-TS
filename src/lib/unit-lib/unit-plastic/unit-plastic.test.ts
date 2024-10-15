@@ -1,6 +1,8 @@
-import { GameObject, Vector } from "@tabletop-playground/api";
-import { MockGameObject, MockVector } from "ttpg-mock";
+import { GameObject, Player, Vector } from "@tabletop-playground/api";
+import { MockGameObject, MockPlayer, MockVector } from "ttpg-mock";
 
+import { OnSystemActivated } from "../../../event/on-system-activated/on-system-activated";
+import { System } from "../../system-lib/system/system";
 import { UnitPlastic } from "./unit-plastic";
 import { UnitType } from "../schema/unit-attrs-schema";
 
@@ -200,4 +202,41 @@ it("assignPlanets", () => {
   expect(plastic.getPlanetExact()).toBeDefined();
   expect(plasticOffPlanet.getPlanetClosest()).toBeDefined();
   expect(plasticOffPlanet.getPlanetExact()).toBeUndefined();
+});
+
+it("combat arena", () => {
+  new MockGameObject({
+    templateMetadata: "mat:base/combat-arena",
+    position: [10, 0, 0],
+    _modelSize: [1, 1, 1],
+  });
+
+  const systemTileObj: GameObject = new MockGameObject({
+    templateMetadata: "tile.system:base/1",
+    position: [-10, 0, 0],
+    _modelSize: [1, 1, 1],
+  });
+  const system: System | undefined = TI4.systemRegistry.getBySystemTileObjId(
+    systemTileObj.getId()
+  );
+  expect(system).toBeDefined();
+  if (!system) {
+    throw new Error("system not found");
+  }
+  let triggerCount = 0;
+  TI4.onSystemActivated.add((_system: System, _player: Player) => {
+    triggerCount++;
+  });
+  const player: Player = new MockPlayer();
+  TI4.onSystemActivated.trigger(system, player);
+  expect(triggerCount).toBe(1);
+  expect(OnSystemActivated.getLastActivatedSystem()).toBeDefined();
+
+  const unitObj: GameObject = new MockGameObject({
+    templateMetadata: "unit:base/infantry",
+    position: [10, 0, 0],
+    _modelSize: [1, 1, 1],
+  });
+  const plastic: UnitPlastic = UnitPlastic.getOne(unitObj)!;
+  expect(plastic.getPos().toString()).toBe("(X=-10,Y=0,Z=0)");
 });

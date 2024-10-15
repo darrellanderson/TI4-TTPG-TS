@@ -23,6 +23,7 @@ import { CreateAndAttachEndTurnButtonUI } from "../ui/end-turn-button-ui/create-
 import { CreateAndAttachTurnOrderUI } from "../ui/turn-order-ui/create-and-attach-turn-order-ui";
 import { DiplomacySystem } from "../context-menu/diplomacy-system/diplomacy-system";
 import { FactionRegistry } from "../lib/faction-lib/registry/faction-registry";
+import { OnSystemActivated } from "../event/on-system-activated/on-system-activated";
 import { PlanetAttachmentRegistry } from "../lib/system-lib/registry/planet-attachment-registry";
 import { PlayerColor } from "../lib/player-lib/player-color/player-color";
 import { PlayerSeats } from "../lib/player-lib/player-seats/player-seats";
@@ -94,37 +95,37 @@ declare global {
 export function resetGlobalThisTI4(): TI4Class {
   globalThis.TI4 = new TI4Class();
   Object.freeze(globalThis.TI4);
+
+  // Run any delayed initialization, things that need globalThis.TI4 to be set.
+  // These are "init" functions in the class objects.
+  const iGlobals: Array<IGlobal> = [
+    new ActivateSystem(),
+    new DiceGroupCleanup(),
+    new DiplomacySystem(),
+    new LeaveSeat(),
+    new OnSystemActivated(),
+    new RSwapSplitCombine(),
+    new ShuffleDecks(),
+  ];
+  if (GameWorld.getExecutionReason() !== "unittest") {
+    iGlobals.push(
+      ...[
+        new BugCardHolderAssignment("card-holder:base/player-hand"),
+        //new BugForceTransformUpdates(),
+        new BugUniqueCards(),
+        new CreateAndAttachEndTurnButtonUI(),
+        new CreateAndAttachTurnOrderUI(),
+      ]
+    );
+  }
+  for (const v of Object.values(globalThis.TI4)) {
+    if (typeof v.init === "function") {
+      iGlobals.push(v);
+    }
+  }
+  GlobalInit.runGlobalInit(iGlobals);
   return globalThis.TI4;
 }
-resetGlobalThisTI4();
-
-// Run any delayed initialization, things that need globalThis.TI4 to be set.
-// These are "init" functions in the class objects.
-const iGlobals: Array<IGlobal> = [
-  new ActivateSystem(),
-  new DiceGroupCleanup(),
-  new DiplomacySystem(),
-  new LeaveSeat(),
-  new RSwapSplitCombine(),
-  new ShuffleDecks(),
-];
-if (GameWorld.getExecutionReason() !== "unittest") {
-  iGlobals.push(
-    ...[
-      new BugCardHolderAssignment("card-holder:base/player-hand"),
-      //new BugForceTransformUpdates(),
-      new BugUniqueCards(),
-      new CreateAndAttachEndTurnButtonUI(),
-      new CreateAndAttachTurnOrderUI(),
-    ]
-  );
-}
-for (const v of Object.values(globalThis.TI4)) {
-  if (typeof v.init === "function") {
-    iGlobals.push(v);
-  }
-}
-GlobalInit.runGlobalInit(iGlobals);
 
 // Unittests reset the globalThis.TI4 object before each test.
 if (GameWorld.getExecutionReason() === "unittest") {
@@ -132,4 +133,6 @@ if (GameWorld.getExecutionReason() === "unittest") {
     resetGlobalThisTI4();
     new SetupPlayerSlotColors().setup();
   });
+} else {
+  resetGlobalThisTI4();
 }

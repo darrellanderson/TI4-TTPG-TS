@@ -7,7 +7,6 @@ it("constructor", () => {
 
 it("trigger", () => {
   new MockGameObject(); // so an object is present for checking
-  new OnSystemActivated().init();
 
   new MockGameObject({
     templateMetadata: "tile.system:base/18",
@@ -35,4 +34,11 @@ it("trigger", () => {
 
   expect(OnSystemActivated.getLastActivatedSystem()).toBeDefined();
   expect(triggerCount).toBe(1);
+});
+
+it("init after token created", () => {
+  new MockGameObject({
+    templateMetadata: "token.command:my-source/my-faction",
+  });
+  new OnSystemActivated().init();
 });
