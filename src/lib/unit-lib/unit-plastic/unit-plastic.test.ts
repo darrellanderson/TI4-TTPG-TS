@@ -243,4 +243,15 @@ it("combat arena", () => {
   });
   const plastic: UnitPlastic = UnitPlastic.getOne(unitObj)!;
   expect(plastic.getPos().toString()).toBe("(X=-9.5,Y=0.5,Z=0)");
+  expect(plastic.getHex()).toBe(
+    TI4.hex.fromPosition(systemTileObj.getPosition())
+  );
+
+  const outsideAreaUnitObj: GameObject = new MockGameObject({
+    templateMetadata: "unit:base/infantry",
+    position: [100, 0, 0],
+    _modelSize: [1, 1, 1],
+  });
+  const outsidePlastic: UnitPlastic = UnitPlastic.getOne(outsideAreaUnitObj)!;
+  expect(outsidePlastic.getPos().toString()).toBe("(X=100,Y=0,Z=0)");
 });
