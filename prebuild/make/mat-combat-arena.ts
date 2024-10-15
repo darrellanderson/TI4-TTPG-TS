@@ -35,6 +35,7 @@ const params: CreateBoardParams = {
   templateName: "Combat Arena Mat",
   assetFilename: "mat/combat-arena",
   templateMetadata: "mat:base/combat-arena",
+  scriptName: "obj/combat-arena-obj.js",
   srcImage: getMat(),
   topDownWorldSize: {
     width: HEX_W_WORLD,

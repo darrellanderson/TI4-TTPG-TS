@@ -17,6 +17,8 @@ import {
 } from "../../lib/strategy-card-lib/initiative-order/initiative-order";
 import { Scoreboard } from "../../lib/score-lib/scoreboard/scoreboard";
 
+const PACKAGE_ID: string = refPackageId;
+
 // Shared map, resets when updating the first entry in the turn order list.
 const __playerSlotToFaction: Map<number, Faction> = new Map();
 const __playerSlotToScore: Map<number, number> = new Map();
@@ -144,7 +146,7 @@ export class TurnOrderEntry extends TurnEntryWart {
     const factionIcon: string =
       faction?.getIcon() ?? "icon/token/circle-outline-only.png";
     const factionIconPackageId: string =
-      faction?.getIconPackageId() ?? refPackageId;
+      faction?.getIconPackageId() ?? PACKAGE_ID;
     this._factionName.setText(factionName);
     this._factionIcon.setImage(factionIcon, factionIconPackageId);
 
