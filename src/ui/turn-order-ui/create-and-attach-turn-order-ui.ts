@@ -1,25 +1,34 @@
 import { IGlobal } from "ttpg-darrell";
 
-import { PlayerSeats } from "../../lib/player-lib/player-seats/player-seats";
+import { Config } from "../../lib/config/config";
 import { TurnOrderUI } from "./turn-order-ui";
 
 export class CreateAndAttachTurnOrderUI implements IGlobal {
-  private readonly _turnOrderUI: TurnOrderUI = new TurnOrderUI();
+  private _turnOrderUI: TurnOrderUI | undefined;
 
   constructor() {}
 
   init() {
-    if (TI4.turnOrder.getTurnOrder().length === 0) {
-      const order: Array<number> = new PlayerSeats()
-        .getAllSeats()
-        .map((playerSeat) => playerSeat.playerSlot);
-      TI4.turnOrder.setTurnOrder(order, "forward", -1);
+    if (this._turnOrderUI) {
+      this.destroy();
+      this._turnOrderUI = undefined;
     }
 
-    this._turnOrderUI.setPlayerCount(6).attachToScreen();
+    const playerCount: number = TI4.config.playerCount;
+    console.log(`CreateAndAttachTurnOrderUI playerCount: ${playerCount}`);
+    this._turnOrderUI = new TurnOrderUI()
+      .setPlayerCount(playerCount)
+      .attachToScreen();
+
+    TI4.config.onConfigChanged.add((_config: Config): void => {
+      this.init();
+    });
   }
 
   destroy(): void {
-    this._turnOrderUI.destroy();
+    if (this._turnOrderUI) {
+      this._turnOrderUI.destroy();
+      this._turnOrderUI = undefined;
+    }
   }
 }

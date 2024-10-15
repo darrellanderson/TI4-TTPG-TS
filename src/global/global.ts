@@ -18,6 +18,7 @@ import {
 } from "ttpg-darrell";
 
 import { ActivateSystem } from "../context-menu/activate-system/activate-system";
+import { Config } from "../lib/config/config";
 import { CreateAndAttachEndTurnButtonUI } from "../ui/end-turn-button-ui/create-and-attach-end-turn-button-ui";
 import { CreateAndAttachTurnOrderUI } from "../ui/turn-order-ui/create-and-attach-turn-order-ui";
 import { DiplomacySystem } from "../context-menu/diplomacy-system/diplomacy-system";
@@ -63,6 +64,7 @@ export class TI4Class {
   >();
 
   // Libraries.
+  public readonly config = new Config("@config/ti4");
   public readonly hex = new Hex(HEX_LAYOUT_POINTY, 5.77735 * 1.5);
   public readonly factionRegistry = new FactionRegistry().loadDefaultData();
   public readonly planetAttachmentRegistry =
