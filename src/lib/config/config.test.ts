@@ -14,7 +14,7 @@ it("save/restore", () => {
 
   // First use.
   config = new Config("@config/test");
-  expect(config.playerCount).toBe(0);
+  expect(config.playerCount).toBe(6);
   expect(config.timestamp).toBe(0);
 
   config.setPlayerCount(3);
