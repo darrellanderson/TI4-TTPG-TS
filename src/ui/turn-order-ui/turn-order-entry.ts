@@ -4,11 +4,13 @@ import {
   Color,
   GameObject,
   ImageWidget,
+  refPackageId,
   Text,
   TextJustification,
 } from "@tabletop-playground/api";
 import { Facing, TurnEntryWart, TurnEntryWidget } from "ttpg-darrell";
 
+import { Faction } from "../../lib/faction-lib/faction/faction";
 import {
   InitiativeEntry,
   InitiativeOrder,
@@ -16,8 +18,9 @@ import {
 import { Scoreboard } from "../../lib/score-lib/scoreboard/scoreboard";
 
 // Shared map, resets when updating the first entry in the turn order list.
-const __playerSlotToStrategyCards: Map<number, Array<GameObject>> = new Map();
+const __playerSlotToFaction: Map<number, Faction> = new Map();
 const __playerSlotToScore: Map<number, number> = new Map();
+const __playerSlotToStrategyCards: Map<number, Array<GameObject>> = new Map();
 
 export class TurnOrderEntry extends TurnEntryWart {
   private readonly _scoreboard: Scoreboard = new Scoreboard();
@@ -38,10 +41,12 @@ export class TurnOrderEntry extends TurnEntryWart {
     this._factionIcon = new ImageWidget().setImageSize(40, 40);
     this._factionName = new Text()
       .setFontSize(6)
+      .setBold(true)
       .setJustification(TextJustification.Center)
       .setText("FACTION");
     this._score = new Text()
       .setFontSize(26)
+      .setBold(true)
       .setJustification(TextJustification.Center)
       .setText("14");
     this._strategyCardSolo = new Text()
@@ -80,6 +85,23 @@ export class TurnOrderEntry extends TurnEntryWart {
 
   destroy(): void {}
 
+  _updatePlayerSlotToFaction(): void {
+    __playerSlotToFaction.clear();
+    for (const [
+      playerSlot,
+      faction,
+    ] of TI4.factionRegistry.getPlayerSlotToFaction()) {
+      __playerSlotToFaction.set(playerSlot, faction);
+    }
+  }
+
+  _updatePlayerSlotToScore(): void {
+    __playerSlotToScore.clear();
+    for (const [playerSlot, score] of this._scoreboard.getPlayerSlotToScore()) {
+      __playerSlotToScore.set(playerSlot, score);
+    }
+  }
+
   _updatePlayerSlotToStrategyCards(): void {
     __playerSlotToStrategyCards.clear();
     const initiativeEntries: Array<InitiativeEntry> =
@@ -92,18 +114,12 @@ export class TurnOrderEntry extends TurnEntryWart {
     }
   }
 
-  _updatePlayerSlotToScore(): void {
-    __playerSlotToScore.clear();
-    for (const [playerSlot, score] of this._scoreboard.getPlayerSlotToScore()) {
-      __playerSlotToScore.set(playerSlot, score);
-    }
-  }
-
   update(playerSlot: number, fgColor: Color, _bgColor: Color): void {
     // Reset shared state when updating the first entry in the turn order list.
     if (playerSlot === TI4.turnOrder.getTurnOrder()[0]) {
-      this._updatePlayerSlotToStrategyCards();
+      this._updatePlayerSlotToFaction();
       this._updatePlayerSlotToScore();
+      this._updatePlayerSlotToStrategyCards();
     }
 
     this._factionName.setTextColor(fgColor);
@@ -122,13 +138,31 @@ export class TurnOrderEntry extends TurnEntryWart {
     this._strategyCardLeftOverLay.setVisible(false);
     this._strategyCardRightOverLay.setVisible(false);
 
+    // Faction.
+    const faction: Faction | undefined = __playerSlotToFaction.get(playerSlot);
+    const factionName: string = faction?.getName() ?? "N/A";
+    const factionIcon: string =
+      faction?.getIcon() ?? "icon/token/circle-outline-only.png";
+    const factionIconPackageId: string =
+      faction?.getIconPackageId() ?? refPackageId;
+    this._factionName.setText(factionName);
+    this._factionIcon.setImage(factionIcon, factionIconPackageId);
+
+    // Score.
+    const score: number = __playerSlotToScore.get(playerSlot) ?? 0;
+    this._score.setText(score.toString());
+
+    // Strategy cards.
     const strategyCards: Array<GameObject> | undefined =
       __playerSlotToStrategyCards.get(playerSlot);
 
     const strategyCard1: GameObject | undefined = strategyCards?.[0];
     const strategyCard2: GameObject | undefined = strategyCards?.[1];
 
-    if (strategyCards?.length === 1 && strategyCard1) {
+    if (!strategyCards || strategyCards?.length === 0) {
+      this._strategyCardSolo.setText("–");
+      this._strategyCardSolo.setVisible(true);
+    } else if (strategyCards?.length === 1 && strategyCard1) {
       const name: string = strategyCard1.getName().toUpperCase();
       const active: boolean = Facing.isFaceUp(strategyCard1);
       this._strategyCardSolo.setText(name);
