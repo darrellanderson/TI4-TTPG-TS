@@ -175,6 +175,7 @@ it("assignPlanets", () => {
     new MockGameObject(),
     new MockVector(0, 0, 0)
   );
+  expect(plastic.getPos().toString()).toBe("(X=0,Y=0,Z=0)");
 
   // Compute a position still inside the hex, but off the planet.
   const pos: Vector = TI4.hex.toPosition("<1,0,-1>").multiply(0.45);
@@ -182,9 +183,10 @@ it("assignPlanets", () => {
     "infantry",
     1,
     new MockGameObject({ position: pos }),
-    new MockVector(0, 0, 0)
+    pos
   );
   expect(plasticOffPlanet.getHex()).toBe("<0,0,0>");
+  expect(plasticOffPlanet.getPos().toString()).toBe("(X=6.754,Y=0,Z=0)");
 
   expect(plastic.getSystem()).toBeUndefined();
   expect(plastic.getPlanetClosest()).toBeUndefined();

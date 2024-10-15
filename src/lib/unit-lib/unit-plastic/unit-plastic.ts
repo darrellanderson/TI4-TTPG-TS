@@ -75,9 +75,15 @@ export class UnitPlastic {
         OnSystemActivated.getLastActivatedSystem();
 
       if (combatArena && system) {
-        const systemTileObj = system.getObj();
         const localPos: Vector = combatArena.worldPositionToLocal(pos);
-        pos = systemTileObj.localPositionToWorld(localPos);
+        const extent: Vector = combatArena.getExtent(false, false);
+        if (
+          Math.abs(localPos.x) < extent.x &&
+          Math.abs(localPos.y) < extent.y
+        ) {
+          const systemTileObj = system.getObj();
+          pos = systemTileObj.localPositionToWorld(localPos);
+        }
       }
       return new UnitPlastic(unit, count, obj, pos);
     }
@@ -183,6 +189,10 @@ export class UnitPlastic {
 
   getHex(): HexType {
     return this._hex;
+  }
+
+  getPos(): Vector {
+    return this._pos;
   }
 
   getObj(): GameObject {
