@@ -44,7 +44,7 @@ export class CombatArenaObj {
     const extent: Vector = this._obj.getExtent(false, false);
 
     // Inset slightly, will have a white border.
-    const d: number = (Math.max(extent.x, extent.y) * 17.32) / 18.32;
+    const d: number = Math.max(extent.x, extent.y) * 17.32;
     this._img.setImageSize(d * 20, d * 20);
 
     const ui: UIElement = new UIElement();

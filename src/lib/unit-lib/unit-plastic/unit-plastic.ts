@@ -1,7 +1,8 @@
 import { GameObject, Vector, world } from "@tabletop-playground/api";
-import { HexType, NSID, ParsedNSID } from "ttpg-darrell";
+import { Find, HexType, NSID, ParsedNSID } from "ttpg-darrell";
 
 import { UnitSchema, UnitType } from "../schema/unit-attrs-schema";
+import { OnSystemActivated } from "../../../event/on-system-activated/on-system-activated";
 import { Planet } from "../../system-lib/planet/planet";
 import { System } from "../../system-lib/system/system";
 
@@ -11,9 +12,12 @@ import { System } from "../../system-lib/system/system";
  * optionally assign those to the closest same-hex owned unit plastic.
  */
 export class UnitPlastic {
+  private static readonly __find: Find = new Find();
+
   private readonly _unit: UnitType;
   private readonly _count: number;
   private readonly _obj: GameObject;
+  private readonly _pos: Vector;
   private readonly _hex: HexType;
   private _owningPlayerSlot: number;
   private _system: System | undefined;
@@ -59,7 +63,23 @@ export class UnitPlastic {
     }
 
     if (unit) {
-      return new UnitPlastic(unit, count, obj);
+      let pos: Vector = obj.getPosition();
+
+      const skipContained: boolean = true;
+      const combatArena: GameObject | undefined = this.__find.findGameObject(
+        "mat:base/combat-arena",
+        undefined,
+        skipContained
+      );
+      const system: System | undefined =
+        OnSystemActivated.getLastActivatedSystem();
+
+      if (combatArena && system) {
+        const systemTileObj = system.getObj();
+        const localPos: Vector = combatArena.worldPositionToLocal(pos);
+        pos = systemTileObj.localPositionToWorld(localPos);
+      }
+      return new UnitPlastic(unit, count, obj, pos);
     }
     return undefined;
   }
@@ -105,10 +125,10 @@ export class UnitPlastic {
         if (entry._owningPlayerSlot < 0) {
           let bestPlayerSlot: number = -1;
           let bestDSq: number = Number.MAX_VALUE;
-          const p0: Vector = entry._obj.getPosition();
+          const p0: Vector = entry._pos;
           for (const other of entries) {
             if (other._owningPlayerSlot >= 0) {
-              const p1: Vector = other._obj.getPosition();
+              const p1: Vector = other._pos;
               const dSq: number = p0.subtract(p1).magnitudeSquared();
               if (dSq < bestDSq) {
                 bestDSq = dSq;
@@ -138,7 +158,7 @@ export class UnitPlastic {
     for (const entry of entries) {
       const system: System | undefined = hexToSystem.get(entry._hex);
       if (system) {
-        const pos: Vector = entry._obj.getPosition();
+        const pos: Vector = entry._pos;
         entry._system = system;
         entry._planetClosest = system.getPlanetClosest(pos);
         entry._planetExact = system.getPlanetExact(pos);
@@ -146,11 +166,12 @@ export class UnitPlastic {
     }
   }
 
-  constructor(unit: UnitType, count: number, obj: GameObject) {
+  constructor(unit: UnitType, count: number, obj: GameObject, pos: Vector) {
     this._unit = unit;
     this._count = count;
     this._obj = obj;
-    this._hex = TI4.hex.fromPosition(obj.getPosition());
+    this._pos = pos;
+    this._hex = TI4.hex.fromPosition(pos);
     this._owningPlayerSlot = obj.getOwningPlayerSlot();
     this._planetClosest = undefined;
     this._planetExact = undefined;

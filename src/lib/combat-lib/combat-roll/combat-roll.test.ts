@@ -4,6 +4,7 @@ import {
   MockCardHolder,
   MockGameObject,
   MockPlayer,
+  MockVector,
 } from "ttpg-mock";
 import { CardUtil, DiceParams, DiceResult } from "ttpg-darrell";
 
@@ -64,7 +65,12 @@ it("data hasUnit", () => {
   expect(data.hasUnit("fighter")).toBe(false);
 
   data.unitPlasticHex.push(
-    new UnitPlastic("infantry", 1, new MockGameObject())
+    new UnitPlastic(
+      "infantry",
+      1,
+      new MockGameObject(),
+      new MockVector(0, 0, 0)
+    )
   );
   expect(data.hasUnit("infantry")).toBe(true);
   expect(data.hasUnit("fighter")).toBe(false);

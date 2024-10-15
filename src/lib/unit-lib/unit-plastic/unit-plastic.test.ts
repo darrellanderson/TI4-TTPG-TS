@@ -1,5 +1,5 @@
 import { GameObject, Vector } from "@tabletop-playground/api";
-import { MockGameObject } from "ttpg-mock";
+import { MockGameObject, MockVector } from "ttpg-mock";
 
 import { UnitPlastic } from "./unit-plastic";
 import { UnitType } from "../schema/unit-attrs-schema";
@@ -8,7 +8,7 @@ it("constructor", () => {
   const unit: UnitType = "infantry";
   const count: number = 1;
   const obj: GameObject = new MockGameObject();
-  new UnitPlastic(unit, count, obj);
+  new UnitPlastic(unit, count, obj, obj.getPosition());
 });
 
 it("getOne (plastic)", () => {
@@ -150,12 +150,14 @@ it("assignOwners", () => {
   const plastic: UnitPlastic = new UnitPlastic(
     "infantry",
     1,
-    new MockGameObject({ owningPlayerSlot: 2 })
+    new MockGameObject({ owningPlayerSlot: 2 }),
+    new MockVector(0, 0, 0)
   );
   const token: UnitPlastic = new UnitPlastic(
     "infantry",
     1,
-    new MockGameObject()
+    new MockGameObject(),
+    new MockVector(0, 0, 0)
   );
   expect(plastic.getOwningPlayerSlot()).toBe(2);
   expect(token.getOwningPlayerSlot()).toBe(-1);
@@ -170,7 +172,8 @@ it("assignPlanets", () => {
   const plastic: UnitPlastic = new UnitPlastic(
     "infantry",
     1,
-    new MockGameObject()
+    new MockGameObject(),
+    new MockVector(0, 0, 0)
   );
 
   // Compute a position still inside the hex, but off the planet.
@@ -178,7 +181,8 @@ it("assignPlanets", () => {
   const plasticOffPlanet: UnitPlastic = new UnitPlastic(
     "infantry",
     1,
-    new MockGameObject({ position: pos })
+    new MockGameObject({ position: pos }),
+    new MockVector(0, 0, 0)
   );
   expect(plasticOffPlanet.getHex()).toBe("<0,0,0>");
 

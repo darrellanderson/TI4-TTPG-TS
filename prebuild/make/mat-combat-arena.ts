@@ -11,9 +11,6 @@ const HEX_H_WORLD: number = 15 * 2;
 const HEX_W: number = 1024;
 const HEX_H: number = Math.round((HEX_H_WORLD / HEX_W_WORLD) * HEX_W);
 
-const SPACING_WORLD: number = 0.5;
-const SPACING: number = Math.round(SPACING_WORLD * (HEX_W / HEX_W_WORLD));
-
 function getGrid(): ZImageCell {
   return {
     type: "ImageCell",
@@ -26,7 +23,7 @@ function getGrid(): ZImageCell {
 function getMat(): ZPaddedCell {
   return {
     type: "PaddedCell",
-    padding: SPACING,
+    padding: 0,
     child: getGrid(),
     background: "#171717",
   };
