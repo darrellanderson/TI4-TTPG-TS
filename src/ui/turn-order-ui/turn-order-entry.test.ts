@@ -11,7 +11,7 @@ it("constructor", () => {
   new TurnOrderEntry(turnEntryWidget);
 });
 
-it("update (zero strategy cards, scoreboard)", () => {
+it("update (zero strategy cards, scoreboard, faction)", () => {
   TI4.turnOrder.setTurnOrder([3], "forward", 3);
   expect(TI4.turnOrder.getTurnOrder()[0]).toBe(3);
 
@@ -22,6 +22,13 @@ it("update (zero strategy cards, scoreboard)", () => {
       owningPlayerSlot: 3,
     }
   );
+
+  new MockCardHolder({ position: [10, 0, 0], owningPlayerSlot: 3 });
+  new MockGameObject({
+    position: [10, 0, 0],
+    templateMetadata: "sheet.faction:base/arborec",
+  });
+  expect(TI4.factionRegistry.getByPlayerSlot(3)?.getName()).toBe("The Arborec");
 
   const scoreboard = new Scoreboard();
   const found: GameObject | undefined = scoreboard

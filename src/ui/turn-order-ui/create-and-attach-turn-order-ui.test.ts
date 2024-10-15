@@ -7,5 +7,9 @@ it("init/destroy", () => {
 
   const createAndAttachTurnOrderUI = new CreateAndAttachTurnOrderUI();
   createAndAttachTurnOrderUI.init();
+  createAndAttachTurnOrderUI.init(); // repeat to destroy first, re-add
+
+  TI4.config.onConfigChanged.trigger(TI4.config);
+
   createAndAttachTurnOrderUI.destroy();
 });

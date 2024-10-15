@@ -36,7 +36,6 @@ export class Config {
   _save(): void {
     const json: string = JSON.stringify(this._config);
     world.setSavedData(json, this._namespaceId);
-    console.log("xxx", json);
   }
 
   get playerCount(): number {
