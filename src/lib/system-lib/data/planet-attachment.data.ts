@@ -14,6 +14,7 @@ export const SOURCE_TO_PLANET_ATTACHMENT_DATA: Record<
       resourcesFaceDown: 0,
       influenceFaceDown: 0,
       techsFaceDown: ["green"],
+      flipIfNoPlanetTech: true,
     },
     {
       name: "Cybernetic Research Facility",
@@ -24,6 +25,7 @@ export const SOURCE_TO_PLANET_ATTACHMENT_DATA: Record<
       resourcesFaceDown: 0,
       influenceFaceDown: 0,
       techsFaceDown: ["yellow"],
+      flipIfNoPlanetTech: true,
     },
     {
       name: "Demilitarized Zone",
@@ -80,6 +82,7 @@ export const SOURCE_TO_PLANET_ATTACHMENT_DATA: Record<
       resourcesFaceDown: 0,
       influenceFaceDown: 0,
       techsFaceDown: ["blue"],
+      flipIfNoPlanetTech: true,
     },
     {
       name: "Rich World",
@@ -107,6 +110,7 @@ export const SOURCE_TO_PLANET_ATTACHMENT_DATA: Record<
       resourcesFaceDown: 0,
       influenceFaceDown: 0,
       techsFaceDown: ["red"],
+      flipIfNoPlanetTech: true,
     },
   ],
 
