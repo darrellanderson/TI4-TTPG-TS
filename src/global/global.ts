@@ -28,6 +28,7 @@ import { PlanetAttachmentRegistry } from "../lib/system-lib/registry/planet-atta
 import { PlayerColor } from "../lib/player-lib/player-color/player-color";
 import { PlayerSeats } from "../lib/player-lib/player-seats/player-seats";
 import { RemoveRegistry } from "../lib/remove-lib/registry/remove-registry";
+import { ReportRemaining } from "../context-menu/report-remaining/report-remaining";
 import { RSwapSplitCombine } from "./r-swap-split-combine";
 import { SetupPlayerSlotColors } from "../setup/setup-player-slot-colors/setup-player-slot-colors";
 import { ShuffleDecks } from "./shuffle-decks";
@@ -58,8 +59,6 @@ registerErrorHandler();
 
 export class TI4Class {
   // Events.
-  public readonly onCardBecameSingletonOrDeck =
-    new OnCardBecameSingletonOrDeck();
   public readonly onSystemActivated = new TriggerableMulticastDelegate<
     (system: System, player: Player) => void
   >();
@@ -103,7 +102,9 @@ export function resetGlobalThisTI4(): TI4Class {
     new DiceGroupCleanup(),
     new DiplomacySystem(),
     new LeaveSeat(),
+    new OnCardBecameSingletonOrDeck(),
     new OnSystemActivated(),
+    new ReportRemaining(),
     new RSwapSplitCombine(),
     new ShuffleDecks(),
   ];
