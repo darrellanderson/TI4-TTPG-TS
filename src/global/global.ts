@@ -19,6 +19,7 @@ import {
 
 import { ActivateSystem } from "../context-menu/activate-system/activate-system";
 import { Config } from "../lib/config/config";
+import { ControlTokenSystem } from "../context-menu/control-token-system/control-token-system";
 import { CreateAndAttachEndTurnButtonUI } from "../ui/end-turn-button-ui/create-and-attach-end-turn-button-ui";
 import { CreateAndAttachTurnOrderUI } from "../ui/turn-order-ui/create-and-attach-turn-order-ui";
 import { DiplomacySystem } from "../context-menu/diplomacy-system/diplomacy-system";
@@ -29,7 +30,8 @@ import { PlayerColor } from "../lib/player-lib/player-color/player-color";
 import { PlayerSeats } from "../lib/player-lib/player-seats/player-seats";
 import { RemoveRegistry } from "../lib/remove-lib/registry/remove-registry";
 import { ReportRemaining } from "../context-menu/report-remaining/report-remaining";
-import { RightClickScore } from "../context-menu/right-click-score/right-click-score";
+import { RightClickScorePrivate } from "../context-menu/right-click-score/right-click-score-private";
+import { RightClickScorePublic } from "../context-menu/right-click-score/right-click-score-public";
 import { RSwapSplitCombine } from "./r-swap-split-combine";
 import { SetupPlayerSlotColors } from "../setup/setup-player-slot-colors/setup-player-slot-colors";
 import { ShuffleDecks } from "./shuffle-decks";
@@ -100,13 +102,15 @@ export function resetGlobalThisTI4(): TI4Class {
   // These are "init" functions in the class objects.
   const iGlobals: Array<IGlobal> = [
     new ActivateSystem(),
+    new ControlTokenSystem(),
     new DiceGroupCleanup(),
     new DiplomacySystem(),
     new LeaveSeat(),
     new OnCardBecameSingletonOrDeck(),
     new OnSystemActivated(),
     new ReportRemaining(),
-    new RightClickScore(),
+    new RightClickScorePrivate(),
+    new RightClickScorePublic(),
     new RSwapSplitCombine(),
     new ShuffleDecks(),
   ];

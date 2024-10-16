@@ -1,9 +1,9 @@
 import { MockCard, MockPlayer } from "ttpg-mock";
-import { RightClickScore } from "./right-click-score";
+import { RightClickScorePrivate } from "./right-click-score-private";
 import { Card, Player } from "@tabletop-playground/api";
 
 it("init", () => {
-  new RightClickScore().init();
+  new RightClickScorePrivate().init();
 });
 
 it("make/split deck", () => {
@@ -12,7 +12,7 @@ it("make/split deck", () => {
   const player: Player = new MockPlayer();
   process.flushTicks();
 
-  new RightClickScore().init();
+  new RightClickScorePrivate().init();
   process.flushTicks();
 
   a._addCardsAsPlayer(b, undefined, undefined, undefined, undefined, player);
@@ -28,15 +28,15 @@ it("trigger custom action", () => {
   const card: MockCard = MockCard.simple(
     "card.objective.secret:my-source/my-name"
   );
-  new RightClickScore().init();
+  new RightClickScorePrivate().init();
   process.flushTicks();
 
   const player: Player = new MockPlayer();
-  card._customActionAsPlayer(player, "*Score");
+  card._customActionAsPlayer(player, "*Score (private)");
 });
 
 it("score", () => {
   const player: Player = new MockPlayer({ slot: 1 });
   const card: Card = MockCard.simple("card.objective.secret:my-source/my-name");
-  new RightClickScore().score(card, player);
+  new RightClickScorePrivate().score(card, player);
 });

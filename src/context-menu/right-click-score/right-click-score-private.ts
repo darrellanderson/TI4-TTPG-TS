@@ -1,19 +1,17 @@
 import { Card, Player } from "@tabletop-playground/api";
-import { Find, IGlobal, NSID, OnCardBecameSingletonOrDeck } from "ttpg-darrell";
+import { IGlobal, NSID, OnCardBecameSingletonOrDeck } from "ttpg-darrell";
 
 import { AdvanceScore } from "../../lib/score-lib/advance-score/advance-score";
 import { MoveCardToPlayerScored } from "../../lib/score-lib/move-card-to-player-scored/move-card-to-player-scored";
-import { Scoreboard } from "../../lib/score-lib/scoreboard/scoreboard";
 
-export class RightClickScore implements IGlobal {
-  private readonly _find: Find = new Find();
-  private readonly _scoreboard: Scoreboard = new Scoreboard();
-
-  private readonly _actionName: string = "*Score";
+/**
+ * Score context menu item for cards that should move to
+ * the player's scored area card-holer.
+ */
+export class RightClickScorePrivate implements IGlobal {
+  private readonly _actionName: string = "*Score (private)";
   private readonly _prefixes: Array<string> = [
     "card.objective.secret",
-    "card.objective.public-1",
-    "card.objective.public-2",
 
     // Can also give full NSIDs.
     "card.action:base/imperial-rider",
@@ -57,10 +55,14 @@ export class RightClickScore implements IGlobal {
   score(card: Card, player: Player): void {
     const playerSlot: number = player.getSlot();
 
+    // Special case for "classified documents leaks" where a secret objective
+    // becomes public.  If the secret is on the agenda/laws mat treat is as
+    // public.
+    // TODO XXX
+
     new MoveCardToPlayerScored().moveCard(card, playerSlot);
 
-    const nsid: string = NSID.get(card);
-    const value: number = nsid.startsWith("card.objective.public-2") ? 2 : 1;
+    const value: number = 1;
     new AdvanceScore().addToScore(playerSlot, value);
   }
 }

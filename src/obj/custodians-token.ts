@@ -1,6 +1,7 @@
 import {
   Container,
   GameObject,
+  GameWorld,
   Player,
   refObject,
   Vector,
@@ -66,4 +67,12 @@ export class CustodiansToken {
   }
 }
 
-new CustodiansToken(refObject);
+export function createFromObject(
+  obj: GameObject,
+  executionReason: string
+): void {
+  if (executionReason !== "unittest") {
+    new CustodiansToken(obj);
+  }
+}
+createFromObject(refObject, GameWorld.getExecutionReason());

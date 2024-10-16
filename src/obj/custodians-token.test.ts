@@ -1,12 +1,7 @@
-import {
-  Container,
-  GameObject,
-  MockContainer,
-  MockGameObject,
-  MockPlayer,
-} from "ttpg-mock";
-import { CustodiansToken } from "./custodians-token";
-import { Player } from "@tabletop-playground/api";
+import { Container, GameObject, Player } from "@tabletop-playground/api";
+import { MockContainer, MockGameObject, MockPlayer } from "ttpg-mock";
+
+import { createFromObject, CustodiansToken } from "./custodians-token";
 
 it("constructor", () => {
   const obj: GameObject = new MockGameObject();
@@ -40,4 +35,9 @@ it("score", () => {
   custodiansToken.score(playerSlot);
 
   expect(container.getNumItems()).toBe(0);
+});
+
+it("createFromObject", () => {
+  const obj: GameObject = new MockGameObject();
+  createFromObject(obj, "yep");
 });
