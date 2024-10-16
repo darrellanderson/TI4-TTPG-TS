@@ -33,11 +33,9 @@ export class RightClickScore implements IGlobal {
 
   init(): void {
     OnCardBecameSingletonOrDeck.onSingletonCardMadeDeck.add((card: Card) => {
-      console.log("onSingletonCardMadeDeck");
       card.removeCustomAction(this._actionName);
     });
     OnCardBecameSingletonOrDeck.onSingletonCardCreated.add((card: Card) => {
-      console.log("onSingletonCardCreated");
       this._maybeAddContextMenuItem(card);
     });
   }
