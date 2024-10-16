@@ -39,7 +39,7 @@
     "HiddenTexture": "",
     "BackIndex": -2,
     "HiddenIndex": -1,
-    "NumHorizontal": 6,
+    "NumHorizontal": 12,
     "NumVertical": 2,
     "Width": 4.2,
     "Height": 6.3,
@@ -61,29 +61,50 @@
         5,
         6,
         7,
-        8
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15
     ],
     "CardNames": {
-        "0": "Alliance (Yellow)",
-        "1": "Black Market Forgery",
-        "2": "Blood Pact",
-        "3": "Crucible",
-        "4": "Dark Pact",
-        "5": "Scepter of Dominion",
-        "6": "Strike Wing Ambuscade",
-        "7": "Terraform",
-        "8": "The Cavalry"
+        "0": "Alliance (Blue)",
+        "1": "Alliance (Green)",
+        "2": "Alliance (Orange)",
+        "3": "Alliance (Pink)",
+        "4": "Alliance (Purple)",
+        "5": "Alliance (Red)",
+        "6": "Alliance (White)",
+        "7": "Alliance (Yellow)",
+        "8": "Black Market Forgery",
+        "9": "Blood Pact",
+        "10": "Crucible",
+        "11": "Dark Pact",
+        "12": "Scepter of Dominion",
+        "13": "Strike Wing Ambuscade",
+        "14": "Terraform",
+        "15": "The Cavalry"
     },
     "CardMetadata": {
-        "0": "card.promissory:pok/alliance",
-        "1": "card.promissory:pok/black-market-forgery",
-        "2": "card.promissory:pok/blood-pact",
-        "3": "card.promissory:pok/crucible",
-        "4": "card.promissory:pok/dark-pact",
-        "5": "card.promissory:pok/scepter-of-dominion",
-        "6": "card.promissory:pok/strike-wing-ambuscade",
-        "7": "card.promissory:pok/terraform",
-        "8": "card.promissory:pok/the-cavalry"
+        "0": "card.promissory.blue:pok/alliance",
+        "1": "card.promissory.green:pok/alliance",
+        "2": "card.promissory.orange:pok/alliance",
+        "3": "card.promissory.pink:pok/alliance",
+        "4": "card.promissory.purple:pok/alliance",
+        "5": "card.promissory.red:pok/alliance",
+        "6": "card.promissory.white:pok/alliance",
+        "7": "card.promissory.yellow:pok/alliance",
+        "8": "card.promissory:pok/black-market-forgery",
+        "9": "card.promissory:pok/blood-pact",
+        "10": "card.promissory:pok/crucible",
+        "11": "card.promissory:pok/dark-pact",
+        "12": "card.promissory:pok/scepter-of-dominion",
+        "13": "card.promissory:pok/strike-wing-ambuscade",
+        "14": "card.promissory:pok/terraform",
+        "15": "card.promissory:pok/the-cavalry"
     },
     "CardTags": {
         "0": [
@@ -111,6 +132,27 @@
             "card-promissory"
         ],
         "8": [
+            "card-promissory"
+        ],
+        "9": [
+            "card-promissory"
+        ],
+        "10": [
+            "card-promissory"
+        ],
+        "11": [
+            "card-promissory"
+        ],
+        "12": [
+            "card-promissory"
+        ],
+        "13": [
+            "card-promissory"
+        ],
+        "14": [
+            "card-promissory"
+        ],
+        "15": [
             "card-promissory"
         ]
     },
