@@ -58,11 +58,7 @@ export class ActivateSystem implements IGlobal {
       playerSlotToCommandTokenCounts.get(player.getSlot());
     const token: GameObject | undefined = commandTokenCounts?.tactic.pop();
     if (!token) {
-      Broadcast.broadcastOne(
-        player,
-        "No command tokens available",
-        Broadcast.ERROR
-      );
+      Broadcast.broadcastAll("No command tokens available", Broadcast.ERROR);
       return false;
     }
 
