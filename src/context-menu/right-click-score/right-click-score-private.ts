@@ -44,7 +44,11 @@ export class RightClickScorePrivate implements IGlobal {
 
   _maybeAddContextMenuItem(card: Card): void {
     const nsid: string = NSID.get(card);
-    if (this._prefixes.some((prefix) => nsid.startsWith(prefix))) {
+    if (
+      this._prefixes.some((prefix) => nsid.startsWith(prefix)) ||
+      (nsid.startsWith("card.promissory") &&
+        nsid.endsWith("support-for-the-throne"))
+    ) {
       card.removeCustomAction(this._actionName);
       card.addCustomAction(this._actionName);
       card.onCustomAction.remove(this._customActionHandler);
