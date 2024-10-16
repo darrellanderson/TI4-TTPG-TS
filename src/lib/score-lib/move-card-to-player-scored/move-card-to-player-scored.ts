@@ -22,7 +22,8 @@ export class MoveCardToPlayerScored {
     const cardHolder: CardHolder | undefined =
       this._getPlayerScoringCardHolder(playerSlot);
     if (cardHolder) {
-      cardHolder.insert(card, 0);
+      const length: number = cardHolder.getCards().length;
+      cardHolder.insert(card, length);
       return true;
     }
     return false;

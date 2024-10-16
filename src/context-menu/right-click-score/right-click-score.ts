@@ -1,13 +1,8 @@
-import {
-  Card,
-  CardHolder,
-  GameObject,
-  Player,
-  Vector,
-  world,
-} from "@tabletop-playground/api";
+import { Card, Player } from "@tabletop-playground/api";
 import { Find, IGlobal, NSID, OnCardBecameSingletonOrDeck } from "ttpg-darrell";
 
+import { AdvanceScore } from "../../lib/score-lib/advance-score/advance-score";
+import { MoveCardToPlayerScored } from "../../lib/score-lib/move-card-to-player-scored/move-card-to-player-scored";
 import { Scoreboard } from "../../lib/score-lib/scoreboard/scoreboard";
 
 export class RightClickScore implements IGlobal {
@@ -19,6 +14,15 @@ export class RightClickScore implements IGlobal {
     "card.objective.secret",
     "card.objective.public-1",
     "card.objective.public-2",
+
+    // Can also give full NSIDs.
+    "card.action:base/imperial-rider",
+    "card.agenda:base/holy-planet-of-ixth",
+    "card.agenda:base/shard-of-the-throne",
+    "card.agenda:base/the-crown-of-emphidia",
+    "card.agenda:pok/political-censure",
+    "card.relic:pok/shard-of-the-throne",
+    "card.relic:pok/the-crown-of-emphidia",
   ];
 
   private readonly _customActionHandler = (
@@ -52,47 +56,11 @@ export class RightClickScore implements IGlobal {
 
   score(card: Card, player: Player): void {
     const playerSlot: number = player.getSlot();
-    this._moveToScoringHolder(card, playerSlot);
-    this._advanceScoreboard(playerSlot);
-  }
 
-  _moveToScoringHolder(card: Card, playerSlot: number): void {
-    const nsid: string = "card-holder:base/player-scoring";
-    const skipContained: boolean = true;
-    const cardHolder: CardHolder | undefined = this._find.findCardHolder(
-      nsid,
-      playerSlot,
-      skipContained
-    );
-    if (cardHolder) {
-      if (card.isHeld()) {
-        card.release();
-      }
-      if (card.isInHolder()) {
-        card.removeFromHolder();
-      }
-      const index: number = cardHolder.getCards().length;
-      cardHolder.insert(card, index);
-    }
-  }
+    new MoveCardToPlayerScored().moveCard(card, playerSlot);
 
-  _advanceScoreboard(playerSlot: number): void {
-    const token: GameObject | undefined =
-      this._scoreboard.getLeadControlToken(playerSlot);
-    if (token) {
-      const pos: Vector = token.getPosition();
-      const score: number | undefined = this._scoreboard.posToScore(pos);
-      if (score !== undefined) {
-        const dst: Vector | undefined = this._scoreboard.scoreToPos(
-          score + 1,
-          playerSlot
-        );
-        if (dst) {
-          dst.z = world.getTableHeight() + 10;
-          token.setPosition(dst, 1);
-          token.snapToGround();
-        }
-      }
-    }
+    const nsid: string = NSID.get(card);
+    const value: number = nsid.startsWith("card.objective.public-2") ? 2 : 1;
+    new AdvanceScore().addToScore(playerSlot, value);
   }
 }

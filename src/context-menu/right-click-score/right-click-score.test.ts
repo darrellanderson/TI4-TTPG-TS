@@ -1,9 +1,4 @@
-import {
-  MockCard,
-  MockCardHolder,
-  MockGameObject,
-  MockPlayer,
-} from "ttpg-mock";
+import { MockCard, MockPlayer } from "ttpg-mock";
 import { RightClickScore } from "./right-click-score";
 import { Card, Player } from "@tabletop-playground/api";
 
@@ -38,30 +33,6 @@ it("trigger custom action", () => {
 
   const player: Player = new MockPlayer();
   card._customActionAsPlayer(player, "*Score");
-});
-
-it("move to scoring holder", () => {
-  const cardHolder = new MockCardHolder({
-    templateMetadata: "card-holder:base/player-scoring",
-    owningPlayerSlot: 1,
-  });
-  const card: Card = MockCard.simple(
-    "card.objective.secret:my-source/my-name",
-    {
-      isHeld: true,
-      cardHolder,
-    }
-  );
-  new RightClickScore()._moveToScoringHolder(card, 1);
-});
-
-it("advance score", () => {
-  MockGameObject.simple("token:base/scoreboard");
-  MockGameObject.simple("token.control:base/sol", {
-    owningPlayerSlot: 1,
-  });
-
-  new RightClickScore()._advanceScoreboard(1);
 });
 
 it("score", () => {

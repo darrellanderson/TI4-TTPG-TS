@@ -1,4 +1,4 @@
-import { GameObject, Vector } from "@tabletop-playground/api";
+import { GameObject, Vector, world } from "@tabletop-playground/api";
 import { Scoreboard } from "../scoreboard/scoreboard";
 
 export class AdvanceScore {
@@ -17,6 +17,7 @@ export class AdvanceScore {
           playerSlot
         );
         if (newPos !== undefined) {
+          newPos.z = world.getTableHeight() + 10;
           const animationSpeed: number = 1;
           token.setPosition(newPos.add([0, 0, 1]), animationSpeed);
           token.snapToGround();
