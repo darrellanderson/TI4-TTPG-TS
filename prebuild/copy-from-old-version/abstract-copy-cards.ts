@@ -113,7 +113,29 @@ export class AbstractCopyCards {
         parts[0] = "card.leader.mech";
       }
       if (parts[0]?.startsWith("card.promissory")) {
-        parts[0] = "card.promissory";
+        let maybeColor: string = "";
+        const typeParts: Array<string> = parts[0].split(".");
+        const third: string | undefined = typeParts[2];
+        if (third === "brown") {
+          continue;
+        }
+        if (
+          third &&
+          [
+            "red",
+            "green",
+            "yellow",
+            "blue",
+            "white",
+            "purple",
+            "orange",
+            "pink",
+          ].includes(third)
+        ) {
+          maybeColor = `.${third}`;
+          dst = dst.replace(".jpg", `-${third}.jpg`);
+        }
+        parts[0] = "card.promissory" + maybeColor;
       }
       if (parts[1]?.startsWith("base.only")) {
         const sourceParts = parts[1].split("/");
