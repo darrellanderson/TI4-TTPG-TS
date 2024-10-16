@@ -29,6 +29,7 @@ import { PlayerColor } from "../lib/player-lib/player-color/player-color";
 import { PlayerSeats } from "../lib/player-lib/player-seats/player-seats";
 import { RemoveRegistry } from "../lib/remove-lib/registry/remove-registry";
 import { ReportRemaining } from "../context-menu/report-remaining/report-remaining";
+import { RightClickScore } from "../context-menu/right-click-score/right-click-score";
 import { RSwapSplitCombine } from "./r-swap-split-combine";
 import { SetupPlayerSlotColors } from "../setup/setup-player-slot-colors/setup-player-slot-colors";
 import { ShuffleDecks } from "./shuffle-decks";
@@ -105,6 +106,7 @@ export function resetGlobalThisTI4(): TI4Class {
     new OnCardBecameSingletonOrDeck(),
     new OnSystemActivated(),
     new ReportRemaining(),
+    new RightClickScore(),
     new RSwapSplitCombine(),
     new ShuffleDecks(),
   ];
