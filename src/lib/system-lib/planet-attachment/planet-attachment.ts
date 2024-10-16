@@ -110,6 +110,10 @@ export class PlanetAttachment {
     if (system) {
       this._planet = system.getPlanetClosest(pos);
       if (this._planet) {
+        if (this._params.flipIfNoPlanetTech) {
+          const hasTech: boolean = this._planet.getTechs().length > 0;
+          this._obj.setRotation([0, 0, hasTech ? 180 : 0]);
+        }
         return this._planet.addAttachment(this);
       }
     }

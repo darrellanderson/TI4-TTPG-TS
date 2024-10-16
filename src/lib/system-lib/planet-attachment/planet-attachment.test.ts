@@ -113,6 +113,44 @@ it("attach/detach", () => {
   expect(planet.hasAttachment(planetAttachment)).toBe(false);
 });
 
+it("flipIfPlanetHasTech", () => {
+  const planetAttachment = new PlanetAttachment(
+    new MockGameObject({
+      templateMetadata: "token.attachment.planet:my-source/my-nsid-name",
+    }),
+    { source: "my-source", packageId: "my-package-id" },
+    {
+      name: "my-name",
+      nsidName: "my-nsid-name",
+      flipIfNoPlanetTech: true,
+    }
+  );
+
+  let systemTileObj: GameObject;
+  let success: boolean;
+
+  systemTileObj = new MockGameObject({
+    templateMetadata: "tile.system:base/1",
+  });
+
+  success = planetAttachment.attach();
+  expect(success).toBe(true);
+  expect(planetAttachment.getObj().getRotation().toString()).toBe(
+    "(P=0,Y=0,R=0)"
+  );
+
+  systemTileObj.destroy();
+  systemTileObj = new MockGameObject({
+    templateMetadata: "tile.system:base/19", // has tech
+  });
+
+  success = planetAttachment.attach();
+  expect(success).toBe(true);
+  expect(planetAttachment.getObj().getRotation().toString()).toBe(
+    "(P=0,Y=0,R=180)"
+  );
+});
+
 it("grab/release", () => {
   const systemTileObj: GameObject = new MockGameObject({
     templateMetadata: "tile.system:base/1",

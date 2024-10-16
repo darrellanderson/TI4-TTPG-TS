@@ -20,6 +20,8 @@ export const PlanetAttachmentSchema = z
     isLegendary: z.boolean().optional(),
     legendaryNsidName: z.string().optional(),
     isDestroyPlanet: z.boolean().optional(),
+
+    flipIfNoPlanetTech: z.boolean().optional(),
   })
   .strict()
   .readonly();
