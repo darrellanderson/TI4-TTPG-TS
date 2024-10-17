@@ -139,10 +139,15 @@ it("scoreToPos (flipped scoreboard)", () => {
     templateMetadata: "card-holder:base/player-hand",
     owningPlayerSlot: 1,
   });
+  new MockCardHolder({
+    templateMetadata: "card-holder:base/player-hand",
+    owningPlayerSlot: 2,
+  });
   MockGameObject.simple("token:base/scoreboard", { rotation: [0, 0, 180] });
   const scoreboardLib: Scoreboard = new Scoreboard();
   const pos: Vector | undefined = scoreboardLib.scoreToPos(5, 1);
   expect(pos?.toString()).toBe("(X=0.2,Y=-4.832,Z=0)");
+  scoreboardLib.scoreToPos(5, 2);
 });
 
 it("getPlayerSlotToScore", () => {
