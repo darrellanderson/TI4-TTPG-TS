@@ -1,26 +1,34 @@
-import { Container, GameObject } from "@tabletop-playground/api";
-import { MockContainer, MockGameObject } from "ttpg-mock";
+import { Card } from "@tabletop-playground/api";
+import { MockCard, MockCardHolder, MockGameObject } from "ttpg-mock";
 
 import { PlaceControlTokenOnCard } from "./place-control-token-on-card";
+
+import { addObjectTemplatesToMockWorld } from "../../nsid/nsid-to-template-id.test";
+beforeEach(() => {
+  addObjectTemplatesToMockWorld();
+});
 
 it("constructor", () => {
   new PlaceControlTokenOnCard();
 });
 
-it("_getControlToken", () => {
-  const controlToken: GameObject = new MockGameObject({
-    templateMetadata: "token.control:base/sol",
-  });
-  const container: Container = new MockContainer({
-    templateMetadata: "container.token.control:base/generic",
-    owningPlayerSlot: 3,
-    items: [controlToken],
-  });
-  expect(container.getNumItems()).toBe(1);
-
+it("place", () => {
   const placeControlTokenOnCard: PlaceControlTokenOnCard =
     new PlaceControlTokenOnCard();
-  const found: GameObject | undefined =
-    placeControlTokenOnCard._getControlToken(3);
-  expect(found?.getId()).toBe(controlToken.getId());
+  const card: Card = new MockCard();
+  let success: boolean;
+
+  success = placeControlTokenOnCard.place(card, 3);
+  expect(success).toBe(false);
+
+  // Set up faction.
+  new MockGameObject({
+    templateMetadata: "sheet.faction:base/arborec",
+    owningPlayerSlot: 3,
+  });
+  new MockCardHolder({ owningPlayerSlot: 3 });
+  expect(TI4.factionRegistry.getByPlayerSlot(3)).toBeDefined();
+
+  success = placeControlTokenOnCard.place(card, 3);
+  expect(success).toBe(true);
 });
