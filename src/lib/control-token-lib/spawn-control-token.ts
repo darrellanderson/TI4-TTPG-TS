@@ -9,6 +9,9 @@ export class SpawnControlToken {
     if (faction) {
       const nsid: string = faction.getControlTokenNsid();
       const token: GameObject | undefined = Spawn.spawn(nsid);
+      if (token) {
+        token.setOwningPlayerSlot(playerSlot);
+      }
       return token;
     }
   }

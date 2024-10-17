@@ -30,6 +30,7 @@ it("spawnControlToken", () => {
 
   controlToken = spawnControlToken.spawnControlToken(3);
   expect(controlToken).toBeDefined();
+  expect(controlToken?.getOwningPlayerSlot()).toBe(3);
 });
 
 it("spawnControlTokenOrThrow", () => {
