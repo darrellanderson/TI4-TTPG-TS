@@ -53,6 +53,7 @@ export class LayoutTokenContainers {
         tags.push(controlTokenTag);
         controlTokenContainer.setContainerTags(tags);
       }
+      controlTokenContainer.setType(1);
     }
 
     const col1 = new LayoutObjects()
