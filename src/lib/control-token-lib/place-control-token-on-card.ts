@@ -16,7 +16,7 @@ export class PlaceControlTokenOnCard {
     });
     if (playerIndex === -1) {
       // Unknown player, use the center position.
-      return center;
+      return center.add([0, 0, 10]);
     }
 
     const playerCount = playerSeats.length;

@@ -1,6 +1,6 @@
-import { MockCard, MockPlayer } from "ttpg-mock";
+import { MockCard, MockGameObject, MockPlayer, MockSnapPoint } from "ttpg-mock";
 import { RightClickScorePrivate } from "./right-click-score-private";
-import { Card, Player } from "@tabletop-playground/api";
+import { Card, GameObject, Player, SnapPoint } from "@tabletop-playground/api";
 
 it("init", () => {
   new RightClickScorePrivate().init();
@@ -36,7 +36,22 @@ it("trigger custom action", () => {
 });
 
 it("score", () => {
-  const player: Player = new MockPlayer({ slot: 1 });
   const card: Card = MockCard.simple("card.objective.secret:my-source/my-name");
+  const player: Player = new MockPlayer({ slot: 1 });
+  new RightClickScorePrivate().score(card, player);
+});
+
+it("score as public", () => {
+  const card: Card = MockCard.simple("card.objective.secret:my-source/my-name");
+
+  const snapPoint: SnapPoint = new MockSnapPoint({ snappedObject: card });
+  expect(card.getSnappedToPoint()).toBe(snapPoint);
+
+  const mat: GameObject = MockGameObject.simple("mat:base/objective-1", {
+    snapPoints: [snapPoint],
+  });
+  expect(snapPoint.getParentObject()).toBe(mat);
+
+  const player: Player = new MockPlayer({ slot: 1 });
   new RightClickScorePrivate().score(card, player);
 });

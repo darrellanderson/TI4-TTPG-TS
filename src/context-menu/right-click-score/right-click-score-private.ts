@@ -1,8 +1,14 @@
-import { Card, Player } from "@tabletop-playground/api";
+import {
+  Card,
+  Player,
+  SnapPoint,
+  StaticObject,
+} from "@tabletop-playground/api";
 import { IGlobal, NSID, OnCardBecameSingletonOrDeck } from "ttpg-darrell";
 
 import { AdvanceScore } from "../../lib/score-lib/advance-score/advance-score";
 import { MoveCardToPlayerScored } from "../../lib/score-lib/move-card-to-player-scored/move-card-to-player-scored";
+import { PlaceControlTokenOnCard } from "../../lib/control-token-lib/place-control-token-on-card";
 
 /**
  * Score context menu item for cards that should move to
@@ -62,9 +68,30 @@ export class RightClickScorePrivate implements IGlobal {
     // Special case for "classified documents leaks" where a secret objective
     // becomes public.  If the secret is on the agenda/laws mat treat is as
     // public.
-    // TODO XXX
+    let isPublic: boolean = false;
+    const snappedToPoint: SnapPoint | undefined = card.getSnappedToPoint();
+    if (snappedToPoint) {
+      const snappedToObj: StaticObject | undefined =
+        snappedToPoint.getParentObject();
+      if (snappedToObj) {
+        const nsid: string = NSID.get(snappedToObj);
+        if (
+          [
+            "mat:base/objective-1",
+            "mat:base/objective-2",
+            "mat:base/agenda-laws",
+          ].includes(nsid)
+        ) {
+          isPublic = true;
+        }
+      }
+    }
 
-    new MoveCardToPlayerScored().moveCard(card, playerSlot);
+    if (isPublic) {
+      new PlaceControlTokenOnCard().place(card, playerSlot);
+    } else {
+      new MoveCardToPlayerScored().moveCard(card, playerSlot);
+    }
 
     const value: number = 1;
     new AdvanceScore().addToScore(playerSlot, value);
