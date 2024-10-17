@@ -5,6 +5,7 @@ import {
   BugUniqueCards,
   DiceGroupCleanup,
   ErrorHandler,
+  Find,
   GlobalInit,
   Hex,
   HEX_LAYOUT_POINTY,
@@ -44,6 +45,8 @@ import { UnitModifierRegistry } from "../lib/unit-lib/registry/unit-modifier-reg
 
 import * as NSID_TO_TEMPLATE_ID from "../nsid/nsid-to-template-id.json";
 Spawn.inject(NSID_TO_TEMPLATE_ID);
+
+Find.ignoreOwnedCardHolderNsid("card-holder:base/player-scoring");
 
 export function registerErrorHandler() {
   if (GameWorld.getExecutionReason() !== "unittest") {
