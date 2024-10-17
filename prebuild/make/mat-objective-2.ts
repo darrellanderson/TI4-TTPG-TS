@@ -18,17 +18,22 @@ const H_WORLD: number = 6.3;
 const SPACING: number = Math.round((0.5 * H) / H_WORLD);
 const DECK_EXTRA_GAP: number = SPACING; // gap + spacing on both sides
 
-function labeledCell(labelText: string, isDeck: boolean): ZColCell {
+function labeledCell(
+  labelText: string,
+  isDeck: boolean,
+  snapEverything?: boolean
+): ZColCell {
+  const tags = snapEverything ? [] : ["card-objective-2"];
+  if (isDeck) {
+    tags.push("deck-objective-2");
+  }
   const slot: ZImageCell = {
     type: "ImageCell",
     width: W,
     height: H,
     imageFile: `prebuild/mat/slot/slot-portrait.jpg`,
-    snapPoints: [{ tags: ["card-objective-2"] }],
+    snapPoints: [{ tags }],
   };
-  if (isDeck) {
-    slot.snapPoints?.[0]?.tags?.push("deck-objective-2");
-  }
   const symbol: ZImageCell = {
     type: "ImageCell",
     width: SYMBOL_SIZE,
@@ -85,6 +90,8 @@ function objectiveRow(): ZRowCell {
       labeledCell("VII", false),
       labeledCell("VIII", false),
       labeledCell("IX", false),
+      gapCell(),
+      labeledCell("Extra", false, true),
     ],
   };
 }
