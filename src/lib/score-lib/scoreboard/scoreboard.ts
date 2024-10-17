@@ -186,7 +186,7 @@ export class Scoreboard {
     }
 
     const playerCount = playerSeats.length;
-    const numRows = Math.floor(playerCount / 2);
+    const numRows = Math.ceil(playerCount / 2);
     let col: number = 0;
     let row: number = numRows - 1 - playerIndex;
     if (row < 0) {

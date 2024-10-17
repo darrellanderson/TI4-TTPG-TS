@@ -13,14 +13,22 @@ it("constructor", () => {
 });
 
 it("getPlayerSlotToActionCardCount (default)", () => {
-  new MockCardHolder({ owningPlayerSlot: 1, position: [10, 0, 0] });
+  new MockCardHolder({
+    templateMetadata: "card-holder:base/player-hand",
+    owningPlayerSlot: 1,
+    position: [10, 0, 0],
+  });
   const slotToCount: Map<number, number> =
     new DealActionCards().getPlayerSlotToActionCardCount();
   expect(slotToCount.get(1)).toBe(1);
 });
 
 it("getPlayerSlotToActionCardCount (scheming, neural-motivator)", () => {
-  new MockCardHolder({ owningPlayerSlot: 1, position: [10, 0, 0] });
+  new MockCardHolder({
+    templateMetadata: "card-holder:base/player-hand",
+    owningPlayerSlot: 1,
+    position: [10, 0, 0],
+  });
   new MockGameObject({
     templateMetadata: "sheet.faction:base/yssaril", // scheming
     position: [10, 0, 0],
@@ -36,7 +44,11 @@ it("getPlayerSlotToActionCardCount (scheming, neural-motivator)", () => {
 });
 
 it("dealAllActionCards", () => {
-  new MockCardHolder({ owningPlayerSlot: 1, position: [10, 0, 0] });
+  new MockCardHolder({
+    templateMetadata: "card-holder:base/player-hand",
+    owningPlayerSlot: 1,
+    position: [10, 0, 0],
+  });
   const tooFewCards: Set<number> = new DealActionCards().dealAllActionCards();
   expect(tooFewCards.size).toBe(1);
 });

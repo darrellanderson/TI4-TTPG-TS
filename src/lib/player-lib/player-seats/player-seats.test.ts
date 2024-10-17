@@ -6,10 +6,26 @@ it("constructor", () => {
 });
 
 it("getAllSeats", () => {
-  new MockCardHolder({ owningPlayerSlot: 1, position: [-10, 10, 0] });
-  new MockCardHolder({ owningPlayerSlot: 2, position: [-10, -10, 0] });
-  new MockCardHolder({ owningPlayerSlot: 3, position: [10, -10, 0] });
-  new MockCardHolder({ owningPlayerSlot: 4, position: [10, 10, 0] });
+  new MockCardHolder({
+    templateMetadata: "card-holder:base/player-hand",
+    owningPlayerSlot: 1,
+    position: [-10, 10, 0],
+  });
+  new MockCardHolder({
+    templateMetadata: "card-holder:base/player-hand",
+    owningPlayerSlot: 2,
+    position: [-10, -10, 0],
+  });
+  new MockCardHolder({
+    templateMetadata: "card-holder:base/player-hand",
+    owningPlayerSlot: 3,
+    position: [10, -10, 0],
+  });
+  new MockCardHolder({
+    templateMetadata: "card-holder:base/player-hand",
+    owningPlayerSlot: 4,
+    position: [10, 10, 0],
+  });
 
   const playerSeats: PlayerSeats = new PlayerSeats();
   const seats: Array<PlayerSeatType> = playerSeats.getAllSeats();

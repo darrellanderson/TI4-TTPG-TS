@@ -1,4 +1,5 @@
 import { CardHolder, Vector, world } from "@tabletop-playground/api";
+import { NSID } from "ttpg-darrell";
 
 export type PlayerSeatType = {
   cardHolder: CardHolder;
@@ -13,10 +14,13 @@ export class PlayerSeats {
     const skipContained: boolean = true;
     for (const obj of world.getAllObjects(skipContained)) {
       if (obj instanceof CardHolder && obj.getOwningPlayerSlot() >= 0) {
-        seats.push({
-          cardHolder: obj,
-          playerSlot: obj.getOwningPlayerSlot(),
-        });
+        const nsid: string = NSID.get(obj);
+        if (nsid === "card-holder:base/player-hand") {
+          seats.push({
+            cardHolder: obj,
+            playerSlot: obj.getOwningPlayerSlot(),
+          });
+        }
       }
     }
 
