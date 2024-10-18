@@ -3,6 +3,11 @@ import { Find, IGlobal } from "ttpg-darrell";
 
 export class ShuffleDecks implements IGlobal {
   public init(): void {
+    const gameInProgress: boolean = TI4.config.timestamp !== 0;
+    if (gameInProgress) {
+      return;
+    }
+
     const deckSnapPointTags: Array<string> = [
       "deck-action",
       "deck-agenda",
@@ -15,6 +20,7 @@ export class ShuffleDecks implements IGlobal {
       "deck-objective-secret",
       "deck-relic",
     ];
+
     const find: Find = new Find();
     for (const deckSnapPointTag of deckSnapPointTags) {
       const deck: Card | undefined = find.findDeckOrDiscard(deckSnapPointTag);

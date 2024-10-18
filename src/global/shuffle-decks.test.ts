@@ -12,4 +12,8 @@ it("shuffle", () => {
   expect(mat).toBeDefined();
 
   new ShuffleDecks().init();
+
+  TI4.config.setTimestamp(1); // game in progress
+
+  new ShuffleDecks().init();
 });
