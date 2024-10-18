@@ -115,7 +115,11 @@ export class SystemAttachment {
     const pos: Vector = this._obj.getPosition();
     this._system = TI4.systemRegistry.getByPosition(pos);
     if (this._system) {
-      return this._system.addAttachment(this);
+      const success: boolean = this._system.addAttachment(this);
+      if (success) {
+        TI4.onSystemChanged.trigger(this._system);
+      }
+      return success;
     }
     return false;
   }
@@ -129,6 +133,7 @@ export class SystemAttachment {
   detach(): boolean {
     if (this._system && this._system.hasAttachment(this)) {
       if (this._system.delAttachment(this)) {
+        TI4.onSystemChanged.trigger(this._system);
         this._system = undefined;
         return true;
       }

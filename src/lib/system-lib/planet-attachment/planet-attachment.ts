@@ -114,7 +114,11 @@ export class PlanetAttachment {
           const hasTech: boolean = this._planet.getTechs().length > 0;
           this._obj.setRotation([0, 0, hasTech ? 180 : 0]);
         }
-        return this._planet.addAttachment(this);
+        const success: boolean = this._planet.addAttachment(this);
+        if (success) {
+          TI4.onSystemChanged.trigger(system);
+        }
+        return success;
       }
     }
     return false;
@@ -130,6 +134,12 @@ export class PlanetAttachment {
     if (this._planet) {
       if (this._planet.delAttachment(this)) {
         this._planet = undefined;
+        const pos: Vector = this._obj.getPosition();
+        const system: System | undefined =
+          TI4.systemRegistry.getByPosition(pos);
+        if (system) {
+          TI4.onSystemChanged.trigger(system);
+        }
         return true;
       }
     }

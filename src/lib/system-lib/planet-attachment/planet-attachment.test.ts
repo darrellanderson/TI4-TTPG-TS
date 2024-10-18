@@ -60,6 +60,11 @@ it("constructor (invalid nsid)", () => {
 });
 
 it("attach/detach", () => {
+  let onSystemChangedCound: number = 0;
+  TI4.onSystemChanged.add(() => {
+    onSystemChangedCound++;
+  });
+
   const planetAttachment = new PlanetAttachment(
     new MockGameObject({
       templateMetadata: "token.attachment.planet:my-source/my-nsid-name",
@@ -74,9 +79,11 @@ it("attach/detach", () => {
   let success: boolean = false;
   success = planetAttachment.attach();
   expect(success).toBe(false); // no planet
+  expect(onSystemChangedCound).toBe(0);
 
   success = planetAttachment.detach();
   expect(success).toBe(false); // no planet
+  expect(onSystemChangedCound).toBe(0);
 
   // Create system tile obj, TI4.systemRegistry picks it up.
   new MockGameObject({ templateMetadata: "tile.system:base/1" });
@@ -99,18 +106,22 @@ it("attach/detach", () => {
   success = planetAttachment.attach();
   expect(success).toBe(true);
   expect(planet.hasAttachment(planetAttachment)).toBe(true);
+  expect(onSystemChangedCound).toBe(1);
 
   success = planetAttachment.attach();
   expect(success).toBe(false); // already attached
   expect(planet.hasAttachment(planetAttachment)).toBe(true);
+  expect(onSystemChangedCound).toBe(1);
 
   success = planetAttachment.detach();
   expect(success).toBe(true);
   expect(planet.hasAttachment(planetAttachment)).toBe(false);
+  expect(onSystemChangedCound).toBe(2);
 
   success = planetAttachment.detach();
   expect(success).toBe(false); // already detached
   expect(planet.hasAttachment(planetAttachment)).toBe(false);
+  expect(onSystemChangedCound).toBe(2);
 });
 
 it("flipIfPlanetHasTech", () => {

@@ -225,6 +225,11 @@ it("wormholesWorldPosition face down", () => {
 });
 
 it("attach/detach", () => {
+  let onSystemChangedCound: number = 0;
+  TI4.onSystemChanged.add(() => {
+    onSystemChangedCound++;
+  });
+
   const attachment = new SystemAttachment(
     new MockGameObject({
       templateMetadata: "token.attachment.system:my-source/my-nsid-name",
@@ -239,6 +244,7 @@ it("attach/detach", () => {
 
   success = attachment.attach();
   expect(success).toBe(false); // no system
+  expect(onSystemChangedCound).toBe(0);
 
   // Create system tile object, TI4.systemRegistry picks it up.
   new MockGameObject({ templateMetadata: `tile.system:base/1` });
@@ -250,22 +256,27 @@ it("attach/detach", () => {
     throw new Error("system not found"); // for TypeScript
   }
   expect(system.hasAttachment(attachment)).toBe(false);
+  expect(onSystemChangedCound).toBe(0);
 
   success = attachment.attach();
   expect(success).toBe(true);
   expect(system.hasAttachment(attachment)).toBe(true);
+  expect(onSystemChangedCound).toBe(1);
 
   success = attachment.attach();
   expect(success).toBe(false); // already attached
   expect(system.hasAttachment(attachment)).toBe(true);
+  expect(onSystemChangedCound).toBe(1);
 
   success = attachment.detach();
   expect(success).toBe(true);
   expect(system.hasAttachment(attachment)).toBe(false);
+  expect(onSystemChangedCound).toBe(2);
 
   success = attachment.detach();
   expect(success).toBe(false);
   expect(system.hasAttachment(attachment)).toBe(false);
+  expect(onSystemChangedCound).toBe(2);
 });
 
 it("grab/release", () => {
