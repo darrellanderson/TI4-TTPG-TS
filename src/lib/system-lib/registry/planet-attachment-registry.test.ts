@@ -1,5 +1,10 @@
 import { GameObject, Package, Vector } from "@tabletop-playground/api";
-import { MockGameObject, MockPackage, mockWorld } from "ttpg-mock";
+import {
+  MockContainer,
+  MockGameObject,
+  MockPackage,
+  mockWorld,
+} from "ttpg-mock";
 
 import { Planet } from "../planet/planet";
 import { PlanetAttachment } from "../planet-attachment/planet-attachment";
@@ -47,6 +52,8 @@ it("getByCardNsid", () => {
     id: "my-id",
     templateMetadata: "token.attachment.planet:my-source/my-nsid-name",
   });
+  new MockContainer({ items: [token] });
+
   expect(
     registry.getByCardNsid("card.exploration.industrial:my-source/my-nsid-name")
   ).toBeDefined();

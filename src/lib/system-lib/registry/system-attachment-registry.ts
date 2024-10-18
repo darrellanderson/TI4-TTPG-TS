@@ -182,6 +182,13 @@ export class SystemAttachmentRegistry {
     return cardNsidName;
   }
 
+  /**
+   * Find the attachment by the linked card.
+   * Only finds attachments inside a container, not loose on the table.
+   *
+   * @param cardNsid
+   * @returns
+   */
   getByCardNsid(cardNsid: string): SystemAttachment | undefined {
     const cardParsed: ParsedNSID | undefined = NSID.parse(cardNsid);
     if (cardParsed) {
@@ -189,7 +196,10 @@ export class SystemAttachmentRegistry {
         cardParsed.nameParts.join(".")
       );
       for (const systemAttachment of this._attachmentObjIdToSystemAttachment.values()) {
-        if (systemAttachment.getNsidName() === cardNsidName) {
+        if (
+          systemAttachment.getNsidName() === cardNsidName &&
+          systemAttachment.getObj().getContainer()
+        ) {
           return systemAttachment;
         }
       }

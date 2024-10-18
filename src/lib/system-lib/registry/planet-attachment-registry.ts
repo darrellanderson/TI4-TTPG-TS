@@ -166,12 +166,22 @@ export class PlanetAttachmentRegistry {
     return this;
   }
 
+  /**
+   * Find the attachment by the linked card.
+   * Only finds attachments inside a container, not loose on the table.
+   *
+   * @param cardNsid
+   * @returns
+   */
   getByCardNsid(cardNsid: string): PlanetAttachment | undefined {
     const cardParsed: ParsedNSID | undefined = NSID.parse(cardNsid);
     if (cardParsed) {
       const cardNsidName = cardParsed.nameParts.join(".");
       for (const planetAttachment of this._attachmentObjIdToPlanetAttachment.values()) {
-        if (planetAttachment.getNsidName() === cardNsidName) {
+        if (
+          planetAttachment.getNsidName() === cardNsidName &&
+          planetAttachment.getObj().getContainer()
+        ) {
           return planetAttachment;
         }
       }

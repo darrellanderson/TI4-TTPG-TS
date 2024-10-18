@@ -1,5 +1,10 @@
 import { GameObject, Package } from "@tabletop-playground/api";
-import { MockGameObject, MockPackage, mockWorld } from "ttpg-mock";
+import {
+  MockContainer,
+  MockGameObject,
+  MockPackage,
+  mockWorld,
+} from "ttpg-mock";
 
 import { SystemAttachmentRegistry } from "./system-attachment-registry";
 import { System } from "../system/system";
@@ -84,10 +89,11 @@ it("token existed at load time, not attached until init.", () => {
 
   // Create attachment token.
   const tokenNsid: string = "token.attachment.system:my-source/my-nsid-name";
-  new MockGameObject({
+  const token: GameObject = new MockGameObject({
     id: "my-id",
     templateMetadata: tokenNsid,
   });
+  new MockContainer({ items: [token] });
   expect(registry.getBySystemAttachmentObjId("my-id")).toBeUndefined();
 
   expect(
