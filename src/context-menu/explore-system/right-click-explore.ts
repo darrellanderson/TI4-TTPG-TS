@@ -1,5 +1,6 @@
 import {
   Card,
+  Container,
   GameObject,
   globalEvents,
   Player,
@@ -139,6 +140,16 @@ export class RightClickExplore implements IGlobal {
   _maybeAddPlanetAttachment(planet: Planet, exploreCardNsid: string): void {
     const planetAttachment: PlanetAttachment | undefined =
       TI4.planetAttachmentRegistry.getByCardNsid(exploreCardNsid);
+    if (planetAttachment) {
+      const obj: GameObject = planetAttachment.getObj();
+      const container: Container | undefined = obj.getContainer(); // expect to find in exploration container
+      if (container) {
+        const success: boolean = container.remove(obj);
+        if (success) {
+          planet.addAttachment(planetAttachment);
+        }
+      }
+    }
   }
 
   _exploreFrontierToken(frontierTokenObj: GameObject, player: Player): void {
