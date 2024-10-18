@@ -1,8 +1,8 @@
 {
   "Type": "Generic",
-  "GUID": "CC4D378BFD65486B5FFD7715310521AA",
+  "GUID": "F7A877A7DEF24B7C9F8B0528CA3C7E1E",
   "Name": "Demilitarized Zone",
-  "Metadata": "token.attachment.planet:pok/dmz",
+  "Metadata": "token.attachment.planet:pok/demilitarized-zone",
   "CollisionType": "Regular",
   "Friction": 0.7,
   "Restitution": 0.3,
@@ -43,7 +43,7 @@
         "Y": 0,
         "Z": 0
       },
-      "Texture": "token/attachment/planet/dmz.png",
+      "Texture": "token/attachment/planet/demilitarized-zone.png",
       "NormalMap": "",
       "ExtraMap": "",
       "IsTransparent": false,
@@ -68,7 +68,7 @@
         "Y": 0,
         "Z": 0
       },
-      "Texture": "token/attachment/planet/dmz.png",
+      "Texture": "token/attachment/planet/demilitarized-zone.png",
       "NormalMap": "",
       "ExtraMap": "",
       "IsTransparent": false,

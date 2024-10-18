@@ -328,6 +328,20 @@ it("getName", () => {
   expect(planetAttachment.getName()).toBe("my-name");
 });
 
+it("getNsidName", () => {
+  const planetAttachment = new PlanetAttachment(
+    new MockGameObject({
+      templateMetadata: "token.attachment.planet:my-source/my-nsid-name",
+    }),
+    { source: "my-source", packageId: "my-package-id" },
+    {
+      name: "my-name",
+      nsidName: "my-nsid-name",
+    }
+  );
+  expect(planetAttachment.getNsidName()).toBe("my-nsid-name");
+});
+
 it("getResources", () => {
   const planetAttachment = new PlanetAttachment(
     new MockGameObject({

@@ -34,6 +34,31 @@ it("object create/desroy", () => {
   registry.destroy();
 });
 
+it("getByCardNsid", () => {
+  const registry = new PlanetAttachmentRegistry().load(
+    { source: "my-source", packageId: "my-package-id" },
+    [{ name: "my-name", nsidName: "my-nsid-name" }]
+  );
+  expect(
+    registry.getByCardNsid("card.exploration.industrial:my-source/my-nsid-name")
+  ).toBeUndefined();
+
+  const token: GameObject = new MockGameObject({
+    id: "my-id",
+    templateMetadata: "token.attachment.planet:my-source/my-nsid-name",
+  });
+  expect(
+    registry.getByCardNsid("card.exploration.industrial:my-source/my-nsid-name")
+  ).toBeDefined();
+
+  token.destroy();
+  expect(
+    registry.getByCardNsid("card.exploration.industrial:my-source/my-nsid-name")
+  ).toBeUndefined();
+
+  registry.destroy();
+});
+
 it("getByPlanetAttachmentObjId", () => {
   const registry = new PlanetAttachmentRegistry().load(
     { source: "my-source", packageId: "my-package-id" },
@@ -68,15 +93,17 @@ it("init attaches", () => {
     id: "my-id",
     templateMetadata: "token.attachment.planet:my-source/my-nsid-name",
   });
-  const registry = new PlanetAttachmentRegistry().load(
-    { source: "my-source", packageId: "my-package-id" },
-    [
-      {
-        name: "my-name",
-        nsidName: "my-nsid-name",
-      },
-    ]
-  );
+  const registry = new PlanetAttachmentRegistry();
+  expect(
+    registry.rawByNsid("token.attachment.planet:my-source/my-nsid-name")
+  ).toBeUndefined();
+
+  registry.load({ source: "my-source", packageId: "my-package-id" }, [
+    {
+      name: "my-name",
+      nsidName: "my-nsid-name",
+    },
+  ]);
   expect(
     registry.rawByNsid("token.attachment.planet:my-source/my-nsid-name")
   ).toBeDefined();
@@ -123,7 +150,7 @@ it("load (do not attach)", () => {
 
 it("loadDefaultData", () => {
   const registry = new PlanetAttachmentRegistry();
-  const nsid: string = "token.attachment.planet:pok/dmz";
+  const nsid: string = "token.attachment.planet:pok/demilitarized-zone";
   expect(registry.rawByNsid(nsid)).toBeUndefined();
   registry.loadDefaultData();
   expect(registry.rawByNsid(nsid)).toBeDefined();
@@ -145,4 +172,26 @@ it("validateImages", () => {
   mockWorld._reset({ packages: [myPackage] });
   registry.validateImages();
   registry.destroy();
+});
+
+it("validate exploration cards", () => {
+  const cardNsids: Array<string> = [
+    "card.exploration.industrial:pok/biotic-research-facility",
+    "card.exploration.industrial:pok/cybernetic-research-facility",
+    "card.exploration.cultural:pok/demilitarized-zone",
+    "card.exploration.cultural:pok/dyson-sphere",
+    "card.exploration.hazardous:pok/lazax-survivors",
+    "card.exploration.hazardous:pok/mining-world",
+    "card.exploration.cultural:pok/paradise-world",
+    "card.exploration.industrial:pok/propulsion-research-facility",
+    "card.exploration.hazardous:pok/rich-world",
+    "card.exploration.cultural:pok/tomb-of-emphidia",
+    "card.exploration.hazardous:pok/warfare-research-facility",
+  ];
+
+  const registry = new PlanetAttachmentRegistry().loadDefaultData();
+  expect(registry.rawByCardNsid("_does_not_exist_")).toBeUndefined();
+  for (const cardNsid of cardNsids) {
+    expect(registry.rawByCardNsid(cardNsid)).toBeDefined();
+  }
 });

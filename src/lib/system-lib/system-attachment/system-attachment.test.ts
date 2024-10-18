@@ -81,6 +81,8 @@ it("anomalies empty", () => {
     }
   );
   expect(attachment.getAnomalies()).toEqual([]);
+  expect(attachment.getName()).toEqual("my-name");
+  expect(attachment.getNsidName()).toEqual("my-nsid-name");
 });
 
 it("img", () => {

@@ -90,6 +90,10 @@ it("token existed at load time, not attached until init.", () => {
   });
   expect(registry.getBySystemAttachmentObjId("my-id")).toBeUndefined();
 
+  expect(
+    registry.getByCardNsid("card.exploration.industrial:my-source/my-nsid-name")
+  ).toBeUndefined();
+
   registry.load({ source: "my-source", packageId: "my-package-id" }, [
     {
       name: "my-name",
@@ -102,6 +106,10 @@ it("token existed at load time, not attached until init.", () => {
   if (!attachment) {
     throw new Error("attachment not defined"); // for TypeScript
   }
+
+  expect(
+    registry.getByCardNsid("card.exploration.industrial:my-source/my-nsid-name")
+  ).toBeDefined();
 
   expect(system.hasAttachment(attachment)).toBe(false);
 
@@ -135,4 +143,19 @@ it("validateImages", () => {
   mockWorld._reset({ packages: [myPackage] });
   registry.validateImages();
   registry.destroy();
+});
+
+it("validate exploration cards", () => {
+  const cardNsids: Array<string> = [
+    "card.exploration.frontier:pok/ion-storm",
+    "card.exploration.frontier:pok/mirage",
+    "card.exploration.cultural:pok/gamma-wormhole",
+    "card.exploration.frontier:pok/gamma-relay",
+  ];
+
+  const registry = new SystemAttachmentRegistry().loadDefaultData();
+  expect(registry.rawByCardNsid("_does_not_exist_")).toBeUndefined();
+  for (const cardNsid of cardNsids) {
+    expect(registry.rawByCardNsid(cardNsid)).toBeDefined();
+  }
 });

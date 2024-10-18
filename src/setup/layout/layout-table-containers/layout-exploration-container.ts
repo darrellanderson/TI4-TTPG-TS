@@ -30,6 +30,7 @@ export class LayoutExplorationContainer {
       "token.attachment.system:pok/ion-storm",
       "token.attachment.system:pok/mirage",
       "token.attachment.system:pok/wormhole-gamma",
+      "token.attachment.system:pok/wormhole-gamma", // gamma-wormhole, gamma-relay cards
     ];
 
     const tag: string = "exploration";

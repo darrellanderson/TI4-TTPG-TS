@@ -200,6 +200,10 @@ export class SystemAttachment {
     return this._params.name;
   }
 
+  getNsidName(): string {
+    return this._params.nsidName;
+  }
+
   /**
    * Get the system attachment token game object.
    *

@@ -17,6 +17,7 @@ import {
 import { Planet } from "../../lib/system-lib/planet/planet";
 import { System } from "../../lib/system-lib/system/system";
 import { TraitSchemaType } from "../../lib/system-lib/schema/basic-types-schema";
+import { PlanetAttachment } from "lib/system-lib/planet-attachment/planet-attachment";
 
 export class RightClickExplore implements IGlobal {
   private readonly _find: Find = new Find();
@@ -133,6 +134,11 @@ export class RightClickExplore implements IGlobal {
       const msg: string = `${playerName} explored ${planetName} (${trait}): ${cardName}`;
       Broadcast.chatAll(msg, player.getPlayerColor());
     }
+  }
+
+  _maybeAddPlanetAttachment(planet: Planet, exploreCardNsid: string): void {
+    const planetAttachment: PlanetAttachment | undefined =
+      TI4.planetAttachmentRegistry.getByCardNsid(exploreCardNsid);
   }
 
   _exploreFrontierToken(frontierTokenObj: GameObject, player: Player): void {

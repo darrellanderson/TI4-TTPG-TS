@@ -214,6 +214,15 @@ export class PlanetAttachment {
   }
 
   /**
+   * Get NSID name.
+   *
+   * @returns
+   */
+  public getNsidName(): string {
+    return this._params.nsidName;
+  }
+
+  /**
    * Get the planet attachment token game object.
    *
    * @returns

@@ -4,7 +4,7 @@ import {
   refPackageId,
   world,
 } from "@tabletop-playground/api";
-import { NSID } from "ttpg-darrell";
+import { NSID, ParsedNSID } from "ttpg-darrell";
 
 import {
   SourceAndPackageIdSchema,
@@ -166,6 +166,19 @@ export class PlanetAttachmentRegistry {
     return this;
   }
 
+  getByCardNsid(cardNsid: string): PlanetAttachment | undefined {
+    const cardParsed: ParsedNSID | undefined = NSID.parse(cardNsid);
+    if (cardParsed) {
+      const cardNsidName = cardParsed.nameParts.join(".");
+      for (const planetAttachment of this._attachmentObjIdToPlanetAttachment.values()) {
+        if (planetAttachment.getNsidName() === cardNsidName) {
+          return planetAttachment;
+        }
+      }
+    }
+    return undefined;
+  }
+
   /**
    * Lookup planet attachment by planet attachment token object nsid.
    * Duplicate tiles for the "same" attachment have separate instances.
@@ -181,6 +194,21 @@ export class PlanetAttachmentRegistry {
 
   public rawByNsid(nsid: string): PlanetAttachmentSchemaType | undefined {
     return this._nsidToSchemaAndSource.get(nsid)?.schema;
+  }
+
+  public rawByCardNsid(
+    cardNsid: string
+  ): PlanetAttachmentSchemaType | undefined {
+    const cardParsed: ParsedNSID | undefined = NSID.parse(cardNsid);
+    if (cardParsed) {
+      const cardNsidName = cardParsed.nameParts.join(".");
+      for (const planetAttachmentSchema of this._nsidToSchemaAndSource.values()) {
+        if (planetAttachmentSchema.schema.nsidName === cardNsidName) {
+          return planetAttachmentSchema.schema;
+        }
+      }
+    }
+    return undefined;
   }
 
   public validateImages(): this {

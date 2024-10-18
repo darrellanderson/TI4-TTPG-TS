@@ -4,7 +4,7 @@ import {
   refPackageId,
   world,
 } from "@tabletop-playground/api";
-import { NSID } from "ttpg-darrell";
+import { NSID, ParsedNSID } from "ttpg-darrell";
 
 import { SystemAttachment } from "../system-attachment/system-attachment";
 import {
@@ -174,6 +174,29 @@ export class SystemAttachmentRegistry {
     return this;
   }
 
+  _maybeRewriteCardNsidName(cardNsidName: string): string {
+    // Multiple cards connect to the same system attachment.
+    if (cardNsidName === "gamma-relay" || cardNsidName === "gamma-wormhole") {
+      return "wormhole-gamma";
+    }
+    return cardNsidName;
+  }
+
+  getByCardNsid(cardNsid: string): SystemAttachment | undefined {
+    const cardParsed: ParsedNSID | undefined = NSID.parse(cardNsid);
+    if (cardParsed) {
+      const cardNsidName = this._maybeRewriteCardNsidName(
+        cardParsed.nameParts.join(".")
+      );
+      for (const systemAttachment of this._attachmentObjIdToSystemAttachment.values()) {
+        if (systemAttachment.getNsidName() === cardNsidName) {
+          return systemAttachment;
+        }
+      }
+    }
+    return undefined;
+  }
+
   /**
    * Lookup system attachment by system attachment token object nsid.
    * Duplicate tokens for the "same" attachment have separate instances.
@@ -189,6 +212,23 @@ export class SystemAttachmentRegistry {
 
   public rawByNsid(nsid: string): SystemAttachmentSchemaType | undefined {
     return this._nsidToSchemaAndSource.get(nsid)?.schema;
+  }
+
+  public rawByCardNsid(
+    cardNsid: string
+  ): SystemAttachmentSchemaType | undefined {
+    const cardParsed: ParsedNSID | undefined = NSID.parse(cardNsid);
+    if (cardParsed) {
+      const cardNsidName = this._maybeRewriteCardNsidName(
+        cardParsed.nameParts.join(".")
+      );
+      for (const systemAttachmentSchema of this._nsidToSchemaAndSource.values()) {
+        if (systemAttachmentSchema.schema.nsidName === cardNsidName) {
+          return systemAttachmentSchema.schema;
+        }
+      }
+    }
+    return undefined;
   }
 
   public validateImages(): this {

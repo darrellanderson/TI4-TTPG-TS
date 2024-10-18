@@ -29,7 +29,7 @@ export const SOURCE_TO_PLANET_ATTACHMENT_DATA: Record<
     },
     {
       name: "Demilitarized Zone",
-      nsidName: "dmz",
+      nsidName: "demilitarized-zone",
     },
     {
       name: "Sleeper Token",
