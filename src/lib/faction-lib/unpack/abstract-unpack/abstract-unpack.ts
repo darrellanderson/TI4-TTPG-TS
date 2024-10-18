@@ -1,4 +1,4 @@
-import { Faction } from "../faction/faction";
+import { Faction } from "../../faction/faction";
 
 export abstract class AbstractUnpack {
   private readonly _faction: Faction;

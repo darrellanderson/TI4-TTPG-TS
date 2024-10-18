@@ -8,11 +8,10 @@ import {
 } from "@tabletop-playground/api";
 import { DeletedItemsContainer, Find, NSID, Spawn } from "ttpg-darrell";
 
-import { AbstractUnpack } from "./abstract-unpack";
-import { Faction } from "../faction/faction";
-import { Scoreboard } from "../../score-lib/scoreboard/scoreboard";
+import { AbstractUnpack } from "../abstract-unpack/abstract-unpack";
+import { Faction } from "../../faction/faction";
 
-export class UnpackCommandControlTokens extends AbstractUnpack {
+export class UnpackCommandTokens extends AbstractUnpack {
   private readonly _find: Find = new Find();
 
   constructor(faction: Faction, playerSlot: number) {
@@ -24,7 +23,7 @@ export class UnpackCommandControlTokens extends AbstractUnpack {
       this.getPlayerSlot()
     );
 
-    // Command tokens in container and on command sheet.
+    // Command tokens in container.
     const commandTokenContainer: Container =
       this._getCommandTokenContainerOrThrow();
     const commandTokenNsid: string = this.getFaction().getCommandTokenNsid();
@@ -36,6 +35,7 @@ export class UnpackCommandControlTokens extends AbstractUnpack {
       commandTokenContainer.insert([commandToken]);
     }
 
+    // Move initial tokens to command sheet.
     const skipContained: boolean = true;
     const commandSheet: GameObject | undefined = this._find.findGameObject(
       "sheet:base/command",
@@ -72,45 +72,11 @@ export class UnpackCommandControlTokens extends AbstractUnpack {
         0,
         pos
       );
-      if (!commandToken) {
-        throw new Error("Cannot take command token from container");
+      if (commandToken) {
+        commandToken.setRotation(rot);
+        commandToken.snapToGround();
       }
-      commandToken.setRotation(rot);
-      commandToken.snapToGround();
     }
-
-    // Control token in container.
-    const controlTokenContainer: Container =
-      this._getControlTokenContainerOrThrow();
-    const controlTokenNsid: string = this.getFaction().getControlTokenNsid();
-    const controlToken: GameObject = Spawn.spawnOrThrow(controlTokenNsid);
-    controlToken.setOwningPlayerSlot(this.getPlayerSlot());
-    controlToken.setTags([`control(${this.getPlayerSlot()})`]);
-    controlToken.setPrimaryColor(color);
-    controlTokenContainer.insert([controlToken]);
-
-    // Control token on scoreboard.
-    const scoreboard: Scoreboard = new Scoreboard();
-    const pos: Vector | undefined = scoreboard.scoreToPos(
-      0,
-      this.getPlayerSlot()
-    );
-    const rot: Rotator | undefined = scoreboard.getControlTokenRotation();
-    if (!pos || !rot) {
-      throw new Error(
-        "Cannot find scoreboard control token position and/or rotation"
-      );
-    }
-    pos.z = z;
-    const scoreboardToken: GameObject = Spawn.spawnOrThrow(
-      controlTokenNsid,
-      pos,
-      rot
-    );
-    scoreboardToken.setOwningPlayerSlot(this.getPlayerSlot());
-    scoreboardToken.setTags([`control(${this.getPlayerSlot()})`]);
-    scoreboardToken.setPrimaryColor(color);
-    scoreboardToken.snapToGround();
   }
 
   remove(): void {
@@ -118,16 +84,14 @@ export class UnpackCommandControlTokens extends AbstractUnpack {
       this._getCommandTokenContainerOrThrow();
     commandTokenContainer.clear();
 
-    const controlTokenContainer: Container =
-      this._getControlTokenContainerOrThrow();
-    controlTokenContainer.clear();
-
     const commandTokenNsid: string = this.getFaction().getCommandTokenNsid();
-    const controlTokenNsid: string = this.getFaction().getControlTokenNsid();
     const skipContained: boolean = true;
     for (const obj of world.getAllObjects(skipContained)) {
       const nsid: string = NSID.get(obj);
-      if (nsid === commandTokenNsid || nsid === controlTokenNsid) {
+      if (
+        nsid === commandTokenNsid &&
+        obj.getOwningPlayerSlot() === this.getPlayerSlot()
+      ) {
         DeletedItemsContainer.destroyWithoutCopying(obj);
       }
     }
@@ -135,20 +99,6 @@ export class UnpackCommandControlTokens extends AbstractUnpack {
 
   _getCommandTokenContainerOrThrow(): Container {
     const nsid: string = "container.token.command:base/generic";
-    const skipContained: boolean = true;
-    const container: Container | undefined = this._find.findContainer(
-      nsid,
-      this.getPlayerSlot(),
-      skipContained
-    );
-    if (!container) {
-      throw new Error(`Cannot find container with nsid: ${nsid}`);
-    }
-    return container;
-  }
-
-  _getControlTokenContainerOrThrow(): Container {
-    const nsid: string = "container.token.control:base/generic";
     const skipContained: boolean = true;
     const container: Container | undefined = this._find.findContainer(
       nsid,

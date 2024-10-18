@@ -1,6 +1,6 @@
 import { GameObject, Player, refObject } from "@tabletop-playground/api";
 import { AbstractUnpack } from "./abstract-unpack";
-import { Faction } from "../faction/faction";
+import { Faction } from "../../faction/faction";
 
 export const FACTION: Faction = TI4.factionRegistry.getByNsid(
   "faction:base/arborec"
