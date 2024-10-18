@@ -52,6 +52,11 @@ export class Faction {
     });
   }
 
+  getCommandTokenNsid(): string {
+    const source: string = this._sourceAndPackageId.source;
+    return `token.command:${source}/${this._params.nsidName}`;
+  }
+
   getCommodities(): number {
     return this._params.commodities;
   }

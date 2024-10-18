@@ -18,21 +18,21 @@ it("place (no seat)", () => {
   const card: Card = new MockCard();
   let success: boolean;
 
-  success = placeControlTokenOnCard.place(card, 3);
+  success = placeControlTokenOnCard.place(card, 10);
   expect(success).toBe(false);
 
   // Set up faction.
   new MockGameObject({
     templateMetadata: "sheet.faction:base/arborec",
-    owningPlayerSlot: 3,
+    owningPlayerSlot: 10,
   });
   new MockCardHolder({
     templateMetadata: "card-holder:base/player-hand",
-    owningPlayerSlot: 3,
+    owningPlayerSlot: 10,
   });
-  expect(TI4.factionRegistry.getByPlayerSlot(3)).toBeDefined();
+  expect(TI4.factionRegistry.getByPlayerSlot(10)).toBeDefined();
 
-  success = placeControlTokenOnCard.place(card, 3);
+  success = placeControlTokenOnCard.place(card, 10);
   expect(success).toBe(true);
 });
 
@@ -54,10 +54,10 @@ it("_computePos (odd seat)", () => {
 
   new MockCardHolder({
     templateMetadata: "card-holder:base/player-hand",
-    owningPlayerSlot: 3,
+    owningPlayerSlot: 10,
   });
 
-  const pos: Vector = placeControlTokenOnCard._computePos(center, 3);
+  const pos: Vector = placeControlTokenOnCard._computePos(center, 10);
   expect(pos.toString()).toBe("(X=0,Y=1.5,Z=10)");
 });
 
@@ -73,9 +73,9 @@ it("_computePos (even seat)", () => {
   });
   new MockCardHolder({
     templateMetadata: "card-holder:base/player-hand",
-    owningPlayerSlot: 3,
+    owningPlayerSlot: 10,
   });
 
-  const pos: Vector = placeControlTokenOnCard._computePos(center, 3);
+  const pos: Vector = placeControlTokenOnCard._computePos(center, 10);
   expect(pos.toString()).toBe("(X=0,Y=-1.5,Z=10)");
 });

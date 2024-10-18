@@ -16,37 +16,37 @@ it("spawnControlToken", () => {
   const spawnControlToken: SpawnControlToken = new SpawnControlToken();
   let controlToken: GameObject | undefined;
 
-  expect(TI4.factionRegistry.getByPlayerSlot(3)).toBeUndefined();
-  controlToken = spawnControlToken.spawnControlToken(3);
+  expect(TI4.factionRegistry.getByPlayerSlot(10)).toBeUndefined();
+  controlToken = spawnControlToken.spawnControlToken(10);
   expect(controlToken).toBeUndefined();
 
   // Set up faction.
   new MockGameObject({
     templateMetadata: "sheet.faction:base/arborec",
-    owningPlayerSlot: 3,
+    owningPlayerSlot: 10,
   });
-  new MockCardHolder({ owningPlayerSlot: 3 });
-  expect(TI4.factionRegistry.getByPlayerSlot(3)).toBeDefined();
+  new MockCardHolder({ owningPlayerSlot: 10 });
+  expect(TI4.factionRegistry.getByPlayerSlot(10)).toBeDefined();
 
-  controlToken = spawnControlToken.spawnControlToken(3);
+  controlToken = spawnControlToken.spawnControlToken(10);
   expect(controlToken).toBeDefined();
-  expect(controlToken?.getOwningPlayerSlot()).toBe(3);
+  expect(controlToken?.getOwningPlayerSlot()).toBe(10);
 });
 
 it("spawnControlTokenOrThrow", () => {
   const spawnControlToken: SpawnControlToken = new SpawnControlToken();
 
   expect(() => {
-    spawnControlToken.spawnControlTokenOrThrow(3);
+    spawnControlToken.spawnControlTokenOrThrow(10);
   }).toThrow();
 
   // Set up faction.
   new MockGameObject({
     templateMetadata: "sheet.faction:base/arborec",
-    owningPlayerSlot: 3,
+    owningPlayerSlot: 10,
   });
-  new MockCardHolder({ owningPlayerSlot: 3 });
-  expect(TI4.factionRegistry.getByPlayerSlot(3)).toBeDefined();
+  new MockCardHolder({ owningPlayerSlot: 10 });
+  expect(TI4.factionRegistry.getByPlayerSlot(10)).toBeDefined();
 
-  spawnControlToken.spawnControlTokenOrThrow(3);
+  spawnControlToken.spawnControlTokenOrThrow(10);
 });

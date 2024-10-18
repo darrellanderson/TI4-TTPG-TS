@@ -16,7 +16,7 @@ export class LayoutExplorationContainer {
       "token.attachment.planet:codex.vigil/custodia-vigilia",
       "token.attachment.planet:pok/biotic-research-facility",
       "token.attachment.planet:pok/cybernetic-research-facility",
-      "token.attachment.planet:pok/dmz",
+      "token.attachment.planet:pok/demilitarized-zone",
       "token.attachment.planet:pok/dyson-sphere",
       "token.attachment.planet:pok/geoform",
       "token.attachment.planet:pok/lazax-survivors",
