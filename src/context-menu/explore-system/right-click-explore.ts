@@ -19,6 +19,7 @@ import { Planet } from "../../lib/system-lib/planet/planet";
 import { System } from "../../lib/system-lib/system/system";
 import { TraitSchemaType } from "../../lib/system-lib/schema/basic-types-schema";
 import { PlanetAttachment } from "lib/system-lib/planet-attachment/planet-attachment";
+import { SystemAttachment } from "lib/system-lib/system-attachment/system-attachment";
 
 export class RightClickExplore implements IGlobal {
   private readonly _find: Find = new Find();
@@ -45,7 +46,12 @@ export class RightClickExplore implements IGlobal {
         trait = trait.substring(1, trait.length - 1); // remove parens
         for (const planet of system.getPlanets()) {
           if (planet.getName() === planetName) {
-            this._explorePlanet(planet, trait as TraitSchemaType, player);
+            this._explorePlanet(
+              system,
+              planet,
+              trait as TraitSchemaType,
+              player
+            );
           }
         }
       }
@@ -111,7 +117,12 @@ export class RightClickExplore implements IGlobal {
     return deck;
   }
 
-  _explorePlanet(planet: Planet, trait: TraitSchemaType, player: Player): void {
+  _explorePlanet(
+    system: System,
+    planet: Planet,
+    trait: TraitSchemaType,
+    player: Player
+  ): void {
     let deck: Card | undefined = this._getExploreDeck(trait);
     let card: Card | undefined = undefined;
     if (deck) {
@@ -134,21 +145,10 @@ export class RightClickExplore implements IGlobal {
       const cardName: string = card.getCardDetails().name;
       const msg: string = `${playerName} explored ${planetName} (${trait}): ${cardName}`;
       Broadcast.chatAll(msg, player.getPlayerColor());
-    }
-  }
 
-  _maybeAddPlanetAttachment(planet: Planet, exploreCardNsid: string): void {
-    const planetAttachment: PlanetAttachment | undefined =
-      TI4.planetAttachmentRegistry.getByCardNsid(exploreCardNsid);
-    if (planetAttachment) {
-      const obj: GameObject = planetAttachment.getObj();
-      const container: Container | undefined = obj.getContainer(); // expect to find in exploration container
-      if (container) {
-        const success: boolean = container.remove(obj);
-        if (success) {
-          planet.addAttachment(planetAttachment);
-        }
-      }
+      const cardNsid: string = NSID.get(card);
+      this._maybeAddPlanetAttachment(planet, cardNsid);
+      this._maybeAddSystemAttachment(system, cardNsid);
     }
   }
 
@@ -176,6 +176,42 @@ export class RightClickExplore implements IGlobal {
       Broadcast.chatAll(msg, player.getPlayerColor());
 
       DeletedItemsContainer.destroyWithoutCopying(frontierTokenObj);
+
+      const system: System | undefined = TI4.systemRegistry.getByPosition(pos);
+      if (system) {
+        const cardNsid: string = NSID.get(card);
+        this._maybeAddSystemAttachment(system, cardNsid);
+      }
+    }
+  }
+
+  _maybeAddPlanetAttachment(planet: Planet, exploreCardNsid: string): void {
+    const planetAttachment: PlanetAttachment | undefined =
+      TI4.planetAttachmentRegistry.getByCardNsid(exploreCardNsid);
+    if (planetAttachment) {
+      const container: Container | undefined = planetAttachment
+        .getObj()
+        .getContainer();
+      const pos = planet.getPosition().add([0, 0, 10]);
+      if (container && container.take(planetAttachment.getObj(), pos)) {
+        planetAttachment.getObj().snapToGround();
+        planet.addAttachment(planetAttachment);
+      }
+    }
+  }
+
+  _maybeAddSystemAttachment(system: System, exploreCardNsid: string): void {
+    const systemAttachment: SystemAttachment | undefined =
+      TI4.systemAttachmentRegistry.getByCardNsid(exploreCardNsid);
+    if (systemAttachment) {
+      const pos = system.getObj().getPosition().add([0, 0, 10]);
+      const container: Container | undefined = systemAttachment
+        .getObj()
+        .getContainer();
+      if (container && container.take(systemAttachment.getObj(), pos)) {
+        systemAttachment.getObj().snapToGround();
+        system.addAttachment(systemAttachment);
+      }
     }
   }
 }

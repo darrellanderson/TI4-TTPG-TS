@@ -1,13 +1,17 @@
+import { Card, Container, GameObject, Player } from "@tabletop-playground/api";
+import { NSID } from "ttpg-darrell";
 import {
   MockCard,
   MockCardDetails,
+  MockContainer,
   MockGameObject,
   MockPlayer,
   MockSnapPoint,
 } from "ttpg-mock";
+
+import { Planet } from "../../lib/system-lib/planet/planet";
 import { RightClickExplore } from "./right-click-explore";
-import { Card, GameObject, Player } from "@tabletop-playground/api";
-import { NSID } from "ttpg-darrell";
+import { System } from "../../lib/system-lib/system/system";
 
 it("constructor", () => {
   new MockGameObject(); // so there is an object in the world
@@ -56,6 +60,8 @@ it("trigger custom action (system)", () => {
 });
 
 it("trigger custom action (frontier)", () => {
+  MockGameObject.simple("tile.system:base/19");
+
   const player: Player = new MockPlayer();
   const token: MockGameObject = MockGameObject.simple(
     "token.attachment.system:pok/frontier"
@@ -82,4 +88,62 @@ it("trigger custom action (frontier)", () => {
 
   token._customActionAsPlayer(player, "*Explore Frontier");
   token._customActionAsPlayer(player, "*Explore Frontier"); // again
+});
+
+it("_maybeAddPlanetAttachment", () => {
+  const systemTileObj: GameObject = MockGameObject.simple(
+    "tile.system:base/19"
+  );
+  const system: System | undefined = TI4.systemRegistry.getBySystemTileObjId(
+    systemTileObj.getId()
+  );
+  expect(system).toBeDefined();
+  if (!system) {
+    throw new Error("system not found"); // for TypeScript
+  }
+
+  const planet: Planet | undefined = system.getPlanets()[0];
+  expect(planet).toBeDefined();
+  if (!planet) {
+    throw new Error("planet not found"); // for TypeScript
+  }
+
+  const cardNsid: string =
+    "card.exploration.industrial:pok/biotic-research-facility";
+  const tokenNsid: string =
+    "token.attachment.planet:pok/biotic-research-facility";
+
+  const attachmentToken: GameObject = MockGameObject.simple(tokenNsid);
+  const container: Container = new MockContainer({ items: [attachmentToken] });
+  expect(attachmentToken.getContainer()).toBeDefined();
+  expect(container.getItems().includes(attachmentToken)).toBe(true);
+  expect(TI4.planetAttachmentRegistry.getByCardNsid(cardNsid)).toBeDefined();
+
+  const rightClickExplore = new RightClickExplore();
+  rightClickExplore._maybeAddPlanetAttachment(planet, cardNsid);
+});
+
+it("_maybeAddSystemAttachment", () => {
+  const systemTileObj: GameObject = MockGameObject.simple(
+    "tile.system:base/19"
+  );
+  const system: System | undefined = TI4.systemRegistry.getBySystemTileObjId(
+    systemTileObj.getId()
+  );
+  expect(system).toBeDefined();
+  if (!system) {
+    throw new Error("system not found"); // for TypeScript
+  }
+
+  const cardNsid: string = "card.exploration.frontier:pok/gamma-relay";
+  const tokenNsid: string = "token.attachment.system:pok/wormhole-gamma";
+
+  const attachmentToken: GameObject = MockGameObject.simple(tokenNsid);
+  const container: Container = new MockContainer({ items: [attachmentToken] });
+  expect(attachmentToken.getContainer()).toBeDefined();
+  expect(container.getItems().includes(attachmentToken)).toBe(true);
+  expect(TI4.systemAttachmentRegistry.getByCardNsid(cardNsid)).toBeDefined();
+
+  const rightClickExplore = new RightClickExplore();
+  rightClickExplore._maybeAddSystemAttachment(system, cardNsid);
 });
