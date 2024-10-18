@@ -1,12 +1,7 @@
 import { Vector } from "@tabletop-playground/api";
 import { LayoutScoringArea } from "./layout-scoring-area";
 
-import { addObjectTemplatesToMockWorld } from "../../../nsid/nsid-to-template-id.test";
 import { setupTestObjectivesSnapPoints } from "./layout-objectives.test";
-
-beforeEach(() => {
-  addObjectTemplatesToMockWorld();
-});
 
 it("constructor", () => {
   setupTestObjectivesSnapPoints();

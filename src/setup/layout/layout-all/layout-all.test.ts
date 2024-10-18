@@ -4,11 +4,6 @@ import { LayoutAll } from "./layout-all";
 import { setupTestTableDeckSnapPoints } from "../layout-table-decks/layout-table-decks.test";
 import { setupTestObjectivesSnapPoints } from "../layout-scoring-area/layout-objectives.test";
 
-import { addObjectTemplatesToMockWorld } from "../../../nsid/nsid-to-template-id.test";
-beforeEach(() => {
-  addObjectTemplatesToMockWorld();
-});
-
 it("constructor", () => {
   setupTestObjectivesSnapPoints();
   setupTestTableDeckSnapPoints();

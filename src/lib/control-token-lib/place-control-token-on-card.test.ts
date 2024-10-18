@@ -3,11 +3,6 @@ import { MockCard, MockCardHolder, MockGameObject } from "ttpg-mock";
 
 import { PlaceControlTokenOnCard } from "./place-control-token-on-card";
 
-import { addObjectTemplatesToMockWorld } from "../../nsid/nsid-to-template-id.test";
-beforeEach(() => {
-  addObjectTemplatesToMockWorld();
-});
-
 it("constructor", () => {
   new PlaceControlTokenOnCard();
 });

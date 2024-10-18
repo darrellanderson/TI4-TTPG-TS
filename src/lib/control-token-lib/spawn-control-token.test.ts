@@ -1,15 +1,15 @@
-import { GameObject } from "@tabletop-playground/api";
+import { Color, GameObject } from "@tabletop-playground/api";
 import { MockCardHolder, MockGameObject } from "ttpg-mock";
 
 import { SpawnControlToken } from "./spawn-control-token";
 
-import { addObjectTemplatesToMockWorld } from "../../nsid/nsid-to-template-id.test";
-beforeEach(() => {
-  addObjectTemplatesToMockWorld();
-});
-
 it("constructor", () => {
   new SpawnControlToken();
+});
+
+it("color available", () => {
+  const color: Color | undefined = TI4.playerColor.getSlotPlasticColor(10);
+  expect(color).toBeDefined();
 });
 
 it("spawnControlToken", () => {

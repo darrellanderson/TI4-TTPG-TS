@@ -1,11 +1,7 @@
 import { Vector } from "@tabletop-playground/api";
-import { LayoutPlayerArea } from "./layout-player-area";
-
-import { addObjectTemplatesToMockWorld } from "../../../nsid/nsid-to-template-id.test";
 import { MockPlayer } from "ttpg-mock";
-beforeEach(() => {
-  addObjectTemplatesToMockWorld();
-});
+
+import { LayoutPlayerArea } from "./layout-player-area";
 
 it("layout", () => {
   new MockPlayer({ slot: 1 }); // assigns card holder

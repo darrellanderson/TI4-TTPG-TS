@@ -1,11 +1,7 @@
 import { Vector } from "@tabletop-playground/api";
-import { LayoutStrategyCards } from "./layout-strategy-cards";
-
-import { addObjectTemplatesToMockWorld } from "../../../nsid/nsid-to-template-id.test";
 import { MockGameObject, MockSnapPoint } from "ttpg-mock";
-beforeEach(() => {
-  addObjectTemplatesToMockWorld();
-});
+
+import { LayoutStrategyCards } from "./layout-strategy-cards";
 
 it("constructor", () => {
   const pos: Vector = new Vector(0, 0, 0);

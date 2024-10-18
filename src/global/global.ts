@@ -44,6 +44,7 @@ import { TechRegistry } from "../lib/tech-lib/registry/tech-registry";
 import { UnitAttrsRegistry } from "../lib/unit-lib/registry/unit-attrs-registry";
 import { UnitModifierRegistry } from "../lib/unit-lib/registry/unit-modifier-registry";
 
+import { addObjectTemplatesToMockWorld } from "../nsid/nsid-to-template-id.test";
 import * as NSID_TO_TEMPLATE_ID from "../nsid/nsid-to-template-id.json";
 Spawn.inject(NSID_TO_TEMPLATE_ID);
 
@@ -145,8 +146,12 @@ export function resetGlobalThisTI4(): TI4Class {
 // Unittests reset the globalThis.TI4 object before each test.
 if (GameWorld.getExecutionReason() === "unittest") {
   beforeEach(() => {
+    addObjectTemplatesToMockWorld(); // does a MockWorld._reset!
     resetGlobalThisTI4();
-    new SetupPlayerSlotColors().setup();
+    new SetupPlayerSlotColors().setup(); // normally part of table state creation
+    if (!TI4.playerColor.getSlotPlasticColor(10)) {
+      console.error("Player color not set");
+    }
   });
 } else {
   resetGlobalThisTI4();

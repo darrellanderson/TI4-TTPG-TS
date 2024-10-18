@@ -3,11 +3,6 @@ import { MockContainer, MockGameObject, MockPlayer } from "ttpg-mock";
 
 import { RSwapSplitCombine } from "./r-swap-split-combine";
 
-import { addObjectTemplatesToMockWorld } from "../nsid/nsid-to-template-id.test";
-beforeEach(() => {
-  addObjectTemplatesToMockWorld();
-});
-
 it("constructor", () => {
   new RSwapSplitCombine();
 });

@@ -1,11 +1,6 @@
 import { Vector } from "@tabletop-playground/api";
 import { LayoutUnitBox } from "./layout-unit-box";
 
-import { addObjectTemplatesToMockWorld } from "../../../nsid/nsid-to-template-id.test";
-beforeEach(() => {
-  addObjectTemplatesToMockWorld();
-});
-
 it("constructor (infantry)", () => {
   new LayoutUnitBox("infantry", 1);
 });

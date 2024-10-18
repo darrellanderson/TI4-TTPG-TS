@@ -1,11 +1,7 @@
 import { Vector } from "@tabletop-playground/api";
-import { LayoutObjectives } from "./layout-objectives";
-
-import { addObjectTemplatesToMockWorld } from "../../../nsid/nsid-to-template-id.test";
 import { MockGameObject, MockSnapPoint } from "ttpg-mock";
-beforeEach(() => {
-  addObjectTemplatesToMockWorld();
-});
+
+import { LayoutObjectives } from "./layout-objectives";
 
 export function setupTestObjectivesSnapPoints() {
   new MockGameObject({

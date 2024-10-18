@@ -2,11 +2,6 @@ import { MockContainer, MockGameObject } from "ttpg-mock";
 import { Faction } from "../faction/faction";
 import { UnpackCommandControlTokens } from "./unpack-command-control-tokens";
 
-import { addObjectTemplatesToMockWorld } from "../../../nsid/nsid-to-template-id.test";
-beforeEach(() => {
-  addObjectTemplatesToMockWorld();
-});
-
 it("unpack/remove", () => {
   const faction: Faction = TI4.factionRegistry.getByNsid(
     "faction:base/arborec"
