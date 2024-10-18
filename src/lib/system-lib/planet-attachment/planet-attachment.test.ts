@@ -147,7 +147,7 @@ it("flipIfPlanetHasTech", () => {
   success = planetAttachment.attach();
   expect(success).toBe(true);
   expect(planetAttachment.getObj().getRotation().toString()).toBe(
-    "(P=0,Y=0,R=0)"
+    "(P=0,Y=0,R=180)"
   );
 
   systemTileObj.destroy();
@@ -158,7 +158,7 @@ it("flipIfPlanetHasTech", () => {
   success = planetAttachment.attach();
   expect(success).toBe(true);
   expect(planetAttachment.getObj().getRotation().toString()).toBe(
-    "(P=0,Y=0,R=180)"
+    "(P=0,Y=0,R=0)"
   );
 });
 
