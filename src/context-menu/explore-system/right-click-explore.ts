@@ -134,6 +134,10 @@ export class RightClickExplore implements IGlobal {
       }
     }
     if (card) {
+      const cardNsid: string = NSID.get(card);
+      this._maybeAddPlanetAttachment(planet, cardNsid);
+      this._maybeAddSystemAttachment(system, cardNsid);
+
       const pos: Vector = planet.getPosition();
       const animSpeed: number = 1;
       card.setPosition(pos.add([0, 0, 10]), animSpeed);
@@ -145,10 +149,6 @@ export class RightClickExplore implements IGlobal {
       const cardName: string = card.getCardDetails().name;
       const msg: string = `${playerName} explored ${planetName} (${trait}): ${cardName}`;
       Broadcast.chatAll(msg, player.getPlayerColor());
-
-      const cardNsid: string = NSID.get(card);
-      this._maybeAddPlanetAttachment(planet, cardNsid);
-      this._maybeAddSystemAttachment(system, cardNsid);
     }
   }
 
@@ -165,6 +165,14 @@ export class RightClickExplore implements IGlobal {
     }
     if (card) {
       const pos: Vector = frontierTokenObj.getPosition();
+      DeletedItemsContainer.destroyWithoutCopying(frontierTokenObj);
+
+      const system: System | undefined = TI4.systemRegistry.getByPosition(pos);
+      if (system) {
+        const cardNsid: string = NSID.get(card);
+        this._maybeAddSystemAttachment(system, cardNsid);
+      }
+
       const animSpeed: number = 1;
       card.setPosition(pos.add([0, 0, 10]), animSpeed);
       card.setRotation([0, 0, 180]);
@@ -174,14 +182,6 @@ export class RightClickExplore implements IGlobal {
       const cardName: string = card.getCardDetails().name;
       const msg: string = `${playerName} explored frontier: ${cardName}`;
       Broadcast.chatAll(msg, player.getPlayerColor());
-
-      DeletedItemsContainer.destroyWithoutCopying(frontierTokenObj);
-
-      const system: System | undefined = TI4.systemRegistry.getByPosition(pos);
-      if (system) {
-        const cardNsid: string = NSID.get(card);
-        this._maybeAddSystemAttachment(system, cardNsid);
-      }
     }
   }
 
@@ -195,7 +195,10 @@ export class RightClickExplore implements IGlobal {
       const pos = planet.getPosition().add([0, 0, 10]);
       if (container && container.take(planetAttachment.getObj(), pos)) {
         planetAttachment.getObj().snapToGround();
-        planet.addAttachment(planetAttachment);
+        const success: boolean = planetAttachment.attach();
+        if (success) {
+          planetAttachment.doLayout();
+        }
       }
     }
   }
@@ -210,7 +213,10 @@ export class RightClickExplore implements IGlobal {
         .getContainer();
       if (container && container.take(systemAttachment.getObj(), pos)) {
         systemAttachment.getObj().snapToGround();
-        system.addAttachment(systemAttachment);
+        const success: boolean = systemAttachment.attach();
+        if (success) {
+          systemAttachment.doLayout();
+        }
       }
     }
   }

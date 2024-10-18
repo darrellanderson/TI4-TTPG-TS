@@ -112,7 +112,7 @@ export class PlanetAttachment {
       if (this._planet) {
         if (this._params.flipIfNoPlanetTech) {
           const hasTech: boolean = this._planet.getTechs().length > 0;
-          this._obj.setRotation([0, 0, hasTech ? 180 : 0]);
+          this._obj.setRotation([0, 0, hasTech ? 0 : 180]);
         }
         const success: boolean = this._planet.addAttachment(this);
         if (success) {
