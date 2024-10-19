@@ -39,7 +39,7 @@
     "HiddenTexture": "",
     "BackIndex": -3,
     "HiddenIndex": -1,
-    "NumHorizontal": 3,
+    "NumHorizontal": 6,
     "NumVertical": 3,
     "Width": 6.3,
     "Height": 4.2,
@@ -59,25 +59,43 @@
         3,
         4,
         5,
-        6
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
     ],
     "CardNames": {
         "0": "Brother Milor Ω",
-        "1": "Z'eu",
-        "2": "Brother Omar Ω",
-        "3": "M'aban Ω",
-        "4": "Dannel of the Tenth Ω",
-        "5": "Xxekir Grom Ω",
-        "6": "Iconoclast Ω"
+        "1": "Xander Alexin Victori III",
+        "2": "Z'eu",
+        "3": "Brother Omar Ω",
+        "4": "M'aban Ω",
+        "5": "Suffi An",
+        "6": "Dannel of the Tenth Ω",
+        "7": "Harka Leeds",
+        "8": "Kuuasi Aun Jalatai",
+        "9": "Odlynn Myrr",
+        "10": "Xxekir Grom Ω",
+        "11": "Iconoclast Ω",
+        "12": "Omniopiares"
     },
     "CardMetadata": {
         "0": "card.leader.agent:codex.vigil/brother-milor.omega",
-        "1": "card.leader.agent:codex.vigil/zeu.omega",
-        "2": "card.leader.commander:codex.vigil/brother-omar.omega",
-        "3": "card.leader.commander:codex.vigil/maban.omega",
-        "4": "card.leader.hero:codex.vigil/dannel-of-the-tenth.omega",
-        "5": "card.leader.hero:codex.vigil/xxekir-grom.omega",
-        "6": "card.leader.mech:codex.vigil/iconoclast.omega"
+        "1": "card.leader.agent:codex.vigil/xander-alexin-victori-iii",
+        "2": "card.leader.agent:codex.vigil/zeu.omega",
+        "3": "card.leader.commander:codex.vigil/brother-omar.omega",
+        "4": "card.leader.commander:codex.vigil/maban.omega",
+        "5": "card.leader.commander:codex.vigil/suffi-an",
+        "6": "card.leader.hero:codex.vigil/dannel-of-the-tenth.omega",
+        "7": "card.leader.hero:codex.vigil/harka-leeds",
+        "8": "card.leader.hero:codex.vigil/kuuasi-aun-jalatai",
+        "9": "card.leader.hero:codex.vigil/odlynn-myrr",
+        "10": "card.leader.hero:codex.vigil/xxekir-grom.omega",
+        "11": "card.leader.mech:codex.vigil/iconoclast.omega",
+        "12": "card.leader.mech:codex.vigil/omniopiares"
     },
     "CardTags": {
         "0": [
@@ -99,6 +117,24 @@
             "card-leader"
         ],
         "6": [
+            "card-leader"
+        ],
+        "7": [
+            "card-leader"
+        ],
+        "8": [
+            "card-leader"
+        ],
+        "9": [
+            "card-leader"
+        ],
+        "10": [
+            "card-leader"
+        ],
+        "11": [
+            "card-leader"
+        ],
+        "12": [
             "card-leader"
         ]
     },
