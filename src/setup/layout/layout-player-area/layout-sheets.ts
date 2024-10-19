@@ -23,6 +23,7 @@ export class LayoutSheets {
 
     leaderSheet.setOwningPlayerSlot(playerSlot);
     leaderSheet.setPrimaryColor(objColor);
+    factionSheet.setOwningPlayerSlot(playerSlot);
     commandSheet.setOwningPlayerSlot(playerSlot);
     commandSheet.setPrimaryColor(objColor);
 

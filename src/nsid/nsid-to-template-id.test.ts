@@ -1,5 +1,10 @@
 import { Spawn } from "ttpg-darrell";
-import { MockGameObjectParams, mockWorld } from "ttpg-mock";
+import {
+  MockCardDetails,
+  MockCardParams,
+  MockGameObjectParams,
+  mockWorld,
+} from "ttpg-mock";
 
 export function addObjectTemplatesToMockWorld(): void {
   const _templateIdToMockGameObjectParams: {
@@ -18,24 +23,30 @@ export function addObjectTemplatesToMockWorld(): void {
     ) {
       _templateIdToMockGameObjectParams[templateId] = {
         _objType: "GameObject",
+        templateMetadata: nsid,
       };
     }
 
     if (nsid.startsWith("card.")) {
-      _templateIdToMockGameObjectParams[templateId] = {
+      const params: MockCardParams = {
         _objType: "Card",
+        templateMetadata: nsid,
+        cardDetails: [new MockCardDetails({ metadata: nsid })],
       };
+      _templateIdToMockGameObjectParams[templateId] = params;
     }
 
     if (nsid.startsWith("card-holder")) {
       _templateIdToMockGameObjectParams[templateId] = {
         _objType: "CardHolder",
+        templateMetadata: nsid,
       };
     }
 
     if (nsid.startsWith("container")) {
       _templateIdToMockGameObjectParams[templateId] = {
         _objType: "Container",
+        templateMetadata: nsid,
       };
     }
   }
