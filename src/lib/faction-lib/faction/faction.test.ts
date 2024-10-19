@@ -25,6 +25,7 @@ it("constructor", () => {
     startingUnits: { carrier: 3 },
     factionTechs: ["my-faction-tech"],
     unitOverrides: ["my-unit-override", "my-mech"],
+    extras: [{ nsid: "my-extra-1" }, { nsid: "my-extra-2", count: 2 }],
   };
   const faction: Faction = new Faction(sourceAndPackageId, schema);
 
@@ -45,6 +46,10 @@ it("constructor", () => {
   expect(faction.getControlTokenNsid()).toEqual(
     "token.control:my-source/my-nsid-name"
   );
+  expect(faction.getExtraCount("my-extra-1")).toEqual(1);
+  expect(faction.getExtraCount("my-extra-2")).toEqual(2);
+  expect(faction.getExtraCount("my-extra-3")).toEqual(0);
+  expect(faction.getExtras()).toEqual(["my-extra-1", "my-extra-2"]);
   expect(faction.getFactionSheetNsid()).toEqual(
     "sheet.faction:my-source/my-nsid-name"
   );

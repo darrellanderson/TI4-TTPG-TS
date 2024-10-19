@@ -72,6 +72,27 @@ export class Faction {
     return `token.control:${source}/${this._params.nsidName}`;
   }
 
+  getExtraCount(nsid: string): number {
+    let result: number = 0;
+    if (this._params.extras) {
+      for (const extra of this._params.extras) {
+        if (extra.nsid === nsid) {
+          result = extra.count ?? 1;
+          break;
+        }
+      }
+    }
+    return result;
+  }
+
+  getExtras(): Array<string> {
+    let result: Array<string> = [];
+    if (this._params.extras) {
+      result = this._params.extras.map((extra): string => extra.nsid);
+    }
+    return result;
+  }
+
   getFactionSheetNsid(): string {
     const source: string = this._sourceAndPackageId.source;
     return `sheet.faction:${source}/${this._params.nsidName}`;

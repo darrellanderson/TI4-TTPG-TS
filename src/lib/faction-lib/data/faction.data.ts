@@ -56,9 +56,9 @@ export const SOURCE_TO_FACTION_DATA: Record<
       factionTechs: ["wormhole-generator", "dimensional-splicer"],
       unitOverrides: ["hil-colish", "icarus-drive"],
       extras: [
-        { nsid: "token.wormhole.creuss:base/alpha" },
-        { nsid: "token.wormhole.creuss:base/beta" },
-        { nsid: "token.wormhole.creuss:pok/gamma" },
+        { nsid: "token.attachment.system:base/wormhole-alpha.creuss" },
+        { nsid: "token.attachment.system:base/wormhole-beta.creuss" },
+        { nsid: "token.attachment.system:pok/wormhole-gamma.creuss" },
       ],
     },
     {
@@ -168,7 +168,7 @@ export const SOURCE_TO_FACTION_DATA: Record<
       },
       factionTechs: ["l4-disruptors", "noneuclidean-shielding"],
       unitOverrides: ["arc-secundus", "dunlain-reaper"],
-      extras: [{ nsid: "faction-ability:base/munitions-reserves" }],
+      extras: [{ nsid: "card.other.portrait:base/munitions-reserves" }],
     },
     {
       nsidName: "mentak",
@@ -698,7 +698,9 @@ export const SOURCE_TO_FACTION_DATA: Record<
       },
       factionTechs: ["iihq-modernization", "agency-supply-network"],
       unitOverrides: ["artemiris", "omniopiares"],
-      extras: [{ nsid: "token.keleres:codex.vigil/custodia_vigilia" }],
+      extras: [
+        { nsid: "token.attachment.planet:codex.vigil/custodia-vigilia" },
+      ],
     },
     {
       nsidName: "keleres-mentak",
@@ -724,7 +726,9 @@ export const SOURCE_TO_FACTION_DATA: Record<
       },
       factionTechs: ["iihq-modernization", "agency-supply-network"],
       unitOverrides: ["artemiris", "omniopiares"],
-      extras: [{ nsid: "token.keleres:codex.vigil/custodia_vigilia" }],
+      extras: [
+        { nsid: "token.attachment.planet:codex.vigil/custodia-vigilia" },
+      ],
     },
     {
       nsidName: "keleres-xxcha",
@@ -750,7 +754,9 @@ export const SOURCE_TO_FACTION_DATA: Record<
       },
       factionTechs: ["iihq-modernization", "agency-supply-network"],
       unitOverrides: ["artemiris", "omniopiares"],
-      extras: [{ nsid: "token.keleres:codex.vigil/custodia_vigilia" }],
+      extras: [
+        { nsid: "token.attachment.planet:codex.vigil/custodia-vigilia" },
+      ],
     },
   ],
 };

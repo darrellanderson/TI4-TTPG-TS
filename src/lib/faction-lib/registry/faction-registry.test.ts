@@ -233,7 +233,7 @@ it("validate NSIDs appear in assets/Templates", () => {
     },
   });
   const regex: RegExp =
-    /"(sheet.faction:.*|token.command:.*|token.control:.*|card.leader.*|card.alliance.*|card.technology.*)"/;
+    /"(card.alliance.*|card.*|sheet.faction:.*|tile.system:.*|token.*)"/;
   for (const entry of entries) {
     const data: Buffer = fs.readFileSync(entry.path);
     const lines: Array<string> = data.toString().split("\n");
@@ -259,6 +259,7 @@ it("validate NSIDs appear in assets/Templates", () => {
     nsids.push(...faction.getCommanderNsids());
     nsids.push(...faction.getHeroNsids());
     nsids.push(...faction.getMechNsids());
+    nsids.push(...faction.getExtras());
 
     // Tech does not include tech color/type.
     for (const nsidName of faction.getFactionTechNsidNames()) {
