@@ -233,7 +233,7 @@ it("validate NSIDs appear in assets/Templates", () => {
     },
   });
   const regex: RegExp =
-    /"(sheet.faction:.*|token.command:.*|token.control:.*)"/;
+    /"(sheet.faction:.*|token.command:.*|token.control:.*|card.leader.*|card.alliance.*|card.technology.*)"/;
   for (const entry of entries) {
     const data: Buffer = fs.readFileSync(entry.path);
     const lines: Array<string> = data.toString().split("\n");
@@ -251,10 +251,29 @@ it("validate NSIDs appear in assets/Templates", () => {
     .loadDefaultData()
     .getAllFactions();
   for (const faction of factions) {
-    const nsid: string = faction.getNsid();
-    nsids.push(nsid.replace("faction:", "sheet.faction:"));
-    nsids.push(nsid.replace("faction:", "token.command:"));
-    nsids.push(nsid.replace("faction:", "token.control:"));
+    nsids.push(faction.getFactionSheetNsid());
+    nsids.push(faction.getControlTokenNsid());
+    nsids.push(faction.getCommandTokenNsid());
+    nsids.push(faction.getAllianceNsid());
+    nsids.push(...faction.getAgentNsids());
+    nsids.push(...faction.getCommanderNsids());
+    nsids.push(...faction.getHeroNsids());
+    nsids.push(...faction.getMechNsids());
+
+    // Tech does not include tech color/type.
+    for (const nsidName of faction.getFactionTechNsidNames()) {
+      let found: boolean = false;
+      for (const nsid of TI4.techRegistry.getAllNsids()) {
+        if (nsid.endsWith(nsidName)) {
+          nsids.push(nsid);
+          found = true;
+          break;
+        }
+      }
+      if (!found) {
+        throw new Error(`Missing tech: ${nsidName}`);
+      }
+    }
   }
 
   const missing: Array<string> = [];

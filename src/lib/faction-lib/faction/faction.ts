@@ -72,6 +72,11 @@ export class Faction {
     return `token.control:${source}/${this._params.nsidName}`;
   }
 
+  getFactionSheetNsid(): string {
+    const source: string = this._sourceAndPackageId.source;
+    return `sheet.faction:${source}/${this._params.nsidName}`;
+  }
+
   getFactionTechNsidNames(): Array<string> {
     return this._params.factionTechs; // need color to form full nsid
   }

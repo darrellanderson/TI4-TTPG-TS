@@ -45,6 +45,9 @@ it("constructor", () => {
   expect(faction.getControlTokenNsid()).toEqual(
     "token.control:my-source/my-nsid-name"
   );
+  expect(faction.getFactionSheetNsid()).toEqual(
+    "sheet.faction:my-source/my-nsid-name"
+  );
   expect(faction.getFactionTechNsidNames()).toEqual(["my-faction-tech"]);
   expect(faction.getHeroNsids()).toEqual([
     "card.leader.hero:my-source/my-hero",
