@@ -12,43 +12,20 @@ export class UnpackFactionTech extends AbstractUnpack {
   }
 
   unpack(): void {
-    // Find existing per-player faction tech deck.
-    const existingTechDeck: Card | undefined = this._find.findDeckOrDiscard(
-      "deck-technology",
-      undefined,
-      undefined,
-      this.getPlayerSlot()
-    );
-    if (!existingTechDeck) {
-      throw new Error(`Could not find tech deck for ${this.getPlayerSlot()}`);
-    }
-
     // Generate full tech deck.
     const nsids: Array<string> = Spawn.getAllNsids().filter((nsid: string) =>
       nsid.startsWith("card.technology")
     );
     const deck: Card = Spawn.spawnMergeDecksOrThrow(nsids);
 
-    // Extract faction tech cards.
     const filtered: Card | undefined = this._filterFactionTech(deck);
     DeletedItemsContainer.destroyWithoutCopying(deck);
 
-    if (filtered) {
-      existingTechDeck.addCards(filtered);
-    }
+    this._addFilteredToExistingTechDeck(filtered);
   }
 
   remove(): void {
-    // Find existing per-player faction tech deck.
-    const existingTechDeck: Card | undefined = this._find.findDeckOrDiscard(
-      "deck-technology",
-      undefined,
-      undefined,
-      this.getPlayerSlot()
-    );
-    if (!existingTechDeck) {
-      throw new Error(`Could not find tech deck for ${this.getPlayerSlot()}`);
-    }
+    const existingTechDeck: Card = this._getExistingTechDeckOrThrow();
 
     const filtered: Card | undefined =
       this._filterFactionTech(existingTechDeck);
@@ -56,6 +33,19 @@ export class UnpackFactionTech extends AbstractUnpack {
     if (filtered) {
       DeletedItemsContainer.destroyWithoutCopying(filtered);
     }
+  }
+
+  _getExistingTechDeckOrThrow(): Card {
+    const existingTechDeck: Card | undefined = this._find.findDeckOrDiscard(
+      "deck-technology",
+      undefined,
+      undefined,
+      this.getPlayerSlot()
+    );
+    if (!existingTechDeck) {
+      throw new Error(`Could not find tech deck for ${this.getPlayerSlot()}`);
+    }
+    return existingTechDeck;
   }
 
   _filterFactionTech(deck: Card): Card | undefined {
@@ -70,5 +60,12 @@ export class UnpackFactionTech extends AbstractUnpack {
       }
       return false;
     });
+  }
+
+  _addFilteredToExistingTechDeck(filtered: Card | undefined): void {
+    const existingTechDeck: Card = this._getExistingTechDeckOrThrow();
+    if (filtered) {
+      existingTechDeck.addCards(filtered);
+    }
   }
 }

@@ -52,7 +52,7 @@ it("_filterFactionTech", () => {
   expect(filtered).toBeDefined();
 });
 
-it("unpack missing tech deck", () => {
+it("_getExistingTechDeckOrThrow missing tech deck", () => {
   const faction: Faction = TI4.factionRegistry.getByNsid(
     "faction:base/arborec"
   )!;
@@ -60,7 +60,7 @@ it("unpack missing tech deck", () => {
 
   const unpack = new UnpackFactionTech(faction, playerSlot);
   expect(() => {
-    unpack.unpack();
+    unpack._getExistingTechDeckOrThrow();
   }).toThrow(/tech deck/);
 });
 
@@ -102,4 +102,27 @@ it("remove (faction tech present)", () => {
 
   const unpack = new UnpackFactionTech(faction, playerSlot);
   unpack.remove();
+});
+
+it("_addFilteredToExistingTechDeck", () => {
+  const faction: Faction = TI4.factionRegistry.getByNsid(
+    "faction:base/arborec"
+  )!;
+  const playerSlot: number = 10;
+
+  const existingTechDeck: Card = new MockCard();
+  new MockGameObject({
+    templateMetadata: "mat.player:base/technology-deck",
+    owningPlayerSlot: playerSlot,
+    snapPoints: [
+      new MockSnapPoint({
+        tags: ["deck-technology"],
+        snappedObject: existingTechDeck,
+      }),
+    ],
+  });
+
+  const filtered: Card = new MockCard();
+  const unpack = new UnpackFactionTech(faction, playerSlot);
+  unpack._addFilteredToExistingTechDeck(filtered);
 });
