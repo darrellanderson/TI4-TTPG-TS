@@ -46,7 +46,10 @@ function getGrid(): ZColCell {
   return {
     type: "ColCell",
     spacing: SPACING,
-    children: [getSlotPortrait(["card-technology"]), getLabel("Technology")],
+    children: [
+      getSlotPortrait(["deck-technology", "card-technology"]),
+      getLabel("Technology"),
+    ],
   };
 }
 
