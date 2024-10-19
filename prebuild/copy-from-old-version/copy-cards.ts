@@ -4,7 +4,12 @@ import { AbstractCopyCards } from "./abstract-copy-cards";
 // Do not copy those.
 import { SOURCE_TO_FACTION_DATA } from "../../src/lib/faction-lib/data/faction.data";
 import path from "path";
-const factionNsidNames: Array<string> = ["keleres"];
+const factionNsidNames: Array<string> = [
+  "keleres",
+  "keleres_argent",
+  "keleres_mentak",
+  "keleres_xxcha",
+];
 for (const factionDataArray of Object.values(SOURCE_TO_FACTION_DATA)) {
   for (const factionData of factionDataArray) {
     factionNsidNames.push(factionData.nsidName);
