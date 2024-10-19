@@ -31,7 +31,10 @@ export class Faction {
   }
 
   getAgentNsids(): Array<string> {
-    const source: string = this._sourceAndPackageId.source;
+    let source: string = this._sourceAndPackageId.source;
+    if (source === "base") {
+      source = "pok"; // aliance got added in PoK
+    }
     return this._params.leaders.agents.map((agent): string => {
       return `card.leader.agent:${source}/${agent}`;
     });
@@ -46,7 +49,10 @@ export class Faction {
   }
 
   getCommanderNsids(): Array<string> {
-    const source: string = this._sourceAndPackageId.source;
+    let source: string = this._sourceAndPackageId.source;
+    if (source === "base") {
+      source = "pok"; // aliance got added in PoK
+    }
     return this._params.leaders.commanders.map((commander): string => {
       return `card.leader.commander:${source}/${commander}`;
     });
@@ -71,7 +77,10 @@ export class Faction {
   }
 
   getHeroNsids(): Array<string> {
-    const source: string = this._sourceAndPackageId.source;
+    let source: string = this._sourceAndPackageId.source;
+    if (source === "base") {
+      source = "pok"; // aliance got added in PoK
+    }
     return this._params.leaders.heroes.map((hero): string => {
       return `card.leader.hero:${source}/${hero}`;
     });
@@ -105,7 +114,10 @@ export class Faction {
   }
 
   getMechNsids(): Array<string> {
-    const source: string = this._sourceAndPackageId.source;
+    let source: string = this._sourceAndPackageId.source;
+    if (source === "base") {
+      source = "pok"; // aliance got added in PoK
+    }
     return this._params.leaders.mechs.map((mech): string => {
       return `card.leader.mech:${source}/${mech}`;
     });
