@@ -1,5 +1,5 @@
-import { Container, GameObject } from "@tabletop-playground/api";
-import { Find } from "ttpg-darrell";
+import { Container, GameObject, world } from "@tabletop-playground/api";
+import { Find, GarbageContainer, NSID } from "ttpg-darrell";
 
 import { UnitType } from "../../../unit-lib/schema/unit-attrs-schema";
 import { Faction } from "../../faction/faction";
@@ -36,9 +36,30 @@ export class UnpackStartingUnits extends AbstractUnpack {
     return obj;
   }
 
-  unpack() {}
+  unpack() {
+    const unitObjs: Array<GameObject> = [];
+    const startingUnits: { [unit: string]: number } =
+      this.getFaction().getStartingUnits();
+    for (const [unit, count] of Object.entries(startingUnits)) {
+      for (let i = 0; i < count; i++) {
+        const obj: GameObject = this._getUnitPlasticOrThrow(unit as UnitType);
+        obj.setOwningPlayerSlot(this.getPlayerSlot());
+        unitObjs.push(obj);
+      }
+    }
+    // TODO XXX place units in starting positions
+  }
 
   remove() {
-    // XXX TODO
+    const skipContained: boolean = true;
+    for (const obj of world.getAllObjects(skipContained)) {
+      const nsid: string = NSID.get(obj);
+      if (
+        nsid.startsWith("unit:") &&
+        obj.getOwningPlayerSlot() === this.getPlayerSlot()
+      ) {
+        GarbageContainer.tryRecycle(obj, undefined);
+      }
+    }
   }
 }
