@@ -38,6 +38,7 @@ export const SOURCE_TO_FACTION_DATA: Record<
       abilities: ["quantum-entanglement", "slipstream", "creuss-gate"],
       commodities: 4,
       home: 51,
+      homeSurrogate: 17,
       leaders: {
         agents: ["emissary-taivra"],
         commanders: ["sai-seravus"],

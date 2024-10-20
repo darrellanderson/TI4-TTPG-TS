@@ -1,7 +1,7 @@
-import { DeletedItemsContainer, Find } from "ttpg-darrell";
+import { DeletedItemsContainer, Find, Spawn } from "ttpg-darrell";
 import { Faction } from "../../faction/faction";
 import { AbstractUnpack } from "../abstract-unpack/abstract-unpack";
-import { Container, GameObject, Vector } from "@tabletop-playground/api";
+import { GameObject, Vector } from "@tabletop-playground/api";
 
 export class UnpackHomeSystem extends AbstractUnpack {
   private readonly _find: Find = new Find();
@@ -10,71 +10,153 @@ export class UnpackHomeSystem extends AbstractUnpack {
     super(faction, playerSlot);
   }
 
-  unpack(): void {
-    const home: number = this.getFaction().getHomeSystemTileNumber();
-    const surrogate: number = this.getFaction().getHomeSurrogateTileNumber();
-
-    const homeSystemTileNsid: string | undefined =
-      TI4.systemRegistry.tileNumberToSystemTileObjNsid(home);
-    const surrogateSystemTileNsid: string | undefined =
-      TI4.systemRegistry.tileNumberToSystemTileObjNsid(surrogate);
-
-    // Get generic home system tile.
-    const genericHomeSystemTileNsid: string = "tile.system:base/000";
+  _findGenericHomeSystemTileOrThrow(): GameObject {
+    const genericHomeSystemTileNsid: string = "tile.system:base/0";
     const skipContained: boolean = true;
-    const genericHomeSystemTile: GameObject | undefined =
-      this._find.findGameObject(
-        genericHomeSystemTileNsid,
-        this.getPlayerSlot(),
-        skipContained
-      );
-    if (!genericHomeSystemTile) {
+    const obj: GameObject | undefined = this._find.findGameObject(
+      genericHomeSystemTileNsid,
+      this.getPlayerSlot(),
+      skipContained
+    );
+    if (!obj) {
       throw new Error(
         `Could not find generic home system tile for ${this.getPlayerSlot()}`
       );
     }
+    return obj;
+  }
 
-    // Get faction sheet (for surrogate, but always do for code exercise in all cases).
+  _findFactionSheetOrThrow(): GameObject {
     const factionSheetNsid: string = this.getFaction().getFactionSheetNsid();
-    const factionSheet: GameObject | undefined = this._find.findGameObject(
+    const obj: GameObject | undefined = this._find.findGameObject(
       factionSheetNsid,
       this.getPlayerSlot(),
-      skipContained
+      true
     );
-    if (!factionSheet) {
+    if (!obj) {
       throw new Error(
         `Could not find faction sheet for ${this.getPlayerSlot()}`
       );
     }
-
-    DeletedItemsContainer.destroyWithoutCopying(genericHomeSystemTile);
-
-    let pos: Vector = genericHomeSystemTile.getPosition().add([0, 0, 10]);
-    let surrogatePos: Vector = new Vector(0, 0, 0);
-
-    // Place surrogate, if any.
-    if (surrogateSystemTileNsid) {
-      surrogatePos = pos;
-      pos = factionSheet.getPosition().add([0, 0, 10]);
-      const surrogateObj: GameObject | undefined = this._find.findGameObject(
-        surrogateSystemTileNsid,
-        this.getPlayerSlot(),
-        skipContained
-      );
-      if (surrogateObj) {
-        const container: Container | undefined = surrogateObj.getContainer();
-        if (container) {
-          container.take(surrogateObj, surrogatePos);
-        } else {
-          surrogateObj.setPosition(surrogatePos);
-        }
-        surrogateObj.snapToGround();
-      }
-    }
-
-    // Place home system tile.
-    // TODO XXX
+    return obj;
   }
 
-  remove(): void {}
+  _spawnGenericHomeSystemTile(): GameObject {
+    const genericHomeSystemTileNsid: string = "tile.system:base/0";
+    const obj: GameObject = Spawn.spawnOrThrow(genericHomeSystemTileNsid);
+    obj.setOwningPlayerSlot(this.getPlayerSlot());
+    return obj;
+  }
+
+  _getHomeSystemTileNsid(): string {
+    const home: number = this.getFaction().getHomeSystemTileNumber();
+    const homeSystemTileNsid: string | undefined =
+      TI4.systemRegistry.tileNumberToSystemTileObjNsid(home);
+    if (!homeSystemTileNsid) {
+      throw new Error(`Could not find home system tile for ${home}`);
+    }
+    return homeSystemTileNsid;
+  }
+
+  _spawnHomeSystemTile(): GameObject {
+    const homeSystemTileNsid: string = this._getHomeSystemTileNsid();
+    const obj: GameObject = Spawn.spawnOrThrow(homeSystemTileNsid);
+    obj.setOwningPlayerSlot(this.getPlayerSlot());
+    return obj;
+  }
+
+  _findHomeSystemTileOrThrow(): GameObject {
+    const homeSystemTileNsid: string = this._getHomeSystemTileNsid();
+    const obj: GameObject | undefined = this._find.findGameObject(
+      homeSystemTileNsid,
+      undefined,
+      true
+    );
+    if (!obj) {
+      throw new Error(
+        `Could not find home system tile for ${this.getPlayerSlot()}`
+      );
+    }
+    return obj;
+  }
+
+  _getSurrogateSystemTileNsid(): string | undefined {
+    const surrogate: number = this.getFaction().getHomeSurrogateTileNumber();
+    return TI4.systemRegistry.tileNumberToSystemTileObjNsid(surrogate);
+  }
+
+  _spawnSurrogateSystemTile(): GameObject | undefined {
+    const surrogateSystemTileNsid: string | undefined =
+      this._getSurrogateSystemTileNsid();
+    if (!surrogateSystemTileNsid) {
+      return undefined;
+    }
+    const obj: GameObject = Spawn.spawnOrThrow(surrogateSystemTileNsid);
+    obj.setOwningPlayerSlot(this.getPlayerSlot());
+    return obj;
+  }
+
+  _findSurrogateSystemTile(): GameObject | undefined {
+    let result: GameObject | undefined = undefined;
+    const surrogateSystemTileNsid: string | undefined =
+      this._getSurrogateSystemTileNsid();
+    if (surrogateSystemTileNsid) {
+      result = this._find.findGameObject(
+        surrogateSystemTileNsid,
+        undefined,
+        true
+      );
+    }
+    return result;
+  }
+
+  unpack(): void {
+    // Get generic home system tile.
+    const genericHomeSystemTile: GameObject =
+      this._findGenericHomeSystemTileOrThrow();
+
+    // Get faction sheet (for surrogate, but always do for code exercise in all cases).
+    const factionSheet: GameObject = this._findFactionSheetOrThrow();
+
+    const homeSystemTileObj: GameObject = this._spawnHomeSystemTile();
+    const surrogatSystemTileeObj: GameObject | undefined =
+      this._spawnSurrogateSystemTile();
+
+    const homePos: Vector = genericHomeSystemTile.getPosition().add([0, 0, 10]);
+    const factionSheetPos: Vector = factionSheet.getPosition().add([0, 0, 10]);
+
+    DeletedItemsContainer.destroyWithoutCopying(genericHomeSystemTile);
+    if (surrogatSystemTileeObj) {
+      surrogatSystemTileeObj.setPosition(homePos);
+      surrogatSystemTileeObj.snapToGround();
+      homeSystemTileObj.setPosition(factionSheetPos);
+      homeSystemTileObj.snapToGround();
+    } else {
+      homeSystemTileObj.setPosition(homePos);
+      homeSystemTileObj.snapToGround();
+    }
+  }
+
+  remove(): void {
+    const homeSystemTileObj: GameObject = this._findHomeSystemTileOrThrow();
+    const surrogatSystemTileeObj: GameObject | undefined =
+      this._findSurrogateSystemTile();
+
+    let pos: Vector;
+    if (surrogatSystemTileeObj) {
+      pos = surrogatSystemTileeObj.getPosition().add([0, 0, 10]);
+    } else {
+      pos = homeSystemTileObj.getPosition().add([0, 0, 10]);
+    }
+
+    DeletedItemsContainer.destroyWithoutCopying(homeSystemTileObj);
+    if (surrogatSystemTileeObj) {
+      DeletedItemsContainer.destroyWithoutCopying(surrogatSystemTileeObj);
+    }
+
+    const genericHomeSystemTile: GameObject =
+      this._spawnGenericHomeSystemTile();
+    genericHomeSystemTile.setPosition(pos);
+    genericHomeSystemTile.snapToGround();
+  }
 }

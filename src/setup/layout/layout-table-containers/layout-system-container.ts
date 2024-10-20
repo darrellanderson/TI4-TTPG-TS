@@ -1,4 +1,5 @@
 import { Container, GameObject, ObjectType } from "@tabletop-playground/api";
+import { SystemSchemaType } from "lib/system-lib/schema/system-schema";
 import { LayoutObjects, Spawn } from "ttpg-darrell";
 
 export class LayoutSystemContainer {
@@ -14,9 +15,11 @@ export class LayoutSystemContainer {
     const tileNumbers: Array<number> =
       TI4.systemRegistry.getAllSystemTileNumbers();
     for (const tileNumber of tileNumbers) {
+      const systemSchema: SystemSchemaType | undefined =
+        TI4.systemRegistry.rawBySystemTileNumber(tileNumber);
       const nsid: string | undefined =
         TI4.systemRegistry.tileNumberToSystemTileObjNsid(tileNumber);
-      if (nsid) {
+      if (systemSchema && !systemSchema.isHome && nsid) {
         const systemTile: GameObject = Spawn.spawnOrThrow(nsid);
         systemTiles.push(systemTile);
 
