@@ -126,6 +126,21 @@ it("loadDefaultData", () => {
   expect(registry.getAllFactions()).not.toHaveLength(0);
 });
 
+it("rewriteLeader", () => {
+  const registry = new FactionRegistry().loadDefaultRewriteLeader();
+
+  let orig: string;
+  let rewritten: string;
+
+  orig = "card.leader.agent:pok/zeu";
+  rewritten = registry.rewriteLeader(orig);
+  expect(rewritten).toBe(orig);
+
+  orig = "card.leader.agent:pok/zeu.omega";
+  rewritten = registry.rewriteLeader(orig);
+  expect(rewritten).toBe("card.leader.agent:codex.vigil/zeu.omega");
+});
+
 it("validate (global)", () => {
   TI4.factionRegistry.validateOrThrow();
 });
@@ -245,8 +260,7 @@ it("validate NSIDs appear in assets/Templates", () => {
       return item.path.endsWith(".json");
     },
   });
-  const regex: RegExp =
-    /"(card.alliance.*|card.*|sheet.faction:.*|tile.system:.*|token.*)"/;
+  const regex: RegExp = /"(card.*|sheet.faction:.*|tile.system:.*|token.*)"/;
   for (const entry of entries) {
     const data: Buffer = fs.readFileSync(entry.path);
     const lines: Array<string> = data.toString().split("\n");

@@ -11,7 +11,7 @@ export const FactionSchema = z
 
     abilities: z.array(NsidNameSchema),
     commodities: z.number().int().min(0),
-    factionTechs: z.array(NsidNameSchema).length(2),
+    factionTechs: z.array(NsidNameSchema).min(2), // omega versions listed separately, can have more than 2
     home: z.number().int().min(0),
     homeSurrogate: z.number().int().min(0).optional(), // home is off-map, place this tile in home pos
     leaders: z

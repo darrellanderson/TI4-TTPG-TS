@@ -36,10 +36,16 @@ export class Faction {
       source = "pok"; // aliance got added in PoK
     }
     return this._params.leaders.agents.map((agent): string => {
-      return `card.leader.agent:${source}/${agent}`;
+      return TI4.factionRegistry.rewriteLeader(
+        `card.leader.agent:${source}/${agent}`
+      );
     });
   }
 
+  /**
+   * Caution, there may be '.omega' version!
+   * @returns
+   */
   getAllianceNsid(): string {
     let source: string = this._sourceAndPackageId.source;
     if (source === "base") {
@@ -54,7 +60,9 @@ export class Faction {
       source = "pok"; // aliance got added in PoK
     }
     return this._params.leaders.commanders.map((commander): string => {
-      return `card.leader.commander:${source}/${commander}`;
+      return TI4.factionRegistry.rewriteLeader(
+        `card.leader.commander:${source}/${commander}`
+      );
     });
   }
 
@@ -108,7 +116,9 @@ export class Faction {
       source = "pok"; // aliance got added in PoK
     }
     return this._params.leaders.heroes.map((hero): string => {
-      return `card.leader.hero:${source}/${hero}`;
+      return TI4.factionRegistry.rewriteLeader(
+        `card.leader.hero:${source}/${hero}`
+      );
     });
   }
 
@@ -145,7 +155,9 @@ export class Faction {
       source = "pok"; // aliance got added in PoK
     }
     return this._params.leaders.mechs.map((mech): string => {
-      return `card.leader.mech:${source}/${mech}`;
+      return TI4.factionRegistry.rewriteLeader(
+        `card.leader.mech:${source}/${mech}`
+      );
     });
   }
 

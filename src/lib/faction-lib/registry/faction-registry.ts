@@ -7,10 +7,12 @@ import {
 import { SOURCE_TO_FACTION_DATA } from "../data/faction.data";
 import { refPackageId, Vector, world } from "@tabletop-playground/api";
 import { Find, NSID } from "ttpg-darrell";
+import { REWRITE_LEADER } from "../data/faction-nsid-rewrite.data";
 
 export class FactionRegistry {
   private readonly _find: Find = new Find();
   private readonly _nsidToFaction: Map<string, Faction> = new Map();
+  private readonly _nsidToRewriteLeader: Map<string, string> = new Map();
 
   constructor() {}
 
@@ -79,6 +81,29 @@ export class FactionRegistry {
       this.load(sourceAndPackageId, factions);
     }
     return this;
+  }
+
+  loadRewriteLeader(rewrite: Record<string, string>): this {
+    for (const [nsid, rewriteLeader] of Object.entries(rewrite)) {
+      this._nsidToRewriteLeader.set(nsid, rewriteLeader);
+    }
+    return this;
+  }
+
+  loadDefaultRewriteLeader(): this {
+    return this.loadRewriteLeader(REWRITE_LEADER);
+  }
+
+  /**
+   * Leader overrides may have a different source than the faction
+   * (e.g. zeu.omega).
+   *
+   * @param nsid
+   * @returns
+   */
+  rewriteLeader(nsid: string): string {
+    const result: string | undefined = this._nsidToRewriteLeader.get(nsid);
+    return result ? result : nsid;
   }
 
   /**

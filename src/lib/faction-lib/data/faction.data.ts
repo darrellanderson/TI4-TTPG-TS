@@ -18,7 +18,7 @@ export const SOURCE_TO_FACTION_DATA: Record<
         heroes: ["letani-miasmiala"],
         mechs: ["letani-behemoth"],
       },
-      promissories: ["stymie"],
+      promissories: ["stymie", "stymie.omega"],
       startingTechs: ["magen-defense-grid"],
       startingUnits: {
         carrier: 1,
@@ -54,7 +54,11 @@ export const SOURCE_TO_FACTION_DATA: Record<
         infantry: 4,
         spaceDock: 1,
       },
-      factionTechs: ["wormhole-generator", "dimensional-splicer"],
+      factionTechs: [
+        "wormhole-generator",
+        "wormhole-generator.omega",
+        "dimensional-splicer",
+      ],
       unitOverrides: ["hil-colish", "icarus-drive"],
       extras: [
         { nsid: "token.attachment.system:base/wormhole-alpha.creuss" },
@@ -131,7 +135,10 @@ export const SOURCE_TO_FACTION_DATA: Record<
         heroes: ["the-helmsman"],
         mechs: ["annihilator"],
       },
-      promissories: ["cybernetic-enhancements"],
+      promissories: [
+        "cybernetic-enhancements",
+        "cybernetic-enhancements.omega",
+      ],
       startingTechs: ["neural-motivator", "plasma-scoring"],
       startingUnits: {
         carrier: 1,
@@ -157,7 +164,7 @@ export const SOURCE_TO_FACTION_DATA: Record<
         heroes: ["darktalon-treilla"],
         mechs: ["dunlain-reaper"],
       },
-      promissories: ["war-funding"],
+      promissories: ["war-funding", "war-funding.omega"],
       startingTechs: ["antimass-deflectors", "plasma-scoring"],
       startingUnits: {
         carrier: 1,
@@ -213,7 +220,11 @@ export const SOURCE_TO_FACTION_DATA: Record<
       promissories: ["fires-of-the-gashlai"],
       startingTechs: ["plasma-scoring"],
       startingUnits: { fighter: 2, infantry: 4, spaceDock: 1, warSun: 1 },
-      factionTechs: ["magmus-reactor", "prototype-war-sun-2"],
+      factionTechs: [
+        "magmus-reactor",
+        "magmus-reactor.omega",
+        "prototype-war-sun-2",
+      ],
       unitOverrides: ["the-inferno", "prototype-war-sun", "ember-colossus"],
       extras: [{ nsid: "tile.system:pok/81" }],
     },
@@ -225,10 +236,10 @@ export const SOURCE_TO_FACTION_DATA: Record<
       commodities: 3,
       home: 9,
       leaders: {
-        agents: ["zeu"],
-        commanders: ["maban"],
+        agents: ["zeu", "zeu.omega"],
+        commanders: ["maban", "maban.omega"],
         heroes: ["the-oracle"],
-        mechs: ["iconoclast"],
+        mechs: ["iconoclast", "iconoclast.omega"],
       },
       promissories: ["gift-of-prescience"],
       startingTechs: ["neural-motivator", "sarween-tools"],
@@ -381,7 +392,7 @@ export const SOURCE_TO_FACTION_DATA: Record<
         heroes: ["mathis-mathinus"],
         mechs: ["reclaimer"],
       },
-      promissories: ["acquiescence"],
+      promissories: ["acquiescence", "acquiescence.omega"],
       startingTechs: [],
       startingUnits: {
         carrier: 1,
@@ -404,7 +415,7 @@ export const SOURCE_TO_FACTION_DATA: Record<
       leaders: {
         agents: ["ggrocuto-rinn"],
         commanders: ["elder-qanoj"],
-        heroes: ["xxekir-grom"],
+        heroes: ["xxekir-grom", "xxekir-grom.omega"],
         mechs: ["indomitus"],
       },
       promissories: ["political-favor"],
@@ -428,12 +439,12 @@ export const SOURCE_TO_FACTION_DATA: Record<
       commodities: 2,
       home: 3,
       leaders: {
-        agents: ["brother-milor"],
-        commanders: ["brother-omar"],
-        heroes: ["dannel-of-the-tenth"],
+        agents: ["brother-milor", "brother-milor.omega"],
+        commanders: ["brother-omar", "brother-omar.omega"],
+        heroes: ["dannel-of-the-tenth", "dannel-of-the-tenth.omega"],
         mechs: ["moyins-ashes"],
       },
-      promissories: ["greyfire-mutagen"],
+      promissories: ["greyfire-mutagen", "greyfire-mutagen.omega"],
       startingTechs: ["sarween-tools"],
       startingUnits: {
         carrier: 2,
@@ -442,7 +453,7 @@ export const SOURCE_TO_FACTION_DATA: Record<
         infantry: 4,
         spaceDock: 1,
       },
-      factionTechs: ["yin-spinner", "impulse-core"],
+      factionTechs: ["yin-spinner", "yin-spinner.omega", "impulse-core"],
       unitOverrides: ["van-hauge", "moyins-ashes"],
     },
     {

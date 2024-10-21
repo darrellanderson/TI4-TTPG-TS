@@ -77,7 +77,9 @@ export class TI4Class {
   // Libraries.
   public readonly config = new Config("@config/ti4");
   public readonly hex = new Hex(HEX_LAYOUT_POINTY, 5.77735 * 1.5);
-  public readonly factionRegistry = new FactionRegistry().loadDefaultData();
+  public readonly factionRegistry = new FactionRegistry()
+    .loadDefaultData()
+    .loadDefaultRewriteLeader();
   public readonly planetAttachmentRegistry =
     new PlanetAttachmentRegistry().loadDefaultData();
   public readonly playerColor = new PlayerColor("@player-color/ti4");
