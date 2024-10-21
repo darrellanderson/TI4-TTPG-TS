@@ -13,6 +13,7 @@ import { Faction } from "../faction/faction";
 import { FactionRegistry } from "./faction-registry";
 import { FactionSchemaType } from "../schema/faction-schema";
 import { SourceAndPackageIdSchemaType } from "../../system-lib/schema/basic-types-schema";
+import { UnitSchema } from "../../unit-lib/schema/unit-attrs-schema";
 
 it("constructor", () => {
   new FactionRegistry();
@@ -220,6 +221,18 @@ it("validate (missing unit override)", () => {
   expect(() => {
     registry.validateOrThrow();
   }).toThrow();
+});
+
+it("validate starting units are UnitType", () => {
+  const factions: Array<Faction> = new FactionRegistry()
+    .loadDefaultData()
+    .getAllFactions();
+  for (const faction of factions) {
+    for (const unitType of Object.keys(faction.getStartingUnits())) {
+      expect(typeof unitType).toBe("string");
+      UnitSchema.parse(unitType);
+    }
+  }
 });
 
 it("validate NSIDs appear in assets/Templates", () => {

@@ -169,8 +169,22 @@ export class Faction {
     return this._params.startingTechs;
   }
 
-  getStartingUnits(): { [unit: string]: number } {
-    return this._params.startingUnits;
+  getStartingUnits(): Record<string, number> {
+    const result: Record<string, number> = {};
+
+    // eslint-disable-next-line prefer-const
+    for (let [unit, count] of Object.entries(this._params.startingUnits)) {
+      if (unit === "spaceDock") {
+        unit = "space-dock";
+      } else if (unit === "warSun") {
+        unit = "war-sun";
+      }
+      result[unit] = count;
+    }
+
+    // his._params.startingUnits;
+
+    return result;
   }
 
   getUnitOverrideNsids(): Array<string> {

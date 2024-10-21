@@ -36,6 +36,18 @@ export class UnpackStartingUnits extends AbstractUnpack {
     return obj;
   }
 
+  _findHomeSystemTileOrThrow(): GameObject {
+    const playerSlot: number = this.getPlayerSlot();
+    const systemTileObj: GameObject | undefined =
+      this.getFaction().getHomeSystemTileObj(playerSlot);
+    if (!systemTileObj) {
+      throw new Error(
+        `Could not find home system tile for ${this.getPlayerSlot()}`
+      );
+    }
+    return systemTileObj;
+  }
+
   unpack() {
     const unitObjs: Array<GameObject> = [];
     const startingUnits: { [unit: string]: number } =
@@ -56,7 +68,8 @@ export class UnpackStartingUnits extends AbstractUnpack {
       const nsid: string = NSID.get(obj);
       if (
         nsid.startsWith("unit:") &&
-        obj.getOwningPlayerSlot() === this.getPlayerSlot()
+        obj.getOwningPlayerSlot() === this.getPlayerSlot() &&
+        obj.getContainer() === undefined
       ) {
         GarbageContainer.tryRecycle(obj, undefined);
       }
