@@ -5,6 +5,8 @@ import { UnitType } from "../../../lib/unit-lib/schema/unit-attrs-schema";
 import { LayoutUnitBox } from "./layout-unit-box";
 import { GameObject, ObjectType } from "@tabletop-playground/api";
 
+const NUM_COLS: number = 3;
+
 export class LayoutUnitBoxes {
   private readonly _layout: LayoutObjects = new LayoutObjects();
 
@@ -53,7 +55,7 @@ export class LayoutUnitBoxes {
 
     let row: LayoutObjects | undefined;
     units.forEach((unit, index) => {
-      if (index % 4 === 0) {
+      if (index % NUM_COLS === 0) {
         row = new LayoutObjects()
           .setChildDistance(LayoutConfig.spacing)
           .setIsVertical(false);

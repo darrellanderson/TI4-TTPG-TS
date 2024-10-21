@@ -41,6 +41,8 @@ export class LayoutPlayerArea {
     const layoutUnitBoxes: LayoutObjects = new LayoutUnitBoxes(
       playerSlot
     ).getLayout();
+    const extraSpaceBetweenBoxesAndSheets =
+      new LayoutObjects().setOverrideWidth(3);
     const layoutSheets: LayoutObjects = new LayoutSheets(
       playerSlot
     ).getLayout();
@@ -50,6 +52,7 @@ export class LayoutPlayerArea {
     const topRow: LayoutObjects = new LayoutObjects()
       .setChildDistance(LayoutConfig.spacingWide)
       .add(layoutUnitBoxes)
+      .add(extraSpaceBetweenBoxesAndSheets) // for extra leaders, alliance cards, etc
       .add(layoutSheets)
       .add(layoutTokenContainers);
 
