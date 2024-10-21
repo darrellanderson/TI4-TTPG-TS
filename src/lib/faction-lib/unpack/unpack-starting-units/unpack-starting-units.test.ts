@@ -3,7 +3,6 @@ import { MockContainer, MockGameObject } from "ttpg-mock";
 
 import { Faction } from "../../faction/faction";
 import { UnpackStartingUnits } from "./unpack-starting-units";
-import exp from "constants";
 
 it("unpack/remove", () => {
   const faction: Faction = TI4.factionRegistry.getByNsid(
