@@ -1,6 +1,11 @@
 import { GameObject, Vector, world } from "@tabletop-playground/api";
-import { NsidNameSchemaType } from "lib/system-lib/schema/basic-types-schema";
 import { Atop, Direction, Find, NSID, ParsedNSID } from "ttpg-darrell";
+
+import {
+  PlayerSeats,
+  PlayerSeatType,
+} from "../../player-lib/player-seats/player-seats";
+import { NsidNameSchemaType } from "../../system-lib/schema/basic-types-schema";
 
 const STRATEGY_CARD_TO_INITIATIVE: Record<NsidNameSchemaType, number> = {
   leadership: 1,
@@ -25,6 +30,7 @@ export type InitiativeEntry = {
 
 export class InitiativeOrder {
   private readonly _find: Find = new Find();
+  private readonly _playerSeats: PlayerSeats = new PlayerSeats();
 
   static getStrategyCardNsidNameFirst(
     obj: GameObject
@@ -114,6 +120,15 @@ export class InitiativeOrder {
   setTurnOrderFromStrategyCards(): void {
     const entries: Array<InitiativeEntry> = this.get();
     const order: Array<number> = entries.map((entry) => entry.playerSlot);
+
+    // Any missing player slots.
+    const seats: Array<PlayerSeatType> = this._playerSeats.getAllSeats();
+    for (const seat of seats) {
+      if (!order.includes(seat.playerSlot)) {
+        order.push(seat.playerSlot);
+      }
+    }
+
     const direction: Direction = "forward";
     const currentTurn: number | undefined = order[0];
     if (currentTurn) {

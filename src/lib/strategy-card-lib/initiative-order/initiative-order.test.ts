@@ -105,11 +105,22 @@ it("setTurnOrderFromStrategyCards", () => {
   MockGameObject.simple("tile.strategy-card:base/diplomacy", {
     position: [100, 0, 0],
   });
-  new MockCardHolder({ owningPlayerSlot: 1, position: [100, 0, 0] });
+  new MockCardHolder({
+    templateMetadata: "card-holder:base/player-hand",
+    owningPlayerSlot: 1,
+    position: [100, 0, 0],
+  });
+
+  // Seat without initiative card.
+  new MockCardHolder({
+    templateMetadata: "card-holder:base/player-hand",
+    owningPlayerSlot: 2,
+    position: [200, 0, 0],
+  });
 
   const initiativeOrder: InitiativeOrder = new InitiativeOrder();
   initiativeOrder.setTurnOrderFromStrategyCards();
 
   const turnOrder: Array<number> = TI4.turnOrder.getTurnOrder();
-  expect(turnOrder).toEqual([1]);
+  expect(turnOrder).toEqual([1, 2]);
 });
