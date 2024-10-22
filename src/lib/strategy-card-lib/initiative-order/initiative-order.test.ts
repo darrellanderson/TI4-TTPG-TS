@@ -98,3 +98,18 @@ it("get (naalu zero)", () => {
   expect(entries[0]?.playerSlot).toBe(1);
   expect(entries[0]?.initiative).toBe(0);
 });
+
+it("setTurnOrderFromStrategyCards", () => {
+  MockGameObject.simple("mat:base/strategy-card");
+  MockGameObject.simple("tile.strategy-card:base/leadership"); // on mat
+  MockGameObject.simple("tile.strategy-card:base/diplomacy", {
+    position: [100, 0, 0],
+  });
+  new MockCardHolder({ owningPlayerSlot: 1, position: [100, 0, 0] });
+
+  const initiativeOrder: InitiativeOrder = new InitiativeOrder();
+  initiativeOrder.setTurnOrderFromStrategyCards();
+
+  const turnOrder: Array<number> = TI4.turnOrder.getTurnOrder();
+  expect(turnOrder).toEqual([1]);
+});

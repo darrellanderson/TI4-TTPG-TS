@@ -1,9 +1,7 @@
 import { GameObject, Rotator, Vector, world } from "@tabletop-playground/api";
-import { Atop, Find, NSID, Spawn } from "ttpg-darrell";
+import { Atop, NSID, Spawn } from "ttpg-darrell";
 
 export class PlaceTgsUnpicked {
-  private readonly _find: Find = new Find();
-
   _getUnpickedStrategyCards(): Array<GameObject> {
     const strategyCards: Array<GameObject> = [];
     let strategyCardMat: GameObject | undefined = undefined;

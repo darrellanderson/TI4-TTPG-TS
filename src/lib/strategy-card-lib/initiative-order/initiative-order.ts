@@ -1,6 +1,6 @@
 import { GameObject, Vector, world } from "@tabletop-playground/api";
 import { NsidNameSchemaType } from "lib/system-lib/schema/basic-types-schema";
-import { Atop, Find, NSID, ParsedNSID } from "ttpg-darrell";
+import { Atop, Direction, Find, NSID, ParsedNSID } from "ttpg-darrell";
 
 const STRATEGY_CARD_TO_INITIATIVE: Record<NsidNameSchemaType, number> = {
   leadership: 1,
@@ -109,5 +109,15 @@ export class InitiativeOrder {
 
     const result: Array<InitiativeEntry> = [...playerSlotToEntry.values()];
     return result.sort((a, b) => a.initiative - b.initiative);
+  }
+
+  setTurnOrderFromStrategyCards(): void {
+    const entries: Array<InitiativeEntry> = this.get();
+    const order: Array<number> = entries.map((entry) => entry.playerSlot);
+    const direction: Direction = "forward";
+    const currentTurn: number | undefined = order[0];
+    if (currentTurn) {
+      TI4.turnOrder.setTurnOrder(order, direction, currentTurn);
+    }
   }
 }

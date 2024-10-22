@@ -50,6 +50,13 @@ export class RecycleStrategyCard extends GarbageHandler {
       .getGlobalPosition()
       .add(new Vector(0, 0, 10));
 
+    const current: Vector = obj.getPosition();
+    const dx: number = Math.abs(current.x - above.x);
+    const dy: number = Math.abs(current.y - above.y);
+    if (dx < 0.1 && dy < 0.1) {
+      return true; // already at pos (possibly with tradegoods on top)
+    }
+
     obj.setPosition(above);
     obj.snapToGround();
     obj.snap();

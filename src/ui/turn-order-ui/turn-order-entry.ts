@@ -52,19 +52,19 @@ export class TurnOrderEntry extends TurnEntryWart {
       .setJustification(TextJustification.Center)
       .setText("14");
     this._strategyCardSolo = new Text()
-      .setFont("handel-gothic-regular.ttf")
+      .setFont("handel-gothic-regular.ttf", refPackageId)
       .setFontSize(11)
       .setJustification(TextJustification.Center)
       .setText("LEADERSHIP");
     this._strategyCardSoloOverlay = new Border();
     this._strategyCardLeft = new Text()
-      .setFont("handel-gothic-regular.ttf")
+      .setFont("handel-gothic-regular.ttf", refPackageId)
       .setFontSize(6)
       .setJustification(TextJustification.Center)
       .setText("LEADERSHIP");
     this._strategyCardLeftOverLay = new Border();
     this._strategyCardRight = new Text()
-      .setFont("handel-gothic-regular.ttf")
+      .setFont("handel-gothic-regular.ttf", refPackageId)
       .setFontSize(6)
       .setJustification(TextJustification.Center)
       .setText("LEADERSHIP");
