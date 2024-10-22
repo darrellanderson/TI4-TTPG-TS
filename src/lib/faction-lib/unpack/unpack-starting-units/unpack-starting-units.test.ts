@@ -86,6 +86,11 @@ it("unpack/remove", () => {
     items: [spaceDock],
   });
 
+  new MockGameObject({
+    templateMetadata: "tile.system:base/5",
+    owningPlayerSlot: playerSlot,
+  });
+
   const unpack = new UnpackStartingUnits(faction, playerSlot);
   unpack.unpack();
   unpack.remove();

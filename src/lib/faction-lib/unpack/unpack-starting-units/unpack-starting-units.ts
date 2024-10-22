@@ -1,4 +1,4 @@
-import { Container, GameObject, world } from "@tabletop-playground/api";
+import { Container, GameObject, Vector, world } from "@tabletop-playground/api";
 import { Find, GarbageContainer, NSID } from "ttpg-darrell";
 
 import { UnitType } from "../../../unit-lib/schema/unit-attrs-schema";
@@ -49,6 +49,8 @@ export class UnpackStartingUnits extends AbstractUnpack {
   }
 
   unpack() {
+    const systemTileObj: GameObject = this._findHomeSystemTileOrThrow();
+
     const unitObjs: Array<GameObject> = [];
     const startingUnits: { [unit: string]: number } =
       this.getFaction().getStartingUnits();
@@ -59,7 +61,15 @@ export class UnpackStartingUnits extends AbstractUnpack {
         unitObjs.push(obj);
       }
     }
-    // TODO XXX place units in starting positions
+
+    const rotate: number = 360 / (unitObjs.length + 1);
+    let localPos: Vector = new Vector(3, 0, 10);
+    for (const obj of unitObjs) {
+      const pos: Vector = systemTileObj.localPositionToWorld(localPos);
+      obj.setPosition(pos);
+      obj.snapToGround();
+      localPos = localPos.rotateAngleAxis(rotate, [0, 0, 1]);
+    }
   }
 
   remove() {
@@ -69,7 +79,7 @@ export class UnpackStartingUnits extends AbstractUnpack {
       if (
         nsid.startsWith("unit:") &&
         obj.getOwningPlayerSlot() === this.getPlayerSlot() &&
-        obj.getContainer() === undefined
+        obj.getContainer() === undefined // loose on table
       ) {
         GarbageContainer.tryRecycle(obj, undefined);
       }
