@@ -72,3 +72,21 @@ it("recycle (not a card)", () => {
   expect(recycle.canRecycle(new MockGameObject())).toBe(false);
   expect(recycle.recycle(new MockGameObject())).toBe(false);
 });
+
+it("recycle (generic)", () => {
+  expect(TI4.playerColor.getSlotColorNameOrThrow(10)).toBe("green");
+
+  const holder: CardHolder = new MockCardHolder({
+    templateMetadata: "card-holder:base/player-hand",
+    owningPlayerSlot: 10,
+  });
+  const card: Card = MockCard.simple("card.promissory.green:my-source/my-name");
+
+  expect(holder.getCards()).not.toContain(card);
+
+  const recycle = new RecycleCardPromissory();
+  expect(recycle.canRecycle(card)).toBe(true);
+  expect(recycle.recycle(card)).toBe(true);
+
+  expect(holder.getCards()).toContain(card);
+});

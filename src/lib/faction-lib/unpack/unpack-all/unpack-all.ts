@@ -7,6 +7,7 @@ import { UnpackFactionSheet } from "../unpack-faction-sheet/unpack-faction-sheet
 import { UnpackFactionTech } from "../unpack-faction-tech/unpack-faction-tech";
 import { UnpackFactionExtras } from "../unpack-faction-extras/unpack-faction-extras";
 import { UnpackHomeSystem } from "../unpack-home-system/unpack-home-system";
+import { UnpackStartingTech } from "../unpack-starting-tech/unpack-starting-tech";
 import { UnpackStartingUnits } from "../unpack-starting-units/unpack-starting-units";
 
 export class UnpackAll extends AbstractUnpack {
@@ -22,6 +23,7 @@ export class UnpackAll extends AbstractUnpack {
       new UnpackFactionSheet(faction, playerSlot),
       new UnpackFactionTech(faction, playerSlot),
       new UnpackHomeSystem(faction, playerSlot),
+      new UnpackStartingTech(faction, playerSlot),
       new UnpackStartingUnits(faction, playerSlot),
     ];
   }

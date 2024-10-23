@@ -67,6 +67,9 @@ registerErrorHandler();
 
 export class TI4Class {
   // Events.
+  public readonly onFactionChanged = new TriggerableMulticastDelegate<
+    (playerSlot: number, player: Player) => void
+  >();
   public readonly onSystemActivated = new TriggerableMulticastDelegate<
     (system: System, player: Player) => void
   >();

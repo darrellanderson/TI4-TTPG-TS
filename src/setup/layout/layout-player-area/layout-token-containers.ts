@@ -22,6 +22,14 @@ export class LayoutTokenContainers {
       colorLib.getColorsByPlayerSlotOrThrow(playerSlot);
     const objColor: Color = colorLib.parseColorOrThrow(colorsType.plastic);
 
+    const factionExtrasContainer: GameObject = Spawn.spawnOrThrow(
+      "container:base/faction-extras"
+    );
+
+    factionExtrasContainer.setOwningPlayerSlot(playerSlot);
+    factionExtrasContainer.setPrimaryColor(objColor);
+    factionExtrasContainer.setRotation([0, 0, 180]);
+
     const commandTokenContainer: GameObject = Spawn.spawnOrThrow(
       "container.token.command:base/generic"
     );
@@ -66,12 +74,22 @@ export class LayoutTokenContainers {
       .setChildDistance(LayoutConfig.spacing)
       .setIsVertical(true);
 
-    this._layout
+    const lower: LayoutObjects = new LayoutObjects()
+      .setChildDistance(LayoutConfig.spacing)
       .add(col1)
       .add(col2)
       .addAfterLayout(() => {
         commandTokenContainer.setObjectType(ObjectType.Ground);
         controlTokenContainer.setObjectType(ObjectType.Ground);
+      });
+
+    this._layout
+      .setChildDistance(LayoutConfig.spacingWide)
+      .setIsVertical(true)
+      .add(factionExtrasContainer)
+      .add(lower)
+      .addAfterLayout(() => {
+        factionExtrasContainer.setObjectType(ObjectType.Ground);
       });
   }
 

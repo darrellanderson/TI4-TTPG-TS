@@ -12,10 +12,7 @@ export class UnpackFactionExtras extends AbstractUnpack {
   }
 
   unpack() {
-    const extrasContainer: Container = Spawn.spawnOrThrow(
-      "container:base/faction-extras"
-    ) as Container;
-    extrasContainer.setOwningPlayerSlot(this.getPlayerSlot());
+    const extrasContainer: Container = this._getFactionExtrasContainerOrThrow();
 
     const faction: Faction = this.getFaction();
     const nsids: Array<string> = faction.getExtras();
@@ -29,19 +26,24 @@ export class UnpackFactionExtras extends AbstractUnpack {
   }
 
   remove() {
+    const extrasContainer: Container = this._getFactionExtrasContainerOrThrow();
+    const items: Array<GameObject> = extrasContainer.getItems();
+    for (const item of items) {
+      // Is it safe to destroy item inside a container?
+      DeletedItemsContainer.destroyWithoutCopying(item);
+    }
+  }
+
+  _getFactionExtrasContainerOrThrow(): Container {
     const skipContained: boolean = true;
     const extrasContainer: Container | undefined = this._find.findContainer(
       "container:base/faction-extras",
       this.getPlayerSlot(),
       skipContained
     );
-
-    if (extrasContainer) {
-      const items: Array<GameObject> = extrasContainer.getItems();
-      for (const item of items) {
-        DeletedItemsContainer.destroyWithoutCopying(item);
-      }
-      DeletedItemsContainer.destroyWithoutCopying(extrasContainer);
+    if (!extrasContainer) {
+      throw new Error("Faction extras container not found");
     }
+    return extrasContainer;
   }
 }
