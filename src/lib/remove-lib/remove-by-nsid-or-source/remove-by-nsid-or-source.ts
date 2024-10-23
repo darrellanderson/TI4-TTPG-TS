@@ -1,4 +1,4 @@
-import { Card, world } from "@tabletop-playground/api";
+import { Card, GameObject, world } from "@tabletop-playground/api";
 import {
   CardUtil,
   DeletedItemsContainer,
@@ -32,8 +32,19 @@ export class RemoveByNsidOrSource {
     return removeByNsidOrSource;
   }
 
+  private readonly _cardUtil: CardUtil = new CardUtil();
   private readonly _removeSources: Set<string> = new Set();
   private readonly _removeNsids: Set<string> = new Set();
+
+  private readonly _shouldRemove = (nsid: string): boolean => {
+    const parsed: ParsedNSID | undefined = NSID.parse(nsid);
+    let remove: boolean = this._removeNsids.has(nsid);
+    if (parsed && !remove) {
+      const source = parsed.sourceParts.join(".");
+      remove = this._removeSources.has(source);
+    }
+    return remove;
+  };
 
   /**
    * Add a source to remove.
@@ -61,34 +72,30 @@ export class RemoveByNsidOrSource {
     return this._removeNsids.has(nsid);
   }
 
-  remove(): void {
-    const cardUtil: CardUtil = new CardUtil();
-
-    const shouldRemove = (nsid: string): boolean => {
-      const parsed: ParsedNSID | undefined = NSID.parse(nsid);
-      let remove: boolean = this._removeNsids.has(nsid);
-      if (parsed && !remove) {
-        const source = parsed.sourceParts.join(".");
-        remove = this._removeSources.has(source);
-      }
-      return remove;
-    };
-
-    for (const obj of world.getAllObjects()) {
+  removeOne(obj: GameObject) {
+    // Cards.
+    if (obj instanceof Card) {
       // Cards.
-      if (obj instanceof Card) {
-        // Cards.
-        const dele: Card | undefined = cardUtil.filterCards(obj, shouldRemove);
-        if (dele) {
-          DeletedItemsContainer.destroyWithoutCopying(dele);
-        }
-      } else {
-        // Basic objects.
-        const nsid: string = NSID.get(obj);
-        if (shouldRemove(nsid)) {
-          DeletedItemsContainer.destroyWithoutCopying(obj);
-        }
+      const dele: Card | undefined = this._cardUtil.filterCards(
+        obj,
+        this._shouldRemove
+      );
+      if (dele) {
+        DeletedItemsContainer.destroyWithoutCopying(dele);
       }
+    } else {
+      // Basic objects.
+      const nsid: string = NSID.get(obj);
+      if (this._shouldRemove(nsid)) {
+        DeletedItemsContainer.destroyWithoutCopying(obj);
+      }
+    }
+  }
+
+  removeAll(): void {
+    const skipContained: boolean = false;
+    for (const obj of world.getAllObjects(skipContained)) {
+      this.removeOne(obj);
     }
   }
 }

@@ -26,7 +26,7 @@ it("delete basic by source", () => {
   const dele: GameObject = MockGameObject.simple("type:source.dele/name");
   const keep: GameObject = MockGameObject.simple("type:source.keep/name");
 
-  new RemoveByNsidOrSource().addSource("source.dele").remove();
+  new RemoveByNsidOrSource().addSource("source.dele").removeAll();
 
   expect(dele.isValid()).toBe(false);
   expect(keep.isValid()).toBe(true);
@@ -36,7 +36,7 @@ it("delete basic by nsid", () => {
   const dele: GameObject = MockGameObject.simple("type:source.dele/name");
   const keep: GameObject = MockGameObject.simple("type:source.keep/name");
 
-  new RemoveByNsidOrSource().addNsid("type:source.dele/name").remove();
+  new RemoveByNsidOrSource().addNsid("type:source.dele/name").removeAll();
 
   expect(dele.isValid()).toBe(false);
   expect(keep.isValid()).toBe(true);
@@ -54,7 +54,7 @@ it("delete card by source", () => {
   nsids = NSID.getDeck(deck);
   expect(nsids).toEqual(["type:source.dele/name", "type:source.keep/name"]);
 
-  new RemoveByNsidOrSource().addSource("source.dele").remove();
+  new RemoveByNsidOrSource().addSource("source.dele").removeAll();
   nsids = NSID.getDeck(deck);
   expect(nsids).toEqual(["type:source.keep/name"]);
 });
@@ -71,7 +71,7 @@ it("delete card by nsid", () => {
   nsids = NSID.getDeck(deck);
   expect(nsids).toEqual(["type:source.dele/name", "type:source.keep/name"]);
 
-  new RemoveByNsidOrSource().addNsid("type:source.dele/name").remove();
+  new RemoveByNsidOrSource().addNsid("type:source.dele/name").removeAll();
   nsids = NSID.getDeck(deck);
   expect(nsids).toEqual(["type:source.keep/name"]);
 });
