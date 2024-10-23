@@ -1,7 +1,9 @@
-import { DeletedItemsContainer, Find, Spawn } from "ttpg-darrell";
-import { Faction } from "../../faction/faction";
-import { AbstractUnpack } from "../abstract-unpack/abstract-unpack";
 import { GameObject, Vector } from "@tabletop-playground/api";
+import { DeletedItemsContainer, Find, Spawn } from "ttpg-darrell";
+
+import { AbstractUnpack } from "../abstract-unpack/abstract-unpack";
+import { Faction } from "../../faction/faction";
+import { MapHomeSystemLocations } from "../../../map-string-lib/map-home-system-locations";
 
 export class UnpackHomeSystem extends AbstractUnpack {
   private readonly _find: Find = new Find();
@@ -11,19 +13,9 @@ export class UnpackHomeSystem extends AbstractUnpack {
   }
 
   _findGenericHomeSystemTileOrThrow(): GameObject {
-    const genericHomeSystemTileNsid: string = "tile.system:base/0";
-    const skipContained: boolean = true;
-    const obj: GameObject | undefined = this._find.findGameObject(
-      genericHomeSystemTileNsid,
-      this.getPlayerSlot(),
-      skipContained
+    return new MapHomeSystemLocations().findOrSpawnGenericHomeSystemOrThrow(
+      this.getPlayerSlot()
     );
-    if (!obj) {
-      throw new Error(
-        `Could not find generic home system tile for ${this.getPlayerSlot()}`
-      );
-    }
-    return obj;
   }
 
   _findFactionSheetOrThrow(): GameObject {
@@ -41,11 +33,10 @@ export class UnpackHomeSystem extends AbstractUnpack {
     return obj;
   }
 
-  _spawnGenericHomeSystemTile(): GameObject {
-    const genericHomeSystemTileNsid: string = "tile.system:base/0";
-    const obj: GameObject = Spawn.spawnOrThrow(genericHomeSystemTileNsid);
-    obj.setOwningPlayerSlot(this.getPlayerSlot());
-    return obj;
+  _spawnGenericHomeSystemTileOrThrow(): GameObject {
+    return new MapHomeSystemLocations().findOrSpawnGenericHomeSystemOrThrow(
+      this.getPlayerSlot()
+    );
   }
 
   _getHomeSystemTileNsid(): string {
@@ -155,7 +146,7 @@ export class UnpackHomeSystem extends AbstractUnpack {
     }
 
     const genericHomeSystemTile: GameObject =
-      this._spawnGenericHomeSystemTile();
+      this._spawnGenericHomeSystemTileOrThrow();
     genericHomeSystemTile.setPosition(pos);
     genericHomeSystemTile.snapToGround();
   }

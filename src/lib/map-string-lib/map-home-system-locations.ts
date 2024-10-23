@@ -1,6 +1,6 @@
-import { Vector, world } from "@tabletop-playground/api";
+import { Color, GameObject, Vector, world } from "@tabletop-playground/api";
 import { PlayerSeatType } from "lib/player-lib/player-seats/player-seats";
-import { HexType } from "ttpg-darrell";
+import { Find, HexType, Spawn } from "ttpg-darrell";
 
 type HomeSystemDir = "N" | "NE" | "SE" | "S" | "SW" | "NW";
 type HomeSystemHexes = {
@@ -87,5 +87,48 @@ export class MapHomeSystemLocations {
       }
     }
     return undefined;
+  }
+
+  findExistingGenericHomeSystem(playerSlot: number): GameObject | undefined {
+    const nsid: string = "tile.system:base/0";
+    const skipContained: boolean = true;
+    return new Find().findGameObject(nsid, playerSlot, skipContained);
+  }
+
+  spawnGenericHomeSystem(playerSlot: number): GameObject | undefined {
+    const nsid: string = "tile.system:base/0";
+    const pos: Vector | undefined = this.get(playerSlot);
+    if (pos) {
+      const obj: GameObject | undefined = Spawn.spawn(nsid, pos);
+      const color: Color | undefined =
+        TI4.playerColor.getSlotPlasticColor(playerSlot);
+
+      if (obj && color) {
+        obj.setName(`Home System (placeholder)`);
+        obj.setOwningPlayerSlot(playerSlot);
+        obj.setPrimaryColor(color);
+        obj.snapToGround();
+        return obj;
+      }
+    }
+    return undefined;
+  }
+
+  findOrSpawnGenericHomeSystemOrThrow(playerSlot: number): GameObject {
+    const existingObj: GameObject | undefined =
+      this.findExistingGenericHomeSystem(playerSlot);
+    if (existingObj) {
+      return existingObj;
+    }
+
+    const newObj: GameObject | undefined =
+      this.spawnGenericHomeSystem(playerSlot);
+    if (newObj) {
+      return newObj;
+    }
+
+    throw new Error(
+      `Failed to find or spawn home system for player slot ${playerSlot}`
+    );
   }
 }

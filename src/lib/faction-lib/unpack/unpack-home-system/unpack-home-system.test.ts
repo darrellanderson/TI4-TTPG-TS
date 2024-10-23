@@ -1,4 +1,4 @@
-import { MockGameObject } from "ttpg-mock";
+import { MockCardHolder, MockGameObject } from "ttpg-mock";
 import { UnpackHomeSystem } from "./unpack-home-system";
 import { Faction } from "../../faction/faction";
 import { GameObject } from "@tabletop-playground/api";
@@ -18,6 +18,11 @@ it("unpack/remove (arborec)", () => {
   MockGameObject.simple("tile.system:base/0", { owningPlayerSlot: playerSlot });
   MockGameObject.simple("tile.system:base/10");
 
+  new MockCardHolder({
+    templateMetadata: "card-holder:base/player-hand",
+    owningPlayerSlot: playerSlot,
+  });
+
   const unpack = new UnpackHomeSystem(faction, playerSlot);
   unpack.unpack();
   unpack.remove();
@@ -35,6 +40,11 @@ it("unpack/remove (creuss)", () => {
   });
   MockGameObject.simple("tile.system:base/0", { owningPlayerSlot: playerSlot });
   MockGameObject.simple("tile.system:base/10");
+
+  new MockCardHolder({
+    templateMetadata: "card-holder:base/player-hand",
+    owningPlayerSlot: playerSlot,
+  });
 
   const unpack = new UnpackHomeSystem(faction, playerSlot);
   unpack.unpack();
@@ -94,15 +104,32 @@ it("_findFactionSheetOrThrow (missing)", () => {
   expect(() => unpack._findFactionSheetOrThrow()).toThrow();
 });
 
-it("_spawnGenericHomeSystemTile", () => {
+it("_spawnGenericHomeSystemTileOrThrow", () => {
+  const faction: Faction = TI4.factionRegistry.getByNsid(
+    "faction:base/arborec"
+  )!;
+  const playerSlot: number = 10;
+
+  new MockCardHolder({
+    templateMetadata: "card-holder:base/player-hand",
+    owningPlayerSlot: playerSlot,
+  });
+
+  const unpack = new UnpackHomeSystem(faction, playerSlot);
+  const obj = unpack._spawnGenericHomeSystemTileOrThrow();
+  expect(obj.getOwningPlayerSlot()).toBe(playerSlot);
+});
+
+it("_spawnGenericHomeSystemTileOrThrow (missing player seat)", () => {
   const faction: Faction = TI4.factionRegistry.getByNsid(
     "faction:base/arborec"
   )!;
   const playerSlot: number = 10;
 
   const unpack = new UnpackHomeSystem(faction, playerSlot);
-  const obj = unpack._spawnGenericHomeSystemTile();
-  expect(obj.getOwningPlayerSlot()).toBe(playerSlot);
+  expect(() => {
+    unpack._spawnGenericHomeSystemTileOrThrow();
+  }).toThrow();
 });
 
 it("_getHomeSystemTileNsid", () => {
