@@ -1,4 +1,4 @@
-import { Vector } from "@tabletop-playground/api";
+import { Vector, world } from "@tabletop-playground/api";
 import { PlayerSeatType } from "lib/player-lib/player-seats/player-seats";
 import { HexType } from "ttpg-darrell";
 
@@ -65,6 +65,7 @@ export class MapHomeSystemLocations {
   get(playerSlot: number): Vector | undefined {
     const playerSeats: Array<PlayerSeatType> = TI4.playerSeats.getAllSeats();
     const playerCount: number = playerSeats.length;
+    const z: number = world.getTableHeight() + 10;
 
     let seatIndex: number = -1;
     playerSeats.forEach((playerSeat, index) => {
@@ -79,7 +80,9 @@ export class MapHomeSystemLocations {
         const hexesEntry: HomeSystemHexes | undefined = hexesArray[seatIndex];
         if (hexesEntry) {
           const hex: HexType = hexesEntry.onMap;
-          return TI4.hex.toPosition(hex);
+          const pos: Vector = TI4.hex.toPosition(hex);
+          pos.z = z;
+          return pos;
         }
       }
     }

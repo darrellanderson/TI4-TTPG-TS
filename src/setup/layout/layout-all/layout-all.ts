@@ -11,6 +11,7 @@ import { LayoutTableDecks } from "../layout-table-decks/layout-table-decks";
 import { LayoutCombatArena } from "../layout-combat-arena/layout-combat-arena";
 import { LayoutQuickRoller } from "../layout-quick-roller/layout-quick-roller";
 import { LayoutTableSystemTiles } from "../layout-table-system-tiles/layout-table-system-tiles";
+import { PlaceGenericHomeSystems } from "../layout-map-area/place-generic-home-systems";
 
 export class LayoutAll {
   private readonly _layout: LayoutObjects;
@@ -75,11 +76,16 @@ export class LayoutAll {
     const numMapRings: number = playerCount <= 6 ? 3 : 4;
     middle.add(left).add(new LayoutMapArea(numMapRings).getLayout()).add(right);
 
-    // Finally place system tiles.
+    // Place system tiles.
     this._layout.addAfterLayout(() => {
       new LayoutTableSystemTiles()
         .getLayout()
         .doLayoutAtPoint(this._layout.getCenter(), 0);
+    });
+
+    // Place generic home systems (AFTER setting up player areas).
+    this._layout.addAfterLayout(() => {
+      new PlaceGenericHomeSystems().placeOrThrow();
     });
   }
 
