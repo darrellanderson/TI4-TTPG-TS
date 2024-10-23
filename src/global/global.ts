@@ -46,6 +46,7 @@ import { UnitModifierRegistry } from "../lib/unit-lib/registry/unit-modifier-reg
 
 import { addObjectTemplatesToMockWorld } from "../nsid/nsid-to-template-id.test";
 import * as NSID_TO_TEMPLATE_ID from "../nsid/nsid-to-template-id.json";
+import { NumpadKeyAll } from "lib/numpad-key-lib/numpad-key-all";
 Spawn.inject(NSID_TO_TEMPLATE_ID);
 
 Find.ignoreOwnedCardHolderNsid("card-holder:base/player-scoring");
@@ -119,6 +120,7 @@ export function resetGlobalThisTI4(): TI4Class {
     new DiceGroupCleanup(),
     new DiplomacySystem(),
     new LeaveSeat(),
+    new NumpadKeyAll(),
     new OnCardBecameSingletonOrDeck(),
     new OnSystemActivated(),
     new ReportRemaining(),
