@@ -8,8 +8,7 @@ import {
 import { Spawn } from "ttpg-darrell";
 
 export class NumpadKeySpawn {
-  private readonly _key: number;
-  private readonly _nsid: string;
+  private readonly _keyToNsid: Record<number, string>;
 
   private readonly _onScriptButtonPressed = (
     player: Player,
@@ -17,23 +16,27 @@ export class NumpadKeySpawn {
     ctrl: boolean,
     alt: boolean
   ): void => {
-    if (index === this._key && !ctrl && !alt) {
+    const nsid: string | undefined = this._keyToNsid[index];
+    if (nsid && !ctrl && !alt) {
       const pos: Vector = player.getCursorPosition();
       pos.z = world.getTableHeight() + 10;
-      const obj: GameObject | undefined = Spawn.spawn(this._nsid, pos);
+      const obj: GameObject | undefined = Spawn.spawn(nsid, pos);
       if (obj) {
         obj.snapToGround();
       }
     }
   };
 
-  constructor(key: number, nsid: string) {
-    if (!Spawn.has(nsid)) {
-      throw new Error(`NumpadKeySpawn: Unknown NSID: "${nsid}"`);
+  constructor(keyToNsid: Record<number, string>) {
+    // Validate NSIDs.
+    for (const key in keyToNsid) {
+      const nsid: string | undefined = keyToNsid[key];
+      if (!nsid || !Spawn.has(nsid)) {
+        throw new Error(`NumpadKeySpawn: Unknown NSID: "${keyToNsid[key]}"`);
+      }
     }
 
-    this._key = key;
-    this._nsid = nsid;
+    this._keyToNsid = keyToNsid;
     globalEvents.onScriptButtonPressed.add(this._onScriptButtonPressed);
   }
 

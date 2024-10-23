@@ -6,7 +6,7 @@ import { mockGlobalEvents, MockPlayer } from "ttpg-mock";
 it("numpad-key", () => {
   const nsid: string = "unit:base/carrier"; // differ from global version's nsids
   const key: number = 19; // won't conflict with actual key number
-  const numpadKeySpawn = new NumpadKeySpawn(key, nsid);
+  const numpadKeySpawn = new NumpadKeySpawn({ [key]: nsid });
 
   let count: number;
   count = world.getAllObjects().filter((obj) => NSID.get(obj) === nsid).length;
@@ -28,4 +28,11 @@ it("numpad-key", () => {
 
   count = world.getAllObjects().filter((obj) => NSID.get(obj) === nsid).length;
   expect(count).toBe(2);
+});
+
+it("numpad-key: invalid nsid", () => {
+  const nsid: string = "_does_not_exist_";
+  expect(() => {
+    new NumpadKeySpawn({ 1: nsid });
+  }).toThrow();
 });
