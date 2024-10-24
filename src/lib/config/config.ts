@@ -6,6 +6,7 @@ export const ConfigSchema = z
   .object({
     playerCount: z.number().int().min(1).max(8),
     timestamp: z.number(), // Unix timestamp, seconds since epoch.
+    sources: z.array(z.string()),
   })
   .strict();
 
@@ -29,17 +30,25 @@ export class Config {
       this._config = {
         playerCount: 6,
         timestamp: 0,
+        sources: ["base"],
       };
     }
   }
 
   _save(): void {
-    const json: string = JSON.stringify(this._config);
+    const json: string = JSON.stringify(
+      this._config,
+      Object.keys(this._config).sort()
+    );
     world.setSavedData(json, this._namespaceId);
   }
 
   get playerCount(): number {
     return this._config.playerCount;
+  }
+
+  get sources(): Array<string> {
+    return [...this._config.sources];
   }
 
   get timestamp(): number {
@@ -48,6 +57,13 @@ export class Config {
 
   setPlayerCount(playerCount: number): this {
     this._config.playerCount = playerCount;
+    this._save();
+    this.onConfigChanged.trigger(this);
+    return this;
+  }
+
+  setSources(sources: Array<string>): this {
+    this._config.sources = sources;
     this._save();
     this.onConfigChanged.trigger(this);
     return this;

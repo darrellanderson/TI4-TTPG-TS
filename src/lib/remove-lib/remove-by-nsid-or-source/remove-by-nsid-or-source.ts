@@ -10,28 +10,6 @@ import {
  * Remove content based on source or NSID.
  */
 export class RemoveByNsidOrSource {
-  static createFromRegistry(useSources: Array<string>): RemoveByNsidOrSource {
-    const removeByNsidOrSource: RemoveByNsidOrSource =
-      new RemoveByNsidOrSource();
-
-    const removeSources: Array<string> = TI4.removeRegistry
-      .getAllSources()
-      .filter((source: string): boolean => {
-        return !useSources.includes(source);
-      });
-    for (const source of removeSources) {
-      removeByNsidOrSource.addSource(source);
-    }
-
-    for (const source of useSources) {
-      const nsids: Array<string> = TI4.removeRegistry.getRemoveBySource(source);
-      for (const nsid of nsids) {
-        removeByNsidOrSource.addNsid(nsid);
-      }
-    }
-    return removeByNsidOrSource;
-  }
-
   private readonly _cardUtil: CardUtil = new CardUtil();
   private readonly _removeSources: Set<string> = new Set();
   private readonly _removeNsids: Set<string> = new Set();

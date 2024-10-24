@@ -1,4 +1,4 @@
-import { Card, GameObject, SnapPoint } from "@tabletop-playground/api";
+import { Card, GameObject, SnapPoint, Vector } from "@tabletop-playground/api";
 import { CardUtil, Find, Spawn } from "ttpg-darrell";
 
 import { AbstractUnpack } from "../abstract-unpack/abstract-unpack";
@@ -13,9 +13,8 @@ export class UnpackLeaders extends AbstractUnpack {
   constructor(faction: Faction, playerSlot: number) {
     super(faction, playerSlot);
 
-    const sources: Array<string> = TI4.config.sources;
     this._removeByNsidOrSource =
-      RemoveByNsidOrSource.createFromRegistry(sources);
+      TI4.removeRegistry.createRemoveFromRegistryAndConfig();
   }
 
   unpack(): void {
@@ -27,7 +26,7 @@ export class UnpackLeaders extends AbstractUnpack {
 
     const deckNsids: Array<string> = Spawn.getAllNsids().filter(
       (nsid: string) => {
-        nsid.startsWith("card.leader");
+        return nsid.startsWith("card.leader");
       }
     );
     const deck: Card = Spawn.spawnMergeDecksOrThrow(deckNsids);
@@ -88,8 +87,21 @@ export class UnpackLeaders extends AbstractUnpack {
       deck,
       (nsid: string): boolean => leaderNsidsAsSet.has(nsid)
     );
-    if (!leaders || leaders.getStackSize() !== leaderNsidsAsSet.size) {
-      throw new Error("Unexpected number of leaders");
+    if (!leaders) {
+      throw new Error("Leaders not found");
+    }
+    if (leaders.getStackSize() !== leaderNsidsAsSet.size) {
+      throw new Error(
+        `Unexpected number of leaders: have ${leaders.getStackSize()}, want ${leaderNsidsAsSet.size}`
+      );
+    }
+
+    const above: Vector = snapPoint.getGlobalPosition().add([0, 0, 10]);
+    const leadersCards: Array<Card> = this._cardUtil.separateDeck(leaders);
+    for (const leaderCard of leadersCards) {
+      leaderCard.setPosition(above);
+      leaderCard.snapToGround();
+      above.y -= 2;
     }
   }
 }

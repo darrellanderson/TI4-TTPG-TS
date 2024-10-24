@@ -1,7 +1,31 @@
 import { SOURCE_TO_REMOVE_NSIDS } from "../data/remove.data";
+import { RemoveByNsidOrSource } from "../remove-by-nsid-or-source/remove-by-nsid-or-source";
 
 export class RemoveRegistry {
   private readonly _sourceToRemoveNsids: Map<string, Array<string>> = new Map();
+
+  createRemoveFromRegistryAndConfig(): RemoveByNsidOrSource {
+    const remove: RemoveByNsidOrSource = new RemoveByNsidOrSource();
+
+    const useSources: Array<string> = TI4.config.sources;
+    const removeSources: Array<string> = this.getAllSources().filter(
+      (source: string): boolean => {
+        return !useSources.includes(source);
+      }
+    );
+    for (const source of removeSources) {
+      remove.addSource(source);
+    }
+
+    for (const source of useSources) {
+      const nsids: Array<string> = this.getRemoveBySource(source);
+      for (const nsid of nsids) {
+        remove.addNsid(nsid);
+      }
+    }
+
+    return remove;
+  }
 
   public getAllNsids(): Array<string> {
     const result: Array<string> = [];

@@ -18,12 +18,15 @@ it("save/restore", () => {
   expect(config.timestamp).toBe(0);
 
   config.setPlayerCount(3);
+  config.setSources(["base", "pok"]);
   config.setTimestamp(1234567890);
   expect(config.playerCount).toBe(3);
   expect(config.timestamp).toBe(1234567890);
 
   json = world.getSavedData("@config/test");
-  expect(json).toBe('{"playerCount":3,"timestamp":1234567890}');
+  expect(json).toBe(
+    '{"playerCount":3,"sources":["base","pok"],"timestamp":1234567890}'
+  );
 
   // Recreate from saved data.
   config = new Config("@config/test");

@@ -1,17 +1,32 @@
-import { MockGameObject } from "ttpg-mock";
+import {
+  MockCard,
+  MockCardDetails,
+  MockGameObject,
+  MockSnapPoint,
+} from "ttpg-mock";
 import { Faction } from "../../faction/faction";
 import { UnpackLeaders } from "./unpack-leaders";
-import { GameObject } from "@tabletop-playground/api";
+import { Card, GameObject, SnapPoint } from "@tabletop-playground/api";
 
-it("unpack/remove", () => {
+it("unpack (spawn does not have cards)", () => {
   const faction: Faction = TI4.factionRegistry.getByNsid(
     "faction:base/arborec"
   )!;
   const playerSlot: number = 10;
 
+  new MockGameObject({
+    templateMetadata: "sheet:pok/leader",
+    owningPlayerSlot: playerSlot,
+    snapPoints: [
+      new MockSnapPoint(),
+      new MockSnapPoint(),
+      new MockSnapPoint(),
+      new MockSnapPoint(),
+    ],
+  });
+
   const unpack = new UnpackLeaders(faction, playerSlot);
-  unpack.unpack();
-  unpack.remove();
+  expect(() => unpack.unpack()).toThrow(/Leaders not found/);
 });
 
 it("_findLeaderSheetOrThrow", () => {
@@ -38,4 +53,21 @@ it("_findLeaderSheetOrThrow (missing)", () => {
 
   const unpack = new UnpackLeaders(faction, playerSlot);
   expect(() => unpack._findLeaderSheetOrThrow()).toThrow();
+});
+
+it("_unpackLeaders", () => {
+  const faction: Faction = TI4.factionRegistry.getByNsid(
+    "faction:base/arborec"
+  )!;
+  const playerSlot: number = 10;
+
+  const nsid: string = "card.leader.agent:pok/letani-ospha";
+  const deck: Card = new MockCard({
+    cardDetails: [new MockCardDetails({ metadata: nsid })],
+  });
+
+  const snapPoint: SnapPoint = new MockSnapPoint();
+
+  const unpack = new UnpackLeaders(faction, playerSlot);
+  unpack._unpackLeaders(deck, [nsid], snapPoint);
 });

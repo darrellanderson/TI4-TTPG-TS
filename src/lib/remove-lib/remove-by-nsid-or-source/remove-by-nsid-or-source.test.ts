@@ -4,13 +4,6 @@ import { NSID } from "ttpg-darrell";
 import { MockCard, MockCardDetails, MockGameObject } from "ttpg-mock";
 import { RemoveByNsidOrSource } from "./remove-by-nsid-or-source";
 
-it("static createFromRegistry", () => {
-  const remove = RemoveByNsidOrSource.createFromRegistry(["pok"]);
-  expect(remove.hasSource("pok")).toBe(false);
-  expect(remove.hasSource("codex.vigil")).toBe(true);
-  expect(remove.hasNsid("card.agenda:base/research-team-warfare")).toBe(true);
-});
-
 it("constructor/add/has", () => {
   const remove = new RemoveByNsidOrSource();
   expect(remove.hasSource("source")).toBe(false);

@@ -71,3 +71,12 @@ it("validate NSIDs appear in assets/Templates", () => {
   }
   expect(missing).toHaveLength(0);
 });
+
+it("static createFromRegistry", () => {
+  const registry: RemoveRegistry = new RemoveRegistry().loadDefaultData();
+  TI4.config.setSources(["base", "pok"]);
+  const remove = registry.createRemoveFromRegistryAndConfig();
+  expect(remove.hasSource("pok")).toBe(false);
+  expect(remove.hasSource("codex.vigil")).toBe(true);
+  expect(remove.hasNsid("card.agenda:base/research-team-warfare")).toBe(true);
+});
