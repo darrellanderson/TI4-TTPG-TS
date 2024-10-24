@@ -15,7 +15,6 @@ import {
   SystemAttachmentSchema,
   SystemAttachmentSchemaType,
 } from "../schema/system-attachment-schema";
-import { ValidateImages } from "../validate/validate-images";
 import { SOURCE_TO_SYSTEM_ATTACHMENT_DATA } from "../data/system-attachment.data";
 
 type SchemaAndSource = {
@@ -239,22 +238,5 @@ export class SystemAttachmentRegistry {
       }
     }
     return undefined;
-  }
-
-  public validateImages(): this {
-    const validateImages = new ValidateImages();
-    for (const schemaAndSource of this._nsidToSchemaAndSource.values()) {
-      const source: SourceAndPackageIdSchemaType =
-        schemaAndSource.sourceAndPackageId;
-      const schema: SystemAttachmentSchemaType = schemaAndSource.schema;
-      let img: string = SystemAttachment.schemaToImg(source, schema, false);
-      validateImages.add(img, source.packageId);
-      if (schema.imgFaceDown) {
-        img = SystemAttachment.schemaToImg(source, schema, true);
-        validateImages.add(img, source.packageId);
-      }
-    }
-    validateImages.validateOrThrow();
-    return this;
   }
 }

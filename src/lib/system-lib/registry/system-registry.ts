@@ -16,7 +16,6 @@ import {
   SourceAndPackageIdSchema,
   SourceAndPackageIdSchemaType,
 } from "../schema/basic-types-schema";
-import { ValidateImages } from "../validate/validate-images";
 
 type SchemaAndSource = {
   schema: SystemSchemaType;
@@ -263,31 +262,5 @@ export class SystemRegistry {
       return `tile.system:${source}/${tileNumber}`;
     }
     return undefined;
-  }
-
-  public validateImages(jpgInsteadOfPng: boolean = false): this {
-    const validateImages = new ValidateImages();
-    for (const schemaAndSource of this._systemTileNumberToSchemaAndSource.values()) {
-      const source: SourceAndPackageIdSchemaType =
-        schemaAndSource.sourceAndPackageId;
-      const schema: SystemSchemaType = schemaAndSource.schema;
-      if (schema.tile <= 0) {
-        continue; // not a real entry
-      }
-      let img: string = System.schemaToImg(source, schema, false);
-      if (jpgInsteadOfPng) {
-        img = img.replace(".png", ".jpg");
-      }
-      validateImages.add(img, source.packageId);
-      if (schema.imgFaceDown) {
-        img = System.schemaToImg(source, schema, true);
-        if (jpgInsteadOfPng) {
-          img = img.replace(".png", ".jpg");
-        }
-        validateImages.add(img, source.packageId);
-      }
-    }
-    validateImages.validateOrThrow();
-    return this;
   }
 }

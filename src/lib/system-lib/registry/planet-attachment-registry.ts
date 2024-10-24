@@ -15,7 +15,6 @@ import {
   PlanetAttachmentSchema,
   PlanetAttachmentSchemaType,
 } from "../schema/planet-attachment-schema";
-import { ValidateImages } from "../validate/validate-images";
 import { SOURCE_TO_PLANET_ATTACHMENT_DATA } from "../data/planet-attachment.data";
 
 type SchemaAndSource = {
@@ -219,22 +218,5 @@ export class PlanetAttachmentRegistry {
       }
     }
     return undefined;
-  }
-
-  public validateImages(): this {
-    const validateImages = new ValidateImages();
-    for (const schemaAndSource of this._nsidToSchemaAndSource.values()) {
-      const source: SourceAndPackageIdSchemaType =
-        schemaAndSource.sourceAndPackageId;
-      const schema: PlanetAttachmentSchemaType = schemaAndSource.schema;
-      let img: string = PlanetAttachment.schemaToImg(source, schema, false);
-      validateImages.add(img, source.packageId);
-      if (schema.imgFaceDown) {
-        img = PlanetAttachment.schemaToImg(source, schema, true);
-        validateImages.add(img, source.packageId);
-      }
-    }
-    validateImages.validateOrThrow();
-    return this;
   }
 }

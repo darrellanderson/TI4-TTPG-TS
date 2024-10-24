@@ -1,10 +1,5 @@
-import { GameObject, Package } from "@tabletop-playground/api";
-import {
-  MockContainer,
-  MockGameObject,
-  MockPackage,
-  mockWorld,
-} from "ttpg-mock";
+import { GameObject } from "@tabletop-playground/api";
+import { MockContainer, MockGameObject } from "ttpg-mock";
 
 import { SystemAttachmentRegistry } from "./system-attachment-registry";
 import { System } from "../system/system";
@@ -131,23 +126,6 @@ it("loadDefaultData", () => {
   expect(registry.rawByNsid(nsid)).toBeUndefined();
   registry.loadDefaultData();
   expect(registry.rawByNsid(nsid)).toBeDefined();
-  registry.destroy();
-});
-
-it("validateImages", () => {
-  const registry = new SystemAttachmentRegistry().load(
-    { source: "my-source", packageId: "my-package-id" },
-    [{ name: "my-name", nsidName: "my-nsid-name", imgFaceDown: true }]
-  );
-  const myPackage: Package = new MockPackage({
-    textureFiles: [
-      "token/attachment/system/my-nsid-name.png",
-      "token/attachment/system/my-nsid-name.back.png",
-    ],
-    uniqueId: "my-package-id",
-  });
-  mockWorld._reset({ packages: [myPackage] });
-  registry.validateImages();
   registry.destroy();
 });
 

@@ -7,14 +7,9 @@
 import fs from "fs";
 import klawSync from "klaw-sync";
 
-import {
-  MockContainer,
-  MockGameObject,
-  MockPackage,
-  mockWorld,
-} from "ttpg-mock";
+import { MockContainer, MockGameObject } from "ttpg-mock";
 import { SystemRegistry } from "./system-registry";
-import { GameObject, Package, Vector, world } from "@tabletop-playground/api";
+import { GameObject, Vector, world } from "@tabletop-playground/api";
 import { SystemSchemaType } from "../schema/system-schema";
 import { NSID, ParsedNSID } from "ttpg-darrell";
 import { Planet } from "../planet/planet";
@@ -176,26 +171,6 @@ it("tileNumberToSystemTileObjNsid", () => {
   nsid = registry.tileNumberToSystemTileObjNsid(999);
   expect(nsid).toBeUndefined();
 
-  registry.destroy();
-});
-
-it("validateImages", () => {
-  const registry = new SystemRegistry().load(
-    { source: "my-source", packageId: "my-package-id" },
-    [{ tile: 12, imgFaceDown: true }, { tile: -1 }]
-  );
-  const myPackage: Package = new MockPackage({
-    textureFiles: [
-      "tile/system/tile-012.png",
-      "tile/system/tile-012.back.png",
-      "tile/system/tile-012.jpg",
-      "tile/system/tile-012.back.jpg",
-    ],
-    uniqueId: "my-package-id",
-  });
-  mockWorld._reset({ packages: [myPackage] });
-  registry.validateImages();
-  registry.validateImages(true);
   registry.destroy();
 });
 

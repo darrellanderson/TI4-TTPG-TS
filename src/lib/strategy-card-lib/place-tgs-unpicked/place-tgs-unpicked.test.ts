@@ -1,7 +1,7 @@
 import { GameObject, world } from "@tabletop-playground/api";
+import { MockGameObject } from "ttpg-mock";
+import { NSID } from "ttpg-darrell";
 import { PlaceTgsUnpicked } from "./place-tgs-unpicked";
-import { MockGameObject, mockWorld } from "ttpg-mock";
-import { NSID, Spawn } from "ttpg-darrell";
 
 it("constructor", () => {
   new PlaceTgsUnpicked();
@@ -31,17 +31,6 @@ it("_getUnpickedStrategyCards (missing mat)", () => {
 });
 
 it("_placeTradeGood", () => {
-  mockWorld._reset({
-    _templateIdToMockGameObjectParams: {
-      __tg__: {
-        templateMetadata: "token:base/tradegood-commodity-1",
-      },
-    },
-  });
-  Spawn.inject({
-    "token:base/tradegood-commodity-1": "__tg__",
-  });
-
   const diplomacy = MockGameObject.simple("tile.strategy-card:base/diplomacy");
 
   const placeTgsUnpicked = new PlaceTgsUnpicked();
