@@ -32,21 +32,9 @@ it("_validateSystems (unknown tile number)", () => {
   expect(new MapStringLoad()._validateSystems(entries)).toBe(false);
 });
 
-it("_validateTemplates", () => {
-  Spawn.inject({ "tile.system:base/1": "my-template-id" });
-  const entries: Array<MapStringEntry> = [{ tile: 1 }];
-  expect(new MapStringLoad()._validateTemplates(entries)).toBe(true);
-});
-
-it("_validateTemplates (missing template)", () => {
-  Spawn.clear();
-  const entries: Array<MapStringEntry> = [{ tile: 1 }];
-  expect(new MapStringLoad()._validateTemplates(entries)).toBe(false);
-});
-
 it("_tryMoveExistingSystemTileObj (existing system)", () => {
   const systemTileObj: GameObject = new MockGameObject({
-    templateMetadata: "tile.system:base/-123",
+    templateMetadata: "tile.system:base/1",
   });
   expect(systemTileObj.getPosition().toString()).toBe("(X=0,Y=0,Z=0)");
   expect(systemTileObj.getRotation().toString()).toBe("(P=0,Y=0,R=0)");
@@ -58,7 +46,7 @@ it("_tryMoveExistingSystemTileObj (existing system)", () => {
     number,
     Array<System>
   > = load._getTileNumberToSystemsSnapshot();
-  expect(systemsSnapshot.get(-123)).toBeDefined();
+  expect(systemsSnapshot.get(1)).toBeDefined();
 
   const success: boolean = load._tryMoveExistingSystemTileObj(
     1,
@@ -181,7 +169,6 @@ it("_tryMoveExistingSystemTileObj (empty system array)", () => {
 });
 
 it("_trySpawnNewSystemTileObj (spawn)", () => {
-  Spawn.inject({ "tile.system:base/1": "my-template-id" });
   expect(TI4.systemRegistry.tileNumberToSystemTileObjNsid(1)).toBeDefined();
   expect(Spawn.has("tile.system:base/1")).toBe(true);
   expect(TI4.systemRegistry.getAllSystemsWithObjs().length).toBe(0);
@@ -209,7 +196,6 @@ it("_trySpawnNewSystemTileObj (unknown nsid)", () => {
 });
 
 it("load", () => {
-  Spawn.inject({ "tile.system:base/1": "my-template-id" });
   const mapString: string = "{1}";
   const load: MapStringLoad = new MapStringLoad();
   expect(load.load(mapString)).toBe(true);
@@ -228,14 +214,12 @@ it("load (unknown tile number)", () => {
 });
 
 it("load (missing template)", () => {
-  Spawn.clear();
-  const mapString: string = "{1}";
+  const mapString: string = "{-123}";
   const load: MapStringLoad = new MapStringLoad();
   expect(load.load(mapString)).toBe(false);
 });
 
 it("load (existing system)", () => {
-  Spawn.inject({ "tile.system:base/1": "my-template-id" });
   new MockGameObject({
     templateMetadata: "tile.system:base/1",
   });
@@ -245,14 +229,12 @@ it("load (existing system)", () => {
 });
 
 it("load (spawn)", () => {
-  Spawn.inject({ "tile.system:base/1": "my-template-id" });
   const mapString: string = "{1}";
   const load: MapStringLoad = new MapStringLoad();
   expect(load.load(mapString)).toBe(true);
 });
 
 it("load (spawn side/rot)", () => {
-  Spawn.inject({ "tile.system:base/1": "my-template-id" });
   const mapString: string = "{1B5}";
   const load: MapStringLoad = new MapStringLoad();
   expect(load.load(mapString)).toBe(true);

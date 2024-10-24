@@ -56,29 +56,6 @@ export class MapStringLoad {
     return true;
   }
 
-  _validateTemplates(entries: Array<MapStringEntry>): boolean {
-    const unknownTiles: Array<number> = [];
-    for (const entry of entries) {
-      const nsid: string | undefined =
-        TI4.systemRegistry.tileNumberToSystemTileObjNsid(entry.tile);
-      if (nsid && !Spawn.has(nsid)) {
-        unknownTiles.push(entry.tile);
-      }
-    }
-    if (unknownTiles.length > 0) {
-      locale.inject({
-        "map-string-load.unknown-templates":
-          "Unknown templates: {unknownTiles}",
-      });
-      const msg: string = locale("map-string-load.unknown-templates", {
-        unknownTiles: unknownTiles.join(", "),
-      });
-      Broadcast.chatAll(msg, Broadcast.ERROR);
-      return false;
-    }
-    return true;
-  }
-
   /**
    * Get a snapshot of systems in game (on the table AND in containers).
    * Used to place systems with duplicates support.
@@ -162,7 +139,7 @@ export class MapStringLoad {
       return false;
     }
 
-    if (!this._validateSystems(entries) || !this._validateTemplates(entries)) {
+    if (!this._validateSystems(entries)) {
       return false;
     }
 
