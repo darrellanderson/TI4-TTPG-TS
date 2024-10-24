@@ -1,5 +1,17 @@
-import { Card, GameObject, SnapPoint, Vector } from "@tabletop-playground/api";
-import { CardUtil, Find, Spawn } from "ttpg-darrell";
+import {
+  Card,
+  GameObject,
+  SnapPoint,
+  Vector,
+  world,
+} from "@tabletop-playground/api";
+import {
+  CardUtil,
+  DeletedItemsContainer,
+  Find,
+  NSID,
+  Spawn,
+} from "ttpg-darrell";
 
 import { AbstractUnpack } from "../abstract-unpack/abstract-unpack";
 import { Faction } from "../../faction/faction";
@@ -60,7 +72,24 @@ export class UnpackLeaders extends AbstractUnpack {
   }
 
   remove(): void {
-    throw new Error("Method not implemented.");
+    const nsids: Array<string> = [
+      ...this.getFaction().getAgentNsids(),
+      ...this.getFaction().getCommanderNsids(),
+      ...this.getFaction().getHeroNsids(),
+      ...this.getFaction().getMechNsids(),
+    ];
+    const nsidSet: Set<string> = new Set(nsids);
+    const skipContained: boolean = true;
+    for (const obj of world.getAllObjects(skipContained)) {
+      const nsid: string = NSID.get(obj);
+      if (nsidSet.has(nsid)) {
+        const pos: Vector = obj.getPosition();
+        const closest: number = this._find.closestOwnedCardHolderOwner(pos);
+        if (closest === this.getPlayerSlot()) {
+          DeletedItemsContainer.destroyWithoutCopying(obj);
+        }
+      }
+    }
   }
 
   _findLeaderSheetOrThrow(): GameObject {
@@ -87,21 +116,23 @@ export class UnpackLeaders extends AbstractUnpack {
       deck,
       (nsid: string): boolean => leaderNsidsAsSet.has(nsid)
     );
-    if (!leaders) {
-      throw new Error("Leaders not found");
-    }
-    if (leaders.getStackSize() !== leaderNsidsAsSet.size) {
-      throw new Error(
-        `Unexpected number of leaders: have ${leaders.getStackSize()}, want ${leaderNsidsAsSet.size}`
-      );
-    }
+    if (leaderNsids.length > 0) {
+      if (!leaders) {
+        throw new Error("Leaders not found");
+      }
+      if (leaders.getStackSize() !== leaderNsidsAsSet.size) {
+        throw new Error(
+          `Unexpected number of leaders: have ${leaders.getStackSize()}, want ${leaderNsidsAsSet.size}`
+        );
+      }
 
-    const above: Vector = snapPoint.getGlobalPosition().add([0, 0, 10]);
-    const leadersCards: Array<Card> = this._cardUtil.separateDeck(leaders);
-    for (const leaderCard of leadersCards) {
-      leaderCard.setPosition(above);
-      leaderCard.snapToGround();
-      above.y -= 2;
+      const above: Vector = snapPoint.getGlobalPosition().add([0, 0, 10]);
+      const leadersCards: Array<Card> = this._cardUtil.separateDeck(leaders);
+      for (const leaderCard of leadersCards) {
+        leaderCard.setPosition(above);
+        leaderCard.snapToGround();
+        above.y -= 2;
+      }
     }
   }
 }

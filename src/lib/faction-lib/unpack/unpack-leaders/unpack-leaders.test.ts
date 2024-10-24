@@ -1,6 +1,7 @@
 import {
   MockCard,
   MockCardDetails,
+  MockCardHolder,
   MockGameObject,
   MockSnapPoint,
 } from "ttpg-mock";
@@ -8,10 +9,33 @@ import { Faction } from "../../faction/faction";
 import { UnpackLeaders } from "./unpack-leaders";
 import { Card, GameObject, SnapPoint } from "@tabletop-playground/api";
 
-it("unpack (spawn does not have cards)", () => {
-  const faction: Faction = TI4.factionRegistry.getByNsid(
-    "faction:base/arborec"
-  )!;
+it("unpack/remove", () => {
+  const faction: Faction = new Faction(
+    {
+      source: "my-source",
+      packageId: "my-package-id",
+    },
+    {
+      nsidName: "my-nsid-name",
+      name: "my-name",
+      abbr: "my-abbr",
+      abilities: ["my-ability"],
+      commodities: 1,
+      home: -123456789,
+      homeSurrogate: 3,
+      leaders: {
+        agents: [],
+        commanders: [],
+        heroes: [],
+        mechs: [],
+      },
+      promissories: ["my-promissory"],
+      startingTechs: ["my-starting-tech"],
+      startingUnits: { carrier: 0 },
+      factionTechs: ["one", "two"],
+      unitOverrides: ["my-unit-override", "my-mech"],
+    }
+  );
   const playerSlot: number = 10;
 
   new MockGameObject({
@@ -26,7 +50,24 @@ it("unpack (spawn does not have cards)", () => {
   });
 
   const unpack = new UnpackLeaders(faction, playerSlot);
-  expect(() => unpack.unpack()).toThrow(/Leaders not found/);
+  unpack.unpack();
+  unpack.remove();
+});
+
+it("unpack (wrong snap point count)", () => {
+  const faction: Faction = TI4.factionRegistry.getByNsid(
+    "faction:base/arborec"
+  )!;
+  const playerSlot: number = 10;
+
+  new MockGameObject({
+    templateMetadata: "sheet:pok/leader",
+    owningPlayerSlot: playerSlot,
+    snapPoints: [new MockSnapPoint(), new MockSnapPoint(), new MockSnapPoint()],
+  });
+
+  const unpack = new UnpackLeaders(faction, playerSlot);
+  expect(() => unpack.unpack()).toThrow(/snap points/);
 });
 
 it("_findLeaderSheetOrThrow", () => {
@@ -70,4 +111,62 @@ it("_unpackLeaders", () => {
 
   const unpack = new UnpackLeaders(faction, playerSlot);
   unpack._unpackLeaders(deck, [nsid], snapPoint);
+});
+
+it("_unpackLeaders (count mismatch)", () => {
+  const faction: Faction = TI4.factionRegistry.getByNsid(
+    "faction:base/arborec"
+  )!;
+  const playerSlot: number = 10;
+
+  const nsid: string = "card.leader.agent:pok/letani-ospha";
+  const deck: Card = new MockCard({
+    cardDetails: [
+      new MockCardDetails({ metadata: nsid }),
+      new MockCardDetails({ metadata: nsid }),
+    ],
+  });
+
+  const snapPoint: SnapPoint = new MockSnapPoint();
+
+  const unpack = new UnpackLeaders(faction, playerSlot);
+  expect(() => unpack._unpackLeaders(deck, [nsid], snapPoint)).toThrow(
+    /number of leaders/
+  );
+});
+
+it("_unpackLeaders (missing cards)", () => {
+  const faction: Faction = TI4.factionRegistry.getByNsid(
+    "faction:base/arborec"
+  )!;
+  const playerSlot: number = 10;
+
+  const nsid: string = "card.leader.agent:pok/letani-ospha";
+  const deck: Card = new MockCard({});
+
+  const snapPoint: SnapPoint = new MockSnapPoint();
+
+  const unpack = new UnpackLeaders(faction, playerSlot);
+  expect(() => unpack._unpackLeaders(deck, [nsid], snapPoint)).toThrow(
+    /Leaders not found/
+  );
+});
+
+it("remove find card", () => {
+  const faction: Faction = TI4.factionRegistry.getByNsid(
+    "faction:base/arborec"
+  )!;
+  const playerSlot: number = 10;
+
+  new MockCardHolder({
+    templateMetadata: "card-holder:base/player-hand",
+    owningPlayerSlot: playerSlot,
+  });
+  const card: Card = MockCard.simple("card.leader.agent:pok/letani-ospha");
+  expect(card.isValid()).toBeTruthy();
+
+  const unpack = new UnpackLeaders(faction, playerSlot);
+  unpack.remove();
+
+  expect(card.isValid()).toBeFalsy();
 });
