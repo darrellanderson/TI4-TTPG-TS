@@ -15,12 +15,29 @@ class MyUnpack extends AbstractUnpack {
   remove(): void {}
 }
 
-it("getters", () => {
+it("dealToPlayerOrThrow", () => {
   const unpack = new MyUnpack();
 
+  const _holder: CardHolder = new MockCardHolder({
+    templateMetadata: "card-holder:base/player-hand",
+    owningPlayerSlot: 10,
+  });
+
+  const card: Card = new MockCard();
+  unpack.dealToPlayerOrThrow(card);
+});
+
+it("dealToPlayerOrThrow (missing card holder)", () => {
+  const unpack = new MyUnpack();
+
+  const card: Card = new MockCard();
   expect(() => {
-    unpack.getPlayerHandHolderOrThrow();
+    unpack.dealToPlayerOrThrow(card);
   }).toThrow(/Missing player hand holder/);
+});
+
+it("getPlayerHandHolderOrThrow", () => {
+  const unpack = new MyUnpack();
 
   const holder: CardHolder = new MockCardHolder({
     templateMetadata: "card-holder:base/player-hand",
@@ -28,7 +45,27 @@ it("getters", () => {
   });
 
   expect(unpack.getPlayerHandHolderOrThrow()).toEqual(holder);
+});
 
-  const card: Card = new MockCard();
-  unpack.dealToPlayerOrThrow(card);
+it("getPlayerHandHolderOrThrow (missing card holder)", () => {
+  const unpack = new MyUnpack();
+
+  expect(() => {
+    unpack.getPlayerHandHolderOrThrow();
+  }).toThrow(/Missing player hand holder/);
+});
+
+it("spawnDeckAndFilterSourcesOrThrow", () => {
+  const unpack = new MyUnpack();
+
+  const deck = unpack.spawnDeckAndFilterSourcesOrThrow("card.alliance:");
+  expect(deck).toBeDefined();
+});
+
+it("spawnDeckAndFilterSourcesOrThrow (unknkown deck)", () => {
+  const unpack = new MyUnpack();
+
+  expect(() => {
+    unpack.spawnDeckAndFilterSourcesOrThrow("_does_not_exist_");
+  }).toThrow(/Missing deck/);
 });

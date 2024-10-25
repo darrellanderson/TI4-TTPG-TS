@@ -21,11 +21,9 @@ export class UnpackFactionAlliance extends AbstractUnpack {
 
   _dealAllianceCardsAndDeleteDeck(unfilteredAlliancesDeck: Card) {
     const nsids: Set<string> = this._getNsids();
-    console.log(Array.from(nsids).join(", "));
     const alliances: Card | undefined = new CardUtil().filterCards(
       unfilteredAlliancesDeck,
       (nsid: string): boolean => {
-        console.log("XXXXXXXXXXX", nsid, nsids.has(nsid));
         return nsids.has(nsid);
       }
     );

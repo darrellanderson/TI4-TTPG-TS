@@ -1,5 +1,5 @@
 import { Card, CardHolder } from "@tabletop-playground/api";
-import { Find } from "ttpg-darrell";
+import { Find, Spawn } from "ttpg-darrell";
 
 import { Faction } from "../../faction/faction";
 
@@ -22,6 +22,26 @@ export abstract class AbstractUnpack {
 
   abstract unpack(): void;
   abstract remove(): void;
+
+  spawnDeckAndFilterSourcesOrThrow(cardNsidPrefix: string): Card {
+    // Get all decks using the card prefix.
+    const deckNsids: Array<string> = Spawn.getAllNsids().filter(
+      (nsid: string): boolean => {
+        return nsid.startsWith(cardNsidPrefix);
+      }
+    );
+
+    // Spawn decks, merge into one.
+    if (deckNsids.length === 0) {
+      throw new Error(`Missing deck: "${cardNsidPrefix}"`);
+    }
+    const deck: Card = Spawn.spawnMergeDecksOrThrow(deckNsids);
+
+    // Remove any sources/nsids based on game config.
+    TI4.removeRegistry.createRemoveFromRegistryAndConfig().removeOne(deck);
+
+    return deck;
+  }
 
   getPlayerHandHolderOrThrow(): CardHolder {
     const skipContained: boolean = true;
