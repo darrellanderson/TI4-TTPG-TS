@@ -36,9 +36,9 @@ it("constructor", () => {
   expect(faction.getAgentNsids()).toEqual([
     "card.leader.agent:my-source/my-agent",
   ]);
-  expect(faction.getAllianceNsid()).toEqual(
-    "card.alliance:my-source/my-nsid-name"
-  );
+  expect(faction.getAllianceNsids()).toEqual([
+    "card.alliance:my-source/my-nsid-name",
+  ]);
   expect(faction.getCommanderNsids()).toEqual([
     "card.leader.commander:my-source/my-commander",
   ]);
@@ -111,7 +111,9 @@ it("constructor (base source get pok mech)", () => {
   ]);
 
   // Alliance is also a PoK addition.
-  expect(faction.getAllianceNsid()).toEqual("card.alliance:pok/my-nsid-name");
+  expect(faction.getAllianceNsids()).toEqual([
+    "card.alliance:pok/my-nsid-name",
+  ]);
 });
 
 it("getHomeSystemTileObj", () => {
@@ -170,6 +172,15 @@ it("getHomeSystemTileObj (bad tile number)", () => {
   };
   const faction: Faction = new Faction(sourceAndPackageId, schema);
   expect(faction.getHomeSystemTileObj(4)).toBeUndefined();
+});
+
+it("rewrite alliance omega source", () => {
+  const yin: Faction = TI4.factionRegistry.getByNsid("faction:base/yin")!;
+  const allianceNsids: Array<string> = yin.getAllianceNsids();
+  expect(allianceNsids.sort()).toEqual([
+    "card.alliance:codex.vigil/yin.omega",
+    "card.alliance:pok/yin",
+  ]);
 });
 
 it("rewrite hero omega source", () => {

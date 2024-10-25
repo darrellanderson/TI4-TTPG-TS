@@ -281,7 +281,7 @@ it("validate NSIDs appear in assets/Templates", () => {
     nsids.push(faction.getFactionSheetNsid());
     nsids.push(faction.getControlTokenNsid());
     nsids.push(faction.getCommandTokenNsid());
-    nsids.push(faction.getAllianceNsid());
+    nsids.push(...faction.getAllianceNsids());
     nsids.push(...faction.getAgentNsids());
     nsids.push(...faction.getCommanderNsids());
     nsids.push(...faction.getHeroNsids());

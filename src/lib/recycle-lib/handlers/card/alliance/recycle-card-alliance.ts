@@ -22,9 +22,8 @@ export class RecycleCardAlliance extends GarbageHandler {
       const playerSlotToFaction: Map<number, Faction> =
         TI4.factionRegistry.getPlayerSlotToFaction();
       for (const [playerSlot, faction] of playerSlotToFaction) {
-        const factionAllianceNsid: string = faction.getAllianceNsid();
-        // Card may be ".omega" or some such, so check if prefix.
-        if (nsid.startsWith(factionAllianceNsid)) {
+        const factionAllianceNsids: Array<string> = faction.getAllianceNsids();
+        if (factionAllianceNsids.includes(nsid)) {
           return this._cardUtil.dealToHolder(obj, playerSlot);
         }
       }

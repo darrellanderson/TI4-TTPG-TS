@@ -46,12 +46,19 @@ export class Faction {
    * Caution, there may be '.omega' version!
    * @returns
    */
-  getAllianceNsid(): string {
+  getAllianceNsids(): Array<string> {
     let source: string = this._sourceAndPackageId.source;
     if (source === "base") {
       source = "pok"; // aliance got added in PoK
     }
-    return `card.alliance:${source}/${this._params.nsidName}`;
+    const nsid: string = `card.alliance:${source}/${this._params.nsidName}`;
+    const result: Array<string> = [nsid];
+    const before: string = `${nsid}.omega`;
+    const after: string = TI4.factionRegistry.rewriteLeader(before);
+    if (before !== after) {
+      result.push(after);
+    }
+    return result;
   }
 
   getCommanderNsids(): Array<string> {

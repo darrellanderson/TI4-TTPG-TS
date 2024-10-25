@@ -15,7 +15,7 @@ it("recycle", () => {
   const card: Card = new MockCard({
     cardDetails: [
       new MockCardDetails({
-        metadata: "card.alliance:my-source/my-faction.omega",
+        metadata: "card.alliance:my-source/my-faction",
       }),
     ],
   });
@@ -54,16 +54,21 @@ it("recycle", () => {
     templateMetadata: "sheet.faction:my-source/my-faction",
   });
 
-  const playerSlotToFaction: Map<number, Faction> =
-    TI4.factionRegistry.getPlayerSlotToFaction();
-  expect(playerSlotToFaction.get(3)?.getName()).toBe("my-faction-name");
+  const faction: Faction | undefined = TI4.factionRegistry.getByPlayerSlot(3);
+  if (!faction) {
+    throw new Error("Missing faction");
+  }
+  expect(faction.getName()).toBe("my-faction-name");
+  expect(faction.getAllianceNsids()).toEqual([
+    "card.alliance:my-source/my-faction",
+  ]);
 
   const recycle = new RecycleCardAlliance();
   expect(recycle.canRecycle(card)).toBe(true);
   expect(recycle.recycle(card)).toBe(true);
 
   expect(cardHolder.getCards().map((card) => NSID.get(card))).toEqual([
-    "card.alliance:my-source/my-faction.omega",
+    "card.alliance:my-source/my-faction",
   ]);
 });
 

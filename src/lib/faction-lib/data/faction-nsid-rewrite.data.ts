@@ -15,6 +15,10 @@ export const REWRITE_LEADER: Record<string, string> = {
   "card.leader.hero:pok/dannel-of-the-tenth.omega":
     "card.leader.hero:codex.vigil/dannel-of-the-tenth.omega",
 
+  // Also rewrite alliances.
+  "card.alliance:pok/yin.omega": "card.alliance:codex.vigil/yin.omega",
+  "card.alliance:pok/naalu.omega": "card.alliance:codex.vigil/naalu.omega",
+
   // Also rewrite promissories.
   "card.promissory:base/greyfire-mutagen.omega":
     "card.promissory:codex.ordinian/greyfire-mutagen.omega",
