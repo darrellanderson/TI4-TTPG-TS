@@ -1,7 +1,7 @@
-import { MockCardHolder } from "ttpg-mock";
+import { MockCard, MockCardHolder } from "ttpg-mock";
 import { Faction } from "../../faction/faction";
 import { AbstractUnpack } from "./abstract-unpack";
-import { CardHolder } from "@tabletop-playground/api";
+import { Card, CardHolder } from "@tabletop-playground/api";
 
 class MyUnpack extends AbstractUnpack {
   constructor() {
@@ -28,4 +28,7 @@ it("getters", () => {
   });
 
   expect(unpack.getPlayerHandHolderOrThrow()).toEqual(holder);
+
+  const card: Card = new MockCard();
+  unpack.dealToPlayerOrThrow(card);
 });

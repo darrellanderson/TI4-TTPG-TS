@@ -1,4 +1,4 @@
-import { CardHolder } from "@tabletop-playground/api";
+import { Card, CardHolder } from "@tabletop-playground/api";
 import { Find } from "ttpg-darrell";
 
 import { Faction } from "../../faction/faction";
@@ -34,5 +34,10 @@ export abstract class AbstractUnpack {
       throw new Error("Missing player hand holder");
     }
     return cardHolder;
+  }
+
+  dealToPlayerOrThrow(card: Card): void {
+    const playerHandHolder: CardHolder = this.getPlayerHandHolderOrThrow();
+    playerHandHolder.insert(card, playerHandHolder.getNumCards());
   }
 }

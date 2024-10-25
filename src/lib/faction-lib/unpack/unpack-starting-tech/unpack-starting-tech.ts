@@ -24,7 +24,6 @@ export class UnpackStartingTech extends AbstractUnpack {
       return;
     }
 
-    const playerHand: CardHolder = this.getPlayerHandHolderOrThrow();
     const techDeck: Card = this._getTechDeckOrThrow();
     const mine: Card | undefined = this._cardUtil.filterCards(
       techDeck,
@@ -45,8 +44,7 @@ export class UnpackStartingTech extends AbstractUnpack {
     }
     const cards: Array<Card> = this._cardUtil.separateDeck(mine);
     for (const card of cards) {
-      const index: number = playerHand.getNumCards();
-      playerHand.insert(card, index);
+      this.dealToPlayerOrThrow(card);
     }
   }
 

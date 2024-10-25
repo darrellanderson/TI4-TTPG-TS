@@ -1,8 +1,8 @@
-import { Card } from "@tabletop-playground/api";
+import { Card, world } from "@tabletop-playground/api";
+import { CardUtil, DeletedItemsContainer, NSID, Spawn } from "ttpg-darrell";
+
 import { Faction } from "../../faction/faction";
 import { AbstractUnpack } from "../abstract-unpack/abstract-unpack";
-import { CardUtil, DeletedItemsContainer, Spawn } from "ttpg-darrell";
-import { GameObject } from "ttpg-mock";
 
 export class UnpackFactionAlliance extends AbstractUnpack {
   constructor(faction: Faction, playerSlot: number) {
@@ -16,20 +16,41 @@ export class UnpackFactionAlliance extends AbstractUnpack {
       }
     );
     const deck: Card = Spawn.spawnMergeDecksOrThrow(deckNsids);
+    this._dealAllianceCardsAndDeleteDeck(deck);
+  }
 
+  _dealAllianceCardsAndDeleteDeck(unfilteredAlliancesDeck: Card) {
     const nsids: Set<string> = this._getNsids();
+    console.log(Array.from(nsids).join(", "));
     const alliances: Card | undefined = new CardUtil().filterCards(
-      deck,
+      unfilteredAlliancesDeck,
       (nsid: string): boolean => {
+        console.log("XXXXXXXXXXX", nsid, nsids.has(nsid));
         return nsids.has(nsid);
       }
     );
+    if (!alliances) {
+      throw new Error("Missing alliance cards");
+    }
 
-    DeletedItemsContainer.destroyWithoutCopying(deck);
+    const cards: Array<Card> = new CardUtil().separateDeck(alliances);
+    for (const card of cards) {
+      this.dealToPlayerOrThrow(card);
+    }
+
+    DeletedItemsContainer.destroyWithoutCopying(unfilteredAlliancesDeck);
   }
 
   remove(): void {
     const nsids: Set<string> = this._getNsids();
+
+    const skipContained: boolean = true;
+    for (const obj of world.getAllObjects(skipContained)) {
+      const nsid: string = NSID.get(obj);
+      if (nsids.has(nsid)) {
+        DeletedItemsContainer.destroyWithoutCopying(obj);
+      }
+    }
   }
 
   _getNsids(): Set<string> {
