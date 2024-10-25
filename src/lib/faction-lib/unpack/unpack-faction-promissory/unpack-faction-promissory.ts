@@ -32,6 +32,7 @@ export class UnpackFactionPromissory extends AbstractUnpack {
 
     const cards: Array<Card> = new CardUtil().separateDeck(promissories);
     for (const card of cards) {
+      card.setRotation([0, 0, 180]);
       this.dealToPlayerOrThrow(card);
     }
 

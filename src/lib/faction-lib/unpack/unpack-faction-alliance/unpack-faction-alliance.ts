@@ -32,6 +32,7 @@ export class UnpackFactionAlliance extends AbstractUnpack {
 
     const cards: Array<Card> = new CardUtil().separateDeck(alliances);
     for (const card of cards) {
+      card.setRotation([0, 0, 180]);
       this.dealToPlayerOrThrow(card);
     }
 

@@ -1,6 +1,7 @@
-// Faction leaders are just the nsid-name portion; they do not track the source.
-// Perhaps they should, for now use a lookaside table.
-export const REWRITE_LEADER: Record<string, string> = {
+// Faction leaders, promissories, etc are just the nsid-name portion;
+// they do not track the source.  Perhaps they should, for now use a
+// lookaside table.
+export const REWRITE_NSIDS: Record<string, string> = {
   "card.leader.agent:pok/zeu.omega": "card.leader.agent:codex.vigil/zeu.omega",
   "card.leader.commander:pok/maban.omega":
     "card.leader.commander:codex.vigil/maban.omega",
@@ -15,11 +16,11 @@ export const REWRITE_LEADER: Record<string, string> = {
   "card.leader.hero:pok/dannel-of-the-tenth.omega":
     "card.leader.hero:codex.vigil/dannel-of-the-tenth.omega",
 
-  // Also rewrite alliances.
+  // alliances.
   "card.alliance:pok/yin.omega": "card.alliance:codex.vigil/yin.omega",
   "card.alliance:pok/naalu.omega": "card.alliance:codex.vigil/naalu.omega",
 
-  // Also rewrite promissories.
+  // promissories.
   "card.promissory:base/greyfire-mutagen.omega":
     "card.promissory:codex.ordinian/greyfire-mutagen.omega",
   "card.promissory:base/cybernetic-enhancements.omega":

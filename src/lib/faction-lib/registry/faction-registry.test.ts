@@ -127,17 +127,17 @@ it("loadDefaultData", () => {
 });
 
 it("rewriteLeader", () => {
-  const registry = new FactionRegistry().loadDefaultRewriteLeader();
+  const registry = new FactionRegistry().loadDefaultRewriteNsid();
 
   let orig: string;
   let rewritten: string;
 
   orig = "card.leader.agent:pok/zeu";
-  rewritten = registry.rewriteLeader(orig);
+  rewritten = registry.rewriteNsid(orig);
   expect(rewritten).toBe(orig);
 
   orig = "card.leader.agent:pok/zeu.omega";
-  rewritten = registry.rewriteLeader(orig);
+  rewritten = registry.rewriteNsid(orig);
   expect(rewritten).toBe("card.leader.agent:codex.vigil/zeu.omega");
 });
 
@@ -289,17 +289,9 @@ it("validate NSIDs appear in assets/Templates", () => {
     nsids.push(...faction.getExtras());
 
     // Tech does not include tech color/type.
-    for (const nsidName of faction.getFactionTechNsidNames()) {
-      let found: boolean = false;
-      for (const nsid of TI4.techRegistry.getAllNsids()) {
-        if (nsid.endsWith(nsidName)) {
-          nsids.push(nsid);
-          found = true;
-          break;
-        }
-      }
-      if (!found) {
-        throw new Error(`Missing tech: ${nsidName}`);
+    for (const nsid of faction.getFactionTechNsids()) {
+      if (!TI4.techRegistry.getByNsid(nsid)) {
+        throw new Error(`Missing tech: ${nsid}`);
       }
     }
   }

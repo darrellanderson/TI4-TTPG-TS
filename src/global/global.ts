@@ -83,7 +83,7 @@ export class TI4Class {
   public readonly hex = new Hex(HEX_LAYOUT_POINTY, 5.77735 * 1.5);
   public readonly factionRegistry = new FactionRegistry()
     .loadDefaultData()
-    .loadDefaultRewriteLeader();
+    .loadDefaultRewriteNsid();
   public readonly planetAttachmentRegistry =
     new PlanetAttachmentRegistry().loadDefaultData();
   public readonly playerColor = new PlayerColor("@player-color/ti4");

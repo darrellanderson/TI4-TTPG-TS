@@ -44,16 +44,12 @@ export class UnpackFactionTech extends AbstractUnpack {
   }
 
   _filterFactionTech(deck: Card): Card | undefined {
-    const factionTechNsidNames: Array<string> =
-      this.getFaction().getFactionTechNsidNames();
+    const factionTechNsids: Set<string> = new Set<string>(
+      this.getFaction().getFactionTechNsids()
+    );
 
     return this._cardUtil.filterCards(deck, (nsid: string): boolean => {
-      for (const factionTechNsidName of factionTechNsidNames) {
-        if (nsid.endsWith(factionTechNsidName)) {
-          return true;
-        }
-      }
-      return false;
+      return factionTechNsids.has(nsid);
     });
   }
 

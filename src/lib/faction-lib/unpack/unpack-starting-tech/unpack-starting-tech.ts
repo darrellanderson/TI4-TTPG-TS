@@ -18,9 +18,10 @@ export class UnpackStartingTech extends AbstractUnpack {
   }
 
   unpack(): void {
-    const startingTechNsidNames: Array<string> =
-      this.getFaction().getStartingTechNsidNames();
-    if (startingTechNsidNames.length === 0) {
+    const startingTechNsids: Set<string> = new Set<string>(
+      this.getFaction().getStartingTechNsids()
+    );
+    if (startingTechNsids.size === 0) {
       return;
     }
 
@@ -28,42 +29,33 @@ export class UnpackStartingTech extends AbstractUnpack {
     const mine: Card | undefined = this._cardUtil.filterCards(
       techDeck,
       (nsid: string): boolean => {
-        for (const startingTechNsidName of startingTechNsidNames) {
-          const omega: string = startingTechNsidName + ".omega";
-          if (nsid.endsWith(startingTechNsidName) || nsid.endsWith(omega)) {
-            return true;
-          }
-        }
-        return false;
+        return startingTechNsids.has(nsid);
       }
     );
     if (!mine) {
       throw new Error(
-        `Missing starting tech cards (${startingTechNsidNames.join(", ")})`
+        `Missing starting tech cards (${Array.from(startingTechNsids).join(", ")})`
       );
     }
     const cards: Array<Card> = this._cardUtil.separateDeck(mine);
     for (const card of cards) {
+      card.setRotation([0, 0, 180]);
       this.dealToPlayerOrThrow(card);
     }
   }
 
   remove(): void {
-    const startingTechNsidNames: Array<string> =
-      this.getFaction().getStartingTechNsidNames();
-    if (startingTechNsidNames.length === 0) {
-      return;
-    }
+    const startingTechNsids: Set<string> = new Set<string>(
+      this.getFaction().getStartingTechNsids()
+    );
     const playerHand: CardHolder = this.getPlayerHandHolderOrThrow();
     const techDeck: Card = this._getTechDeckOrThrow();
 
     for (const card of playerHand.getCards()) {
       const nsid: string = NSID.get(card);
-      for (const startingTechNsidName of startingTechNsidNames) {
-        if (nsid.endsWith(startingTechNsidName)) {
-          card.removeFromHolder();
-          techDeck.addCards(card);
-        }
+      if (startingTechNsids.has(nsid)) {
+        card.removeFromHolder();
+        techDeck.addCards(card);
       }
     }
   }

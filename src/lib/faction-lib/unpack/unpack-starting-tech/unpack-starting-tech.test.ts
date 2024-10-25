@@ -53,6 +53,22 @@ it("unpack/remove (no starting tech)", () => {
   const faction: Faction = TI4.factionRegistry.getByNsid("faction:base/norr")!;
   const playerSlot: number = 10;
 
+  new MockCardHolder({
+    templateMetadata: "card-holder:base/player-hand",
+    owningPlayerSlot: playerSlot,
+  });
+
+  const techDeck: Card = new MockCard();
+  const snapPoint: SnapPoint = new MockSnapPoint({
+    tags: ["deck-technology"],
+    snappedObject: techDeck,
+  });
+  new MockGameObject({
+    templateMetadata: "mat.player:base/technology-deck",
+    owningPlayerSlot: playerSlot,
+    snapPoints: [snapPoint],
+  });
+
   const unpack = new UnpackStartingTech(faction, playerSlot);
   unpack.unpack();
   unpack.remove();

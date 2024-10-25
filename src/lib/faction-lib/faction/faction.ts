@@ -1,10 +1,12 @@
+import { GameObject } from "@tabletop-playground/api";
+import { Find } from "ttpg-darrell";
+
 import { FactionSchemaType } from "../schema/faction-schema";
 import {
   NsidNameSchemaType,
   SourceAndPackageIdSchemaType,
 } from "../../system-lib/schema/basic-types-schema";
-import { GameObject } from "@tabletop-playground/api";
-import { Find } from "ttpg-darrell";
+import { Tech } from "../../tech-lib/tech/tech";
 
 export class Faction {
   private readonly _sourceAndPackageId: SourceAndPackageIdSchemaType;
@@ -36,7 +38,7 @@ export class Faction {
       source = "pok"; // aliance got added in PoK
     }
     return this._params.leaders.agents.map((agent): string => {
-      return TI4.factionRegistry.rewriteLeader(
+      return TI4.factionRegistry.rewriteNsid(
         `card.leader.agent:${source}/${agent}`
       );
     });
@@ -54,7 +56,7 @@ export class Faction {
     const nsid: string = `card.alliance:${source}/${this._params.nsidName}`;
     const result: Array<string> = [nsid];
     const before: string = `${nsid}.omega`;
-    const after: string = TI4.factionRegistry.rewriteLeader(before);
+    const after: string = TI4.factionRegistry.rewriteNsid(before);
     if (before !== after) {
       result.push(after);
     }
@@ -67,7 +69,7 @@ export class Faction {
       source = "pok"; // aliance got added in PoK
     }
     return this._params.leaders.commanders.map((commander): string => {
-      return TI4.factionRegistry.rewriteLeader(
+      return TI4.factionRegistry.rewriteNsid(
         `card.leader.commander:${source}/${commander}`
       );
     });
@@ -113,8 +115,19 @@ export class Faction {
     return `sheet.faction:${source}/${this._params.nsidName}`;
   }
 
-  getFactionTechNsidNames(): Array<string> {
-    return this._params.factionTechs; // need color to form full nsid
+  getFactionTechNsids(): Array<string> {
+    const result: Array<string> = [];
+    for (const factionTech of this._params.factionTechs) {
+      const techs: Array<Tech> =
+        TI4.techRegistry.getByNsidNameMaybeOmegaToo(factionTech);
+      const nsids: Array<string> = techs.map((tech) => tech.getNsid());
+      result.push(...nsids);
+      // If not found, add a bogus entry.  Validate will catch and report.
+      if (nsids.length === 0) {
+        result.push(`card.technology.unknown:unknown/${factionTech}`);
+      }
+    }
+    return result;
   }
 
   getHeroNsids(): Array<string> {
@@ -123,7 +136,7 @@ export class Faction {
       source = "pok"; // aliance got added in PoK
     }
     return this._params.leaders.heroes.map((hero): string => {
-      return TI4.factionRegistry.rewriteLeader(
+      return TI4.factionRegistry.rewriteNsid(
         `card.leader.hero:${source}/${hero}`
       );
     });
@@ -162,7 +175,7 @@ export class Faction {
       source = "pok"; // aliance got added in PoK
     }
     return this._params.leaders.mechs.map((mech): string => {
-      return TI4.factionRegistry.rewriteLeader(
+      return TI4.factionRegistry.rewriteNsid(
         `card.leader.mech:${source}/${mech}`
       );
     });
@@ -180,14 +193,25 @@ export class Faction {
   getPromissoryNsids(): Array<string> {
     const source: string = this._sourceAndPackageId.source;
     return this._params.promissories.map((promissory): string => {
-      return TI4.factionRegistry.rewriteLeader(
+      return TI4.factionRegistry.rewriteNsid(
         `card.promissory:${source}/${promissory}`
       );
     });
   }
 
-  getStartingTechNsidNames(): Array<string> {
-    return this._params.startingTechs;
+  getStartingTechNsids(): Array<string> {
+    const result: Array<string> = [];
+    for (const startingTech of this._params.startingTechs) {
+      const techs: Array<Tech> =
+        TI4.techRegistry.getByNsidNameMaybeOmegaToo(startingTech);
+      const nsids: Array<string> = techs.map((tech) => tech.getNsid());
+      result.push(...nsids);
+      // If not found, add a bogus entry.  Validate will catch and report.
+      if (nsids.length === 0) {
+        result.push(`card.technology.unknown:unknown/${startingTech}`);
+      }
+    }
+    return result;
   }
 
   getStartingUnits(): Record<string, number> {

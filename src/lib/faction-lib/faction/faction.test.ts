@@ -21,9 +21,9 @@ it("constructor", () => {
       mechs: ["my-mech"],
     },
     promissories: ["my-promissory"],
-    startingTechs: ["my-starting-tech"],
+    startingTechs: ["antimass-deflectors"], // looks up in tech registry
     startingUnits: { carrier: 3 },
-    factionTechs: ["my-faction-tech"],
+    factionTechs: ["plasma-scoring"], // looks up in tech registry
     unitOverrides: ["my-unit-override", "my-mech"],
     extras: [{ nsid: "my-extra-1" }, { nsid: "my-extra-2", count: 2 }],
   };
@@ -53,7 +53,9 @@ it("constructor", () => {
   expect(faction.getFactionSheetNsid()).toEqual(
     "sheet.faction:my-source/my-nsid-name"
   );
-  expect(faction.getFactionTechNsidNames()).toEqual(["my-faction-tech"]);
+  expect(faction.getFactionTechNsids()).toEqual([
+    "card.technology.red:base/plasma-scoring",
+  ]);
   expect(faction.getHeroNsids()).toEqual([
     "card.leader.hero:my-source/my-hero",
   ]);
@@ -70,7 +72,9 @@ it("constructor", () => {
     "card.promissory:my-source/my-promissory",
   ]);
   expect(faction.getStartingUnits()).toEqual({ carrier: 3 });
-  expect(faction.getStartingTechNsidNames()).toEqual(["my-starting-tech"]);
+  expect(faction.getStartingTechNsids().sort()).toEqual([
+    "card.technology.blue:base/antimass-deflectors",
+  ]);
   expect(faction.getUnitOverrideNsids()).toEqual([
     "unit:my-source/my-unit-override",
     "card.leader.mech:my-source/my-mech",

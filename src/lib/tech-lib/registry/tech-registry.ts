@@ -8,10 +8,6 @@ import { Tech } from "../tech/tech";
 
 export class TechRegistry {
   private readonly _nsidToTech: Map<string, Tech> = new Map();
-  private readonly _nsidNameToTechSchemaType: Map<
-    NsidNameSchemaType,
-    TechSchemaType
-  > = new Map();
 
   getAllNsids(): Array<string> {
     return Array.from(this._nsidToTech.keys());
@@ -21,8 +17,14 @@ export class TechRegistry {
     return this._nsidToTech.get(nsid);
   }
 
-  rawByNsidName(nsidName: NsidNameSchemaType): TechSchemaType | undefined {
-    return this._nsidNameToTechSchemaType.get(nsidName);
+  getByNsidNameMaybeOmegaToo(nsidName: string): Array<Tech> {
+    const result: Array<Tech> = [];
+    for (const tech of this._nsidToTech.values()) {
+      if (tech.getNsidName().startsWith(nsidName)) {
+        result.push(tech);
+      }
+    }
+    return result;
   }
 
   load(source: NsidNameSchemaType, techSchemas: Array<TechSchemaType>): this {
@@ -45,7 +47,6 @@ export class TechRegistry {
         throw new Error(`duplicate nsid: ${nsid}`);
       }
       this._nsidToTech.set(nsid, tech);
-      this._nsidNameToTechSchemaType.set(tech.getNsidName(), techSchema);
     }
     return this;
   }

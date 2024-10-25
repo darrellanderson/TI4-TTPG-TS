@@ -32,19 +32,14 @@ it("load (with data)", () => {
   };
 
   const registry = new TechRegistry();
-  let raw: TechSchemaType | undefined;
   let tech: Tech | undefined;
 
-  raw = registry.rawByNsidName("my-nsid-name");
   tech = registry.getByNsid("card.technology.blue:my-source/my-nsid-name");
-  expect(raw).toBeUndefined();
   expect(tech).toBeUndefined();
 
   registry.load("my-source", [schema]);
 
-  raw = registry.rawByNsidName("my-nsid-name");
   tech = registry.getByNsid("card.technology.blue:my-source/my-nsid-name");
-  expect(raw?.nsidName).toBe("my-nsid-name");
   expect(tech?.getName()).toBe("my-name");
 });
 
@@ -85,19 +80,14 @@ it("load (duplicate)", () => {
 
 it("loadDefaultData", () => {
   const registry = new TechRegistry();
-  let raw: TechSchemaType | undefined;
   let tech: Tech | undefined;
 
-  raw = registry.rawByNsidName("plasma-scoring");
   tech = registry.getByNsid("card.technology.red:base/plasma-scoring");
-  expect(raw).toBeUndefined();
   expect(tech).toBeUndefined();
 
   registry.loadDefaultData();
 
-  raw = registry.rawByNsidName("plasma-scoring");
   tech = registry.getByNsid("card.technology.red:base/plasma-scoring");
-  expect(raw?.nsidName).toBe("plasma-scoring");
   expect(tech?.getName()).toBe("Plasma Scoring");
 });
 
@@ -141,4 +131,15 @@ it("validate NSIDs appear in assets/Templates", () => {
     console.log("missing", missing.join("\n"));
   }
   expect(missing).toHaveLength(0);
+});
+
+it("getByNsidNameMaybeOmegaToo", () => {
+  const registry = new TechRegistry().loadDefaultData();
+  const techs: Array<Tech> =
+    registry.getByNsidNameMaybeOmegaToo("magen-defense-grid");
+  const nsids: Array<string> = techs.map((tech) => tech.getNsid());
+  expect(nsids.sort()).toEqual([
+    "card.technology.red:base/magen-defense-grid",
+    "card.technology.red:codex.ordinian/magen-defense-grid.omega",
+  ]);
 });

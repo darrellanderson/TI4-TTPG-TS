@@ -7,12 +7,12 @@ import {
 import { SOURCE_TO_FACTION_DATA } from "../data/faction.data";
 import { refPackageId, Vector, world } from "@tabletop-playground/api";
 import { Find, NSID } from "ttpg-darrell";
-import { REWRITE_LEADER } from "../data/faction-nsid-rewrite.data";
+import { REWRITE_NSIDS } from "../data/faction-nsid-rewrite.data";
 
 export class FactionRegistry {
   private readonly _find: Find = new Find();
   private readonly _nsidToFaction: Map<string, Faction> = new Map();
-  private readonly _nsidToRewriteLeader: Map<string, string> = new Map();
+  private readonly _nsidToRewriteNsid: Map<string, string> = new Map();
 
   constructor() {}
 
@@ -85,13 +85,13 @@ export class FactionRegistry {
 
   loadRewriteLeader(rewrite: Record<string, string>): this {
     for (const [nsid, rewriteLeader] of Object.entries(rewrite)) {
-      this._nsidToRewriteLeader.set(nsid, rewriteLeader);
+      this._nsidToRewriteNsid.set(nsid, rewriteLeader);
     }
     return this;
   }
 
-  loadDefaultRewriteLeader(): this {
-    return this.loadRewriteLeader(REWRITE_LEADER);
+  loadDefaultRewriteNsid(): this {
+    return this.loadRewriteLeader(REWRITE_NSIDS);
   }
 
   /**
@@ -101,8 +101,8 @@ export class FactionRegistry {
    * @param nsid
    * @returns
    */
-  rewriteLeader(nsid: string): string {
-    const result: string | undefined = this._nsidToRewriteLeader.get(nsid);
+  rewriteNsid(nsid: string): string {
+    const result: string | undefined = this._nsidToRewriteNsid.get(nsid);
     return result ? result : nsid;
   }
 
@@ -115,14 +115,14 @@ export class FactionRegistry {
    */
   validate(errors: Array<string>): this {
     for (const faction of this.getAllFactions()) {
-      for (const nsidName of faction.getFactionTechNsidNames()) {
-        if (!TI4.techRegistry.rawByNsidName(nsidName)) {
-          errors.push(`faction tech nsidName not found: "${nsidName}"`);
+      for (const nsid of faction.getFactionTechNsids()) {
+        if (!TI4.techRegistry.getByNsid(nsid)) {
+          errors.push(`faction tech nsidName not found: "${nsid}"`);
         }
       }
-      for (const nsidName of faction.getStartingTechNsidNames()) {
-        if (!TI4.techRegistry.rawByNsidName(nsidName)) {
-          errors.push(`starting tech nsidName not found: "${nsidName}"`);
+      for (const nsid of faction.getStartingTechNsids()) {
+        if (!TI4.techRegistry.getByNsid(nsid)) {
+          errors.push(`starting tech nsidName not found: "${nsid}"`);
         }
       }
       for (const nsid of faction.getUnitOverrideNsids()) {

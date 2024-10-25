@@ -30,7 +30,13 @@ export class Config {
       this._config = {
         playerCount: 6,
         timestamp: 0,
-        sources: ["base"],
+        sources: [
+          "base",
+          "pok",
+          "codex.affinity",
+          "codex.ordinian",
+          "codex.vigil",
+        ],
       };
     }
   }
