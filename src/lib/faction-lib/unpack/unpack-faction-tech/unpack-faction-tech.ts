@@ -1,7 +1,8 @@
 import { Card } from "@tabletop-playground/api";
+import { CardUtil, DeletedItemsContainer, Find } from "ttpg-darrell";
+
 import { Faction } from "../../faction/faction";
 import { AbstractUnpack } from "../abstract-unpack/abstract-unpack";
-import { CardUtil, DeletedItemsContainer, Find, Spawn } from "ttpg-darrell";
 
 export class UnpackFactionTech extends AbstractUnpack {
   private readonly _cardUtil: CardUtil = new CardUtil();
@@ -12,15 +13,9 @@ export class UnpackFactionTech extends AbstractUnpack {
   }
 
   unpack(): void {
-    // Generate full tech deck.
-    const nsids: Array<string> = Spawn.getAllNsids().filter((nsid: string) =>
-      nsid.startsWith("card.technology")
-    );
-    const deck: Card = Spawn.spawnMergeDecksOrThrow(nsids);
-
+    const deck: Card = this.spawnDeckAndFilterSourcesOrThrow("card.technology");
     const filtered: Card | undefined = this._filterFactionTech(deck);
     DeletedItemsContainer.destroyWithoutCopying(deck);
-
     this._addFilteredToExistingTechDeck(filtered);
   }
 

@@ -5,13 +5,7 @@ import {
   Vector,
   world,
 } from "@tabletop-playground/api";
-import {
-  CardUtil,
-  DeletedItemsContainer,
-  Find,
-  NSID,
-  Spawn,
-} from "ttpg-darrell";
+import { CardUtil, DeletedItemsContainer, Find, NSID } from "ttpg-darrell";
 
 import { AbstractUnpack } from "../abstract-unpack/abstract-unpack";
 import { Faction } from "../../faction/faction";
@@ -36,12 +30,7 @@ export class UnpackLeaders extends AbstractUnpack {
       throw new Error("Unexpected number of snap points");
     }
 
-    const deckNsids: Array<string> = Spawn.getAllNsids().filter(
-      (nsid: string) => {
-        return nsid.startsWith("card.leader");
-      }
-    );
-    const deck: Card = Spawn.spawnMergeDecksOrThrow(deckNsids);
+    const deck: Card = this.spawnDeckAndFilterSourcesOrThrow("card.leader:");
 
     let nsids: Array<string>;
     let snapPoint: SnapPoint | undefined;

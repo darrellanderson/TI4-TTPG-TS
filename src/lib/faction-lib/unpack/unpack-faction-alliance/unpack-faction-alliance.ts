@@ -1,30 +1,38 @@
-import { Card, world } from "@tabletop-playground/api";
-import { CardUtil, DeletedItemsContainer, NSID, Spawn } from "ttpg-darrell";
+import { Card, Vector, world } from "@tabletop-playground/api";
+import {
+  CardUtil,
+  DeletedItemsContainer,
+  Find,
+  NSID,
+  ParsedNSID,
+} from "ttpg-darrell";
 
 import { Faction } from "../../faction/faction";
 import { AbstractUnpack } from "../abstract-unpack/abstract-unpack";
 
 export class UnpackFactionAlliance extends AbstractUnpack {
+  private readonly _find: Find = new Find();
+
   constructor(faction: Faction, playerSlot: number) {
     super(faction, playerSlot);
   }
 
   unpack(): void {
-    const deckNsids: Array<string> = Spawn.getAllNsids().filter(
-      (nsid: string): boolean => {
-        return nsid.startsWith("card.alliance:");
-      }
-    );
-    const deck: Card = Spawn.spawnMergeDecksOrThrow(deckNsids);
+    const deck: Card = this.spawnDeckAndFilterSourcesOrThrow("card.alliance:");
     this._dealAllianceCardsAndDeleteDeck(deck);
   }
 
   _dealAllianceCardsAndDeleteDeck(unfilteredAlliancesDeck: Card) {
-    const nsids: Set<string> = this._getNsids();
+    const nsidNames: Array<string> = this._getNsidNames();
     const alliances: Card | undefined = new CardUtil().filterCards(
       unfilteredAlliancesDeck,
       (nsid: string): boolean => {
-        return nsids.has(nsid);
+        for (const nsidName of nsidNames) {
+          if (nsid.includes(nsidName)) {
+            return true;
+          }
+        }
+        return false;
       }
     );
     if (!alliances) {
@@ -40,23 +48,37 @@ export class UnpackFactionAlliance extends AbstractUnpack {
   }
 
   remove(): void {
-    const nsids: Set<string> = this._getNsids();
-
+    const nsidNames: Array<string> = this._getNsidNames();
     const skipContained: boolean = true;
     for (const obj of world.getAllObjects(skipContained)) {
       const nsid: string = NSID.get(obj);
-      if (nsids.has(nsid)) {
-        DeletedItemsContainer.destroyWithoutCopying(obj);
+      if (nsid.startsWith("card.alliance:")) {
+        const pos: Vector = obj.getPosition();
+        const owner: number = this._find.closestOwnedCardHolderOwner(pos);
+        if (owner === this.getPlayerSlot()) {
+          for (const nsidName of nsidNames) {
+            if (nsid.includes(nsidName)) {
+              DeletedItemsContainer.destroyWithoutCopying(obj);
+            }
+          }
+        }
       }
     }
   }
 
-  _getNsids(): Set<string> {
+  _getNsidNames(): Array<string> {
     // Careful, there may be an omega version of the alliance card!
+    // Unlike most faction methods it does not add omega versions with
+    // corrected sources; just use the name part of the nsid to match.
     const nsid: string = this.getFaction().getAllianceNsid();
-    const nsids: Set<string> = new Set<string>();
-    nsids.add(nsid);
-    nsids.add(nsid + ".omega");
-    return nsids;
+    const parsed: ParsedNSID | undefined = NSID.parse(nsid);
+    const nsidNames: Array<string> = [];
+    if (parsed) {
+      // Include leading slash to match the start of a name.
+      const nsidName = "/" + parsed.nameParts.join(".");
+      nsidNames.push(nsidName);
+      nsidNames.push(nsidName + ".omega");
+    }
+    return nsidNames;
   }
 }

@@ -173,7 +173,9 @@ export class Faction {
   getPromissoryNsids(): Array<string> {
     const source: string = this._sourceAndPackageId.source;
     return this._params.promissories.map((promissory): string => {
-      return `card.promissory:${source}/${promissory}`;
+      return TI4.factionRegistry.rewriteLeader(
+        `card.promissory:${source}/${promissory}`
+      );
     });
   }
 

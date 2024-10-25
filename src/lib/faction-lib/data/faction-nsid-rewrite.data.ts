@@ -14,4 +14,16 @@ export const REWRITE_LEADER: Record<string, string> = {
     "card.leader.commander:codex.vigil/brother-omar.omega",
   "card.leader.hero:pok/dannel-of-the-tenth.omega":
     "card.leader.hero:codex.vigil/dannel-of-the-tenth.omega",
+
+  // Also rewrite promissories.
+  "card.promissory:base/greyfire-mutagen.omega":
+    "card.promissory:codex.ordinian/greyfire-mutagen.omega",
+  "card.promissory:base/cybernetic-enhancements.omega":
+    "card.promissory:codex.ordinian/cybernetic-enhancements.omega",
+  "card.promissory:base/war-funding.omega":
+    "card.promissory:codex.ordinian/war-funding.omega",
+  "card.promissory:base/acquiescence.omega":
+    "card.promissory:codex.ordinian/acquiescence.omega",
+  "card.promissory:base/stymie.omega":
+    "card.promissory:codex.ordinian/stymie.omega",
 };

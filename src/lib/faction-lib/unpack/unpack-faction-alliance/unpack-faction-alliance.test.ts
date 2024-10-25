@@ -54,6 +54,11 @@ it("remove (find card)", () => {
     ],
   });
 
+  new MockCardHolder({
+    templateMetadata: "card-holder:base/player-hand",
+    owningPlayerSlot: playerSlot,
+  });
+
   expect(card.isValid()).toBe(true);
   unpack.remove();
   expect(card.isValid()).toBe(false);

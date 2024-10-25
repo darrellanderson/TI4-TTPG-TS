@@ -171,3 +171,23 @@ it("getHomeSystemTileObj (bad tile number)", () => {
   const faction: Faction = new Faction(sourceAndPackageId, schema);
   expect(faction.getHomeSystemTileObj(4)).toBeUndefined();
 });
+
+it("rewrite hero omega source", () => {
+  const xxcha: Faction = TI4.factionRegistry.getByNsid("faction:base/xxcha")!;
+  const heroNsids: Array<string> = xxcha.getHeroNsids();
+  expect(heroNsids.sort()).toEqual([
+    "card.leader.hero:codex.vigil/xxekir-grom.omega",
+    "card.leader.hero:pok/xxekir-grom",
+  ]);
+});
+
+it("rewrite promissory omega source", () => {
+  const arborec: Faction = TI4.factionRegistry.getByNsid(
+    "faction:base/arborec"
+  )!;
+  const promissoryNsids: Array<string> = arborec.getPromissoryNsids();
+  expect(promissoryNsids.sort()).toEqual([
+    "card.promissory:base/stymie",
+    "card.promissory:codex.ordinian/stymie.omega",
+  ]);
+});
