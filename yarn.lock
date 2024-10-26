@@ -3578,9 +3578,9 @@ ttpg-darrell@^1.0.55:
     zod "^3.22.4"
 
 ttpg-mock@^1.0.48:
-  version "1.0.54"
-  resolved "https://registry.yarnpkg.com/ttpg-mock/-/ttpg-mock-1.0.54.tgz#7b061ee1d7f0b78acc2d27cca009050e38b42a9c"
-  integrity sha512-TMYjSlQxBza8AtcQYxcj683XFVGZOXn4OwRSg6fzA5YdWenXsV7IwEsjnwiUCdeIwIHb6HtzTZwl2gb6iQA9Zw==
+  version "1.0.55"
+  resolved "https://registry.yarnpkg.com/ttpg-mock/-/ttpg-mock-1.0.55.tgz#8a53713c7cbc401c8710de16fa4c5422b7a0d73c"
+  integrity sha512-MZzai0zsvUwuanN0cZPmmEjzw6hj0yqM/gipnZtjivagkfskcwAYSLWKPMFQzzxowaGaS9c1+oEQAsN0fEZm/A==
   dependencies:
     "@tabletop-playground/api" "^0.41.0"
     three "^0.158.0"
