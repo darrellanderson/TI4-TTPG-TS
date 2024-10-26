@@ -1,4 +1,4 @@
-import { GameObject, Vector } from "@tabletop-playground/api";
+import { GameObject, ObjectType, Vector } from "@tabletop-playground/api";
 import { Faction } from "../../faction/faction";
 import { AbstractUnpack } from "../abstract-unpack/abstract-unpack";
 import { DeletedItemsContainer, Find, Spawn } from "ttpg-darrell";
@@ -54,5 +54,6 @@ export class UnpackFactionSheet extends AbstractUnpack {
 
     DeletedItemsContainer.destroyWithoutCopying(factionSheet);
     generic.snapToGround();
+    generic.setObjectType(ObjectType.Ground);
   }
 }

@@ -12,6 +12,7 @@ import { UnpackHomeSystem } from "../unpack-home-system/unpack-home-system";
 import { UnpackLeaders } from "../unpack-leaders/unpack-leaders";
 import { UnpackStartingTech } from "../unpack-starting-tech/unpack-starting-tech";
 import { UnpackStartingUnits } from "../unpack-starting-units/unpack-starting-units";
+import { UnpackHomePlanetCards } from "../unpack-home-planet-cards/unpack-home-planet-cards";
 
 export class UnpackAll extends AbstractUnpack {
   private readonly _unpacks: Array<AbstractUnpack>;
@@ -31,6 +32,9 @@ export class UnpackAll extends AbstractUnpack {
       new UnpackLeaders(faction, playerSlot),
       new UnpackStartingTech(faction, playerSlot),
       new UnpackStartingUnits(faction, playerSlot),
+
+      // Do after unpacking home system tile.
+      new UnpackHomePlanetCards(faction, playerSlot),
     ];
   }
 

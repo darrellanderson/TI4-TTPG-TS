@@ -41,9 +41,11 @@ function update() {
   const faction: Faction | undefined =
     TI4.factionRegistry.getByPlayerSlot(owner);
   if (owner >= 0 && faction) {
-    // Update faction icon.
-    widget.setImage(faction.getIcon(), faction.getIconPackageId());
+    const icon: string = faction.getIcon();
+    const outline: string = icon.replace(".png", "-outline-only.png");
+    widget.setImage(icon, faction.getIconPackageId());
     widget.setTintColor([1, 1, 1, 1]);
+    outlineWidget.setImage(outline, faction.getIconPackageId());
   } else {
     widget.setImage("icon/token/circle.png", packageId);
     widget.setTintColor([0, 0, 0, 1]);

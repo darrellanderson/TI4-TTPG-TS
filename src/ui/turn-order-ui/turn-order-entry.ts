@@ -42,7 +42,7 @@ export class TurnOrderEntry extends TurnEntryWart {
 
     this._factionIcon = new ImageWidget().setImageSize(40, 40);
     this._factionName = new Text()
-      .setFontSize(6)
+      .setFontSize(7)
       .setBold(true)
       .setJustification(TextJustification.Center)
       .setText("FACTION");
@@ -142,7 +142,7 @@ export class TurnOrderEntry extends TurnEntryWart {
 
     // Faction.
     const faction: Faction | undefined = __playerSlotToFaction.get(playerSlot);
-    const factionName: string = faction?.getName() ?? "N/A";
+    const factionName: string = faction?.getAbbr().toUpperCase() ?? "N/A";
     const factionIcon: string =
       faction?.getIcon() ?? "icon/token/circle-outline-only.png";
     const factionIconPackageId: string =

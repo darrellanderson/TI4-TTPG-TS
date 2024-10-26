@@ -63,7 +63,7 @@ export class UnpackStartingUnits extends AbstractUnpack {
     }
 
     const rotate: number = 360 / (unitObjs.length + 1);
-    let localPos: Vector = new Vector(3, 0, 10);
+    let localPos: Vector = new Vector(5, 0, 10);
     for (const obj of unitObjs) {
       const pos: Vector = systemTileObj.localPositionToWorld(localPos);
       obj.setPosition(pos);

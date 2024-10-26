@@ -38,7 +38,9 @@ function labeledCell(
     type: "ImageCell",
     width: SYMBOL_SIZE,
     height: SYMBOL_SIZE,
-    imageFile: `prebuild/mat/slot/symbol-objective-2.png`,
+    imageFile: snapEverything
+      ? `prebuild/mat/slot/symbol-empty.png`
+      : `prebuild/mat/slot/symbol-objective-2.png`,
   };
   const slotWithSymbol: ZCanvasCell = {
     type: "CanvasCell",
