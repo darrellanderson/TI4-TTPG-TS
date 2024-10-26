@@ -1,6 +1,7 @@
 import {
   Card,
   GameObject,
+  Rotator,
   SnapPoint,
   Vector,
   world,
@@ -38,25 +39,29 @@ export class UnpackLeaders extends AbstractUnpack {
     nsids = this.getFaction().getAgentNsids();
     snapPoint = snapPoints[3];
     if (snapPoint) {
-      this._unpackLeaders(deck, nsids, snapPoint);
+      const rot: Rotator = new Rotator(0, 0, 180);
+      this._unpackLeaders(deck, nsids, snapPoint, rot);
     }
 
     nsids = this.getFaction().getCommanderNsids();
     snapPoint = snapPoints[2];
     if (snapPoint) {
-      this._unpackLeaders(deck, nsids, snapPoint);
+      const rot: Rotator = new Rotator(0, 0, 0);
+      this._unpackLeaders(deck, nsids, snapPoint, rot);
     }
 
     nsids = this.getFaction().getHeroNsids();
     snapPoint = snapPoints[1];
     if (snapPoint) {
-      this._unpackLeaders(deck, nsids, snapPoint);
+      const rot: Rotator = new Rotator(0, 0, 0);
+      this._unpackLeaders(deck, nsids, snapPoint, rot);
     }
 
     nsids = this.getFaction().getMechNsids();
     snapPoint = snapPoints[0];
     if (snapPoint) {
-      this._unpackLeaders(deck, nsids, snapPoint);
+      const rot: Rotator = new Rotator(0, 0, 180);
+      this._unpackLeaders(deck, nsids, snapPoint, rot);
     }
 
     DeletedItemsContainer.destroyWithoutCopying(deck);
@@ -100,7 +105,8 @@ export class UnpackLeaders extends AbstractUnpack {
   _unpackLeaders(
     deck: Card,
     leaderNsids: Array<string>,
-    snapPoint: SnapPoint
+    snapPoint: SnapPoint,
+    rotator: Rotator
   ): void {
     const leaderNsidsAsSet: Set<string> = new Set(leaderNsids);
     const leaders: Card | undefined = this._cardUtil.filterCards(
@@ -118,6 +124,7 @@ export class UnpackLeaders extends AbstractUnpack {
       const leadersCards: Array<Card> = this._cardUtil.separateDeck(leaders);
       for (const leaderCard of leadersCards) {
         leaderCard.setPosition(above);
+        leaderCard.setRotation(rotator);
         leaderCard.snapToGround();
         above.y -= 2;
       }

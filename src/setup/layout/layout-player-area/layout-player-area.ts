@@ -22,6 +22,7 @@ import { LayoutSheets } from "./layout-sheets";
 import { LayoutTokenContainers } from "./layout-token-containers";
 import { LayoutUnitBoxes } from "./layout-unit-boxes";
 import { LayoutStatusPad } from "./layout-status-pad";
+import { PlaceGenericPromissories } from "./place-generic-promissories";
 
 export class LayoutPlayerArea {
   private readonly _layout: LayoutBorder;
@@ -86,6 +87,10 @@ export class LayoutPlayerArea {
       .setColor(color)
       .setOutlineWidth(1)
       .setTag(`player-area-${playerSlot}`);
+
+    this._layout.addAfterLayout(() => {
+      new PlaceGenericPromissories().place(playerSlot);
+    });
   }
 
   getLayout(): LayoutObjects {

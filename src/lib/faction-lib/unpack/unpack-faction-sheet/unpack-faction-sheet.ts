@@ -32,6 +32,7 @@ export class UnpackFactionSheet extends AbstractUnpack {
 
     DeletedItemsContainer.destroyWithoutCopying(generic);
     factionSheet.snapToGround();
+    factionSheet.setObjectType(ObjectType.Ground);
   }
 
   remove(): void {

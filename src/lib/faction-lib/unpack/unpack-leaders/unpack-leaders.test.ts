@@ -3,11 +3,12 @@ import {
   MockCardDetails,
   MockCardHolder,
   MockGameObject,
+  MockRotator,
   MockSnapPoint,
 } from "ttpg-mock";
 import { Faction } from "../../faction/faction";
 import { UnpackLeaders } from "./unpack-leaders";
-import { Card, GameObject, SnapPoint } from "@tabletop-playground/api";
+import { Card, GameObject, Rotator, SnapPoint } from "@tabletop-playground/api";
 
 it("unpack/remove", () => {
   const faction: Faction = new Faction(
@@ -108,9 +109,10 @@ it("_unpackLeaders", () => {
   });
 
   const snapPoint: SnapPoint = new MockSnapPoint();
+  const rot: Rotator = new MockRotator(0, 0, 0);
 
   const unpack = new UnpackLeaders(faction, playerSlot);
-  unpack._unpackLeaders(deck, [nsid], snapPoint);
+  unpack._unpackLeaders(deck, [nsid], snapPoint, rot);
 });
 
 it("_unpackLeaders (missing cards)", () => {
@@ -123,9 +125,10 @@ it("_unpackLeaders (missing cards)", () => {
   const deck: Card = new MockCard({});
 
   const snapPoint: SnapPoint = new MockSnapPoint();
+  const rot: Rotator = new MockRotator(0, 0, 0);
 
   const unpack = new UnpackLeaders(faction, playerSlot);
-  expect(() => unpack._unpackLeaders(deck, [nsid], snapPoint)).toThrow(
+  expect(() => unpack._unpackLeaders(deck, [nsid], snapPoint, rot)).toThrow(
     /Leaders not found/
   );
 });
