@@ -25,7 +25,7 @@ import { CreateAndAttachEndTurnButtonUI } from "../ui/end-turn-button-ui/create-
 import { CreateAndAttachTurnOrderUI } from "../ui/turn-order-ui/create-and-attach-turn-order-ui";
 import { DiplomacySystem } from "../context-menu/diplomacy-system/diplomacy-system";
 import { FactionRegistry } from "../lib/faction-lib/registry/faction-registry";
-import { NumpadKeyAll } from "../lib/numpad-key-lib/numpad-key-all";
+import { NumpadKeyAll } from "../lib/numpad-key-lib/numpad-key-all/numpad-key-all";
 import { OnSystemActivated } from "../event/on-system-activated/on-system-activated";
 import { PlanetAttachmentRegistry } from "../lib/system-lib/registry/planet-attachment-registry";
 import { PlayerColor } from "../lib/player-lib/player-color/player-color";

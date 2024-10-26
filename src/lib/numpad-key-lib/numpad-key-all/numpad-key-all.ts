@@ -1,5 +1,6 @@
 import { IGlobal } from "ttpg-darrell";
-import { NumpadKeySpawn } from "./numpad-key-spawn";
+import { NumpadKeySpawn } from "../numpad-key-spawn/numpad-key-spawn";
+import { NumpadKeyRecycle } from "../numpad-key-recycle/numpad-key-recycle";
 
 export class NumpadKeyAll implements IGlobal {
   init(): void {
@@ -8,5 +9,6 @@ export class NumpadKeyAll implements IGlobal {
       2: "token:base/fighter-1",
       3: "token:base/infantry-1",
     });
+    new NumpadKeyRecycle(10); // 10 is zero key
   }
 }
