@@ -89,7 +89,7 @@ export class LayoutPlayerArea {
       .setTag(`player-area-${playerSlot}`);
 
     this._layout.addAfterLayout(() => {
-      new PlaceGenericPromissories().place(playerSlot);
+      new PlaceGenericPromissories(playerSlot).place();
     });
   }
 
