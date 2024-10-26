@@ -1,7 +1,15 @@
-// 6 (z+110)
-import { globalEvents, Player, Vector, world } from "@tabletop-playground/api";
+// 7
+import {
+  GameObject,
+  globalEvents,
+  Player,
+  Vector,
+  world,
+} from "@tabletop-playground/api";
+import { Find } from "ttpg-darrell";
 
-export class NumpadKeyLookMap {
+export class NumpadKeyLookScoring {
+  private readonly _find: Find = new Find();
   private readonly _key: number;
 
   private readonly _onScriptButtonPressed = (
@@ -14,8 +22,20 @@ export class NumpadKeyLookMap {
     if (index !== this._key || ctrl || alt) {
       return;
     }
-    const lookAt: Vector = new Vector(0, 0, world.getTableHeight());
-    const lookFrom: Vector = lookAt.add([-10, 0, 110]);
+
+    const skipContained: boolean = true;
+    const obj: GameObject | undefined = this._find.findGameObject(
+      "token:base/scoreboard",
+      undefined,
+      skipContained
+    );
+    if (!obj) {
+      return;
+    }
+
+    const lookAt: Vector = obj.getPosition();
+    lookAt.z = world.getTableHeight();
+    const lookFrom: Vector = lookAt.add([-10, 0, 70]);
     const rot = lookFrom.findLookAtRotation(lookAt);
     player.setPositionAndRotation(lookFrom, rot);
   };
