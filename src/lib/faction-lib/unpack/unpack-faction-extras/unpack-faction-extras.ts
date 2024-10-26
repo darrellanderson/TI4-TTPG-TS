@@ -1,4 +1,4 @@
-import { Container, GameObject } from "@tabletop-playground/api";
+import { Container, GameObject, Vector } from "@tabletop-playground/api";
 import { DeletedItemsContainer, Find, Spawn } from "ttpg-darrell";
 
 import { AbstractUnpack } from "../abstract-unpack/abstract-unpack";
@@ -27,9 +27,10 @@ export class UnpackFactionExtras extends AbstractUnpack {
 
   remove() {
     const extrasContainer: Container = this._getFactionExtrasContainerOrThrow();
+    const above: Vector = extrasContainer.getPosition().add([0, 0, 10]);
     const items: Array<GameObject> = extrasContainer.getItems();
     for (const item of items) {
-      // Is it safe to destroy item inside a container?
+      extrasContainer.take(item, above);
       DeletedItemsContainer.destroyWithoutCopying(item);
     }
   }

@@ -50,6 +50,9 @@ export class UnpackFactionAlliance extends AbstractUnpack {
         const pos: Vector = obj.getPosition();
         const owner: number = this._find.closestOwnedCardHolderOwner(pos);
         if (owner === this.getPlayerSlot()) {
+          if (obj instanceof Card) {
+            obj.removeFromHolder();
+          }
           DeletedItemsContainer.destroyWithoutCopying(obj);
         }
       }

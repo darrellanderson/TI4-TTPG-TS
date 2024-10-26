@@ -58,6 +58,8 @@ export class UnpackLeaders extends AbstractUnpack {
     if (snapPoint) {
       this._unpackLeaders(deck, nsids, snapPoint);
     }
+
+    DeletedItemsContainer.destroyWithoutCopying(deck);
   }
 
   remove(): void {
@@ -107,11 +109,8 @@ export class UnpackLeaders extends AbstractUnpack {
     );
     if (leaderNsids.length > 0) {
       if (!leaders) {
-        throw new Error("Leaders not found");
-      }
-      if (leaders.getStackSize() !== leaderNsidsAsSet.size) {
         throw new Error(
-          `Unexpected number of leaders: have ${leaders.getStackSize()}, want ${leaderNsidsAsSet.size}`
+          `Leaders not found (faction "${this.getFaction().getName()}", leaders [${leaderNsids.join(", ")}])`
         );
       }
 

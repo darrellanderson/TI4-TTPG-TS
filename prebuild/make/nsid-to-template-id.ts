@@ -61,7 +61,7 @@ async function main() {
         const newNsid = cardNsids[0];
         if (nsid !== newNsid) {
           console.log(
-            `REPLACING SINGLETON "${nsid}" with "${newNsid}" (${jsonFilename})`,
+            `REPLACING SINGLETON "${nsid}" with "${newNsid}" (${jsonFilename})`
           );
           nsid = newNsid;
         }
@@ -81,7 +81,13 @@ async function main() {
               }
             }
           }
-          return firstParts.slice(0, matchingPartsCount).join(".");
+          const result: string = firstParts
+            .slice(0, matchingPartsCount)
+            .join(".");
+          if (result.startsWith("card.leader")) {
+            return "card.leader";
+          }
+          return result;
         };
 
         // Use a common prefix (matching to a dot-delimited string).
@@ -97,12 +103,15 @@ async function main() {
         });
         const source = getPrefix(sources);
 
-        const newNsid = `${type}:${source}/*`;
-        if (nsid !== newNsid) {
-          console.log(
-            `REPLACING DECK "${nsid}" with "${newNsid}" (${jsonFilename})`,
-          );
-          nsid = newNsid;
+        for (let i = 0; i !== -1; i++) {
+          const newNsid = `${type}:${source}/${i}`;
+          if (!nsidToTemplateId[newNsid]) {
+            console.log(
+              `REPLACING DECK "${nsid}" with "${newNsid}" (${jsonFilename})`
+            );
+            nsid = newNsid;
+            break;
+          }
         }
       }
     }
@@ -113,7 +122,7 @@ async function main() {
       continue;
     }
 
-    console.log(`accepting "${jsonFilename}"`);
+    console.log(`accepting "${jsonFilename}: ${nsid}"`);
     if (nsidToTemplateId[nsid]) {
       throw new Error(`Duplicate NSID "${nsid}"`);
     }

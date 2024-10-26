@@ -113,28 +113,6 @@ it("_unpackLeaders", () => {
   unpack._unpackLeaders(deck, [nsid], snapPoint);
 });
 
-it("_unpackLeaders (count mismatch)", () => {
-  const faction: Faction = TI4.factionRegistry.getByNsid(
-    "faction:base/arborec"
-  )!;
-  const playerSlot: number = 10;
-
-  const nsid: string = "card.leader.agent:pok/letani-ospha";
-  const deck: Card = new MockCard({
-    cardDetails: [
-      new MockCardDetails({ metadata: nsid }),
-      new MockCardDetails({ metadata: nsid }),
-    ],
-  });
-
-  const snapPoint: SnapPoint = new MockSnapPoint();
-
-  const unpack = new UnpackLeaders(faction, playerSlot);
-  expect(() => unpack._unpackLeaders(deck, [nsid], snapPoint)).toThrow(
-    /number of leaders/
-  );
-});
-
 it("_unpackLeaders (missing cards)", () => {
   const faction: Faction = TI4.factionRegistry.getByNsid(
     "faction:base/arborec"
