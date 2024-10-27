@@ -119,10 +119,14 @@ it("load (invalid schema)", () => {
 it("loadDefaultData", () => {
   const registry = new FactionRegistry();
   expect(registry.getByNsid("faction:base/arborec")).toBeUndefined();
+  expect(() => {
+    registry.getByNsidOrThrow("faction:base/arborec");
+  }).toThrow();
   expect(registry.getAllFactions()).toHaveLength(0);
 
   registry.loadDefaultData();
   expect(registry.getByNsid("faction:base/arborec")).toBeDefined();
+  expect(registry.getByNsidOrThrow("faction:base/arborec")).toBeDefined();
   expect(registry.getAllFactions()).not.toHaveLength(0);
 });
 
