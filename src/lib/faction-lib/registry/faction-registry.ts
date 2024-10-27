@@ -20,6 +20,14 @@ export class FactionRegistry {
     return Array.from(this._nsidToFaction.values());
   }
 
+  getAllFactionsFilteredByConfigSources(): Array<Faction> {
+    const sources: Set<string> = new Set(TI4.config.sources);
+    return this.getAllFactions().filter((faction) => {
+      const source: string = faction.getSource();
+      return sources.has(source);
+    });
+  }
+
   getByNsid(nsid: string): Faction | undefined {
     return this._nsidToFaction.get(nsid);
   }

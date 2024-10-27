@@ -429,6 +429,10 @@ export class System {
     return result.filter((planet) => !planet.isDestroyedPlanet());
   }
 
+  getSource(): string {
+    return this._sourceAndPackageId.source;
+  }
+
   /**
    * Get system tile number.
    *

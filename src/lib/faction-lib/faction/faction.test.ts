@@ -71,6 +71,7 @@ it("constructor", () => {
   expect(faction.getPromissoryNsids()).toEqual([
     "card.promissory:my-source/my-promissory",
   ]);
+  expect(faction.getSource()).toEqual("my-source");
   expect(faction.getStartingUnits()).toEqual({ carrier: 3 });
   expect(faction.getStartingTechNsids().sort()).toEqual([
     "card.technology.blue:base/antimass-deflectors",

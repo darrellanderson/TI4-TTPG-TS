@@ -16,6 +16,7 @@ import {
   SourceAndPackageIdSchema,
   SourceAndPackageIdSchemaType,
 } from "../schema/basic-types-schema";
+import { SystemTier, SystemTierType } from "../system/system-tier";
 
 type SchemaAndSource = {
   schema: SystemSchemaType;
@@ -164,8 +165,21 @@ export class SystemRegistry {
     );
   }
 
+  public getAllDraftableSystemsFilteredByConfigSources(): Array<System> {
+    const sources: Set<string> = new Set(TI4.config.sources);
+    const systemTier = new SystemTier();
+    return this.getAllSystemsWithObjs().filter((system) => {
+      const source: string = system.getSource();
+      if (!sources.has(source)) {
+        return false;
+      }
+      const tier: SystemTierType = systemTier.getTier(system);
+      return tier !== "other";
+    });
+  }
+
   /**
-   * Get systems for system tile objects on the table (skip contained).
+   * Get systems for system tile objects (optionally skip contained).
    *
    * @returns
    */

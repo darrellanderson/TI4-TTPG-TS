@@ -13,6 +13,7 @@ import { GameObject, Vector, world } from "@tabletop-playground/api";
 import { SystemSchemaType } from "../schema/system-schema";
 import { NSID, ParsedNSID } from "ttpg-darrell";
 import { Planet } from "../planet/planet";
+import { System } from "../system/system";
 
 it("constructor", () => {
   new SystemRegistry();
@@ -98,6 +99,28 @@ it("loadDefaultData", () => {
   expect(registry.rawBySystemTileNumber(1)).toBeUndefined();
   registry.loadDefaultData();
   expect(registry.rawBySystemTileNumber(1)).toBeDefined();
+  registry.destroy();
+});
+
+it("getAllDraftableSystemsFilteredByConfigSources", () => {
+  const registry = new SystemRegistry().loadDefaultData();
+
+  // Only finds systems in the game world.
+  MockGameObject.simple("tile.system:base/1"); // home
+  MockGameObject.simple("tile.system:base/18"); // exlude from draft
+  MockGameObject.simple("tile.system:base/19");
+  MockGameObject.simple("tile.system:pok/59"); // pok
+
+  let systems: Array<System>;
+
+  TI4.config.setSources(["base"]);
+  systems = registry.getAllDraftableSystemsFilteredByConfigSources();
+  expect(systems).toHaveLength(1);
+
+  TI4.config.setSources(["base", "pok"]);
+  systems = registry.getAllDraftableSystemsFilteredByConfigSources();
+  expect(systems).toHaveLength(2);
+
   registry.destroy();
 });
 

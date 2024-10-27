@@ -199,6 +199,10 @@ export class Faction {
     });
   }
 
+  getSource(): NsidNameSchemaType {
+    return this._sourceAndPackageId.source;
+  }
+
   getStartingTechNsids(): Array<string> {
     const result: Array<string> = [];
     for (const startingTech of this._params.startingTechs) {

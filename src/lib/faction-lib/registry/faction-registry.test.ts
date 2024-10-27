@@ -307,3 +307,20 @@ it("validate NSIDs appear in assets/Templates", () => {
   }
   expect(missing).toHaveLength(0);
 });
+
+it("getAllFactionsFilteredByConfigSources", () => {
+  const registry: FactionRegistry = new FactionRegistry().loadDefaultData();
+  let factions: Array<Faction>;
+
+  TI4.config.setSources(["base", "pok"]);
+  factions = registry.getAllFactionsFilteredByConfigSources();
+  expect(factions).toHaveLength(24); // keleres flavors are separate
+
+  TI4.config.setSources(["base", "pok", "codex.vigil"]);
+  factions = registry.getAllFactionsFilteredByConfigSources();
+  expect(factions).toHaveLength(27); // keleres flavors are separate
+
+  TI4.config.setSources(["base"]);
+  factions = registry.getAllFactionsFilteredByConfigSources();
+  expect(factions).toHaveLength(17);
+});

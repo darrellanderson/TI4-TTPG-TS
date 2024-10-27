@@ -61,6 +61,7 @@ it("constructor", () => {
   const system = new System(systemTileObj, source, params);
   expect(system.getObj()).toBe(systemTileObj);
   expect(system.getSystemTileNumber()).toBe(1000);
+  expect(system.getSource()).toEqual("my-source");
 });
 
 it("constructor (invalid params)", () => {
