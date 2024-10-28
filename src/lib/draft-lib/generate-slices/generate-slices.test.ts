@@ -57,3 +57,48 @@ it("_hasAdjacentAnomalies (slice length mismatch)", () => {
     generateSlices._hasAdjacentAnomalies(slice);
   }).toThrow();
 });
+
+it("_separateAnomalies", () => {
+  MockGameObject.simple("tile.system:base/19");
+  MockGameObject.simple("tile.system:base/41"); // anomaly
+  MockGameObject.simple("tile.system:base/42"); // anomaly
+
+  const generateSlices = new GenerateSlices(0, [
+    "<0,0,0>",
+    "<1,0,-1>",
+    "<2,0,-2>",
+    "<3,0,-3>",
+  ]);
+
+  const slice: Array<number> = [19, 41, 42];
+  let separated: Array<number>;
+
+  // With shuffline (do a few times to be more likely to work).
+  for (let i = 0; i < 10; i++) {
+    separated = generateSlices._separateAnomalies(slice);
+    expect(separated[1]).toEqual(19);
+  }
+
+  // Without shuffling.
+  separated = generateSlices._separateAnomalies(slice, false);
+  expect(separated[1]).toEqual(19);
+
+  // Again but
+  expect(() => {
+    generateSlices._separateAnomalies([]);
+  }).toThrow();
+});
+
+it("_permutator", () => {
+  const slice: Array<number> = [19, 20];
+  const inspector = (slice: Array<number>): boolean => {
+    return slice[0] === 20;
+  };
+
+  const generateSlices = new GenerateSlices(0, []);
+  const permuted: Array<number> | undefined = generateSlices._permutator(
+    slice,
+    inspector
+  );
+  expect(permuted).toEqual([20, 19]);
+});
