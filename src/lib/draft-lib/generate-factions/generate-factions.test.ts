@@ -97,3 +97,13 @@ it("_resolve (block keleres)", () => {
     .map((faction) => faction.getAbbr());
   expect(out).toEqual(["Argent", "Mentak", "Xxcha", "Naalu"]);
 });
+
+it("_resolve (not enough factions)", () => {
+  const factions: Array<Faction> = ["faction:base/naalu"].map((nsid) =>
+    TI4.factionRegistry.getByNsidOrThrow(nsid)
+  );
+
+  const generateFactions = new GenerateFactions();
+  const count = 2;
+  expect(() => generateFactions._resolveOrThrow(count, factions)).toThrow();
+});
