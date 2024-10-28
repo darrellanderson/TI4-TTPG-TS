@@ -181,6 +181,20 @@ it("getByPosition", () => {
   registry.destroy();
 });
 
+it("getBySystemTileNumber", () => {
+  const registry = new SystemRegistry().load(
+    { source: "my-source", packageId: "my-package-id" },
+    [{ tile: 1000 }]
+  );
+  new MockGameObject({
+    templateMetadata: "tile.system:my-source/1000",
+  });
+  expect(registry.getAllSystemsWithObjs()).toHaveLength(1);
+  expect(registry.getBySystemTileNumber(1000)).toBeDefined();
+  expect(registry.getBySystemTileNumber(999)).toBeUndefined();
+  registry.destroy();
+});
+
 it("tileNumberToSystemTileObjNsid", () => {
   const registry = new SystemRegistry().load(
     { source: "my-source", packageId: "my-package-id" },

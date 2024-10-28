@@ -218,6 +218,15 @@ export class SystemRegistry {
     return undefined;
   }
 
+  public getBySystemTileNumber(tileNumber: number): System | undefined {
+    for (const system of this._systemTileObjIdToSystem.values()) {
+      if (system.getSystemTileNumber() === tileNumber) {
+        return system;
+      }
+    }
+    return undefined;
+  }
+
   /**
    * Lookup system by system tile object nsid.
    * Duplicate tiles for the "same" system have separate System instances.
