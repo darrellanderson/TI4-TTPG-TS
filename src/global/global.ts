@@ -18,6 +18,7 @@ import {
   TurnOrder,
 } from "ttpg-darrell";
 
+import { addObjectTemplatesToMockWorld } from "../nsid/nsid-to-template-id.test";
 import { ActivateSystem } from "../context-menu/activate-system/activate-system";
 import { Config } from "../lib/config/config";
 import { ControlTokenSystem } from "../context-menu/control-token-system/control-token-system";
@@ -43,9 +44,9 @@ import { SystemAttachmentRegistry } from "../lib/system-lib/registry/system-atta
 import { SystemRegistry } from "../lib/system-lib/registry/system-registry";
 import { TechRegistry } from "../lib/tech-lib/registry/tech-registry";
 import { UnitAttrsRegistry } from "../lib/unit-lib/registry/unit-attrs-registry";
+import { UnitModifierActiveIdle } from "../lib/unit-lib/unit-modifier/unit-modifier-active-idle";
 import { UnitModifierRegistry } from "../lib/unit-lib/registry/unit-modifier-registry";
 
-import { addObjectTemplatesToMockWorld } from "../nsid/nsid-to-template-id.test";
 import * as NSID_TO_TEMPLATE_ID from "../nsid/nsid-to-template-id.json";
 Spawn.inject(NSID_TO_TEMPLATE_ID);
 
@@ -129,6 +130,7 @@ export function resetGlobalThisTI4(): TI4Class {
     new RightClickScorePublic(),
     new RSwapSplitCombine(),
     new ShuffleDecks(),
+    new UnitModifierActiveIdle(),
   ];
   if (GameWorld.getExecutionReason() !== "unittest") {
     iGlobals.push(
