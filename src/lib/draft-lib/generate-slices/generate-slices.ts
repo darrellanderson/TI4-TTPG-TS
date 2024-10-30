@@ -9,33 +9,84 @@ export type Slice = Array<number>;
 
 export type GenerateSlicesParams = {
   sliceCount: number;
-  sliceMakeup?: Array<SystemTierType>;
-  sliceShape: Array<HexType>;
-  minWormholes?: number;
+  sliceMakeup: ReadonlyArray<SystemTierType>;
+  sliceShape: ReadonlyArray<HexType>;
+  minAlphaWormholes?: number;
+  minBetaWormholes?: number;
   minLegendary?: number;
 };
 
+export type TierToSystems = Map<SystemTierType, Array<System>>;
+
+export class SliceInProgress {
+  private readonly _size: number;
+  private readonly _remainingMakeup: Array<SystemTierType>;
+  private readonly _systems: Array<System> = [];
+
+  constructor(makeup: ReadonlyArray<SystemTierType>) {
+    this._size = makeup.length;
+    this._remainingMakeup = [...makeup];
+  }
+
+  addSystemOrThrow(system: System) {
+    const tier: SystemTierType = new SystemTier().getTier(system);
+    const index: number = this._remainingMakeup.indexOf(tier);
+    if (index === -1) {
+      throw new Error(`system tier (${tier}) not in remaining makeup`);
+    }
+    this._remainingMakeup.splice(index, 1);
+    this._systems.push(system);
+    if (this._systems.length > this._size) {
+      throw new Error("too many systems added");
+    }
+  }
+
+  canAdd(system: System): boolean {
+    const tier: SystemTierType = new SystemTier().getTier(system);
+    return (
+      this._remainingMakeup.includes(tier) && this._systems.length < this._size
+    );
+  }
+
+  getRemainingMakeup(): Array<SystemTierType> {
+    return this._remainingMakeup;
+  }
+}
+
 export class GenerateSlices {
   private readonly _params: GenerateSlicesParams;
+  private readonly _slicesInProgress: Array<SliceInProgress> = [];
 
   constructor(params: GenerateSlicesParams) {
     this._params = Object.freeze(params);
+
+    for (let i = 0; i < this._params.sliceCount; i++) {
+      this._slicesInProgress.push(
+        new SliceInProgress(this._params.sliceMakeup)
+      );
+    }
   }
 
   generateSlices() {
     // Implementation
   }
 
-  _getTierToShuffledSystems(): Map<SystemTierType, Array<System>> {
-    const tierToSystems = new Map<SystemTierType, Array<System>>();
+  _getShuffledSystems(): Array<System> {
+    let systems: Array<System> =
+      TI4.systemRegistry.getAllDraftableSystemsFilteredByConfigSources();
+    systems = new Shuffle<System>().shuffle(systems);
+    return systems;
+  }
+
+  _getTierToSystems(systems: Array<System>): TierToSystems {
+    const tierToSystems: TierToSystems = new Map<
+      SystemTierType,
+      Array<System>
+    >();
     tierToSystems.set("high", []);
     tierToSystems.set("med", []);
     tierToSystems.set("low", []);
     tierToSystems.set("red", []);
-
-    let systems: Array<System> =
-      TI4.systemRegistry.getAllDraftableSystemsFilteredByConfigSources();
-    systems = new Shuffle<System>().shuffle(systems);
 
     // Split systems into tiers.
     const systemTier = new SystemTier();
@@ -47,9 +98,51 @@ export class GenerateSlices {
       }
     }
 
-    //
-
     return tierToSystems;
+  }
+
+  /**
+   * Promote wormholes and legendaries according to params.
+   * Return them in a tier-to-systems map, also removing them
+   * from the input systems array.
+   *
+   * @param systems
+   */
+  _promoteWormholesAndLegendaries(systems: Array<System>): TierToSystems {
+    // Move candidates from input systems to promoted.
+    let count: number;
+    let promoteCandidates: Array<System>;
+    const promoted: Array<System> = [];
+    const doPromotion = () => {
+      for (let i = 0; i < count; i++) {
+        const system = promoteCandidates.shift();
+        if (system) {
+          const index = systems.indexOf(system);
+          if (index !== -1) {
+            systems.splice(index, 1);
+            promoted.push(system);
+          }
+        }
+      }
+    };
+
+    count = this._params.minAlphaWormholes || 0;
+    promoteCandidates = systems.filter((system) =>
+      system.getWormholes().includes("alpha")
+    );
+    doPromotion();
+
+    count = this._params.minBetaWormholes || 0;
+    promoteCandidates = systems.filter((system) =>
+      system.getWormholes().includes("beta")
+    );
+    doPromotion();
+
+    count = this._params.minLegendary || 0;
+    promoteCandidates = systems.filter((system) => system.isLegendary());
+    doPromotion();
+
+    return this._getTierToSystems(promoted);
   }
 
   _hasAdjacentAnomalies(slice: Slice): boolean {

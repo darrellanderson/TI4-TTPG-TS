@@ -1,7 +1,6 @@
-import { GenerateSlices } from "./generate-slices";
-import { System } from "../../system-lib/system/system";
-import { SystemTierType } from "../../system-lib/system/system-tier";
 import { MockGameObject } from "ttpg-mock";
+import { GenerateSlices, TierToSystems } from "./generate-slices";
+import { System } from "../../system-lib/system/system";
 
 it("_getTierToShuffledSystems", () => {
   // Systems must exist for registry to find them.
@@ -16,14 +15,12 @@ it("_getTierToShuffledSystems", () => {
   TI4.config.setSources(["base", "pok"]);
   const generateSlices = new GenerateSlices({
     sliceCount: 0,
+    sliceMakeup: [],
     sliceShape: [],
-    minWormholes: 1,
-    minLegendary: 1,
   });
-  const tierToSystems: Map<
-    SystemTierType,
-    Array<System>
-  > = generateSlices._getTierToShuffledSystems();
+  const systems: Array<System> = generateSlices._getShuffledSystems();
+  const tierToSystems: TierToSystems =
+    generateSlices._getTierToSystems(systems);
   expect(tierToSystems.size).toBe(4);
   expect(tierToSystems.get("high")?.length).toBe(10);
   expect(tierToSystems.get("med")?.length).toBe(14);
@@ -39,6 +36,7 @@ it("_hasAdjacentAnomalies", () => {
 
   const generateSlices = new GenerateSlices({
     sliceCount: 0,
+    sliceMakeup: [],
     sliceShape: ["<0,0,0>", "<1,0,-1>", "<2,0,-2>"],
   });
   let slice: Array<number>;
@@ -53,6 +51,7 @@ it("_hasAdjacentAnomalies", () => {
 it("_hasAdjacentAnomalies (slice length mismatch)", () => {
   const generateSlices = new GenerateSlices({
     sliceCount: 0,
+    sliceMakeup: [],
     sliceShape: ["<0,0,0>", "<1,0,-1>", "<2,0,-2>"],
   });
   const slice: Array<number> = [19, 20, 21];
@@ -68,6 +67,7 @@ it("_separateAnomalies", () => {
 
   const generateSlices = new GenerateSlices({
     sliceCount: 0,
+    sliceMakeup: [],
     sliceShape: ["<0,0,0>", "<1,0,-1>", "<2,0,-2>", "<3,0,-3>"],
   });
 
@@ -96,7 +96,11 @@ it("_permutator", () => {
     return slice[0] === 20;
   };
 
-  const generateSlices = new GenerateSlices({ sliceCount: 0, sliceShape: [] });
+  const generateSlices = new GenerateSlices({
+    sliceCount: 0,
+    sliceMakeup: [],
+    sliceShape: [],
+  });
   const permuted: Array<number> | undefined = generateSlices._permutator(
     slice,
     inspector
