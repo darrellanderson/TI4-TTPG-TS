@@ -9,6 +9,7 @@ export type Slice = Array<number>;
 
 export type GenerateSlicesParams = {
   sliceCount: number;
+  sliceMakeup?: Array<SystemTierType>;
   sliceShape: Array<HexType>;
   minWormholes?: number;
   minLegendary?: number;
@@ -36,34 +37,7 @@ export class GenerateSlices {
       TI4.systemRegistry.getAllDraftableSystemsFilteredByConfigSources();
     systems = new Shuffle<System>().shuffle(systems);
 
-    // Move minimum required systems to the front of the list.
-    if (this._params.minWormholes) {
-      const promoteSystems: Array<System> = systems.filter(
-        (system) => system.getWormholes().length > 0
-      );
-      for (let i = 0; i < this._params.minWormholes; i++) {
-        const promoteSystem: System | undefined = promoteSystems.shift();
-        if (promoteSystem) {
-          const index: number = systems.indexOf(promoteSystem);
-          systems.splice(index, 1);
-          systems.unshift(promoteSystem);
-        }
-      }
-    }
-    if (this._params.minLegendary) {
-      const promoteSystems: Array<System> = systems.filter((system) =>
-        system.isLegendary()
-      );
-      for (let i = 0; i < this._params.minLegendary; i++) {
-        const promoteSystem: System | undefined = promoteSystems.shift();
-        if (promoteSystem) {
-          const index: number = systems.indexOf(promoteSystem);
-          systems.splice(index, 1);
-          systems.unshift(promoteSystem);
-        }
-      }
-    }
-
+    // Split systems into tiers.
     const systemTier = new SystemTier();
     for (const system of systems) {
       const tier = systemTier.getTier(system);
@@ -72,6 +46,9 @@ export class GenerateSlices {
         entries.push(system);
       }
     }
+
+    //
+
     return tierToSystems;
   }
 
