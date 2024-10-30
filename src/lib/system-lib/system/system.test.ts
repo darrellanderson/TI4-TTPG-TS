@@ -586,3 +586,26 @@ it("isHyperlane (default)", () => {
   );
   expect(system.isHyperlane()).toBe(false);
 });
+
+it("isLegendary", () => {
+  const system = new System(
+    new MockGameObject({ templateMetadata: "tile.system:my-source/1000" }),
+    { source: "my-source", packageId: "my-package-id" },
+    {
+      tile: 1000,
+      planets: [
+        { name: "my-name", nsidName: "my-nsid-name", isLegendary: true },
+      ],
+    }
+  );
+  expect(system.isLegendary()).toBe(true);
+});
+
+it("isLegendary (default)", () => {
+  const system = new System(
+    new MockGameObject({ templateMetadata: "tile.system:my-source/1000" }),
+    { source: "my-source", packageId: "my-package-id" },
+    { tile: 1000, planets: [{ name: "my-name", nsidName: "my-nsid-name" }] }
+  );
+  expect(system.isLegendary()).toBe(false);
+});

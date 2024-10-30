@@ -14,7 +14,12 @@ it("_getTierToShuffledSystems", () => {
   }
 
   TI4.config.setSources(["base", "pok"]);
-  const generateSlices = new GenerateSlices(0, []);
+  const generateSlices = new GenerateSlices({
+    sliceCount: 0,
+    sliceShape: [],
+    minWormholes: 1,
+    minLegendary: 1,
+  });
   const tierToSystems: Map<
     SystemTierType,
     Array<System>
@@ -32,11 +37,10 @@ it("_hasAdjacentAnomalies", () => {
   MockGameObject.simple("tile.system:base/41"); // anomaly
   MockGameObject.simple("tile.system:base/42"); // anomaly
 
-  const generateSlices = new GenerateSlices(0, [
-    "<0,0,0>",
-    "<1,0,-1>",
-    "<2,0,-2>",
-  ]);
+  const generateSlices = new GenerateSlices({
+    sliceCount: 0,
+    sliceShape: ["<0,0,0>", "<1,0,-1>", "<2,0,-2>"],
+  });
   let slice: Array<number>;
 
   slice = [19, 20]; // no anomalies
@@ -47,11 +51,10 @@ it("_hasAdjacentAnomalies", () => {
 });
 
 it("_hasAdjacentAnomalies (slice length mismatch)", () => {
-  const generateSlices = new GenerateSlices(0, [
-    "<0,0,0>",
-    "<1,0,-1>",
-    "<2,0,-2>",
-  ]);
+  const generateSlices = new GenerateSlices({
+    sliceCount: 0,
+    sliceShape: ["<0,0,0>", "<1,0,-1>", "<2,0,-2>"],
+  });
   const slice: Array<number> = [19, 20, 21];
   expect(() => {
     generateSlices._hasAdjacentAnomalies(slice);
@@ -63,12 +66,10 @@ it("_separateAnomalies", () => {
   MockGameObject.simple("tile.system:base/41"); // anomaly
   MockGameObject.simple("tile.system:base/42"); // anomaly
 
-  const generateSlices = new GenerateSlices(0, [
-    "<0,0,0>",
-    "<1,0,-1>",
-    "<2,0,-2>",
-    "<3,0,-3>",
-  ]);
+  const generateSlices = new GenerateSlices({
+    sliceCount: 0,
+    sliceShape: ["<0,0,0>", "<1,0,-1>", "<2,0,-2>", "<3,0,-3>"],
+  });
 
   const slice: Array<number> = [19, 41, 42];
   let separated: Array<number>;
@@ -95,7 +96,7 @@ it("_permutator", () => {
     return slice[0] === 20;
   };
 
-  const generateSlices = new GenerateSlices(0, []);
+  const generateSlices = new GenerateSlices({ sliceCount: 0, sliceShape: [] });
   const permuted: Array<number> | undefined = generateSlices._permutator(
     slice,
     inspector

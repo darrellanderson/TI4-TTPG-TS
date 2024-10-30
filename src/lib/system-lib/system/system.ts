@@ -542,4 +542,13 @@ export class System {
   isHyperlane(): boolean {
     return this._params.isHyperlane ?? false;
   }
+
+  isLegendary(): boolean {
+    for (const planet of this._planets) {
+      if (planet.isLegendary()) {
+        return true;
+      }
+    }
+    return false;
+  }
 }

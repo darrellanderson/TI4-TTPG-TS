@@ -7,13 +7,18 @@ import {
 
 export type Slice = Array<number>;
 
-export class GenerateSlices {
-  private readonly _count: number;
-  private readonly _sliceShape: Array<HexType>;
+export type GenerateSlicesParams = {
+  sliceCount: number;
+  sliceShape: Array<HexType>;
+  minWormholes?: number;
+  minLegendary?: number;
+};
 
-  constructor(count: number, sliceShape: Array<HexType>) {
-    this._count = count;
-    this._sliceShape = [...sliceShape];
+export class GenerateSlices {
+  private readonly _params: GenerateSlicesParams;
+
+  constructor(params: GenerateSlicesParams) {
+    this._params = Object.freeze(params);
   }
 
   generateSlices() {
@@ -31,6 +36,34 @@ export class GenerateSlices {
       TI4.systemRegistry.getAllDraftableSystemsFilteredByConfigSources();
     systems = new Shuffle<System>().shuffle(systems);
 
+    // Move minimum required systems to the front of the list.
+    if (this._params.minWormholes) {
+      const promoteSystems: Array<System> = systems.filter(
+        (system) => system.getWormholes().length > 0
+      );
+      for (let i = 0; i < this._params.minWormholes; i++) {
+        const promoteSystem: System | undefined = promoteSystems.shift();
+        if (promoteSystem) {
+          const index: number = systems.indexOf(promoteSystem);
+          systems.splice(index, 1);
+          systems.unshift(promoteSystem);
+        }
+      }
+    }
+    if (this._params.minLegendary) {
+      const promoteSystems: Array<System> = systems.filter((system) =>
+        system.isLegendary()
+      );
+      for (let i = 0; i < this._params.minLegendary; i++) {
+        const promoteSystem: System | undefined = promoteSystems.shift();
+        if (promoteSystem) {
+          const index: number = systems.indexOf(promoteSystem);
+          systems.splice(index, 1);
+          systems.unshift(promoteSystem);
+        }
+      }
+    }
+
     const systemTier = new SystemTier();
     for (const system of systems) {
       const tier = systemTier.getTier(system);
@@ -44,15 +77,15 @@ export class GenerateSlices {
 
   _hasAdjacentAnomalies(slice: Slice): boolean {
     // Slice shape includes home system as first entry.
-    if (this._sliceShape.length !== slice.length + 1) {
+    if (this._params.sliceShape.length !== slice.length + 1) {
       throw new Error(
-        `slice shape (${this._sliceShape.length}) and slice length (${slice.length}) mismatch`
+        `slice shape (${this._params.sliceShape.length}) and slice length (${slice.length}) mismatch`
       );
     }
 
     const hexIsAnomalySet: Set<HexType> = new Set();
     for (let i = 0; i < slice.length; i++) {
-      const hex: HexType | undefined = this._sliceShape[i + 1]; // first is home system
+      const hex: HexType | undefined = this._params.sliceShape[i + 1]; // first is home system
       const tileNumber: number | undefined = slice[i];
       if (hex && tileNumber !== undefined) {
         const system: System | undefined =
@@ -62,7 +95,7 @@ export class GenerateSlices {
         }
       }
     }
-    for (const hex of this._sliceShape) {
+    for (const hex of this._params.sliceShape) {
       if (!hexIsAnomalySet.has(hex)) {
         continue;
       }
@@ -77,9 +110,9 @@ export class GenerateSlices {
 
   _separateAnomalies(slice: Slice, tryShuffleFirst: boolean = true): Slice {
     // Slice shape includes home system as first entry.
-    if (this._sliceShape.length !== slice.length + 1) {
+    if (this._params.sliceShape.length !== slice.length + 1) {
       throw new Error(
-        `slice shape (${this._sliceShape.length}) and slice length (${slice.length}) mismatch`
+        `slice shape (${this._params.sliceShape.length}) and slice length (${slice.length}) mismatch`
       );
     }
 
