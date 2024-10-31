@@ -1,32 +1,5 @@
 import { MockGameObject } from "ttpg-mock";
-import { GenerateSlices, TierToSystems } from "./generate-slices";
-import { System } from "../../system-lib/system/system";
-
-it("_getTierToShuffledSystems", () => {
-  // Systems must exist for registry to find them.
-  for (const tileNumber of TI4.systemRegistry.getAllSystemTileNumbers()) {
-    const nsid: string | undefined =
-      TI4.systemRegistry.tileNumberToSystemTileObjNsid(tileNumber);
-    if (nsid) {
-      MockGameObject.simple(nsid);
-    }
-  }
-
-  TI4.config.setSources(["base", "pok"]);
-  const generateSlices = new GenerateSlices({
-    sliceCount: 0,
-    sliceMakeup: [],
-    sliceShape: [],
-  });
-  const systems: Array<System> = generateSlices._getShuffledSystems();
-  const tierToSystems: TierToSystems =
-    generateSlices._getTierToSystems(systems);
-  expect(tierToSystems.size).toBe(4);
-  expect(tierToSystems.get("high")?.length).toBe(10);
-  expect(tierToSystems.get("med")?.length).toBe(14);
-  expect(tierToSystems.get("low")?.length).toBe(12);
-  expect(tierToSystems.get("red")?.length).toBe(18);
-});
+import { GenerateSlices } from "./generate-slices";
 
 it("_hasAdjacentAnomalies", () => {
   MockGameObject.simple("tile.system:base/19");

@@ -1,6 +1,11 @@
 import { Hex, HexType, Shuffle } from "ttpg-darrell";
 import { System } from "../../system-lib/system/system";
 import {
+  SystemSummary,
+  SystemSummaryType,
+} from "../../system-lib/system/system-summary";
+
+import {
   SystemTier,
   SystemTierType,
 } from "../../system-lib/system/system-tier";
@@ -16,8 +21,6 @@ export type GenerateSlicesParams = {
   minLegendary?: number;
 };
 
-export type TierToSystems = Map<SystemTierType, Array<System>>;
-
 export class SliceInProgress {
   private readonly _size: number;
   private readonly _remainingMakeup: Array<SystemTierType>;
@@ -28,32 +31,31 @@ export class SliceInProgress {
     this._remainingMakeup = new Shuffle<SystemTierType>().shuffle([...makeup]);
   }
 
-  addSystemOrThrow(system: System) {
-    const tier: SystemTierType = new SystemTier().getTier(system);
-    const index: number = this._remainingMakeup.indexOf(tier);
-    if (index === -1) {
-      throw new Error(`system tier (${tier}) not in remaining makeup`);
-    }
-    this._remainingMakeup.splice(index, 1);
+  addSystem(system: System) {
     this._systems.push(system);
     if (this._systems.length > this._size) {
       throw new Error("too many systems added");
     }
   }
 
-  canAdd(system: System): boolean {
-    const tier: SystemTierType = new SystemTier().getTier(system);
-    return (
-      this._remainingMakeup.includes(tier) && this._systems.length < this._size
-    );
-  }
-
-  getRemainingMakeup(): Array<SystemTierType> {
-    return this._remainingMakeup;
+  getNextRemainingTier(): SystemTierType | undefined {
+    return this._remainingMakeup[0];
   }
 
   getSystems(): Array<System> {
-    return this._systems;
+    return [...this._systems];
+  }
+
+  hasRemainingTier(tier: SystemTierType): boolean {
+    return this._remainingMakeup.includes(tier);
+  }
+
+  removeRemainingTier(tier: SystemTierType) {
+    const index: number = this._remainingMakeup.indexOf(tier);
+    if (index === -1) {
+      throw new Error(`system tier (${tier}) not in remaining makeup`);
+    }
+    this._remainingMakeup.splice(index, 1);
   }
 }
 
@@ -85,8 +87,8 @@ export class GenerateSlices {
         if (sliceInProgress.canAdd(promotedSystem)) {
           if (
             !shortestSlice ||
-            sliceInProgress.getRemainingMakeup().length <
-              shortestSlice.getRemainingMakeup().length
+            sliceInProgress.getSystems().length <
+              shortestSlice.getSystems().length
           ) {
             shortestSlice = sliceInProgress;
           }
@@ -94,6 +96,31 @@ export class GenerateSlices {
       }
       if (shortestSlice) {
         shortestSlice.addSystemOrThrow(promotedSystem);
+      }
+    }
+
+    // Add remaining systems to slices.
+    const pending: Array<SliceInProgress> = [...this._slicesInProgress];
+    while (pending.length > 0) {
+      const sliceInProgress: SliceInProgress | undefined = pending.shift()!;
+      if (sliceInProgress) {
+        const tier: SystemTierType | undefined =
+          sliceInProgress.getRemainingMakeup()[0];
+        if (tier) {
+          // Prefer the tier, but if none left use all systems.
+          const systemsForTier: Array<System> = this._getSystemsForTier(
+            systems,
+            tier
+          );
+
+          // Choose and add system.
+          this._chooseAndAddNextSystem(sliceInProgress, systemsForTier);
+        }
+
+        // If more to go, put back in pending.
+        if (sliceInProgress.getRemainingMakeup().length > 0) {
+          pending.push(sliceInProgress);
+        }
       }
     }
   }
@@ -105,27 +132,86 @@ export class GenerateSlices {
     return systems;
   }
 
-  _getTierToSystems(systems: Array<System>): TierToSystems {
-    const tierToSystems: TierToSystems = new Map<
-      SystemTierType,
-      Array<System>
-    >();
-    tierToSystems.set("high", []);
-    tierToSystems.set("med", []);
-    tierToSystems.set("low", []);
-    tierToSystems.set("red", []);
-
-    // Split systems into tiers.
+  _getSystemsForTier(
+    systems: Array<System>,
+    tier: SystemTierType
+  ): Array<System> {
     const systemTier = new SystemTier();
-    for (const system of systems) {
-      const tier = systemTier.getTier(system);
-      const entries: Array<System> | undefined = tierToSystems.get(tier);
-      if (entries) {
-        entries.push(system);
-      }
+    let result: Array<System> = systems.filter(
+      (system) => systemTier.getTier(system) === tier
+    );
+    // Try to use the requested tier, but if none left use all systems.
+    if (result.length === 0) {
+      result = systems;
+    }
+    if (result.length === 0) {
+      throw new Error(`no systems for tier ${tier}`);
+    }
+    return result;
+  }
+
+  _chooseAndAddNextSystem(
+    sliceInProgress: SliceInProgress,
+    systems: Array<System>
+  ): void {
+    // TODO XXX
+  }
+
+  _score(sliceInProgress: SliceInProgress, system: System): number {
+    const systems: Array<System> = [...sliceInProgress.getSystems()];
+    systems.push(system);
+
+    const summary: SystemSummaryType = new SystemSummary(
+      systems
+    ).getSummaryRaw();
+
+    // Make some setups extremely unlikely.
+    if (summary.legendary.length > 1) {
+      return 0.001;
+    }
+    if (summary.wormholes.length > 1) {
+      return 0.001;
     }
 
-    return tierToSystems;
+    const avgOptInf: number = summary.optInfluence / systems.length;
+    const avgOptRes: number = summary.optResources / systems.length;
+
+    // Milty draft requires:
+    // - mininf = 4.0,
+    // - minres = 2.5,
+    // - mintot = 9.0,
+    // - maxtot = 13.0
+    const minAvgOptInf: number = 4 / 5;
+    const minAvgOptRes: number = 2.5 / 5;
+    const minAvgTot: number = 9 / 5;
+    const maxAvgTot: number = 13 / 5;
+    const targetOptInf: number = 1.354; // 4/(4+2.5)*11/5
+    const targetOptRes: number = 0.846; // 2.5/(4+2.5)*11/5
+
+    const weightMinInf: number = Math.min(1, avgOptInf / minAvgOptInf);
+    const weightMinRes: number = Math.min(1, avgOptRes / minAvgOptRes);
+    const weightMinTot: number = Math.min(
+      1,
+      (avgOptInf + avgOptRes) / minAvgTot
+    );
+
+    const weightMaxTot: number = avgOptInf + avgOptRes > maxAvgTot ? 0.001 : 1;
+
+    const weightTargetInf: number =
+      1 / (Math.abs(avgOptInf - targetOptInf) + 1);
+    const weightTargetRes: number =
+      1 / (Math.abs(avgOptRes - targetOptRes) + 1);
+
+    const score: number =
+      100 *
+      weightMinInf *
+      weightMinRes *
+      weightMinTot *
+      weightMaxTot *
+      weightTargetInf *
+      weightTargetRes;
+
+    return score;
   }
 
   /**
