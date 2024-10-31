@@ -68,7 +68,30 @@ export class GenerateSlices {
   }
 
   generateSlices() {
-    // Implementation
+    // Get all candidate systems, split off promoted.
+    const systems: Array<System> = this._getShuffledSystems();
+    let promotedSystems: Array<System> =
+      this._promoteWormholesAndLegendaries(systems);
+    promotedSystems = new Shuffle<System>().shuffle(promotedSystems);
+
+    // Add promoted systems to slices, spread evenly.
+    for (const promotedSystem of promotedSystems) {
+      let shortestSlice: SliceInProgress | undefined = undefined;
+      for (const sliceInProgress of this._slicesInProgress) {
+        if (sliceInProgress.canAdd(promotedSystem)) {
+          if (
+            !shortestSlice ||
+            sliceInProgress.getRemainingMakeup().length <
+              shortestSlice.getRemainingMakeup().length
+          ) {
+            shortestSlice = sliceInProgress;
+          }
+        }
+      }
+      if (shortestSlice) {
+        shortestSlice.addSystemOrThrow(promotedSystem);
+      }
+    }
   }
 
   _getShuffledSystems(): Array<System> {
@@ -102,13 +125,12 @@ export class GenerateSlices {
   }
 
   /**
-   * Promote wormholes and legendaries according to params.
-   * Return them in a tier-to-systems map, also removing them
-   * from the input systems array.
+   * Promote wormholes and legendaries according to params.  Return them in a
+   * new array, removing them from the input systems array.
    *
    * @param systems
    */
-  _promoteWormholesAndLegendaries(systems: Array<System>): TierToSystems {
+  _promoteWormholesAndLegendaries(systems: Array<System>): Array<System> {
     // Move candidates from input systems to promoted.
     let count: number;
     let promoteCandidates: Array<System>;
@@ -142,7 +164,7 @@ export class GenerateSlices {
     promoteCandidates = systems.filter((system) => system.isLegendary());
     doPromotion();
 
-    return this._getTierToSystems(promoted);
+    return promoted;
   }
 
   _hasAdjacentAnomalies(slice: Slice): boolean {
