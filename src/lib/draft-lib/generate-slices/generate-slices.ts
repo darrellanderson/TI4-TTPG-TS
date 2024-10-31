@@ -25,7 +25,7 @@ export class SliceInProgress {
 
   constructor(makeup: ReadonlyArray<SystemTierType>) {
     this._size = makeup.length;
-    this._remainingMakeup = [...makeup];
+    this._remainingMakeup = new Shuffle<SystemTierType>().shuffle([...makeup]);
   }
 
   addSystemOrThrow(system: System) {
@@ -50,6 +50,10 @@ export class SliceInProgress {
 
   getRemainingMakeup(): Array<SystemTierType> {
     return this._remainingMakeup;
+  }
+
+  getSystems(): Array<System> {
+    return this._systems;
   }
 }
 
