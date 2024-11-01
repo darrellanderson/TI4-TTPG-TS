@@ -6,7 +6,7 @@ import {
 } from "../../system-lib/schema/basic-types-schema";
 import { SOURCE_TO_FACTION_DATA } from "../data/faction.data";
 import { refPackageId, Vector, world } from "@tabletop-playground/api";
-import { Find, NSID } from "ttpg-darrell";
+import { Find, NSID, ParsedNSID } from "ttpg-darrell";
 import { REWRITE_NSIDS } from "../data/faction-nsid-rewrite.data";
 
 export class FactionRegistry {
@@ -38,6 +38,17 @@ export class FactionRegistry {
       throw new Error(`faction not found: "${nsid}"`);
     }
     return faction;
+  }
+
+  getByNsidName(nsidName: string): Faction | undefined {
+    for (const nsid of this._nsidToFaction.keys()) {
+      if (nsid.endsWith(nsidName)) {
+        const parsed: ParsedNSID | undefined = NSID.parse(nsid);
+        if (parsed && parsed.nameParts[0] === nsidName) {
+          return this.getByNsid(nsid);
+        }
+      }
+    }
   }
 
   getByPlayerSlot(playerSlot: number): Faction | undefined {
