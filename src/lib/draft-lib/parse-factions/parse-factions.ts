@@ -1,13 +1,15 @@
 import { Faction } from "../../faction-lib/faction/faction";
 
 export class ParseFactions {
-  parseFactions(config: string, unknown: Array<string>): Faction[] {
+  parseFactions(config: string, errors: Array<string>): Faction[] {
     let index: number;
 
     const prefix = "factions=";
     index = config.indexOf(prefix);
     if (index !== -1) {
       config = config.substring(index + prefix.length);
+    } else {
+      return [];
     }
 
     const suffix = "&";
@@ -27,7 +29,7 @@ export class ParseFactions {
       if (faction) {
         factions.push(faction);
       } else {
-        unknown.push(nsidName);
+        errors.push(`unknown faction "${nsidName}"`);
       }
     }
 
