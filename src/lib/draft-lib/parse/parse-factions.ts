@@ -9,6 +9,7 @@ export class ParseFactions {
     if (index !== -1) {
       config = config.substring(index + prefix.length);
     } else {
+      // factions= MUST exist to find them.
       return [];
     }
 

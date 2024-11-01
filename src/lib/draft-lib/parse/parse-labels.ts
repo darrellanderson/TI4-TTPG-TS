@@ -7,6 +7,7 @@ export class ParseLabels {
     if (index !== -1) {
       config = config.substring(index + prefix.length);
     } else {
+      // labels= MUST exist to find them.
       return [];
     }
 
