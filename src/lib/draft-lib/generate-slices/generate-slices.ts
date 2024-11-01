@@ -1,4 +1,10 @@
-import { Hex, HexType, Shuffle } from "ttpg-darrell";
+import {
+  Hex,
+  HexType,
+  Shuffle,
+  WeightedChoice,
+  WeightedChoiceOption,
+} from "ttpg-darrell";
 import { System } from "../../system-lib/system/system";
 import {
   SystemSummary,
@@ -28,7 +34,7 @@ export class SliceInProgress {
 
   constructor(makeup: ReadonlyArray<SystemTierType>) {
     this._size = makeup.length;
-    this._remainingMakeup = new Shuffle<SystemTierType>().shuffle([...makeup]);
+    this._remainingMakeup = [...makeup];
   }
 
   addSystem(system: System) {
@@ -64,16 +70,21 @@ export class GenerateSlices {
   private readonly _slicesInProgress: Array<SliceInProgress> = [];
 
   constructor(params: GenerateSlicesParams) {
+    // Slice shape includes home system as first entry.
+    if (params.sliceShape.length !== params.sliceMakeup.length + 1) {
+      throw new Error("slice shape and makeup mismatch");
+    }
+
     this._params = Object.freeze(params);
 
     for (let i = 0; i < this._params.sliceCount; i++) {
-      this._slicesInProgress.push(
-        new SliceInProgress(this._params.sliceMakeup)
-      );
+      const makeup: ReadonlyArray<SystemTierType> =
+        new Shuffle<SystemTierType>().shuffle([...this._params.sliceMakeup]);
+      this._slicesInProgress.push(new SliceInProgress(makeup));
     }
   }
 
-  generateSlices() {
+  generateSlices(): Array<Slice> {
     // Get all candidate systems, split off promoted.
     const systems: Array<System> = this._getShuffledSystems();
     let promotedSystems: Array<System> =
@@ -81,21 +92,14 @@ export class GenerateSlices {
     promotedSystems = new Shuffle<System>().shuffle(promotedSystems);
 
     // Add promoted systems to slices, spread evenly.
+    const systemTier = new SystemTier();
     for (const promotedSystem of promotedSystems) {
-      let shortestSlice: SliceInProgress | undefined = undefined;
-      for (const sliceInProgress of this._slicesInProgress) {
-        if (sliceInProgress.canAdd(promotedSystem)) {
-          if (
-            !shortestSlice ||
-            sliceInProgress.getSystems().length <
-              shortestSlice.getSystems().length
-          ) {
-            shortestSlice = sliceInProgress;
-          }
-        }
-      }
+      const tier: SystemTierType = systemTier.getTier(promotedSystem);
+      const shortestSlice: SliceInProgress | undefined =
+        this._getShortestSliceWithTier(tier);
       if (shortestSlice) {
-        shortestSlice.addSystemOrThrow(promotedSystem);
+        shortestSlice.addSystem(promotedSystem);
+        shortestSlice.removeRemainingTier(tier);
       }
     }
 
@@ -105,7 +109,7 @@ export class GenerateSlices {
       const sliceInProgress: SliceInProgress | undefined = pending.shift()!;
       if (sliceInProgress) {
         const tier: SystemTierType | undefined =
-          sliceInProgress.getRemainingMakeup()[0];
+          sliceInProgress.getNextRemainingTier();
         if (tier) {
           // Prefer the tier, but if none left use all systems.
           const systemsForTier: Array<System> = this._getSystemsForTier(
@@ -115,14 +119,22 @@ export class GenerateSlices {
 
           // Choose and add system.
           this._chooseAndAddNextSystem(sliceInProgress, systemsForTier);
+          sliceInProgress.removeRemainingTier(tier);
         }
 
         // If more to go, put back in pending.
-        if (sliceInProgress.getRemainingMakeup().length > 0) {
+        if (sliceInProgress.getNextRemainingTier()) {
           pending.push(sliceInProgress);
         }
       }
     }
+
+    return this._slicesInProgress.map((sliceInProgress) => {
+      const slice: Slice = sliceInProgress
+        .getSystems()
+        .map((system) => system.getSystemTileNumber());
+      return this._separateAnomalies(slice);
+    });
   }
 
   _getShuffledSystems(): Array<System> {
@@ -150,11 +162,33 @@ export class GenerateSlices {
     return result;
   }
 
+  _getShortestSliceWithTier(tier: SystemTierType): SliceInProgress | undefined {
+    let shortestSlice: SliceInProgress | undefined = undefined;
+    for (const sliceInProgress of this._slicesInProgress) {
+      if (sliceInProgress.hasRemainingTier(tier)) {
+        if (
+          !shortestSlice ||
+          sliceInProgress.getSystems().length <
+            shortestSlice.getSystems().length
+        ) {
+          shortestSlice = sliceInProgress;
+        }
+      }
+    }
+    return shortestSlice;
+  }
+
   _chooseAndAddNextSystem(
     sliceInProgress: SliceInProgress,
     systems: Array<System>
   ): void {
-    // TODO XXX
+    const options: WeightedChoiceOption<System>[] = systems.map(
+      (system): WeightedChoiceOption<System> => {
+        return { weight: this._score(sliceInProgress, system), value: system };
+      }
+    );
+    const system: System = new WeightedChoice<System>(options).choice();
+    sliceInProgress.addSystem(system);
   }
 
   _score(sliceInProgress: SliceInProgress, system: System): number {
