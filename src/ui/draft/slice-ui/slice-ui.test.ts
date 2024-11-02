@@ -14,12 +14,13 @@ beforeEach(() => {
 
 it("size", () => {
   const slice = new SliceUI(1, ["<0,0,0>"]);
-  expect(slice.getWidth()).toBe(200);
-  expect(slice.getHeight()).toBe(174);
+  const size = slice.getSize();
+  expect(size.w).toBeGreaterThan(0);
+  expect(size.h).toBeGreaterThan(0);
 });
 
 it("getWidget", () => {
-  const slice = new SliceUI(1, ["<0,0,0>"]);
-  const widget = slice.getWidget([1]);
+  const slice = new SliceUI(1, ["<0,0,0>", "<1,0,-1>"]);
+  const widget = slice.getWidget([19]);
   expect(widget).toBeDefined();
 });

@@ -4,6 +4,7 @@ import { UnitAttrsSchemaType, UnitType } from "../schema/unit-attrs-schema";
 import { CombatAttrs } from "./combat-attrs";
 
 const _colorLib: ColorLib = new ColorLib();
+const _packageId: string = refPackageId;
 
 /**
  * Unit attributes, e.g. cost, combat stats.
@@ -259,7 +260,7 @@ export class UnitAttrs {
   }
 
   getImgPackageId(): string {
-    return refPackageId;
+    return _packageId;
   }
 
   getName(): string {

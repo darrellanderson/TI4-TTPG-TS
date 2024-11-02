@@ -67,12 +67,8 @@ export class SliceUI {
     this._height = Math.ceil(bottom - top);
   }
 
-  getWidth(): number {
-    return this._width;
-  }
-
-  getHeight(): number {
-    return this._height;
+  getSize(): { w: number; h: number } {
+    return { w: this._width, h: this._height };
   }
 
   getWidget(slice: Slice): Widget {
@@ -118,8 +114,8 @@ export class SliceUI {
     });
 
     return new LayoutBox()
-      .setOverrideWidth(this.getWidth() + 1)
-      .setOverrideHeight(this.getHeight() + 1)
+      .setOverrideWidth(this._width + 1)
+      .setOverrideHeight(this._height + 1)
       .setChild(canvas);
   }
 }
