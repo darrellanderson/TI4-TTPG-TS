@@ -7,8 +7,8 @@ import {
   Widget,
 } from "@tabletop-playground/api";
 import { Hex, HEX_LAYOUT_POINTY, HexType } from "ttpg-darrell";
-import { Slice } from "lib/draft-lib/generate-slices/generate-slices";
-import { System } from "lib/system-lib/system/system";
+import { SliceTiles } from "../../../lib/draft-lib/generate-slices/generate-slices";
+import { System } from "../../../lib/system-lib/system/system";
 
 const HALF_HEX_W_PX: number = 100;
 const packageId: string = refPackageId;
@@ -67,7 +67,7 @@ export class SliceUI {
     return { w: this._width, h: this._height };
   }
 
-  getWidget(slice: Slice): Widget {
+  getWidget(slice: SliceTiles): Widget {
     const canvas: Canvas = new Canvas();
 
     // Add home system.

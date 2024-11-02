@@ -1,5 +1,5 @@
 import { MapUI } from "./map-ui";
 
 it("constructor", () => {
-  new MapUI(1);
+  new MapUI(1, []);
 });

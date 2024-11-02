@@ -6,14 +6,23 @@ import {
   Vector,
   Widget,
 } from "@tabletop-playground/api";
-import { MapHomeSystemLocations } from "lib/map-string-lib/map-home-system-locations";
-import { PlayerSeatType } from "lib/player-lib/player-seats/player-seats";
 import { Hex, HEX_LAYOUT_POINTY, HexType } from "ttpg-darrell";
+
+import { Faction } from "../../../lib/faction-lib/faction/faction";
+import { MapHomeSystemLocations } from "../../../lib/map-string-lib/map-home-system-locations";
+import { PlayerSeatType } from "../../../lib/player-lib/player-seats/player-seats";
+import {
+  SliceShape,
+  SliceTiles,
+} from "../../../lib/draft-lib/generate-slices/generate-slices";
 
 const HALF_HEX_W_PX: number = 50;
 const packageId: string = refPackageId;
 
 export class MapUI {
+  private readonly _defaultSliceShape: SliceShape;
+  private readonly _seatIndexToSliceShape: Map<number, SliceShape> = new Map();
+
   private readonly _halfScaledHexWidth: number; // int
   private readonly _halfScaledHexHeight: number; // int
   private readonly _scaledHex: Hex;
@@ -22,7 +31,9 @@ export class MapUI {
   private readonly _width: number; // int
   private readonly _height: number; // int
 
-  constructor(scale: number) {
+  constructor(scale: number, sliceShape: SliceShape) {
+    this._defaultSliceShape = sliceShape;
+
     this._halfScaledHexWidth = Math.ceil(HALF_HEX_W_PX * scale);
     this._halfScaledHexHeight = Math.ceil(this._halfScaledHexWidth * 0.866);
     this._scaledHex = new Hex(HEX_LAYOUT_POINTY, this._halfScaledHexWidth); // x/y flipped thus pointy
@@ -72,11 +83,20 @@ export class MapUI {
     this._height = Math.ceil(bottom - top);
   }
 
+  overrideSliceShape(seatIndex: number, sliceShape: SliceShape): this {
+    this._seatIndexToSliceShape.set(seatIndex, sliceShape);
+    return this;
+  }
+
   getSize(): { w: number; h: number } {
     return { w: this._width, h: this._height };
   }
 
-  getWidget(): Widget {
+  getWidget(
+    seatIndexToSliceTiles: Map<number, SliceTiles>,
+    seatIndexToFaction: Map<number, Faction>,
+    setIndexToPlayerName: Map<number, string>
+  ): Widget {
     const canvas: Canvas = new Canvas();
 
     this._hexPositions.forEach((pos: Vector) => {

@@ -16,12 +16,13 @@ import {
   SystemTierType,
 } from "../../system-lib/system/system-tier";
 
-export type Slice = Array<number>;
+export type SliceTiles = ReadonlyArray<number>;
+export type SliceShape = ReadonlyArray<HexType>;
 
 export type GenerateSlicesParams = {
   sliceCount: number;
   sliceMakeup: ReadonlyArray<SystemTierType>;
-  sliceShape: ReadonlyArray<HexType>;
+  sliceShape: SliceShape;
   minAlphaWormholes?: number;
   minBetaWormholes?: number;
   minLegendary?: number;
@@ -84,7 +85,7 @@ export class GenerateSlices {
     }
   }
 
-  generateSlices(): Array<Slice> {
+  generateSlices(): Array<SliceTiles> {
     // Get all candidate systems, split off promoted.
     const systems: Array<System> = this._getShuffledSystems();
     let promotedSystems: Array<System> =
@@ -130,7 +131,7 @@ export class GenerateSlices {
     }
 
     return this._slicesInProgress.map((sliceInProgress) => {
-      const slice: Slice = sliceInProgress
+      const slice: SliceTiles = sliceInProgress
         .getSystems()
         .map((system) => system.getSystemTileNumber());
       return this._separateAnomalies(slice);
@@ -291,7 +292,7 @@ export class GenerateSlices {
     return promoted;
   }
 
-  _hasAdjacentAnomalies(slice: Slice): boolean {
+  _hasAdjacentAnomalies(slice: SliceTiles): boolean {
     // Slice shape includes home system as first entry.
     if (this._params.sliceShape.length !== slice.length + 1) {
       throw new Error(
@@ -324,7 +325,10 @@ export class GenerateSlices {
     return false;
   }
 
-  _separateAnomalies(slice: Slice, tryShuffleFirst: boolean = true): Slice {
+  _separateAnomalies(
+    slice: SliceTiles,
+    tryShuffleFirst: boolean = true
+  ): SliceTiles {
     // Slice shape includes home system as first entry.
     if (this._params.sliceShape.length !== slice.length + 1) {
       throw new Error(
@@ -342,16 +346,16 @@ export class GenerateSlices {
         if (!this._hasAdjacentAnomalies(slice)) {
           return slice;
         }
-        slice = shuffle.shuffle(slice);
+        slice = shuffle.shuffle([...slice]);
       }
     }
 
     // No luck.  Walk through slice permutations and use the first good one.
     // (This always fixes the same way, hence a few random stabs before this.)
-    const inspector = (candidate: Slice): boolean => {
+    const inspector = (candidate: SliceTiles): boolean => {
       return !this._hasAdjacentAnomalies(candidate);
     };
-    const goodSlice = this._permutator(slice, inspector);
+    const goodSlice = this._permutator([...slice], inspector);
     if (goodSlice) {
       slice = goodSlice;
     }
@@ -361,11 +365,11 @@ export class GenerateSlices {
 
   _permutator(
     array: Array<number>,
-    inspector: (candidate: Slice) => boolean
+    inspector: (candidate: Array<number>) => boolean
   ): Array<number> | undefined {
     // https://stackoverflow.com/questions/9960908/permutations-in-javascript
     let result: Array<number> | undefined = undefined;
-    const permute = (arr: Slice, m: Array<number> = []) => {
+    const permute = (arr: Array<number>, m: Array<number> = []) => {
       if (arr.length === 0) {
         const success = inspector(m);
         if (success) {

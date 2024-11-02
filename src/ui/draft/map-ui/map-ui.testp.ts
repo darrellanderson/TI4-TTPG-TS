@@ -7,9 +7,9 @@ import {
 import { MapUI } from "./map-ui";
 
 function go() {
-  const mapUI = new MapUI(1);
+  const mapUI = new MapUI(1, []);
 
-  const widget: Widget = mapUI.getWidget();
+  const widget: Widget = mapUI.getWidget(new Map(), new Map(), new Map());
 
   const screenUI = new ScreenUIElement();
   screenUI.positionX = 0.5;

@@ -2,8 +2,8 @@ import { MockGameObject } from "ttpg-mock";
 import {
   GenerateSlices,
   GenerateSlicesParams,
-  Slice,
   SliceInProgress,
+  SliceTiles,
 } from "./generate-slices";
 import { SystemTierType } from "../../system-lib/system/system-tier";
 import { System } from "../../system-lib/system/system";
@@ -288,8 +288,8 @@ it("_separateAnomalies", () => {
     sliceShape: ["<0,0,0>", "<1,0,-1>", "<2,0,-2>", "<3,0,-3>"],
   });
 
-  const slice: Array<number> = [19, 41, 42];
-  let separated: Array<number>;
+  const slice: SliceTiles = [19, 41, 42];
+  let separated: SliceTiles;
 
   // With shuffline (do a few times to be more likely to work).
   for (let i = 0; i < 10; i++) {
@@ -328,6 +328,6 @@ it("_permutator", () => {
 it("milty", () => {
   const params: GenerateSlicesParams = new Milty().getGenerateSlicesParams();
   const generateSlices = new GenerateSlices(params);
-  const slices: Array<Slice> = generateSlices.generateSlices();
+  const slices: Array<SliceTiles> = generateSlices.generateSlices();
   expect(slices.length).toBe(6);
 });

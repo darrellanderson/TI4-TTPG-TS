@@ -4,7 +4,7 @@ import {
   Widget,
   world,
 } from "@tabletop-playground/api";
-import { MILTY_SLICE_SHAPE } from "lib/draft-lib/drafts/milty";
+import { MILTY_SLICE_SHAPE } from "../../../lib/draft-lib/drafts/milty";
 import { SliceUI } from "./slice-ui";
 
 function go() {

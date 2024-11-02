@@ -1,4 +1,4 @@
-import { Slice } from "../generate-slices/generate-slices";
+import { SliceTiles } from "../generate-slices/generate-slices";
 
 export class ParseSlices {
   private readonly _sliceSize: number;
@@ -7,7 +7,7 @@ export class ParseSlices {
     this._sliceSize = sliceSize;
   }
 
-  public parseSlices(config: string, errors: Array<string>): Array<Slice> {
+  public parseSlices(config: string, errors: Array<string>): Array<SliceTiles> {
     let index: number;
 
     const prefix = "slices=";
@@ -24,7 +24,7 @@ export class ParseSlices {
 
     const entries: Array<string> = config.split("|");
 
-    const slices: Array<Slice> = [];
+    const slices: Array<SliceTiles> = [];
 
     for (const entry of entries) {
       const tileNumberStrings: Array<string> = entry.split(",");
@@ -35,7 +35,7 @@ export class ParseSlices {
         continue;
       }
 
-      const slice: Slice = tileNumberStrings.map((tileNumberString) =>
+      const slice: SliceTiles = tileNumberStrings.map((tileNumberString) =>
         parseInt(tileNumberString)
       );
       if (slice.includes(NaN)) {

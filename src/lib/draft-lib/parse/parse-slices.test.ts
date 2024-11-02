@@ -1,9 +1,9 @@
-import { Slice } from "../generate-slices/generate-slices";
+import { SliceTiles } from "../generate-slices/generate-slices";
 import { ParseSlices } from "./parse-slices";
 
 it("parse", () => {
   const errors: Array<string> = [];
-  const slices: Array<Slice> = new ParseSlices(5).parseSlices(
+  const slices: Array<SliceTiles> = new ParseSlices(5).parseSlices(
     "slices=1,2,3,4,5|6,7,8,9,10&",
     errors
   );
@@ -16,7 +16,7 @@ it("parse", () => {
 
 it("parse (wrong tile count)", () => {
   const errors: Array<string> = [];
-  const slices: Array<Slice> = new ParseSlices(5).parseSlices(
+  const slices: Array<SliceTiles> = new ParseSlices(5).parseSlices(
     "1,2,3,4,5,6",
     errors
   );
@@ -26,7 +26,7 @@ it("parse (wrong tile count)", () => {
 
 it("parse (tile not a number)", () => {
   const errors: Array<string> = [];
-  const slices: Array<Slice> = new ParseSlices(5).parseSlices(
+  const slices: Array<SliceTiles> = new ParseSlices(5).parseSlices(
     "1,2,3,4,x",
     errors
   );
