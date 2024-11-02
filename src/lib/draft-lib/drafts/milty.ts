@@ -2,7 +2,7 @@ import { HexType, WeightedChoice } from "ttpg-darrell";
 import { GenerateSlicesParams } from "../generate-slices/generate-slices";
 import { SystemTierType } from "../../system-lib/system/system-tier";
 
-export const SLICE_MAKEUP: ReadonlyArray<SystemTierType> = [
+export const MILTY_SLICE_MAKEUP: ReadonlyArray<SystemTierType> = [
   "high",
   "med",
   "low",
@@ -10,7 +10,7 @@ export const SLICE_MAKEUP: ReadonlyArray<SystemTierType> = [
   "red",
 ];
 
-export const SLICE_SHAPE: ReadonlyArray<HexType> = [
+export const MILTY_SLICE_SHAPE: ReadonlyArray<HexType> = [
   "<0,0,0>", // home system
   "<1,-1,0>", // left
   "<1,0,-1>", // front
@@ -23,8 +23,8 @@ export class Milty {
   public getGenerateSlicesParams(): GenerateSlicesParams {
     return {
       sliceCount: 6,
-      sliceMakeup: SLICE_MAKEUP,
-      sliceShape: SLICE_SHAPE,
+      sliceMakeup: MILTY_SLICE_MAKEUP,
+      sliceShape: MILTY_SLICE_SHAPE,
       minAlphaWormholes: new WeightedChoice<number>([
         { weight: 1, value: 2 },
         { weight: 1, value: 3 },
