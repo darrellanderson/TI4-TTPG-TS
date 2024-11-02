@@ -19,6 +19,17 @@ export const MILTY_SLICE_SHAPE: ReadonlyArray<HexType> = [
   "<2,0,-2>", // front-far
 ];
 
+// 7p seat index 3,
+// 8p seat index 3 and 7
+export const MILTY_SLICE_SHAPE_ALT: ReadonlyArray<HexType> = [
+  "<0,0,0>", // home system
+  "<1,-1,0>", // left
+  "<2,0,-2>", // front (pushed forward)
+  "<1,0,-1>", // right (pushed forward)
+  "<2,-1,-1>", // left-eq
+  "<3,-1,-2>", // front-far (pushed forward)
+];
+
 export class Milty {
   public getGenerateSlicesParams(): GenerateSlicesParams {
     return {

@@ -4,13 +4,12 @@ import {
   Widget,
   world,
 } from "@tabletop-playground/api";
-import { MILTY_SLICE_SHAPE } from "lib/draft-lib/drafts/milty";
-import { SliceUI } from "./slice-ui";
+import { MapUI } from "./map-ui";
 
 function go() {
-  const sliceUI = new SliceUI(1, MILTY_SLICE_SHAPE);
+  const mapUI = new MapUI(1);
 
-  const widget: Widget = sliceUI.getWidget([21, 22, 23, 24, 25]);
+  const widget: Widget = mapUI.getWidget();
 
   const screenUI = new ScreenUIElement();
   screenUI.positionX = 0.5;
@@ -18,8 +17,8 @@ function go() {
   screenUI.relativePositionX = true;
   screenUI.relativePositionY = true;
 
-  screenUI.width = sliceUI.getSize().w;
-  screenUI.height = sliceUI.getSize().h;
+  screenUI.width = mapUI.getSize().w;
+  screenUI.height = mapUI.getSize().h;
   screenUI.relativeWidth = false;
   screenUI.relativeHeight = false;
 

@@ -14,8 +14,6 @@ const HALF_HEX_W_PX: number = 100;
 const packageId: string = refPackageId;
 
 export class SliceUI {
-  private readonly _sliceShape: ReadonlyArray<HexType>;
-
   private readonly _halfScaledHexWidth: number; // int
   private readonly _halfScaledHexHeight: number; // int
   private readonly _scaledHex: Hex;
@@ -25,8 +23,6 @@ export class SliceUI {
   private readonly _height: number; // int
 
   constructor(scale: number, sliceShape: ReadonlyArray<HexType>) {
-    this._sliceShape = sliceShape;
-
     this._halfScaledHexWidth = Math.ceil(HALF_HEX_W_PX * scale);
     this._halfScaledHexHeight = Math.ceil(this._halfScaledHexWidth * 0.866);
     this._scaledHex = new Hex(HEX_LAYOUT_POINTY, this._halfScaledHexWidth); // x/y flipped thus pointy
@@ -114,8 +110,8 @@ export class SliceUI {
     });
 
     return new LayoutBox()
-      .setOverrideWidth(this._width + 1)
-      .setOverrideHeight(this._height + 1)
+      .setOverrideWidth(this._width)
+      .setOverrideHeight(this._height)
       .setChild(canvas);
   }
 }
