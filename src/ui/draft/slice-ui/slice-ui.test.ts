@@ -14,8 +14,8 @@ beforeEach(() => {
 
 it("size", () => {
   const slice = new SliceUI(1, ["<0,0,0>"]);
-  expect(slice.getWidth()).toBe(120);
-  expect(slice.getHeight()).toBe(104);
+  expect(slice.getWidth()).toBe(200);
+  expect(slice.getHeight()).toBe(174);
 });
 
 it("getWidget", () => {
