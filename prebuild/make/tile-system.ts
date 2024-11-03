@@ -129,6 +129,9 @@ for (const info of infos) {
   );
 
   transformFiles.push("./assets/Textures/" + info.imgFileFace);
+  if (info.imgFileBack.startsWith("tile/system/tile-")) {
+    transformFiles.push("./assets/Textures/" + info.imgFileBack);
+  }
 }
 
 /**
