@@ -1,10 +1,12 @@
 import {
   Canvas,
+  Color,
   ImageWidget,
   LayoutBox,
   refPackageId,
   Vector,
   Widget,
+  world,
 } from "@tabletop-playground/api";
 import { Hex, HEX_LAYOUT_POINTY, HexType } from "ttpg-darrell";
 
@@ -15,6 +17,7 @@ import {
   SliceShape,
   SliceTiles,
 } from "../../../lib/draft-lib/generate-slices/generate-slices";
+import { System } from "lib/system-lib/system/system";
 
 const HALF_HEX_W_PX: number = 50;
 const packageId: string = refPackageId;
@@ -27,16 +30,20 @@ export class MapUI {
   private readonly _halfScaledHexHeight: number; // int
   private readonly _scaledHex: Hex;
 
-  private readonly _hexPositions: Array<Vector> = []; // indexed like sliceShape
+  private readonly _playerSlotToAnchorHex: Map<number, HexType> = new Map();
+
   private readonly _width: number; // int
   private readonly _height: number; // int
+
+  private readonly _left: number;
+  private readonly _top: number;
 
   constructor(scale: number, sliceShape: SliceShape) {
     this._defaultSliceShape = sliceShape;
 
     this._halfScaledHexWidth = Math.ceil(HALF_HEX_W_PX * scale);
     this._halfScaledHexHeight = Math.ceil(this._halfScaledHexWidth * 0.866);
-    this._scaledHex = new Hex(HEX_LAYOUT_POINTY, this._halfScaledHexWidth); // x/y flipped thus pointy
+    this._scaledHex = new Hex(HEX_LAYOUT_POINTY, this._halfScaledHexWidth);
 
     let left: number = 0;
     let top: number = 0;
@@ -45,19 +52,15 @@ export class MapUI {
 
     const homeSystemLocs = new MapHomeSystemLocations();
     const seats: Array<PlayerSeatType> = TI4.playerSeats.getAllSeats();
-    console.log("seats", seats.length);
     for (const seat of seats) {
       const playerSlot: number = seat.playerSlot;
       const homePosWorld: Vector | undefined = homeSystemLocs.get(playerSlot);
       if (homePosWorld) {
         const homePosHex: HexType = TI4.hex.fromPosition(homePosWorld);
-        console.log("homePosHex", homePosHex);
+        this._playerSlotToAnchorHex.set(playerSlot, homePosHex);
+
         const pos: Vector = this._scaledHex.toPosition(homePosHex);
-
-        // Convert to screen coordinates (swap x/y, and flip y).
         [pos.x, pos.y] = [pos.y, -pos.x];
-
-        this._hexPositions.push(pos);
 
         // Update bounding box.
         left = Math.min(left, pos.x - this._halfScaledHexWidth);
@@ -67,25 +70,25 @@ export class MapUI {
       }
     }
 
-    // Adjust positions to be relative to bounding box top-left.
-    for (const pos of this._hexPositions) {
-      pos.x -= left;
-      pos.y -= top;
-    }
-
-    // Adjust to int.
-    for (const pos of this._hexPositions) {
-      pos.x = Math.ceil(pos.x);
-      pos.y = Math.ceil(pos.y);
-    }
-
     this._width = Math.ceil(right - left);
     this._height = Math.ceil(bottom - top);
+
+    this._left = left;
+    this._top = top;
   }
 
   overrideSliceShape(seatIndex: number, sliceShape: SliceShape): this {
     this._seatIndexToSliceShape.set(seatIndex, sliceShape);
     return this;
+  }
+
+  _getSliceShape(seatIndex: number): SliceShape {
+    const sliceShape: SliceShape | undefined =
+      this._seatIndexToSliceShape.get(seatIndex);
+    if (sliceShape) {
+      return sliceShape;
+    }
+    return this._defaultSliceShape;
   }
 
   getSize(): { w: number; h: number } {
@@ -99,22 +102,79 @@ export class MapUI {
   ): Widget {
     const canvas: Canvas = new Canvas();
 
-    this._hexPositions.forEach((pos: Vector) => {
-      const img = new ImageWidget()
-        .setImageSize(
-          this._halfScaledHexWidth * 2 + 2,
-          this._halfScaledHexHeight * 2 + 2
-        )
-        .setImage("tile/system/tile-000.png", packageId);
+    [...this._playerSlotToAnchorHex.entries()].forEach(
+      ([playerSlot, anchorHex], index) => {
+        const sliceShape: SliceShape = this._getSliceShape(index);
+        const sliceTiles: SliceTiles | undefined =
+          seatIndexToSliceTiles.get(index);
+        const faction: Faction | undefined = seatIndexToFaction.get(index);
+        const color: Color = world.getSlotColor(playerSlot);
 
-      canvas.addChild(
-        img,
-        pos.x - this._halfScaledHexWidth - 1,
-        pos.y - this._halfScaledHexWidth - 1,
-        this._halfScaledHexWidth * 2 + 2,
-        this._halfScaledHexWidth * 2 + 2 // image is square, not hex sized!
-      );
-    });
+        const anchorPos: Vector = this._scaledHex.toPosition(anchorHex);
+        const dirHex: HexType = "<0,0,0>";
+        const dirPos: Vector = this._scaledHex.toPosition(dirHex);
+        const dir = dirPos.subtract(anchorPos);
+
+        const theta = Math.atan2(dir.y, dir.x);
+        const cos = Math.cos(theta);
+        const sin = Math.sin(theta);
+
+        // First entry in slice shape is the home system.
+        sliceShape.forEach((shapeHex: HexType, index: number) => {
+          const img = new ImageWidget().setImageSize(
+            this._halfScaledHexWidth * 2 + 2,
+            this._halfScaledHexHeight * 2 + 2
+          );
+          if (index === 0) {
+            if (faction) {
+              img.setImage(faction.getHomeImg(), faction.getHomeImgPackageId());
+            } else {
+              img.setImage("tile/system/tile-000.png", packageId);
+            }
+          } else if (sliceTiles) {
+            const tile: number | undefined = sliceTiles[index - 1];
+            if (tile) {
+              const system: System | undefined =
+                TI4.systemRegistry.getBySystemTileNumber(tile);
+              if (system) {
+                img.setImage(system.getImg(), system.getImgPackageId());
+              }
+            }
+          } else if (color) {
+            img
+              .setImage("tile/system/tile-000.png", packageId)
+              .setTintColor(color);
+          }
+
+          // Update position based on hex and direction to center.
+          const shapeOffset = this._scaledHex.toPosition(shapeHex);
+
+          // Rotate offset in direction.
+          let dx = cos * shapeOffset.x - sin * shapeOffset.y;
+          let dy = sin * shapeOffset.x + cos * shapeOffset.y;
+
+          dx = Math.floor(dx * 1000) / 1000;
+          dy = Math.floor(dy * 1000) / 1000;
+
+          const pos = new Vector(
+            anchorPos.x + dx,
+            anchorPos.y + dy,
+            anchorPos.z
+          );
+          [pos.x, pos.y] = [pos.y, -pos.x];
+          pos.x -= this._left;
+          pos.y -= this._top;
+
+          canvas.addChild(
+            img,
+            pos.x - this._halfScaledHexWidth - 1,
+            pos.y - this._halfScaledHexWidth - 1,
+            this._halfScaledHexWidth * 2 + 2,
+            this._halfScaledHexWidth * 2 + 2 // image is square, not hex sized!
+          );
+        });
+      }
+    );
 
     return new LayoutBox()
       .setOverrideWidth(this._width)

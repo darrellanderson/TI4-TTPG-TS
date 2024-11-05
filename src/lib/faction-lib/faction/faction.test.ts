@@ -60,6 +60,8 @@ it("constructor", () => {
     "card.leader.hero:my-source/my-hero",
   ]);
   expect(faction.getHomeSurrogateTileNumber()).toEqual(-1);
+  expect(faction.getHomeImg()).toEqual("tile/system/tile-002.png");
+  expect(faction.getHomeImgPackageId()).toEqual("my-package-id");
   expect(faction.getHomeSystemTileNumber()).toEqual(2);
   expect(faction.getIcon()).toEqual("icon/faction/my-nsid-name.png");
   expect(faction.getIconPackageId()).toEqual("my-package-id");

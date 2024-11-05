@@ -146,6 +146,14 @@ export class Faction {
     return this._params.homeSurrogate ?? -1;
   }
 
+  getHomeImg(): string {
+    return `tile/system/tile-${this._params.home.toString().padStart(3, "0")}.png`;
+  }
+
+  getHomeImgPackageId(): string {
+    return this._sourceAndPackageId.packageId;
+  }
+
   getHomeSystemTileNumber(): number {
     return this._params.home;
   }
