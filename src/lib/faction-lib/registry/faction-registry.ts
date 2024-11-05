@@ -13,6 +13,7 @@ export class FactionRegistry {
   private readonly _find: Find = new Find();
   private readonly _nsidToFaction: Map<string, Faction> = new Map();
   private readonly _nsidToRewriteNsid: Map<string, string> = new Map();
+  private readonly _tileNumberToFaction: Map<number, Faction> = new Map();
 
   constructor() {}
 
@@ -26,6 +27,10 @@ export class FactionRegistry {
       const source: string = faction.getSource();
       return sources.has(source);
     });
+  }
+
+  getByHomeSystemTileNumber(tileNumber: number): Faction | undefined {
+    return this._tileNumberToFaction.get(tileNumber);
   }
 
   getByNsid(nsid: string): Faction | undefined {
@@ -95,6 +100,12 @@ export class FactionRegistry {
         factionSchemaType
       );
       this._nsidToFaction.set(faction.getNsid(), faction);
+      if (!faction.getNsid().includes("keleres")) {
+        this._tileNumberToFaction.set(
+          faction.getHomeSystemTileNumber(),
+          faction
+        );
+      }
     }
     return this;
   }

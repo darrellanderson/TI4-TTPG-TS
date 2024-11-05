@@ -7,8 +7,9 @@ import {
 import { MapUI } from "./map-ui";
 
 function go() {
-  const mapString: string = "19";
+  const mapString: string = "19 -110 -111 1";
   const mapUI = new MapUI(1, mapString);
+  mapUI.setHexLabel("<0,0,0>", "Mecatol Rex Plus Some More Words");
 
   const widget: Widget = mapUI.getWidget();
 
@@ -18,8 +19,8 @@ function go() {
   screenUI.relativePositionX = true;
   screenUI.relativePositionY = true;
 
-  screenUI.width = mapUI.getSize().w;
-  screenUI.height = mapUI.getSize().h;
+  screenUI.width = mapUI.getSize().w + 4; // border
+  screenUI.height = mapUI.getSize().h + 4;
   screenUI.relativeWidth = false;
   screenUI.relativeHeight = false;
 
