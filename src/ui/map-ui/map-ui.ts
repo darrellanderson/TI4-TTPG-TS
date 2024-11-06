@@ -24,6 +24,8 @@ import { System } from "../../lib/system-lib/system/system";
 import { Faction } from "../../lib/faction-lib/faction/faction";
 
 const HALF_HEX_W_PX: number = 100; // 50 for small screens
+const LABEL_RELATIVE_TO_HEX_SIZE: number = 0.2;
+
 const packageId: string = refPackageId;
 
 export class MapUI {
@@ -73,7 +75,7 @@ export class MapUI {
     this._halfScaledHexWidth = Math.ceil(HALF_HEX_W_PX * scale);
     this._halfScaledHexHeight = Math.ceil(this._halfScaledHexWidth * 0.866);
     this._scaledHex = new Hex(HEX_LAYOUT_POINTY, this._halfScaledHexWidth);
-    this._labelFontSize = this._halfScaledHexWidth * 0.2;
+    this._labelFontSize = this._halfScaledHexWidth * LABEL_RELATIVE_TO_HEX_SIZE;
 
     let left: number = 0;
     let top: number = 0;
@@ -168,36 +170,41 @@ export class MapUI {
         this._halfScaledHexWidth * 2 + 2,
         this._halfScaledHexWidth * 2 + 2 // image is square, not hex sized!
       );
-
-      // Add label.
-      const label: string | undefined = this._hexToLabel.get(hex);
-      if (label) {
-        const labelText: Text = new Text()
-          .setAutoWrap(true)
-          .setBold(true)
-          .setFontSize(this._labelFontSize)
-          .setJustification(TextJustification.Center)
-          .setText(` ${label.trim()} `);
-
-        const c: number = 0;
-        const border: Widget = new Border()
-          .setColor([c, c, c, 0.5])
-          .setChild(labelText);
-
-        const box: LayoutBox = new LayoutBox()
-          .setHorizontalAlignment(HorizontalAlignment.Center)
-          .setVerticalAlignment(VerticalAlignment.Center)
-          .setChild(border);
-
-        canvas.addChild(
-          box,
-          pos.x - this._halfScaledHexWidth - 1,
-          pos.y - this._halfScaledHexWidth - 1,
-          this._halfScaledHexWidth * 2 + 2,
-          this._halfScaledHexWidth * 2 + 2 // image is square, not hex sized!
-        );
-      }
     });
+
+    // Add labels (do after tiles so labels lay on top).
+    for (const [hex, label] of this._hexToLabel) {
+      const pos: Vector = this._scaledHex.toPosition(hex);
+
+      [pos.x, pos.y] = [pos.y, -pos.x];
+      pos.x -= this._left;
+      pos.y -= this._top;
+
+      const labelText: Text = new Text()
+        .setAutoWrap(true)
+        .setBold(true)
+        .setFontSize(this._labelFontSize)
+        .setJustification(TextJustification.Center)
+        .setText(` ${label.trim()} `);
+
+      const c: number = 0;
+      const border: Widget = new Border()
+        .setColor([c, c, c, 0.5])
+        .setChild(labelText);
+
+      const box: LayoutBox = new LayoutBox()
+        .setHorizontalAlignment(HorizontalAlignment.Center)
+        .setVerticalAlignment(VerticalAlignment.Center)
+        .setChild(border);
+
+      canvas.addChild(
+        box,
+        pos.x - this._halfScaledHexWidth - 1,
+        pos.y - this._halfScaledHexWidth - 1,
+        this._halfScaledHexWidth * 2 + 2,
+        this._halfScaledHexWidth * 2 + 2 // image is square, not hex sized!
+      );
+    }
 
     return canvas;
   }

@@ -213,12 +213,6 @@ it("load (unknown tile number)", () => {
   expect(load.load(mapString)).toBe(false);
 });
 
-it("load (missing template)", () => {
-  const mapString: string = "{-123}";
-  const load: MapStringLoad = new MapStringLoad();
-  expect(load.load(mapString)).toBe(false);
-});
-
 it("load (existing system)", () => {
   new MockGameObject({
     templateMetadata: "tile.system:base/1",

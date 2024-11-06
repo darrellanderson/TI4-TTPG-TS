@@ -37,10 +37,12 @@ export class MapStringLoad {
   _validateSystems(entries: Array<MapStringEntry>): boolean {
     const unknownTiles: Array<number> = [];
     for (const entry of entries) {
-      const nsid: string | undefined =
-        TI4.systemRegistry.tileNumberToSystemTileObjNsid(entry.tile);
-      if (!nsid) {
-        unknownTiles.push(entry.tile);
+      if (entry.tile > 0) {
+        const nsid: string | undefined =
+          TI4.systemRegistry.tileNumberToSystemTileObjNsid(entry.tile);
+        if (!nsid) {
+          unknownTiles.push(entry.tile);
+        }
       }
     }
     if (unknownTiles.length > 0) {
