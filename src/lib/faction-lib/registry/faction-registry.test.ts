@@ -61,7 +61,7 @@ it("load (with data)", () => {
     abbr: "my-abbr",
     abilities: [],
     commodities: 0,
-    home: 0,
+    home: 10,
     leaders: {
       agents: [],
       commanders: [],
@@ -77,11 +77,13 @@ it("load (with data)", () => {
 
   const registry = new FactionRegistry();
   expect(registry.getByNsid("faction:my-source/my-nsid-name")).toBeUndefined();
+  expect(registry.getByHomeSystemTileNumber(10)?.getName()).toBeUndefined();
 
   registry.load(sourceAndPackageId, [schema]);
   expect(registry.getByNsid("faction:my-source/my-nsid-name")?.getName()).toBe(
     "my-name"
   );
+  expect(registry.getByHomeSystemTileNumber(10)?.getName()).toBe("my-name");
 });
 
 it("load (invalid schema)", () => {

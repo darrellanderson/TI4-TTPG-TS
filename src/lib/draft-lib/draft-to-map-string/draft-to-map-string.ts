@@ -47,7 +47,7 @@ export class DraftToMapString {
     seatIndexToFaction: Map<number, Faction>,
     seatIndexToPlayerName: Map<number, string>
   ): { mapString: string; hexToPlayerName: Map<HexType, string> } {
-    const mapString: Array<string> = ["{18}"];
+    const mapStringEntries: Array<string> = ["{18}"];
     const hexToPlayerName: Map<HexType, string> = new Map();
 
     // When a slice does not have assigned tiles, use blank/colored tiles.
@@ -115,18 +115,21 @@ export class DraftToMapString {
           if (tile === -1 && missingTileNumber) {
             tile = missingTileNumber;
           }
-          mapString[mapStringIndex] = tile.toString();
+          mapStringEntries[mapStringIndex] = tile.toString();
         });
       }
     }
 
-    console.log("mapString", mapString.join(","));
-    for (let i = 0; i < mapString.length; i++) {
-      if (mapString[i] === undefined) {
-        mapString[i] = "-1";
+    this._fillMissingMapStringEntries(mapStringEntries);
+
+    return { mapString: mapStringEntries.join(" "), hexToPlayerName };
+  }
+
+  _fillMissingMapStringEntries(mapStringEntries: Array<string>): void {
+    for (let i = 0; i < mapStringEntries.length; i++) {
+      if (mapStringEntries[i] === undefined) {
+        mapStringEntries[i] = "-1";
       }
     }
-
-    return { mapString: mapString.join(" "), hexToPlayerName };
   }
 }
