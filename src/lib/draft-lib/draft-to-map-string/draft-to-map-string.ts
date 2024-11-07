@@ -5,10 +5,7 @@ import { Faction } from "../../faction-lib/faction/faction";
 import { MapHomeSystemLocations } from "../../map-string-lib/map-home-system-locations";
 import { MapStringHex } from "../../map-string-lib/map-string-hex";
 import { MapUI } from "../../../ui/map-ui/map-ui";
-import {
-  PlayerSeats,
-  PlayerSeatType,
-} from "../../player-lib/player-seats/player-seats";
+import { PlayerSeatType } from "../../player-lib/player-seats/player-seats";
 import { SliceShape, SliceTiles } from "../generate-slices/generate-slices";
 
 export class DraftToMapString {
@@ -50,18 +47,23 @@ export class DraftToMapString {
     seatIndexToFaction: Map<number, Faction>,
     seatIndexToPlayerName: Map<number, string>
   ): { mapString: string; hexToPlayerName: Map<HexType, string> } {
-    const mapString: Array<string> = [];
+    const mapString: Array<string> = ["18"];
     const hexToPlayerName: Map<HexType, string> = new Map();
 
     // When a slice does not have assigned tiles, use blank/colored tiles.
     const seatIndexToMissingTileNumber: Map<number, number> = new Map();
-    new PlayerSeats()
+    TI4.playerSeats
       .getAllSeats()
       .forEach((seatEntry: PlayerSeatType, seatIndex) => {
         const playerSlot: number = seatEntry.playerSlot;
         const tile: number = MapUI.playerSlotToColorTileNumber(playerSlot);
         seatIndexToMissingTileNumber.set(seatIndex, tile);
       });
+
+    console.log(
+      "xxx seatIndex keys",
+      Array.from(seatIndexToSliceTiles.keys()).join(",")
+    );
 
     const mapStringHex: MapStringHex = new MapStringHex();
     for (const seatIndex of seatIndexToSliceTiles.keys()) {
