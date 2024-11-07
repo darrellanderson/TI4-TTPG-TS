@@ -3,6 +3,7 @@ import {
   GameObject,
   Rotator,
   Vector,
+  world,
 } from "@tabletop-playground/api";
 import { Broadcast, HexType, locale, Spawn } from "ttpg-darrell";
 
@@ -114,8 +115,10 @@ export class MapStringLoad {
         return false;
       }
     }
+    pos.z = world.getTableHeight() + 10;
     systemTileObj.setPosition(pos);
     systemTileObj.setRotation(rot);
+    systemTileObj.snapToGround();
     return true;
   }
 

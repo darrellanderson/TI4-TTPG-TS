@@ -55,7 +55,7 @@ it("_tryMoveExistingSystemTileObj (existing system)", () => {
     systemsSnapshot
   );
   expect(success).toBe(true);
-  expect(systemTileObj.getPosition().toString()).toBe("(X=1,Y=2,Z=3)");
+  expect(systemTileObj.getPosition().toString()).toBe("(X=1,Y=2,Z=0)");
   expect(systemTileObj.getRotation().toString()).toBe("(P=4,Y=5,R=6)");
 });
 
@@ -87,7 +87,7 @@ it("_tryMoveExistingSystemTileObj (existing system in container)", () => {
   expect(success).toBe(true);
   expect(container.getItems().includes(systemTileObj)).toBe(false);
   expect(systemTileObj.getContainer()).toBeUndefined();
-  expect(systemTileObj.getPosition().toString()).toBe("(X=1,Y=2,Z=3)");
+  expect(systemTileObj.getPosition().toString()).toBe("(X=1,Y=2,Z=0)");
   expect(systemTileObj.getRotation().toString()).toBe("(P=4,Y=5,R=6)");
 });
 
