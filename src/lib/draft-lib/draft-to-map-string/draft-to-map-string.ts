@@ -47,7 +47,7 @@ export class DraftToMapString {
     seatIndexToFaction: Map<number, Faction>,
     seatIndexToPlayerName: Map<number, string>
   ): { mapString: string; hexToPlayerName: Map<HexType, string> } {
-    const mapString: Array<string> = ["18"];
+    const mapString: Array<string> = ["{18}"];
     const hexToPlayerName: Map<HexType, string> = new Map();
 
     // When a slice does not have assigned tiles, use blank/colored tiles.
@@ -60,13 +60,8 @@ export class DraftToMapString {
         seatIndexToMissingTileNumber.set(seatIndex, tile);
       });
 
-    console.log(
-      "xxx seatIndex keys",
-      Array.from(seatIndexToSliceTiles.keys()).join(",")
-    );
-
     const mapStringHex: MapStringHex = new MapStringHex();
-    for (const seatIndex of seatIndexToSliceTiles.keys()) {
+    for (const seatIndex of seatIndexToMissingTileNumber.keys()) {
       const sliceShape: SliceShape = this._getSliceShape(seatIndex);
       const sliceTiles: SliceTiles | undefined =
         seatIndexToSliceTiles.get(seatIndex);
@@ -109,31 +104,17 @@ export class DraftToMapString {
           const mapStringIndex: number = mapStringHex.hexToIndex(hex);
 
           let tile: number = -1;
-          if (tileIndex === 0) {
-            if (faction) {
-              tile = faction.getHomeSystemTileNumber();
-            }
+          if (tileIndex === 0 && faction) {
+            tile = faction.getHomeSystemTileNumber();
           } else if (sliceTiles) {
             const sliceTile = sliceTiles[tileIndex - 1];
             if (sliceTile) {
               tile = sliceTile;
             }
-          } else {
-            if (missingTileNumber) {
-              tile = missingTileNumber;
-            }
           }
-          console.log(
-            JSON.stringify({
-              seatIndex,
-              tileIndex,
-              tile,
-              dir: dir.toString(),
-              anchor: anchorPos.toString(),
-              pos: pos.toString(),
-            })
-          );
-
+          if (tile === -1 && missingTileNumber) {
+            tile = missingTileNumber;
+          }
           mapString[mapStringIndex] = tile.toString();
         });
       }

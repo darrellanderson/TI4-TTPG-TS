@@ -17,6 +17,7 @@ function go() {
   const setIndexToPlayerName: Map<number, string> = new Map();
 
   seatIndexToSliceTiles.set(1, [21, 22, 23, 24, 25]);
+  seatIndexToSliceTiles.set(2, [31, 32, 33, 34, 35]);
 
   const arborec = TI4.factionRegistry.getByNsid("faction:base/arborec")!;
   if (!arborec) {
