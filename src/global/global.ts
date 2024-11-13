@@ -158,9 +158,6 @@ if (GameWorld.getExecutionReason() === "unittest") {
     addObjectTemplatesToMockWorld(); // does a MockWorld._reset!
     resetGlobalThisTI4();
     new SetupPlayerSlotColors().setup(); // normally part of table state creation
-    if (!TI4.playerColor.getSlotPlasticColor(10)) {
-      console.error("Player color not set");
-    }
   });
 } else {
   resetGlobalThisTI4();
