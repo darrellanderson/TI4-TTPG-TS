@@ -168,6 +168,7 @@ async function transformImage(filename: string) {
     .resize(512, 512, { fit: "fill" })
     .extractChannel("alpha")
     .toBuffer();
+  const pngFile: string = filename.replace(/.jpg$/, ".png");
   await sharp(buffer)
     .extract({
       left: 70,
@@ -177,7 +178,7 @@ async function transformImage(filename: string) {
     })
     .resize(512, 512, { fit: "fill" })
     .joinChannel(mask)
-    .toFile(filename.replace(/.jpg$/, ".png"));
+    .toFile(pngFile);
 }
 
 async function transformImages() {
