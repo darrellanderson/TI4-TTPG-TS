@@ -9,23 +9,27 @@ import {
 import { Hex, HEX_LAYOUT_POINTY, HexType } from "ttpg-darrell";
 import { SliceTiles } from "../../../lib/draft-lib/generate-slices/generate-slices";
 import { System } from "../../../lib/system-lib/system/system";
+import { AbstractUI } from "../../abstract-ui/abtract-ui";
 
 const HALF_HEX_W_PX: number = 100;
 const packageId: string = refPackageId;
 
-export class SliceUI {
+export class SliceUI extends AbstractUI {
+  private readonly _slice: SliceTiles;
   private readonly _halfScaledHexWidth: number; // int
   private readonly _halfScaledHexHeight: number; // int
   private readonly _scaledHex: Hex;
+  private readonly _hexPositions: Array<Vector>; // indexed like sliceShape
 
-  private readonly _hexPositions: Array<Vector> = []; // indexed like sliceShape
-  private readonly _width: number; // int
-  private readonly _height: number; // int
-
-  constructor(scale: number, sliceShape: ReadonlyArray<HexType>) {
-    this._halfScaledHexWidth = Math.ceil(HALF_HEX_W_PX * scale);
-    this._halfScaledHexHeight = Math.ceil(this._halfScaledHexWidth * 0.866);
-    this._scaledHex = new Hex(HEX_LAYOUT_POINTY, this._halfScaledHexWidth); // x/y flipped thus pointy
+  constructor(
+    slice: SliceTiles,
+    sliceShape: ReadonlyArray<HexType>,
+    scale: number
+  ) {
+    const _halfScaledHexWidth = Math.ceil(HALF_HEX_W_PX * scale);
+    const _halfScaledHexHeight = Math.ceil(_halfScaledHexWidth * 0.866);
+    const _scaledHex = new Hex(HEX_LAYOUT_POINTY, _halfScaledHexWidth); // x/y flipped thus pointy
+    const _hexPositions: Array<Vector> = [];
 
     let left: number = 0;
     let top: number = 0;
@@ -33,41 +37,41 @@ export class SliceUI {
     let bottom: number = 0;
     for (const hex of sliceShape) {
       // Remember hex position.
-      const pos: Vector = this._scaledHex.toPosition(hex);
+      const pos: Vector = _scaledHex.toPosition(hex);
 
       // Convert to screen coordinates (swap x/y, and flip y).
       [pos.x, pos.y] = [pos.y, -pos.x];
 
-      this._hexPositions.push(pos);
+      _hexPositions.push(pos);
 
       // Update bounding box.
-      left = Math.min(left, pos.x - this._halfScaledHexWidth);
-      top = Math.min(top, pos.y - this._halfScaledHexHeight);
-      right = Math.max(right, pos.x + this._halfScaledHexWidth);
-      bottom = Math.max(bottom, pos.y + this._halfScaledHexHeight);
+      left = Math.min(left, pos.x - _halfScaledHexWidth);
+      top = Math.min(top, pos.y - _halfScaledHexHeight);
+      right = Math.max(right, pos.x + _halfScaledHexWidth);
+      bottom = Math.max(bottom, pos.y + _halfScaledHexHeight);
     }
 
     // Adjust positions to be relative to bounding box top-left.
-    for (const pos of this._hexPositions) {
+    for (const pos of _hexPositions) {
       pos.x -= left;
       pos.y -= top;
     }
 
     // Adjust to int.
-    for (const pos of this._hexPositions) {
+    for (const pos of _hexPositions) {
       pos.x = Math.ceil(pos.x);
       pos.y = Math.ceil(pos.y);
     }
 
-    this._width = Math.ceil(right - left);
-    this._height = Math.ceil(bottom - top);
+    super({ w: Math.ceil(right - left), h: Math.ceil(bottom - top) });
+    this._slice = slice;
+    this._halfScaledHexWidth = _halfScaledHexWidth;
+    this._halfScaledHexHeight = _halfScaledHexHeight;
+    this._scaledHex = _scaledHex;
+    this._hexPositions = _hexPositions;
   }
 
-  getSize(): { w: number; h: number } {
-    return { w: this._width, h: this._height };
-  }
-
-  getWidget(slice: SliceTiles): Widget {
+  getWidget(): Widget {
     const canvas: Canvas = new Canvas();
 
     // Add home system.
@@ -88,7 +92,7 @@ export class SliceUI {
       );
     }
 
-    slice.forEach((tile: number, index: number) => {
+    this._slice.forEach((tile: number, index: number) => {
       const system: System | undefined =
         TI4.systemRegistry.getBySystemTileNumber(tile);
       const pos: Vector | undefined = this._hexPositions[index + 1]; // 0 is home system

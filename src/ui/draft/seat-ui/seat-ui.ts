@@ -9,22 +9,18 @@ import {
 } from "@tabletop-playground/api";
 import { BOX_H, BOX_W, FONT_SIZE } from "../faction-ui/faction-ui";
 import { PlayerSeatType } from "lib/player-lib/player-seats/player-seats";
+import { AbstractUI } from "../../abstract-ui/abtract-ui";
 
-export class SeatUI {
-  private readonly _width: number;
-  private readonly _height: number;
-  private readonly _fontSize: number;
+export class SeatUI extends AbstractUI {
   private readonly _speakerSeatIndex: number;
+  private readonly _seatIndex: number;
+  private readonly _fontSize: number;
 
-  constructor(scale: number, speakerSeatIndex: number) {
-    this._width = BOX_W * scale;
-    this._height = BOX_H * scale;
-    this._fontSize = FONT_SIZE * scale;
+  constructor(seatIndex: number, speakerSeatIndex: number, scale: number) {
+    super({ w: BOX_W * scale, h: BOX_H * scale });
     this._speakerSeatIndex = speakerSeatIndex;
-  }
-
-  getSize(): { w: number; h: number } {
-    return { w: this._width, h: this._height };
+    this._seatIndex = seatIndex;
+    this._fontSize = FONT_SIZE * scale;
   }
 
   _getPlayerSlotOrThrow(seatIndex: number): number {
@@ -58,9 +54,9 @@ export class SeatUI {
     return result.toUpperCase();
   }
 
-  getWidget(seatIndex: number): Widget {
-    const label: string = this._getLabelOrThrow(seatIndex);
-    const playerSlot: number = this._getPlayerSlotOrThrow(seatIndex);
+  getWidget(): Widget {
+    const label: string = this._getLabelOrThrow(this._seatIndex);
+    const playerSlot: number = this._getPlayerSlotOrThrow(this._seatIndex);
 
     const color: Color = world.getSlotColor(playerSlot);
     const text: Widget = new Text()

@@ -10,8 +10,9 @@ it("_getPlayerSlotOrThrow", () => {
   });
 
   const scale: number = 1;
+  const speakerSeatIndex: number = 0;
   const seatIndex: number = 0;
-  const seatUi = new SeatUI(scale, seatIndex);
+  const seatUi = new SeatUI(seatIndex, speakerSeatIndex, scale);
   const playerSlot: number = seatUi._getPlayerSlotOrThrow(seatIndex);
   expect(playerSlot).toBeDefined();
 
@@ -21,9 +22,10 @@ it("_getPlayerSlotOrThrow", () => {
 });
 
 it("_getLabelOrThrow", () => {
-  const scale: number = 1;
   const seatIndex: number = 0;
-  const seatUi = new SeatUI(scale, seatIndex);
+  const speakerSeatIndex: number = 0;
+  const scale: number = 1;
+  const seatUi = new SeatUI(seatIndex, speakerSeatIndex, scale);
   const label: string = seatUi._getLabelOrThrow(seatIndex);
   expect(label).toBeDefined();
 
@@ -46,13 +48,19 @@ it("getWidget", () => {
 
   const scale: number = 1;
   const seatIndex: number = 0;
-  const widget: Widget = new SeatUI(scale, seatIndex).getWidget(0);
+  const speakerSeatIndex: number = 0;
+  const widget: Widget = new SeatUI(
+    seatIndex,
+    speakerSeatIndex,
+    scale
+  ).getWidget();
   expect(widget).toBeDefined();
 });
 
 it("getSize", () => {
   const scale: number = 1;
   const seatIndex: number = 0;
-  const size = new SeatUI(scale, seatIndex).getSize();
+  const speakerSeatIndex: number = 0;
+  const size = new SeatUI(seatIndex, speakerSeatIndex, scale).getSize();
   expect(size).toBeDefined();
 });
