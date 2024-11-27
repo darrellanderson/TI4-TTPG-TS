@@ -135,7 +135,13 @@ export class MapUI {
       // Apply system image, or default to blank tile.
       const system: System | undefined =
         TI4.systemRegistry.getBySystemTileNumber(entry.tile);
-      if (system) {
+      if (system && system.isHyperlane()) {
+        // Cannot rotate images, use a gray tile for hyperlanes.
+        const c = 0.03;
+        img
+          .setImage("tile/system/tile-000.png", packageId)
+          .setTintColor([c, c, c, 1]);
+      } else if (system) {
         img.setImage(system.getImg(), system.getImgPackageId());
       } else {
         img.setImage("tile/system/tile-000.png", packageId);

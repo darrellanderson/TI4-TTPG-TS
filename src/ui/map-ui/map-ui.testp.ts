@@ -7,7 +7,7 @@ import {
 import { MapUI } from "./map-ui";
 
 function go() {
-  const mapString: string = "19 -110 -111 1";
+  const mapString: string = "19 -110 -111 1 91";
   const mapUI = new MapUI(1, mapString);
   mapUI.setHexLabel("<0,0,0>", "Mecatol Rex Plus Some More Words");
 

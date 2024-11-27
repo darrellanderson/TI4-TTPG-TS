@@ -88,9 +88,19 @@ export class SliceUI extends AbstractUI {
         TI4.systemRegistry.getBySystemTileNumber(tile);
       const pos: Vector | undefined = hexPositions[index + 1]; // 0 is home system
       if (system && pos) {
-        const img = new ImageWidget()
-          .setImageSize(halfScaledHexWidth * 2, halfScaledHexHeight * 2)
-          .setImage(system.getImg(), system.getImgPackageId());
+        const img: ImageWidget = new ImageWidget().setImageSize(
+          halfScaledHexWidth * 2,
+          halfScaledHexHeight * 2
+        );
+        if (system.isHyperlane()) {
+          // Cannot rotate images, use a gray tile for hyperlanes.
+          const c = 0.03;
+          img
+            .setImage("tile/system/tile-000.png", packageId)
+            .setTintColor([c, c, c, 1]);
+        } else {
+          img.setImage(system.getImg(), system.getImgPackageId());
+        }
         canvas.addChild(
           img,
           pos.x - halfScaledHexWidth - 1,
