@@ -2,6 +2,14 @@ import { MockGameObject } from "ttpg-mock";
 import { System } from "../system/system";
 import { SystemSummary } from "./system-summary";
 
+it("static getFromSystemTileNumbers", () => {
+  MockGameObject.simple("tile.system:base/19");
+  const asText: string = SystemSummary.getFromSystemTileNumbers([
+    19,
+  ]).getSummary();
+  expect(asText).toEqual("1/2 (0/2)\nY");
+});
+
 it("constructor", () => {
   const systems: Array<System> = [];
   new SystemSummary(systems);
@@ -72,4 +80,7 @@ it("getSummaryRaw", () => {
     traits: "CI",
     wormholes: "αβ",
   });
+
+  const asText: string = systemSummary.getSummary();
+  expect(asText).toEqual("112/121 (52/70)\nBR αβ L");
 });

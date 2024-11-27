@@ -16,39 +16,35 @@ export const FONT_SIZE: number = BOX_H * 0.42;
 export const SPACING: number = BOX_H * 0.1;
 
 export class FactionUI extends AbstractUI {
-  private readonly _faction: Faction;
-  private readonly _fontSize: number;
-  private readonly _spacing: number;
-
   constructor(faction: Faction, scale: number) {
-    super({ w: BOX_W * scale, h: BOX_H * scale });
+    const w: number = BOX_W * scale;
+    const h: number = BOX_H * scale;
 
-    this._faction = faction;
-    this._fontSize = FONT_SIZE * scale;
-    this._spacing = SPACING * scale;
-  }
+    const fontSize = FONT_SIZE * scale;
+    const spacing = SPACING * scale;
 
-  getWidget(): Widget {
-    const s: number = this._height - this._spacing * 2;
+    const s: number = h - spacing * 2;
     const icon: Widget = new ImageWidget()
       .setImageSize(s, s)
-      .setImage(this._faction.getIcon(), this._faction.getIconPackageId());
+      .setImage(faction.getIcon(), faction.getIconPackageId());
 
     const name: Widget = new Text()
       .setBold(true)
-      .setFontSize(this._fontSize)
-      .setText(this._faction.getAbbr().toUpperCase());
+      .setFontSize(fontSize)
+      .setText(faction.getAbbr().toUpperCase());
 
     const panel: Widget = new HorizontalBox()
-      .setChildDistance(this._spacing)
+      .setChildDistance(spacing)
       .addChild(icon)
       .addChild(name);
 
-    return new LayoutBox()
-      .setOverrideWidth(this._width)
-      .setOverrideHeight(this._height)
+    const widget: Widget = new LayoutBox()
+      .setOverrideWidth(w)
+      .setOverrideHeight(h)
       .setHorizontalAlignment(HorizontalAlignment.Center)
       .setVerticalAlignment(VerticalAlignment.Center)
       .setChild(panel);
+
+    super(widget, { w, h });
   }
 }

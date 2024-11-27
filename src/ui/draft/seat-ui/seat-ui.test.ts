@@ -9,32 +9,27 @@ it("_getPlayerSlotOrThrow", () => {
     position: [-10, 10, 0],
   });
 
-  const scale: number = 1;
-  const speakerSeatIndex: number = 0;
   const seatIndex: number = 0;
-  const seatUi = new SeatUI(seatIndex, speakerSeatIndex, scale);
-  const playerSlot: number = seatUi._getPlayerSlotOrThrow(seatIndex);
+  const playerSlot: number = SeatUI._getPlayerSlotOrThrow(seatIndex);
   expect(playerSlot).toBeDefined();
 
   expect(() => {
-    seatUi._getPlayerSlotOrThrow(1);
+    SeatUI._getPlayerSlotOrThrow(1);
   }).toThrow();
 });
 
 it("_getLabelOrThrow", () => {
   const seatIndex: number = 0;
   const speakerSeatIndex: number = 0;
-  const scale: number = 1;
-  const seatUi = new SeatUI(seatIndex, speakerSeatIndex, scale);
-  const label: string = seatUi._getLabelOrThrow(seatIndex);
+  const label: string = SeatUI._getLabelOrThrow(seatIndex, speakerSeatIndex);
   expect(label).toBeDefined();
 
   expect(() => {
-    seatUi._getLabelOrThrow(100);
+    SeatUI._getLabelOrThrow(100, speakerSeatIndex);
   }).toThrow();
 
   expect(() => {
-    seatUi._getLabelOrThrow(-100);
+    SeatUI._getLabelOrThrow(-100, speakerSeatIndex);
   }).toThrow();
 });
 
@@ -58,6 +53,13 @@ it("getWidget", () => {
 });
 
 it("getSize", () => {
+  new MockCardHolder({
+    templateMetadata: "card-holder:base/player-hand",
+    owningPlayerSlot: 10,
+    position: [-10, 10, 0],
+  });
+  expect(TI4.playerSeats.getAllSeats().length).toBeGreaterThan(0);
+
   const scale: number = 1;
   const seatIndex: number = 0;
   const speakerSeatIndex: number = 0;

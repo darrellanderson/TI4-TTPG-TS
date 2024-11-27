@@ -12,18 +12,7 @@ import { PlayerSeatType } from "lib/player-lib/player-seats/player-seats";
 import { AbstractUI } from "../../abstract-ui/abtract-ui";
 
 export class SeatUI extends AbstractUI {
-  private readonly _speakerSeatIndex: number;
-  private readonly _seatIndex: number;
-  private readonly _fontSize: number;
-
-  constructor(seatIndex: number, speakerSeatIndex: number, scale: number) {
-    super({ w: BOX_W * scale, h: BOX_H * scale });
-    this._speakerSeatIndex = speakerSeatIndex;
-    this._seatIndex = seatIndex;
-    this._fontSize = FONT_SIZE * scale;
-  }
-
-  _getPlayerSlotOrThrow(seatIndex: number): number {
+  static _getPlayerSlotOrThrow(seatIndex: number): number {
     const playerSeatType: PlayerSeatType | undefined =
       TI4.playerSeats.getAllSeats()[seatIndex];
     if (!playerSeatType) {
@@ -32,9 +21,9 @@ export class SeatUI extends AbstractUI {
     return playerSeatType.playerSlot;
   }
 
-  _getLabelOrThrow(seatIndex: number): string {
+  static _getLabelOrThrow(seatIndex: number, speakerSeatIndex: number): string {
     const playerCount: number = TI4.config.playerCount;
-    let pickCount: number = seatIndex - this._speakerSeatIndex;
+    let pickCount: number = seatIndex - speakerSeatIndex;
     if (pickCount < 0) {
       pickCount += playerCount;
     }
@@ -54,22 +43,29 @@ export class SeatUI extends AbstractUI {
     return result.toUpperCase();
   }
 
-  getWidget(): Widget {
-    const label: string = this._getLabelOrThrow(this._seatIndex);
-    const playerSlot: number = this._getPlayerSlotOrThrow(this._seatIndex);
+  constructor(seatIndex: number, speakerSeatIndex: number, scale: number) {
+    const w: number = BOX_W * scale;
+    const h: number = BOX_H * scale;
+
+    const fontSize = FONT_SIZE * scale;
+
+    const label: string = SeatUI._getLabelOrThrow(seatIndex, speakerSeatIndex);
+    const playerSlot: number = SeatUI._getPlayerSlotOrThrow(seatIndex);
 
     const color: Color = world.getSlotColor(playerSlot);
     const text: Widget = new Text()
       .setBold(true)
-      .setFontSize(this._fontSize)
+      .setFontSize(fontSize)
       .setTextColor(color)
       .setText(label);
 
-    return new LayoutBox()
-      .setOverrideWidth(this._width)
-      .setOverrideHeight(this._height)
+    const widget: Widget = new LayoutBox()
+      .setOverrideWidth(w)
+      .setOverrideHeight(h)
       .setHorizontalAlignment(HorizontalAlignment.Center)
       .setVerticalAlignment(VerticalAlignment.Center)
       .setChild(text);
+
+    super(widget, { w: BOX_W * scale, h: BOX_H * scale });
   }
 }

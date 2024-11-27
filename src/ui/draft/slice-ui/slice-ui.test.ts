@@ -30,3 +30,10 @@ it("getWidget", () => {
   const widget = sliceUi.getWidget();
   expect(widget).toBeDefined();
 });
+
+it("setLabel", () => {
+  const slice: Array<number> = [19, 20];
+  const sliceShape: Array<HexType> = ["<0,0,0>", "<1,0,-1>", "<1,0,-1>"];
+  const sliceUi = new SliceUI(slice, sliceShape, 1);
+  sliceUi.setLabel("test");
+});

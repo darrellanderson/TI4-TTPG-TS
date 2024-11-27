@@ -8,9 +8,11 @@ import { MILTY_SLICE_SHAPE } from "../../../lib/draft-lib/drafts/milty";
 import { SliceUI } from "./slice-ui";
 
 function go() {
-  const sliceUI = new SliceUI(1, MILTY_SLICE_SHAPE);
+  const slice: Array<number> = [21, 22, 23, 24, 25];
+  const scale: number = 1;
+  const sliceUI = new SliceUI(slice, MILTY_SLICE_SHAPE, scale);
 
-  const widget: Widget = sliceUI.getWidget([21, 22, 23, 24, 25]);
+  const widget: Widget = sliceUI.getWidget();
 
   const screenUI = new ScreenUIElement();
   screenUI.positionX = 0.5;

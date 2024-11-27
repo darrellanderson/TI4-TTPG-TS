@@ -13,8 +13,8 @@ function go() {
     throw new Error("Faction not found");
   }
 
-  const factionUi = new FactionUI(1);
-  const widget: Widget = factionUi.getWidget(faction);
+  const factionUi = new FactionUI(faction, 1);
+  const widget: Widget = factionUi.getWidget();
 
   const screenUI = new ScreenUIElement();
   screenUI.positionX = 0.5;

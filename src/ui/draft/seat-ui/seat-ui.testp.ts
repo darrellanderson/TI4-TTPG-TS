@@ -7,8 +7,11 @@ import {
 import { SeatUI } from "./seat-ui";
 
 function go() {
-  const seatUi = new SeatUI(1, 0);
-  const widget: Widget = seatUi.getWidget(0);
+  const seatIndex: number = 0;
+  const speakerIndex: number = 0;
+  const scale: number = 1;
+  const seatUi = new SeatUI(seatIndex, speakerIndex, scale);
+  const widget: Widget = seatUi.getWidget();
 
   const screenUI = new ScreenUIElement();
   screenUI.positionX = 0.5;

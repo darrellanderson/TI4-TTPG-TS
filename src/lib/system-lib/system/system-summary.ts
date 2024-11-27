@@ -20,7 +20,21 @@ export type SystemSummaryType = {
 };
 
 export class SystemSummary {
-  private readonly _systems: Array<System> = [];
+  private readonly _systems: ReadonlyArray<System> = [];
+
+  static getFromSystemTileNumbers(
+    systemTileNumbers: ReadonlyArray<number>
+  ): SystemSummary {
+    const systems: Array<System> = [];
+    systemTileNumbers.forEach((tile: number) => {
+      const system: System | undefined =
+        TI4.systemRegistry.getBySystemTileNumber(tile);
+      if (system) {
+        systems.push(system);
+      }
+    });
+    return new SystemSummary(systems);
+  }
 
   constructor(systems: Array<System>) {
     this._systems = [...systems];
@@ -84,5 +98,20 @@ export class SystemSummary {
     result.wormholes = result.wormholes.split("").sort().join("");
 
     return result;
+  }
+
+  getSummary(): string {
+    const raw: SystemSummaryType = this.getSummaryRaw();
+
+    const resInf: string = [
+      `${raw.resources}/${raw.influence}`,
+      `(${raw.optResources}/${raw.optInfluence})`,
+    ].join(" ");
+
+    const attrs: string = [raw.techs, raw.wormholes, raw.legendary]
+      .filter((x) => x.length > 0)
+      .join(" ");
+
+    return [resInf, attrs].join("\n");
   }
 }
