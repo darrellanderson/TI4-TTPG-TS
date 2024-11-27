@@ -15,13 +15,13 @@ import {
 } from "@tabletop-playground/api";
 import { Hex, HEX_LAYOUT_POINTY, HexType } from "ttpg-darrell";
 
+import { Faction } from "../../lib/faction-lib/faction/faction";
 import {
   MapStringEntry,
   MapStringParser,
 } from "../../lib/map-string-lib/map-string-parser";
 import { MapStringHex } from "../../lib/map-string-lib/map-string-hex";
 import { System } from "../../lib/system-lib/system/system";
-import { Faction } from "../../lib/faction-lib/faction/faction";
 
 const HALF_HEX_W_PX: number = 50; // 50 for small screens
 const LABEL_RELATIVE_TO_HEX_SIZE: number = 0.2;
