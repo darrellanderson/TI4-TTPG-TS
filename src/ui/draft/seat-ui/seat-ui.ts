@@ -55,7 +55,7 @@ export class SeatUI {
     if (result === undefined) {
       throw new Error(`Unexpected pick count: ${pickCount}`);
     }
-    return result;
+    return result.toUpperCase();
   }
 
   getWidget(seatIndex: number): Widget {
