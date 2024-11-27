@@ -4,14 +4,15 @@ import {
   ImageWidget,
   LayoutBox,
   Text,
+  VerticalAlignment,
   Widget,
 } from "@tabletop-playground/api";
 import { Faction } from "../../../lib/faction-lib/faction/faction";
 
-const BOX_W: number = 220;
-const BOX_H: number = 58;
-const FONT_SIZE: number = BOX_H * 0.42;
-const SPACING: number = BOX_H * 0.1;
+export const BOX_W: number = 220;
+export const BOX_H: number = 58;
+export const FONT_SIZE: number = BOX_H * 0.42;
+export const SPACING: number = BOX_H * 0.1;
 
 export class FactionUI {
   private readonly _width: number;
@@ -50,7 +51,7 @@ export class FactionUI {
       .setOverrideWidth(this._width)
       .setOverrideHeight(this._height)
       .setHorizontalAlignment(HorizontalAlignment.Center)
-      .setVerticalAlignment(HorizontalAlignment.Center)
+      .setVerticalAlignment(VerticalAlignment.Center)
       .setChild(panel);
   }
 }
