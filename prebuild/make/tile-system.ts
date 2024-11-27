@@ -7,6 +7,7 @@
  * - assets/Textures/tile/system/tile-{tile}.jpg
  */
 
+//import { execSync } from "child_process";
 import fs from "fs";
 import path from "path";
 import sharp from "sharp";
@@ -179,6 +180,11 @@ async function transformImage(filename: string) {
     .resize(512, 512, { fit: "fill" })
     .joinChannel(mask)
     .toFile(pngFile);
+
+  // Convert to DDS.  (No, apparently DDS files not supported?)
+  //const ddsFile: string = pngFile.replace(/.png$/, ".dds");
+  //const command: string = `magick convert "${pngFile}" "${ddsFile}"`;
+  //execSync(command);
 }
 
 async function transformImages() {
