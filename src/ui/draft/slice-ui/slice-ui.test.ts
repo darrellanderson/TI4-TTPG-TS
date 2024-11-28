@@ -15,7 +15,7 @@ beforeEach(() => {
 });
 
 it("size", () => {
-  const slice: Array<number> = [19, 20];
+  const slice: Array<number> = [19, 91];
   const sliceShape: Array<HexType> = ["<0,0,0>", "<1,0,-1>", "<1,0,-1>"];
   const sliceUi = new SliceUI(slice, sliceShape, 1);
   const size: UI_SIZE = sliceUi.getSize();
