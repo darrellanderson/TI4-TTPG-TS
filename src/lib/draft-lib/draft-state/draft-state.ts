@@ -3,7 +3,7 @@ import { NamespaceId } from "ttpg-darrell";
 import { z } from "zod";
 
 import { SliceShape, SliceTiles } from "../generate-slices/generate-slices";
-import { Faction } from "lib/faction-lib/faction/faction";
+import { Faction } from "../../faction-lib/faction/faction";
 
 export const DraftStateSchema = z.object({
   sliceShape: z.array(z.string()).readonly().default([]),
@@ -38,6 +38,10 @@ export class DraftState {
     } else {
       this._data = DraftStateSchema.parse({});
     }
+  }
+
+  destroy(): void {
+    world.setSavedData("", this._namespaceId);
   }
 
   _save(): void {
@@ -85,5 +89,47 @@ export class DraftState {
 
   getSpeakerIndex(): number {
     return this._data.speakerIndex;
+  }
+
+  setSliceIndexToPlayerSlot(sliceIndex: number, playerSlot: number) {
+    if (playerSlot === -1) {
+      delete this._data.sliceIndexToPlayerSlot[sliceIndex];
+    } else {
+      this._data.sliceIndexToPlayerSlot[sliceIndex] = playerSlot;
+    }
+    this._save();
+    return this;
+  }
+
+  getSliceIndexToPlayerSlot(sliceIndex: number): number | undefined {
+    return this._data.sliceIndexToPlayerSlot[sliceIndex];
+  }
+
+  setFactionIndexToPlayerSlot(factionIndex: number, playerSlot: number) {
+    if (playerSlot === -1) {
+      delete this._data.factionIndexToPlayerSlot[factionIndex];
+    } else {
+      this._data.factionIndexToPlayerSlot[factionIndex] = playerSlot;
+    }
+    this._save();
+    return this;
+  }
+
+  getFactionIndexToPlayerSlot(factionIndex: number): number | undefined {
+    return this._data.factionIndexToPlayerSlot[factionIndex];
+  }
+
+  setSeatIndexToPlayerSlot(seatIndex: number, playerSlot: number) {
+    if (playerSlot === -1) {
+      delete this._data.seatIndexToPlayerSlot[seatIndex];
+    } else {
+      this._data.seatIndexToPlayerSlot[seatIndex] = playerSlot;
+    }
+    this._save();
+    return this;
+  }
+
+  getSeatIndexToPlayerSlot(seatIndex: number): number | undefined {
+    return this._data.seatIndexToPlayerSlot[seatIndex];
   }
 }
