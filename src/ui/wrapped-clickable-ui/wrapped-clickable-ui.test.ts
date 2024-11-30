@@ -15,10 +15,35 @@ it("getSize", () => {
   expect(innerSize).toEqual({ w: 1, h: 2 });
 
   const scale: number = 1;
-  const wrappedUi: AbstractUI = new WrappedClickableUI(myAbstractUi, scale);
+  const wrappedUi: WrappedClickableUI = new WrappedClickableUI(
+    myAbstractUi,
+    scale
+  );
   const outserSize: UI_SIZE = wrappedUi.getSize();
   expect(outserSize).toEqual({
     w: 1 + BORDER_SIZE * 2,
     h: 2 + BORDER_SIZE * 2,
   });
+});
+
+it("owningPlayerSlot", () => {
+  const myAbstractUi: AbstractUI = new MyAbstractUI();
+  const scale: number = 1;
+  const wrappedUi: WrappedClickableUI = new WrappedClickableUI(
+    myAbstractUi,
+    scale
+  );
+  expect(wrappedUi.getOwningPlayerSlot()).toEqual(-1);
+
+  wrappedUi.setOwningPlayerSlot(1);
+  expect(wrappedUi.getOwningPlayerSlot()).toEqual(1);
+
+  wrappedUi.maybeToggleOwningPlayerSlot(1);
+  wrappedUi.setOwningPlayerSlot(-1);
+
+  wrappedUi.maybeToggleOwningPlayerSlot(1);
+  wrappedUi.setOwningPlayerSlot(1);
+
+  wrappedUi.maybeToggleOwningPlayerSlot(2);
+  wrappedUi.setOwningPlayerSlot(1);
 });

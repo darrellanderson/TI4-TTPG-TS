@@ -2,31 +2,30 @@ import { Canvas, LayoutBox, Widget } from "@tabletop-playground/api";
 import { AbstractUI, UI_SIZE } from "../abstract-ui/abtract-ui";
 
 /**
- * Requires all entries be the same size.  Template to an AbstractUI subclass
- * to make it more likely they are.
+ * Requires all entries be the same size.
  */
-export class GridUIBuilder<T extends AbstractUI> {
-  private readonly _uis: Array<T> = [];
+export class GridUIBuilder {
+  private readonly _uis: Array<AbstractUI> = [];
   private _maxRows: number = 1;
   private _padding: number = 0;
   private _spacing: number = 0;
 
-  addUIs(uis: Array<T>): GridUIBuilder<T> {
+  addUIs(uis: Array<AbstractUI>): this {
     this._uis.push(...uis);
     return this;
   }
 
-  setMaxRows(maxRows: number): GridUIBuilder<T> {
+  setMaxRows(maxRows: number): this {
     this._maxRows = maxRows;
     return this;
   }
 
-  setPadding(padding: number): GridUIBuilder<T> {
+  setPadding(padding: number): this {
     this._padding = padding;
     return this;
   }
 
-  setSpacing(spacing: number): GridUIBuilder<T> {
+  setSpacing(spacing: number): this {
     this._spacing = spacing;
     return this;
   }
@@ -36,7 +35,7 @@ export class GridUIBuilder<T extends AbstractUI> {
     const numRows: number = Math.min(this._maxRows, this._uis.length);
 
     let entrySize: UI_SIZE = { w: 0, h: 0 };
-    const entry: T | undefined = this._uis[0];
+    const entry: AbstractUI | undefined = this._uis[0];
     if (entry) {
       entrySize = entry.getSize();
     }
@@ -56,7 +55,7 @@ export class GridUIBuilder<T extends AbstractUI> {
       .setOverrideWidth(gridSize.w)
       .setOverrideHeight(gridSize.h)
       .setChild(canvas);
-    this._uis.forEach((entry: T, index: number) => {
+    this._uis.forEach((entry: AbstractUI, index: number) => {
       const col: number = index % numCols;
       const row: number = Math.floor(index / numCols);
       const entrySize: UI_SIZE = entry.getSize();

@@ -10,7 +10,7 @@ class MyAbstractUI extends AbstractUI {
 }
 
 it("build 1x1", () => {
-  const gridUi: AbstractUI = new GridUIBuilder<MyAbstractUI>()
+  const gridUi: AbstractUI = new GridUIBuilder()
     .addUIs([new MyAbstractUI()])
     .build();
   expect(gridUi.getWidget()).toBeDefined();
@@ -18,7 +18,7 @@ it("build 1x1", () => {
 });
 
 it("build 1x1 with padding", () => {
-  const gridUi: AbstractUI = new GridUIBuilder<MyAbstractUI>()
+  const gridUi: AbstractUI = new GridUIBuilder()
     .addUIs([new MyAbstractUI()])
     .setPadding(5)
     .build();
@@ -27,7 +27,7 @@ it("build 1x1 with padding", () => {
 });
 
 it("build 2x1", () => {
-  const gridUi: AbstractUI = new GridUIBuilder<MyAbstractUI>()
+  const gridUi: AbstractUI = new GridUIBuilder()
     .addUIs([new MyAbstractUI(), new MyAbstractUI()])
     .build();
   expect(gridUi.getWidget()).toBeDefined();
@@ -35,7 +35,7 @@ it("build 2x1", () => {
 });
 
 it("build 1x2", () => {
-  const gridUi: AbstractUI = new GridUIBuilder<MyAbstractUI>()
+  const gridUi: AbstractUI = new GridUIBuilder()
     .addUIs([new MyAbstractUI(), new MyAbstractUI()])
     .setMaxRows(100)
     .build();
@@ -44,7 +44,7 @@ it("build 1x2", () => {
 });
 
 it("build 2x2", () => {
-  const gridUi: AbstractUI = new GridUIBuilder<MyAbstractUI>()
+  const gridUi: AbstractUI = new GridUIBuilder()
     .addUIs([new MyAbstractUI(), new MyAbstractUI(), new MyAbstractUI()])
     .setMaxRows(2)
     .build();
@@ -53,7 +53,7 @@ it("build 2x2", () => {
 });
 
 it("build 1x1 with spacing", () => {
-  const gridUi: AbstractUI = new GridUIBuilder<MyAbstractUI>()
+  const gridUi: AbstractUI = new GridUIBuilder()
     .addUIs([new MyAbstractUI()])
     .setSpacing(3)
     .build();
@@ -62,7 +62,7 @@ it("build 1x1 with spacing", () => {
 });
 
 it("build 2x1 with spacing", () => {
-  const gridUi: AbstractUI = new GridUIBuilder<MyAbstractUI>()
+  const gridUi: AbstractUI = new GridUIBuilder()
     .addUIs([new MyAbstractUI(), new MyAbstractUI()])
     .setSpacing(3)
     .build();
@@ -71,7 +71,7 @@ it("build 2x1 with spacing", () => {
 });
 
 it("build 1x2 with spacing", () => {
-  const gridUi: AbstractUI = new GridUIBuilder<MyAbstractUI>()
+  const gridUi: AbstractUI = new GridUIBuilder()
     .addUIs([new MyAbstractUI(), new MyAbstractUI()])
     .setMaxRows(100)
     .setSpacing(3)
@@ -81,7 +81,7 @@ it("build 1x2 with spacing", () => {
 });
 
 it("build 2x2 with spacing", () => {
-  const gridUi: AbstractUI = new GridUIBuilder<MyAbstractUI>()
+  const gridUi: AbstractUI = new GridUIBuilder()
     .addUIs([new MyAbstractUI(), new MyAbstractUI(), new MyAbstractUI()])
     .setMaxRows(2)
     .setSpacing(3)

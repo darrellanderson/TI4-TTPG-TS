@@ -18,7 +18,7 @@ class MyAbstractUI extends AbstractUI {
 }
 
 function go() {
-  const grid: AbstractUI = new GridUIBuilder<MyAbstractUI>()
+  const grid: AbstractUI = new GridUIBuilder()
     .addUIs([
       new MyAbstractUI("1"),
       new MyAbstractUI("2"),
