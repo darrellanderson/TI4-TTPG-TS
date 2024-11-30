@@ -38,6 +38,8 @@ export class DraftState {
     } else {
       this._data = DraftStateSchema.parse({});
     }
+
+    this._save();
   }
 
   destroy(): void {
@@ -45,7 +47,7 @@ export class DraftState {
   }
 
   _save(): void {
-    world.setSavedData(this._namespaceId, JSON.stringify(this._data));
+    world.setSavedData(JSON.stringify(this._data), this._namespaceId);
   }
 
   setSliceShape(sliceShape: SliceShape): this {
