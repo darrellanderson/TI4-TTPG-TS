@@ -24,9 +24,12 @@ it("getSize", () => {
     w: 1 + BORDER_SIZE * 2,
     h: 2 + BORDER_SIZE * 2,
   });
+
+  expect(wrappedUi.getBorder()).toBeDefined();
+  expect(wrappedUi.getContentButton()).toBeDefined();
 });
 
-it("owningPlayerSlot", () => {
+it("setOwningPlayerSlot", () => {
   const myAbstractUi: AbstractUI = new MyAbstractUI();
   const scale: number = 1;
   const wrappedUi: WrappedClickableUI = new WrappedClickableUI(
@@ -38,12 +41,12 @@ it("owningPlayerSlot", () => {
   wrappedUi.setOwningPlayerSlot(1);
   expect(wrappedUi.getOwningPlayerSlot()).toEqual(1);
 
-  wrappedUi.maybeToggleOwningPlayerSlot(1);
+  wrappedUi.setOwningPlayerSlot(undefined);
+  expect(wrappedUi.getOwningPlayerSlot()).toEqual(-1);
+
+  wrappedUi.setOwningPlayerSlot(1);
+  expect(wrappedUi.getOwningPlayerSlot()).toEqual(1);
+
   wrappedUi.setOwningPlayerSlot(-1);
-
-  wrappedUi.maybeToggleOwningPlayerSlot(1);
-  wrappedUi.setOwningPlayerSlot(1);
-
-  wrappedUi.maybeToggleOwningPlayerSlot(2);
-  wrappedUi.setOwningPlayerSlot(1);
+  expect(wrappedUi.getOwningPlayerSlot()).toEqual(-1);
 });

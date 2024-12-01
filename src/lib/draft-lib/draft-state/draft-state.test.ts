@@ -90,27 +90,27 @@ it("speaker index", () => {
 
 it("sliceIndexToPlayerSlot", () => {
   const state: DraftState = new DraftState("@test/draft-state");
-  expect(state.getSliceIndexToPlayerSlot(0)).toBeUndefined();
+  expect(state.getSliceIndexToPlayerSlot(0)).toBe(-1);
   state.setSliceIndexToPlayerSlot(0, 1);
   expect(state.getSliceIndexToPlayerSlot(0)).toBe(1);
   state.setSliceIndexToPlayerSlot(0, -1);
-  expect(state.getSliceIndexToPlayerSlot(0)).toBeUndefined();
+  expect(state.getSliceIndexToPlayerSlot(0)).toBe(-1);
 });
 
 it("factionIndexToPlayerSlot", () => {
   const state: DraftState = new DraftState("@test/draft-state");
-  expect(state.getFactionIndexToPlayerSlot(0)).toBeUndefined();
+  expect(state.getFactionIndexToPlayerSlot(0)).toBe(-1);
   state.setFactionIndexToPlayerSlot(0, 1);
   expect(state.getFactionIndexToPlayerSlot(0)).toBe(1);
   state.setFactionIndexToPlayerSlot(0, -1);
-  expect(state.getFactionIndexToPlayerSlot(0)).toBeUndefined();
+  expect(state.getFactionIndexToPlayerSlot(0)).toBe(-1);
 });
 
 it("seatIndexToPlayerSlot", () => {
   const state: DraftState = new DraftState("@test/draft-state");
-  expect(state.getSeatIndexToPlayerSlot(0)).toBeUndefined();
+  expect(state.getSeatIndexToPlayerSlot(0)).toBe(-1);
   state.setSeatIndexToPlayerSlot(0, 1);
   expect(state.getSeatIndexToPlayerSlot(0)).toBe(1);
   state.setSeatIndexToPlayerSlot(0, -1);
-  expect(state.getSeatIndexToPlayerSlot(0)).toBeUndefined();
+  expect(state.getSeatIndexToPlayerSlot(0)).toBe(-1);
 });

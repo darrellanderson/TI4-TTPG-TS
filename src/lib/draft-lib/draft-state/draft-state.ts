@@ -1,5 +1,5 @@
 import { world } from "@tabletop-playground/api";
-import { NamespaceId } from "ttpg-darrell";
+import { NamespaceId, TriggerableMulticastDelegate } from "ttpg-darrell";
 import { z } from "zod";
 
 import { SliceShape, SliceTiles } from "../generate-slices/generate-slices";
@@ -10,9 +10,9 @@ export const DraftStateSchema = z.object({
   slices: z.array(z.array(z.number()).readonly()).readonly().default([]),
   factions: z.array(z.string()).default([]),
   speakerIndex: z.number().default(-1),
-  sliceIndexToPlayerSlot: z.array(z.number()).default([]),
-  factionIndexToPlayerSlot: z.array(z.number()).default([]),
-  seatIndexToPlayerSlot: z.array(z.number()).default([]),
+  sliceIndexToPlayerSlot: z.array(z.number().nullable()).default([]),
+  factionIndexToPlayerSlot: z.array(z.number().nullable()).default([]),
+  seatIndexToPlayerSlot: z.array(z.number().nullable()).default([]),
 });
 
 export type DraftStateSchemaType = z.infer<typeof DraftStateSchema>;
@@ -21,6 +21,10 @@ export type DraftStateSchemaType = z.infer<typeof DraftStateSchema>;
  * Persistent draft state: player choices.
  */
 export class DraftState {
+  public readonly onDraftStateChanged: TriggerableMulticastDelegate<
+    (draftState: DraftState) => void
+  > = new TriggerableMulticastDelegate<(draftState: DraftState) => void>();
+
   private readonly _namespaceId: NamespaceId;
   private readonly _data: DraftStateSchemaType;
 
@@ -53,6 +57,7 @@ export class DraftState {
   setSliceShape(sliceShape: SliceShape): this {
     this._data.sliceShape = sliceShape;
     this._save();
+    this.onDraftStateChanged.trigger(this);
     return this;
   }
 
@@ -63,6 +68,7 @@ export class DraftState {
   setSlices(slices: Array<SliceTiles>): this {
     this._data.slices = slices;
     this._save();
+    this.onDraftStateChanged.trigger(this);
     return this;
   }
 
@@ -73,6 +79,7 @@ export class DraftState {
   setFactions(factions: Array<Faction>): this {
     this._data.factions = factions.map((faction) => faction.getNsid());
     this._save();
+    this.onDraftStateChanged.trigger(this);
     return this;
   }
 
@@ -86,6 +93,7 @@ export class DraftState {
   setSpeakerIndex(speakerIndex: number): this {
     this._data.speakerIndex = speakerIndex;
     this._save();
+    this.onDraftStateChanged.trigger(this);
     return this;
   }
 
@@ -93,45 +101,36 @@ export class DraftState {
     return this._data.speakerIndex;
   }
 
-  setSliceIndexToPlayerSlot(sliceIndex: number, playerSlot: number) {
-    if (playerSlot === -1) {
-      delete this._data.sliceIndexToPlayerSlot[sliceIndex];
-    } else {
-      this._data.sliceIndexToPlayerSlot[sliceIndex] = playerSlot;
-    }
+  setSliceIndexToPlayerSlot(sliceIndex: number, playerSlot: number): this {
+    this._data.sliceIndexToPlayerSlot[sliceIndex] = playerSlot;
     this._save();
+    this.onDraftStateChanged.trigger(this);
     return this;
   }
 
-  getSliceIndexToPlayerSlot(sliceIndex: number): number | undefined {
-    return this._data.sliceIndexToPlayerSlot[sliceIndex];
+  getSliceIndexToPlayerSlot(sliceIndex: number): number {
+    return this._data.sliceIndexToPlayerSlot[sliceIndex] ?? -1;
   }
 
-  setFactionIndexToPlayerSlot(factionIndex: number, playerSlot: number) {
-    if (playerSlot === -1) {
-      delete this._data.factionIndexToPlayerSlot[factionIndex];
-    } else {
-      this._data.factionIndexToPlayerSlot[factionIndex] = playerSlot;
-    }
+  setFactionIndexToPlayerSlot(factionIndex: number, playerSlot: number): this {
+    this._data.factionIndexToPlayerSlot[factionIndex] = playerSlot;
     this._save();
+    this.onDraftStateChanged.trigger(this);
     return this;
   }
 
-  getFactionIndexToPlayerSlot(factionIndex: number): number | undefined {
-    return this._data.factionIndexToPlayerSlot[factionIndex];
+  getFactionIndexToPlayerSlot(factionIndex: number): number {
+    return this._data.factionIndexToPlayerSlot[factionIndex] ?? -1;
   }
 
-  setSeatIndexToPlayerSlot(seatIndex: number, playerSlot: number) {
-    if (playerSlot === -1) {
-      delete this._data.seatIndexToPlayerSlot[seatIndex];
-    } else {
-      this._data.seatIndexToPlayerSlot[seatIndex] = playerSlot;
-    }
+  setSeatIndexToPlayerSlot(seatIndex: number, playerSlot: number): this {
+    this._data.seatIndexToPlayerSlot[seatIndex] = playerSlot;
     this._save();
+    this.onDraftStateChanged.trigger(this);
     return this;
   }
 
-  getSeatIndexToPlayerSlot(seatIndex: number): number | undefined {
-    return this._data.seatIndexToPlayerSlot[seatIndex];
+  getSeatIndexToPlayerSlot(seatIndex: number): number {
+    return this._data.seatIndexToPlayerSlot[seatIndex] ?? -1;
   }
 }
