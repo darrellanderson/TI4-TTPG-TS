@@ -17,17 +17,26 @@ export class WrappedClickableUI extends AbstractUI {
 
   constructor(ui: AbstractUI, scale: number) {
     const size: UI_SIZE = ui.getSize();
-    size.w += BORDER_SIZE * 2 * scale;
-    size.h += BORDER_SIZE * 2 * scale;
+    size.w += BORDER_SIZE * 2 * scale + 16;
+    size.h += BORDER_SIZE * 2 * scale + 16;
 
     const child: Widget = ui.getWidget();
-    const contentButton: ContentButton = new ContentButton().setChild(child);
-    const border = new Border().setChild(contentButton);
 
-    const widget: Widget = new LayoutBox()
+    const contentButton: ContentButton = new ContentButton().setChild(child);
+    const contentBox: LayoutBox = new LayoutBox()
       .setOverrideWidth(size.w)
       .setOverrideHeight(size.h)
-      .setChild(border);
+      .setPadding(
+        BORDER_SIZE * scale,
+        BORDER_SIZE * scale,
+        BORDER_SIZE * scale,
+        BORDER_SIZE * scale
+      )
+      .setChild(contentButton);
+
+    const border = new Border().setChild(contentBox);
+
+    const widget: Widget = border;
 
     super(widget, size);
     this._contentButton = contentButton;

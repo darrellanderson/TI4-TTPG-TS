@@ -4,6 +4,7 @@ import {
   DraftStateSchema,
   DraftStateSchemaType,
 } from "./draft-state";
+import { world } from "@tabletop-playground/api";
 
 it("schema (empty)", () => {
   const state: DraftStateSchemaType = DraftStateSchema.parse({});
@@ -113,4 +114,18 @@ it("seatIndexToPlayerSlot", () => {
   expect(state.getSeatIndexToPlayerSlot(0)).toBe(1);
   state.setSeatIndexToPlayerSlot(0, -1);
   expect(state.getSeatIndexToPlayerSlot(0)).toBe(-1);
+});
+
+it("load from state where a lower index is missing", () => {
+  let state: DraftState;
+
+  // Set a non-zero index value, to make sure the zod parsing is working.
+  state = new DraftState("@test/draft-state");
+  state.setSliceIndexToPlayerSlot(3, 1);
+  expect(state.getSliceIndexToPlayerSlot(3)).toBe(1);
+
+  console.log("xxx", world.getSavedData("@test/draft-state"));
+
+  state = new DraftState("@test/draft-state");
+  expect(state.getSliceIndexToPlayerSlot(3)).toBe(1);
 });

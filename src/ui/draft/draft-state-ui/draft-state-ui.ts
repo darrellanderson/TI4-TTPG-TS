@@ -25,6 +25,14 @@ export class DraftStateUI extends AbstractUI {
       const currentSlot: number =
         draftState.getSliceIndexToPlayerSlot(sliceIndex);
       if (currentSlot === -1) {
+        // If there was a different candidate selected, clear it.
+        for (let i = 0; i < draftState.getSlices().length; i++) {
+          if (draftState.getSliceIndexToPlayerSlot(i) === playerSlot) {
+            draftState.setSliceIndexToPlayerSlot(i, -1);
+          }
+        }
+
+        // Select this candidate.
         draftState.setSliceIndexToPlayerSlot(sliceIndex, playerSlot);
       } else if (currentSlot === playerSlot) {
         draftState.setSliceIndexToPlayerSlot(sliceIndex, -1);
@@ -41,6 +49,14 @@ export class DraftStateUI extends AbstractUI {
       const currentSlot: number =
         draftState.getFactionIndexToPlayerSlot(sliceIndex);
       if (currentSlot === -1) {
+        // If there was a different candidate selected, clear it.
+        for (let i = 0; i < draftState.getFactions().length; i++) {
+          if (draftState.getFactionIndexToPlayerSlot(i) === playerSlot) {
+            draftState.setFactionIndexToPlayerSlot(i, -1);
+          }
+        }
+
+        // Select this candidate.
         draftState.setFactionIndexToPlayerSlot(sliceIndex, playerSlot);
       } else if (currentSlot === playerSlot) {
         draftState.setFactionIndexToPlayerSlot(sliceIndex, -1);
@@ -57,6 +73,14 @@ export class DraftStateUI extends AbstractUI {
       const currentSlot: number =
         draftState.getSeatIndexToPlayerSlot(sliceIndex);
       if (currentSlot === -1) {
+        // If there was a different candidate selected, clear it.
+        for (let i = 0; i < TI4.config.playerCount; i++) {
+          if (draftState.getSeatIndexToPlayerSlot(i) === playerSlot) {
+            draftState.setSeatIndexToPlayerSlot(i, -1);
+          }
+        }
+
+        // Select this candidate.
         draftState.setSeatIndexToPlayerSlot(sliceIndex, playerSlot);
       } else if (currentSlot === playerSlot) {
         draftState.setSeatIndexToPlayerSlot(sliceIndex, -1);
@@ -126,7 +150,7 @@ export class DraftStateUI extends AbstractUI {
 
     super(panel.getWidget(), panel.getSize());
 
-    draftState.onDraftStateChanged.add((): void => {
+    const update = (): void => {
       sliceButtons.forEach(
         (button: WrappedClickableUI, index: number): void => {
           const playerSlot: number =
@@ -145,6 +169,9 @@ export class DraftStateUI extends AbstractUI {
         const playerSlot: number = draftState.getSeatIndexToPlayerSlot(index);
         button.setOwningPlayerSlot(playerSlot);
       });
-    });
+    };
+
+    draftState.onDraftStateChanged.add(update);
+    update();
   }
 }

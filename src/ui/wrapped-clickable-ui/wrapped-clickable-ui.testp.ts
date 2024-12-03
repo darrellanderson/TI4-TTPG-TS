@@ -1,24 +1,23 @@
 import {
   Border,
   ScreenUIElement,
-  Text,
   Widget,
   world,
 } from "@tabletop-playground/api";
 import { AbstractUI } from "../abstract-ui/abtract-ui";
+import { MILTY_SLICE_SHAPE } from "../../lib/draft-lib/drafts/milty";
+import { SliceUI } from "../draft/slice-ui/slice-ui";
 import { WrappedClickableUI } from "./wrapped-clickable-ui";
 
-class MyAbstractUI extends AbstractUI {
-  constructor() {
-    const widget: Widget = new Text().setText("Hello");
-    super(widget, { w: 100, h: 200 });
-  }
-}
-
 function go() {
-  const innerUi: AbstractUI = new MyAbstractUI();
-  const scale: number = 1;
+  const scale: number = 3;
+  const innerUi: AbstractUI = new SliceUI(
+    [21, 22, 23, 24, 25],
+    MILTY_SLICE_SHAPE,
+    scale
+  );
   const wrappedUi = new WrappedClickableUI(innerUi, scale);
+  wrappedUi.getBorder().setColor([1, 0, 0, 1]);
   const widget: Widget = wrappedUi.getWidget();
 
   const screenUI = new ScreenUIElement();
