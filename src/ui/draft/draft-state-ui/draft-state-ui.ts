@@ -13,7 +13,7 @@ import { SliceUI } from "../slice-ui/slice-ui";
 import { WrappedClickableUI } from "../../wrapped-clickable-ui/wrapped-clickable-ui";
 import { Faction } from "lib/faction-lib/faction/faction";
 
-const SPACING: number = 4;
+const SPACING: number = 12;
 
 export class DraftStateUI extends AbstractUI {
   static _createSliceClickHandler(
