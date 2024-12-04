@@ -31,7 +31,10 @@ it("constructor", () => {
 });
 
 it("_createSliceClickHandler", () => {
-  const draftState: DraftState = new DraftState("@test/draft-state");
+  const draftState: DraftState = new DraftState("@test/draft-state").setSlices([
+    [1, 2, 3, 4, 5],
+    [6, 7, 8, 9, 10],
+  ]);
 
   const sliceIndex: number = 0;
   const handler: (button: ContentButton, player: Player) => void =
@@ -44,10 +47,23 @@ it("_createSliceClickHandler", () => {
   // Click again to clear.
   handler(new ContentButton(), new MockPlayer({ slot: 10 }));
   expect(draftState.getSliceIndexToPlayerSlot(sliceIndex)).toBe(-1);
+
+  // Select a different item, click to swap.
+  draftState.setSliceIndexToPlayerSlot(sliceIndex + 1, 10);
+  expect(draftState.getSliceIndexToPlayerSlot(sliceIndex + 1)).toBe(10);
+  expect(draftState.getSliceIndexToPlayerSlot(sliceIndex)).toBe(-1);
+  handler(new ContentButton(), new MockPlayer({ slot: 10 }));
+  expect(draftState.getSliceIndexToPlayerSlot(sliceIndex + 1)).toBe(-1);
+  expect(draftState.getSliceIndexToPlayerSlot(sliceIndex)).toBe(10);
 });
 
 it("_createFactionClickHandler", () => {
-  const draftState: DraftState = new DraftState("@test/draft-state");
+  const draftState: DraftState = new DraftState(
+    "@test/draft-state"
+  ).setFactions([
+    TI4.factionRegistry.getByNsidOrThrow("faction:base/arborec"),
+    TI4.factionRegistry.getByNsidOrThrow("faction:base/sol"),
+  ]);
 
   const sliceIndex: number = 0;
   const handler: (button: ContentButton, player: Player) => void =
@@ -60,6 +76,14 @@ it("_createFactionClickHandler", () => {
   // Click again to clear.
   handler(new ContentButton(), new MockPlayer({ slot: 10 }));
   expect(draftState.getFactionIndexToPlayerSlot(sliceIndex)).toBe(-1);
+
+  // Select a different item, click to swap.
+  draftState.setFactionIndexToPlayerSlot(sliceIndex + 1, 10);
+  expect(draftState.getFactionIndexToPlayerSlot(sliceIndex + 1)).toBe(10);
+  expect(draftState.getFactionIndexToPlayerSlot(sliceIndex)).toBe(-1);
+  handler(new ContentButton(), new MockPlayer({ slot: 10 }));
+  expect(draftState.getFactionIndexToPlayerSlot(sliceIndex + 1)).toBe(-1);
+  expect(draftState.getFactionIndexToPlayerSlot(sliceIndex)).toBe(10);
 });
 
 it("_createSeatClickHandler", () => {
@@ -76,4 +100,12 @@ it("_createSeatClickHandler", () => {
   // Click again to clear.
   handler(new ContentButton(), new MockPlayer({ slot: 10 }));
   expect(draftState.getSeatIndexToPlayerSlot(sliceIndex)).toBe(-1);
+
+  // Select a different item, click to swap.
+  draftState.setSeatIndexToPlayerSlot(sliceIndex + 1, 10);
+  expect(draftState.getSeatIndexToPlayerSlot(sliceIndex + 1)).toBe(10);
+  expect(draftState.getSeatIndexToPlayerSlot(sliceIndex)).toBe(-1);
+  handler(new ContentButton(), new MockPlayer({ slot: 10 }));
+  expect(draftState.getSeatIndexToPlayerSlot(sliceIndex + 1)).toBe(-1);
+  expect(draftState.getSeatIndexToPlayerSlot(sliceIndex)).toBe(10);
 });
