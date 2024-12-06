@@ -117,7 +117,7 @@ export class DraftStateUI extends AbstractUI {
       });
     const sliceGrid: AbstractUI = new GridUIBuilder()
       .addUIs(sliceButtons)
-      .setMaxRows(2)
+      .setMaxRows(3)
       .setSpacing(SPACING * scale)
       .build();
 

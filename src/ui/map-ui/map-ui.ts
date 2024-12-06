@@ -24,7 +24,7 @@ import {
 import { MapStringHex } from "../../lib/map-string-lib/map-string-hex";
 import { System } from "../../lib/system-lib/system/system";
 
-const HALF_HEX_W_PX: number = 50; // 50 for small screens
+const HALF_HEX_W_PX: number = 20; // 50 will fill a small screen
 const LABEL_RELATIVE_TO_HEX_SIZE: number = 0.2;
 
 const packageId: string = refPackageId;
