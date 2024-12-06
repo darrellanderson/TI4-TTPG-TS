@@ -1,6 +1,7 @@
-import { Vector } from "@tabletop-playground/api";
+import { Player, Vector, world } from "@tabletop-playground/api";
 import { HexType } from "ttpg-darrell";
 
+import { DraftState } from "../draft-state/draft-state";
 import { Faction } from "../../faction-lib/faction/faction";
 import { MapHomeSystemLocations } from "../../map-string-lib/map-home-system-locations";
 import { MapStringHex } from "../../map-string-lib/map-string-hex";
@@ -8,10 +9,57 @@ import { MapUI } from "../../../ui/map-ui/map-ui";
 import { PlayerSeatType } from "../../player-lib/player-seats/player-seats";
 import { SliceShape, SliceTiles } from "../generate-slices/generate-slices";
 
+export type MapStringAndHexToPlayerName = {
+  mapString: string;
+  hexToPlayerName: Map<HexType, string>;
+};
+
 export class DraftToMapString {
   private readonly _defaultSliceShape: SliceShape;
   private readonly _seatIndexToSliceShape: Map<number, SliceShape> = new Map();
   private readonly _seatIndexToAnchorHex: Map<number, HexType> = new Map();
+
+  static fromDraftState(draftState: DraftState): MapStringAndHexToPlayerName {
+    const seatIndexToSliceTiles: Map<number, SliceTiles> = new Map();
+    const seatIndexToFaction: Map<number, Faction> = new Map();
+    const seatIndexToPlayerName: Map<number, string> = new Map();
+
+    for (let seatIndex = 0; seatIndex < TI4.config.playerCount; seatIndex++) {
+      const playerSlot: number = draftState.getSeatIndexToPlayerSlot(seatIndex);
+      // Seat must be taken to link attributes.
+      if (playerSlot >= 0) {
+        // Slice tiles.
+        draftState.getSlices().forEach((sliceTiles: SliceTiles, sliceIndex) => {
+          if (draftState.getSliceIndexToPlayerSlot(sliceIndex) === playerSlot) {
+            seatIndexToSliceTiles.set(seatIndex, sliceTiles);
+          }
+        });
+
+        // Faction.
+        draftState.getFactions().forEach((faction: Faction, factionIndex) => {
+          if (
+            draftState.getFactionIndexToPlayerSlot(factionIndex) === playerSlot
+          ) {
+            seatIndexToFaction.set(seatIndex, faction);
+          }
+        });
+
+        // Player name.
+        const player: Player | undefined = world.getPlayerBySlot(playerSlot);
+        if (player) {
+          seatIndexToPlayerName.set(seatIndex, player.getName());
+        }
+      }
+    }
+
+    const mapStringAndHexToPlayerName: MapStringAndHexToPlayerName =
+      new DraftToMapString(draftState.getSliceShape()).buildMapString(
+        seatIndexToSliceTiles,
+        seatIndexToFaction,
+        seatIndexToPlayerName
+      );
+    return mapStringAndHexToPlayerName;
+  }
 
   constructor(sliceShape: SliceShape) {
     this._defaultSliceShape = sliceShape;
@@ -46,7 +94,7 @@ export class DraftToMapString {
     seatIndexToSliceTiles: Map<number, SliceTiles>,
     seatIndexToFaction: Map<number, Faction>,
     seatIndexToPlayerName: Map<number, string>
-  ): { mapString: string; hexToPlayerName: Map<HexType, string> } {
+  ): MapStringAndHexToPlayerName {
     const mapStringEntries: Array<string> = ["{18}"];
     const hexToPlayerName: Map<HexType, string> = new Map();
 

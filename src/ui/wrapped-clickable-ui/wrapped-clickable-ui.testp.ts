@@ -1,5 +1,6 @@
 import {
   Border,
+  Color,
   ScreenUIElement,
   Widget,
   world,
@@ -14,6 +15,7 @@ function go() {
   const innerUi: AbstractUI = new SliceUI(
     [21, 22, 23, 24, 25],
     MILTY_SLICE_SHAPE,
+    new Color(0.5, 0.5, 0.5, 1),
     scale
   );
   const wrappedUi = new WrappedClickableUI(innerUi, scale);

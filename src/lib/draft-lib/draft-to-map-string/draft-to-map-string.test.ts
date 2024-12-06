@@ -1,12 +1,17 @@
 import { MockCardHolder } from "ttpg-mock";
+
+import { DraftState } from "../draft-state/draft-state";
+import {
+  DraftToMapString,
+  MapStringAndHexToPlayerName,
+} from "./draft-to-map-string";
 import { Faction } from "../../faction-lib/faction/faction";
+import { MapHomeSystemLocations } from "../../map-string-lib/map-home-system-locations";
 import { MILTY_SLICE_SHAPE, MILTY_SLICE_SHAPE_ALT } from "../drafts/milty";
 import { SliceTiles } from "../generate-slices/generate-slices";
-import { DraftToMapString } from "./draft-to-map-string";
-import { MapHomeSystemLocations } from "../../map-string-lib/map-home-system-locations";
 
 beforeEach(() => {
-  // Create card hol
+  // Create card holder for TI4.playerSeats to use.
   for (const playerSlot of [10, 11, 12, 13, 14, 15]) {
     new MockCardHolder({
       templateMetadata: "card-holder:base/player-hand",
@@ -71,4 +76,31 @@ it("_fillMissingMapStringEntries", () => {
   entries[2] = "1";
   draftToMapString._fillMissingMapStringEntries(entries);
   expect(entries).toEqual(["{18}", "-1", "1"]);
+});
+
+it("static map string", () => {
+  const state: DraftState = new DraftState("@test/draft-state")
+    .setSliceShape(["<0,0,0>", "<1,0,-1>", "<2,0,-2>"])
+    .setSlices([
+      [1, 2],
+      [3, 4],
+      [5, 6],
+    ])
+    .setFactions(
+      ["faction:base/arborec", "faction:base/sol", "faction:pok/ul"].map(
+        (nsidName) => TI4.factionRegistry.getByNsidOrThrow(nsidName)
+      )
+    )
+    .setSpeakerIndex(2)
+    .setSliceIndexToPlayerSlot(0, 1)
+    .setFactionIndexToPlayerSlot(0, 1)
+    .setSeatIndexToPlayerSlot(0, 1);
+
+  const mapStringAndHexToPlayerName: MapStringAndHexToPlayerName =
+    DraftToMapString.fromDraftState(state);
+
+  const mapString: string = mapStringAndHexToPlayerName.mapString;
+  expect(mapString).toBe(
+    "{18} -114 -115 2 -111 -112 -113 -114 -1 -115 -1 1 -1 -111 -1 -112 -1 -113 -1 -114 -1 -1 -115 -1 -1 5 -1 -1 -111 -1 -1 -112 -1 -1 -113"
+  );
 });

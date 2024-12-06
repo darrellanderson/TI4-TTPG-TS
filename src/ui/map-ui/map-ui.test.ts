@@ -1,5 +1,6 @@
 import { MockGameObject } from "ttpg-mock";
 import { MapUI } from "./map-ui";
+import { HexType } from "ttpg-darrell";
 
 // Systems must exist for registry to know about them.
 beforeEach(() => {
@@ -28,7 +29,9 @@ it("colorTileNumberToColor (undefined)", () => {
 });
 
 it("constructor", () => {
-  const mapUI = new MapUI(1, "1 2 -1 91 -101").setHexLabel("<1,0,-1>", "label");
+  const hexToLabel: Map<HexType, string> = new Map();
+  hexToLabel.set("<1,0,-1>", "label");
+  const mapUI = new MapUI(1, "1 2 -1 91 -101", hexToLabel);
   expect(mapUI).toBeDefined();
   expect(mapUI.getSize()).toBeDefined();
   expect(mapUI.getWidget()).toBeDefined();

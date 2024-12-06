@@ -5,11 +5,13 @@ import {
   world,
 } from "@tabletop-playground/api";
 import { MapUI } from "./map-ui";
+import { HexType } from "ttpg-darrell";
 
 function go() {
   const mapString: string = "19 -110 -111 1 91";
-  const mapUI = new MapUI(1, mapString);
-  mapUI.setHexLabel("<0,0,0>", "Mecatol Rex Plus Some More Words");
+  const hexToLabel: Map<HexType, string> = new Map();
+  hexToLabel.set("<0,0,0>", "Mecatol Rex");
+  const mapUI = new MapUI(1, mapString, hexToLabel);
 
   const widget: Widget = mapUI.getWidget();
 

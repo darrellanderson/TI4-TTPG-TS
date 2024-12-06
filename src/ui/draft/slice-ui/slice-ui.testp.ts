@@ -1,5 +1,6 @@
 import {
   Border,
+  Color,
   ScreenUIElement,
   Widget,
   world,
@@ -9,8 +10,9 @@ import { SliceUI } from "./slice-ui";
 
 function go() {
   const slice: Array<number> = [91, 22, 23, 24, 25];
-  const scale: number = 1;
-  const sliceUI = new SliceUI(slice, MILTY_SLICE_SHAPE, scale);
+  const color: Color = new Color(0.5, 0.5, 0.5, 1);
+  const scale: number = 2;
+  const sliceUI = new SliceUI(slice, MILTY_SLICE_SHAPE, color, scale);
 
   const widget: Widget = sliceUI.getWidget();
 

@@ -10,8 +10,8 @@ import {
 import { Faction } from "../../../lib/faction-lib/faction/faction";
 import { AbstractUI } from "../../abstract-ui/abtract-ui";
 
-export const BOX_W: number = 220;
-export const BOX_H: number = 58;
+export const BOX_W: number = 110;
+export const BOX_H: number = 30;
 export const FONT_SIZE: number = BOX_H * 0.42;
 export const SPACING: number = BOX_H * 0.1;
 

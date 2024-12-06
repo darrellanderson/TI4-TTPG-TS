@@ -1,5 +1,7 @@
 import {
+  Border,
   Canvas,
+  Color,
   ImageWidget,
   LayoutBox,
   refPackageId,
@@ -17,7 +19,7 @@ import { SliceTiles } from "../../../lib/draft-lib/generate-slices/generate-slic
 import { System } from "../../../lib/system-lib/system/system";
 import { SystemSummary } from "../../../lib/system-lib/system/system-summary";
 
-const HALF_HEX_W_PX: number = 30;
+const HALF_HEX_W_PX: number = 40;
 const packageId: string = refPackageId;
 
 export class SliceUI extends AbstractUI {
@@ -26,6 +28,7 @@ export class SliceUI extends AbstractUI {
   constructor(
     slice: SliceTiles,
     sliceShape: ReadonlyArray<HexType>,
+    sliceColor: Color,
     scale: number
   ) {
     const halfScaledHexWidth = Math.ceil(HALF_HEX_W_PX * scale);
@@ -72,7 +75,8 @@ export class SliceUI extends AbstractUI {
     if (homePos) {
       const img = new ImageWidget()
         .setImageSize(halfScaledHexWidth * 2 + 2, halfScaledHexHeight * 2 + 2)
-        .setImage("tile/system/tile-000.png", packageId);
+        .setImage("tile/system/tile-000.png", packageId)
+        .setTintColor(sliceColor);
       canvas.addChild(
         img,
         homePos.x - halfScaledHexWidth - 1,
@@ -129,9 +133,10 @@ export class SliceUI extends AbstractUI {
       .setJustification(TextJustification.Center)
       .setTextColor([0, 0, 0, 1])
       .setText("Slice");
+    const labelBorder = new Border().setColor(sliceColor).setChild(labelText);
     const panel: Widget = new VerticalBox()
       .addChild(summaryText)
-      .addChild(labelText);
+      .addChild(labelBorder);
     const panelBox = new LayoutBox()
       .setOverrideWidth(Math.ceil(right - left))
       .setOverrideHeight(halfScaledHexHeight * 2 + 2)

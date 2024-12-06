@@ -14,6 +14,11 @@ const draftState: DraftState = new DraftState("@test/draft-state")
     [21, 22, 23, 24, 25],
     [31, 32, 33, 34, 35],
     [41, 42, 43, 44, 45],
+    [21, 22, 23, 24, 25],
+    [31, 32, 33, 34, 35],
+    [41, 42, 43, 44, 45],
+    [21, 22, 23, 24, 25],
+    [31, 32, 33, 34, 35],
   ])
   .setFactions(
     ["faction:base/arborec", "faction:base/sol", "faction:base/naalu"].map(

@@ -1,8 +1,9 @@
+import { ContentButton, Player } from "@tabletop-playground/api";
 import { MockCardHolder, MockPlayer } from "ttpg-mock";
+
 import { DraftState } from "../../../lib/draft-lib/draft-state/draft-state";
 import { DraftStateUI } from "./draft-state-ui";
 import { MILTY_SLICE_SHAPE } from "../../../lib/draft-lib/drafts/milty";
-import { ContentButton, Player } from "@tabletop-playground/api";
 
 beforeEach(() => {
   // Player seats looks for card holders.

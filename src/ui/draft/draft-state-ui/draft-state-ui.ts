@@ -1,9 +1,17 @@
-import { ContentButton, Player } from "@tabletop-playground/api";
+import { Color, ContentButton, Player } from "@tabletop-playground/api";
+import { HexType } from "ttpg-darrell";
+
 import { AbstractUI } from "../../abstract-ui/abtract-ui";
 import { DraftState } from "../../../lib/draft-lib/draft-state/draft-state";
+import {
+  DraftToMapString,
+  MapStringAndHexToPlayerName,
+} from "../../../lib/draft-lib/draft-to-map-string/draft-to-map-string";
+import { Faction } from "../../../lib/faction-lib/faction/faction";
 import { FactionUI } from "../faction-ui/faction-ui";
 import { GridUIBuilder } from "../../panel/grid-ui-builder";
 import { HorizontalUIBuilder } from "../../panel/horizontal-ui-builder";
+import { MapUI } from "../../map-ui/map-ui";
 import { SeatUI } from "../seat-ui/seat-ui";
 import {
   SliceShape,
@@ -11,7 +19,6 @@ import {
 } from "../../../lib/draft-lib/generate-slices/generate-slices";
 import { SliceUI } from "../slice-ui/slice-ui";
 import { WrappedClickableUI } from "../../wrapped-clickable-ui/wrapped-clickable-ui";
-import { Faction } from "lib/faction-lib/faction/faction";
 
 const SPACING: number = 12;
 
@@ -93,7 +100,13 @@ export class DraftStateUI extends AbstractUI {
     const sliceButtons: Array<WrappedClickableUI> = draftState
       .getSlices()
       .map((slice: SliceTiles, index: number) => {
-        const sliceUi: AbstractUI = new SliceUI(slice, sliceShape, scale);
+        const color: Color = new Color(1, 0, 0, 1);
+        const sliceUi: AbstractUI = new SliceUI(
+          slice,
+          sliceShape,
+          color,
+          scale
+        );
         const clickable = new WrappedClickableUI(sliceUi, scale);
         clickable
           .getContentButton()
@@ -104,7 +117,7 @@ export class DraftStateUI extends AbstractUI {
       });
     const sliceGrid: AbstractUI = new GridUIBuilder()
       .addUIs(sliceButtons)
-      .setMaxRows(3)
+      .setMaxRows(2)
       .setSpacing(SPACING * scale)
       .build();
 
@@ -142,8 +155,16 @@ export class DraftStateUI extends AbstractUI {
       .setSpacing(SPACING * scale)
       .build();
 
+    const mapStringAndHexToPlayerName: MapStringAndHexToPlayerName =
+      DraftToMapString.fromDraftState(draftState);
+
+    const mapString: string = mapStringAndHexToPlayerName.mapString;
+    const hexToLabel: Map<HexType, string> =
+      mapStringAndHexToPlayerName.hexToPlayerName;
+    const map: AbstractUI = new MapUI(scale, mapString, hexToLabel);
+
     const panel: AbstractUI = new HorizontalUIBuilder()
-      .addUIs([sliceGrid, factionGrid, seatGrid])
+      .addUIs([sliceGrid, factionGrid, seatGrid, map])
       .setPadding(SPACING * scale)
       .setSpacing(SPACING * scale)
       .build();

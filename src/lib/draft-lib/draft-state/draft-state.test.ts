@@ -124,8 +124,6 @@ it("load from state where a lower index is missing", () => {
   state.setSliceIndexToPlayerSlot(3, 1);
   expect(state.getSliceIndexToPlayerSlot(3)).toBe(1);
 
-  console.log("xxx", world.getSavedData("@test/draft-state"));
-
   state = new DraftState("@test/draft-state");
   expect(state.getSliceIndexToPlayerSlot(3)).toBe(1);
 });
