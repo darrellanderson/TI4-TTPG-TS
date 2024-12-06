@@ -35,10 +35,7 @@ function go() {
   console.log("xxx", mapString);
   new MapStringLoad().load(mapString);
 
-  const mapUI = new MapUI(1, mapString);
-  for (const [hex, playerName] of hexToPlayerName) {
-    mapUI.setHexLabel(hex, playerName);
-  }
+  const mapUI = new MapUI(1, mapString, hexToPlayerName);
 
   const widget: Widget = mapUI.getWidget();
 
