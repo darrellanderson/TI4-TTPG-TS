@@ -7,7 +7,7 @@ it("static getFromSystemTileNumbers", () => {
   const asText: string = SystemSummary.getFromSystemTileNumbers([
     19,
   ]).getSummary();
-  expect(asText).toEqual("1/2 (0/2)\nY");
+  expect(asText).toEqual("1/2 (0/2) Y");
 });
 
 it("constructor", () => {
@@ -82,5 +82,5 @@ it("getSummaryRaw", () => {
   });
 
   const asText: string = systemSummary.getSummary();
-  expect(asText).toEqual("112/121 (52/70)\nBR αβ L");
+  expect(asText).toEqual("112/121 (52/70) BR αβ L");
 });

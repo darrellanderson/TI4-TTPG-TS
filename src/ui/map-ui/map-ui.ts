@@ -24,12 +24,16 @@ import {
 import { MapStringHex } from "../../lib/map-string-lib/map-string-hex";
 import { System } from "../../lib/system-lib/system/system";
 
-const HALF_HEX_W_PX: number = 20; // 50 will fill a small screen
-const LABEL_RELATIVE_TO_HEX_SIZE: number = 0.2;
+const HALF_HEX_W_PX: number = 32; // 50 will fill a small screen
+const LABEL_RELATIVE_TO_HEX_SIZE: number = 0.3;
 
 const packageId: string = refPackageId;
 
 export class MapUI extends AbstractUI {
+  private readonly _mapStringIndexToImageWidget: Map<number, ImageWidget> =
+    new Map();
+  private readonly _hexToTextWidget: Map<HexType, Text> = new Map();
+
   /**
    * Get a negative tile number that will render as this player slot's color.
    *
@@ -60,6 +64,9 @@ export class MapUI extends AbstractUI {
     mapString: string,
     hexToLabel: Map<HexType, string>
   ) {
+    const _mapStringIndexToImageWidget: Map<number, ImageWidget> = new Map();
+    const _hexToTextWidget: Map<HexType, Text> = new Map();
+
     const halfScaledHexWidth: number = Math.ceil(HALF_HEX_W_PX * scale);
     const halfScaledHexHeight: number = Math.ceil(halfScaledHexWidth * 0.866);
     const scaledHex: Hex = new Hex(HEX_LAYOUT_POINTY, halfScaledHexWidth);
@@ -103,6 +110,23 @@ export class MapUI extends AbstractUI {
         halfScaledHexHeight * 2 + 2
       );
 
+      const hex: HexType = mapStringHex.indexToHex(index);
+      const pos: Vector = scaledHex.toPosition(hex);
+
+      [pos.x, pos.y] = [pos.y, -pos.x];
+      pos.x -= left;
+      pos.y -= top;
+
+      canvas.addChild(
+        img,
+        pos.x - halfScaledHexWidth - 1,
+        pos.y - halfScaledHexWidth - 1,
+        halfScaledHexWidth * 2 + 2,
+        halfScaledHexWidth * 2 + 2 // image is square, not hex sized!
+      );
+
+      _mapStringIndexToImageWidget.set(index, img);
+
       // Apply system image, or default to blank tile.
       const system: System | undefined =
         TI4.systemRegistry.getBySystemTileNumber(entry.tile);
@@ -132,25 +156,10 @@ export class MapUI extends AbstractUI {
       if (color) {
         img.setTintColor(color);
       }
-
-      const hex: HexType = mapStringHex.indexToHex(index);
-      const pos: Vector = scaledHex.toPosition(hex);
-
-      [pos.x, pos.y] = [pos.y, -pos.x];
-      pos.x -= left;
-      pos.y -= top;
-
-      canvas.addChild(
-        img,
-        pos.x - halfScaledHexWidth - 1,
-        pos.y - halfScaledHexWidth - 1,
-        halfScaledHexWidth * 2 + 2,
-        halfScaledHexWidth * 2 + 2 // image is square, not hex sized!
-      );
     });
 
     // Add labels (do after tiles so labels lay on top).
-    for (const [hex, label] of hexToLabel) {
+    for (const hex of hexToLabel.keys()) {
       const pos: Vector = scaledHex.toPosition(hex);
 
       [pos.x, pos.y] = [pos.y, -pos.x];
@@ -161,8 +170,7 @@ export class MapUI extends AbstractUI {
         .setAutoWrap(true)
         .setBold(true)
         .setFontSize(labelFontSize)
-        .setJustification(TextJustification.Center)
-        .setText(` ${label.trim()} `);
+        .setJustification(TextJustification.Center);
 
       const c: number = 0;
       const border: Widget = new Border()
@@ -181,7 +189,67 @@ export class MapUI extends AbstractUI {
         halfScaledHexWidth * 2 + 2,
         halfScaledHexWidth * 2 + 2 // image is square, not hex sized!
       );
+
+      _hexToTextWidget.set(hex, labelText);
     }
     super(canvas, size);
+
+    this._hexToTextWidget = _hexToTextWidget;
+    this._mapStringIndexToImageWidget = _mapStringIndexToImageWidget;
+
+    this.update(mapString, hexToLabel);
+  }
+
+  update(mapString: string, hexToLabel: Map<HexType, string>): void {
+    const entries: Array<MapStringEntry> = new MapStringParser().parseOrThrow(
+      mapString
+    );
+
+    entries.forEach((entry: MapStringEntry, index: number) => {
+      // Update system image.
+      const img: ImageWidget | undefined =
+        this._mapStringIndexToImageWidget.get(index);
+      if (img) {
+        // Apply system image, or default to blank tile.
+        const system: System | undefined =
+          TI4.systemRegistry.getBySystemTileNumber(entry.tile);
+        if (system && system.isHyperlane()) {
+          // Cannot rotate images, use a gray tile for hyperlanes.
+          const c = 0.03;
+          img
+            .setImage("tile/system/tile-000.png", packageId)
+            .setTintColor([c, c, c, 1]);
+        } else if (system) {
+          img.setImage(system.getImg(), system.getImgPackageId());
+        } else {
+          img.setImage("tile/system/tile-000.png", packageId);
+        }
+
+        // Faction home systems might not exist in the world (yet),
+        // systemRegistry only knows existing systems.
+        // Look up faction by home system.
+        const faction: Faction | undefined =
+          TI4.factionRegistry.getByHomeSystemTileNumber(entry.tile);
+        if (faction) {
+          img.setImage(faction.getHomeImg(), faction.getHomeImgPackageId());
+        }
+
+        // Apply tint color.
+        const color: Color | undefined = MapUI.colorTileNumberToColor(
+          entry.tile
+        );
+        if (color) {
+          img.setTintColor(color);
+        } else {
+          img.setTintColor([1, 1, 1, 1]);
+        }
+      }
+    });
+
+    // Update label text.
+    this._hexToTextWidget.forEach((labelText: Text, hex: HexType) => {
+      const label: string = hexToLabel.get(hex) ?? "";
+      labelText.setText(`${label.trim()}`);
+    });
   }
 }

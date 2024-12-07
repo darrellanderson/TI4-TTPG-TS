@@ -103,15 +103,14 @@ export class SystemSummary {
   getSummary(): string {
     const raw: SystemSummaryType = this.getSummaryRaw();
 
-    const resInf: string = [
+    return [
       `${raw.resources}/${raw.influence}`,
       `(${raw.optResources}/${raw.optInfluence})`,
-    ].join(" ");
-
-    const attrs: string = [raw.techs, raw.wormholes, raw.legendary]
+      raw.techs,
+      raw.wormholes,
+      raw.legendary,
+    ]
       .filter((x) => x.length > 0)
       .join(" ");
-
-    return [resInf, attrs].join("\n");
   }
 }

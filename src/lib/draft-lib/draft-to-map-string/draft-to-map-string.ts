@@ -7,6 +7,7 @@ import { MapHomeSystemLocations } from "../../map-string-lib/map-home-system-loc
 import { MapStringHex } from "../../map-string-lib/map-string-hex";
 import { MapUI } from "../../../ui/map-ui/map-ui";
 import { PlayerSeatType } from "../../player-lib/player-seats/player-seats";
+import { SeatUI } from "../../../ui/draft/seat-ui/seat-ui";
 import { SliceShape, SliceTiles } from "../generate-slices/generate-slices";
 
 export type MapStringAndHexToPlayerName = {
@@ -49,6 +50,11 @@ export class DraftToMapString {
         if (player) {
           seatIndexToPlayerName.set(seatIndex, player.getName());
         }
+      } else {
+        // Unclaimed seat, use speaker order as label.
+        const speakerIndex: number = draftState.getSpeakerIndex();
+        const label: string = SeatUI._getLabelOrThrow(seatIndex, speakerIndex);
+        seatIndexToPlayerName.set(seatIndex, label);
       }
     }
 

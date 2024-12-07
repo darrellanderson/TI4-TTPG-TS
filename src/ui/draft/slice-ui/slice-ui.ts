@@ -8,7 +8,6 @@ import {
   Text,
   TextJustification,
   Vector,
-  VerticalAlignment,
   VerticalBox,
   Widget,
 } from "@tabletop-playground/api";
@@ -115,11 +114,10 @@ export class SliceUI extends AbstractUI {
       }
     });
 
-    // Add label (home system location).
+    // Add label (below slice).
     const summaryValue: string =
       SystemSummary.getFromSystemTileNumbers(slice).getSummary();
-
-    const fontSize: number = halfScaledHexHeight * 0.25;
+    const fontSize: number = halfScaledHexHeight * 0.5;
     const summaryText: Text = new Text()
       .setBold(true)
       .setFontSize(fontSize)
@@ -133,24 +131,17 @@ export class SliceUI extends AbstractUI {
       .setJustification(TextJustification.Center)
       .setTextColor([0, 0, 0, 1])
       .setText("Slice");
-    const labelBorder = new Border().setColor(sliceColor).setChild(labelText);
     const panel: Widget = new VerticalBox()
       .addChild(summaryText)
-      .addChild(labelBorder);
-    const panelBox = new LayoutBox()
-      .setOverrideWidth(Math.ceil(right - left))
-      .setOverrideHeight(halfScaledHexHeight * 2 + 2)
-      .setVerticalAlignment(VerticalAlignment.Center)
+      .addChild(labelText);
+    const panelBorder: Widget = new Border()
+      .setColor(sliceColor)
       .setChild(panel);
-    if (homePos) {
-      canvas.addChild(
-        panelBox,
-        0,
-        homePos.y - halfScaledHexHeight - 1,
-        Math.ceil(right - left),
-        halfScaledHexHeight * 2 + 2
-      );
-    }
+    const labelWidth: number = Math.ceil(right - left);
+    const labelHeight: number = Math.ceil(fontSize * 4);
+    const labelY = Math.floor(bottom - top - labelHeight * 0.5);
+    canvas.addChild(panelBorder, 0, labelY, labelWidth, labelHeight);
+    bottom += labelHeight * 0.5;
 
     const w: number = Math.ceil(right - left);
     const h: number = Math.ceil(bottom - top);

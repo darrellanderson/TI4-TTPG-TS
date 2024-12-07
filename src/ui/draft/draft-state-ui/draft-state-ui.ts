@@ -157,11 +157,10 @@ export class DraftStateUI extends AbstractUI {
 
     const mapStringAndHexToPlayerName: MapStringAndHexToPlayerName =
       DraftToMapString.fromDraftState(draftState);
-
     const mapString: string = mapStringAndHexToPlayerName.mapString;
     const hexToLabel: Map<HexType, string> =
       mapStringAndHexToPlayerName.hexToPlayerName;
-    const map: AbstractUI = new MapUI(scale, mapString, hexToLabel);
+    const map: MapUI = new MapUI(scale, mapString, hexToLabel);
 
     const panel: AbstractUI = new HorizontalUIBuilder()
       .addUIs([sliceGrid, factionGrid, seatGrid, map])
@@ -190,6 +189,13 @@ export class DraftStateUI extends AbstractUI {
         const playerSlot: number = draftState.getSeatIndexToPlayerSlot(index);
         button.setOwningPlayerSlot(playerSlot);
       });
+
+      const mapStringAndHexToPlayerName: MapStringAndHexToPlayerName =
+        DraftToMapString.fromDraftState(draftState);
+      const mapString: string = mapStringAndHexToPlayerName.mapString;
+      const hexToLabel: Map<HexType, string> =
+        mapStringAndHexToPlayerName.hexToPlayerName;
+      map.update(mapString, hexToLabel);
     };
 
     draftState.onDraftStateChanged.add(update);
