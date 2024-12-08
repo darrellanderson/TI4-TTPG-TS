@@ -17,6 +17,8 @@ export abstract class AbstractUI {
   private readonly _height: number = 0;
 
   constructor(widget: Widget, size: UI_SIZE) {
+    // Place the widget inside a sized layout box, some widgets may render
+    // incorrectly without this when used in a ContentButton (e.g. Canvas).
     this._widget = new LayoutBox()
       .setOverrideWidth(size.w)
       .setOverrideHeight(size.h)

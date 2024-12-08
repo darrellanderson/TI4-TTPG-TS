@@ -1,5 +1,6 @@
-import { Canvas, LayoutBox, Widget } from "@tabletop-playground/api";
-import { AbstractUI, UI_SIZE } from "../abstract-ui/abtract-ui";
+import { AbstractUI } from "../abstract-ui/abtract-ui";
+import { VerticalUIBuilder } from "./vertical-ui-builder";
+import { HorizontalUIBuilder } from "./horizontal-ui-builder";
 
 /**
  * Requires all entries be the same size.
@@ -32,42 +33,26 @@ export class GridUIBuilder {
 
   build(): AbstractUI {
     const numCols: number = Math.ceil(this._uis.length / this._maxRows);
-    const numRows: number = Math.min(this._maxRows, this._uis.length);
 
-    let entrySize: UI_SIZE = { w: 0, h: 0 };
-    const entry: AbstractUI | undefined = this._uis[0];
-    if (entry) {
-      entrySize = entry.getSize();
-    }
-    const gridSize: UI_SIZE = {
-      w:
-        entrySize.w * numCols +
-        this._spacing * (numCols - 1) +
-        this._padding * 2,
-      h:
-        entrySize.h * numRows +
-        this._spacing * (numRows - 1) +
-        this._padding * 2,
-    };
+    const rows: Array<HorizontalUIBuilder> = [];
 
-    const canvas: Canvas = new Canvas();
-    const canvasBox: Widget = new LayoutBox()
-      .setOverrideWidth(gridSize.w)
-      .setOverrideHeight(gridSize.h)
-      .setChild(canvas);
     this._uis.forEach((entry: AbstractUI, index: number) => {
       const col: number = index % numCols;
-      const row: number = Math.floor(index / numCols);
-      const entrySize: UI_SIZE = entry.getSize();
-      const x: number = col * (entrySize.w + this._spacing) + this._padding;
-      const y: number = row * (entrySize.h + this._spacing) + this._padding;
-      canvas.addChild(entry.getWidget(), x, y, entrySize.w, entrySize.h);
+      let currentRow: HorizontalUIBuilder | undefined = rows[rows.length - 1];
+      if (currentRow === undefined || col === 0) {
+        currentRow = new HorizontalUIBuilder().setSpacing(this._spacing);
+        rows.push(currentRow);
+      }
+      currentRow.addUIs([entry]);
     });
 
-    return new (class GridUI extends AbstractUI {
-      constructor() {
-        super(canvasBox, gridSize);
-      }
-    })();
+    const rowAsUis: Array<AbstractUI> = rows.map((row: HorizontalUIBuilder) =>
+      row.build()
+    );
+    return new VerticalUIBuilder()
+      .setPadding(this._padding)
+      .setSpacing(this._spacing)
+      .addUIs(rowAsUis)
+      .build();
   }
 }

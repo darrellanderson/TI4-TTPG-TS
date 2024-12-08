@@ -1,7 +1,7 @@
 import {
-  Canvas,
   HorizontalAlignment,
   LayoutBox,
+  VerticalBox,
   Widget,
 } from "@tabletop-playground/api";
 import { AbstractUI, UI_SIZE } from "../abstract-ui/abtract-ui";
@@ -38,51 +38,38 @@ export class VerticalUIBuilder {
   }
 
   build(): AbstractUI {
-    // Calculate size while laying out entries.
-    let nextY = this._padding;
+    const panel: VerticalBox = new VerticalBox()
+      .setChildDistance(this._spacing)
+      .setHorizontalAlignment(this._horizontalAligntment);
+    const panelBox: Widget = new LayoutBox()
+      .setPadding(
+        this._padding,
+        this._padding,
+        this._padding,
+        this._padding - 1 // -1 to prevent scrollbar
+      )
+      .setChild(panel);
+
+    // Calculate size while adding entries.
     let maxWidth = 0;
-
-    this._uis.forEach((entry: AbstractUI) => {
-      const entrySize: UI_SIZE = entry.getSize();
-      maxWidth = Math.max(maxWidth, entrySize.w);
-    });
-
-    const canvas: Canvas = new Canvas();
+    let height = 0; // add padding later
     this._uis.forEach((entry: AbstractUI, index: number) => {
       const entrySize: UI_SIZE = entry.getSize();
+      maxWidth = Math.max(maxWidth, entrySize.w);
       if (index > 0) {
-        nextY += this._spacing;
+        height += this._spacing;
       }
-
-      let left: number = 0;
-      if (this._horizontalAligntment === HorizontalAlignment.Center) {
-        left = (maxWidth - entrySize.w) / 2;
-      } else if (this._horizontalAligntment === HorizontalAlignment.Right) {
-        left = maxWidth - entrySize.w;
-      }
-
-      canvas.addChild(
-        entry.getWidget(),
-        this._padding + left,
-        nextY,
-        entrySize.w,
-        entrySize.h
-      );
-
-      nextY += entrySize.h;
+      height += entrySize.h;
+      panel.addChild(entry.getWidget());
     });
     const panelSize: UI_SIZE = {
       w: maxWidth + this._padding * 2,
-      h: nextY + this._padding,
+      h: height + this._padding * 2,
     };
 
-    const canvasBox: Widget = new LayoutBox()
-      .setOverrideWidth(panelSize.w)
-      .setOverrideHeight(panelSize.h)
-      .setChild(canvas);
     return new (class HorizontalUI extends AbstractUI {
       constructor() {
-        super(canvasBox, panelSize);
+        super(panelBox, panelSize);
       }
     })();
   }
