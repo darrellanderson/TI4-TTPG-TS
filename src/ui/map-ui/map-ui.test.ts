@@ -29,13 +29,16 @@ it("colorTileNumberToColor (undefined)", () => {
 });
 
 it("constructor, update", () => {
+  const mapString: string = "1 2 -1 91 -101";
   const hexToLabel: Map<HexType, string> = new Map();
+  const scale: number = 1;
+
   hexToLabel.set("<1,0,-1>", "label");
-  const mapUI = new MapUI(1, "1 2 -1 91 -101", hexToLabel);
+  const mapUI = new MapUI(mapString, hexToLabel, scale);
   expect(mapUI).toBeDefined();
   expect(mapUI.getSize()).toBeDefined();
   expect(mapUI.getWidget()).toBeDefined();
 
   const updatedHexToLabel: Map<HexType, string> = new Map();
-  mapUI.update("1 2 -1 91 -101", updatedHexToLabel);
+  mapUI.update(mapString, updatedHexToLabel);
 });

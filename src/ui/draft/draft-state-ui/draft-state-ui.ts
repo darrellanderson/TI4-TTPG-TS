@@ -160,7 +160,7 @@ export class DraftStateUI extends AbstractUI {
     const mapString: string = mapStringAndHexToPlayerName.mapString;
     const hexToLabel: Map<HexType, string> =
       mapStringAndHexToPlayerName.hexToPlayerName;
-    const map: MapUI = new MapUI(scale, mapString, hexToLabel);
+    const map: MapUI = new MapUI(mapString, hexToLabel, scale);
 
     const panel: AbstractUI = new HorizontalUIBuilder()
       .addUIs([sliceGrid, factionGrid, seatGrid, map])

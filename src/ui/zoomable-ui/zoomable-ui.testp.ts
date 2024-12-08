@@ -4,18 +4,24 @@ import {
   Widget,
   world,
 } from "@tabletop-playground/api";
-import { MapUI } from "./map-ui";
 import { HexType } from "ttpg-darrell";
+
+import { MapUI } from "../map-ui/map-ui";
+import { CreateZoomedUiType, ZoomableUI } from "./zoomable-ui";
 
 function go() {
   const mapString: string = "19 -110 -111 1 91";
   const hexToLabel: Map<HexType, string> = new Map();
   const scale: number = 1;
+  const mapUi = new MapUI(mapString, hexToLabel, scale);
 
-  hexToLabel.set("<0,0,0>", "Mecatol Rex");
-  const mapUI = new MapUI(mapString, hexToLabel, scale);
+  const createZoomableUI: CreateZoomedUiType = (scale: number) => {
+    return new MapUI(mapString, hexToLabel, scale * 2);
+  };
 
-  const widget: Widget = mapUI.getWidget();
+  const zoomableUi = new ZoomableUI(mapUi, scale, createZoomableUI);
+
+  const widget: Widget = zoomableUi.getWidget();
 
   const screenUI = new ScreenUIElement();
   screenUI.positionX = 0.5;
@@ -23,8 +29,8 @@ function go() {
   screenUI.relativePositionX = true;
   screenUI.relativePositionY = true;
 
-  screenUI.width = mapUI.getSize().w + 4; // border
-  screenUI.height = mapUI.getSize().h + 4;
+  screenUI.width = zoomableUi.getSize().w + 4; // border
+  screenUI.height = zoomableUi.getSize().h + 4;
   screenUI.relativeWidth = false;
   screenUI.relativeHeight = false;
 

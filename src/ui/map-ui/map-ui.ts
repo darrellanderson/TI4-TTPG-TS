@@ -60,9 +60,9 @@ export class MapUI extends AbstractUI {
   }
 
   constructor(
-    scale: number,
     mapString: string,
-    hexToLabel: Map<HexType, string>
+    hexToLabel: Map<HexType, string>,
+    scale: number
   ) {
     const _mapStringIndexToImageWidget: Map<number, ImageWidget> = new Map();
     const _hexToTextWidget: Map<HexType, Text> = new Map();
