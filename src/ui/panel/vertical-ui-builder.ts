@@ -1,4 +1,9 @@
-import { Canvas, LayoutBox, Widget } from "@tabletop-playground/api";
+import {
+  Canvas,
+  HorizontalAlignment,
+  LayoutBox,
+  Widget,
+} from "@tabletop-playground/api";
 import { AbstractUI, UI_SIZE } from "../abstract-ui/abtract-ui";
 
 /**
@@ -6,11 +11,19 @@ import { AbstractUI, UI_SIZE } from "../abstract-ui/abtract-ui";
  */
 export class VerticalUIBuilder {
   private readonly _uis: Array<AbstractUI> = [];
+  private _horizontalAligntment: HorizontalAlignment = HorizontalAlignment.Left;
   private _padding: number = 0;
   private _spacing: number = 0;
 
   addUIs(uis: Array<AbstractUI>): VerticalUIBuilder {
     this._uis.push(...uis);
+    return this;
+  }
+
+  setHorizontalAlignment(
+    horizontalAlignment: HorizontalAlignment
+  ): VerticalUIBuilder {
+    this._horizontalAligntment = horizontalAlignment;
     return this;
   }
 
@@ -29,17 +42,28 @@ export class VerticalUIBuilder {
     let nextY = this._padding;
     let maxWidth = 0;
 
+    this._uis.forEach((entry: AbstractUI) => {
+      const entrySize: UI_SIZE = entry.getSize();
+      maxWidth = Math.max(maxWidth, entrySize.w);
+    });
+
     const canvas: Canvas = new Canvas();
     this._uis.forEach((entry: AbstractUI, index: number) => {
       const entrySize: UI_SIZE = entry.getSize();
       if (index > 0) {
         nextY += this._spacing;
       }
-      maxWidth = Math.max(maxWidth, entrySize.w);
+
+      let left: number = 0;
+      if (this._horizontalAligntment === HorizontalAlignment.Center) {
+        left = (maxWidth - entrySize.w) / 2;
+      } else if (this._horizontalAligntment === HorizontalAlignment.Right) {
+        left = maxWidth - entrySize.w;
+      }
 
       canvas.addChild(
         entry.getWidget(),
-        this._padding,
+        this._padding + left,
         nextY,
         entrySize.w,
         entrySize.h

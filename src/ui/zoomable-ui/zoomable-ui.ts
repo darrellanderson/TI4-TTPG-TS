@@ -1,5 +1,6 @@
 import {
   Button,
+  HorizontalAlignment,
   Player,
   PlayerPermission,
   ScreenUIElement,
@@ -67,9 +68,11 @@ export class ZoomableUI extends AbstractUI {
   ) {
     // Create zoom button, place below the clickable widget.
     const zoomButtonUi: ButtonUI = new ButtonUI(scale);
+    zoomButtonUi.getButton().setText("Zoom");
 
     const panel: AbstractUI = new VerticalUIBuilder()
       .addUIs([unzoomedUi, zoomButtonUi])
+      .setHorizontalAlignment(HorizontalAlignment.Center)
       .setSpacing(SPACING * scale)
       .build();
 

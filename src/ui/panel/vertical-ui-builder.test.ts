@@ -1,4 +1,4 @@
-import { Text, Widget } from "@tabletop-playground/api";
+import { HorizontalAlignment, Text, Widget } from "@tabletop-playground/api";
 import { AbstractUI } from "../abstract-ui/abtract-ui";
 import { VerticalUIBuilder } from "./vertical-ui-builder";
 
@@ -59,4 +59,25 @@ it("build 2 with padding", () => {
     .build();
   expect(abstractUi.getWidget()).toBeDefined();
   expect(abstractUi.getSize()).toEqual({ w: 11, h: 24 });
+});
+
+it("vertical alignment: left", () => {
+  new VerticalUIBuilder()
+    .addUIs([new MyAbstractUI(), new MyAbstractUI()])
+    .setHorizontalAlignment(HorizontalAlignment.Left)
+    .build();
+});
+
+it("vertical alignment: center", () => {
+  new VerticalUIBuilder()
+    .addUIs([new MyAbstractUI(), new MyAbstractUI()])
+    .setHorizontalAlignment(HorizontalAlignment.Center)
+    .build();
+});
+
+it("vertical alignment: right", () => {
+  new VerticalUIBuilder()
+    .addUIs([new MyAbstractUI(), new MyAbstractUI()])
+    .setHorizontalAlignment(HorizontalAlignment.Right)
+    .build();
 });

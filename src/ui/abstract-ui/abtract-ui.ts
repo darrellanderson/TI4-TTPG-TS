@@ -1,4 +1,4 @@
-import { Widget } from "@tabletop-playground/api";
+import { LayoutBox, Widget } from "@tabletop-playground/api";
 
 export type UI_SIZE = {
   w: number;
@@ -17,7 +17,10 @@ export abstract class AbstractUI {
   private readonly _height: number = 0;
 
   constructor(widget: Widget, size: UI_SIZE) {
-    this._widget = widget;
+    this._widget = new LayoutBox()
+      .setOverrideWidth(size.w)
+      .setOverrideHeight(size.h)
+      .setChild(widget);
     this._width = size.w;
     this._height = size.h;
   }
