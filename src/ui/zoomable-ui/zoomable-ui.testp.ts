@@ -8,6 +8,7 @@ import { HexType } from "ttpg-darrell";
 
 import { MapUI } from "../map-ui/map-ui";
 import { CreateZoomedUiType, ZoomableUI } from "./zoomable-ui";
+import { AbstractUI } from "ui/abstract-ui/abtract-ui";
 
 function go() {
   const mapString: string = "19 -110 -111 1 91";
@@ -15,12 +16,12 @@ function go() {
   const scale: number = 1;
   const mapUi = new MapUI(mapString, hexToLabel, scale);
 
-  const createZoomableUI: CreateZoomedUiType = (scale: number) => {
+  const createZoomedUI: CreateZoomedUiType = (scale: number): AbstractUI => {
+    console.log("createZoomedUI", scale);
     return new MapUI(mapString, hexToLabel, scale * 2);
   };
 
-  const zoomableUi = new ZoomableUI(mapUi, scale, createZoomableUI);
-
+  const zoomableUi = new ZoomableUI(mapUi, scale, createZoomedUI);
   const widget: Widget = zoomableUi.getWidget();
 
   const screenUI = new ScreenUIElement();

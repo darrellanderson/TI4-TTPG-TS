@@ -35,7 +35,7 @@ function go() {
   console.log("xxx", mapString);
   new MapStringLoad().load(mapString);
 
-  const mapUI = new MapUI(1, mapString, hexToPlayerName);
+  const mapUI = new MapUI(mapString, hexToPlayerName, 1);
 
   const widget: Widget = mapUI.getWidget();
 

@@ -46,6 +46,8 @@ export class ZoomableUI extends AbstractUI {
       screenUiElement.positionY = 0.5;
       screenUiElement.relativePositionX = true;
       screenUiElement.relativePositionY = true;
+      screenUiElement.relativeWidth = false;
+      screenUiElement.relativeHeight = false;
       screenUiElement.width = clickableUi.getSize().w;
       screenUiElement.height = clickableUi.getSize().h;
       screenUiElement.players = new PlayerPermission().addPlayer(player);
