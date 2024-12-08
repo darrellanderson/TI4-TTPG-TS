@@ -10,6 +10,9 @@ import { AbstractUI, UI_SIZE } from "../abstract-ui/abtract-ui";
 
 export const BORDER_SIZE: number = 4;
 
+/**
+ * Wrap an AbstractUI inside a ContentButton.
+ */
 export class WrappedClickableUI extends AbstractUI {
   private readonly _contentButton: ContentButton;
   private readonly _border: Border = new Border();

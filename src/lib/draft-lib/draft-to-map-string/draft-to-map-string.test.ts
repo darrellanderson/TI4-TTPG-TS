@@ -1,4 +1,4 @@
-import { MockCardHolder } from "ttpg-mock";
+import { MockCardHolder, MockPlayer } from "ttpg-mock";
 
 import { DraftState } from "../draft-state/draft-state";
 import {
@@ -79,6 +79,8 @@ it("_fillMissingMapStringEntries", () => {
 });
 
 it("static map string", () => {
+  new MockPlayer({ name: "MyName", slot: 1 });
+
   const state: DraftState = new DraftState("@test/draft-state")
     .setSliceShape(["<0,0,0>", "<1,0,-1>", "<2,0,-2>"])
     .setSlices([
