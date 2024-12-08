@@ -14,14 +14,14 @@ function go() {
   const mapString: string = "19 -110 -111 1 91";
   const hexToLabel: Map<HexType, string> = new Map();
   const scale: number = 1;
-  const mapUi = new MapUI(mapString, hexToLabel, scale);
+  const mapUi: AbstractUI = new MapUI(mapString, hexToLabel, scale);
 
   const createZoomedUI: CreateZoomedUiType = (scale: number): AbstractUI => {
     console.log("createZoomedUI", scale);
-    return new MapUI(mapString, hexToLabel, scale * 2);
+    return new MapUI(mapString, hexToLabel, scale * 3);
   };
 
-  const zoomableUi = new ZoomableUI(mapUi, scale, createZoomedUI);
+  const zoomableUi: AbstractUI = new ZoomableUI(mapUi, scale, createZoomedUI);
   const widget: Widget = zoomableUi.getWidget();
 
   const screenUI = new ScreenUIElement();
