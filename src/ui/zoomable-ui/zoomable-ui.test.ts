@@ -1,4 +1,4 @@
-import { Button, Player, ScreenUIElement } from "@tabletop-playground/api";
+import { Button, Player } from "@tabletop-playground/api";
 import { AbstractUI } from "../abstract-ui/abtract-ui";
 import { ButtonUI } from "../button-ui/button-ui";
 import { ZoomableUI } from "./zoomable-ui";
@@ -24,13 +24,11 @@ it("_getOnZoomOpenHandler", () => {
   );
 });
 
-it("_getOnZoomOpenHandler", () => {
+it("_getOnZoomClosedHandler", () => {
   const unzoomedUI: AbstractUI = new ButtonUI(1);
   const scale: number = 1;
   const createZoomedUI: () => AbstractUI = () => new ButtonUI(1);
 
   const zoomableUI = new ZoomableUI(unzoomedUI, scale, createZoomedUI);
-
-  const screenUiElement = new ScreenUIElement();
-  zoomableUI._getOnZoomClosedHandler(screenUiElement)();
+  zoomableUI._getOnZoomClosedHandler();
 });

@@ -117,7 +117,7 @@ export class DraftStateUI extends AbstractUI {
           );
 
         const createZoomedUi = (): AbstractUI => {
-          return new SliceUI(slice, sliceShape, color, scale * 3);
+          return new SliceUI(slice, sliceShape, color, scale * 4);
         };
         const zoomableSliceButton = new ZoomableUI(
           clickable,

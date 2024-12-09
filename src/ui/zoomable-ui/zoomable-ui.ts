@@ -1,5 +1,6 @@
 import {
   Button,
+  ContentButton,
   HorizontalAlignment,
   Player,
   PlayerPermission,
@@ -16,14 +17,22 @@ const SPACING: number = 12;
 
 export type CreateZoomedUiType = (scale: number) => AbstractUI;
 
+const __playerSlotToZoomedScreenUiElement: Map<number, ScreenUIElement> =
+  new Map();
+
 /**
  * Create a new UI containing the given UI and adding a zoom button.
  * Zooming calls the given function to create a new UI.
  */
 export class ZoomableUI extends AbstractUI {
-  _getOnZoomClosedHandler(screenUiElement: ScreenUIElement): () => void {
-    return (): void => {
-      world.removeScreenUIElement(screenUiElement);
+  _getOnZoomClosedHandler(): (button: ContentButton, player: Player) => void {
+    return (_button: ContentButton, player: Player): void => {
+      const screenUiElement: ScreenUIElement | undefined =
+        __playerSlotToZoomedScreenUiElement.get(player.getSlot());
+      if (screenUiElement !== undefined) {
+        __playerSlotToZoomedScreenUiElement.delete(player.getSlot());
+        world.removeScreenUIElement(screenUiElement);
+      }
     };
   }
 
@@ -32,6 +41,14 @@ export class ZoomableUI extends AbstractUI {
     scale: number
   ): (button: Button, player: Player) => void {
     return (_button: Button, player: Player): void => {
+      // Remove any existing zoomed UI for this player.
+      const existingScreenUiElement: ScreenUIElement | undefined =
+        __playerSlotToZoomedScreenUiElement.get(player.getSlot());
+      if (existingScreenUiElement !== undefined) {
+        world.removeScreenUIElement(existingScreenUiElement);
+        __playerSlotToZoomedScreenUiElement.delete(player.getSlot());
+      }
+
       // Display zoomed UI to player.
       // Wrap in a clickable to hide it.
       const zoomedUi: AbstractUI = createZoomedUI(scale);
@@ -55,9 +72,14 @@ export class ZoomableUI extends AbstractUI {
       screenUiElement.widget = clickableUi.getWidget();
       world.addScreenUI(screenUiElement);
 
+      __playerSlotToZoomedScreenUiElement.set(
+        player.getSlot(),
+        screenUiElement
+      );
+
       clickableUi
         .getContentButton()
-        .onClicked.add(this._getOnZoomClosedHandler(screenUiElement));
+        .onClicked.add(this._getOnZoomClosedHandler());
     };
   }
 
