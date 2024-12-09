@@ -23,6 +23,9 @@ const __playerSlotToZoomedScreenUiElement: Map<number, ScreenUIElement> =
 /**
  * Create a new UI containing the given UI and adding a zoom button.
  * Zooming calls the given function to create a new UI.
+ *
+ * Each player can only have one zoomed UI at a time, zomming a new UI will
+ * close any existing one.
  */
 export class ZoomableUI extends AbstractUI {
   _getOnZoomClosedHandler(): (button: ContentButton, player: Player) => void {

@@ -19,7 +19,7 @@ import {
 } from "../../../lib/draft-lib/generate-slices/generate-slices";
 import { SliceUI } from "../slice-ui/slice-ui";
 import { WrappedClickableUI } from "../../wrapped-clickable-ui/wrapped-clickable-ui";
-import { ZoomableUI } from "ui/zoomable-ui/zoomable-ui";
+import { ZoomableUI } from "../../zoomable-ui/zoomable-ui";
 
 const SPACING: number = 12;
 
