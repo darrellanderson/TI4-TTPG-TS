@@ -23,14 +23,24 @@ export class WrappedClickableUI extends AbstractUI {
   constructor(ui: AbstractUI, scale: number) {
     const borderWidth: number = Math.ceil(BORDER_WIDTH * scale);
 
+    // Add padding to inner UI before adding ContentButton.
+    const innerSize: UI_SIZE = {
+      w: ui.getSize().w + borderWidth * 2,
+      h: ui.getSize().h + borderWidth * 2,
+    };
+    const innerBox: Widget = new LayoutBox()
+      .setOverrideWidth(innerSize.w)
+      .setOverrideHeight(innerSize.h)
+      .setHorizontalAlignment(HorizontalAlignment.Center)
+      .setVerticalAlignment(VerticalAlignment.Center)
+      .setChild(ui.getWidget());
+
     // Place inner UI insdie a ContentButton.  ContentButton adds 4 px padding.
     const contentButtonSize: UI_SIZE = {
-      w: ui.getSize().w + 8,
-      h: ui.getSize().h + 8,
+      w: innerSize.w + 8,
+      h: innerSize.h + 8,
     };
-    const contentButton: ContentButton = new ContentButton().setChild(
-      ui.getWidget()
-    );
+    const contentButton: ContentButton = new ContentButton().setChild(innerBox);
 
     // Place inside an unsided LayoutBox with fixed padding.
     const borderSize: UI_SIZE = {
