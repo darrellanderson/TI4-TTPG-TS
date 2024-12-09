@@ -40,14 +40,14 @@ export class GridUIBuilder {
       const col: number = index % numCols;
       let currentRow: HorizontalUIBuilder | undefined = rows[rows.length - 1];
       if (currentRow === undefined || col === 0) {
-        currentRow = new HorizontalUIBuilder().setSpacing(this._spacing);
+        currentRow = new HorizontalUIBuilder();
         rows.push(currentRow);
       }
       currentRow.addUIs([entry]);
     });
 
     const rowAsUis: Array<AbstractUI> = rows.map((row: HorizontalUIBuilder) =>
-      row.build()
+      row.setSpacing(this._spacing).build()
     );
     return new VerticalUIBuilder()
       .setPadding(this._padding)

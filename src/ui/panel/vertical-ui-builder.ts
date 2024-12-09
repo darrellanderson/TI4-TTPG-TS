@@ -1,6 +1,7 @@
 import {
   HorizontalAlignment,
   LayoutBox,
+  VerticalAlignment,
   VerticalBox,
   Widget,
 } from "@tabletop-playground/api";
@@ -41,14 +42,6 @@ export class VerticalUIBuilder {
     const panel: VerticalBox = new VerticalBox()
       .setChildDistance(this._spacing)
       .setHorizontalAlignment(this._horizontalAligntment);
-    const panelBox: Widget = new LayoutBox()
-      .setPadding(
-        this._padding,
-        this._padding,
-        this._padding,
-        this._padding - 1 // -1 to prevent scrollbar
-      )
-      .setChild(panel);
 
     // Calculate size while adding entries.
     let maxWidth = 0;
@@ -66,6 +59,14 @@ export class VerticalUIBuilder {
       w: maxWidth + this._padding * 2,
       h: height + this._padding * 2,
     };
+
+    // Place insize a "with padding" layout box.
+    const panelBox: Widget = new LayoutBox()
+      .setOverrideWidth(panelSize.w)
+      .setOverrideHeight(panelSize.h)
+      .setHorizontalAlignment(HorizontalAlignment.Center)
+      .setVerticalAlignment(VerticalAlignment.Center)
+      .setChild(panel);
 
     return new (class HorizontalUI extends AbstractUI {
       constructor() {

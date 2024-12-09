@@ -1,4 +1,5 @@
 import {
+  HorizontalAlignment,
   HorizontalBox,
   LayoutBox,
   VerticalAlignment,
@@ -41,14 +42,6 @@ export class HorizontalUIBuilder {
     const panel: HorizontalBox = new HorizontalBox()
       .setChildDistance(this._spacing)
       .setVerticalAlignment(this._verticalAlignment);
-    const panelBox: Widget = new LayoutBox()
-      .setPadding(
-        this._padding,
-        this._padding - 1, // -1 to prevent scrollbar
-        this._padding,
-        this._padding
-      )
-      .setChild(panel);
 
     // Calculate size while adding out entries.
     let maxHeight = 0;
@@ -67,6 +60,14 @@ export class HorizontalUIBuilder {
       w: width + this._padding * 2,
       h: maxHeight + this._padding * 2,
     };
+
+    // Place insize a "with padding" layout box.
+    const panelBox: Widget = new LayoutBox()
+      .setOverrideWidth(panelSize.w)
+      .setOverrideHeight(panelSize.h)
+      .setHorizontalAlignment(HorizontalAlignment.Center)
+      .setVerticalAlignment(VerticalAlignment.Center)
+      .setChild(panel);
 
     return new (class HorizontalUI extends AbstractUI {
       constructor() {

@@ -2,13 +2,15 @@ import {
   Border,
   Color,
   ContentButton,
+  HorizontalAlignment,
   LayoutBox,
+  VerticalAlignment,
   Widget,
   world,
 } from "@tabletop-playground/api";
 import { AbstractUI, UI_SIZE } from "../abstract-ui/abtract-ui";
 
-export const BORDER_SIZE: number = 4;
+export const BORDER_WIDTH: number = 4;
 
 /**
  * Wrap an AbstractUI inside a ContentButton.
@@ -19,29 +21,33 @@ export class WrappedClickableUI extends AbstractUI {
   private _owningPlayerSlot: number = -1;
 
   constructor(ui: AbstractUI, scale: number) {
-    const size: UI_SIZE = ui.getSize();
-    size.w += BORDER_SIZE * 2 * scale + 16;
-    size.h += BORDER_SIZE * 2 * scale + 16;
+    const borderWidth: number = Math.ceil(BORDER_WIDTH * scale);
 
-    const child: Widget = ui.getWidget();
+    // Place inner UI insdie a ContentButton.  ContentButton adds 4 px padding.
+    const contentButtonSize: UI_SIZE = {
+      w: ui.getSize().w + 8,
+      h: ui.getSize().h + 8,
+    };
+    const contentButton: ContentButton = new ContentButton().setChild(
+      ui.getWidget()
+    );
 
-    const contentButton: ContentButton = new ContentButton().setChild(child);
-    const contentBox: LayoutBox = new LayoutBox()
-      .setOverrideWidth(size.w)
-      .setOverrideHeight(size.h)
-      .setPadding(
-        BORDER_SIZE * scale,
-        BORDER_SIZE * scale,
-        BORDER_SIZE * scale,
-        BORDER_SIZE * scale
-      )
+    // Place inside an unsided LayoutBox with fixed padding.
+    const borderSize: UI_SIZE = {
+      w: contentButtonSize.w + borderWidth * 2,
+      h: contentButtonSize.h + borderWidth * 2,
+    };
+    const contentButtonBox: Widget = new LayoutBox()
+      .setPadding(borderWidth, borderWidth, borderWidth, borderWidth)
       .setChild(contentButton);
+    const border: Border = new Border().setChild(contentButtonBox);
+    const borderBox: Widget = new LayoutBox()
+      .setOverrideWidth(borderSize.w)
+      .setOverrideHeight(borderSize.h)
+      .setChild(border);
 
-    const border = new Border().setChild(contentBox);
+    super(borderBox, borderSize);
 
-    const widget: Widget = border;
-
-    super(widget, size);
     this._contentButton = contentButton;
     this._border = border;
   }

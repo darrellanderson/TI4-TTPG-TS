@@ -1,4 +1,9 @@
-import { LayoutBox, Widget } from "@tabletop-playground/api";
+import {
+  HorizontalAlignment,
+  LayoutBox,
+  VerticalAlignment,
+  Widget,
+} from "@tabletop-playground/api";
 
 export type UI_SIZE = {
   w: number;
@@ -19,15 +24,19 @@ export abstract class AbstractUI {
   constructor(widget: Widget, size: UI_SIZE) {
     // Place the widget inside a sized layout box, some widgets may render
     // incorrectly without this when used in a ContentButton (e.g. Canvas).
+    // Also set h/v alignment to prevent the widget from stretching.
     this._widget = new LayoutBox()
       .setOverrideWidth(size.w)
       .setOverrideHeight(size.h)
+      .setHorizontalAlignment(HorizontalAlignment.Left)
+      .setVerticalAlignment(VerticalAlignment.Top)
       .setChild(widget);
-    this._width = size.w;
-    this._height = size.h;
+    this._width = Math.ceil(size.w); // use integers, pixel-align screen UIs.
+    this._height = Math.ceil(size.h);
   }
 
   getSize(): UI_SIZE {
+    // Create a new tuple, prevent external modification.
     return { w: this._width, h: this._height };
   }
 

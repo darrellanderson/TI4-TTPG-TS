@@ -1,7 +1,9 @@
 import {
   Border,
   Color,
+  HorizontalBox,
   ScreenUIElement,
+  VerticalBox,
   Widget,
   world,
 } from "@tabletop-playground/api";
@@ -19,7 +21,7 @@ function go() {
     scale
   );
   const wrappedUi = new WrappedClickableUI(innerUi, scale);
-  wrappedUi.getBorder().setColor([1, 0, 0, 1]);
+  wrappedUi.getBorder().setColor([0, 1, 0, 1]);
   const widget: Widget = wrappedUi.getWidget();
 
   const screenUI = new ScreenUIElement();
@@ -28,15 +30,17 @@ function go() {
   screenUI.relativePositionX = true;
   screenUI.relativePositionY = true;
 
-  screenUI.width = wrappedUi.getSize().w;
-  screenUI.height = wrappedUi.getSize().h;
+  screenUI.width = wrappedUi.getSize().w + 1;
+  screenUI.height = wrappedUi.getSize().h + 1;
   screenUI.relativeWidth = false;
   screenUI.relativeHeight = false;
 
   screenUI.anchorX = 0.5;
   screenUI.anchorY = 0.5;
 
-  screenUI.widget = new Border().setChild(widget);
+  screenUI.widget = new HorizontalBox().addChild(
+    new VerticalBox().addChild(widget)
+  );
 
   world.addScreenUI(screenUI);
 }
