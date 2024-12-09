@@ -193,7 +193,12 @@ export class MapUI extends AbstractUI {
       _hexToTextWidget.set(hex, labelText);
     }
 
-    super(canvas, size);
+    const box: Widget = new LayoutBox()
+      .setOverrideWidth(size.w)
+      .setOverrideHeight(size.h)
+      .setChild(canvas);
+
+    super(box, size);
 
     this._hexToTextWidget = _hexToTextWidget;
     this._mapStringIndexToImageWidget = _mapStringIndexToImageWidget;

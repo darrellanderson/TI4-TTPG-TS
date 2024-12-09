@@ -22,6 +22,9 @@ export abstract class AbstractUI {
   private readonly _height: number = 0;
 
   constructor(widget: Widget, size: UI_SIZE) {
+    size.w = Math.ceil(size.w); // use integers, pixel-align screen UIs.
+    size.h = Math.ceil(size.h);
+
     // Place the widget inside a sized layout box, some widgets may render
     // incorrectly without this when used in a ContentButton (e.g. Canvas).
     // Also set h/v alignment to prevent the widget from stretching.
@@ -31,8 +34,8 @@ export abstract class AbstractUI {
       .setHorizontalAlignment(HorizontalAlignment.Left)
       .setVerticalAlignment(VerticalAlignment.Top)
       .setChild(widget);
-    this._width = Math.ceil(size.w); // use integers, pixel-align screen UIs.
-    this._height = Math.ceil(size.h);
+    this._width = size.w;
+    this._height = size.h;
   }
 
   getSize(): UI_SIZE {

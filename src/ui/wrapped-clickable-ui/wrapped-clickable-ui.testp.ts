@@ -1,5 +1,4 @@
 import {
-  Border,
   Color,
   HorizontalBox,
   ScreenUIElement,
