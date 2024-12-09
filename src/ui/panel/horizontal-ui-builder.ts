@@ -62,11 +62,14 @@ export class HorizontalUIBuilder {
     };
 
     // Place insize a "with padding" layout box.
+    // Panels like to add scrollbars even with an exact fit,
+    // set a negative excess padding to absorb extra.
     const panelBox: Widget = new LayoutBox()
       .setOverrideWidth(panelSize.w)
       .setOverrideHeight(panelSize.h)
-      .setHorizontalAlignment(HorizontalAlignment.Center)
-      .setVerticalAlignment(VerticalAlignment.Center)
+      .setPadding(this._padding, -100, this._padding, 0)
+      .setHorizontalAlignment(HorizontalAlignment.Left)
+      .setVerticalAlignment(VerticalAlignment.Top)
       .setChild(panel);
 
     return new (class HorizontalUI extends AbstractUI {
