@@ -19,6 +19,7 @@ import {
 } from "../../../lib/draft-lib/generate-slices/generate-slices";
 import { SliceUI } from "../slice-ui/slice-ui";
 import { WrappedClickableUI } from "../../wrapped-clickable-ui/wrapped-clickable-ui";
+import { ZoomableUI } from "ui/zoomable-ui/zoomable-ui";
 
 const SPACING: number = 12;
 
@@ -97,6 +98,7 @@ export class DraftStateUI extends AbstractUI {
 
   constructor(draftState: DraftState, scale: number) {
     const sliceShape: SliceShape = draftState.getSliceShape();
+    const zoomableSliceButtons: Array<AbstractUI> = [];
     const sliceButtons: Array<WrappedClickableUI> = draftState
       .getSlices()
       .map((slice: SliceTiles, index: number) => {
@@ -113,10 +115,21 @@ export class DraftStateUI extends AbstractUI {
           .onClicked.add(
             DraftStateUI._createSliceClickHandler(draftState, index)
           );
+
+        const createZoomedUi = (): AbstractUI => {
+          return new SliceUI(slice, sliceShape, color, scale * 3);
+        };
+        const zoomableSliceButton = new ZoomableUI(
+          clickable,
+          scale,
+          createZoomedUi
+        );
+        zoomableSliceButtons.push(zoomableSliceButton);
+
         return clickable;
       });
     const sliceGrid: AbstractUI = new GridUIBuilder()
-      .addUIs(sliceButtons)
+      .addUIs(zoomableSliceButtons)
       .setMaxRows(3)
       .setSpacing(SPACING * scale)
       .build();

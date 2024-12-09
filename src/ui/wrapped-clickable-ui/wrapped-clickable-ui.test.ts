@@ -21,8 +21,8 @@ it("getSize", () => {
   );
   const outserSize: UI_SIZE = wrappedUi.getSize();
   expect(outserSize).toEqual({
-    w: 1 + BORDER_WIDTH * 2 + 8,
-    h: 2 + BORDER_WIDTH * 2 + 8,
+    w: 1 + BORDER_WIDTH * 4 + 8,
+    h: 2 + BORDER_WIDTH * 4 + 8,
   });
 
   expect(wrappedUi.getBorder()).toBeDefined();

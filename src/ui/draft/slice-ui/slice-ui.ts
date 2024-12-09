@@ -18,7 +18,7 @@ import { SliceTiles } from "../../../lib/draft-lib/generate-slices/generate-slic
 import { System } from "../../../lib/system-lib/system/system";
 import { SystemSummary } from "../../../lib/system-lib/system/system-summary";
 
-const HALF_HEX_W_PX: number = 30;
+const HALF_HEX_W_PX: number = 25;
 const packageId: string = refPackageId;
 
 export class SliceUI extends AbstractUI {
@@ -134,9 +134,12 @@ export class SliceUI extends AbstractUI {
     const panel: Widget = new VerticalBox()
       .addChild(summaryText)
       .addChild(labelText);
+    const panelBox: LayoutBox = new LayoutBox()
+      .setPadding(0, 0, 0, -100)
+      .setChild(panel);
     const panelBorder: Widget = new Border()
       .setColor(sliceColor)
-      .setChild(panel);
+      .setChild(panelBox);
     const labelWidth: number = Math.ceil(right - left);
     const labelHeight: number = Math.ceil(fontSize * 4);
     const labelY = Math.floor(bottom - top - labelHeight * 0.5);
