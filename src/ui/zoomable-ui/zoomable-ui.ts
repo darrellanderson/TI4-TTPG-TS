@@ -13,7 +13,7 @@ import { ButtonUI } from "../button-ui/button-ui";
 import { VerticalUIBuilder } from "../panel/vertical-ui-builder";
 import { WrappedClickableUI } from "../wrapped-clickable-ui/wrapped-clickable-ui";
 
-const SPACING: number = 12;
+const SPACING: number = 0; // Align zoom button directly below the unzoomed UI.
 
 export type CreateZoomedUiType = (scale: number) => AbstractUI;
 
@@ -59,6 +59,9 @@ export class ZoomableUI extends AbstractUI {
         zoomedUi,
         scale
       );
+      clickableUi
+        .getContentButton()
+        .onClicked.add(this._getOnZoomClosedHandler());
 
       const screenUiElement = new ScreenUIElement();
       screenUiElement.anchorX = 0.5;
@@ -75,14 +78,11 @@ export class ZoomableUI extends AbstractUI {
       screenUiElement.widget = clickableUi.getWidget();
       world.addScreenUI(screenUiElement);
 
+      // Register as this player's zoomed UI.
       __playerSlotToZoomedScreenUiElement.set(
         player.getSlot(),
         screenUiElement
       );
-
-      clickableUi
-        .getContentButton()
-        .onClicked.add(this._getOnZoomClosedHandler());
     };
   }
 
@@ -93,7 +93,7 @@ export class ZoomableUI extends AbstractUI {
   ) {
     // Create zoom button, place below the clickable widget.
     const zoomButtonUi: ButtonUI = new ButtonUI(scale);
-    zoomButtonUi.getButton().setText("Zoom");
+    zoomButtonUi.getButton().setText("ZOOM"); // font size already set
 
     const panel: AbstractUI = new VerticalUIBuilder()
       .addUIs([unzoomedUi, zoomButtonUi])

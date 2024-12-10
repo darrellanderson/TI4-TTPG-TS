@@ -96,6 +96,15 @@ export class DraftStateUI extends AbstractUI {
     };
   }
 
+  static _createZoomecUi = (
+    slice: SliceTiles,
+    sliceShape: SliceShape,
+    color: Color,
+    scale: number
+  ): AbstractUI => {
+    return new SliceUI(slice, sliceShape, color, scale * 4);
+  };
+
   constructor(draftState: DraftState, scale: number) {
     const sliceShape: SliceShape = draftState.getSliceShape();
     const zoomableSliceButtons: Array<AbstractUI> = [];
@@ -175,8 +184,22 @@ export class DraftStateUI extends AbstractUI {
       mapStringAndHexToPlayerName.hexToPlayerName;
     const map: MapUI = new MapUI(mapString, hexToLabel, scale);
 
+    const createZoomedMap = (scale: number): AbstractUI => {
+      const mapStringAndHexToPlayerName: MapStringAndHexToPlayerName =
+        DraftToMapString.fromDraftState(draftState);
+      const mapString: string = mapStringAndHexToPlayerName.mapString;
+      const hexToLabel: Map<HexType, string> =
+        mapStringAndHexToPlayerName.hexToPlayerName;
+      return new MapUI(mapString, hexToLabel, scale * 1.7);
+    };
+    const zoomableMapUi: AbstractUI = new ZoomableUI(
+      map,
+      scale,
+      createZoomedMap
+    );
+
     const panel: AbstractUI = new HorizontalUIBuilder()
-      .addUIs([sliceGrid, factionGrid, seatGrid, map])
+      .addUIs([sliceGrid, factionGrid, seatGrid, zoomableMapUi])
       .setPadding(SPACING * scale)
       .setSpacing(SPACING * scale)
       .build();
