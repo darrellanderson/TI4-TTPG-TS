@@ -4,7 +4,6 @@ import {
   DraftStateSchema,
   DraftStateSchemaType,
 } from "./draft-state";
-import { world } from "@tabletop-playground/api";
 
 it("schema (empty)", () => {
   const state: DraftStateSchemaType = DraftStateSchema.parse({});
