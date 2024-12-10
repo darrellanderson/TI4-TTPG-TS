@@ -102,7 +102,7 @@ export class DraftStateUI extends AbstractUI {
     color: Color
   ): CreateZoomedUiType => {
     return (scale: number): AbstractUI => {
-      return new SliceUI(slice, sliceShape, color, scale * 4);
+      return new SliceUI(slice, sliceShape, color, scale * 3.5);
     };
   };
 
@@ -115,7 +115,7 @@ export class DraftStateUI extends AbstractUI {
       const mapString: string = mapStringAndHexToPlayerName.mapString;
       const hexToLabel: Map<HexType, string> =
         mapStringAndHexToPlayerName.hexToPlayerName;
-      return new MapUI(mapString, hexToLabel, scale * 1.7);
+      return new MapUI(mapString, hexToLabel, scale * 2);
     };
   };
 
@@ -195,7 +195,7 @@ export class DraftStateUI extends AbstractUI {
     const mapString: string = mapStringAndHexToPlayerName.mapString;
     const hexToLabel: Map<HexType, string> =
       mapStringAndHexToPlayerName.hexToPlayerName;
-    const mapUi: MapUI = new MapUI(mapString, hexToLabel, scale * 1.7);
+    const mapUi: MapUI = new MapUI(mapString, hexToLabel, scale);
 
     // Add zoom button.
     const createZoomedMapUi: CreateZoomedUiType =

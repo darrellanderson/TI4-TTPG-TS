@@ -1,8 +1,8 @@
-import { Button, ContentButton, Player } from "@tabletop-playground/api";
+import { ContentButton, ImageButton, Player } from "@tabletop-playground/api";
 import { AbstractUI } from "../abstract-ui/abtract-ui";
 import { ButtonUI } from "../button-ui/button-ui";
 import { ZoomableUI } from "./zoomable-ui";
-import { MockButton, MockContentButton, MockPlayer } from "ttpg-mock";
+import { MockContentButton, MockImageButton, MockPlayer } from "ttpg-mock";
 
 it("constructor", () => {
   const unzoomedUI: AbstractUI = new ButtonUI(1);
@@ -19,9 +19,9 @@ it("_getOnZoomOpenHandler", () => {
 
   const zoomableUI = new ZoomableUI(unzoomedUI, scale, createZoomedUI);
 
-  const button: Button = new MockButton();
+  const button: ImageButton = new MockImageButton();
   const player: Player = new MockPlayer();
-  const onZoomOpenedHandler: (button: Button, player: Player) => void =
+  const onZoomOpenedHandler: (button: ImageButton, player: Player) => void =
     zoomableUI._getOnZoomOpenHandler(createZoomedUI, scale);
   onZoomOpenedHandler(button, player);
   onZoomOpenedHandler(button, player); // again

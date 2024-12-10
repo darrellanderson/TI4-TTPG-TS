@@ -1,22 +1,23 @@
 import {
-  Button,
   ContentButton,
-  HorizontalAlignment,
+  ImageButton,
   Player,
   PlayerPermission,
+  refPackageId,
   ScreenUIElement,
+  VerticalAlignment,
   world,
 } from "@tabletop-playground/api";
 
 import { AbstractUI } from "../abstract-ui/abtract-ui";
-import { ButtonUI } from "../button-ui/button-ui";
-import { VerticalUIBuilder } from "../panel/vertical-ui-builder";
+import { HorizontalUIBuilder } from "ui/panel/horizontal-ui-builder";
 import { WrappedClickableUI } from "../wrapped-clickable-ui/wrapped-clickable-ui";
 
 const SPACING: number = 0; // Align zoom button directly below the unzoomed UI.
 
 export type CreateZoomedUiType = (scale: number) => AbstractUI;
 
+const packageId: string = refPackageId;
 const __playerSlotToZoomedScreenUiElement: Map<number, ScreenUIElement> =
   new Map();
 
@@ -42,8 +43,8 @@ export class ZoomableUI extends AbstractUI {
   _getOnZoomOpenHandler(
     createZoomedUI: CreateZoomedUiType,
     scale: number
-  ): (button: Button, player: Player) => void {
-    return (_button: Button, player: Player): void => {
+  ): (button: ImageButton, player: Player) => void {
+    return (_button: ImageButton, player: Player): void => {
       // Remove any existing zoomed UI for this player.
       const existingScreenUiElement: ScreenUIElement | undefined =
         __playerSlotToZoomedScreenUiElement.get(player.getSlot());
@@ -91,20 +92,24 @@ export class ZoomableUI extends AbstractUI {
     scale: number,
     createZoomedUI: CreateZoomedUiType
   ) {
-    // Create zoom button, place below the clickable widget.
-    const zoomButtonUi: ButtonUI = new ButtonUI(scale);
-    zoomButtonUi.getButton().setText("ZOOM"); // font size already set
+    const size: number = Math.ceil(30 * scale);
+    const zoomButton: ImageButton = new ImageButton()
+      .setImage("ui/window/grow.png", packageId)
+      .setImageSize(size, size);
+    const zoomButtonUi: AbstractUI = new (class extends AbstractUI {
+      constructor() {
+        super(zoomButton, { w: size, h: size });
+      }
+    })();
 
-    const panel: AbstractUI = new VerticalUIBuilder()
+    const panel: AbstractUI = new HorizontalUIBuilder()
       .addUIs([unzoomedUi, zoomButtonUi])
-      .setHorizontalAlignment(HorizontalAlignment.Center)
+      .setVerticalAlignment(VerticalAlignment.Center)
       .setSpacing(SPACING * scale)
       .build();
 
     super(panel.getWidget(), panel.getSize());
 
-    zoomButtonUi
-      .getButton()
-      .onClicked.add(this._getOnZoomOpenHandler(createZoomedUI, scale));
+    zoomButton.onClicked.add(this._getOnZoomOpenHandler(createZoomedUI, scale));
   }
 }

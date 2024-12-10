@@ -18,7 +18,7 @@ import { SliceTiles } from "../../../lib/draft-lib/generate-slices/generate-slic
 import { System } from "../../../lib/system-lib/system/system";
 import { SystemSummary } from "../../../lib/system-lib/system/system-summary";
 
-const HALF_HEX_W_PX: number = 25;
+const HALF_HEX_W_PX: number = 30;
 const packageId: string = refPackageId;
 
 export class SliceUI extends AbstractUI {
