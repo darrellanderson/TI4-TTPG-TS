@@ -38,5 +38,10 @@ it("setLabel", () => {
   const sliceShape: Array<HexType> = ["<0,0,0>", "<1,0,-1>", "<1,0,-1>"];
   const color: Color = new Color(0.5, 0.5, 0.5, 1);
   const sliceUi = new SliceUI(slice, sliceShape, color, 1);
-  sliceUi.setLabel("test");
+
+  // Use varying label lengths to test different number of lines.
+  for (let i = 0; i < 100; i++) {
+    const label: string = "x ".repeat(i);
+    sliceUi.setLabel(label);
+  }
 });

@@ -33,6 +33,8 @@ function go() {
   screenUI.widget = new Border().setChild(widget);
 
   world.addScreenUI(screenUI);
+
+  sliceUI.setLabel("123456789 123456789 123456789 123");
 }
 
 setTimeout(go, 1000);

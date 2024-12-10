@@ -23,6 +23,7 @@ const packageId: string = refPackageId;
 
 export class SliceUI extends AbstractUI {
   private readonly _labelText: Text;
+  private readonly _defaultFontSize: number;
 
   constructor(
     slice: SliceTiles,
@@ -117,7 +118,7 @@ export class SliceUI extends AbstractUI {
     // Add label (below slice).
     const summaryValue: string =
       SystemSummary.getFromSystemTileNumbers(slice).getSummary();
-    const fontSize: number = halfScaledHexHeight * 0.5;
+    const fontSize: number = halfScaledHexHeight * 0.45;
     const summaryText: Text = new Text()
       .setBold(true)
       .setFontSize(fontSize)
@@ -155,9 +156,23 @@ export class SliceUI extends AbstractUI {
 
     super(widget, { w, h });
     this._labelText = labelText;
+    this._defaultFontSize = fontSize;
   }
 
   public setLabel(label: string): void {
     this._labelText.setText(label);
+
+    let fontSize = this._defaultFontSize;
+
+    const maxLineLength: number = 18;
+    const numLines: number = Math.ceil(label.length / maxLineLength);
+    if (numLines === 2) {
+      // More will fit in one line with smaller font size.
+      const excess: number = label.length - maxLineLength;
+      fontSize *= 1 - excess / maxLineLength / 2;
+    } else if (numLines > 2) {
+      fontSize *= 1.5 / numLines;
+    }
+    this._labelText.setFontSize(fontSize);
   }
 }
