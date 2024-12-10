@@ -19,7 +19,7 @@ import {
 } from "../../../lib/draft-lib/generate-slices/generate-slices";
 import { SliceUI } from "../slice-ui/slice-ui";
 import { WrappedClickableUI } from "../../wrapped-clickable-ui/wrapped-clickable-ui";
-import { ZoomableUI } from "../../zoomable-ui/zoomable-ui";
+import { CreateZoomedUiType, ZoomableUI } from "../../zoomable-ui/zoomable-ui";
 
 const SPACING: number = 12;
 
@@ -96,13 +96,27 @@ export class DraftStateUI extends AbstractUI {
     };
   }
 
-  static _createZoomecUi = (
+  static _getCreateZoomedSliceUi = (
     slice: SliceTiles,
     sliceShape: SliceShape,
-    color: Color,
-    scale: number
-  ): AbstractUI => {
-    return new SliceUI(slice, sliceShape, color, scale * 4);
+    color: Color
+  ): CreateZoomedUiType => {
+    return (scale: number): AbstractUI => {
+      return new SliceUI(slice, sliceShape, color, scale * 4);
+    };
+  };
+
+  static _getCreatedZoomedMapUi = (
+    draftState: DraftState
+  ): CreateZoomedUiType => {
+    return (scale: number): AbstractUI => {
+      const mapStringAndHexToPlayerName: MapStringAndHexToPlayerName =
+        DraftToMapString.fromDraftState(draftState);
+      const mapString: string = mapStringAndHexToPlayerName.mapString;
+      const hexToLabel: Map<HexType, string> =
+        mapStringAndHexToPlayerName.hexToPlayerName;
+      return new MapUI(mapString, hexToLabel, scale * 1.7);
+    };
   };
 
   constructor(draftState: DraftState, scale: number) {
@@ -125,9 +139,8 @@ export class DraftStateUI extends AbstractUI {
             DraftStateUI._createSliceClickHandler(draftState, index)
           );
 
-        const createZoomedUi = (): AbstractUI => {
-          return new SliceUI(slice, sliceShape, color, scale * 4);
-        };
+        const createZoomedUi: CreateZoomedUiType =
+          DraftStateUI._getCreateZoomedSliceUi(slice, sliceShape, color);
         const zoomableSliceButton = new ZoomableUI(
           clickable,
           scale,
@@ -182,20 +195,15 @@ export class DraftStateUI extends AbstractUI {
     const mapString: string = mapStringAndHexToPlayerName.mapString;
     const hexToLabel: Map<HexType, string> =
       mapStringAndHexToPlayerName.hexToPlayerName;
-    const map: MapUI = new MapUI(mapString, hexToLabel, scale);
+    const mapUi: MapUI = new MapUI(mapString, hexToLabel, scale * 1.7);
 
-    const createZoomedMap = (scale: number): AbstractUI => {
-      const mapStringAndHexToPlayerName: MapStringAndHexToPlayerName =
-        DraftToMapString.fromDraftState(draftState);
-      const mapString: string = mapStringAndHexToPlayerName.mapString;
-      const hexToLabel: Map<HexType, string> =
-        mapStringAndHexToPlayerName.hexToPlayerName;
-      return new MapUI(mapString, hexToLabel, scale * 1.7);
-    };
-    const zoomableMapUi: AbstractUI = new ZoomableUI(
-      map,
+    // Add zoom button.
+    const createZoomedMapUi: CreateZoomedUiType =
+      DraftStateUI._getCreatedZoomedMapUi(draftState);
+    const zoomableMapUi: ZoomableUI = new ZoomableUI(
+      mapUi,
       scale,
-      createZoomedMap
+      createZoomedMapUi
     );
 
     const panel: AbstractUI = new HorizontalUIBuilder()
@@ -231,7 +239,7 @@ export class DraftStateUI extends AbstractUI {
       const mapString: string = mapStringAndHexToPlayerName.mapString;
       const hexToLabel: Map<HexType, string> =
         mapStringAndHexToPlayerName.hexToPlayerName;
-      map.update(mapString, hexToLabel);
+      mapUi.update(mapString, hexToLabel);
     };
 
     draftState.onDraftStateChanged.add(update);

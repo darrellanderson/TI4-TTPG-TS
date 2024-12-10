@@ -1,9 +1,14 @@
-import { ContentButton, Player } from "@tabletop-playground/api";
+import { Color, ContentButton, Player } from "@tabletop-playground/api";
 import { MockCardHolder, MockPlayer } from "ttpg-mock";
 
 import { DraftState } from "../../../lib/draft-lib/draft-state/draft-state";
 import { DraftStateUI } from "./draft-state-ui";
 import { MILTY_SLICE_SHAPE } from "../../../lib/draft-lib/drafts/milty";
+import {
+  SliceShape,
+  SliceTiles,
+} from "lib/draft-lib/generate-slices/generate-slices";
+import { CreateZoomedUiType } from "ui/zoomable-ui/zoomable-ui";
 
 beforeEach(() => {
   // Player seats looks for card holders.
@@ -109,4 +114,23 @@ it("_createSeatClickHandler", () => {
   handler(new ContentButton(), new MockPlayer({ slot: 10 }));
   expect(draftState.getSeatIndexToPlayerSlot(sliceIndex + 1)).toBe(-1);
   expect(draftState.getSeatIndexToPlayerSlot(sliceIndex)).toBe(10);
+});
+
+it("_getCreateZoomedSliceUi", () => {
+  const slice: SliceTiles = [1, 2, 3, 4, 5];
+  const sliceShape: SliceShape = MILTY_SLICE_SHAPE;
+  const color: Color = new Color(0, 0, 0, 1);
+  const createZoomedSliceUi: CreateZoomedUiType =
+    DraftStateUI._getCreateZoomedSliceUi(slice, sliceShape, color);
+
+  const scale: number = 1;
+  createZoomedSliceUi(scale);
+});
+
+it("_getCreateZoomedMapUi", () => {
+  const draftState: DraftState = new DraftState("@test/draft-state");
+
+  const createZoomedMapUi = DraftStateUI._getCreatedZoomedMapUi(draftState);
+  const scale = 1;
+  createZoomedMapUi(scale);
 });
