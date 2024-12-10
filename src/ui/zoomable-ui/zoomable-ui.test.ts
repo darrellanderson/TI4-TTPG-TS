@@ -34,7 +34,9 @@ it("_getOnZoomClosedHandler", () => {
 
   const zoomableUI = new ZoomableUI(unzoomedUI, scale, createZoomedUI);
 
+  const contentButton: ContentButton = new MockContentButton();
+  const player: Player = new MockPlayer();
   const onZoomClosedHandler: (button: ContentButton, player: Player) => void =
     zoomableUI._getOnZoomClosedHandler();
-  onZoomClosedHandler(new ContentButton(), new Player());
+  onZoomClosedHandler(contentButton, player);
 });
