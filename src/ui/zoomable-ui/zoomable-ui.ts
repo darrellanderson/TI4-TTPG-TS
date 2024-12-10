@@ -10,7 +10,7 @@ import {
 } from "@tabletop-playground/api";
 
 import { AbstractUI } from "../abstract-ui/abtract-ui";
-import { HorizontalUIBuilder } from "ui/panel/horizontal-ui-builder";
+import { HorizontalUIBuilder } from "../panel/horizontal-ui-builder";
 import { WrappedClickableUI } from "../wrapped-clickable-ui/wrapped-clickable-ui";
 
 const SPACING: number = 0; // Align zoom button directly below the unzoomed UI.
