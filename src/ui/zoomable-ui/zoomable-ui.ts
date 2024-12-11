@@ -1,19 +1,21 @@
 import {
+  Canvas,
   ContentButton,
   ImageButton,
+  LayoutBox,
   Player,
   PlayerPermission,
   refPackageId,
   ScreenUIElement,
-  VerticalAlignment,
+  Widget,
   world,
 } from "@tabletop-playground/api";
 
-import { AbstractUI } from "../abstract-ui/abtract-ui";
-import { HorizontalUIBuilder } from "../panel/horizontal-ui-builder";
-import { WrappedClickableUI } from "../wrapped-clickable-ui/wrapped-clickable-ui";
-
-const SPACING: number = 0; // Align zoom button directly below the unzoomed UI.
+import { AbstractUI, UI_SIZE } from "../abstract-ui/abtract-ui";
+import {
+  WRAPPED_BORDER_WIDTH,
+  WrappedClickableUI,
+} from "../wrapped-clickable-ui/wrapped-clickable-ui";
 
 export type CreateZoomedUiType = (scale: number) => AbstractUI;
 
@@ -92,23 +94,32 @@ export class ZoomableUI extends AbstractUI {
     scale: number,
     createZoomedUI: CreateZoomedUiType
   ) {
-    const size: number = Math.ceil(30 * scale);
+    const borderWidth: number = Math.ceil(WRAPPED_BORDER_WIDTH * scale) + 2;
+
+    const unzoomedWidget: Widget = unzoomedUi.getWidget();
+    const unzoomedSize: UI_SIZE = unzoomedUi.getSize();
+
+    const zoomButtonSize: number = Math.ceil(30 * scale);
     const zoomButton: ImageButton = new ImageButton()
       .setImage("ui/window/grow.png", packageId)
-      .setImageSize(size, size);
-    const zoomButtonUi: AbstractUI = new (class extends AbstractUI {
-      constructor() {
-        super(zoomButton, { w: size, h: size });
-      }
-    })();
+      .setImageSize(zoomButtonSize, zoomButtonSize);
 
-    const panel: AbstractUI = new HorizontalUIBuilder()
-      .addUIs([unzoomedUi, zoomButtonUi])
-      .setVerticalAlignment(VerticalAlignment.Center)
-      .setSpacing(SPACING * scale)
-      .build();
+    // Place zoom button *over* the unzoomed UI.
+    const canvas = new Canvas();
+    canvas.addChild(unzoomedWidget, 0, 0, unzoomedSize.w, unzoomedSize.h);
+    canvas.addChild(
+      zoomButton,
+      unzoomedSize.w - zoomButtonSize - borderWidth,
+      borderWidth,
+      zoomButtonSize,
+      zoomButtonSize
+    );
+    const canvasBox: Widget = new LayoutBox()
+      .setOverrideWidth(unzoomedSize.w)
+      .setOverrideHeight(unzoomedSize.h)
+      .setChild(canvas);
 
-    super(panel.getWidget(), panel.getSize());
+    super(canvasBox, unzoomedSize);
 
     zoomButton.onClicked.add(this._getOnZoomOpenHandler(createZoomedUI, scale));
   }

@@ -10,7 +10,7 @@ import {
 } from "@tabletop-playground/api";
 import { AbstractUI, UI_SIZE } from "../abstract-ui/abtract-ui";
 
-export const BORDER_WIDTH: number = 4;
+export const WRAPPED_BORDER_WIDTH: number = 4;
 
 /**
  * Wrap an AbstractUI inside a ContentButton.
@@ -21,7 +21,7 @@ export class WrappedClickableUI extends AbstractUI {
   private _owningPlayerSlot: number = -1;
 
   constructor(ui: AbstractUI, scale: number) {
-    const borderWidth: number = Math.ceil(BORDER_WIDTH * scale);
+    const borderWidth: number = Math.ceil(WRAPPED_BORDER_WIDTH * scale);
 
     // Add padding to inner UI before adding ContentButton.
     const innerSize: UI_SIZE = {

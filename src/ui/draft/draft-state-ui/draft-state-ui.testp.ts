@@ -7,6 +7,8 @@ import {
 import { DraftState } from "../../../lib/draft-lib/draft-state/draft-state";
 import { DraftStateUI } from "./draft-state-ui";
 import { MILTY_SLICE_SHAPE } from "lib/draft-lib/drafts/milty";
+import { AbstractWindow } from "ui/abstract-window/abstract-window";
+import { AbstractUI } from "ui/abstract-ui/abtract-ui";
 
 const draftState: DraftState = new DraftState("@test/draft-state")
   .setSliceShape(MILTY_SLICE_SHAPE)
@@ -27,7 +29,7 @@ const draftState: DraftState = new DraftState("@test/draft-state")
   )
   .setSpeakerIndex(1);
 
-function go() {
+function _goDirect() {
   const draftStateUi = new DraftStateUI(draftState, 1);
   const widget: Widget = draftStateUi.getWidget();
 
@@ -50,4 +52,12 @@ function go() {
   world.addScreenUI(screenUI);
 }
 
-setTimeout(go, 1000);
+function _goWindow() {
+  new AbstractWindow((scale: number): AbstractUI => {
+    return new DraftStateUI(draftState, scale);
+  }, "@test/draft-state-ui")
+    .createWindow()
+    .attach();
+}
+
+setTimeout(_goDirect, 100);

@@ -1,6 +1,9 @@
 import { Text, Widget } from "@tabletop-playground/api";
 import { AbstractUI, UI_SIZE } from "../abstract-ui/abtract-ui";
-import { BORDER_WIDTH, WrappedClickableUI } from "./wrapped-clickable-ui";
+import {
+  WRAPPED_BORDER_WIDTH,
+  WrappedClickableUI,
+} from "./wrapped-clickable-ui";
 
 class MyAbstractUI extends AbstractUI {
   constructor() {
@@ -21,8 +24,8 @@ it("getSize", () => {
   );
   const outserSize: UI_SIZE = wrappedUi.getSize();
   expect(outserSize).toEqual({
-    w: 1 + BORDER_WIDTH * 4 + 8,
-    h: 2 + BORDER_WIDTH * 4 + 8,
+    w: 1 + WRAPPED_BORDER_WIDTH * 4 + 8,
+    h: 2 + WRAPPED_BORDER_WIDTH * 4 + 8,
   });
 
   expect(wrappedUi.getBorder()).toBeDefined();
