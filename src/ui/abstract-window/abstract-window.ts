@@ -14,6 +14,8 @@ export type CreateAbstractUIType = (scale: number) => AbstractUI;
 /**
  * AbstractUI and Window have similar, but not identical APIs.
  * This class is a bridge from AbstractUI to Window.
+ *
+ * Not actually an "abstract" class, but deals in AbstractUIs.
  */
 export class AbstractWindow {
   private readonly _namespaceId: NamespaceId | undefined;
@@ -53,11 +55,15 @@ export class AbstractWindow {
         height: defaultSize.h,
       },
       windowWidgetGenerator,
+
+      title: "Test Window",
+      defaultTarget: "screen",
+      screen: { anchor: { u: 0.5, v: 1 }, pos: { u: 0.5, v: 0.5 } },
     };
   }
 
   createWindow(): Window {
-    const playerSlots: number[] = Array.from(Array(20).keys());
+    const playerSlots: Array<number> = [10];
     return new Window(this._windowParams, playerSlots, this._namespaceId);
   }
 }
