@@ -60,4 +60,4 @@ function _goWindow() {
     .attach();
 }
 
-setTimeout(_goDirect, 100);
+setTimeout(_goWindow, 100);

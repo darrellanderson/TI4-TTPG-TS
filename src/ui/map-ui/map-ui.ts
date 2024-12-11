@@ -67,8 +67,8 @@ export class MapUI extends AbstractUI {
     const _mapStringIndexToImageWidget: Map<number, ImageWidget> = new Map();
     const _hexToTextWidget: Map<HexType, Text> = new Map();
 
-    const halfScaledHexWidth: number = Math.ceil(HALF_HEX_W_PX * scale);
-    const halfScaledHexHeight: number = Math.ceil(halfScaledHexWidth * 0.866);
+    const halfScaledHexWidth: number = HALF_HEX_W_PX * scale;
+    const halfScaledHexHeight: number = halfScaledHexWidth * 0.866;
     const scaledHex: Hex = new Hex(HEX_LAYOUT_POINTY, halfScaledHexWidth);
     const labelFontSize: number =
       halfScaledHexWidth * LABEL_RELATIVE_TO_HEX_SIZE;
@@ -94,8 +94,8 @@ export class MapUI extends AbstractUI {
       bottom = Math.max(bottom, y + halfScaledHexHeight);
     }
 
-    const width: number = Math.ceil(right - left);
-    const height: number = Math.ceil(bottom - top);
+    const width: number = right - left;
+    const height: number = bottom - top;
     const size: UI_SIZE = { w: width, h: height };
 
     const canvas: Canvas = new Canvas();

@@ -94,12 +94,12 @@ export class ZoomableUI extends AbstractUI {
     scale: number,
     createZoomedUI: CreateZoomedUiType
   ) {
-    const borderWidth: number = Math.ceil(WRAPPED_BORDER_WIDTH * scale) + 2;
+    const borderWidth: number = WRAPPED_BORDER_WIDTH * scale + 2;
 
     const unzoomedWidget: Widget = unzoomedUi.getWidget();
     const unzoomedSize: UI_SIZE = unzoomedUi.getSize();
 
-    const zoomButtonSize: number = Math.ceil(30 * scale);
+    const zoomButtonSize: number = 30 * scale;
     const zoomButton: ImageButton = new ImageButton()
       .setImage("ui/window/grow.png", packageId)
       .setImageSize(zoomButtonSize, zoomButtonSize);

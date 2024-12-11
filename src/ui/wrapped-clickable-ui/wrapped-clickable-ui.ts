@@ -21,7 +21,7 @@ export class WrappedClickableUI extends AbstractUI {
   private _owningPlayerSlot: number = -1;
 
   constructor(ui: AbstractUI, scale: number) {
-    const borderWidth: number = Math.ceil(WRAPPED_BORDER_WIDTH * scale);
+    const borderWidth: number = WRAPPED_BORDER_WIDTH * scale;
 
     // Add padding to inner UI before adding ContentButton.
     const innerSize: UI_SIZE = {

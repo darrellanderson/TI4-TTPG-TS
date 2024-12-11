@@ -18,7 +18,7 @@ import { SliceTiles } from "../../../lib/draft-lib/generate-slices/generate-slic
 import { System } from "../../../lib/system-lib/system/system";
 import { SystemSummary } from "../../../lib/system-lib/system/system-summary";
 
-const HALF_HEX_W_PX: number = 30;
+const HALF_HEX_W_PX: number = 27;
 const packageId: string = refPackageId;
 
 export class SliceUI extends AbstractUI {
@@ -31,8 +31,8 @@ export class SliceUI extends AbstractUI {
     sliceColor: Color,
     scale: number
   ) {
-    const halfScaledHexWidth = Math.ceil(HALF_HEX_W_PX * scale);
-    const halfScaledHexHeight = Math.ceil(halfScaledHexWidth * 0.866);
+    const halfScaledHexWidth: number = HALF_HEX_W_PX * scale;
+    const halfScaledHexHeight: number = halfScaledHexWidth * 0.866;
     const scaledHex = new Hex(HEX_LAYOUT_POINTY, halfScaledHexWidth); // x/y flipped thus pointy
     const hexPositions: Array<Vector> = [];
 
@@ -60,12 +60,6 @@ export class SliceUI extends AbstractUI {
     for (const pos of hexPositions) {
       pos.x -= left;
       pos.y -= top;
-    }
-
-    // Adjust to int.
-    for (const pos of hexPositions) {
-      pos.x = Math.ceil(pos.x);
-      pos.y = Math.ceil(pos.y);
     }
 
     const canvas: Canvas = new Canvas();
@@ -141,14 +135,14 @@ export class SliceUI extends AbstractUI {
     const panelBorder: Widget = new Border()
       .setColor(sliceColor)
       .setChild(panelBox);
-    const labelWidth: number = Math.ceil(right - left);
-    const labelHeight: number = Math.ceil(fontSize * 4);
-    const labelY = Math.floor(bottom - top - labelHeight * 0.5);
+    const labelWidth: number = right - left;
+    const labelHeight: number = fontSize * 4;
+    const labelY = bottom - top - labelHeight * 0.5;
     canvas.addChild(panelBorder, 0, labelY, labelWidth, labelHeight);
     bottom += labelHeight * 0.5;
 
-    const w: number = Math.ceil(right - left);
-    const h: number = Math.ceil(bottom - top);
+    const w: number = right - left;
+    const h: number = bottom - top;
     const widget: Widget = new LayoutBox()
       .setOverrideWidth(w)
       .setOverrideHeight(h)

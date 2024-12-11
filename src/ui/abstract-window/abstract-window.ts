@@ -58,7 +58,7 @@ export class AbstractWindow {
 
       title: "Test Window",
       defaultTarget: "screen",
-      screen: { anchor: { u: 0.5, v: 0 }, pos: { u: 0.5, v: 0.0 } },
+      screen: { anchor: { u: 1, v: 0 }, pos: { u: 0.814, v: 0.01 } },
     };
   }
 
