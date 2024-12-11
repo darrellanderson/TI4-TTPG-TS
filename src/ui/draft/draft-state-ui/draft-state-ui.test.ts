@@ -31,9 +31,10 @@ it("constructor", () => {
   draftState.setSpeakerIndex(0);
 
   const scale: number = 1;
-  new DraftStateUI(draftState, scale);
+  const draftStateUi = new DraftStateUI(draftState, scale);
 
   draftState.onDraftStateChanged.trigger(draftState);
+  draftStateUi.destroy();
 });
 
 it("_createSliceClickHandler", () => {

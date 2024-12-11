@@ -38,6 +38,11 @@ export abstract class AbstractUI {
     this._height = size.h;
   }
 
+  /**
+   * Remove any event handlers, etc.
+   */
+  destroy(): void {}
+
   getSize(): UI_SIZE {
     // Create a new tuple, prevent external modification.
     return { w: this._width, h: this._height };

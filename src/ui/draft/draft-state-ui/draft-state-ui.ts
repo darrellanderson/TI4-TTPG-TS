@@ -24,6 +24,9 @@ import { CreateZoomedUiType, ZoomableUI } from "../../zoomable-ui/zoomable-ui";
 const SPACING: number = 12;
 
 export class DraftStateUI extends AbstractUI {
+  private readonly _draftState: DraftState;
+  private readonly _onDraftStateChangedHandler: () => void;
+
   static _createSliceClickHandler(
     draftState: DraftState,
     sliceIndex: number
@@ -214,7 +217,8 @@ export class DraftStateUI extends AbstractUI {
 
     super(panel.getWidget(), panel.getSize());
 
-    const update = (): void => {
+    this._draftState = draftState;
+    this._onDraftStateChangedHandler = (): void => {
       sliceButtons.forEach(
         (button: WrappedClickableUI, index: number): void => {
           const playerSlot: number =
@@ -242,7 +246,14 @@ export class DraftStateUI extends AbstractUI {
       mapUi.update(mapString, hexToLabel);
     };
 
-    draftState.onDraftStateChanged.add(update);
-    update();
+    draftState.onDraftStateChanged.add(this._onDraftStateChangedHandler);
+    this._onDraftStateChangedHandler();
+  }
+
+  destroy(): void {
+    super.destroy();
+    this._draftState.onDraftStateChanged.remove(
+      this._onDraftStateChangedHandler
+    );
   }
 }
