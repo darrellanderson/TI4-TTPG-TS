@@ -34,7 +34,7 @@ export async function center(pngFilename: string) {
  */
 export async function opaqueJpg(
   pngFilename: string,
-  grayscale: boolean = false,
+  grayscale: boolean = false
 ) {
   const src: string = pngFilename;
   const dst: string = pngFilename.replace(/.png$/, ".jpg");
@@ -238,6 +238,44 @@ export async function outlineOnly(pngFilename: string) {
   console.log(`Created: ${dst}`);
 }
 
+/**
+ * Mask of just the inner image, no ouline.
+ *
+ * @param pngFilename
+ */
+export async function innerMask(pngFilename: string) {
+  const src: string = pngFilename;
+  const dst: string = pngFilename.replace(/.png$/, "-inner-mask.png");
+  if (src === dst) {
+    throw new Error("src is dst???");
+  }
+
+  const metadata: Metadata = await sharp(src).metadata();
+  const width: number = metadata.width || 1;
+  const height: number = metadata.height || 1;
+
+  // White ship, black background.
+  const inner: Buffer = await sharp(src)
+    .extractChannel("alpha")
+    .unflatten()
+    .toBuffer();
+
+  // Color
+  await sharp({
+    create: {
+      width,
+      height,
+      channels: 4,
+      background: { r: 255, g: 0, b: 0, alpha: 255 },
+    },
+  })
+    .composite([{ input: inner, blend: "multiply" }])
+    .png()
+    .toFile(dst);
+
+  console.log(`Created: ${dst}`);
+}
+
 export async function clipCircle(inFilename: string, pngFilename: string) {
   const src: string = inFilename;
   const dst: string = pngFilename;
@@ -249,7 +287,7 @@ export async function clipCircle(inFilename: string, pngFilename: string) {
   const w: number = 256 - x * 2;
   const r: number = Math.floor(w / 2);
   const circle = Buffer.from(
-    `<svg viewBox="0 0 256 256"><rect x="${x}" y="${x}" width="${w}" height="${w}" rx="${r}" ry="${r}"/></svg>`,
+    `<svg viewBox="0 0 256 256"><rect x="${x}" y="${x}" width="${w}" height="${w}" rx="${r}" ry="${r}"/></svg>`
   );
 
   // Clip circle (circle not to edge).

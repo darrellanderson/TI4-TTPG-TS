@@ -15,6 +15,7 @@ import { UnitType } from "../../src/lib/unit-lib/schema/unit-attrs-schema";
 
 import {
   center,
+  innerMask,
   opaqueJpg,
   outlineFeathered,
   outlineOnly,
@@ -48,6 +49,9 @@ async function processUnit(unit: UnitType) {
   // Also create an opaque version for container icons.
   await opaqueJpg(dst);
   await outlineFeathered(dst);
+
+  // Create a mask to tint the unit but not outline.
+  await innerMask(dst);
 
   // Version which is only the outline.
   await outlineOnly(dst);
