@@ -20,6 +20,7 @@ import {
   outlineFeathered,
   outlineOnly,
 } from "./lib/outline-mask";
+import { sustained } from "./lib/sustained";
 
 const units: Set<UnitType> = new Set();
 
@@ -55,6 +56,9 @@ async function processUnit(unit: UnitType) {
 
   // Version which is only the outline.
   await outlineOnly(dst);
+
+  // Sustained version.
+  await sustained(dst, `./prebuild/icon/unit/sustained.png`);
 }
 
 for (const unit of units) {
