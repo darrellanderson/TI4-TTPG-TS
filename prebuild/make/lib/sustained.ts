@@ -112,7 +112,12 @@ export async function sustained(
     .toFile(pngFilename.replace(/.png$/, "-outline-only.png"));
 
   // Sustained version, outlined unit with sustained effect on top.
-  const sustainedOutline: Buffer = await whiteOutlinedMask(sustained);
+  // Clip sustained outline to unit outline.
+  let sustainedOutline: Buffer = await whiteOutlinedMask(sustained);
+  sustainedOutline = await sharp(sustainedOutline)
+    .composite([{ input: unitOutlined, blend: "dest-in" }])
+    .png()
+    .toBuffer();
   const unitOutlinedWithSustainedOutline: Buffer = await sharp(unitOutlined)
     .composite([{ input: sustainedOutline, blend: "over" }])
     .png()
