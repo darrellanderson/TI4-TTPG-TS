@@ -5,7 +5,7 @@
 	"Metadata": "",
 	"CollisionType": "Regular",
 	"Friction": 0.7,
-	"Restitution": 0.3,
+	"Restitution": 0,
 	"Density": 1,
 	"SurfaceType": "Plastic",
 	"Roughness": 1,
@@ -22,9 +22,9 @@
 		"G": 0,
 		"B": 0
 	},
-	"Flippable": false,
+	"Flippable": true,
 	"AutoStraighten": false,
-	"ShouldSnap": true,
+	"ShouldSnap": false,
 	"ScriptName": "",
 	"Blueprint": "",
 	"Models": [
@@ -47,7 +47,7 @@
 			{
 				"X": -0,
 				"Y": 0,
-				"Z": 0
+				"Z": 135
 			},
 			"Texture": "icon/unit/dreadnought-outlined.png",
 			"NormalMap": "",
@@ -78,7 +78,7 @@
 			{
 				"X": -0,
 				"Y": 0,
-				"Z": 0
+				"Z": 135
 			},
 			"Texture": "icon/unit/dreadnought-sustained.png",
 			"NormalMap": "",
@@ -94,7 +94,7 @@
 	"Collision": [
 		{
 			"Model": "icon/unit/dreadnought-outlined.png",
-			"ShapeAccuracy": 5,
+			"ShapeAccuracy": 4,
 			"Offset":
 			{
 				"X": 0,
@@ -103,15 +103,15 @@
 			},
 			"Scale":
 			{
-				"X": 1,
-				"Y": 1,
-				"Z": 0.10000000000000001
+				"X": 4,
+				"Y": 4,
+				"Z": 0.40000000000000002
 			},
 			"Rotation":
 			{
 				"X": -0,
 				"Y": 0,
-				"Z": 0
+				"Z": 135
 			},
 			"Type": "Convex",
 			"ConvexCollision": true
