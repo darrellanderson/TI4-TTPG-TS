@@ -83,23 +83,6 @@ async function punchHoleInMask(redMask: Buffer, hole: Buffer): Promise<Buffer> {
   return punchedHole;
 }
 
-async function outline(input: Buffer): Promise<Buffer> {
-  const blurredInnerMask: Buffer = await sharp(input)
-    .blur(OUTLINE_WIDTH)
-    .flatten(true)
-    .toColorspace("b-w")
-    .png()
-    .toBuffer();
-  const output: Buffer = await sharp(blurredInnerMask)
-    .threshold(1)
-    .unflatten()
-    .negate()
-    .extractChannel("alpha")
-    .png()
-    .toBuffer();
-  return output;
-}
-
 /**
  * Create a unit with a white outline and a "sustained damage" effect.
  * Also create a mask to tint the unit portion but not the outline or sustained portion.
@@ -108,10 +91,51 @@ export async function sustained(
   pngFilename: string,
   sustainedPngFilename: string
 ) {
+  // Input images.
+  const unit: Buffer = await sharp(pngFilename).png().toBuffer();
+  const sustained: Buffer = await sharp(sustainedPngFilename).png().toBuffer();
+
+  // Red unit-shaped mask.
+  const unitMask: Buffer = await redMask(unit);
+  await sharp(unitMask).png().toFile(pngFilename.replace(/.png$/, "-mask.png"));
+
+  // Unit with a white outline.
+  const unitOutlined: Buffer = await whiteOutlinedMask(unit);
+  await sharp(unitOutlined)
+    .png()
+    .toFile(pngFilename.replace(/.png$/, "-outlined.png"));
+
+  // White outline only, unit is a transparent hole.
+  const outlineOnly: Buffer = await punchHoleInMask(unitOutlined, unit);
+  await sharp(outlineOnly)
+    .png()
+    .toFile(pngFilename.replace(/.png$/, "-outline-only.png"));
+
+  // Sustained version, outlined unit with sustained effect on top.
+  const sustainedOutline: Buffer = await whiteOutlinedMask(sustained);
+  const unitOutlinedWithSustainedOutline: Buffer = await sharp(unitOutlined)
+    .composite([{ input: sustainedOutline, blend: "over" }])
+    .png()
+    .toBuffer();
+  await sharp(unitOutlinedWithSustainedOutline).toFile(
+    pngFilename.replace(/.png$/, "-sustained.png")
+  );
+
+  // Sustained mask is unit minus the padded sustain.
+  const sustainedMask: Buffer = await punchHoleInMask(
+    unitMask,
+    sustainedOutline
+  );
+  await sharp(sustainedMask)
+    .png()
+    .toFile(pngFilename.replace(/.png$/, "-sustained-mask.png"));
+
+  /*
   const src: string = pngFilename;
   const dstOutlined: string = pngFilename.replace(/.png$/, "-outlined.png");
-  const dst: string = pngFilename.replace(/.png$/, "-sustained.png");
   const dstMask: string = pngFilename.replace(/.png$/, "-sustained-mask.png");
+  const dstSustained: string = pngFilename.replace(/.png$/, "-sustained.png");
+  const dst: string = pngFilename.replace(/.png$/, "-sustained.png");
 
   const metadata: Metadata = await sharp(src).metadata();
   const width: number = metadata.width || 1;
@@ -182,4 +206,5 @@ export async function sustained(
     .png()
     .toBuffer();
   await sharp(mask).png().toFile(dstMask);
+  */
 }
