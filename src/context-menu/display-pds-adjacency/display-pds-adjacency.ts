@@ -45,7 +45,7 @@ export class DisplayPDSAdjacency implements IGlobal {
     if (nsid.startsWith("unit:base/pds")) {
       obj.addCustomAction(ADJACENCY_ACTION_NAME, ADJACENCY_ACTION_TOOLTIP);
       obj.onCustomAction.add(
-        (obj: GameObject, player: Player, identifier: string): void => {
+        (obj: GameObject, _player: Player, identifier: string): void => {
           if (identifier === ADJACENCY_ACTION_NAME) {
             this._toggleAdjacencyLines(obj);
           }
@@ -110,5 +110,3 @@ export class DisplayPDSAdjacency implements IGlobal {
     }
   }
 }
-
-new DisplayPDSAdjacency().init();

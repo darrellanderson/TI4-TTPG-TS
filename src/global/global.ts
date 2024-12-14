@@ -48,6 +48,7 @@ import { UnitModifierActiveIdle } from "../lib/unit-lib/unit-modifier/unit-modif
 import { UnitModifierRegistry } from "../lib/unit-lib/registry/unit-modifier-registry";
 
 import * as NSID_TO_TEMPLATE_ID from "../nsid/nsid-to-template-id.json";
+import { DisplayPDSAdjacency } from "context-menu/display-pds-adjacency/display-pds-adjacency";
 Spawn.inject(NSID_TO_TEMPLATE_ID);
 
 Find.ignoreOwnedCardHolderNsid("card-holder:base/player-scoring");
@@ -120,6 +121,7 @@ export function resetGlobalThisTI4(): TI4Class {
     new ControlTokenSystem(),
     new DiceGroupCleanup(),
     new DiplomacySystem(),
+    new DisplayPDSAdjacency(),
     new LeaveSeat(),
     new NumpadKeyAll(),
     new OnCardBecameSingletonOrDeck(),
