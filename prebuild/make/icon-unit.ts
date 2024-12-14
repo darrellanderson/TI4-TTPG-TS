@@ -46,9 +46,11 @@ async function processUnit(unit: UnitType) {
 
   // Sustained creates:
   // 1. x-mask.png : red mask of unit
-  // 1. x-outlined.png : white outline with unit inside
-  // 2. x-outline-only.png : white outline with transparent inside
-  await sustained(dst, `./prebuild/icon/unit/sustained.png`);
+  // 2. x-outlined.png : white outline with unit inside
+  // 3. x-outline-only.png : white outline with transparent inside
+  // 4. x-sustained.png : x-outlined.png with outlined sustain icon atop
+  // 5. x-sustained-mask.png : red mask of unit portion of x-sustained.png
+  await sustained(dst, `./prebuild/icon/unit/sustained-sad.png`);
 
   /*
   await outlineFeathered(dst);

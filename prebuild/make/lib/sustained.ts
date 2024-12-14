@@ -49,13 +49,17 @@ async function whiteOutlinedMask(input: Buffer): Promise<Buffer> {
     .png()
     .toBuffer();
 
-  const fuzzyOutline: Buffer = await sharp(input)
+  // Work with a solid red version of the input, the later unflatten
+  // treats black as transparent.
+  const redUnit: Buffer = await redMask(input);
+  const fuzzyOutline: Buffer = await sharp(redUnit)
     .blur(OUTLINE_WIDTH)
     .flatten(true)
     .toColorspace("b-w")
     .png()
     .toBuffer();
 
+  // Create a version with a solid outline (fuzzy has alpha fadeout).
   const flatOutline: Buffer = await sharp(fuzzyOutline)
     .threshold(1) // force black and white
     .negate() // invert black and white
@@ -63,6 +67,7 @@ async function whiteOutlinedMask(input: Buffer): Promise<Buffer> {
     .png()
     .toBuffer();
 
+  // Fill the flat outline with white, lay the original unit on top.
   const whiteOutline: Buffer = await sharp(white)
     .composite([
       { input: flatOutline, blend: "dest-in" },
@@ -134,82 +139,4 @@ export async function sustained(
   await sharp(sustainedMask)
     .png()
     .toFile(pngFilename.replace(/.png$/, "-sustained-mask.png"));
-
-  /*
-  const src: string = pngFilename;
-  const dstOutlined: string = pngFilename.replace(/.png$/, "-outlined.png");
-  const dstMask: string = pngFilename.replace(/.png$/, "-sustained-mask.png");
-  const dstSustained: string = pngFilename.replace(/.png$/, "-sustained.png");
-  const dst: string = pngFilename.replace(/.png$/, "-sustained.png");
-
-  const metadata: Metadata = await sharp(src).metadata();
-  const width: number = metadata.width || 1;
-  const height: number = metadata.height || 1;
-
-  const unit: Buffer = await sharp(src).png().toBuffer();
-
-  const outlined: Buffer = await whiteOutlinedMask(unit);
-  punchHoleInMask(outlined, unit);
-
-  const unitOutline: Buffer = await outline(unit);
-  const unitMask: Buffer = await sharp(unit)
-    .extractChannel("alpha")
-    .unflatten()
-    .png()
-    .toBuffer();
-
-  const unitOutlineWithTransparency: Buffer = await sharp(unitOutline)
-    .unflatten()
-    .negate()
-    .png()
-    .toBuffer();
-  const unitOutlined: Buffer = await sharp({
-    create: {
-      width,
-      height,
-      channels: 4,
-      background: { r: 255, g: 255, b: 255, alpha: 0 },
-    },
-  })
-    .composite([{ input: unitOutlineWithTransparency, blend: "add" }])
-    //.composite([{ input: unit, blend: "atop" }])
-    .png()
-    .toBuffer();
-  await sharp(unitOutlineWithTransparency).png().toFile(dstOutlined);
-
-  const sustained: Buffer = await sharp(sustainedPngFilename).toBuffer();
-  const sustainedOutline: Buffer = await outline(sustained);
-  const sustainedOutlineMask: Buffer = await sharp(sustainedOutline)
-    .extractChannel("alpha")
-    .unflatten()
-    .png()
-    .toBuffer();
-
-  const sustainedUnit: Buffer = await sharp(unitOutline)
-    .composite([{ input: unit, blend: "atop" }])
-    .composite([{ input: sustainedOutline, blend: "add" }])
-    .composite([{ input: sustained, blend: "atop" }])
-    .png()
-    .toBuffer();
-  await sharp(sustainedUnit).png().toFile(dst);
-
-  const mask: Buffer = await sharp({
-    create: {
-      width,
-      height,
-      channels: 4,
-      background: { r: 255, g: 0, b: 0, alpha: 255 },
-    },
-  })
-    .composite([
-      { input: unitMask, blend: "multiply" },
-      {
-        input: sustainedOutlineMask,
-        blend: "multiply",
-      },
-    ])
-    .png()
-    .toBuffer();
-  await sharp(mask).png().toFile(dstMask);
-  */
 }
