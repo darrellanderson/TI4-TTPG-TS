@@ -25,6 +25,7 @@ import { ControlTokenSystem } from "../context-menu/control-token-system/control
 import { CreateAndAttachEndTurnButtonUI } from "../ui/end-turn-button-ui/create-and-attach-end-turn-button-ui";
 import { CreateAndAttachTurnOrderUI } from "../ui/turn-order-ui/create-and-attach-turn-order-ui";
 import { DiplomacySystem } from "../context-menu/diplomacy-system/diplomacy-system";
+import { DisplayPDSAdjacency } from "../context-menu/display-pds-adjacency/display-pds-adjacency";
 import { FactionRegistry } from "../lib/faction-lib/registry/faction-registry";
 import { NumpadKeyAll } from "../lib/numpad-key-lib/numpad-key-all/numpad-key-all";
 import { OnSystemActivated } from "../event/on-system-activated/on-system-activated";
@@ -48,7 +49,6 @@ import { UnitModifierActiveIdle } from "../lib/unit-lib/unit-modifier/unit-modif
 import { UnitModifierRegistry } from "../lib/unit-lib/registry/unit-modifier-registry";
 
 import * as NSID_TO_TEMPLATE_ID from "../nsid/nsid-to-template-id.json";
-import { DisplayPDSAdjacency } from "context-menu/display-pds-adjacency/display-pds-adjacency";
 Spawn.inject(NSID_TO_TEMPLATE_ID);
 
 Find.ignoreOwnedCardHolderNsid("card-holder:base/player-scoring");

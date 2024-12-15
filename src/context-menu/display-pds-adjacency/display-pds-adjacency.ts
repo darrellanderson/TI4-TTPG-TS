@@ -7,11 +7,12 @@ import {
   Vector,
   world,
 } from "@tabletop-playground/api";
-import { SystemAdjacency } from "lib/system-lib/system-adjacency/system-adjacency";
 import { AdjacencyResult, HexType, IGlobal, NSID } from "ttpg-darrell";
 
+import { SystemAdjacency } from "../../lib/system-lib/system-adjacency/system-adjacency";
+
 const ADJACENCY_LINE_TAG: string = "__adj__";
-const ADJACENCY_ACTION_NAME: string = "*Toggle display adjacency";
+export const ADJACENCY_ACTION_NAME: string = "*Toggle display adjacency";
 const ADJACENCY_ACTION_TOOLTIP: string =
   "Display adjacent systems: neighbors, wormholes, hyperlanes, etc";
 
@@ -20,8 +21,20 @@ const ADJACENCY_ACTION_TOOLTIP: string =
  * This is mostly for debugging and verifying hyperlanes.
  */
 export class DisplayPDSAdjacency implements IGlobal {
+  public _toggleCount: number = 0; // for testing
+
   private readonly _onObjectCreatedHandler = (obj: GameObject): void => {
     this._maybeAddContextMenu(obj);
+  };
+
+  private readonly _onCustomActionHandler = (
+    obj: GameObject,
+    _player: Player,
+    identifier: string
+  ): void => {
+    if (identifier === ADJACENCY_ACTION_NAME) {
+      this._toggleAdjacencyLines(obj);
+    }
   };
 
   init(): void {
@@ -44,13 +57,7 @@ export class DisplayPDSAdjacency implements IGlobal {
     const nsid: string = NSID.get(obj);
     if (nsid.startsWith("unit:base/pds")) {
       obj.addCustomAction(ADJACENCY_ACTION_NAME, ADJACENCY_ACTION_TOOLTIP);
-      obj.onCustomAction.add(
-        (obj: GameObject, _player: Player, identifier: string): void => {
-          if (identifier === ADJACENCY_ACTION_NAME) {
-            this._toggleAdjacencyLines(obj);
-          }
-        }
-      );
+      obj.onCustomAction.add(this._onCustomActionHandler);
     }
   }
 
@@ -64,6 +71,7 @@ export class DisplayPDSAdjacency implements IGlobal {
   }
 
   _toggleAdjacencyLines(obj: GameObject): void {
+    this._toggleCount++;
     if (this._hasAdjacencyLines(obj)) {
       this._removeAdajecncyLines(obj);
     } else {
