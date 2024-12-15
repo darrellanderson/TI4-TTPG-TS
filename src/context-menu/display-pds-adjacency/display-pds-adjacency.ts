@@ -11,7 +11,7 @@ import { AdjacencyResult, HexType, IGlobal, NSID } from "ttpg-darrell";
 
 import { SystemAdjacency } from "../../lib/system-lib/system-adjacency/system-adjacency";
 
-const ADJACENCY_LINE_TAG: string = "__adj__";
+export const ADJACENCY_LINE_TAG: string = "__adj__";
 export const ADJACENCY_ACTION_NAME: string = "*Toggle display adjacency";
 const ADJACENCY_ACTION_TOOLTIP: string =
   "Display adjacent systems: neighbors, wormholes, hyperlanes, etc";
@@ -34,6 +34,74 @@ export class DisplayPDSAdjacency implements IGlobal {
       this._toggleAdjacencyLines(obj);
     }
   };
+
+  static _parseAdjencyNodeOrThrow(node: string): {
+    hex: HexType;
+    direction: string | undefined;
+  } {
+    const re: RegExp = /^(<-?\d+,-?\d+,-?\d+>)-?(n|ne|e|se|s|sw|w|nw)?$/;
+    const match: RegExpMatchArray | null = node.match(re);
+    if (!match) {
+      throw new Error(`Invalid node: ${node}`);
+    }
+    const hex: HexType = match[1] as HexType;
+    return { hex, direction: match[2] };
+  }
+
+  static _getLinePoints(adjacencyNodePath: Array<string>): Array<Vector> {
+    // Path includes start and end as well as middle (if any).
+    return adjacencyNodePath.map((node: string): Vector => {
+      const parsed: { hex: HexType; direction: string | undefined } =
+        DisplayPDSAdjacency._parseAdjencyNodeOrThrow(node);
+      const pos: Vector = TI4.hex.toPosition(parsed.hex);
+
+      // Hyperlanes add nodes for the hyperlane hex edges traversed.
+      if (parsed.direction) {
+        // Corners start with "top right", winding counterclockwise.
+        const corners: Array<Vector> = TI4.hex.corners("<0,0,0>");
+        let a: Vector | undefined = undefined;
+        let b: Vector | undefined = undefined;
+        if (parsed.direction === "n") {
+          a = corners[0];
+          b = corners[1];
+        } else if (parsed.direction === "nw") {
+          a = corners[1];
+          b = corners[2];
+        } else if (parsed.direction === "sw") {
+          a = corners[2];
+          b = corners[3];
+        } else if (parsed.direction === "s") {
+          a = corners[3];
+          b = corners[4];
+        } else if (parsed.direction === "se") {
+          a = corners[4];
+          b = corners[5];
+        } else if (parsed.direction === "ne") {
+          a = corners[5];
+          b = corners[0];
+        }
+        if (a && b) {
+          pos.x += (a.x + b.x) / 2;
+          pos.y += (a.y + b.y) / 2;
+        }
+      }
+
+      return pos;
+    });
+  }
+
+  static _getLine(adjacencyNodePath: Array<string>): DrawingLine {
+    const line: DrawingLine = new DrawingLine();
+    line.color = new Color(1, 0, 0, 1);
+    line.normals = [new Vector(0, 0, 1)];
+    line.tag = ADJACENCY_LINE_TAG;
+    line.thickness = 0.5;
+
+    // World positions!
+    line.points = DisplayPDSAdjacency._getLinePoints(adjacencyNodePath);
+
+    return line;
+  }
 
   init(): void {
     globalEvents.onObjectCreated.add(this._onObjectCreatedHandler);
@@ -76,61 +144,6 @@ export class DisplayPDSAdjacency implements IGlobal {
     }
   }
 
-  _parseAdjencyNodeOrThrow(node: string): {
-    hex: HexType;
-    direction: string | undefined;
-  } {
-    const re: RegExp = /^(<-?\d+,-?\d+,-?\d+>)-?(n|ne|e|se|s|sw|w|nw)?$/;
-    const match: RegExpMatchArray | null = node.match(re);
-    if (!match) {
-      throw new Error(`Invalid node: ${node}`);
-    }
-    const hex: HexType = match[1] as HexType;
-    return { hex, direction: match[2] };
-  }
-
-  _getLinePoints(adjacencyNodePath: Array<string>): Array<Vector> {
-    // Path includes start and end as well as middle (if any).
-    return adjacencyNodePath.map((node: string): Vector => {
-      const parsed: { hex: HexType; direction: string | undefined } =
-        this._parseAdjencyNodeOrThrow(node);
-      const pos: Vector = TI4.hex.toPosition(parsed.hex);
-
-      // Hyperlanes add nodes for the hyperlane hex edges traversed.
-      if (parsed.direction) {
-        // Corners start with "top right", winding counterclockwise.
-        const corners: Array<Vector> = TI4.hex.corners("<0,0,0>");
-        let a: Vector | undefined = undefined;
-        let b: Vector | undefined = undefined;
-        if (parsed.direction === "n") {
-          a = corners[0];
-          b = corners[1];
-        } else if (parsed.direction === "nw") {
-          a = corners[1];
-          b = corners[2];
-        } else if (parsed.direction === "sw") {
-          a = corners[2];
-          b = corners[3];
-        } else if (parsed.direction === "s") {
-          a = corners[3];
-          b = corners[4];
-        } else if (parsed.direction === "se") {
-          a = corners[4];
-          b = corners[5];
-        } else if (parsed.direction === "ne") {
-          a = corners[5];
-          b = corners[0];
-        }
-        if (a && b) {
-          pos.x += (a.x + b.x) / 2;
-          pos.y += (a.y + b.y) / 2;
-        }
-      }
-
-      return pos;
-    });
-  }
-
   _addAdjacencyLines(obj: GameObject): void {
     const pos: Vector = obj.getPosition();
     const hex: HexType = TI4.hex.fromPosition(pos);
@@ -141,19 +154,16 @@ export class DisplayPDSAdjacency implements IGlobal {
         return adjacencyResult.distance === 1;
       });
     adjacencyResults.forEach((adjacencyResult: AdjacencyResult): void => {
-      const line: DrawingLine = new DrawingLine();
-      line.color = new Color(1, 0, 0, 1);
-      line.normals = [new Vector(0, 0, 1)];
-      line.tag = ADJACENCY_LINE_TAG;
-      line.thickness = 1;
-
-      line.points = this._getLinePoints(adjacencyResult.path).map(
-        (point: Vector): Vector => {
-          const pos: Vector = obj.worldPositionToLocal(point);
-          pos.z = 0; // same plane as the PDS.
-          return pos;
-        }
+      const line: DrawingLine = DisplayPDSAdjacency._getLine(
+        adjacencyResult.path
       );
+
+      // Convert to local positions.
+      line.points = line.points.map((point: Vector): Vector => {
+        const pos: Vector = obj.worldPositionToLocal(point);
+        pos.z = 0; // same plane as the PDS.
+        return pos;
+      });
 
       obj.addDrawingLine(line);
     });

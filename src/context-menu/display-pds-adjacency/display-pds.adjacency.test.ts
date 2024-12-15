@@ -76,37 +76,33 @@ it("toggle on/off", () => {
 });
 
 it("_parseAdjencyNodeOrThrow", () => {
-  const displayPdsAdjacency = new DisplayPDSAdjacency();
-  expect(() => displayPdsAdjacency._parseAdjencyNodeOrThrow("")).toThrow();
+  expect(() => DisplayPDSAdjacency._parseAdjencyNodeOrThrow("")).toThrow();
 
   let parsed: { hex: HexType; direction: string | undefined };
-  parsed = displayPdsAdjacency._parseAdjencyNodeOrThrow("<0,0,0>");
+  parsed = DisplayPDSAdjacency._parseAdjencyNodeOrThrow("<0,0,0>");
   expect(parsed.hex).toBe("<0,0,0>");
   expect(parsed.direction).toBeUndefined();
 
-  parsed = displayPdsAdjacency._parseAdjencyNodeOrThrow("<0,0,0>-n");
+  parsed = DisplayPDSAdjacency._parseAdjencyNodeOrThrow("<0,0,0>-n");
   expect(parsed.hex).toBe("<0,0,0>");
   expect(parsed.direction).toBe("n");
 });
 
 it("_getLinePoints", () => {
-  const displayPdsAdjacency = new DisplayPDSAdjacency();
-  const p1 = displayPdsAdjacency
-    ._getLinePoints(["<0,0,0>", "<1,0,-1>"])
-    .map((pos: Vector) => pos.toString());
+  const p1 = DisplayPDSAdjacency._getLinePoints(["<0,0,0>", "<1,0,-1>"]).map(
+    (pos: Vector) => pos.toString()
+  );
   expect(p1).toEqual(["(X=0,Y=0,Z=0)", "(X=15.01,Y=0,Z=0)"]);
 
-  const p2 = displayPdsAdjacency
-    ._getLinePoints([
-      "<0,0,0>",
-      "<0,0,0>-n",
-      "<0,0,0>-nw",
-      "<0,0,0>-sw",
-      "<0,0,0>-s",
-      "<0,0,0>-se",
-      "<0,0,0>-ne",
-    ])
-    .map((pos: Vector) => pos.toString());
+  const p2 = DisplayPDSAdjacency._getLinePoints([
+    "<0,0,0>",
+    "<0,0,0>-n",
+    "<0,0,0>-nw",
+    "<0,0,0>-sw",
+    "<0,0,0>-s",
+    "<0,0,0>-se",
+    "<0,0,0>-ne",
+  ]).map((pos: Vector) => pos.toString());
   expect(p2).toEqual([
     "(X=0,Y=0,Z=0)",
     "(X=7.505,Y=0,Z=0)",
