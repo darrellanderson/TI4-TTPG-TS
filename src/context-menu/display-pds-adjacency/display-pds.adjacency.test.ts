@@ -1,4 +1,4 @@
-import { globalEvents, Player } from "@tabletop-playground/api";
+import { globalEvents, Player, Vector } from "@tabletop-playground/api";
 import { HexType } from "ttpg-darrell";
 import { DrawingLine, MockGameObject, MockPlayer } from "ttpg-mock";
 
@@ -73,4 +73,47 @@ it("toggle on/off", () => {
   pds._customActionAsPlayer(player, ADJACENCY_ACTION_NAME);
   expect(pds.getDrawingLines().length).toBe(0);
   expect(displayPdsAdjacency._hasAdjacencyLines(pds)).toBe(false);
+});
+
+it("_parseAdjencyNodeOrThrow", () => {
+  const displayPdsAdjacency = new DisplayPDSAdjacency();
+  expect(() => displayPdsAdjacency._parseAdjencyNodeOrThrow("")).toThrow();
+
+  let parsed: { hex: HexType; direction: string | undefined };
+  parsed = displayPdsAdjacency._parseAdjencyNodeOrThrow("<0,0,0>");
+  expect(parsed.hex).toBe("<0,0,0>");
+  expect(parsed.direction).toBeUndefined();
+
+  parsed = displayPdsAdjacency._parseAdjencyNodeOrThrow("<0,0,0>-n");
+  expect(parsed.hex).toBe("<0,0,0>");
+  expect(parsed.direction).toBe("n");
+});
+
+it("_getLinePoints", () => {
+  const displayPdsAdjacency = new DisplayPDSAdjacency();
+  const p1 = displayPdsAdjacency
+    ._getLinePoints(["<0,0,0>", "<1,0,-1>"])
+    .map((pos: Vector) => pos.toString());
+  expect(p1).toEqual(["(X=0,Y=0,Z=0)", "(X=15.01,Y=0,Z=0)"]);
+
+  const p2 = displayPdsAdjacency
+    ._getLinePoints([
+      "<0,0,0>",
+      "<0,0,0>-n",
+      "<0,0,0>-nw",
+      "<0,0,0>-sw",
+      "<0,0,0>-s",
+      "<0,0,0>-se",
+      "<0,0,0>-ne",
+    ])
+    .map((pos: Vector) => pos.toString());
+  expect(p2).toEqual([
+    "(X=0,Y=0,Z=0)",
+    "(X=7.505,Y=0,Z=0)",
+    "(X=3.752,Y=-6.5,Z=0)",
+    "(X=-3.752,Y=-6.5,Z=0)",
+    "(X=-7.505,Y=0,Z=0)",
+    "(X=-3.752,Y=6.5,Z=0)",
+    "(X=3.752,Y=6.5,Z=0)",
+  ]);
 });
