@@ -1,11 +1,12 @@
 import {
   DrawingLine,
   GameObject,
+  globalEvents,
   Vector,
   world,
 } from "@tabletop-playground/api";
 import { Adjacency, HexType, IGlobal } from "ttpg-darrell";
-import { globalEvents } from "ttpg-mock";
+
 import { System } from "../system/system";
 import { SystemAdjacencyHyperlane } from "./system-adjacency-hyperlane";
 import {
@@ -36,12 +37,15 @@ export class DrawHyperlanes implements IGlobal {
       obj.getId()
     );
     if (system && system.isHyperlane()) {
+      obj.onMovementStopped.remove(this._onMovementStoppedHandler);
       obj.onMovementStopped.add(this._onMovementStoppedHandler);
       this._update(obj);
     }
   }
 
   _update(obj: GameObject): void {
+    console.log("DrawHyperlanes._update", obj.getId());
+    world.showPing(obj.getPosition(), [1, 0, 0, 1], false);
     obj.getDrawingLines().forEach((line) => {
       if (line.tag === ADJACENCY_LINE_TAG) {
         obj.removeDrawingLineObject(line);
@@ -61,17 +65,31 @@ export class DrawHyperlanes implements IGlobal {
 
     const adjacency: Adjacency = new Adjacency();
     new SystemAdjacencyHyperlane().addTags(hexToSystem, adjacency);
-    for (const [a, b] of adjacency.getAllLinks()) {
-      const line: DrawingLine = DisplayPDSAdjacency._getLine([a, b]);
 
-      // Convert to local positions.
-      line.points = line.points.map((point: Vector): Vector => {
-        const pos: Vector = obj.worldPositionToLocal(point);
-        pos.z = extent.z + 0.05;
-        return pos;
-      });
-
-      obj.addDrawingLine(line);
+    const dirs: Array<string> = ["n", "nw", "sw", "s", "se", "ne"];
+    for (const src of dirs) {
+      const srcNode: string = `${hex}-${src}`;
+      const adj: Set<string> = adjacency._getAdjacentNodeSet(srcNode);
+      console.log("adj", hex, srcNode, "::", Array.from(adj).join(" // "));
+      for (const dst of dirs) {
+        const dstNode: string = `${hex}-${dst}`;
+        if (src >= dst || !adj.has(dstNode)) {
+          continue;
+        }
+        const line: DrawingLine = DisplayPDSAdjacency._getLine([
+          srcNode,
+          dstNode,
+        ]);
+        // Convert to local positions.
+        line.points = line.points.map((point: Vector): Vector => {
+          const pos: Vector = obj.worldPositionToLocal(point);
+          pos.z = extent.z + 0.05;
+          return pos;
+        });
+        obj.addDrawingLine(line);
+      }
     }
   }
 }
+
+new DrawHyperlanes().init();
