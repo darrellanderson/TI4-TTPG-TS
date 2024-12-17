@@ -202,3 +202,39 @@ it("addTags (rotated hyperlane)", () => {
     })
   );
 });
+
+it("addTags (multiple hyperlanes)", () => {
+  const hexToSystem: Map<HexType, System> = new Map<HexType, System>();
+  const adjacency: Adjacency = new Adjacency();
+
+  // Add sw-ne hyperlane system.
+  new MockGameObject({
+    templateMetadata: "tile.system:pok/88",
+  });
+  const hyperlaneSystem: System | undefined = TI4.systemRegistry.getByPosition(
+    new Vector(0, 0, 0)
+  );
+  if (hyperlaneSystem) {
+    hexToSystem.set("<0,0,0>", hyperlaneSystem);
+  }
+
+  // Register hyperlane nodes and links.
+  new SystemAdjacencyHyperlane().addTags(hexToSystem, adjacency);
+
+  expect(
+    adjacency.hasLink({
+      src: "<0,-1,1>|<0,0,0>",
+      dst: "<0,0,0>|<0,1,-1>",
+      distance: 0,
+      isTransit: true,
+    })
+  );
+  expect(
+    adjacency.hasLink({
+      src: "<0,-1,1>|<0,0,0>",
+      dst: "<0,0,0>|<1,0,-1>",
+      distance: 0,
+      isTransit: true,
+    })
+  );
+});

@@ -5,9 +5,16 @@ import {
   Vector,
   world,
 } from "@tabletop-playground/api";
-import { Adjacency, HexType, IGlobal } from "ttpg-darrell";
+import {
+  Adjacency,
+  AdjacencyPathType,
+  Hex,
+  HexType,
+  IGlobal,
+} from "ttpg-darrell";
 
 import { System } from "../system/system";
+import { SystemAdjacency } from "./system-adjacency";
 import { SystemAdjacencyHyperlane } from "./system-adjacency-hyperlane";
 import {
   ADJACENCY_LINE_TAG,
@@ -51,6 +58,7 @@ export class DrawHyperlanes implements IGlobal {
         obj.removeDrawingLineObject(line);
       }
     });
+
     const extent: Vector = obj.getExtent(false, false);
 
     const pos: Vector = obj.getPosition();
@@ -66,28 +74,62 @@ export class DrawHyperlanes implements IGlobal {
     const adjacency: Adjacency = new Adjacency();
     new SystemAdjacencyHyperlane().addTags(hexToSystem, adjacency);
 
-    const dirs: Array<string> = ["n", "nw", "sw", "s", "se", "ne"];
-    for (const src of dirs) {
-      const srcNode: string = `${hex}-${src}`;
-      const adj: Set<string> = adjacency._getAdjacentNodeSet(srcNode);
-      console.log("adj", hex, srcNode, "::", Array.from(adj).join(" // "));
-      for (const dst of dirs) {
-        const dstNode: string = `${hex}-${dst}`;
-        if (src >= dst || !adj.has(dstNode)) {
-          continue;
+    // Get the directed edge going in to the system, use as the
+    // starting points for paths (may start with a transit link).
+    //
+    // That said, paths cannot END with a transit link.  Add a bogus
+    // non-transit link to each outgoing directed edge and strip off later.
+    const bogusNode: string = "<bogus>";
+    const edgesIn: Array<string> = [];
+    Hex.neighbors(hex).forEach((neighbor: HexType) => {
+      const edgeIn: string = [neighbor, hex].join("|");
+      edgesIn.push(edgeIn);
+
+      const edgeOut: string = [hex, neighbor].join("|");
+      adjacency.addLink({
+        src: edgeOut,
+        dst: bogusNode + "-" + neighbor, // unique to prevent revisiting the same final node
+        distance: 0.5,
+        isTransit: false,
+      });
+    });
+
+    // Get paths from each edge separately (using a shared incoming hub leads
+    // to path collisions clipping the paths for re-visiting the same edge).
+    // We want this to visually verify each direction of each hyperlane.
+    const paths: Array<AdjacencyPathType> = [];
+    for (const edgeIn of edgesIn) {
+      const edgePaths: ReadonlyArray<AdjacencyPathType> = adjacency.get(
+        edgeIn,
+        100
+      );
+      paths.push(...edgePaths);
+    }
+
+    const simplePaths: Array<Array<string>> = paths.map(
+      (path: AdjacencyPathType): Array<string> => {
+        const simplePath: Array<string> = SystemAdjacency.simplifyPath(path);
+        const last: string | undefined = simplePath.pop();
+        if (!last?.startsWith(bogusNode)) {
+          throw new Error("Unexpected path");
         }
-        const line: DrawingLine = DisplayPDSAdjacency._getLine([
-          srcNode,
-          dstNode,
-        ]);
-        // Convert to local positions.
-        line.points = line.points.map((point: Vector): Vector => {
-          const pos: Vector = obj.worldPositionToLocal(point);
-          pos.z = extent.z + 0.05;
-          return pos;
-        });
-        obj.addDrawingLine(line);
+        return simplePath;
       }
+    );
+
+    console.log("paths", obj.getId(), paths.length);
+    console.log("simplePaths", "\n" + simplePaths.join("\n"));
+
+    for (const simplePath of simplePaths) {
+      const line: DrawingLine = DisplayPDSAdjacency._getLine(simplePath);
+      // Convert to local positions.
+      line.points = line.points.map((point: Vector): Vector => {
+        const pos: Vector = obj.worldPositionToLocal(point);
+        pos.z = extent.z + 0.05;
+        extent.z += 0.1;
+        return pos;
+      });
+      obj.addDrawingLine(line);
     }
   }
 }

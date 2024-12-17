@@ -114,6 +114,7 @@ export class SystemAdjacencyHyperlane {
                 distance: 0,
                 isTransit: true,
               };
+              //console.log(JSON.stringify(link));
               adjacency.addLink(link);
             }
           }
