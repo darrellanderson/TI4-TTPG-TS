@@ -1,6 +1,14 @@
-import { Adjacency, AdjacencyPathType, Hex, HexType } from "ttpg-darrell";
-import { System } from "../system/system";
 import { Vector } from "@tabletop-playground/api";
+import {
+  Adjacency,
+  AdjacencyLinkType,
+  AdjacencyNodeType,
+  AdjacencyPathType,
+  Hex,
+  HexType,
+} from "ttpg-darrell";
+
+import { System } from "../system/system";
 import { SystemAdjacencyHyperlane } from "./system-adjacency-hyperlane";
 import { SystemAdjacencyNeighbor } from "./system-adjacency-neighbor";
 import { SystemAdjacencyWormhole } from "./system-adjacency-wormhole";
@@ -24,20 +32,74 @@ export class SystemAdjacency {
   }
 
   /**
+   * Convert path to simplified list of nodes.
+   * Intended for debugging and display.
+   *
+   * @param adjacencyNodePath
+   * @returns
+   */
+  static simplifyPath(
+    adjacencyNodePath: AdjacencyPathType
+  ): Array<AdjacencyNodeType> {
+    const result: Array<AdjacencyNodeType> = [];
+    const first: AdjacencyLinkType | undefined = adjacencyNodePath.path[0];
+    if (first) {
+      result.push(first.src);
+    }
+    for (const link of adjacencyNodePath.path) {
+      result.push(link.dst);
+    }
+    return result;
+  }
+
+  /**
+   * Node is either a HexType or a with-direction hex edge encoded as
+   * "srcHex|dstHex".
+   *
+   * @param node
+   * @returns
+   */
+  static adjNodeToPositionOrThrow(node: AdjacencyNodeType): Vector {
+    const re: RegExp = /^(<-?\d+,-?\d+,-?\d+>)\|?(<-?\d+,-?\d+,-?\d+>)?$/;
+    const match: RegExpMatchArray | null = node.match(re);
+    let srcHex: HexType | undefined;
+    let dstHex: HexType | undefined;
+    if (match) {
+      const srcStr: string | undefined = match[1];
+      if (srcStr) {
+        srcHex = srcStr as HexType;
+      }
+      const dstStr: string | undefined = match[2];
+      if (dstStr) {
+        dstHex = dstStr as HexType;
+      }
+    }
+    if (srcHex && dstHex) {
+      const srcPos: Vector = TI4.hex.toPosition(srcHex);
+      const dstPos: Vector = TI4.hex.toPosition(dstHex);
+      return srcPos.add(dstPos).divide(2);
+    } else if (srcHex) {
+      return TI4.hex.toPosition(srcHex);
+    } else {
+      throw new Error(`Invalid node: ${node}`);
+    }
+  }
+
+  /**
    * Get cooked adjacency results, just the adjacent hexes.
    * @param hex
    * @returns
    */
-  getAdjHexes(hex: HexType): Set<HexType> {
+  public getAdjHexes(hex: HexType): Set<HexType> {
     const adjHexes: Set<HexType> = new Set();
 
-    const adjacencyResults: ReadonlyArray<AdjacencyPathType> =
-      this.getAdjencyResults(hex);
-    adjacencyResults.forEach((result: AdjacencyPathType): void => {
-      if (result.distance === 1) {
+    const adjacencyPaths: ReadonlyArray<AdjacencyPathType> =
+      this.getAdjacencyPaths(hex);
+    adjacencyPaths.forEach((adjacencyPath: AdjacencyPathType): void => {
+      if (adjacencyPath.distance === 1) {
         // Adjacency downgraded from HexType to string.
         // Verify node is HexType before using as one.
-        const adjHex: HexType = result.node as HexType;
+        const adjHex: HexType = adjacencyPath.node as HexType;
         if (Hex._maybeHexFromString(adjHex)) {
           adjHexes.add(adjHex);
         }
@@ -52,7 +114,7 @@ export class SystemAdjacency {
    * @param hex
    * @returns
    */
-  getAdjencyResults(hex: HexType): ReadonlyArray<AdjacencyPathType> {
+  public getAdjacencyPaths(hex: HexType): ReadonlyArray<AdjacencyPathType> {
     const adjacency: Adjacency = new Adjacency();
     const hexToSystem: Map<HexType, System> = SystemAdjacency.getHexToSystem();
     this._hyperlane.addTags(hexToSystem, adjacency);

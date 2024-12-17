@@ -35,58 +35,10 @@ export class DisplayPDSAdjacency implements IGlobal {
     }
   };
 
-  static _parseAdjencyNodeOrThrow(node: string): {
-    hex: HexType;
-    direction: string | undefined;
-  } {
-    const re: RegExp = /^(<-?\d+,-?\d+,-?\d+>)-?(n|ne|e|se|s|sw|w|nw)?$/;
-    const match: RegExpMatchArray | null = node.match(re);
-    if (!match) {
-      throw new Error(`Invalid node: ${node}`);
-    }
-    const hex: HexType = match[1] as HexType;
-    return { hex, direction: match[2] };
-  }
-
   static _getLinePoints(adjacencyNodePath: Array<string>): Array<Vector> {
     // Path includes start and end as well as middle (if any).
     return adjacencyNodePath.map((node: string): Vector => {
-      const parsed: { hex: HexType; direction: string | undefined } =
-        DisplayPDSAdjacency._parseAdjencyNodeOrThrow(node);
-      const pos: Vector = TI4.hex.toPosition(parsed.hex);
-
-      // Hyperlanes add nodes for the hyperlane hex edges traversed.
-      if (parsed.direction) {
-        // Corners start with "top right", winding counterclockwise.
-        const corners: Array<Vector> = TI4.hex.corners("<0,0,0>");
-        let a: Vector | undefined = undefined;
-        let b: Vector | undefined = undefined;
-        if (parsed.direction === "n") {
-          a = corners[0];
-          b = corners[1];
-        } else if (parsed.direction === "nw") {
-          a = corners[1];
-          b = corners[2];
-        } else if (parsed.direction === "sw") {
-          a = corners[2];
-          b = corners[3];
-        } else if (parsed.direction === "s") {
-          a = corners[3];
-          b = corners[4];
-        } else if (parsed.direction === "se") {
-          a = corners[4];
-          b = corners[5];
-        } else if (parsed.direction === "ne") {
-          a = corners[5];
-          b = corners[0];
-        }
-        if (a && b) {
-          pos.x += (a.x + b.x) / 2;
-          pos.y += (a.y + b.y) / 2;
-        }
-      }
-
-      return pos;
+      return SystemAdjacency.adjNodeToPositionOrThrow(node);
     });
   }
 
@@ -150,13 +102,13 @@ export class DisplayPDSAdjacency implements IGlobal {
 
     const adjacencyResults: ReadonlyArray<AdjacencyPathType> =
       new SystemAdjacency()
-        .getAdjencyResults(hex)
+        .getAdjacencyPaths(hex)
         .filter((adjacencyResult: AdjacencyPathType): boolean => {
           return adjacencyResult.distance === 1;
         });
     adjacencyResults.forEach((adjacencyPathType: AdjacencyPathType): void => {
       const line: DrawingLine = DisplayPDSAdjacency._getLine(
-        adjacencyPathType.path
+        SystemAdjacency.simplifyPath(adjacencyPathType)
       );
 
       // Convert to local positions.

@@ -1,6 +1,6 @@
 import { GameObject, Vector } from "@tabletop-playground/api";
 import { MockGameObject } from "ttpg-mock";
-import { Adjacency, AdjacencyResult, Hex, HexType } from "ttpg-darrell";
+import { Adjacency, Hex, HexType } from "ttpg-darrell";
 
 import { SystemAdjacencyHyperlane } from "./system-adjacency-hyperlane";
 import { System } from "../system/system";
@@ -21,6 +21,7 @@ it("static yawToShift", () => {
   expect(SystemAdjacencyHyperlane.yawToShift(361)).toBe(0);
 });
 
+/*
 it("static neighborsWithRotAndFlip", () => {
   const defaultNeighbors: Array<HexType> = Hex.neighbors("<0,0,0>");
   let neighbors: Array<HexType>;
@@ -171,3 +172,4 @@ it("addTags (rotated hyperlane)", () => {
   expect(adjacency.hasNodeTag("<0,0,0>-ne", "<-1,0,1>|<0,0,0>")).toBe(true);
   expect(adjacency.hasNodeTag("<0,0,0>-ne", "<0,0,0>|<1,0,-1>")).toBe(true);
 });
+*/

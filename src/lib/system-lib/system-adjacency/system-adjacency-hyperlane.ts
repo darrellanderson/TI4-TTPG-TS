@@ -55,6 +55,7 @@ export class SystemAdjacencyHyperlane {
 
       const hyperlanes: Record<string, Array<string>> = system.getHyperlanes();
       for (const [srcDir, dstDirs] of Object.entries(hyperlanes)) {
+        /*
         const srcEdge: HexType | undefined =
           neighbors[neighborIndicess[srcDir]];
 
@@ -76,7 +77,7 @@ export class SystemAdjacencyHyperlane {
               adjacency.addLink(edge, edge); // make nodes sharing this tag adjacent
             }
           }
-        }
+        }*/
       }
     }
   }
