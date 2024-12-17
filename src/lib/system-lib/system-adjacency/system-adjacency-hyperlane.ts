@@ -1,31 +1,87 @@
 import { GameObject } from "@tabletop-playground/api";
-import { Adjacency, Facing, Hex, HexType } from "ttpg-darrell";
+import {
+  Adjacency,
+  AdjacencyLinkType,
+  Facing,
+  Hex,
+  HexType,
+} from "ttpg-darrell";
 import { System } from "../system/system";
+
+export type Direction = "n" | "nw" | "sw" | "s" | "se" | "ne";
+export type DirectionToNeighborHexType = Record<Direction, HexType>;
 
 export class SystemAdjacencyHyperlane {
   constructor() {}
 
-  static yawToShift(yaw: number): number {
+  /**
+   * Translate system tile rotation into neighbor index shift.
+   * Expose for map string save.
+   *
+   * @param yaw
+   * @returns
+   */
+  public static yawToShift(yaw: number): number {
     yaw = yaw % 360; // [-360:360]
     yaw = (yaw + 360) % 360; // [0:360]
     return Math.round(yaw / 60) % 6; // [0:5]
   }
 
-  static neighborIndicesWithRotAndFlip(system: System): Array<number> {
+  static _getDirectionToNeighbor(
+    neighbors: Array<HexType>
+  ): DirectionToNeighborHexType {
+    const n: HexType | undefined = neighbors[0];
+    const nw: HexType | undefined = neighbors[1];
+    const sw: HexType | undefined = neighbors[2];
+    const s: HexType | undefined = neighbors[3];
+    const se: HexType | undefined = neighbors[4];
+    const ne: HexType | undefined = neighbors[5];
+
+    // Make sure TypeScript knows all the values are defined.
+    if (!n || !nw || !sw || !s || !se || !ne || neighbors.length !== 6) {
+      throw new Error("neighbors must have 6 elements");
+    }
+    return {
+      n,
+      nw,
+      sw,
+      s,
+      se,
+      ne,
+    };
+  }
+
+  /**
+   * Compute system tile local direction to world edge.
+   *
+   * That is, "n" is north from the tile's rotated/flipped local perspective,
+   * but may be any of the 6 directions in world space.
+   *
+   * @param system
+   * @returns
+   */
+  static _localNeighborsWithRotAndFlip(
+    system: System
+  ): DirectionToNeighborHexType {
     const systemTileObj: GameObject = system.getObj();
     const faceUp: boolean = Facing.isFaceUp(systemTileObj);
     const yaw: number = systemTileObj.getRotation().yaw;
-    const n: number = SystemAdjacencyHyperlane.yawToShift(yaw);
+    const yawShiftCount: number = SystemAdjacencyHyperlane.yawToShift(yaw);
 
-    const neighborIndicess: Array<number> = [...new Array(6).fill(0).keys()];
-    for (let i = 0; i < n; i++) {
+    const hex: HexType = TI4.hex.fromPosition(systemTileObj.getPosition());
+    const neighbors: Array<HexType> = Hex.neighbors(hex);
+
+    // Shift neighbors to match local orientation.
+    for (let i = 0; i < yawShiftCount; i++) {
       if (faceUp) {
-        neighborIndicess.push(neighborIndicess.shift()!);
+        neighbors.push(neighbors.shift()!);
       } else {
-        neighborIndicess.unshift(neighborIndicess.pop()!);
+        neighbors.unshift(neighbors.pop()!);
       }
     }
-    return neighborIndicess;
+
+    // Extract the shifted hexes in local directions.
+    return SystemAdjacencyHyperlane._getDirectionToNeighbor(neighbors);
   }
 
   public addTags(
@@ -37,47 +93,31 @@ export class SystemAdjacencyHyperlane {
         continue;
       }
 
-      const neighbors: Array<HexType> = Hex.neighbors(hex);
-      const edgesIn: Array<string> = neighbors.map(
-        (neighbor: HexType): string => {
-          return [neighbor, hex].sort().join("|");
-        }
-      );
-      const edgesOut: Array<string> = neighbors.map(
-        (neighbor: HexType): string => {
-          return [hex, neighbor].sort().join("|");
-        }
-      );
-
-      // Get mapping to neighbor indices, accounting for rotated and flipped.
-      const neighborIndicess: Array<number> =
-        SystemAdjacencyHyperlane.neighborIndicesWithRotAndFlip(system);
+      // Get mapping to neighbors, accounting for rotated and flipped.
+      const localNeighbors: DirectionToNeighborHexType =
+        SystemAdjacencyHyperlane._localNeighborsWithRotAndFlip(system);
 
       const hyperlanes: Record<string, Array<string>> = system.getHyperlanes();
       for (const [srcDir, dstDirs] of Object.entries(hyperlanes)) {
-        /*
-        const srcEdge: HexType | undefined =
-          neighbors[neighborIndicess[srcDir]];
-
-        // Create a node for each edge of the hyperlane, link the edge
-        // to the node and mark as a transit node.
-        const srcHex: HexType | undefined = dirToHex[srcDir];
-        if (srcHex) {
-          const node: string = `${hex}-${srcDir}`;
-          const edge = [srcHex, hex].sort().join("|");
-          adjacency.addNodeTags(node, [edge]);
-          adjacency.addTransitNode(node);
-          adjacency.addLink(edge, edge); // make nodes sharing this tag adjacent
-
+        const srcNeighbor: HexType | undefined =
+          localNeighbors[srcDir as Direction];
+        if (srcNeighbor) {
+          const srcEdge: string = [srcNeighbor, hex].join("|");
           for (const dstDir of dstDirs) {
-            const dstHex: HexType | undefined = dirToHex[dstDir];
-            if (dstHex) {
-              const edge = [hex, dstHex].sort().join("|");
-              adjacency.addNodeTags(node, [edge]);
-              adjacency.addLink(edge, edge); // make nodes sharing this tag adjacent
+            const dstNeighbor: HexType | undefined =
+              localNeighbors[dstDir as Direction];
+            if (dstNeighbor) {
+              const dstEdge: string = [hex, dstNeighbor].join("|");
+              const link: AdjacencyLinkType = {
+                src: srcEdge,
+                dst: dstEdge,
+                distance: 0,
+                isTransit: true,
+              };
+              adjacency.addLink(link);
             }
           }
-        }*/
+        }
       }
     }
   }
