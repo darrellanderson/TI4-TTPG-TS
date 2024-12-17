@@ -11,8 +11,9 @@ export class SystemAdjacencyNeighbor {
     hexToSystem: Map<HexType, System>,
     adjacency: Adjacency
   ): void {
-    // Add tags for each edge where systems are in the same class.
-    // Do not use a single tag for the system, allows for an edge to be blocked.
+    // Create:
+    // 1. Incoming links from hex edges to hex.
+    // 2. Outgoing links from hex to hex edges.
     for (const [hex, system] of hexToSystem) {
       // "off-map" systems never have neighbors (not to be conused with
       // adjaency, which they can have via wormholes).  Hyperlanes do
@@ -26,9 +27,23 @@ export class SystemAdjacencyNeighbor {
       for (const neighbor of neighbors) {
         const neighborSystem: System | undefined = hexToSystem.get(neighbor);
         if (neighborSystem && neighborSystem.getClass() === system.getClass()) {
-          const edge: string = [hex, neighbor].sort().join("|");
-          adjacency.addNodeTags(hex, [edge]);
-          adjacency.addLink(edge, edge); // make nodes sharing this tag adjacent
+          // Incoming link from neighbor to hex.
+          const edgeIn: string = [neighbor, hex].join("|");
+          adjacency.addLink({
+            src: edgeIn,
+            dst: hex,
+            distance: 0.5,
+            isTransit: false,
+          });
+
+          // Outgoing link from hex to neighbor.
+          const edgeOut: string = [hex, neighbor].join("|");
+          adjacency.addLink({
+            src: hex,
+            dst: edgeOut,
+            distance: 0.5,
+            isTransit: true,
+          });
         }
       }
     }
@@ -61,8 +76,12 @@ export class SystemAdjacencyNeighbor {
         }
       }
       if (best) {
-        const edge: string = [hex, best].sort().join("|");
-        adjacency.removeLink(edge, edge);
+        // Remove all links between edge and the two hexes.
+        const edgeA: string = [best, hex].join("|");
+        adjacency.removeNode(edgeA);
+
+        const edgeB: string = [hex, best].join("|");
+        adjacency.removeNode(edgeB);
       }
     }
   }

@@ -7,7 +7,7 @@ import {
   Vector,
   world,
 } from "@tabletop-playground/api";
-import { AdjacencyResult, HexType, IGlobal, NSID } from "ttpg-darrell";
+import { AdjacencyPathType, HexType, IGlobal, NSID } from "ttpg-darrell";
 
 import { SystemAdjacency } from "../../lib/system-lib/system-adjacency/system-adjacency";
 
@@ -148,14 +148,15 @@ export class DisplayPDSAdjacency implements IGlobal {
     const pos: Vector = obj.getPosition();
     const hex: HexType = TI4.hex.fromPosition(pos);
 
-    const adjacencyResults: Array<AdjacencyResult> = new SystemAdjacency()
-      .getAdjencyResults(hex)
-      .filter((adjacencyResult: AdjacencyResult): boolean => {
-        return adjacencyResult.distance === 1;
-      });
-    adjacencyResults.forEach((adjacencyResult: AdjacencyResult): void => {
+    const adjacencyResults: ReadonlyArray<AdjacencyPathType> =
+      new SystemAdjacency()
+        .getAdjencyResults(hex)
+        .filter((adjacencyResult: AdjacencyPathType): boolean => {
+          return adjacencyResult.distance === 1;
+        });
+    adjacencyResults.forEach((adjacencyPathType: AdjacencyPathType): void => {
       const line: DrawingLine = DisplayPDSAdjacency._getLine(
-        adjacencyResult.path
+        adjacencyPathType.path
       );
 
       // Convert to local positions.

@@ -11,21 +11,21 @@ export class SystemAdjacencyHyperlane {
     return Math.round(yaw / 60) % 6; // [0:5]
   }
 
-  static neighborsWithRotAndFlip(hex: HexType, system: System): Array<HexType> {
+  static neighborIndicesWithRotAndFlip(system: System): Array<number> {
     const systemTileObj: GameObject = system.getObj();
     const faceUp: boolean = Facing.isFaceUp(systemTileObj);
     const yaw: number = systemTileObj.getRotation().yaw;
     const n: number = SystemAdjacencyHyperlane.yawToShift(yaw);
 
-    const neighbors: Array<HexType> = Hex.neighbors(hex);
+    const neighborIndicess: Array<number> = [...new Array(6).fill(0).keys()];
     for (let i = 0; i < n; i++) {
       if (faceUp) {
-        neighbors.push(neighbors.shift()!);
+        neighborIndicess.push(neighborIndicess.shift()!);
       } else {
-        neighbors.unshift(neighbors.pop()!);
+        neighborIndicess.unshift(neighborIndicess.pop()!);
       }
     }
-    return neighbors;
+    return neighborIndicess;
   }
 
   public addTags(
@@ -37,21 +37,27 @@ export class SystemAdjacencyHyperlane {
         continue;
       }
 
-      // Get neighbors, reverse-rotate to match the system's orientation.
-      // (This way we can use "north" relative to the tile orientation.)
-      const neighbors: Array<HexType> =
-        SystemAdjacencyHyperlane.neighborsWithRotAndFlip(hex, system);
-      const dirToHex: Record<string, HexType | undefined> = {
-        n: neighbors[0],
-        nw: neighbors[1],
-        sw: neighbors[2],
-        s: neighbors[3],
-        se: neighbors[4],
-        ne: neighbors[5],
-      };
+      const neighbors: Array<HexType> = Hex.neighbors(hex);
+      const edgesIn: Array<string> = neighbors.map(
+        (neighbor: HexType): string => {
+          return [neighbor, hex].sort().join("|");
+        }
+      );
+      const edgesOut: Array<string> = neighbors.map(
+        (neighbor: HexType): string => {
+          return [hex, neighbor].sort().join("|");
+        }
+      );
+
+      // Get mapping to neighbor indices, accounting for rotated and flipped.
+      const neighborIndicess: Array<number> =
+        SystemAdjacencyHyperlane.neighborIndicesWithRotAndFlip(system);
 
       const hyperlanes: Record<string, Array<string>> = system.getHyperlanes();
       for (const [srcDir, dstDirs] of Object.entries(hyperlanes)) {
+        const srcEdge: HexType | undefined =
+          neighbors[neighborIndicess[srcDir]];
+
         // Create a node for each edge of the hyperlane, link the edge
         // to the node and mark as a transit node.
         const srcHex: HexType | undefined = dirToHex[srcDir];

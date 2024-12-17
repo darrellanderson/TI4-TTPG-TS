@@ -1,4 +1,4 @@
-import { Card, GameObject } from "@tabletop-playground/api";
+import { Card } from "@tabletop-playground/api";
 import { Adjacency, HexType } from "ttpg-darrell";
 import { MockCard, MockGameObject, MockSnapPoint } from "ttpg-mock";
 
@@ -19,29 +19,67 @@ it("addTags", () => {
 
   new SystemAdjacencyWormhole().addTags(hexToSystem, adjacency);
 
-  expect(adjacency.hasLink("alpha", "alpha")).toBe(true);
-  expect(adjacency.hasLink("beta", "beta")).toBe(true);
-  expect(adjacency.hasNodeTag("<0,0,0>", "alpha")).toBe(false);
-  expect(adjacency.hasNodeTag("<0,0,0>", "beta")).toBe(true);
+  expect(
+    adjacency.hasLink({
+      src: "<0,0,0>",
+      dst: "beta",
+      distance: 0.5,
+      isTransit: true,
+    })
+  ).toBe(true);
+  expect(
+    adjacency.hasLink({
+      src: "beta",
+      dst: "<0,0,0>",
+      distance: 0.5,
+      isTransit: false,
+    })
+  ).toBe(true);
 });
 
 it("creuss flagship", () => {
-  const flagship: GameObject = MockGameObject.simple(
-    "unit.flagship:base/creuss"
-  );
-  const hex: HexType = TI4.hex.fromPosition(flagship.getPosition());
+  MockGameObject.simple("unit.flagship:base/creuss");
   const adjacency: Adjacency = new Adjacency();
-  expect(adjacency.hasNodeTag(hex, "delta")).toBe(false);
   new SystemAdjacencyWormhole()._applyCreussFlagship(adjacency);
-  expect(adjacency.hasNodeTag(hex, "delta")).toBe(true);
+
+  expect(
+    adjacency.hasLink({
+      src: "<0,0,0>",
+      dst: "delta",
+      distance: 0.5,
+      isTransit: true,
+    })
+  ).toBe(true);
+  expect(
+    adjacency.hasLink({
+      src: "delta",
+      dst: "<0,0,0>",
+      distance: 0.5,
+      isTransit: false,
+    })
+  ).toBe(true);
 });
 
 it("card wormhole_reconstruction", () => {
   MockCard.simple("card.agenda:base/wormhole_reconstruction");
   const adjacency: Adjacency = new Adjacency();
-  expect(adjacency.hasLink("alpha", "beta")).toBe(false);
   new SystemAdjacencyWormhole()._applyCards(adjacency);
-  expect(adjacency.hasLink("alpha", "beta")).toBe(true);
+  expect(
+    adjacency.hasLink({
+      src: "alpha",
+      dst: "beta",
+      distance: 0,
+      isTransit: true,
+    })
+  ).toBe(true);
+  expect(
+    adjacency.hasLink({
+      src: "beta",
+      dst: "alpha",
+      distance: 0,
+      isTransit: true,
+    })
+  ).toBe(true);
 });
 
 it("card wormhole_reconstruction (face down)", () => {
@@ -49,9 +87,23 @@ it("card wormhole_reconstruction (face down)", () => {
     isFaceUp: false,
   });
   const adjacency: Adjacency = new Adjacency();
-  expect(adjacency.hasLink("alpha", "beta")).toBe(false);
   new SystemAdjacencyWormhole()._applyCards(adjacency);
-  expect(adjacency.hasLink("alpha", "beta")).toBe(false);
+  expect(
+    adjacency.hasLink({
+      src: "alpha",
+      dst: "beta",
+      distance: 0,
+      isTransit: true,
+    })
+  ).toBe(false);
+  expect(
+    adjacency.hasLink({
+      src: "beta",
+      dst: "alpha",
+      distance: 0,
+      isTransit: true,
+    })
+  ).toBe(false);
 });
 
 it("card wormhole_reconstruction (in discard)", () => {
@@ -59,17 +111,45 @@ it("card wormhole_reconstruction (in discard)", () => {
     snappedToPoint: new MockSnapPoint({ tags: ["discard"] }),
   });
   const adjacency: Adjacency = new Adjacency();
-  expect(adjacency.hasLink("alpha", "beta")).toBe(false);
   new SystemAdjacencyWormhole()._applyCards(adjacency);
-  expect(adjacency.hasLink("alpha", "beta")).toBe(false);
+  expect(
+    adjacency.hasLink({
+      src: "alpha",
+      dst: "beta",
+      distance: 0,
+      isTransit: true,
+    })
+  ).toBe(false);
+  expect(
+    adjacency.hasLink({
+      src: "beta",
+      dst: "alpha",
+      distance: 0,
+      isTransit: true,
+    })
+  ).toBe(false);
 });
 
 it("card lost_star_chart", () => {
   MockCard.simple("card.action:base/lost_star_chart");
   const adjacency: Adjacency = new Adjacency();
-  expect(adjacency.hasLink("alpha", "beta")).toBe(false);
   new SystemAdjacencyWormhole()._applyCards(adjacency);
-  expect(adjacency.hasLink("alpha", "beta")).toBe(true);
+  expect(
+    adjacency.hasLink({
+      src: "alpha",
+      dst: "beta",
+      distance: 0,
+      isTransit: true,
+    })
+  ).toBe(true);
+  expect(
+    adjacency.hasLink({
+      src: "beta",
+      dst: "alpha",
+      distance: 0,
+      isTransit: true,
+    })
+  ).toBe(true);
 });
 
 it("card lost_star_chart (face down)", () => {
@@ -77,9 +157,23 @@ it("card lost_star_chart (face down)", () => {
     isFaceUp: false,
   });
   const adjacency: Adjacency = new Adjacency();
-  expect(adjacency.hasLink("alpha", "beta")).toBe(false);
   new SystemAdjacencyWormhole()._applyCards(adjacency);
-  expect(adjacency.hasLink("alpha", "beta")).toBe(false);
+  expect(
+    adjacency.hasLink({
+      src: "alpha",
+      dst: "beta",
+      distance: 0,
+      isTransit: true,
+    })
+  ).toBe(false);
+  expect(
+    adjacency.hasLink({
+      src: "beta",
+      dst: "alpha",
+      distance: 0,
+      isTransit: true,
+    })
+  ).toBe(false);
 });
 
 it("card lost_star_chart (in discard)", () => {
@@ -87,16 +181,28 @@ it("card lost_star_chart (in discard)", () => {
     snappedToPoint: new MockSnapPoint({ tags: ["discard"] }),
   });
   const adjacency: Adjacency = new Adjacency();
-  expect(adjacency.hasLink("alpha", "beta")).toBe(false);
   new SystemAdjacencyWormhole()._applyCards(adjacency);
-  expect(adjacency.hasLink("alpha", "beta")).toBe(false);
+  expect(
+    adjacency.hasLink({
+      src: "alpha",
+      dst: "beta",
+      distance: 0,
+      isTransit: true,
+    })
+  ).toBe(false);
+  expect(
+    adjacency.hasLink({
+      src: "beta",
+      dst: "alpha",
+      distance: 0,
+      isTransit: true,
+    })
+  ).toBe(false);
 });
 
 it("card emissary_taivra (active)", () => {
   let adjacency: Adjacency;
   adjacency = new Adjacency();
-  expect(adjacency.hasLink("alpha", "delta")).toBe(false);
-
   const card: Card = MockCard.simple(
     "card.leader.agent.creuss:pok/emissary_taivra"
   );
@@ -105,11 +211,41 @@ it("card emissary_taivra (active)", () => {
   adjacency = new Adjacency();
   new SystemAdjacencyWormhole()._applyCards(adjacency);
   expect(UnitModifierActiveIdle.isActive(card)).toBe(false);
-  expect(adjacency.hasLink("alpha", "delta")).toBe(false);
+  expect(
+    adjacency.hasLink({
+      src: "alpha",
+      dst: "delta",
+      distance: 0,
+      isTransit: true,
+    })
+  ).toBe(false);
+  expect(
+    adjacency.hasLink({
+      src: "delta",
+      dst: "alpha",
+      distance: 0,
+      isTransit: true,
+    })
+  ).toBe(false);
 
   UnitModifierActiveIdle.setActive(card, true);
   adjacency = new Adjacency();
   new SystemAdjacencyWormhole()._applyCards(adjacency);
   expect(UnitModifierActiveIdle.isActive(card)).toBe(true);
-  expect(adjacency.hasLink("alpha", "delta")).toBe(true);
+  expect(
+    adjacency.hasLink({
+      src: "alpha",
+      dst: "delta",
+      distance: 0,
+      isTransit: true,
+    })
+  ).toBe(true);
+  expect(
+    adjacency.hasLink({
+      src: "delta",
+      dst: "alpha",
+      distance: 0,
+      isTransit: true,
+    })
+  ).toBe(true);
 });

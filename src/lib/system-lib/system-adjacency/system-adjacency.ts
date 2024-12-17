@@ -1,4 +1,4 @@
-import { Adjacency, AdjacencyResult, Hex, HexType } from "ttpg-darrell";
+import { Adjacency, AdjacencyPathType, Hex, HexType } from "ttpg-darrell";
 import { System } from "../system/system";
 import { Vector } from "@tabletop-playground/api";
 import { SystemAdjacencyHyperlane } from "./system-adjacency-hyperlane";
@@ -31,9 +31,9 @@ export class SystemAdjacency {
   getAdjHexes(hex: HexType): Set<HexType> {
     const adjHexes: Set<HexType> = new Set();
 
-    const adjacencyResults: Array<AdjacencyResult> =
+    const adjacencyResults: ReadonlyArray<AdjacencyPathType> =
       this.getAdjencyResults(hex);
-    adjacencyResults.forEach((result: AdjacencyResult): void => {
+    adjacencyResults.forEach((result: AdjacencyPathType): void => {
       if (result.distance === 1) {
         // Adjacency downgraded from HexType to string.
         // Verify node is HexType before using as one.
@@ -52,7 +52,7 @@ export class SystemAdjacency {
    * @param hex
    * @returns
    */
-  getAdjencyResults(hex: HexType): Array<AdjacencyResult> {
+  getAdjencyResults(hex: HexType): ReadonlyArray<AdjacencyPathType> {
     const adjacency: Adjacency = new Adjacency();
     const hexToSystem: Map<HexType, System> = SystemAdjacency.getHexToSystem();
     this._hyperlane.addTags(hexToSystem, adjacency);

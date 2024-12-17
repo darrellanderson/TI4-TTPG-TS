@@ -19,14 +19,24 @@ export class SystemAdjacencyWormhole {
     hexToSystem: Map<HexType, System>,
     adjacency: Adjacency
   ): void {
-    for (const wormhole of SystemAdjacencyWormhole.WORMHOMES) {
-      adjacency.addLink(wormhole, wormhole);
-    }
-
     // Add wormholes in systems (inclues attachments).
     for (const [hex, system] of hexToSystem) {
       for (const wormhole of system.getWormholes()) {
-        adjacency.addNodeTags(hex, [wormhole]);
+        // System into wormhole.
+        adjacency.addLink({
+          src: hex,
+          dst: wormhole,
+          distance: 0.5,
+          isTransit: true,
+        });
+
+        // Wormhole into system.
+        adjacency.addLink({
+          src: wormhole,
+          dst: hex,
+          distance: 0.5,
+          isTransit: false,
+        });
       }
     }
 
@@ -46,7 +56,18 @@ export class SystemAdjacencyWormhole {
     if (creussFlagship) {
       const pos: Vector = creussFlagship.getPosition();
       const hex: HexType = TI4.hex.fromPosition(pos);
-      adjacency.addNodeTags(hex, ["delta"]);
+      adjacency.addLink({
+        src: hex,
+        dst: "delta",
+        distance: 0.5,
+        isTransit: true,
+      });
+      adjacency.addLink({
+        src: "delta",
+        dst: hex,
+        distance: 0.5,
+        isTransit: false,
+      });
     }
   }
 
@@ -60,7 +81,18 @@ export class SystemAdjacencyWormhole {
       card &&
       this._cardUtil.isLooseCard(card, allowFaceDown, rejectSnapPointTags)
     ) {
-      adjacency.addLink("alpha", "beta");
+      adjacency.addLink({
+        src: "alpha",
+        dst: "beta",
+        distance: 0,
+        isTransit: true,
+      });
+      adjacency.addLink({
+        src: "beta",
+        dst: "alpha",
+        distance: 0,
+        isTransit: true,
+      });
     }
 
     card = this._find.findCard("card.action:base/lost_star_chart");
@@ -68,7 +100,18 @@ export class SystemAdjacencyWormhole {
       card &&
       this._cardUtil.isLooseCard(card, allowFaceDown, rejectSnapPointTags)
     ) {
-      adjacency.addLink("alpha", "beta");
+      adjacency.addLink({
+        src: "alpha",
+        dst: "beta",
+        distance: 0,
+        isTransit: true,
+      });
+      adjacency.addLink({
+        src: "beta",
+        dst: "alpha",
+        distance: 0,
+        isTransit: true,
+      });
     }
 
     // Creuss agent, can be applied for any player.
@@ -84,7 +127,14 @@ export class SystemAdjacencyWormhole {
     ) {
       for (const a of SystemAdjacencyWormhole.WORMHOMES) {
         for (const b of SystemAdjacencyWormhole.WORMHOMES) {
-          adjacency.addLink(a, b);
+          if (a !== b) {
+            adjacency.addLink({
+              src: a,
+              dst: b,
+              distance: 0,
+              isTransit: true,
+            });
+          }
         }
       }
     }
