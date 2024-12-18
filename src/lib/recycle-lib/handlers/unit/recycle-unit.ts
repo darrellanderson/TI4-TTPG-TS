@@ -1,5 +1,10 @@
 import { Container, GameObject } from "@tabletop-playground/api";
-import { Find, GarbageHandler, NSID } from "ttpg-darrell";
+import {
+  DeletedItemsContainer,
+  Find,
+  GarbageHandler,
+  NSID,
+} from "ttpg-darrell";
 
 export class RecycleUnit extends GarbageHandler {
   private readonly _find: Find = new Find();
@@ -23,6 +28,13 @@ export class RecycleUnit extends GarbageHandler {
 
     if (!container) {
       return false;
+    }
+
+    const type: number = container.getType();
+    if (type === 1 || type === 3) {
+      // Infinite container (anonymous units).
+      DeletedItemsContainer.destroyWithoutCopying(obj);
+      return true;
     }
 
     container.addObjects([obj]);

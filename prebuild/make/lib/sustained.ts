@@ -102,7 +102,7 @@ export async function sustained(
 
   // Red unit-shaped mask.
   const unitMask: Buffer = await redMask(unit);
-  await sharp(unitMask).png().toFile(pngFilename.replace(/.png$/, "-mask.png"));
+  //await sharp(unitMask).png().toFile(pngFilename.replace(/.png$/, "-transparent-mask.png"));
 
   // Unit with a white outline.
   const unitOutlined: Buffer = await whiteOutlinedMask(unit);

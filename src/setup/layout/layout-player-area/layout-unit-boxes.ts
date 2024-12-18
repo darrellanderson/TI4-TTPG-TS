@@ -10,52 +10,29 @@ const NUM_COLS: number = 3;
 export class LayoutUnitBoxes {
   private readonly _layout: LayoutObjects = new LayoutObjects();
 
-  constructor(playerSlot: number) {
+  constructor(playerSlot: number, numCols: number = NUM_COLS) {
     this._layout.setChildDistance(LayoutConfig.spacing).setIsVertical(true);
 
-    /*
     const units: Array<UnitType> = [
       "war-sun",
       "flagship",
       "dreadnought",
+
       "cruiser",
-      "destroyer",
-      "carrier",
-      "pds",
-      "space-dock",
-      "fighter",
-      "infantry",
-      "mech",
-    ];
-
-    for (const unit of units) {
-      const unitBox: LayoutUnitBox = new LayoutUnitBox(unit, playerSlot);
-      this._layout.add(unitBox.getLayout());
-    }
-      */
-
-    const units: Array<UnitType> = [
-      "war-sun",
-      "flagship",
-
-      "dreadnought",
-      "cruiser",
-
       "destroyer",
       "carrier",
 
       "pds",
       "space-dock",
-
       "fighter",
-      "infantry",
 
+      "infantry",
       "mech",
     ];
 
     let row: LayoutObjects | undefined;
     units.forEach((unit, index) => {
-      if (index % NUM_COLS === 0) {
+      if (index % numCols === 0) {
         row = new LayoutObjects()
           .setChildDistance(LayoutConfig.spacing)
           .setIsVertical(false);

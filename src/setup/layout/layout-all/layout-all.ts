@@ -1,5 +1,6 @@
 import { LayoutObjects, LayoutObjectsSize } from "ttpg-darrell";
 
+import { LayoutCombatArenaAndUnitBoxes } from "../layout-combat-arena/layout-combat-arena-and-unit-boxes";
 import { LayoutConfig } from "../layout-config";
 import { LayoutFighterInfTgContainers } from "../layout-fighter-inf-tg-containers/layout-fighter-inf-tg-containers";
 import { LayoutMapArea } from "../layout-map-area/layout-map-area";
@@ -8,9 +9,8 @@ import { LayoutScoringArea } from "../layout-scoring-area/layout-scoring-area";
 import { LayoutStrategyCards } from "../layout-strategy-cards/layout-strategy-cards";
 import { LayoutTableContainers } from "../layout-table-containers/layout-table-containers";
 import { LayoutTableDecks } from "../layout-table-decks/layout-table-decks";
-import { LayoutCombatArena } from "../layout-combat-arena/layout-combat-arena";
-import { LayoutQuickRoller } from "../layout-quick-roller/layout-quick-roller";
 import { LayoutTableSystemTiles } from "../layout-table-system-tiles/layout-table-system-tiles";
+import { LayoutQuickRoller } from "../layout-quick-roller/layout-quick-roller";
 import { PlaceGenericHomeSystems } from "../layout-map-area/place-generic-home-systems";
 
 export class LayoutAll {
@@ -53,7 +53,7 @@ export class LayoutAll {
       .add(new LayoutFighterInfTgContainers().getLayout());
     right
       .add(new LayoutFighterInfTgContainers().getLayout())
-      .add(new LayoutCombatArena().getLayout())
+      .add(new LayoutCombatArenaAndUnitBoxes().getLayout())
       .add(
         new LayoutObjects()
           .setChildDistance(LayoutConfig.spacingExtraWide)

@@ -13,7 +13,7 @@ import path from "path";
 import { SOURCE_TO_UNIT_ATTRS_DATA } from "../../src/lib/unit-lib/data/unit-attrs.data";
 import { UnitType } from "../../src/lib/unit-lib/schema/unit-attrs-schema";
 
-import { center, opaqueJpg } from "./lib/outline-mask";
+import { center, opaqueJpg, outlineFeathered } from "./lib/outline-mask";
 import { sustained } from "./lib/sustained";
 
 const units: Set<UnitType> = new Set();
@@ -44,6 +44,9 @@ async function processUnit(unit: UnitType) {
   // Also create an opaque version for container icons.
   await opaqueJpg(dst);
 
+  // Solid red bleed to edge with black feathered outline.
+  await outlineFeathered(dst);
+
   // Sustained creates:
   // 1. x-mask.png : red mask of unit
   // 2. x-outlined.png : white outline with unit inside
@@ -51,17 +54,6 @@ async function processUnit(unit: UnitType) {
   // 4. x-sustained.png : x-outlined.png with outlined sustain icon atop
   // 5. x-sustained-mask.png : red mask of unit portion of x-sustained.png
   await sustained(dst, `./prebuild/icon/unit/sustained-sad.png`);
-
-  /*
-  await outlineFeathered(dst);
-
-  // Create a mask to tint the unit but not outline.
-  await innerMask(dst);
-
-  // Version which is only the outline.
-  await outlineOnly(dst);
-
-  */
 }
 
 for (const unit of units) {

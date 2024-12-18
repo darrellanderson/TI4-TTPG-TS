@@ -14,9 +14,14 @@ export class LayoutUnitBox {
 
   constructor(unit: UnitType, playerSlot: number) {
     const colorLib: ColorLib = new ColorLib();
-    const colorsType: ColorsType =
-      colorLib.getColorsByPlayerSlotOrThrow(playerSlot);
-    const objColor: Color = colorLib.parseColorOrThrow(colorsType.plastic);
+    let objColor: Color | undefined = undefined;
+    if (playerSlot >= 0) {
+      const colorsType: ColorsType =
+        colorLib.getColorsByPlayerSlotOrThrow(playerSlot);
+      objColor = colorLib.parseColorOrThrow(colorsType.plastic);
+    } else {
+      objColor = colorLib.parseColorOrThrow("#5D1602");
+    }
 
     const source: string = unit === "mech" ? "pok" : "base";
     const containerNsid: string = `container.unit:${source}/${unit}`;
@@ -28,7 +33,10 @@ export class LayoutUnitBox {
     const unitAttrs: UnitAttrs = TI4.unitAttrsRegistry
       .defaultUnitAttrsSet()
       .getOrThrow(unit);
-    const componentCount: number = unitAttrs.getComponentCount();
+    let componentCount: number = unitAttrs.getComponentCount();
+    if (playerSlot < 0) {
+      componentCount = 1;
+    }
 
     // Create the container.
     const container: GameObject = Spawn.spawnOrThrow(containerNsid);
@@ -40,6 +48,9 @@ export class LayoutUnitBox {
       if (!tags.includes(unitTag)) {
         tags.push(unitTag);
         container.setContainerTags(tags);
+      }
+      if (playerSlot < 0) {
+        container.setType(1); // infinite
       }
     }
     if (container instanceof Container) {

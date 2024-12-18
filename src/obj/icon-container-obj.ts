@@ -64,6 +64,9 @@ process.nextTick(() => {
     const colorsType: ColorsType = colorLib.getColorsByPlayerSlotOrThrow(owner);
     const widgetColor: Color = colorLib.parseColorOrThrow(colorsType.widget);
     widget.setTintColor(widgetColor);
+  } else if (nsid.startsWith("container.unit")) {
+    // Anonymous units.
+    widget.setTintColor(obj.getPrimaryColor());
   }
   obj.addUI(ui);
   obj.addUI(outline);
