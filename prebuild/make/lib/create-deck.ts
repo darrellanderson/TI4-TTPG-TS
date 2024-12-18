@@ -61,6 +61,14 @@ export class CreateDeck {
         throw new Error("error readong " + jsonFile);
       }
 
+      // Remove " (PoK)" suffix from name.
+      let name: string = cardJson.name;
+      const stripSuffix: string = " (PoK)";
+      if (name.endsWith(stripSuffix)) {
+        name = name.substring(0, name.length - stripSuffix.length);
+        cardJson.name = name;
+      }
+
       const nsid: string = cardJson.nsid.replace(/_/g, "-");
       const parts: Array<string> = nsid.split(/[:/]/);
       let source: string | undefined = parts[1];
