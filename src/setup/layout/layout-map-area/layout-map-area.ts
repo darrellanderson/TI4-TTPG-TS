@@ -1,4 +1,4 @@
-import { DrawingLine, Vector, world } from "@tabletop-playground/api";
+import { Color, DrawingLine, Vector, world } from "@tabletop-playground/api";
 import { ColorLib, HexType, LayoutObjects } from "ttpg-darrell";
 
 // Draw map rings.
@@ -10,7 +10,7 @@ const HEX_CORNERS: Array<{ q: number; r: number; s: number }> = [
   { q: 0, r: -1, s: 1 },
   { q: 1, r: -1, s: 0 },
 ];
-const THICKNESS: number = 0.5;
+const THICKNESS: number = 1;
 const COLORS: Array<string> = [
   "#008080", // teal
   "#FC6A03", // orange
@@ -33,8 +33,8 @@ export class LayoutMapArea {
       y = Math.max(y, corner.y);
     }
     this._layout
-      .setOverrideWidth(y * 2 * (numRings + 1.5)) // extra space for mallice, etc
-      .setOverrideHeight(x * 2 * (numRings + 0.5));
+      .setOverrideWidth(y * 2 * numRings + 6)
+      .setOverrideHeight(x * 2 * numRings + 1);
 
     this._layout.addAfterLayout(() => {
       this._addMapRingLines(numRings);
@@ -81,8 +81,15 @@ export class LayoutMapArea {
       const colorHex: string | undefined = COLORS[i % COLORS.length];
       const points: Array<Vector> = this._getCorners(i, true);
       if (colorHex) {
+        // Darken color.
+        const color: Color = new ColorLib().parseColorOrThrow(colorHex);
+        const s: number = 0.25;
+        color.r *= s;
+        color.g *= s;
+        color.b *= s;
+
         const line = new DrawingLine();
-        line.color = new ColorLib().parseColorOrThrow(colorHex);
+        line.color = color;
         line.normals = [new Vector(0, 0, 1)];
         line.points = points;
         line.rounded = false;

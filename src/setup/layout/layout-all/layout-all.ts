@@ -73,7 +73,7 @@ export class LayoutAll {
       leftSize.w - rightSize.w - LayoutConfig.spacingExtraWide;
     right.add(new LayoutObjects().setOverrideWidth(pad));
 
-    const numMapRings: number = playerCount <= 6 ? 3 : 4;
+    const numMapRings: number = playerCount <= 6 ? 4 : 5; // always add an extra ring
     middle.add(left).add(new LayoutMapArea(numMapRings).getLayout()).add(right);
 
     // Place system tiles.

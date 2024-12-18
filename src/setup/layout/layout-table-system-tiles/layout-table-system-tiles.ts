@@ -30,7 +30,7 @@ export class LayoutTableSystemTiles {
       this._moveSystemTileFromContainer(tileNumber, pos, rot);
 
       tileNumber = 82;
-      pos = TI4.hex.toPosition("<0,-5,5>");
+      pos = TI4.hex.toPosition("<0,-6,6>");
       rot = new Rotator(0, 0, 180);
       this._moveSystemTileFromContainer(tileNumber, pos, rot);
 
