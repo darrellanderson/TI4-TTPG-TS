@@ -25,7 +25,7 @@ import { ControlTokenSystem } from "../context-menu/control-token-system/control
 import { CreateAndAttachEndTurnButtonUI } from "../ui/end-turn-button-ui/create-and-attach-end-turn-button-ui";
 import { CreateAndAttachTurnOrderUI } from "../ui/turn-order-ui/create-and-attach-turn-order-ui";
 import { DiplomacySystem } from "../context-menu/diplomacy-system/diplomacy-system";
-//import { DisplayPDSAdjacency } from "../context-menu/display-pds-adjacency/display-pds-adjacency";
+import { DisplayPDSAdjacency } from "../context-menu/display-pds-adjacency/display-pds-adjacency";
 import { FactionRegistry } from "../lib/faction-lib/registry/faction-registry";
 import { NumpadKeyAll } from "../lib/numpad-key-lib/numpad-key-all/numpad-key-all";
 import { OnSystemActivated } from "../event/on-system-activated/on-system-activated";
@@ -121,7 +121,7 @@ export function resetGlobalThisTI4(): TI4Class {
     new ControlTokenSystem(),
     new DiceGroupCleanup(),
     new DiplomacySystem(),
-    //new DisplayPDSAdjacency(),
+    new DisplayPDSAdjacency(),
     new LeaveSeat(),
     new NumpadKeyAll(),
     new OnCardBecameSingletonOrDeck(),
