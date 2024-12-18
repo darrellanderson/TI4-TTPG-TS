@@ -85,8 +85,8 @@ it("static _localNeighborsWithRotAndFlip", () => {
   systemTileObj.setRotation([0, 60, 0]);
   localDirToNeighbor =
     SystemAdjacencyHyperlane._localNeighborsWithRotAndFlip(system);
-  expect(localDirToNeighbor.n).toEqual(globalNeighbors.nw);
-  expect(localDirToNeighbor.nw).toEqual(globalNeighbors.sw);
+  expect(localDirToNeighbor.n).toEqual(globalNeighbors.ne);
+  expect(localDirToNeighbor.nw).toEqual(globalNeighbors.n);
 
   systemTileObj.setRotation([0, 60, -180]);
   localDirToNeighbor =
@@ -97,8 +97,8 @@ it("static _localNeighborsWithRotAndFlip", () => {
   systemTileObj.setRotation([0, 300, 0]);
   localDirToNeighbor =
     SystemAdjacencyHyperlane._localNeighborsWithRotAndFlip(system);
-  expect(localDirToNeighbor.n).toEqual(globalNeighbors.ne);
-  expect(localDirToNeighbor.nw).toEqual(globalNeighbors.n);
+  expect(localDirToNeighbor.n).toEqual(globalNeighbors.nw);
+  expect(localDirToNeighbor.nw).toEqual(globalNeighbors.sw);
 
   systemTileObj.setRotation([0, 300, -180]);
   localDirToNeighbor =

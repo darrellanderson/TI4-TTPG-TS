@@ -1,11 +1,5 @@
 import { GameObject } from "@tabletop-playground/api";
-import {
-  Adjacency,
-  AdjacencyLinkType,
-  Facing,
-  Hex,
-  HexType,
-} from "ttpg-darrell";
+import { Adjacency, AdjacencyLinkType, Hex, HexType } from "ttpg-darrell";
 import { System } from "../system/system";
 
 export type Direction = "n" | "nw" | "sw" | "s" | "se" | "ne";
@@ -64,7 +58,6 @@ export class SystemAdjacencyHyperlane {
     system: System
   ): DirectionToNeighborHexType {
     const systemTileObj: GameObject = system.getObj();
-    const faceUp: boolean = Facing.isFaceUp(systemTileObj);
     const yaw: number = systemTileObj.getRotation().yaw;
     const yawShiftCount: number = SystemAdjacencyHyperlane.yawToShift(yaw);
 
@@ -73,11 +66,7 @@ export class SystemAdjacencyHyperlane {
 
     // Shift neighbors to match local orientation.
     for (let i = 0; i < yawShiftCount; i++) {
-      if (faceUp) {
-        neighbors.push(neighbors.shift()!);
-      } else {
-        neighbors.unshift(neighbors.pop()!);
-      }
+      neighbors.unshift(neighbors.pop()!);
     }
 
     // Extract the shifted hexes in local directions.

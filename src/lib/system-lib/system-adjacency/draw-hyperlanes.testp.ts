@@ -8,6 +8,7 @@ import {
 import {
   Adjacency,
   AdjacencyPathType,
+  Facing,
   Hex,
   HexType,
   IGlobal,
@@ -120,15 +121,19 @@ export class DrawHyperlanes implements IGlobal {
     console.log("paths", obj.getId(), paths.length);
     console.log("simplePaths", "\n" + simplePaths.join("\n"));
 
+    const isFaceUp: boolean = Facing.isFaceUp(obj);
     for (const simplePath of simplePaths) {
       const line: DrawingLine = DisplayPDSAdjacency._getLine(simplePath);
       // Convert to local positions.
       line.points = line.points.map((point: Vector): Vector => {
         const pos: Vector = obj.worldPositionToLocal(point);
-        pos.z = extent.z + 0.05;
-        extent.z += 0.1;
+        const z = (isFaceUp ? 1 : -1) * (extent.z + 0.05);
+        pos.z = z;
         return pos;
       });
+      if (!isFaceUp) {
+        line.normals = [new Vector(0, 0, -1)];
+      }
       obj.addDrawingLine(line);
     }
   }
