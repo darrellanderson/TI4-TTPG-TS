@@ -21,8 +21,8 @@ import { LayoutMats } from "./layout-mats";
 import { LayoutSheets } from "./layout-sheets";
 import { LayoutTokenContainers } from "./layout-token-containers";
 import { LayoutUnitBoxes } from "./layout-unit-boxes";
-import { LayoutStatusPad } from "./layout-status-pad";
 import { PlaceGenericPromissories } from "./place-generic-promissories";
+import { LayoutRowTrovesAndStatusPad } from "./layout-row-troves-and-status-pad";
 
 export class LayoutPlayerArea {
   private readonly _layout: LayoutBorder;
@@ -34,7 +34,7 @@ export class LayoutPlayerArea {
       .setVerticalAlignment(VerticalAlignment.Top);
 
     // Status pad alone at very top, gives players' a little space too.
-    const statusPad: LayoutObjects = new LayoutStatusPad(
+    const trovesAndStatusPad: LayoutObjects = new LayoutRowTrovesAndStatusPad(
       playerSlot
     ).getLayout();
 
@@ -66,7 +66,11 @@ export class LayoutPlayerArea {
       cardHolder.setHiddenCardsType(HiddenCardsType.Back);
     }
 
-    innerLayout.add(statusPad).add(topRow).add(layoutMats).add(cardHolder);
+    innerLayout
+      .add(trovesAndStatusPad)
+      .add(topRow)
+      .add(layoutMats)
+      .add(cardHolder);
 
     innerLayout.addAfterLayout(() => {
       cardHolder.setObjectType(ObjectType.Ground);
