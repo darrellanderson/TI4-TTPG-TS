@@ -4,11 +4,26 @@ import {
   HorizontalBox,
   Panel,
   refObject,
+  refPackageId,
   UIElement,
   Vector,
   Widget,
+  world,
 } from "@tabletop-playground/api";
 import { EditTimer } from "ttpg-darrell";
+
+const packageId: string = refPackageId;
+TI4.timer.onTimerExpired.add(() => {
+  const sound = world.importSound("bing-bong.flac", packageId);
+  if (!sound) {
+    console.log("no sound?");
+    return;
+  }
+  const startTime = 0;
+  const volume = 0.75; // [0:2] range
+  const loop = false;
+  sound.play(startTime, volume, loop);
+});
 
 const timerText: Button = new Button()
   .setFontSize(20)
