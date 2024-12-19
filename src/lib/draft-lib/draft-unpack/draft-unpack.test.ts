@@ -1,12 +1,13 @@
+import { GameObject, Player } from "@tabletop-playground/api";
 import {
   MockCardHolder,
   MockGameObject,
   MockPlayer,
   MockVector,
 } from "ttpg-mock";
+
 import { DraftState } from "../draft-state/draft-state";
 import { DraftUnpack } from "./draft-unpack";
-import { GameObject, Player } from "@tabletop-playground/api";
 
 it("constructor", () => {
   const draftState: DraftState = new DraftState("@test/test");

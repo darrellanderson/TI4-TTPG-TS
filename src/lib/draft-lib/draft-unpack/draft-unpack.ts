@@ -4,6 +4,7 @@ import { Find } from "ttpg-darrell";
 import { DraftState } from "../draft-state/draft-state";
 import { DraftToMapString } from "../draft-to-map-string/draft-to-map-string";
 import { Faction } from "../../faction-lib/faction/faction";
+import { MapStringLoad } from "../../map-string-lib/map-string-load";
 import {
   MapStringEntry,
   MapStringParser,
@@ -80,7 +81,6 @@ export class DraftUnpack {
       tokenPos.z = world.getTableHeight() + 10;
       speakerToken.setPosition(tokenPos);
       speakerToken.snapToGround();
-      console.log("xxx", tokenPos.toString());
     }
 
     return this;
@@ -104,6 +104,15 @@ export class DraftUnpack {
         entry.side = undefined;
       }
     });
+    const scrubbedMapString: string = mapStringEntries
+      .map((entry) => {
+        return [entry.tile, entry.rot, entry.side]
+          .filter((x) => x !== undefined)
+          .join("");
+      })
+      .join(" ");
+
+    new MapStringLoad().load(scrubbedMapString);
 
     return this;
   }
