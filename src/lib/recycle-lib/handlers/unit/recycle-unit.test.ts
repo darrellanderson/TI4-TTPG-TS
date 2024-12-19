@@ -40,3 +40,22 @@ it("recycle (container owner mismatch)", () => {
   expect(recycle.recycle(token)).toBe(false);
   expect(container.getItems().map((x) => x.getId())).toEqual([]);
 });
+
+it("recycle (player slot -1)", () => {
+  const token: GameObject = new MockGameObject({
+    id: "my-unit-id",
+    templateMetadata: "unit:base/carrier",
+    owningPlayerSlot: -1,
+  });
+  const container: Container = new MockContainer({
+    templateMetadata: "container.unit:base/carrier",
+    owningPlayerSlot: -1,
+    type: 1,
+  });
+
+  const recycle: GarbageHandler = new RecycleUnit();
+  expect(recycle.canRecycle(token)).toBe(true);
+  expect(recycle.recycle(token)).toBe(true);
+  expect(token.isValid()).toBe(false);
+  expect(container.getNumItems()).toBe(0);
+});

@@ -119,8 +119,11 @@ it("seatIndexToFaction", () => {
   const factionIndex: number = 0;
 
   expect(state.getSeatIndexToFaction(seatIndex)).toBeUndefined();
-  state.setFactionIndexToPlayerSlot(factionIndex, playerSlot);
+
   state.setSeatIndexToPlayerSlot(seatIndex, playerSlot);
+  expect(state.getSeatIndexToFaction(seatIndex)).toBeUndefined();
+
+  state.setFactionIndexToPlayerSlot(factionIndex, playerSlot);
   expect(state.getSeatIndexToFaction(seatIndex)?.getAbbr()).toBe("Arborec");
 });
 

@@ -9,3 +9,7 @@ it("layout", () => {
   const yaw: number = 0;
   new LayoutRowTrovesAndStatusPad(10).getLayout().doLayoutAtPoint(pos, yaw);
 });
+
+it("bad player slot", () => {
+  expect(() => new LayoutRowTrovesAndStatusPad(-1)).toThrow();
+});
