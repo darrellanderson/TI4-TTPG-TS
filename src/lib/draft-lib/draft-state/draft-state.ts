@@ -54,6 +54,39 @@ export class DraftState {
     world.setSavedData(JSON.stringify(this._data), this._namespaceId);
   }
 
+  isComplete(): boolean {
+    const playerCount: number = TI4.config.playerCount;
+
+    const chosenSliceCount: number = [
+      ...this._data.sliceIndexToPlayerSlot.values(),
+    ].filter((playerSlot: number | null): boolean => {
+      return playerSlot !== null && playerSlot >= 0;
+    }).length;
+    if (chosenSliceCount < playerCount) {
+      return false;
+    }
+
+    const chosenFactionCount: number = [
+      ...this._data.factionIndexToPlayerSlot.values(),
+    ].filter((playerSlot: number | null): boolean => {
+      return playerSlot !== null && playerSlot >= 0;
+    }).length;
+    if (chosenFactionCount < playerCount) {
+      return false;
+    }
+
+    const chosenSeatCount: number = [
+      ...this._data.seatIndexToPlayerSlot.values(),
+    ].filter((playerSlot: number | null): boolean => {
+      return playerSlot !== null && playerSlot >= 0;
+    }).length;
+    if (chosenSeatCount < playerCount) {
+      return false;
+    }
+
+    return true;
+  }
+
   setSliceShape(sliceShape: SliceShape): this {
     this._data.sliceShape = sliceShape;
     this._save();
@@ -121,6 +154,26 @@ export class DraftState {
 
   getFactionIndexToPlayerSlot(factionIndex: number): number {
     return this._data.factionIndexToPlayerSlot[factionIndex] ?? -1;
+  }
+
+  /**
+   * What faction is assigned to the result seat index?
+   *
+   * @param seatIndex
+   * @returns
+   */
+  getSeatIndexToFaction(seatIndex: number): Faction | undefined {
+    const playerSlot: number = this.getSeatIndexToPlayerSlot(seatIndex);
+    if (playerSlot < 0) {
+      return undefined;
+    }
+    const index: number = this._data.factionIndexToPlayerSlot.findIndex(
+      (playerSlot: number | null): boolean => playerSlot === playerSlot
+    );
+    if (index < 0) {
+      return undefined;
+    }
+    return this.getFactions()[index];
   }
 
   setSeatIndexToPlayerSlot(seatIndex: number, playerSlot: number): this {

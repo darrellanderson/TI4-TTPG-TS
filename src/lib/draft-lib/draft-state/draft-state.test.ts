@@ -106,6 +106,24 @@ it("factionIndexToPlayerSlot", () => {
   expect(state.getFactionIndexToPlayerSlot(0)).toBe(-1);
 });
 
+it("seatIndexToFaction", () => {
+  const state: DraftState = new DraftState("@test/draft-state");
+  state.setFactions(
+    ["faction:base/arborec", "faction:base/sol", "faction:pok/ul"].map(
+      (nsidName) => TI4.factionRegistry.getByNsidOrThrow(nsidName)
+    )
+  );
+
+  const playerSlot: number = 13;
+  const seatIndex: number = 1;
+  const factionIndex: number = 0;
+
+  expect(state.getSeatIndexToFaction(seatIndex)).toBeUndefined();
+  state.setFactionIndexToPlayerSlot(factionIndex, playerSlot);
+  state.setSeatIndexToPlayerSlot(seatIndex, playerSlot);
+  expect(state.getSeatIndexToFaction(seatIndex)?.getAbbr()).toBe("Arborec");
+});
+
 it("seatIndexToPlayerSlot", () => {
   const state: DraftState = new DraftState("@test/draft-state");
   expect(state.getSeatIndexToPlayerSlot(0)).toBe(-1);
@@ -125,4 +143,34 @@ it("load from state where a lower index is missing", () => {
 
   state = new DraftState("@test/draft-state");
   expect(state.getSliceIndexToPlayerSlot(3)).toBe(1);
+});
+
+it("isComplete", () => {
+  const state: DraftState = new DraftState("@test/draft-state")
+    .setSliceShape(["<0,0,0>", "<1,0,-1>", "<2,0,-1>"])
+    .setSlices([
+      [1, 2],
+      [3, 4],
+      [5, 6],
+    ])
+    .setFactions(
+      ["faction:base/arborec", "faction:base/sol", "faction:pok/ul"].map(
+        (nsidName) => TI4.factionRegistry.getByNsidOrThrow(nsidName)
+      )
+    );
+
+  TI4.config.setPlayerCount(1);
+  expect(state.isComplete()).toBe(false);
+
+  state.setSpeakerIndex(2);
+  expect(state.isComplete()).toBe(false);
+
+  state.setSliceIndexToPlayerSlot(0, 1);
+  expect(state.isComplete()).toBe(false);
+
+  state.setFactionIndexToPlayerSlot(0, 2);
+  expect(state.isComplete()).toBe(false);
+
+  state.setSeatIndexToPlayerSlot(0, 3);
+  expect(state.isComplete()).toBe(true);
 });
