@@ -1,6 +1,11 @@
-import { HexType, WeightedChoice } from "ttpg-darrell";
-import { GenerateSlicesParams } from "../generate-slices/generate-slices";
+import { HexType, NamespaceId, WeightedChoice } from "ttpg-darrell";
+import {
+  GenerateSlicesParams,
+  SliceTiles,
+} from "../generate-slices/generate-slices";
 import { SystemTierType } from "../../system-lib/system/system-tier";
+import { DraftState } from "../draft-state/draft-state";
+import { ParseSlices } from "../parse/parse-slices";
 
 export const MILTY_SLICE_MAKEUP: ReadonlyArray<SystemTierType> = [
   "high",
@@ -31,7 +36,7 @@ export const MILTY_SLICE_SHAPE_ALT: ReadonlyArray<HexType> = [
 ];
 
 export class Milty {
-  public getGenerateSlicesParams(): GenerateSlicesParams {
+  public static _getGenerateSlicesParams(): GenerateSlicesParams {
     return {
       sliceCount: 6,
       sliceMakeup: MILTY_SLICE_MAKEUP,
@@ -49,5 +54,22 @@ export class Milty {
         { weight: 1, value: 2 },
       ]).choice(),
     };
+  }
+
+  public static generateDraftState(
+    config: string,
+    namespaceId: NamespaceId
+  ): DraftState {
+    const draftState: DraftState = new DraftState(namespaceId);
+    const errors: Array<string> = [];
+
+    const slices: Array<SliceTiles> = new ParseSlices(5).parseSlices(
+      config,
+      errors
+    );
+
+    xxx;
+
+    return draftState;
   }
 }
