@@ -46,9 +46,13 @@ it("constructor, isDraftInProgress, destroy", () => {
 
 it("slice shape", () => {
   const state: DraftState = new DraftState("@test/draft-state");
-  expect(state.getSliceShape()).toEqual([]);
+  expect(state.getSliceShape(0)).toEqual([]);
+
   state.setSliceShape(["<0,0,0>", "<1,0,-1>", "<2,0,-1>"]);
-  expect(state.getSliceShape()).toEqual(["<0,0,0>", "<1,0,-1>", "<2,0,-1>"]);
+  expect(state.getSliceShape(0)).toEqual(["<0,0,0>", "<1,0,-1>", "<2,0,-1>"]);
+
+  state.overrideSliceShape(0, ["<3,0,-3>"]);
+  expect(state.getSliceShape(0)).toEqual(["<3,0,-3>"]);
 });
 
 it("slices", () => {

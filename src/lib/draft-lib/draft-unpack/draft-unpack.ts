@@ -1,7 +1,14 @@
-import { PlayerSeatType } from "lib/player-lib/player-seats/player-seats";
-import { DraftState } from "../draft-state/draft-state";
 import { GameObject, Player, Vector, world } from "@tabletop-playground/api";
 import { Find } from "ttpg-darrell";
+
+import { DraftState } from "../draft-state/draft-state";
+import { DraftToMapString } from "../draft-to-map-string/draft-to-map-string";
+import { Faction } from "../../faction-lib/faction/faction";
+import {
+  MapStringEntry,
+  MapStringParser,
+} from "../../map-string-lib/map-string-parser";
+import { PlayerSeatType } from "../../player-lib/player-seats/player-seats";
 
 export class DraftUnpack {
   private readonly _draftState: DraftState;
@@ -75,6 +82,28 @@ export class DraftUnpack {
       speakerToken.snapToGround();
       console.log("xxx", tokenPos.toString());
     }
+
+    return this;
+  }
+
+  unpackMap(): this {
+    // Get baked map string, included faction home systems.
+    const mapString: string = DraftToMapString.fromDraftState(
+      this._draftState
+    ).mapString;
+
+    const mapStringEntries: Array<MapStringEntry> =
+      new MapStringParser().parseOrThrow(mapString);
+    mapStringEntries.forEach((entry: MapStringEntry) => {
+      const tile: number = entry.tile;
+      const faction: Faction | undefined =
+        TI4.factionRegistry.getByHomeSystemTileNumber(tile);
+      if (faction) {
+        entry.tile = 0;
+        entry.rot = undefined;
+        entry.side = undefined;
+      }
+    });
 
     return this;
   }

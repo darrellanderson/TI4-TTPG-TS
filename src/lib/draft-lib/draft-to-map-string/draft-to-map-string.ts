@@ -58,8 +58,17 @@ export class DraftToMapString {
       }
     }
 
+    const draftToMapString = new DraftToMapString(draftState.getSliceShape(-1));
+    const playerCount: number = TI4.config.playerCount;
+    for (let seatIndex = 0; seatIndex < playerCount; seatIndex++) {
+      draftToMapString.overrideSliceShape(
+        seatIndex,
+        draftState.getSliceShape(seatIndex)
+      );
+    }
+
     const mapStringAndHexToPlayerName: MapStringAndHexToPlayerName =
-      new DraftToMapString(draftState.getSliceShape()).buildMapString(
+      draftToMapString.buildMapString(
         seatIndexToSliceTiles,
         seatIndexToFaction,
         seatIndexToPlayerName

@@ -5,8 +5,11 @@ import { z } from "zod";
 import { SliceShape, SliceTiles } from "../generate-slices/generate-slices";
 import { Faction } from "../../faction-lib/faction/faction";
 
+const SliceShapeSchema = z.array(z.string()).readonly().default([]);
+
 export const DraftStateSchema = z.object({
-  sliceShape: z.array(z.string()).readonly().default([]),
+  sliceShape: SliceShapeSchema,
+  sliceShapeOverrides: z.array(SliceShapeSchema.nullable()).default([]),
   slices: z.array(z.array(z.number()).readonly()).readonly().default([]),
   factions: z.array(z.string()).default([]),
   speakerIndex: z.number().default(-1),
@@ -94,8 +97,20 @@ export class DraftState {
     return this;
   }
 
-  getSliceShape(): SliceShape {
-    return this._data.sliceShape as SliceShape;
+  overrideSliceShape(seatIndex: number, sliceShape: SliceShape): this {
+    this._data.sliceShapeOverrides[seatIndex] = sliceShape;
+    this._save();
+    this.onDraftStateChanged.trigger(this);
+    return this;
+  }
+
+  getSliceShape(seatIndex: number): SliceShape {
+    let sliceShape: ReadonlyArray<string> | null | undefined;
+    sliceShape = this._data.sliceShapeOverrides[seatIndex];
+    if (!sliceShape) {
+      sliceShape = this._data.sliceShape;
+    }
+    return sliceShape as SliceShape;
   }
 
   setSlices(slices: Array<SliceTiles>): this {

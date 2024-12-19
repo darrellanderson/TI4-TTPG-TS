@@ -66,3 +66,9 @@ it("moveSpeakerToken", () => {
   draftUnpack.moveSpeakerToken();
   expect(speakerToken.getPosition().toString()).toBe("(X=72.5,Y=0,Z=0)");
 });
+
+it("unpackMap", () => {
+  const draftState: DraftState = new DraftState("@test/test");
+  const draftUnpack: DraftUnpack = new DraftUnpack(draftState);
+  draftUnpack.unpackMap();
+});

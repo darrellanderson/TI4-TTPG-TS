@@ -123,15 +123,15 @@ export class DraftStateUI extends AbstractUI {
   };
 
   constructor(draftState: DraftState, scale: number) {
-    const sliceShape: SliceShape = draftState.getSliceShape();
     const zoomableSliceButtons: Array<AbstractUI> = [];
     const sliceButtons: Array<WrappedClickableUI> = draftState
       .getSlices()
       .map((slice: SliceTiles, index: number) => {
+        const sliceShape: SliceShape = draftState.getSliceShape(index);
         const color: Color = new Color(1, 0, 0, 1);
         const sliceUi: AbstractUI = new SliceUI(
           slice,
-          sliceShape,
+          draftState.getSliceShape(index),
           color,
           scale
         );
