@@ -22,7 +22,7 @@
   },
   "Flippable": true,
   "AutoStraighten": false,
-  "ShouldSnap": false,
+  "ShouldSnap": true,
   "ScriptName": "",
   "Blueprint": "",
   "Models": [
@@ -82,5 +82,7 @@
     "Z": 1
   },
   "GroundAccessibility": "ZoomAndContext",
-  "Tags": []
+  "Tags": [
+    "token-speaker"
+  ]
 }

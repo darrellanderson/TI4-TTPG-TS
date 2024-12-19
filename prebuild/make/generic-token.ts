@@ -126,6 +126,11 @@ for (const info of infos) {
     json.ScriptName = "obj/custodians-token.js";
   }
 
+  if (info.nsid === "token:base/speaker") {
+    json.Tags = ["token-speaker"];
+    json.ShouldSnap = true;
+  }
+
   const templateFile: string = "./assets/Templates/" + info.templateFile;
   const templateDir: string = path.dirname(templateFile);
   const templateData: Buffer = Buffer.from(JSON.stringify(json, null, 2));
