@@ -1,7 +1,7 @@
 import { Faction } from "../../faction-lib/faction/faction";
 
 export class ParseFactions {
-  parseFactions(config: string, errors: Array<string>): Faction[] {
+  parseFactions(config: string, errors: Array<string>): Faction[] | undefined {
     let index: number;
 
     const prefix = "factions=";
@@ -10,7 +10,7 @@ export class ParseFactions {
       config = config.substring(index + prefix.length);
     } else {
       // factions= MUST exist to find them.
-      return [];
+      return undefined;
     }
 
     const suffix = "&";
@@ -34,6 +34,6 @@ export class ParseFactions {
       }
     }
 
-    return factions;
+    return factions.length > 0 ? factions : undefined;
   }
 }

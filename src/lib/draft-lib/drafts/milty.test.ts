@@ -10,14 +10,14 @@ it("getGenerateSlicesParams", () => {
   expect(generateSlicesParams).toBeDefined();
 });
 
-it("createDraftState", () => {
+it("createDraftEmptyState", () => {
   const milty = new Milty();
-  const draftState = milty.createDraftState("@test/milty");
+  const draftState = milty.createEmptyDraftState("@test/milty");
   expect(draftState).toBeDefined();
 
   TI4.config.setPlayerCount(7);
-  milty.createDraftState("@test/milty");
+  milty.createEmptyDraftState("@test/milty");
 
   TI4.config.setPlayerCount(8);
-  milty.createDraftState("@test/milty");
+  milty.createEmptyDraftState("@test/milty");
 });

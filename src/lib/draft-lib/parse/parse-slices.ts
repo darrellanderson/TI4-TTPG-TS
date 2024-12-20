@@ -7,7 +7,10 @@ export class ParseSlices {
     this._sliceSize = sliceSize;
   }
 
-  public parseSlices(config: string, errors: Array<string>): Array<SliceTiles> {
+  public parseSlices(
+    config: string,
+    errors: Array<string>
+  ): Array<SliceTiles> | undefined {
     let index: number;
 
     const prefix = "slices=";
@@ -46,6 +49,6 @@ export class ParseSlices {
       slices.push(slice);
     }
 
-    return slices;
+    return slices.length > 0 ? slices : undefined;
   }
 }

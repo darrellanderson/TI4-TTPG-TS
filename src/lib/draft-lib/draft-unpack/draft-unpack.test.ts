@@ -62,7 +62,9 @@ it("moveSpeakerToken", () => {
 });
 
 it("unpackMap", () => {
-  const draftState: DraftState = new Milty().createDraftState("@test/test");
+  const draftState: DraftState = new Milty().createEmptyDraftState(
+    "@test/test"
+  );
   const draftUnpack: DraftUnpack = new DraftUnpack(draftState);
 
   // Place a faction home system in the map string.

@@ -1,5 +1,5 @@
 export class ParseLabels {
-  parseLabels(config: string): Array<string> {
+  parseLabels(config: string): Array<string> | undefined {
     let index: number;
 
     const prefix = "labels=";
@@ -8,7 +8,7 @@ export class ParseLabels {
       config = config.substring(index + prefix.length);
     } else {
       // labels= MUST exist to find them.
-      return [];
+      return undefined;
     }
 
     const suffix = "&";
@@ -17,7 +17,9 @@ export class ParseLabels {
       config = config.substring(0, index);
     }
 
-    const labels: Array<string> = config.split("|");
-    return labels;
+    const labels: Array<string> = config
+      .split("|")
+      .filter((label) => label.length > 0);
+    return labels.length > 0 ? labels : undefined;
   }
 }
