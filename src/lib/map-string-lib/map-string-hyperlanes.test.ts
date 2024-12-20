@@ -49,4 +49,11 @@ it("_moveCollisions", () => {
   expect(merged).toBe(
     "{18} 85A3 23 68 85A0 46 41 31 88A1 76 48 40 88A0 65 87A0 34 64 38 87A5 86A3 83A1 42 0 79 21 0 32 83A0 86A0 84A3 39 0 71 24 0 63 84A5"
   );
+
+  // Too few open slots.
+  mapString =
+    "1 23 68 1 46 41 1 1 76 48 40 65 1 1 34 64 38 31 1 1 42 0 79 21 0 32 1 1 1 39 0 71 24 0 63";
+  expect(() => {
+    new MapStringHyperlanes().addHyperlanes(mapString, hyperlanesMapString);
+  }).toThrow();
 });

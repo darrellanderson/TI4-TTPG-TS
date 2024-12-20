@@ -25,6 +25,7 @@ it("constructor", () => {
   const draftState: DraftState = new DraftState("@test/draft-state");
   draftState.setSliceShape(MILTY_SLICE_SHAPE);
   draftState.setSlices([[21, 22, 23, 24, 25]]);
+  draftState.setSliceLabels(["A"]);
   draftState.setFactions([
     TI4.factionRegistry.getByNsidOrThrow("faction:base/arborec"),
   ]);
