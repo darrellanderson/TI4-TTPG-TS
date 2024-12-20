@@ -4,6 +4,7 @@ import { Find } from "ttpg-darrell";
 import { DraftState } from "../draft-state/draft-state";
 import { DraftToMapString } from "../draft-to-map-string/draft-to-map-string";
 import { Faction } from "../../faction-lib/faction/faction";
+import { MapStringFormat } from "../../map-string-lib/map-string-format";
 import { MapStringLoad } from "../../map-string-lib/map-string-load";
 import {
   MapStringEntry,
@@ -104,13 +105,9 @@ export class DraftUnpack {
         entry.side = undefined;
       }
     });
-    const scrubbedMapString: string = mapStringEntries
-      .map((entry) => {
-        return [entry.tile, entry.rot, entry.side]
-          .filter((x) => x !== undefined)
-          .join("");
-      })
-      .join(" ");
+    const scrubbedMapString: string = new MapStringFormat().format(
+      mapStringEntries
+    );
 
     new MapStringLoad().load(scrubbedMapString);
 
