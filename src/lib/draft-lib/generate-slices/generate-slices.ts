@@ -20,7 +20,6 @@ export type SliceTiles = ReadonlyArray<number>;
 export type SliceShape = ReadonlyArray<HexType>;
 
 export type GenerateSlicesParams = {
-  sliceCount: number;
   sliceMakeup: ReadonlyArray<SystemTierType>;
   sliceShape: SliceShape;
   minAlphaWormholes?: number;
@@ -77,15 +76,15 @@ export class GenerateSlices {
     }
 
     this._params = Object.freeze(params);
+  }
 
-    for (let i = 0; i < this._params.sliceCount; i++) {
+  generateSlices(sliceCount: number): Array<SliceTiles> {
+    for (let i = 0; i < sliceCount; i++) {
       const makeup: ReadonlyArray<SystemTierType> =
         new Shuffle<SystemTierType>().shuffle([...this._params.sliceMakeup]);
       this._slicesInProgress.push(new SliceInProgress(makeup));
     }
-  }
 
-  generateSlices(): Array<SliceTiles> {
     // Get all candidate systems, split off promoted.
     const systems: Array<System> = this._getShuffledSystems();
     let promotedSystems: Array<System> =

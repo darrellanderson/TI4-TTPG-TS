@@ -38,7 +38,6 @@ export const MILTY_SLICE_SHAPE_ALT: SliceShape = [
 export class Milty {
   public getGenerateSlicesParams(): GenerateSlicesParams {
     return {
-      sliceCount: 6,
       sliceMakeup: MILTY_SLICE_MAKEUP,
       sliceShape: MILTY_SLICE_SHAPE,
       minAlphaWormholes: new WeightedChoice<number>([
