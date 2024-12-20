@@ -11,6 +11,7 @@ export const DraftStateSchema = z.object({
   sliceShape: SliceShapeSchema,
   sliceShapeOverrides: z.array(SliceShapeSchema.nullable()).default([]),
   slices: z.array(z.array(z.number()).readonly()).readonly().default([]),
+  sliceLabels: z.array(z.string()).default([]),
   factions: z.array(z.string()).default([]),
   speakerIndex: z.number().default(-1),
   sliceIndexToPlayerSlot: z.array(z.number().nullable()).default([]),
@@ -54,7 +55,10 @@ export class DraftState {
   }
 
   _save(): void {
-    world.setSavedData(JSON.stringify(this._data), this._namespaceId);
+    const json: string = JSON.stringify(this._data);
+    if (json.length < 1024) {
+      world.setSavedData(json, this._namespaceId);
+    }
   }
 
   isComplete(): boolean {
@@ -125,6 +129,22 @@ export class DraftState {
 
   getSlices(): Array<SliceTiles> {
     return this._data.slices as Array<SliceTiles>;
+  }
+
+  setSliceLabels(sliceLabels: Array<string>): this {
+    sliceLabels.forEach((label: string) => {
+      if (label.length > 100) {
+        throw new Error(`slice label too long (max 100): "${label}"`);
+      }
+    });
+    this._data.sliceLabels = sliceLabels;
+    this._save();
+    this.onDraftStateChanged.trigger(this);
+    return this;
+  }
+
+  getSliceLabels(): Array<string> {
+    return this._data.sliceLabels;
   }
 
   setFactions(factions: Array<Faction>): this {

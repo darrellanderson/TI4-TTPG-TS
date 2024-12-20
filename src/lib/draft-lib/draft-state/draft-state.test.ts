@@ -75,6 +75,17 @@ it("slices", () => {
   ]);
 });
 
+it("slice labels", () => {
+  const state: DraftState = new DraftState("@test/draft-state");
+  expect(state.getSliceLabels()).toEqual([]);
+  state.setSliceLabels(["A", "B", "C"]);
+  expect(state.getSliceLabels()).toEqual(["A", "B", "C"]);
+
+  expect(() => {
+    state.setSliceLabels([new Array(101).fill("A").join("")]);
+  }).toThrow();
+});
+
 it("factions", () => {
   const state: DraftState = new DraftState("@test/draft-state");
   expect(state.getFactions()).toEqual([]);
