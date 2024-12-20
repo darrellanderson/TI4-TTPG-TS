@@ -51,8 +51,13 @@ it("slice shape", () => {
   state.setSliceShape(["<0,0,0>", "<1,0,-1>", "<2,0,-1>"]);
   expect(state.getSliceShape(0)).toEqual(["<0,0,0>", "<1,0,-1>", "<2,0,-1>"]);
 
-  state.overrideSliceShape(0, ["<3,0,-3>"]);
-  expect(state.getSliceShape(0)).toEqual(["<3,0,-3>"]);
+  state.overrideSliceShape(0, ["<3,0,-3>", "<4,0,-4>", "<5,0,-5>"]);
+  expect(state.getSliceShape(0)).toEqual(["<3,0,-3>", "<4,0,-4>", "<5,0,-5>"]);
+
+  // Slice shape must be the same length.
+  expect(() => {
+    state.overrideSliceShape(1, ["<3,0,-3>"]);
+  }).toThrow();
 });
 
 it("slices", () => {

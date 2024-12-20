@@ -98,6 +98,9 @@ export class DraftState {
   }
 
   overrideSliceShape(seatIndex: number, sliceShape: SliceShape): this {
+    if (sliceShape.length !== this._data.sliceShape.length) {
+      throw new Error("Invalid slice shape length");
+    }
     this._data.sliceShapeOverrides[seatIndex] = sliceShape;
     this._save();
     this.onDraftStateChanged.trigger(this);

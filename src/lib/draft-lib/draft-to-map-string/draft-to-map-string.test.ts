@@ -44,6 +44,12 @@ it("map string", () => {
   }
   seatIndexToFaction.set(4, arborec);
 
+  const sol = TI4.factionRegistry.getByNsid("faction:base/sol")!;
+  if (!sol) {
+    throw new Error("sol not found");
+  }
+  seatIndexToFaction.set(5, sol);
+
   seatIndexToPlayerName.set(4, "MyName");
 
   const { mapString, hexToPlayerName } = new DraftToMapString(
@@ -55,7 +61,7 @@ it("map string", () => {
   );
 
   expect(mapString).toBe(
-    "{18} 25 -115 -110 -111 -112 -113 22 24 -115 -115 -110 -110 -111 -111 -112 -112 -113 -113 5 21 -115 -115 -115 -110 -110 -110 -111 -111 -111 -112 -112 -112 -113 -113 -113 23"
+    "{18} 25 -115 -110 -111 -112 -113 22 24 -115 -115 -110 -110 -111 -111 -112 -112 -113 -113 5 21 -115 1 -115 -110 -110 -110 -111 -111 -111 -112 -112 -112 -113 -113 -113 23"
   );
   expect(Array.from(hexToPlayerName.keys()).join(",")).toBe("<3,0,-3>");
   expect(hexToPlayerName.get("<3,0,-3>")).toBe("MyName");
