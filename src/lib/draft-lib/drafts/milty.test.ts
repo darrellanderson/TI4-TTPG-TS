@@ -1,6 +1,7 @@
 import { MockGameObject } from "ttpg-mock";
-import { CreateDraftParams } from "./abstract-draft";
-import { Milty } from "./milty";
+import { AbstractDraft, CreateDraftParams } from "./abstract-draft";
+import { Milty, MILTY_SLICE_SHAPE, MILTY_SLICE_SHAPE_ALT } from "./milty";
+import { DraftState } from "../draft-state/draft-state";
 
 // Systems must exist for registry to know about them.
 beforeEach(() => {
@@ -24,15 +25,40 @@ it("getGenerateSlicesParams", () => {
 });
 
 it("createDraftEmptyState", () => {
-  const milty = new Milty();
-  const draftState = milty.createEmptyDraftState("@test/milty");
+  let abstractDraft: AbstractDraft | undefined;
+  let draftState: DraftState | undefined;
+
+  abstractDraft = new Milty();
+  draftState = abstractDraft.createEmptyDraftState("@test/milty");
   expect(draftState).toBeDefined();
 
+  expect(draftState.getSliceShape(-1)).toEqual(MILTY_SLICE_SHAPE);
+
   TI4.config.setPlayerCount(7);
-  milty.createEmptyDraftState("@test/milty");
+  abstractDraft = new Milty();
+  draftState = abstractDraft.createEmptyDraftState("@test/milty");
+  expect(draftState.getSliceShape(-1)).toEqual(MILTY_SLICE_SHAPE);
+  expect(draftState.getSliceShape(0)).toEqual(MILTY_SLICE_SHAPE);
+  expect(draftState.getSliceShape(1)).toEqual(MILTY_SLICE_SHAPE);
+  expect(draftState.getSliceShape(2)).toEqual(MILTY_SLICE_SHAPE);
+  expect(draftState.getSliceShape(3)).toEqual(MILTY_SLICE_SHAPE_ALT);
+  expect(draftState.getSliceShape(4)).toEqual(MILTY_SLICE_SHAPE);
+  expect(draftState.getSliceShape(5)).toEqual(MILTY_SLICE_SHAPE);
+  expect(draftState.getSliceShape(6)).toEqual(MILTY_SLICE_SHAPE);
+  expect(draftState.getSliceShape(7)).toEqual(MILTY_SLICE_SHAPE);
 
   TI4.config.setPlayerCount(8);
-  milty.createEmptyDraftState("@test/milty");
+  abstractDraft = new Milty();
+  draftState = abstractDraft.createEmptyDraftState("@test/milty");
+  expect(draftState).toBeDefined();
+  expect(draftState.getSliceShape(0)).toEqual(MILTY_SLICE_SHAPE);
+  expect(draftState.getSliceShape(1)).toEqual(MILTY_SLICE_SHAPE);
+  expect(draftState.getSliceShape(2)).toEqual(MILTY_SLICE_SHAPE);
+  expect(draftState.getSliceShape(3)).toEqual(MILTY_SLICE_SHAPE_ALT);
+  expect(draftState.getSliceShape(4)).toEqual(MILTY_SLICE_SHAPE);
+  expect(draftState.getSliceShape(5)).toEqual(MILTY_SLICE_SHAPE);
+  expect(draftState.getSliceShape(6)).toEqual(MILTY_SLICE_SHAPE);
+  expect(draftState.getSliceShape(7)).toEqual(MILTY_SLICE_SHAPE_ALT);
 });
 
 it("createDraftState", () => {
