@@ -43,6 +43,12 @@ export abstract class AbstractDraft {
     }
     draftState.setSlices(slices);
 
+    if (draftState.getSlices().length < TI4.config.playerCount) {
+      errors.push(
+        `Slice count (${draftState.getSlices().length}) is less than player count (${TI4.config.playerCount})`
+      );
+    }
+
     // Slice labels.
     const labels: Array<string> | undefined = new ParseLabels().parseLabels(
       params.config
@@ -58,6 +64,12 @@ export abstract class AbstractDraft {
       factions = new GenerateFactions().generate(params.numFactions);
     }
     draftState.setFactions(factions);
+
+    if (draftState.getFactions().length < TI4.config.playerCount) {
+      errors.push(
+        `Faction count (${draftState.getFactions().length}) is less than player count (${TI4.config.playerCount})`
+      );
+    }
 
     const speakerIndex: number = Math.floor(
       Math.random() * TI4.config.playerCount

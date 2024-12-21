@@ -46,6 +46,7 @@ it("createEmptyDraftState", () => {
 });
 
 it("createDraftState (generate all)", () => {
+  TI4.config.setPlayerCount(2);
   const draft: MyAbstractDraft = new MyAbstractDraft();
   const params: CreateDraftParams = {
     namespaceId: "@test/test",
@@ -59,7 +60,26 @@ it("createDraftState (generate all)", () => {
   expect(errors).toEqual([]);
 });
 
+it("createDraftState (generate all, too few)", () => {
+  TI4.config.setPlayerCount(6);
+  const draft: MyAbstractDraft = new MyAbstractDraft();
+  const params: CreateDraftParams = {
+    namespaceId: "@test/test",
+    numSlices: 2,
+    numFactions: 2,
+    config: "",
+  };
+  const errors: Array<string> = [];
+  const draftState: DraftState = draft.createDraftState(params, errors);
+  expect(draftState).toBeDefined();
+  expect(errors).toEqual([
+    "Slice count (2) is less than player count (6)",
+    "Faction count (2) is less than player count (6)",
+  ]);
+});
+
 it("createDraftState (parse all)", () => {
+  TI4.config.setPlayerCount(2);
   const draft: MyAbstractDraft = new MyAbstractDraft();
   const params: CreateDraftParams = {
     namespaceId: "@test/test",

@@ -62,6 +62,7 @@ it("createDraftEmptyState", () => {
 });
 
 it("createDraftState", () => {
+  TI4.config.setPlayerCount(2);
   const createDraftParams: CreateDraftParams = {
     namespaceId: "@test/milty",
     numSlices: 3,
