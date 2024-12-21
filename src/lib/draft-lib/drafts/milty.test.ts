@@ -70,9 +70,16 @@ it("createDraftState", () => {
     config: "&labels=a",
   };
 
-  const milty = new Milty();
+  const milty: AbstractDraft = new Milty();
   const errors: Array<string> = [];
-  const draftState = milty.createDraftState(createDraftParams, errors);
+  const draftState: DraftState = milty.createDraftState(
+    createDraftParams,
+    errors
+  );
   expect(draftState).toBeDefined();
   expect(errors).toEqual([]);
+
+  expect(draftState.getSlices().length).toEqual(3);
+  expect(draftState.getSliceLabels()).toEqual(["a"]);
+  expect(draftState.getFactions().length).toEqual(3);
 });
