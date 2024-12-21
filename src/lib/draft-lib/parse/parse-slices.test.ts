@@ -33,3 +33,23 @@ it("parse (tile not a number)", () => {
   expect(errors).toEqual(['slice "1,2,3,4,x" has invalid tile number']);
   expect(slices).toBeUndefined();
 });
+
+it("parse (empty)", () => {
+  const errors: Array<string> = [];
+  const slices: Array<SliceTiles> | undefined = new ParseSlices(5).parseSlices(
+    "",
+    errors
+  );
+  expect(errors).toEqual([]);
+  expect(slices).toBeUndefined();
+});
+
+it("parse (empty, but &)", () => {
+  const errors: Array<string> = [];
+  const slices: Array<SliceTiles> | undefined = new ParseSlices(5).parseSlices(
+    "&other=stuff",
+    errors
+  );
+  expect(errors).toEqual([]);
+  expect(slices).toBeUndefined();
+});

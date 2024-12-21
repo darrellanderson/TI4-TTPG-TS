@@ -21,7 +21,9 @@ export class ParseFactions {
 
     config = config.toLowerCase();
 
-    const nsidNames: Array<string> = config.split("|");
+    const nsidNames: Array<string> = config
+      .split("|")
+      .filter((s) => s.length > 0);
     const factions: Array<Faction> = [];
 
     for (const nsidName of nsidNames) {

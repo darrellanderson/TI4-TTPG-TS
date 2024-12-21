@@ -22,12 +22,13 @@ export abstract class AbstractDraft {
   abstract getGenerateSlicesParams(): GenerateSlicesParams;
   abstract createEmptyDraftState(namespaceId: NamespaceId): DraftState;
 
-  createDraftState(params: CreateDraftParams): DraftState {
+  createDraftState(
+    params: CreateDraftParams,
+    errors: Array<string>
+  ): DraftState {
     const draftState: DraftState = this.createEmptyDraftState(
       params.namespaceId
     );
-
-    const errors: Array<string> = [];
 
     // Slices.
     const sliceSize: number = draftState.getSliceShape(-1).length;

@@ -40,10 +40,12 @@ it("createDraftState", () => {
     namespaceId: "@test/milty",
     numSlices: 3,
     numFactions: 3,
-    config: "labels=a",
+    config: "&labels=a",
   };
 
   const milty = new Milty();
-  const draftState = milty.createDraftState(createDraftParams);
+  const errors: Array<string> = [];
+  const draftState = milty.createDraftState(createDraftParams, errors);
   expect(draftState).toBeDefined();
+  expect(errors).toEqual([]);
 });

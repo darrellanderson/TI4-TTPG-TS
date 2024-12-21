@@ -25,12 +25,16 @@ export class ParseSlices {
       config = config.substring(0, index);
     }
 
-    const entries: Array<string> = config.split("|");
+    const entries: Array<string> = config
+      .split("|")
+      .filter((s) => s.length > 0);
 
     const slices: Array<SliceTiles> = [];
 
     for (const entry of entries) {
-      const tileNumberStrings: Array<string> = entry.split(",");
+      const tileNumberStrings: Array<string> = entry
+        .split(/[, ]/)
+        .filter((s) => s.length > 0);
       if (tileNumberStrings.length !== this._sliceSize) {
         errors.push(
           `slice "${entry}" has ${tileNumberStrings.length} tiles, expected ${this._sliceSize}`
