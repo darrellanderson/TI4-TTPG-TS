@@ -128,14 +128,9 @@ export class DraftStateUI extends AbstractUI {
     const sliceButtons: Array<WrappedClickableUI> = draftState
       .getSlices()
       .map((slice: SliceTiles, index: number) => {
-        const sliceShape: SliceShape = draftState.getSliceShape(index);
+        const sliceShape: SliceShape = draftState.getSliceShape(-1);
         const color: Color = new Color(1, 0, 0, 1);
-        const sliceUi: SliceUI = new SliceUI(
-          slice,
-          draftState.getSliceShape(index),
-          color,
-          scale
-        );
+        const sliceUi: SliceUI = new SliceUI(slice, sliceShape, color, scale);
         const label: string | undefined = sliceLabels[index];
         if (label) {
           sliceUi.setLabel(label);

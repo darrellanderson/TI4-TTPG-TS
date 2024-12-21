@@ -5,6 +5,7 @@ import { DraftState } from "../draft-state/draft-state";
 import { Faction } from "../../faction-lib/faction/faction";
 import { MapHomeSystemLocations } from "../../map-string-lib/map-home-system-locations";
 import { MapStringHex } from "../../map-string-lib/map-string-hex";
+import { MapStringHyperlanes } from "../../map-string-lib/map-string-hyperlanes";
 import { MapUI } from "../../../ui/map-ui/map-ui";
 import { PlayerSeatType } from "../../player-lib/player-seats/player-seats";
 import { SeatUI } from "../../../ui/draft/seat-ui/seat-ui";
@@ -184,8 +185,18 @@ export class DraftToMapString {
     }
 
     this._fillMissingMapStringEntries(mapStringEntries);
+    let mapString: string = mapStringEntries.join(" ");
 
-    return { mapString: mapStringEntries.join(" "), hexToPlayerName };
+    // Apply hyperlanes, if any.
+    const playerCount: number = TI4.config.playerCount;
+    const hyperlaneMapString = MapStringHyperlanes.get(playerCount);
+
+    mapString = new MapStringHyperlanes().addHyperlanes(
+      mapString,
+      hyperlaneMapString
+    );
+
+    return { mapString, hexToPlayerName };
   }
 
   _fillMissingMapStringEntries(mapStringEntries: Array<string>): void {
