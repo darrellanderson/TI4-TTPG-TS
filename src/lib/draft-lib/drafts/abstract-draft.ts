@@ -31,7 +31,7 @@ export abstract class AbstractDraft {
     );
 
     // Slices.
-    const sliceSize: number = draftState.getSliceShape(-1).length;
+    const sliceSize: number = draftState.getSliceShape(-1).length - 1;
     let slices: Array<SliceTiles> | undefined;
     slices = new ParseSlices(sliceSize).parseSlices(params.config, errors);
     if (slices === undefined) {
@@ -57,6 +57,7 @@ export abstract class AbstractDraft {
     if (factions === undefined) {
       factions = new GenerateFactions().generate(params.numFactions);
     }
+    draftState.setFactions(factions);
 
     const speakerIndex: number = Math.floor(
       Math.random() * TI4.config.playerCount

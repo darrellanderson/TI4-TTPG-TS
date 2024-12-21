@@ -9,7 +9,7 @@ class MyAbstractDraft extends AbstractDraft {
     return { sliceMakeup: ["high"], sliceShape: ["<0,0,0>", "<1,0,-1>"] };
   }
   createEmptyDraftState(namespaceId: NamespaceId): DraftState {
-    return new DraftState(namespaceId);
+    return new DraftState(namespaceId).setSliceShape(["<0,0,0>", "<1,0,-1>"]);
   }
   constructor() {
     super();
@@ -45,7 +45,7 @@ it("createEmptyDraftState", () => {
   expect(draft.createEmptyDraftState(namespaceId)).toBeDefined();
 });
 
-it("createDraftState", () => {
+it("createDraftState (generate all)", () => {
   const draft: MyAbstractDraft = new MyAbstractDraft();
   const params: CreateDraftParams = {
     namespaceId: "@test/test",
@@ -57,4 +57,25 @@ it("createDraftState", () => {
   const draftState: DraftState = draft.createDraftState(params, errors);
   expect(draftState).toBeDefined();
   expect(errors).toEqual([]);
+});
+
+it("createDraftState (parse all)", () => {
+  const draft: MyAbstractDraft = new MyAbstractDraft();
+  const params: CreateDraftParams = {
+    namespaceId: "@test/test",
+    numSlices: 2,
+    numFactions: 2,
+    config: "19|20&factions=arborec|ul&labels=a|b|c",
+  };
+  const errors: Array<string> = [];
+  const draftState: DraftState = draft.createDraftState(params, errors);
+  expect(draftState).toBeDefined();
+  expect(errors).toEqual([]);
+
+  expect(draftState.getSlices()).toEqual([[19], [20]]);
+  expect(draftState.getSliceLabels()).toEqual(["a", "b", "c"]);
+  expect(draftState.getFactions().map((faction) => faction.getAbbr())).toEqual([
+    "Arborec",
+    "Ul",
+  ]);
 });

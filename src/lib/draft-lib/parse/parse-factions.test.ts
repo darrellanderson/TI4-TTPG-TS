@@ -4,7 +4,7 @@ import { ParseFactions } from "./parse-factions";
 it("parse", () => {
   const errors: Array<string> = [];
   const factions: Array<Faction> | undefined =
-    new ParseFactions().parseFactions("factions=arborec|sol|_bogus_&", errors);
+    new ParseFactions().parseFactions("&factions=arborec|sol|_bogus_&", errors);
   if (!factions) {
     throw new Error("factions is undefined");
   }
@@ -23,6 +23,6 @@ it("parse (absent)", () => {
 it("parse (present, but empty)", () => {
   const errors: Array<string> = [];
   const factions: Array<Faction> | undefined =
-    new ParseFactions().parseFactions("factions=", errors);
+    new ParseFactions().parseFactions("&factions=", errors);
   expect(factions).toBeUndefined();
 });
