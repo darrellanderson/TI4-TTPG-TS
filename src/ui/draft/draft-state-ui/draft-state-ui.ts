@@ -18,6 +18,7 @@ import {
   SliceTiles,
 } from "../../../lib/draft-lib/generate-slices/generate-slices";
 import { SliceUI } from "../slice-ui/slice-ui";
+import { TurnOrderMini } from "../../turn-order-mini/turn-order-mini";
 import { WrappedClickableUI } from "../../wrapped-clickable-ui/wrapped-clickable-ui";
 import { CreateZoomedUiType, ZoomableUI } from "../../zoomable-ui/zoomable-ui";
 
@@ -209,8 +210,16 @@ export class DraftStateUI extends AbstractUI {
       createZoomedMapUi
     );
 
+    // Turn order.
+    const turnOrderMini: AbstractUI = new TurnOrderMini(scale);
+
+    const mapOverTurnOrder: AbstractUI = new HorizontalUIBuilder()
+      .setSpacing(SPACING * scale)
+      .addUIs([zoomableMapUi, turnOrderMini])
+      .build();
+
     const panel: AbstractUI = new HorizontalUIBuilder()
-      .addUIs([sliceGrid, factionGrid, seatGrid, zoomableMapUi])
+      .addUIs([sliceGrid, factionGrid, seatGrid, mapOverTurnOrder])
       .setPadding(SPACING * scale)
       .setSpacing(SPACING * scale)
       .build();
