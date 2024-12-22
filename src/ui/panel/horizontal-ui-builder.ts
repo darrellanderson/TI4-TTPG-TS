@@ -72,9 +72,17 @@ export class HorizontalUIBuilder {
       .setVerticalAlignment(VerticalAlignment.Top)
       .setChild(panel);
 
+    const uis: Array<AbstractUI> = this._uis;
     return new (class HorizontalUI extends AbstractUI {
       constructor() {
         super(panelBox, panelSize);
+      }
+
+      destroy(): void {
+        uis.forEach((entry: AbstractUI) => {
+          entry.destroy();
+        });
+        super.destroy();
       }
     })();
   }

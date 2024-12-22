@@ -21,8 +21,6 @@ export class AbstractWindow {
   private readonly _namespaceId: NamespaceId | undefined;
   private readonly _windowParams: WindowParams;
 
-  private _shiftLeftToSeeTurnOrder: boolean = false;
-
   constructor(
     createAbstractUI: CreateAbstractUIType,
     namespaceId: NamespaceId | undefined
@@ -51,11 +49,6 @@ export class AbstractWindow {
       })();
     };
 
-    let u: number = 0.99;
-    if (this._shiftLeftToSeeTurnOrder) {
-      u = 0.814;
-    }
-
     this._windowParams = {
       size: {
         width: defaultSize.w,
@@ -65,7 +58,8 @@ export class AbstractWindow {
 
       title: "Test Window",
       defaultTarget: "screen",
-      screen: { anchor: { u: 1, v: 0 }, pos: { u, v: 0.01 } },
+      // Use u 0.814 to see turn order.
+      screen: { anchor: { u: 1, v: 0 }, pos: { u: 0.99, v: 0.01 } },
     };
   }
 

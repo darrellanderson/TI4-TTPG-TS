@@ -16,6 +16,7 @@ export const WRAPPED_BORDER_WIDTH: number = 4;
  * Wrap an AbstractUI inside a ContentButton.
  */
 export class WrappedClickableUI extends AbstractUI {
+  private readonly _innerUI: AbstractUI;
   private readonly _contentButton: ContentButton;
   private readonly _border: Border = new Border();
   private _owningPlayerSlot: number = -1;
@@ -58,8 +59,14 @@ export class WrappedClickableUI extends AbstractUI {
 
     super(borderBox, borderSize);
 
+    this._innerUI = ui;
     this._contentButton = contentButton;
     this._border = border;
+  }
+
+  destroy(): void {
+    this._innerUI.destroy();
+    super.destroy();
   }
 
   getContentButton(): ContentButton {

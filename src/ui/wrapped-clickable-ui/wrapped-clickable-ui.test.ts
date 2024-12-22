@@ -30,6 +30,7 @@ it("getSize", () => {
 
   expect(wrappedUi.getBorder()).toBeDefined();
   expect(wrappedUi.getContentButton()).toBeDefined();
+  wrappedUi.destroy();
 });
 
 it("setOwningPlayerSlot", () => {

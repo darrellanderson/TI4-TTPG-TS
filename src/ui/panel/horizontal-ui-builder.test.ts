@@ -15,6 +15,7 @@ it("build 1", () => {
     .build();
   expect(abstractUi.getWidget()).toBeDefined();
   expect(abstractUi.getSize()).toEqual({ w: 1, h: 7 });
+  abstractUi.destroy();
 });
 
 it("build 2", () => {
