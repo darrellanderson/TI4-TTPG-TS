@@ -1,4 +1,9 @@
-import { Color, ContentButton, Player } from "@tabletop-playground/api";
+import {
+  Color,
+  ContentButton,
+  HorizontalAlignment,
+  Player,
+} from "@tabletop-playground/api";
 import { HexType } from "ttpg-darrell";
 
 import { AbstractUI } from "../../abstract-ui/abtract-ui";
@@ -19,6 +24,7 @@ import {
 } from "../../../lib/draft-lib/generate-slices/generate-slices";
 import { SliceUI } from "../slice-ui/slice-ui";
 import { TurnOrderMini } from "../../turn-order-mini/turn-order-mini";
+import { VerticalUIBuilder } from "../../panel/vertical-ui-builder";
 import { WrappedClickableUI } from "../../wrapped-clickable-ui/wrapped-clickable-ui";
 import { CreateZoomedUiType, ZoomableUI } from "../../zoomable-ui/zoomable-ui";
 
@@ -213,8 +219,9 @@ export class DraftStateUI extends AbstractUI {
     // Turn order.
     const turnOrderMini: AbstractUI = new TurnOrderMini(scale);
 
-    const mapOverTurnOrder: AbstractUI = new HorizontalUIBuilder()
+    const mapOverTurnOrder: AbstractUI = new VerticalUIBuilder()
       .setSpacing(SPACING * scale)
+      .setHorizontalAlignment(HorizontalAlignment.Center)
       .addUIs([zoomableMapUi, turnOrderMini])
       .build();
 

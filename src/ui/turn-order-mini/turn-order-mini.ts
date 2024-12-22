@@ -2,13 +2,13 @@ import {
   Border,
   Color,
   HorizontalAlignment,
-  HorizontalBox,
   LayoutBox,
   Panel,
   Player,
   Text,
   TextJustification,
   VerticalAlignment,
+  VerticalBox,
   Widget,
   world,
 } from "@tabletop-playground/api";
@@ -47,17 +47,19 @@ export class TurnOrderMini extends AbstractUI {
   };
 
   constructor(scale: number) {
-    const entrySize: UI_SIZE = { w: 100 * scale, h: 25 * scale };
-    const fontSize: number = entrySize.h * 0.8;
+    const entrySize: UI_SIZE = { w: 200 * scale, h: 30 * scale };
+    const fontSize: number = entrySize.h * 0.4;
 
     const playerCount: number = TI4.config.playerCount;
     const panelSize: UI_SIZE = { w: entrySize.w, h: entrySize.h * playerCount };
-    const panel: Panel = new HorizontalBox();
+    const panel: Panel = new VerticalBox();
 
     const entries: Array<{ text: Text; bg: Border }> = [];
     for (let i: number = 0; i < playerCount; i++) {
-      const text: Text = new Text();
-      text.setFontSize(fontSize).setJustification(TextJustification.Center);
+      const text: Text = new Text()
+        .setBold(true)
+        .setFontSize(fontSize)
+        .setJustification(TextJustification.Center);
 
       const bg: Border = new Border();
       bg.setChild(text);
@@ -76,6 +78,7 @@ export class TurnOrderMini extends AbstractUI {
 
     this._entries = entries;
     TurnOrder.onTurnStateChanged.add(this._onTurnOrderChanged);
+    this._onTurnOrderChanged();
   }
 
   destroy(): void {

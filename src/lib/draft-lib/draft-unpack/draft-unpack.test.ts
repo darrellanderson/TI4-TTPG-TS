@@ -85,3 +85,14 @@ it("unpackMap", () => {
 
   draftUnpack.unpackMap();
 });
+
+it("set turn order", () => {
+  const draftState: DraftState = new DraftState("@test/test");
+  const draftUnpack: DraftUnpack = new DraftUnpack(draftState);
+
+  draftState.setSpeakerIndex(0);
+  draftUnpack.setTurnOrder();
+
+  const turnOrder: Array<number> = TI4.turnOrder.getTurnOrder();
+  expect(turnOrder).toEqual([10, 11, 12, 13, 14, 15]);
+});

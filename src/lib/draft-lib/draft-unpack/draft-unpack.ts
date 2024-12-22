@@ -113,4 +113,17 @@ export class DraftUnpack {
 
     return this;
   }
+
+  setTurnOrder(): this {
+    const speakerIndex: number = this._draftState.getSpeakerIndex();
+    const playerCount: number = TI4.config.playerCount;
+
+    const order: Array<number> = [];
+    for (let i = 0; i < playerCount; i++) {
+      order.push(((speakerIndex + i) % playerCount) + 10);
+    }
+    TI4.turnOrder.setTurnOrder(order, "forward", speakerIndex);
+
+    return this;
+  }
 }
