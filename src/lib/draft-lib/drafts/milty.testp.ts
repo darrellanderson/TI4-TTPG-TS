@@ -4,14 +4,12 @@ import { AbstractDraft, CreateDraftParams } from "./abstract-draft";
 import { Milty } from "./milty";
 import { AbstractWindow } from "ui/abstract-window/abstract-window";
 
-TI4.config.setPlayerCount(7);
-
 const abstractDraft: AbstractDraft = new Milty();
 
 const params: CreateDraftParams = {
   namespaceId: "@test/test",
   numSlices: 8,
-  numFactions: 8,
+  numFactions: 9,
   config: "",
 };
 const errors: Array<string> = [];

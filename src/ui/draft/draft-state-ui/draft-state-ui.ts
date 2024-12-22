@@ -173,7 +173,7 @@ export class DraftStateUI extends AbstractUI {
       });
     const factionGrid: AbstractUI = new GridUIBuilder()
       .addUIs(factionButtons)
-      .setMaxRows(6)
+      .setMaxRows(9)
       .setSpacing(SPACING * scale)
       .build();
 
@@ -189,7 +189,7 @@ export class DraftStateUI extends AbstractUI {
     }
     const seatGrid: AbstractUI = new GridUIBuilder()
       .addUIs(seatButtons)
-      .setMaxRows(6)
+      .setMaxRows(9)
       .setSpacing(SPACING * scale)
       .build();
 
