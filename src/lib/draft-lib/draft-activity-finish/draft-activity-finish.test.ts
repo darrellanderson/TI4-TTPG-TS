@@ -7,7 +7,7 @@ import {
 } from "ttpg-mock";
 
 import { DraftState } from "../draft-state/draft-state";
-import { DraftUnpack } from "./draft-unpack";
+import { DraftActivityFinish } from "./draft-activity-finish";
 import { DraftToMapString } from "../draft-to-map-string/draft-to-map-string";
 import { Milty } from "../drafts/milty";
 
@@ -24,7 +24,15 @@ beforeEach(() => {
 
 it("constructor", () => {
   const draftState: DraftState = new DraftState("@test/test");
-  new DraftUnpack(draftState);
+  new DraftActivityFinish(draftState);
+});
+
+it("finishAll", () => {
+  const draftState: DraftState = new DraftState("@test/test");
+  const draftActivityFinish: DraftActivityFinish = new DraftActivityFinish(
+    draftState
+  );
+  draftActivityFinish.finishAll();
 });
 
 it("movePlayersToSeats", () => {
@@ -33,11 +41,13 @@ it("movePlayersToSeats", () => {
   const player: Player = new MockPlayer({ slot: 10 });
 
   const draftState: DraftState = new DraftState("@test/test");
-  const draftUnpack: DraftUnpack = new DraftUnpack(draftState);
+  const draftActivityFinish: DraftActivityFinish = new DraftActivityFinish(
+    draftState
+  );
 
   draftState.setSeatIndexToPlayerSlot(0, 10); // choose seat
 
-  draftUnpack.movePlayersToSeats();
+  draftActivityFinish.movePlayersToSeats();
   expect(player.getSlot()).toBe(19); // first moved to an open slot
 
   process.flushTicks();
@@ -50,14 +60,16 @@ it("moveSpeakerToken", () => {
   const speakerToken: GameObject = MockGameObject.simple("token:base/speaker");
 
   const draftState: DraftState = new DraftState("@test/test");
-  const draftUnpack: DraftUnpack = new DraftUnpack(draftState);
+  const draftActivityFinish: DraftActivityFinish = new DraftActivityFinish(
+    draftState
+  );
 
   draftState.setSpeakerIndex(0);
-  draftUnpack.moveSpeakerToken();
+  draftActivityFinish.moveSpeakerToken();
   expect(speakerToken.getPosition().toString()).toBe("(X=-72.5,Y=15,Z=0)");
 
   draftState.setSpeakerIndex(4);
-  draftUnpack.moveSpeakerToken();
+  draftActivityFinish.moveSpeakerToken();
   expect(speakerToken.getPosition().toString()).toBe("(X=72.5,Y=12,Z=0)");
 });
 
@@ -65,7 +77,9 @@ it("unpackMap", () => {
   const draftState: DraftState = new Milty().createEmptyDraftState(
     "@test/test"
   );
-  const draftUnpack: DraftUnpack = new DraftUnpack(draftState);
+  const draftActivityFinish: DraftActivityFinish = new DraftActivityFinish(
+    draftState
+  );
 
   // Place a faction home system in the map string.
   draftState.setFactions([
@@ -83,15 +97,17 @@ it("unpackMap", () => {
     "{18} -112 -114 -115 -113 -111 -110 -112 -112 -114 -114 -115 -115 -113 -113 -111 -111 -110 -110 -112 -112 -114 -114 -114 -115 5 -115 -113 -113 -113 -111 -111 -111 -110 -110 -110 -112"
   );
 
-  draftUnpack.unpackMap();
+  draftActivityFinish.unpackMap();
 });
 
 it("set turn order", () => {
   const draftState: DraftState = new DraftState("@test/test");
-  const draftUnpack: DraftUnpack = new DraftUnpack(draftState);
+  const draftActivityFinish: DraftActivityFinish = new DraftActivityFinish(
+    draftState
+  );
 
   draftState.setSpeakerIndex(0);
-  draftUnpack.setTurnOrder();
+  draftActivityFinish.setTurnOrder();
 
   const turnOrder: Array<number> = TI4.turnOrder.getTurnOrder();
   expect(turnOrder).toEqual([10, 11, 12, 13, 14, 15]);

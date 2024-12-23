@@ -12,12 +12,21 @@ import {
 } from "../../map-string-lib/map-string-parser";
 import { PlayerSeatType } from "../../player-lib/player-seats/player-seats";
 
-export class DraftUnpack {
+export class DraftActivityFinish {
   private readonly _draftState: DraftState;
   private readonly _find: Find = new Find();
 
   constructor(draftState: DraftState) {
     this._draftState = draftState;
+  }
+
+  finishAll(): this {
+    this.movePlayersToSeats();
+    this.moveSpeakerToken();
+    this.unpackMap();
+    this.setTurnOrder();
+
+    return this;
   }
 
   movePlayersToSeats(): this {
