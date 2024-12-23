@@ -132,7 +132,8 @@ export class DraftActivityStart {
     };
     const window: Window = new AbstractWindow(
       create,
-      "@TI4/draft-window"
+      "@TI4/draft-window",
+      "Draft"
     ).createWindow();
     window.attach();
 

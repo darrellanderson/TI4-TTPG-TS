@@ -1,22 +1,18 @@
-import { DraftStateUI } from "ui/draft/draft-state-ui/draft-state-ui";
-import { DraftState } from "../draft-state/draft-state";
-import { AbstractDraft, CreateDraftParams } from "./idraft";
 import { Milty } from "./milty";
-import { AbstractWindow } from "ui/abstract-window/abstract-window";
+import { IDraft } from "./idraft";
+import {
+  DraftActivityStart,
+  DraftActivityStartParams,
+} from "../draft-activity-start/draft-activity-start";
 
-const abstractDraft: AbstractDraft = new Milty();
+const draft: IDraft = new Milty();
 
-const params: CreateDraftParams = {
+const params: DraftActivityStartParams = {
   namespaceId: "@test/test",
   numSlices: 8,
   numFactions: 9,
   config: "",
 };
 const errors: Array<string> = [];
-const draftState: DraftState = abstractDraft.createDraftState(params, errors);
-
-const window: AbstractWindow = new AbstractWindow(
-  (scale: number) => new DraftStateUI(draftState, scale),
-  undefined
-);
-window.createWindow().attach();
+const draftActivityStart = new DraftActivityStart();
+draftActivityStart.start(draft, params, errors);

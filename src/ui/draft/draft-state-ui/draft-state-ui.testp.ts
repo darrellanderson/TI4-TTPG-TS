@@ -53,9 +53,13 @@ function _goDirect() {
 }
 
 function _goWindow() {
-  new AbstractWindow((scale: number): AbstractUI => {
-    return new DraftStateUI(draftState, scale);
-  }, "@test/draft-state-ui")
+  new AbstractWindow(
+    (scale: number): AbstractUI => {
+      return new DraftStateUI(draftState, scale);
+    },
+    "@test/draft-state-ui",
+    "Draft"
+  )
     .createWindow()
     .attach();
 }

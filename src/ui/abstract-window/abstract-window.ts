@@ -23,7 +23,8 @@ export class AbstractWindow {
 
   constructor(
     createAbstractUI: CreateAbstractUIType,
-    namespaceId: NamespaceId | undefined
+    namespaceId: NamespaceId | undefined,
+    windowTitle: string
   ) {
     this._namespaceId = namespaceId;
 
@@ -56,7 +57,9 @@ export class AbstractWindow {
       },
       windowWidgetGenerator,
 
-      title: "Test Window",
+      disableClose: true,
+
+      title: windowTitle,
       defaultTarget: "screen",
       // Use u 0.814 to see turn order.
       screen: { anchor: { u: 1, v: 0 }, pos: { u: 0.99, v: 0.01 } },

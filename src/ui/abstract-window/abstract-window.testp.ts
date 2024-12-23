@@ -11,7 +11,8 @@ const namespaceId = "@test/test";
 
 const window: Window = new AbstractWindow(
   createAbstractUI,
-  namespaceId
+  namespaceId,
+  "title"
 ).createWindow();
 
 setTimeout(() => {

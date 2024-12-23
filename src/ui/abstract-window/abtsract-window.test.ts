@@ -13,7 +13,8 @@ it("constuctor, createWindow", () => {
 
   const window: Window = new AbstractWindow(
     createAbstractUI,
-    namespaceId
+    namespaceId,
+    "Test Window"
   ).createWindow();
 
   window.attach().detach();
