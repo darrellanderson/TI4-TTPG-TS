@@ -1,18 +1,20 @@
 import { NamespaceId } from "ttpg-darrell";
-import { DraftState } from "../draft-state/draft-state";
-import { GenerateSlicesParams } from "../generate-slices/generate-slices";
-import { AbstractDraft, CreateDraftParams } from "./abstract-draft";
-import { MockGameObject } from "ttpg-mock";
+import { MockCardHolder, MockGameObject } from "ttpg-mock";
 
-class MyAbstractDraft extends AbstractDraft {
+import { IDraft } from "../drafts/idraft";
+import { GenerateSlicesParams } from "../generate-slices/generate-slices";
+import { DraftState } from "../draft-state/draft-state";
+import {
+  DraftActivityStart,
+  DraftActivityStartParams,
+} from "./draft-activity-start";
+
+class MyDraft implements IDraft {
   getGenerateSlicesParams(): GenerateSlicesParams {
     return { sliceMakeup: ["high"], sliceShape: ["<0,0,0>", "<1,0,-1>"] };
   }
   createEmptyDraftState(namespaceId: NamespaceId): DraftState {
     return new DraftState(namespaceId).setSliceShape(["<0,0,0>", "<1,0,-1>"]);
-  }
-  constructor() {
-    super();
   }
 }
 
@@ -27,12 +29,26 @@ beforeEach(() => {
   }
 });
 
+// Create card holder for TI4.playerSeats to use.
+beforeEach(() => {
+  for (const playerSlot of [10, 11, 12, 13, 14, 15]) {
+    new MockCardHolder({
+      templateMetadata: "card-holder:base/player-hand",
+      owningPlayerSlot: playerSlot,
+    });
+  }
+});
+
+it("static shouldResume", () => {
+  expect(DraftActivityStart.shouldResume()).toBe(false);
+});
+
 it("constructor", () => {
-  new MyAbstractDraft();
+  new MyDraft();
 });
 
 it("getGenerateSlicesParams", () => {
-  const draft: MyAbstractDraft = new MyAbstractDraft();
+  const draft: IDraft = new MyDraft();
   expect(draft.getGenerateSlicesParams()).toEqual({
     sliceMakeup: ["high"],
     sliceShape: ["<0,0,0>", "<1,0,-1>"],
@@ -40,38 +56,40 @@ it("getGenerateSlicesParams", () => {
 });
 
 it("createEmptyDraftState", () => {
-  const draft: MyAbstractDraft = new MyAbstractDraft();
+  const draft: IDraft = new MyDraft();
   const namespaceId: NamespaceId = "@test/test";
   expect(draft.createEmptyDraftState(namespaceId)).toBeDefined();
 });
 
 it("createDraftState (generate all)", () => {
   TI4.config.setPlayerCount(2);
-  const draft: MyAbstractDraft = new MyAbstractDraft();
-  const params: CreateDraftParams = {
+  const draft: IDraft = new MyDraft();
+  const params: DraftActivityStartParams = {
     namespaceId: "@test/test",
     numSlices: 2,
     numFactions: 2,
     config: "",
   };
   const errors: Array<string> = [];
-  const draftState: DraftState = draft.createDraftState(params, errors);
-  expect(draftState).toBeDefined();
+  const draftActivityStart = new DraftActivityStart();
+  const success: boolean = draftActivityStart.start(draft, params, errors);
+  expect(success).toBe(true);
   expect(errors).toEqual([]);
 });
 
 it("createDraftState (generate all, too few)", () => {
   TI4.config.setPlayerCount(6);
-  const draft: MyAbstractDraft = new MyAbstractDraft();
-  const params: CreateDraftParams = {
+  const draft: IDraft = new MyDraft();
+  const params: DraftActivityStartParams = {
     namespaceId: "@test/test",
     numSlices: 2,
     numFactions: 2,
     config: "",
   };
   const errors: Array<string> = [];
-  const draftState: DraftState = draft.createDraftState(params, errors);
-  expect(draftState).toBeDefined();
+  const draftActivityStart = new DraftActivityStart();
+  const success: boolean = draftActivityStart.start(draft, params, errors);
+  expect(success).toBe(false);
   expect(errors).toEqual([
     "Slice count (2) is less than player count (6)",
     "Faction count (2) is less than player count (6)",
@@ -80,22 +98,23 @@ it("createDraftState (generate all, too few)", () => {
 
 it("createDraftState (parse all)", () => {
   TI4.config.setPlayerCount(2);
-  const draft: MyAbstractDraft = new MyAbstractDraft();
-  const params: CreateDraftParams = {
+  const draft: IDraft = new MyDraft();
+  const params: DraftActivityStartParams = {
     namespaceId: "@test/test",
     numSlices: 2,
     numFactions: 2,
     config: "19|20&factions=arborec|ul&labels=a|b|c",
   };
   const errors: Array<string> = [];
-  const draftState: DraftState = draft.createDraftState(params, errors);
-  expect(draftState).toBeDefined();
+  const draftActivityStart = new DraftActivityStart();
+  const success: boolean = draftActivityStart.start(draft, params, errors);
+  expect(success).toBe(true);
   expect(errors).toEqual([]);
 
-  expect(draftState.getSlices()).toEqual([[19], [20]]);
-  expect(draftState.getSliceLabels()).toEqual(["a", "b", "c"]);
-  expect(draftState.getFactions().map((faction) => faction.getAbbr())).toEqual([
-    "Arborec",
-    "Ul",
-  ]);
+  const draftState: DraftState | undefined = draftActivityStart.getDraftState();
+  expect(draftState?.getSlices()).toEqual([[19], [20]]);
+  expect(draftState?.getSliceLabels()).toEqual(["a", "b", "c"]);
+  expect(draftState?.getFactions().map((faction) => faction.getAbbr())).toEqual(
+    ["Arborec", "Ul"]
+  );
 });

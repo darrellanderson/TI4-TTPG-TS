@@ -6,7 +6,7 @@ import {
   SliceShape,
 } from "../generate-slices/generate-slices";
 import { SystemTierType } from "../../system-lib/system/system-tier";
-import { AbstractDraft } from "./abstract-draft";
+import { IDraft } from "./idraft";
 
 export const MILTY_SLICE_MAKEUP: ReadonlyArray<SystemTierType> = [
   "high",
@@ -36,7 +36,7 @@ export const MILTY_SLICE_SHAPE_ALT: SliceShape = [
   "<3,-1,-2>", // front-far (pushed forward)
 ];
 
-export class Milty extends AbstractDraft {
+export class Milty implements IDraft {
   public getGenerateSlicesParams(): GenerateSlicesParams {
     return {
       sliceMakeup: MILTY_SLICE_MAKEUP,

@@ -1,6 +1,6 @@
 import { DraftStateUI } from "ui/draft/draft-state-ui/draft-state-ui";
 import { DraftState } from "../draft-state/draft-state";
-import { AbstractDraft, CreateDraftParams } from "./abstract-draft";
+import { AbstractDraft, CreateDraftParams } from "./idraft";
 import { Milty } from "./milty";
 import { AbstractWindow } from "ui/abstract-window/abstract-window";
 
