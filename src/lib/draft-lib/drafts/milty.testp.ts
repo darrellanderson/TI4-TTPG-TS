@@ -14,5 +14,15 @@ const params: DraftActivityStartParams = {
   config: "",
 };
 const errors: Array<string> = [];
-const draftActivityStart = new DraftActivityStart();
-draftActivityStart.start(draft, params, errors);
+
+if (DraftActivityStart.resumeIfInProgress()) {
+  // Draft is in progress.
+  console.log("Draft is in progress");
+} else {
+  const draftActivityStart = new DraftActivityStart();
+  const success: boolean = draftActivityStart.start(draft, params, errors);
+  if (!success) {
+    throw new Error("DraftActivityStart failed");
+  }
+  console.log("Draft starting");
+}
