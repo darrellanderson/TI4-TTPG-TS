@@ -45,6 +45,13 @@ it("_maybeAdvanceTurn", () => {
   expect(TI4.turnOrder.getCurrentTurn()).toBe(11);
 });
 
+it("_getSliceColorOrThrow", () => {
+  DraftStateUI._getSliceColorOrThrow(0);
+  expect(() => {
+    DraftStateUI._getSliceColorOrThrow(100);
+  }).toThrow();
+});
+
 it("_createSliceClickHandler", () => {
   const draftState: DraftState = new DraftState("@test/draft-state").setSlices([
     [1, 2, 3, 4, 5],

@@ -4,9 +4,10 @@ import {
   HorizontalAlignment,
   Player,
 } from "@tabletop-playground/api";
-import { HexType } from "ttpg-darrell";
+import { ColorLib, HexType } from "ttpg-darrell";
 
 import { AbstractUI } from "../../abstract-ui/abtract-ui";
+import { ButtonUI } from "../../button-ui/button-ui";
 import { DraftState } from "../../../lib/draft-lib/draft-state/draft-state";
 import {
   DraftToMapString,
@@ -29,6 +30,18 @@ import { WrappedClickableUI } from "../../wrapped-clickable-ui/wrapped-clickable
 import { CreateZoomedUiType, ZoomableUI } from "../../zoomable-ui/zoomable-ui";
 
 const SPACING: number = 12;
+
+const COLORS: Array<string> = [
+  "#F0F0F0", // white
+  "#00CFFF", // blue
+  "#572780", // purple
+  "#D7B700", // yellow
+  "#FF1010", // red
+  "#00FF00", // green
+  "#F46FCD", // pink
+  "#FC6A03", // orange
+  "#6E260E", // brown
+];
 
 export class DraftStateUI extends AbstractUI {
   private readonly _draftState: DraftState;
@@ -139,6 +152,14 @@ export class DraftStateUI extends AbstractUI {
     };
   };
 
+  static _getSliceColorOrThrow = (index: number): Color => {
+    const colorString: string | undefined = COLORS[index];
+    if (!colorString) {
+      throw new Error(`Missing color for index ${index}`);
+    }
+    return new ColorLib().parseColorOrThrow(colorString);
+  };
+
   constructor(draftState: DraftState, scale: number) {
     const sliceLabels: Array<string> = draftState.getSliceLabels();
     const zoomableSliceButtons: Array<AbstractUI> = [];
@@ -146,7 +167,7 @@ export class DraftStateUI extends AbstractUI {
       .getSlices()
       .map((slice: SliceTiles, index: number) => {
         const sliceShape: SliceShape = draftState.getSliceShape(-1);
-        const color: Color = new Color(1, 0, 0, 1);
+        const color: Color = DraftStateUI._getSliceColorOrThrow(index);
         const sliceUi: SliceUI = new SliceUI(slice, sliceShape, color, scale);
         const label: string | undefined = sliceLabels[index];
         if (label) {
@@ -229,10 +250,13 @@ export class DraftStateUI extends AbstractUI {
     // Turn order.
     const turnOrderMini: AbstractUI = new TurnOrderMini(scale);
 
+    const finishDraftButton: ButtonUI = new ButtonUI(scale);
+    finishDraftButton.getButton().setText("Finish");
+
     const mapOverTurnOrder: AbstractUI = new VerticalUIBuilder()
       .setSpacing(SPACING * scale)
       .setHorizontalAlignment(HorizontalAlignment.Center)
-      .addUIs([zoomableMapUi, turnOrderMini])
+      .addUIs([zoomableMapUi, turnOrderMini, finishDraftButton])
       .build();
 
     const panel: AbstractUI = new HorizontalUIBuilder()
@@ -270,6 +294,8 @@ export class DraftStateUI extends AbstractUI {
       const hexToLabel: Map<HexType, string> =
         mapStringAndHexToPlayerName.hexToPlayerName;
       mapUi.update(mapString, hexToLabel);
+
+      finishDraftButton.getButton().setEnabled(draftState.isComplete());
     };
 
     draftState.onDraftStateChanged.add(this._onDraftStateChangedHandler);
