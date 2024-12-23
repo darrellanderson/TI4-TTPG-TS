@@ -34,6 +34,13 @@ export class DraftStateUI extends AbstractUI {
   private readonly _draftState: DraftState;
   private readonly _onDraftStateChangedHandler: () => void;
 
+  static _maybeAdvanceTurn = (player: Player): void => {
+    const playerSlot: number = player.getSlot();
+    if (TI4.turnOrder.getCurrentTurn() === playerSlot) {
+      TI4.turnOrder.nextTurn();
+    }
+  };
+
   static _createSliceClickHandler(
     draftState: DraftState,
     sliceIndex: number
@@ -52,6 +59,7 @@ export class DraftStateUI extends AbstractUI {
 
         // Select this candidate.
         draftState.setSliceIndexToPlayerSlot(sliceIndex, playerSlot);
+        DraftStateUI._maybeAdvanceTurn(player);
       } else if (currentSlot === playerSlot) {
         draftState.setSliceIndexToPlayerSlot(sliceIndex, -1);
       }
@@ -76,6 +84,7 @@ export class DraftStateUI extends AbstractUI {
 
         // Select this candidate.
         draftState.setFactionIndexToPlayerSlot(sliceIndex, playerSlot);
+        DraftStateUI._maybeAdvanceTurn(player);
       } else if (currentSlot === playerSlot) {
         draftState.setFactionIndexToPlayerSlot(sliceIndex, -1);
       }
@@ -100,6 +109,7 @@ export class DraftStateUI extends AbstractUI {
 
         // Select this candidate.
         draftState.setSeatIndexToPlayerSlot(sliceIndex, playerSlot);
+        DraftStateUI._maybeAdvanceTurn(player);
       } else if (currentSlot === playerSlot) {
         draftState.setSeatIndexToPlayerSlot(sliceIndex, -1);
       }

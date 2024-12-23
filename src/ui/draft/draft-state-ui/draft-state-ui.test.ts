@@ -38,6 +38,13 @@ it("constructor", () => {
   draftStateUi.destroy();
 });
 
+it("_maybeAdvanceTurn", () => {
+  TI4.turnOrder.setTurnOrder([10, 11, 12, 13, 14, 15], "forward", 10);
+  const player: Player = new MockPlayer({ slot: 10 });
+  DraftStateUI._maybeAdvanceTurn(player);
+  expect(TI4.turnOrder.getCurrentTurn()).toBe(11);
+});
+
 it("_createSliceClickHandler", () => {
   const draftState: DraftState = new DraftState("@test/draft-state").setSlices([
     [1, 2, 3, 4, 5],
