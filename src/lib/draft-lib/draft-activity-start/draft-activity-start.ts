@@ -1,6 +1,12 @@
-import { Direction, NamespaceId, Shuffle } from "ttpg-darrell";
+import { Direction, NamespaceId, Shuffle, Window } from "ttpg-darrell";
 
+import { AbstractUI } from "../../../ui/abstract-ui/abtract-ui";
+import {
+  AbstractWindow,
+  CreateAbstractUIType,
+} from "../../../ui/abstract-window/abstract-window";
 import { DraftState } from "../draft-state/draft-state";
+import { DraftStateUI } from "../../../ui/draft/draft-state-ui/draft-state-ui";
 import { Faction } from "../../faction-lib/faction/faction";
 import {
   GenerateSlices,
@@ -30,8 +36,12 @@ export type DraftActivityStartParams = {
 export class DraftActivityStart {
   private _draftState: DraftState | undefined;
 
-  static shouldResume(): boolean {
-    return DraftState.isDraftInProgress(DRAFT_NAMESPACE_ID);
+  static resumeIfInProgress(): boolean {
+    if (DraftState.isDraftInProgress(DRAFT_NAMESPACE_ID)) {
+      new DraftActivityStart().resume();
+      return true;
+    }
+    return false;
   }
 
   getDraftState(): DraftState | undefined {
@@ -111,9 +121,21 @@ export class DraftActivityStart {
   }
 
   resume(): this {
-    this._draftState = new DraftState(DRAFT_NAMESPACE_ID);
+    if (!DraftState.isDraftInProgress(DRAFT_NAMESPACE_ID)) {
+      throw new Error("Draft not in progress");
+    }
+    const draftState: DraftState = new DraftState(DRAFT_NAMESPACE_ID);
+    this._draftState = draftState;
 
-    // TODO
+    const create: CreateAbstractUIType = (scale: number): AbstractUI => {
+      return new DraftStateUI(draftState, scale);
+    };
+    const window: Window = new AbstractWindow(
+      create,
+      "@TI4/draft-window"
+    ).createWindow();
+    window.attach();
+
     return this;
   }
 }

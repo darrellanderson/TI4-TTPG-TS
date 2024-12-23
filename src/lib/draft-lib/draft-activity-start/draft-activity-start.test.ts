@@ -39,8 +39,25 @@ beforeEach(() => {
   }
 });
 
-it("static shouldResume", () => {
-  expect(DraftActivityStart.shouldResume()).toBe(false);
+it("static resumeIfInProgress (false)", () => {
+  expect(DraftActivityStart.resumeIfInProgress()).toBe(false);
+});
+
+it("static resumeIfInProgress (true)", () => {
+  TI4.config.setPlayerCount(2);
+  const draft: IDraft = new MyDraft();
+  const params: DraftActivityStartParams = {
+    namespaceId: "@test/test",
+    numSlices: 2,
+    numFactions: 2,
+    config: "",
+  };
+  const errors: Array<string> = [];
+  const draftActivityStart = new DraftActivityStart();
+  const success: boolean = draftActivityStart.start(draft, params, errors);
+  expect(errors).toEqual([]);
+  expect(success).toBe(true);
+  expect(DraftActivityStart.resumeIfInProgress()).toBe(true);
 });
 
 it("constructor", () => {
@@ -117,4 +134,9 @@ it("createDraftState (parse all)", () => {
   expect(draftState?.getFactions().map((faction) => faction.getAbbr())).toEqual(
     ["Arborec", "Ul"]
   );
+});
+
+it("resume (not in progress)", () => {
+  const draftActivityStart = new DraftActivityStart();
+  expect(() => draftActivityStart.resume()).toThrow();
 });
