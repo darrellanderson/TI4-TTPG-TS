@@ -4,6 +4,7 @@ import {
   DraftActivityStart,
   DraftActivityStartParams,
 } from "../draft-activity-start/draft-activity-start";
+import { DraftState } from "../draft-state/draft-state";
 
 const draft: IDraft = new Milty();
 
@@ -15,7 +16,7 @@ const params: DraftActivityStartParams = {
 };
 const errors: Array<string> = [];
 
-if (DraftActivityStart.resumeIfInProgress()) {
+if (DraftState.isDraftInProgress("@TI4/draft")) {
   // Draft is in progress.
   console.log("Draft is in progress");
 } else {
