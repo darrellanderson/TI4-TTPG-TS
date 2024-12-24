@@ -8,7 +8,7 @@ import {
   Find,
   GlobalInit,
   Hex,
-  HEX_LAYOUT_POINTY,
+  HEX_LAYOUT_POINTY, // TTPG inverts x/y axis
   IGlobal,
   LeaveSeat,
   OnCardBecameSingletonOrDeck,

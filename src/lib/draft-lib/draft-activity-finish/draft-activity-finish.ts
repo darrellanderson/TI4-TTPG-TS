@@ -11,6 +11,7 @@ import {
   MapStringParser,
 } from "../../map-string-lib/map-string-parser";
 import { PlayerSeatType } from "../../player-lib/player-seats/player-seats";
+import { UnpackAll } from "../../faction-lib/unpack/unpack-all/unpack-all";
 
 export class DraftActivityFinish {
   private readonly _draftState: DraftState;
@@ -23,6 +24,7 @@ export class DraftActivityFinish {
   finishAll(): this {
     this.movePlayersToSeats();
     this.moveSpeakerToken();
+    this.unpackFactions();
     this.unpackMap();
     this.setTurnOrder();
 
@@ -93,6 +95,18 @@ export class DraftActivityFinish {
       speakerToken.snapToGround();
     }
 
+    return this;
+  }
+
+  unpackFactions(): this {
+    const seats: Array<PlayerSeatType> = TI4.playerSeats.getAllSeats();
+    seats.forEach((seat: PlayerSeatType, index: number) => {
+      const faction: Faction | undefined =
+        this._draftState.getSeatIndexToFaction(index);
+      if (faction) {
+        new UnpackAll(faction, seat.playerSlot).unpack();
+      }
+    });
     return this;
   }
 

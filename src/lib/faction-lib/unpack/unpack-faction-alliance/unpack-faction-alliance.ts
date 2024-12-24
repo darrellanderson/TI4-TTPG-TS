@@ -27,7 +27,9 @@ export class UnpackFactionAlliance extends AbstractUnpack {
       }
     );
     if (!alliances) {
-      throw new Error("Missing alliance cards");
+      throw new Error(
+        "Missing alliance cards: " + Array.from(nsids).join(", ")
+      );
     }
 
     const cards: Array<Card> = new CardUtil().separateDeck(alliances);

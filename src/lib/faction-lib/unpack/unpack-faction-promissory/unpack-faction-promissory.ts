@@ -27,7 +27,9 @@ export class UnpackFactionPromissory extends AbstractUnpack {
       }
     );
     if (!promissories) {
-      throw new Error("Missing promissory cards");
+      throw new Error(
+        "Missing promissory cards: " + Array.from(nsids).join(", ")
+      );
     }
 
     const cards: Array<Card> = new CardUtil().separateDeck(promissories);
