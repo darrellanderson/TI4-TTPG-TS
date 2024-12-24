@@ -5,6 +5,7 @@ import { IDraft } from "../drafts/idraft";
 import { GenerateSlicesParams } from "../generate-slices/generate-slices";
 import { DraftState } from "../draft-state/draft-state";
 import {
+  DraftActivityMaybeResume,
   DraftActivityStart,
   DraftActivityStartParams,
 } from "./draft-activity-start";
@@ -40,7 +41,7 @@ beforeEach(() => {
 });
 
 it("static resumeIfInProgress (false)", () => {
-  expect(DraftActivityStart.resumeIfInProgress()).toBe(false);
+  new DraftActivityMaybeResume().init();
 });
 
 it("static resumeIfInProgress (true)", () => {
@@ -57,7 +58,7 @@ it("static resumeIfInProgress (true)", () => {
   const success: boolean = draftActivityStart.start(draft, params, errors);
   expect(errors).toEqual([]);
   expect(success).toBe(true);
-  expect(DraftActivityStart.resumeIfInProgress()).toBe(true);
+  new DraftActivityMaybeResume().init();
 });
 
 it("constructor", () => {

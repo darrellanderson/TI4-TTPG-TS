@@ -1,4 +1,4 @@
-import { Direction, NamespaceId, Shuffle, Window } from "ttpg-darrell";
+import { Direction, IGlobal, NamespaceId, Shuffle, Window } from "ttpg-darrell";
 
 import { AbstractUI } from "../../../ui/abstract-ui/abtract-ui";
 import {
@@ -28,6 +28,14 @@ export type DraftActivityStartParams = {
   config: string;
 };
 
+export class DraftActivityMaybeResume implements IGlobal {
+  init(): void {
+    if (DraftState.isDraftInProgress(DRAFT_NAMESPACE_ID)) {
+      new DraftActivityStart().resume();
+    }
+  }
+}
+
 /**
  * Start (or resume) a draft activity.
  * Load draft information from a config string, or generate it.
@@ -35,14 +43,6 @@ export type DraftActivityStartParams = {
  */
 export class DraftActivityStart {
   private _draftState: DraftState | undefined;
-
-  static resumeIfInProgress(): boolean {
-    if (DraftState.isDraftInProgress(DRAFT_NAMESPACE_ID)) {
-      new DraftActivityStart().resume();
-      return true;
-    }
-    return false;
-  }
 
   getDraftState(): DraftState | undefined {
     return this._draftState;

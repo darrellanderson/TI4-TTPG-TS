@@ -26,6 +26,7 @@ import { CreateAndAttachEndTurnButtonUI } from "../ui/end-turn-button-ui/create-
 import { CreateAndAttachTurnOrderUI } from "../ui/turn-order-ui/create-and-attach-turn-order-ui";
 import { DiplomacySystem } from "../context-menu/diplomacy-system/diplomacy-system";
 import { DisplayPDSAdjacency } from "../context-menu/display-pds-adjacency/display-pds-adjacency";
+import { DraftActivityMaybeResume } from "../lib/draft-lib/draft-activity-start/draft-activity-start";
 import { FactionRegistry } from "../lib/faction-lib/registry/faction-registry";
 import { NumpadKeyAll } from "../lib/numpad-key-lib/numpad-key-all/numpad-key-all";
 import { OnSystemActivated } from "../event/on-system-activated/on-system-activated";
@@ -134,6 +135,8 @@ export function resetGlobalThisTI4(): TI4Class {
     new ShuffleDecks(),
     new UnitModifierActiveIdle(),
   ];
+
+  // Add UI and some bug workarounds to production runs.
   if (GameWorld.getExecutionReason() !== "unittest") {
     iGlobals.push(
       ...[
@@ -145,6 +148,10 @@ export function resetGlobalThisTI4(): TI4Class {
       ]
     );
   }
+
+  // Finally run any "after everything else" init functions.
+  iGlobals.push(new DraftActivityMaybeResume());
+
   for (const v of Object.values(globalThis.TI4)) {
     if (typeof v.init === "function") {
       iGlobals.push(v);
