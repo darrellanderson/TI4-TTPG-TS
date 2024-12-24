@@ -73,6 +73,22 @@ it("moveSpeakerToken", () => {
   expect(speakerToken.getPosition().toString()).toBe("(X=72.5,Y=12,Z=0)");
 });
 
+it("unpackFactions", () => {
+  const draftState: DraftState = new DraftState("@test/test");
+  draftState.setFactions([
+    TI4.factionRegistry.getByNsidOrThrow("faction:base/arborec"),
+  ]);
+  draftState.setFactionIndexToPlayerSlot(0, 10);
+  draftState.setSeatIndexToPlayerSlot(1, 10);
+
+  const draftActivityFinish: DraftActivityFinish = new DraftActivityFinish(
+    draftState
+  );
+  expect(() => {
+    draftActivityFinish.unpackFactions();
+  }).toThrow(); // see faction/unpack-all for how to set up all the needed stuff
+});
+
 it("unpackMap", () => {
   const draftState: DraftState = new Milty().createEmptyDraftState(
     "@test/test"
