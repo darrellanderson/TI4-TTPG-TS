@@ -17,7 +17,8 @@ import { FONT_SIZE, FactionUI } from "./faction-ui";
 import {
   WRAPPED_BORDER_WIDTH,
   WrappedClickableUI,
-} from "ui/wrapped-clickable-ui/wrapped-clickable-ui";
+} from "../../wrapped-clickable-ui/wrapped-clickable-ui";
+import { AbstractWrappedClickableUI } from "../../wrapped-clickable-ui/abstract-wrapped-clickable-ui";
 
 /**
  * Keleres has three flavors, based on Argent, Mentak, and Xxcha.
@@ -28,10 +29,9 @@ import {
  * Use the "wrapped clickable ui" size because cannot have buttons
  * inside a content button.
  */
-export class KeleresUI extends AbstractUI {
+export class KeleresUI extends AbstractWrappedClickableUI {
   private readonly _contentButton: ContentButton;
   private readonly _border: Border = new Border();
-  private _owningPlayerSlot: number = -1;
   private readonly _draftState: DraftState;
 
   private readonly _keleresArgent: Faction =
@@ -52,6 +52,14 @@ export class KeleresUI extends AbstractUI {
 
   destroy(): void {
     this._draftState.onDraftStateChanged.remove(this._onDraftStateChanged);
+  }
+
+  getContentButton(): ContentButton {
+    return this._contentButton;
+  }
+
+  getBorder(): Border {
+    return this._border;
   }
 
   constructor(draftState: DraftState, scale: number) {

@@ -28,6 +28,7 @@ import { TurnOrderMini } from "../../turn-order-mini/turn-order-mini";
 import { VerticalUIBuilder } from "../../panel/vertical-ui-builder";
 import { WrappedClickableUI } from "../../wrapped-clickable-ui/wrapped-clickable-ui";
 import { CreateZoomedUiType, ZoomableUI } from "../../zoomable-ui/zoomable-ui";
+import { AbstractWrappedClickableUI } from "ui/wrapped-clickable-ui/abstract-wrapped-clickable-ui";
 
 const SPACING: number = 12;
 
@@ -197,7 +198,7 @@ export class DraftStateUI extends AbstractUI {
       .setSpacing(SPACING * scale)
       .build();
 
-    const factionButtons: Array<WrappedClickableUI> = draftState
+    const factionButtons: Array<AbstractWrappedClickableUI> = draftState
       .getFactions()
       .map((faction: Faction, index: number) => {
         const factionUi: AbstractUI = new FactionUI(faction, scale);
@@ -277,7 +278,7 @@ export class DraftStateUI extends AbstractUI {
         }
       );
       factionButtons.forEach(
-        (button: WrappedClickableUI, index: number): void => {
+        (button: AbstractWrappedClickableUI, index: number): void => {
           const playerSlot: number =
             draftState.getFactionIndexToPlayerSlot(index);
           button.setOwningPlayerSlot(playerSlot);

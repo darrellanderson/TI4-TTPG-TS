@@ -1,25 +1,23 @@
 import {
   Border,
-  Color,
   ContentButton,
   HorizontalAlignment,
   LayoutBox,
   VerticalAlignment,
   Widget,
-  world,
 } from "@tabletop-playground/api";
 import { AbstractUI, UI_SIZE } from "../abstract-ui/abtract-ui";
+import { AbstractWrappedClickableUI } from "./abstract-wrapped-clickable-ui";
 
 export const WRAPPED_BORDER_WIDTH: number = 4;
 
 /**
  * Wrap an AbstractUI inside a ContentButton.
  */
-export class WrappedClickableUI extends AbstractUI {
+export class WrappedClickableUI extends AbstractWrappedClickableUI {
   private readonly _innerUI: AbstractUI;
   private readonly _contentButton: ContentButton;
   private readonly _border: Border = new Border();
-  private _owningPlayerSlot: number = -1;
 
   constructor(ui: AbstractUI, scale: number) {
     const borderWidth: number = WRAPPED_BORDER_WIDTH * scale;
@@ -75,24 +73,5 @@ export class WrappedClickableUI extends AbstractUI {
 
   getBorder(): Border {
     return this._border;
-  }
-
-  getOwningPlayerSlot(): number {
-    return this._owningPlayerSlot;
-  }
-
-  setOwningPlayerSlot(owningPlayerSlot: number | undefined): this {
-    if (owningPlayerSlot === undefined) {
-      owningPlayerSlot = -1;
-    }
-    this._owningPlayerSlot = owningPlayerSlot;
-
-    let color: Color = new Color(0, 0, 0, 0);
-    if (owningPlayerSlot !== -1) {
-      color = world.getSlotColor(owningPlayerSlot);
-    }
-    this._border.setColor(color);
-
-    return this;
   }
 }
