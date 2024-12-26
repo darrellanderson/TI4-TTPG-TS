@@ -28,6 +28,7 @@ it("constructor", () => {
   draftState.setSliceLabels(["A"]);
   draftState.setFactions([
     TI4.factionRegistry.getByNsidOrThrow("faction:base/arborec"),
+    TI4.factionRegistry.getByNsidOrThrow("faction:codex.vigil/keleres-argent"),
   ]);
   draftState.setSpeakerIndex(0);
 

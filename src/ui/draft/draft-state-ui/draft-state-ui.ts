@@ -29,6 +29,7 @@ import { VerticalUIBuilder } from "../../panel/vertical-ui-builder";
 import { WrappedClickableUI } from "../../wrapped-clickable-ui/wrapped-clickable-ui";
 import { CreateZoomedUiType, ZoomableUI } from "../../zoomable-ui/zoomable-ui";
 import { AbstractWrappedClickableUI } from "ui/wrapped-clickable-ui/abstract-wrapped-clickable-ui";
+import { KeleresUI } from "../faction-ui/keleres-ui";
 
 const SPACING: number = 12;
 
@@ -201,8 +202,14 @@ export class DraftStateUI extends AbstractUI {
     const factionButtons: Array<AbstractWrappedClickableUI> = draftState
       .getFactions()
       .map((faction: Faction, index: number) => {
-        const factionUi: AbstractUI = new FactionUI(faction, scale);
-        const clickable = new WrappedClickableUI(factionUi, scale);
+        let clickable: AbstractWrappedClickableUI;
+
+        if (faction.getNsid().includes("/keleres")) {
+          clickable = new KeleresUI(draftState, scale);
+        } else {
+          const factionUi: AbstractUI = new FactionUI(faction, scale);
+          clickable = new WrappedClickableUI(factionUi, scale);
+        }
         clickable
           .getContentButton()
           .onClicked.add(
