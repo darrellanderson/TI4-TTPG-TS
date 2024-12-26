@@ -20,6 +20,43 @@ import {
 } from "../../wrapped-clickable-ui/wrapped-clickable-ui";
 import { AbstractWrappedClickableUI } from "../../wrapped-clickable-ui/abstract-wrapped-clickable-ui";
 
+type KeleresFlavor = "argent" | "mentak" | "xxcha";
+
+class KeleresFlavorButton {
+  public readonly _flavor: KeleresFlavor;
+  public readonly _fg: Text;
+  public readonly _bg: Border;
+  public readonly _widget: Widget;
+
+  constructor(flavor: KeleresFlavor, w: number, h: number) {
+    this._flavor = flavor;
+
+    const fontSize: number = h * 0.5;
+
+    this._fg = new Text()
+      .setBold(true)
+      .setFontSize(fontSize)
+      .setJustification(TextJustification.Center)
+      .setText(flavor.toUpperCase());
+    const fgBox: Widget = new LayoutBox()
+      .setOverrideWidth(w)
+      .setOverrideHeight(h)
+      .setHorizontalAlignment(HorizontalAlignment.Center)
+      .setVerticalAlignment(VerticalAlignment.Center)
+      .setChild(this._fg);
+    this._bg = new Border().setChild(fgBox);
+
+    throw new Error("line 49");
+
+    // Create a ContentButton with the flavor text.
+    // Strip off ContentButton added edges; cannot use LayoutBox negative
+    // padding because it will be in another Canvas and bleed, but wrap
+    // in a second Canvas to enforce the size/trim.
+    const button: ContentButton = new ContentButton().setChild(this._bg);
+    this._widget = new Canvas().addChild(button, -4, -4, w + 8, h + 8);
+  }
+}
+
 /**
  * Keleres has three flavors, based on Argent, Mentak, and Xxcha.
  *
@@ -89,7 +126,7 @@ export class KeleresUI extends AbstractWrappedClickableUI {
     this._draftState.onDraftStateChanged.add(this._onDraftStateChanged);
 
     // Now fill in the canvas.
-    const reserveW: number = size.w * 0.4;
+    const reserveW: number = size.w * 0.45;
 
     // Label, skip the icon for the reduced size.
     const nameW: number = size.w - reserveW - borderWidth * 2;
@@ -109,56 +146,16 @@ export class KeleresUI extends AbstractWrappedClickableUI {
 
     const flavorLeft: number = size.w - reserveW;
     const flavorH: number = size.h / 3;
-    const flavorFontSize: number = fontSize * 0.8;
 
-    const createFlavorButton = (
-      name: string,
-      border: Border,
-      button: ContentButton
-    ): Widget => {
-      const flavorLabel: Widget = new Text()
-        .setFontSize(flavorFontSize)
-        .setText(name.toUpperCase());
-      const flavorLabelBox: Widget = new LayoutBox()
-        .setOverrideWidth(reserveW)
-        .setOverrideHeight(flavorH)
-        .setHorizontalAlignment(HorizontalAlignment.Center)
-        .setVerticalAlignment(VerticalAlignment.Center)
-        .setChild(flavorLabel);
-      border.setChild(flavorLabelBox);
-      button.setChild(border);
+    const argent: Widget = new KeleresFlavorButton("argent", reserveW, flavorH)
+      ._widget;
+    const mentak: Widget = new KeleresFlavorButton("mentak", reserveW, flavorH)
+      ._widget;
+    const xxcha: Widget = new KeleresFlavorButton("xxcha", reserveW, flavorH)
+      ._widget;
 
-      // Strip off content button edges.  LayoutBox negative padding
-      // fails here, displaying on the canvas.
-      const flavorBox: Widget = new Canvas().addChild(
-        button,
-        -4,
-        -4,
-        reserveW + 8,
-        flavorH + 8
-      );
-      return flavorBox;
-    };
-
-    const argent: Widget = createFlavorButton(
-      "argent",
-      this._argentBorder,
-      this._argentButton
-    );
     canvas.addChild(argent, flavorLeft, 0, reserveW, flavorH);
-
-    const mentak: Widget = createFlavorButton(
-      "mentak",
-      this._mentakBorder,
-      this._mentakButton
-    );
     canvas.addChild(mentak, flavorLeft, flavorH, reserveW, flavorH);
-
-    const xxcha: Widget = createFlavorButton(
-      "xxcha",
-      this._xxchaBorder,
-      this._xxchaButton
-    );
     canvas.addChild(xxcha, flavorLeft, flavorH * 2, reserveW, flavorH);
 
     // Add left button last to draw on top of flavor bleed left.
