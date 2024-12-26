@@ -27,6 +27,7 @@ export class DraftActivityFinish {
     this.unpackFactions();
     this.unpackMap();
     this.setTurnOrder();
+    this._draftState.destroy();
 
     return this;
   }

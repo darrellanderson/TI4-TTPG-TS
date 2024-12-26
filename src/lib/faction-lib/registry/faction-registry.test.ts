@@ -84,6 +84,11 @@ it("load (with data)", () => {
     "my-name"
   );
   expect(registry.getByHomeSystemTileNumber(10)?.getName()).toBe("my-name");
+
+  expect(registry.getByNsidNameOrThrow("my-nsid-name")).toBeDefined();
+  expect(() => {
+    registry.getByNsidNameOrThrow("__invalid__");
+  }).toThrow();
 });
 
 it("load (invalid schema)", () => {

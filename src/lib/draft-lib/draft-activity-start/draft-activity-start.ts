@@ -137,6 +137,13 @@ export class DraftActivityStart {
     ).createWindow();
     window.attach();
 
+    // Close window when draft state destroyed.
+    this._draftState.onDraftStateChanged.add(() => {
+      if (!draftState.isActive()) {
+        window.detach();
+      }
+    });
+
     return this;
   }
 }

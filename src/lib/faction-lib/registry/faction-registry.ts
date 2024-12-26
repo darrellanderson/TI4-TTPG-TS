@@ -56,6 +56,14 @@ export class FactionRegistry {
     }
   }
 
+  getByNsidNameOrThrow(nsidName: string): Faction {
+    const faction: Faction | undefined = this.getByNsidName(nsidName);
+    if (!faction) {
+      throw new Error(`faction not found: "${nsidName}"`);
+    }
+    return faction;
+  }
+
   getByPlayerSlot(playerSlot: number): Faction | undefined {
     const playerSlotToFaction: Map<number, Faction> =
       this.getPlayerSlotToFaction();

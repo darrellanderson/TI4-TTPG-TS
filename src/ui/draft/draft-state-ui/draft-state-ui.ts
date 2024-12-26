@@ -1,13 +1,15 @@
 import {
+  Button,
   Color,
   ContentButton,
   HorizontalAlignment,
   Player,
 } from "@tabletop-playground/api";
-import { ColorLib, HexType } from "ttpg-darrell";
+import { ColorLib, HexType, ThrottleClickHandler } from "ttpg-darrell";
 
 import { AbstractUI } from "../../abstract-ui/abtract-ui";
 import { ButtonUI } from "../../button-ui/button-ui";
+import { DraftActivityFinish } from "../../../lib/draft-lib/draft-activity-finish/draft-activity-finish";
 import { DraftState } from "../../../lib/draft-lib/draft-state/draft-state";
 import {
   DraftToMapString,
@@ -29,6 +31,7 @@ import { VerticalUIBuilder } from "../../panel/vertical-ui-builder";
 import { WrappedClickableUI } from "../../wrapped-clickable-ui/wrapped-clickable-ui";
 import { CreateZoomedUiType, ZoomableUI } from "../../zoomable-ui/zoomable-ui";
 import { AbstractWrappedClickableUI } from "ui/wrapped-clickable-ui/abstract-wrapped-clickable-ui";
+import { ConfirmButtonUI } from "ui/button-ui/confirm-button-ui";
 
 const SPACING: number = 12;
 
@@ -59,7 +62,7 @@ export class DraftStateUI extends AbstractUI {
     draftState: DraftState,
     sliceIndex: number
   ): (_button: ContentButton, player: Player) => void {
-    return (_button: ContentButton, player: Player): void => {
+    const handler = (_button: ContentButton, player: Player): void => {
       const playerSlot: number = player.getSlot();
       const currentSlot: number =
         draftState.getSliceIndexToPlayerSlot(sliceIndex);
@@ -78,13 +81,14 @@ export class DraftStateUI extends AbstractUI {
         draftState.setSliceIndexToPlayerSlot(sliceIndex, -1);
       }
     };
+    return new ThrottleClickHandler<ContentButton>(handler).get();
   }
 
   static _createFactionClickHandler(
     draftState: DraftState,
     sliceIndex: number
   ): (_button: ContentButton, player: Player) => void {
-    return (_button: ContentButton, player: Player): void => {
+    const handler = (_button: ContentButton, player: Player): void => {
       const playerSlot: number = player.getSlot();
       const currentSlot: number =
         draftState.getFactionIndexToPlayerSlot(sliceIndex);
@@ -103,13 +107,14 @@ export class DraftStateUI extends AbstractUI {
         draftState.setFactionIndexToPlayerSlot(sliceIndex, -1);
       }
     };
+    return new ThrottleClickHandler<ContentButton>(handler).get();
   }
 
   static _createSeatClickHandler(
     draftState: DraftState,
     sliceIndex: number
   ): (_button: ContentButton, player: Player) => void {
-    return (_button: ContentButton, player: Player): void => {
+    const handler = (_button: ContentButton, player: Player): void => {
       const playerSlot: number = player.getSlot();
       const currentSlot: number =
         draftState.getSeatIndexToPlayerSlot(sliceIndex);
@@ -128,6 +133,25 @@ export class DraftStateUI extends AbstractUI {
         draftState.setSeatIndexToPlayerSlot(sliceIndex, -1);
       }
     };
+    return new ThrottleClickHandler<ContentButton>(handler).get();
+  }
+
+  static _createFinishClickHandler(
+    draftState: DraftState
+  ): (button: Button, player: Player) => void {
+    const handler = (_button: Button, _player: Player): void => {
+      new DraftActivityFinish(draftState).finishAll();
+    };
+    return new ThrottleClickHandler<Button>(handler).get();
+  }
+
+  static _createCancelClickHandler(
+    draftState: DraftState
+  ): (button: Button, player: Player) => void {
+    const handler = (_button: Button, _player: Player): void => {
+      draftState.destroy();
+    };
+    return new ThrottleClickHandler<Button>(handler).get();
   }
 
   static _getCreateZoomedSliceUi = (
@@ -253,11 +277,26 @@ export class DraftStateUI extends AbstractUI {
 
     const finishDraftButton: ButtonUI = new ButtonUI(scale);
     finishDraftButton.getButton().setText("Finish");
+    finishDraftButton
+      .getButton()
+      .onClicked.add(DraftStateUI._createFinishClickHandler(draftState));
+
+    const cancelButton: ButtonUI = new ButtonUI(scale);
+    cancelButton.getButton().setText("Cancel");
+    cancelButton
+      .getButton()
+      .onClicked.add(DraftStateUI._createCancelClickHandler(draftState));
+    const confirmCancelButton: AbstractUI = new ConfirmButtonUI(cancelButton);
 
     const mapOverTurnOrder: AbstractUI = new VerticalUIBuilder()
       .setSpacing(SPACING * scale)
       .setHorizontalAlignment(HorizontalAlignment.Center)
-      .addUIs([zoomableMapUi, turnOrderMini, finishDraftButton])
+      .addUIs([
+        zoomableMapUi,
+        turnOrderMini,
+        finishDraftButton,
+        confirmCancelButton,
+      ])
       .build();
 
     const panel: AbstractUI = new HorizontalUIBuilder()

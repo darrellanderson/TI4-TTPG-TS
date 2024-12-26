@@ -21,6 +21,7 @@ import {
   WrappedClickableUI,
 } from "../../wrapped-clickable-ui/wrapped-clickable-ui";
 import { AbstractWrappedClickableUI } from "../../wrapped-clickable-ui/abstract-wrapped-clickable-ui";
+import { Shuffle, ThrottleClickHandler } from "ttpg-darrell";
 
 type KeleresFlavor = "argent" | "mentak" | "xxcha";
 
@@ -29,24 +30,48 @@ type KeleresFlavor = "argent" | "mentak" | "xxcha";
  */
 export class KeleresFlavorButton {
   private readonly _draftState: DraftState;
-  private readonly _faction: Faction;
 
   public readonly _flavor: KeleresFlavor;
+  public readonly _faction: Faction;
   public readonly _fg: Text;
   public readonly _bg: Border;
   public readonly _widget: Widget;
 
-  public _onClicked = (
-    _contentButton: ContentButton,
-    _player: Player
-  ): void => {
-    const index: number = this._getKeleresIndex();
-    const factions: Array<Faction> = this._draftState.getFactions();
-    if (index >= 0) {
-      factions[index] = this._faction;
-      this._draftState.setFactions(factions);
+  /**
+   * Switch the keleres faction to this flavor.
+   *
+   * @param _contentButton
+   * @param _player
+   */
+  public _onClicked = new ThrottleClickHandler<ContentButton>(
+    (_contentButton: ContentButton, _player: Player): void => {
+      const keleresIndex: number = KeleresFlavorButton._getKeleresIndex(
+        this._draftState
+      );
+      const factions: Array<Faction> = this._draftState.getFactions();
+      if (keleresIndex >= 0 && factions[keleresIndex] !== this._faction) {
+        factions[keleresIndex] = this._faction;
+        this._draftState.setFactions(factions);
+      }
     }
-  };
+  ).get();
+
+  static _getKeleresIndex(draftState: DraftState): number {
+    return draftState.getFactions().findIndex((faction) => {
+      return faction.getNsid().startsWith("faction:codex.vigil/keleres");
+    });
+  }
+
+  static _getLinkedFaction(keleresFlavor: Faction): Faction {
+    const m: RegExpMatchArray | null = keleresFlavor
+      .getNsid()
+      .match(/keleres-(\w+)/);
+    const nsidName: string | undefined = m?.[1];
+    if (!nsidName) {
+      throw new Error("not a keleres faction");
+    }
+    return TI4.factionRegistry.getByNsidNameOrThrow(nsidName);
+  }
 
   constructor(
     draftState: DraftState,
@@ -86,14 +111,15 @@ export class KeleresFlavorButton {
     button.onClicked.add(this._onClicked);
   }
 
-  _getKeleresIndex(): number {
-    return this._draftState.getFactions().findIndex((faction) => {
-      return faction.getNsid().startsWith("faction:codex.vigil/keleres");
-    });
-  }
-
+  /**
+   * Update the button color to reflect if this is the active flavor.
+   * This only updates the local widget attributes, never touches
+   * the draft state (to avoid infinite update loops).
+   */
   update(): void {
-    const keleresIndex: number = this._getKeleresIndex();
+    const keleresIndex: number = KeleresFlavorButton._getKeleresIndex(
+      this._draftState
+    );
     const activeFaction: Faction | undefined =
       this._draftState.getFactions()[keleresIndex];
     if (activeFaction) {
@@ -125,7 +151,51 @@ export class KeleresUI extends AbstractWrappedClickableUI {
   private readonly _flavorButtons: Array<KeleresFlavorButton> = [];
 
   private readonly _onDraftStateChanged = (): void => {
+    // Update the flavor buttons.
     this._flavorButtons.forEach((flavorButton) => flavorButton.update());
+
+    // Check which flavors are no longer available.
+    const keleresFactions: Array<Faction> = this._flavorButtons.map(
+      (flavorButton) => flavorButton._faction
+    );
+    const linkedFactions: Array<Faction> = keleresFactions.map(
+      (keleresFaction) => KeleresFlavorButton._getLinkedFaction(keleresFaction)
+    );
+
+    // Which linked factions are in use?
+    const chosenLinkedFactions: Array<Faction> = [];
+    for (let seatIndex = 0; seatIndex < TI4.config.playerCount; seatIndex++) {
+      const faction: Faction | undefined =
+        this._draftState.getSeatIndexToFaction(seatIndex);
+      if (faction && linkedFactions.includes(faction)) {
+        chosenLinkedFactions.push(faction);
+      }
+    }
+
+    // Which flavors are available?
+    const availableFlavors: Array<Faction> = [];
+    keleresFactions.forEach((keleresFaction) => {
+      const linkedFaction: Faction =
+        KeleresFlavorButton._getLinkedFaction(keleresFaction);
+      if (!chosenLinkedFactions.includes(linkedFaction)) {
+        availableFlavors.push(keleresFaction);
+      }
+    });
+
+    // If the current flavor is no longer available, switch to another.
+    const keleresIndex: number = KeleresFlavorButton._getKeleresIndex(
+      this._draftState
+    );
+    let currentFlavor: Faction | undefined =
+      this._draftState.getFactions()[keleresIndex];
+    if (currentFlavor && !availableFlavors.includes(currentFlavor)) {
+      currentFlavor = new Shuffle<Faction>().shuffle(availableFlavors)[0];
+      if (currentFlavor) {
+        const factions: Array<Faction> = this._draftState.getFactions();
+        factions[keleresIndex] = currentFlavor;
+        this._draftState.setFactions(factions); // triggers another update
+      }
+    }
   };
 
   destroy(): void {
