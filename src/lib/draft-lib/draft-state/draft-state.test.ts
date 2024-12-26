@@ -35,12 +35,14 @@ it("constructor, isDraftInProgress, destroy", () => {
   expect(DraftState.isDraftInProgress(namespaceId)).toBe(false);
 
   const draftState = new DraftState(namespaceId);
+  expect(draftState.isActive()).toBeTruthy();
   expect(DraftState.isDraftInProgress(namespaceId)).toBeTruthy();
 
   // Create from the existing draft state.
   new DraftState(namespaceId);
 
   draftState.destroy();
+  expect(draftState.isActive()).toBeFalsy();
   expect(DraftState.isDraftInProgress(namespaceId)).toBeFalsy();
 });
 

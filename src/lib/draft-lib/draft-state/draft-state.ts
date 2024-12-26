@@ -52,6 +52,8 @@ export class DraftState {
 
   destroy(): void {
     world.setSavedData("", this._namespaceId);
+    this.onDraftStateChanged.trigger(this);
+    this.onDraftStateChanged.clear();
   }
 
   _save(): void {
@@ -59,6 +61,10 @@ export class DraftState {
     if (json.length < 1024) {
       world.setSavedData(json, this._namespaceId);
     }
+  }
+
+  isActive(): boolean {
+    return DraftState.isDraftInProgress(this._namespaceId);
   }
 
   isComplete(): boolean {

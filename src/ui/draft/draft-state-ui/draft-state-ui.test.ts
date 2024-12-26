@@ -68,6 +68,7 @@ it("_createSliceClickHandler", () => {
   expect(draftState.getSliceIndexToPlayerSlot(sliceIndex)).toBe(10);
 
   // Click again to clear.
+  jest.spyOn(Date, "now").mockReturnValue(Date.now() + 1000); // dodge throttling
   handler(new ContentButton(), new MockPlayer({ slot: 10 }));
   expect(draftState.getSliceIndexToPlayerSlot(sliceIndex)).toBe(-1);
 
@@ -75,6 +76,7 @@ it("_createSliceClickHandler", () => {
   draftState.setSliceIndexToPlayerSlot(sliceIndex + 1, 10);
   expect(draftState.getSliceIndexToPlayerSlot(sliceIndex + 1)).toBe(10);
   expect(draftState.getSliceIndexToPlayerSlot(sliceIndex)).toBe(-1);
+  jest.spyOn(Date, "now").mockReturnValue(Date.now() + 2000); // dodge throttling
   handler(new ContentButton(), new MockPlayer({ slot: 10 }));
   expect(draftState.getSliceIndexToPlayerSlot(sliceIndex + 1)).toBe(-1);
   expect(draftState.getSliceIndexToPlayerSlot(sliceIndex)).toBe(10);
@@ -97,6 +99,7 @@ it("_createFactionClickHandler", () => {
   expect(draftState.getFactionIndexToPlayerSlot(sliceIndex)).toBe(10);
 
   // Click again to clear.
+  jest.spyOn(Date, "now").mockReturnValue(Date.now() + 1000); // dodge throttling
   handler(new ContentButton(), new MockPlayer({ slot: 10 }));
   expect(draftState.getFactionIndexToPlayerSlot(sliceIndex)).toBe(-1);
 
@@ -104,6 +107,7 @@ it("_createFactionClickHandler", () => {
   draftState.setFactionIndexToPlayerSlot(sliceIndex + 1, 10);
   expect(draftState.getFactionIndexToPlayerSlot(sliceIndex + 1)).toBe(10);
   expect(draftState.getFactionIndexToPlayerSlot(sliceIndex)).toBe(-1);
+  jest.spyOn(Date, "now").mockReturnValue(Date.now() + 2000); // dodge throttling
   handler(new ContentButton(), new MockPlayer({ slot: 10 }));
   expect(draftState.getFactionIndexToPlayerSlot(sliceIndex + 1)).toBe(-1);
   expect(draftState.getFactionIndexToPlayerSlot(sliceIndex)).toBe(10);
@@ -121,6 +125,7 @@ it("_createSeatClickHandler", () => {
   expect(draftState.getSeatIndexToPlayerSlot(sliceIndex)).toBe(10);
 
   // Click again to clear.
+  jest.spyOn(Date, "now").mockReturnValue(Date.now() + 1000); // dodge throttling
   handler(new ContentButton(), new MockPlayer({ slot: 10 }));
   expect(draftState.getSeatIndexToPlayerSlot(sliceIndex)).toBe(-1);
 
@@ -128,6 +133,7 @@ it("_createSeatClickHandler", () => {
   draftState.setSeatIndexToPlayerSlot(sliceIndex + 1, 10);
   expect(draftState.getSeatIndexToPlayerSlot(sliceIndex + 1)).toBe(10);
   expect(draftState.getSeatIndexToPlayerSlot(sliceIndex)).toBe(-1);
+  jest.spyOn(Date, "now").mockReturnValue(Date.now() + 2000); // dodge throttling
   handler(new ContentButton(), new MockPlayer({ slot: 10 }));
   expect(draftState.getSeatIndexToPlayerSlot(sliceIndex + 1)).toBe(-1);
   expect(draftState.getSeatIndexToPlayerSlot(sliceIndex)).toBe(10);
