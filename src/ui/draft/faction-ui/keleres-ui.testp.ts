@@ -4,12 +4,13 @@ import { KeleresUI } from "./keleres-ui";
 import { DraftState } from "../../../lib/draft-lib/draft-state/draft-state";
 function go() {
   const faction: Faction | undefined =
-    TI4.factionRegistry.getByNsidName("arborec");
+    TI4.factionRegistry.getByNsidName("keleres-argent");
   if (!faction) {
     throw new Error("Faction not found");
   }
 
   const draftState = new DraftState("@test/test");
+  draftState.setFactions([faction]);
 
   const keleresUi = new KeleresUI(draftState, 1);
   const widget: Widget = keleresUi.getWidget();

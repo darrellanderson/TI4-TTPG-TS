@@ -1,9 +1,11 @@
 import {
   Border,
   Canvas,
+  Color,
   ContentButton,
   HorizontalAlignment,
   LayoutBox,
+  Player,
   Text,
   TextJustification,
   VerticalAlignment,
@@ -22,14 +24,42 @@ import { AbstractWrappedClickableUI } from "../../wrapped-clickable-ui/abstract-
 
 type KeleresFlavor = "argent" | "mentak" | "xxcha";
 
-class KeleresFlavorButton {
+/**
+ * Export for testing, not normally used externally.
+ */
+export class KeleresFlavorButton {
+  private readonly _draftState: DraftState;
+  private readonly _faction: Faction;
+
   public readonly _flavor: KeleresFlavor;
   public readonly _fg: Text;
   public readonly _bg: Border;
   public readonly _widget: Widget;
 
-  constructor(flavor: KeleresFlavor, w: number, h: number) {
+  public _onClicked = (
+    _contentButton: ContentButton,
+    _player: Player
+  ): void => {
+    const index: number = this._getKeleresIndex();
+    const factions: Array<Faction> = this._draftState.getFactions();
+    if (index >= 0) {
+      factions[index] = this._faction;
+      this._draftState.setFactions(factions);
+    }
+  };
+
+  constructor(
+    draftState: DraftState,
+    flavor: KeleresFlavor,
+    w: number,
+    h: number
+  ) {
+    this._draftState = draftState;
     this._flavor = flavor;
+
+    this._faction = TI4.factionRegistry.getByNsidOrThrow(
+      `faction:codex.vigil/keleres-${flavor}`
+    );
 
     const fontSize: number = h * 0.5;
 
@@ -46,14 +76,35 @@ class KeleresFlavorButton {
       .setChild(this._fg);
     this._bg = new Border().setChild(fgBox);
 
-    throw new Error("line 49");
-
     // Create a ContentButton with the flavor text.
     // Strip off ContentButton added edges; cannot use LayoutBox negative
     // padding because it will be in another Canvas and bleed, but wrap
     // in a second Canvas to enforce the size/trim.
     const button: ContentButton = new ContentButton().setChild(this._bg);
     this._widget = new Canvas().addChild(button, -4, -4, w + 8, h + 8);
+
+    button.onClicked.add(this._onClicked);
+  }
+
+  _getKeleresIndex(): number {
+    return this._draftState.getFactions().findIndex((faction) => {
+      return faction.getNsid().startsWith("faction:codex.vigil/keleres");
+    });
+  }
+
+  update(): void {
+    const keleresIndex: number = this._getKeleresIndex();
+    const activeFaction: Faction | undefined =
+      this._draftState.getFactions()[keleresIndex];
+    if (activeFaction) {
+      const isActive: boolean = this._faction === activeFaction;
+      const colorActive: Color = new Color(0, 0, 0, 1);
+      const colorPassive: Color = new Color(1, 1, 1, 1);
+      const fg: Color = isActive ? colorActive : colorPassive;
+      const bg: Color = isActive ? colorPassive : colorActive;
+      this._fg.setTextColor(fg);
+      this._bg.setColor(bg);
+    }
   }
 }
 
@@ -71,21 +122,11 @@ export class KeleresUI extends AbstractWrappedClickableUI {
   private readonly _border: Border = new Border();
   private readonly _draftState: DraftState;
 
-  private readonly _keleresArgent: Faction =
-    TI4.factionRegistry.getByNsidOrThrow("faction:codex.vigil/keleres-argent");
-  private readonly _keleresMentak: Faction =
-    TI4.factionRegistry.getByNsidOrThrow("faction:codex.vigil/keleres-mentak");
-  private readonly _keleresXxcha: Faction =
-    TI4.factionRegistry.getByNsidOrThrow("faction:codex.vigil/keleres-xxcha");
+  private readonly _flavorButtons: Array<KeleresFlavorButton> = [];
 
-  private readonly _argentBorder: Border = new Border();
-  private readonly _argentButton: ContentButton = new ContentButton();
-  private readonly _mentakBorder: Border = new Border();
-  private readonly _mentakButton: ContentButton = new ContentButton();
-  private readonly _xxchaBorder: Border = new Border();
-  private readonly _xxchaButton: ContentButton = new ContentButton();
-
-  private readonly _onDraftStateChanged = (): void => {};
+  private readonly _onDraftStateChanged = (): void => {
+    this._flavorButtons.forEach((flavorButton) => flavorButton.update());
+  };
 
   destroy(): void {
     this._draftState.onDraftStateChanged.remove(this._onDraftStateChanged);
@@ -147,16 +188,33 @@ export class KeleresUI extends AbstractWrappedClickableUI {
     const flavorLeft: number = size.w - reserveW;
     const flavorH: number = size.h / 3;
 
-    const argent: Widget = new KeleresFlavorButton("argent", reserveW, flavorH)
-      ._widget;
-    const mentak: Widget = new KeleresFlavorButton("mentak", reserveW, flavorH)
-      ._widget;
-    const xxcha: Widget = new KeleresFlavorButton("xxcha", reserveW, flavorH)
-      ._widget;
+    const argent: KeleresFlavorButton = new KeleresFlavorButton(
+      draftState,
+      "argent",
+      reserveW,
+      flavorH
+    );
+    const mentak: KeleresFlavorButton = new KeleresFlavorButton(
+      draftState,
+      "mentak",
+      reserveW,
+      flavorH
+    );
+    const xxcha: KeleresFlavorButton = new KeleresFlavorButton(
+      draftState,
+      "xxcha",
+      reserveW,
+      flavorH
+    );
 
-    canvas.addChild(argent, flavorLeft, 0, reserveW, flavorH);
-    canvas.addChild(mentak, flavorLeft, flavorH, reserveW, flavorH);
-    canvas.addChild(xxcha, flavorLeft, flavorH * 2, reserveW, flavorH);
+    this._flavorButtons.push(argent, mentak, xxcha);
+    this._flavorButtons.forEach((flavorButton) => {
+      flavorButton.update();
+    });
+
+    canvas.addChild(argent._widget, flavorLeft, 0, reserveW, flavorH);
+    canvas.addChild(mentak._widget, flavorLeft, flavorH, reserveW, flavorH);
+    canvas.addChild(xxcha._widget, flavorLeft, flavorH * 2, reserveW, flavorH);
 
     // Add left button last to draw on top of flavor bleed left.
     canvas.addChild(this._border, 0, 0, size.w - reserveW, size.h);
