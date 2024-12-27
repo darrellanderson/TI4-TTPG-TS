@@ -18,6 +18,7 @@ import { IDraft } from "../drafts/idraft";
 import { ParseSlices } from "../parse/parse-slices";
 import { ParseLabels } from "../parse/parse-labels";
 import { ParseFactions } from "../parse/parse-factions";
+import { ResolveConflictsKeleres } from "../resolve-conflicts/resolve-conflicts-keleres";
 
 const DRAFT_NAMESPACE_ID: NamespaceId = "@ti4/draft";
 
@@ -127,6 +128,11 @@ export class DraftActivityStart {
     const draftState: DraftState = new DraftState(DRAFT_NAMESPACE_ID);
     this._draftState = draftState;
 
+    const resolveConflictsKeleres = new ResolveConflictsKeleres(draftState);
+    this._draftState.onDraftStateChanged.add(() => {
+      resolveConflictsKeleres.resolve();
+    });
+
     const create: CreateAbstractUIType = (scale: number): AbstractUI => {
       return new DraftStateUI(draftState, scale);
     };
@@ -145,5 +151,12 @@ export class DraftActivityStart {
     });
 
     return this;
+  }
+
+  destroy(): void {
+    if (this._draftState) {
+      this._draftState.destroy();
+      this._draftState = undefined;
+    }
   }
 }

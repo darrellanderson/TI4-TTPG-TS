@@ -59,6 +59,7 @@ it("static resumeIfInProgress (true)", () => {
   expect(errors).toEqual([]);
   expect(success).toBe(true);
   new DraftActivityMaybeResume().init();
+  draftActivityStart.destroy();
 });
 
 it("constructor", () => {

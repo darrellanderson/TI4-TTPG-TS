@@ -12,25 +12,6 @@ it("static _getKeleresIndex", () => {
   expect(keleresIndex).toBe(0);
 });
 
-it("static _getLinkedFaction", () => {
-  const flavorToLinkedNsid: { [key: string]: string } = {
-    "faction:codex.vigil/keleres-argent": "faction:pok/argent",
-    "faction:codex.vigil/keleres-mentak": "faction:base/mentak",
-    "faction:codex.vigil/keleres-xxcha": "faction:base/xxcha",
-  };
-  for (const [flavor, linkedNsid] of Object.entries(flavorToLinkedNsid)) {
-    const keleresFlavor = TI4.factionRegistry.getByNsidOrThrow(flavor);
-    const linkedFaction = KeleresFlavorButton._getLinkedFaction(keleresFlavor);
-    expect(linkedFaction.getNsid()).toBe(linkedNsid);
-  }
-
-  expect(() => {
-    KeleresFlavorButton._getLinkedFaction(
-      TI4.factionRegistry.getByNsidOrThrow("faction:base/arborec")
-    );
-  }).toThrow();
-});
-
 it("flavor button onClicked swaps flavor", () => {
   const draftState = new DraftState("@test/test");
   draftState.setFactions([
