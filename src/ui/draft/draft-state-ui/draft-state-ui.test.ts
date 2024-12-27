@@ -1,4 +1,4 @@
-import { Color, ContentButton, Player } from "@tabletop-playground/api";
+import { Button, Color, ContentButton, Player } from "@tabletop-playground/api";
 import { MockCardHolder, MockPlayer } from "ttpg-mock";
 
 import { DraftState } from "../../../lib/draft-lib/draft-state/draft-state";
@@ -137,6 +137,27 @@ it("_createSeatClickHandler", () => {
   handler(new ContentButton(), new MockPlayer({ slot: 10 }));
   expect(draftState.getSeatIndexToPlayerSlot(sliceIndex + 1)).toBe(-1);
   expect(draftState.getSeatIndexToPlayerSlot(sliceIndex)).toBe(10);
+});
+
+it("_createFinishClickHandler", () => {
+  const draftState: DraftState = new DraftState("@test/draft-state");
+  const handler: (button: Button, player: Player) => void =
+    DraftStateUI._createFinishClickHandler(draftState);
+
+  expect(draftState.isActive()).toBe(true);
+  expect(() => {
+    handler(new Button(), new MockPlayer({ slot: 10 }));
+  }).toThrow(); // let DraftStateActivityFinish handle the deeper testing
+});
+
+it("_createCancelClickHandler", () => {
+  const draftState: DraftState = new DraftState("@test/draft-state");
+  const handler: (button: Button, player: Player) => void =
+    DraftStateUI._createCancelClickHandler(draftState);
+
+  expect(draftState.isActive()).toBe(true);
+  handler(new Button(), new MockPlayer({ slot: 10 }));
+  expect(draftState.isActive()).toBe(false);
 });
 
 it("_getCreateZoomedSliceUi", () => {
