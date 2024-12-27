@@ -96,7 +96,6 @@ export class ResolveConflictsKeleres {
       const linkedFaction: Faction =
         ResolveConflictsKeleres.getLinkedFactionOrThrow(keleresFlavor);
       if (!chosenLinkedFactions.includes(linkedFaction)) {
-        console.log("flavor available", keleresFlavor.getNsid());
         availableFlavors.push(keleresFlavor);
       }
     });
