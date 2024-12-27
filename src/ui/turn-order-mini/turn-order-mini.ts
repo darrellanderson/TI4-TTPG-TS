@@ -65,7 +65,7 @@ export class TurnOrderMini extends AbstractUI {
       bg.setChild(text);
 
       entries.push({ text, bg });
-      panel.addChild(bg);
+      panel.addChild(bg, 1);
     }
 
     const box: Widget = new LayoutBox()

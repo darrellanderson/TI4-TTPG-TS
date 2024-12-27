@@ -295,15 +295,15 @@ export class DraftStateUI extends AbstractUI {
       .onClicked.add(DraftStateUI._createCancelClickHandler(draftState));
     const confirmCancelButton: AbstractUI = new ConfirmButtonUI(cancelButton);
 
+    const finishAndCancelButtons: AbstractUI = new HorizontalUIBuilder()
+      .setSpacing(SPACING * scale)
+      .addUIs([finishDraftButton, confirmCancelButton])
+      .build();
+
     const mapOverTurnOrder: AbstractUI = new VerticalUIBuilder()
       .setSpacing(SPACING * scale)
       .setHorizontalAlignment(HorizontalAlignment.Center)
-      .addUIs([
-        zoomableMapUi,
-        turnOrderMini,
-        finishDraftButton,
-        confirmCancelButton,
-      ])
+      .addUIs([zoomableMapUi, turnOrderMini, finishAndCancelButtons])
       .build();
 
     const panel: AbstractUI = new HorizontalUIBuilder()
