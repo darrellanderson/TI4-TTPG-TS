@@ -5,7 +5,12 @@ import {
   HorizontalAlignment,
   Player,
 } from "@tabletop-playground/api";
-import { ColorLib, HexType, ThrottleClickHandler } from "ttpg-darrell";
+import {
+  Broadcast,
+  ColorLib,
+  HexType,
+  ThrottleClickHandler,
+} from "ttpg-darrell";
 
 import { AbstractUI } from "../../abstract-ui/abtract-ui";
 import { ButtonUI } from "../../button-ui/button-ui";
@@ -141,6 +146,7 @@ export class DraftStateUI extends AbstractUI {
     draftState: DraftState
   ): (button: Button, player: Player) => void {
     const handler = (_button: Button, _player: Player): void => {
+      Broadcast.chatAll(`Draft finished by ${_player.getName()}`);
       new DraftActivityFinish(draftState).finishAll();
     };
     return new ThrottleClickHandler<Button>(handler).get();
@@ -150,6 +156,7 @@ export class DraftStateUI extends AbstractUI {
     draftState: DraftState
   ): (button: Button, player: Player) => void {
     const handler = (_button: Button, _player: Player): void => {
+      Broadcast.chatAll(`Draft cancelled by ${_player.getName()}`);
       draftState.destroy();
     };
     return new ThrottleClickHandler<Button>(handler).get();

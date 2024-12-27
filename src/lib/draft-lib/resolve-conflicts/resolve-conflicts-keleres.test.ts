@@ -66,6 +66,27 @@ it("static getLinkedFactionOrThrow (throw)", () => {
   }).toThrow();
 });
 
+it("static getAvailableFlavors", () => {
+  const draftState = new DraftState("@test/test");
+  draftState.setFactions([
+    TI4.factionRegistry.getByNsidOrThrow("faction:codex.vigil/keleres-argent"),
+    TI4.factionRegistry.getByNsidOrThrow("faction:pok/argent"),
+    TI4.factionRegistry.getByNsidOrThrow("faction:base/arborec"),
+  ]);
+  draftState.setFactionIndexToPlayerSlot(1, 10);
+
+  const availableFlavors: ReadonlyArray<Faction> =
+    ResolveConflictsKeleres.getAvailableFlavors(draftState);
+  const nsids: Array<string> = availableFlavors.map((faction) =>
+    faction.getNsid()
+  );
+  nsids.sort();
+  expect(nsids).toEqual([
+    "faction:codex.vigil/keleres-mentak",
+    "faction:codex.vigil/keleres-xxcha",
+  ]);
+});
+
 it("resolve (move keleres to open flavor)", () => {
   const draftState = new DraftState("@test/test");
   draftState.setFactions([

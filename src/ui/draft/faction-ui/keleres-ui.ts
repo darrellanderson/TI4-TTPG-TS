@@ -11,6 +11,7 @@ import {
   VerticalAlignment,
   Widget,
 } from "@tabletop-playground/api";
+import { ThrottleClickHandler } from "ttpg-darrell";
 
 import { AbstractUI, UI_SIZE } from "../../abstract-ui/abtract-ui";
 import { DraftState } from "../../../lib/draft-lib/draft-state/draft-state";
@@ -21,7 +22,7 @@ import {
   WrappedClickableUI,
 } from "../../wrapped-clickable-ui/wrapped-clickable-ui";
 import { AbstractWrappedClickableUI } from "../../wrapped-clickable-ui/abstract-wrapped-clickable-ui";
-import { ThrottleClickHandler } from "ttpg-darrell";
+import { ResolveConflictsKeleres } from "../../../lib/draft-lib/resolve-conflicts/resolve-conflicts-keleres";
 
 type KeleresFlavor = "argent" | "mentak" | "xxcha";
 
@@ -30,11 +31,10 @@ type KeleresFlavor = "argent" | "mentak" | "xxcha";
  */
 export class KeleresFlavorButton {
   private readonly _draftState: DraftState;
-
-  public readonly _flavor: KeleresFlavor;
-  public readonly _faction: Faction;
-  public readonly _fg: Text;
-  public readonly _bg: Border;
+  private readonly _faction: Faction;
+  private readonly _fg: Text;
+  private readonly _bg: Border;
+  private readonly _button: ContentButton;
   public readonly _widget: Widget;
 
   /**
@@ -69,7 +69,6 @@ export class KeleresFlavorButton {
     h: number
   ) {
     this._draftState = draftState;
-    this._flavor = flavor;
 
     this._faction = TI4.factionRegistry.getByNsidOrThrow(
       `faction:codex.vigil/keleres-${flavor}`
@@ -94,10 +93,10 @@ export class KeleresFlavorButton {
     // Strip off ContentButton added edges; cannot use LayoutBox negative
     // padding because it will be in another Canvas and bleed, but wrap
     // in a second Canvas to enforce the size/trim.
-    const button: ContentButton = new ContentButton().setChild(this._bg);
-    this._widget = new Canvas().addChild(button, -4, -4, w + 8, h + 8);
+    this._button = new ContentButton().setChild(this._bg);
+    this._widget = new Canvas().addChild(this._button, -4, -4, w + 8, h + 8);
 
-    button.onClicked.add(this._onClicked);
+    this._button.onClicked.add(this._onClicked);
   }
 
   /**
@@ -120,6 +119,12 @@ export class KeleresFlavorButton {
       this._fg.setTextColor(fg);
       this._bg.setColor(bg);
     }
+
+    // Enable if an available flavor.
+    const availableFlavors: ReadonlyArray<Faction> =
+      ResolveConflictsKeleres.getAvailableFlavors(this._draftState);
+    const isEnabled: boolean = availableFlavors.includes(this._faction);
+    this._button.setEnabled(isEnabled);
   }
 }
 

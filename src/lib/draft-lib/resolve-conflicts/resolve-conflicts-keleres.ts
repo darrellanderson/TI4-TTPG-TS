@@ -67,13 +67,41 @@ export class ResolveConflictsKeleres {
     return TI4.factionRegistry.getByNsidNameOrThrow(nsidName);
   }
 
+  static getAvailableFlavors(draftState: DraftState): ReadonlyArray<Faction> {
+    const keleresFlavors: ReadonlyArray<Faction> =
+      ResolveConflictsKeleres.getAllKeleresFlavors();
+    const linkedFactions: ReadonlyArray<Faction> =
+      ResolveConflictsKeleres.getAllLinkedFactions();
+
+    // Which linked factions already chosen?
+    const chosenLinkedFactions: Array<Faction> = [];
+    draftState.getFactions().forEach((faction: Faction, index: number) => {
+      const isLinked: boolean = linkedFactions.includes(faction);
+      const isSelected: boolean =
+        draftState.getFactionIndexToPlayerSlot(index) !== -1;
+      if (isLinked && isSelected) {
+        chosenLinkedFactions.push(faction);
+      }
+    });
+
+    // Which flavors are available?
+    const availableFlavors: Array<Faction> = [];
+    keleresFlavors.forEach((keleresFlavor) => {
+      const linkedFaction: Faction =
+        ResolveConflictsKeleres.getLinkedFactionOrThrow(keleresFlavor);
+      if (!chosenLinkedFactions.includes(linkedFaction)) {
+        availableFlavors.push(keleresFlavor);
+      }
+    });
+
+    return availableFlavors;
+  }
+
   constructor(draftState: DraftState) {
     this._draftState = draftState;
   }
 
   public resolve(): void {
-    const keleresFlavors: ReadonlyArray<Faction> =
-      ResolveConflictsKeleres.getAllKeleresFlavors();
     const linkedFactions: ReadonlyArray<Faction> =
       ResolveConflictsKeleres.getAllLinkedFactions();
 
@@ -91,14 +119,8 @@ export class ResolveConflictsKeleres {
       });
 
     // Which flavors are available?
-    const availableFlavors: Array<Faction> = [];
-    keleresFlavors.forEach((keleresFlavor) => {
-      const linkedFaction: Faction =
-        ResolveConflictsKeleres.getLinkedFactionOrThrow(keleresFlavor);
-      if (!chosenLinkedFactions.includes(linkedFaction)) {
-        availableFlavors.push(keleresFlavor);
-      }
-    });
+    const availableFlavors: ReadonlyArray<Faction> =
+      ResolveConflictsKeleres.getAvailableFlavors(this._draftState);
 
     // If the current flavor is no longer available, switch to another.
     const keleresIndex: number = ResolveConflictsKeleres.getKeleresIndex(
@@ -107,9 +129,9 @@ export class ResolveConflictsKeleres {
     const keleresFaction: Faction | undefined =
       this._draftState.getFactions()[keleresIndex];
     if (keleresFaction && !availableFlavors.includes(keleresFaction)) {
-      const newFlavor: Faction = new Shuffle<Faction>().choiceOrThrow(
-        availableFlavors
-      );
+      const newFlavor: Faction = new Shuffle<Faction>().choiceOrThrow([
+        ...availableFlavors,
+      ]);
       const factions: Array<Faction> = this._draftState.getFactions();
       factions[keleresIndex] = newFlavor;
       this._draftState.setFactions(factions); // triggers another update
