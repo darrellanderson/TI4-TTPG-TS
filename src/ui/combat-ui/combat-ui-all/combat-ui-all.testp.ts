@@ -5,23 +5,11 @@ import {
   world,
 } from "@tabletop-playground/api";
 import { AbstractUI } from "../../abstract-ui/abtract-ui";
-import { CombatUIPlanet } from "./combat-ui-planet";
-import { Planet } from "../../../lib/system-lib/planet/planet";
-import { System } from "../../../lib/system-lib/system/system";
+import { CombatUIAll } from "./combat-ui-all";
 
 function go() {
-  const system: System | undefined =
-    TI4.systemRegistry.getBySystemTileNumber(19);
-  if (!system) {
-    throw new Error("system is undefined");
-  }
-  const planet: Planet | undefined = system.getPlanets()[0];
-  if (!planet) {
-    throw new Error("planet is undefined");
-  }
-
   const scale: number = 1;
-  const abstractUi: AbstractUI = new CombatUIPlanet(scale).setPlanet(planet);
+  const abstractUi: AbstractUI = new CombatUIAll(scale);
 
   const widget: Widget = abstractUi.getWidget();
 

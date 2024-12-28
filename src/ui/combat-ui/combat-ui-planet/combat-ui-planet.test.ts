@@ -24,7 +24,9 @@ it("constructor/getters", () => {
   if (!planet) {
     throw new Error("planet is undefined");
   }
-  const combatUiPlanet: CombatUIPlanet = new CombatUIPlanet(planet, 1);
+  const combatUiPlanet: CombatUIPlanet = new CombatUIPlanet(1);
+  expect(combatUiPlanet.getPlanet()).toBeUndefined();
+  combatUiPlanet.setPlanet(planet);
   expect(combatUiPlanet.getPlanet()).toBe(planet);
   expect(combatUiPlanet.getBombardment()).toBeDefined();
   expect(combatUiPlanet.getSpaceCannonDefense()).toBeDefined();

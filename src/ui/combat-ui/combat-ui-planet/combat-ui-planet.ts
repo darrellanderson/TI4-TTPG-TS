@@ -1,4 +1,4 @@
-import { Button } from "@tabletop-playground/api";
+import { Button, Text } from "@tabletop-playground/api";
 
 import { AbstractUI } from "../../abstract-ui/abtract-ui";
 import { ButtonUI } from "../../button-ui/button-ui";
@@ -8,14 +8,14 @@ import { Planet } from "../../../lib/system-lib/planet/planet";
 import { VerticalUIBuilder } from "../../panel/vertical-ui-builder";
 
 export class CombatUIPlanet extends AbstractUI {
-  private readonly _planet: Planet;
+  private _planet: Planet | undefined;
+  private readonly _planetName: Text;
   private readonly _bombardment: Button;
   private readonly _spaceCannonDefense: Button;
   private readonly _groundCombat: Button;
 
-  constructor(planet: Planet, scale: number) {
+  constructor(scale: number) {
     const planetNameUi: LabelUI = new LabelUI(scale);
-    planetNameUi.getText().setText(planet.getName());
 
     const bombardmentUi: ButtonUI = new ButtonUI(scale);
     bombardmentUi.getButton().setText("Bombardment");
@@ -38,13 +38,27 @@ export class CombatUIPlanet extends AbstractUI {
 
     super(abstractUi.getWidget(), abstractUi.getSize());
 
-    this._planet = planet;
+    this._planetName = planetNameUi.getText();
     this._bombardment = bombardmentUi.getButton();
     this._spaceCannonDefense = spaceCannonDefenseUi.getButton();
     this._groundCombat = groundCombatUi.getButton();
+
+    this.setPlanet(undefined);
   }
 
-  getPlanet(): Planet {
+  setPlanet(planet: Planet | undefined): this {
+    const enabled: boolean = planet !== undefined;
+    const planetName: string = planet ? planet.getName() : "-";
+
+    this._planet = planet;
+    this._planetName.setText(planetName);
+    this._bombardment.setEnabled(enabled);
+    this._spaceCannonDefense.setEnabled(enabled);
+    this._groundCombat.setEnabled(enabled);
+    return this;
+  }
+
+  getPlanet(): Planet | undefined {
     return this._planet;
   }
 

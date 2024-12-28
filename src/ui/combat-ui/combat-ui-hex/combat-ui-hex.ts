@@ -10,8 +10,9 @@ import {
 import { AbstractUI, UI_SIZE } from "../../abstract-ui/abtract-ui";
 import { OnSystemActivated } from "../../../event/on-system-activated/on-system-activated";
 import { System } from "../../../lib/system-lib/system/system";
+import { CONFIG } from "../../config/config";
 
-const HALF_HEX_W_PX: number = 250;
+const HALF_HEX_W_PX: number = CONFIG.BUTTON_WIDTH + CONFIG.SPACING / 2;
 const packageId: string = refPackageId;
 
 export class CombatUIHex extends AbstractUI {
