@@ -1,5 +1,4 @@
 import {
-  Button,
   HorizontalAlignment,
   LayoutBox,
   Text,
@@ -7,26 +6,25 @@ import {
   Widget,
 } from "@tabletop-playground/api";
 import { AbstractUI, UI_SIZE } from "../abstract-ui/abtract-ui";
-
-const FONT_SIZE: number = 12;
+import { CONFIG } from "../config/config";
 
 export class LabelUI extends AbstractUI {
   private readonly _text: Text;
 
   constructor(scale: number) {
-    const fontSize: number = FONT_SIZE * scale;
+    const fontSize: number = CONFIG.FONT_SIZE * scale;
 
     const text: Text = new Text().setFontSize(fontSize).setText("X");
 
     const size: UI_SIZE = {
-      w: 100 * scale,
-      h: fontSize * 3,
+      w: CONFIG.BUTTON_WIDTH * scale,
+      h: CONFIG.BUTTON_HEIGHT * scale,
     };
     const widget: Widget = new LayoutBox()
       .setOverrideWidth(size.w)
       .setOverrideHeight(size.h)
-      .setHorizontalAlignment(HorizontalAlignment.Fill)
-      .setVerticalAlignment(VerticalAlignment.Fill)
+      .setHorizontalAlignment(HorizontalAlignment.Center)
+      .setVerticalAlignment(VerticalAlignment.Center)
       .setChild(text);
 
     super(widget, size);

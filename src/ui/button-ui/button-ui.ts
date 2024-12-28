@@ -6,20 +6,19 @@ import {
   Widget,
 } from "@tabletop-playground/api";
 import { AbstractUI, UI_SIZE } from "../abstract-ui/abtract-ui";
-
-const FONT_SIZE: number = 12;
+import { CONFIG } from "../config/config";
 
 export class ButtonUI extends AbstractUI {
   private readonly _button: Button;
 
   constructor(scale: number) {
-    const fontSize: number = FONT_SIZE * scale;
+    const fontSize: number = CONFIG.FONT_SIZE * scale;
 
     const button: Button = new Button().setFontSize(fontSize).setText("X");
 
     const size: UI_SIZE = {
-      w: 100 * scale,
-      h: fontSize * 3,
+      w: CONFIG.BUTTON_WIDTH * scale,
+      h: CONFIG.BUTTON_HEIGHT * scale,
     };
     const widget: Widget = new LayoutBox()
       .setOverrideWidth(size.w)
