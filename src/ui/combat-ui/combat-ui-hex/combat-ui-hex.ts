@@ -1,15 +1,17 @@
 import {
   Canvas,
   ImageWidget,
+  LayoutBox,
   Player,
   refPackageId,
+  Widget,
 } from "@tabletop-playground/api";
 
 import { AbstractUI, UI_SIZE } from "../../abstract-ui/abtract-ui";
 import { OnSystemActivated } from "../../../event/on-system-activated/on-system-activated";
 import { System } from "../../../lib/system-lib/system/system";
 
-const HALF_HEX_W_PX: number = 27;
+const HALF_HEX_W_PX: number = 250;
 const packageId: string = refPackageId;
 
 export class CombatUIHex extends AbstractUI {
@@ -32,7 +34,12 @@ export class CombatUIHex extends AbstractUI {
       h: halfScaledHexHeight * 2,
     };
 
-    super(canvas, size);
+    const canvasBox: Widget = new LayoutBox()
+      .setOverrideWidth(size.w)
+      .setOverrideHeight(size.h)
+      .setChild(canvas);
+
+    super(canvasBox, size);
 
     this._canvas = canvas;
     TI4.onSystemActivated.add(this._onSystemActivatedHandler);
@@ -62,6 +69,6 @@ export class CombatUIHex extends AbstractUI {
     const img = new ImageWidget()
       .setImage(imgFile, imgPackageId)
       .setImageSize(size.w, size.h);
-    this._canvas.addChild(img, 0, 0, size.w, size.h);
+    this._canvas.addChild(img, 0, -(size.w - size.h) / 2, size.w, size.w); // hex is square
   }
 }

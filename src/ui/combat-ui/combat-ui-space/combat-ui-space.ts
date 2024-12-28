@@ -19,7 +19,7 @@ export class CombatUISpace extends AbstractUI {
     ambushUi.getButton().setText("Ambush");
 
     const antifighterBarrageUi: ButtonUI = new ButtonUI(scale);
-    ambushUi.getButton().setText("Anti-fighter Barrage");
+    antifighterBarrageUi.getButton().setText("Anti-fighter Barrage");
 
     const spaceCombatUi: ButtonUI = new ButtonUI(scale);
     spaceCombatUi.getButton().setText("Space Combat");
