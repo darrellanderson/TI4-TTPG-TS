@@ -5,7 +5,7 @@ import { ButtonUI } from "../../button-ui/button-ui";
 import { CONFIG } from "../../config/config";
 import { LabelUI } from "../../button-ui/label-ui";
 import { Planet } from "../../../lib/system-lib/planet/planet";
-import { VerticalUIBuilder } from "ui/panel/vertical-ui-builder";
+import { VerticalUIBuilder } from "../../panel/vertical-ui-builder";
 
 export class CombatUIPlanet extends AbstractUI {
   private readonly _planet: Planet;

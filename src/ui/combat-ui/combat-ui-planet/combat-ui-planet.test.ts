@@ -14,7 +14,7 @@ beforeEach(() => {
   }
 });
 
-it("constructor", () => {
+it("constructor/getters", () => {
   const system: System | undefined =
     TI4.systemRegistry.getBySystemTileNumber(1);
   if (!system) {
@@ -24,5 +24,9 @@ it("constructor", () => {
   if (!planet) {
     throw new Error("planet is undefined");
   }
-  new CombatUIPlanet(planet, 1);
+  const combatUiPlanet: CombatUIPlanet = new CombatUIPlanet(planet, 1);
+  expect(combatUiPlanet.getPlanet()).toBe(planet);
+  expect(combatUiPlanet.getBombardment()).toBeDefined();
+  expect(combatUiPlanet.getSpaceCannonDefense()).toBeDefined();
+  expect(combatUiPlanet.getGroundCombat()).toBeDefined();
 });

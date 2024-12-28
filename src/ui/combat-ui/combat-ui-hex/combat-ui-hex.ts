@@ -18,7 +18,9 @@ export class CombatUIHex extends AbstractUI {
   private readonly _onSystemActivatedHandler = (
     _system: System,
     _player: Player
-  ): void => {};
+  ): void => {
+    this.update();
+  };
 
   constructor(scale: number) {
     const halfScaledHexWidth: number = HALF_HEX_W_PX * scale;
