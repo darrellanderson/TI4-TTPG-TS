@@ -31,6 +31,10 @@ export class ButtonUI extends AbstractUI {
     this._button = button;
   }
 
+  destroy(): void {
+    this._button.onClicked.clear();
+  }
+
   getButton(): Button {
     return this._button;
   }

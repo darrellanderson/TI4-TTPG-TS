@@ -39,6 +39,13 @@ export class CombatUIAllSimple extends AbstractUI {
     this._combatUiPlanets = combatUiPlanets;
   }
 
+  destroy(): void {
+    this._combatUiSpace.destroy();
+    this._combatUiPlanets.forEach((combatUiPlanet) => {
+      combatUiPlanet.destroy();
+    });
+  }
+
   update(system: System | undefined): void {
     this._combatUiPlanets.forEach((planet) => planet.setPlanet(undefined));
     if (system) {

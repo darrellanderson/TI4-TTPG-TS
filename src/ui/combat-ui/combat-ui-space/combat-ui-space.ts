@@ -42,6 +42,13 @@ export class CombatUISpace extends AbstractUI {
     this._spaceCombat = spaceCombatUi.getButton();
   }
 
+  destroy(): void {
+    this._spaceCannonOffense.onClicked.clear();
+    this._ambush.onClicked.clear();
+    this._antifighterBarrage.onClicked.clear();
+    this._spaceCombat.onClicked.clear();
+  }
+
   getSpaceCannonOffense(): Button {
     return this._spaceCannonOffense;
   }

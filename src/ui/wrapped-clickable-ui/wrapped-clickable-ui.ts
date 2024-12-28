@@ -64,6 +64,7 @@ export class WrappedClickableUI extends AbstractWrappedClickableUI {
 
   destroy(): void {
     this._innerUI.destroy();
+    this._contentButton.onClicked.clear();
     super.destroy();
   }
 

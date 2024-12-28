@@ -46,6 +46,12 @@ export class CombatUIPlanet extends AbstractUI {
     this.setPlanet(undefined);
   }
 
+  destroy(): void {
+    this._bombardment.onClicked.clear();
+    this._spaceCannonDefense.onClicked.clear();
+    this._groundCombat.onClicked.clear();
+  }
+
   setPlanet(planet: Planet | undefined): this {
     const enabled: boolean = planet !== undefined;
     const planetName: string = planet ? planet.getName() : "-";

@@ -31,6 +31,9 @@ const __playerSlotToZoomedScreenUiElement: Map<number, ScreenUIElement> =
  * close any existing one.
  */
 export class ZoomableUI extends AbstractUI {
+  private readonly _unzoomedUi: AbstractUI;
+  private readonly _zoomButton: ImageButton;
+
   _getOnZoomClosedHandler(): (button: ContentButton, player: Player) => void {
     return (_button: ContentButton, player: Player): void => {
       const screenUiElement: ScreenUIElement | undefined =
@@ -121,6 +124,14 @@ export class ZoomableUI extends AbstractUI {
 
     super(canvasBox, unzoomedSize);
 
+    this._unzoomedUi = unzoomedUi;
+    this._zoomButton = zoomButton;
     zoomButton.onClicked.add(this._getOnZoomOpenHandler(createZoomedUI, scale));
+  }
+
+  destroy(): void {
+    this._unzoomedUi.destroy();
+    this._zoomButton.onClicked.clear();
+    super.destroy();
   }
 }
