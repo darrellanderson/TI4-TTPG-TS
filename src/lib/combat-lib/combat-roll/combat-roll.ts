@@ -60,6 +60,7 @@ export type BestUnitWithCombatAttrs = {
 };
 
 export type _UnitRollsSummary = {
+  diceParams: DiceParams;
   hits: number;
   diceWithHitsCritsAndRerolls: Array<string>;
 };
@@ -729,6 +730,7 @@ export class CombatRoll {
       let unitRollsSummary: _UnitRollsSummary | undefined = result.get(unit);
       if (!unitRollsSummary) {
         unitRollsSummary = {
+          diceParams: diceResult.diceParams,
           hits: 0,
           diceWithHitsCritsAndRerolls: [],
         };
@@ -749,5 +751,32 @@ export class CombatRoll {
     }
 
     return result;
+  }
+
+  getSimpleSummary(diceResults: Array<DiceResult>): string {
+    const unitRollsSummaries: Map<UnitType, _UnitRollsSummary> =
+      this._getUnitRollsSummaries(diceResults);
+
+    const result: Array<string> = [];
+    let totalHits: number = 0;
+    for (const [unit, unitRollsSummary] of unitRollsSummaries.entries()) {
+      const unitAttrs: UnitAttrs | undefined = this.self.unitAttrsSet.get(unit);
+      const hitValue: number | undefined = unitRollsSummary.diceParams.hit;
+      if (unitAttrs && hitValue !== undefined) {
+        const name: string = unitAttrs.getName();
+        totalHits += unitRollsSummary.hits;
+        let critValue: string = "";
+        if (unitRollsSummary.diceParams.crit) {
+          critValue = `|${unitRollsSummary.diceParams.crit}`;
+        }
+        const formatted: string = `${name} (${hitValue}${critValue}): ${unitRollsSummary.diceWithHitsCritsAndRerolls}`;
+        result.push(formatted);
+      }
+    }
+
+    result.unshift(`Total hits: ${totalHits}`);
+    result.push(this.getUnitModifierNamesWithDescriptions().join(", "));
+
+    return result.filter((s) => s.length > 0).join("\n");
   }
 }
