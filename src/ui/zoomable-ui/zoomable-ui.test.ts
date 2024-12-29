@@ -4,12 +4,12 @@ import { ButtonUI } from "../button-ui/button-ui";
 import { ZoomableUI } from "./zoomable-ui";
 import { MockContentButton, MockImageButton, MockPlayer } from "ttpg-mock";
 
-it("constructor", () => {
+it("constructor/destroy", () => {
   const unzoomedUI: AbstractUI = new ButtonUI(1);
   const scale: number = 1;
   const createZoomedUI: () => AbstractUI = () => new ButtonUI(1);
 
-  new ZoomableUI(unzoomedUI, scale, createZoomedUI);
+  new ZoomableUI(unzoomedUI, scale, createZoomedUI).destroy();
 });
 
 it("_getOnZoomOpenHandler", () => {

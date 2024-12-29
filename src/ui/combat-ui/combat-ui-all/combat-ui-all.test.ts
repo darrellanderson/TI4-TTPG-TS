@@ -1,5 +1,5 @@
 import { CombatUIAll } from "./combat-ui-all";
 
-it("constructor", () => {
-  new CombatUIAll(1);
+it("constructor/destroy", () => {
+  new CombatUIAll(1).destroy();
 });

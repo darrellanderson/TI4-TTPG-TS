@@ -14,7 +14,7 @@ beforeEach(() => {
   }
 });
 
-it("constructor/getters", () => {
+it("constructor/getters/destroy", () => {
   const system: System | undefined =
     TI4.systemRegistry.getBySystemTileNumber(1);
   if (!system) {
@@ -31,4 +31,5 @@ it("constructor/getters", () => {
   expect(combatUiPlanet.getBombardment()).toBeDefined();
   expect(combatUiPlanet.getSpaceCannonDefense()).toBeDefined();
   expect(combatUiPlanet.getGroundCombat()).toBeDefined();
+  combatUiPlanet.destroy();
 });

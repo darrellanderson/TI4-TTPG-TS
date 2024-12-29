@@ -49,8 +49,8 @@ export type CombatRollParams = {
   planetName?: string; // for planet-based rolls
   activatingPlayerSlot: number;
   rollingPlayerSlot: number;
-  overrideSelfFaction?: Faction;
-  overrideOpponentFaction?: Faction;
+  overrideSelfFaction?: Faction; // for unittests
+  overrideOpponentFaction?: Faction; // for unittests
 };
 
 export type BestUnitWithCombatAttrs = {

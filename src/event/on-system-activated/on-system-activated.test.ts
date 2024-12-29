@@ -24,6 +24,7 @@ it("trigger", () => {
   });
 
   expect(OnSystemActivated.getLastActivatedSystem()).toBeUndefined();
+  expect(OnSystemActivated.getLastActivatingPlayerSlot()).toBeUndefined();
   expect(triggerCount).toBe(0);
 
   const player = new MockPlayer({ name: "my-player" });
@@ -33,7 +34,13 @@ it("trigger", () => {
   commandToken._releaseAsPlayer(player, thrown);
 
   expect(OnSystemActivated.getLastActivatedSystem()).toBeDefined();
+  expect(OnSystemActivated.getLastActivatingPlayerSlot()).toBe(
+    player.getSlot()
+  );
   expect(triggerCount).toBe(1);
+
+  // Create again from persistent state.
+  new OnSystemActivated().init();
 });
 
 it("init after token created", () => {
