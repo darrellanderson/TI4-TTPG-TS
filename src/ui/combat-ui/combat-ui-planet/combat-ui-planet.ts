@@ -8,6 +8,7 @@ import { OnSystemActivated } from "../../../event/on-system-activated/on-system-
 import { Planet } from "../../../lib/system-lib/planet/planet";
 import { System } from "../../../lib/system-lib/system/system";
 import { VerticalUIBuilder } from "../../panel/vertical-ui-builder";
+import { ThrottleClickHandler } from "ttpg-darrell";
 
 export class CombatUIPlanet extends AbstractUI {
   private readonly _planetIndex: number;
@@ -27,39 +28,39 @@ export class CombatUIPlanet extends AbstractUI {
 
     const bombardmentUi: ButtonUI = new ButtonUI(scale);
     bombardmentUi.getButton().setText("Bombardment");
-    bombardmentUi
-      .getButton()
-      .onClicked.add((_button: Button, player: Player) => {
+    bombardmentUi.getButton().onClicked.add(
+      new ThrottleClickHandler<Button>((_button: Button, player: Player) => {
         TI4.onCombatClicked.trigger(
           "bombardment",
           this._planetNameValue,
           player
         );
-      });
+      }).get()
+    );
 
     const spaceCannonDefenseUi: ButtonUI = new ButtonUI(scale);
     spaceCannonDefenseUi.getButton().setText("Spc Cannon Defense");
-    spaceCannonDefenseUi
-      .getButton()
-      .onClicked.add((_button: Button, player: Player) => {
+    spaceCannonDefenseUi.getButton().onClicked.add(
+      new ThrottleClickHandler<Button>((_button: Button, player: Player) => {
         TI4.onCombatClicked.trigger(
           "spaceCannonDefense",
           this._planetNameValue,
           player
         );
-      });
+      }).get()
+    );
 
     const groundCombatUi: ButtonUI = new ButtonUI(scale);
     groundCombatUi.getButton().setText("Ground Combat");
-    groundCombatUi
-      .getButton()
-      .onClicked.add((_button: Button, player: Player) => {
+    groundCombatUi.getButton().onClicked.add(
+      new ThrottleClickHandler<Button>((_button: Button, player: Player) => {
         TI4.onCombatClicked.trigger(
           "groundCombat",
           this._planetNameValue,
           player
         );
-      });
+      }).get()
+    );
 
     const abstractUi: AbstractUI = new VerticalUIBuilder()
       .setSpacing(CONFIG.SPACING)

@@ -4,6 +4,7 @@ import { AbstractUI } from "../../abstract-ui/abtract-ui";
 import { ButtonUI } from "../../button-ui/button-ui";
 import { CONFIG } from "../../config/config";
 import { VerticalUIBuilder } from "../../panel/vertical-ui-builder";
+import { ThrottleClickHandler } from "ttpg-darrell";
 
 export class CombatUISpace extends AbstractUI {
   private readonly _spaceCannonOffense: Button;
@@ -16,33 +17,35 @@ export class CombatUISpace extends AbstractUI {
 
     const spaceCannonOffenseUi: ButtonUI = new ButtonUI(scale);
     spaceCannonOffenseUi.getButton().setText("Spc Cannon Offense");
-    spaceCannonOffenseUi
-      .getButton()
-      .onClicked.add((_button: Button, player: Player) => {
+    spaceCannonOffenseUi.getButton().onClicked.add(
+      new ThrottleClickHandler<Button>((_button: Button, player: Player) => {
         TI4.onCombatClicked.trigger("spaceCannonOffense", planetName, player);
-      });
+      }).get()
+    );
 
     const ambushUi: ButtonUI = new ButtonUI(scale);
     ambushUi.getButton().setText("Ambush");
-    ambushUi.getButton().onClicked.add((_button: Button, player: Player) => {
-      TI4.onCombatClicked.trigger("ambush", planetName, player);
-    });
+    ambushUi.getButton().onClicked.add(
+      new ThrottleClickHandler<Button>((_button: Button, player: Player) => {
+        TI4.onCombatClicked.trigger("ambush", planetName, player);
+      }).get()
+    );
 
     const antifighterBarrageUi: ButtonUI = new ButtonUI(scale);
     antifighterBarrageUi.getButton().setText("Anti-fighter Barrage");
-    antifighterBarrageUi
-      .getButton()
-      .onClicked.add((_button: Button, player: Player) => {
+    antifighterBarrageUi.getButton().onClicked.add(
+      new ThrottleClickHandler<Button>((_button: Button, player: Player) => {
         TI4.onCombatClicked.trigger("antiFighterBarrage", planetName, player);
-      });
+      }).get()
+    );
 
     const spaceCombatUi: ButtonUI = new ButtonUI(scale);
     spaceCombatUi.getButton().setText("Space Combat");
-    spaceCombatUi
-      .getButton()
-      .onClicked.add((_button: Button, player: Player) => {
+    spaceCombatUi.getButton().onClicked.add(
+      new ThrottleClickHandler<Button>((_button: Button, player: Player) => {
         TI4.onCombatClicked.trigger("spaceCombat", planetName, player);
-      });
+      }).get()
+    );
 
     const abstractUi: AbstractUI = new VerticalUIBuilder()
       .setSpacing(CONFIG.SPACING)
