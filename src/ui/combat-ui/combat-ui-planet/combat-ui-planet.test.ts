@@ -55,6 +55,9 @@ it("click buttons", () => {
   const scale: number = 0;
   const combatUiPlanet: CombatUIPlanet = new CombatUIPlanet(planetIndex, scale);
 
+  // Again just to exercise the handler.
+  TI4.onSystemActivated.trigger(system, player);
+
   let eventCombatRollType: CombatRollType | undefined = undefined;
   let eventPlanetName: string | undefined = undefined;
   let eventPlayer: Player | undefined = undefined;

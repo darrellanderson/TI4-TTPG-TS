@@ -18,6 +18,10 @@ export class CombatUIPlanet extends AbstractUI {
   private readonly _spaceCannonDefense: Button;
   private readonly _groundCombat: Button;
 
+  private readonly _onSystemActivatedHandler = () => {
+    this.update();
+  };
+
   constructor(scale: number, planetIndex: number) {
     const planetNameUi: LabelUI = new LabelUI(scale);
 
@@ -75,6 +79,8 @@ export class CombatUIPlanet extends AbstractUI {
     this._spaceCannonDefense = spaceCannonDefenseUi.getButton();
     this._groundCombat = groundCombatUi.getButton();
 
+    TI4.onSystemActivated.add(this._onSystemActivatedHandler);
+
     this.update();
   }
 
@@ -82,6 +88,8 @@ export class CombatUIPlanet extends AbstractUI {
     this._bombardment.onClicked.clear();
     this._spaceCannonDefense.onClicked.clear();
     this._groundCombat.onClicked.clear();
+
+    TI4.onSystemActivated.remove(this._onSystemActivatedHandler);
   }
 
   update(): void {
