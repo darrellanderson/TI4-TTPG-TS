@@ -20,6 +20,7 @@ import {
 
 import { addObjectTemplatesToMockWorld } from "../nsid/nsid-to-template-id.test";
 import { ActivateSystem } from "../context-menu/activate-system/activate-system";
+import { CombatRollType } from "../lib/combat-lib/combat-roll/combat-roll";
 import { Config } from "../lib/config/config";
 import { ControlTokenSystem } from "../context-menu/control-token-system/control-token-system";
 import { CreateAndAttachEndTurnButtonUI } from "../ui/end-turn-button-ui/create-and-attach-end-turn-button-ui";
@@ -71,6 +72,13 @@ registerErrorHandler();
 
 export class TI4Class {
   // Events.
+  public readonly onCombatClicked = new TriggerableMulticastDelegate<
+    (
+      rollType: CombatRollType,
+      planetName: string | undefined,
+      player: Player
+    ) => void
+  >();
   public readonly onFactionChanged = new TriggerableMulticastDelegate<
     (playerSlot: number, player: Player) => void
   >();

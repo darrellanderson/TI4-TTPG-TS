@@ -1,4 +1,4 @@
-import { Button } from "@tabletop-playground/api";
+import { Button, Player } from "@tabletop-playground/api";
 
 import { AbstractUI } from "../../abstract-ui/abtract-ui";
 import { ButtonUI } from "../../button-ui/button-ui";
@@ -12,17 +12,37 @@ export class CombatUISpace extends AbstractUI {
   private readonly _spaceCombat: Button;
 
   constructor(scale: number) {
+    const planetName: string | undefined = undefined; // space
+
     const spaceCannonOffenseUi: ButtonUI = new ButtonUI(scale);
     spaceCannonOffenseUi.getButton().setText("Spc Cannon Offense");
+    spaceCannonOffenseUi
+      .getButton()
+      .onClicked.add((_button: Button, player: Player) => {
+        TI4.onCombatClicked.trigger("spaceCannonOffense", planetName, player);
+      });
 
     const ambushUi: ButtonUI = new ButtonUI(scale);
     ambushUi.getButton().setText("Ambush");
+    ambushUi.getButton().onClicked.add((_button: Button, player: Player) => {
+      TI4.onCombatClicked.trigger("ambush", planetName, player);
+    });
 
     const antifighterBarrageUi: ButtonUI = new ButtonUI(scale);
     antifighterBarrageUi.getButton().setText("Anti-fighter Barrage");
+    antifighterBarrageUi
+      .getButton()
+      .onClicked.add((_button: Button, player: Player) => {
+        TI4.onCombatClicked.trigger("antiFighterBarrage", planetName, player);
+      });
 
     const spaceCombatUi: ButtonUI = new ButtonUI(scale);
     spaceCombatUi.getButton().setText("Space Combat");
+    spaceCombatUi
+      .getButton()
+      .onClicked.add((_button: Button, player: Player) => {
+        TI4.onCombatClicked.trigger("spaceCombat", planetName, player);
+      });
 
     const abstractUi: AbstractUI = new VerticalUIBuilder()
       .setSpacing(CONFIG.SPACING)

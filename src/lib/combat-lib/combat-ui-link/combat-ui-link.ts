@@ -4,22 +4,10 @@ import { CombatUISpace } from "../../../ui/combat-ui/combat-ui-space/combat-ui-s
 import { System } from "../../system-lib/system/system";
 
 /**
- * Set up CombatUI buttons, reset on system activation.
+ * Listen for combat UI clicks, turn into combat rolls.
  */
 export class CombatUILink {
-  private readonly _onSystemActivatedHandler = (
-    system: System,
-    _player: Player
-  ): void => {};
+  constructor() {}
 
-  constructor(
-    combatUiSpace: CombatUISpace,
-    combatUiPlanets: Array<CombatUIPlanet>
-  ) {
-    TI4.onSystemActivated.add(this._onSystemActivatedHandler);
-  }
-
-  destroy(): void {
-    TI4.onSystemActivated.remove(this._onSystemActivatedHandler);
-  }
+  destroy(): void {}
 }

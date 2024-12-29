@@ -35,6 +35,7 @@ import { UnitModifierActiveIdle } from "../../unit-lib/unit-modifier/unit-modifi
 import { UnitPlastic } from "../../unit-lib/unit-plastic/unit-plastic";
 
 export type CombatRollType =
+  | "ambush"
   | "antiFighterBarrage"
   | "bombardment"
   | "spaceCannonOffense"

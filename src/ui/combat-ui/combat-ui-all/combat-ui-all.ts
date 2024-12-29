@@ -24,7 +24,7 @@ export class CombatUIAll extends AbstractUI {
     const combatUiSpace: CombatUISpace = new CombatUISpace(scale);
     const combatUiPlanets: Array<CombatUIPlanet> = [];
     for (let i = 0; i < 3; i++) {
-      combatUiPlanets.push(new CombatUIPlanet(scale));
+      combatUiPlanets.push(new CombatUIPlanet(i, scale));
     }
     const combatUiHex: CombatUIHex = new CombatUIHex(scale);
 

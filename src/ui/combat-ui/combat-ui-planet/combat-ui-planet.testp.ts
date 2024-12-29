@@ -1,12 +1,12 @@
 import {
   Border,
+  Player,
   ScreenUIElement,
   Widget,
   world,
 } from "@tabletop-playground/api";
 import { AbstractUI } from "../../abstract-ui/abtract-ui";
 import { CombatUIPlanet } from "./combat-ui-planet";
-import { Planet } from "../../../lib/system-lib/planet/planet";
 import { System } from "../../../lib/system-lib/system/system";
 
 function go() {
@@ -15,14 +15,15 @@ function go() {
   if (!system) {
     throw new Error("system is undefined");
   }
-  const planet: Planet | undefined = system.getPlanets()[0];
-  if (!planet) {
-    throw new Error("planet is undefined");
+  const player: Player | undefined = world.getAllPlayers()[0];
+  if (!player) {
+    throw new Error("player is undefined");
   }
+  TI4.onSystemActivated.trigger(system, player);
 
+  const planetIndex: number = 0;
   const scale: number = 1;
-  const abstractUi: AbstractUI = new CombatUIPlanet(scale).setPlanet(planet);
-
+  const abstractUi: AbstractUI = new CombatUIPlanet(planetIndex, scale);
   const widget: Widget = abstractUi.getWidget();
 
   const screenUI = new ScreenUIElement();
