@@ -9,6 +9,7 @@ import {
 } from "@tabletop-playground/api";
 import {
   Atop,
+  Broadcast,
   CardUtil,
   DiceGroup,
   DiceGroupParams,
@@ -705,10 +706,11 @@ export class CombatRoll {
   }
 
   public roll(player: Player, position: Vector): void {
-    const callback = (
-      _diceResults: Array<DiceResult>,
-      _player: Player
-    ): void => {};
+    const callback = (diceResults: Array<DiceResult>, player: Player): void => {
+      const summary: string = this.getSimpleSummary(diceResults);
+      const color: Color = world.getSlotColor(player.getSlot());
+      Broadcast.broadcastAll(summary, color);
+    };
     const diceParams: Array<DiceParams> = this.createDiceParamsArray();
     const diceGroupParams: DiceGroupParams = {
       diceParams,
