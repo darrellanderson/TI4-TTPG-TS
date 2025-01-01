@@ -10,7 +10,7 @@ import { CardUtil, DiceParams, DiceResult } from "ttpg-darrell";
 
 import { CombatAttrs } from "../../unit-lib/unit-attrs/combat-attrs";
 import {
-  _UnitRollsSummary,
+  UnitRollsSummary,
   BestUnitWithCombatAttrs,
   CombatRoll,
   CombatRollParams,
@@ -194,6 +194,7 @@ it("_getCombatAttrs (groundCombat)", () => {
   });
   const unitToCombatAttrs: Map<UnitType, CombatAttrs> =
     combatRoll._getUnitToCombatAttrs();
+  expect(combatRoll.getPlanetName()).toBe("Jord");
   expect(unitToCombatAttrs.get("carrier")).toBeUndefined();
   expect(unitToCombatAttrs.get("destroyer")).toBeUndefined();
   expect(unitToCombatAttrs.get("dreadnought")).toBeUndefined();
@@ -1290,12 +1291,6 @@ it("roll", () => {
 });
 
 it("_getUnitRollSummaries (no crit)", () => {
-  const combatRoll: CombatRoll = new CombatRoll({
-    rollType: "spaceCombat",
-    hex: "<0,0,0>",
-    activatingPlayerSlot: 1,
-    rollingPlayerSlot: 2,
-  });
   const diceResults: Array<DiceResult> = [
     {
       diceParams: {
@@ -1306,8 +1301,8 @@ it("_getUnitRollSummaries (no crit)", () => {
       value: 9,
     },
   ];
-  const summaries: Map<UnitType, _UnitRollsSummary> =
-    combatRoll._getUnitRollsSummaries(diceResults);
+  const summaries: Map<UnitType, UnitRollsSummary> =
+    CombatRoll.getUnitRollsSummaries(diceResults);
   expect(summaries.get("carrier")).toEqual({
     diceParams: {
       id: "carrier",
@@ -1319,12 +1314,6 @@ it("_getUnitRollSummaries (no crit)", () => {
 });
 
 it("_getUnitRollSummaries (crit)", () => {
-  const combatRoll: CombatRoll = new CombatRoll({
-    rollType: "spaceCombat",
-    hex: "<0,0,0>",
-    activatingPlayerSlot: 1,
-    rollingPlayerSlot: 2,
-  });
   const diceResults: Array<DiceResult> = [
     {
       diceParams: {
@@ -1336,8 +1325,8 @@ it("_getUnitRollSummaries (crit)", () => {
       value: 9,
     },
   ];
-  const summaries: Map<UnitType, _UnitRollsSummary> =
-    combatRoll._getUnitRollsSummaries(diceResults);
+  const summaries: Map<UnitType, UnitRollsSummary> =
+    CombatRoll.getUnitRollsSummaries(diceResults);
   expect(summaries.get("carrier")).toEqual({
     diceParams: {
       id: "carrier",
@@ -1349,12 +1338,6 @@ it("_getUnitRollSummaries (crit)", () => {
 });
 
 it("_getUnitRollSummaries (crit with count)", () => {
-  const combatRoll: CombatRoll = new CombatRoll({
-    rollType: "spaceCombat",
-    hex: "<0,0,0>",
-    activatingPlayerSlot: 1,
-    rollingPlayerSlot: 2,
-  });
   const diceResults: Array<DiceResult> = [
     {
       diceParams: {
@@ -1367,8 +1350,8 @@ it("_getUnitRollSummaries (crit with count)", () => {
       value: 9,
     },
   ];
-  const summaries: Map<UnitType, _UnitRollsSummary> =
-    combatRoll._getUnitRollsSummaries(diceResults);
+  const summaries: Map<UnitType, UnitRollsSummary> =
+    CombatRoll.getUnitRollsSummaries(diceResults);
   expect(summaries.get("carrier")).toEqual({
     diceParams: {
       id: "carrier",
@@ -1401,11 +1384,11 @@ it("getSimpleSummary", () => {
     },
   ];
 
-  const unitRollsSummaries: Map<UnitType, _UnitRollsSummary> =
-    combatRoll._getUnitRollsSummaries(diceResults);
+  const unitRollsSummaries: Map<UnitType, UnitRollsSummary> =
+    CombatRoll.getUnitRollsSummaries(diceResults);
   expect(unitRollsSummaries.get("carrier")).toBeDefined();
 
-  expect(combatRoll.getSimpleSummary(diceResults)).toEqual(
+  expect(CombatRoll.getSimpleSummary(combatRoll, unitRollsSummaries)).toEqual(
     "Total hits: 2\nCarrier (9|10): 9##"
   );
 });

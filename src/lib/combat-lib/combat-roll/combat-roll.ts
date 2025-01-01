@@ -9,7 +9,6 @@ import {
 } from "@tabletop-playground/api";
 import {
   Atop,
-  Broadcast,
   CardUtil,
   DiceGroup,
   DiceGroupParams,
@@ -60,7 +59,7 @@ export type BestUnitWithCombatAttrs = {
   combatAttrs: CombatAttrs;
 };
 
-export type _UnitRollsSummary = {
+export type UnitRollsSummary = {
   diceParams: DiceParams;
   hits: number;
   diceWithHitsCritsAndRerolls: Array<string>;
@@ -705,11 +704,13 @@ export class CombatRoll {
     return this._params.rollType;
   }
 
+  public getPlanetName(): string | undefined {
+    return this._params.planetName;
+  }
+
   public roll(player: Player, position: Vector): void {
     const callback = (diceResults: Array<DiceResult>, player: Player): void => {
-      const summary: string = this.getSimpleSummary(diceResults);
-      const color: Color = world.getSlotColor(player.getSlot());
-      Broadcast.broadcastAll(summary, color);
+      TI4.onCombatResult.trigger(this, diceResults, player);
     };
     const diceParams: Array<DiceParams> = this.createDiceParamsArray();
     const diceGroupParams: DiceGroupParams = {
@@ -722,14 +723,14 @@ export class CombatRoll {
     DiceGroup.roll(diceGroupParams);
   }
 
-  _getUnitRollsSummaries(
+  static getUnitRollsSummaries(
     diceResults: Array<DiceResult>
-  ): Map<UnitType, _UnitRollsSummary> {
-    const result: Map<UnitType, _UnitRollsSummary> = new Map();
+  ): Map<UnitType, UnitRollsSummary> {
+    const result: Map<UnitType, UnitRollsSummary> = new Map();
 
     for (const diceResult of diceResults) {
       const unit: UnitType = diceResult.diceParams.id as UnitType;
-      let unitRollsSummary: _UnitRollsSummary | undefined = result.get(unit);
+      let unitRollsSummary: UnitRollsSummary | undefined = result.get(unit);
       if (!unitRollsSummary) {
         unitRollsSummary = {
           diceParams: diceResult.diceParams,
@@ -755,14 +756,15 @@ export class CombatRoll {
     return result;
   }
 
-  getSimpleSummary(diceResults: Array<DiceResult>): string {
-    const unitRollsSummaries: Map<UnitType, _UnitRollsSummary> =
-      this._getUnitRollsSummaries(diceResults);
-
+  static getSimpleSummary(
+    combatRoll: CombatRoll,
+    unitRollsSummaries: Map<UnitType, UnitRollsSummary>
+  ): string {
     const result: Array<string> = [];
     let totalHits: number = 0;
     for (const [unit, unitRollsSummary] of unitRollsSummaries.entries()) {
-      const unitAttrs: UnitAttrs | undefined = this.self.unitAttrsSet.get(unit);
+      const unitAttrs: UnitAttrs | undefined =
+        combatRoll.self.unitAttrsSet.get(unit);
       const hitValue: number | undefined = unitRollsSummary.diceParams.hit;
       if (unitAttrs && hitValue !== undefined) {
         const name: string = unitAttrs.getName();
@@ -777,7 +779,7 @@ export class CombatRoll {
     }
 
     result.unshift(`Total hits: ${totalHits}`);
-    result.push(this.getUnitModifierNamesWithDescriptions().join(", "));
+    result.push(combatRoll.getUnitModifierNamesWithDescriptions().join(", "));
 
     return result.filter((s) => s.length > 0).join("\n");
   }
