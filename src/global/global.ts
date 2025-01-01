@@ -28,6 +28,7 @@ import { DisplayPDSAdjacency } from "../context-menu/display-pds-adjacency/displ
 import { DraftActivityMaybeResume } from "../lib/draft-lib/draft-activity-start/draft-activity-start";
 import { FactionRegistry } from "../lib/faction-lib/registry/faction-registry";
 import { NumpadKeyAll } from "../lib/numpad-key-lib/numpad-key-all/numpad-key-all";
+import { OnCombatClicked } from "../event/on-combat-clicked/on-combat-clicked";
 import { OnSystemActivated } from "../event/on-system-activated/on-system-activated";
 import { PlanetAttachmentRegistry } from "../lib/system-lib/registry/planet-attachment-registry";
 import { PlayerColor } from "../lib/player-lib/player-color/player-color";
@@ -117,6 +118,7 @@ export function resetGlobalThisTI4(): TI4Class {
     new LeaveSeat(),
     new NumpadKeyAll(),
     new OnCardBecameSingletonOrDeck(),
+    new OnCombatClicked(),
     new OnSystemActivated(),
     new ReportRemaining(),
     new RightClickExplore(),

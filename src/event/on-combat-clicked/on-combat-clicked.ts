@@ -1,18 +1,17 @@
 import { Player, Vector, world } from "@tabletop-playground/api";
-import { HexType } from "ttpg-darrell";
-
+import { HexType, IGlobal } from "ttpg-darrell";
 import {
-  CombatRoll,
-  CombatRollParams,
   CombatRollType,
-} from "../combat-roll/combat-roll";
-import { OnSystemActivated } from "../../../event/on-system-activated/on-system-activated";
-import { System } from "../../system-lib/system/system";
+  CombatRollParams,
+  CombatRoll,
+} from "../../lib/combat-lib/combat-roll/combat-roll";
+import { OnSystemActivated } from "../on-system-activated/on-system-activated";
+import { System } from "../../lib/system-lib/system/system";
 
 /**
  * Listen for combat UI clicks, turn into combat rolls.
  */
-export class CombatUILink {
+export class OnCombatClicked implements IGlobal {
   private readonly _onCombatClickedHandler = (
     rollType: CombatRollType,
     planetName: string | undefined,
@@ -36,14 +35,23 @@ export class CombatUILink {
         rollingPlayerSlot,
       };
 
-      const z: number = world.getTableHeight() + 10;
-      const rollPos: Vector = new Vector(0, 0, z);
+      // Choose a roll position based on the rolling player.
+      let rollPos: Vector = new Vector(0, 0, 0);
+      for (const seat of TI4.playerSeats.getAllSeats()) {
+        if (seat.playerSlot === rollingPlayerSlot) {
+          rollPos = seat.cardHolder.getPosition();
+          rollPos.x *= 0.75; // move toward center
+          break;
+        }
+      }
+      rollPos.z = world.getTableHeight() + 10;
+
       const combatRoll: CombatRoll = CombatRoll.createCooked(params);
       combatRoll.roll(player, rollPos);
     }
   };
 
-  constructor() {
+  init() {
     TI4.events.onCombatClicked.add(this._onCombatClickedHandler);
   }
 
