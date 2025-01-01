@@ -64,11 +64,8 @@ GarbageContainer.onRecycled.add(
           return result;
         });
         nameToCount.clear();
-        const msg: string = [
-          player.getName(),
-          "recycled:",
-          items.join(", "),
-        ].join(" ");
+        const playerName: string = TI4.playerName.getByPlayer(player);
+        const msg: string = `${playerName} recycled: ${items.join(", ")}`;
         Broadcast.chatAll(msg);
       });
     }

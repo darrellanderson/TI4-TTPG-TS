@@ -27,11 +27,13 @@ import { DiplomacySystem } from "../context-menu/diplomacy-system/diplomacy-syst
 import { DisplayPDSAdjacency } from "../context-menu/display-pds-adjacency/display-pds-adjacency";
 import { DraftActivityMaybeResume } from "../lib/draft-lib/draft-activity-start/draft-activity-start";
 import { FactionRegistry } from "../lib/faction-lib/registry/faction-registry";
+import { GlobalEvents } from "./global-events";
 import { NumpadKeyAll } from "../lib/numpad-key-lib/numpad-key-all/numpad-key-all";
 import { OnCombatClicked } from "../event/on-combat-clicked/on-combat-clicked";
 import { OnSystemActivated } from "../event/on-system-activated/on-system-activated";
 import { PlanetAttachmentRegistry } from "../lib/system-lib/registry/planet-attachment-registry";
 import { PlayerColor } from "../lib/player-lib/player-color/player-color";
+import { PlayerName } from "../lib/player-lib/player-name/player-name";
 import { PlayerSeats } from "../lib/player-lib/player-seats/player-seats";
 import { RemoveRegistry } from "../lib/remove-lib/registry/remove-registry";
 import { ReportRemaining } from "../context-menu/report-remaining/report-remaining";
@@ -49,7 +51,6 @@ import { UnitModifierActiveIdle } from "../lib/unit-lib/unit-modifier/unit-modif
 import { UnitModifierRegistry } from "../lib/unit-lib/registry/unit-modifier-registry";
 
 import * as NSID_TO_TEMPLATE_ID from "../nsid/nsid-to-template-id.json";
-import { GlobalEvents } from "./global-events";
 Spawn.inject(NSID_TO_TEMPLATE_ID);
 
 Find.ignoreOwnedCardHolderNsid("card-holder:base/player-scoring");
@@ -82,6 +83,7 @@ export class TI4Class {
   public readonly planetAttachmentRegistry =
     new PlanetAttachmentRegistry().loadDefaultData();
   public readonly playerColor = new PlayerColor("@player-color/ti4");
+  public readonly playerName = new PlayerName();
   public readonly playerSeats = new PlayerSeats();
   public readonly removeRegistry = new RemoveRegistry().loadDefaultData();
   public readonly systemAttachmentRegistry =

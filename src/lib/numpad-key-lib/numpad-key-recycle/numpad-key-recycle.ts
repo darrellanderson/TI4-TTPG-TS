@@ -27,7 +27,7 @@ export class NumpadKeyRecycle {
     }
 
     // Require control+key several times to enable normal key based recycle.
-    const name: string = player.getName();
+    const name: string = player.getName(); // key off player name
     let count: number = this._playerNameToCtrlKeyCount.get(name) || 0;
     if (ctrl) {
       count += 1;

@@ -144,7 +144,7 @@ export class RightClickExplore implements IGlobal {
       card.setRotation([0, 0, 180]);
       card.snapToGround();
 
-      const playerName: string = player.getName();
+      const playerName: string = TI4.playerName.getByPlayer(player);
       const planetName: string = planet.getName();
       const cardName: string = card.getCardDetails().name;
       const msg: string = `${playerName} explored ${planetName} (${trait}): ${cardName}`;
@@ -178,7 +178,7 @@ export class RightClickExplore implements IGlobal {
       card.setRotation([0, 0, 180]);
       card.snapToGround();
 
-      const playerName: string = player.getName();
+      const playerName: string = TI4.playerName.getByPlayer(player);
       const cardName: string = card.getCardDetails().name;
       const msg: string = `${playerName} explored frontier: ${cardName}`;
       Broadcast.chatAll(msg, player.getPlayerColor());

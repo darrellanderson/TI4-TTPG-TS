@@ -1,4 +1,10 @@
-import { Color, GameObject, Player, refObject } from "@tabletop-playground/api";
+import {
+  Color,
+  GameObject,
+  Player,
+  refObject,
+  world,
+} from "@tabletop-playground/api";
 import { Broadcast } from "ttpg-darrell";
 
 import { InitiativeOrder } from "../lib/strategy-card-lib/initiative-order/initiative-order";
@@ -19,20 +25,21 @@ const _readyLib: ReadyLib = new ReadyLib();
 
 refObject.onCustomAction.add(
   (_obj: GameObject, player: Player, identifier: string) => {
+    const playerName: string = TI4.playerName.getByPlayer(player);
+    const playerColor: Color = world.getSlotColor(player.getSlot());
+
     if (identifier === ACTION_PLACE_TGS) {
       _initiativeOrder.setTurnOrderFromStrategyCards();
       _placeTGsUnpicked.placeTgsUnpicked();
 
-      const msg: string = `${player.getName()} placed TGs and set turns`;
-      const color: Color = player.getPlayerColor();
-      Broadcast.chatAll(msg, color);
+      const msg: string = `${playerName} placed TGs and set turns`;
+      Broadcast.chatAll(msg, playerColor);
     } else if (identifier === ACTION_RETURN_STRATEGY_CARDS) {
       _returnStrategyCards.returnAllStrategyCardsRespecingPoliticalStability();
       _readyLib.readyAll();
 
-      const msg: string = `${player.getName()} returned strategy cards`;
-      const color: Color = player.getPlayerColor();
-      Broadcast.chatAll(msg, color);
+      const msg: string = `${playerName} returned strategy cards`;
+      Broadcast.chatAll(msg, playerColor);
     }
   }
 );

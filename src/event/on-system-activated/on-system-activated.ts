@@ -66,7 +66,7 @@ export class OnSystemActivated implements IGlobal {
     TI4.events.onSystemActivated.add((system: System, player: Player): void => {
       OnSystemActivated.__lastActivatedSystem = system;
       OnSystemActivated.__lastActivatingPlayerSlot = player.getSlot();
-      const name: string = player.getName();
+      const name: string = TI4.playerName.getByPlayer(player);
       const systemSummary: string = system.getName();
       const message: string = `${name} activated ${systemSummary}`;
       Broadcast.broadcastAll(message);
