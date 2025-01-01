@@ -9,6 +9,8 @@ import { refPackageId, Vector, world } from "@tabletop-playground/api";
 import { Find, NSID, ParsedNSID } from "ttpg-darrell";
 import { REWRITE_NSIDS } from "../data/faction-nsid-rewrite.data";
 
+const packageId: string = refPackageId;
+
 export class FactionRegistry {
   private readonly _find: Find = new Find();
   private readonly _nsidToFaction: Map<string, Faction> = new Map();
@@ -122,7 +124,7 @@ export class FactionRegistry {
     for (const [source, factions] of Object.entries(SOURCE_TO_FACTION_DATA)) {
       const sourceAndPackageId: SourceAndPackageIdSchemaType = {
         source,
-        packageId: refPackageId,
+        packageId,
       };
       this.load(sourceAndPackageId, factions);
     }

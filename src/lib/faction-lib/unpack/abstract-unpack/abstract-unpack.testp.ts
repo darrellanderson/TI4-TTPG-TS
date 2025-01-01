@@ -12,13 +12,13 @@ export class AbstractUnpackTestP {
     refObject.addCustomAction("*Unpack");
     refObject.addCustomAction("*Remove");
     refObject.onCustomAction.add(
-      (_obj: GameObject, player: Player, _identifier: string): void => {
+      (_obj: GameObject, _player: Player, _identifier: string): void => {
         if (_identifier === "*Unpack") {
           unpack.unpack();
-          TI4.events.onFactionChanged.trigger(PLAYER_SLOT, player);
+          TI4.events.onFactionChanged.trigger(PLAYER_SLOT);
         } else if (_identifier === "*Remove") {
           unpack.remove();
-          TI4.events.onFactionChanged.trigger(PLAYER_SLOT, player);
+          TI4.events.onFactionChanged.trigger(PLAYER_SLOT);
         }
       }
     );

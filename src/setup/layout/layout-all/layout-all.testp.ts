@@ -4,7 +4,7 @@ import { LayoutAll } from "./layout-all";
 import { SetupPlayerSlotColors } from "setup/setup-player-slot-colors/setup-player-slot-colors";
 
 console.log("LAYOUT-ALL.TESTP");
-TI4.config.setPlayerCount(8);
+TI4.config.setPlayerCount(6);
 
 for (const obj of world.getAllObjects(true)) {
   if (obj !== refObject) {

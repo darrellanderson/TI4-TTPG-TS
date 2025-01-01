@@ -17,7 +17,7 @@ import {
 } from "../../lib/strategy-card-lib/initiative-order/initiative-order";
 import { Scoreboard } from "../../lib/score-lib/scoreboard/scoreboard";
 
-const PACKAGE_ID: string = refPackageId;
+const packageId: string = refPackageId;
 
 // Shared map, resets when updating the first entry in the turn order list.
 const __playerSlotToFaction: Map<number, Faction> = new Map();
@@ -52,19 +52,19 @@ export class TurnOrderEntry extends TurnEntryWart {
       .setJustification(TextJustification.Center)
       .setText("14");
     this._strategyCardSolo = new Text()
-      .setFont("handel-gothic-regular.ttf", refPackageId)
+      .setFont("handel-gothic-regular.ttf", packageId)
       .setFontSize(11)
       .setJustification(TextJustification.Center)
       .setText("LEADERSHIP");
     this._strategyCardSoloOverlay = new Border();
     this._strategyCardLeft = new Text()
-      .setFont("handel-gothic-regular.ttf", refPackageId)
+      .setFont("handel-gothic-regular.ttf", packageId)
       .setFontSize(6)
       .setJustification(TextJustification.Center)
       .setText("LEADERSHIP");
     this._strategyCardLeftOverLay = new Border();
     this._strategyCardRight = new Text()
-      .setFont("handel-gothic-regular.ttf", refPackageId)
+      .setFont("handel-gothic-regular.ttf", packageId)
       .setFontSize(6)
       .setJustification(TextJustification.Center)
       .setText("LEADERSHIP");
@@ -146,7 +146,7 @@ export class TurnOrderEntry extends TurnEntryWart {
     const factionIcon: string =
       faction?.getIcon() ?? "icon/token/circle-outline-only.png";
     const factionIconPackageId: string =
-      faction?.getIconPackageId() ?? PACKAGE_ID;
+      faction?.getIconPackageId() ?? packageId;
     this._factionName.setText(factionName);
     this._factionIcon.setImage(factionIcon, factionIconPackageId);
 

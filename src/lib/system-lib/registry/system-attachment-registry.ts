@@ -17,6 +17,8 @@ import {
 } from "../schema/system-attachment-schema";
 import { SOURCE_TO_SYSTEM_ATTACHMENT_DATA } from "../data/system-attachment.data";
 
+const packageId: string = refPackageId;
+
 type SchemaAndSource = {
   schema: SystemAttachmentSchemaType;
   sourceAndPackageId: SourceAndPackageIdSchemaType;
@@ -166,7 +168,7 @@ export class SystemAttachmentRegistry {
     )) {
       const sourceAndPackageId: SourceAndPackageIdSchemaType = {
         source,
-        packageId: refPackageId,
+        packageId,
       };
       this.load(sourceAndPackageId, systemAttachmentSchemas);
     }

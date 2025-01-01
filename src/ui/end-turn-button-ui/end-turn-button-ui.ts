@@ -1,6 +1,8 @@
 import { refPackageId } from "@tabletop-playground/api";
 import { EndTurnButton, EndTurnButtonParams, TurnOrder } from "ttpg-darrell";
 
+const packageId: string = refPackageId;
+
 export class EndTurnButtonUI {
   private readonly _endTurnButton: EndTurnButton;
 
@@ -8,7 +10,7 @@ export class EndTurnButtonUI {
     const turnOrder: TurnOrder = TI4.turnOrder;
     const params: EndTurnButtonParams = {
       sound: "beep-ramp-up.flac",
-      soundPackageId: refPackageId,
+      soundPackageId: packageId,
     };
     this._endTurnButton = new EndTurnButton(turnOrder, params);
   }

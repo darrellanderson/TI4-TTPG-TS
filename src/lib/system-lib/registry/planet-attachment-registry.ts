@@ -17,6 +17,8 @@ import {
 } from "../schema/planet-attachment-schema";
 import { SOURCE_TO_PLANET_ATTACHMENT_DATA } from "../data/planet-attachment.data";
 
+const packageId: string = refPackageId;
+
 type SchemaAndSource = {
   schema: PlanetAttachmentSchemaType;
   sourceAndPackageId: SourceAndPackageIdSchemaType;
@@ -158,7 +160,7 @@ export class PlanetAttachmentRegistry {
     )) {
       const sourceAndPackageId: SourceAndPackageIdSchemaType = {
         source,
-        packageId: refPackageId,
+        packageId,
       };
       this.load(sourceAndPackageId, planetAttachmentSchemas);
     }

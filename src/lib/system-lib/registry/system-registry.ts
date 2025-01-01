@@ -18,6 +18,8 @@ import {
 } from "../schema/basic-types-schema";
 import { SystemTier, SystemTierType } from "../system/system-tier";
 
+const packageId: string = refPackageId;
+
 type SchemaAndSource = {
   schema: SystemSchemaType;
   sourceAndPackageId: SourceAndPackageIdSchemaType;
@@ -147,7 +149,7 @@ export class SystemRegistry {
     )) {
       const sourceAndPackageId: SourceAndPackageIdSchemaType = {
         source,
-        packageId: refPackageId,
+        packageId,
       };
       this.load(sourceAndPackageId, systemSchemas);
     }

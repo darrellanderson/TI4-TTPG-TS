@@ -42,11 +42,13 @@ export class UnpackAll extends AbstractUnpack {
     for (const unpack of this._unpacks) {
       unpack.unpack();
     }
+    TI4.events.onFactionChanged.trigger(this.getPlayerSlot());
   }
 
   remove(): void {
     for (const unpack of this._unpacks) {
       unpack.remove();
     }
+    TI4.events.onFactionChanged.trigger(this.getPlayerSlot());
   }
 }
