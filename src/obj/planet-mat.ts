@@ -31,7 +31,7 @@ export class PlanetMat {
       }
     );
 
-    TI4.onSystemActivated.add((system: System, _player: Player) => {
+    TI4.events.onSystemActivated.add((system: System, _player: Player) => {
       for (const actionName of this._actionNameToPlanetCardNsid.keys()) {
         this._obj.removeCustomAction(actionName);
       }

@@ -19,7 +19,11 @@ export class CombatUISpace extends AbstractUI {
     spaceCannonOffenseUi.getButton().setText("Spc Cannon Offense");
     spaceCannonOffenseUi.getButton().onClicked.add(
       new ThrottleClickHandler<Button>((_button: Button, player: Player) => {
-        TI4.onCombatClicked.trigger("spaceCannonOffense", planetName, player);
+        TI4.events.onCombatClicked.trigger(
+          "spaceCannonOffense",
+          planetName,
+          player
+        );
       }).get()
     );
 
@@ -27,7 +31,7 @@ export class CombatUISpace extends AbstractUI {
     ambushUi.getButton().setText("Ambush");
     ambushUi.getButton().onClicked.add(
       new ThrottleClickHandler<Button>((_button: Button, player: Player) => {
-        TI4.onCombatClicked.trigger("ambush", planetName, player);
+        TI4.events.onCombatClicked.trigger("ambush", planetName, player);
       }).get()
     );
 
@@ -35,7 +39,11 @@ export class CombatUISpace extends AbstractUI {
     antifighterBarrageUi.getButton().setText("Anti-fighter Barrage");
     antifighterBarrageUi.getButton().onClicked.add(
       new ThrottleClickHandler<Button>((_button: Button, player: Player) => {
-        TI4.onCombatClicked.trigger("antiFighterBarrage", planetName, player);
+        TI4.events.onCombatClicked.trigger(
+          "antiFighterBarrage",
+          planetName,
+          player
+        );
       }).get()
     );
 
@@ -43,7 +51,7 @@ export class CombatUISpace extends AbstractUI {
     spaceCombatUi.getButton().setText("Space Combat");
     spaceCombatUi.getButton().onClicked.add(
       new ThrottleClickHandler<Button>((_button: Button, player: Player) => {
-        TI4.onCombatClicked.trigger("spaceCombat", planetName, player);
+        TI4.events.onCombatClicked.trigger("spaceCombat", planetName, player);
       }).get()
     );
 

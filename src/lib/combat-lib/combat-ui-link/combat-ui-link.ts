@@ -44,10 +44,10 @@ export class CombatUILink {
   };
 
   constructor() {
-    TI4.onCombatClicked.add(this._onCombatClickedHandler);
+    TI4.events.onCombatClicked.add(this._onCombatClickedHandler);
   }
 
   destroy(): void {
-    TI4.onCombatClicked.remove(this._onCombatClickedHandler);
+    TI4.events.onCombatClicked.remove(this._onCombatClickedHandler);
   }
 }

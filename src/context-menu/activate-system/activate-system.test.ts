@@ -11,7 +11,7 @@ it("constructor", () => {
 
 it("activate", () => {
   let activatedTileNumber: number = -1;
-  TI4.onSystemActivated.add((system: System, _player: Player) => {
+  TI4.events.onSystemActivated.add((system: System, _player: Player) => {
     activatedTileNumber = system.getSystemTileNumber();
   });
 

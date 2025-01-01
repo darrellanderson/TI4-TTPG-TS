@@ -228,11 +228,11 @@ it("combat arena", () => {
     throw new Error("system not found");
   }
   let triggerCount = 0;
-  TI4.onSystemActivated.add((_system: System, _player: Player) => {
+  TI4.events.onSystemActivated.add((_system: System, _player: Player) => {
     triggerCount++;
   });
   const player: Player = new MockPlayer();
-  TI4.onSystemActivated.trigger(system, player);
+  TI4.events.onSystemActivated.trigger(system, player);
   expect(triggerCount).toBe(1);
   expect(OnSystemActivated.getLastActivatedSystem()).toBeDefined();
 

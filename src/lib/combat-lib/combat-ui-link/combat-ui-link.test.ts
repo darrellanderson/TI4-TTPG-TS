@@ -22,11 +22,11 @@ it("linked event", () => {
     throw new Error("system is undefined");
   }
   const player: Player = new MockPlayer();
-  TI4.onSystemActivated.trigger(system, player);
+  TI4.events.onSystemActivated.trigger(system, player);
 
   const combatUILink = new CombatUILink();
 
-  TI4.onCombatClicked.trigger("groundCombat", "Mecatol Rex", player);
+  TI4.events.onCombatClicked.trigger("groundCombat", "Mecatol Rex", player);
 
   combatUILink.destroy();
 });

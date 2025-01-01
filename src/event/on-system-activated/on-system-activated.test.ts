@@ -17,7 +17,7 @@ it("trigger", () => {
   });
 
   let triggerCount: number = 0;
-  TI4.onSystemActivated.add((system, player) => {
+  TI4.events.onSystemActivated.add((system, player) => {
     triggerCount++;
     expect(system.getSystemTileNumber()).toBe(18);
     expect(player.getName()).toBe("my-player");

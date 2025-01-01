@@ -49,7 +49,7 @@ export class OnSystemActivated implements IGlobal {
         const json: string = JSON.stringify(state);
         world.setSavedData(json, KEY);
 
-        TI4.onSystemActivated.trigger(system, player);
+        TI4.events.onSystemActivated.trigger(system, player);
       }
     }
   };
@@ -63,7 +63,7 @@ export class OnSystemActivated implements IGlobal {
       this._maybeLinkCommandToken(obj);
     }
 
-    TI4.onSystemActivated.add((system: System, player: Player): void => {
+    TI4.events.onSystemActivated.add((system: System, player: Player): void => {
       OnSystemActivated.__lastActivatedSystem = system;
       OnSystemActivated.__lastActivatingPlayerSlot = player.getSlot();
       const name: string = player.getName();

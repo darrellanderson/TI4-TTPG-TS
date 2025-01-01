@@ -25,7 +25,7 @@ function go() {
   if (!player) {
     throw new Error("player is undefined");
   }
-  TI4.onSystemActivated.trigger(system, player);
+  TI4.events.onSystemActivated.trigger(system, player);
 
   const widget: Widget = abstractUi.getWidget();
 

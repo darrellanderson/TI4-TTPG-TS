@@ -85,8 +85,8 @@ it("_getSystemTileLastActivated", () => {
     throw new Error("System not found");
   }
   const player = new MockPlayer({ slot: 10 });
-  TI4.onSystemActivated.trigger(system, player);
-  TI4.onSystemActivated.trigger(system, player); // repeat to test removal of old action
+  TI4.events.onSystemActivated.trigger(system, player);
+  TI4.events.onSystemActivated.trigger(system, player); // repeat to test removal of old action
 
   found = buildArea._getSystemTileLastActivated();
   expect(found?.getId()).toBe("my-last-activated");
@@ -140,5 +140,5 @@ it("activate long system name", () => {
   if (!system) {
     throw new Error("System not found");
   }
-  TI4.onSystemActivated.trigger(system, player);
+  TI4.events.onSystemActivated.trigger(system, player);
 });

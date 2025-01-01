@@ -30,7 +30,7 @@ export class CombatUIPlanet extends AbstractUI {
     bombardmentUi.getButton().setText("Bombardment");
     bombardmentUi.getButton().onClicked.add(
       new ThrottleClickHandler<Button>((_button: Button, player: Player) => {
-        TI4.onCombatClicked.trigger(
+        TI4.events.onCombatClicked.trigger(
           "bombardment",
           this._planetNameValue,
           player
@@ -42,7 +42,7 @@ export class CombatUIPlanet extends AbstractUI {
     spaceCannonDefenseUi.getButton().setText("Spc Cannon Defense");
     spaceCannonDefenseUi.getButton().onClicked.add(
       new ThrottleClickHandler<Button>((_button: Button, player: Player) => {
-        TI4.onCombatClicked.trigger(
+        TI4.events.onCombatClicked.trigger(
           "spaceCannonDefense",
           this._planetNameValue,
           player
@@ -54,7 +54,7 @@ export class CombatUIPlanet extends AbstractUI {
     groundCombatUi.getButton().setText("Ground Combat");
     groundCombatUi.getButton().onClicked.add(
       new ThrottleClickHandler<Button>((_button: Button, player: Player) => {
-        TI4.onCombatClicked.trigger(
+        TI4.events.onCombatClicked.trigger(
           "groundCombat",
           this._planetNameValue,
           player
@@ -80,7 +80,7 @@ export class CombatUIPlanet extends AbstractUI {
     this._spaceCannonDefense = spaceCannonDefenseUi.getButton();
     this._groundCombat = groundCombatUi.getButton();
 
-    TI4.onSystemActivated.add(this._onSystemActivatedHandler);
+    TI4.events.onSystemActivated.add(this._onSystemActivatedHandler);
 
     this.update();
   }
@@ -90,7 +90,7 @@ export class CombatUIPlanet extends AbstractUI {
     this._spaceCannonDefense.onClicked.clear();
     this._groundCombat.onClicked.clear();
 
-    TI4.onSystemActivated.remove(this._onSystemActivatedHandler);
+    TI4.events.onSystemActivated.remove(this._onSystemActivatedHandler);
   }
 
   update(): void {

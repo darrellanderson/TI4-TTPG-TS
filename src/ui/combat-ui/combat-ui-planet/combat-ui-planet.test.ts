@@ -27,7 +27,7 @@ it("constructor/getters/destroy", () => {
     throw new Error("planet is undefined");
   }
   const player: Player = new MockPlayer();
-  TI4.onSystemActivated.trigger(system, player);
+  TI4.events.onSystemActivated.trigger(system, player);
 
   const planetIndex: number = 0;
   const scale: number = 0;
@@ -49,19 +49,19 @@ it("click buttons", () => {
     throw new Error("planet is undefined");
   }
   const player: Player = new MockPlayer();
-  TI4.onSystemActivated.trigger(system, player);
+  TI4.events.onSystemActivated.trigger(system, player);
 
   const planetIndex: number = 0;
   const scale: number = 0;
   const combatUiPlanet: CombatUIPlanet = new CombatUIPlanet(planetIndex, scale);
 
   // Again just to exercise the handler.
-  TI4.onSystemActivated.trigger(system, player);
+  TI4.events.onSystemActivated.trigger(system, player);
 
   let eventCombatRollType: CombatRollType | undefined = undefined;
   let eventPlanetName: string | undefined = undefined;
   let eventPlayer: Player | undefined = undefined;
-  TI4.onCombatClicked.add((combatRollType, planetName, player) => {
+  TI4.events.onCombatClicked.add((combatRollType, planetName, player) => {
     eventCombatRollType = combatRollType;
     eventPlanetName = planetName;
     eventPlayer = player;

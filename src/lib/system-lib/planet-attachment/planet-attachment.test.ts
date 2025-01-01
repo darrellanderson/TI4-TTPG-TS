@@ -61,7 +61,7 @@ it("constructor (invalid nsid)", () => {
 
 it("attach/detach", () => {
   let onSystemChangedCound: number = 0;
-  TI4.onSystemChanged.add(() => {
+  TI4.events.onSystemChanged.add(() => {
     onSystemChangedCound++;
   });
 

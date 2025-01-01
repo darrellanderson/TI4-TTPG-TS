@@ -116,7 +116,7 @@ export class PlanetAttachment {
         }
         const success: boolean = this._planet.addAttachment(this);
         if (success) {
-          TI4.onSystemChanged.trigger(system);
+          TI4.events.onSystemChanged.trigger(system);
         }
         return success;
       }
@@ -138,7 +138,7 @@ export class PlanetAttachment {
         const system: System | undefined =
           TI4.systemRegistry.getByPosition(pos);
         if (system) {
-          TI4.onSystemChanged.trigger(system);
+          TI4.events.onSystemChanged.trigger(system);
         }
         return true;
       }

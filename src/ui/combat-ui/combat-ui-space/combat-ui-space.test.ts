@@ -17,7 +17,7 @@ it("click buttons", () => {
   let eventCombatType: string | undefined = undefined;
   let eventPlanetName: string | undefined = undefined;
   let eventPlayer: Player | undefined = undefined;
-  TI4.onCombatClicked.add(
+  TI4.events.onCombatClicked.add(
     (combatType: string, planetName: string | undefined, player: Player) => {
       eventCombatType = combatType;
       eventPlanetName = planetName;

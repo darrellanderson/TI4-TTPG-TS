@@ -59,7 +59,7 @@ export class BuildArea {
     this._zone.onBeginOverlap.add(this._onUpdateHandler);
     this._zone.onEndOverlap.add(this._onUpdateHandler);
 
-    TI4.onSystemActivated.add((system: System, player: Player) => {
+    TI4.events.onSystemActivated.add((system: System, player: Player) => {
       if (player.getSlot() === this._obj.getOwningPlayerSlot()) {
         this._lastActivatedSystemTileObj = system.getObj();
         if (this._lastActivatedActionName) {

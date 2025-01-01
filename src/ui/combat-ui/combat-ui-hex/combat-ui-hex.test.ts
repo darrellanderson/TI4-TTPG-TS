@@ -28,7 +28,7 @@ it("_onSystemActivatedHandler", () => {
     throw new Error("system is undefined");
   }
   const player: Player = new MockPlayer();
-  TI4.onSystemActivated.trigger(system, player);
+  TI4.events.onSystemActivated.trigger(system, player);
 });
 
 it("update", () => {

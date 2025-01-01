@@ -56,4 +56,4 @@ function update() {
 // Owner not set at creation time, wait a frame.
 process.nextTick(update);
 
-TI4.onFactionChanged.add(update);
+TI4.events.onFactionChanged.add(update);

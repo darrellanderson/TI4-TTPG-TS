@@ -1,10 +1,9 @@
-import { GameWorld, Player } from "@tabletop-playground/api";
+import { GameWorld } from "@tabletop-playground/api";
 import {
   BugCardHolderAssignment,
   BugSplatRemoteReporter,
   BugUniqueCards,
   DiceGroupCleanup,
-  DiceResult,
   ErrorHandler,
   Find,
   GlobalInit,
@@ -15,16 +14,11 @@ import {
   OnCardBecameSingletonOrDeck,
   Spawn,
   Timer,
-  TriggerableMulticastDelegate,
   TurnOrder,
 } from "ttpg-darrell";
 
 import { addObjectTemplatesToMockWorld } from "../nsid/nsid-to-template-id.test";
 import { ActivateSystem } from "../context-menu/activate-system/activate-system";
-import {
-  CombatRoll,
-  CombatRollType,
-} from "../lib/combat-lib/combat-roll/combat-roll";
 import { Config } from "../lib/config/config";
 import { ControlTokenSystem } from "../context-menu/control-token-system/control-token-system";
 import { CreateAndAttachEndTurnButtonUI } from "../ui/end-turn-button-ui/create-and-attach-end-turn-button-ui";
@@ -46,7 +40,6 @@ import { RightClickScorePublic } from "../context-menu/right-click-score/right-c
 import { RSwapSplitCombine } from "./r-swap-split-combine";
 import { SetupPlayerSlotColors } from "../setup/setup-player-slot-colors/setup-player-slot-colors";
 import { ShuffleDecks } from "./shuffle-decks";
-import { System } from "lib/system-lib/system/system";
 import { SystemAttachmentRegistry } from "../lib/system-lib/registry/system-attachment-registry";
 import { SystemRegistry } from "../lib/system-lib/registry/system-registry";
 import { TechRegistry } from "../lib/tech-lib/registry/tech-registry";
@@ -55,6 +48,7 @@ import { UnitModifierActiveIdle } from "../lib/unit-lib/unit-modifier/unit-modif
 import { UnitModifierRegistry } from "../lib/unit-lib/registry/unit-modifier-registry";
 
 import * as NSID_TO_TEMPLATE_ID from "../nsid/nsid-to-template-id.json";
+import { GlobalEvents } from "./global-events";
 Spawn.inject(NSID_TO_TEMPLATE_ID);
 
 Find.ignoreOwnedCardHolderNsid("card-holder:base/player-scoring");
@@ -76,29 +70,7 @@ registerErrorHandler();
 
 export class TI4Class {
   // Events.
-  public readonly onCombatClicked = new TriggerableMulticastDelegate<
-    (
-      rollType: CombatRollType,
-      planetName: string | undefined,
-      player: Player
-    ) => void
-  >();
-  public readonly onCombatResult = new TriggerableMulticastDelegate<
-    (
-      combatRoll: CombatRoll,
-      diceResults: Array<DiceResult>,
-      player: Player
-    ) => void
-  >();
-  public readonly onFactionChanged = new TriggerableMulticastDelegate<
-    (playerSlot: number, player: Player) => void
-  >();
-  public readonly onSystemActivated = new TriggerableMulticastDelegate<
-    (system: System, player: Player) => void
-  >();
-  public readonly onSystemChanged = new TriggerableMulticastDelegate<
-    (system: System) => void
-  >();
+  public readonly events = Object.freeze(new GlobalEvents());
 
   // Libraries.
   public readonly config = new Config("@config/ti4");

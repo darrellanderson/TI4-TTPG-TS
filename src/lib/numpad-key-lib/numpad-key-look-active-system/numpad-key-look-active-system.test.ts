@@ -25,7 +25,7 @@ it("look active system", () => {
     systemTileObj.getId()
   );
   if (system) {
-    TI4.onSystemActivated.trigger(system, player);
+    TI4.events.onSystemActivated.trigger(system, player);
   }
 
   // Now there's an active system.

@@ -36,9 +36,9 @@ export class CombatArenaObj {
     this._img = new ImageWidget();
     this._addUI();
 
-    TI4.onSystemActivated.add(this._onSystemActivatedHandler);
+    TI4.events.onSystemActivated.add(this._onSystemActivatedHandler);
     this._obj.onDestroyed.add(() => {
-      TI4.onSystemActivated.remove(this._onSystemActivatedHandler);
+      TI4.events.onSystemActivated.remove(this._onSystemActivatedHandler);
     });
 
     this._setSystemImage(18);

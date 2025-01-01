@@ -710,7 +710,7 @@ export class CombatRoll {
 
   public roll(player: Player, position: Vector): void {
     const callback = (diceResults: Array<DiceResult>, player: Player): void => {
-      TI4.onCombatResult.trigger(this, diceResults, player);
+      TI4.events.onCombatResult.trigger(this, diceResults, player);
     };
     const diceParams: Array<DiceParams> = this.createDiceParamsArray();
     const diceGroupParams: DiceGroupParams = {

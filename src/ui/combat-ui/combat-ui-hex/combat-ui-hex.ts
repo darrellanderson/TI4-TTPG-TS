@@ -43,13 +43,13 @@ export class CombatUIHex extends AbstractUI {
     super(canvasBox, size);
 
     this._canvas = canvas;
-    TI4.onSystemActivated.add(this._onSystemActivatedHandler);
+    TI4.events.onSystemActivated.add(this._onSystemActivatedHandler);
 
     this.update();
   }
 
   destroy(): void {
-    TI4.onSystemActivated.remove(this._onSystemActivatedHandler);
+    TI4.events.onSystemActivated.remove(this._onSystemActivatedHandler);
   }
 
   update(): void {
