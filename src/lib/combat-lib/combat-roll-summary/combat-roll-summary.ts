@@ -10,10 +10,20 @@ export type UnitRollsSummary = {
   diceWithHitsCritsAndRerolls: Array<string>;
 };
 
+/**
+ * Generate a text summary of a combat roll,
+ * including a method to broadcast that summary.
+ */
 export class CombatRollSummary {
   private readonly _combatRoll: CombatRoll;
   private readonly _diceResults: Array<DiceResult>;
 
+  /**
+   * Convert a pile of dice into per-unit summaries.
+   *
+   * @param diceResults
+   * @returns
+   */
   static getUnitRollsSummaries(
     diceResults: Array<DiceResult>
   ): Map<UnitType, UnitRollsSummary> {
@@ -47,6 +57,13 @@ export class CombatRollSummary {
     return result;
   }
 
+  /**
+   * Convert per-unit summaries into an overall summary.
+   *
+   * @param combatRoll
+   * @param unitRollsSummaries
+   * @returns
+   */
   static getSimpleSummary(
     combatRoll: CombatRoll,
     unitRollsSummaries: Map<UnitType, UnitRollsSummary>
@@ -82,11 +99,20 @@ export class CombatRollSummary {
     return `${playerName} rolled ${totalHits} hits: ${combinedUnitResults} (${modifiers.join(", ")})`;
   }
 
+  /**
+   * Summarize only this combat roll result, not reusable for other rolls.
+   *
+   * @param combatRoll
+   * @param diceResults
+   */
   constructor(combatRoll: CombatRoll, diceResults: Array<DiceResult>) {
     this._combatRoll = combatRoll;
     this._diceResults = diceResults;
   }
 
+  /**
+   * Broadcast summary to all players, colored by the rolling player's slot.
+   */
   broadcastAll(): void {
     const unitRollsSummaries: Map<UnitType, UnitRollsSummary> =
       CombatRollSummary.getUnitRollsSummaries(this._diceResults);
