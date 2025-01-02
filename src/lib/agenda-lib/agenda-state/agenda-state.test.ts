@@ -31,10 +31,13 @@ it("outcome name/num outcomes", () => {
   expect(agendaState.getNumOutcomes()).toBe(0);
   expect(agendaState.getOutcomeName(0)).toBeUndefined();
   expect(agendaState.getOutcomeName(1)).toBeUndefined();
-  agendaState.setOutcomeName(1, "my-outcome");
+  agendaState.setOutcomeName(
+    1,
+    "my-outcome this name is too long and will be truncated"
+  );
   expect(agendaState.getNumOutcomes()).toBe(2);
   expect(agendaState.getOutcomeName(0)).toBeUndefined();
-  expect(agendaState.getOutcomeName(1)).toBe("my-outcome");
+  expect(agendaState.getOutcomeName(1)).toBe("my-outcome this n...");
 });
 
 it("phase", () => {

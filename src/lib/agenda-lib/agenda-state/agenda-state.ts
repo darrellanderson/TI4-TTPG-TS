@@ -2,6 +2,8 @@ import { world } from "@tabletop-playground/api";
 import { NamespaceId, TriggerableMulticastDelegate } from "ttpg-darrell";
 import { z } from "zod";
 
+export const MAX_OUTCOME_NAME_LENGTH = 20;
+
 const AgendaPhase = z.enum(["whens", "afters", "voting"]);
 export type AgendaPhaseType = z.infer<typeof AgendaPhase>;
 
@@ -91,6 +93,9 @@ export class AgendaState {
   }
 
   setOutcomeName(index: number, name: string): this {
+    if (name.length > MAX_OUTCOME_NAME_LENGTH) {
+      name = name.substring(0, MAX_OUTCOME_NAME_LENGTH - 3) + "...";
+    }
     this._data.outcomeNames[index] = name;
     this._save();
     this.onAgendaStateChanged.trigger(this);
