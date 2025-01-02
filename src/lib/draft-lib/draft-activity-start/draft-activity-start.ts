@@ -45,6 +45,41 @@ export class DraftActivityMaybeResume implements IGlobal {
 export class DraftActivityStart {
   private _draftState: DraftState | undefined;
 
+  static getOrGenerateSlices(
+    config: string,
+    numSlices: number,
+    generateSlicesParams: GenerateSlicesParams,
+    errors: Array<string>
+  ): Array<SliceTiles> {
+    const sliceSize: number = generateSlicesParams.sliceShape.length - 1;
+    let slices: Array<SliceTiles> | undefined = new ParseSlices(
+      sliceSize
+    ).parseSlices(config, errors);
+    if (slices === undefined) {
+      slices = new GenerateSlices(generateSlicesParams).generateSlices(
+        numSlices
+      );
+    }
+    return slices;
+  }
+
+  static getSliceLabels(config: string): Array<string> | undefined {
+    return new ParseLabels().parseLabels(config);
+  }
+
+  static getOrGenerateFactions(
+    config: string,
+    numFactions: number,
+    errors: Array<string>
+  ): Array<Faction> {
+    let factions: Array<Faction> | undefined =
+      new ParseFactions().parseFactions(config, errors);
+    if (factions === undefined) {
+      factions = new GenerateFactions().generate(numFactions);
+    }
+    return factions;
+  }
+
   getDraftState(): DraftState | undefined {
     return this._draftState;
   }
@@ -57,18 +92,14 @@ export class DraftActivityStart {
     this._draftState = draft.createEmptyDraftState(DRAFT_NAMESPACE_ID);
 
     // Slices.
-    const sliceSize: number = this._draftState.getSliceShape(-1).length - 1;
-    let slices: Array<SliceTiles> | undefined;
-    slices = new ParseSlices(sliceSize).parseSlices(params.config, errors);
-    if (slices === undefined) {
-      const generateSlicesParams: GenerateSlicesParams =
-        draft.getGenerateSlicesParams();
-      slices = new GenerateSlices(generateSlicesParams).generateSlices(
-        params.numSlices
-      );
-    }
+    const sliceParams: GenerateSlicesParams = draft.getGenerateSlicesParams();
+    const slices: Array<SliceTiles> = DraftActivityStart.getOrGenerateSlices(
+      params.config,
+      params.numSlices,
+      sliceParams,
+      errors
+    );
     this._draftState.setSlices(slices);
-
     if (this._draftState.getSlices().length < TI4.config.playerCount) {
       errors.push(
         `Slice count (${this._draftState.getSlices().length}) is less than player count (${TI4.config.playerCount})`
@@ -76,7 +107,7 @@ export class DraftActivityStart {
     }
 
     // Slice labels.
-    const labels: Array<string> | undefined = new ParseLabels().parseLabels(
+    const labels: Array<string> | undefined = DraftActivityStart.getSliceLabels(
       params.config
     );
     if (labels !== undefined) {
@@ -84,11 +115,11 @@ export class DraftActivityStart {
     }
 
     // Factions.
-    let factions: Array<Faction> | undefined =
-      new ParseFactions().parseFactions(params.config, errors);
-    if (factions === undefined) {
-      factions = new GenerateFactions().generate(params.numFactions);
-    }
+    const factions: Array<Faction> = DraftActivityStart.getOrGenerateFactions(
+      params.config,
+      params.numFactions,
+      errors
+    );
     this._draftState.setFactions(factions);
 
     if (this._draftState.getFactions().length < TI4.config.playerCount) {
