@@ -3,7 +3,14 @@ import { CreateAndAttachTurnOrderUI } from "./create-and-attach-turn-order-ui";
 
 it("init/destroy", () => {
   // Create a card holder for PlayerSeats to detect.
-  new MockCardHolder({ owningPlayerSlot: 3 });
+  new MockCardHolder({
+    templateMetadata: "card-holder:base/player-hand",
+    owningPlayerSlot: 10,
+  });
+  new MockCardHolder({
+    templateMetadata: "card-holder:base/player-hand",
+    owningPlayerSlot: 11,
+  });
 
   const createAndAttachTurnOrderUI = new CreateAndAttachTurnOrderUI();
   createAndAttachTurnOrderUI.init();

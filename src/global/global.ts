@@ -19,6 +19,7 @@ import {
 
 import { addObjectTemplatesToMockWorld } from "../nsid/nsid-to-template-id.test";
 import { ActivateSystem } from "../context-menu/system/activate-system/activate-system";
+import { AgendaActivityMaybeResume } from "../lib/agenda-lib/agenda-activity-start/agenda-activity-start";
 import { Config } from "../lib/config/config";
 import { ControlTokenSystem } from "../context-menu/system/control-token-system/control-token-system";
 import { CreateAndAttachEndTurnButtonUI } from "../ui/end-turn-button-ui/create-and-attach-end-turn-button-ui";
@@ -147,7 +148,9 @@ export function resetGlobalThisTI4(): TI4Class {
   }
 
   // Finally run any "after everything else" init functions.
-  iGlobals.push(new DraftActivityMaybeResume());
+  iGlobals.push(
+    ...[new AgendaActivityMaybeResume(), new DraftActivityMaybeResume()]
+  );
 
   for (const v of Object.values(globalThis.TI4)) {
     if (typeof v.init === "function") {
