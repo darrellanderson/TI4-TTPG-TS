@@ -2,23 +2,28 @@ import { world } from "@tabletop-playground/api";
 import { NamespaceId, TriggerableMulticastDelegate } from "ttpg-darrell";
 import { z } from "zod";
 
+const AgendaPhase = z.enum(["whens", "afters", "voting"]);
+export type AgendaPhaseType = z.infer<typeof AgendaPhase>;
+
 const AgendaRiderSchema = z.object({
+  seat: z.number(),
   objId: z.string(),
   outcome: z.number(),
 });
-type AgendaRiderSchemaType = z.infer<typeof AgendaRiderSchema>;
+export type AgendaRiderSchemaType = z.infer<typeof AgendaRiderSchema>;
 
 const AgendaSeatStateSchema = z.object({
   avail: z.number().default(0),
   outcome: z.number().default(-1),
   votes: z.number().default(0),
-  riders: z.array(AgendaRiderSchema).default([]),
 });
 type AgendaSeatStateSchemaType = z.infer<typeof AgendaSeatStateSchema>;
 
 const AgendaStateSchema = z.object({
   agendaObjId: z.string().default(""),
   outcomeNames: z.array(z.string().nullable()).default([]),
+  phase: AgendaPhase.default("whens"),
+  riders: z.array(AgendaRiderSchema).default([]),
   seatIndexToState: z.array(AgendaSeatStateSchema).default([]),
 });
 type AgendaStateSchemaType = z.infer<typeof AgendaStateSchema>;
@@ -70,20 +75,37 @@ export class AgendaState {
     return this._data.agendaObjId;
   }
 
-  setAgendaObjId(agendaObjId: string): void {
+  setAgendaObjId(agendaObjId: string): this {
     this._data.agendaObjId = agendaObjId;
     this._save();
     this.onAgendaStateChanged.trigger(this);
+    return this;
+  }
+
+  getNumOutcomes(): number {
+    return this._data.outcomeNames.length;
   }
 
   getOutcomeName(index: number): string | undefined {
     return this._data.outcomeNames[index] ?? undefined;
   }
 
-  setOutcomeName(index: number, name: string): void {
+  setOutcomeName(index: number, name: string): this {
     this._data.outcomeNames[index] = name;
     this._save();
     this.onAgendaStateChanged.trigger(this);
+    return this;
+  }
+
+  getPhase(): AgendaPhaseType {
+    return this._data.phase;
+  }
+
+  setPhase(phase: AgendaPhaseType): this {
+    this._data.phase = phase;
+    this._save();
+    this.onAgendaStateChanged.trigger(this);
+    return this;
   }
 
   _getSeatState(seatIndex: number): AgendaSeatStateSchemaType {
@@ -96,61 +118,66 @@ export class AgendaState {
     return seatState;
   }
 
-  getAvailableVotes(seatIndex: number): number {
+  getSeatAvailableVotes(seatIndex: number): number {
     const seatState = this._getSeatState(seatIndex);
     return seatState.avail;
   }
 
-  setAvailableVotes(seatIndex: number, votes: number): void {
+  setSeatAvailableVotes(seatIndex: number, votes: number): this {
     const seatState = this._getSeatState(seatIndex);
     seatState.avail = votes;
     this._save();
     this.onAgendaStateChanged.trigger(this);
+    return this;
   }
 
-  getOutcomeChoice(seatIndex: number): number {
+  getSeatOutcomeChoice(seatIndex: number): number {
     const seatState = this._getSeatState(seatIndex);
     return seatState.outcome;
   }
 
-  setOutcomeChoice(seatIndex: number, outcome: number): void {
+  setSeatOutcomeChoice(seatIndex: number, outcome: number): this {
     const seatState = this._getSeatState(seatIndex);
     seatState.outcome = outcome;
     this._save();
     this.onAgendaStateChanged.trigger(this);
+    return this;
   }
 
-  getVotesForOutcome(seatIndex: number): number {
+  getSeatVotesForOutcome(seatIndex: number): number {
     const seatState = this._getSeatState(seatIndex);
     return seatState.votes;
   }
 
-  setVotesForOutcome(seatIndex: number, votes: number): void {
+  setSeatVotesForOutcome(seatIndex: number, votes: number): this {
     const seatState = this._getSeatState(seatIndex);
     seatState.votes = votes;
     this._save();
     this.onAgendaStateChanged.trigger(this);
+    return this;
   }
 
-  addRider(seatIndex: number, objId: string, outcome: number): void {
+  getRiders(): AgendaRiderSchemaType[] {
+    return this._data.riders;
+  }
+
+  addRider(seatIndex: number, objId: string, outcome: number): this {
     this.removeRider(objId);
-    const seatState = this._getSeatState(seatIndex);
-    seatState.riders.push({ objId, outcome });
+    this._data.riders.push({ seat: seatIndex, objId, outcome });
     this._save();
     this.onAgendaStateChanged.trigger(this);
+    return this;
   }
 
-  removeRider(objId: string): void {
-    for (const seatState of this._data.seatIndexToState) {
-      seatState.riders.forEach(
-        (rider: AgendaRiderSchemaType, index: number) => {
-          if (rider.objId === objId) {
-            seatState.riders.splice(index, 1);
-            this._save();
-            this.onAgendaStateChanged.trigger(this);
-          }
-        }
-      );
+  removeRider(objId: string): this {
+    const index: number = this._data.riders.findIndex(
+      (rider) => rider.objId === objId
+    );
+    if (index >= 0) {
+      this._data.riders.splice(index, 1);
+      this._save();
+      this.onAgendaStateChanged.trigger(this);
     }
+    return this;
   }
 }
