@@ -30,6 +30,7 @@ import { FactionRegistry } from "../lib/faction-lib/registry/faction-registry";
 import { GlobalEvents } from "./global-events";
 import { NumpadKeyAll } from "../lib/numpad-key-lib/numpad-key-all/numpad-key-all";
 import { OnCombatClicked } from "../event/on-combat-clicked/on-combat-clicked";
+import { OnCombatResult } from "../event/on-combat-result/on-combat-result";
 import { OnSystemActivated } from "../event/on-system-activated/on-system-activated";
 import { PlanetAttachmentRegistry } from "../lib/system-lib/registry/planet-attachment-registry";
 import { PlayerColor } from "../lib/player-lib/player-color/player-color";
@@ -121,6 +122,7 @@ export function resetGlobalThisTI4(): TI4Class {
     new NumpadKeyAll(),
     new OnCardBecameSingletonOrDeck(),
     new OnCombatClicked(),
+    new OnCombatResult(),
     new OnSystemActivated(),
     new ReportRemaining(),
     new RightClickExplore(),
