@@ -2,7 +2,7 @@ import { GameObject, Player } from "@tabletop-playground/api";
 import { MockCardHolder, MockGameObject, MockPlayer } from "ttpg-mock";
 
 import { ActivateSystem } from "./activate-system";
-import { System } from "../../lib/system-lib/system/system";
+import { System } from "../../../lib/system-lib/system/system";
 
 it("constructor", () => {
   new MockGameObject(); // so an object is in the world

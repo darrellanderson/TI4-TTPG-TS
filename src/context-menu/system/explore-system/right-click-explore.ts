@@ -15,11 +15,11 @@ import {
   NSID,
 } from "ttpg-darrell";
 
-import { Planet } from "../../lib/system-lib/planet/planet";
-import { System } from "../../lib/system-lib/system/system";
-import { TraitSchemaType } from "../../lib/system-lib/schema/basic-types-schema";
-import { PlanetAttachment } from "lib/system-lib/planet-attachment/planet-attachment";
-import { SystemAttachment } from "lib/system-lib/system-attachment/system-attachment";
+import { Planet } from "../../../lib/system-lib/planet/planet";
+import { System } from "../../../lib/system-lib/system/system";
+import { TraitSchemaType } from "../../../lib/system-lib/schema/basic-types-schema";
+import { PlanetAttachment } from "../../../lib/system-lib/planet-attachment/planet-attachment";
+import { SystemAttachment } from "../../../lib/system-lib/system-attachment/system-attachment";
 
 export class RightClickExplore implements IGlobal {
   private readonly _find: Find = new Find();

@@ -9,9 +9,9 @@ import {
   MockSnapPoint,
 } from "ttpg-mock";
 
-import { Planet } from "../../lib/system-lib/planet/planet";
+import { Planet } from "../../../lib/system-lib/planet/planet";
 import { RightClickExplore } from "./right-click-explore";
-import { System } from "../../lib/system-lib/system/system";
+import { System } from "../../../lib/system-lib/system/system";
 
 it("constructor", () => {
   new MockGameObject(); // so there is an object in the world

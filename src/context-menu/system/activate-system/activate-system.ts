@@ -10,8 +10,8 @@ import { Broadcast, IGlobal, NSID } from "ttpg-darrell";
 import {
   CommandTokenCounter,
   CommandTokenCounts,
-} from "../../lib/command-token-lib/command-token-counter/command-token-counter";
-import { System } from "../../lib/system-lib/system/system";
+} from "../../../lib/command-token-lib/command-token-counter/command-token-counter";
+import { System } from "../../../lib/system-lib/system/system";
 
 export class ActivateSystem implements IGlobal {
   private readonly _actionName: string = "*Activate System";

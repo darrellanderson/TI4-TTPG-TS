@@ -18,12 +18,12 @@ import {
 } from "ttpg-darrell";
 
 import { addObjectTemplatesToMockWorld } from "../nsid/nsid-to-template-id.test";
-import { ActivateSystem } from "../context-menu/activate-system/activate-system";
+import { ActivateSystem } from "../context-menu/system/activate-system/activate-system";
 import { Config } from "../lib/config/config";
-import { ControlTokenSystem } from "../context-menu/control-token-system/control-token-system";
+import { ControlTokenSystem } from "../context-menu/system/control-token-system/control-token-system";
 import { CreateAndAttachEndTurnButtonUI } from "../ui/end-turn-button-ui/create-and-attach-end-turn-button-ui";
 import { CreateAndAttachTurnOrderUI } from "../ui/turn-order-ui/create-and-attach-turn-order-ui";
-import { DiplomacySystem } from "../context-menu/diplomacy-system/diplomacy-system";
+import { DiplomacySystem } from "../context-menu/system/diplomacy-system/diplomacy-system";
 import { DisplayPDSAdjacency } from "../context-menu/display-pds-adjacency/display-pds-adjacency";
 import { DraftActivityMaybeResume } from "../lib/draft-lib/draft-activity-start/draft-activity-start";
 import { FactionRegistry } from "../lib/faction-lib/registry/faction-registry";
@@ -38,7 +38,7 @@ import { PlayerName } from "../lib/player-lib/player-name/player-name";
 import { PlayerSeats } from "../lib/player-lib/player-seats/player-seats";
 import { RemoveRegistry } from "../lib/remove-lib/registry/remove-registry";
 import { ReportRemaining } from "../context-menu/report-remaining/report-remaining";
-import { RightClickExplore } from "../context-menu/explore-system/right-click-explore";
+import { RightClickExplore } from "../context-menu/system/explore-system/right-click-explore";
 import { RightClickScorePrivate } from "../context-menu/right-click-score/right-click-score-private";
 import { RightClickScorePublic } from "../context-menu/right-click-score/right-click-score-public";
 import { RSwapSplitCombine } from "./r-swap-split-combine";
