@@ -1,4 +1,4 @@
-import { IGlobal } from "ttpg-darrell";
+import { IGlobal, PlayerSlot } from "ttpg-darrell";
 
 import { Config } from "../../lib/config/config";
 import { TurnOrderUI } from "./turn-order-ui";
@@ -13,6 +13,15 @@ export class CreateAndAttachTurnOrderUI implements IGlobal {
   constructor() {}
 
   init() {
+    let order: Array<PlayerSlot> = TI4.turnOrder.getTurnOrder();
+    if (order.length === 0) {
+      order = TI4.playerSeats.getAllSeats().map((seat) => seat.playerSlot);
+      const first: PlayerSlot | undefined = order[0];
+      if (first !== undefined) {
+        TI4.turnOrder.setTurnOrder(order, "forward", first);
+      }
+    }
+
     if (this._turnOrderUI) {
       this.destroy();
       this._turnOrderUI = undefined;
