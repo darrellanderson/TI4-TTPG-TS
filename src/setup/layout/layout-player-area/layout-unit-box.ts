@@ -20,7 +20,7 @@ export class LayoutUnitBox {
         colorLib.getColorsByPlayerSlotOrThrow(playerSlot);
       objColor = colorLib.parseColorOrThrow(colorsType.plastic);
     } else {
-      objColor = colorLib.parseColorOrThrow("#5D1602");
+      objColor = TI4.playerColor.getAnonymousColor();
     }
 
     const source: string = unit === "mech" ? "pok" : "base";

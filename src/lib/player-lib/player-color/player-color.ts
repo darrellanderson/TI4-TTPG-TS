@@ -16,6 +16,10 @@ export class PlayerColor {
     this._namespaceId = namespaceId;
   }
 
+  getAnonymousColor(): Color {
+    return this._colorLib.parseColorOrThrow("#5D1602");
+  }
+
   _getPlayerColorEntry(slot: number): PlayerColorEntry | undefined {
     const json: string = world.getSavedData(this._namespaceId);
     if (json && json.length > 0) {

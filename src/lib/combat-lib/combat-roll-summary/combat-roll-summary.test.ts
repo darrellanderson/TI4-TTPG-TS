@@ -82,7 +82,7 @@ it("getSimpleSummary", () => {
     rollType: "spaceCombat",
     hex: "<0,0,0>",
     activatingPlayerSlot: 1,
-    rollingPlayerSlot: 2,
+    rollingPlayerSlot: 10,
   });
   const diceResults: Array<DiceResult> = [
     {
@@ -104,10 +104,10 @@ it("getSimpleSummary", () => {
 
   expect(
     CombatRollSummary.getSimpleSummary(combatRoll, unitRollsSummaries)
-  ).toEqual("Total hits: 2\nCarrier (9|10): 9##");
+  ).toEqual("green rolled 2 hits: Carrier (9|10): 9## (no modifiers)");
 });
 
-it("constructor", () => {
+it("broadcast", () => {
   const combatRoll: CombatRoll = new CombatRoll({
     rollType: "spaceCombat",
     hex: "<0,0,0>",
@@ -115,6 +115,24 @@ it("constructor", () => {
     rollingPlayerSlot: 10,
   });
   const diceResults: Array<DiceResult> = [];
-  const roll = new CombatRollSummary(combatRoll, diceResults);
-  expect(roll).toBeTruthy();
+  const summary: CombatRollSummary = new CombatRollSummary(
+    combatRoll,
+    diceResults
+  );
+  summary.broadcastAll();
+});
+
+it("broadcast (anonymous roller)", () => {
+  const combatRoll: CombatRoll = new CombatRoll({
+    rollType: "spaceCombat",
+    hex: "<0,0,0>",
+    activatingPlayerSlot: 10,
+    rollingPlayerSlot: -1,
+  });
+  const diceResults: Array<DiceResult> = [];
+  const summary: CombatRollSummary = new CombatRollSummary(
+    combatRoll,
+    diceResults
+  );
+  summary.broadcastAll();
 });
