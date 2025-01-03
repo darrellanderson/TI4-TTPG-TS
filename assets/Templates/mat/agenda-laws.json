@@ -23,7 +23,7 @@
     "Flippable": false,
     "AutoStraighten": false,
     "ShouldSnap": false,
-    "ScriptName": "obj/mat-agenda-laws.js",
+    "ScriptName": "obj/agenda-laws-mat.js",
     "Blueprint": "",
     "Models": [
         {
