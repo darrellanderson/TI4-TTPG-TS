@@ -99,6 +99,7 @@ const params: CreateBoardParams = {
   templateName: "Agenda/Laws Mat",
   assetFilename: "mat/agenda-laws",
   templateMetadata: "mat:base/agenda-laws",
+  scriptName: "obj/agenda-laws-mat.js",
   srcImage: objectiveMat(),
   topDownWorldSize: {
     autoWidthHeight: { pixel: H, world: H_WORLD },

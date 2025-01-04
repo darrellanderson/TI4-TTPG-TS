@@ -1,4 +1,4 @@
-import { Player } from "@tabletop-playground/api";
+import { Card, Player } from "@tabletop-playground/api";
 import { DiceResult, TriggerableMulticastDelegate } from "ttpg-darrell";
 
 import {
@@ -13,6 +13,13 @@ import { System } from "../lib/system-lib/system/system";
  * There are a few related events such as TurnOrder.onTurnOrderChanged, etc.
  */
 export class GlobalEvents {
+  /**
+   * Called when an agenda card is snapped to the agenda snap point.
+   */
+  public readonly onAgendaCard = new TriggerableMulticastDelegate<
+    (agendaCard: Card, player: Player) => void
+  >();
+
   /**
    * Called when a player clicks a combat-initiating button.
    *
