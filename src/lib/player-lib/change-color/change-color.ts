@@ -77,6 +77,10 @@ export class ChangeColor {
   }
 
   changeColor(newColorName: string, newColorHex: string): void {
+    const oldColorName: string = TI4.playerColor.getSlotColorNameOrThrow(
+      this._playerSlot
+    );
+
     TI4.playerColor.setSlotColor(this._playerSlot, newColorName, newColorHex);
 
     const plasticColor: Color = TI4.playerColor.getSlotPlasticColorOrThrow(
@@ -91,6 +95,7 @@ export class ChangeColor {
     }
 
     this._recolorPlayerAreaBorderLines();
+    this._replaceGenericPromissories(oldColorName, newColorName);
   }
 
   _recolorPlayerAreaBorderLines(): void {
@@ -107,5 +112,21 @@ export class ChangeColor {
         world.addDrawingLine(line);
       }
     }
+  }
+
+  _replaceGenericPromissories(
+    oldColorName: string,
+    newColorName: string
+  ): void {
+    const sourceAndName: Array<string> = [
+      "base/ceasefire",
+      "base/political-secret",
+      "base/support-for-the-throne",
+      "base/trade-agreement",
+      "pok/alliance",
+    ];
+
+    ("card.promissory.pink:base/trade-agreement");
+    // TODO
   }
 }
