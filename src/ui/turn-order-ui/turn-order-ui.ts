@@ -6,6 +6,7 @@ import {
   TurnOrderWidgetParams,
 } from "ttpg-darrell";
 import { TurnOrderEntry } from "./turn-order-entry";
+import { Player } from "@tabletop-playground/api";
 
 export class TurnOrderUI {
   private readonly _params: TurnOrderWidgetParams = {
@@ -25,6 +26,20 @@ export class TurnOrderUI {
         return new TurnOrderEntry(turnEntryWidget);
       },
     ],
+    customActions: [
+      {
+        name: "Change color",
+      },
+    ],
+    onCustomAction: (
+      clickingPlayer: Player,
+      identifier: string,
+      targetPlayerSlot: number
+    ) => {
+      if (identifier === "Change color") {
+        console.log("Change color", clickingPlayer, targetPlayerSlot);
+      }
+    },
   };
   private _turnOrderWidget: TurnOrderWidget | undefined;
 

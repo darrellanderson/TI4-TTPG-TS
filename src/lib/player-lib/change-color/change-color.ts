@@ -1,5 +1,19 @@
-import { Color, GameObject, world } from "@tabletop-playground/api";
-import { Find, NSID } from "ttpg-darrell";
+import {
+  Card,
+  CardHolder,
+  Color,
+  GameObject,
+  Rotator,
+  Vector,
+  world,
+} from "@tabletop-playground/api";
+import {
+  CardUtil,
+  DeletedItemsContainer,
+  Find,
+  NSID,
+  Spawn,
+} from "ttpg-darrell";
 
 /**
  * Change player color.
@@ -19,6 +33,7 @@ import { Find, NSID } from "ttpg-darrell";
  */
 export class ChangeColor {
   private readonly _playerSlot: number;
+  private readonly _cardUtil: CardUtil = new CardUtil();
   private readonly _find: Find = new Find();
 
   private readonly _recolorNsids: Set<string> = new Set<string>([
@@ -118,7 +133,7 @@ export class ChangeColor {
     oldColorName: string,
     newColorName: string
   ): void {
-    const sourceAndName: Array<string> = [
+    const sourcesAndNames: Array<string> = [
       "base/ceasefire",
       "base/political-secret",
       "base/support-for-the-throne",
@@ -126,7 +141,71 @@ export class ChangeColor {
       "pok/alliance",
     ];
 
-    ("card.promissory.pink:base/trade-agreement");
-    // TODO
+    const _getPromissoryDeck = (): Card => {
+      const deckNsids: Array<string> = Spawn.getAllNsids().filter(
+        (nsid: string) => nsid.startsWith("card.promissory")
+      );
+      const deck: Card = Spawn.spawnMergeDecksOrThrow(deckNsids);
+      return deck;
+    };
+    const promissoryDeck: Card = _getPromissoryDeck();
+
+    const _getGenericPromissoryCard = (deck: Card, wantNsid: string): Card => {
+      const cardStack: Card | undefined = this._cardUtil.filterCards(
+        deck,
+        (nsid: string): boolean => {
+          return nsid === wantNsid;
+        }
+      );
+      if (!cardStack || cardStack.getStackSize() !== 1) {
+        throw new Error(`Expected 1 card in stack: ${wantNsid}`);
+      }
+      return cardStack;
+    };
+
+    const nsids: Set<string> = new Set(
+      sourcesAndNames.map((sourceAndName: string) => {
+        return `card.promissory.${oldColorName}:${sourceAndName}`;
+      })
+    );
+
+    const skipContained: boolean = false; // look inside containers
+    for (const obj of world.getAllObjects(skipContained)) {
+      const nsid: string = NSID.get(obj);
+      if (nsids.has(nsid) && obj instanceof Card) {
+        const newNsid: string = nsid.replace(oldColorName, newColorName);
+
+        if (obj.isHeld()) {
+          obj.release();
+        }
+        const pos: Vector = obj.getPosition();
+        const rot: Rotator = obj.getRotation();
+
+        // If in a card holder (likely) rememeber the holder and index.
+        const holder: CardHolder | undefined = obj.getHolder();
+        let index: number = -1;
+        if (holder) {
+          index = holder.getCards().indexOf(obj);
+          if (index >= 0) {
+            holder.removeAt(index);
+          }
+        }
+
+        DeletedItemsContainer.destroyWithoutCopying(obj);
+
+        const newCard: Card = _getGenericPromissoryCard(
+          promissoryDeck,
+          newNsid
+        );
+        newCard.setPosition(pos);
+        newCard.setRotation(rot);
+
+        if (holder) {
+          index = Math.min(index, holder.getCards().length);
+          holder.insert(newCard, index);
+        }
+      }
+    }
+    DeletedItemsContainer.destroyWithoutCopying(promissoryDeck);
   }
 }

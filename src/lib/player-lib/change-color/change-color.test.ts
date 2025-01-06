@@ -1,6 +1,20 @@
-import { GameObject, MockGameObject } from "ttpg-mock";
+import {
+  Card,
+  CardHolder,
+  DrawingLine,
+  GameObject,
+  Rotator,
+  Vector,
+  world,
+} from "@tabletop-playground/api";
+import {
+  MockCard,
+  MockCardDetails,
+  MockCardHolder,
+  MockGameObject,
+} from "ttpg-mock";
+import { NSID, Spawn } from "ttpg-darrell";
 import { ChangeColor } from "./change-color";
-import { DrawingLine, world } from "@tabletop-playground/api";
 
 it("constructor", () => {
   new ChangeColor(10);
@@ -54,4 +68,60 @@ it("_recolorPlayerAreaBorderLines", () => {
 
   drawingLine = world.getDrawingLines()[0];
   expect(drawingLine?.color.toHex()).toBe("FE0808FF");
+});
+
+it("_recolorGenericPromissoryCards", () => {
+  const loose: Card = MockCard.simple("card.promissory.white:base/ceasefire");
+  const inHolder: Card = MockCard.simple(
+    "card.promissory.white:base/political-secret"
+  );
+  const holder: CardHolder = new MockCardHolder({ cards: [inHolder] });
+
+  expect(TI4.playerColor.getSlotColorName(15)).toBe("white");
+  expect(loose.isValid()).toBe(true);
+  expect(inHolder.isValid()).toBe(true);
+
+  // Spawns some decks to find cards.
+  const origSpawn: (
+    nsid: string,
+    position?: Vector | [x: number, y: number, z: number] | undefined,
+    rotation?: Rotator | [pitch: number, yaw: number, roll: number] | undefined
+  ) => GameObject | undefined = Spawn.spawn;
+  jest
+    .spyOn(Spawn, "spawn")
+    .mockImplementation(
+      (
+        nsid: string,
+        position?: Vector | [x: number, y: number, z: number] | undefined,
+        rotation?:
+          | Rotator
+          | [pitch: number, yaw: number, roll: number]
+          | undefined
+      ): GameObject | undefined => {
+        if (nsid === "card.promissory:base/0") {
+          return new MockCard({
+            cardDetails: [
+              new MockCardDetails({
+                metadata: "card.promissory.red:base/ceasefire",
+              }),
+              new MockCardDetails({
+                metadata: "card.promissory.red:base/political-secret",
+              }),
+              new MockCardDetails({
+                metadata: "card.promissory.red:base/__other__",
+              }),
+            ],
+          });
+        }
+        return origSpawn(nsid, position, rotation);
+      }
+    );
+  new ChangeColor(15).changeColor("red", "#ff0000");
+
+  expect(loose.isValid()).toBe(false);
+  expect(inHolder.isValid()).toBe(false);
+
+  expect(holder.getCards().map((card) => NSID.get(card))).toEqual([
+    "card.promissory.red:base/political-secret",
+  ]);
 });
