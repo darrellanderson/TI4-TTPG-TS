@@ -110,7 +110,9 @@ export class ChangeColor {
     }
 
     this._recolorPlayerAreaBorderLines();
-    this._replaceGenericPromissories(oldColorName, newColorName);
+    if (oldColorName !== newColorName) {
+      this._replaceGenericPromissories(oldColorName, newColorName);
+    }
   }
 
   _recolorPlayerAreaBorderLines(): void {
