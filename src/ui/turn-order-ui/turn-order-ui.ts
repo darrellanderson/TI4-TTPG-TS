@@ -43,6 +43,10 @@ export class TurnOrderUI {
   };
   private _turnOrderWidget: TurnOrderWidget | undefined;
 
+  getParams(): TurnOrderWidgetParams {
+    return this._params;
+  }
+
   setPlayerCount(playerCount: number): this {
     this._params.reserveSlots = playerCount;
     return this;

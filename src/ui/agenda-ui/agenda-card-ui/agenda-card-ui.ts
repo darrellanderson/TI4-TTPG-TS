@@ -18,12 +18,16 @@ export class UnzoomedAgendaCardUI extends AbstractUI {
 }
 
 export class AgendaCardUI extends ZoomableUI {
+  static _getCreateZoomedUI(agendaCard: Card, scale: number): () => AbstractUI {
+    return () => new UnzoomedAgendaCardUI(agendaCard, scale * 2);
+  }
+
   constructor(agendaCard: Card, scale: number) {
     const unzoomedUi: AbstractUI = new UnzoomedAgendaCardUI(agendaCard, scale);
-    const createZoomedUI = (scale: number): AbstractUI => {
-      return new UnzoomedAgendaCardUI(agendaCard, scale * 2);
-    };
-
+    const createZoomedUI: () => AbstractUI = AgendaCardUI._getCreateZoomedUI(
+      agendaCard,
+      scale
+    );
     super(unzoomedUi, scale, createZoomedUI);
   }
 }

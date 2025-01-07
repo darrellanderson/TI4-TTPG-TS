@@ -71,14 +71,16 @@ it("_recolorPlayerAreaBorderLines", () => {
 });
 
 it("_recolorGenericPromissoryCards", () => {
-  const loose: Card = MockCard.simple("card.promissory.white:base/ceasefire");
+  const held: Card = MockCard.simple("card.promissory.white:base/ceasefire", {
+    isHeld: true,
+  });
   const inHolder: Card = MockCard.simple(
     "card.promissory.white:base/political-secret"
   );
   const holder: CardHolder = new MockCardHolder({ cards: [inHolder] });
 
   expect(TI4.playerColor.getSlotColorName(15)).toBe("white");
-  expect(loose.isValid()).toBe(true);
+  expect(held.isValid()).toBe(true);
   expect(inHolder.isValid()).toBe(true);
 
   // Spawns some decks to find cards.
@@ -110,6 +112,12 @@ it("_recolorGenericPromissoryCards", () => {
               new MockCardDetails({
                 metadata: "card.promissory.red:base/__other__",
               }),
+              new MockCardDetails({
+                metadata: "card.promissory.white:base/ceasefire",
+              }),
+              new MockCardDetails({
+                metadata: "card.promissory.white:base/ceasefire", // illegal duplicate
+              }),
             ],
           });
         }
@@ -118,10 +126,14 @@ it("_recolorGenericPromissoryCards", () => {
     );
   new ChangeColor(15).changeColor("red", "#ff0000");
 
-  expect(loose.isValid()).toBe(false);
+  expect(held.isValid()).toBe(false);
   expect(inHolder.isValid()).toBe(false);
 
   expect(holder.getCards().map((card) => NSID.get(card))).toEqual([
     "card.promissory.red:base/political-secret",
   ]);
+
+  expect(() => {
+    new ChangeColor(15).changeColor("white", "#ffffff");
+  }).toThrow();
 });
