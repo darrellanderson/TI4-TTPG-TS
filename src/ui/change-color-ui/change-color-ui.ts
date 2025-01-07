@@ -6,13 +6,33 @@ import { CONFIG } from "../config/config";
 import { HorizontalUIBuilder } from "../panel/horizontal-ui-builder";
 import { LabelUI } from "../button-ui/label-ui";
 import { VerticalUIBuilder } from "../panel/vertical-ui-builder";
+import { ContentButton, Player } from "@tabletop-playground/api";
 
 export class ChangeColorUI extends AbstractUI {
   static _getAllColorNames(): Array<string> {
     return Object.keys(COLORS);
   }
 
-  static _getColorRow(colorName: string, scale: number): AbstractUI {
+  static _getClickHandler(
+    targetPlayerSlot: number,
+    colorName: string,
+    colorHex: string
+  ): (button: ContentButton, player: Player) => void {
+    return (_button: ContentButton, player: Player) => {
+      TI4.events.onPlayerChangedColor.trigger(
+        targetPlayerSlot,
+        colorName,
+        colorHex,
+        player
+      );
+    };
+  }
+
+  static _getColorRow(
+    colorName: string,
+    targetPlayerSlot: number,
+    scale: number
+  ): AbstractUI {
     const colorLib: ColorLib = new ColorLib();
 
     const nameUi: LabelUI = new LabelUI(scale);
@@ -28,6 +48,13 @@ export class ChangeColorUI extends AbstractUI {
       );
       const colorHex: string = colorsType.widget;
       const colorUi: ColorChoiceButton = new ColorChoiceButton(colorHex, scale);
+
+      colorUi
+        .getContentButton()
+        .onClicked.add(
+          ChangeColorUI._getClickHandler(targetPlayerSlot, colorName, colorHex)
+        );
+
       uis.push(colorUi);
     }
 
@@ -37,12 +64,12 @@ export class ChangeColorUI extends AbstractUI {
       .build();
   }
 
-  constructor(scale: number) {
+  constructor(targetPlayerSlot: number, scale: number) {
     const uis: Array<AbstractUI> = [];
 
     const colorNames: Array<string> = ChangeColorUI._getAllColorNames();
     for (const colorName of colorNames) {
-      uis.push(ChangeColorUI._getColorRow(colorName, scale));
+      uis.push(ChangeColorUI._getColorRow(colorName, targetPlayerSlot, scale));
     }
 
     const abstractUi: AbstractUI = new VerticalUIBuilder()

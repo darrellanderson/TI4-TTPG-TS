@@ -55,6 +55,19 @@ export class GlobalEvents {
   >();
 
   /**
+   * Called when a player changes color.  Clicking player might not
+   * be the player who changed color.
+   */
+  public readonly onPlayerChangedColor = new TriggerableMulticastDelegate<
+    (
+      playerSlot: number,
+      colorName: string,
+      colorHex: string,
+      clickingPlayer: Player
+    ) => void
+  >();
+
+  /**
    * Called when a player activates a system.  Other mechanisms may also
    * activate a system by triggering this event.
    *

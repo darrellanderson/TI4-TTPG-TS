@@ -1,4 +1,6 @@
+import { MockContentButton, MockPlayer } from "ttpg-mock";
 import { ChangeColorUI } from "./change-color-ui";
+import { ContentButton, Player } from "@tabletop-playground/api";
 
 it("static getAllColorNames", () => {
   const colorNames: Array<string> = ChangeColorUI._getAllColorNames();
@@ -6,6 +8,19 @@ it("static getAllColorNames", () => {
 });
 
 it("constructor", () => {
+  const playerSlot: number = 10;
   const scale: number = 1;
-  new ChangeColorUI(scale);
+  new ChangeColorUI(playerSlot, scale);
+});
+
+it("click", () => {
+  const playerSlot: number = 10;
+  const colorName: string = "red";
+  const colorHex: string = "#ff0000";
+  const clickHandler: (_button: ContentButton, _player: Player) => void =
+    ChangeColorUI._getClickHandler(playerSlot, colorName, colorHex);
+
+  const button: ContentButton = new MockContentButton();
+  const player: Player = new MockPlayer();
+  clickHandler(button, player);
 });

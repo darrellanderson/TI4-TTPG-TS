@@ -1,5 +1,6 @@
 import {
   Border,
+  Canvas,
   Color,
   ContentButton,
   LayoutBox,
@@ -14,16 +15,33 @@ export class ColorChoiceButton extends AbstractUI {
   private readonly _contentButton: ContentButton;
 
   constructor(colorHex: string, scale: number) {
-    const border: Border = new Border();
-    const contentButton: ContentButton = new ContentButton().setChild(border);
-    const widget: Widget = new LayoutBox()
-      .setPadding(-4, -4, -4, -4)
-      .setChild(contentButton);
     const size: UI_SIZE = {
       w: CONFIG.BUTTON_HEIGHT * scale, // square
       h: CONFIG.BUTTON_HEIGHT * scale,
     };
-    super(widget, size);
+
+    const border: Border = new Border();
+    const borderBox: Widget = new LayoutBox()
+      .setOverrideWidth(size.w)
+      .setOverrideHeight(size.h)
+      .setChild(border);
+
+    const contentButton: ContentButton = new ContentButton().setChild(
+      borderBox
+    );
+    const contentButtonCanvas: Widget = new Canvas().addChild(
+      contentButton,
+      -4,
+      -4,
+      size.w + 8,
+      size.h + 8
+    );
+    const contentButtonBox: Widget = new LayoutBox()
+      .setOverrideWidth(size.w)
+      .setOverrideHeight(size.h)
+      .setChild(contentButtonCanvas);
+
+    super(contentButtonBox, size);
 
     const color: Color = new ColorLib().parseColorOrThrow(colorHex);
     border.setColor(color);
