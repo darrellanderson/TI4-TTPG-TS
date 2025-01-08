@@ -167,11 +167,15 @@ export class DraftActivityStart {
     const create: CreateAbstractUIType = (scale: number): AbstractUI => {
       return new DraftStateUI(draftState, scale);
     };
-    const window: Window = new AbstractWindow(
+    const namespaceId: NamespaceId = "@TI4/draft-window";
+    const windowTitle: string = "Draft";
+    const abstractWindow: AbstractWindow = new AbstractWindow(
       create,
-      "@TI4/draft-window",
-      "Draft"
-    ).createWindow();
+      namespaceId,
+      windowTitle
+    );
+    abstractWindow.getMutableWindowParams().disableClose = true;
+    const window: Window = abstractWindow.createWindow();
     window.attach();
 
     // Close window when draft state destroyed.
