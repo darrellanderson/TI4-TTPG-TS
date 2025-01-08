@@ -11,11 +11,12 @@ it("constuctor, createWindow", () => {
   };
   const namespaceId = "@test/test";
 
+  const playerSlots: Array<number> = [10];
   const window: Window = new AbstractWindow(
     createAbstractUI,
     namespaceId,
     "Test Window"
-  ).createWindow();
+  ).createWindow(playerSlots);
 
   window.attach().detach();
 });

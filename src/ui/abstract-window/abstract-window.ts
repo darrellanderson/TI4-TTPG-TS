@@ -66,8 +66,12 @@ export class AbstractWindow {
     };
   }
 
-  createWindow(): Window {
-    const playerSlots: Array<number> = [10];
+  createWindow(playerSlots?: Array<number>): Window {
+    if (!playerSlots) {
+      playerSlots = TI4.playerSeats
+        .getAllSeats()
+        .map((seat) => seat.playerSlot);
+    }
     return new Window(this._windowParams, playerSlots, this._namespaceId);
   }
 }

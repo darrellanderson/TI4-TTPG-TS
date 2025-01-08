@@ -8,6 +8,8 @@ import {
 import { TurnOrderEntry } from "./turn-order-entry";
 import { Player } from "@tabletop-playground/api";
 
+const CUSTOM_ACTION_CHANGE_COLOR: string = "Change color";
+
 export class TurnOrderUI {
   private readonly _params: TurnOrderWidgetParams = {
     entryWidth: 220,
@@ -28,7 +30,7 @@ export class TurnOrderUI {
     ],
     customActions: [
       {
-        name: "Change color",
+        name: CUSTOM_ACTION_CHANGE_COLOR,
       },
     ],
     onCustomAction: (
@@ -36,7 +38,7 @@ export class TurnOrderUI {
       identifier: string,
       targetPlayerSlot: number
     ) => {
-      if (identifier === "Change color") {
+      if (identifier === CUSTOM_ACTION_CHANGE_COLOR) {
         TI4.events.onPlayerChangeColorRequest.trigger(
           targetPlayerSlot,
           clickingPlayer

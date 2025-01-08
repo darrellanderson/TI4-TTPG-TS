@@ -1,14 +1,22 @@
+import {
+  Button,
+  ContentButton,
+  HorizontalAlignment,
+  Player,
+} from "@tabletop-playground/api";
 import { ColorLib, COLORS, ColorsType } from "ttpg-darrell";
 
 import { AbstractUI } from "../abstract-ui/abtract-ui";
+import { ButtonUI } from "../button-ui/button-ui";
 import { ColorChoiceButton } from "./color-choice-button";
 import { CONFIG } from "../config/config";
 import { HorizontalUIBuilder } from "../panel/horizontal-ui-builder";
 import { LabelUI } from "../button-ui/label-ui";
 import { VerticalUIBuilder } from "../panel/vertical-ui-builder";
-import { ContentButton, Player } from "@tabletop-playground/api";
 
 export class ChangeColorUI extends AbstractUI {
+  private readonly _cancelButton: Button;
+
   static _getAllColorNames(): Array<string> {
     return Object.keys(COLORS);
   }
@@ -72,11 +80,22 @@ export class ChangeColorUI extends AbstractUI {
       uis.push(ChangeColorUI._getColorRow(colorName, targetPlayerSlot, scale));
     }
 
+    const cancelButton: ButtonUI = new ButtonUI(scale);
+    cancelButton.getButton().setText("Cancel");
+    uis.push(cancelButton);
+
     const abstractUi: AbstractUI = new VerticalUIBuilder()
+      .setHorizontalAlignment(HorizontalAlignment.Right)
       .setSpacing(CONFIG.SPACING * scale)
       .addUIs(uis)
       .build();
 
     super(abstractUi.getWidget(), abstractUi.getSize());
+
+    this._cancelButton = cancelButton.getButton();
+  }
+
+  getCancelButton(): Button {
+    return this._cancelButton;
   }
 }
