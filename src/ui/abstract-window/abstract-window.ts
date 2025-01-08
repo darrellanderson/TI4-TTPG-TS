@@ -57,13 +57,15 @@ export class AbstractWindow {
       },
       windowWidgetGenerator,
 
-      disableClose: true,
-
       title: windowTitle,
       defaultTarget: "screen",
-      // Use u 0.814 to see turn order.
+      // Use u=0.814 to see turn order.
       screen: { anchor: { u: 1, v: 0 }, pos: { u: 0.99, v: 0.01 } },
     };
+  }
+
+  getMutableWindowParams(): WindowParams {
+    return this._windowParams;
   }
 
   createWindow(playerSlots?: Array<number>): Window {

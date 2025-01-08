@@ -10,13 +10,17 @@ it("constuctor, createWindow", () => {
     return new ButtonUI(scale);
   };
   const namespaceId = "@test/test";
-
-  const playerSlots: Array<number> = [10];
-  const window: Window = new AbstractWindow(
+  const title: string = "Test Window";
+  const abstractWindow = new AbstractWindow(
     createAbstractUI,
     namespaceId,
-    "Test Window"
-  ).createWindow(playerSlots);
+    title
+  );
+
+  abstractWindow.getMutableWindowParams().disableClose = true;
+
+  const playerSlots: Array<number> = [10];
+  const window: Window = abstractWindow.createWindow(playerSlots);
 
   window.attach().detach();
 });
