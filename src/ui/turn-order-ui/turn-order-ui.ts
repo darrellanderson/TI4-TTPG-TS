@@ -37,11 +37,25 @@ export class TurnOrderUI {
       targetPlayerSlot: number
     ) => {
       if (identifier === "Change color") {
-        console.log("Change color", clickingPlayer, targetPlayerSlot);
+        TI4.events.onPlayerChangeColorRequest.trigger(
+          targetPlayerSlot,
+          clickingPlayer
+        );
       }
     },
   };
+
+  private _onPlayerChangedColorHandler = () => {
+    if (this._turnOrderWidget) {
+      this._turnOrderWidget.update();
+    }
+  };
+
   private _turnOrderWidget: TurnOrderWidget | undefined;
+
+  constructor() {
+    TI4.events.onPlayerChangedColor.add(this._onPlayerChangedColorHandler);
+  }
 
   getParams(): TurnOrderWidgetParams {
     return this._params;
@@ -70,5 +84,6 @@ export class TurnOrderUI {
       this._turnOrderWidget.destroy();
       this._turnOrderWidget = undefined;
     }
+    TI4.events.onPlayerChangedColor.remove(this._onPlayerChangedColorHandler);
   }
 }

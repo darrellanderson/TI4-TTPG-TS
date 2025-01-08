@@ -13,6 +13,8 @@ it("attach", () => {
 
 it("getParams, onCustomAction", () => {
   const turnOrderUI = new TurnOrderUI();
+  turnOrderUI.attachToScreen();
+
   const params = turnOrderUI.getParams();
   const clickingPlayer: Player = new MockPlayer();
   const identifier: string = "Change color";
@@ -29,4 +31,16 @@ it("getParams, onCustomAction", () => {
     throw new Error("onCustomAction is undefined");
   }
   onCustomAction(clickingPlayer, identifier, targetPlayerSlot);
+
+  const playerSlot: number = 10;
+  const colorName: string = "red";
+  const colorHex: string = "#ff0000";
+  TI4.events.onPlayerChangedColor.trigger(
+    playerSlot,
+    colorName,
+    colorHex,
+    clickingPlayer
+  );
+
+  turnOrderUI.destroy();
 });
