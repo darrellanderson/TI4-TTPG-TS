@@ -9,8 +9,7 @@ import {
 import { ChangeColorUI } from "../../ui/change-color-ui/change-color-ui";
 
 export class OnPlayerChangeColorRequest implements IGlobal {
-  private _cancelButton: Button | undefined;
-  private _window: Window | undefined;
+  private _playerSlotToWindow: Map<number, Window> = new Map();
 
   private readonly _onPlayerChangeColorRequestHandler = (
     playerSlot: number,
@@ -24,7 +23,12 @@ export class OnPlayerChangeColorRequest implements IGlobal {
       scale: number
     ): AbstractUI => {
       const changeColorUi = new ChangeColorUI(playerSlot, scale);
-      this._cancelButton = changeColorUi.getCancelButton();
+      const cancelButton: Button = changeColorUi.getCancelButton();
+
+      cancelButton.onClicked.add(
+        this._createCancelOnClickedHandler(playerSlot)
+      );
+
       return changeColorUi;
     };
     const namespaceId: NamespaceId | undefined = undefined;
@@ -33,29 +37,32 @@ export class OnPlayerChangeColorRequest implements IGlobal {
       namespaceId,
       "Change Color"
     );
-    this._window = abstractWindow.createWindow().attach();
-
-    if (this._cancelButton) {
-      this._cancelButton.onClicked.add(() => {
-        if (this._window) {
-          this._window.detach();
-          this._window = undefined;
-        }
-      });
-    }
+    const window: Window = abstractWindow.createWindow().attach();
+    this._playerSlotToWindow.set(playerSlot, window);
   };
 
   private readonly _onPlayerChangedColorHandler = (
-    _playerSlot: number,
+    playerSlot: number,
     _colorName: string,
     _colorHex: string,
     _clickingPlayer: Player
   ): void => {
-    if (this._window) {
-      this._window.detach();
-      this._window = undefined;
-    }
+    this._closeWindow(playerSlot);
   };
+
+  public _createCancelOnClickedHandler(playerSlot: number): () => void {
+    return () => {
+      this._closeWindow(playerSlot);
+    };
+  }
+
+  _closeWindow(playerSlot: number) {
+    const window: Window | undefined = this._playerSlotToWindow.get(playerSlot);
+    if (window) {
+      window.detach();
+      this._playerSlotToWindow.delete(playerSlot);
+    }
+  }
 
   init(): void {
     TI4.events.onPlayerChangeColorRequest.add(
@@ -68,9 +75,5 @@ export class OnPlayerChangeColorRequest implements IGlobal {
     TI4.events.onPlayerChangeColorRequest.remove(
       this._onPlayerChangeColorRequestHandler
     );
-  }
-
-  getCancelButton(): Button | undefined {
-    return this._cancelButton;
   }
 }
