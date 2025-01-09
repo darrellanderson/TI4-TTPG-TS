@@ -124,8 +124,8 @@ export class ChangeColor {
 
     for (const line of world.getDrawingLines()) {
       if (line.tag === tag) {
-        line.color = widgetColor;
         world.removeDrawingLineObject(line);
+        line.color = widgetColor;
         world.addDrawingLine(line);
       }
     }

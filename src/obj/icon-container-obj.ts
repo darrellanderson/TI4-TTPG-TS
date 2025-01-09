@@ -57,7 +57,10 @@ outline.widget = new ImageWidget()
 
 // Owner not set at creation time, wait a frame.
 const obj: GameObject = refObject;
-process.nextTick(() => {
+obj.addUI(ui);
+obj.addUI(outline);
+
+const update = (): void => {
   const owner: number = obj.getOwningPlayerSlot();
   if (owner >= 0) {
     const colorLib: ColorLib = new ColorLib();
@@ -68,6 +71,7 @@ process.nextTick(() => {
     // Anonymous units.
     widget.setTintColor(obj.getPrimaryColor());
   }
-  obj.addUI(ui);
-  obj.addUI(outline);
-});
+};
+
+process.nextTick(update);
+TI4.events.onPlayerChangedColor.add(update);
