@@ -57,6 +57,36 @@ it("seat available votes", () => {
   expect(agendaState.getSeatAvailableVotes(1)).toBe(2);
 });
 
+it("seat no afters", () => {
+  const agendaState: AgendaState = new AgendaState("@test/test");
+  expect(agendaState.getSeatNoAfters(0)).toBe("unknown");
+  expect(agendaState.getSeatNoAfters(1)).toBe("unknown");
+  agendaState.setSeatNoAfters(1, "no");
+  expect(agendaState.getSeatNoAfters(0)).toBe("unknown");
+  expect(agendaState.getSeatNoAfters(1)).toBe("no");
+  agendaState.setSeatNoAfters(1, "never");
+  expect(agendaState.getSeatNoAfters(0)).toBe("unknown");
+  expect(agendaState.getSeatNoAfters(1)).toBe("never");
+  agendaState.setSeatNoAfters(1, "unknown");
+  expect(agendaState.getSeatNoAfters(0)).toBe("unknown");
+  expect(agendaState.getSeatNoAfters(1)).toBe("unknown");
+});
+
+it("seat no whens", () => {
+  const agendaState: AgendaState = new AgendaState("@test/test");
+  expect(agendaState.getSeatNoWhens(0)).toBe("unknown");
+  expect(agendaState.getSeatNoWhens(1)).toBe("unknown");
+  agendaState.setSeatNoWhens(1, "no");
+  expect(agendaState.getSeatNoWhens(0)).toBe("unknown");
+  expect(agendaState.getSeatNoWhens(1)).toBe("no");
+  agendaState.setSeatNoWhens(1, "never");
+  expect(agendaState.getSeatNoWhens(0)).toBe("unknown");
+  expect(agendaState.getSeatNoWhens(1)).toBe("never");
+  agendaState.setSeatNoWhens(1, "unknown");
+  expect(agendaState.getSeatNoWhens(0)).toBe("unknown");
+  expect(agendaState.getSeatNoWhens(1)).toBe("unknown");
+});
+
 it("seat outcome choice", () => {
   const agendaState: AgendaState = new AgendaState("@test/test");
   expect(agendaState.getSeatOutcomeChoice(0)).toBe(-1);

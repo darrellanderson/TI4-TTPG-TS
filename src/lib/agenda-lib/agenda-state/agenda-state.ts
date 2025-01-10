@@ -4,7 +4,7 @@ import {
   TriggerableMulticastDelegate,
   TurnOrder,
 } from "ttpg-darrell";
-import { z } from "zod";
+import { number, z } from "zod";
 
 export const MAX_OUTCOME_NAME_LENGTH = 20;
 
@@ -22,6 +22,8 @@ const AgendaSeatStateSchema = z.object({
   avail: z.number().default(0),
   outcome: z.number().default(-1),
   votes: z.number().default(0),
+  noWhens: number().default(0), // 0 = unknown, 1 = no, 2 = never
+  noAfters: number().default(0), // 0 = unknown, 1 = no, 2 = never
 });
 type AgendaSeatStateSchemaType = z.infer<typeof AgendaSeatStateSchema>;
 
@@ -142,6 +144,59 @@ export class AgendaState {
   setSeatAvailableVotes(seatIndex: number, votes: number): this {
     const seatState = this._getSeatState(seatIndex);
     seatState.avail = votes;
+    this._save();
+    this.onAgendaStateChanged.trigger(this);
+    return this;
+  }
+
+  getSeatNoAfters(seatIndex: number): "unknown" | "no" | "never" {
+    const seatState = this._getSeatState(seatIndex);
+    if (seatState.noAfters === 1) {
+      return "no";
+    } else if (seatState.noAfters === 2) {
+      return "never";
+    } else {
+      return "unknown";
+    }
+  }
+
+  setSeatNoAfters(
+    seatIndex: number,
+    noWhens: "unknown" | "no" | "never"
+  ): this {
+    const seatState = this._getSeatState(seatIndex);
+    if (noWhens === "no") {
+      seatState.noAfters = 1;
+    } else if (noWhens === "never") {
+      seatState.noAfters = 2;
+    } else {
+      seatState.noAfters = 0;
+    }
+    this._save();
+    this.onAgendaStateChanged.trigger(this);
+    return this;
+  }
+
+  getSeatNoWhens(seatIndex: number): "unknown" | "no" | "never" {
+    const seatState = this._getSeatState(seatIndex);
+    if (seatState.noWhens === 1) {
+      return "no";
+    } else if (seatState.noWhens === 2) {
+      return "never";
+    } else {
+      return "unknown";
+    }
+  }
+
+  setSeatNoWhens(seatIndex: number, noWhens: "unknown" | "no" | "never"): this {
+    const seatState = this._getSeatState(seatIndex);
+    if (noWhens === "no") {
+      seatState.noWhens = 1;
+    } else if (noWhens === "never") {
+      seatState.noWhens = 2;
+    } else {
+      seatState.noWhens = 0;
+    }
     this._save();
     this.onAgendaStateChanged.trigger(this);
     return this;
