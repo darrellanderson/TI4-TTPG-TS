@@ -1,5 +1,9 @@
 import { world } from "@tabletop-playground/api";
-import { NamespaceId, TriggerableMulticastDelegate } from "ttpg-darrell";
+import {
+  NamespaceId,
+  TriggerableMulticastDelegate,
+  TurnOrder,
+} from "ttpg-darrell";
 import { z } from "zod";
 
 export const MAX_OUTCOME_NAME_LENGTH = 20;
@@ -38,6 +42,10 @@ export class AgendaState {
   private readonly _namespaceId: NamespaceId;
   private readonly _data: AgendaStateSchemaType;
 
+  private readonly _onTurnStateChangedHandler = () => {
+    this.onAgendaStateChanged.trigger(this);
+  };
+
   static isAgendaInProgress(namespaceId: NamespaceId): boolean {
     const data: string | undefined = world.getSavedData(namespaceId);
     return data !== undefined && data.length > 0;
@@ -45,6 +53,8 @@ export class AgendaState {
 
   constructor(namespaceId: NamespaceId) {
     this._namespaceId = namespaceId;
+
+    TurnOrder.onTurnStateChanged.add(this._onTurnStateChangedHandler);
 
     const data: string | undefined = world.getSavedData(namespaceId);
     if (data !== undefined && data.length > 0) {
@@ -60,6 +70,7 @@ export class AgendaState {
     world.setSavedData("", this._namespaceId);
     this.onAgendaStateChanged.trigger(this);
     this.onAgendaStateChanged.clear();
+    TurnOrder.onTurnStateChanged.remove(this._onTurnStateChangedHandler);
   }
 
   _save(): void {
@@ -184,5 +195,23 @@ export class AgendaState {
       this.onAgendaStateChanged.trigger(this);
     }
     return this;
+  }
+
+  getWaitingForMessage(): string {
+    const currentPlayerSlot: number = TI4.turnOrder.getCurrentTurn();
+    const currentPlayerName: string =
+      TI4.playerName.getBySlot(currentPlayerSlot);
+
+    const phase: string = this.getPhase();
+    let action: string = "";
+    if (this.getPhase() === "whens") {
+      action = "any whens";
+    } else if (phase === "afters") {
+      action = "any afters";
+    } else if (phase === "voting") {
+      action = "please vote";
+    }
+
+    return `${action}, ${currentPlayerName}`;
   }
 }

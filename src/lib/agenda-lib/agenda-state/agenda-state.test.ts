@@ -1,4 +1,5 @@
 import { NamespaceId } from "ttpg-darrell";
+import { MockPlayer } from "ttpg-mock";
 import { AgendaState } from "./agenda-state";
 
 it("constructor/destroy/isActive/static isAgendaInProgress", () => {
@@ -88,4 +89,19 @@ it("rider", () => {
 
   agendaState.removeRider("my-rider-obj-id");
   expect(agendaState.getRiders()).toEqual([]);
+});
+
+it("waiting for", () => {
+  const agendaState: AgendaState = new AgendaState("@test/test");
+  expect(agendaState.getWaitingForMessage()).toEqual("any whens, ???");
+
+  agendaState.setPhase("afters");
+  expect(agendaState.getWaitingForMessage()).toEqual("any afters, ???");
+
+  agendaState.setPhase("voting");
+  expect(agendaState.getWaitingForMessage()).toEqual("please vote, ???");
+
+  new MockPlayer({ slot: 10, name: "my-name" });
+  TI4.turnOrder.setTurnOrder([10], "forward", 10);
+  expect(agendaState.getWaitingForMessage()).toEqual("please vote, green");
 });
