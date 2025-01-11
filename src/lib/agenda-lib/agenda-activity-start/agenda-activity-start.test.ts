@@ -1,4 +1,4 @@
-import { MockCard } from "ttpg-mock";
+import { MockCard, MockCardHolder, MockGameObject } from "ttpg-mock";
 import { AgendaState } from "../agenda-state/agenda-state";
 import {
   AgendaActivityMaybeResume,
@@ -20,6 +20,11 @@ it("constructor", () => {
 });
 
 it("start/destroy", () => {
+  new MockCardHolder({
+    templateMetadata: "card-holder:base/player-hand",
+    owningPlayerSlot: 10,
+  });
+  MockGameObject.simple("token:base/speaker");
   const agendaCard: Card = MockCard.simple("card.agenda:my-source/my-name");
 
   const agendaActivityStart: AgendaActivityStart = new AgendaActivityStart();

@@ -1,6 +1,7 @@
-import { IGlobal, NamespaceId } from "ttpg-darrell";
+import { IGlobal, NamespaceId, PlayerSlot } from "ttpg-darrell";
 import { AgendaState } from "../agenda-state/agenda-state";
 import { Card } from "@tabletop-playground/api";
+import { AgendaTurnOrder } from "../agenda-turn-order/agenda-turn-order";
 
 const AGENDA_NAMESPACE_ID: NamespaceId = "@ti4/agenda";
 
@@ -25,7 +26,13 @@ export class AgendaActivityStart {
     );
     this._agendaState.onAgendaStateChanged.add(this._onAgendaStateChanged);
 
-    // TODO: set turn order.
+    // Set turn order.
+    const order: Array<PlayerSlot> =
+      new AgendaTurnOrder().getWhensOrAftersOrder();
+    const first: PlayerSlot | undefined = order[0];
+    if (first !== undefined) {
+      TI4.turnOrder.setTurnOrder(order, "forward", first);
+    }
 
     this.resume();
     return true;
