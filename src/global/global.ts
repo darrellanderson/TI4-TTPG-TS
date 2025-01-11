@@ -30,6 +30,7 @@ import { DraftActivityMaybeResume } from "../lib/draft-lib/draft-activity-start/
 import { FactionRegistry } from "../lib/faction-lib/registry/faction-registry";
 import { GlobalEvents } from "./global-events";
 import { NumpadKeyAll } from "../lib/numpad-key-lib/numpad-key-all/numpad-key-all";
+import { OnAgendaCard } from "../event/on-agenda-card/on-agenda-card";
 import { OnCombatClicked } from "../event/on-combat-clicked/on-combat-clicked";
 import { OnCombatResult } from "../event/on-combat-result/on-combat-result";
 import { OnPlayerChangeColorRequest } from "../event/on-player-change-color-request/on-player-change-color-request";
@@ -124,6 +125,7 @@ export function resetGlobalThisTI4(): TI4Class {
     new DisplayPDSAdjacency(),
     new LeaveSeat(),
     new NumpadKeyAll(),
+    new OnAgendaCard(),
     new OnCardBecameSingletonOrDeck(),
     new OnCombatClicked(),
     new OnCombatResult(),
