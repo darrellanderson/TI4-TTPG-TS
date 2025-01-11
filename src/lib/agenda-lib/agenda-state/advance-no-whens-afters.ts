@@ -1,4 +1,4 @@
-import { PlayerSlot } from "ttpg-darrell";
+import { Broadcast, PlayerSlot } from "ttpg-darrell";
 import { AgendaState } from "./agenda-state";
 import { PlayerSeatType } from "lib/player-lib/player-seats/player-seats";
 import { AgendaTurnOrder } from "../agenda-turn-order/agenda-turn-order";
@@ -48,6 +48,9 @@ export class AdvanceNoWhensAfters {
     }
 
     if (skipTurn) {
+      const name: string = TI4.playerName.getBySlot(currentTurn);
+      Broadcast.chatAll(`${name} plays no ${this._agendaState.getPhase()}`);
+
       if (isLast && first !== undefined) {
         // Skipping the last player in the turn order advances the phase.
         if (this._agendaState.getPhase() === "whens") {
