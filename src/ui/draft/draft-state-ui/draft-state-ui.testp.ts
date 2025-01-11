@@ -54,7 +54,7 @@ function _goDirect() {
 
 function _goWindow() {
   new AbstractWindow(
-    (scale: number): AbstractUI => {
+    (_playerSlot: number, scale: number): AbstractUI => {
       return new DraftStateUI(draftState, scale);
     },
     "@test/draft-state-ui",

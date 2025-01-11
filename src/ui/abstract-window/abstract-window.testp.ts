@@ -4,7 +4,10 @@ import { AbstractUI } from "../abstract-ui/abtract-ui";
 import { AbstractWindow, CreateAbstractUIType } from "./abstract-window";
 import { ButtonUI } from "../button-ui/button-ui";
 
-const createAbstractUI: CreateAbstractUIType = (scale: number): AbstractUI => {
+const createAbstractUI: CreateAbstractUIType = (
+  _playerSlot: number,
+  scale: number
+): AbstractUI => {
   return new ButtonUI(scale * 6);
 };
 const namespaceId = "@test/test";

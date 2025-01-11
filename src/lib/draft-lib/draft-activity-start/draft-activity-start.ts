@@ -164,7 +164,10 @@ export class DraftActivityStart {
       resolveConflictsKeleres.resolve();
     });
 
-    const create: CreateAbstractUIType = (scale: number): AbstractUI => {
+    const create: CreateAbstractUIType = (
+      _playerSlot: number,
+      scale: number
+    ): AbstractUI => {
       return new DraftStateUI(draftState, scale);
     };
     const namespaceId: NamespaceId = "@TI4/draft-window";

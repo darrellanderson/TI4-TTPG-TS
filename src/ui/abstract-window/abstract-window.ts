@@ -9,7 +9,10 @@ import {
 
 import { AbstractUI, UI_SIZE } from "../abstract-ui/abtract-ui";
 
-export type CreateAbstractUIType = (scale: number) => AbstractUI;
+export type CreateAbstractUIType = (
+  playerSlot: number,
+  scale: number
+) => AbstractUI;
 
 /**
  * AbstractUI and Window have similar, but not identical APIs.
@@ -28,7 +31,12 @@ export class AbstractWindow {
   ) {
     this._namespaceId = namespaceId;
 
-    const defaultUi: AbstractUI = createAbstractUI(1);
+    const defaultPlayerSlot: number = -1;
+    const defaultScale: number = 1;
+    const defaultUi: AbstractUI = createAbstractUI(
+      defaultPlayerSlot,
+      defaultScale
+    );
     const defaultSize: UI_SIZE = defaultUi.getSize();
     defaultUi.destroy();
 
@@ -37,7 +45,7 @@ export class AbstractWindow {
         private _abstractUi: AbstractUI | undefined;
 
         create(params: WindowWidgetParams): Widget {
-          this._abstractUi = createAbstractUI(params.scale);
+          this._abstractUi = createAbstractUI(params.playerSlot, params.scale);
           return this._abstractUi.getWidget();
         }
 

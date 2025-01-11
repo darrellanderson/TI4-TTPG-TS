@@ -5,6 +5,7 @@ import { AbstractWindow, CreateAbstractUIType } from "./abstract-window";
 
 it("constuctor, createWindow", () => {
   const createAbstractUI: CreateAbstractUIType = (
+    _playerSlot: number,
     scale: number
   ): AbstractUI => {
     return new ButtonUI(scale);
