@@ -11,7 +11,8 @@ it("maybe resume (no)", () => {
 });
 
 it("maybe resume (yes)", () => {
-  new AgendaState("@ti4/agenda");
+  const card: Card = MockCard.simple("card.agenda:my-source/my-name");
+  new AgendaState("@ti4/agenda").setAgendaObjId(card.getId());
   new AgendaActivityMaybeResume().init();
 });
 

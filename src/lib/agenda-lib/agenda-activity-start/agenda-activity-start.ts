@@ -1,7 +1,14 @@
-import { IGlobal, NamespaceId, PlayerSlot } from "ttpg-darrell";
-import { AgendaState } from "../agenda-state/agenda-state";
 import { Card } from "@tabletop-playground/api";
+import { IGlobal, NamespaceId, PlayerSlot } from "ttpg-darrell";
+
+import { AbstractUI } from "../../../ui/abstract-ui/abtract-ui";
+import { AgendaState } from "../agenda-state/agenda-state";
 import { AgendaTurnOrder } from "../agenda-turn-order/agenda-turn-order";
+import { AgendaStateUI } from "../../../ui/agenda-ui/agenda-state-ui/agenda-state-ui";
+import {
+  AbstractWindow,
+  CreateAbstractUIType,
+} from "../../../ui/abstract-window/abstract-window";
 
 const AGENDA_NAMESPACE_ID: NamespaceId = "@ti4/agenda";
 
@@ -39,9 +46,24 @@ export class AgendaActivityStart {
   }
 
   resume(): this {
-    this._agendaState = new AgendaState(AGENDA_NAMESPACE_ID);
+    const agendaState: AgendaState = new AgendaState(AGENDA_NAMESPACE_ID);
+    this._agendaState = agendaState;
 
-    // TODO: Create UI, window.
+    // Create UI, window.
+    const createAbstractUI: CreateAbstractUIType = (
+      playerSlot: number,
+      scale: number
+    ): AbstractUI => {
+      return new AgendaStateUI(agendaState, playerSlot, scale);
+    };
+    const windowTitle: string = "Agenda";
+    const abstractWindow: AbstractWindow = new AbstractWindow(
+      createAbstractUI,
+      AGENDA_NAMESPACE_ID,
+      windowTitle
+    );
+    abstractWindow.getMutableWindowParams().disableClose = true;
+    abstractWindow.createWindow().attach();
 
     return this;
   }
