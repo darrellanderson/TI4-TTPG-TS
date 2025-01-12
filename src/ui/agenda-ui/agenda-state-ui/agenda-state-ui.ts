@@ -6,10 +6,11 @@ import {
 } from "@tabletop-playground/api";
 import { AbstractUI } from "../../abstract-ui/abtract-ui";
 import { AgendaState } from "../../../lib/agenda-lib/agenda-state/agenda-state";
-import { CONFIG } from "../../config/config";
-import { HorizontalUIBuilder } from "../../panel/horizontal-ui-builder";
 import { AgendaCardUI } from "../agenda-card-ui/agenda-card-ui";
 import { ButtonUI } from "../../button-ui/button-ui";
+import { CONFIG } from "../../config/config";
+import { HorizontalUIBuilder } from "../../panel/horizontal-ui-builder";
+import { VerticalUIBuilder } from "../../panel/vertical-ui-builder";
 
 export class AgendaStateUI extends AbstractUI {
   private readonly _agendaState: AgendaState;
@@ -63,6 +64,42 @@ export class AgendaStateUI extends AbstractUI {
       .build();
   }
 
+  static _createAftersUI(
+    agendaState: AgendaState,
+    seatIndex: number,
+    scale: number
+  ): AbstractUI {
+    const noAfters: ButtonUI = new ButtonUI(scale);
+    noAfters.getButton().setText("No afters");
+    noAfters.getButton().onClicked.add(() => {
+      agendaState.setSeatNoAfters(seatIndex, "no");
+    });
+
+    const neverAfters: ButtonUI = new ButtonUI(scale);
+    neverAfters.getButton().setText("Never afters");
+    neverAfters.getButton().onClicked.add(() => {
+      agendaState.setSeatNoAfters(seatIndex, "never");
+    });
+
+    const reset: ButtonUI = new ButtonUI(scale);
+    reset.getButton().setText("Reset afters");
+    reset.getButton().onClicked.add(() => {
+      agendaState.setSeatNoAfters(seatIndex, "unknown");
+    });
+
+    agendaState.onAgendaStateChanged.add(() => {
+      const noNeverUnknown: "no" | "never" | "unknown" =
+        agendaState.getSeatNoAfters(seatIndex);
+      noAfters.getButton().setEnabled(noNeverUnknown === "unknown");
+      neverAfters.getButton().setEnabled(noNeverUnknown !== "never");
+    });
+
+    return new HorizontalUIBuilder()
+      .setSpacing(CONFIG.SPACING)
+      .addUIs([noAfters, neverAfters, reset])
+      .build();
+  }
+
   static _createTopRowUI(
     agendaState: AgendaState,
     seatIndex: number,
@@ -79,10 +116,21 @@ export class AgendaStateUI extends AbstractUI {
       scale
     );
 
+    const aftersUI: AbstractUI = AgendaStateUI._createAftersUI(
+      agendaState,
+      seatIndex,
+      scale
+    );
+
+    const whensAfters: AbstractUI = new VerticalUIBuilder()
+      .setSpacing(CONFIG.SPACING)
+      .addUIs([whensUI, aftersUI])
+      .build();
+
     return new HorizontalUIBuilder()
       .setSpacing(CONFIG.SPACING)
       .setVerticalAlignment(VerticalAlignment.Top)
-      .addUIs([agendaCardUI, whensUI])
+      .addUIs([agendaCardUI, whensAfters])
       .build();
   }
 

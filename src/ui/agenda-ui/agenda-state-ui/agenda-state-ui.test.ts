@@ -38,6 +38,18 @@ it("static _createWhensUI", () => {
   clickAll(abstractUi.getWidget());
 });
 
+it("static _createAftersUI", () => {
+  const agendaState: AgendaState = new AgendaState("@test/test");
+  const seatIndex: number = 0;
+  const scale: number = 1;
+  const abstractUi: AbstractUI = AgendaStateUI._createAftersUI(
+    agendaState,
+    seatIndex,
+    scale
+  );
+  clickAll(abstractUi.getWidget());
+});
+
 it("constructor/event/destroy", () => {
   const agendaCard: Card = MockCard.simple("card.agenda:my-source/my-name");
   const agendaState: AgendaState = new AgendaState("@test/test").setAgendaObjId(
