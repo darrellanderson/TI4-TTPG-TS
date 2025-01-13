@@ -8,12 +8,14 @@ import { Card } from "@tabletop-playground/api";
 
 it("maybe resume (no)", () => {
   new AgendaActivityMaybeResume().init();
+  process.flushTicks();
 });
 
 it("maybe resume (yes)", () => {
   const card: Card = MockCard.simple("card.agenda:my-source/my-name");
   new AgendaState("@ti4/agenda").setAgendaObjId(card.getId());
   new AgendaActivityMaybeResume().init();
+  process.flushTicks();
 });
 
 it("constructor", () => {

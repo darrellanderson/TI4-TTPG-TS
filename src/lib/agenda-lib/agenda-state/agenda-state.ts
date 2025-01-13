@@ -59,6 +59,7 @@ export class AgendaState {
     TurnOrder.onTurnStateChanged.add(this._onTurnStateChangedHandler);
 
     const data: string | undefined = world.getSavedData(namespaceId);
+    console.log("XXX load", data);
     if (data !== undefined && data.length > 0) {
       this._data = AgendaStateSchema.parse(JSON.parse(data));
     } else {
@@ -69,6 +70,7 @@ export class AgendaState {
   }
 
   destroy(): void {
+    console.log("XXX destroy");
     world.setSavedData("", this._namespaceId);
     this.onAgendaStateChanged.trigger(this);
     this.onAgendaStateChanged.clear();
@@ -76,6 +78,7 @@ export class AgendaState {
   }
 
   _save(): void {
+    console.log("XXX save");
     const json: string = JSON.stringify(this._data);
     if (json.length < 1024) {
       world.setSavedData(json, this._namespaceId);
@@ -259,14 +262,17 @@ export class AgendaState {
 
     const phase: string = this.getPhase();
     let action: string = "";
+    let suffix: string = "";
     if (this.getPhase() === "whens") {
-      action = "any whens";
+      action = "Any whens";
+      suffix = "?";
     } else if (phase === "afters") {
-      action = "any afters";
+      action = "Any afters";
+      suffix = "?";
     } else if (phase === "voting") {
-      action = "please vote";
+      action = "Please vote";
     }
 
-    return `${action}, ${currentPlayerName}`;
+    return `${action}, ${currentPlayerName}${suffix}`;
   }
 }

@@ -14,24 +14,21 @@ const AGENDA_NAMESPACE_ID: NamespaceId = "@ti4/agenda";
 
 export class AgendaActivityMaybeResume implements IGlobal {
   init(): void {
-    if (AgendaState.isAgendaInProgress(AGENDA_NAMESPACE_ID)) {
-      new AgendaActivityStart().resume();
-    }
+    process.nextTick(() => {
+      if (AgendaState.isAgendaInProgress(AGENDA_NAMESPACE_ID)) {
+        new AgendaActivityStart().resume();
+      }
+    });
   }
 }
 
 export class AgendaActivityStart {
   private _agendaState: AgendaState | undefined;
 
-  private readonly _onAgendaStateChanged = (
-    _agendaState: AgendaState
-  ): void => {};
-
   start(agendaCard: Card): boolean {
     this._agendaState = new AgendaState(AGENDA_NAMESPACE_ID).setAgendaObjId(
       agendaCard.getId()
     );
-    this._agendaState.onAgendaStateChanged.add(this._onAgendaStateChanged);
 
     // Set turn order.
     const order: Array<PlayerSlot> =

@@ -1,6 +1,7 @@
 import {
   Card,
   GameObject,
+  Text,
   VerticalAlignment,
   world,
 } from "@tabletop-playground/api";
@@ -10,6 +11,7 @@ import { AgendaCardUI } from "../agenda-card-ui/agenda-card-ui";
 import { ButtonUI } from "../../button-ui/button-ui";
 import { CONFIG } from "../../config/config";
 import { HorizontalUIBuilder } from "../../panel/horizontal-ui-builder";
+import { LongLabelUI } from "../../button-ui/long-label-ui";
 import { VerticalUIBuilder } from "../../panel/vertical-ui-builder";
 
 export class AgendaStateUI extends AbstractUI {
@@ -28,13 +30,30 @@ export class AgendaStateUI extends AbstractUI {
     return new AgendaCardUI(agendaCard, scale);
   }
 
+  static _createWaitingForUi(
+    agendaState: AgendaState,
+    scale: number
+  ): AbstractUI {
+    const scaledWidth: number =
+      CONFIG.BUTTON_WIDTH * scale * 3 + CONFIG.SPACING * 2;
+    const longLabel: LongLabelUI = new LongLabelUI(scaledWidth, scale);
+    const text: Text = longLabel.getText();
+
+    agendaState.onAgendaStateChanged.add(() => {
+      const msg: string = agendaState.getWaitingForMessage();
+      text.setText(msg);
+    });
+
+    return longLabel;
+  }
+
   static _createWhensUI(
     agendaState: AgendaState,
     seatIndex: number,
     scale: number
   ): AbstractUI {
     const noWhens: ButtonUI = new ButtonUI(scale);
-    noWhens.getButton().setText("No whens");
+    noWhens.getButton().setText("No whens (for now)");
     noWhens.getButton().onClicked.add(() => {
       agendaState.setSeatNoWhens(seatIndex, "no");
     });
@@ -70,7 +89,7 @@ export class AgendaStateUI extends AbstractUI {
     scale: number
   ): AbstractUI {
     const noAfters: ButtonUI = new ButtonUI(scale);
-    noAfters.getButton().setText("No afters");
+    noAfters.getButton().setText("No afters (for now)");
     noAfters.getButton().onClicked.add(() => {
       agendaState.setSeatNoAfters(seatIndex, "no");
     });
@@ -110,6 +129,11 @@ export class AgendaStateUI extends AbstractUI {
       scale
     );
 
+    const waitingForUI: AbstractUI = AgendaStateUI._createWaitingForUi(
+      agendaState,
+      scale
+    );
+
     const whensUI: AbstractUI = AgendaStateUI._createWhensUI(
       agendaState,
       seatIndex,
@@ -124,7 +148,7 @@ export class AgendaStateUI extends AbstractUI {
 
     const whensAfters: AbstractUI = new VerticalUIBuilder()
       .setSpacing(CONFIG.SPACING)
-      .addUIs([whensUI, aftersUI])
+      .addUIs([waitingForUI, whensUI, aftersUI])
       .build();
 
     return new HorizontalUIBuilder()
@@ -151,6 +175,9 @@ export class AgendaStateUI extends AbstractUI {
     this._agendaState.onAgendaStateChanged.add(
       this._onAgendaStateChangedHandler
     );
+
+    // Trigger the event to update the UI.
+    this._agendaState.onAgendaStateChanged.trigger(agendaState);
   }
 
   destroy(): void {

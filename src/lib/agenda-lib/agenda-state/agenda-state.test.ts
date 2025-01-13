@@ -123,7 +123,7 @@ it("rider", () => {
 
 it("waiting for", () => {
   const agendaState: AgendaState = new AgendaState("@test/test");
-  expect(agendaState.getWaitingForMessage()).toEqual("any whens, ???");
+  expect(agendaState.getWaitingForMessage()).toEqual("Any whens, ????");
 
   agendaState.setPhase("afters");
   expect(agendaState.getWaitingForMessage()).toEqual("any afters, ???");
