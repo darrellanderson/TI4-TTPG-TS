@@ -105,6 +105,15 @@ it("seat votes for outcome", () => {
   expect(agendaState.getSeatVotesForOutcome(1)).toBe(2);
 });
 
+it("seat votes locked", () => {
+  const agendaState: AgendaState = new AgendaState("@test/test");
+  expect(agendaState.getSeatVotesLocked(0)).toBe(false);
+  expect(agendaState.getSeatVotesLocked(1)).toBe(false);
+  agendaState.setSeatsVotesLocked(1, true);
+  expect(agendaState.getSeatVotesLocked(0)).toBe(false);
+  expect(agendaState.getSeatVotesLocked(1)).toBe(true);
+});
+
 it("rider", () => {
   const seatIndex: number = 1;
   const outcomeIndex: number = 13;

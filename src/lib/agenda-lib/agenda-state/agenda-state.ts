@@ -23,6 +23,7 @@ const AgendaSeatStateSchema = z.object({
   avail: z.number().default(0),
   outcome: z.number().default(-1),
   votes: z.number().default(0),
+  lockVotes: z.boolean().default(false),
   noWhens: number().default(0), // 0 = unknown, 1 = no, 2 = never
   noAfters: number().default(0), // 0 = unknown, 1 = no, 2 = never
 });
@@ -227,6 +228,19 @@ export class AgendaState {
   setSeatVotesForOutcome(seatIndex: number, votes: number): this {
     const seatState = this._getSeatState(seatIndex);
     seatState.votes = votes;
+    this._save();
+    this.onAgendaStateChanged.trigger(this);
+    return this;
+  }
+
+  getSeatVotesLocked(seatIndex: number): boolean {
+    const seatState = this._getSeatState(seatIndex);
+    return seatState.lockVotes;
+  }
+
+  setSeatsVotesLocked(seatIndex: number, locked: boolean) {
+    const seatState = this._getSeatState(seatIndex);
+    seatState.lockVotes = locked;
     this._save();
     this.onAgendaStateChanged.trigger(this);
     return this;
