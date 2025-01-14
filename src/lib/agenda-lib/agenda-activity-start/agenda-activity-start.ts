@@ -10,12 +10,13 @@ import {
   CreateAbstractUIType,
 } from "../../../ui/abstract-window/abstract-window";
 
-const AGENDA_NAMESPACE_ID: NamespaceId = "@ti4/agenda";
+const AGENDA_STATE_NAMESPACE_ID: NamespaceId = "@ti4/agenda-state";
+const AGENDA_WINDOW_NAMESPACE_ID: NamespaceId = "@ti4/agenda-window";
 
 export class AgendaActivityMaybeResume implements IGlobal {
   init(): void {
     process.nextTick(() => {
-      if (AgendaState.isAgendaInProgress(AGENDA_NAMESPACE_ID)) {
+      if (AgendaState.isAgendaInProgress(AGENDA_STATE_NAMESPACE_ID)) {
         new AgendaActivityStart().resume();
       }
     });
@@ -26,9 +27,9 @@ export class AgendaActivityStart {
   private _agendaState: AgendaState | undefined;
 
   start(agendaCard: Card): boolean {
-    this._agendaState = new AgendaState(AGENDA_NAMESPACE_ID).setAgendaObjId(
-      agendaCard.getId()
-    );
+    this._agendaState = new AgendaState(
+      AGENDA_STATE_NAMESPACE_ID
+    ).setAgendaObjId(agendaCard.getId());
 
     // Set turn order.
     const order: Array<PlayerSlot> =
@@ -43,7 +44,7 @@ export class AgendaActivityStart {
   }
 
   resume(): this {
-    const agendaState: AgendaState = new AgendaState(AGENDA_NAMESPACE_ID);
+    const agendaState: AgendaState = new AgendaState(AGENDA_STATE_NAMESPACE_ID);
     this._agendaState = agendaState;
 
     // Create UI, window.
@@ -56,7 +57,7 @@ export class AgendaActivityStart {
     const windowTitle: string = "Agenda";
     const abstractWindow: AbstractWindow = new AbstractWindow(
       createAbstractUI,
-      AGENDA_NAMESPACE_ID,
+      AGENDA_WINDOW_NAMESPACE_ID,
       windowTitle
     );
     abstractWindow.getMutableWindowParams().disableClose = true;

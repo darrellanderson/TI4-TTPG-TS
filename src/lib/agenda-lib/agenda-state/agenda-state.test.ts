@@ -122,16 +122,15 @@ it("rider", () => {
 });
 
 it("waiting for", () => {
-  const agendaState: AgendaState = new AgendaState("@test/test");
-  expect(agendaState.getWaitingForMessage()).toEqual("Any whens, ????");
-
-  agendaState.setPhase("afters");
-  expect(agendaState.getWaitingForMessage()).toEqual("any afters, ???");
-
-  agendaState.setPhase("voting");
-  expect(agendaState.getWaitingForMessage()).toEqual("please vote, ???");
-
   new MockPlayer({ slot: 10, name: "my-name" });
   TI4.turnOrder.setTurnOrder([10], "forward", 10);
-  expect(agendaState.getWaitingForMessage()).toEqual("please vote, green");
+
+  const agendaState: AgendaState = new AgendaState("@test/test");
+  expect(agendaState.getWaitingForMessage()).toEqual("Any whens, green?");
+
+  agendaState.setPhase("afters");
+  expect(agendaState.getWaitingForMessage()).toEqual("Any afters, green?");
+
+  agendaState.setPhase("voting");
+  expect(agendaState.getWaitingForMessage()).toEqual("Please vote, green");
 });

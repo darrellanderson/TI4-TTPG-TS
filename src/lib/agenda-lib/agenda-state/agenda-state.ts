@@ -32,7 +32,7 @@ const AgendaStateSchema = z.object({
   outcomeNames: z.array(z.string().nullable()).default([]),
   phase: AgendaPhase.default("whens"),
   riders: z.array(AgendaRiderSchema).default([]),
-  seatIndexToState: z.array(AgendaSeatStateSchema).default([]),
+  seatIndexToState: z.array(AgendaSeatStateSchema.nullable()).default([]),
 });
 type AgendaStateSchemaType = z.infer<typeof AgendaStateSchema>;
 
@@ -59,7 +59,6 @@ export class AgendaState {
     TurnOrder.onTurnStateChanged.add(this._onTurnStateChangedHandler);
 
     const data: string | undefined = world.getSavedData(namespaceId);
-    console.log("XXX load", data);
     if (data !== undefined && data.length > 0) {
       this._data = AgendaStateSchema.parse(JSON.parse(data));
     } else {
@@ -70,7 +69,6 @@ export class AgendaState {
   }
 
   destroy(): void {
-    console.log("XXX destroy");
     world.setSavedData("", this._namespaceId);
     this.onAgendaStateChanged.trigger(this);
     this.onAgendaStateChanged.clear();
@@ -78,7 +76,6 @@ export class AgendaState {
   }
 
   _save(): void {
-    console.log("XXX save");
     const json: string = JSON.stringify(this._data);
     if (json.length < 1024) {
       world.setSavedData(json, this._namespaceId);
@@ -130,7 +127,7 @@ export class AgendaState {
   }
 
   _getSeatState(seatIndex: number): AgendaSeatStateSchemaType {
-    let seatState: AgendaSeatStateSchemaType | undefined =
+    let seatState: AgendaSeatStateSchemaType | null | undefined =
       this._data.seatIndexToState[seatIndex];
     if (!seatState) {
       seatState = AgendaSeatStateSchema.parse({});
