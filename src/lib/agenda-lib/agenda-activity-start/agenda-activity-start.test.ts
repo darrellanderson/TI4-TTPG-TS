@@ -13,7 +13,7 @@ it("maybe resume (no)", () => {
 
 it("maybe resume (yes)", () => {
   const card: Card = MockCard.simple("card.agenda:my-source/my-name");
-  new AgendaState("@ti4/agenda").setAgendaObjId(card.getId());
+  new AgendaState("@ti4/agenda-state").setAgendaObjId(card.getId());
   new AgendaActivityMaybeResume().init();
   process.flushTicks();
 });

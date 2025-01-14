@@ -5,6 +5,7 @@ import {
   TurnOrder,
 } from "ttpg-darrell";
 import { number, z } from "zod";
+import { AdvanceNoWhensAfters } from "./advance-no-whens-afters";
 
 export const MAX_OUTCOME_NAME_LENGTH = 20;
 
@@ -66,6 +67,9 @@ export class AgendaState {
     }
 
     this._save();
+
+    // Advance turn/phase current "waiting for" player sets no whens or afters.
+    new AdvanceNoWhensAfters(this);
   }
 
   destroy(): void {

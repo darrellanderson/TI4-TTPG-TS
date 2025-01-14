@@ -19,6 +19,7 @@ export class AdvanceNoWhensAfters {
     this._agendaState.onAgendaStateChanged.add(
       this._onAgendaStateChangedHandler
     );
+    this.maybeAdvance();
   }
 
   maybeAdvance(): void {

@@ -37,4 +37,11 @@ export class PlayerSeats {
 
     return seats;
   }
+
+  getSeatIndexByPlayerSlot(playerSlot: number): number {
+    const seats: Array<PlayerSeatType> = this.getAllSeats();
+    return seats.findIndex((seat: PlayerSeatType) => {
+      return seat.playerSlot === playerSlot;
+    });
+  }
 }

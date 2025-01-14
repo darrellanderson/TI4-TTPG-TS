@@ -52,7 +52,9 @@ export class AgendaActivityStart {
       playerSlot: number,
       scale: number
     ): AbstractUI => {
-      return new AgendaStateUI(agendaState, playerSlot, scale);
+      const seatIndex: number =
+        TI4.playerSeats.getSeatIndexByPlayerSlot(playerSlot);
+      return new AgendaStateUI(agendaState, seatIndex, scale);
     };
     const windowTitle: string = "Agenda";
     const abstractWindow: AbstractWindow = new AbstractWindow(
