@@ -38,6 +38,17 @@ it("getAllSeats (empty)", () => {
   expect(seats).toEqual([]);
 });
 
+it("getPlayerSlotBySeatIndex", () => {
+  new MockCardHolder({
+    templateMetadata: "card-holder:base/player-hand",
+    owningPlayerSlot: 1,
+  });
+
+  const playerSeats = new PlayerSeats();
+  expect(playerSeats.getPlayerSlotBySeatIndex(0)).toBe(1);
+  expect(playerSeats.getPlayerSlotBySeatIndex(1)).toBe(-1);
+});
+
 it("getSeatIndexByPlayerSlot", () => {
   new MockCardHolder({
     templateMetadata: "card-holder:base/player-hand",
