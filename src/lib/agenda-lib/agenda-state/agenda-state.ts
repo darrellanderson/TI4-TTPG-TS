@@ -6,6 +6,7 @@ import {
 } from "ttpg-darrell";
 import { number, z } from "zod";
 import { AdvanceNoWhensAfters } from "./advance-no-whens-afters";
+import { ReportFinalAgendaState } from "./report-final-agenda-state";
 
 export const MAX_OUTCOME_NAME_LENGTH = 20;
 
@@ -71,6 +72,9 @@ export class AgendaState {
 
     // Advance turn/phase current "waiting for" player sets no whens or afters.
     new AdvanceNoWhensAfters(this);
+
+    // Report final state when finished.
+    new ReportFinalAgendaState(this);
   }
 
   destroy(): void {

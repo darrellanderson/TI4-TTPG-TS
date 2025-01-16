@@ -1,6 +1,7 @@
 import { NamespaceId } from "ttpg-darrell";
 import { MockPlayer } from "ttpg-mock";
 import { AgendaState } from "./agenda-state";
+import { world } from "@tabletop-playground/api";
 
 it("constructor/destroy/isActive/static isAgendaInProgress", () => {
   const id: NamespaceId = "@test/test";
@@ -18,6 +19,12 @@ it("constructor/destroy/isActive/static isAgendaInProgress", () => {
   agendaState.destroy();
   expect(AgendaState.isAgendaInProgress(id)).toBe(false);
   expect(agendaState.isActive()).toBe(false);
+});
+
+it("constructor (bad json)", () => {
+  const id: NamespaceId = "@test/test";
+  world.setSavedData("bad json", id);
+  expect(() => new AgendaState(id)).toThrow();
 });
 
 it("agenda obj id", () => {
