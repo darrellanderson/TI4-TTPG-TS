@@ -1,4 +1,4 @@
-import { PlayerSlot } from "ttpg-darrell";
+import { Broadcast, PlayerSlot } from "ttpg-darrell";
 import { AgendaState } from "./agenda-state";
 
 export type AgendaOutcomeSummary = {
@@ -99,5 +99,14 @@ export class ReportFinalAgendaState {
 
   constructor(agendaState: AgendaState) {
     this._agendaState = agendaState;
+
+    agendaState.onAgendaStateChanged.add(() => {
+      if (ReportFinalAgendaState.isComplete(this._agendaState)) {
+        const summary: string = ReportFinalAgendaState.summary(
+          this._agendaState
+        );
+        Broadcast.chatAll(summary);
+      }
+    });
   }
 }
