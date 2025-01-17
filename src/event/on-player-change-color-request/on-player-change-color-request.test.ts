@@ -1,5 +1,5 @@
-import { Player } from "@tabletop-playground/api";
-import { MockPlayer } from "ttpg-mock";
+import { Button, Player } from "@tabletop-playground/api";
+import { MockButton, MockPlayer } from "ttpg-mock";
 import { OnPlayerChangeColorRequest } from "./on-player-change-color-request";
 
 it("init/destroy", () => {
@@ -17,5 +17,7 @@ it("event", () => {
 
 it("cancel handler", () => {
   const onPlayerChangeColorRequest = new OnPlayerChangeColorRequest();
-  onPlayerChangeColorRequest._onCancelClickedHandler;
+  const button: Button = new MockButton();
+  const player: Player = new MockPlayer();
+  onPlayerChangeColorRequest._onCancelClickedHandler(button, player);
 });

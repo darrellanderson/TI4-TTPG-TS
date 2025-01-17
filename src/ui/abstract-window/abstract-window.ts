@@ -33,7 +33,6 @@ export class AbstractWindow {
     namespaceId: NamespaceId | undefined,
     windowTitle: string
   ) {
-    console.log("AbstractWindow.constructor", windowTitle);
     this._namespaceId = namespaceId;
 
     const defaultParams: CreateAbstractUIParams = {
