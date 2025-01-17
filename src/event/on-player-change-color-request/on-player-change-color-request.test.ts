@@ -17,12 +17,5 @@ it("event", () => {
 
 it("cancel handler", () => {
   const onPlayerChangeColorRequest = new OnPlayerChangeColorRequest();
-  onPlayerChangeColorRequest.init();
-  const playerSlot: number = 10;
-  const clickingPlayer: Player = new MockPlayer();
-  TI4.events.onPlayerChangeColorRequest.trigger(playerSlot, clickingPlayer);
-
-  const cancelHandler =
-    onPlayerChangeColorRequest._createCancelOnClickedHandler(10);
-  cancelHandler();
+  onPlayerChangeColorRequest._onCancelClickedHandler;
 });

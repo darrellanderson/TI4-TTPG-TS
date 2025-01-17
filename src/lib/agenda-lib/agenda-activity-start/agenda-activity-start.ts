@@ -7,6 +7,7 @@ import { AgendaTurnOrder } from "../agenda-turn-order/agenda-turn-order";
 import { AgendaStateUI } from "../../../ui/agenda-ui/agenda-state-ui/agenda-state-ui";
 import {
   AbstractWindow,
+  CreateAbstractUIParams,
   CreateAbstractUIType,
 } from "../../../ui/abstract-window/abstract-window";
 
@@ -49,12 +50,12 @@ export class AgendaActivityStart {
 
     // Create UI, window.
     const createAbstractUI: CreateAbstractUIType = (
-      playerSlot: number,
-      scale: number
+      params: CreateAbstractUIParams
     ): AbstractUI => {
-      const seatIndex: number =
-        TI4.playerSeats.getSeatIndexByPlayerSlot(playerSlot);
-      return new AgendaStateUI(agendaState, seatIndex, scale);
+      const seatIndex: number = TI4.playerSeats.getSeatIndexByPlayerSlot(
+        params.playerSlot
+      );
+      return new AgendaStateUI(agendaState, seatIndex, params.scale);
     };
     const windowTitle: string = "Agenda";
     const abstractWindow: AbstractWindow = new AbstractWindow(

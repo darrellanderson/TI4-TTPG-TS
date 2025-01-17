@@ -1,14 +1,17 @@
 import { Window } from "ttpg-darrell";
 import { AbstractUI } from "../abstract-ui/abtract-ui";
 import { ButtonUI } from "../button-ui/button-ui";
-import { AbstractWindow, CreateAbstractUIType } from "./abstract-window";
+import {
+  AbstractWindow,
+  CreateAbstractUIParams,
+  CreateAbstractUIType,
+} from "./abstract-window";
 
 it("constuctor, createWindow", () => {
   const createAbstractUI: CreateAbstractUIType = (
-    _playerSlot: number,
-    scale: number
+    params: CreateAbstractUIParams
   ): AbstractUI => {
-    return new ButtonUI(scale);
+    return new ButtonUI(params.scale);
   };
   const namespaceId = "@test/test";
   const title: string = "Test Window";

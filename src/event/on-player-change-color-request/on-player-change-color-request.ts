@@ -4,31 +4,37 @@ import { Broadcast, IGlobal, NamespaceId, Window } from "ttpg-darrell";
 import { AbstractUI } from "../../ui/abstract-ui/abtract-ui";
 import {
   AbstractWindow,
+  CreateAbstractUIParams,
   CreateAbstractUIType,
 } from "../../ui/abstract-window/abstract-window";
 import { ChangeColorUI } from "../../ui/change-color-ui/change-color-ui";
 
 export class OnPlayerChangeColorRequest implements IGlobal {
-  private _playerSlotToWindow: Map<number, Window> = new Map();
+  private _colorChangeWindow: Window | undefined;
+
+  readonly _onCancelClickedHandler = (
+    _button: Button,
+    _player: Player
+  ): void => {
+    this._closeWindow();
+  };
 
   private readonly _onPlayerChangeColorRequestHandler = (
-    playerSlot: number,
+    targetPlayerSlot: number,
     clickingPlayer: Player
   ) => {
+    this._closeWindow();
+
     const clickingPlayerName: string = clickingPlayer.getName();
     const msg: string = `${clickingPlayerName} clicked change player color`;
     Broadcast.chatAll(msg);
 
     const createAbstractUi: CreateAbstractUIType = (
-      scale: number
+      params: CreateAbstractUIParams
     ): AbstractUI => {
-      const changeColorUi = new ChangeColorUI(playerSlot, scale);
+      const changeColorUi = new ChangeColorUI(targetPlayerSlot, params.scale);
       const cancelButton: Button = changeColorUi.getCancelButton();
-
-      cancelButton.onClicked.add(
-        this._createCancelOnClickedHandler(playerSlot)
-      );
-
+      cancelButton.onClicked.add(this._onCancelClickedHandler);
       return changeColorUi;
     };
     const namespaceId: NamespaceId | undefined = undefined;
@@ -38,29 +44,22 @@ export class OnPlayerChangeColorRequest implements IGlobal {
       "Change Color"
     );
     const window: Window = abstractWindow.createWindow().attach();
-    this._playerSlotToWindow.set(playerSlot, window);
+    this._colorChangeWindow = window;
   };
 
   private readonly _onPlayerChangedColorHandler = (
-    playerSlot: number,
+    _playerSlot: number,
     _colorName: string,
     _colorHex: string,
     _clickingPlayer: Player
   ): void => {
-    this._closeWindow(playerSlot);
+    this._closeWindow();
   };
 
-  public _createCancelOnClickedHandler(playerSlot: number): () => void {
-    return () => {
-      this._closeWindow(playerSlot);
-    };
-  }
-
-  _closeWindow(playerSlot: number) {
-    const window: Window | undefined = this._playerSlotToWindow.get(playerSlot);
-    if (window) {
-      window.detach();
-      this._playerSlotToWindow.delete(playerSlot);
+  _closeWindow() {
+    if (this._colorChangeWindow) {
+      this._colorChangeWindow.detach();
+      this._colorChangeWindow = undefined;
     }
   }
 

@@ -1,4 +1,4 @@
-import { MockContentButton, MockPlayer } from "ttpg-mock";
+import { MockCardHolder, MockContentButton, MockPlayer } from "ttpg-mock";
 import { ChangeColorUI } from "./change-color-ui";
 import { ContentButton, Player } from "@tabletop-playground/api";
 
@@ -8,6 +8,15 @@ it("static getAllColorNames", () => {
 });
 
 it("constructor", () => {
+  new MockCardHolder({
+    owningPlayerSlot: 10,
+    templateMetadata: "card-holder:base/player-hand",
+  });
+  new MockCardHolder({
+    owningPlayerSlot: 11,
+    templateMetadata: "card-holder:base/player-hand",
+  });
+
   const playerSlot: number = 10;
   const scale: number = 1;
   new ChangeColorUI(playerSlot, scale);

@@ -41,13 +41,27 @@ export class ChangeColorUI extends AbstractUI {
     targetPlayerSlot: number,
     scale: number
   ): AbstractUI {
-    const colorLib: ColorLib = new ColorLib();
+    // Disable if color in use.
+    const inUseColorNames: Set<string> = new Set();
+    TI4.playerSeats.getAllSeats().forEach((playerSeat) => {
+      const playerSlot: number = playerSeat.playerSlot;
+      if (playerSlot !== targetPlayerSlot) {
+        const colorName: string =
+          TI4.playerColor.getSlotColorNameOrThrow(playerSlot);
+        inUseColorNames.add(colorName);
+      }
+    });
+    const isEnabled: boolean = !inUseColorNames.has(colorName);
 
     const nameUi: LabelUI = new LabelUI(scale);
     nameUi.getText().setText(colorName);
+    if (!isEnabled) {
+      nameUi.getText().setTextColor([0, 0, 0, 1]);
+    }
 
     const uis: Array<AbstractUI> = [nameUi];
 
+    const colorLib: ColorLib = new ColorLib();
     const numColors: number = colorLib.getColorsLengthOrThrow(colorName);
     for (let i = 0; i < numColors; i++) {
       const colorsType: ColorsType = colorLib.getColorsByNameOrThrow(
@@ -62,6 +76,9 @@ export class ChangeColorUI extends AbstractUI {
         .onClicked.add(
           ChangeColorUI._getClickHandler(targetPlayerSlot, colorName, colorHex)
         );
+
+      // Only allow colors not already in use.
+      colorUi.getContentButton().setEnabled(isEnabled);
 
       uis.push(colorUi);
     }
@@ -85,7 +102,7 @@ export class ChangeColorUI extends AbstractUI {
     uis.push(cancelButton);
 
     const abstractUi: AbstractUI = new VerticalUIBuilder()
-      .setHorizontalAlignment(HorizontalAlignment.Right)
+      .setHorizontalAlignment(HorizontalAlignment.Center)
       .setSpacing(CONFIG.SPACING * scale)
       .addUIs(uis)
       .build();

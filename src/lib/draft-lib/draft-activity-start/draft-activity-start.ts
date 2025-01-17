@@ -3,6 +3,7 @@ import { Direction, IGlobal, NamespaceId, Shuffle, Window } from "ttpg-darrell";
 import { AbstractUI } from "../../../ui/abstract-ui/abtract-ui";
 import {
   AbstractWindow,
+  CreateAbstractUIParams,
   CreateAbstractUIType,
 } from "../../../ui/abstract-window/abstract-window";
 import { DraftState } from "../draft-state/draft-state";
@@ -165,10 +166,9 @@ export class DraftActivityStart {
     });
 
     const create: CreateAbstractUIType = (
-      _playerSlot: number,
-      scale: number
+      params: CreateAbstractUIParams
     ): AbstractUI => {
-      return new DraftStateUI(draftState, scale);
+      return new DraftStateUI(draftState, params.scale);
     };
     const namespaceId: NamespaceId = "@TI4/draft-window";
     const windowTitle: string = "Draft";
