@@ -20,7 +20,7 @@ export class EditableButtonUI extends AbstractUI {
     if (this._widgetSwitcher.getActiveWidget() === this._button) {
       this._widgetSwitcher.setActiveWidget(this._editText);
     } else if (this._widgetSwitcher.getActiveWidget() === this._editText) {
-      this._widgetSwitcher.setActiveWidget(this._button);
+      this._onEditTextCommitted();
     }
   };
 
@@ -55,8 +55,8 @@ export class EditableButtonUI extends AbstractUI {
       .addChild(editText);
 
     const panel: Widget = new HorizontalBox()
-      .addChild(widgetSwitcher)
-      .addChild(edit, 1);
+      .addChild(widgetSwitcher, 1)
+      .addChild(edit, 0);
 
     const box: Widget = new LayoutBox()
       .setOverrideWidth(size.w)
@@ -69,6 +69,8 @@ export class EditableButtonUI extends AbstractUI {
     this._button = button;
     this._editText = editText;
     this._widgetSwitcher = widgetSwitcher;
+
+    edit.onClicked.add(this._onEditClicked);
   }
 
   destroy(): void {
