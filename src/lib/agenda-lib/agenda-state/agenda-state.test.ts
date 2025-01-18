@@ -116,7 +116,7 @@ it("seat votes locked", () => {
   const agendaState: AgendaState = new AgendaState("@test/test");
   expect(agendaState.getSeatVotesLocked(0)).toBe(false);
   expect(agendaState.getSeatVotesLocked(1)).toBe(false);
-  agendaState.setSeatsVotesLocked(1, true);
+  agendaState.setSeatVotesLocked(1, true);
   expect(agendaState.getSeatVotesLocked(0)).toBe(false);
   expect(agendaState.getSeatVotesLocked(1)).toBe(true);
 });

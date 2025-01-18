@@ -48,7 +48,9 @@ export class EditableButtonUI extends AbstractUI {
       .setFontSize(CONFIG.FONT_SIZE * scale)
       .setText("X");
 
-    const edit: ImageButton = new ImageButton().setImageSize(size.h, size.h);
+    const edit: ImageButton = new ImageButton()
+      .setImage("ui/agenda/edit.png")
+      .setImageSize(size.h, size.h);
 
     const widgetSwitcher: WidgetSwitcher = new WidgetSwitcher()
       .addChild(button)
@@ -75,5 +77,21 @@ export class EditableButtonUI extends AbstractUI {
 
   destroy(): void {
     this._button.onClicked.clear();
+  }
+
+  getButton(): Button {
+    return this._button;
+  }
+
+  /**
+   * Expost the TextBox in order to restrict value types (e.g. numbers only).
+   * @returns
+   */
+  getTextBox(): TextBox {
+    return this._editText;
+  }
+
+  getWidgetSwitcher(): WidgetSwitcher {
+    return this._widgetSwitcher;
   }
 }

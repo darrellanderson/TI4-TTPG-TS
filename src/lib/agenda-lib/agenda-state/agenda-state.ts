@@ -242,7 +242,7 @@ export class AgendaState {
     return seatState.lockVotes;
   }
 
-  setSeatsVotesLocked(seatIndex: number, locked: boolean) {
+  setSeatVotesLocked(seatIndex: number, locked: boolean) {
     const seatState = this._getSeatState(seatIndex);
     seatState.lockVotes = locked;
     this._save();

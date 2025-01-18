@@ -12,3 +12,11 @@ it("edit click", () => {
   editableButton._onEditClicked();
   editableButton._onEditTextCommitted();
 });
+
+it("getters", () => {
+  const scale: number = 1;
+  const editableButton: EditableButtonUI = new EditableButtonUI(scale);
+  editableButton.getButton();
+  editableButton.getTextBox();
+  editableButton.getWidgetSwitcher();
+});

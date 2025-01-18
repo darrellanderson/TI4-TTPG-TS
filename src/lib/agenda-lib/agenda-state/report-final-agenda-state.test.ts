@@ -29,7 +29,7 @@ it("static isComplete", () => {
   TI4.turnOrder.setTurnOrder([10, 11], "forward", 11);
   expect(ReportFinalAgendaState.isComplete(agendaState)).toBe(false);
 
-  agendaState.setSeatsVotesLocked(1, true);
+  agendaState.setSeatVotesLocked(1, true);
   expect(ReportFinalAgendaState.isComplete(agendaState)).toBe(true);
 });
 
@@ -155,6 +155,6 @@ it("constructor/event", () => {
   TI4.turnOrder.setTurnOrder([10, 11], "forward", 11);
   expect(ReportFinalAgendaState.isComplete(agendaState)).toBe(false);
 
-  agendaState.setSeatsVotesLocked(1, true);
+  agendaState.setSeatVotesLocked(1, true);
   expect(ReportFinalAgendaState.isComplete(agendaState)).toBe(true);
 });

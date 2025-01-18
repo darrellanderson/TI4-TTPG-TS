@@ -2,12 +2,14 @@ import {
   Card,
   GameObject,
   Text,
+  TextJustification,
   VerticalAlignment,
   world,
 } from "@tabletop-playground/api";
 import { AbstractUI } from "../../abstract-ui/abtract-ui";
-import { AgendaState } from "../../../lib/agenda-lib/agenda-state/agenda-state";
 import { AgendaCardUI } from "../agenda-card-ui/agenda-card-ui";
+import { AgendaState } from "../../../lib/agenda-lib/agenda-state/agenda-state";
+import { AgendaVoteCountUI } from "../agenda-vote-count-ui/agenda-vote-count-ui";
 import { ButtonUI } from "../../button-ui/button-ui";
 import { CONFIG } from "../../config/config";
 import { HorizontalUIBuilder } from "../../panel/horizontal-ui-builder";
@@ -78,7 +80,7 @@ export class AgendaStateUI extends AbstractUI {
     });
 
     return new HorizontalUIBuilder()
-      .setSpacing(CONFIG.SPACING)
+      .setSpacing(CONFIG.SPACING * scale)
       .addUIs([noWhens, neverWhens, reset])
       .build();
   }
@@ -114,8 +116,41 @@ export class AgendaStateUI extends AbstractUI {
     });
 
     return new HorizontalUIBuilder()
-      .setSpacing(CONFIG.SPACING)
+      .setSpacing(CONFIG.SPACING * scale)
       .addUIs([noAfters, neverAfters, reset])
+      .build();
+  }
+
+  /**
+   * Votes: [not voting|#] [lock votes]
+   *
+   * @param agendaState
+   * @param seatIndex
+   * @param scale
+   * @returns
+   */
+  static _createVoteUI(
+    agendaState: AgendaState,
+    seatIndex: number,
+    scale: number
+  ): AbstractUI {
+    const scaledWidth: number =
+      CONFIG.BUTTON_WIDTH * scale * 2 + CONFIG.SPACING * scale;
+    const label: LongLabelUI = new LongLabelUI(scaledWidth, scale);
+    label
+      .getText()
+      .setJustification(TextJustification.Right)
+      .setText("Select outcome below.  Votes:");
+
+    const votes: AgendaVoteCountUI = new AgendaVoteCountUI(
+      agendaState,
+      seatIndex,
+      scale
+    );
+
+    return new HorizontalUIBuilder()
+      .setSpacing(CONFIG.SPACING * scale)
+      .addUIs([label, votes])
       .build();
   }
 
@@ -146,15 +181,21 @@ export class AgendaStateUI extends AbstractUI {
       scale
     );
 
-    const whensAfters: AbstractUI = new VerticalUIBuilder()
-      .setSpacing(CONFIG.SPACING)
-      .addUIs([waitingForUI, whensUI, aftersUI])
+    const votingUI: AbstractUI = AgendaStateUI._createVoteUI(
+      agendaState,
+      seatIndex,
+      scale
+    );
+
+    const whensAftersVotes: AbstractUI = new VerticalUIBuilder()
+      .setSpacing(CONFIG.SPACING * scale)
+      .addUIs([waitingForUI, whensUI, aftersUI, votingUI])
       .build();
 
     return new HorizontalUIBuilder()
-      .setSpacing(CONFIG.SPACING)
+      .setSpacing(CONFIG.SPACING * scale)
       .setVerticalAlignment(VerticalAlignment.Top)
-      .addUIs([agendaCardUI, whensAfters])
+      .addUIs([agendaCardUI, whensAftersVotes])
       .build();
   }
 
