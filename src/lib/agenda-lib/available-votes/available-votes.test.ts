@@ -97,3 +97,21 @@ it("_getPlayerSlotToPerPlanetBonus (alliance, but commander not unlocked)", () =
   const expected: Map<number, number> = new Map();
   expect(value).toEqual(expected);
 });
+
+it("_getXxchaResInfVotes (no cards)", () => {
+  const value: Set<number> = new AvailableVotes()._getXxchaResInfVotes();
+  const expected: Set<number> = new Set();
+  expect(value).toEqual(expected);
+});
+
+it("_getXxchaResInfVotes (hero)", () => {
+  new MockCardHolder({
+    templateMetadata: "card-holder:base/player-hand",
+    owningPlayerSlot: 10,
+  });
+  MockCard.simple("card.leader.hero.xxcha:codex.vigil/xxekir_grom.omega");
+
+  const value: Set<number> = new AvailableVotes()._getXxchaResInfVotes();
+  const expected: Set<number> = new Set([10]);
+  expect(value).toEqual(expected);
+});

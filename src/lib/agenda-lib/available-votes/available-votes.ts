@@ -4,7 +4,7 @@ import {
   StaticObject,
   Vector,
 } from "@tabletop-playground/api";
-import { CardUtil, Find, NSID } from "ttpg-darrell";
+import { CardUtil, Find, NSID, PlayerSlot } from "ttpg-darrell";
 
 export class AvailableVotes {
   private readonly _cardUtil: CardUtil = new CardUtil();
@@ -95,7 +95,33 @@ export class AvailableVotes {
     return playerSlotToPerPlanetBonus;
   }
 
-  _hasXxchaResInfVotes(): boolean {
-    return false;
+  /**
+   * Get which player (if any) has the unlocked xxcha hero.
+   * The call signature allows more than one, but internally
+   * only looks for the first.
+   *
+   * @returns
+   */
+  _getXxchaResInfVotes(): Set<PlayerSlot> {
+    const result: Set<PlayerSlot> = new Set();
+
+    const gromOmegaNsid: string =
+      "card.leader.hero.xxcha:codex.vigil/xxekir_grom.omega";
+    const playerSlot: number | undefined = undefined;
+    const skipContained: boolean = true;
+    const gromOmega: Card | undefined = this._find.findCard(
+      gromOmegaNsid,
+      playerSlot,
+      skipContained
+    );
+
+    const allowFaceDown: boolean = false;
+    if (gromOmega && this._cardUtil.isLooseCard(gromOmega, allowFaceDown)) {
+      const pos: Vector = gromOmega.getPosition();
+      const playerSlot: number = this._find.closestOwnedCardHolderOwner(pos);
+      result.add(playerSlot);
+    }
+
+    return result;
   }
 }
