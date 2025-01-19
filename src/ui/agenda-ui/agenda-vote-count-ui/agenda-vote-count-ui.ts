@@ -72,7 +72,6 @@ export class AgendaVoteCountUI extends AbstractUI {
       .setChild(panel);
 
     agendaState.onAgendaStateChanged.add(() => {
-      console.log("agendaState.onAgendaStateChanged");
       const votes: number = agendaState.getSeatVotesForOutcome(seatIndex);
       const locked: boolean = agendaState.getSeatVotesLocked(seatIndex);
       votesTextBox.setText(votes.toString());
