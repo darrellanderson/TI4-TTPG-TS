@@ -3,7 +3,9 @@ import {
   SnapPoint,
   StaticObject,
   Vector,
+  world,
 } from "@tabletop-playground/api";
+import { Planet } from "lib/system-lib/planet/planet";
 import { CardUtil, Find, NSID, PlayerSlot } from "ttpg-darrell";
 
 export class AvailableVotes {
@@ -123,5 +125,60 @@ export class AvailableVotes {
     }
 
     return result;
+  }
+
+  getPlayerSlotToVotes(): Map<number, number> {
+    const playerSlotToVotes: Map<number, number> = new Map();
+    for (const seat of TI4.playerSeats.getAllSeats()) {
+      playerSlotToVotes.set(seat.playerSlot, 0);
+    }
+
+    // Representative Government, all players get one vote.
+    if (this._isRepresentativeGovernment()) {
+      for (const playerSlot of playerSlotToVotes.keys()) {
+        playerSlotToVotes.set(playerSlot, 1);
+      }
+      return playerSlotToVotes;
+    }
+
+    const playerSlotToPerPlanetBonus: Map<number, number> =
+      this._getPlayerSlotToPerPlanetBonus();
+    const xxchaResInfVotes: Set<PlayerSlot> = this._getXxchaResInfVotes();
+
+    const skipContained: boolean = true;
+    const allowFaceDown: boolean = false;
+    for (const obj of world.getAllObjects(skipContained)) {
+      if (this._cardUtil.isLooseCard(obj, allowFaceDown)) {
+        const nsid: string = NSID.get(obj);
+        const planet: Planet | undefined =
+          TI4.systemRegistry.getPlanetByPlanetCardNsid(nsid);
+        if (planet) {
+          const pos: Vector = obj.getPosition();
+          const playerSlot: number =
+            this._find.closestOwnedCardHolderOwner(pos);
+          let votes: number | undefined = playerSlotToVotes.get(playerSlot);
+          if (votes !== undefined) {
+            // Normal influence.
+            votes += planet.getInfluence();
+
+            // Per-planet bonus.
+            const bonus: number | undefined =
+              playerSlotToPerPlanetBonus.get(playerSlot);
+            if (bonus !== undefined) {
+              votes += bonus;
+            }
+
+            // Xxcha omega hero.
+            if (xxchaResInfVotes.has(playerSlot)) {
+              votes += planet.getResources();
+            }
+
+            playerSlotToVotes.set(playerSlot, votes);
+          }
+        }
+      }
+    }
+
+    return playerSlotToVotes;
   }
 }
