@@ -50,13 +50,17 @@ export class AgendaVoteCountUI extends AbstractUI {
   };
 
   readonly _incr = (): void => {
-    let votes: number = parseInt(this._votesTextBox.getText(), 10);
+    let votes: number = this._agendaState.getSeatVotesForOutcome(
+      this._seatIndex
+    );
     votes = Math.min(999, votes + 1);
     this._agendaState.setSeatVotesForOutcome(this._seatIndex, votes);
   };
 
   readonly _decr = (): void => {
-    let votes: number = parseInt(this._votesTextBox.getText(), 10);
+    let votes: number = this._agendaState.getSeatVotesForOutcome(
+      this._seatIndex
+    );
     votes = Math.max(0, votes - 1);
     this._agendaState.setSeatVotesForOutcome(this._seatIndex, votes);
   };

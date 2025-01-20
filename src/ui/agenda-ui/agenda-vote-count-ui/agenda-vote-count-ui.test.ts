@@ -8,6 +8,44 @@ it("constructor/destroy", () => {
   new AgendaVoteCountUI(agendaState, seatIndex, scale).destroy();
 });
 
+it("_decr", () => {
+  const agendaState: AgendaState = new AgendaState("@test/test");
+  const seatIndex: number = 0;
+  const scale: number = 1;
+  const agendaVoteCountUI: AgendaVoteCountUI = new AgendaVoteCountUI(
+    agendaState,
+    seatIndex,
+    scale
+  );
+  agendaState.setSeatVotesForOutcome(seatIndex, 1);
+  expect(agendaState.getSeatVotesForOutcome(seatIndex)).toBe(1);
+
+  agendaVoteCountUI._decr();
+  expect(agendaState.getSeatVotesForOutcome(seatIndex)).toBe(0);
+
+  agendaVoteCountUI._decr();
+  expect(agendaState.getSeatVotesForOutcome(seatIndex)).toBe(0);
+
+  agendaVoteCountUI.destroy();
+});
+
+it("_incr", () => {
+  const agendaState: AgendaState = new AgendaState("@test/test");
+  const seatIndex: number = 0;
+  const scale: number = 1;
+  const agendaVoteCountUI: AgendaVoteCountUI = new AgendaVoteCountUI(
+    agendaState,
+    seatIndex,
+    scale
+  );
+  expect(agendaState.getSeatVotesForOutcome(seatIndex)).toBe(0);
+
+  agendaVoteCountUI._incr();
+  expect(agendaState.getSeatVotesForOutcome(seatIndex)).toBe(1);
+
+  agendaVoteCountUI.destroy();
+});
+
 it("_onLockClicked", () => {
   const agendaState: AgendaState = new AgendaState("@test/test");
   const seatIndex: number = 0;
