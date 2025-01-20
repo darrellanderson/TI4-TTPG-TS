@@ -1,4 +1,4 @@
-import { GameObject, world } from "@tabletop-playground/api";
+import { Card, GameObject, world } from "@tabletop-playground/api";
 import { CardUtil, Facing, HexType, NSID } from "ttpg-darrell";
 import { Vector } from "ttpg-mock";
 
@@ -28,12 +28,13 @@ export class ResetPlanetCards {
       const hex: HexType = TI4.hex.fromPosition(pos);
 
       if (
+        obj instanceof Card &&
         isCandidate &&
         this._cardUtil.isLooseCard(obj, allowFaceDown) &&
         !Facing.isFaceUp(obj) &&
         !systemHexes.has(hex)
       ) {
-        //
+        obj.flipOrUpright();
       }
     }
   }
