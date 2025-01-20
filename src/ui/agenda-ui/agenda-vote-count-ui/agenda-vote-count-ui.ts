@@ -11,6 +11,8 @@ import { AgendaState } from "../../../lib/agenda-lib/agenda-state/agenda-state";
 import { CONFIG } from "../../config/config";
 
 /**
+ * ONE player's vote entry.
+ *
  * #editable [lock]
  */
 export class AgendaVoteCountUI extends AbstractUI {
@@ -47,11 +49,31 @@ export class AgendaVoteCountUI extends AbstractUI {
     );
   };
 
+  readonly _incr = (): void => {
+    let votes: number = parseInt(this._votesTextBox.getText(), 10);
+    votes = Math.min(999, votes + 1);
+    this._agendaState.setSeatVotesForOutcome(this._seatIndex, votes);
+  };
+
+  readonly _decr = (): void => {
+    let votes: number = parseInt(this._votesTextBox.getText(), 10);
+    votes = Math.max(0, votes - 1);
+    this._agendaState.setSeatVotesForOutcome(this._seatIndex, votes);
+  };
+
   constructor(agendaState: AgendaState, seatIndex: number, scale: number) {
     const votesTextBox: TextBox = new TextBox()
       .setFontSize(CONFIG.FONT_SIZE * scale)
       .setMaxLength(3)
       .setInputType(4); // positive integers (or zero)
+
+    const decrButton: Button = new Button()
+      .setFontSize(CONFIG.FONT_SIZE * scale)
+      .setText("-");
+
+    const incrButton: Button = new Button()
+      .setFontSize(CONFIG.FONT_SIZE * scale)
+      .setText("+");
 
     const lockButton: Button = new Button().setFontSize(
       CONFIG.FONT_SIZE * scale
@@ -59,7 +81,9 @@ export class AgendaVoteCountUI extends AbstractUI {
 
     const panel: Panel = new HorizontalBox()
       .setChildDistance(CONFIG.SPACING * scale)
-      .addChild(votesTextBox, 0.6)
+      .addChild(votesTextBox, 0.3)
+      .addChild(decrButton, 0.15)
+      .addChild(incrButton, 0.15)
       .addChild(lockButton, 0.4);
 
     const size: UI_SIZE = {
@@ -76,11 +100,15 @@ export class AgendaVoteCountUI extends AbstractUI {
       const locked: boolean = agendaState.getSeatVotesLocked(seatIndex);
       votesTextBox.setText(votes.toString());
       votesTextBox.setEnabled(!locked);
+      decrButton.setEnabled(!locked);
+      incrButton.setEnabled(!locked);
       lockButton.setText(locked ? "Unlock" : "Lock");
     });
 
     super(widget, size);
 
+    decrButton.onClicked.add(this._decr);
+    incrButton.onClicked.add(this._incr);
     lockButton.onClicked.add(this._onLockClicked);
     votesTextBox.onTextCommitted.add(this._onVotesChanged);
 
