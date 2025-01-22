@@ -1,6 +1,7 @@
 import { Button, LayoutBox, Player, Widget } from "@tabletop-playground/api";
 import { AbstractUI, UI_SIZE } from "../../abstract-ui/abtract-ui";
 import { AgendaState } from "../../../lib/agenda-lib/agenda-state/agenda-state";
+import { CONFIG } from "../../config/config";
 import { EditableButtonUI } from "../../button-ui/editable-button-ui";
 
 /**
@@ -22,7 +23,10 @@ export class AgendaOutcomeUI extends AbstractUI {
   };
 
   constructor(agendaState: AgendaState, outcomeIndex: number, scale: number) {
-    const size: UI_SIZE = { w: 100 * scale, h: 100 * scale };
+    const size: UI_SIZE = {
+      w: CONFIG.BUTTON_WIDTH * scale,
+      h: CONFIG.BUTTON_HEIGHT * scale,
+    };
 
     const outcomeNameUi: EditableButtonUI = new EditableButtonUI(scale);
 

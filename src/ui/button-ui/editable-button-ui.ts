@@ -3,6 +3,7 @@ import {
   HorizontalBox,
   ImageButton,
   LayoutBox,
+  refPackageId,
   TextBox,
   Widget,
   WidgetSwitcher,
@@ -11,6 +12,8 @@ import { TriggerableMulticastDelegate } from "ttpg-darrell";
 
 import { AbstractUI, UI_SIZE } from "../abstract-ui/abtract-ui";
 import { CONFIG } from "../config/config";
+
+const packageId: string = refPackageId;
 
 export class EditableButtonUI extends AbstractUI {
   public onEdited = new TriggerableMulticastDelegate<(text: string) => void>();
@@ -49,7 +52,7 @@ export class EditableButtonUI extends AbstractUI {
       .setText("X");
 
     const edit: ImageButton = new ImageButton()
-      .setImage("ui/agenda/edit.png")
+      .setImage("ui/agenda/edit.png", packageId)
       .setImageSize(size.h, size.h);
 
     const widgetSwitcher: WidgetSwitcher = new WidgetSwitcher()
