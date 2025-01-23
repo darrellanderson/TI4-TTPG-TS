@@ -15,6 +15,7 @@ import { CONFIG } from "../../config/config";
 import { HorizontalUIBuilder } from "../../panel/horizontal-ui-builder";
 import { LongLabelUI } from "../../button-ui/long-label-ui";
 import { VerticalUIBuilder } from "../../panel/vertical-ui-builder";
+import { AgendaOutcomeUI } from "../agenda-outcome-ui/agenda-outcome-ui";
 
 export class AgendaStateUI extends AbstractUI {
   private readonly _agendaState: AgendaState;
@@ -154,6 +155,22 @@ export class AgendaStateUI extends AbstractUI {
       .build();
   }
 
+  static _createOutcomeUIs(
+    agendaState: AgendaState,
+    scale: number
+  ): AbstractUI {
+    const outcomeUIs: Array<AbstractUI> = [];
+    for (let i = 0; i < 8; i++) {
+      const outcomeUI: AbstractUI = new AgendaOutcomeUI(agendaState, i, scale);
+      outcomeUIs.push(outcomeUI);
+    }
+
+    return new VerticalUIBuilder()
+      .setSpacing(CONFIG.SPACING * scale)
+      .addUIs(outcomeUIs)
+      .build();
+  }
+
   static _createTopRowUI(
     agendaState: AgendaState,
     seatIndex: number,
@@ -187,9 +204,14 @@ export class AgendaStateUI extends AbstractUI {
       scale
     );
 
+    const outcomeUIs: AbstractUI = AgendaStateUI._createOutcomeUIs(
+      agendaState,
+      scale
+    );
+
     const whensAftersVotes: AbstractUI = new VerticalUIBuilder()
       .setSpacing(CONFIG.SPACING * scale)
-      .addUIs([waitingForUI, whensUI, aftersUI, votingUI])
+      .addUIs([waitingForUI, whensUI, aftersUI, votingUI, outcomeUIs])
       .build();
 
     return new HorizontalUIBuilder()

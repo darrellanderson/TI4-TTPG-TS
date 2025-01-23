@@ -9,6 +9,7 @@ import {
 import { AbstractUI, UI_SIZE } from "../../abstract-ui/abtract-ui";
 import { AgendaState } from "../../../lib/agenda-lib/agenda-state/agenda-state";
 import { CONFIG } from "../../config/config";
+import { ThrottleClickHandler } from "ttpg-darrell";
 
 /**
  * ONE player's vote entry.
@@ -24,13 +25,13 @@ export class AgendaVoteCountUI extends AbstractUI {
 
   private _delayedApplyVotesHandle: NodeJS.Timeout | undefined;
 
-  readonly _onLockClicked = (): void => {
+  readonly _onLockClicked = new ThrottleClickHandler<Button>((): void => {
     const oldLocked: boolean = this._agendaState.getSeatVotesLocked(
       this._seatIndex
     );
     const newLocked: boolean = !oldLocked;
     this._agendaState.setSeatVotesLocked(this._seatIndex, newLocked);
-  };
+  }).get();
 
   readonly _applyVoteCountToAgendaState = (): void => {
     this._delayedApplyVotesHandle = undefined;
@@ -49,21 +50,21 @@ export class AgendaVoteCountUI extends AbstractUI {
     );
   };
 
-  readonly _incr = (): void => {
+  readonly _incr = new ThrottleClickHandler<Button>((): void => {
     let votes: number = this._agendaState.getSeatVotesForOutcome(
       this._seatIndex
     );
     votes = Math.min(999, votes + 1);
     this._agendaState.setSeatVotesForOutcome(this._seatIndex, votes);
-  };
+  }).get();
 
-  readonly _decr = (): void => {
+  readonly _decr = new ThrottleClickHandler<Button>((): void => {
     let votes: number = this._agendaState.getSeatVotesForOutcome(
       this._seatIndex
     );
     votes = Math.max(0, votes - 1);
     this._agendaState.setSeatVotesForOutcome(this._seatIndex, votes);
-  };
+  }).get();
 
   constructor(agendaState: AgendaState, seatIndex: number, scale: number) {
     const votesTextBox: TextBox = new TextBox()

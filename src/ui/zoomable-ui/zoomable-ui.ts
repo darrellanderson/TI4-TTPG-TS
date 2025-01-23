@@ -16,6 +16,7 @@ import {
   WRAPPED_BORDER_WIDTH,
   WrappedClickableUI,
 } from "../wrapped-clickable-ui/wrapped-clickable-ui";
+import { ThrottleClickHandler } from "ttpg-darrell";
 
 export type CreateZoomedUiType = (scale: number) => AbstractUI;
 
@@ -67,7 +68,11 @@ export class ZoomableUI extends AbstractUI {
       );
       clickableUi
         .getContentButton()
-        .onClicked.add(this._getOnZoomClosedHandler());
+        .onClicked.add(
+          new ThrottleClickHandler<ContentButton>(
+            this._getOnZoomClosedHandler()
+          ).get()
+        );
 
       const screenUiElement = new ScreenUIElement();
       screenUiElement.anchorX = 0.5;
@@ -126,7 +131,11 @@ export class ZoomableUI extends AbstractUI {
 
     this._unzoomedUi = unzoomedUi;
     this._zoomButton = zoomButton;
-    zoomButton.onClicked.add(this._getOnZoomOpenHandler(createZoomedUI, scale));
+    zoomButton.onClicked.add(
+      new ThrottleClickHandler<ImageButton>(
+        this._getOnZoomOpenHandler(createZoomedUI, scale)
+      ).get()
+    );
   }
 
   destroy(): void {

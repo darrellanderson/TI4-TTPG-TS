@@ -1,5 +1,7 @@
+import { Button, Player } from "@tabletop-playground/api";
 import { AgendaState } from "../../../lib/agenda-lib/agenda-state/agenda-state";
 import { AgendaVoteCountUI } from "./agenda-vote-count-ui";
+import { MockButton, MockPlayer } from "ttpg-mock";
 
 it("constructor/destroy", () => {
   const agendaState: AgendaState = new AgendaState("@test/test");
@@ -20,10 +22,12 @@ it("_decr", () => {
   agendaState.setSeatVotesForOutcome(seatIndex, 1);
   expect(agendaState.getSeatVotesForOutcome(seatIndex)).toBe(1);
 
-  agendaVoteCountUI._decr();
+  const button: Button = new MockButton();
+  const player: Player = new MockPlayer();
+  agendaVoteCountUI._decr(button, player);
   expect(agendaState.getSeatVotesForOutcome(seatIndex)).toBe(0);
 
-  agendaVoteCountUI._decr();
+  agendaVoteCountUI._decr(button, player);
   expect(agendaState.getSeatVotesForOutcome(seatIndex)).toBe(0);
 
   agendaVoteCountUI.destroy();
@@ -40,7 +44,9 @@ it("_incr", () => {
   );
   expect(agendaState.getSeatVotesForOutcome(seatIndex)).toBe(0);
 
-  agendaVoteCountUI._incr();
+  const button: Button = new MockButton();
+  const player: Player = new MockPlayer();
+  agendaVoteCountUI._incr(button, player);
   expect(agendaState.getSeatVotesForOutcome(seatIndex)).toBe(1);
 
   agendaVoteCountUI.destroy();
@@ -55,8 +61,11 @@ it("_onLockClicked", () => {
     seatIndex,
     scale
   );
-  agendaVoteCountUI._onLockClicked(); // lock
-  agendaVoteCountUI._onLockClicked(); // unlock
+
+  const button: Button = new MockButton();
+  const player: Player = new MockPlayer();
+  agendaVoteCountUI._onLockClicked(button, player); // lock
+  agendaVoteCountUI._onLockClicked(button, player); // unlock
   agendaVoteCountUI.destroy();
 });
 

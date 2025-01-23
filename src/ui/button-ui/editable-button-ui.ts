@@ -3,12 +3,16 @@ import {
   HorizontalBox,
   ImageButton,
   LayoutBox,
+  Player,
   refPackageId,
   TextBox,
   Widget,
   WidgetSwitcher,
 } from "@tabletop-playground/api";
-import { TriggerableMulticastDelegate } from "ttpg-darrell";
+import {
+  ThrottleClickHandler,
+  TriggerableMulticastDelegate,
+} from "ttpg-darrell";
 
 import { AbstractUI, UI_SIZE } from "../abstract-ui/abtract-ui";
 import { CONFIG } from "../config/config";
@@ -18,7 +22,7 @@ const packageId: string = refPackageId;
 export class EditableButtonUI extends AbstractUI {
   public onEdited = new TriggerableMulticastDelegate<(text: string) => void>();
 
-  readonly _onEditClicked = (): void => {
+  readonly _onEditClicked = (_button: ImageButton, _player: Player): void => {
     this._editText.setText(this._button.getText());
     if (this._widgetSwitcher.getActiveWidget() === this._button) {
       this._widgetSwitcher.setActiveWidget(this._editText);
@@ -75,7 +79,9 @@ export class EditableButtonUI extends AbstractUI {
     this._editText = editText;
     this._widgetSwitcher = widgetSwitcher;
 
-    edit.onClicked.add(this._onEditClicked);
+    edit.onClicked.add(
+      new ThrottleClickHandler<ImageButton>(this._onEditClicked).get()
+    );
   }
 
   destroy(): void {
