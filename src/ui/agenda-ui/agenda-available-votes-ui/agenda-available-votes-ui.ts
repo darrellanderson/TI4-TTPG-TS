@@ -7,6 +7,7 @@ import { CONFIG } from "../../config/config";
  *
  * Feature request for editable available votes, but that
  * requires persistence.  Perhaps add +/- vote tokens homebrewers can add.
+ * Or a vote +- counter?  Tokens you can flip to ignore might be cleanest.
  */
 export class AgendaAvailableVotesUI extends AbstractUI {
   constructor(scaledWidth: number, scale: number) {
