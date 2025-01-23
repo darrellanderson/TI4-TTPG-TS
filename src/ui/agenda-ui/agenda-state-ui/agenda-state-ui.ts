@@ -17,6 +17,15 @@ import { LongLabelUI } from "../../button-ui/long-label-ui";
 import { VerticalUIBuilder } from "../../panel/vertical-ui-builder";
 import { AgendaOutcomeUI } from "../agenda-outcome-ui/agenda-outcome-ui";
 
+/**
+ * [Available votes]
+ * [1. My whens:] [no whens for now] [never whens] [reset whens]
+ * [2. My afters:] [no afters for now] [never afters] [reset afters]
+ * [Voting: choose outcome and set your votes for it below]
+ * [...Outcome] [vote summary]+[]
+ * [3. My votes:] [# + -] [lock votes] [reset votes]
+ * [waiting for: ...]
+ */
 export class AgendaStateUI extends AbstractUI {
   private readonly _agendaState: AgendaState;
   private readonly _onAgendaStateChangedHandler = () => {};
