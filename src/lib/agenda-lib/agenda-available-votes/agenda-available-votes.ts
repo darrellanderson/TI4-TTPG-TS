@@ -160,6 +160,13 @@ export class AgendaAvailableVotes {
       }
     }
 
+    // Add zero votes for any player slots not already in the map.
+    for (const playerSlot of playerSlots) {
+      if (!playerSlotToAvailableVotes.has(playerSlot)) {
+        playerSlotToAvailableVotes.set(playerSlot, 0);
+      }
+    }
+
     return playerSlotToAvailableVotes;
   }
 }

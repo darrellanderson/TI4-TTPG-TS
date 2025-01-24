@@ -112,6 +112,10 @@ it("getPlayerSlotToAvailableVotes (normal)", () => {
     templateMetadata: "card-holder:base/player-hand",
     owningPlayerSlot: 10,
   });
+  new MockCardHolder({
+    templateMetadata: "card-holder:base/player-hand",
+    owningPlayerSlot: 11,
+  });
 
   MockCard.simple("card.planet:base/mecatol-rex"); // 1/6
   MockCard.simple("card.planet:base/zohbat"); // 3/1
@@ -119,8 +123,9 @@ it("getPlayerSlotToAvailableVotes (normal)", () => {
   const agendaAvailableVotes = new AgendaAvailableVotes();
   const playerSlotToAvailableVotes: Map<PlayerSlot, number> =
     agendaAvailableVotes.getPlayerSlotToAvailableVotes();
-  expect(playerSlotToAvailableVotes.size).toBe(1);
+  expect(playerSlotToAvailableVotes.size).toBe(2);
   expect(playerSlotToAvailableVotes.get(10)).toBe(7);
+  expect(playerSlotToAvailableVotes.get(11)).toBe(0);
 });
 
 it("getPlayerSlotToAvailableVotes (per-planet bonus)", () => {
