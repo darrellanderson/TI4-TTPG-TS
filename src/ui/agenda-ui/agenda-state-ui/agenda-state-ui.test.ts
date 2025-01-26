@@ -30,7 +30,7 @@ it("static _createWhensUI", () => {
   const agendaState: AgendaState = new AgendaState("@test/test");
   const seatIndex: number = 0;
   const scale: number = 1;
-  const abstractUi: AbstractUI = AgendaStateUI._createWhensUI(
+  const abstractUi: AbstractUI = AgendaStateUI._createWhensRow(
     agendaState,
     seatIndex,
     scale
@@ -42,7 +42,7 @@ it("static _createAftersUI", () => {
   const agendaState: AgendaState = new AgendaState("@test/test");
   const seatIndex: number = 0;
   const scale: number = 1;
-  const abstractUi: AbstractUI = AgendaStateUI._createAftersUI(
+  const abstractUi: AbstractUI = AgendaStateUI._createAftersRow(
     agendaState,
     seatIndex,
     scale

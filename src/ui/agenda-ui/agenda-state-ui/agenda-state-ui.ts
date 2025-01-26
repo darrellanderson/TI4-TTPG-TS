@@ -1,4 +1,5 @@
 import {
+  Button,
   Card,
   GameObject,
   Text,
@@ -6,19 +7,23 @@ import {
   VerticalAlignment,
   world,
 } from "@tabletop-playground/api";
+import { ThrottleClickHandler } from "ttpg-darrell";
+
 import { AbstractUI } from "../../abstract-ui/abtract-ui";
+import { AgendaAvailableVotesUI } from "../agenda-available-votes-ui/agenda-available-votes-ui";
 import { AgendaCardUI } from "../agenda-card-ui/agenda-card-ui";
+import { AgendaOutcomeUI } from "../agenda-outcome-ui/agenda-outcome-ui";
 import { AgendaState } from "../../../lib/agenda-lib/agenda-state/agenda-state";
 import { AgendaVoteCountUI } from "../agenda-vote-count-ui/agenda-vote-count-ui";
 import { ButtonUI } from "../../button-ui/button-ui";
 import { CONFIG } from "../../config/config";
 import { HorizontalUIBuilder } from "../../panel/horizontal-ui-builder";
+import { LabelUI } from "../../button-ui/label-ui";
 import { LongLabelUI } from "../../button-ui/long-label-ui";
 import { VerticalUIBuilder } from "../../panel/vertical-ui-builder";
-import { AgendaOutcomeUI } from "../agenda-outcome-ui/agenda-outcome-ui";
 
 /**
- * [Available votes]
+ * [Available votes:] [Available votes]x2 [reset votes]
  * [1. My whens:] [no whens for now] [never whens] [reset whens]
  * [2. My afters:] [no afters for now] [never afters] [reset afters]
  * [Voting: choose outcome and set your votes for it below]
@@ -42,7 +47,7 @@ export class AgendaStateUI extends AbstractUI {
     return new AgendaCardUI(agendaCard, scale);
   }
 
-  static _createWaitingForUi(
+  static _createWaitingForRow(
     agendaState: AgendaState,
     scale: number
   ): AbstractUI {
@@ -59,11 +64,37 @@ export class AgendaStateUI extends AbstractUI {
     return longLabel;
   }
 
-  static _createWhensUI(
+  static _createAvailableVotesRow(scale: number): AbstractUI {
+    const label: LabelUI = new LabelUI(scale);
+    label.getText().setText("Available votes:");
+
+    const availableVotesUI: AgendaAvailableVotesUI = new AgendaAvailableVotesUI(
+      scale * 3,
+      scale
+    );
+
+    const reset: ButtonUI = new ButtonUI(scale);
+    reset.getButton().setText("Reset available votes");
+    reset.getButton().onClicked.add(
+      new ThrottleClickHandler<Button>(() => {
+        availableVotesUI.update();
+      }).get()
+    );
+
+    return new HorizontalUIBuilder()
+      .setSpacing(CONFIG.SPACING * scale)
+      .addUIs([label, availableVotesUI, reset])
+      .build();
+  }
+
+  static _createWhensRow(
     agendaState: AgendaState,
     seatIndex: number,
     scale: number
   ): AbstractUI {
+    const label: LabelUI = new LabelUI(scale);
+    label.getText().setText("My whens:");
+
     const noWhens: ButtonUI = new ButtonUI(scale);
     noWhens.getButton().setText("No whens (for now)");
     noWhens.getButton().onClicked.add(() => {
@@ -91,15 +122,18 @@ export class AgendaStateUI extends AbstractUI {
 
     return new HorizontalUIBuilder()
       .setSpacing(CONFIG.SPACING * scale)
-      .addUIs([noWhens, neverWhens, reset])
+      .addUIs([label, noWhens, neverWhens, reset])
       .build();
   }
 
-  static _createAftersUI(
+  static _createAftersRow(
     agendaState: AgendaState,
     seatIndex: number,
     scale: number
   ): AbstractUI {
+    const label: LabelUI = new LabelUI(scale);
+    label.getText().setText("My afters:");
+
     const noAfters: ButtonUI = new ButtonUI(scale);
     noAfters.getButton().setText("No afters (for now)");
     noAfters.getButton().onClicked.add(() => {
@@ -127,7 +161,7 @@ export class AgendaStateUI extends AbstractUI {
 
     return new HorizontalUIBuilder()
       .setSpacing(CONFIG.SPACING * scale)
-      .addUIs([noAfters, neverAfters, reset])
+      .addUIs([label, noAfters, neverAfters, reset])
       .build();
   }
 
@@ -139,7 +173,7 @@ export class AgendaStateUI extends AbstractUI {
    * @param scale
    * @returns
    */
-  static _createVoteUI(
+  static _createHowToVoteRow(
     agendaState: AgendaState,
     seatIndex: number,
     scale: number
@@ -190,24 +224,24 @@ export class AgendaStateUI extends AbstractUI {
       scale
     );
 
-    const waitingForUI: AbstractUI = AgendaStateUI._createWaitingForUi(
+    const waitingForUI: AbstractUI = AgendaStateUI._createWaitingForRow(
       agendaState,
       scale
     );
 
-    const whensUI: AbstractUI = AgendaStateUI._createWhensUI(
-      agendaState,
-      seatIndex,
-      scale
-    );
-
-    const aftersUI: AbstractUI = AgendaStateUI._createAftersUI(
+    const whensUI: AbstractUI = AgendaStateUI._createWhensRow(
       agendaState,
       seatIndex,
       scale
     );
 
-    const votingUI: AbstractUI = AgendaStateUI._createVoteUI(
+    const aftersUI: AbstractUI = AgendaStateUI._createAftersRow(
+      agendaState,
+      seatIndex,
+      scale
+    );
+
+    const votingUI: AbstractUI = AgendaStateUI._createHowToVoteRow(
       agendaState,
       seatIndex,
       scale

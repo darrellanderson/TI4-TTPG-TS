@@ -152,7 +152,7 @@ export class AvailableVotes {
         const nsid: string = NSID.get(obj);
         const planet: Planet | undefined =
           TI4.systemRegistry.getPlanetByPlanetCardNsid(nsid);
-        if (planet) {
+        if (planet && !planet.isDestroyedPlanet()) {
           const pos: Vector = obj.getPosition();
           const playerSlot: number =
             this._find.closestOwnedCardHolderOwner(pos);
