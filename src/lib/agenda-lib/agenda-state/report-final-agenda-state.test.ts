@@ -1,6 +1,13 @@
-import { MockCardHolder, MockPlayer } from "ttpg-mock";
+import {
+  MockCard,
+  MockCardDetails,
+  MockCardHolder,
+  MockGameObject,
+  MockPlayer,
+} from "ttpg-mock";
 import { AgendaState } from "./agenda-state";
 import { ReportFinalAgendaState } from "./report-final-agenda-state";
+import { Card, GameObject } from "@tabletop-playground/api";
 
 it("constructor", () => {
   const agendaState: AgendaState = new AgendaState("@test/test");
@@ -93,6 +100,31 @@ it("static getOutcomeSummaries", () => {
   ]);
 });
 
+it("static sortOutcomeIndicesByDecreasingVoteCount", () => {
+  const agendaState: AgendaState = new AgendaState("@test/test");
+
+  const outcomeIndex: number = 0;
+  const seatIndex: number = 0;
+  const votes: number = 1;
+  agendaState.setOutcomeName(outcomeIndex, "Outcome 1");
+  agendaState.setSeatOutcomeChoice(seatIndex, outcomeIndex);
+  agendaState.setSeatVotesForOutcome(seatIndex, votes);
+
+  agendaState.setOutcomeName(1, "Outcome 2");
+  agendaState.setSeatOutcomeChoice(1, 1);
+  agendaState.setSeatVotesForOutcome(1, 2);
+
+  agendaState.setOutcomeName(2, "Outcome 3");
+  agendaState.setSeatOutcomeChoice(2, 2);
+  agendaState.setSeatVotesForOutcome(2, 3);
+
+  expect(agendaState.getNumOutcomes()).toBe(3);
+
+  expect(
+    ReportFinalAgendaState.sortOutcomeIndicesByDecreasingVoteCount(agendaState)
+  ).toEqual([2, 1, 0]);
+});
+
 it("static summary", () => {
   new MockCardHolder({
     templateMetadata: "card-holder:base/player-hand",
@@ -127,7 +159,69 @@ it("static summary", () => {
 
   const summary: string = ReportFinalAgendaState.summary(agendaState);
   expect(summary).toBe(
-    '"Outcome 1" 13 votes by green, "Outcome 3" 3 votes by ???, "Outcome 2" 2 votes by red'
+    '"Outcome 1" (votes: 13 by green), "Outcome 2" (votes: 2 by red), "Outcome 3" (votes: 3 by ???), "Outcome 4" (votes: 0 by )'
+  );
+});
+
+it("static summary (rider, card)", () => {
+  new MockCardHolder({
+    templateMetadata: "card-holder:base/player-hand",
+    owningPlayerSlot: 10,
+  });
+  expect(TI4.playerSeats.getAllSeats().length).toBe(1);
+
+  const card: Card = new MockCard({
+    cardDetails: [new MockCardDetails({ name: "my-card-name" })],
+  });
+
+  const agendaState: AgendaState = new AgendaState("@test/test");
+  agendaState.setOutcomeName(0, "Outcome 1"); // update num outcomes
+  expect(agendaState.getNumOutcomes()).toBe(1);
+
+  const outcomeIndexByDecreasingVotes: Array<number> =
+    ReportFinalAgendaState.sortOutcomeIndicesByDecreasingVoteCount(agendaState);
+  expect(outcomeIndexByDecreasingVotes).toEqual([0]);
+
+  const seatInddex: number = 0;
+  const objId: string = card.getId();
+  const outcomeIndex: number = 0;
+  agendaState.addRider(seatInddex, objId, outcomeIndex);
+  expect(agendaState.getRiders()).toEqual([{ objId, outcome: 0, seat: 0 }]);
+
+  const summary: string = ReportFinalAgendaState.summary(agendaState);
+  expect(summary).toBe(
+    '"Outcome 1" (votes: 0 by ) with riders: my-card-name (green)'
+  );
+});
+
+it("static summary (rider, non-card)", () => {
+  new MockCardHolder({
+    templateMetadata: "card-holder:base/player-hand",
+    owningPlayerSlot: 10,
+  });
+  expect(TI4.playerSeats.getAllSeats().length).toBe(1);
+
+  const rider: GameObject = new MockGameObject({
+    name: "my-rider-name",
+  });
+
+  const agendaState: AgendaState = new AgendaState("@test/test");
+  agendaState.setOutcomeName(0, "Outcome 1"); // update num outcomes
+  expect(agendaState.getNumOutcomes()).toBe(1);
+
+  const outcomeIndexByDecreasingVotes: Array<number> =
+    ReportFinalAgendaState.sortOutcomeIndicesByDecreasingVoteCount(agendaState);
+  expect(outcomeIndexByDecreasingVotes).toEqual([0]);
+
+  const seatInddex: number = 0;
+  const objId: string = rider.getId();
+  const outcomeIndex: number = 0;
+  agendaState.addRider(seatInddex, objId, outcomeIndex);
+  expect(agendaState.getRiders()).toEqual([{ objId, outcome: 0, seat: 0 }]);
+
+  const summary: string = ReportFinalAgendaState.summary(agendaState);
+  expect(summary).toBe(
+    '"Outcome 1" (votes: 0 by ) with riders: my-rider-name (green)'
   );
 });
 
