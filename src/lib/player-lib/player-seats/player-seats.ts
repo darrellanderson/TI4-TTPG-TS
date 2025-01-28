@@ -43,10 +43,26 @@ export class PlayerSeats {
     return seats[seatIndex]?.playerSlot ?? -1;
   }
 
+  getPlayerSlotBySeatIndexOrThrow(seatIndex: number): number {
+    const playerSlot: number = this.getPlayerSlotBySeatIndex(seatIndex);
+    if (playerSlot === -1) {
+      throw new Error(`Seat index ${seatIndex} not found.`);
+    }
+    return playerSlot;
+  }
+
   getSeatIndexByPlayerSlot(playerSlot: number): number {
     const seats: Array<PlayerSeatType> = this.getAllSeats();
     return seats.findIndex((seat: PlayerSeatType) => {
       return seat.playerSlot === playerSlot;
     });
+  }
+
+  getSeatIndexByPlayerSlotOrThrow(playerSlot: number): number {
+    const seatIndex: number = this.getSeatIndexByPlayerSlot(playerSlot);
+    if (seatIndex === -1) {
+      throw new Error(`Player slot ${playerSlot} not found.`);
+    }
+    return seatIndex;
   }
 }
