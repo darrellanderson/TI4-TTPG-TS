@@ -74,6 +74,75 @@ export class AdvanceNoWhensAfters {
     }
   }
 
+  _resetWhens(): void {
+    const playerCount: number = TI4.config.playerCount;
+    for (let seatIndex = 0; seatIndex < playerCount; seatIndex++) {
+      // "never" is sticky, but "no" gets cleared.
+      if (this._agendaState.getSeatNoWhens(seatIndex) === "no") {
+        this._agendaState.setSeatNoWhens(seatIndex, "unknown");
+      }
+    }
+  }
+
+  _resetAfters(): void {
+    const playerCount: number = TI4.config.playerCount;
+    for (let seatIndex = 0; seatIndex < playerCount; seatIndex++) {
+      // "never" is sticky, but "no" gets cleared.
+      if (this._agendaState.getSeatNoAfters(seatIndex) === "no") {
+        this._agendaState.setSeatNoAfters(seatIndex, "unknown");
+      }
+    }
+  }
+
+  _maybeAdvancePhaseWhens(): void {
+    if (this._agendaState.getPhase() !== "whens") {
+      return;
+    }
+
+    if (!this._isLastPlayerInTurnOrder()) {
+      return;
+    }
+
+    // If a when was played and at the end of turn order, go again.
+    if (this._isWhenPlayed()) {
+      this._resetWhens();
+      TI4.turnOrder.nextTurn();
+      return;
+    }
+
+    const order: Array<PlayerSlot> =
+      new AgendaTurnOrder().getWhensOrAftersOrder();
+    const first: PlayerSlot | undefined = order[0];
+    if (first !== undefined) {
+      this._agendaState.setPhase("afters");
+      TI4.turnOrder.setTurnOrder(order, "forward", first);
+    }
+  }
+
+  _maybeAdvancePhaseAfters(): void {
+    if (this._agendaState.getPhase() !== "afters") {
+      return;
+    }
+
+    if (!this._isLastPlayerInTurnOrder()) {
+      return;
+    }
+
+    // If an after was played and at the end of turn order, go again.
+    if (this._isAfterPlayed()) {
+      this._resetAfters();
+      TI4.turnOrder.nextTurn();
+      return;
+    }
+
+    const order: Array<PlayerSlot> = new AgendaTurnOrder().getVotingOrder();
+    const first: PlayerSlot | undefined = order[0];
+    if (first !== undefined) {
+      this._agendaState.setPhase("voting");
+      TI4.turnOrder.setTurnOrder(order, "forward", first);
+    }
+  }
+
   maybeAdvance(): void {
     /*
     const turnOrder: Array<PlayerSlot> = TI4.turnOrder.getTurnOrder();
