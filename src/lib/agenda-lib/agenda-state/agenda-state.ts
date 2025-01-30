@@ -171,7 +171,8 @@ export class AgendaState {
 
   setSeatNoAfters(
     seatIndex: number,
-    noWhens: "unknown" | "no" | "never"
+    noWhens: "unknown" | "no" | "never",
+    suppressStateChangedEvent: boolean = false
   ): this {
     const seatState = this._getSeatState(seatIndex);
     if (noWhens === "no") {
@@ -182,7 +183,9 @@ export class AgendaState {
       seatState.noAfters = 0;
     }
     this._save();
-    this.onAgendaStateChanged.trigger(this);
+    if (!suppressStateChangedEvent) {
+      this.onAgendaStateChanged.trigger(this);
+    }
     return this;
   }
 
@@ -197,7 +200,11 @@ export class AgendaState {
     }
   }
 
-  setSeatNoWhens(seatIndex: number, noWhens: "unknown" | "no" | "never"): this {
+  setSeatNoWhens(
+    seatIndex: number,
+    noWhens: "unknown" | "no" | "never",
+    suppressStateChangedEvent: boolean = false
+  ): this {
     const seatState = this._getSeatState(seatIndex);
     if (noWhens === "no") {
       seatState.noWhens = 1;
@@ -207,7 +214,9 @@ export class AgendaState {
       seatState.noWhens = 0;
     }
     this._save();
-    this.onAgendaStateChanged.trigger(this);
+    if (!suppressStateChangedEvent) {
+      this.onAgendaStateChanged.trigger(this);
+    }
     return this;
   }
 

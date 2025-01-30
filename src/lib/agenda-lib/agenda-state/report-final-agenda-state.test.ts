@@ -226,9 +226,7 @@ it("static summary (rider, non-card)", () => {
 });
 
 it("constructor/event", () => {
-  const agendaState: AgendaState = new AgendaState("@test/test");
-  new ReportFinalAgendaState(agendaState);
-
+  TI4.config.setPlayerCount(2);
   new MockCardHolder({
     templateMetadata: "card-holder:base/player-hand",
     owningPlayerSlot: 10,
@@ -241,6 +239,9 @@ it("constructor/event", () => {
   });
   expect(TI4.playerSeats.getSeatIndexByPlayerSlot(10)).toBe(0);
   expect(TI4.playerSeats.getSeatIndexByPlayerSlot(11)).toBe(1);
+
+  const agendaState: AgendaState = new AgendaState("@test/test");
+  new ReportFinalAgendaState(agendaState);
 
   expect(ReportFinalAgendaState.isComplete(agendaState)).toBe(false);
 

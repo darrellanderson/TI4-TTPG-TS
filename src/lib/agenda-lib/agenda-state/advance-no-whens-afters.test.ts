@@ -1,7 +1,7 @@
-import { MockCardHolder, MockGameObject, Player } from "ttpg-mock";
+import { PlayerSlot } from "ttpg-darrell";
+import { MockCardHolder, MockGameObject } from "ttpg-mock";
 import { AdvanceNoWhensAfters } from "./advance-no-whens-afters";
 import { AgendaState } from "./agenda-state";
-import { PlayerSlot } from "ttpg-darrell";
 
 it("constructor", () => {
   const agendaState: AgendaState = new AgendaState("@test/test");
@@ -113,49 +113,33 @@ it("_isSkipTurnAfter", () => {
   expect(advanceNoWhensAfters._isSkipTurnAfter()).toBe(true);
 });
 
-it("_isSkipTurn", () => {
-  const agendaState: AgendaState = new AgendaState("@test/test");
-  const advanceNoWhensAfters: AdvanceNoWhensAfters = new AdvanceNoWhensAfters(
-    agendaState
-  );
-
-  agendaState.setPhase("whens");
-  expect(advanceNoWhensAfters._isSkipTurn()).toBe(false);
-
-  agendaState.setPhase("afters");
-  expect(advanceNoWhensAfters._isSkipTurn()).toBe(false);
-
-  agendaState.setPhase("voting");
-  expect(advanceNoWhensAfters._isSkipTurn()).toBe(false);
-});
-
-it("_resetWhens", () => {
+it("_resetWhensSuppressAgendaStateChangeEvent", () => {
   const agendaState: AgendaState = new AgendaState("@test/test");
   const advanceNoWhensAfters: AdvanceNoWhensAfters = new AdvanceNoWhensAfters(
     agendaState
   );
 
   agendaState.setSeatNoWhens(0, "no");
-  advanceNoWhensAfters._resetWhens();
+  advanceNoWhensAfters._resetWhensSuppressAgendaStateChangeEvent();
   expect(agendaState.getSeatNoWhens(0)).toBe("unknown");
 
   agendaState.setSeatNoWhens(0, "never");
-  advanceNoWhensAfters._resetWhens();
+  advanceNoWhensAfters._resetWhensSuppressAgendaStateChangeEvent();
   expect(agendaState.getSeatNoWhens(0)).toBe("never");
 });
 
-it("_resetAfters", () => {
+it("_resetAftersSuppressAgendaStateChangeEvent", () => {
   const agendaState: AgendaState = new AgendaState("@test/test");
   const advanceNoWhensAfters: AdvanceNoWhensAfters = new AdvanceNoWhensAfters(
     agendaState
   );
 
   agendaState.setSeatNoAfters(0, "no");
-  advanceNoWhensAfters._resetAfters();
+  advanceNoWhensAfters._resetAftersSuppressAgendaStateChangeEvent();
   expect(agendaState.getSeatNoAfters(0)).toBe("unknown");
 
   agendaState.setSeatNoAfters(0, "never");
-  advanceNoWhensAfters._resetAfters();
+  advanceNoWhensAfters._resetAftersSuppressAgendaStateChangeEvent();
   expect(agendaState.getSeatNoAfters(0)).toBe("never");
 });
 
@@ -340,8 +324,163 @@ it("_maybeAdvancePhaseAfters (advance)", () => {
   expect(TI4.turnOrder.getCurrentTurn()).toBe(11);
 });
 
-/*
-it("advance next turn, next phase", () => {
+it("_maybeSkipTurnWhens (wrong phase)", () => {
+  const agendaState: AgendaState = new AgendaState("@test/test");
+  agendaState.setPhase("voting");
+  const advanceNoWhensAfters: AdvanceNoWhensAfters = new AdvanceNoWhensAfters(
+    agendaState
+  );
+  const success: boolean = advanceNoWhensAfters._maybeSkipTurnWhens();
+  expect(success).toBe(false);
+  expect(agendaState.getPhase()).toBe("voting");
+});
+
+it("_maybeSkipTurnWhens (no skip)", () => {
+  TI4.config.setPlayerCount(2);
+  new MockCardHolder({
+    templateMetadata: "card-holder:base/player-hand",
+    owningPlayerSlot: 10,
+    position: [-1, 1, 0],
+  });
+  new MockCardHolder({
+    templateMetadata: "card-holder:base/player-hand",
+    owningPlayerSlot: 11,
+    position: [-1, -1, 0],
+  });
+  MockGameObject.simple("token:base/speaker");
+
+  const seats: Array<number> = TI4.playerSeats
+    .getAllSeats()
+    .map((seat) => seat.playerSlot);
+  expect(seats).toEqual([10, 11]);
+
+  const order: Array<PlayerSlot> = [10, 11];
+  TI4.turnOrder.setTurnOrder(order, "forward", 10);
+
+  const agendaState: AgendaState = new AgendaState("@test/test");
+  agendaState.setPhase("whens");
+  const advanceNoWhensAfters: AdvanceNoWhensAfters = new AdvanceNoWhensAfters(
+    agendaState
+  );
+  const success: boolean = advanceNoWhensAfters._maybeSkipTurnWhens();
+  expect(success).toBe(false);
+  expect(agendaState.getPhase()).toBe("whens");
+});
+
+it("_maybeSkipTurnWhens (skip)", () => {
+  TI4.config.setPlayerCount(2);
+  new MockCardHolder({
+    templateMetadata: "card-holder:base/player-hand",
+    owningPlayerSlot: 10,
+    position: [-1, 1, 0],
+  });
+  new MockCardHolder({
+    templateMetadata: "card-holder:base/player-hand",
+    owningPlayerSlot: 11,
+    position: [-1, -1, 0],
+  });
+  MockGameObject.simple("token:base/speaker");
+
+  const seats: Array<number> = TI4.playerSeats
+    .getAllSeats()
+    .map((seat) => seat.playerSlot);
+  expect(seats).toEqual([10, 11]);
+
+  const order: Array<PlayerSlot> = [10, 11];
+  TI4.turnOrder.setTurnOrder(order, "forward", 10);
+
+  const agendaState: AgendaState = new AgendaState("@test/test");
+  agendaState.setPhase("whens");
+  agendaState.setSeatNoWhens(0, "no");
+
+  const advanceNoWhensAfters: AdvanceNoWhensAfters = new AdvanceNoWhensAfters(
+    agendaState
+  );
+  const success: boolean = advanceNoWhensAfters._maybeSkipTurnWhens();
+  expect(success).toBe(true);
+  expect(agendaState.getPhase()).toBe("whens");
+  expect(TI4.turnOrder.getCurrentTurn()).toBe(11);
+});
+
+it("_maybeSkipTurnAfters (wrong phase)", () => {
+  const agendaState: AgendaState = new AgendaState("@test/test");
+  agendaState.setPhase("voting");
+  const advanceNoWhensAfters: AdvanceNoWhensAfters = new AdvanceNoWhensAfters(
+    agendaState
+  );
+  const success: boolean = advanceNoWhensAfters._maybeSkipTurnAfters();
+  expect(success).toBe(false);
+  expect(agendaState.getPhase()).toBe("voting");
+});
+
+it("_maybeSkipTurnAfters (no skip)", () => {
+  TI4.config.setPlayerCount(2);
+  new MockCardHolder({
+    templateMetadata: "card-holder:base/player-hand",
+    owningPlayerSlot: 10,
+    position: [-1, 1, 0],
+  });
+  new MockCardHolder({
+    templateMetadata: "card-holder:base/player-hand",
+    owningPlayerSlot: 11,
+    position: [-1, -1, 0],
+  });
+  MockGameObject.simple("token:base/speaker");
+
+  const seats: Array<number> = TI4.playerSeats
+    .getAllSeats()
+    .map((seat) => seat.playerSlot);
+  expect(seats).toEqual([10, 11]);
+
+  const order: Array<PlayerSlot> = [10, 11];
+  TI4.turnOrder.setTurnOrder(order, "forward", 10);
+
+  const agendaState: AgendaState = new AgendaState("@test/test");
+  agendaState.setPhase("afters");
+  const advanceNoWhensAfters: AdvanceNoWhensAfters = new AdvanceNoWhensAfters(
+    agendaState
+  );
+  const success: boolean = advanceNoWhensAfters._maybeSkipTurnAfters();
+  expect(success).toBe(false);
+  expect(agendaState.getPhase()).toBe("afters");
+});
+
+it("_maybeSkipTurnAfters (skip)", () => {
+  TI4.config.setPlayerCount(2);
+  new MockCardHolder({
+    templateMetadata: "card-holder:base/player-hand",
+    owningPlayerSlot: 10,
+    position: [-1, 1, 0],
+  });
+  new MockCardHolder({
+    templateMetadata: "card-holder:base/player-hand",
+    owningPlayerSlot: 11,
+    position: [-1, -1, 0],
+  });
+  MockGameObject.simple("token:base/speaker");
+
+  const seats: Array<number> = TI4.playerSeats
+    .getAllSeats()
+    .map((seat) => seat.playerSlot);
+  expect(seats).toEqual([10, 11]);
+
+  const order: Array<PlayerSlot> = [10, 11];
+  TI4.turnOrder.setTurnOrder(order, "forward", 10);
+
+  const agendaState: AgendaState = new AgendaState("@test/test");
+  agendaState.setPhase("afters");
+  agendaState.setSeatNoAfters(0, "no");
+
+  const advanceNoWhensAfters: AdvanceNoWhensAfters = new AdvanceNoWhensAfters(
+    agendaState
+  );
+  const success: boolean = advanceNoWhensAfters._maybeSkipTurnAfters();
+  expect(success).toBe(true);
+  expect(agendaState.getPhase()).toBe("afters");
+  expect(TI4.turnOrder.getCurrentTurn()).toBe(11);
+});
+
+it("maybeAdvance", () => {
   new MockCardHolder({
     templateMetadata: "card-holder:base/player-hand",
     owningPlayerSlot: 10,
@@ -357,47 +496,13 @@ it("advance next turn, next phase", () => {
     .map((seat) => seat.playerSlot);
   expect(seats).toEqual([10, 11]);
 
-  new MockGameObject({
-    templateMetadata: "token:base/speaker",
-    position: [-1, -1, 0],
-  });
-
   TI4.turnOrder.setTurnOrder([10, 11], "forward", 10);
-
   const agendaState: AgendaState = new AgendaState("@test/test");
-  let stateChangeCount: number = 0;
-  agendaState.onAgendaStateChanged.add(() => {
-    stateChangeCount++;
-  });
-
-  new AdvanceNoWhensAfters(agendaState);
-
-  expect(stateChangeCount).toBe(0);
-  expect(agendaState.getPhase()).toBe("whens");
-  expect(TI4.turnOrder.getCurrentTurn()).toBe(10);
-
-  agendaState.setSeatNoWhens(0, "no");
-  expect(agendaState.getSeatNoWhens(0)).toBe("no");
-  expect(stateChangeCount).toBe(2);
-  expect(agendaState.getPhase()).toBe("whens");
-  expect(TI4.turnOrder.getCurrentTurn()).toBe(11);
-
-  agendaState.setSeatNoWhens(1, "never");
-  expect(agendaState.getSeatNoWhens(1)).toBe("never");
-  expect(stateChangeCount).toBe(5);
-  expect(agendaState.getPhase()).toBe("afters");
-  expect(TI4.turnOrder.getCurrentTurn()).toBe(10);
-
-  agendaState.setSeatNoAfters(0, "no");
-  expect(agendaState.getSeatNoAfters(0)).toBe("no");
-  expect(stateChangeCount).toBe(7);
-  expect(agendaState.getPhase()).toBe("afters");
-  expect(TI4.turnOrder.getCurrentTurn()).toBe(11);
-
-  agendaState.setSeatNoAfters(1, "never");
-  expect(agendaState.getSeatNoAfters(1)).toBe("never");
-  expect(stateChangeCount).toBe(10);
+  agendaState.setPhase("voting");
+  const advanceNoWhensAfters: AdvanceNoWhensAfters = new AdvanceNoWhensAfters(
+    agendaState
+  );
+  const success: boolean = advanceNoWhensAfters.maybeAdvance();
+  expect(success).toBe(false);
   expect(agendaState.getPhase()).toBe("voting");
-  expect(TI4.turnOrder.getCurrentTurn()).toBe(10);
 });
-*/
