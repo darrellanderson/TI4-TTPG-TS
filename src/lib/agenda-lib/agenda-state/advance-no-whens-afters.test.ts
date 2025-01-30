@@ -166,7 +166,8 @@ it("_maybeAdvancePhaseWhens (wrong phase)", () => {
     agendaState
   );
   agendaState.setPhase("voting");
-  advanceNoWhensAfters._maybeAdvancePhaseWhens();
+  const success: boolean = advanceNoWhensAfters._maybeAdvancePhaseWhens();
+  expect(success).toBe(false);
   expect(agendaState.getPhase()).toBe("voting");
 });
 
@@ -183,7 +184,8 @@ it("_maybeAdvancePhaseWhens (not last in turn order)", () => {
 
   expect(advanceNoWhensAfters._isLastPlayerInTurnOrder()).toBe(false);
 
-  advanceNoWhensAfters._maybeAdvancePhaseWhens();
+  const success: boolean = advanceNoWhensAfters._maybeAdvancePhaseWhens();
+  expect(success).toBe(false);
   expect(agendaState.getPhase()).toBe("whens");
   expect(TI4.turnOrder.getCurrentTurn()).toBe(10);
 });
@@ -202,7 +204,8 @@ it("_maybeAdvancePhaseWhens (last in turn order, when played)", () => {
   expect(advanceNoWhensAfters._isLastPlayerInTurnOrder()).toBe(true);
   expect(advanceNoWhensAfters._isWhenPlayed()).toBe(true);
 
-  advanceNoWhensAfters._maybeAdvancePhaseWhens();
+  const success: boolean = advanceNoWhensAfters._maybeAdvancePhaseWhens();
+  expect(success).toBe(true);
   expect(agendaState.getPhase()).toBe("whens");
   expect(TI4.turnOrder.getCurrentTurn()).toBe(10);
 });
@@ -240,7 +243,8 @@ it("_maybeAdvancePhaseWhens (advance)", () => {
   expect(advanceNoWhensAfters._isLastPlayerInTurnOrder()).toBe(true);
   expect(advanceNoWhensAfters._isWhenPlayed()).toBe(false);
 
-  advanceNoWhensAfters._maybeAdvancePhaseWhens();
+  const success: boolean = advanceNoWhensAfters._maybeAdvancePhaseWhens();
+  expect(success).toBe(true);
   expect(agendaState.getPhase()).toBe("afters");
   expect(TI4.turnOrder.getCurrentTurn()).toBe(10);
 });
@@ -252,7 +256,8 @@ it("_maybeAdvancePhaseAfters (wrong phase)", () => {
   const advanceNoWhensAfters: AdvanceNoWhensAfters = new AdvanceNoWhensAfters(
     agendaState
   );
-  advanceNoWhensAfters._maybeAdvancePhaseAfters();
+  const success: boolean = advanceNoWhensAfters._maybeAdvancePhaseAfters();
+  expect(success).toBe(false);
   expect(agendaState.getPhase()).toBe("whens");
 });
 
@@ -269,7 +274,8 @@ it("_maybeAdvancePhaseAfters (not last in turn order)", () => {
 
   expect(advanceNoWhensAfters._isLastPlayerInTurnOrder()).toBe(false);
 
-  advanceNoWhensAfters._maybeAdvancePhaseAfters();
+  const success: boolean = advanceNoWhensAfters._maybeAdvancePhaseAfters();
+  expect(success).toBe(false);
   expect(agendaState.getPhase()).toBe("afters");
   expect(TI4.turnOrder.getCurrentTurn()).toBe(10);
 });
@@ -288,7 +294,8 @@ it("_maybeAdvancePhaseAfters (last in turn order, after played)", () => {
   expect(advanceNoWhensAfters._isLastPlayerInTurnOrder()).toBe(true);
   expect(advanceNoWhensAfters._isAfterPlayed()).toBe(true);
 
-  advanceNoWhensAfters._maybeAdvancePhaseAfters();
+  const success: boolean = advanceNoWhensAfters._maybeAdvancePhaseAfters();
+  expect(success).toBe(true);
   expect(agendaState.getPhase()).toBe("afters");
   expect(TI4.turnOrder.getCurrentTurn()).toBe(10);
 });
@@ -327,7 +334,8 @@ it("_maybeAdvancePhaseAfters (advance)", () => {
   expect(advanceNoWhensAfters._isLastPlayerInTurnOrder()).toBe(true);
   expect(advanceNoWhensAfters._isAfterPlayed()).toBe(false);
 
-  advanceNoWhensAfters._maybeAdvancePhaseAfters();
+  const success: boolean = advanceNoWhensAfters._maybeAdvancePhaseAfters();
+  expect(success).toBe(true);
   expect(agendaState.getPhase()).toBe("voting");
   expect(TI4.turnOrder.getCurrentTurn()).toBe(11);
 });

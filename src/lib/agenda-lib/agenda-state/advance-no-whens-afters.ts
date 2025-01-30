@@ -94,53 +94,63 @@ export class AdvanceNoWhensAfters {
     }
   }
 
-  _maybeAdvancePhaseWhens(): void {
+  _maybeAdvancePhaseWhens(): boolean {
     if (this._agendaState.getPhase() !== "whens") {
-      return;
+      return false;
     }
 
     if (!this._isLastPlayerInTurnOrder()) {
-      return;
+      return false;
     }
 
     // If a when was played and at the end of turn order, go again.
     if (this._isWhenPlayed()) {
       this._resetWhens();
       TI4.turnOrder.nextTurn();
-      return;
+      return true;
     }
 
     const order: Array<PlayerSlot> =
       new AgendaTurnOrder().getWhensOrAftersOrder();
     const first: PlayerSlot | undefined = order[0];
     if (first !== undefined) {
-      this._agendaState.setPhase("afters");
       TI4.turnOrder.setTurnOrder(order, "forward", first);
     }
+    this._agendaState.setPhase("afters");
+    return true;
   }
 
-  _maybeAdvancePhaseAfters(): void {
+  _maybeAdvancePhaseAfters(): boolean {
     if (this._agendaState.getPhase() !== "afters") {
-      return;
+      return false;
     }
 
     if (!this._isLastPlayerInTurnOrder()) {
-      return;
+      return false;
     }
 
     // If an after was played and at the end of turn order, go again.
     if (this._isAfterPlayed()) {
       this._resetAfters();
       TI4.turnOrder.nextTurn();
-      return;
+      return true;
     }
 
     const order: Array<PlayerSlot> = new AgendaTurnOrder().getVotingOrder();
     const first: PlayerSlot | undefined = order[0];
     if (first !== undefined) {
-      this._agendaState.setPhase("voting");
       TI4.turnOrder.setTurnOrder(order, "forward", first);
     }
+    this._agendaState.setPhase("voting");
+    return true;
+  }
+
+  maybeAdvanceTurnWhens(): void {
+    if (this._agendaState.getPhase() !== "whens") {
+      return;
+    }
+
+    // TODO
   }
 
   maybeAdvance(): void {
