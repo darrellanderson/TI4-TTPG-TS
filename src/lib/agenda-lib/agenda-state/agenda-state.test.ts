@@ -27,6 +27,15 @@ it("constructor (bad json)", () => {
   expect(() => new AgendaState(id)).toThrow();
 });
 
+it("transactThenTriggerDelayedStateChangedEvent", () => {
+  const agendaState: AgendaState = new AgendaState("@test/test");
+  expect(agendaState.getPhase()).toBe("whens");
+  agendaState.transactThenTriggerDelayedStateChangedEvent(() => {
+    agendaState.setPhase("afters");
+  });
+  expect(agendaState.getPhase()).toBe("afters");
+});
+
 it("agenda obj id", () => {
   const agendaState: AgendaState = new AgendaState("@test/test");
   expect(agendaState.getAgendaObjId()).toBe("");

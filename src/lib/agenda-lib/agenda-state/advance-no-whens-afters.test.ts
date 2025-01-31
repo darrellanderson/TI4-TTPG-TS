@@ -120,11 +120,11 @@ it("_resetWhensSuppressAgendaStateChangeEvent", () => {
   );
 
   agendaState.setSeatNoWhens(0, "no");
-  advanceNoWhensAfters._resetWhensSuppressAgendaStateChangeEvent();
+  advanceNoWhensAfters._resetWhens();
   expect(agendaState.getSeatNoWhens(0)).toBe("unknown");
 
   agendaState.setSeatNoWhens(0, "never");
-  advanceNoWhensAfters._resetWhensSuppressAgendaStateChangeEvent();
+  advanceNoWhensAfters._resetWhens();
   expect(agendaState.getSeatNoWhens(0)).toBe("never");
 });
 
@@ -135,11 +135,11 @@ it("_resetAftersSuppressAgendaStateChangeEvent", () => {
   );
 
   agendaState.setSeatNoAfters(0, "no");
-  advanceNoWhensAfters._resetAftersSuppressAgendaStateChangeEvent();
+  advanceNoWhensAfters._resetAfters();
   expect(agendaState.getSeatNoAfters(0)).toBe("unknown");
 
   agendaState.setSeatNoAfters(0, "never");
-  advanceNoWhensAfters._resetAftersSuppressAgendaStateChangeEvent();
+  advanceNoWhensAfters._resetAfters();
   expect(agendaState.getSeatNoAfters(0)).toBe("never");
 });
 

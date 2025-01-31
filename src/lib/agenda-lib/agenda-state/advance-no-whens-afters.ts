@@ -63,22 +63,22 @@ export class AdvanceNoWhensAfters {
     return unknownNoNever === "no" || unknownNoNever === "never";
   }
 
-  _resetWhensSuppressAgendaStateChangeEvent(): void {
+  _resetWhens(): void {
     const playerCount: number = TI4.config.playerCount;
     for (let seatIndex = 0; seatIndex < playerCount; seatIndex++) {
       // "never" is sticky, but "no" gets cleared.
       if (this._agendaState.getSeatNoWhens(seatIndex) === "no") {
-        this._agendaState.setSeatNoWhens(seatIndex, "unknown", true);
+        this._agendaState.setSeatNoWhens(seatIndex, "unknown");
       }
     }
   }
 
-  _resetAftersSuppressAgendaStateChangeEvent(): void {
+  _resetAfters(): void {
     const playerCount: number = TI4.config.playerCount;
     for (let seatIndex = 0; seatIndex < playerCount; seatIndex++) {
       // "never" is sticky, but "no" gets cleared.
       if (this._agendaState.getSeatNoAfters(seatIndex) === "no") {
-        this._agendaState.setSeatNoAfters(seatIndex, "unknown", true);
+        this._agendaState.setSeatNoAfters(seatIndex, "unknown");
       }
     }
   }
@@ -94,18 +94,22 @@ export class AdvanceNoWhensAfters {
 
     // If a when was played and at the end of turn order, go again.
     if (this._isWhenPlayed()) {
-      TI4.turnOrder.nextTurn();
-      this._resetWhensSuppressAgendaStateChangeEvent();
+      this._agendaState.transactThenTriggerDelayedStateChangedEvent(() => {
+        this._resetWhens();
+        TI4.turnOrder.nextTurn();
+      });
       return true;
     }
 
     const order: Array<PlayerSlot> =
       new AgendaTurnOrder().getWhensOrAftersOrder();
     const first: PlayerSlot | undefined = order[0];
-    if (first !== undefined) {
-      TI4.turnOrder.setTurnOrder(order, "forward", first);
-    }
-    this._agendaState.setPhase("afters");
+    this._agendaState.transactThenTriggerDelayedStateChangedEvent(() => {
+      if (first !== undefined) {
+        TI4.turnOrder.setTurnOrder(order, "forward", first);
+      }
+      this._agendaState.setPhase("afters");
+    });
     return true;
   }
 
@@ -120,17 +124,21 @@ export class AdvanceNoWhensAfters {
 
     // If an after was played and at the end of turn order, go again.
     if (this._isAfterPlayed()) {
-      TI4.turnOrder.nextTurn();
-      this._resetAftersSuppressAgendaStateChangeEvent();
+      this._agendaState.transactThenTriggerDelayedStateChangedEvent(() => {
+        this._resetAfters();
+        TI4.turnOrder.nextTurn();
+      });
       return true;
     }
 
     const order: Array<PlayerSlot> = new AgendaTurnOrder().getVotingOrder();
     const first: PlayerSlot | undefined = order[0];
-    if (first !== undefined) {
-      TI4.turnOrder.setTurnOrder(order, "forward", first);
-    }
-    this._agendaState.setPhase("voting");
+    this._agendaState.transactThenTriggerDelayedStateChangedEvent(() => {
+      if (first !== undefined) {
+        TI4.turnOrder.setTurnOrder(order, "forward", first);
+      }
+      this._agendaState.setPhase("voting");
+    });
     return true;
   }
 

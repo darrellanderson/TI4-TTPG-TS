@@ -43,12 +43,15 @@ export class AgendaState {
   public readonly onAgendaStateChanged: TriggerableMulticastDelegate<
     (agendaState: AgendaState) => void
   > = new TriggerableMulticastDelegate<(agendaState: AgendaState) => void>();
+  private _suppressStateChangeEvents: boolean = false;
 
   private readonly _namespaceId: NamespaceId;
   private readonly _data: AgendaStateSchemaType;
 
   private readonly _onTurnStateChangedHandler = () => {
-    this.onAgendaStateChanged.trigger(this);
+    if (!this._suppressStateChangeEvents) {
+      this.onAgendaStateChanged.trigger(this);
+    }
   };
 
   static isAgendaInProgress(namespaceId: NamespaceId): boolean {
@@ -79,9 +82,18 @@ export class AgendaState {
 
   destroy(): void {
     world.setSavedData("", this._namespaceId);
-    this.onAgendaStateChanged.trigger(this);
+    if (!this._suppressStateChangeEvents) {
+      this.onAgendaStateChanged.trigger(this);
+    }
     this.onAgendaStateChanged.clear();
     TurnOrder.onTurnStateChanged.remove(this._onTurnStateChangedHandler);
+  }
+
+  transactThenTriggerDelayedStateChangedEvent(f: () => void): void {
+    this._suppressStateChangeEvents = true;
+    f();
+    this._suppressStateChangeEvents = false;
+    this.onAgendaStateChanged.trigger(this);
   }
 
   _save(): void {
@@ -102,7 +114,9 @@ export class AgendaState {
   setAgendaObjId(agendaObjId: string): this {
     this._data.agendaObjId = agendaObjId;
     this._save();
-    this.onAgendaStateChanged.trigger(this);
+    if (!this._suppressStateChangeEvents) {
+      this.onAgendaStateChanged.trigger(this);
+    }
     return this;
   }
 
@@ -120,7 +134,9 @@ export class AgendaState {
     }
     this._data.outcomeNames[index] = name;
     this._save();
-    this.onAgendaStateChanged.trigger(this);
+    if (!this._suppressStateChangeEvents) {
+      this.onAgendaStateChanged.trigger(this);
+    }
     return this;
   }
 
@@ -131,7 +147,9 @@ export class AgendaState {
   setPhase(phase: AgendaPhaseType): this {
     this._data.phase = phase;
     this._save();
-    this.onAgendaStateChanged.trigger(this);
+    if (!this._suppressStateChangeEvents) {
+      this.onAgendaStateChanged.trigger(this);
+    }
     return this;
   }
 
@@ -154,7 +172,9 @@ export class AgendaState {
     const seatState = this._getSeatState(seatIndex);
     seatState.avail = votes;
     this._save();
-    this.onAgendaStateChanged.trigger(this);
+    if (!this._suppressStateChangeEvents) {
+      this.onAgendaStateChanged.trigger(this);
+    }
     return this;
   }
 
@@ -171,8 +191,7 @@ export class AgendaState {
 
   setSeatNoAfters(
     seatIndex: number,
-    noWhens: "unknown" | "no" | "never",
-    suppressStateChangedEvent: boolean = false
+    noWhens: "unknown" | "no" | "never"
   ): this {
     const seatState = this._getSeatState(seatIndex);
     if (noWhens === "no") {
@@ -183,7 +202,7 @@ export class AgendaState {
       seatState.noAfters = 0;
     }
     this._save();
-    if (!suppressStateChangedEvent) {
+    if (!this._suppressStateChangeEvents) {
       this.onAgendaStateChanged.trigger(this);
     }
     return this;
@@ -200,11 +219,7 @@ export class AgendaState {
     }
   }
 
-  setSeatNoWhens(
-    seatIndex: number,
-    noWhens: "unknown" | "no" | "never",
-    suppressStateChangedEvent: boolean = false
-  ): this {
+  setSeatNoWhens(seatIndex: number, noWhens: "unknown" | "no" | "never"): this {
     const seatState = this._getSeatState(seatIndex);
     if (noWhens === "no") {
       seatState.noWhens = 1;
@@ -214,7 +229,7 @@ export class AgendaState {
       seatState.noWhens = 0;
     }
     this._save();
-    if (!suppressStateChangedEvent) {
+    if (!this._suppressStateChangeEvents) {
       this.onAgendaStateChanged.trigger(this);
     }
     return this;
@@ -229,7 +244,9 @@ export class AgendaState {
     const seatState = this._getSeatState(seatIndex);
     seatState.outcome = outcome;
     this._save();
-    this.onAgendaStateChanged.trigger(this);
+    if (!this._suppressStateChangeEvents) {
+      this.onAgendaStateChanged.trigger(this);
+    }
     return this;
   }
 
@@ -242,7 +259,9 @@ export class AgendaState {
     const seatState = this._getSeatState(seatIndex);
     seatState.votes = votes;
     this._save();
-    this.onAgendaStateChanged.trigger(this);
+    if (!this._suppressStateChangeEvents) {
+      this.onAgendaStateChanged.trigger(this);
+    }
     return this;
   }
 
@@ -255,7 +274,9 @@ export class AgendaState {
     const seatState = this._getSeatState(seatIndex);
     seatState.lockVotes = locked;
     this._save();
-    this.onAgendaStateChanged.trigger(this);
+    if (!this._suppressStateChangeEvents) {
+      this.onAgendaStateChanged.trigger(this);
+    }
     return this;
   }
 
@@ -267,7 +288,9 @@ export class AgendaState {
     this.removeRider(objId);
     this._data.riders.push({ seat: seatIndex, objId, outcome });
     this._save();
-    this.onAgendaStateChanged.trigger(this);
+    if (!this._suppressStateChangeEvents) {
+      this.onAgendaStateChanged.trigger(this);
+    }
     return this;
   }
 
@@ -278,7 +301,9 @@ export class AgendaState {
     if (index >= 0) {
       this._data.riders.splice(index, 1);
       this._save();
-      this.onAgendaStateChanged.trigger(this);
+      if (!this._suppressStateChangeEvents) {
+        this.onAgendaStateChanged.trigger(this);
+      }
     }
     return this;
   }
