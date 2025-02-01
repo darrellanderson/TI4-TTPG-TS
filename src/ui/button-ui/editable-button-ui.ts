@@ -64,6 +64,7 @@ export class EditableButtonUI extends AbstractUI {
       .addChild(editText);
 
     const panel: Widget = new HorizontalBox()
+      .setChildDistance(0)
       .addChild(widgetSwitcher, 1)
       .addChild(edit, 0);
 

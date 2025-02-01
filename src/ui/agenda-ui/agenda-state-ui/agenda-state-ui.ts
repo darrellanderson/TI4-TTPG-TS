@@ -23,13 +23,13 @@ import { LongLabelUI } from "../../button-ui/long-label-ui";
 import { VerticalUIBuilder } from "../../panel/vertical-ui-builder";
 
 /**
+ * [waiting for: ...]
  * [Available votes:] [Available votes]x3 [reset votes]
  * [1. My whens:] [play when] [no whens for now] [never whens] [reset whens]
  * [2. My afters:] [play after] [no afters for now] [never afters] [reset afters]
  * [Voting: choose outcome and set your votes for it below]
  * [...Outcome] [vote summary]+[]
  * [3. My votes:] [# + -] [lock votes] [reset votes]
- * [waiting for: ...]
  */
 export class AgendaStateUI extends AbstractUI {
   private readonly _agendaState: AgendaState;
@@ -52,7 +52,7 @@ export class AgendaStateUI extends AbstractUI {
     scale: number
   ): AbstractUI {
     const scaledWidth: number =
-      CONFIG.BUTTON_WIDTH * scale * 4 + CONFIG.SPACING * 3;
+      CONFIG.BUTTON_WIDTH * scale * 5 + CONFIG.SPACING * 4;
     const longLabel: LongLabelUI = new LongLabelUI(scaledWidth, scale);
     const text: Text = longLabel.getText();
 
@@ -66,7 +66,10 @@ export class AgendaStateUI extends AbstractUI {
 
   static _createAvailableVotesRow(scale: number): AbstractUI {
     const label: LabelUI = new LabelUI(scale);
-    label.getText().setText("Available votes:");
+    label
+      .getText()
+      .setJustification(TextJustification.Right)
+      .setText("Available votes:");
 
     const availableVotesUI: AgendaAvailableVotesUI = new AgendaAvailableVotesUI(
       CONFIG.BUTTON_WIDTH * scale * 3 + CONFIG.SPACING * 2,
@@ -93,7 +96,10 @@ export class AgendaStateUI extends AbstractUI {
     scale: number
   ): AbstractUI {
     const label: LabelUI = new LabelUI(scale);
-    label.getText().setText("My whens:");
+    label
+      .getText()
+      .setJustification(TextJustification.Right)
+      .setText("My whens:");
 
     const playWhen: ButtonUI = new ButtonUI(scale);
     playWhen.getButton().setText("Play when");
@@ -125,15 +131,22 @@ export class AgendaStateUI extends AbstractUI {
     });
 
     agendaState.onAgendaStateChanged.add(() => {
-      const currentPlayerSlot: PlayerSlot = TI4.turnOrder.getCurrentTurn();
-      const currentSeatIndex: number =
-        TI4.playerSeats.getSeatIndexByPlayerSlot(currentPlayerSlot);
-      playWhen.getButton().setEnabled(currentSeatIndex === seatIndex);
-
       const noNeverUnknown: "no" | "never" | "unknown" =
         agendaState.getSeatNoWhens(seatIndex);
       noWhens.getButton().setEnabled(noNeverUnknown === "unknown");
       neverWhens.getButton().setEnabled(noNeverUnknown !== "never");
+
+      const isWhens: boolean = agendaState.getPhase() === "whens";
+      const currentPlayerSlot: PlayerSlot = TI4.turnOrder.getCurrentTurn();
+      const currentSeatIndex: number =
+        TI4.playerSeats.getSeatIndexByPlayerSlot(currentPlayerSlot);
+      playWhen
+        .getButton()
+        .setEnabled(
+          isWhens &&
+            currentSeatIndex === seatIndex &&
+            noNeverUnknown === "unknown"
+        );
     });
 
     return new HorizontalUIBuilder()
@@ -148,7 +161,10 @@ export class AgendaStateUI extends AbstractUI {
     scale: number
   ): AbstractUI {
     const label: LabelUI = new LabelUI(scale);
-    label.getText().setText("My afters:");
+    label
+      .getText()
+      .setJustification(TextJustification.Right)
+      .setText("My afters:");
 
     const playAfter: ButtonUI = new ButtonUI(scale);
     playAfter.getButton().setText("Play after");
@@ -184,6 +200,18 @@ export class AgendaStateUI extends AbstractUI {
         agendaState.getSeatNoAfters(seatIndex);
       noAfters.getButton().setEnabled(noNeverUnknown === "unknown");
       neverAfters.getButton().setEnabled(noNeverUnknown !== "never");
+
+      const isAfters: boolean = agendaState.getPhase() === "afters";
+      const currentPlayerSlot: PlayerSlot = TI4.turnOrder.getCurrentTurn();
+      const currentSeatIndex: number =
+        TI4.playerSeats.getSeatIndexByPlayerSlot(currentPlayerSlot);
+      playAfter
+        .getButton()
+        .setEnabled(
+          isAfters &&
+            currentSeatIndex === seatIndex &&
+            noNeverUnknown === "unknown"
+        );
     });
 
     return new HorizontalUIBuilder()
@@ -251,6 +279,9 @@ export class AgendaStateUI extends AbstractUI {
       scale
     );
 
+    const availableVotesUI: AbstractUI =
+      AgendaStateUI._createAvailableVotesRow(scale);
+
     const waitingForUI: AbstractUI = AgendaStateUI._createWaitingForRow(
       agendaState,
       scale
@@ -281,7 +312,14 @@ export class AgendaStateUI extends AbstractUI {
 
     const whensAftersVotes: AbstractUI = new VerticalUIBuilder()
       .setSpacing(CONFIG.SPACING * scale)
-      .addUIs([waitingForUI, whensUI, aftersUI, votingUI, outcomeUIs])
+      .addUIs([
+        waitingForUI,
+        availableVotesUI,
+        whensUI,
+        aftersUI,
+        votingUI,
+        outcomeUIs,
+      ])
       .build();
 
     return new HorizontalUIBuilder()

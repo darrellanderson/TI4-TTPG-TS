@@ -2,6 +2,7 @@ import {
   HorizontalAlignment,
   LayoutBox,
   Text,
+  TextJustification,
   VerticalAlignment,
   Widget,
 } from "@tabletop-playground/api";
@@ -14,7 +15,10 @@ export class LabelUI extends AbstractUI {
   constructor(scale: number) {
     const fontSize: number = CONFIG.FONT_SIZE * scale;
 
-    const text: Text = new Text().setFontSize(fontSize).setText("X");
+    const text: Text = new Text()
+      .setFontSize(fontSize)
+      .setJustification(TextJustification.Center)
+      .setText("X");
 
     const size: UI_SIZE = {
       w: CONFIG.BUTTON_WIDTH * scale,
@@ -23,7 +27,7 @@ export class LabelUI extends AbstractUI {
     const widget: Widget = new LayoutBox()
       .setOverrideWidth(size.w)
       .setOverrideHeight(size.h)
-      .setHorizontalAlignment(HorizontalAlignment.Center)
+      .setHorizontalAlignment(HorizontalAlignment.Fill)
       .setVerticalAlignment(VerticalAlignment.Center)
       .setChild(text);
 
