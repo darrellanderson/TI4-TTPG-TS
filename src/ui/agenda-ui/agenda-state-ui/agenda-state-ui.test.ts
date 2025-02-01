@@ -26,6 +26,12 @@ it("static _createAgendaCardUI (no agenda card)", () => {
   }).toThrow("Agenda card missing or not card");
 });
 
+it("static _createAvailableVotesUI", () => {
+  const scale: number = 1;
+  const abstractUi: AbstractUI = AgendaStateUI._createAvailableVotesRow(scale);
+  clickAll(abstractUi.getWidget());
+});
+
 it("static _createWhensUI", () => {
   const agendaState: AgendaState = new AgendaState("@test/test");
   const seatIndex: number = 0;

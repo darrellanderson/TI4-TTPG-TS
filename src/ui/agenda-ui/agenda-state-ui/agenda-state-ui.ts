@@ -7,7 +7,7 @@ import {
   VerticalAlignment,
   world,
 } from "@tabletop-playground/api";
-import { ThrottleClickHandler } from "ttpg-darrell";
+import { Broadcast, PlayerSlot, ThrottleClickHandler } from "ttpg-darrell";
 
 import { AbstractUI } from "../../abstract-ui/abtract-ui";
 import { AgendaAvailableVotesUI } from "../agenda-available-votes-ui/agenda-available-votes-ui";
@@ -23,9 +23,9 @@ import { LongLabelUI } from "../../button-ui/long-label-ui";
 import { VerticalUIBuilder } from "../../panel/vertical-ui-builder";
 
 /**
- * [Available votes:] [Available votes]x2 [reset votes]
- * [1. My whens:] [no whens for now] [never whens] [reset whens]
- * [2. My afters:] [no afters for now] [never afters] [reset afters]
+ * [Available votes:] [Available votes]x3 [reset votes]
+ * [1. My whens:] [play when] [no whens for now] [never whens] [reset whens]
+ * [2. My afters:] [play after] [no afters for now] [never afters] [reset afters]
  * [Voting: choose outcome and set your votes for it below]
  * [...Outcome] [vote summary]+[]
  * [3. My votes:] [# + -] [lock votes] [reset votes]
@@ -52,7 +52,7 @@ export class AgendaStateUI extends AbstractUI {
     scale: number
   ): AbstractUI {
     const scaledWidth: number =
-      CONFIG.BUTTON_WIDTH * scale * 3 + CONFIG.SPACING * 2;
+      CONFIG.BUTTON_WIDTH * scale * 4 + CONFIG.SPACING * 3;
     const longLabel: LongLabelUI = new LongLabelUI(scaledWidth, scale);
     const text: Text = longLabel.getText();
 
@@ -69,7 +69,7 @@ export class AgendaStateUI extends AbstractUI {
     label.getText().setText("Available votes:");
 
     const availableVotesUI: AgendaAvailableVotesUI = new AgendaAvailableVotesUI(
-      scale * 3,
+      CONFIG.BUTTON_WIDTH * scale * 3 + CONFIG.SPACING * 2,
       scale
     );
 
@@ -95,6 +95,17 @@ export class AgendaStateUI extends AbstractUI {
     const label: LabelUI = new LabelUI(scale);
     label.getText().setText("My whens:");
 
+    const playWhen: ButtonUI = new ButtonUI(scale);
+    playWhen.getButton().setText("Play when");
+    playWhen.getButton().onClicked.add(() => {
+      const playerSlot: number =
+        TI4.playerSeats.getPlayerSlotBySeatIndex(seatIndex);
+      const playerName: string = TI4.playerName.getBySlot(playerSlot);
+      const msg: string = `When played by ${playerName}`;
+      Broadcast.chatAll(msg);
+      TI4.turnOrder.nextTurn();
+    });
+
     const noWhens: ButtonUI = new ButtonUI(scale);
     noWhens.getButton().setText("No whens (for now)");
     noWhens.getButton().onClicked.add(() => {
@@ -114,6 +125,11 @@ export class AgendaStateUI extends AbstractUI {
     });
 
     agendaState.onAgendaStateChanged.add(() => {
+      const currentPlayerSlot: PlayerSlot = TI4.turnOrder.getCurrentTurn();
+      const currentSeatIndex: number =
+        TI4.playerSeats.getSeatIndexByPlayerSlot(currentPlayerSlot);
+      playWhen.getButton().setEnabled(currentSeatIndex === seatIndex);
+
       const noNeverUnknown: "no" | "never" | "unknown" =
         agendaState.getSeatNoWhens(seatIndex);
       noWhens.getButton().setEnabled(noNeverUnknown === "unknown");
@@ -122,7 +138,7 @@ export class AgendaStateUI extends AbstractUI {
 
     return new HorizontalUIBuilder()
       .setSpacing(CONFIG.SPACING * scale)
-      .addUIs([label, noWhens, neverWhens, reset])
+      .addUIs([label, playWhen, noWhens, neverWhens, reset])
       .build();
   }
 
@@ -133,6 +149,17 @@ export class AgendaStateUI extends AbstractUI {
   ): AbstractUI {
     const label: LabelUI = new LabelUI(scale);
     label.getText().setText("My afters:");
+
+    const playAfter: ButtonUI = new ButtonUI(scale);
+    playAfter.getButton().setText("Play after");
+    playAfter.getButton().onClicked.add(() => {
+      const playerSlot: number =
+        TI4.playerSeats.getPlayerSlotBySeatIndex(seatIndex);
+      const playerName: string = TI4.playerName.getBySlot(playerSlot);
+      const msg: string = `After played by ${playerName}`;
+      Broadcast.chatAll(msg);
+      TI4.turnOrder.nextTurn();
+    });
 
     const noAfters: ButtonUI = new ButtonUI(scale);
     noAfters.getButton().setText("No afters (for now)");
@@ -161,7 +188,7 @@ export class AgendaStateUI extends AbstractUI {
 
     return new HorizontalUIBuilder()
       .setSpacing(CONFIG.SPACING * scale)
-      .addUIs([label, noAfters, neverAfters, reset])
+      .addUIs([label, playAfter, noAfters, neverAfters, reset])
       .build();
   }
 
