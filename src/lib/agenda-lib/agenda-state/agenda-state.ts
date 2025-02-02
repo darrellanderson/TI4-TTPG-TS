@@ -25,8 +25,8 @@ const AgendaSeatStateSchema = z.object({
   outcome: z.number().default(-1),
   votes: z.number().default(0),
   lockVotes: z.boolean().default(false),
-  noWhens: number().default(0), // 0 = unknown, 1 = no, 2 = never
-  noAfters: number().default(0), // 0 = unknown, 1 = no, 2 = never
+  noWhens: number().default(0), // 0 = unknown, 1 = no, 2 = never, 3 = play
+  noAfters: number().default(0), // 0 = unknown, 1 = no, 2 = never, 3 = play
 });
 type AgendaSeatStateSchemaType = z.infer<typeof AgendaSeatStateSchema>;
 
@@ -178,12 +178,14 @@ export class AgendaState {
     return this;
   }
 
-  getSeatNoAfters(seatIndex: number): "unknown" | "no" | "never" {
+  getSeatNoAfters(seatIndex: number): "unknown" | "no" | "never" | "play" {
     const seatState = this._getSeatState(seatIndex);
     if (seatState.noAfters === 1) {
       return "no";
     } else if (seatState.noAfters === 2) {
       return "never";
+    } else if (seatState.noAfters === 3) {
+      return "play";
     } else {
       return "unknown";
     }
@@ -191,13 +193,15 @@ export class AgendaState {
 
   setSeatNoAfters(
     seatIndex: number,
-    noWhens: "unknown" | "no" | "never"
+    noWhens: "unknown" | "no" | "never" | "play"
   ): this {
     const seatState = this._getSeatState(seatIndex);
     if (noWhens === "no") {
       seatState.noAfters = 1;
     } else if (noWhens === "never") {
       seatState.noAfters = 2;
+    } else if (noWhens === "play") {
+      seatState.noAfters = 3;
     } else {
       seatState.noAfters = 0;
     }
@@ -208,23 +212,30 @@ export class AgendaState {
     return this;
   }
 
-  getSeatNoWhens(seatIndex: number): "unknown" | "no" | "never" {
+  getSeatNoWhens(seatIndex: number): "unknown" | "no" | "never" | "play" {
     const seatState = this._getSeatState(seatIndex);
     if (seatState.noWhens === 1) {
       return "no";
     } else if (seatState.noWhens === 2) {
       return "never";
+    } else if (seatState.noWhens === 3) {
+      return "play";
     } else {
       return "unknown";
     }
   }
 
-  setSeatNoWhens(seatIndex: number, noWhens: "unknown" | "no" | "never"): this {
+  setSeatNoWhens(
+    seatIndex: number,
+    noWhens: "unknown" | "no" | "never" | "play"
+  ): this {
     const seatState = this._getSeatState(seatIndex);
     if (noWhens === "no") {
       seatState.noWhens = 1;
     } else if (noWhens === "never") {
       seatState.noWhens = 2;
+    } else if (noWhens === "play") {
+      seatState.noWhens = 3;
     } else {
       seatState.noWhens = 0;
     }

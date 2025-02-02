@@ -83,6 +83,9 @@ it("seat no afters", () => {
   agendaState.setSeatNoAfters(1, "never");
   expect(agendaState.getSeatNoAfters(0)).toBe("unknown");
   expect(agendaState.getSeatNoAfters(1)).toBe("never");
+  agendaState.setSeatNoAfters(1, "play");
+  expect(agendaState.getSeatNoAfters(0)).toBe("unknown");
+  expect(agendaState.getSeatNoAfters(1)).toBe("play");
   agendaState.setSeatNoAfters(1, "unknown");
   expect(agendaState.getSeatNoAfters(0)).toBe("unknown");
   expect(agendaState.getSeatNoAfters(1)).toBe("unknown");
@@ -98,6 +101,9 @@ it("seat no whens", () => {
   agendaState.setSeatNoWhens(1, "never");
   expect(agendaState.getSeatNoWhens(0)).toBe("unknown");
   expect(agendaState.getSeatNoWhens(1)).toBe("never");
+  agendaState.setSeatNoWhens(1, "play");
+  expect(agendaState.getSeatNoWhens(0)).toBe("unknown");
+  expect(agendaState.getSeatNoWhens(1)).toBe("play");
   agendaState.setSeatNoWhens(1, "unknown");
   expect(agendaState.getSeatNoWhens(0)).toBe("unknown");
   expect(agendaState.getSeatNoWhens(1)).toBe("unknown");

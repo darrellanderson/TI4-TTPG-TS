@@ -7,7 +7,7 @@ import {
   VerticalAlignment,
   world,
 } from "@tabletop-playground/api";
-import { Broadcast, PlayerSlot, ThrottleClickHandler } from "ttpg-darrell";
+import { ThrottleClickHandler } from "ttpg-darrell";
 
 import { AbstractUI } from "../../abstract-ui/abtract-ui";
 import { AgendaAvailableVotesUI } from "../agenda-available-votes-ui/agenda-available-votes-ui";
@@ -51,8 +51,15 @@ export class AgendaStateUI extends AbstractUI {
     agendaState: AgendaState,
     scale: number
   ): AbstractUI {
+    const label: LabelUI = new LabelUI(scale);
+    label
+      .getText()
+      .setJustification(TextJustification.Right)
+      .setText("Waiting for:");
+
+    // Room for 4, but use 3 to center in the space.
     const scaledWidth: number =
-      CONFIG.BUTTON_WIDTH * scale * 5 + CONFIG.SPACING * 4;
+      CONFIG.BUTTON_WIDTH * scale * 3 + CONFIG.SPACING * 2;
     const longLabel: LongLabelUI = new LongLabelUI(scaledWidth, scale);
     const text: Text = longLabel.getText();
 
@@ -61,7 +68,10 @@ export class AgendaStateUI extends AbstractUI {
       text.setText(msg);
     });
 
-    return longLabel;
+    return new HorizontalUIBuilder()
+      .setSpacing(CONFIG.SPACING * scale)
+      .addUIs([label, longLabel])
+      .build();
   }
 
   static _createAvailableVotesRow(scale: number): AbstractUI {
@@ -104,12 +114,7 @@ export class AgendaStateUI extends AbstractUI {
     const playWhen: ButtonUI = new ButtonUI(scale);
     playWhen.getButton().setText("Play when");
     playWhen.getButton().onClicked.add(() => {
-      const playerSlot: number =
-        TI4.playerSeats.getPlayerSlotBySeatIndex(seatIndex);
-      const playerName: string = TI4.playerName.getBySlot(playerSlot);
-      const msg: string = `When played by ${playerName}`;
-      Broadcast.chatAll(msg);
-      TI4.turnOrder.nextTurn();
+      agendaState.setSeatNoWhens(seatIndex, "play");
     });
 
     const noWhens: ButtonUI = new ButtonUI(scale);
@@ -131,22 +136,11 @@ export class AgendaStateUI extends AbstractUI {
     });
 
     agendaState.onAgendaStateChanged.add(() => {
-      const noNeverUnknown: "no" | "never" | "unknown" =
+      const noNeverUnknownPlay: "no" | "never" | "unknown" | "play" =
         agendaState.getSeatNoWhens(seatIndex);
-      noWhens.getButton().setEnabled(noNeverUnknown === "unknown");
-      neverWhens.getButton().setEnabled(noNeverUnknown !== "never");
-
-      const isWhens: boolean = agendaState.getPhase() === "whens";
-      const currentPlayerSlot: PlayerSlot = TI4.turnOrder.getCurrentTurn();
-      const currentSeatIndex: number =
-        TI4.playerSeats.getSeatIndexByPlayerSlot(currentPlayerSlot);
-      playWhen
-        .getButton()
-        .setEnabled(
-          isWhens &&
-            currentSeatIndex === seatIndex &&
-            noNeverUnknown === "unknown"
-        );
+      noWhens.getButton().setEnabled(noNeverUnknownPlay === "unknown");
+      neverWhens.getButton().setEnabled(noNeverUnknownPlay !== "never");
+      playWhen.getButton().setEnabled(noNeverUnknownPlay === "unknown");
     });
 
     return new HorizontalUIBuilder()
@@ -169,12 +163,7 @@ export class AgendaStateUI extends AbstractUI {
     const playAfter: ButtonUI = new ButtonUI(scale);
     playAfter.getButton().setText("Play after");
     playAfter.getButton().onClicked.add(() => {
-      const playerSlot: number =
-        TI4.playerSeats.getPlayerSlotBySeatIndex(seatIndex);
-      const playerName: string = TI4.playerName.getBySlot(playerSlot);
-      const msg: string = `After played by ${playerName}`;
-      Broadcast.chatAll(msg);
-      TI4.turnOrder.nextTurn();
+      agendaState.setSeatNoAfters(seatIndex, "play");
     });
 
     const noAfters: ButtonUI = new ButtonUI(scale);
@@ -196,22 +185,11 @@ export class AgendaStateUI extends AbstractUI {
     });
 
     agendaState.onAgendaStateChanged.add(() => {
-      const noNeverUnknown: "no" | "never" | "unknown" =
+      const noNeverUnknownPlay: "no" | "never" | "unknown" | "play" =
         agendaState.getSeatNoAfters(seatIndex);
-      noAfters.getButton().setEnabled(noNeverUnknown === "unknown");
-      neverAfters.getButton().setEnabled(noNeverUnknown !== "never");
-
-      const isAfters: boolean = agendaState.getPhase() === "afters";
-      const currentPlayerSlot: PlayerSlot = TI4.turnOrder.getCurrentTurn();
-      const currentSeatIndex: number =
-        TI4.playerSeats.getSeatIndexByPlayerSlot(currentPlayerSlot);
-      playAfter
-        .getButton()
-        .setEnabled(
-          isAfters &&
-            currentSeatIndex === seatIndex &&
-            noNeverUnknown === "unknown"
-        );
+      noAfters.getButton().setEnabled(noNeverUnknownPlay === "unknown");
+      neverAfters.getButton().setEnabled(noNeverUnknownPlay !== "never");
+      playAfter.getButton().setEnabled(noNeverUnknownPlay === "unknown");
     });
 
     return new HorizontalUIBuilder()
@@ -233,13 +211,11 @@ export class AgendaStateUI extends AbstractUI {
     seatIndex: number,
     scale: number
   ): AbstractUI {
-    const scaledWidth: number =
-      CONFIG.BUTTON_WIDTH * scale * 2 + CONFIG.SPACING * scale;
-    const label: LongLabelUI = new LongLabelUI(scaledWidth, scale);
+    const label: LabelUI = new LabelUI(scale);
     label
       .getText()
       .setJustification(TextJustification.Right)
-      .setText("Select outcome below.  Votes:");
+      .setText("My votes:");
 
     const votes: AgendaVoteCountUI = new AgendaVoteCountUI(
       agendaState,
@@ -247,9 +223,19 @@ export class AgendaStateUI extends AbstractUI {
       scale
     );
 
+    const scaledWidth: number =
+      CONFIG.BUTTON_WIDTH * scale * 3 + CONFIG.SPACING * 2 * scale;
+    const howTo: LongLabelUI = new LongLabelUI(scaledWidth, scale);
+    howTo
+      .getText()
+      .setJustification(TextJustification.Left)
+      .setText(
+        "select outcome below, enter votes and lock; abstain/no vote just lock"
+      );
+
     return new HorizontalUIBuilder()
       .setSpacing(CONFIG.SPACING * scale)
-      .addUIs([label, votes])
+      .addUIs([label, votes, howTo])
       .build();
   }
 

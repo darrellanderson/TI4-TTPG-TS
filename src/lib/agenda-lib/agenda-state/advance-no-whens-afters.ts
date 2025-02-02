@@ -50,17 +50,25 @@ export class AdvanceNoWhensAfters {
   _isSkipTurnWhen(): boolean {
     const current: PlayerSlot = TI4.turnOrder.getCurrentTurn();
     const seatIndex: number = TI4.playerSeats.getSeatIndexByPlayerSlot(current);
-    const unknownNoNever: "unknown" | "no" | "never" =
+    const unknownNoNeverPlay: "unknown" | "no" | "never" | "play" =
       this._agendaState.getSeatNoWhens(seatIndex);
-    return unknownNoNever === "no" || unknownNoNever === "never";
+    return (
+      unknownNoNeverPlay === "no" ||
+      unknownNoNeverPlay === "never" ||
+      unknownNoNeverPlay === "play"
+    );
   }
 
   _isSkipTurnAfter(): boolean {
     const current: PlayerSlot = TI4.turnOrder.getCurrentTurn();
     const seatIndex: number = TI4.playerSeats.getSeatIndexByPlayerSlot(current);
-    const unknownNoNever: "unknown" | "no" | "never" =
+    const unknownNoNeverPlay: "unknown" | "no" | "never" | "play" =
       this._agendaState.getSeatNoAfters(seatIndex);
-    return unknownNoNever === "no" || unknownNoNever === "never";
+    return (
+      unknownNoNeverPlay === "no" ||
+      unknownNoNeverPlay === "never" ||
+      unknownNoNeverPlay === "play"
+    );
   }
 
   _resetWhens(): void {
