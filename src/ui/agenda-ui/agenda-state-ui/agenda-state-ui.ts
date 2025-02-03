@@ -4,7 +4,6 @@ import {
   GameObject,
   Text,
   TextJustification,
-  VerticalAlignment,
   world,
 } from "@tabletop-playground/api";
 import { ThrottleClickHandler } from "ttpg-darrell";
@@ -255,16 +254,11 @@ export class AgendaStateUI extends AbstractUI {
       .build();
   }
 
-  static _createTopRowUI(
+  static _createTopLeftUI(
     agendaState: AgendaState,
     seatIndex: number,
     scale: number
   ): AbstractUI {
-    const agendaCardUI: AbstractUI = AgendaStateUI._createAgendaCardUI(
-      agendaState,
-      scale
-    );
-
     const availableVotesUI: AbstractUI =
       AgendaStateUI._createAvailableVotesRow(scale);
 
@@ -291,42 +285,59 @@ export class AgendaStateUI extends AbstractUI {
       scale
     );
 
-    const outcomeUIs: AbstractUI = AgendaStateUI._createOutcomeUIs(
-      agendaState,
-      scale
-    );
-
-    const whensAftersVotes: AbstractUI = new VerticalUIBuilder()
+    return new VerticalUIBuilder()
       .setSpacing(CONFIG.SPACING * scale)
-      .addUIs([
-        waitingForUI,
-        availableVotesUI,
-        whensUI,
-        aftersUI,
-        votingUI,
-        outcomeUIs,
-      ])
-      .build();
-
-    return new HorizontalUIBuilder()
-      .setSpacing(CONFIG.SPACING * scale)
-      .setVerticalAlignment(VerticalAlignment.Top)
-      .addUIs([agendaCardUI, whensAftersVotes])
+      .addUIs([waitingForUI, availableVotesUI, whensUI, aftersUI, votingUI])
       .build();
   }
 
+  static _createTopRightUI(
+    agendaState: AgendaState,
+    scale: number
+  ): AbstractUI {
+    const agendaCardUI: AbstractUI = AgendaStateUI._createAgendaCardUI(
+      agendaState,
+      scale
+    );
+    return agendaCardUI;
+  }
+
+  static _createBottomUI(agendaState: AgendaState, scale: number): AbstractUI {
+    const outcomesUI: AbstractUI = AgendaStateUI._createOutcomeUIs(
+      agendaState,
+      scale
+    );
+    return outcomesUI;
+  }
+
   constructor(agendaState: AgendaState, seatIndex: number, scale: number) {
-    const topRowUI: AbstractUI = AgendaStateUI._createTopRowUI(
+    const topRowLeftUI: AbstractUI = AgendaStateUI._createTopLeftUI(
       agendaState,
       seatIndex,
       scale
     );
 
-    const abstractUi: AbstractUI = new HorizontalUIBuilder()
+    const topRightUI: AbstractUI = AgendaStateUI._createTopRightUI(
+      agendaState,
+      scale
+    );
+
+    const bottomUI: AbstractUI = AgendaStateUI._createBottomUI(
+      agendaState,
+      scale
+    );
+
+    const topUI: AbstractUI = new HorizontalUIBuilder()
       .setSpacing(CONFIG.SPACING * scale)
-      .addUIs([topRowUI])
+      .addUIs([topRowLeftUI, topRightUI])
       .build();
-    super(abstractUi.getWidget(), abstractUi.getSize());
+
+    const ui: AbstractUI = new VerticalUIBuilder()
+      .setSpacing(CONFIG.SPACING * scale)
+      .addUIs([topUI, bottomUI])
+      .build();
+
+    super(ui.getWidget(), ui.getSize());
 
     this._agendaState = agendaState;
     this._agendaState.onAgendaStateChanged.add(

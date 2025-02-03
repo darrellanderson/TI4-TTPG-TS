@@ -1,14 +1,18 @@
 import { Card, ImageWidget } from "@tabletop-playground/api";
 import { AbstractUI, UI_SIZE } from "../../abstract-ui/abtract-ui";
+import { CONFIG } from "../../config/config";
 import { ZoomableUI } from "../../zoomable-ui/zoomable-ui";
-
-const CARD_H_PX: number = 300;
 
 export class UnzoomedAgendaCardUI extends AbstractUI {
   constructor(agendaCard: Card, scale: number) {
+    const numRows: number = 5;
+    const h: number =
+      CONFIG.BUTTON_HEIGHT * numRows * scale +
+      CONFIG.SPACING * (numRows - 1) * scale;
+
     const size: UI_SIZE = {
-      w: (CARD_H_PX * scale * 500) / 750,
-      h: CARD_H_PX * scale,
+      w: (h * 500) / 750,
+      h,
     };
     const widget: ImageWidget = new ImageWidget()
       .setImageSize(size.w, size.h)
