@@ -5,7 +5,7 @@ import { ZoomableUI } from "../../zoomable-ui/zoomable-ui";
 
 export class UnzoomedAgendaCardUI extends AbstractUI {
   constructor(agendaCard: Card, scale: number) {
-    const numRows: number = 5;
+    const numRows: number = 7;
     const h: number =
       CONFIG.BUTTON_HEIGHT * numRows * scale +
       CONFIG.SPACING * (numRows - 1) * scale;

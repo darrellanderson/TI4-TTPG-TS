@@ -20,6 +20,7 @@ import { HorizontalUIBuilder } from "../../panel/horizontal-ui-builder";
 import { LabelUI } from "../../button-ui/label-ui";
 import { LongLabelUI } from "../../button-ui/long-label-ui";
 import { VerticalUIBuilder } from "../../panel/vertical-ui-builder";
+import { AgendaHowToUI } from "../agenda-how-to-ui/agenda-how-to-ui";
 
 /**
  * [waiting for: ...]
@@ -262,6 +263,8 @@ export class AgendaStateUI extends AbstractUI {
     const availableVotesUI: AbstractUI =
       AgendaStateUI._createAvailableVotesRow(scale);
 
+    const howToUI: AbstractUI = new AgendaHowToUI(scale);
+
     const waitingForUI: AbstractUI = AgendaStateUI._createWaitingForRow(
       agendaState,
       scale
@@ -287,7 +290,14 @@ export class AgendaStateUI extends AbstractUI {
 
     return new VerticalUIBuilder()
       .setSpacing(CONFIG.SPACING * scale)
-      .addUIs([waitingForUI, availableVotesUI, whensUI, aftersUI, votingUI])
+      .addUIs([
+        howToUI,
+        waitingForUI,
+        availableVotesUI,
+        whensUI,
+        aftersUI,
+        votingUI,
+      ])
       .build();
   }
 
