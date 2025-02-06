@@ -230,7 +230,7 @@ export class AgendaStateUI extends AbstractUI {
       .getText()
       .setJustification(TextJustification.Left)
       .setText(
-        "select outcome below, enter votes and lock; abstain/no vote just lock"
+        "select outcome below, enter votes and lock; to abstain lock zero votes"
       );
 
     return new HorizontalUIBuilder()

@@ -17,13 +17,14 @@ export class AgendaHowToUI extends AbstractUI {
         CONFIG.SPACING * scale,
         CONFIG.SPACING * scale
       );
-    const widget: Widget = new Border().setColor([1, 0, 0, 1]).setChild(box);
+    const c: number = 0.06;
+    const widget: Widget = new Border().setColor([c, c, c, 1]).setChild(box);
     super(widget, size);
 
     const msg: string = [
       "Click 'no whens' to skip your whens this round, you get another chance next round if anyone plays a when.",
       "Click 'never whens' to skip every time.",
-      "Click 'play when' to skip to the next turn, handle then when with the table.",
+      "Click 'play when' to skip to the next turn (handle then when with the table).",
       "You may click before your turn, it will be processed when your turn comes.",
       "Repeat for afters, then vote.",
     ].join(" ");
