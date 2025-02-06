@@ -7,7 +7,7 @@ it("static getAvailableVotesRichText", () => {
     owningPlayerSlot: 10,
   });
   const result: string = AgendaAvailableVotesUI.getAvailableVotesRichText();
-  expect(result).toEqual("[color=#00c702]0[/color]");
+  expect(result).toEqual("[b][color=#00c702]0[/color][/b]");
 });
 
 it("constructor", () => {

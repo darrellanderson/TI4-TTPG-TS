@@ -22,11 +22,11 @@ export class AgendaHowToUI extends AbstractUI {
     super(widget, size);
 
     const msg: string = [
-      "Click 'no whens' to skip your whens this round, you get another chance next round if anyone plays a when.",
-      "Click 'never whens' to skip every time.",
-      "Click 'play when' to skip to the next turn (handle then when with the table).",
-      "You may click before your turn, it will be processed when your turn comes.",
-      "Repeat for afters, then vote.",
+      "[b]Play when[/b] to skip to the next turn (handle then when with the table).",
+      "[b]No whens[/b] to skip your whens this round, you get another chance next round if anyone plays a when.",
+      "[b]Never whens[/b] to skip every time.",
+      "Repeat for afters (right click many afters to assign the outcome), then vote.",
+      "You may click early, it will be processed on your turn.",
     ].join(" ");
 
     const richText: Widget = new RichText()

@@ -22,7 +22,7 @@ export class AgendaAvailableVotesUI extends LongRichTextUI {
       entries.push(`[color=#${colorHex}]${availableVotes}[/color]`);
     }
 
-    return entries.join("  |  ");
+    return "[b]" + entries.join("  |  ") + "[/b]";
   }
 
   constructor(scaledWidth: number, scale: number) {

@@ -35,13 +35,13 @@ export class AgendaOutcomeUI extends AbstractUI {
 
   constructor(agendaState: AgendaState, outcomeIndex: number, scale: number) {
     const size: UI_SIZE = {
-      w: CONFIG.BUTTON_WIDTH * scale * 3 + CONFIG.SPACING * 2,
+      w: CONFIG.BUTTON_WIDTH * scale * 3 + CONFIG.SPACING * 2 * scale,
       h: CONFIG.BUTTON_HEIGHT * scale,
     };
 
     const outcomeNameUi: EditableButtonUI = new EditableButtonUI(scale);
     const voteSummary: LongRichTextUI = new LongRichTextUI(
-      CONFIG.BUTTON_WIDTH * 2 + CONFIG.SPACING,
+      CONFIG.BUTTON_WIDTH * scale,
       scale
     );
     voteSummary.getRichText().setJustification(TextJustification.Left);
@@ -68,19 +68,20 @@ export class AgendaOutcomeUI extends AbstractUI {
       let totalVotes: number = 0;
       TI4.playerSeats.getAllSeats().forEach((seat, index) => {
         const outcomeChoice: number = agendaState.getSeatOutcomeChoice(index);
-        if (outcomeChoice === outcomeIndex) {
+        const votes: number = agendaState.getSeatVotesForOutcome(index);
+        if (outcomeChoice === outcomeIndex && votes > 0) {
           const playerSlot: number = seat.playerSlot;
           const color: Color = world.getSlotColor(playerSlot);
           const colorHex: string = color.toHex().substring(0, 6).toLowerCase();
-          const votes: number = agendaState.getSeatVotesForOutcome(index);
           richVotes.push(`[color=#${colorHex}]${votes}[/color]`);
           totalVotes += votes;
         }
       });
-      let summary: string = `Votes: ${totalVotes}`;
+      let summary: string = `${totalVotes}`;
       if (richVotes.length > 0) {
         summary += ` (${richVotes.join(", ")})`;
       }
+      summary = `[b]${summary}[/b]`;
       voteSummary.getRichText().setText(summary);
     });
   }
