@@ -44,4 +44,7 @@ it("outcome button clicked", () => {
   agendaOutcomeUI._onOutcomeClicked(button, player);
 
   expect(agendaState.getSeatOutcomeChoice(0)).toBe(0);
+
+  // Also set a positive vote count.
+  agendaState.setSeatVotesForOutcome(0, 1);
 });

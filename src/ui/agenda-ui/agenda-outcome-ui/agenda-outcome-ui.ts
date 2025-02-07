@@ -5,13 +5,14 @@ import {
   TextJustification,
   world,
 } from "@tabletop-playground/api";
-import { AbstractUI, UI_SIZE } from "../../abstract-ui/abtract-ui";
+import { AbstractUI } from "../../abstract-ui/abtract-ui";
 import { AgendaState } from "../../../lib/agenda-lib/agenda-state/agenda-state";
 import { CONFIG } from "../../config/config";
 import { EditableButtonUI } from "../../button-ui/editable-button-ui";
 import { HorizontalUIBuilder } from "../../panel/horizontal-ui-builder";
 import { LongRichTextUI } from "../../button-ui/long-richtext-ui";
 import { ThrottleClickHandler } from "ttpg-darrell";
+import { AgendaRiderUI } from "./agenda-rider-ui";
 
 /**
  * UI:
@@ -34,24 +35,20 @@ export class AgendaOutcomeUI extends AbstractUI {
   ).get();
 
   constructor(agendaState: AgendaState, outcomeIndex: number, scale: number) {
-    const size: UI_SIZE = {
-      w: CONFIG.BUTTON_WIDTH * scale * 3 + CONFIG.SPACING * 2 * scale,
-      h: CONFIG.BUTTON_HEIGHT * scale,
-    };
-
-    const outcomeNameUi: EditableButtonUI = new EditableButtonUI(scale);
     const voteSummary: LongRichTextUI = new LongRichTextUI(
       CONFIG.BUTTON_WIDTH * scale,
       scale
     );
-    voteSummary.getRichText().setJustification(TextJustification.Left);
+    voteSummary.getRichText().setJustification(TextJustification.Right);
+    const outcomeNameUi: EditableButtonUI = new EditableButtonUI(scale);
+    const riders: AbstractUI = new AgendaRiderUI(agendaState, scale);
 
     const ui: AbstractUI = new HorizontalUIBuilder()
       .setSpacing(CONFIG.SPACING * scale)
-      .addUIs([outcomeNameUi, voteSummary])
+      .addUIs([voteSummary, outcomeNameUi, riders])
       .build();
 
-    super(ui.getWidget(), size);
+    super(ui.getWidget(), ui.getSize());
     this._agendaState = agendaState;
     this._outcomeIndex = outcomeIndex;
 
