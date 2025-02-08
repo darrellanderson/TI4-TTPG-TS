@@ -3,7 +3,7 @@ import { AbstractUI, UI_SIZE } from "../../abstract-ui/abtract-ui";
 import { CONFIG } from "../../config/config";
 import { ZoomableUI } from "../../zoomable-ui/zoomable-ui";
 
-export class UnzoomedAgendaCardUI extends AbstractUI {
+export class UnzoomedCardUI extends AbstractUI {
   constructor(agendaCard: Card, scale: number) {
     const numRows: number = 7;
     const h: number =
@@ -23,11 +23,11 @@ export class UnzoomedAgendaCardUI extends AbstractUI {
 
 export class AgendaCardUI extends ZoomableUI {
   static _getCreateZoomedUI(agendaCard: Card, scale: number): () => AbstractUI {
-    return () => new UnzoomedAgendaCardUI(agendaCard, scale * 2);
+    return () => new UnzoomedCardUI(agendaCard, scale * 2);
   }
 
   constructor(agendaCard: Card, scale: number) {
-    const unzoomedUi: AbstractUI = new UnzoomedAgendaCardUI(agendaCard, scale);
+    const unzoomedUi: AbstractUI = new UnzoomedCardUI(agendaCard, scale);
     const createZoomedUI: () => AbstractUI = AgendaCardUI._getCreateZoomedUI(
       agendaCard,
       scale

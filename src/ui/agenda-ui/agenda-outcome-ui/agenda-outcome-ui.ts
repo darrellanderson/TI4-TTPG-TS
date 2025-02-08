@@ -41,7 +41,11 @@ export class AgendaOutcomeUI extends AbstractUI {
     );
     voteSummary.getRichText().setJustification(TextJustification.Right);
     const outcomeNameUi: EditableButtonUI = new EditableButtonUI(scale);
-    const riders: AbstractUI = new AgendaRiderUI(agendaState, scale);
+    const riders: AbstractUI = new AgendaRiderUI(
+      agendaState,
+      outcomeIndex,
+      scale
+    );
 
     const ui: AbstractUI = new HorizontalUIBuilder()
       .setSpacing(CONFIG.SPACING * scale)
