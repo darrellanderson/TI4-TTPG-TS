@@ -13,30 +13,21 @@ it("constructor/destroy", () => {
 });
 
 it("_getOnZoomOpenHandler", () => {
-  const unzoomedUI: AbstractUI = new ButtonUI(1);
   const scale: number = 1;
   const createZoomedUI: () => AbstractUI = () => new ButtonUI(1);
-
-  const zoomableUI = new ZoomableUI(unzoomedUI, scale, createZoomedUI);
 
   const button: ImageButton = new MockImageButton();
   const player: Player = new MockPlayer();
   const onZoomOpenedHandler: (button: ImageButton, player: Player) => void =
-    zoomableUI._getOnZoomOpenHandler(createZoomedUI, scale);
+    ZoomableUI._getOnZoomOpenHandler(createZoomedUI, scale);
   onZoomOpenedHandler(button, player);
   onZoomOpenedHandler(button, player); // again
 });
 
 it("_getOnZoomClosedHandler", () => {
-  const unzoomedUI: AbstractUI = new ButtonUI(1);
-  const scale: number = 1;
-  const createZoomedUI: () => AbstractUI = () => new ButtonUI(1);
-
-  const zoomableUI = new ZoomableUI(unzoomedUI, scale, createZoomedUI);
-
   const contentButton: ContentButton = new MockContentButton();
   const player: Player = new MockPlayer();
   const onZoomClosedHandler: (button: ContentButton, player: Player) => void =
-    zoomableUI._getOnZoomClosedHandler();
+    ZoomableUI._getOnZoomClosedHandler();
   onZoomClosedHandler(contentButton, player);
 });

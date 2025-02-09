@@ -35,7 +35,10 @@ export class ZoomableUI extends AbstractUI {
   private readonly _unzoomedUi: AbstractUI;
   private readonly _zoomButton: ImageButton;
 
-  _getOnZoomClosedHandler(): (button: ContentButton, player: Player) => void {
+  static _getOnZoomClosedHandler(): (
+    button: ContentButton,
+    player: Player
+  ) => void {
     return (_button: ContentButton, player: Player): void => {
       const screenUiElement: ScreenUIElement | undefined =
         __playerSlotToZoomedScreenUiElement.get(player.getSlot());
@@ -46,11 +49,11 @@ export class ZoomableUI extends AbstractUI {
     };
   }
 
-  _getOnZoomOpenHandler(
+  static _getOnZoomOpenHandler<T>(
     createZoomedUI: CreateZoomedUiType,
     scale: number
-  ): (button: ImageButton, player: Player) => void {
-    return (_button: ImageButton, player: Player): void => {
+  ): (button: T, player: Player) => void {
+    return (_button: T, player: Player): void => {
       // Remove any existing zoomed UI for this player.
       const existingScreenUiElement: ScreenUIElement | undefined =
         __playerSlotToZoomedScreenUiElement.get(player.getSlot());
@@ -70,7 +73,7 @@ export class ZoomableUI extends AbstractUI {
         .getContentButton()
         .onClicked.add(
           new ThrottleClickHandler<ContentButton>(
-            this._getOnZoomClosedHandler()
+            ZoomableUI._getOnZoomClosedHandler()
           ).get()
         );
 
@@ -133,7 +136,7 @@ export class ZoomableUI extends AbstractUI {
     this._zoomButton = zoomButton;
     zoomButton.onClicked.add(
       new ThrottleClickHandler<ImageButton>(
-        this._getOnZoomOpenHandler(createZoomedUI, scale)
+        ZoomableUI._getOnZoomOpenHandler<ImageButton>(createZoomedUI, scale)
       ).get()
     );
   }
