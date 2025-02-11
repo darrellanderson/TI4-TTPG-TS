@@ -5,7 +5,6 @@ import {
   AgendaState,
 } from "../../../lib/agenda-lib/agenda-state/agenda-state";
 import { AgendaRiderUI } from "./agenda-rider-ui";
-import exp from "constants";
 
 it("static _createRiderButton", () => {
   new MockCardHolder({
