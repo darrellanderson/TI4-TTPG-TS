@@ -1,6 +1,8 @@
 import { Card, ImageWidget } from "@tabletop-playground/api";
 import { AbstractUI, UI_SIZE } from "../../abstract-ui/abtract-ui";
 import { CONFIG } from "../../config/config";
+import { CreateZoomedCardUI } from "../../zoomable-ui/create-zoomed-card-ui";
+import { CreateZoomedUiType } from "../../zoomable-ui/zoomable-ui";
 import { ZoomableUiFullyClickable } from "../../zoomable-ui/zoomable-ui-fully-clickable";
 
 export class UnzoomedCardUI extends AbstractUI {
@@ -28,10 +30,9 @@ export class AgendaCardUI extends ZoomableUiFullyClickable {
 
   constructor(agendaCard: Card, scale: number) {
     const unzoomedUi: AbstractUI = new UnzoomedCardUI(agendaCard, scale);
-    const createZoomedUI: () => AbstractUI = AgendaCardUI._getCreateZoomedUI(
-      agendaCard,
-      scale
-    );
+    const createZoomedUI: CreateZoomedUiType = new CreateZoomedCardUI(
+      agendaCard
+    ).get();
     super(unzoomedUi, scale, createZoomedUI);
   }
 }
