@@ -16,6 +16,8 @@ import {
   AgendaRiderSchemaType,
   AgendaState,
 } from "../../../lib/agenda-lib/agenda-state/agenda-state";
+import { CreateZoomedUiType, ZoomableUI } from "../../zoomable-ui/zoomable-ui";
+import { CreateZoomedCardUI } from "../../zoomable-ui/create-zoomed-card-ui";
 
 export class AgendaRiderUI extends AbstractUI {
   static _createRiderButton(
@@ -39,6 +41,14 @@ export class AgendaRiderUI extends AbstractUI {
       .setFontSize(CONFIG.FONT_SIZE * scale)
       .setTextColor(playerColor)
       .setText(name);
+
+    if (obj instanceof Card) {
+      const createZoomedUi: CreateZoomedUiType = new CreateZoomedCardUI(
+        obj
+      ).get();
+      const onClicked = ZoomableUI._getOnZoomOpenHandler(createZoomedUi, scale);
+      button.onClicked.add(onClicked);
+    }
 
     return button;
   }
