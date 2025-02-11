@@ -32,8 +32,8 @@ export class ZoomableUiFullyClickable extends AbstractUI {
       contentButton,
       -4,
       -4,
-      unzoomedSize.w + 4,
-      unzoomedSize.h + 4
+      unzoomedSize.w + 8,
+      unzoomedSize.h + 8
     );
     const canvasBox: Widget = new LayoutBox()
       .setOverrideWidth(unzoomedSize.w)
