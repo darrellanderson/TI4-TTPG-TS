@@ -1,6 +1,7 @@
 import { Card, Player } from "@tabletop-playground/api";
 import { DiceResult, TriggerableMulticastDelegate } from "ttpg-darrell";
 
+import { AgendaState } from "../lib/agenda-lib/agenda-state/agenda-state";
 import {
   CombatRollType,
   CombatRoll,
@@ -18,6 +19,16 @@ export class GlobalEvents {
    */
   public readonly onAgendaCard = new TriggerableMulticastDelegate<
     (agendaCard: Card, player: Player) => void
+  >();
+
+  /**
+   * Called when agenda state is created.  Listeners can attach to
+   * the AgendaState.onAgendaStateChanged event.
+   *
+   * @param agendaState state that was created.
+   */
+  public readonly onAgendaStateCreated = new TriggerableMulticastDelegate<
+    (agendaState: AgendaState) => void
   >();
 
   /**

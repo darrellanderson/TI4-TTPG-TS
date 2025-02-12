@@ -4,21 +4,30 @@ import { AgendaState } from "./agenda-state";
 import { world } from "@tabletop-playground/api";
 
 it("constructor/destroy/isActive/static isAgendaInProgress", () => {
+  let onAgendaStateCreatedCount: number = 0;
+  TI4.events.onAgendaStateCreated.add((_agendaState: AgendaState): void => {
+    onAgendaStateCreatedCount++;
+  });
+  expect(onAgendaStateCreatedCount).toBe(0);
+
   const id: NamespaceId = "@test/test";
   expect(AgendaState.isAgendaInProgress(id)).toBe(false);
 
   const agendaState: AgendaState = new AgendaState(id);
   expect(AgendaState.isAgendaInProgress(id)).toBe(true);
   expect(agendaState.isActive()).toBe(true);
+  expect(onAgendaStateCreatedCount).toBe(1);
 
   // Construct again using exisitng state.
   new AgendaState(id);
   expect(AgendaState.isAgendaInProgress(id)).toBe(true);
   expect(agendaState.isActive()).toBe(true);
+  expect(onAgendaStateCreatedCount).toBe(2);
 
   agendaState.destroy();
   expect(AgendaState.isAgendaInProgress(id)).toBe(false);
   expect(agendaState.isActive()).toBe(false);
+  expect(onAgendaStateCreatedCount).toBe(2);
 });
 
 it("constructor (bad json)", () => {

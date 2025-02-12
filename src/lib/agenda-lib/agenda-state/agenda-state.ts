@@ -78,6 +78,9 @@ export class AgendaState {
 
     // Report final state when finished.
     new ReportFinalAgendaState(this);
+
+    // Tell any external listeners a new agenda started/resumed.
+    TI4.events.onAgendaStateCreated.trigger(this);
   }
 
   destroy(): void {
