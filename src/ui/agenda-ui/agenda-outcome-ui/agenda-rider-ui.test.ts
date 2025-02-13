@@ -1,5 +1,5 @@
 import { GameObject, Widget } from "@tabletop-playground/api";
-import { clickAll, MockCard, MockCardHolder } from "ttpg-mock";
+import { clickAll, MockCard, MockCardDetails, MockCardHolder } from "ttpg-mock";
 import {
   AgendaRiderSchemaType,
   AgendaState,
@@ -12,7 +12,13 @@ it("static _createRiderButton", () => {
     owningPlayerSlot: 10,
   });
 
-  const riderObj: GameObject = new MockCard();
+  const riderObj: GameObject = new MockCard({
+    cardDetails: [
+      new MockCardDetails({
+        name: "longer than max characters length to force truncation",
+      }),
+    ],
+  });
 
   const rider: AgendaRiderSchemaType = {
     objId: riderObj.getId(),

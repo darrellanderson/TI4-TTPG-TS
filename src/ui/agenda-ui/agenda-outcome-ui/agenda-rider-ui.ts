@@ -32,6 +32,10 @@ export class AgendaRiderUI extends AbstractUI {
     if (obj instanceof Card) {
       name = obj.getCardDetails().name;
     }
+    const maxLength: number = 20;
+    if (name.length > maxLength) {
+      name = name.substring(0, maxLength - 3) + "...";
+    }
 
     const playerSlot: number = TI4.playerSeats.getPlayerSlotBySeatIndexOrThrow(
       rider.seat
