@@ -1,5 +1,10 @@
-import { GameObject, Player } from "@tabletop-playground/api";
-import { MockCardHolder, MockGameObject, MockPlayer } from "ttpg-mock";
+import { Card, GameObject, Player } from "@tabletop-playground/api";
+import {
+  MockCard,
+  MockCardHolder,
+  MockGameObject,
+  MockPlayer,
+} from "ttpg-mock";
 
 import { AgendaState } from "../../lib/agenda-lib/agenda-state/agenda-state";
 import { ReportFinalAgendaState } from "../../lib/agenda-lib/agenda-state/report-final-agenda-state";
@@ -90,4 +95,15 @@ it("onCustomAction", () => {
 
   rider._customActionAsPlayer(player, ACTION_CLEAR_PREDICT);
   expect(agendaState.getRiders()).toEqual([]);
+});
+
+it("singleton card, deck", () => {
+  new RightClickRider().init();
+
+  const card1: Card = new MockCard();
+  const card2: Card = new MockCard();
+  card1.addCards(card2);
+  process.flushTicks();
+  card1.takeCards();
+  process.flushTicks();
 });

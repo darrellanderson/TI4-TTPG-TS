@@ -4,7 +4,7 @@ import {
   Player,
   world,
 } from "@tabletop-playground/api";
-import { IGlobal, NSID } from "ttpg-darrell";
+import { IGlobal, NSID, OnCardBecameSingletonOrDeck } from "ttpg-darrell";
 
 import { AgendaState } from "../../lib/agenda-lib/agenda-state/agenda-state";
 import { ReportFinalAgendaState } from "../../lib/agenda-lib/agenda-state/report-final-agenda-state";
@@ -59,6 +59,16 @@ export class RightClickRider implements IGlobal {
         this._onAgendaStateChange(agendaState);
       });
     });
+    OnCardBecameSingletonOrDeck.onSingletonCardCreated.add(
+      (obj: GameObject): void => {
+        this._maybeAddGameObject(obj);
+      }
+    );
+    OnCardBecameSingletonOrDeck.onSingletonCardMadeDeck.add(
+      (obj: GameObject): void => {
+        this._maybeRemoveGameObject(obj);
+      }
+    );
 
     const skipContained: boolean = false;
     for (const obj of world.getAllObjects(skipContained)) {
