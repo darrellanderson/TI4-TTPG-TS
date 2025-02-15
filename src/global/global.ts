@@ -43,6 +43,7 @@ import { PlayerSeats } from "../lib/player-lib/player-seats/player-seats";
 import { RemoveRegistry } from "../lib/remove-lib/registry/remove-registry";
 import { ReportRemaining } from "../context-menu/report-remaining/report-remaining";
 import { RightClickExplore } from "../context-menu/system/explore-system/right-click-explore";
+import { RightClickRider } from "../context-menu/right-click-rider/right-click-rider";
 import { RightClickScorePrivate } from "../context-menu/right-click-score/right-click-score-private";
 import { RightClickScorePublic } from "../context-menu/right-click-score/right-click-score-public";
 import { RSwapSplitCombine } from "./r-swap-split-combine";
@@ -134,6 +135,7 @@ export function resetGlobalThisTI4(): TI4Class {
     new OnSystemActivated(),
     new ReportRemaining(),
     new RightClickExplore(),
+    new RightClickRider(),
     new RightClickScorePrivate(),
     new RightClickScorePublic(),
     new RSwapSplitCombine(),
