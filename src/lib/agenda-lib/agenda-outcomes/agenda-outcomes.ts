@@ -1,6 +1,6 @@
 import { AgendaState } from "../agenda-state/agenda-state";
 
-export const AGENDA_OUTCOME_TYEP_TO_LABEL: { [key: string]: string } = {
+export const AGENDA_OUTCOME_TYPE_TO_LABEL: Record<string, string> = {
   "for-against": "For/Against",
   player: "Elect Player",
   "strategy-card": "Elect Strategy Card",

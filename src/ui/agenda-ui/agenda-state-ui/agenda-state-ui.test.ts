@@ -69,5 +69,7 @@ it("constructor/event/destroy", () => {
     scale
   );
   agendaState.onAgendaStateChanged.trigger(agendaState);
+
+  agendaState.setOutcomeName(0, "For");
   agendaStateUI.destroy();
 });

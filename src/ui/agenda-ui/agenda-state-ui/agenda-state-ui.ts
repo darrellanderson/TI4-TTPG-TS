@@ -11,6 +11,7 @@ import { ThrottleClickHandler } from "ttpg-darrell";
 import { AbstractUI } from "../../abstract-ui/abtract-ui";
 import { AgendaAvailableVotesUI } from "../agenda-available-votes-ui/agenda-available-votes-ui";
 import { AgendaCardUI } from "../agenda-card-ui/agenda-card-ui";
+import { AgendaHowToUI } from "../agenda-how-to-ui/agenda-how-to-ui";
 import { AgendaOutcomeUI } from "../agenda-outcome-ui/agenda-outcome-ui";
 import { AgendaState } from "../../../lib/agenda-lib/agenda-state/agenda-state";
 import { AgendaVoteCountUI } from "../agenda-vote-count-ui/agenda-vote-count-ui";
@@ -19,8 +20,9 @@ import { CONFIG } from "../../config/config";
 import { HorizontalUIBuilder } from "../../panel/horizontal-ui-builder";
 import { LabelUI } from "../../button-ui/label-ui";
 import { LongLabelUI } from "../../button-ui/long-label-ui";
+import { SwitcherUI } from "../../../ui/switcher-ui/switcher-ui";
 import { VerticalUIBuilder } from "../../panel/vertical-ui-builder";
-import { AgendaHowToUI } from "../agenda-how-to-ui/agenda-how-to-ui";
+import { AgendaChooseTypeUI } from "../agenda-choose-type-ui/agenda-choose-type-ui";
 
 /**
  * [waiting for: ...]
@@ -33,7 +35,7 @@ import { AgendaHowToUI } from "../agenda-how-to-ui/agenda-how-to-ui";
  */
 export class AgendaStateUI extends AbstractUI {
   private readonly _agendaState: AgendaState;
-  private readonly _onAgendaStateChangedHandler = () => {};
+  private readonly _switcherUiOutcomeTypeThenMain: SwitcherUI;
 
   static _createAgendaCardUI(
     agendaState: AgendaState,
@@ -336,6 +338,11 @@ export class AgendaStateUI extends AbstractUI {
       agendaState,
       scale
     );
+    const outcomeTypeUi: AbstractUI = new AgendaChooseTypeUI(
+      agendaState,
+      scale
+    );
+    const switcherUi: SwitcherUI = new SwitcherUI([outcomeTypeUi, bottomUI]);
 
     const topUI: AbstractUI = new HorizontalUIBuilder()
       .setSpacing(CONFIG.SPACING * scale)
@@ -344,15 +351,20 @@ export class AgendaStateUI extends AbstractUI {
 
     const ui: AbstractUI = new VerticalUIBuilder()
       .setSpacing(CONFIG.SPACING * scale)
-      .addUIs([topUI, bottomUI])
+      .addUIs([topUI, switcherUi])
       .build();
 
     super(ui.getWidget(), ui.getSize());
 
     this._agendaState = agendaState;
-    this._agendaState.onAgendaStateChanged.add(
-      this._onAgendaStateChangedHandler
-    );
+    this._switcherUiOutcomeTypeThenMain = switcherUi;
+
+    // Switch to the main UI when outcome type is known.
+    agendaState.onAgendaStateChanged.add(() => {
+      if (agendaState.getNumOutcomes() > 0) {
+        this._switcherUiOutcomeTypeThenMain.switchToIndex(1);
+      }
+    });
 
     // Trigger the event to update the UI.
     this._agendaState.onAgendaStateChanged.trigger(agendaState);
@@ -360,8 +372,5 @@ export class AgendaStateUI extends AbstractUI {
 
   destroy(): void {
     super.destroy();
-    this._agendaState.onAgendaStateChanged.remove(
-      this._onAgendaStateChangedHandler
-    );
   }
 }
