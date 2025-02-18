@@ -116,6 +116,7 @@ export class RightClickRift implements IGlobal {
     if (RightClickRift.isRiftSystemTile(obj)) {
       obj.removeCustomAction(RIFT_ACTION_NAME);
       obj.addCustomAction(RIFT_ACTION_NAME, RIFT_ACTION_TOOLTIP);
+      obj.onCustomAction.remove(this._onCustomActionHandler);
       obj.onCustomAction.add(this._onCustomActionHandler);
     }
   };
