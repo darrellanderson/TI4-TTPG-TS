@@ -2,6 +2,7 @@ import {
   Border,
   GameObject,
   globalEvents,
+  Player,
   RichText,
   UIElement,
   UIPresentationStyle,
@@ -15,6 +16,10 @@ import { System } from "../../lib/system-lib/system/system";
 import { UnitAttrs } from "../../lib/unit-lib/unit-attrs/unit-attrs";
 import { UnitAttrsSet } from "../../lib/unit-lib/unit-attrs-set/unit-attrs-set";
 import { UnitPlastic } from "../../lib/unit-lib/unit-plastic/unit-plastic";
+
+export const RIFT_ACTION_NAME: string = "*Rift all ships in system";
+export const RIFT_ACTION_TOOLTIP: string =
+  "Roll for all ships in the system, show result on ship (lift and drop to remove)";
 
 export class RightClickRift implements IGlobal {
   /**
@@ -91,6 +96,14 @@ export class RightClickRift implements IGlobal {
     );
   }
 
+  static rollRift(riftObj: GameObject): void {
+    const ships: Array<GameObject> = RightClickRift.getShipsInRift(riftObj);
+    for (const ship of ships) {
+      const rollValue: number = Math.floor(Math.random() * 10) + 1;
+      RightClickRift.applyRiftResult(ship, rollValue);
+    }
+  }
+
   init(): void {
     globalEvents.onObjectCreated.add(this._onObjectCreatedHandler);
     const skipContained: boolean = false;
@@ -101,7 +114,19 @@ export class RightClickRift implements IGlobal {
 
   _onObjectCreatedHandler = (obj: GameObject): void => {
     if (RightClickRift.isRiftSystemTile(obj)) {
-      //
+      obj.removeCustomAction(RIFT_ACTION_NAME);
+      obj.addCustomAction(RIFT_ACTION_NAME, RIFT_ACTION_TOOLTIP);
+      obj.onCustomAction.add(this._onCustomActionHandler);
+    }
+  };
+
+  _onCustomActionHandler = (
+    obj: GameObject,
+    _player: Player,
+    identifier: string
+  ): void => {
+    if (identifier === RIFT_ACTION_NAME) {
+      RightClickRift.rollRift(obj);
     }
   };
 }

@@ -1,7 +1,7 @@
 import { GameObject, Player } from "@tabletop-playground/api";
 import { MockGameObject, MockPlayer } from "ttpg-mock";
 
-import { RightClickRift } from "./right-click-rift";
+import { RIFT_ACTION_NAME, RightClickRift } from "./right-click-rift";
 
 it("static applyRiftResult (yes)", () => {
   const unitObj: MockGameObject = MockGameObject.simple("unit:base/destroyer");
@@ -40,8 +40,13 @@ it("static isRiftSystemTile", () => {
 
 it("constructor/init", () => {
   MockGameObject.simple("tile.system:base/41"); // rift to find
-  const rift = new RightClickRift();
-  expect(rift).toBeDefined();
-  rift.init();
+  new RightClickRift().init();
   MockGameObject.simple("tile.system:base/41"); // rift obj created
+});
+
+it("roll rift", () => {
+  const riftObj: MockGameObject = MockGameObject.simple("tile.system:base/41");
+  const _ship: GameObject = MockGameObject.simple("unit:base/destroyer");
+  new RightClickRift().init();
+  riftObj._customActionAsPlayer(new MockPlayer(), RIFT_ACTION_NAME);
 });
