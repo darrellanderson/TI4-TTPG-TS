@@ -8,7 +8,22 @@ export const AGENDA_OUTCOME_TYPE_TO_LABEL: Record<string, string> = {
 };
 
 export class AgendaOutcomes {
+  /**
+   * Do the populate as a transaction (rider processing gets batched).
+   *
+   * @param agendaState
+   * @param outcomeType
+   * @returns
+   */
   populate(agendaState: AgendaState, outcomeType: string): boolean {
+    let result: boolean = false;
+    agendaState.transactThenTriggerDelayedStateChangedEvent(() => {
+      result = this._populate(agendaState, outcomeType);
+    });
+    return result;
+  }
+
+  _populate(agendaState: AgendaState, outcomeType: string): boolean {
     let index: number = 0;
     if (outcomeType === "for-against") {
       agendaState.setOutcomeName(index++, "For");
