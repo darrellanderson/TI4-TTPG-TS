@@ -1,5 +1,5 @@
-import { Player } from "@tabletop-playground/api";
-import { GameObject, MockGameObject, MockPlayer } from "ttpg-mock";
+import { GameObject, Player } from "@tabletop-playground/api";
+import { MockGameObject, MockPlayer } from "ttpg-mock";
 
 import { RightClickRift } from "./right-click-rift";
 
@@ -19,6 +19,17 @@ it("static applyRiftResult (no)", () => {
   RightClickRift.applyRiftResult(unitObj, rollValue);
 });
 
+it("static getShipsInRift", () => {
+  const riftObj: GameObject = MockGameObject.simple("tile.system:base/41");
+  const ship: GameObject = MockGameObject.simple("unit:base/destroyer");
+  const _shipOutsideHex: GameObject = MockGameObject.simple(
+    "unit:base/destroyer",
+    { position: [100, 0, 0] }
+  );
+  const ships: Array<GameObject> = RightClickRift.getShipsInRift(riftObj);
+  expect(ships).toEqual([ship]);
+});
+
 it("static isRiftSystemTile", () => {
   const yes: GameObject = MockGameObject.simple("tile.system:base/41");
   const no: GameObject = MockGameObject.simple("tile.system:base/1");
@@ -28,9 +39,9 @@ it("static isRiftSystemTile", () => {
 });
 
 it("constructor/init", () => {
-  new MockGameObject(); // for an object to find
+  MockGameObject.simple("tile.system:base/41"); // rift to find
   const rift = new RightClickRift();
   expect(rift).toBeDefined();
   rift.init();
-  new MockGameObject(); // for object created
+  MockGameObject.simple("tile.system:base/41"); // rift obj created
 });

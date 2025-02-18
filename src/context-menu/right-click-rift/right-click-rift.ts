@@ -9,9 +9,12 @@ import {
   Widget,
   world,
 } from "@tabletop-playground/api";
-import { IGlobal } from "ttpg-darrell";
+import { HexType, IGlobal } from "ttpg-darrell";
 
 import { System } from "../../lib/system-lib/system/system";
+import { UnitAttrs } from "../../lib/unit-lib/unit-attrs/unit-attrs";
+import { UnitAttrsSet } from "../../lib/unit-lib/unit-attrs-set/unit-attrs-set";
+import { UnitPlastic } from "../../lib/unit-lib/unit-plastic/unit-plastic";
 
 export class RightClickRift implements IGlobal {
   /**
@@ -57,6 +60,26 @@ export class RightClickRift implements IGlobal {
       obj.onReleased.remove(onReleasedHandler);
     };
     unitObj.onReleased.add(onReleasedHandler);
+  }
+
+  static getShipsInRift(riftObj: GameObject): Array<GameObject> {
+    const hex: HexType = TI4.hex.fromPosition(riftObj.getPosition());
+    const unitAttrsSet: UnitAttrsSet =
+      TI4.unitAttrsRegistry.defaultUnitAttrsSet();
+    const plastic: Array<UnitPlastic> = UnitPlastic.getAll().filter(
+      (plastic) => {
+        const isHex: boolean = plastic.getHex() === hex;
+        if (!isHex) {
+          return false;
+        }
+        const unitAttrs: UnitAttrs | undefined = unitAttrsSet.get(
+          plastic.getUnit()
+        );
+        return unitAttrs !== undefined && unitAttrs.isShip();
+      }
+    );
+    UnitPlastic.assignOwners(plastic);
+    return plastic.map((plastic) => plastic.getObj());
   }
 
   static isRiftSystemTile(obj: GameObject): boolean {
