@@ -1,7 +1,9 @@
 import {
+  Border,
   GameObject,
   globalEvents,
   RichText,
+  UIElement,
   UIPresentationStyle,
   Vector,
   Widget,
@@ -10,7 +12,6 @@ import {
 import { IGlobal } from "ttpg-darrell";
 
 import { System } from "../../lib/system-lib/system/system";
-import { UIElement } from "ttpg-mock";
 
 export class RightClickRift implements IGlobal {
   /**
@@ -35,14 +36,20 @@ export class RightClickRift implements IGlobal {
     const isSurvivor: boolean = rollValue >= surviveOn;
     const bbColor: string = isSurvivor ? "#00ff00" : "#ff0000";
     const symbol: string = isSurvivor ? "√" : "X";
+
+    const scale: number = 4;
     const widget: Widget = new RichText()
-      .setFontSize(18)
+      .setBold(true)
+      .setFontSize(12 * scale)
       .setText(`[color=${bbColor}]${rollValue}${symbol}[/color]`);
 
+    const c = 0.02;
     const ui: UIElement = new UIElement();
     ui.position = localAbove;
     ui.presentationStyle = UIPresentationStyle.ViewAligned;
-    ui.widget = widget;
+    ui.scale = 1 / scale;
+    ui.useTransparency = true;
+    ui.widget = new Border().setColor([c, c, c, 0.3]).setChild(widget);
     unitObj.addUI(ui);
 
     const onReleasedHandler = (obj: GameObject): void => {
