@@ -44,6 +44,7 @@ import { RemoveRegistry } from "../lib/remove-lib/registry/remove-registry";
 import { ReportRemaining } from "../context-menu/report-remaining/report-remaining";
 import { RightClickExplore } from "../context-menu/system/explore-system/right-click-explore";
 import { RightClickRider } from "../context-menu/right-click-rider/right-click-rider";
+import { RightClickRift } from "../context-menu/right-click-rift/right-click-rift";
 import { RightClickScorePrivate } from "../context-menu/right-click-score/right-click-score-private";
 import { RightClickScorePublic } from "../context-menu/right-click-score/right-click-score-public";
 import { RSwapSplitCombine } from "./r-swap-split-combine";
@@ -136,6 +137,7 @@ export function resetGlobalThisTI4(): TI4Class {
     new ReportRemaining(),
     new RightClickExplore(),
     new RightClickRider(),
+    new RightClickRift(),
     new RightClickScorePrivate(),
     new RightClickScorePublic(),
     new RSwapSplitCombine(),
