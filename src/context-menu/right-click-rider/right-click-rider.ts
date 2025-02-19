@@ -79,7 +79,6 @@ export class RightClickRider implements IGlobal {
   _maybeAddGameObject(obj: GameObject): void {
     const nsid: string = NSID.get(obj);
     if (RightClickRider._isRider(nsid)) {
-      console.log("RightClickRider._maybeAddGameObject", nsid);
       this._riderObjIds.add(obj.getId());
       obj.onCustomAction.remove(this._onCustomActionHanlder);
       obj.onCustomAction.add(this._onCustomActionHanlder);
