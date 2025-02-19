@@ -2,6 +2,7 @@ export type GenericTokenType = {
   name: string;
   nsidName: string;
   imgBack?: boolean;
+  isRider?: boolean;
   modelScale?: number;
   model?: string; // assets/Textures/token/${model}.obj
 };
@@ -29,7 +30,12 @@ export const SOURCE_TO_GENERIC_TOKENS: Record<
       modelScale: 1.5,
       imgBack: true,
     },
-    { name: "Nekro Prediction", nsidName: "nekro-prediction", modelScale: 1.5 },
+    {
+      name: "Nekro Prediction",
+      nsidName: "nekro-prediction",
+      modelScale: 1.5,
+      isRider: true,
+    },
     {
       name: "Scoreboard",
       nsidName: "scoreboard",

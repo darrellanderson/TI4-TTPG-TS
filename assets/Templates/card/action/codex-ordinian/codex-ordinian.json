@@ -110,7 +110,7 @@
         "10": "card.action:codex.ordinian/plagiarize",
         "11": "card.action:codex.ordinian/rally",
         "12": "card.action:codex.ordinian/reflective-shielding",
-        "13": "card.action:codex.ordinian/sanction",
+        "13": "card.action:codex.ordinian/sanction|rider",
         "14": "card.action:codex.ordinian/scramble-frequency",
         "15": "card.action:codex.ordinian/solar-flare",
         "16": "card.action:codex.ordinian/war-machine.1",

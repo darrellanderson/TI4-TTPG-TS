@@ -57,6 +57,9 @@ export class AgendaOutcomeUI extends AbstractUI {
     this._outcomeIndex = outcomeIndex;
 
     outcomeNameUi.getButton().onClicked.add(this._onOutcomeClicked);
+    outcomeNameUi.onEdited.add((text: string) => {
+      agendaState.setOutcomeName(outcomeIndex, text);
+    });
 
     agendaState.onAgendaStateChanged.add(() => {
       // Outcome name.

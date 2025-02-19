@@ -2,7 +2,7 @@
   "Type": "Generic",
   "GUID": "C7CB5024001EAB399758EBAD90A7B2AA",
   "Name": "Nekro Prediction",
-  "Metadata": "token:base/nekro-prediction",
+  "Metadata": "token:base/nekro-prediction|rider",
   "CollisionType": "Regular",
   "Friction": 0.7,
   "Restitution": 0.3,

@@ -1,5 +1,5 @@
 {
   "name": "Construction Rider",
-  "nsid": "card.action:base/construction-rider",
+  "nsid": "card.action:base/construction-rider|rider",
   "desc": "-This placement would trigger Minister of Industry, though any influence from planets exhausted to build units is also deducted from that player's votes"
 }

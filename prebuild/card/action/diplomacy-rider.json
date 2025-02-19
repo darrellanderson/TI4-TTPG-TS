@@ -1,5 +1,5 @@
 {
   "name": "Diplomacy Rider",
-  "nsid": "card.action:base/diplomacy-rider",
+  "nsid": "card.action:base/diplomacy-rider|rider",
   "desc": "-Mecatol Rex is a valid target"
 }

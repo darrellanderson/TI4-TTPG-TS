@@ -35,7 +35,8 @@ for (const [source, genericTokens] of Object.entries(
   for (const genericToken of genericTokens) {
     const name: string = genericToken.name;
     const nsidName: string = genericToken.nsidName;
-    const nsid: string = `token:${source}/${nsidName}`;
+    const rider: string = genericToken.isRider ? "|rider" : "";
+    const nsid: string = `token:${source}/${nsidName}${rider}`;
 
     const imgFileFace: string = `token/${nsidName}.jpg`;
     let imgFileBack: string = imgFileFace;

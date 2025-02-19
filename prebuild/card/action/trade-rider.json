@@ -1,5 +1,5 @@
 {
   "name": "Trade Rider",
-  "nsid": "card.action:base/trade-rider",
+  "nsid": "card.action:base/trade-rider|rider",
   "desc": ""
 }
