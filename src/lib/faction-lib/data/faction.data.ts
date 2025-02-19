@@ -290,7 +290,7 @@ export const SOURCE_TO_FACTION_DATA: Record<
       factionTechs: ["valefar-assimilator-x", "valefar-assimilator-y"],
       unitOverrides: ["the-alastor", "mordred"],
       extras: [
-        { nsid: "token:base/nekro-prediction" },
+        { nsid: "token:base/nekro-prediction|rider" },
         { nsid: "token:base/nekro-x" },
         { nsid: "token:base/nekro-y" },
         {

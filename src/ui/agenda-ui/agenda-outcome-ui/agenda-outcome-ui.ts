@@ -34,6 +34,8 @@ export class AgendaOutcomeUI extends AbstractUI {
     }
   ).get();
 
+  readonly _onEdited: (text: string) => void;
+
   constructor(agendaState: AgendaState, outcomeIndex: number, scale: number) {
     const voteSummary: LongRichTextUI = new LongRichTextUI(
       CONFIG.BUTTON_WIDTH * scale,
@@ -56,10 +58,12 @@ export class AgendaOutcomeUI extends AbstractUI {
     this._agendaState = agendaState;
     this._outcomeIndex = outcomeIndex;
 
-    outcomeNameUi.getButton().onClicked.add(this._onOutcomeClicked);
-    outcomeNameUi.onEdited.add((text: string) => {
+    this._onEdited = (text: string) => {
       agendaState.setOutcomeName(outcomeIndex, text);
-    });
+    };
+
+    outcomeNameUi.getButton().onClicked.add(this._onOutcomeClicked);
+    outcomeNameUi.onEdited.add(this._onEdited);
 
     agendaState.onAgendaStateChanged.add(() => {
       // Outcome name.

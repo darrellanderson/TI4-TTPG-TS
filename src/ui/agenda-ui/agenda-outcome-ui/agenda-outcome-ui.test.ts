@@ -3,11 +3,12 @@ import { AgendaState } from "../../../lib/agenda-lib/agenda-state/agenda-state";
 import { Button, Player } from "@tabletop-playground/api";
 import { MockButton, MockCardHolder, MockPlayer } from "ttpg-mock";
 
-it("constructor", () => {
+it("constructor, event", () => {
   const agendaState: AgendaState = new AgendaState("@test/test");
   const outcomeIndex: number = 0;
   const scale: number = 1;
-  new AgendaOutcomeUI(agendaState, outcomeIndex, scale);
+  const agendaOutcomeUI = new AgendaOutcomeUI(agendaState, outcomeIndex, scale);
+  agendaOutcomeUI._onEdited("Test");
 });
 
 it("agenda state changed", () => {
