@@ -15,6 +15,7 @@ import {
   Spawn,
   Timer,
   TurnOrder,
+  WhisperReporter,
 } from "ttpg-darrell";
 
 import { addObjectTemplatesToMockWorld } from "../nsid/nsid-to-template-id.test";
@@ -144,6 +145,7 @@ export function resetGlobalThisTI4(): TI4Class {
     new ShuffleDecks(),
     new UnitModifierActiveIdle(),
     new UnpackFactionContextMenuItem(),
+    new WhisperReporter(),
   ];
 
   // Add UI and some bug workarounds to production runs.
