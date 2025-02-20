@@ -13,14 +13,15 @@ export class LayoutUnitBox {
   private readonly _layout: LayoutObjects = new LayoutObjects();
 
   constructor(unit: UnitType, playerSlot: number) {
+    const isAnonymousUnitBox = playerSlot === 19;
     const colorLib: ColorLib = new ColorLib();
     let objColor: Color | undefined = undefined;
-    if (playerSlot >= 0) {
+    if (isAnonymousUnitBox) {
+      objColor = TI4.playerColor.getAnonymousColor();
+    } else {
       const colorsType: ColorsType =
         colorLib.getColorsByPlayerSlotOrThrow(playerSlot);
       objColor = colorLib.parseColorOrThrow(colorsType.plastic);
-    } else {
-      objColor = TI4.playerColor.getAnonymousColor();
     }
 
     const source: string = unit === "mech" ? "pok" : "base";
@@ -34,8 +35,8 @@ export class LayoutUnitBox {
       .defaultUnitAttrsSet()
       .getOrThrow(unit);
     let componentCount: number = unitAttrs.getComponentCount();
-    if (playerSlot < 0) {
-      componentCount = 1;
+    if (isAnonymousUnitBox) {
+      componentCount = 1; // anonymous gets one
     }
 
     // Create the container.
@@ -49,7 +50,7 @@ export class LayoutUnitBox {
         tags.push(unitTag);
         container.setContainerTags(tags);
       }
-      if (playerSlot < 0) {
+      if (isAnonymousUnitBox) {
         container.setType(1); // infinite
       }
     }

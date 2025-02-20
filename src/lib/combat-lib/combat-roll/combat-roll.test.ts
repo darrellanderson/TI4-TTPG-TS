@@ -6,7 +6,7 @@ import {
   MockPlayer,
   MockVector,
 } from "ttpg-mock";
-import { CardUtil, DiceParams } from "ttpg-darrell";
+import { CardUtil, DiceParams, DiceResult } from "ttpg-darrell";
 
 import { CombatAttrs } from "../../unit-lib/unit-attrs/combat-attrs";
 import {
@@ -1287,4 +1287,32 @@ it("roll", () => {
   const player: Player = new MockPlayer();
   const position: Vector = new Vector(0, 0, 0);
   combatRoll.roll(player, position);
+});
+
+it("opponent has anonymous units", () => {
+  MockGameObject.simple("tile/system:base/1");
+  MockGameObject.simple("unit:base/carrier", { owningPlayerSlot: 2 });
+  MockGameObject.simple("unit:base/carrier", { owningPlayerSlot: 19 });
+  const combatRoll: CombatRoll = CombatRoll.createCooked({
+    rollType: "spaceCombat",
+    hex: "<0,0,0>",
+    activatingPlayerSlot: 2,
+    rollingPlayerSlot: 2,
+  });
+  expect(combatRoll.opponent.playerSlot).toBe(19);
+  expect(combatRoll.opponent.getCount("carrier")).toBe(1);
+
+  const rollingPlayerSlots: Array<number> = [];
+  TI4.events.onCombatResult.add(
+    (combatRoll: CombatRoll, _diceResults: Array<DiceResult>): void => {
+      rollingPlayerSlots.push(combatRoll.self.playerSlot);
+    }
+  );
+  expect(rollingPlayerSlots).toEqual([]);
+
+  const player: Player = new MockPlayer({ slot: 2 });
+  const position: Vector = new MockVector(0, 0, 0);
+  combatRoll.roll(player, position);
+
+  expect(rollingPlayerSlots).toEqual([2, 19]);
 });

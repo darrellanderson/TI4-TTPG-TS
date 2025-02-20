@@ -62,14 +62,14 @@ obj.addUI(outline);
 
 const update = (): void => {
   const owner: number = obj.getOwningPlayerSlot();
-  if (owner >= 0) {
+  if (nsid.startsWith("container.unit") && owner === 19) {
+    // Anonymous units.
+    widget.setTintColor(obj.getPrimaryColor());
+  } else if (owner >= 0) {
     const colorLib: ColorLib = new ColorLib();
     const colorsType: ColorsType = colorLib.getColorsByPlayerSlotOrThrow(owner);
     const widgetColor: Color = colorLib.parseColorOrThrow(colorsType.widget);
     widget.setTintColor(widgetColor);
-  } else if (nsid.startsWith("container.unit")) {
-    // Anonymous units.
-    widget.setTintColor(obj.getPrimaryColor());
   }
 };
 

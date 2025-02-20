@@ -703,11 +703,25 @@ export class CombatRoll {
   }
 
   public roll(player: Player, position: Vector): void {
+    const doFakeRoll: boolean =
+      this._params.rollingPlayerSlot === 19 ||
+      GameWorld.getExecutionReason() === "unittest";
+
     const callback = (
       diceResults: Array<DiceResult>,
       _player: Player
     ): void => {
       TI4.events.onCombatResult.trigger(this, diceResults);
+
+      if (this.opponent.playerSlot === 19) {
+        // Opponent is anonymous units, roll for them.
+        CombatRoll.createCooked({
+          rollType: this._params.rollType,
+          hex: this._params.hex,
+          activatingPlayerSlot: this._params.activatingPlayerSlot,
+          rollingPlayerSlot: 19,
+        }).roll(player, position);
+      }
     };
     const diceParams: Array<DiceParams> = this.createDiceParamsArray();
     const diceGroupParams: DiceGroupParams = {
@@ -715,7 +729,7 @@ export class CombatRoll {
       player,
       position,
       callback,
-      doFakeRoll: GameWorld.getExecutionReason() === "unittest",
+      doFakeRoll,
     };
     DiceGroup.roll(diceGroupParams);
   }
