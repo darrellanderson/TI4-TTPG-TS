@@ -123,7 +123,7 @@ export class CombatRollSummary {
 
     const rollingPlayerSlot: number = this._combatRoll.self.playerSlot;
     let color: Color | undefined = world.getSlotColor(rollingPlayerSlot);
-    if (rollingPlayerSlot < 0 || !color) {
+    if (rollingPlayerSlot === 19 || !color) {
       color = TI4.playerColor.getAnonymousColor();
     }
 

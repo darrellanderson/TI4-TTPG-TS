@@ -127,7 +127,7 @@ it("broadcast (anonymous roller)", () => {
     rollType: "spaceCombat",
     hex: "<0,0,0>",
     activatingPlayerSlot: 10,
-    rollingPlayerSlot: -1,
+    rollingPlayerSlot: 19,
   });
   const diceResults: Array<DiceResult> = [];
   const summary: CombatRollSummary = new CombatRollSummary(
