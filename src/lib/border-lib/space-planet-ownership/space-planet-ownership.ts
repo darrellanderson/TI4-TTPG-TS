@@ -7,12 +7,19 @@ import { UnitAttrs } from "../../unit-lib/unit-attrs/unit-attrs";
 import { UnitPlastic } from "../../unit-lib/unit-plastic/unit-plastic";
 import { UnitType } from "../../unit-lib/schema/unit-attrs-schema";
 
-export type ControlType = {
+export type ControlObjType = {
   obj: GameObject;
   owningPlayerSlot: PlayerSlot;
   hex: HexType;
   system: System;
   planet: Planet | undefined;
+};
+
+export type ControlSystemType = {
+  hex: HexType;
+  system: System;
+  spaceOwningPlayerSlot: PlayerSlot;
+  planetNameToOwningPlayerSlot: Map<string, PlayerSlot>;
 };
 
 export class SpacePlanetOwnership {
@@ -32,14 +39,14 @@ export class SpacePlanetOwnership {
 
   _createControlTypeFromUnitPlastic(
     unitPlastic: UnitPlastic
-  ): ControlType | undefined {
+  ): ControlObjType | undefined {
     const hex: HexType = unitPlastic.getHex();
     const system: System | undefined = this._hexToSystem.get(hex);
     if (!system) {
       return undefined;
     }
 
-    const result: ControlType = {
+    const result: ControlObjType = {
       obj: unitPlastic.getObj(),
       owningPlayerSlot: unitPlastic.getOwningPlayerSlot(),
       hex,
@@ -59,7 +66,7 @@ export class SpacePlanetOwnership {
 
   _createControlTypeFromControlToken(
     controlToken: GameObject
-  ): ControlType | undefined {
+  ): ControlObjType | undefined {
     const nsid: string = NSID.get(controlToken);
     if (nsid !== "token:base/control") {
       return undefined;
@@ -82,13 +89,13 @@ export class SpacePlanetOwnership {
     };
   }
 
-  _getAllControlEntries(): Array<ControlType> {
-    const result: Array<ControlType> = [];
+  _getAllControlEntries(): Array<ControlObjType> {
+    const result: Array<ControlObjType> = [];
 
     const plastics: Array<UnitPlastic> = UnitPlastic.getAll();
     UnitPlastic.assignPlanets(plastics);
     for (const plastic of plastics) {
-      const controlType: ControlType | undefined =
+      const controlType: ControlObjType | undefined =
         this._createControlTypeFromUnitPlastic(plastic);
       if (controlType) {
         result.push(controlType);
@@ -97,10 +104,62 @@ export class SpacePlanetOwnership {
 
     const skipContained: boolean = true;
     for (const obj of world.getAllObjects(skipContained)) {
-      const controlType: ControlType | undefined =
+      const controlType: ControlObjType | undefined =
         this._createControlTypeFromControlToken(obj);
       if (controlType) {
         result.push(controlType);
+      }
+    }
+
+    return result;
+  }
+
+  getSystemControlEntries(): Map<HexType, ControlSystemType> {
+    const result: Map<HexType, ControlSystemType> = new Map();
+
+    const controlEntries: Array<ControlObjType> = this._getAllControlEntries();
+    for (const controlEntry of controlEntries) {
+      const hex: HexType = controlEntry.hex;
+      let controlSystemType: ControlSystemType | undefined = result.get(hex);
+      if (!controlSystemType) {
+        controlSystemType = {
+          hex,
+          system: controlEntry.system,
+          spaceOwningPlayerSlot: -1,
+          planetNameToOwningPlayerSlot: new Map(),
+        };
+      }
+
+      // Space control.
+      if (controlEntry.planet === undefined) {
+        if (controlSystemType.spaceOwningPlayerSlot === -1) {
+          controlSystemType.spaceOwningPlayerSlot =
+            controlEntry.owningPlayerSlot;
+        } else if (
+          controlSystemType.spaceOwningPlayerSlot >= 0 &&
+          controlSystemType.spaceOwningPlayerSlot !==
+            controlEntry.owningPlayerSlot
+        ) {
+          // Multiple control entries with different slots.
+          controlSystemType.spaceOwningPlayerSlot = -2;
+        }
+      }
+
+      // Planet control.
+      if (controlEntry.planet) {
+        const planetName: string = controlEntry.planet.getName();
+        const oldOwner: PlayerSlot | undefined =
+          controlSystemType.planetNameToOwningPlayerSlot.get(planetName);
+        const newOwner: PlayerSlot = controlEntry.owningPlayerSlot;
+        if (oldOwner === undefined) {
+          controlSystemType.planetNameToOwningPlayerSlot.set(
+            planetName,
+            newOwner
+          );
+        } else if (oldOwner !== newOwner) {
+          // Multiple control entries with different slots.
+          controlSystemType.planetNameToOwningPlayerSlot.set(planetName, -2);
+        }
       }
     }
 

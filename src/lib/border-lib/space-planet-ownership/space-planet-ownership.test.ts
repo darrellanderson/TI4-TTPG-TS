@@ -1,6 +1,11 @@
 import { GameObject } from "@tabletop-playground/api";
+import { HexType } from "ttpg-darrell";
 import { MockGameObject } from "ttpg-mock";
-import { ControlType, SpacePlanetOwnership } from "./space-planet-ownership";
+import {
+  ControlObjType,
+  ControlSystemType,
+  SpacePlanetOwnership,
+} from "./space-planet-ownership";
 import { UnitPlastic } from "../../unit-lib/unit-plastic/unit-plastic";
 
 it("constructor", () => {
@@ -22,16 +27,16 @@ it("_createControlTypeFromUnitPlastic (ship)", () => {
   UnitPlastic.assignPlanets([plastic]);
 
   const ownership = new SpacePlanetOwnership();
-  const controlType: ControlType | undefined =
+  const controlObjType: ControlObjType | undefined =
     ownership._createControlTypeFromUnitPlastic(plastic);
-  if (!controlType) {
-    throw new Error("ControlType not found");
+  if (!controlObjType) {
+    throw new Error("controlObjType not found");
   }
-  expect(controlType.obj).toBe(obj);
-  expect(controlType.owningPlayerSlot).toBe(13);
-  expect(controlType.hex).toBe("<0,0,0>");
-  expect(controlType.system.getObj()).toBe(systemTileObj);
-  expect(controlType.planet).toBeUndefined();
+  expect(controlObjType.obj).toBe(obj);
+  expect(controlObjType.owningPlayerSlot).toBe(13);
+  expect(controlObjType.hex).toBe("<0,0,0>");
+  expect(controlObjType.system.getObj()).toBe(systemTileObj);
+  expect(controlObjType.planet).toBeUndefined();
 });
 
 it("_createControlTypeFromUnitPlastic (ground)", () => {
@@ -49,16 +54,16 @@ it("_createControlTypeFromUnitPlastic (ground)", () => {
   UnitPlastic.assignPlanets([plastic]);
 
   const ownership = new SpacePlanetOwnership();
-  const controlType: ControlType | undefined =
+  const controlObjType: ControlObjType | undefined =
     ownership._createControlTypeFromUnitPlastic(plastic);
-  if (!controlType) {
-    throw new Error("ControlType not found");
+  if (!controlObjType) {
+    throw new Error("controlObjType not found");
   }
-  expect(controlType.obj).toBe(obj);
-  expect(controlType.owningPlayerSlot).toBe(13);
-  expect(controlType.hex).toBe("<0,0,0>");
-  expect(controlType.system.getObj()).toBe(systemTileObj);
-  expect(controlType.planet?.getName()).toBe("Mecatol Rex");
+  expect(controlObjType.obj).toBe(obj);
+  expect(controlObjType.owningPlayerSlot).toBe(13);
+  expect(controlObjType.hex).toBe("<0,0,0>");
+  expect(controlObjType.system.getObj()).toBe(systemTileObj);
+  expect(controlObjType.planet?.getName()).toBe("Mecatol Rex");
 });
 
 it("_createControlTypeFromUnitPlastic (no system tile)", () => {
@@ -73,9 +78,9 @@ it("_createControlTypeFromUnitPlastic (no system tile)", () => {
   UnitPlastic.assignPlanets([plastic]);
 
   const ownership = new SpacePlanetOwnership();
-  const controlType: ControlType | undefined =
+  const controlObjType: ControlObjType | undefined =
     ownership._createControlTypeFromUnitPlastic(plastic);
-  expect(controlType).toBeUndefined();
+  expect(controlObjType).toBeUndefined();
 });
 
 it("_createControlTypeFromControlToken", () => {
@@ -87,16 +92,16 @@ it("_createControlTypeFromControlToken", () => {
   });
 
   const ownership = new SpacePlanetOwnership();
-  const controlType: ControlType | undefined =
+  const controlObjType: ControlObjType | undefined =
     ownership._createControlTypeFromControlToken(controlToken);
-  if (!controlType) {
-    throw new Error("ControlType not found");
+  if (!controlObjType) {
+    throw new Error("controlObjType not found");
   }
-  expect(controlType.obj).toBe(controlToken);
-  expect(controlType.owningPlayerSlot).toBe(13);
-  expect(controlType.hex).toBe("<0,0,0>");
-  expect(controlType.system.getObj()).toBe(systemTileObj);
-  expect(controlType.planet?.getName()).toBe("Mecatol Rex");
+  expect(controlObjType.obj).toBe(controlToken);
+  expect(controlObjType.owningPlayerSlot).toBe(13);
+  expect(controlObjType.hex).toBe("<0,0,0>");
+  expect(controlObjType.system.getObj()).toBe(systemTileObj);
+  expect(controlObjType.planet?.getName()).toBe("Mecatol Rex");
 });
 
 it("_createControlTypeFromControlToken (not a control token)", () => {
@@ -105,9 +110,9 @@ it("_createControlTypeFromControlToken (not a control token)", () => {
   });
 
   const ownership = new SpacePlanetOwnership();
-  const controlType: ControlType | undefined =
+  const controlObjType: ControlObjType | undefined =
     ownership._createControlTypeFromControlToken(controlToken);
-  expect(controlType).toBeUndefined();
+  expect(controlObjType).toBeUndefined();
 });
 
 it("_createControlTypeFromControlToken (no system tile)", () => {
@@ -116,9 +121,9 @@ it("_createControlTypeFromControlToken (no system tile)", () => {
   });
 
   const ownership = new SpacePlanetOwnership();
-  const controlType: ControlType | undefined =
+  const controlObjType: ControlObjType | undefined =
     ownership._createControlTypeFromControlToken(controlToken);
-  expect(controlType).toBeUndefined();
+  expect(controlObjType).toBeUndefined();
 });
 
 it("_getAllControlEntries", () => {
@@ -127,8 +132,15 @@ it("_getAllControlEntries", () => {
   const controlToken: GameObject = MockGameObject.simple("token:base/control");
 
   const ownership = new SpacePlanetOwnership();
-  const controlTypes: Array<ControlType> = ownership._getAllControlEntries();
-  expect(controlTypes.length).toBe(2);
-  expect(controlTypes[0]?.obj).toBe(unitObj);
-  expect(controlTypes[1]?.obj).toBe(controlToken);
+  const controlObjTypes: Array<ControlObjType> =
+    ownership._getAllControlEntries();
+  expect(controlObjTypes.length).toBe(2);
+  expect(controlObjTypes[0]?.obj).toBe(unitObj);
+  expect(controlObjTypes[1]?.obj).toBe(controlToken);
+});
+
+it("getSystemControlEntries", () => {
+  const ownership = new SpacePlanetOwnership();
+  const controlSystemTypes: Map<HexType, ControlSystemType> =
+    ownership.getSystemControlEntries();
 });
