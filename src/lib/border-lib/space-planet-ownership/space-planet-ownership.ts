@@ -1,5 +1,5 @@
-import { GameObject, Vector } from "@tabletop-playground/api";
-import { HexType, PlayerSlot } from "ttpg-darrell";
+import { GameObject, Vector, world } from "@tabletop-playground/api";
+import { HexType, NSID, PlayerSlot } from "ttpg-darrell";
 
 import { Planet } from "../../system-lib/planet/planet";
 import { System } from "../../system-lib/system/system";
@@ -60,6 +60,11 @@ export class SpacePlanetOwnership {
   _createControlTypeFromControlToken(
     controlToken: GameObject
   ): ControlType | undefined {
+    const nsid: string = NSID.get(controlToken);
+    if (nsid !== "token:base/control") {
+      return undefined;
+    }
+
     const pos: Vector = controlToken.getPosition();
     const hex: HexType = TI4.hex.fromPosition(pos);
     const system: System | undefined = this._hexToSystem.get(hex);
@@ -75,5 +80,30 @@ export class SpacePlanetOwnership {
       system,
       planet,
     };
+  }
+
+  _getAllControlEntries(): Array<ControlType> {
+    const result: Array<ControlType> = [];
+
+    const plastics: Array<UnitPlastic> = UnitPlastic.getAll();
+    UnitPlastic.assignPlanets(plastics);
+    for (const plastic of plastics) {
+      const controlType: ControlType | undefined =
+        this._createControlTypeFromUnitPlastic(plastic);
+      if (controlType) {
+        result.push(controlType);
+      }
+    }
+
+    const skipContained: boolean = true;
+    for (const obj of world.getAllObjects(skipContained)) {
+      const controlType: ControlType | undefined =
+        this._createControlTypeFromControlToken(obj);
+      if (controlType) {
+        result.push(controlType);
+      }
+    }
+
+    return result;
   }
 }

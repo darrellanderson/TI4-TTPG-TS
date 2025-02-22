@@ -99,6 +99,17 @@ it("_createControlTypeFromControlToken", () => {
   expect(controlType.planet?.getName()).toBe("Mecatol Rex");
 });
 
+it("_createControlTypeFromControlToken (not a control token)", () => {
+  const controlToken: GameObject = MockGameObject.simple("token:base/command", {
+    owningPlayerSlot: 13,
+  });
+
+  const ownership = new SpacePlanetOwnership();
+  const controlType: ControlType | undefined =
+    ownership._createControlTypeFromControlToken(controlToken);
+  expect(controlType).toBeUndefined();
+});
+
 it("_createControlTypeFromControlToken (no system tile)", () => {
   const controlToken: GameObject = MockGameObject.simple("token:base/control", {
     owningPlayerSlot: 13,
@@ -108,4 +119,16 @@ it("_createControlTypeFromControlToken (no system tile)", () => {
   const controlType: ControlType | undefined =
     ownership._createControlTypeFromControlToken(controlToken);
   expect(controlType).toBeUndefined();
+});
+
+it("_getAllControlEntries", () => {
+  MockGameObject.simple("tile.system:base/18");
+  const unitObj: GameObject = MockGameObject.simple("unit:base/mech");
+  const controlToken: GameObject = MockGameObject.simple("token:base/control");
+
+  const ownership = new SpacePlanetOwnership();
+  const controlTypes: Array<ControlType> = ownership._getAllControlEntries();
+  expect(controlTypes.length).toBe(2);
+  expect(controlTypes[0]?.obj).toBe(unitObj);
+  expect(controlTypes[1]?.obj).toBe(controlToken);
 });
