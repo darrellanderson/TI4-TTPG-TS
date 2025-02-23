@@ -139,8 +139,45 @@ it("_getAllControlEntries", () => {
   expect(controlObjTypes[1]?.obj).toBe(controlToken);
 });
 
-it("getSystemControlEntries", () => {
+it("getHexToControlSystemEntries", () => {
+  MockGameObject.simple("tile.system:base/18");
+  MockGameObject.simple("unit:base/destroyer", { owningPlayerSlot: 13 });
+  MockGameObject.simple("unit:base/destroyer", { owningPlayerSlot: 13 });
+  MockGameObject.simple("token:base/control", { owningPlayerSlot: 14 });
+
   const ownership = new SpacePlanetOwnership();
-  const controlSystemTypes: Map<HexType, ControlSystemType> =
-    ownership.getSystemControlEntries();
+  const hexToControlSystemEntry: Map<HexType, ControlSystemType> =
+    ownership.getHexToControlSystemEntry();
+
+  expect(hexToControlSystemEntry.size).toBe(1);
+  const controlSystemType: ControlSystemType | undefined =
+    hexToControlSystemEntry.get("<0,0,0>");
+  expect(controlSystemType?.hex).toBe("<0,0,0>");
+  expect(controlSystemType?.system.getSystemTileNumber()).toBe(18);
+  expect(controlSystemType?.spaceOwningPlayerSlot).toBe(13);
+  expect(
+    controlSystemType?.planetNameToOwningPlayerSlot.get("Mecatol Rex")
+  ).toBe(14);
+});
+
+it("getHexToControlSystemEntries (conflicting units in space, ground)", () => {
+  MockGameObject.simple("tile.system:base/18");
+  MockGameObject.simple("unit:base/destroyer", { owningPlayerSlot: 13 });
+  MockGameObject.simple("unit:base/destroyer", { owningPlayerSlot: 14 }); // Conflict.
+  MockGameObject.simple("token:base/control", { owningPlayerSlot: 14 });
+  MockGameObject.simple("unit:pok/mech", { owningPlayerSlot: 13 }); // Conflict.
+
+  const ownership = new SpacePlanetOwnership();
+  const hexToControlSystemEntry: Map<HexType, ControlSystemType> =
+    ownership.getHexToControlSystemEntry();
+
+  expect(hexToControlSystemEntry.size).toBe(1);
+  const controlSystemType: ControlSystemType | undefined =
+    hexToControlSystemEntry.get("<0,0,0>");
+  expect(controlSystemType?.hex).toBe("<0,0,0>");
+  expect(controlSystemType?.system.getSystemTileNumber()).toBe(18);
+  expect(controlSystemType?.spaceOwningPlayerSlot).toBe(-2);
+  expect(
+    controlSystemType?.planetNameToOwningPlayerSlot.get("Mecatol Rex")
+  ).toBe(-2);
 });

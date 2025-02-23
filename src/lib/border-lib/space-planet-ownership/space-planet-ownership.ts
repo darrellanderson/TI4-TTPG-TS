@@ -114,13 +114,14 @@ export class SpacePlanetOwnership {
     return result;
   }
 
-  getSystemControlEntries(): Map<HexType, ControlSystemType> {
-    const result: Map<HexType, ControlSystemType> = new Map();
+  getHexToControlSystemEntry(): Map<HexType, ControlSystemType> {
+    const hexToControlSystemEntry: Map<HexType, ControlSystemType> = new Map();
 
     const controlEntries: Array<ControlObjType> = this._getAllControlEntries();
     for (const controlEntry of controlEntries) {
       const hex: HexType = controlEntry.hex;
-      let controlSystemType: ControlSystemType | undefined = result.get(hex);
+      let controlSystemType: ControlSystemType | undefined =
+        hexToControlSystemEntry.get(hex);
       if (!controlSystemType) {
         controlSystemType = {
           hex,
@@ -128,6 +129,7 @@ export class SpacePlanetOwnership {
           spaceOwningPlayerSlot: -1,
           planetNameToOwningPlayerSlot: new Map(),
         };
+        hexToControlSystemEntry.set(hex, controlSystemType);
       }
 
       // Space control.
@@ -163,6 +165,6 @@ export class SpacePlanetOwnership {
       }
     }
 
-    return result;
+    return hexToControlSystemEntry;
   }
 }
