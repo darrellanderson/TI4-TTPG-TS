@@ -181,3 +181,21 @@ it("getHexToControlSystemEntries (conflicting units in space, ground)", () => {
     controlSystemType?.planetNameToOwningPlayerSlot.get("Mecatol Rex")
   ).toBe(-2);
 });
+
+it("getHexToControlSystemEntries (no space, ground)", () => {
+  MockGameObject.simple("tile.system:base/18");
+
+  const ownership = new SpacePlanetOwnership();
+  const hexToControlSystemEntry: Map<HexType, ControlSystemType> =
+    ownership.getHexToControlSystemEntry();
+
+  expect(hexToControlSystemEntry.size).toBe(1);
+  const controlSystemType: ControlSystemType | undefined =
+    hexToControlSystemEntry.get("<0,0,0>");
+  expect(controlSystemType?.hex).toBe("<0,0,0>");
+  expect(controlSystemType?.system.getSystemTileNumber()).toBe(18);
+  expect(controlSystemType?.spaceOwningPlayerSlot).toBe(-1);
+  expect(
+    controlSystemType?.planetNameToOwningPlayerSlot.get("Mecatol Rex")
+  ).toBe(-1);
+});

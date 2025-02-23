@@ -117,50 +117,56 @@ export class SpacePlanetOwnership {
   getHexToControlSystemEntry(): Map<HexType, ControlSystemType> {
     const hexToControlSystemEntry: Map<HexType, ControlSystemType> = new Map();
 
+    for (const [hex, system] of this._hexToSystem) {
+      const planetNameToOwningPlayerSlot: Map<string, PlayerSlot> = new Map();
+      for (const planet of system.getPlanets()) {
+        planetNameToOwningPlayerSlot.set(planet.getName(), -1);
+      }
+      const controlSystemType: ControlSystemType = {
+        hex,
+        system,
+        spaceOwningPlayerSlot: -1,
+        planetNameToOwningPlayerSlot,
+      };
+      hexToControlSystemEntry.set(hex, controlSystemType);
+    }
+
     const controlEntries: Array<ControlObjType> = this._getAllControlEntries();
     for (const controlEntry of controlEntries) {
       const hex: HexType = controlEntry.hex;
-      let controlSystemType: ControlSystemType | undefined =
+      const controlSystemType: ControlSystemType | undefined =
         hexToControlSystemEntry.get(hex);
-      if (!controlSystemType) {
-        controlSystemType = {
-          hex,
-          system: controlEntry.system,
-          spaceOwningPlayerSlot: -1,
-          planetNameToOwningPlayerSlot: new Map(),
-        };
-        hexToControlSystemEntry.set(hex, controlSystemType);
-      }
-
-      // Space control.
-      if (controlEntry.planet === undefined) {
-        if (controlSystemType.spaceOwningPlayerSlot === -1) {
-          controlSystemType.spaceOwningPlayerSlot =
-            controlEntry.owningPlayerSlot;
-        } else if (
-          controlSystemType.spaceOwningPlayerSlot >= 0 &&
-          controlSystemType.spaceOwningPlayerSlot !==
-            controlEntry.owningPlayerSlot
-        ) {
-          // Multiple control entries with different slots.
-          controlSystemType.spaceOwningPlayerSlot = -2;
+      if (controlSystemType) {
+        // Space control.
+        if (controlEntry.planet === undefined) {
+          if (controlSystemType.spaceOwningPlayerSlot === -1) {
+            controlSystemType.spaceOwningPlayerSlot =
+              controlEntry.owningPlayerSlot;
+          } else if (
+            controlSystemType.spaceOwningPlayerSlot >= 0 &&
+            controlSystemType.spaceOwningPlayerSlot !==
+              controlEntry.owningPlayerSlot
+          ) {
+            // Multiple control entries with different slots.
+            controlSystemType.spaceOwningPlayerSlot = -2;
+          }
         }
-      }
 
-      // Planet control.
-      if (controlEntry.planet) {
-        const planetName: string = controlEntry.planet.getName();
-        const oldOwner: PlayerSlot | undefined =
-          controlSystemType.planetNameToOwningPlayerSlot.get(planetName);
-        const newOwner: PlayerSlot = controlEntry.owningPlayerSlot;
-        if (oldOwner === undefined) {
-          controlSystemType.planetNameToOwningPlayerSlot.set(
-            planetName,
-            newOwner
-          );
-        } else if (oldOwner !== newOwner) {
-          // Multiple control entries with different slots.
-          controlSystemType.planetNameToOwningPlayerSlot.set(planetName, -2);
+        // Planet control.
+        if (controlEntry.planet) {
+          const planetName: string = controlEntry.planet.getName();
+          const oldOwner: PlayerSlot | undefined =
+            controlSystemType.planetNameToOwningPlayerSlot.get(planetName);
+          const newOwner: PlayerSlot = controlEntry.owningPlayerSlot;
+          if (oldOwner === undefined || oldOwner === -1) {
+            controlSystemType.planetNameToOwningPlayerSlot.set(
+              planetName,
+              newOwner
+            );
+          } else if (oldOwner !== newOwner) {
+            // Multiple control entries with different slots.
+            controlSystemType.planetNameToOwningPlayerSlot.set(planetName, -2);
+          }
         }
       }
     }
