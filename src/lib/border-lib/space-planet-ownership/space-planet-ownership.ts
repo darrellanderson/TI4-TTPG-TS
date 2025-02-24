@@ -7,14 +7,21 @@ import { UnitAttrs } from "../../unit-lib/unit-attrs/unit-attrs";
 import { UnitPlastic } from "../../unit-lib/unit-plastic/unit-plastic";
 import { UnitType } from "../../unit-lib/schema/unit-attrs-schema";
 
+/**
+ * Represent a GameObject that exerts control over a planet or space area.
+ */
 export type ControlObjType = {
   obj: GameObject;
   owningPlayerSlot: PlayerSlot;
   hex: HexType;
   system: System;
-  planet: Planet | undefined;
+  planet: Planet | undefined; // undefined for space control
 };
 
+/**
+ * Summarizes system control: who owns the space, and who owns each planet.
+ * -1 = no control, -2 = multiple players (player slot for normal control).
+ */
 export type ControlSystemType = {
   hex: HexType;
   system: System;
@@ -22,6 +29,10 @@ export type ControlSystemType = {
   planetNameToOwningPlayerSlot: Map<string, PlayerSlot>;
 };
 
+/**
+ * Calculate per-hex control of space and planets.
+ * Should be recreated for each use in case hex-to-system changed.
+ */
 export class SpacePlanetOwnership {
   private readonly _hexToSystem: Map<HexType, System> = new Map();
 
