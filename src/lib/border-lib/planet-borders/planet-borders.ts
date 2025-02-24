@@ -15,10 +15,13 @@ export class PlanetBorders {
     this._lineThickness = lineThickness;
   }
 
-  _getDrawingLine(planet: Planet, owner: PlayerSlot): DrawingLine | undefined {
+  _getPlanetDrawingLine(
+    planet: Planet,
+    owner: PlayerSlot
+  ): DrawingLine | undefined {
     const color: Color | undefined = TI4.playerColor.getSlotWidgetColor(owner);
     if (!color) {
-      return undefined;
+      return undefined; // also handles -1, -2 owners
     }
 
     const z: number = world.getTableHeight() + 0.2;
@@ -35,33 +38,32 @@ export class PlanetBorders {
     return line;
   }
 
-  getDrawingLines(): Array<DrawingLine> {
+  _getSystemPlanetsDrawingLines(
+    controlSystemEntry: ControlSystemType
+  ): Array<DrawingLine> {
     const lines: Array<DrawingLine> = [];
-
-    for (const controlSystemEntry of this._hexToControlSystemEntry.values()) {
-      const planetNameToOwningPlayerSlot: Map<string, PlayerSlot> =
-        controlSystemEntry.planetNameToOwningPlayerSlot;
-      for (const [planetName, playerSlot] of planetNameToOwningPlayerSlot) {
-        if (playerSlot < 0) {
-          continue; // no or multiple ownership
-        }
-        let planet: Planet | undefined = undefined;
-        for (const candidatePlanet of controlSystemEntry.system.getPlanets()) {
-          if (candidatePlanet.getName() === planetName) {
-            planet = candidatePlanet;
-            break;
-          }
-        }
-        if (planet) {
-          const line: DrawingLine | undefined = this._getDrawingLine(
-            planet,
-            playerSlot
-          );
-          if (line) {
-            lines.push(line);
-          }
+    for (const planet of controlSystemEntry.system.getPlanets()) {
+      const playerSlot: PlayerSlot | undefined =
+        controlSystemEntry.planetNameToOwningPlayerSlot.get(planet.getName());
+      if (playerSlot !== undefined) {
+        const line: DrawingLine | undefined = this._getPlanetDrawingLine(
+          planet,
+          playerSlot
+        );
+        if (line) {
+          lines.push(line);
         }
       }
+    }
+    return lines;
+  }
+
+  getDrawingLines(): Array<DrawingLine> {
+    const lines: Array<DrawingLine> = [];
+    for (const controlSystemEntry of this._hexToControlSystemEntry.values()) {
+      const systemLines: Array<DrawingLine> =
+        this._getSystemPlanetsDrawingLines(controlSystemEntry);
+      lines.push(...systemLines);
     }
     return lines;
   }
