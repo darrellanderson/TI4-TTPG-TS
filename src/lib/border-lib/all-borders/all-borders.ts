@@ -84,6 +84,12 @@ export class AllBorders implements IGlobal {
         line.tag = LINE_TAG;
         world.addDrawingLine(line);
       }
+
+      console.log(
+        "_updateLines",
+        [...hexToControlSystemEntry.keys()].join(","),
+        lines.length
+      );
     }
   }
 

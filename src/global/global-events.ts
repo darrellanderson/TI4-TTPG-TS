@@ -22,6 +22,13 @@ export class GlobalEvents {
   >();
 
   /**
+   * Called when an agenda card is removed from the agenda snap point.
+   */
+  public readonly onAgendaCardRemoved = new TriggerableMulticastDelegate<
+    (player: Player) => void
+  >();
+
+  /**
    * Called when agenda state is created.  Listeners can attach to
    * the AgendaState.onAgendaStateChanged event.
    *
