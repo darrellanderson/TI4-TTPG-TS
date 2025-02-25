@@ -69,27 +69,22 @@ export class AllBorders implements IGlobal {
       const hexToControlSystemEntry: Map<HexType, ControlSystemType> =
         new SpacePlanetOwnership().getHexToControlSystemEntry();
 
-      const lines: Array<DrawingLine> = [
-        ...new SpaceBorders(
-          hexToControlSystemEntry,
-          LINE_THICKNESS
-        ).getDrawingLines(),
-        ...new PlanetBorders(
-          hexToControlSystemEntry,
-          LINE_THICKNESS
-        ).getDrawingLines(),
-      ];
+      const spaceLines: Array<DrawingLine> = new SpaceBorders(
+        hexToControlSystemEntry,
+        LINE_THICKNESS
+      ).getDrawingLines();
+
+      const planetLines: Array<DrawingLine> = new PlanetBorders(
+        hexToControlSystemEntry,
+        LINE_THICKNESS
+      ).getDrawingLines();
+
+      const lines: Array<DrawingLine> = [...spaceLines, ...planetLines];
       for (const line of lines) {
         line.players = visibleTo;
         line.tag = LINE_TAG;
         world.addDrawingLine(line);
       }
-
-      console.log(
-        "_updateLines",
-        [...hexToControlSystemEntry.keys()].join(","),
-        lines.length
-      );
     }
   }
 

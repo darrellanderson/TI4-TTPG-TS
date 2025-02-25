@@ -24,7 +24,7 @@ export class PlanetBorders {
       return undefined; // also handles -1, -2 owners
     }
 
-    const z: number = world.getTableHeight() + 0.2;
+    const z: number = world.getTableHeight() + 0.3;
     const points: Array<Vector> = planet.getPositionAsCircle();
     const line = new DrawingLine();
     line.color = color;

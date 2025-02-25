@@ -3,6 +3,7 @@ import {
   Container,
   GameObject,
   ObjectType,
+  Vector,
 } from "@tabletop-playground/api";
 import { ColorLib, ColorsType, LayoutObjects, Spawn } from "ttpg-darrell";
 
@@ -55,8 +56,9 @@ export class LayoutUnitBox {
       }
     }
     if (container instanceof Container) {
+      const above: Vector = container.getPosition().add([0, 0, 10]);
       for (let i = 0; i < componentCount; i++) {
-        const unit: GameObject = Spawn.spawnOrThrow(unitNsid);
+        const unit: GameObject = Spawn.spawnOrThrow(unitNsid, above);
         unit.setOwningPlayerSlot(playerSlot);
         unit.setPrimaryColor(objColor);
         tags = unit.getTags();

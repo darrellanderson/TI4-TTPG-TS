@@ -74,7 +74,7 @@ export class SpaceBorders {
     }
 
     const polygons: Array<Polygon> = this._getPolygons(owner);
-    const z = world.getTableHeight() + 0.2;
+    const z = world.getTableHeight() + 0.3;
     for (let polygon of polygons) {
       polygon = polygon.inset(this._lineThickness / 2);
       const line: DrawingLine = new DrawingLine();
