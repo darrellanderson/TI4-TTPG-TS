@@ -77,7 +77,7 @@ export class AgendaLawsMat {
       zone.setStacking(ZonePermission.Nobody);
     }
 
-    zone.setAlwaysVisible(true);
+    zone.setAlwaysVisible(false);
     return zone;
   }
 }
