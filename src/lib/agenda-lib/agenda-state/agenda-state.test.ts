@@ -30,6 +30,16 @@ it("constructor/destroy/isActive/static isAgendaInProgress", () => {
   expect(onAgendaStateCreatedCount).toBe(2);
 });
 
+it("onAgendaCardRemoved", () => {
+  const id: NamespaceId = "@test/test";
+  const agendaState: AgendaState = new AgendaState(id);
+  expect(AgendaState.isAgendaInProgress(id)).toBe(true);
+  expect(agendaState.isActive()).toBe(true);
+  TI4.events.onAgendaCardRemoved.trigger();
+  expect(AgendaState.isAgendaInProgress(id)).toBe(false);
+  expect(agendaState.isActive()).toBe(false);
+});
+
 it("constructor (bad json)", () => {
   const id: NamespaceId = "@test/test";
   world.setSavedData("bad json", id);

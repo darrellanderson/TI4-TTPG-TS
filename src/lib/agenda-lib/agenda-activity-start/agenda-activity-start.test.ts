@@ -32,5 +32,6 @@ it("start/destroy", () => {
 
   const agendaActivityStart: AgendaActivityStart = new AgendaActivityStart();
   agendaActivityStart.start(agendaCard);
+  TI4.events.onAgendaCardRemoved.trigger();
   agendaActivityStart.destroy();
 });
