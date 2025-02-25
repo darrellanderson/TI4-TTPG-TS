@@ -57,6 +57,12 @@ export class AgendaLawsMat {
     // Do this AFTER getting the first snap point.
     this._zone = this._findOrCreateZone();
     this._zone.onEndOverlap.add(this.onEndOverlapHandler);
+
+    this._obj.onReleased.add(() => {
+      const pos: Vector = this._firstSnapPoint.getGlobalPosition();
+      pos.z = world.getTableHeight() + HEIGHT / 2;
+      this._zone.setPosition(pos);
+    });
   }
 
   _findOrCreateZone(): Zone {
