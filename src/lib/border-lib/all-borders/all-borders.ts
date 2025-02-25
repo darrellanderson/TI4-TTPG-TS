@@ -45,6 +45,7 @@ export class AllBorders implements IGlobal {
 
   destroy(): void {
     TurnOrder.onTurnStateChanged.remove(this._onTurnChangedHandler);
+    // leave world saved data alone so we can restore on init
   }
 
   _save(): void {
@@ -84,6 +85,10 @@ export class AllBorders implements IGlobal {
         world.addDrawingLine(line);
       }
     }
+  }
+
+  isVisibleTo(playerSlot: PlayerSlot): boolean {
+    return this._visibleTo.includes(playerSlot);
   }
 
   toggleVisibility(playerSlot: PlayerSlot): void {
