@@ -25,7 +25,7 @@ export class GlobalEvents {
    * Called when an agenda card is removed from the agenda snap point.
    */
   public readonly onAgendaCardRemoved = new TriggerableMulticastDelegate<
-    (player: Player) => void
+    () => void
   >();
 
   /**

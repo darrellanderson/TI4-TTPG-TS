@@ -1,5 +1,5 @@
 import { Card } from "@tabletop-playground/api";
-import { IGlobal, NamespaceId, PlayerSlot } from "ttpg-darrell";
+import { IGlobal, NamespaceId, PlayerSlot, Window } from "ttpg-darrell";
 
 import { AbstractUI } from "../../../ui/abstract-ui/abtract-ui";
 import { AgendaState } from "../agenda-state/agenda-state";
@@ -26,6 +26,20 @@ export class AgendaActivityMaybeResume implements IGlobal {
 
 export class AgendaActivityStart {
   private _agendaState: AgendaState | undefined;
+  private _agendaWindow: Window | undefined = undefined;
+
+  private readonly _onAgendaStateChangedHandler = (): void => {
+    if (
+      this._agendaState &&
+      !this._agendaState.isActive() &&
+      this._agendaWindow
+    ) {
+      this._agendaState.onAgendaStateChanged.remove(
+        this._onAgendaStateChangedHandler
+      );
+      this._agendaWindow.detach();
+    }
+  };
 
   start(agendaCard: Card): boolean {
     this._agendaState = new AgendaState(
@@ -46,7 +60,11 @@ export class AgendaActivityStart {
 
   resume(): this {
     const agendaState: AgendaState = new AgendaState(AGENDA_STATE_NAMESPACE_ID);
+
     this._agendaState = agendaState;
+    this._agendaState.onAgendaStateChanged.add(
+      this._onAgendaStateChangedHandler
+    );
 
     // Create UI, window.
     const createAbstractUI: CreateAbstractUIType = (
@@ -64,13 +82,16 @@ export class AgendaActivityStart {
       windowTitle
     );
     abstractWindow.getMutableWindowParams().disableClose = true;
-    abstractWindow.createWindow().attach();
+    this._agendaWindow = abstractWindow.createWindow().attach();
 
     return this;
   }
 
   destroy(): void {
     if (this._agendaState) {
+      this._agendaState.onAgendaStateChanged.remove(
+        this._onAgendaStateChangedHandler
+      );
       this._agendaState.destroy();
       this._agendaState = undefined;
     }

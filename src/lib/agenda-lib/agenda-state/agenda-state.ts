@@ -48,10 +48,15 @@ export class AgendaState {
   private readonly _namespaceId: NamespaceId;
   private readonly _data: AgendaStateSchemaType;
 
-  private readonly _onTurnStateChangedHandler = () => {
+  private readonly _onTurnStateChangedHandler = (): void => {
     if (!this._suppressStateChangeEvents) {
       this.onAgendaStateChanged.trigger(this);
     }
+  };
+
+  private readonly _onAgendaCardRemovedHandler = (): void => {
+    // If the agenda card is removed, we need to clear the agenda state.
+    this.destroy();
   };
 
   static isAgendaInProgress(namespaceId: NamespaceId): boolean {
@@ -63,6 +68,7 @@ export class AgendaState {
     this._namespaceId = namespaceId;
 
     TurnOrder.onTurnStateChanged.add(this._onTurnStateChangedHandler);
+    TI4.events.onAgendaCardRemoved.add(this._onAgendaCardRemovedHandler);
 
     const data: string | undefined = world.getSavedData(namespaceId);
     if (data !== undefined && data.length > 0) {
@@ -85,11 +91,10 @@ export class AgendaState {
 
   destroy(): void {
     world.setSavedData("", this._namespaceId);
-    if (!this._suppressStateChangeEvents) {
-      this.onAgendaStateChanged.trigger(this);
-    }
-    this.onAgendaStateChanged.clear();
     TurnOrder.onTurnStateChanged.remove(this._onTurnStateChangedHandler);
+    TI4.events.onAgendaCardRemoved.remove(this._onAgendaCardRemovedHandler);
+    this.onAgendaStateChanged.trigger(this);
+    this.onAgendaStateChanged.clear();
   }
 
   transactThenTriggerDelayedStateChangedEvent(f: () => void): void {
