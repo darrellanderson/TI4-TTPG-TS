@@ -26,9 +26,12 @@ export class MapPlacePlanetCards {
   }
 
   static getActivePlanetsDeck(nsids: Set<string>): Card | undefined {
+    // Find the total planets deck.
     let planetsDeck: Card | undefined = new Find().findDeckOrDiscard(
       "deck-planet"
     );
+
+    // Filter down to the planets that are in the game.
     if (planetsDeck) {
       planetsDeck = new CardUtil().filterCards(
         planetsDeck,
@@ -50,13 +53,18 @@ export class MapPlacePlanetCards {
       nsids.add(nsid);
     });
 
+    const planetsDeck: Card | undefined =
+      MapPlacePlanetCards.getActivePlanetsDeck(nsids);
     if (planetsDeck) {
-      const planetCards: Array<Card> = new CardUtil().separateDeck(planetsDeck);
+      // Get separate cards, index by nsid.
       const nsidToCard: Map<string, Card> = new Map();
+      const planetCards: Array<Card> = new CardUtil().separateDeck(planetsDeck);
       planetCards.forEach((card) => {
         const nsid: string = NSID.get(card);
         nsidToCard.set(nsid, card);
       });
+
+      // Map planets to cards.
       planets.forEach((planet) => {
         const nsid: string = planet.getPlanetCardNsid();
         const card: Card | undefined = nsidToCard.get(nsid);
