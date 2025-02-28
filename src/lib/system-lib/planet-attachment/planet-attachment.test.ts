@@ -309,7 +309,7 @@ it("getLegendaryCardNsid", () => {
     }
   );
   expect(planetAttachment.getLegendaryCardNsid()).toBe(
-    "card.legendary_planet:my-source/legendary-1"
+    "card.legendary-planet:my-source/legendary-1"
   );
 });
 

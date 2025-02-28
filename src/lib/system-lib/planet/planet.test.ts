@@ -169,8 +169,8 @@ it("getLegendarynsidNames", () => {
   );
   planet.addAttachment(attachment);
   expect(planet.getLegendaryCardNsids()).toEqual([
-    "card.legendary_planet:my-source/my-planet-legendary-card-nsid",
-    "card.legendary_planet:my-source/my-attachment-legendary-card-nsid",
+    "card.legendary-planet:my-source/my-planet-legendary-card-nsid",
+    "card.legendary-planet:my-source/my-attachment-legendary-card-nsid",
   ]);
 });
 

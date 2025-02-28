@@ -201,7 +201,7 @@ export class PlanetAttachment {
    */
   getLegendaryCardNsid(): string | undefined {
     const source: string = this._sourceAndPackageId.source;
-    return `card.legendary_planet:${source}/${this._params.legendaryNsidName}`;
+    return `card.legendary-planet:${source}/${this._params.legendaryNsidName}`;
   }
 
   /**

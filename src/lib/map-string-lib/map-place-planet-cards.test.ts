@@ -25,7 +25,7 @@ it("_getCardNsidToPlanet", () => {
   const nsidToPlanet = mapPlacePlanetCards._getCardNsidToPlanet();
   expect(nsidToPlanet.size).toBe(2);
   expect([...nsidToPlanet.keys()].sort()).toEqual([
-    "card.legendary_planet:pok/the-atrament",
+    "card.legendary-planet:pok/the-atrament",
     "card.planet:pok/primor",
   ]);
 });
@@ -34,10 +34,10 @@ it("_getActivePlanetsDecks", () => {
   const legednaryDeck = new MockCard({
     cardDetails: [
       new MockCardDetails({
-        metadata: "card.legendary_planet:pok/the-atrament",
+        metadata: "card.legendary-planet:pok/the-atrament",
       }),
       new MockCardDetails({
-        metadata: "card.legendary_planet:pok/__some-other-legendary__",
+        metadata: "card.legendary-planet:pok/__some-other-legendary__",
       }),
     ],
   });
@@ -82,10 +82,10 @@ it("_getActivePlanetsDecks", () => {
     throw new Error("deck0 is undefined");
   }
   expect(NSID.getDeck(deck0)).toEqual([
-    "card.legendary_planet:pok/the-atrament",
+    "card.legendary-planet:pok/the-atrament",
   ]);
   expect(NSID.getDeck(legednaryDeck)).toEqual([
-    "card.legendary_planet:pok/__some-other-legendary__", // unused remains
+    "card.legendary-planet:pok/__some-other-legendary__", // unused remains
   ]);
 
   const deck1: Card | undefined = decks[1];
@@ -102,10 +102,10 @@ it("placePlanetCards", () => {
   const legednaryDeck = new MockCard({
     cardDetails: [
       new MockCardDetails({
-        metadata: "card.legendary_planet:pok/the-atrament",
+        metadata: "card.legendary-planet:pok/the-atrament",
       }),
       new MockCardDetails({
-        metadata: "card.legendary_planet:pok/__some-other-legendary__",
+        metadata: "card.legendary-planet:pok/__some-other-legendary__",
       }),
     ],
   });
@@ -142,14 +142,14 @@ it("placePlanetCards", () => {
   mapPlacePlanetCards.placePlanetCards();
 
   expect(NSID.getDeck(legednaryDeck)).toEqual([
-    "card.legendary_planet:pok/__some-other-legendary__", // unused remains
+    "card.legendary-planet:pok/__some-other-legendary__", // unused remains
   ]);
   expect(NSID.getDeck(planetDeck)).toEqual([
     "card.planet:pok/__some-other-planet__", // unused remains
   ]);
 
   const legendaryCard: Card | undefined = new Find().findCard(
-    "card.legendary_planet:pok/the-atrament"
+    "card.legendary-planet:pok/the-atrament"
   );
   expect(legendaryCard).toBeDefined();
 

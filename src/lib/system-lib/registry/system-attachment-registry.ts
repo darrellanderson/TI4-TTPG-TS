@@ -183,6 +183,10 @@ export class SystemAttachmentRegistry {
     return cardNsidName;
   }
 
+  getAllNsids(): Array<string> {
+    return Array.from(this._nsidToSchemaAndSource.keys());
+  }
+
   /**
    * Find the attachment by the linked card.
    * Only finds attachments inside a container, not loose on the table.

@@ -221,7 +221,8 @@ it("validate NSIDs appear in assets/Templates", () => {
       return item.path.endsWith(".json");
     },
   });
-  const regex: RegExp = /"(card\.planet:.*|tile\.system:.*)"/;
+  const regex: RegExp =
+    /"(card\.planet:.*|card.legendary-planet:.*|tile\.system:.*)"/;
   for (const entry of entries) {
     const data: Buffer = fs.readFileSync(entry.path);
     const lines: Array<string> = data.toString().split("\n");
@@ -261,6 +262,10 @@ it("validate NSIDs appear in assets/Templates", () => {
     for (const planet of schema.planets ?? []) {
       const nsid: string = `card.planet:${source}/${planet.nsidName}`;
       nsids.push(nsid);
+      if (planet.legendaryNsidName) {
+        const nsid: string = `card.legendary-planet:${source}/${planet.legendaryNsidName}`;
+        nsids.push(nsid);
+      }
     }
   }
 

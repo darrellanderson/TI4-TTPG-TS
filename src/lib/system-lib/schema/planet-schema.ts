@@ -18,7 +18,7 @@ export const PlanetSchema = z
     techs: z.array(TechSchema).optional(),
     traits: z.array(TraitSchema).optional(),
     isLegendary: z.boolean().optional(),
-    legendaryNsidName: NsidNameSchema.optional(), // card NSID "card.legendary_planet:${source}/${legendaryNsidName}"
+    legendaryNsidName: NsidNameSchema.optional(), // card NSID "card.legendary-planet:${source}/${legendaryNsidName}"
   })
   .strict()
   .readonly();

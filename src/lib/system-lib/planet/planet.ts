@@ -134,7 +134,7 @@ export class Planet {
     const result: Array<string> = [];
     if (this._params.legendaryNsidName) {
       const source: string = this._sourceAndPackageId.source;
-      const nsid: string = `card.legendary_planet:${source}/${this._params.legendaryNsidName}`;
+      const nsid: string = `card.legendary-planet:${source}/${this._params.legendaryNsidName}`;
       result.push(nsid);
     }
     for (const attachment of this._attachments) {
