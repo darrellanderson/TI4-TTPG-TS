@@ -1,4 +1,4 @@
-import { Widget } from "@tabletop-playground/api";
+import { Widget, world } from "@tabletop-playground/api";
 import {
   IWindowWidget,
   NamespaceId,
@@ -89,6 +89,19 @@ export class AbstractWindow {
         .getAllSeats()
         .map((seat) => seat.playerSlot);
     }
+
+    // Add the host player slot.
+    let host: number = -1;
+    for (const player of world.getAllPlayers()) {
+      if (player.isHost()) {
+        host = player.getSlot();
+        break;
+      }
+    }
+    if (host >= 0 && !playerSlots.includes(host)) {
+      playerSlots.push(host);
+    }
+
     return new Window(this._windowParams, playerSlots, this._namespaceId);
   }
 }

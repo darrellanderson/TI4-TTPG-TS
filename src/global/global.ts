@@ -56,6 +56,7 @@ import { SystemAttachmentRegistry } from "../lib/system-lib/registry/system-atta
 import { SystemRegistry } from "../lib/system-lib/registry/system-registry";
 import { TechRegistry } from "../lib/tech-lib/registry/tech-registry";
 import { ToggleBorders } from "../context-menu/toggle-borders/toggle-borders";
+import { ToggleMapTool } from "../context-menu/toggle-map-tool/toggle-map-tool";
 import { UnitAttrsRegistry } from "../lib/unit-lib/registry/unit-attrs-registry";
 import { UnitModifierActiveIdle } from "../lib/unit-lib/unit-modifier/unit-modifier-active-idle";
 import { UnitModifierRegistry } from "../lib/unit-lib/registry/unit-modifier-registry";
@@ -147,6 +148,7 @@ export function resetGlobalThisTI4(): TI4Class {
     new RSwapSplitCombine(),
     new ShuffleDecks(),
     new ToggleBorders(),
+    new ToggleMapTool(),
     new UnitModifierActiveIdle(),
     new UnpackFactionContextMenuItem(),
     new WhisperReporter(),
