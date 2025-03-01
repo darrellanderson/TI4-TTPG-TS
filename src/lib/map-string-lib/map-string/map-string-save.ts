@@ -2,7 +2,7 @@ import { Vector } from "@tabletop-playground/api";
 import { Facing, HexType } from "ttpg-darrell";
 
 import { MapStringHex } from "./map-string-hex";
-import { SystemAdjacencyHyperlane } from "..//system-lib/system-adjacency/system-adjacency-hyperlane";
+import { SystemAdjacencyHyperlane } from "../../system-lib/system-adjacency/system-adjacency-hyperlane";
 
 export class MapStringSave {
   save(): string {

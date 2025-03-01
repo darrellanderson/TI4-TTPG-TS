@@ -20,8 +20,8 @@ import { Faction } from "../../lib/faction-lib/faction/faction";
 import {
   MapStringEntry,
   MapStringParser,
-} from "../../lib/map-string-lib/map-string-parser";
-import { MapStringHex } from "../../lib/map-string-lib/map-string-hex";
+} from "../../lib/map-string-lib/map-string/map-string-parser";
+import { MapStringHex } from "../../lib/map-string-lib/map-string/map-string-hex";
 import { System } from "../../lib/system-lib/system/system";
 
 const HALF_HEX_W_PX: number = 28; // 50 will fill a small screen

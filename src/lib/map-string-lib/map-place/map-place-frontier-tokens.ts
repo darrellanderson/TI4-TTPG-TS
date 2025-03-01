@@ -1,6 +1,6 @@
-import { Vector } from "ttpg-mock";
-import { System } from "../system-lib/system/system";
 import { Spawn } from "ttpg-darrell";
+import { System } from "../../system-lib/system/system";
+import { Vector } from "@tabletop-playground/api";
 
 export class MapPlaceFrontierTokens {
   static _getZeroPlanetSystems(): Array<System> {

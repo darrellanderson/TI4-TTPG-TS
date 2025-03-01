@@ -7,14 +7,14 @@ import {
   Widget,
 } from "@tabletop-playground/api";
 
-import { MapPlaceFrontierTokens } from "../../lib/map-string-lib/map-place-frontier-tokens";
-import { MapPlacePlanetCards } from "../../lib/map-string-lib/map-place-planet-cards";
-import { MapRemoveAllNonHomeSystems } from "../../lib/map-string-lib/map-remove-all-non-home-systems";
-import { MapRemoveFrontierTokens } from "../../lib/map-string-lib/map-remove-frontier-tokens";
-import { MapRemovePlanetCards } from "../../lib/map-string-lib/map-remove-planet-cards";
-import { MapStringLoad } from "../../lib/map-string-lib/map-string-load";
-import { MapStringSave } from "../../lib/map-string-lib/map-string-save";
-import { MapStringHyperlanes } from "../../lib/map-string-lib/map-string-hyperlanes";
+import { MapPlaceFrontierTokens } from "../../lib/map-string-lib/map-place/map-place-frontier-tokens";
+import { MapPlacePlanetCards } from "../../lib/map-string-lib/map-place/map-place-planet-cards";
+import { MapRemoveAllNonHomeSystems } from "../../lib/map-string-lib/map-remove/map-remove-all-non-home-systems";
+import { MapRemoveFrontierTokens } from "../../lib/map-string-lib/map-remove/map-remove-frontier-tokens";
+import { MapRemovePlanetCards } from "../../lib/map-string-lib/map-remove/map-remove-planet-cards";
+import { MapStringLoad } from "../../lib/map-string-lib/map-string/map-string-load";
+import { MapStringSave } from "../../lib/map-string-lib/map-string/map-string-save";
+import { MapStringHyperlanes } from "../../lib/map-string-lib/map-string/map-string-hyperlanes";
 
 import { AbstractUI, UI_SIZE } from "../abstract-ui/abtract-ui";
 import { ButtonUI } from "../button-ui/button-ui";

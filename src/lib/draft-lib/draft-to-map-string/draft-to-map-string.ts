@@ -3,9 +3,9 @@ import { HexType } from "ttpg-darrell";
 
 import { DraftState } from "../draft-state/draft-state";
 import { Faction } from "../../faction-lib/faction/faction";
-import { MapHomeSystemLocations } from "../../map-string-lib/map-home-system-locations";
-import { MapStringHex } from "../../map-string-lib/map-string-hex";
-import { MapStringHyperlanes } from "../../map-string-lib/map-string-hyperlanes";
+import { MapHomeSystemLocations } from "../../map-string-lib/map-home-system-locations/map-home-system-locations";
+import { MapStringHex } from "../../map-string-lib/map-string/map-string-hex";
+import { MapStringHyperlanes } from "../../map-string-lib/map-string/map-string-hyperlanes";
 import { MapUI } from "../../../ui/map-ui/map-ui";
 import { PlayerSeatType } from "../../player-lib/player-seats/player-seats";
 import { SeatUI } from "../../../ui/draft/seat-ui/seat-ui";

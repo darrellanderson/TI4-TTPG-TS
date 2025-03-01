@@ -9,7 +9,7 @@ import { SliceTiles } from "../../../lib/draft-lib/generate-slices/generate-slic
 import { MILTY_SLICE_SHAPE } from "../../../lib/draft-lib/drafts/milty";
 import { MapUI } from "../../../ui/map-ui/map-ui";
 import { DraftToMapString } from "./draft-to-map-string";
-import { MapStringLoad } from "lib/map-string-lib/map-string-load";
+import { MapStringLoad } from "../../map-string-lib/map-string/map-string-load";
 
 function go() {
   const seatIndexToSliceTiles: Map<number, SliceTiles> = new Map();

@@ -6,7 +6,7 @@ import {
   MapStringAndHexToPlayerName,
 } from "./draft-to-map-string";
 import { Faction } from "../../faction-lib/faction/faction";
-import { MapHomeSystemLocations } from "../../map-string-lib/map-home-system-locations";
+import { MapHomeSystemLocations } from "../../map-string-lib/map-home-system-locations/map-home-system-locations";
 import { MILTY_SLICE_SHAPE, MILTY_SLICE_SHAPE_ALT } from "../drafts/milty";
 import { SliceTiles } from "../generate-slices/generate-slices";
 

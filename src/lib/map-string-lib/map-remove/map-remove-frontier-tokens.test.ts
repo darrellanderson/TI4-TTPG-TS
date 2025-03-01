@@ -1,7 +1,7 @@
 import { GameObject } from "@tabletop-playground/api";
 import { GarbageContainer } from "ttpg-darrell";
 import { MockGameObject } from "ttpg-mock";
-import { RecycleTokenFrontier } from "../recycle-lib/handlers/token/recycle-token-frontier/recycle-token-frontier";
+import { RecycleTokenFrontier } from "../../recycle-lib/handlers/token/recycle-token-frontier/recycle-token-frontier";
 import { MapRemoveFrontierTokens } from "./map-remove-frontier-tokens";
 
 it("remove", () => {

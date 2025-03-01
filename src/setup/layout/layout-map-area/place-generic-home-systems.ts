@@ -1,4 +1,4 @@
-import { MapHomeSystemLocations } from "../../../lib/map-string-lib/map-home-system-locations";
+import { MapHomeSystemLocations } from "../../../lib/map-string-lib/map-home-system-locations/map-home-system-locations";
 import { PlayerSeatType } from "../../../lib/player-lib/player-seats/player-seats";
 
 /**

@@ -2,7 +2,7 @@ import { Card } from "@tabletop-playground/api";
 import { GarbageContainer } from "ttpg-darrell";
 import { MockCard, MockGameObject, MockSnapPoint } from "ttpg-mock";
 import { MapRemovePlanetCards } from "./map-remove-planet-cards";
-import { RecycleCardPlanet } from "../recycle-lib/handlers/card/planet/recycle-card-planet";
+import { RecycleCardPlanet } from "../../recycle-lib/handlers/card/planet/recycle-card-planet";
 
 it("remove", () => {
   MockGameObject.simple("tile.system:base/18");

@@ -1,6 +1,5 @@
-import { Card, GameObject, world } from "@tabletop-playground/api";
+import { Card, GameObject, Vector, world } from "@tabletop-playground/api";
 import { CardUtil, Facing, HexType, NSID } from "ttpg-darrell";
-import { Vector } from "ttpg-mock";
 
 export class ResetPlanetCards {
   private readonly _cardUtil: CardUtil = new CardUtil();

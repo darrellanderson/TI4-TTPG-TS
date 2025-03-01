@@ -1,6 +1,6 @@
 import { Card, Vector } from "@tabletop-playground/api";
 import { CardUtil, Find, NSID } from "ttpg-darrell";
-import { Planet } from "../system-lib/planet/planet";
+import { Planet } from "../../system-lib/planet/planet";
 
 export class MapPlacePlanetCards {
   private readonly _cardUtil: CardUtil = new CardUtil();

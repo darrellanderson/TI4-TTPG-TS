@@ -4,7 +4,7 @@ import { MockContainer, MockGameObject, Vector } from "ttpg-mock";
 
 import { MapStringEntry } from "./map-string-parser";
 import { MapStringLoad } from "./map-string-load";
-import { System } from "../system-lib/system/system";
+import { System } from "../../system-lib/system/system";
 
 it("constructor", () => {
   new MapStringLoad();

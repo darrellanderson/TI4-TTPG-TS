@@ -8,7 +8,7 @@ import {
 import { Broadcast, HexType, locale, Spawn } from "ttpg-darrell";
 
 import { MapStringEntry, MapStringParser } from "./map-string-parser";
-import { System } from "lib/system-lib/system/system";
+import { System } from "../../system-lib/system/system";
 import { MapStringHex } from "./map-string-hex";
 
 export class MapStringLoad {

@@ -3,7 +3,7 @@ import { DeletedItemsContainer, Find, Spawn } from "ttpg-darrell";
 
 import { AbstractUnpack } from "../abstract-unpack/abstract-unpack";
 import { Faction } from "../../faction/faction";
-import { MapHomeSystemLocations } from "../../../map-string-lib/map-home-system-locations";
+import { MapHomeSystemLocations } from "../../../map-string-lib/map-home-system-locations/map-home-system-locations";
 
 export class UnpackHomeSystem extends AbstractUnpack {
   private readonly _find: Find = new Find();

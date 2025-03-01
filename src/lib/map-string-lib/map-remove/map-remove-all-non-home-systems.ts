@@ -1,6 +1,6 @@
 import { GameObject, Player } from "@tabletop-playground/api";
 import { GarbageContainer } from "ttpg-darrell";
-import { System } from "../system-lib/system/system";
+import { System } from "../../system-lib/system/system";
 
 export class MapRemoveAllNonHomeSystems {
   removeAllNonHomeSystems(): void {

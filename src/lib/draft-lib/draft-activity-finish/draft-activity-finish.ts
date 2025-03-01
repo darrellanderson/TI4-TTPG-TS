@@ -4,12 +4,12 @@ import { Find } from "ttpg-darrell";
 import { DraftState } from "../draft-state/draft-state";
 import { DraftToMapString } from "../draft-to-map-string/draft-to-map-string";
 import { Faction } from "../../faction-lib/faction/faction";
-import { MapStringFormat } from "../../map-string-lib/map-string-format";
-import { MapStringLoad } from "../../map-string-lib/map-string-load";
+import { MapStringFormat } from "../../map-string-lib/map-string/map-string-format";
+import { MapStringLoad } from "../../map-string-lib/map-string/map-string-load";
 import {
   MapStringEntry,
   MapStringParser,
-} from "../../map-string-lib/map-string-parser";
+} from "../../map-string-lib/map-string/map-string-parser";
 import { PlayerSeatType } from "../../player-lib/player-seats/player-seats";
 import { UnpackAll } from "../../faction-lib/unpack/unpack-all/unpack-all";
 

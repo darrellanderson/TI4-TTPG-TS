@@ -1,8 +1,8 @@
-import { MockGameObject } from "ttpg-mock";
-import { MapPlaceFrontierTokens } from "./map-place-frontier-tokens";
-import { System } from "../system-lib/system/system";
 import { world } from "@tabletop-playground/api";
 import { NSID } from "ttpg-darrell";
+import { MockGameObject } from "ttpg-mock";
+import { MapPlaceFrontierTokens } from "./map-place-frontier-tokens";
+import { System } from "../../system-lib/system/system";
 
 it("static _getZeroPlanetSystems", () => {
   MockGameObject.simple("tile.system:base/39");
