@@ -1,6 +1,8 @@
 import {
+  Button,
   LayoutBox,
   MultilineTextBox,
+  Player,
   TextJustification,
   Widget,
 } from "@tabletop-playground/api";
@@ -20,11 +22,19 @@ import { HorizontalUIBuilder } from "../panel/horizontal-ui-builder";
 import { LabelUI } from "../button-ui/label-ui";
 import { VerticalUIBuilder } from "../panel/vertical-ui-builder";
 import { CONFIG } from "../config/config";
+import { Broadcast } from "ttpg-darrell";
 
 export class MapToolUI extends AbstractUI {
   private readonly _editText: MultilineTextBox;
 
-  private readonly _onMapStringLoad = (): void => {
+  private readonly _onMapStringLoad = (
+    _button: Button,
+    player: Player
+  ): void => {
+    const playerName: string = TI4.playerName.getByPlayer(player);
+    const msg: string = `Map string loaded by ${playerName}`;
+    Broadcast.chatAll(msg);
+
     const mapString: string = this._editText.getText();
     new MapStringLoad().load(mapString);
   };
@@ -34,29 +44,68 @@ export class MapToolUI extends AbstractUI {
     this._editText.setText(mapString);
   };
 
-  private readonly _onPlacePlanetCards = (): void => {
+  private readonly _onPlacePlanetCards = (
+    _button: Button,
+    player: Player
+  ): void => {
+    const playerName: string = TI4.playerName.getByPlayer(player);
+    const msg: string = `Planet cards placed by ${playerName}`;
+    Broadcast.chatAll(msg);
+
     new MapPlacePlanetCards().placePlanetCards();
   };
 
-  private readonly _onPlaceFrontierTokens = (): void => {
+  private readonly _onPlaceFrontierTokens = (
+    _button: Button,
+    player: Player
+  ): void => {
+    const playerName: string = TI4.playerName.getByPlayer(player);
+    const msg: string = `Frontier tokens placed by ${playerName}`;
+    Broadcast.chatAll(msg);
+
     new MapPlaceFrontierTokens().placeFrontierTokens();
   };
 
-  private readonly _onRemovePlanetCards = (): void => {
+  private readonly _onRemovePlanetCards = (
+    _button: Button,
+    player: Player
+  ): void => {
+    const playerName: string = TI4.playerName.getByPlayer(player);
+    const msg: string = `Planet cards removed by ${playerName}`;
+    Broadcast.chatAll(msg);
+
     new MapRemovePlanetCards().removePlanetCards();
   };
 
-  private readonly _onRemoveFrontierTokens = (): void => {
+  private readonly _onRemoveFrontierTokens = (
+    _button: Button,
+    player: Player
+  ): void => {
+    const playerName: string = TI4.playerName.getByPlayer(player);
+    const msg: string = `Frontier tokens removed by ${playerName}`;
+    Broadcast.chatAll(msg);
+
     new MapRemoveFrontierTokens().removeFrontierTokens();
   };
 
-  private readonly _onPlaceHyperlanes = (): void => {
+  private readonly _onPlaceHyperlanes = (
+    _button: Button,
+    player: Player
+  ): void => {
+    const playerName: string = TI4.playerName.getByPlayer(player);
+    const msg: string = `Hyperlanes placed by ${playerName}`;
+    Broadcast.chatAll(msg);
+
     const playerCount: number = TI4.config.playerCount;
     const mapString: string = MapStringHyperlanes.get(playerCount);
     new MapStringLoad().load(mapString);
   };
 
-  private readonly _onClearMap = (): void => {
+  private readonly _onClearMap = (_button: Button, player: Player): void => {
+    const playerName: string = TI4.playerName.getByPlayer(player);
+    const msg: string = `Map cleared by ${playerName}`;
+    Broadcast.chatAll(msg);
+
     new MapRemovePlanetCards().removePlanetCards();
     new MapRemoveFrontierTokens().removeFrontierTokens();
     new MapRemoveAllNonHomeSystems().removeAllNonHomeSystems();
