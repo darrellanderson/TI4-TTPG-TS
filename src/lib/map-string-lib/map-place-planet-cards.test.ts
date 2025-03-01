@@ -1,3 +1,5 @@
+import { Card } from "@tabletop-playground/api";
+import { Find, NSID } from "ttpg-darrell";
 import {
   MockCard,
   MockCardDetails,
@@ -5,8 +7,6 @@ import {
   MockSnapPoint,
 } from "ttpg-mock";
 import { MapPlacePlanetCards } from "./map-place-planet-cards";
-import { Card } from "@tabletop-playground/api";
-import { Find, NSID } from "ttpg-darrell";
 
 it("constructor", () => {
   new MapPlacePlanetCards();
