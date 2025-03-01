@@ -4,7 +4,7 @@ import {
   TextJustification,
   Widget,
 } from "@tabletop-playground/api";
-import { AbstractUI, UI_SIZE } from "../abstract-ui/abtract-ui";
+
 import { MapPlaceFrontierTokens } from "../../lib/map-string-lib/map-place-frontier-tokens";
 import { MapPlacePlanetCards } from "../../lib/map-string-lib/map-place-planet-cards";
 import { MapRemoveAllNonHomeSystems } from "../../lib/map-string-lib/map-remove-all-non-home-systems";
@@ -13,11 +13,13 @@ import { MapRemovePlanetCards } from "../../lib/map-string-lib/map-remove-planet
 import { MapStringLoad } from "../../lib/map-string-lib/map-string-load";
 import { MapStringSave } from "../../lib/map-string-lib/map-string-save";
 import { MapStringHyperlanes } from "../../lib/map-string-lib/map-string-hyperlanes";
+
+import { AbstractUI, UI_SIZE } from "../abstract-ui/abtract-ui";
 import { ButtonUI } from "../button-ui/button-ui";
 import { HorizontalUIBuilder } from "../panel/horizontal-ui-builder";
+import { LabelUI } from "../button-ui/label-ui";
 import { VerticalUIBuilder } from "../panel/vertical-ui-builder";
 import { CONFIG } from "../config/config";
-import { LabelUI } from "ui/button-ui/label-ui";
 
 export class MapToolUI extends AbstractUI {
   private readonly _editText: MultilineTextBox;
@@ -58,6 +60,7 @@ export class MapToolUI extends AbstractUI {
     new MapRemovePlanetCards().removePlanetCards();
     new MapRemoveFrontierTokens().removeFrontierTokens();
     new MapRemoveAllNonHomeSystems().removeAllNonHomeSystems();
+    this._editText.setText("");
   };
 
   constructor(scale: number) {
