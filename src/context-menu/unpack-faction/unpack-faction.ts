@@ -11,8 +11,8 @@ import {
 import { Faction } from "../../lib/faction-lib/faction/faction";
 import { UnpackAll } from "../../lib/faction-lib/unpack/unpack-all/unpack-all";
 
-export const ACTION_UNPACK: string = "*Unpack faction";
-export const ACTION_REMOVE: string = "*Remove faction";
+export const ACTION_UNPACK: string = "*Unpack Faction";
+export const ACTION_REMOVE: string = "*Remove Faction";
 
 /**
  * Right click a faction reference card, "unpack" option.

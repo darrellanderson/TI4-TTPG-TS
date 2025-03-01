@@ -10,7 +10,7 @@ import { AgendaState } from "../../lib/agenda-lib/agenda-state/agenda-state";
 import { ReportFinalAgendaState } from "../../lib/agenda-lib/agenda-state/report-final-agenda-state";
 
 const ACTION_PREFIX_PREDICT: string = "*Predict ";
-export const ACTION_CLEAR_PREDICT: string = "*Clear prediction";
+export const ACTION_CLEAR_PREDICT: string = "*Clear Prediction";
 
 /**
  * Add "predict {agenda outcome}", "clear agenda outcome" options to riders.

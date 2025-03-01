@@ -1,7 +1,7 @@
 import { globalEvents, Player, world } from "@tabletop-playground/api";
 import { IGlobal } from "ttpg-darrell";
 
-const ACTION: string = "*Toggle borders";
+const ACTION: string = "*Toggle Borders";
 const TOOLTIP: string =
   "Display which players control planets and space by color outline";
 

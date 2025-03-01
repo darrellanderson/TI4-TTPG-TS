@@ -17,7 +17,7 @@ import { UnitAttrs } from "../../lib/unit-lib/unit-attrs/unit-attrs";
 import { UnitAttrsSet } from "../../lib/unit-lib/unit-attrs-set/unit-attrs-set";
 import { UnitPlastic } from "../../lib/unit-lib/unit-plastic/unit-plastic";
 
-export const RIFT_ACTION_NAME: string = "*Rift all ships in system";
+export const RIFT_ACTION_NAME: string = "*Rift All Ships In System";
 export const RIFT_ACTION_TOOLTIP: string =
   "Roll for all ships in the system, show result on ship (lift and drop to remove)";
 
