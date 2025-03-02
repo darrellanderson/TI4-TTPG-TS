@@ -6,7 +6,7 @@ import {
   Vector,
   world,
 } from "@tabletop-playground/api";
-import { Broadcast, IGlobal, NSID } from "ttpg-darrell";
+import { Broadcast, HexType, IGlobal, NSID } from "ttpg-darrell";
 
 import { System } from "lib/system-lib/system/system";
 
@@ -63,6 +63,7 @@ export class OnSystemActivated implements IGlobal {
       this._maybeLinkCommandToken(obj);
     }
 
+    // Report system activation.
     TI4.events.onSystemActivated.add((system: System, player: Player): void => {
       OnSystemActivated.__lastActivatedSystem = system;
       OnSystemActivated.__lastActivatingPlayerSlot = player.getSlot();
@@ -70,6 +71,14 @@ export class OnSystemActivated implements IGlobal {
       const systemSummary: string = system.getName();
       const message: string = `${name} activated ${systemSummary}`;
       Broadcast.broadcastAll(message);
+    });
+
+    // Display active system.
+    TI4.events.onSystemActivated.add((system: System): void => {
+      const obj: GameObject = system.getObj();
+      const pos: Vector = obj.getPosition();
+      const hex: HexType = TI4.hex.fromPosition(pos);
+      // TODO XXX LINE
     });
 
     // Restore last activated system.
