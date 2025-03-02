@@ -1,8 +1,8 @@
 import { globalEvents, Player, world } from "@tabletop-playground/api";
 import { IGlobal } from "ttpg-darrell";
 
-const ACTION: string = "*Toggle Borders";
-const TOOLTIP: string =
+export const TOGGLE_BORDERS_ACTION: string = "*Toggle Borders";
+const TOGGLE_BORDERS_TOOLTIP: string =
   "Display which players control planets and space by color outline";
 
 export class ToggleBorders implements IGlobal {
@@ -10,13 +10,13 @@ export class ToggleBorders implements IGlobal {
     player: Player,
     identifier: string
   ): void => {
-    if (identifier === ACTION) {
+    if (identifier === TOGGLE_BORDERS_ACTION) {
       TI4.borders.toggleVisibility(player.getSlot());
     }
   };
 
   init(): void {
-    world.addCustomAction(ACTION, TOOLTIP);
+    world.addCustomAction(TOGGLE_BORDERS_ACTION, TOGGLE_BORDERS_TOOLTIP);
     globalEvents.onCustomAction.add(this._onCustomActionHandler);
   }
 }
