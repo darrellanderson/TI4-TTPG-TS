@@ -16,8 +16,9 @@ it("constructor/init", () => {
 
 it("purge", () => {
   const obj: GameObject = MockGameObject.simple("type:source/name|purge");
+  const playerSlot: number = 10;
   new MockContainer({ templateMetadata: "container:base/purged" });
-  new RightClickPurge()._purge(obj);
+  new RightClickPurge()._purge(obj, playerSlot);
 });
 
 it("_onObjectCreatedHandler", () => {

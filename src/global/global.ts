@@ -45,6 +45,7 @@ import { PlayerSeats } from "../lib/player-lib/player-seats/player-seats";
 import { RemoveRegistry } from "../lib/remove-lib/registry/remove-registry";
 import { ReportRemaining } from "../context-menu/report-remaining/report-remaining";
 import { RightClickExplore } from "../context-menu/system/explore-system/right-click-explore";
+import { RightClickPurge } from "../context-menu/right-click-purge/right-click-purge";
 import { RightClickRider } from "../context-menu/right-click-rider/right-click-rider";
 import { RightClickRift } from "../context-menu/right-click-rift/right-click-rift";
 import { RightClickScorePrivate } from "../context-menu/right-click-score/right-click-score-private";
@@ -141,6 +142,7 @@ export function resetGlobalThisTI4(): TI4Class {
     new OnSystemActivated(),
     new ReportRemaining(),
     new RightClickExplore(),
+    new RightClickPurge(),
     new RightClickRider(),
     new RightClickRift(),
     new RightClickScorePrivate(),

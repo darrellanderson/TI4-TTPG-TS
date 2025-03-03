@@ -1,12 +1,19 @@
 import {
   Card,
+  CardDetails,
   Container,
   GameObject,
   globalEvents,
   Player,
   world,
 } from "@tabletop-playground/api";
-import { Find, IGlobal, NSID, OnCardBecameSingletonOrDeck } from "ttpg-darrell";
+import {
+  Broadcast,
+  Find,
+  IGlobal,
+  NSID,
+  OnCardBecameSingletonOrDeck,
+} from "ttpg-darrell";
 
 export const PURGE_ACTION_NAME: string = "*Purge";
 
@@ -28,11 +35,11 @@ export class RightClickPurge implements IGlobal {
 
   private readonly _onCustomActionHandler = (
     object: GameObject,
-    _player: Player,
+    player: Player,
     identifier: string
   ): void => {
     if (identifier === PURGE_ACTION_NAME) {
-      this._purge(object);
+      this._purge(object, player.getSlot());
     }
   };
 
@@ -64,16 +71,25 @@ export class RightClickPurge implements IGlobal {
     }
   }
 
-  _purge(obj: GameObject): void {
+  _purge(obj: GameObject, playerSlot: number): void {
     const nsid: string = "container:base/purged";
-    const playerSlot: number | undefined = undefined;
+    const containerOwningPlayerSlot: number | undefined = undefined;
     const skipContained: boolean = true;
     const purgeContainer: Container | undefined = this._find.findContainer(
       nsid,
-      playerSlot,
+      containerOwningPlayerSlot,
       skipContained
     );
     if (purgeContainer) {
+      const playerName: string = TI4.playerName.getBySlot(playerSlot);
+      let objectName: string = obj.getName();
+      if (obj instanceof Card && obj.getStackSize() === 1) {
+        const cardDetails: CardDetails = obj.getCardDetails();
+        objectName = cardDetails.name;
+      }
+      const msg: string = `${playerName} purged ${objectName}`;
+      Broadcast.chatAll(msg);
+
       purgeContainer.addObjects([obj]);
     }
   }
