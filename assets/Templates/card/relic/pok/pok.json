@@ -78,11 +78,11 @@
     },
     "CardMetadata": {
         "0": "card.relic:pok/dominus-orb",
-        "1": "card.relic:pok/maw-of-worlds",
+        "1": "card.relic:pok/maw-of-worlds|purge",
         "2": "card.relic:pok/scepter-of-emelpar",
         "3": "card.relic:pok/shard-of-the-throne",
         "4": "card.relic:pok/stellar-converter",
-        "5": "card.relic:pok/the-codex",
+        "5": "card.relic:pok/the-codex|purge",
         "6": "card.relic:pok/the-crown-of-emphidia",
         "7": "card.relic:pok/the-crown-of-thalnos",
         "8": "card.relic:pok/the-obsidian",

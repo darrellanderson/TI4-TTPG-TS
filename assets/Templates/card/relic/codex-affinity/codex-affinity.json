@@ -63,7 +63,7 @@
         "2": "Nano-Forge"
     },
     "CardMetadata": {
-        "0": "card.relic:codex.affinity/dynamis-core",
+        "0": "card.relic:codex.affinity/dynamis-core|purge",
         "1": "card.relic:codex.affinity/jrxs4550",
         "2": "card.relic:codex.affinity/nanoforge"
     },
