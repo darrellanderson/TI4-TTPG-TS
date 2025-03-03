@@ -44,8 +44,27 @@ export class RightClickPurge implements IGlobal {
   };
 
   public static _isPurgeable(obj: GameObject): boolean {
+    // This would be a good use for nsid attributes, however those lead to
+    // ugly additions to metadata; need to find a better way to have attrs.
     const nsid: string = NSID.get(obj);
-    return nsid.endsWith("|purge");
+
+    // Relic fragments.
+    if (
+      nsid.startsWith("card.exploration") &&
+      nsid.includes("-relic-fragment.")
+    ) {
+      return true;
+    }
+
+    // Most heroes.
+    if (
+      nsid.startsWith("card.leader.hero:") &&
+      nsid !== "card.leader.hero:codex.vigil/xxekir-grom.omega"
+    ) {
+      return true;
+    }
+
+    return false;
   }
 
   init(): void {
