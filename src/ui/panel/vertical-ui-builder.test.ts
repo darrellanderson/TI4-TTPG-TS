@@ -82,3 +82,10 @@ it("vertical alignment: right", () => {
     .setHorizontalAlignment(HorizontalAlignment.Right)
     .build();
 });
+
+it("override height", () => {
+  new VerticalUIBuilder()
+    .addUIs([new MyAbstractUI(), new MyAbstractUI()])
+    .setOverrideHeight(100)
+    .build();
+});

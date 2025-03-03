@@ -3,7 +3,6 @@ import {
   LayoutBox,
   VerticalAlignment,
   VerticalBox,
-  Widget,
 } from "@tabletop-playground/api";
 import { AbstractUI, UI_SIZE } from "../abstract-ui/abtract-ui";
 
@@ -15,6 +14,7 @@ export class VerticalUIBuilder {
   private _horizontalAligntment: HorizontalAlignment = HorizontalAlignment.Left;
   private _padding: number = 0;
   private _spacing: number = 0;
+  private _overrideHeight: number = -1;
 
   addUIs(uis: Array<AbstractUI>): VerticalUIBuilder {
     this._uis.push(...uis);
@@ -25,6 +25,11 @@ export class VerticalUIBuilder {
     horizontalAlignment: HorizontalAlignment
   ): VerticalUIBuilder {
     this._horizontalAligntment = horizontalAlignment;
+    return this;
+  }
+
+  setOverrideHeight(overrideHeight: number): VerticalUIBuilder {
+    this._overrideHeight = overrideHeight;
     return this;
   }
 
@@ -60,16 +65,24 @@ export class VerticalUIBuilder {
       h: height + this._padding * 2,
     };
 
+    if (this._overrideHeight > 0) {
+      panelSize.h = this._overrideHeight;
+    }
+
     // Place insize a "with padding" layout box.
     // Panels like to add scrollbars even with an exact fit,
     // set a negative excess padding to absorb extra.
-    const panelBox: Widget = new LayoutBox()
+    const panelBox: LayoutBox = new LayoutBox()
       .setOverrideWidth(panelSize.w)
       .setOverrideHeight(panelSize.h)
       .setPadding(this._padding, 0, this._padding, -100)
       .setHorizontalAlignment(HorizontalAlignment.Left)
       .setVerticalAlignment(VerticalAlignment.Top)
       .setChild(panel);
+
+    if (this._overrideHeight > 0) {
+      panelBox.setPadding(0, 0, 0, 0);
+    }
 
     const uis: Array<AbstractUI> = this._uis;
     return new (class HorizontalUI extends AbstractUI {
