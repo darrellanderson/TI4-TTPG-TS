@@ -68,7 +68,7 @@ export class MapPremadeUI extends AbstractUI {
     const mapString: string = MapPremadeUI._emptyMapString(playerCount);
     const hexToLabel: Map<HexType, string> = new Map();
 
-    const mapUi: MapUI = new MapUI(mapString, hexToLabel, scale * 1.7);
+    const mapUi: MapUI = new MapUI(mapString, hexToLabel, scale * 1.5);
 
     const useMapButton: ButtonUI = new ButtonUI(scale);
     useMapButton.getButton().setText("Use Map");

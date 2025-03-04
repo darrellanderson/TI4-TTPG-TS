@@ -6,6 +6,12 @@ import {
   TextJustification,
   Widget,
 } from "@tabletop-playground/api";
+import {
+  Broadcast,
+  NamespaceId,
+  ThrottleClickHandler,
+  Window,
+} from "ttpg-darrell";
 
 import { MapPlaceFrontierTokens } from "../../lib/map-string-lib/map-place/map-place-frontier-tokens";
 import { MapPlacePlanetCards } from "../../lib/map-string-lib/map-place/map-place-planet-cards";
@@ -20,12 +26,18 @@ import { AbstractUI, UI_SIZE } from "../abstract-ui/abtract-ui";
 import { ButtonUI } from "../button-ui/button-ui";
 import { HorizontalUIBuilder } from "../panel/horizontal-ui-builder";
 import { LabelUI } from "../button-ui/label-ui";
+import { MapPremadeUI } from "../map-premade-ui/map-premade-ui";
 import { VerticalUIBuilder } from "../panel/vertical-ui-builder";
 import { CONFIG } from "../config/config";
-import { Broadcast } from "ttpg-darrell";
+import {
+  AbstractWindow,
+  CreateAbstractUIParams,
+  CreateAbstractUIType,
+} from "../abstract-window/abstract-window";
 
 export class MapToolUI extends AbstractUI {
   private readonly _editText: MultilineTextBox;
+  private _premadeMapWindow: Window | undefined = undefined;
 
   private readonly _onMapStringLoad = (
     _button: Button,
@@ -117,6 +129,16 @@ export class MapToolUI extends AbstractUI {
     labelUi.getText().setText("Map string:");
     labelUi.getText().setJustification(TextJustification.Left);
 
+    const premadeMapButton: ButtonUI = new ButtonUI(scale);
+    premadeMapButton.getButton().setText("Use premade map");
+    premadeMapButton.getButton().onClicked.add(
+      new ThrottleClickHandler<Button>(
+        (_button: Button, player: Player): void => {
+          this._openPremadeMapWindow(player.getSlot());
+        }
+      ).get()
+    );
+
     const editText: MultilineTextBox = new MultilineTextBox()
       .setFontSize(CONFIG.FONT_SIZE * scale)
       .setMaxLength(1000);
@@ -185,7 +207,7 @@ export class MapToolUI extends AbstractUI {
 
     const overall: AbstractUI = new VerticalUIBuilder()
       .setSpacing(CONFIG.SPACING * scale)
-      .addUIs([labelUi, textBoxUi, bottom])
+      .addUIs([premadeMapButton, labelUi, textBoxUi, bottom])
       .build();
 
     super(overall.getWidget(), overall.getSize());
@@ -206,5 +228,29 @@ export class MapToolUI extends AbstractUI {
       .getButton()
       .onClicked.add(this._onRemoveFrontierTokens);
     buttonClearMap.getButton().onClicked.add(this._onClearMap);
+  }
+
+  _openPremadeMapWindow(playerSlot: number): void {
+    const createAbstractUI: CreateAbstractUIType = (
+      params: CreateAbstractUIParams
+    ): AbstractUI => {
+      const mapPremadeUi: MapPremadeUI = new MapPremadeUI(params.scale);
+      mapPremadeUi.onMapString.add((mapString: string): void => {
+        this._editText.setText(mapString);
+        if (this._premadeMapWindow) {
+          this._premadeMapWindow.detach();
+          this._premadeMapWindow = undefined;
+        }
+      });
+      return mapPremadeUi;
+    };
+    const namespaceId: NamespaceId | undefined = undefined;
+    const windowTitle: string = "Premade Maps";
+    const abstractWindow: AbstractWindow = new AbstractWindow(
+      createAbstractUI,
+      namespaceId,
+      windowTitle
+    );
+    this._premadeMapWindow = abstractWindow.createWindow([playerSlot]).attach();
   }
 }
