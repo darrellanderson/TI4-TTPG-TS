@@ -86,7 +86,9 @@ it("trigger custom action (frontier)", () => {
     ],
   });
 
+  expect(token.isValid()).toBe(true);
   token._customActionAsPlayer(player, "*Explore Frontier");
+  expect(token.isValid()).toBe(false); // explore destroys token
   token._customActionAsPlayer(player, "*Explore Frontier"); // again
 });
 
