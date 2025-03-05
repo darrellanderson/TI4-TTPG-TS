@@ -1,5 +1,6 @@
 import { Color, GameObject, Player, world } from "@tabletop-playground/api";
 import { AbstractRightClickCard, Broadcast } from "ttpg-darrell";
+import { RightClickPurge } from "../../right-click-purge/right-click-purge";
 
 /**
  * Empyrean hero Conservator Procyon
@@ -17,23 +18,25 @@ export class HeroMultiverseShift extends AbstractRightClickCard {
     const cardNsidPrefix: string = "card.leader.hero:pok/conservator-procyon";
     const customActionName: string = "*Multiverse Shift";
     const customActionHandler = (
-      _object: GameObject,
+      object: GameObject,
       player: Player,
       identifier: string
     ): void => {
       if (identifier === customActionName) {
-        this._multiverseShift(player.getSlot());
+        this._multiverseShift(object, player.getSlot());
       }
     };
     super(cardNsidPrefix, customActionName, customActionHandler);
   }
 
-  _multiverseShift(playerSlot: number): void {
+  _multiverseShift(object: GameObject, playerSlot: number): void {
     const playerName: string = TI4.playerName.getBySlot(playerSlot);
     const color: Color = world.getSlotColor(playerSlot);
     const msg: string = `${playerName} executing Multiverse Shift!`;
     Broadcast.chatAll(msg, color);
 
     // TODO
+
+    new RightClickPurge()._purge(object, playerSlot);
   }
 }

@@ -10,8 +10,7 @@ export class ReturnCommandTokens {
   private readonly _recycleCommandToken: RecycleTokenCommand =
     new RecycleTokenCommand();
 
-  returnAllCommandTokens(): void {
-    // Only return command tokens on system tiles.
+  getAllCommandTokensOnMap(): Array<GameObject> {
     const hexes: Set<HexType> = new Set();
     const commandTokens: Array<GameObject> = [];
 
@@ -29,14 +28,36 @@ export class ReturnCommandTokens {
         commandTokens.push(obj);
       }
     }
-
-    for (const commandToken of commandTokens) {
+    return commandTokens.filter((commandToken) => {
       const pos: Vector = commandToken.getPosition();
       const hex: HexType = TI4.hex.fromPosition(pos);
-      if (
-        hexes.has(hex) &&
-        this._recycleCommandToken.canRecycle(commandToken)
-      ) {
+      return hexes.has(hex);
+    });
+  }
+
+  /**
+   * Return command tokens for only one player (for Sol's hero).
+   *
+   * @param playerSlot
+   */
+  returnOnePlayersCommandTokens(playerSlot: number): void {
+    const commandTokens: Array<GameObject> =
+      this.getAllCommandTokensOnMap().filter(
+        (commandToken) => commandToken.getOwningPlayerSlot() === playerSlot
+      );
+
+    for (const commandToken of commandTokens) {
+      if (this._recycleCommandToken.canRecycle(commandToken)) {
+        this._recycleCommandToken.recycle(commandToken);
+      }
+    }
+  }
+
+  returnAllCommandTokens(): void {
+    const commandTokens: Array<GameObject> = this.getAllCommandTokensOnMap();
+
+    for (const commandToken of commandTokens) {
+      if (this._recycleCommandToken.canRecycle(commandToken)) {
         this._recycleCommandToken.recycle(commandToken);
       }
     }

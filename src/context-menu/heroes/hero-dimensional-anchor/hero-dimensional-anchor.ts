@@ -1,5 +1,6 @@
 import { Color, GameObject, Player, world } from "@tabletop-playground/api";
 import { AbstractRightClickCard, Broadcast } from "ttpg-darrell";
+import { RightClickPurge } from "../../right-click-purge/right-click-purge";
 
 /**
  * Vuil'Raith hero It Feeds on Carrion
@@ -25,23 +26,25 @@ export class HeroDimensionalAnchor extends AbstractRightClickCard {
     const cardNsidPrefix: string = "card.leader.hero:pok/it-feeds-on-carrion";
     const customActionName: string = "*Dimensional Anchor";
     const customActionHandler = (
-      _object: GameObject,
+      object: GameObject,
       player: Player,
       identifier: string
     ): void => {
       if (identifier === customActionName) {
-        this._dimensionalAnchor(player.getSlot());
+        this._dimensionalAnchor(object, player.getSlot());
       }
     };
     super(cardNsidPrefix, customActionName, customActionHandler);
   }
 
-  _dimensionalAnchor(playerSlot: number): void {
+  _dimensionalAnchor(object: GameObject, playerSlot: number): void {
     const playerName: string = TI4.playerName.getBySlot(playerSlot);
     const color: Color = world.getSlotColor(playerSlot);
     const msg: string = `${playerName} executing Dimensional Anchor!`;
     Broadcast.chatAll(msg, color);
 
     // TODO
+
+    new RightClickPurge()._purge(object, playerSlot);
   }
 }
