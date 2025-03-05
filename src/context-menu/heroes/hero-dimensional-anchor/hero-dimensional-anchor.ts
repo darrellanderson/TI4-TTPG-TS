@@ -1,9 +1,19 @@
-import { GameObject, Player } from "@tabletop-playground/api";
-import { AbstractRightClickCard } from "ttpg-darrell";
+import { Color, GameObject, Player, world } from "@tabletop-playground/api";
+import { AbstractRightClickCard, Broadcast } from "ttpg-darrell";
 
 /**
- * Roll a die for all non-fighter ships in and adjacent to systems that contain
- * a dimensional tear; on a 1-3 capture the unit.
+ * Vuil'Raith hero It Feeds on Carrion
+ *
+ * ACTION: Each other player rolls a die for each of their non-fighter ships
+ * that are in or adjacent to a system that contains a dimensional tear; on a
+ * 1-3, capture that unit.
+ *
+ * If this causes a player's ground forces or fighters to be removed, also
+ * capture those units.
+ *
+ * Then, purge this card.
+ *
+ * NOTES:
  *
  * Do not roll for ships *in* systems, if a player is blockading
  * none of their ships roll.
@@ -12,13 +22,26 @@ import { AbstractRightClickCard } from "ttpg-darrell";
  */
 export class HeroDimensionalAnchor extends AbstractRightClickCard {
   constructor() {
-    const cardNsidPrefix: string = "x";
+    const cardNsidPrefix: string = "card.leader.hero:pok/it-feeds-on-carrion";
     const customActionName: string = "*Dimensional Anchor";
     const customActionHandler = (
-      object: GameObject,
+      _object: GameObject,
       player: Player,
       identifier: string
-    ): void => {};
+    ): void => {
+      if (identifier === customActionName) {
+        this._dimensionalAnchor(player.getSlot());
+      }
+    };
     super(cardNsidPrefix, customActionName, customActionHandler);
+  }
+
+  _dimensionalAnchor(playerSlot: number): void {
+    const playerName: string = TI4.playerName.getBySlot(playerSlot);
+    const color: Color = world.getSlotColor(playerSlot);
+    const msg: string = `${playerName} executing Dimensional Anchor!`;
+    Broadcast.chatAll(msg, color);
+
+    // TODO
   }
 }
