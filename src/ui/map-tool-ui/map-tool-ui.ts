@@ -230,24 +230,25 @@ export class MapToolUI extends AbstractUI {
     buttonClearMap.getButton().onClicked.add(this._onClearMap);
   }
 
+  _createMapPremadeUI: CreateAbstractUIType = (
+    params: CreateAbstractUIParams
+  ): AbstractUI => {
+    const mapPremadeUi: MapPremadeUI = new MapPremadeUI(params.scale);
+    mapPremadeUi.onMapString.add((mapString: string): void => {
+      this._editText.setText(mapString);
+      if (this._premadeMapWindow) {
+        this._premadeMapWindow.detach();
+        this._premadeMapWindow = undefined;
+      }
+    });
+    return mapPremadeUi;
+  };
+
   _openPremadeMapWindow(playerSlot: number): void {
-    const createAbstractUI: CreateAbstractUIType = (
-      params: CreateAbstractUIParams
-    ): AbstractUI => {
-      const mapPremadeUi: MapPremadeUI = new MapPremadeUI(params.scale);
-      mapPremadeUi.onMapString.add((mapString: string): void => {
-        this._editText.setText(mapString);
-        if (this._premadeMapWindow) {
-          this._premadeMapWindow.detach();
-          this._premadeMapWindow = undefined;
-        }
-      });
-      return mapPremadeUi;
-    };
     const namespaceId: NamespaceId | undefined = undefined;
     const windowTitle: string = "Premade Maps";
     const abstractWindow: AbstractWindow = new AbstractWindow(
-      createAbstractUI,
+      this._createMapPremadeUI,
       namespaceId,
       windowTitle
     );

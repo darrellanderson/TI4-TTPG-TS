@@ -36,6 +36,18 @@ export class MapPremadeUI extends AbstractUI {
   >();
   private _mapString: string = "";
 
+  private readonly _premadeMapButtons: Array<Button>;
+  readonly _onFilterTextChanged = (
+    _textBox: TextBox,
+    _player: Player,
+    text: string
+  ): void => {
+    text = text.toLowerCase();
+    this._premadeMapButtons.forEach((button: Button): void => {
+      button.setVisible(button.getText().toLowerCase().includes(text));
+    });
+  };
+
   static _emptyMapString(playerCount: number): string {
     if (playerCount <= 6) {
       return "0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0";
@@ -93,7 +105,7 @@ export class MapPremadeUI extends AbstractUI {
     const mapLeft: AbstractUI = new VerticalUIBuilder()
       .setSpacing(CONFIG.SPACING * scale)
       .addUIs([filterLabelAndFilter, mapUi, useMapButton])
-      .setHorizontalAlignment(HorizontalAlignment.Center)
+      .setHorizontalAlignment(HorizontalAlignment.Right)
       .build();
 
     // Show premade maps.
@@ -129,19 +141,11 @@ export class MapPremadeUI extends AbstractUI {
 
     this._mapString = mapString;
 
-    filter
-      .getEditText()
-      .onTextChanged.add(
-        (_textBox: TextBox, _player: Player, text: string): void => {
-          text = text.toLowerCase();
-          premadeMapButtons.forEach((buttonUi: ButtonUI): void => {
-            buttonUi
-              .getWidget()
-              .setVisible(
-                buttonUi.getButton().getText().toLowerCase().includes(text)
-              );
-          });
-        }
-      );
+    this._premadeMapButtons = premadeMapButtons.map(
+      (buttonUi: ButtonUI): Button => {
+        return buttonUi.getButton();
+      }
+    );
+    filter.getEditText().onTextChanged.add(this._onFilterTextChanged);
   }
 }

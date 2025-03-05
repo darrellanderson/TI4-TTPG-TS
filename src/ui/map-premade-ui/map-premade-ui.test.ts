@@ -1,6 +1,6 @@
-import { Widget } from "@tabletop-playground/api";
+import { Player, Widget } from "@tabletop-playground/api";
+import { clickAll, MockTextBox } from "ttpg-mock";
 import { MapPremadeUI } from "./map-premade-ui";
-import { clickAll } from "ttpg-mock";
 
 it("static emptyMapString", () => {
   const mapString6: string = MapPremadeUI._emptyMapString(3);
@@ -21,4 +21,10 @@ it("constructor, clickall", () => {
   const scale: number = 1;
   const widget: Widget = new MapPremadeUI(scale).getWidget();
   clickAll(widget);
+});
+
+it("editText event", () => {
+  const scale: number = 1;
+  const mapPremadeUI: MapPremadeUI = new MapPremadeUI(scale);
+  mapPremadeUI._onFilterTextChanged(new MockTextBox(), new Player(), "text");
 });
