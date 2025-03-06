@@ -5,10 +5,19 @@ import {
   Vector,
   world,
 } from "@tabletop-playground/api";
-import { AbstractRightClickCard, Broadcast, HexType, NSID } from "ttpg-darrell";
+import {
+  AbstractRightClickCard,
+  Broadcast,
+  HexType,
+  NSID,
+  PlayerSlot,
+} from "ttpg-darrell";
 import { Faction } from "../../../lib/faction-lib/faction/faction";
 import { RightClickPurge } from "../../right-click-purge/right-click-purge";
 import { SystemAdjacency } from "../../../lib/system-lib/system-adjacency/system-adjacency";
+import { UnitAttrs } from "../../../lib/unit-lib/unit-attrs/unit-attrs";
+import { UnitAttrsSet } from "../../../lib/unit-lib/unit-attrs-set/unit-attrs-set";
+import { UnitPlastic } from "../../../lib/unit-lib/unit-plastic/unit-plastic";
 
 /**
  * Vuil'Raith hero It Feeds on Carrion
@@ -72,7 +81,7 @@ export class HeroDimensionalAnchor extends AbstractRightClickCard {
     return hexes;
   }
 
-  _getAdjacentHexes(hexes: Set<HexType>, playerSlot: number): Set<HexType> {
+  _getAdjacentHexes(hexes: Set<HexType>, playerSlot: PlayerSlot): Set<HexType> {
     const adjHexes: Set<HexType> = new Set();
     const systemAdjacency: SystemAdjacency = new SystemAdjacency();
     const faction: Faction | undefined =
@@ -84,5 +93,28 @@ export class HeroDimensionalAnchor extends AbstractRightClickCard {
       }
     }
     return adjHexes;
+  }
+
+  _hexToNonFighterShips(): Map<HexType, Array<UnitPlastic>> {
+    const hexToNonFighterShips: Map<HexType, Array<UnitPlastic>> = new Map();
+    const unitAttrsSet: UnitAttrsSet =
+      TI4.unitAttrsRegistry.defaultUnitAttrsSet();
+    const unitPlastics: Array<UnitPlastic> = UnitPlastic.getAll();
+    for (const unitPlastic of unitPlastics) {
+      const unitAttrs: UnitAttrs | undefined = unitAttrsSet.get(
+        unitPlastic.getUnit()
+      );
+      if (unitAttrs && unitAttrs.isShip()) {
+        const hex: HexType = unitPlastic.getHex();
+        let unitPlastics: Array<UnitPlastic> | undefined =
+          hexToNonFighterShips.get(hex);
+        if (!unitPlastics) {
+          unitPlastics = [];
+          hexToNonFighterShips.set(hex, unitPlastics);
+        }
+        unitPlastics.push(unitPlastic);
+      }
+    }
+    return hexToNonFighterShips;
   }
 }

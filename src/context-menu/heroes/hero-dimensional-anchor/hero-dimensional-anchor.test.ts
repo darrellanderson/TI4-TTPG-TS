@@ -1,5 +1,5 @@
 import { Player } from "@tabletop-playground/api";
-import { MockCard, MockPlayer } from "ttpg-mock";
+import { MockCard, MockGameObject, MockPlayer } from "ttpg-mock";
 import { HeroDimensionalAnchor } from "./hero-dimensional-anchor";
 
 it("constructor, init", () => {
@@ -15,4 +15,13 @@ it("right click", () => {
 
   const player: Player = new MockPlayer();
   card._customActionAsPlayer(player, "*Dimensional Anchor");
+});
+
+it("_getDimensionalTearHexes", () => {
+  MockGameObject.simple(
+    "token.attachment.system:pok/dimensional-tear.vuilraith"
+  );
+  const hero = new HeroDimensionalAnchor();
+  const hexes = hero._getDimensionalTearHexes(true);
+  expect(hexes.size).toBeGreaterThan(0);
 });
