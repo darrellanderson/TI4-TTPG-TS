@@ -3,7 +3,7 @@ import { HexType, PlayerSlot } from "ttpg-darrell";
 import { MockCard, MockGameObject, MockPlayer } from "ttpg-mock";
 import { HeroDimensionalAnchor } from "./hero-dimensional-anchor";
 import { UnitPlastic } from "../../../lib/unit-lib/unit-plastic/unit-plastic";
-import { UnitType } from "lib/unit-lib/schema/unit-attrs-schema";
+import { UnitType } from "../../../lib/unit-lib/schema/unit-attrs-schema";
 
 it("constructor, init", () => {
   new HeroDimensionalAnchor().init();
@@ -31,7 +31,7 @@ it("_getDimensionalTearHexes", () => {
   expect(hexes.size).toBe(1);
 });
 
-it("_getAdjacentHexes", () => {
+it("_getInAndAdjacentHexes", () => {
   // Must have system tiles for adjacency.
   MockGameObject.simple("tile.system:base/18", {
     position: TI4.hex.toPosition("<0,0,0>"),
@@ -46,7 +46,7 @@ it("_getAdjacentHexes", () => {
 
   const hero = new HeroDimensionalAnchor();
   const playerSlot: number = 10;
-  const adjHexes: Set<HexType> = hero._getAdjacentHexes(hexes, playerSlot);
+  const adjHexes: Set<HexType> = hero._getInAndAdjacentHexes(hexes, playerSlot);
   expect(adjHexes.size).toBe(2);
 });
 
@@ -108,4 +108,32 @@ it("_getNonFighterShips", () => {
     new HeroDimensionalAnchor()._getNonFighterShips(plastics);
   expect(filtered.length).toBe(1);
   expect(filtered).toEqual([dreadnoughtPlastic]);
+});
+
+it("_getNonBlockadedShips", () => {
+  const destroyer: GameObject = MockGameObject.simple("unit:base/destroyer", {
+    owningPlayerSlot: 10,
+  });
+  const dreadnought: GameObject = MockGameObject.simple(
+    "unit:base/dreadnought",
+    {
+      owningPlayerSlot: 11,
+    }
+  );
+  const destroyerPlastic: UnitPlastic | undefined =
+    UnitPlastic.getOne(destroyer);
+  const dreadnoughtPlastic: UnitPlastic | undefined =
+    UnitPlastic.getOne(dreadnought);
+  if (!destroyerPlastic || !dreadnoughtPlastic) {
+    throw new Error("Plastic not found");
+  }
+  const plastics: Array<UnitPlastic> = [destroyerPlastic, dreadnoughtPlastic];
+  const blockadingPlayerSlots: Set<PlayerSlot> = new Set([11]);
+  const filtered: Array<UnitPlastic> =
+    new HeroDimensionalAnchor()._getNonBlockadedShips(
+      plastics,
+      blockadingPlayerSlots
+    );
+  expect(filtered.length).toBe(1);
+  expect(filtered).toEqual([destroyerPlastic]);
 });

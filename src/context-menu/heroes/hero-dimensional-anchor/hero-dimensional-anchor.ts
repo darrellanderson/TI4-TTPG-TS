@@ -18,6 +18,7 @@ import { SystemAdjacency } from "../../../lib/system-lib/system-adjacency/system
 import { UnitAttrs } from "../../../lib/unit-lib/unit-attrs/unit-attrs";
 import { UnitAttrsSet } from "../../../lib/unit-lib/unit-attrs-set/unit-attrs-set";
 import { UnitPlastic } from "../../../lib/unit-lib/unit-plastic/unit-plastic";
+import { RightClickRift } from "../../right-click-rift/right-click-rift";
 
 /**
  * Vuil'Raith hero It Feeds on Carrion
@@ -58,7 +59,51 @@ export class HeroDimensionalAnchor extends AbstractRightClickCard {
     const msg: string = `${playerName} executing Dimensional Anchor!`;
     Broadcast.chatAll(msg, color);
 
-    // TODO
+    // Hero applies to all dimensional tears, including nekro's.
+    const dimensionalTearHexes: Set<HexType> =
+      this._getDimensionalTearHexes(true); // include Nekro
+    const inAndAdjacentHexes: Set<HexType> = this._getInAndAdjacentHexes(
+      dimensionalTearHexes,
+      playerSlot
+    );
+
+    // Get players blockading the vuil'raith dimensional tears (not Nekro).
+    const blockadableHexes: Set<HexType> = this._getDimensionalTearHexes(false); // exclude Nekro
+    const hexToShipsIncludingFighters: Map<
+      HexType,
+      Array<UnitPlastic>
+    > = this._getHexToShipsIncludingFighters();
+    const blockadingPlayerSlots: Set<PlayerSlot> = new Set([playerSlot]); // exlude self
+    for (const hex of blockadableHexes) {
+      const ships: Array<UnitPlastic> | undefined =
+        hexToShipsIncludingFighters.get(hex);
+      if (ships) {
+        const owners: Set<PlayerSlot> = this._getShipOwners(ships);
+        for (const owner of owners) {
+          blockadingPlayerSlots.add(owner);
+        }
+      }
+    }
+
+    // Get non-fighter ships from non-blockading players.
+    const nonFighterShips: Array<UnitPlastic> = [];
+    for (const hex of inAndAdjacentHexes) {
+      const ships: Array<UnitPlastic> | undefined =
+        hexToShipsIncludingFighters.get(hex);
+      if (ships) {
+        const nonFighterShips: Array<UnitPlastic> =
+          this._getNonFighterShips(ships);
+        const nonBlockadedShips: Array<UnitPlastic> =
+          this._getNonBlockadedShips(nonFighterShips, blockadingPlayerSlots);
+        nonFighterShips.push(...nonBlockadedShips);
+      }
+    }
+
+    for (const nonFighterShip of nonFighterShips) {
+      const obj: GameObject = nonFighterShip.getObj();
+      const rollResult: number = Math.floor(Math.random() * 10) + 1;
+      RightClickRift.applyRiftResult(obj, rollResult);
+    }
 
     new RightClickPurge()._purge(object, playerSlot);
   }
@@ -94,7 +139,10 @@ export class HeroDimensionalAnchor extends AbstractRightClickCard {
    * @param playerSlot
    * @returns
    */
-  _getAdjacentHexes(hexes: Set<HexType>, playerSlot: PlayerSlot): Set<HexType> {
+  _getInAndAdjacentHexes(
+    hexes: Set<HexType>,
+    playerSlot: PlayerSlot
+  ): Set<HexType> {
     const allAdjHexes: Set<HexType> = new Set(hexes); // include original hexes
     const systemAdjacency: SystemAdjacency = new SystemAdjacency();
     const faction: Faction | undefined =
@@ -149,6 +197,16 @@ export class HeroDimensionalAnchor extends AbstractRightClickCard {
   _getNonFighterShips(ships: Array<UnitPlastic>): Array<UnitPlastic> {
     return ships.filter((ship) => {
       return ship.getUnit() !== "fighter";
+    });
+  }
+
+  _getNonBlockadedShips(
+    ships: Array<UnitPlastic>,
+    blockadingPlayerSlots: Set<PlayerSlot>
+  ): Array<UnitPlastic> {
+    return ships.filter((ship) => {
+      const owner: PlayerSlot = ship.getOwningPlayerSlot();
+      return !blockadingPlayerSlots.has(owner);
     });
   }
 }
