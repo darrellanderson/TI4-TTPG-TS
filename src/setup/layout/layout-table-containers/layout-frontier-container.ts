@@ -23,6 +23,7 @@ export class LayoutFrontierContainer {
       if (!tags.includes(tag)) {
         tags.push(tag);
         container.setContainerTags(tags);
+        container.setType(1);
       }
     }
 
@@ -32,6 +33,10 @@ export class LayoutFrontierContainer {
     if (!tags.includes(tag)) {
       tags.push(tag);
       token.setTags(tags);
+    }
+
+    if (container instanceof Container) {
+      container.insert([token]);
     }
   }
 
