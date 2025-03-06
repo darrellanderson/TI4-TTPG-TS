@@ -5,4 +5,5 @@ import { GlowingToken } from "./glowing-token";
 it("constructor", () => {
   const token: GameObject = new MockGameObject();
   new GlowingToken(token);
+  new GlowingToken(token); // again, removes old line
 });
