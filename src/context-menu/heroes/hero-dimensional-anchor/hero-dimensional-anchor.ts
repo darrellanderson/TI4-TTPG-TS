@@ -6,7 +6,9 @@ import {
   world,
 } from "@tabletop-playground/api";
 import { AbstractRightClickCard, Broadcast, HexType, NSID } from "ttpg-darrell";
+import { Faction } from "../../../lib/faction-lib/faction/faction";
 import { RightClickPurge } from "../../right-click-purge/right-click-purge";
+import { SystemAdjacency } from "../../../lib/system-lib/system-adjacency/system-adjacency";
 
 /**
  * Vuil'Raith hero It Feeds on Carrion
@@ -22,9 +24,7 @@ import { RightClickPurge } from "../../right-click-purge/right-click-purge";
  *
  * NOTES:
  *
- * Do not roll for ships *in* systems, if a player is blockading
- * none of their ships roll.
- *
+ * If a player is blockading a vuil'raith system, they are immune.
  * Ugh, except if Nekro copies, the nekro versions do not count as blockade.
  */
 export class HeroDimensionalAnchor extends AbstractRightClickCard {
@@ -70,5 +70,19 @@ export class HeroDimensionalAnchor extends AbstractRightClickCard {
       }
     }
     return hexes;
+  }
+
+  _getAdjacentHexes(hexes: Set<HexType>, playerSlot: number): Set<HexType> {
+    const adjHexes: Set<HexType> = new Set();
+    const systemAdjacency: SystemAdjacency = new SystemAdjacency();
+    const faction: Faction | undefined =
+      TI4.factionRegistry.getByPlayerSlot(playerSlot);
+    for (const hex of hexes) {
+      const adjHexes: Set<HexType> = systemAdjacency.getAdjHexes(hex, faction);
+      for (const adjHex of adjHexes) {
+        adjHexes.add(adjHex);
+      }
+    }
+    return adjHexes;
   }
 }

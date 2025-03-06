@@ -12,6 +12,7 @@ import { System } from "../system/system";
 import { SystemAdjacencyHyperlane } from "./system-adjacency-hyperlane";
 import { SystemAdjacencyNeighbor } from "./system-adjacency-neighbor";
 import { SystemAdjacencyWormhole } from "./system-adjacency-wormhole";
+import { Faction } from "../../faction-lib/faction/faction";
 
 export class SystemAdjacency {
   private readonly _hyperlane = new SystemAdjacencyHyperlane();
@@ -90,11 +91,11 @@ export class SystemAdjacency {
    * @param hex
    * @returns
    */
-  public getAdjHexes(hex: HexType): Set<HexType> {
+  public getAdjHexes(hex: HexType, faction: Faction | undefined): Set<HexType> {
     const adjHexes: Set<HexType> = new Set();
 
     const adjacencyPaths: ReadonlyArray<AdjacencyPathType> =
-      this.getAdjacencyPaths(hex);
+      this.getAdjacencyPaths(hex, faction);
     adjacencyPaths.forEach((adjacencyPath: AdjacencyPathType): void => {
       if (adjacencyPath.distance === 1) {
         // Adjacency downgraded from HexType to string.
@@ -114,12 +115,15 @@ export class SystemAdjacency {
    * @param hex
    * @returns
    */
-  public getAdjacencyPaths(hex: HexType): ReadonlyArray<AdjacencyPathType> {
+  public getAdjacencyPaths(
+    hex: HexType,
+    faction: Faction | undefined
+  ): ReadonlyArray<AdjacencyPathType> {
     const adjacency: Adjacency = new Adjacency();
     const hexToSystem: Map<HexType, System> = SystemAdjacency.getHexToSystem();
     this._hyperlane.addTags(hexToSystem, adjacency);
     this._neighbor.addTags(hexToSystem, adjacency);
-    this._wormhole.addTags(hexToSystem, adjacency);
+    this._wormhole.addTags(hexToSystem, adjacency, faction);
     this._neighbor.removeTags(adjacency); // adjacency blocking tokens
     return adjacency.get(hex, 1);
   }

@@ -10,6 +10,7 @@ import {
 import { AdjacencyPathType, HexType, IGlobal, NSID } from "ttpg-darrell";
 
 import { SystemAdjacency } from "../../lib/system-lib/system-adjacency/system-adjacency";
+import { Faction } from "../../lib/faction-lib/faction/faction";
 
 export const ADJACENCY_LINE_TAG: string = "__adj__";
 export const ADJACENCY_ACTION_NAME: string = "*Toggle display adjacency";
@@ -99,10 +100,11 @@ export class DisplayPDSAdjacency implements IGlobal {
   _addAdjacencyLines(obj: GameObject): void {
     const pos: Vector = obj.getPosition();
     const hex: HexType = TI4.hex.fromPosition(pos);
+    const faction: Faction | undefined = undefined;
 
     const adjacencyResults: ReadonlyArray<AdjacencyPathType> =
       new SystemAdjacency()
-        .getAdjacencyPaths(hex)
+        .getAdjacencyPaths(hex, faction)
         .filter((adjacencyResult: AdjacencyPathType): boolean => {
           return adjacencyResult.distance === 1;
         });

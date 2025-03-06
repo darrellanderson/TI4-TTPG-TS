@@ -7,6 +7,7 @@ import {
   DisplayPDSAdjacency,
 } from "./display-pds-adjacency";
 import { SystemAdjacency } from "../../lib/system-lib/system-adjacency/system-adjacency";
+import { Faction } from "../../lib/faction-lib/faction/faction";
 
 it("init/destroy", () => {
   const displayPdsAdjacency = new DisplayPDSAdjacency();
@@ -27,7 +28,11 @@ it("toggle on/off", () => {
   MockGameObject.simple("tile.system:base/2", {
     position: TI4.hex.toPosition("<1,0,-1>"),
   });
-  const adj: Set<HexType> = new SystemAdjacency().getAdjHexes("<0,0,0>");
+  const faction: Faction | undefined = undefined;
+  const adj: Set<HexType> = new SystemAdjacency().getAdjHexes(
+    "<0,0,0>",
+    faction
+  );
   expect(adj.has("<1,0,-1>")).toBe(true);
 
   globalEvents.onObjectCreated.clear(); // remove global DisplayPDSAdjacency

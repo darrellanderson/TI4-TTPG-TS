@@ -2,6 +2,7 @@ import { Vector } from "@tabletop-playground/api";
 import { AdjacencyNodeType, AdjacencyPathType, HexType } from "ttpg-darrell";
 import { MockGameObject } from "ttpg-mock";
 
+import { Faction } from "../../faction-lib/faction/faction";
 import { System } from "../system/system";
 import { SystemAdjacency } from "./system-adjacency";
 
@@ -63,7 +64,11 @@ it("getAdjHexes", () => {
     position: TI4.hex.toPosition("<2,0,-2>"),
   });
 
-  const adjHexes: Set<HexType> = new SystemAdjacency().getAdjHexes("<0,0,0>");
+  const faction: Faction | undefined = undefined;
+  const adjHexes: Set<HexType> = new SystemAdjacency().getAdjHexes(
+    "<0,0,0>",
+    faction
+  );
   const asArray: Array<HexType> = Array.from(adjHexes);
   expect(asArray).toEqual(["<1,0,-1>"]);
 });

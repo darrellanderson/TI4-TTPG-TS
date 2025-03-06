@@ -147,7 +147,20 @@ export class CombatRoll {
 
   constructor(params: CombatRollParams) {
     this._params = params;
-    this._adjHexes = new SystemAdjacency().getAdjHexes(params.hex);
+
+    this.self = new CombatRollPerPlayerData();
+    this.self.playerSlot = params.rollingPlayerSlot;
+
+    this.opponent = new CombatRollPerPlayerData();
+    this.opponent.playerSlot = -1;
+    if (params.rollingPlayerSlot !== params.activatingPlayerSlot) {
+      this.opponent.playerSlot = params.activatingPlayerSlot;
+    }
+
+    this._adjHexes = new SystemAdjacency().getAdjHexes(
+      params.hex,
+      this.self.faction
+    );
 
     const pos: Vector = TI4.hex.toPosition(params.hex);
     this.system = TI4.systemRegistry.getByPosition(pos);
@@ -158,15 +171,6 @@ export class CombatRoll {
           break;
         }
       }
-    }
-
-    this.self = new CombatRollPerPlayerData();
-    this.self.playerSlot = params.rollingPlayerSlot;
-
-    this.opponent = new CombatRollPerPlayerData();
-    this.opponent.playerSlot = -1;
-    if (params.rollingPlayerSlot !== params.activatingPlayerSlot) {
-      this.opponent.playerSlot = params.activatingPlayerSlot;
     }
   }
 

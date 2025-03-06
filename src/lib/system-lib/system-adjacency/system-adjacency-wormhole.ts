@@ -2,6 +2,7 @@ import { Adjacency, CardUtil, Find, HexType } from "ttpg-darrell";
 import { System } from "../system/system";
 import { Card, GameObject, Vector } from "@tabletop-playground/api";
 import { UnitModifierActiveIdle } from "../../unit-lib/unit-modifier/unit-modifier-active-idle";
+import { Faction } from "lib/faction-lib/faction/faction";
 
 export class SystemAdjacencyWormhole {
   public static WORMHOMES: Array<string> = [
@@ -17,7 +18,8 @@ export class SystemAdjacencyWormhole {
 
   public addTags(
     hexToSystem: Map<HexType, System>,
-    adjacency: Adjacency
+    adjacency: Adjacency,
+    faction: Faction | undefined
   ): void {
     // Add wormholes in systems (inclues attachments).
     for (const [hex, system] of hexToSystem) {
@@ -40,8 +42,32 @@ export class SystemAdjacencyWormhole {
       }
     }
 
+    if (faction) {
+      this._applyFaction(faction, adjacency);
+    }
     this._applyCreussFlagship(adjacency);
     this._applyCards(adjacency);
+  }
+
+  _applyFaction(faction: Faction, adjacency: Adjacency): void {
+    if (
+      faction
+        .getAbilityNsids()
+        .includes("faction-ability:base/quantum-entanglement")
+    ) {
+      adjacency.addLink({
+        src: "alpha",
+        dst: "beta",
+        distance: 0,
+        isTransit: true,
+      });
+      adjacency.addLink({
+        src: "beta",
+        dst: "alpha",
+        distance: 0,
+        isTransit: true,
+      });
+    }
   }
 
   _applyCreussFlagship(adjacency: Adjacency): void {

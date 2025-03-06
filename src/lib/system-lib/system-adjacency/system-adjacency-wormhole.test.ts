@@ -2,6 +2,7 @@ import { Card } from "@tabletop-playground/api";
 import { Adjacency, HexType } from "ttpg-darrell";
 import { MockCard, MockGameObject, MockSnapPoint } from "ttpg-mock";
 
+import { Faction } from "../../faction-lib/faction/faction";
 import { System } from "../system/system";
 import { SystemAdjacencyWormhole } from "./system-adjacency-wormhole";
 import { SystemAdjacency } from "./system-adjacency";
@@ -16,8 +17,9 @@ it("addTags", () => {
 
   const hexToSystem: Map<HexType, System> = SystemAdjacency.getHexToSystem();
   const adjacency: Adjacency = new Adjacency();
+  const faction: Faction | undefined = undefined;
 
-  new SystemAdjacencyWormhole().addTags(hexToSystem, adjacency);
+  new SystemAdjacencyWormhole().addTags(hexToSystem, adjacency, faction);
 
   expect(
     adjacency.hasLink({
@@ -33,6 +35,25 @@ it("addTags", () => {
       dst: "<0,0,0>",
       distance: 0.5,
       isTransit: false,
+    })
+  ).toBe(true);
+});
+
+it("faction creuss", () => {
+  const adjacency: Adjacency = new Adjacency();
+  const faction: Faction | undefined = TI4.factionRegistry.getByNsid(
+    "faction:base/creuss"
+  );
+  expect(faction).toBeDefined();
+
+  const hexToSystem: Map<HexType, System> = SystemAdjacency.getHexToSystem();
+  new SystemAdjacencyWormhole().addTags(hexToSystem, adjacency, faction);
+  expect(
+    adjacency.hasLink({
+      src: "alpha",
+      dst: "beta",
+      distance: 0,
+      isTransit: true,
     })
   ).toBe(true);
 });
