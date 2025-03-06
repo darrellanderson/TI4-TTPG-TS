@@ -63,6 +63,12 @@ export class HeroDimensionalAnchor extends AbstractRightClickCard {
     new RightClickPurge()._purge(object, playerSlot);
   }
 
+  /**
+   * Get hexes with dimensional tears.
+   *
+   * @param includeNekro
+   * @returns
+   */
   _getDimensionalTearHexes(includeNekro: boolean): Set<HexType> {
     const hexes: Set<HexType> = new Set();
     const skipContained: boolean = true;
@@ -81,20 +87,32 @@ export class HeroDimensionalAnchor extends AbstractRightClickCard {
     return hexes;
   }
 
+  /**
+   * Get hexes adjacent to the given hexes (including the source hexes).
+   *
+   * @param hexes
+   * @param playerSlot
+   * @returns
+   */
   _getAdjacentHexes(hexes: Set<HexType>, playerSlot: PlayerSlot): Set<HexType> {
-    const adjHexes: Set<HexType> = new Set();
+    const allAdjHexes: Set<HexType> = new Set(hexes); // include original hexes
     const systemAdjacency: SystemAdjacency = new SystemAdjacency();
     const faction: Faction | undefined =
       TI4.factionRegistry.getByPlayerSlot(playerSlot);
     for (const hex of hexes) {
       const adjHexes: Set<HexType> = systemAdjacency.getAdjHexes(hex, faction);
       for (const adjHex of adjHexes) {
-        adjHexes.add(adjHex);
+        allAdjHexes.add(adjHex);
       }
     }
-    return adjHexes;
+    return allAdjHexes;
   }
 
+  /**
+   * Get hexes with non-fighter ships (get plastics).
+   *
+   * @returns
+   */
   _hexToNonFighterShips(): Map<HexType, Array<UnitPlastic>> {
     const hexToNonFighterShips: Map<HexType, Array<UnitPlastic>> = new Map();
     const unitAttrsSet: UnitAttrsSet =
