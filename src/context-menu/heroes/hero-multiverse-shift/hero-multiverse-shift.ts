@@ -67,7 +67,7 @@ export class HeroMultiverseShift extends AbstractRightClickCard {
     const z = world.getTableHeight() + 10;
     for (const hex of zeroPlanetHexes) {
       if (!alreadyHaveFrontierTokenHexes.has(hex)) {
-        const pos: Vector = TI4.hex.toPosition(hex);
+        const pos: Vector = TI4.hex.toPosition(hex).add([0, -2.5, 0]);
         pos.z = z;
         const obj: GameObject = Spawn.spawnOrThrow(
           "token.attachment.system:pok/frontier",
