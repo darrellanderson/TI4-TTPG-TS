@@ -109,11 +109,12 @@ export class HeroDimensionalAnchor extends AbstractRightClickCard {
   }
 
   /**
-   * Get hexes with non-fighter ships (get plastics).
+   * Get hexes and ships (get plastics).
+   * Include fighters here to detect blockages, remove them for the final list.
    *
    * @returns
    */
-  _hexToNonFighterShips(): Map<HexType, Array<UnitPlastic>> {
+  _getHexToShipsIncludingFighters(): Map<HexType, Array<UnitPlastic>> {
     const hexToNonFighterShips: Map<HexType, Array<UnitPlastic>> = new Map();
     const unitAttrsSet: UnitAttrsSet =
       TI4.unitAttrsRegistry.defaultUnitAttrsSet();
@@ -134,5 +135,20 @@ export class HeroDimensionalAnchor extends AbstractRightClickCard {
       }
     }
     return hexToNonFighterShips;
+  }
+
+  _getShipOwners(ships: Array<UnitPlastic>): Set<PlayerSlot> {
+    const owners: Set<PlayerSlot> = new Set();
+    for (const ship of ships) {
+      const owner: PlayerSlot = ship.getOwningPlayerSlot();
+      owners.add(owner);
+    }
+    return owners;
+  }
+
+  _getNonFighterShips(ships: Array<UnitPlastic>): Array<UnitPlastic> {
+    return ships.filter((ship) => {
+      return ship.getUnit() !== "fighter";
+    });
   }
 }
