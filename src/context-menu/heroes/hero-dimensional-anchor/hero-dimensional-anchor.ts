@@ -1,5 +1,11 @@
-import { Color, GameObject, Player, world } from "@tabletop-playground/api";
-import { AbstractRightClickCard, Broadcast } from "ttpg-darrell";
+import {
+  Color,
+  GameObject,
+  Player,
+  Vector,
+  world,
+} from "@tabletop-playground/api";
+import { AbstractRightClickCard, Broadcast, HexType, NSID } from "ttpg-darrell";
 import { RightClickPurge } from "../../right-click-purge/right-click-purge";
 
 /**
@@ -46,5 +52,23 @@ export class HeroDimensionalAnchor extends AbstractRightClickCard {
     // TODO
 
     new RightClickPurge()._purge(object, playerSlot);
+  }
+
+  _getDimensionalTearHexes(includeNekro: boolean): Set<HexType> {
+    const hexes: Set<HexType> = new Set();
+    const skipContained: boolean = true;
+    for (const obj of world.getAllObjects(skipContained)) {
+      const nsid: string = NSID.get(obj);
+      if (
+        nsid === "token.attachment.system:pok/dimensional-tear.vuilraith" ||
+        (includeNekro &&
+          nsid === "token.attachment.system:pok/dimensional-tear.nekro")
+      ) {
+        const pos: Vector = obj.getPosition();
+        const hex: HexType = TI4.hex.fromPosition(pos);
+        hexes.add(hex);
+      }
+    }
+    return hexes;
   }
 }
