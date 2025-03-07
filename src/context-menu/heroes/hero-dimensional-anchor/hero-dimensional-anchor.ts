@@ -86,7 +86,7 @@ export class HeroDimensionalAnchor extends AbstractRightClickCard {
     }
 
     // Get non-fighter ships from non-blockading players.
-    const nonFighterShips: Array<UnitPlastic> = [];
+    const allNonFighterShips: Array<UnitPlastic> = [];
     for (const hex of inAndAdjacentHexes) {
       const ships: Array<UnitPlastic> | undefined =
         hexToShipsIncludingFighters.get(hex);
@@ -95,11 +95,11 @@ export class HeroDimensionalAnchor extends AbstractRightClickCard {
           this._getNonFighterShips(ships);
         const nonBlockadedShips: Array<UnitPlastic> =
           this._getNonBlockadedShips(nonFighterShips, blockadingPlayerSlots);
-        nonFighterShips.push(...nonBlockadedShips);
+        allNonFighterShips.push(...nonBlockadedShips);
       }
     }
 
-    for (const nonFighterShip of nonFighterShips) {
+    for (const nonFighterShip of allNonFighterShips) {
       const obj: GameObject = nonFighterShip.getObj();
       const rollResult: number = Math.floor(Math.random() * 10) + 1;
       RightClickRift.applyRiftResult(obj, rollResult);

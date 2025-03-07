@@ -1,4 +1,4 @@
-import { GameObject, Player } from "@tabletop-playground/api";
+import { Card, GameObject, Player } from "@tabletop-playground/api";
 import { HexType, PlayerSlot } from "ttpg-darrell";
 import { MockCard, MockGameObject, MockPlayer } from "ttpg-mock";
 import { HeroDimensionalAnchor } from "./hero-dimensional-anchor";
@@ -136,4 +136,90 @@ it("_getNonBlockadedShips", () => {
     );
   expect(filtered.length).toBe(1);
   expect(filtered).toEqual([destroyerPlastic]);
+});
+
+it("_dimensionalAnchor", () => {
+  const playerslotActing: number = 12;
+  const playerSlotBlockading: number = 11;
+  const playerSlotCapturable: number = 10;
+
+  // Tear system.
+  MockGameObject.simple("tile.system:base/18");
+  MockGameObject.simple(
+    "token.attachment.system:pok/dimensional-tear.vuilraith"
+  );
+  MockGameObject.simple("unit:base/carrier", {
+    owningPlayerSlot: playerSlotBlockading,
+  });
+
+  // Adjacent system.
+  MockGameObject.simple("tile.system:base/19", {
+    position: TI4.hex.toPosition("<1,0,-1>"),
+  });
+  const yes: GameObject = MockGameObject.simple("unit:base/dreadnought", {
+    owningPlayerSlot: playerSlotCapturable,
+    position: TI4.hex.toPosition("<1,0,-1>"),
+  });
+  const no: GameObject = MockGameObject.simple("unit:base/destroyer", {
+    owningPlayerSlot: playerSlotBlockading,
+    position: TI4.hex.toPosition("<1,0,-1>"),
+  });
+
+  const hero = new HeroDimensionalAnchor();
+
+  // Check intermediate state.
+  {
+    const dimensionalTearHexes: Set<HexType> =
+      hero._getDimensionalTearHexes(true); // include Nekro
+    expect(Array.from(dimensionalTearHexes)).toEqual(["<0,0,0>"]);
+
+    const inAndAdjacentHexes: Set<HexType> = hero._getInAndAdjacentHexes(
+      dimensionalTearHexes,
+      playerslotActing
+    );
+    expect(Array.from(inAndAdjacentHexes)).toEqual(["<0,0,0>", "<1,0,-1>"]);
+
+    const blockadableHexes: Set<HexType> = hero._getDimensionalTearHexes(false); // exclude Nekro
+    expect(Array.from(blockadableHexes)).toEqual(["<0,0,0>"]);
+
+    const hexToShipsIncludingFighters: Map<
+      HexType,
+      Array<UnitPlastic>
+    > = hero._getHexToShipsIncludingFighters();
+
+    const blockadingShips: Array<UnitPlastic> | undefined =
+      hexToShipsIncludingFighters.get("<0,0,0>");
+    if (!blockadingShips) {
+      throw new Error("No blockading");
+    }
+    const blockading: Set<PlayerSlot> = hero._getShipOwners(blockadingShips);
+    expect(Array.from(blockading)).toEqual([playerSlotBlockading]);
+
+    const adjShips: Array<UnitPlastic> | undefined =
+      hexToShipsIncludingFighters.get("<1,0,-1>");
+    if (!adjShips) {
+      throw new Error("No adjacent");
+    }
+    const nonFighterShips: Array<UnitPlastic> =
+      hero._getNonFighterShips(adjShips);
+    expect(nonFighterShips.map((unitPlastic) => unitPlastic.getUnit())).toEqual(
+      ["dreadnought", "destroyer"]
+    );
+    const nonBlockadedShips: Array<UnitPlastic> = hero._getNonBlockadedShips(
+      nonFighterShips,
+      blockading
+    );
+    expect(
+      nonBlockadedShips.map((unitPlastic) => unitPlastic.getUnit())
+    ).toEqual(["dreadnought"]);
+  }
+
+  const card: Card = MockCard.simple(
+    "card.leader.hero:pok/it-feeds-on-carrion"
+  );
+  const playerSlot: number = no.getOwningPlayerSlot();
+  hero._dimensionalAnchor(card, playerSlot);
+
+  expect(no.getUIs().length).toBe(0);
+  expect(yes.getUIs().length).toBe(1);
 });
