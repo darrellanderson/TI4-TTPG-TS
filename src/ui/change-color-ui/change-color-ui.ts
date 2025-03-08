@@ -46,9 +46,9 @@ export class ChangeColorUI extends AbstractUI {
     TI4.playerSeats.getAllSeats().forEach((playerSeat) => {
       const playerSlot: number = playerSeat.playerSlot;
       if (playerSlot !== targetPlayerSlot) {
-        const colorName: string =
+        const inUseColorName: string =
           TI4.playerColor.getSlotColorNameOrThrow(playerSlot);
-        inUseColorNames.add(colorName);
+        inUseColorNames.add(inUseColorName);
       }
     });
     const isEnabled: boolean = !inUseColorNames.has(colorName);

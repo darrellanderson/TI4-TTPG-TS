@@ -61,11 +61,13 @@ it("click buttons", () => {
   let eventCombatRollType: CombatRollType | undefined = undefined;
   let eventPlanetName: string | undefined = undefined;
   let eventPlayer: Player | undefined = undefined;
-  TI4.events.onCombatClicked.add((combatRollType, planetName, player) => {
-    eventCombatRollType = combatRollType;
-    eventPlanetName = planetName;
-    eventPlayer = player;
-  });
+  TI4.events.onCombatClicked.add(
+    (combatRollType, planetName, clickingPlayer) => {
+      eventCombatRollType = combatRollType;
+      eventPlanetName = planetName;
+      eventPlayer = clickingPlayer;
+    }
+  );
   expect(eventCombatRollType).toBeUndefined();
   expect(eventPlanetName).toBeUndefined();
   expect(eventPlayer).toBeUndefined();

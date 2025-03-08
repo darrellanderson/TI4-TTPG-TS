@@ -71,12 +71,12 @@ export class MapStringLoad {
     const result: Map<number, Array<System>> = new Map();
     for (const system of systems) {
       const tileNumber = system.getSystemTileNumber();
-      let systems: Array<System> | undefined = result.get(tileNumber);
-      if (!systems) {
-        systems = [];
-        result.set(tileNumber, systems);
+      let tileSystems: Array<System> | undefined = result.get(tileNumber);
+      if (!tileSystems) {
+        tileSystems = [];
+        result.set(tileNumber, tileSystems);
       }
-      systems.push(system);
+      tileSystems.push(system);
     }
     return result;
   }

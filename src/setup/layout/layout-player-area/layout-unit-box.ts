@@ -58,16 +58,16 @@ export class LayoutUnitBox {
     if (container instanceof Container) {
       const above: Vector = container.getPosition().add([0, 0, 10]);
       for (let i = 0; i < componentCount; i++) {
-        const unit: GameObject = Spawn.spawnOrThrow(unitNsid, above);
-        unit.setOwningPlayerSlot(playerSlot);
-        unit.setPrimaryColor(objColor);
-        tags = unit.getTags();
+        const platic: GameObject = Spawn.spawnOrThrow(unitNsid, above);
+        platic.setOwningPlayerSlot(playerSlot);
+        platic.setPrimaryColor(objColor);
+        tags = platic.getTags();
         if (!tags.includes(unitTag)) {
           tags.push(unitTag);
-          unit.setTags(tags);
+          platic.setTags(tags);
         }
 
-        container.insert([unit]);
+        container.insert([platic]);
       }
     }
 

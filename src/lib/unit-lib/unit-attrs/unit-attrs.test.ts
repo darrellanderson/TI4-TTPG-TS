@@ -68,7 +68,7 @@ it("static sortByOverrideOrder", () => {
     { name: "no-nsid-name", unit: "carrier" },
   ];
   const sorted = UnitAttrs.sortByOverrideOrder(attrs);
-  const nsidNames = sorted.map((attrs) => attrs.nsidName);
+  const nsidNames = sorted.map((thisAttrs) => thisAttrs.nsidName);
   expect(nsidNames).toEqual([undefined, undefined, "a", "b", "c"]);
 });
 

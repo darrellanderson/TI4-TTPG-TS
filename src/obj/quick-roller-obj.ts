@@ -107,8 +107,11 @@ class QuickRoller {
   onClickedRoll(player: Player) {
     if (!this._diceGroupParams) {
       this._diceGroupParams = {
-        callback: (diceResults: Array<DiceResult>, player: Player): void => {
-          this.onRollFinished(diceResults, player);
+        callback: (
+          diceResults: Array<DiceResult>,
+          rollingPlayer: Player
+        ): void => {
+          this.onRollFinished(diceResults, rollingPlayer);
         },
         diceParams: [],
         player,

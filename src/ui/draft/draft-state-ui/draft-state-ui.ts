@@ -342,12 +342,12 @@ export class DraftStateUI extends AbstractUI {
         button.setOwningPlayerSlot(playerSlot);
       });
 
-      const mapStringAndHexToPlayerName: MapStringAndHexToPlayerName =
+      const newMapStringAndHexToPlayerName: MapStringAndHexToPlayerName =
         DraftToMapString.fromDraftState(draftState);
-      const mapString: string = mapStringAndHexToPlayerName.mapString;
-      const hexToLabel: Map<HexType, string> =
-        mapStringAndHexToPlayerName.hexToPlayerName;
-      mapUi.update(mapString, hexToLabel);
+      const newMapString: string = newMapStringAndHexToPlayerName.mapString;
+      const newHexToLabel: Map<HexType, string> =
+        newMapStringAndHexToPlayerName.hexToPlayerName;
+      mapUi.update(newMapString, newHexToLabel);
 
       finishDraftButton.getButton().setEnabled(draftState.isComplete());
     };

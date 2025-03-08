@@ -212,7 +212,8 @@ export class DraftState {
       return undefined;
     }
     const index: number = this._data.factionIndexToPlayerSlot.findIndex(
-      (playerSlot: number | null): boolean => playerSlot === playerSlot
+      (factionPlayerSlot: number | null): boolean =>
+        factionPlayerSlot === playerSlot
     );
     if (index < 0) {
       return undefined;

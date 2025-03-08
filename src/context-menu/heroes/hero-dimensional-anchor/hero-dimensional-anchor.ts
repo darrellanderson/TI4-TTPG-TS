@@ -163,7 +163,7 @@ export class HeroDimensionalAnchor extends AbstractRightClickCard {
    * @returns
    */
   _getHexToShipsIncludingFighters(): Map<HexType, Array<UnitPlastic>> {
-    const hexToNonFighterShips: Map<HexType, Array<UnitPlastic>> = new Map();
+    const hexToShips: Map<HexType, Array<UnitPlastic>> = new Map();
     const unitAttrsSet: UnitAttrsSet =
       TI4.unitAttrsRegistry.defaultUnitAttrsSet();
     const unitPlastics: Array<UnitPlastic> = UnitPlastic.getAll();
@@ -173,16 +173,15 @@ export class HeroDimensionalAnchor extends AbstractRightClickCard {
       );
       if (unitAttrs && unitAttrs.isShip()) {
         const hex: HexType = unitPlastic.getHex();
-        let unitPlastics: Array<UnitPlastic> | undefined =
-          hexToNonFighterShips.get(hex);
-        if (!unitPlastics) {
-          unitPlastics = [];
-          hexToNonFighterShips.set(hex, unitPlastics);
+        let ships: Array<UnitPlastic> | undefined = hexToShips.get(hex);
+        if (!ships) {
+          ships = [];
+          hexToShips.set(hex, ships);
         }
-        unitPlastics.push(unitPlastic);
+        ships.push(unitPlastic);
       }
     }
-    return hexToNonFighterShips;
+    return hexToShips;
   }
 
   _getShipOwners(ships: Array<UnitPlastic>): Set<PlayerSlot> {

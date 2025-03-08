@@ -126,10 +126,10 @@ export class DrawHyperlanes implements IGlobal {
       const line: DrawingLine = DisplayPDSAdjacency._getLine(simplePath);
       // Convert to local positions.
       line.points = line.points.map((point: Vector): Vector => {
-        const pos: Vector = obj.worldPositionToLocal(point);
+        const localPos: Vector = obj.worldPositionToLocal(point);
         const z = (isFaceUp ? 1 : -1) * (extent.z + 0.05);
-        pos.z = z;
-        return pos;
+        localPos.z = z;
+        return localPos;
       });
       if (!isFaceUp) {
         line.normals = [new Vector(0, 0, -1)];

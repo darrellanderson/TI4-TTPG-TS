@@ -121,20 +121,20 @@ export class UnitPlastic {
     const hexToEntries: Map<HexType, Array<UnitPlastic>> = new Map();
     for (const entry of entries) {
       const hex: HexType = entry._hex;
-      let entries: Array<UnitPlastic> | undefined = hexToEntries.get(hex);
-      if (!entries) {
-        entries = [];
-        hexToEntries.set(hex, entries);
+      let hexEntries: Array<UnitPlastic> | undefined = hexToEntries.get(hex);
+      if (!hexEntries) {
+        hexEntries = [];
+        hexToEntries.set(hex, hexEntries);
       }
-      entries.push(entry);
+      hexEntries.push(entry);
     }
-    for (const entries of hexToEntries.values()) {
-      for (const entry of entries) {
+    for (const hexEntries of hexToEntries.values()) {
+      for (const entry of hexEntries) {
         if (entry._owningPlayerSlot < 0) {
           let bestPlayerSlot: number = -1;
           let bestDSq: number = Number.MAX_VALUE;
           const p0: Vector = entry._pos;
-          for (const other of entries) {
+          for (const other of hexEntries) {
             if (other._owningPlayerSlot >= 0) {
               const p1: Vector = other._pos;
               const dSq: number = p0.subtract(p1).magnitudeSquared();

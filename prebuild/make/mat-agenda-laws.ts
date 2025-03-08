@@ -18,13 +18,16 @@ const H_WORLD: number = 6.3;
 const SPACING: number = Math.round((0.5 * H) / H_WORLD);
 const DECK_EXTRA_GAP: number = SPACING; // gap + spacing on both sides
 
-function labeledCell(labelText: string): ZColCell {
+function labeledCell(
+  labelText: string,
+  extraTags: Array<string> = []
+): ZColCell {
   const slot: ZImageCell = {
     type: "ImageCell",
     width: W,
     height: H,
     imageFile: `prebuild/mat/slot/slot-portrait.jpg`,
-    snapPoints: [{ tags: ["card-agenda"] }],
+    snapPoints: [{ tags: ["card-agenda", ...extraTags] }],
   };
   const symbol: ZImageCell = {
     type: "ImageCell",
@@ -75,7 +78,7 @@ function objectiveRow(): ZRowCell {
     type: "RowCell",
     spacing: SPACING,
     children: [
-      labeledCell("Agenda"),
+      labeledCell("Agenda", ["active-agenda"]),
       gapCell(),
       labeledCell("Laws"),
       labeledCell(""),

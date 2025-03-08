@@ -1304,8 +1304,8 @@ it("opponent has anonymous units", () => {
 
   const rollingPlayerSlots: Array<number> = [];
   TI4.events.onCombatResult.add(
-    (combatRoll: CombatRoll, _diceResults: Array<DiceResult>): void => {
-      rollingPlayerSlots.push(combatRoll.self.playerSlot);
+    (resultCombatRoll: CombatRoll, _diceResults: Array<DiceResult>): void => {
+      rollingPlayerSlots.push(resultCombatRoll.self.playerSlot);
     }
   );
   expect(rollingPlayerSlots).toEqual([]);

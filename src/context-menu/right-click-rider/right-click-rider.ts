@@ -55,9 +55,11 @@ export class RightClickRider implements IGlobal {
     });
     TI4.events.onAgendaStateCreated.add((agendaState: AgendaState): void => {
       this._agendaState = agendaState;
-      agendaState.onAgendaStateChanged.add((agendaState: AgendaState): void => {
-        this._onAgendaStateChange(agendaState);
-      });
+      agendaState.onAgendaStateChanged.add(
+        (_agendaState: AgendaState): void => {
+          this._onAgendaStateChange(agendaState);
+        }
+      );
     });
     OnCardBecameSingletonOrDeck.onSingletonCardCreated.add(
       (obj: GameObject): void => {

@@ -294,8 +294,8 @@ it("_separateAnomalies", () => {
 
 it("_permutator", () => {
   const slice: Array<number> = [19, 20];
-  const inspector = (slice: Array<number>): boolean => {
-    return slice[0] === 20;
+  const inspector = (inspectSlice: Array<number>): boolean => {
+    return inspectSlice[0] === 20;
   };
 
   const generateSlices = new GenerateSlices({

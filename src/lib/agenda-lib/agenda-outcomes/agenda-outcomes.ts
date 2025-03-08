@@ -52,8 +52,8 @@ export class AgendaOutcomes {
     }
 
     if (outcomeType === "other") {
-      for (let index = 0; index < 8; index++) {
-        agendaState.setOutcomeName(index, "");
+      for (let i = 0; i < 8; i++) {
+        agendaState.setOutcomeName(i, "");
       }
       return true;
     }

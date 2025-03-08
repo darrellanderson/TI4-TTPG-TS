@@ -115,9 +115,9 @@ export class DisplayPDSAdjacency implements IGlobal {
 
       // Convert to local positions.
       line.points = line.points.map((point: Vector): Vector => {
-        const pos: Vector = obj.worldPositionToLocal(point);
-        pos.z = 0; // same plane as the PDS.
-        return pos;
+        const localPos: Vector = obj.worldPositionToLocal(point);
+        localPos.z = 0; // same plane as the PDS.
+        return localPos;
       });
 
       obj.addDrawingLine(line);

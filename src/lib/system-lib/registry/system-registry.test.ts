@@ -260,11 +260,11 @@ it("validate NSIDs appear in assets/Templates", () => {
     }
     const source: string = parsed.sourceParts.join("-");
     for (const planet of schema.planets ?? []) {
-      const nsid: string = `card.planet:${source}/${planet.nsidName}`;
-      nsids.push(nsid);
+      const cardNsid: string = `card.planet:${source}/${planet.nsidName}`;
+      nsids.push(cardNsid);
       if (planet.legendaryNsidName) {
-        const nsid: string = `card.legendary-planet:${source}/${planet.legendaryNsidName}`;
-        nsids.push(nsid);
+        const legendaryNsid: string = `card.legendary-planet:${source}/${planet.legendaryNsidName}`;
+        nsids.push(legendaryNsid);
       }
     }
   }

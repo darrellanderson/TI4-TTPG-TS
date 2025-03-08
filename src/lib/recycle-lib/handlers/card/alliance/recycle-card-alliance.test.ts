@@ -67,9 +67,9 @@ it("recycle", () => {
   expect(recycle.canRecycle(card)).toBe(true);
   expect(recycle.recycle(card)).toBe(true);
 
-  expect(cardHolder.getCards().map((card) => NSID.get(card))).toEqual([
-    "card.alliance:my-source/my-faction",
-  ]);
+  expect(
+    cardHolder.getCards().map((inHolderCard) => NSID.get(inHolderCard))
+  ).toEqual(["card.alliance:my-source/my-faction"]);
 });
 
 it("recycle (not a card)", () => {

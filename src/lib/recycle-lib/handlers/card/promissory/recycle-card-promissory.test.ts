@@ -62,9 +62,9 @@ it("recycle", () => {
   expect(recycle.canRecycle(card)).toBe(true);
   expect(recycle.recycle(card)).toBe(true);
 
-  expect(cardHolder.getCards().map((card) => NSID.get(card))).toEqual([
-    "card.promissory:my-source/my-promissory.omega",
-  ]);
+  expect(
+    cardHolder.getCards().map((inHolderCard) => NSID.get(inHolderCard))
+  ).toEqual(["card.promissory:my-source/my-promissory.omega"]);
 });
 
 it("recycle (not a card)", () => {

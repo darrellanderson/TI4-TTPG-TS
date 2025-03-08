@@ -16,9 +16,9 @@ function go() {
   const scale: number = 1;
   const mapUi: AbstractUI = new MapUI(mapString, hexToLabel, scale);
 
-  const createZoomedUI: CreateZoomedUiType = (scale: number): AbstractUI => {
-    console.log("createZoomedUI", scale);
-    return new MapUI(mapString, hexToLabel, scale * 3);
+  const createZoomedUI: CreateZoomedUiType = (newScale: number): AbstractUI => {
+    console.log("createZoomedUI", newScale);
+    return new MapUI(mapString, hexToLabel, newScale * 3);
   };
 
   const zoomableUi: AbstractUI = new ZoomableUI(mapUi, scale, createZoomedUI);

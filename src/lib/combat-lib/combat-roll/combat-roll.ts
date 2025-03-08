@@ -719,12 +719,13 @@ export class CombatRoll {
 
       if (this.opponent.playerSlot === 19) {
         // Opponent is anonymous units, roll for them.
-        CombatRoll.createCooked({
+        const anonRoll: CombatRoll = CombatRoll.createCooked({
           rollType: this._params.rollType,
           hex: this._params.hex,
           activatingPlayerSlot: this._params.activatingPlayerSlot,
           rollingPlayerSlot: 19,
-        }).roll(player, position);
+        });
+        anonRoll.roll(player, position);
       }
     };
     const diceParams: Array<DiceParams> = this.createDiceParamsArray();

@@ -50,7 +50,10 @@ export class AgendaAvailableVotes {
       const nsid: string = NSID.get(obj);
       if (nsids.includes(nsid) && obj instanceof Card) {
         const allowFaceDown: boolean = false;
-        const rejectSnapPointTags: Array<string> = ["discard-agenda"];
+        const rejectSnapPointTags: Array<string> = [
+          "discard-agenda",
+          "active-agenda",
+        ];
         if (
           this._cardUtil.isLooseCard(obj, allowFaceDown, rejectSnapPointTags)
         ) {

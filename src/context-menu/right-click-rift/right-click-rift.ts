@@ -71,7 +71,7 @@ export class RightClickRift implements IGlobal {
     const hex: HexType = TI4.hex.fromPosition(riftObj.getPosition());
     const unitAttrsSet: UnitAttrsSet =
       TI4.unitAttrsRegistry.defaultUnitAttrsSet();
-    const plastic: Array<UnitPlastic> = UnitPlastic.getAll().filter(
+    const plastics: Array<UnitPlastic> = UnitPlastic.getAll().filter(
       (plastic) => {
         const isHex: boolean = plastic.getHex() === hex;
         if (!isHex) {
@@ -83,8 +83,8 @@ export class RightClickRift implements IGlobal {
         return unitAttrs !== undefined && unitAttrs.isShip();
       }
     );
-    UnitPlastic.assignOwners(plastic);
-    return plastic.map((plastic) => plastic.getObj());
+    UnitPlastic.assignOwners(plastics);
+    return plastics.map((plastic) => plastic.getObj());
   }
 
   static isRiftSystemTile(obj: GameObject): boolean {

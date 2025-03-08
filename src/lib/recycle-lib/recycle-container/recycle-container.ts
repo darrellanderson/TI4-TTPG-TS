@@ -52,13 +52,13 @@ GarbageContainer.onRecycled.add(
         reportPending = false;
         const names: Array<string> = Array.from(nameToCount.keys()).sort();
         const items: Array<string> = names.map((name: string) => {
-          const count: number | undefined = nameToCount.get(name);
+          const newCount: number | undefined = nameToCount.get(name);
           let result: string = "";
-          if (count !== undefined) {
-            if (count === 1) {
+          if (newCount !== undefined) {
+            if (newCount === 1) {
               result = name;
             } else {
-              result = `${name} (${count})`;
+              result = `${name} (${newCount})`;
             }
           }
           return result;
