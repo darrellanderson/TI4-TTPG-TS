@@ -1,13 +1,15 @@
 import { Player } from "@tabletop-playground/api";
-import { CombatUISpace } from "./combat-ui-space";
 import {
+  clickAll,
   MockButton,
   MockCardHolder,
   MockGameObject,
   MockPlayer,
 } from "ttpg-mock";
 import { PlayerSlot } from "ttpg-darrell";
-import { Faction } from "lib/faction-lib/faction/faction";
+import { AbstractUI } from "../../abstract-ui/abtract-ui";
+import { CombatUISpace } from "./combat-ui-space";
+import { Faction } from "../../../lib/faction-lib/faction/faction";
 
 it("consttructor/getters/destroy", () => {
   const scale: number = 1;
@@ -37,7 +39,49 @@ it("constructor (faction with ambush)", () => {
 
   const scale: number = 1;
   const playerSlot: PlayerSlot = 10;
-  new CombatUISpace(scale, playerSlot);
+  const ui: AbstractUI = new CombatUISpace(scale, playerSlot);
+
+  let ambushCount: number = 0;
+  TI4.events.onCombatClicked.add(
+    (combatType: string, _planetName: string | undefined, _player: Player) => {
+      if (combatType === "ambush") {
+        ambushCount++;
+      }
+    }
+  );
+  clickAll(ui.getWidget());
+  expect(ambushCount).toEqual(1);
+});
+
+it("constructor (faction without ambush)", () => {
+  new MockCardHolder({ position: [10, 0, 0], owningPlayerSlot: 10 });
+  new MockGameObject({
+    position: [10, 0, 0],
+    templateMetadata: "sheet.faction:base/arborec",
+  });
+
+  const faction: Faction | undefined = TI4.factionRegistry.getByPlayerSlot(10);
+  if (!faction) {
+    throw new Error("faction is undefined");
+  }
+  expect(
+    faction.getAbilityNsids().includes("faction-ability:base/ambush")
+  ).toBe(false);
+
+  const scale: number = 1;
+  const playerSlot: PlayerSlot = 10;
+  const ui: AbstractUI = new CombatUISpace(scale, playerSlot);
+
+  let ambushCount: number = 0;
+  TI4.events.onCombatClicked.add(
+    (combatType: string, _planetName: string | undefined, _player: Player) => {
+      if (combatType === "ambush") {
+        ambushCount++;
+      }
+    }
+  );
+  clickAll(ui.getWidget());
+  expect(ambushCount).toEqual(0);
 });
 
 it("click buttons", () => {
