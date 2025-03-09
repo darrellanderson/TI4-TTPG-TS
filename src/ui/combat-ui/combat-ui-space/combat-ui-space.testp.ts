@@ -4,12 +4,14 @@ import {
   Widget,
   world,
 } from "@tabletop-playground/api";
+import { PlayerSlot } from "ttpg-darrell";
 import { AbstractUI } from "../../abstract-ui/abtract-ui";
 import { CombatUISpace } from "./combat-ui-space";
 
 function go() {
   const scale: number = 1;
-  const abstractUi: AbstractUI = new CombatUISpace(scale);
+  const playerSlot: PlayerSlot = 10;
+  const abstractUi: AbstractUI = new CombatUISpace(scale, playerSlot);
 
   const widget: Widget = abstractUi.getWidget();
 
