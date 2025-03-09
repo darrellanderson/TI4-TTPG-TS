@@ -1,10 +1,11 @@
 import { Button, Player } from "@tabletop-playground/api";
+import { PlayerSlot, ThrottleClickHandler } from "ttpg-darrell";
 
 import { AbstractUI } from "../../abstract-ui/abtract-ui";
 import { ButtonUI } from "../../button-ui/button-ui";
 import { CONFIG } from "../../config/config";
 import { VerticalUIBuilder } from "../../panel/vertical-ui-builder";
-import { ThrottleClickHandler } from "ttpg-darrell";
+import { Faction } from "lib/faction-lib/faction/faction";
 
 export class CombatUISpace extends AbstractUI {
   private readonly _spaceCannonOffense: Button;
@@ -12,7 +13,7 @@ export class CombatUISpace extends AbstractUI {
   private readonly _antifighterBarrage: Button;
   private readonly _spaceCombat: Button;
 
-  constructor(scale: number) {
+  constructor(scale: number, playerSlot: PlayerSlot) {
     const planetName: string | undefined = undefined; // space
 
     const spaceCannonOffenseUi: ButtonUI = new ButtonUI(scale);
@@ -55,14 +56,24 @@ export class CombatUISpace extends AbstractUI {
       }).get()
     );
 
+    const uis: Array<AbstractUI> = [
+      spaceCannonOffenseUi,
+      ambushUi,
+      antifighterBarrageUi,
+      spaceCombatUi,
+    ];
+    const faction: Faction | undefined =
+      TI4.factionRegistry.getByPlayerSlot(playerSlot);
+    if (
+      !faction ||
+      !faction.getAbilityNsids().includes("faction-ability:base/ambush")
+    ) {
+      uis.splice(1, 1); // prune ambush
+    }
+
     const abstractUi: AbstractUI = new VerticalUIBuilder()
       .setSpacing(CONFIG.SPACING)
-      .addUIs([
-        spaceCannonOffenseUi,
-        ambushUi,
-        antifighterBarrageUi,
-        spaceCombatUi,
-      ])
+      .addUIs(uis)
       .build();
 
     super(abstractUi.getWidget(), abstractUi.getSize());

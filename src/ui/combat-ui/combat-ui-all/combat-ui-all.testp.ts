@@ -6,10 +6,12 @@ import {
 } from "@tabletop-playground/api";
 import { AbstractUI } from "../../abstract-ui/abtract-ui";
 import { CombatUIAll } from "./combat-ui-all";
+import { PlayerSlot } from "ttpg-darrell";
 
 function go() {
   const scale: number = 1;
-  const abstractUi: AbstractUI = new CombatUIAll(scale);
+  const playerSlot: PlayerSlot = 10;
+  const abstractUi: AbstractUI = new CombatUIAll(scale, playerSlot);
 
   const widget: Widget = abstractUi.getWidget();
 

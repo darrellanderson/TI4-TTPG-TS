@@ -1,9 +1,18 @@
 import { Player } from "@tabletop-playground/api";
 import { CombatUISpace } from "./combat-ui-space";
-import { MockButton, MockPlayer } from "ttpg-mock";
+import {
+  MockButton,
+  MockCardHolder,
+  MockGameObject,
+  MockPlayer,
+} from "ttpg-mock";
+import { PlayerSlot } from "ttpg-darrell";
+import { Faction } from "lib/faction-lib/faction/faction";
 
 it("consttructor/getters/destroy", () => {
-  const combatUiSpace: CombatUISpace = new CombatUISpace(1);
+  const scale: number = 1;
+  const playerSlot: PlayerSlot = 10;
+  const combatUiSpace: CombatUISpace = new CombatUISpace(scale, playerSlot);
   expect(combatUiSpace.getSpaceCannonOffense()).toBeDefined();
   expect(combatUiSpace.getAmbush()).toBeDefined();
   expect(combatUiSpace.getAntifighterBarrage()).toBeDefined();
@@ -11,8 +20,30 @@ it("consttructor/getters/destroy", () => {
   combatUiSpace.destroy();
 });
 
+it("constructor (faction with ambush)", () => {
+  new MockCardHolder({ position: [10, 0, 0], owningPlayerSlot: 10 });
+  new MockGameObject({
+    position: [10, 0, 0],
+    templateMetadata: "sheet.faction:base/mentak",
+  });
+
+  const faction: Faction | undefined = TI4.factionRegistry.getByPlayerSlot(10);
+  if (!faction) {
+    throw new Error("faction is undefined");
+  }
+  expect(
+    faction.getAbilityNsids().includes("faction-ability:base/ambush")
+  ).toBe(true);
+
+  const scale: number = 1;
+  const playerSlot: PlayerSlot = 10;
+  new CombatUISpace(scale, playerSlot);
+});
+
 it("click buttons", () => {
-  const combatUiSpace: CombatUISpace = new CombatUISpace(1);
+  const scale: number = 1;
+  const playerSlot: PlayerSlot = 10;
+  const combatUiSpace: CombatUISpace = new CombatUISpace(scale, playerSlot);
 
   let eventCombatType: string | undefined = undefined;
   let eventPlanetName: string | undefined = undefined;

@@ -1,3 +1,4 @@
+import { PlayerSlot } from "ttpg-darrell";
 import { AbstractUI } from "../../abstract-ui/abtract-ui";
 import { CombatUISpace } from "../combat-ui-space/combat-ui-space";
 import { CombatUIPlanet } from "../combat-ui-planet/combat-ui-planet";
@@ -11,8 +12,8 @@ export class CombatUIAllSimple extends AbstractUI {
   private readonly _combatUiSpace: CombatUISpace;
   private readonly _combatUiPlanets: Array<CombatUIPlanet> = [];
 
-  constructor(scale: number) {
-    const combatUiSpace: CombatUISpace = new CombatUISpace(scale);
+  constructor(scale: number, playerSlot: PlayerSlot) {
+    const combatUiSpace: CombatUISpace = new CombatUISpace(scale, playerSlot);
     const combatUiPlanets: Array<CombatUIPlanet> = [];
     for (let i = 0; i < 3; i++) {
       combatUiPlanets.push(new CombatUIPlanet(scale, i));

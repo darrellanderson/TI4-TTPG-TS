@@ -24,7 +24,7 @@ export class ToggleCombatWindow implements IGlobal {
     const createAbstractUi: CreateAbstractUIType = (
       params: CreateAbstractUIParams
     ): AbstractUI => {
-      return new CombatUIAllSimple(params.scale);
+      return new CombatUIAllSimple(params.scale, params.playerSlot);
     };
     const namespaceId: NamespaceId | undefined = undefined;
     const windowTitle: string = "Combat";

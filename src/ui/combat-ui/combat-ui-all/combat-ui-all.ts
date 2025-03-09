@@ -10,6 +10,7 @@ import { CombatUIHex } from "../combat-ui-hex/combat-ui-hex";
 import { CONFIG } from "../../config/config";
 import { HorizontalUIBuilder } from "../../panel/horizontal-ui-builder";
 import { VerticalUIBuilder } from "../../panel/vertical-ui-builder";
+import { PlayerSlot } from "ttpg-darrell";
 
 /**
  * space | hex
@@ -20,8 +21,8 @@ export class CombatUIAll extends AbstractUI {
   private readonly _combatUiPlanets: Array<CombatUIPlanet> = [];
   private readonly _combatUiHex: CombatUIHex;
 
-  constructor(scale: number) {
-    const combatUiSpace: CombatUISpace = new CombatUISpace(scale);
+  constructor(scale: number, playerSlot: PlayerSlot) {
+    const combatUiSpace: CombatUISpace = new CombatUISpace(scale, playerSlot);
     const combatUiPlanets: Array<CombatUIPlanet> = [];
     for (let i = 0; i < 3; i++) {
       combatUiPlanets.push(new CombatUIPlanet(scale, i));

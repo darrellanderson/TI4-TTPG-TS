@@ -9,6 +9,7 @@ import {
 import { AbstractUI } from "../../abstract-ui/abtract-ui";
 import { CombatUIAllSimple } from "./combat-ui-all-simple";
 import { System } from "../../../lib/system-lib/system/system";
+import { PlayerSlot } from "ttpg-darrell";
 
 const player: Player | undefined = world.getAllPlayers()[0];
 
@@ -20,7 +21,8 @@ function go() {
   }
 
   const scale: number = 1;
-  const abstractUi: AbstractUI = new CombatUIAllSimple(scale);
+  const playerSlot: PlayerSlot = 10;
+  const abstractUi: AbstractUI = new CombatUIAllSimple(scale, playerSlot);
 
   if (!player) {
     throw new Error("player is undefined");
