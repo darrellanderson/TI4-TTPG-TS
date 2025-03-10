@@ -21,7 +21,7 @@ import { ParseLabels } from "../parse/parse-labels";
 import { ParseFactions } from "../parse/parse-factions";
 import { ResolveConflictsKeleres } from "../resolve-conflicts/resolve-conflicts-keleres";
 
-const DRAFT_NAMESPACE_ID: NamespaceId = "@ti4/draft";
+export const DRAFT_NAMESPACE_ID: NamespaceId = "@ti4/draft";
 
 export type DraftActivityStartParams = {
   namespaceId: NamespaceId;
