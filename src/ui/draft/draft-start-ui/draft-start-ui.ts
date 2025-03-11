@@ -2,6 +2,7 @@ import {
   LayoutBox,
   MultilineTextBox,
   Player,
+  Slider,
   Widget,
 } from "@tabletop-playground/api";
 import { Broadcast } from "ttpg-darrell";
@@ -25,6 +26,22 @@ export class DraftStartUI extends AbstractUI {
     numSlices: TI4.config.playerCount,
     numFactions: TI4.config.playerCount,
     config: "",
+  };
+
+  readonly _onSliceCountChanged = (
+    _slider: Slider,
+    _player: Player,
+    value: number
+  ): void => {
+    this._params.numSlices = value;
+  };
+
+  readonly _onFactionCountChanged = (
+    _slider: Slider,
+    _player: Player,
+    value: number
+  ): void => {
+    this._params.numFactions = value;
   };
 
   readonly _onTextCommitted = (
@@ -84,6 +101,10 @@ export class DraftStartUI extends AbstractUI {
     super(ui.getWidget(), ui.getSize());
 
     this._idraft = idraft;
+    numSlices.getSlider().setValue(this._params.numSlices);
+    numSlices.getSlider().onValueChanged.add(this._onSliceCountChanged);
+    numFactions.getSlider().setValue(this._params.numFactions);
+    numFactions.getSlider().onValueChanged.add(this._onFactionCountChanged);
     editText.onTextCommitted.add(this._onTextCommitted);
   }
 
