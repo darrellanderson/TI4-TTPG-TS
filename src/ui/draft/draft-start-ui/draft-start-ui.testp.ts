@@ -1,0 +1,36 @@
+import {
+  Border,
+  ScreenUIElement,
+  Widget,
+  world,
+} from "@tabletop-playground/api";
+import { DraftStartUI } from "./draft-start-ui";
+import { IDraft } from "../../../lib/draft-lib/drafts/idraft";
+import { Milty } from "../../../lib/draft-lib/drafts/milty";
+
+function _goDirect() {
+  const scale: number = 1;
+  const idraft: IDraft = new Milty();
+  const draftStartUi = new DraftStartUI(scale, idraft);
+  const widget: Widget = draftStartUi.getWidget();
+
+  const screenUI = new ScreenUIElement();
+  screenUI.positionX = 0.5;
+  screenUI.positionY = 0.5;
+  screenUI.relativePositionX = true;
+  screenUI.relativePositionY = true;
+
+  screenUI.width = draftStartUi.getSize().w;
+  screenUI.height = draftStartUi.getSize().h;
+  screenUI.relativeWidth = false;
+  screenUI.relativeHeight = false;
+
+  screenUI.anchorX = 0.5;
+  screenUI.anchorY = 0.5;
+
+  screenUI.widget = new Border().setChild(widget);
+
+  world.addScreenUI(screenUI);
+}
+
+setTimeout(_goDirect, 100);

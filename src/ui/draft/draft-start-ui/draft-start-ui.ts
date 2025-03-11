@@ -1,23 +1,26 @@
 import {
-  LayoutBox,
+  Button,
+  HorizontalAlignment,
   MultilineTextBox,
   Player,
   Slider,
-  Widget,
+  TextJustification,
 } from "@tabletop-playground/api";
-import { Broadcast } from "ttpg-darrell";
-import { AbstractUI, UI_SIZE } from "../../abstract-ui/abtract-ui";
+import { Broadcast, ThrottleClickHandler } from "ttpg-darrell";
+import { AbstractUI } from "../../abstract-ui/abtract-ui";
+import { ButtonUI } from "../../button-ui/button-ui";
 import { CONFIG } from "../../config/config";
 import {
   DRAFT_NAMESPACE_ID,
   DraftActivityStart,
   DraftActivityStartParams,
 } from "../../../lib/draft-lib/draft-activity-start/draft-activity-start";
+import { EditableUI } from "../../button-ui/editable-ui";
 import { HorizontalUIBuilder } from "../../panel/horizontal-ui-builder";
 import { IDraft } from "../../../lib/draft-lib/drafts/idraft";
 import { LabelUI } from "../../button-ui/label-ui";
-import { VerticalUIBuilder } from "../../panel/vertical-ui-builder";
 import { SliderWithValueUI } from "../../button-ui/slider-with-value-ui";
+import { VerticalUIBuilder } from "../../panel/vertical-ui-builder";
 
 export class DraftStartUI extends AbstractUI {
   private readonly _idraft: IDraft;
@@ -52,11 +55,20 @@ export class DraftStartUI extends AbstractUI {
     this._params.config = text;
   };
 
+  readonly _onStartButtonClicked = new ThrottleClickHandler<Button>(
+    (_button: Button, _player: Player) => {
+      this.startDraft();
+    }
+  ).get();
+
   constructor(scale: number, idraft: IDraft) {
     const playerCount: number = TI4.config.playerCount;
 
     const numSlicesLabel: LabelUI = new LabelUI(scale);
-    numSlicesLabel.getText().setText("Slice count:");
+    numSlicesLabel
+      .getText()
+      .setText("Slice count:")
+      .setJustification(TextJustification.Right);
     const numSlices: SliderWithValueUI = new SliderWithValueUI(scale);
     numSlices.getSlider().setMinValue(playerCount);
     numSlices.getSlider().setMaxValue(9);
@@ -66,7 +78,10 @@ export class DraftStartUI extends AbstractUI {
       .build();
 
     const numFactionsLabel: LabelUI = new LabelUI(scale);
-    numFactionsLabel.getText().setText("Faction count:");
+    numFactionsLabel
+      .getText()
+      .setText("Faction count:")
+      .setJustification(TextJustification.Right);
     const numFactions: SliderWithValueUI = new SliderWithValueUI(scale);
     numFactions.getSlider().setMinValue(playerCount);
     numFactions.getSlider().setMaxValue(9);
@@ -76,27 +91,28 @@ export class DraftStartUI extends AbstractUI {
       .build();
 
     const customConfigLabel: LabelUI = new LabelUI(scale);
-    customConfigLabel.getText().setText("Custom config:");
-    const editText: MultilineTextBox = new MultilineTextBox()
-      .setFontSize(CONFIG.FONT_SIZE * scale)
-      .setMaxLength(1000);
-    const textBoxSize: UI_SIZE = {
-      w: CONFIG.BUTTON_WIDTH * 2 * scale + CONFIG.SPACING * scale,
-      h: CONFIG.BUTTON_HEIGHT * scale,
-    };
-    const layoutBox: Widget = new LayoutBox()
-      .setChild(editText)
-      .setOverrideHeight(textBoxSize.h)
-      .setOverrideWidth(textBoxSize.w);
-    const textBoxUi: AbstractUI = new (class extends AbstractUI {
-      constructor() {
-        super(layoutBox, textBoxSize);
-      }
-    })();
+    customConfigLabel
+      .getText()
+      .setText("Custom config:")
+      .setJustification(TextJustification.Right);
+    const customConfig: EditableUI = new EditableUI(scale);
+    const customConfigPanel: AbstractUI = new HorizontalUIBuilder()
+      .setSpacing(CONFIG.SPACING * scale)
+      .addUIs([customConfigLabel, customConfig])
+      .build();
+
+    const startButton: ButtonUI = new ButtonUI(scale);
+    startButton.getButton().setText("Start Draft");
 
     const ui: AbstractUI = new VerticalUIBuilder()
       .setSpacing(CONFIG.SPACING * scale)
-      .addUIs([numSlicesPanel, numFactionsPanel, customConfigLabel, textBoxUi])
+      .setHorizontalAlignment(HorizontalAlignment.Center)
+      .addUIs([
+        numSlicesPanel,
+        numFactionsPanel,
+        customConfigPanel,
+        startButton,
+      ])
       .build();
     super(ui.getWidget(), ui.getSize());
 
@@ -105,7 +121,8 @@ export class DraftStartUI extends AbstractUI {
     numSlices.getSlider().onValueChanged.add(this._onSliceCountChanged);
     numFactions.getSlider().setValue(this._params.numFactions);
     numFactions.getSlider().onValueChanged.add(this._onFactionCountChanged);
-    editText.onTextCommitted.add(this._onTextCommitted);
+    customConfig.getEditText().onTextCommitted.add(this._onTextCommitted);
+    startButton.getButton().onClicked.add(this._onStartButtonClicked);
   }
 
   startDraft(): void {

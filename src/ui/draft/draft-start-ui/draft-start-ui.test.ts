@@ -1,5 +1,6 @@
 import { MultilineTextBox, Player } from "@tabletop-playground/api";
 import {
+  MockButton,
   MockCardHolder,
   MockGameObject,
   MockMultilineTextBox,
@@ -40,6 +41,15 @@ it("_onTextCommitted", () => {
   const player: Player = new MockPlayer();
   const text: string = "test";
   draftStartUI._onTextCommitted(textBox, player, text);
+});
+
+it("_onStartButtonClicked", () => {
+  const scale: number = 1;
+  const idraft: IDraft = new Milty();
+  const draftStartUI = new DraftStartUI(scale, idraft);
+  expect(() => {
+    draftStartUI._onStartButtonClicked(new MockButton(), new MockPlayer());
+  }).toThrow(); // need a lot of setup not to throw, exercise the click handler.
 });
 
 it("startDraft", () => {
