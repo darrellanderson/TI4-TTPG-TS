@@ -37,6 +37,10 @@ export const MILTY_SLICE_SHAPE_ALT: SliceShape = [
 ];
 
 export class Milty implements IDraft {
+  public getDraftName(): string {
+    return "Milty Draft";
+  }
+
   public getGenerateSlicesParams(): GenerateSlicesParams {
     return {
       sliceMakeup: MILTY_SLICE_MAKEUP,

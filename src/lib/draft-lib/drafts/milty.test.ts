@@ -6,6 +6,12 @@ it("constructor", () => {
   new Milty();
 });
 
+it("getDraftName", () => {
+  const milty = new Milty();
+  const draftName = milty.getDraftName();
+  expect(draftName).toEqual("Milty Draft");
+});
+
 it("getGenerateSlicesParams", () => {
   const milty = new Milty();
   const generateSlicesParams = milty.getGenerateSlicesParams();

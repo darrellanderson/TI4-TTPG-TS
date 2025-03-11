@@ -11,6 +11,10 @@ import {
 } from "./draft-activity-start";
 
 class MyDraft implements IDraft {
+  getDraftName(): string {
+    return "My Draft";
+  }
+
   getGenerateSlicesParams(): GenerateSlicesParams {
     return { sliceMakeup: ["high"], sliceShape: ["<0,0,0>", "<1,0,-1>"] };
   }
