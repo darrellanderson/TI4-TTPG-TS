@@ -7,6 +7,7 @@ import {
 } from "../../../lib/draft-lib/draft-activity-start/draft-activity-start";
 import { IDraft } from "../../../lib/draft-lib/drafts/idraft";
 import { VerticalUIBuilder } from "../../panel/vertical-ui-builder";
+import { HorizontalUIBuilder } from "ui/panel/horizontal-ui-builder";
 
 export class DraftStartUI extends AbstractUI {
   private readonly _idraft: IDraft;
