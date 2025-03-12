@@ -75,6 +75,7 @@ export class DraftStartUI extends AbstractUI {
     const numSlices: SliderWithValueUI = new SliderWithValueUI(scale);
     numSlices.getSlider().setMinValue(playerCount);
     numSlices.getSlider().setMaxValue(9);
+    numSlices.getSlider().setValue(params.numSlices);
     const numSlicesPanel: AbstractUI = new HorizontalUIBuilder()
       .setSpacing(CONFIG.SPACING * scale)
       .addUIs([numSlicesLabel, numSlices])
@@ -88,6 +89,7 @@ export class DraftStartUI extends AbstractUI {
     const numFactions: SliderWithValueUI = new SliderWithValueUI(scale);
     numFactions.getSlider().setMinValue(playerCount);
     numFactions.getSlider().setMaxValue(9);
+    numFactions.getSlider().setValue(params.numFactions);
     const numFactionsPanel: AbstractUI = new HorizontalUIBuilder()
       .setSpacing(CONFIG.SPACING * scale)
       .addUIs([numFactionsLabel, numFactions])
@@ -103,6 +105,7 @@ export class DraftStartUI extends AbstractUI {
       .setSpacing(CONFIG.SPACING * scale)
       .addUIs([customConfigLabel, customConfig])
       .build();
+    customConfig.getEditText().setText(params.config);
 
     const startButton: ButtonUI = new ButtonUI(scale);
     startButton.getButton().setText("Start Draft");
@@ -121,9 +124,7 @@ export class DraftStartUI extends AbstractUI {
 
     this._idraft = idraft;
     this._params = params;
-    numSlices.getSlider().setValue(this._params.numSlices);
     numSlices.getSlider().onValueChanged.add(this._onSliceCountChanged);
-    numFactions.getSlider().setValue(this._params.numFactions);
     numFactions.getSlider().onValueChanged.add(this._onFactionCountChanged);
     customConfig.getEditText().onTextCommitted.add(this._onTextCommitted);
     startButton.getButton().onClicked.add(this._onStartButtonClicked);
