@@ -6,7 +6,11 @@ import {
   Slider,
   TextJustification,
 } from "@tabletop-playground/api";
-import { Broadcast, ThrottleClickHandler } from "ttpg-darrell";
+import {
+  Broadcast,
+  ThrottleClickHandler,
+  TriggerableMulticastDelegate,
+} from "ttpg-darrell";
 import { AbstractUI } from "../../abstract-ui/abtract-ui";
 import { ButtonUI } from "../../button-ui/button-ui";
 import { CONFIG } from "../../config/config";
@@ -22,6 +26,10 @@ import { SliderWithValueUI } from "../../button-ui/slider-with-value-ui";
 import { VerticalUIBuilder } from "../../panel/vertical-ui-builder";
 
 export class DraftStartUI extends AbstractUI {
+  public readonly onDraftStarted = new TriggerableMulticastDelegate<
+    () => void
+  >();
+
   private readonly _idraft: IDraft;
   private readonly _params: DraftActivityStartParams;
 
@@ -51,6 +59,7 @@ export class DraftStartUI extends AbstractUI {
 
   readonly _onStartButtonClicked = new ThrottleClickHandler<Button>(
     (_button: Button, _player: Player) => {
+      this.onDraftStarted.trigger();
       this.startDraft();
     }
   ).get();

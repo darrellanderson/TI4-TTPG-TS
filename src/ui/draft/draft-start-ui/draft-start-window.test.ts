@@ -7,9 +7,18 @@ it("constructor", () => {
   new DraftStartWindow(idraft);
 });
 
+it("_onDraftStartedHandler", () => {
+  const idraft: IDraft = new Milty();
+  const draftStartWindow = new DraftStartWindow(idraft);
+  const playerSlot: number = 10;
+  draftStartWindow.createAndAttachWindow(playerSlot);
+  draftStartWindow._onDraftStartedHandler();
+});
+
 it("createAndAttachWindow", () => {
   const idraft: IDraft = new Milty();
   const draftStartWindow = new DraftStartWindow(idraft);
   const playerSlot: number = 10;
   draftStartWindow.createAndAttachWindow(playerSlot);
+  draftStartWindow.createAndAttachWindow(playerSlot); // again, close old window
 });

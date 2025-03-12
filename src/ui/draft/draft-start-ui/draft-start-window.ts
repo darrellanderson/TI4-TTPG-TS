@@ -13,6 +13,14 @@ import {
 
 export class DraftStartWindow {
   private readonly _idraft: IDraft;
+  private _window: Window | undefined = undefined;
+
+  readonly _onDraftStartedHandler = (): void => {
+    if (this._window) {
+      this._window.destroy();
+      this._window = undefined;
+    }
+  };
 
   // This is mutable, window UI can change it.
   // It is *not* persisted, no point using persistent window with it.
@@ -24,11 +32,13 @@ export class DraftStartWindow {
   };
 
   readonly _createAbstractUI: CreateAbstractUIType = (params): AbstractUI => {
-    return new DraftStartUI(
+    const draftStartUi: DraftStartUI = new DraftStartUI(
       params.scale,
       this._idraft,
       this._draftActivityStartParams
     );
+    draftStartUi.onDraftStarted.add(this._onDraftStartedHandler);
+    return draftStartUi;
   };
 
   constructor(idraft: IDraft) {
@@ -42,7 +52,12 @@ export class DraftStartWindow {
       namespaceId,
       "Draft Start"
     );
-    const window: Window = abstractWindow.createWindow([playerSlot]);
-    window.attach();
+
+    if (this._window) {
+      this._window.destroy();
+      this._window = undefined;
+    }
+    this._window = abstractWindow.createWindow([playerSlot]);
+    this._window.attach();
   }
 }
