@@ -11,7 +11,6 @@ import { AbstractUI } from "../../abstract-ui/abtract-ui";
 import { ButtonUI } from "../../button-ui/button-ui";
 import { CONFIG } from "../../config/config";
 import {
-  DRAFT_NAMESPACE_ID,
   DraftActivityStart,
   DraftActivityStartParams,
 } from "../../../lib/draft-lib/draft-activity-start/draft-activity-start";
@@ -24,12 +23,7 @@ import { VerticalUIBuilder } from "../../panel/vertical-ui-builder";
 
 export class DraftStartUI extends AbstractUI {
   private readonly _idraft: IDraft;
-  private readonly _params: DraftActivityStartParams = {
-    namespaceId: DRAFT_NAMESPACE_ID,
-    numSlices: TI4.config.playerCount,
-    numFactions: TI4.config.playerCount,
-    config: "",
-  };
+  private readonly _params: DraftActivityStartParams;
 
   readonly _onSliceCountChanged = (
     _slider: Slider,
@@ -61,7 +55,7 @@ export class DraftStartUI extends AbstractUI {
     }
   ).get();
 
-  constructor(scale: number, idraft: IDraft) {
+  constructor(scale: number, idraft: IDraft, params: DraftActivityStartParams) {
     const playerCount: number = TI4.config.playerCount;
 
     const numSlicesLabel: LabelUI = new LabelUI(scale);
@@ -117,6 +111,7 @@ export class DraftStartUI extends AbstractUI {
     super(ui.getWidget(), ui.getSize());
 
     this._idraft = idraft;
+    this._params = params;
     numSlices.getSlider().setValue(this._params.numSlices);
     numSlices.getSlider().onValueChanged.add(this._onSliceCountChanged);
     numFactions.getSlider().setValue(this._params.numFactions);

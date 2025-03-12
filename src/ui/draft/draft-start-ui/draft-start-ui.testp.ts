@@ -4,6 +4,7 @@ import {
   Widget,
   world,
 } from "@tabletop-playground/api";
+import { DraftActivityStartParams } from "../../../lib/draft-lib/draft-activity-start/draft-activity-start";
 import { DraftStartUI } from "./draft-start-ui";
 import { IDraft } from "../../../lib/draft-lib/drafts/idraft";
 import { Milty } from "../../../lib/draft-lib/drafts/milty";
@@ -11,7 +12,13 @@ import { Milty } from "../../../lib/draft-lib/drafts/milty";
 function _goDirect() {
   const scale: number = 1;
   const idraft: IDraft = new Milty();
-  const draftStartUi = new DraftStartUI(scale, idraft);
+  const params: DraftActivityStartParams = {
+    namespaceId: "@test/test",
+    numSlices: 2,
+    numFactions: 2,
+    config: "",
+  };
+  const draftStartUi = new DraftStartUI(scale, idraft, params);
   const widget: Widget = draftStartUi.getWidget();
 
   const screenUI = new ScreenUIElement();
