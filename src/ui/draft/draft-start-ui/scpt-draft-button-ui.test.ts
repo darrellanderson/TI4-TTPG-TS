@@ -1,31 +1,51 @@
 import { Button, Player } from "@tabletop-playground/api";
 import { clickAll, MockButton, MockPlayer } from "ttpg-mock";
-import { ScptDraftButtonUI, ScptDraftParams } from "./scpt-draft-button-ui";
-import { IDraft } from "../../../lib/draft-lib/drafts/idraft";
 import { Milty } from "../../../lib/draft-lib/drafts/milty";
+import { DRAFT_NAMESPACE_ID } from "../../../lib/draft-lib/draft-activity-start/draft-activity-start";
+import { ScptDraftButtonUI, ScptDraftParams } from "./scpt-draft-button-ui";
 
 it("constructor", () => {
   const scale = 1;
-  const params: ScptDraftParams = {
+  const scptDraftParams: ScptDraftParams = {
     label: "YEAR",
+    draft: new Milty(),
   };
-  new ScptDraftButtonUI(scale, params);
+  new ScptDraftButtonUI(scale, scptDraftParams);
 });
 
 it("clickAllButtons", () => {
-  const idraft: IDraft = new Milty();
-
   const scale = 1;
-  const params: ScptDraftParams = {
+  const scptDraftParams: ScptDraftParams = {
     label: "YEAR",
-    qual: idraft,
-    prelim: idraft,
-    semi: idraft,
-    final: idraft,
+    draft: new Milty(),
+    qual: {
+      namespaceId: DRAFT_NAMESPACE_ID,
+      numSlices: 6,
+      numFactions: 6,
+      config: "",
+    },
+    prelim: {
+      namespaceId: DRAFT_NAMESPACE_ID,
+      numSlices: 6,
+      numFactions: 6,
+      config: "",
+    },
+    semi: {
+      namespaceId: DRAFT_NAMESPACE_ID,
+      numSlices: 6,
+      numFactions: 6,
+      config: "",
+    },
+    final: {
+      namespaceId: DRAFT_NAMESPACE_ID,
+      numSlices: 6,
+      numFactions: 6,
+      config: "",
+    },
   };
   const scptDraftButtonUI: ScptDraftButtonUI = new ScptDraftButtonUI(
     scale,
-    params
+    scptDraftParams
   );
 
   // Click the "confirm" buttons.
@@ -35,8 +55,18 @@ it("clickAllButtons", () => {
   const button: Button = new MockButton();
   const player: Player = new MockPlayer();
 
-  scptDraftButtonUI._qualHandler(button, player);
-  scptDraftButtonUI._prelimHandler(button, player);
-  scptDraftButtonUI._semiHandler(button, player);
-  scptDraftButtonUI._finalHandler(button, player);
+  // These throw because systems are not set up.
+  // Exercise them to get to that point.
+  expect(() => {
+    scptDraftButtonUI._qualHandler(button, player);
+  }).toThrow();
+  expect(() => {
+    scptDraftButtonUI._prelimHandler(button, player);
+  }).toThrow();
+  expect(() => {
+    scptDraftButtonUI._semiHandler(button, player);
+  }).toThrow();
+  expect(() => {
+    scptDraftButtonUI._finalHandler(button, player);
+  }).toThrow();
 });

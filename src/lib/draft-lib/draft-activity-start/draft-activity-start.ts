@@ -20,6 +20,7 @@ import { ParseSlices } from "../parse/parse-slices";
 import { ParseLabels } from "../parse/parse-labels";
 import { ParseFactions } from "../parse/parse-factions";
 import { ResolveConflictsKeleres } from "../resolve-conflicts/resolve-conflicts-keleres";
+import { Rotator, Vector } from "@tabletop-playground/api";
 
 export const DRAFT_NAMESPACE_ID: NamespaceId = "@ti4/draft";
 
@@ -178,6 +179,32 @@ export class DraftActivityStart {
       windowTitle
     );
     abstractWindow.getMutableWindowParams().disableClose = true;
+
+    const playerSlotToTransform: {
+      [key: number]: {
+        pos: [x: number, y: number, z: number] | Vector;
+        rot: [pitch: number, yaw: number, roll: number] | Rotator;
+      };
+    } = {};
+    for (const playerSeat of TI4.playerSeats.getAllSeats()) {
+      const playerSlot: number = playerSeat.playerSlot;
+      const pos: Vector = playerSeat.cardHolder.getPosition().add([0, 0, 3]);
+      pos.x = pos.x * 0.75; // move toward middle
+      const rot: Rotator = new Rotator(0, 0, 0);
+      playerSlotToTransform[playerSlot] = {
+        pos,
+        rot,
+      };
+    }
+
+    abstractWindow.getMutableWindowParams().world = {
+      anchor: {
+        u: 0.5,
+        v: 0.5,
+      },
+      playerSlotToTransform,
+    };
+
     const window: Window = abstractWindow.createWindow();
     window.attach();
 

@@ -4,15 +4,24 @@ import {
   Widget,
   world,
 } from "@tabletop-playground/api";
+import { AbstractUI } from "../../abstract-ui/abtract-ui";
+import { DRAFT_NAMESPACE_ID } from "../../../lib/draft-lib/draft-activity-start/draft-activity-start";
+import { Milty } from "../../../lib/draft-lib/drafts/milty";
 import { ScptDraftButtonUI, ScptDraftParams } from "./scpt-draft-button-ui";
-import { AbstractUI } from "ui/abstract-ui/abtract-ui";
 
 function _goDirect() {
   const scale: number = 1;
-  const params: ScptDraftParams = {
+  const scptDraftParams: ScptDraftParams = {
     label: "YEAR",
+    draft: new Milty(),
+    qual: {
+      namespaceId: DRAFT_NAMESPACE_ID,
+      numSlices: 6,
+      numFactions: 6,
+      config: "",
+    },
   };
-  const abstractUi: AbstractUI = new ScptDraftButtonUI(scale, params);
+  const abstractUi: AbstractUI = new ScptDraftButtonUI(scale, scptDraftParams);
   const widget: Widget = abstractUi.getWidget();
 
   const screenUI = new ScreenUIElement();

@@ -13,48 +13,57 @@ import { AbstractUI, UI_SIZE } from "../../abstract-ui/abtract-ui";
 import { CONFIG } from "../../config/config";
 import { ConfirmButton, ThrottleClickHandler } from "ttpg-darrell";
 import { IDraft } from "lib/draft-lib/drafts/idraft";
-import { DraftStartWindow } from "./draft-start-window";
+import { DraftActivityStartParams } from "../../../lib/draft-lib/draft-activity-start/draft-activity-start";
+import { DraftStartUI } from "./draft-start-ui";
 
 export type ScptDraftParams = {
   label: string;
-  qual?: IDraft;
-  prelim?: IDraft;
-  semi?: IDraft;
-  final?: IDraft;
+  draft: IDraft;
+  qual?: DraftActivityStartParams;
+  prelim?: DraftActivityStartParams;
+  semi?: DraftActivityStartParams;
+  final?: DraftActivityStartParams;
 };
 
 /**
- * "YEAR" qual / prelim / semi / final
+ * "YEAR" qual / prelim / semi / final.
+ *
+ * SCPT draft goes right to the draft, not the "DraftStartUI" (which would be
+ * used to set slice and faction count).
  */
 export class ScptDraftButtonUI extends AbstractUI {
   private readonly _scptDraftParams: ScptDraftParams;
 
-  _qualHandler = (_button: Button, player: Player): void => {
-    const idraft: IDraft | undefined = this._scptDraftParams.qual;
-    const playerSlot: number = player.getSlot();
-    if (idraft) {
-      new DraftStartWindow(idraft).createAndAttachWindow(playerSlot);
+  _qualHandler = (_button: Button, _player: Player): void => {
+    const draftActivityStartParams: DraftActivityStartParams | undefined =
+      this._scptDraftParams.qual;
+    const idraft: IDraft = this._scptDraftParams.draft;
+    if (draftActivityStartParams) {
+      new DraftStartUI(1, idraft, draftActivityStartParams).startDraft();
     }
   };
-  _prelimHandler = (_button: Button, player: Player): void => {
-    const idraft: IDraft | undefined = this._scptDraftParams.prelim;
-    const playerSlot: number = player.getSlot();
-    if (idraft) {
-      new DraftStartWindow(idraft).createAndAttachWindow(playerSlot);
+  _prelimHandler = (_button: Button, _player: Player): void => {
+    const draftActivityStartParams: DraftActivityStartParams | undefined =
+      this._scptDraftParams.prelim;
+    const idraft: IDraft = this._scptDraftParams.draft;
+    if (draftActivityStartParams) {
+      new DraftStartUI(1, idraft, draftActivityStartParams).startDraft();
     }
   };
-  _semiHandler = (_button: Button, player: Player): void => {
-    const idraft: IDraft | undefined = this._scptDraftParams.semi;
-    const playerSlot: number = player.getSlot();
-    if (idraft) {
-      new DraftStartWindow(idraft).createAndAttachWindow(playerSlot);
+  _semiHandler = (_button: Button, _player: Player): void => {
+    const draftActivityStartParams: DraftActivityStartParams | undefined =
+      this._scptDraftParams.semi;
+    const idraft: IDraft = this._scptDraftParams.draft;
+    if (draftActivityStartParams) {
+      new DraftStartUI(1, idraft, draftActivityStartParams).startDraft();
     }
   };
-  _finalHandler = (_button: Button, player: Player): void => {
-    const idraft: IDraft | undefined = this._scptDraftParams.final;
-    const playerSlot: number = player.getSlot();
-    if (idraft) {
-      new DraftStartWindow(idraft).createAndAttachWindow(playerSlot);
+  _finalHandler = (_button: Button, _player: Player): void => {
+    const draftActivityStartParams: DraftActivityStartParams | undefined =
+      this._scptDraftParams.final;
+    const idraft: IDraft = this._scptDraftParams.draft;
+    if (draftActivityStartParams) {
+      new DraftStartUI(1, idraft, draftActivityStartParams).startDraft();
     }
   };
 
