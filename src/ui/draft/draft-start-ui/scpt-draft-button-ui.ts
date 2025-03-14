@@ -22,7 +22,7 @@ export type ScptDraftParams = {
 };
 
 /**
- * "YEAR" qual prelim / semi / final
+ * "YEAR" qual / prelim / semi / final
  */
 export class ScptDraftButtonUI extends AbstractUI {
   private readonly _year: string;
