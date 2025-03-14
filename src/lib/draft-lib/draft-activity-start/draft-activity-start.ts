@@ -20,7 +20,7 @@ import { ParseSlices } from "../parse/parse-slices";
 import { ParseLabels } from "../parse/parse-labels";
 import { ParseFactions } from "../parse/parse-factions";
 import { ResolveConflictsKeleres } from "../resolve-conflicts/resolve-conflicts-keleres";
-import { Rotator, Vector } from "@tabletop-playground/api";
+import { Rotator, Vector, world } from "@tabletop-playground/api";
 
 export const DRAFT_NAMESPACE_ID: NamespaceId = "@ti4/draft";
 
@@ -155,6 +155,17 @@ export class DraftActivityStart {
   }
 
   resume(): this {
+    try {
+      this._resume();
+    } catch (e) {
+      // Something went wrong, erase the draft in progress.
+      world.setSavedData("", DRAFT_NAMESPACE_ID);
+      throw e;
+    }
+    return this;
+  }
+
+  _resume(): this {
     if (!DraftState.isDraftInProgress(DRAFT_NAMESPACE_ID)) {
       throw new Error("Draft not in progress");
     }
