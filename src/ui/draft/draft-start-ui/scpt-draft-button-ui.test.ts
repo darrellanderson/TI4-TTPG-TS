@@ -1,4 +1,4 @@
-import { Button, Player, Widget } from "@tabletop-playground/api";
+import { Button, Player } from "@tabletop-playground/api";
 import { clickAll, MockButton, MockPlayer } from "ttpg-mock";
 import { ScptDraftButtonUI, ScptDraftParams } from "./scpt-draft-button-ui";
 import { IDraft } from "../../../lib/draft-lib/drafts/idraft";
