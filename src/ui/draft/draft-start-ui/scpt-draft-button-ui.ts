@@ -3,6 +3,7 @@ import {
   HorizontalBox,
   LayoutBox,
   Panel,
+  Player,
   Text,
   TextJustification,
   VerticalAlignment,
@@ -10,8 +11,9 @@ import {
 } from "@tabletop-playground/api";
 import { AbstractUI, UI_SIZE } from "../../abstract-ui/abtract-ui";
 import { CONFIG } from "../../config/config";
-import { ConfirmButton } from "ttpg-darrell";
+import { ConfirmButton, ThrottleClickHandler } from "ttpg-darrell";
 import { IDraft } from "lib/draft-lib/drafts/idraft";
+import { DraftStartWindow } from "./draft-start-window";
 
 export type ScptDraftParams = {
   label: string;
@@ -25,6 +27,37 @@ export type ScptDraftParams = {
  * "YEAR" qual / prelim / semi / final
  */
 export class ScptDraftButtonUI extends AbstractUI {
+  private readonly _scptDraftParams: ScptDraftParams;
+
+  _qualHandler = (_button: Button, player: Player): void => {
+    const idraft: IDraft | undefined = this._scptDraftParams.qual;
+    const playerSlot: number = player.getSlot();
+    if (idraft) {
+      new DraftStartWindow(idraft).createAndAttachWindow(playerSlot);
+    }
+  };
+  _prelimHandler = (_button: Button, player: Player): void => {
+    const idraft: IDraft | undefined = this._scptDraftParams.prelim;
+    const playerSlot: number = player.getSlot();
+    if (idraft) {
+      new DraftStartWindow(idraft).createAndAttachWindow(playerSlot);
+    }
+  };
+  _semiHandler = (_button: Button, player: Player): void => {
+    const idraft: IDraft | undefined = this._scptDraftParams.semi;
+    const playerSlot: number = player.getSlot();
+    if (idraft) {
+      new DraftStartWindow(idraft).createAndAttachWindow(playerSlot);
+    }
+  };
+  _finalHandler = (_button: Button, player: Player): void => {
+    const idraft: IDraft | undefined = this._scptDraftParams.final;
+    const playerSlot: number = player.getSlot();
+    if (idraft) {
+      new DraftStartWindow(idraft).createAndAttachWindow(playerSlot);
+    }
+  };
+
   constructor(scale: number, scptDraftParams: ScptDraftParams) {
     const size: UI_SIZE = {
       w: (CONFIG.BUTTON_WIDTH * 2 + CONFIG.SPACING) * scale,
@@ -76,5 +109,19 @@ export class ScptDraftButtonUI extends AbstractUI {
       .setChild(panel);
 
     super(panelBox, size);
+    this._scptDraftParams = scptDraftParams;
+
+    buttonQual.onClicked.add(
+      new ThrottleClickHandler<Button>(this._qualHandler).get()
+    );
+    buttonPrelim.onClicked.add(
+      new ThrottleClickHandler<Button>(this._prelimHandler).get()
+    );
+    buttonSemi.onClicked.add(
+      new ThrottleClickHandler<Button>(this._semiHandler).get()
+    );
+    buttonFinal.onClicked.add(
+      new ThrottleClickHandler<Button>(this._finalHandler).get()
+    );
   }
 }
