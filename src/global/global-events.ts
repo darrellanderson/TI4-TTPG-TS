@@ -1,4 +1,4 @@
-import { Card, Player } from "@tabletop-playground/api";
+import { Card, GameObject, Player } from "@tabletop-playground/api";
 import { DiceResult, TriggerableMulticastDelegate } from "ttpg-darrell";
 
 import { AgendaState } from "../lib/agenda-lib/agenda-state/agenda-state";
@@ -90,6 +90,13 @@ export class GlobalEvents {
       colorHex: string,
       clickingPlayer: Player
     ) => void
+  >();
+
+  /**
+   * Called when an object fall below the table.
+   */
+  public readonly onObjectFellThroughTable = new TriggerableMulticastDelegate<
+    (object: GameObject) => void
   >();
 
   /**
