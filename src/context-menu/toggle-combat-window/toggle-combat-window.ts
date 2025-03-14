@@ -1,4 +1,4 @@
-import { Player } from "@tabletop-playground/api";
+import { Player, Rotator, Vector } from "@tabletop-playground/api";
 import { IGlobal, NamespaceId, Window } from "ttpg-darrell";
 import { AbstractUI } from "../../ui/abstract-ui/abtract-ui";
 import {
@@ -34,6 +34,30 @@ export class ToggleCombatWindow implements IGlobal {
       windowTitle
     );
     abstractWindow.getMutableWindowParams().addToggleMenuItem = true;
+
+    const playerSlotToTransform: {
+      [key: number]: {
+        pos: [x: number, y: number, z: number] | Vector;
+        rot: [pitch: number, yaw: number, roll: number] | Rotator;
+      };
+    } = {};
+    for (const playerSeat of TI4.playerSeats.getAllSeats()) {
+      const playerSlot: number = playerSeat.playerSlot;
+      const pos: Vector = playerSeat.cardHolder.getPosition().add([0, 0, 3]);
+      pos.x = pos.x * 0.75; // move toward middle
+      const rot: Rotator = new Rotator(0, 0, 0);
+      playerSlotToTransform[playerSlot] = {
+        pos,
+        rot,
+      };
+    }
+    abstractWindow.getMutableWindowParams().world = {
+      anchor: {
+        u: 0.5,
+        v: 0.5,
+      },
+      playerSlotToTransform,
+    };
     this._window = abstractWindow.createWindow();
   };
 
