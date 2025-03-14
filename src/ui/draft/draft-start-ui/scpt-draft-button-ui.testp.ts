@@ -4,13 +4,15 @@ import {
   Widget,
   world,
 } from "@tabletop-playground/api";
-import { ScptDraftButtonUI } from "./scpt-draft-button-ui";
+import { ScptDraftButtonUI, ScptDraftParams } from "./scpt-draft-button-ui";
 import { AbstractUI } from "ui/abstract-ui/abtract-ui";
 
 function _goDirect() {
   const scale: number = 1;
-  const year: string = "YEAR";
-  const abstractUi: AbstractUI = new ScptDraftButtonUI(scale, year);
+  const params: ScptDraftParams = {
+    label: "YEAR",
+  };
+  const abstractUi: AbstractUI = new ScptDraftButtonUI(scale, params);
   const widget: Widget = abstractUi.getWidget();
 
   const screenUI = new ScreenUIElement();
