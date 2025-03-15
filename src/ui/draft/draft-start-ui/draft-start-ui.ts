@@ -24,13 +24,15 @@ import { IDraft } from "../../../lib/draft-lib/drafts/idraft";
 import { LabelUI } from "../../button-ui/label-ui";
 import { SliderWithValueUI } from "../../button-ui/slider-with-value-ui";
 import { VerticalUIBuilder } from "../../panel/vertical-ui-builder";
+import { Milty } from "../../../lib/draft-lib/drafts/milty";
+import { Wekker } from "../../../lib/draft-lib/drafts/wekker";
 
 export class DraftStartUI extends AbstractUI {
   public readonly onDraftStarted = new TriggerableMulticastDelegate<
     () => void
   >();
 
-  private readonly _idrafts: Array<IDraft> = [];
+  private readonly _idrafts: Array<IDraft> = [new Milty(), new Wekker()];
   private readonly _params: DraftActivityStartParams;
 
   readonly _onSliceCountChanged = (
