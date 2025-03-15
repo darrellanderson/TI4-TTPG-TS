@@ -35,6 +35,7 @@ import { NumpadKeyAll } from "../lib/numpad-key-lib/numpad-key-all/numpad-key-al
 import { OnAgendaCard } from "../event/on-agenda-card/on-agenda-card";
 import { OnCombatClicked } from "../event/on-combat-clicked/on-combat-clicked";
 import { OnCombatResult } from "../event/on-combat-result/on-combat-result";
+import { OnObjectFellThroughTable } from "../event/on-object-fell-through-table/on-object-fell-through-table";
 import { OnPlayerChangeColorRequest } from "../event/on-player-change-color-request/on-player-change-color-request";
 import { OnPlayerChangedColor } from "../event/on-player-changed-color/on-player-changed-color";
 import { OnSystemActivated } from "../event/on-system-activated/on-system-activated";
@@ -138,6 +139,7 @@ export function resetGlobalThisTI4(): TI4Class {
     new OnCardBecameSingletonOrDeck(),
     new OnCombatClicked(),
     new OnCombatResult(),
+    new OnObjectFellThroughTable(),
     new OnPlayerChangeColorRequest(),
     new OnPlayerChangedColor(),
     new OnSystemActivated(),
