@@ -4,12 +4,12 @@ import {
   AbstractWindow,
   CreateAbstractUIType,
 } from "../../abstract-window/abstract-window";
-import { IDraft } from "../../../lib/draft-lib/drafts/idraft";
 import { DraftStartUI } from "./draft-start-ui";
 import {
   DRAFT_NAMESPACE_ID,
   DraftActivityStartParams,
 } from "../../../lib/draft-lib/draft-activity-start/draft-activity-start";
+import { Milty } from "../../../lib/draft-lib/drafts/milty";
 
 export class DraftStartWindow {
   private _window: Window | undefined = undefined;
@@ -23,7 +23,13 @@ export class DraftStartWindow {
 
   // This is mutable, window UI can change it.
   // It is *not* persisted, no point using persistent window with it.
-  private readonly _draftActivityStartParams: DraftActivityStartParams;
+  private readonly _draftActivityStartParams: DraftActivityStartParams = {
+    namespaceId: DRAFT_NAMESPACE_ID,
+    draft: new Milty(),
+    numSlices: TI4.config.playerCount,
+    numFactions: TI4.config.playerCount,
+    config: "",
+  };
 
   readonly _createAbstractUI: CreateAbstractUIType = (params): AbstractUI => {
     const draftStartUi: DraftStartUI = new DraftStartUI(
@@ -34,15 +40,7 @@ export class DraftStartWindow {
     return draftStartUi;
   };
 
-  constructor(idraft: IDraft) {
-    this._draftActivityStartParams = {
-      namespaceId: DRAFT_NAMESPACE_ID,
-      draft: idraft,
-      numSlices: TI4.config.playerCount,
-      numFactions: TI4.config.playerCount,
-      config: "",
-    };
-  }
+  constructor() {}
 
   createAndAttachWindow(playerSlot: number): void {
     const namespaceId: NamespaceId | undefined = undefined;
