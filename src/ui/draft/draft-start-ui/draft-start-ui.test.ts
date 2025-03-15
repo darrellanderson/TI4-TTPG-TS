@@ -8,59 +8,58 @@ import {
   MockSlider,
 } from "ttpg-mock";
 import { DraftStartUI } from "./draft-start-ui";
-import { IDraft } from "../../../lib/draft-lib/drafts/idraft";
 import { Milty } from "../../../lib/draft-lib/drafts/milty";
 import { DraftActivityStartParams } from "lib/draft-lib/draft-activity-start/draft-activity-start";
 
 it("constructor", () => {
   const scale: number = 1;
-  const idraft: IDraft = new Milty();
   const params: DraftActivityStartParams = {
     namespaceId: "@test/test",
+    draft: new Milty(),
     numSlices: 2,
     numFactions: 2,
     config: "",
   };
-  const draftStartUI = new DraftStartUI(scale, idraft, params);
+  const draftStartUI = new DraftStartUI(scale, params);
   expect(draftStartUI).toBeDefined();
 });
 
 it("_onSliceCountChanged", () => {
   const scale: number = 1;
-  const idraft: IDraft = new Milty();
   const params: DraftActivityStartParams = {
     namespaceId: "@test/test",
+    draft: new Milty(),
     numSlices: 2,
     numFactions: 2,
     config: "",
   };
-  const draftStartUI = new DraftStartUI(scale, idraft, params);
+  const draftStartUI = new DraftStartUI(scale, params);
   draftStartUI._onSliceCountChanged(new MockSlider(), new MockPlayer(), 1);
 });
 
 it("_onFactionCountChanged", () => {
   const scale: number = 1;
-  const idraft: IDraft = new Milty();
   const params: DraftActivityStartParams = {
     namespaceId: "@test/test",
+    draft: new Milty(),
     numSlices: 2,
     numFactions: 2,
     config: "",
   };
-  const draftStartUI = new DraftStartUI(scale, idraft, params);
+  const draftStartUI = new DraftStartUI(scale, params);
   draftStartUI._onFactionCountChanged(new MockSlider(), new MockPlayer(), 1);
 });
 
 it("_onTextCommitted", () => {
   const scale: number = 1;
-  const idraft: IDraft = new Milty();
   const params: DraftActivityStartParams = {
     namespaceId: "@test/test",
+    draft: new Milty(),
     numSlices: 2,
     numFactions: 2,
     config: "",
   };
-  const draftStartUI = new DraftStartUI(scale, idraft, params);
+  const draftStartUI = new DraftStartUI(scale, params);
 
   const textBox: MultilineTextBox = new MockMultilineTextBox();
   const player: Player = new MockPlayer();
@@ -70,14 +69,14 @@ it("_onTextCommitted", () => {
 
 it("_onStartButtonClicked", () => {
   const scale: number = 1;
-  const idraft: IDraft = new Milty();
   const params: DraftActivityStartParams = {
     namespaceId: "@test/test",
+    draft: new Milty(),
     numSlices: 2,
     numFactions: 2,
     config: "",
   };
-  const draftStartUI = new DraftStartUI(scale, idraft, params);
+  const draftStartUI = new DraftStartUI(scale, params);
   expect(() => {
     draftStartUI._onStartButtonClicked(new MockButton(), new MockPlayer());
   }).toThrow(); // need a lot of setup not to throw, exercise the click handler.
@@ -112,14 +111,14 @@ it("startDraft", () => {
   });
 
   const scale: number = 1;
-  const idraft: IDraft = new Milty();
   const params: DraftActivityStartParams = {
     namespaceId: "@test/test",
+    draft: new Milty(),
     numSlices: 2,
     numFactions: 2,
     config: "",
   };
-  const draftStartUI = new DraftStartUI(scale, idraft, params);
+  const draftStartUI = new DraftStartUI(scale, params);
 
   // Bad config, will generate an error message during start.
   draftStartUI._onTextCommitted(

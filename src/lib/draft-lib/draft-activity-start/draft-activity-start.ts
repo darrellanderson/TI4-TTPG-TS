@@ -1,3 +1,4 @@
+import { Rotator, Vector, world } from "@tabletop-playground/api";
 import { Direction, IGlobal, NamespaceId, Shuffle, Window } from "ttpg-darrell";
 
 import { AbstractUI } from "../../../ui/abstract-ui/abtract-ui";
@@ -20,12 +21,12 @@ import { ParseSlices } from "../parse/parse-slices";
 import { ParseLabels } from "../parse/parse-labels";
 import { ParseFactions } from "../parse/parse-factions";
 import { ResolveConflictsKeleres } from "../resolve-conflicts/resolve-conflicts-keleres";
-import { Rotator, Vector, world } from "@tabletop-playground/api";
 
 export const DRAFT_NAMESPACE_ID: NamespaceId = "@ti4/draft";
 
 export type DraftActivityStartParams = {
   namespaceId: NamespaceId;
+  draft: IDraft;
   numSlices: number;
   numFactions: number;
   config: string;
@@ -86,15 +87,12 @@ export class DraftActivityStart {
     return this._draftState;
   }
 
-  start(
-    draft: IDraft,
-    params: DraftActivityStartParams,
-    errors: Array<string>
-  ): boolean {
-    this._draftState = draft.createEmptyDraftState(DRAFT_NAMESPACE_ID);
+  start(params: DraftActivityStartParams, errors: Array<string>): boolean {
+    this._draftState = params.draft.createEmptyDraftState(DRAFT_NAMESPACE_ID);
 
     // Slices.
-    const sliceParams: GenerateSlicesParams = draft.getGenerateSlicesParams();
+    const sliceParams: GenerateSlicesParams =
+      params.draft.getGenerateSlicesParams();
     const slices: Array<SliceTiles> = DraftActivityStart.getOrGenerateSlices(
       params.config,
       params.numSlices,

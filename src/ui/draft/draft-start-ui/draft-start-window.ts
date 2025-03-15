@@ -12,7 +12,6 @@ import {
 } from "../../../lib/draft-lib/draft-activity-start/draft-activity-start";
 
 export class DraftStartWindow {
-  private readonly _idraft: IDraft;
   private _window: Window | undefined = undefined;
 
   readonly _onDraftStartedHandler = (): void => {
@@ -24,17 +23,11 @@ export class DraftStartWindow {
 
   // This is mutable, window UI can change it.
   // It is *not* persisted, no point using persistent window with it.
-  private readonly _draftActivityStartParams: DraftActivityStartParams = {
-    namespaceId: DRAFT_NAMESPACE_ID,
-    numSlices: TI4.config.playerCount,
-    numFactions: TI4.config.playerCount,
-    config: "",
-  };
+  private readonly _draftActivityStartParams: DraftActivityStartParams;
 
   readonly _createAbstractUI: CreateAbstractUIType = (params): AbstractUI => {
     const draftStartUi: DraftStartUI = new DraftStartUI(
       params.scale,
-      this._idraft,
       this._draftActivityStartParams
     );
     draftStartUi.onDraftStarted.add(this._onDraftStartedHandler);
@@ -42,7 +35,13 @@ export class DraftStartWindow {
   };
 
   constructor(idraft: IDraft) {
-    this._idraft = idraft;
+    this._draftActivityStartParams = {
+      namespaceId: DRAFT_NAMESPACE_ID,
+      draft: idraft,
+      numSlices: TI4.config.playerCount,
+      numFactions: TI4.config.playerCount,
+      config: "",
+    };
   }
 
   createAndAttachWindow(playerSlot: number): void {

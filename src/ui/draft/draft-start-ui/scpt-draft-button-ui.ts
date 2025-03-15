@@ -12,13 +12,11 @@ import {
 import { AbstractUI, UI_SIZE } from "../../abstract-ui/abtract-ui";
 import { CONFIG } from "../../config/config";
 import { ConfirmButton, ThrottleClickHandler } from "ttpg-darrell";
-import { IDraft } from "lib/draft-lib/drafts/idraft";
 import { DraftActivityStartParams } from "../../../lib/draft-lib/draft-activity-start/draft-activity-start";
 import { DraftStartUI } from "./draft-start-ui";
 
 export type ScptDraftParams = {
   label: string;
-  draft: IDraft;
   qual?: DraftActivityStartParams;
   prelim?: DraftActivityStartParams;
   semi?: DraftActivityStartParams;
@@ -37,33 +35,29 @@ export class ScptDraftButtonUI extends AbstractUI {
   _qualHandler = (_button: Button, _player: Player): void => {
     const draftActivityStartParams: DraftActivityStartParams | undefined =
       this._scptDraftParams.qual;
-    const idraft: IDraft = this._scptDraftParams.draft;
     if (draftActivityStartParams) {
-      new DraftStartUI(1, idraft, draftActivityStartParams).startDraft();
+      new DraftStartUI(1, draftActivityStartParams).startDraft();
     }
   };
   _prelimHandler = (_button: Button, _player: Player): void => {
     const draftActivityStartParams: DraftActivityStartParams | undefined =
       this._scptDraftParams.prelim;
-    const idraft: IDraft = this._scptDraftParams.draft;
     if (draftActivityStartParams) {
-      new DraftStartUI(1, idraft, draftActivityStartParams).startDraft();
+      new DraftStartUI(1, draftActivityStartParams).startDraft();
     }
   };
   _semiHandler = (_button: Button, _player: Player): void => {
     const draftActivityStartParams: DraftActivityStartParams | undefined =
       this._scptDraftParams.semi;
-    const idraft: IDraft = this._scptDraftParams.draft;
     if (draftActivityStartParams) {
-      new DraftStartUI(1, idraft, draftActivityStartParams).startDraft();
+      new DraftStartUI(1, draftActivityStartParams).startDraft();
     }
   };
   _finalHandler = (_button: Button, _player: Player): void => {
     const draftActivityStartParams: DraftActivityStartParams | undefined =
       this._scptDraftParams.final;
-    const idraft: IDraft = this._scptDraftParams.draft;
     if (draftActivityStartParams) {
-      new DraftStartUI(1, idraft, draftActivityStartParams).startDraft();
+      new DraftStartUI(1, draftActivityStartParams).startDraft();
     }
   };
 

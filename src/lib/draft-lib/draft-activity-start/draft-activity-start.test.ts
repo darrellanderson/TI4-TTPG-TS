@@ -50,16 +50,16 @@ it("static resumeIfInProgress (false)", () => {
 
 it("static resumeIfInProgress (true)", () => {
   TI4.config.setPlayerCount(2);
-  const draft: IDraft = new MyDraft();
   const params: DraftActivityStartParams = {
     namespaceId: "@test/test",
+    draft: new MyDraft(),
     numSlices: 2,
     numFactions: 2,
     config: "",
   };
   const errors: Array<string> = [];
   const draftActivityStart = new DraftActivityStart();
-  const success: boolean = draftActivityStart.start(draft, params, errors);
+  const success: boolean = draftActivityStart.start(params, errors);
   expect(errors).toEqual([]);
   expect(success).toBe(true);
   new DraftActivityMaybeResume().init();
@@ -86,32 +86,32 @@ it("createEmptyDraftState", () => {
 
 it("createDraftState (generate all)", () => {
   TI4.config.setPlayerCount(2);
-  const draft: IDraft = new MyDraft();
   const params: DraftActivityStartParams = {
     namespaceId: "@test/test",
+    draft: new MyDraft(),
     numSlices: 2,
     numFactions: 2,
     config: "",
   };
   const errors: Array<string> = [];
   const draftActivityStart = new DraftActivityStart();
-  const success: boolean = draftActivityStart.start(draft, params, errors);
+  const success: boolean = draftActivityStart.start(params, errors);
   expect(success).toBe(true);
   expect(errors).toEqual([]);
 });
 
 it("createDraftState (generate all, too few)", () => {
   TI4.config.setPlayerCount(6);
-  const draft: IDraft = new MyDraft();
   const params: DraftActivityStartParams = {
     namespaceId: "@test/test",
+    draft: new MyDraft(),
     numSlices: 2,
     numFactions: 2,
     config: "",
   };
   const errors: Array<string> = [];
   const draftActivityStart = new DraftActivityStart();
-  const success: boolean = draftActivityStart.start(draft, params, errors);
+  const success: boolean = draftActivityStart.start(params, errors);
   expect(success).toBe(false);
   expect(errors).toEqual([
     "Slice count (2) is less than player count (6)",
@@ -121,16 +121,16 @@ it("createDraftState (generate all, too few)", () => {
 
 it("createDraftState (parse all)", () => {
   TI4.config.setPlayerCount(2);
-  const draft: IDraft = new MyDraft();
   const params: DraftActivityStartParams = {
     namespaceId: "@test/test",
+    draft: new MyDraft(),
     numSlices: 2,
     numFactions: 2,
     config: "19|20&factions=arborec|ul&labels=a|b|c",
   };
   const errors: Array<string> = [];
   const draftActivityStart = new DraftActivityStart();
-  const success: boolean = draftActivityStart.start(draft, params, errors);
+  const success: boolean = draftActivityStart.start(params, errors);
   expect(success).toBe(true);
   expect(errors).toEqual([]);
 

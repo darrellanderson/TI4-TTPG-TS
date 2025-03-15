@@ -8,7 +8,6 @@ it("constructor", () => {
   const scale = 1;
   const scptDraftParams: ScptDraftParams = {
     label: "YEAR",
-    draft: new Milty(),
   };
   new ScptDraftButtonUI(scale, scptDraftParams);
 });
@@ -17,27 +16,30 @@ it("clickAllButtons", () => {
   const scale = 1;
   const scptDraftParams: ScptDraftParams = {
     label: "YEAR",
-    draft: new Milty(),
     qual: {
       namespaceId: DRAFT_NAMESPACE_ID,
+      draft: new Milty(),
       numSlices: 6,
       numFactions: 6,
       config: "",
     },
     prelim: {
       namespaceId: DRAFT_NAMESPACE_ID,
+      draft: new Milty(),
       numSlices: 6,
       numFactions: 6,
       config: "",
     },
     semi: {
       namespaceId: DRAFT_NAMESPACE_ID,
+      draft: new Milty(),
       numSlices: 6,
       numFactions: 6,
       config: "",
     },
     final: {
       namespaceId: DRAFT_NAMESPACE_ID,
+      draft: new Milty(),
       numSlices: 6,
       numFactions: 6,
       config: "",

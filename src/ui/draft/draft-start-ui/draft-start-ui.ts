@@ -30,7 +30,7 @@ export class DraftStartUI extends AbstractUI {
     () => void
   >();
 
-  private readonly _idraft: IDraft;
+  private readonly _idrafts: Array<IDraft> = [];
   private readonly _params: DraftActivityStartParams;
 
   readonly _onSliceCountChanged = (
@@ -64,7 +64,7 @@ export class DraftStartUI extends AbstractUI {
     }
   ).get();
 
-  constructor(scale: number, idraft: IDraft, params: DraftActivityStartParams) {
+  constructor(scale: number, params: DraftActivityStartParams) {
     const playerCount: number = TI4.config.playerCount;
 
     const numSlicesLabel: LabelUI = new LabelUI(scale);
@@ -122,7 +122,6 @@ export class DraftStartUI extends AbstractUI {
       .build();
     super(ui.getWidget(), ui.getSize());
 
-    this._idraft = idraft;
     this._params = params;
     numSlices.getSlider().onValueChanged.add(this._onSliceCountChanged);
     numFactions.getSlider().onValueChanged.add(this._onFactionCountChanged);
@@ -132,7 +131,7 @@ export class DraftStartUI extends AbstractUI {
 
   startDraft(): void {
     const errors: Array<string> = new Array<string>();
-    new DraftActivityStart().start(this._idraft, this._params, errors);
+    new DraftActivityStart().start(this._params, errors);
     if (errors.length > 0) {
       const msg: string = errors.join("\n");
       Broadcast.chatAll("Draft start errors:\n" + msg);
