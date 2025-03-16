@@ -1,29 +1,50 @@
-import { refObject, Vector, world } from "@tabletop-playground/api";
+import { GameObject, refObject, Vector, world } from "@tabletop-playground/api";
 
 import { LayoutAll } from "./layout-all";
 import { SetupPlayerSlotColors } from "setup/setup-player-slot-colors/setup-player-slot-colors";
+import { DeletedItemsContainer } from "ttpg-darrell";
 
-console.log("LAYOUT-ALL.TESTP");
-TI4.config.setPlayerCount(6);
+const refObjectCopy: GameObject = refObject;
 
-for (const obj of world.getAllObjects(true)) {
-  if (obj !== refObject) {
-    obj.destroy();
+function scrub() {
+  // Destroy objects inside containers, because destroying containers
+  // relocates the contents.
+  for (const obj of world.getAllObjects(false)) {
+    if (obj !== refObjectCopy && obj.getContainer()) {
+      DeletedItemsContainer.destroyWithoutCopying(obj);
+    }
+  }
+
+  for (const obj of world.getAllObjects(true)) {
+    if (obj !== refObjectCopy) {
+      DeletedItemsContainer.destroyWithoutCopying(obj);
+    }
+  }
+  for (const line of world.getDrawingLines()) {
+    world.removeDrawingLineObject(line);
+  }
+  for (const zone of world.getAllZones()) {
+    zone.destroy();
   }
 }
-for (const line of world.getDrawingLines()) {
-  world.removeDrawingLineObject(line);
+
+function go() {
+  console.log("LAYOUT-ALL.TESTP");
+  scrub();
+
+  TI4.config.setPlayerCount(6);
+
+  new SetupPlayerSlotColors().setup();
+
+  const z: number = world.getTableHeight();
+  const pos: Vector = new Vector(0, 0, z + 3);
+  const yaw: number = 0;
+
+  const playerCount: number = TI4.config.playerCount;
+  const layout: LayoutAll = new LayoutAll(playerCount);
+  layout.getLayout().doLayoutAtPoint(pos, yaw);
 }
-for (const zone of world.getAllZones()) {
-  zone.destroy();
-}
 
-new SetupPlayerSlotColors().setup();
-
-const z: number = world.getTableHeight();
-const pos: Vector = new Vector(0, 0, z + 3);
-const yaw: number = 0;
-
-const playerCount: number = TI4.config.playerCount;
-const layout: LayoutAll = new LayoutAll(playerCount);
-layout.getLayout().doLayoutAtPoint(pos, yaw);
+setTimeout(scrub, 1000);
+setTimeout(scrub, 2000);
+setTimeout(go, 3000);
