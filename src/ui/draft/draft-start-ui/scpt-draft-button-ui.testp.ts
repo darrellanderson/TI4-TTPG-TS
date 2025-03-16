@@ -13,9 +13,9 @@ function _goDirect() {
   const scale: number = 1;
   const scptDraftParams: ScptDraftParams = {
     label: "YEAR",
-    draft: new Milty(),
     qual: {
       namespaceId: DRAFT_NAMESPACE_ID,
+      draft: new Milty(),
       numSlices: 6,
       numFactions: 6,
       config: "",

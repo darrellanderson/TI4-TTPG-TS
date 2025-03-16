@@ -10,6 +10,7 @@ const draft: IDraft = new Milty();
 
 const params: DraftActivityStartParams = {
   namespaceId: "@test/test",
+  draft,
   numSlices: 8,
   numFactions: 9,
   config: "",
@@ -22,7 +23,7 @@ function go(): void {
     console.log("Draft is in progress");
   } else {
     const draftActivityStart = new DraftActivityStart();
-    const success: boolean = draftActivityStart.start(draft, params, errors);
+    const success: boolean = draftActivityStart.start(params, errors);
     if (!success) {
       throw new Error("DraftActivityStart failed");
     }
