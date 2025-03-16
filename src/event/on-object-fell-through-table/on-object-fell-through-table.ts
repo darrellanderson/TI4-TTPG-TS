@@ -9,7 +9,7 @@ export class OnObjectFellThroughTable implements IGlobal {
     const pos: Vector = new Vector(
       this._relocateTo.x,
       this._relocateTo.y,
-      world.getTableHeight() + 100
+      world.getTableHeight() + 10
     );
     object.setPosition(pos);
     object.snapToGround();
@@ -22,20 +22,10 @@ export class OnObjectFellThroughTable implements IGlobal {
     TI4.events.onObjectFellThroughTable.trigger(object);
   };
 
-  init(): void {
-    const zone: Zone = this._findOrCreateZone();
-    zone.getOverlappingObjects().forEach((object: GameObject) => {
-      this._onBeginOverlapHandler(zone, object);
-    });
-    zone.onBeginOverlap.add(this._onBeginOverlapHandler);
-  }
-
-  setRelocateTo(position: Vector): this {
-    this._relocateTo = position;
-    return this;
-  }
-
-  _getTablePositionAndExtent(): { tablePosition: Vector; tableExtent: Vector } {
+  static _getTablePositionAndExtent(): {
+    tablePosition: Vector;
+    tableExtent: Vector;
+  } {
     const result = {
       tablePosition: new Vector(0, 0, 0),
       tableExtent: new Vector(0, 0, 0),
@@ -55,11 +45,12 @@ export class OnObjectFellThroughTable implements IGlobal {
     return result;
   }
 
-  _findOrCreateZone(): Zone {
+  static _findOrCreateZone(): Zone {
     const zoneId: string = "__below_table__";
 
     // Find the table (by NSID).
-    const { tablePosition, tableExtent } = this._getTablePositionAndExtent();
+    const { tablePosition, tableExtent } =
+      OnObjectFellThroughTable._getTablePositionAndExtent();
     const tableHeight: number = Math.max(
       world.getTableHeight(),
       tablePosition.z + tableExtent.z
@@ -88,5 +79,28 @@ export class OnObjectFellThroughTable implements IGlobal {
     zone.setAlwaysVisible(true);
 
     return zone;
+  }
+
+  /**
+   * Destroy the zone (will be recreated on next load).
+   * This can be useful for testing, or before doing bulk setup that may create
+   * things at the origin (below the table).
+   */
+  static destroyZone(): void {
+    const zone: Zone = OnObjectFellThroughTable._findOrCreateZone();
+    zone.destroy();
+  }
+
+  init(): void {
+    const zone: Zone = OnObjectFellThroughTable._findOrCreateZone();
+    zone.getOverlappingObjects().forEach((object: GameObject) => {
+      this._onBeginOverlapHandler(zone, object);
+    });
+    zone.onBeginOverlap.add(this._onBeginOverlapHandler);
+  }
+
+  setRelocateTo(position: Vector): this {
+    this._relocateTo = position;
+    return this;
   }
 }
