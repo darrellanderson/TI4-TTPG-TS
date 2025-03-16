@@ -1,5 +1,5 @@
 import { GameObject, Vector, world, Zone } from "@tabletop-playground/api";
-import { IGlobal, NSID } from "ttpg-darrell";
+import { ErrorHandler, IGlobal, NSID } from "ttpg-darrell";
 
 export class OnObjectFellThroughTable implements IGlobal {
   private _relocateTo: Vector = new Vector(0, 0, 0);
@@ -14,6 +14,10 @@ export class OnObjectFellThroughTable implements IGlobal {
     object.setPosition(pos);
     object.snapToGround();
 
+    const nsid: string = NSID.get(object);
+    const msg: string = `"${nsid}" fell through the table`;
+    ErrorHandler.onError.trigger(msg);
+
     // Tell any listeners that the object fell through the table.
     TI4.events.onObjectFellThroughTable.trigger(object);
   };
@@ -24,15 +28,6 @@ export class OnObjectFellThroughTable implements IGlobal {
       this._onBeginOverlapHandler(zone, object);
     });
     zone.onBeginOverlap.add(this._onBeginOverlapHandler);
-
-    process.nextTick(() => {
-      console.log(
-        "xxx zone",
-        zone.getId(),
-        zone.getPosition().toString(),
-        zone.getScale().toString()
-      );
-    });
   }
 
   setRelocateTo(position: Vector): this {
@@ -84,8 +79,10 @@ export class OnObjectFellThroughTable implements IGlobal {
       const pos: Vector = new Vector(0, 0, tableHeight / 2 - 1);
       zone = world.createZone(pos);
       zone.setId(zoneId);
-      zone.setScale([tableExtent.x, tableExtent.y, tableHeight]);
+      zone.setScale([tableExtent.x * 2, tableExtent.y * 2, tableHeight]);
     }
+
+    zone.setScale([tableExtent.x * 2, tableExtent.y * 2, tableHeight]);
 
     zone.setColor([1, 0, 0, 0.5]);
     zone.setAlwaysVisible(true);

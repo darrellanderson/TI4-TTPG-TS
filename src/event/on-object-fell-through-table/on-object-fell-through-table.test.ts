@@ -66,7 +66,7 @@ it("_findOrCreateZone", () => {
   expect(zone).toBeDefined();
   expect(zone.getId()).toBe("__below_table__");
   expect(zone.getPosition().toString()).toBe("(X=0,Y=0,Z=2)");
-  expect(zone.getScale().toString()).toBe("(X=2,Y=2.5,Z=6)");
+  expect(zone.getScale().toString()).toBe("(X=4,Y=5,Z=6)");
 
   const again: Zone = obj._findOrCreateZone();
   expect(again).toEqual(zone); // found exisiting zone.
