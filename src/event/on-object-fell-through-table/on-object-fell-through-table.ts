@@ -5,6 +5,11 @@ export class OnObjectFellThroughTable implements IGlobal {
   private _relocateTo: Vector = new Vector(0, 0, 0);
 
   readonly _onBeginOverlapHandler = (_zone: Zone, object: GameObject): void => {
+    const objPos: Vector = object.getPosition();
+    if (objPos.x === 0 && objPos.y === 0 && objPos.z === 0) {
+      return; // "f"lip moves the object to the origin briefly.
+    }
+
     // Move above table.
     const pos: Vector = new Vector(
       this._relocateTo.x,
@@ -66,7 +71,7 @@ export class OnObjectFellThroughTable implements IGlobal {
     }
 
     // Create zone if it doesn't exist.
-    const pos: Vector = new Vector(0, 0, tableHeight / 2 - tableExtent.z);
+    const pos: Vector = new Vector(0, 0, tableHeight / 2 - 3);
     if (!zone) {
       zone = world.createZone(pos);
       zone.setId(zoneId);
@@ -75,12 +80,12 @@ export class OnObjectFellThroughTable implements IGlobal {
     // Always update pos/size.
     zone.setPosition(pos);
     zone.setScale([
-      tableExtent.x * 2 + 0.1,
-      tableExtent.y * 2 + 0.1,
+      tableExtent.x * 2 - 0.1,
+      tableExtent.y * 2 - 0.1,
       tableHeight,
     ]);
 
-    // Visualize for initial testing.
+    // Visualize for initial testing?
     zone.setColor([1, 0, 0, 0.5]);
     zone.setAlwaysVisible(true);
 

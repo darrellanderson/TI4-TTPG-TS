@@ -1,4 +1,4 @@
-import { GameWorld } from "@tabletop-playground/api";
+import { GameWorld, Vector } from "@tabletop-playground/api";
 import {
   BugCardHolderAssignment,
   BugSplatRemoteReporter,
@@ -139,7 +139,7 @@ export function resetGlobalThisTI4(): TI4Class {
     new OnCardBecameSingletonOrDeck(),
     new OnCombatClicked(),
     new OnCombatResult(),
-    new OnObjectFellThroughTable(),
+    new OnObjectFellThroughTable().setRelocateTo(new Vector(0, -250, 0)),
     new OnPlayerChangeColorRequest(),
     new OnPlayerChangedColor(),
     new OnSystemActivated(),
