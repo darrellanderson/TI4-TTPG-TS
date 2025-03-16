@@ -33,7 +33,7 @@ export class OnObjectFellThroughTable implements IGlobal {
 
     // Find the table (by NSID).
     const currentRotation: boolean = true;
-    const includeGeometry: boolean = false;
+    const includeGeometry: boolean = true;
     for (const table of world.getAllTables()) {
       const nsid: string = NSID.get(table);
       if (nsid === "table:base/table") {
@@ -66,15 +66,21 @@ export class OnObjectFellThroughTable implements IGlobal {
     }
 
     // Create zone if it doesn't exist.
+    const pos: Vector = new Vector(0, 0, tableHeight / 2 - tableExtent.z);
     if (!zone) {
-      const pos: Vector = new Vector(0, 0, tableHeight / 2 - 1);
       zone = world.createZone(pos);
       zone.setId(zoneId);
-      zone.setScale([tableExtent.x * 2, tableExtent.y * 2, tableHeight]);
     }
 
-    zone.setScale([tableExtent.x * 2, tableExtent.y * 2, tableHeight]);
+    // Always update pos/size.
+    zone.setPosition(pos);
+    zone.setScale([
+      tableExtent.x * 2 + 0.1,
+      tableExtent.y * 2 + 0.1,
+      tableHeight,
+    ]);
 
+    // Visualize for initial testing.
     zone.setColor([1, 0, 0, 0.5]);
     zone.setAlwaysVisible(true);
 
