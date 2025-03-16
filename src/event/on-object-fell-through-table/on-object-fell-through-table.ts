@@ -87,7 +87,7 @@ export class OnObjectFellThroughTable implements IGlobal {
 
     // Visualize for initial testing?
     zone.setColor([1, 0, 0, 0.5]);
-    zone.setAlwaysVisible(true);
+    zone.setAlwaysVisible(false);
 
     return zone;
   }
