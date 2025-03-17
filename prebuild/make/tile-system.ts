@@ -112,6 +112,7 @@ for (const info of infos) {
   json.Models[1].Texture = info.imgFileBack;
   json.Models[0].Model = info.modelFileFace;
   json.Models[1].Model = info.modelFileBack;
+  json.Tags = ["system"];
 
   const templateFile: string = "./assets/Templates/" + info.templateFile;
   const templateDir: string = path.dirname(templateFile);
