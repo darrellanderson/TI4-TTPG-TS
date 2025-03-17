@@ -45,7 +45,6 @@ export class DraftStartUI extends AbstractUI {
     _checked: boolean
   ) => {
     // Regardless of checked state, use last one the player clicked.
-    // Regardless of checked state, use last one the player clicked.
     if (player) {
       this._draftCheckBoxes.forEach(
         (draftCheckBox: CheckBox, index: number) => {
