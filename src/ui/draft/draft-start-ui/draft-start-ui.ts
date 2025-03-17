@@ -1,10 +1,12 @@
 import {
   Button,
+  CheckBox,
   HorizontalAlignment,
   MultilineTextBox,
   Player,
   Slider,
   TextJustification,
+  VerticalAlignment,
 } from "@tabletop-playground/api";
 import {
   Broadcast,
@@ -18,6 +20,8 @@ import {
   DraftActivityStart,
   DraftActivityStartParams,
 } from "../../../lib/draft-lib/draft-activity-start/draft-activity-start";
+import { CheckBoxUI } from "../../button-ui/checkbox-ui";
+import { DivUI } from "../../div-ui/div-ui";
 import { EditableUI } from "../../button-ui/editable-ui";
 import { HorizontalUIBuilder } from "../../panel/horizontal-ui-builder";
 import { IDraft } from "../../../lib/draft-lib/drafts/idraft";
@@ -34,6 +38,33 @@ export class DraftStartUI extends AbstractUI {
 
   private readonly _idrafts: Array<IDraft> = [new Milty(), new Wekker()];
   private readonly _params: DraftActivityStartParams;
+  private readonly _draftCheckBoxes: Array<CheckBox>;
+
+  static _scptDrafts(scale: number): VerticalUIBuilder {
+    return new VerticalUIBuilder().setSpacing(CONFIG.SPACING * scale);
+  }
+
+  readonly _onDraftCheckStateChangedHandler = (
+    checkBox: CheckBox,
+    player: Player | undefined,
+    _checked: boolean
+  ) => {
+    // Regardless of checked state, use last one the player clicked.
+    if (player) {
+      this._draftCheckBoxes.forEach(
+        (draftCheckBox: CheckBox, index: number) => {
+          const iDraft: IDraft | undefined = this._idrafts[index];
+          const useThis: boolean =
+            draftCheckBox.getText() === checkBox.getText();
+          draftCheckBox.setIsChecked(useThis);
+          if (useThis && iDraft) {
+            // Set the current draft to the one selected by the player.
+            this._params.draft = iDraft;
+          }
+        }
+      );
+    }
+  };
 
   readonly _onSliceCountChanged = (
     _slider: Slider,
@@ -68,6 +99,35 @@ export class DraftStartUI extends AbstractUI {
 
   constructor(scale: number, params: DraftActivityStartParams) {
     const playerCount: number = TI4.config.playerCount;
+
+    const sliceShapeLabel: LabelUI = new LabelUI(scale);
+    sliceShapeLabel
+      .getText()
+      .setText("Slice shape:")
+      .setJustification(TextJustification.Right);
+
+    const iDrafts: Array<IDraft> = [new Milty(), new Wekker()];
+    const draftCheckBoxUIs: Array<CheckBoxUI> = iDrafts.map(
+      (idraft: IDraft): CheckBoxUI => {
+        const checkBoxUi: CheckBoxUI = new CheckBoxUI(scale);
+        checkBoxUi.getCheckBox().setText(idraft.getDraftName());
+        checkBoxUi
+          .getCheckBox()
+          .setIsChecked(idraft.getDraftName() === params.draft.getDraftName());
+        return checkBoxUi;
+      }
+    );
+
+    const draftCheckBoxesPanel: AbstractUI = new VerticalUIBuilder()
+      .setSpacing(CONFIG.SPACING * scale)
+      .addUIs(draftCheckBoxUIs)
+      .build();
+
+    const draftPanel: AbstractUI = new HorizontalUIBuilder()
+      .setVerticalAlignment(VerticalAlignment.Top)
+      .setSpacing(CONFIG.SPACING * scale)
+      .addUIs([sliceShapeLabel, draftCheckBoxesPanel])
+      .build();
 
     const numSlicesLabel: LabelUI = new LabelUI(scale);
     numSlicesLabel
@@ -112,19 +172,40 @@ export class DraftStartUI extends AbstractUI {
     const startButton: ButtonUI = new ButtonUI(scale);
     startButton.getButton().setText("Start Draft");
 
-    const ui: AbstractUI = new VerticalUIBuilder()
+    const rightUi: AbstractUI = new VerticalUIBuilder()
       .setSpacing(CONFIG.SPACING * scale)
       .setHorizontalAlignment(HorizontalAlignment.Center)
       .addUIs([
+        draftPanel,
         numSlicesPanel,
         numFactionsPanel,
         customConfigPanel,
         startButton,
       ])
       .build();
+
+    const SCPT: AbstractUI = DraftStartUI._scptDrafts(scale)
+      .setOverrideHeight(rightUi.getSize().h)
+      .build();
+
+    const div: AbstractUI = new DivUI(scale, rightUi.getSize().h, "vertical");
+    const ui: AbstractUI = new HorizontalUIBuilder()
+      .setSpacing(CONFIG.SPACING * scale)
+      .setVerticalAlignment(VerticalAlignment.Top)
+      .addUIs([SCPT, div, rightUi])
+      .build();
+
     super(ui.getWidget(), ui.getSize());
 
     this._params = params;
+    this._draftCheckBoxes = draftCheckBoxUIs.map(
+      (checkBoxUI: CheckBoxUI): CheckBox => {
+        const checkBox: CheckBox = checkBoxUI.getCheckBox();
+        checkBox.onCheckStateChanged.add(this._onDraftCheckStateChangedHandler);
+        return checkBox;
+      }
+    );
+
     numSlices.getSlider().onValueChanged.add(this._onSliceCountChanged);
     numFactions.getSlider().onValueChanged.add(this._onFactionCountChanged);
     customConfig.getEditText().onTextCommitted.add(this._onTextCommitted);
