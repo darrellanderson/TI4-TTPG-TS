@@ -7,8 +7,8 @@ import { DeletedItemsContainer } from "ttpg-darrell";
 const refObjectCopy: GameObject = refObject;
 
 function scrub() {
-  // Destroy objects inside containers, because destroying containers
-  // relocates the contents.
+  // Destroy objects inside containers.  Destroying a container destroys the
+  // contents "normally", potentially triggering deleted items treatment.
   for (const obj of world.getAllObjects(false)) {
     if (obj !== refObjectCopy && obj.getContainer()) {
       DeletedItemsContainer.destroyWithoutCopying(obj);
