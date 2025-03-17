@@ -2,14 +2,15 @@ import { MultilineTextBox, Player } from "@tabletop-playground/api";
 import {
   MockButton,
   MockCardHolder,
+  MockCheckBox,
   MockGameObject,
   MockMultilineTextBox,
   MockPlayer,
   MockSlider,
 } from "ttpg-mock";
+import { DraftActivityStartParams } from "../../../lib/draft-lib/draft-activity-start/draft-activity-start";
 import { DraftStartUI } from "./draft-start-ui";
 import { Milty } from "../../../lib/draft-lib/drafts/milty";
-import { DraftActivityStartParams } from "lib/draft-lib/draft-activity-start/draft-activity-start";
 
 it("constructor", () => {
   const scale: number = 1;
@@ -22,6 +23,23 @@ it("constructor", () => {
   };
   const draftStartUI = new DraftStartUI(scale, params);
   expect(draftStartUI).toBeDefined();
+});
+
+it("_onDraftCheckStateChangedHandler", () => {
+  const scale: number = 1;
+  const params: DraftActivityStartParams = {
+    namespaceId: "@test/test",
+    draft: new Milty(),
+    numSlices: 2,
+    numFactions: 2,
+    config: "",
+  };
+  const draftStartUI = new DraftStartUI(scale, params);
+  draftStartUI._onDraftCheckStateChangedHandler(
+    new MockCheckBox().setText(params.draft.getDraftName()),
+    new MockPlayer(),
+    true
+  );
 });
 
 it("_onSliceCountChanged", () => {
