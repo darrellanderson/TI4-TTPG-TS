@@ -1,17 +1,20 @@
 import {
   Container,
   GameObject,
+  ObjectType,
   Rotator,
   Vector,
   world,
 } from "@tabletop-playground/api";
-import { Broadcast, HexType, locale, Spawn } from "ttpg-darrell";
+import { Broadcast, Find, HexType, locale, Spawn } from "ttpg-darrell";
 
 import { MapStringEntry, MapStringParser } from "./map-string-parser";
 import { System } from "../../system-lib/system/system";
 import { MapStringHex } from "./map-string-hex";
 
 export class MapStringLoad {
+  private readonly _find: Find = new Find();
+
   _parseAndValidateMapString(
     mapString: string
   ): Array<MapStringEntry> | undefined {
@@ -116,9 +119,11 @@ export class MapStringLoad {
       }
     }
     pos.z = world.getTableHeight() + 10;
+    systemTileObj.setObjectType(ObjectType.Regular);
     systemTileObj.setPosition(pos);
     systemTileObj.setRotation(rot);
     systemTileObj.snapToGround();
+    systemTileObj.setObjectType(ObjectType.Ground);
     return true;
   }
 
@@ -132,11 +137,40 @@ export class MapStringLoad {
     if (!nsid) {
       return false;
     }
-    const systemTileObj: GameObject | undefined = Spawn.spawn(nsid, pos, rot);
+    const above: Vector = pos.add(new Vector(0, 0, 10));
+    const systemTileObj: GameObject | undefined = Spawn.spawn(nsid, above, rot);
+    if (systemTileObj) {
+      systemTileObj.setTags(["system"]);
+      systemTileObj.snapToGround();
+      systemTileObj.setObjectType(ObjectType.Ground);
+    }
     return systemTileObj !== undefined;
   }
 
   public load(mapString: string): boolean {
+    const nsid: string = "token:base/custodians";
+    const playerSlot: number | undefined = undefined;
+    const skipContained: boolean = true;
+    const custodiansToken: GameObject | undefined = this._find.findGameObject(
+      nsid,
+      playerSlot,
+      skipContained
+    );
+    if (custodiansToken) {
+      custodiansToken.setPosition([500, 0, world.getTableHeight() + 10]);
+    }
+
+    const success: boolean = this._load(mapString);
+
+    if (custodiansToken) {
+      custodiansToken.setPosition([0, 0, world.getTableHeight() + 10]);
+      custodiansToken.snapToGround();
+    }
+
+    return success;
+  }
+
+  private _load(mapString: string): boolean {
     // Parse the map string.
     const entries: Array<MapStringEntry> | undefined =
       this._parseAndValidateMapString(mapString);

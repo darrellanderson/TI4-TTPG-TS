@@ -16,25 +16,22 @@ it("constructor", () => {
 
 it("_createMapPremadeUI", () => {
   const scale: number = 1;
-  const mapToolUI: MapToolUI = new MapToolUI(scale);
-
   const playerSlot: number = 10;
-  mapToolUI._openPremadeMapWindow(playerSlot);
-
   const params: CreateAbstractUIParams = {
     scale,
     playerSlot,
   };
+
+  const mapToolUI: MapToolUI = new MapToolUI(scale);
+  const player: Player = new MockPlayer();
+  clickAll(mapToolUI.getWidget(), player); // attach window
+
   const mapPremadeUi: MapPremadeUI = mapToolUI._createMapPremadeUI(
     params
   ) as MapPremadeUI;
   expect(mapPremadeUi).toBeDefined();
   mapPremadeUi.onMapString.trigger("mapString");
-});
 
-it("_openPremadeMapWindow", () => {
-  const scale: number = 1;
-  const mapToolUI: MapToolUI = new MapToolUI(scale);
-  const playerSlot: number = 10;
-  mapToolUI._openPremadeMapWindow(playerSlot);
+  // Repeat, closes existing window.
+  mapToolUI._createMapPremadeUI(params);
 });

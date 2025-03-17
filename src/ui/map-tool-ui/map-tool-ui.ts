@@ -39,90 +39,104 @@ export class MapToolUI extends AbstractUI {
   private readonly _editText: MultilineTextBox;
   private _premadeMapWindow: Window | undefined = undefined;
 
-  private readonly _onMapStringLoad = (
-    _button: Button,
-    player: Player
-  ): void => {
-    const playerName: string = TI4.playerName.getByPlayer(player);
-    const msg: string = `Map string loaded by ${playerName}`;
-    Broadcast.chatAll(msg);
+  private readonly _onUsePremadeMap = new ThrottleClickHandler<Button>(
+    (_button: Button, player: Player): void => {
+      const playerSlot: number = player.getSlot();
+      const namespaceId: NamespaceId | undefined = undefined;
+      const windowTitle: string = "Premade Maps";
+      const abstractWindow: AbstractWindow = new AbstractWindow(
+        this._createMapPremadeUI,
+        namespaceId,
+        windowTitle
+      );
+      this._premadeMapWindow = abstractWindow
+        .createWindow([playerSlot])
+        .attach();
+    }
+  ).get();
 
-    const mapString: string = this._editText.getText();
-    new MapStringLoad().load(mapString);
-  };
+  private readonly _onMapStringLoad = new ThrottleClickHandler<Button>(
+    (_button: Button, player: Player): void => {
+      const playerName: string = TI4.playerName.getByPlayer(player);
+      const msg: string = `Map string loaded by ${playerName}`;
+      Broadcast.chatAll(msg);
 
-  private readonly _onMapStringSave = (): void => {
-    const mapString: string = new MapStringSave().save();
-    this._editText.setText(mapString);
-  };
+      const mapString: string = this._editText.getText();
+      new MapStringLoad().load(mapString);
+    }
+  ).get();
 
-  private readonly _onPlacePlanetCards = (
-    _button: Button,
-    player: Player
-  ): void => {
-    const playerName: string = TI4.playerName.getByPlayer(player);
-    const msg: string = `Planet cards placed by ${playerName}`;
-    Broadcast.chatAll(msg);
+  private readonly _onMapStringSave = new ThrottleClickHandler<Button>(
+    (): void => {
+      const mapString: string = new MapStringSave().save();
+      this._editText.setText(mapString);
+    }
+  ).get();
 
-    new MapPlacePlanetCards().placePlanetCards();
-  };
+  private readonly _onPlacePlanetCards = new ThrottleClickHandler<Button>(
+    (_button: Button, player: Player): void => {
+      const playerName: string = TI4.playerName.getByPlayer(player);
+      const msg: string = `Planet cards placed by ${playerName}`;
+      Broadcast.chatAll(msg);
 
-  private readonly _onPlaceFrontierTokens = (
-    _button: Button,
-    player: Player
-  ): void => {
-    const playerName: string = TI4.playerName.getByPlayer(player);
-    const msg: string = `Frontier tokens placed by ${playerName}`;
-    Broadcast.chatAll(msg);
+      new MapPlacePlanetCards().placePlanetCards();
+    }
+  ).get();
 
-    new MapPlaceFrontierTokens().placeFrontierTokens();
-  };
+  private readonly _onPlaceFrontierTokens = new ThrottleClickHandler<Button>(
+    (_button: Button, player: Player): void => {
+      const playerName: string = TI4.playerName.getByPlayer(player);
+      const msg: string = `Frontier tokens placed by ${playerName}`;
+      Broadcast.chatAll(msg);
 
-  private readonly _onRemovePlanetCards = (
-    _button: Button,
-    player: Player
-  ): void => {
-    const playerName: string = TI4.playerName.getByPlayer(player);
-    const msg: string = `Planet cards removed by ${playerName}`;
-    Broadcast.chatAll(msg);
+      new MapPlaceFrontierTokens().placeFrontierTokens();
+    }
+  ).get();
 
-    new MapRemovePlanetCards().removePlanetCards();
-  };
+  private readonly _onRemovePlanetCards = new ThrottleClickHandler<Button>(
+    (_button: Button, player: Player): void => {
+      const playerName: string = TI4.playerName.getByPlayer(player);
+      const msg: string = `Planet cards removed by ${playerName}`;
+      Broadcast.chatAll(msg);
 
-  private readonly _onRemoveFrontierTokens = (
-    _button: Button,
-    player: Player
-  ): void => {
-    const playerName: string = TI4.playerName.getByPlayer(player);
-    const msg: string = `Frontier tokens removed by ${playerName}`;
-    Broadcast.chatAll(msg);
+      new MapRemovePlanetCards().removePlanetCards();
+    }
+  ).get();
 
-    new MapRemoveFrontierTokens().removeFrontierTokens();
-  };
+  private readonly _onRemoveFrontierTokens = new ThrottleClickHandler<Button>(
+    (_button: Button, player: Player): void => {
+      const playerName: string = TI4.playerName.getByPlayer(player);
+      const msg: string = `Frontier tokens removed by ${playerName}`;
+      Broadcast.chatAll(msg);
 
-  private readonly _onPlaceHyperlanes = (
-    _button: Button,
-    player: Player
-  ): void => {
-    const playerName: string = TI4.playerName.getByPlayer(player);
-    const msg: string = `Hyperlanes placed by ${playerName}`;
-    Broadcast.chatAll(msg);
+      new MapRemoveFrontierTokens().removeFrontierTokens();
+    }
+  ).get();
 
-    const playerCount: number = TI4.config.playerCount;
-    const mapString: string = MapStringHyperlanes.get(playerCount);
-    new MapStringLoad().load(mapString);
-  };
+  private readonly _onPlaceHyperlanes = new ThrottleClickHandler<Button>(
+    (_button: Button, player: Player): void => {
+      const playerName: string = TI4.playerName.getByPlayer(player);
+      const msg: string = `Hyperlanes placed by ${playerName}`;
+      Broadcast.chatAll(msg);
 
-  private readonly _onClearMap = (_button: Button, player: Player): void => {
-    const playerName: string = TI4.playerName.getByPlayer(player);
-    const msg: string = `Map cleared by ${playerName}`;
-    Broadcast.chatAll(msg);
+      const playerCount: number = TI4.config.playerCount;
+      const mapString: string = MapStringHyperlanes.get(playerCount);
+      new MapStringLoad().load(mapString);
+    }
+  ).get();
 
-    new MapRemovePlanetCards().removePlanetCards();
-    new MapRemoveFrontierTokens().removeFrontierTokens();
-    new MapRemoveAllNonHomeSystems().removeAllNonHomeSystems();
-    this._editText.setText("");
-  };
+  private readonly _onClearMap = new ThrottleClickHandler<Button>(
+    (_button: Button, player: Player): void => {
+      const playerName: string = TI4.playerName.getByPlayer(player);
+      const msg: string = `Map cleared by ${playerName}`;
+      Broadcast.chatAll(msg);
+
+      new MapRemovePlanetCards().removePlanetCards();
+      new MapRemoveFrontierTokens().removeFrontierTokens();
+      new MapRemoveAllNonHomeSystems().removeAllNonHomeSystems();
+      this._editText.setText("");
+    }
+  ).get();
 
   constructor(scale: number) {
     const labelUi: LabelUI = new LabelUI(scale);
@@ -131,13 +145,6 @@ export class MapToolUI extends AbstractUI {
 
     const premadeMapButton: ButtonUI = new ButtonUI(scale);
     premadeMapButton.getButton().setText("Use premade map");
-    premadeMapButton.getButton().onClicked.add(
-      new ThrottleClickHandler<Button>(
-        (_button: Button, player: Player): void => {
-          this._openPremadeMapWindow(player.getSlot());
-        }
-      ).get()
-    );
 
     const editText: MultilineTextBox = new MultilineTextBox()
       .setFontSize(CONFIG.FONT_SIZE * scale)
@@ -214,6 +221,7 @@ export class MapToolUI extends AbstractUI {
 
     this._editText = editText;
 
+    premadeMapButton.getButton().onClicked.add(this._onUsePremadeMap);
     buttonLoad.getButton().onClicked.add(this._onMapStringLoad);
     buttonPlacePlanetCards.getButton().onClicked.add(this._onPlacePlanetCards);
     buttonPlaceFrontierTokens
@@ -243,15 +251,4 @@ export class MapToolUI extends AbstractUI {
     });
     return mapPremadeUi;
   };
-
-  _openPremadeMapWindow(playerSlot: number): void {
-    const namespaceId: NamespaceId | undefined = undefined;
-    const windowTitle: string = "Premade Maps";
-    const abstractWindow: AbstractWindow = new AbstractWindow(
-      this._createMapPremadeUI,
-      namespaceId,
-      windowTitle
-    );
-    this._premadeMapWindow = abstractWindow.createWindow([playerSlot]).attach();
-  }
 }

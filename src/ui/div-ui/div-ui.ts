@@ -8,9 +8,11 @@ export class DivUI extends AbstractUI {
     orientation: "horizontal" | "vertical"
   ) {
     const thickness = 2 * scale;
+    const w: number = orientation === "horizontal" ? scaledLength : thickness;
+    const h: number = orientation === "horizontal" ? thickness : scaledLength;
     const size: UI_SIZE = {
-      w: orientation === "horizontal" ? scaledLength : thickness,
-      h: orientation === "horizontal" ? thickness : scaledLength,
+      w,
+      h,
     };
     const border: Border = new Border().setColor([0, 0, 0, 1]);
     const borderBox: LayoutBox = new LayoutBox()

@@ -33,6 +33,7 @@ export class LayoutSystemContainer {
 
     const container: GameObject = Spawn.spawnOrThrow("container:base/systems");
     if (container instanceof Container) {
+      container.setMaxItems(500);
       container.insert(systemTiles);
 
       // Apply tag to restrict what can enter.

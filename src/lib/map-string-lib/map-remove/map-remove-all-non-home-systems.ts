@@ -1,4 +1,4 @@
-import { GameObject, Player } from "@tabletop-playground/api";
+import { GameObject, ObjectType, Player } from "@tabletop-playground/api";
 import { GarbageContainer } from "ttpg-darrell";
 import { System } from "../../system-lib/system/system";
 
@@ -11,6 +11,7 @@ export class MapRemoveAllNonHomeSystems {
     for (const system of systems) {
       if (!system.isHome()) {
         const obj: GameObject = system.getObj();
+        obj.setObjectType(ObjectType.Regular);
         GarbageContainer.tryRecycle(obj, player);
       }
     }

@@ -183,7 +183,7 @@ it("_trySpawnNewSystemTileObj (spawn)", () => {
   expect(systems.length).toBe(1);
   const systemTileObj: GameObject | undefined = systems[0]?.getObj();
   expect(systemTileObj?.getTemplateMetadata()).toBe("tile.system:base/1");
-  expect(systemTileObj?.getPosition().toString()).toBe("(X=1,Y=2,Z=3)");
+  expect(systemTileObj?.getPosition().toString()).toBe("(X=1,Y=2,Z=0)"); // snap to ground
   expect(systemTileObj?.getRotation().toString()).toBe("(P=4,Y=5,R=6)");
 });
 
@@ -196,6 +196,7 @@ it("_trySpawnNewSystemTileObj (unknown nsid)", () => {
 });
 
 it("load", () => {
+  MockGameObject.simple("token:base/custodians");
   const mapString: string = "{1}";
   const load: MapStringLoad = new MapStringLoad();
   expect(load.load(mapString)).toBe(true);
