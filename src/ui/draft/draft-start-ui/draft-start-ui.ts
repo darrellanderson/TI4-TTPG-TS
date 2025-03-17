@@ -21,6 +21,7 @@ import {
   DraftActivityStartParams,
 } from "../../../lib/draft-lib/draft-activity-start/draft-activity-start";
 import { CheckBoxUI } from "../../button-ui/checkbox-ui";
+import { DivUI } from "../../div-ui/div-ui";
 import { EditableUI } from "../../button-ui/editable-ui";
 import { HorizontalUIBuilder } from "../../panel/horizontal-ui-builder";
 import { IDraft } from "../../../lib/draft-lib/drafts/idraft";
@@ -38,6 +39,10 @@ export class DraftStartUI extends AbstractUI {
   private readonly _idrafts: Array<IDraft> = [new Milty(), new Wekker()];
   private readonly _params: DraftActivityStartParams;
   private readonly _draftCheckBoxes: Array<CheckBox>;
+
+  static _scptDrafts(scale: number): VerticalUIBuilder {
+    return new VerticalUIBuilder().setSpacing(CONFIG.SPACING * scale);
+  }
 
   readonly _onDraftCheckStateChangedHandler = (
     checkBox: CheckBox,
@@ -167,7 +172,7 @@ export class DraftStartUI extends AbstractUI {
     const startButton: ButtonUI = new ButtonUI(scale);
     startButton.getButton().setText("Start Draft");
 
-    const ui: AbstractUI = new VerticalUIBuilder()
+    const rightUi: AbstractUI = new VerticalUIBuilder()
       .setSpacing(CONFIG.SPACING * scale)
       .setHorizontalAlignment(HorizontalAlignment.Center)
       .addUIs([
@@ -178,6 +183,18 @@ export class DraftStartUI extends AbstractUI {
         startButton,
       ])
       .build();
+
+    const SCPT: AbstractUI = DraftStartUI._scptDrafts(scale)
+      .setOverrideHeight(rightUi.getSize().h)
+      .build();
+
+    const div: AbstractUI = new DivUI(scale, rightUi.getSize().h, "vertical");
+    const ui: AbstractUI = new HorizontalUIBuilder()
+      .setSpacing(CONFIG.SPACING * scale)
+      .setVerticalAlignment(VerticalAlignment.Top)
+      .addUIs([SCPT, div, rightUi])
+      .build();
+
     super(ui.getWidget(), ui.getSize());
 
     this._params = params;
