@@ -44,6 +44,7 @@ import { PlayerColor } from "../lib/player-lib/player-color/player-color";
 import { PlayerName } from "../lib/player-lib/player-name/player-name";
 import { PlayerSeats } from "../lib/player-lib/player-seats/player-seats";
 import { RemoveRegistry } from "../lib/remove-lib/registry/remove-registry";
+import { ReportCommandTokenPutGet } from "../lib/command-token-lib/report-command-token-put-get/report-command-token-put-get";
 import { ReportRemaining } from "../context-menu/report-remaining/report-remaining";
 import { RightClickExplore } from "../context-menu/system/explore-system/right-click-explore";
 import { RightClickPurge } from "../context-menu/right-click-purge/right-click-purge";
@@ -143,6 +144,7 @@ export function resetGlobalThisTI4(): TI4Class {
     new OnPlayerChangeColorRequest(),
     new OnPlayerChangedColor(),
     new OnSystemActivated(),
+    new ReportCommandTokenPutGet(),
     new ReportRemaining(),
     new RightClickExplore(),
     new RightClickPurge(),
