@@ -100,6 +100,13 @@ export class GlobalEvents {
   >();
 
   /**
+   * Called when a player plays a strategy card.
+   */
+  public readonly onStrategyCardPlayed = new TriggerableMulticastDelegate<
+    (strategyCard: GameObject, player: Player) => void
+  >();
+
+  /**
    * Called when a player activates a system.  Other mechanisms may also
    * activate a system by triggering this event.
    *

@@ -22,7 +22,6 @@ export class PerContainerReportCommandTokenPutGet {
 
   constructor(container: Container) {
     this._container = container;
-    console.log("PerContainerReportCommandTokenPutGet", container.getId());
 
     container.onInserted.add(this._onInserted);
     container.onRemoved.add(this._onRemoved);
