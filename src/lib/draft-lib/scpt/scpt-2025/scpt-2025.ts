@@ -4,10 +4,13 @@ import {
   DraftActivityStartParams,
 } from "../../draft-activity-start/draft-activity-start";
 import { Milty } from "../../drafts/milty";
+import { Scpt2024 } from "../scpt-2024/scpt-2024";
+import { Scpt2023 } from "../scpt-2023/scpt-2023";
+import { Scpt2022 } from "../scpt-2022/scpt-2022";
 
 export class Scpt2025 extends AbstractScpt {
   getLabel(): string {
-    return "2025 (#7)";
+    return "#7 (2025)";
   }
 
   getQual(): DraftActivityStartParams | undefined {
@@ -45,8 +48,23 @@ export class Scpt2025 extends AbstractScpt {
   }
 
   getPrelim(): DraftActivityStartParams | undefined {
-    return undefined;
+    // Choose a prior prelim's slices.
+    const candidates: Array<AbstractScpt> = [
+      new Scpt2024(),
+      new Scpt2023(),
+      new Scpt2022(),
+    ];
+    const index: number = Math.floor(Math.random() * candidates.length);
+    const scpt: AbstractScpt | undefined = candidates[index];
+    if (scpt) {
+      const params: DraftActivityStartParams | undefined = scpt.getPrelim();
+      if (params) {
+        params.numFactions = 6;
+        return params;
+      }
+    }
   }
+
   getSemi(): DraftActivityStartParams | undefined {
     return undefined;
   }
