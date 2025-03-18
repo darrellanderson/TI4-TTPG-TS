@@ -4,6 +4,7 @@ import {
   Widget,
   world,
 } from "@tabletop-playground/api";
+import { TriggerableMulticastDelegate } from "ttpg-darrell";
 import { AbstractUI } from "../../abstract-ui/abtract-ui";
 import { DRAFT_NAMESPACE_ID } from "../../../lib/draft-lib/draft-activity-start/draft-activity-start";
 import { Milty } from "../../../lib/draft-lib/drafts/milty";
@@ -21,7 +22,12 @@ function _goDirect() {
       config: "",
     },
   };
-  const abstractUi: AbstractUI = new ScptDraftButtonUI(scale, scptDraftParams);
+  const onDraftStarted = new TriggerableMulticastDelegate<() => void>();
+  const abstractUi: AbstractUI = new ScptDraftButtonUI(
+    scale,
+    scptDraftParams,
+    onDraftStarted
+  );
   const widget: Widget = abstractUi.getWidget();
 
   const screenUI = new ScreenUIElement();

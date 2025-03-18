@@ -1,4 +1,5 @@
 import { Button, Player } from "@tabletop-playground/api";
+import { TriggerableMulticastDelegate } from "ttpg-darrell";
 import { clickAll, MockButton, MockPlayer } from "ttpg-mock";
 import { Milty } from "../../../lib/draft-lib/drafts/milty";
 import { DRAFT_NAMESPACE_ID } from "../../../lib/draft-lib/draft-activity-start/draft-activity-start";
@@ -9,7 +10,8 @@ it("constructor", () => {
   const scptDraftParams: ScptDraftParams = {
     label: "YEAR",
   };
-  new ScptDraftButtonUI(scale, scptDraftParams);
+  const onDraftStarted = new TriggerableMulticastDelegate<() => void>();
+  new ScptDraftButtonUI(scale, scptDraftParams, onDraftStarted);
 });
 
 it("clickAllButtons", () => {
@@ -45,9 +47,11 @@ it("clickAllButtons", () => {
       config: "",
     },
   };
+  const onDraftStarted = new TriggerableMulticastDelegate<() => void>();
   const scptDraftButtonUI: ScptDraftButtonUI = new ScptDraftButtonUI(
     scale,
-    scptDraftParams
+    scptDraftParams,
+    onDraftStarted
   );
 
   // Click the "confirm" buttons.

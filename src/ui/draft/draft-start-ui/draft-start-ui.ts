@@ -26,23 +26,19 @@ import { EditableUI } from "../../button-ui/editable-ui";
 import { HorizontalUIBuilder } from "../../panel/horizontal-ui-builder";
 import { IDraft } from "../../../lib/draft-lib/drafts/idraft";
 import { LabelUI } from "../../button-ui/label-ui";
+import { LongLabelUI } from "../../button-ui/long-label-ui";
 import { SliderWithValueUI } from "../../button-ui/slider-with-value-ui";
 import { VerticalUIBuilder } from "../../panel/vertical-ui-builder";
 import { Milty } from "../../../lib/draft-lib/drafts/milty";
 import { Wekker } from "../../../lib/draft-lib/drafts/wekker";
+import { ScptDraftsUi } from "./scpt-drafts-ui";
 
 export class DraftStartUI extends AbstractUI {
-  public readonly onDraftStarted = new TriggerableMulticastDelegate<
-    () => void
-  >();
+  public readonly onDraftStarted;
 
   private readonly _idrafts: Array<IDraft> = [new Milty(), new Wekker()];
   private readonly _params: DraftActivityStartParams;
   private readonly _draftCheckBoxes: Array<CheckBox>;
-
-  static _scptDrafts(scale: number): VerticalUIBuilder {
-    return new VerticalUIBuilder().setSpacing(CONFIG.SPACING * scale);
-  }
 
   readonly _onDraftCheckStateChangedHandler = (
     checkBox: CheckBox,
@@ -99,6 +95,12 @@ export class DraftStartUI extends AbstractUI {
 
   constructor(scale: number, params: DraftActivityStartParams) {
     const playerCount: number = TI4.config.playerCount;
+    const onDraftStarted = new TriggerableMulticastDelegate<() => void>();
+
+    const scaledWidth: number =
+      (CONFIG.BUTTON_WIDTH * 2 + CONFIG.SPACING * 2) * scale;
+    const label: LongLabelUI = new LongLabelUI(scaledWidth, scale);
+    label.getText().setBold(true).setText("Custom Draft".toUpperCase());
 
     const sliceShapeLabel: LabelUI = new LabelUI(scale);
     sliceShapeLabel
@@ -176,6 +178,7 @@ export class DraftStartUI extends AbstractUI {
       .setSpacing(CONFIG.SPACING * scale)
       .setHorizontalAlignment(HorizontalAlignment.Center)
       .addUIs([
+        label,
         draftPanel,
         numSlicesPanel,
         numFactionsPanel,
@@ -184,11 +187,14 @@ export class DraftStartUI extends AbstractUI {
       ])
       .build();
 
-    const SCPT: AbstractUI = DraftStartUI._scptDrafts(scale)
-      .setOverrideHeight(rightUi.getSize().h)
-      .build();
+    const overrideHeight: number = rightUi.getSize().h;
+    const SCPT: AbstractUI = new ScptDraftsUi(
+      scale,
+      overrideHeight,
+      onDraftStarted
+    );
 
-    const div: AbstractUI = new DivUI(scale, rightUi.getSize().h, "vertical");
+    const div: AbstractUI = new DivUI(scale, overrideHeight, "vertical");
     const ui: AbstractUI = new HorizontalUIBuilder()
       .setSpacing(CONFIG.SPACING * scale)
       .setVerticalAlignment(VerticalAlignment.Top)
@@ -197,6 +203,7 @@ export class DraftStartUI extends AbstractUI {
 
     super(ui.getWidget(), ui.getSize());
 
+    this.onDraftStarted = onDraftStarted;
     this._params = params;
     this._draftCheckBoxes = draftCheckBoxUIs.map(
       (checkBoxUI: CheckBoxUI): CheckBox => {

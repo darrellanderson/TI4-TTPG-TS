@@ -11,7 +11,11 @@ import {
 } from "@tabletop-playground/api";
 import { AbstractUI, UI_SIZE } from "../../abstract-ui/abtract-ui";
 import { CONFIG } from "../../config/config";
-import { ConfirmButton, ThrottleClickHandler } from "ttpg-darrell";
+import {
+  ConfirmButton,
+  ThrottleClickHandler,
+  TriggerableMulticastDelegate,
+} from "ttpg-darrell";
 import { DraftActivityStartParams } from "../../../lib/draft-lib/draft-activity-start/draft-activity-start";
 import { DraftStartUI } from "./draft-start-ui";
 
@@ -31,11 +35,13 @@ export type ScptDraftParams = {
  */
 export class ScptDraftButtonUI extends AbstractUI {
   private readonly _scptDraftParams: ScptDraftParams;
+  private readonly _onDraftStarted: TriggerableMulticastDelegate<() => void>;
 
   _qualHandler = (_button: Button, _player: Player): void => {
     const draftActivityStartParams: DraftActivityStartParams | undefined =
       this._scptDraftParams.qual;
     if (draftActivityStartParams) {
+      this._onDraftStarted.trigger();
       new DraftStartUI(1, draftActivityStartParams).startDraft();
     }
   };
@@ -43,6 +49,7 @@ export class ScptDraftButtonUI extends AbstractUI {
     const draftActivityStartParams: DraftActivityStartParams | undefined =
       this._scptDraftParams.prelim;
     if (draftActivityStartParams) {
+      this._onDraftStarted.trigger();
       new DraftStartUI(1, draftActivityStartParams).startDraft();
     }
   };
@@ -50,6 +57,7 @@ export class ScptDraftButtonUI extends AbstractUI {
     const draftActivityStartParams: DraftActivityStartParams | undefined =
       this._scptDraftParams.semi;
     if (draftActivityStartParams) {
+      this._onDraftStarted.trigger();
       new DraftStartUI(1, draftActivityStartParams).startDraft();
     }
   };
@@ -57,11 +65,16 @@ export class ScptDraftButtonUI extends AbstractUI {
     const draftActivityStartParams: DraftActivityStartParams | undefined =
       this._scptDraftParams.final;
     if (draftActivityStartParams) {
+      this._onDraftStarted.trigger();
       new DraftStartUI(1, draftActivityStartParams).startDraft();
     }
   };
 
-  constructor(scale: number, scptDraftParams: ScptDraftParams) {
+  constructor(
+    scale: number,
+    scptDraftParams: ScptDraftParams,
+    onDraftStarted: TriggerableMulticastDelegate<() => void>
+  ) {
     const size: UI_SIZE = {
       w: (CONFIG.BUTTON_WIDTH * 2 + CONFIG.SPACING) * scale,
       h: CONFIG.BUTTON_HEIGHT * scale,
@@ -113,6 +126,7 @@ export class ScptDraftButtonUI extends AbstractUI {
 
     super(panelBox, size);
     this._scptDraftParams = scptDraftParams;
+    this._onDraftStarted = onDraftStarted;
 
     buttonQual.onClicked.add(
       new ThrottleClickHandler<Button>(this._qualHandler).get()

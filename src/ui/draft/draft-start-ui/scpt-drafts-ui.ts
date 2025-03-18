@@ -1,0 +1,46 @@
+import { TriggerableMulticastDelegate } from "ttpg-darrell";
+import { AbstractUI } from "../../abstract-ui/abtract-ui";
+import { CONFIG } from "../../config/config";
+import { LongLabelUI } from "../../button-ui/long-label-ui";
+import { ScptDraftButtonUI } from "./scpt-draft-button-ui";
+import { VerticalUIBuilder } from "../../panel/vertical-ui-builder";
+
+import { AbstractScpt } from "../../../lib/draft-lib/scpt/abstract-scpt/abstract-scpt";
+import { Scpt2025 } from "../../../lib/draft-lib/scpt/scpt-2025/scpt-2025";
+
+export class ScptDraftsUi extends AbstractUI {
+  constructor(
+    scale: number,
+    overrideHeight: number,
+    onDraftStarted: TriggerableMulticastDelegate<() => void>
+  ) {
+    const scaledWidth: number =
+      (CONFIG.BUTTON_WIDTH * 2 + CONFIG.SPACING * 2) * scale;
+    const label: LongLabelUI = new LongLabelUI(scaledWidth, scale);
+    label
+      .getText()
+      .setBold(true)
+      .setText("SCPT Patreon Tournament Drafts".toUpperCase());
+
+    const abstractDrafts: Array<AbstractScpt> = [new Scpt2025()];
+
+    const uis: Array<AbstractUI> = abstractDrafts.map(
+      (abstractScpt: AbstractScpt): AbstractUI => {
+        return new ScptDraftButtonUI(
+          scale,
+          abstractScpt.getScptDraftParams(),
+          onDraftStarted
+        );
+      }
+    );
+    uis.unshift(label);
+
+    const ui: AbstractUI = new VerticalUIBuilder()
+      .setSpacing(CONFIG.SPACING * scale)
+      .setOverrideHeight(overrideHeight)
+      .addUIs(uis)
+      .build();
+
+    super(ui.getWidget(), ui.getSize());
+  }
+}
