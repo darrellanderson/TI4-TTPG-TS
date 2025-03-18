@@ -10,6 +10,7 @@ import { Scpt2025 } from "../../../lib/draft-lib/scpt/scpt-2025/scpt-2025";
 import { Scpt2024 } from "../../../lib/draft-lib/scpt/scpt-2024/scpt-2024";
 import { Scpt2023 } from "../../../lib/draft-lib/scpt/scpt-2023/scpt-2023";
 import { Scpt2022 } from "../../../lib/draft-lib/scpt/scpt-2022/scpt-2022";
+import { Scpt2021 } from "../../../lib/draft-lib/scpt/scpt-2021/scpt-2021";
 
 export class ScptDraftsUi extends AbstractUI {
   constructor(
@@ -30,6 +31,7 @@ export class ScptDraftsUi extends AbstractUI {
       new Scpt2024(),
       new Scpt2023(),
       new Scpt2022(),
+      new Scpt2021(),
     ];
 
     const uis: Array<AbstractUI> = abstractDrafts.map(

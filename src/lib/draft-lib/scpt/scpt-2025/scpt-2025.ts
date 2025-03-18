@@ -7,6 +7,7 @@ import { Milty } from "../../drafts/milty";
 import { Scpt2024 } from "../scpt-2024/scpt-2024";
 import { Scpt2023 } from "../scpt-2023/scpt-2023";
 import { Scpt2022 } from "../scpt-2022/scpt-2022";
+import { Scpt2021 } from "../scpt-2021/scpt-2021";
 
 export class Scpt2025 extends AbstractScpt {
   getLabel(): string {
@@ -53,6 +54,7 @@ export class Scpt2025 extends AbstractScpt {
       new Scpt2024(),
       new Scpt2023(),
       new Scpt2022(),
+      new Scpt2021(),
     ];
     const index: number = Math.floor(Math.random() * candidates.length);
     const scpt: AbstractScpt | undefined = candidates[index];
