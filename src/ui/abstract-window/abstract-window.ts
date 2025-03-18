@@ -1,4 +1,4 @@
-import { Widget, world } from "@tabletop-playground/api";
+import { Rotator, Vector, Widget, world } from "@tabletop-playground/api";
 import {
   IWindowWidget,
   NamespaceId,
@@ -27,6 +27,31 @@ export type CreateAbstractUIType = (
 export class AbstractWindow {
   private readonly _namespaceId: NamespaceId | undefined;
   private readonly _windowParams: WindowParams;
+
+  static getPlayerSlotToTransform(): {
+    [key: number]: {
+      pos: [x: number, y: number, z: number] | Vector;
+      rot: [pitch: number, yaw: number, roll: number] | Rotator;
+    };
+  } {
+    const playerSlotToTransform: {
+      [key: number]: {
+        pos: [x: number, y: number, z: number] | Vector;
+        rot: [pitch: number, yaw: number, roll: number] | Rotator;
+      };
+    } = {};
+    for (const playerSeat of TI4.playerSeats.getAllSeats()) {
+      const playerSlot: number = playerSeat.playerSlot;
+      const pos: Vector = playerSeat.cardHolder.getPosition().add([0, 0, 3]);
+      pos.x = pos.x * 0.75; // move toward middle
+      const rot: Rotator = new Rotator(0, 0, 0);
+      playerSlotToTransform[playerSlot] = {
+        pos,
+        rot,
+      };
+    }
+    return playerSlotToTransform;
+  }
 
   constructor(
     createAbstractUI: CreateAbstractUIType,
@@ -76,6 +101,14 @@ export class AbstractWindow {
       defaultTarget: "screen",
       // Use u=0.814 to see turn order.
       screen: { anchor: { u: 1, v: 0 }, pos: { u: 0.97, v: 0.05 } },
+
+      world: {
+        anchor: {
+          u: 0.5,
+          v: 0.5,
+        },
+        playerSlotToTransform: AbstractWindow.getPlayerSlotToTransform(),
+      },
     };
   }
 

@@ -1,4 +1,4 @@
-import { Rotator, Vector, world } from "@tabletop-playground/api";
+import { world } from "@tabletop-playground/api";
 import { Direction, IGlobal, NamespaceId, Shuffle, Window } from "ttpg-darrell";
 
 import { AbstractUI } from "../../../ui/abstract-ui/abtract-ui";
@@ -188,32 +188,6 @@ export class DraftActivityStart {
       windowTitle
     );
     abstractWindow.getMutableWindowParams().disableClose = true;
-
-    const playerSlotToTransform: {
-      [key: number]: {
-        pos: [x: number, y: number, z: number] | Vector;
-        rot: [pitch: number, yaw: number, roll: number] | Rotator;
-      };
-    } = {};
-    for (const playerSeat of TI4.playerSeats.getAllSeats()) {
-      const playerSlot: number = playerSeat.playerSlot;
-      const pos: Vector = playerSeat.cardHolder.getPosition().add([0, 0, 3]);
-      pos.x = pos.x * 0.75; // move toward middle
-      const rot: Rotator = new Rotator(0, 0, 0);
-      playerSlotToTransform[playerSlot] = {
-        pos,
-        rot,
-      };
-    }
-
-    abstractWindow.getMutableWindowParams().world = {
-      anchor: {
-        u: 0.5,
-        v: 0.5,
-      },
-      playerSlotToTransform,
-    };
-
     const window: Window = abstractWindow.createWindow();
     window.attach();
 

@@ -2,6 +2,11 @@ import { GameObject, ObjectType, Player } from "@tabletop-playground/api";
 import { GarbageContainer } from "ttpg-darrell";
 import { System } from "../../system-lib/system/system";
 
+const IGNORE_TILES: Set<number> = new Set([
+  18, // mecatol rex
+  82, // mallice
+]);
+
 export class MapRemoveAllNonHomeSystems {
   removeAllNonHomeSystems(): void {
     const skipContained: boolean = true;
@@ -9,7 +14,8 @@ export class MapRemoveAllNonHomeSystems {
       TI4.systemRegistry.getAllSystemsWithObjs(skipContained);
     const player: Player | undefined = undefined;
     for (const system of systems) {
-      if (!system.isHome()) {
+      const tile: number = system.getSystemTileNumber();
+      if (!system.isHome() && !IGNORE_TILES.has(tile)) {
         const obj: GameObject = system.getObj();
         obj.setObjectType(ObjectType.Regular);
         GarbageContainer.tryRecycle(obj, player);

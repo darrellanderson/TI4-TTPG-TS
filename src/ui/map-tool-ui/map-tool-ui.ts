@@ -3,6 +3,7 @@ import {
   LayoutBox,
   MultilineTextBox,
   Player,
+  TextBox,
   TextJustification,
   Widget,
 } from "@tabletop-playground/api";
@@ -24,6 +25,7 @@ import { MapStringHyperlanes } from "../../lib/map-string-lib/map-string/map-str
 
 import { AbstractUI, UI_SIZE } from "../abstract-ui/abtract-ui";
 import { ButtonUI } from "../button-ui/button-ui";
+import { DraftStartWindow } from "../draft/draft-start-ui/draft-start-window";
 import { HorizontalUIBuilder } from "../panel/horizontal-ui-builder";
 import { LabelUI } from "../button-ui/label-ui";
 import { MapPremadeUI } from "../map-premade-ui/map-premade-ui";
@@ -52,6 +54,13 @@ export class MapToolUI extends AbstractUI {
       this._premadeMapWindow = abstractWindow
         .createWindow([playerSlot])
         .attach();
+    }
+  ).get();
+
+  private readonly _onUseSliceDraft = new ThrottleClickHandler<Button>(
+    (_button: Button, player: Player): void => {
+      const playerSlot: number = player.getSlot();
+      new DraftStartWindow().createAndAttachWindow(playerSlot);
     }
   ).get();
 
@@ -141,16 +150,19 @@ export class MapToolUI extends AbstractUI {
   constructor(scale: number) {
     const labelUi: LabelUI = new LabelUI(scale);
     labelUi.getText().setText("Map string:");
-    labelUi.getText().setJustification(TextJustification.Left);
+    labelUi.getText().setJustification(TextJustification.Right);
 
-    const premadeMapButton: ButtonUI = new ButtonUI(scale);
-    premadeMapButton.getButton().setText("Use premade map");
+    const buttonPremadeMap: ButtonUI = new ButtonUI(scale);
+    buttonPremadeMap.getButton().setText("Use premade map...");
 
-    const editText: MultilineTextBox = new MultilineTextBox()
+    const buttonSliceDraft: ButtonUI = new ButtonUI(scale);
+    buttonSliceDraft.getButton().setText("Use slice draft...");
+
+    const editText: TextBox = new TextBox()
       .setFontSize(CONFIG.FONT_SIZE * scale)
       .setMaxLength(1000);
     const textBoxSize: UI_SIZE = {
-      w: CONFIG.BUTTON_WIDTH * 2 * scale + CONFIG.SPACING * scale,
+      w: CONFIG.BUTTON_WIDTH * scale,
       h: CONFIG.BUTTON_HEIGHT * scale,
     };
     const layoutBox: Widget = new LayoutBox()
@@ -190,6 +202,8 @@ export class MapToolUI extends AbstractUI {
     const left: AbstractUI = new VerticalUIBuilder()
       .setSpacing(CONFIG.SPACING * scale)
       .addUIs([
+        buttonPremadeMap,
+        labelUi,
         buttonLoad,
         buttonPlacePlanetCards,
         buttonPlaceFrontierTokens,
@@ -200,6 +214,8 @@ export class MapToolUI extends AbstractUI {
     const right: AbstractUI = new VerticalUIBuilder()
       .setSpacing(CONFIG.SPACING * scale)
       .addUIs([
+        buttonSliceDraft,
+        textBoxUi,
         buttonSave,
         buttonRemovePlanetCards,
         buttonRemoveFrontierTokens,
@@ -207,21 +223,17 @@ export class MapToolUI extends AbstractUI {
       ])
       .build();
 
-    const bottom: AbstractUI = new HorizontalUIBuilder()
+    const overall: AbstractUI = new HorizontalUIBuilder()
       .setSpacing(CONFIG.SPACING * scale)
       .addUIs([left, right])
-      .build();
-
-    const overall: AbstractUI = new VerticalUIBuilder()
-      .setSpacing(CONFIG.SPACING * scale)
-      .addUIs([premadeMapButton, labelUi, textBoxUi, bottom])
       .build();
 
     super(overall.getWidget(), overall.getSize());
 
     this._editText = editText;
 
-    premadeMapButton.getButton().onClicked.add(this._onUsePremadeMap);
+    buttonPremadeMap.getButton().onClicked.add(this._onUsePremadeMap);
+    buttonSliceDraft.getButton().onClicked.add(this._onUseSliceDraft);
     buttonLoad.getButton().onClicked.add(this._onMapStringLoad);
     buttonPlacePlanetCards.getButton().onClicked.add(this._onPlacePlanetCards);
     buttonPlaceFrontierTokens

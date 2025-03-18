@@ -1,7 +1,7 @@
+import { Player } from "@tabletop-playground/api";
 import { MockGameObject, MockPlayer } from "ttpg-mock";
 import { ToggleCombatWindow } from "./toggle-combat-window";
-import { System } from "lib/system-lib/system/system";
-import { Player } from "@tabletop-playground/api";
+import { System } from "../../lib/system-lib/system/system";
 
 it("constructor/init/event", () => {
   const toggleCombatWindow = new ToggleCombatWindow();
