@@ -5,8 +5,6 @@ import {
   TurnOrder,
 } from "ttpg-darrell";
 import { number, z } from "zod";
-import { AdvanceNoWhensAfters } from "./advance-no-whens-afters";
-import { ReportFinalAgendaState } from "./report-final-agenda-state";
 
 export const MAX_OUTCOME_NAME_LENGTH = 20;
 
@@ -80,10 +78,12 @@ export class AgendaState {
     this._save();
 
     // Advance turn/phase current "waiting for" player sets no whens or afters.
-    new AdvanceNoWhensAfters(this);
+    // new AdvanceNoWhensAfters(this);
+    // CREATE THIS IN THE ONAGENDASTATECREATED EVENT to avoid circular dependency.
 
     // Report final state when finished.
-    new ReportFinalAgendaState(this);
+    // new ReportFinalAgendaState(this);
+    // CREATE THIS IN THE ONAGENDASTATECREATED EVENT to avoid circular dependency.
 
     // Tell any external listeners a new agenda started/resumed.
     TI4.events.onAgendaStateCreated.trigger(this);
