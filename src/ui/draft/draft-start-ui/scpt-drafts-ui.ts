@@ -13,6 +13,16 @@ import { Scpt2022 } from "../../../lib/draft-lib/scpt/scpt-2022/scpt-2022";
 import { Scpt2021 } from "../../../lib/draft-lib/scpt/scpt-2021/scpt-2021";
 
 export class ScptDraftsUi extends AbstractUI {
+  static getScptDrafts(): Array<AbstractScpt> {
+    return [
+      new Scpt2025(),
+      new Scpt2024(),
+      new Scpt2023(),
+      new Scpt2022(),
+      new Scpt2021(),
+    ];
+  }
+
   constructor(
     scale: number,
     overrideHeight: number,
@@ -26,13 +36,7 @@ export class ScptDraftsUi extends AbstractUI {
       .setBold(true)
       .setText("SCPT Patreon Tournament Drafts".toUpperCase());
 
-    const abstractDrafts: Array<AbstractScpt> = [
-      new Scpt2025(),
-      new Scpt2024(),
-      new Scpt2023(),
-      new Scpt2022(),
-      new Scpt2021(),
-    ];
+    const abstractDrafts: Array<AbstractScpt> = ScptDraftsUi.getScptDrafts();
 
     const uis: Array<AbstractUI> = abstractDrafts.map(
       (abstractScpt: AbstractScpt): AbstractUI => {
