@@ -6,9 +6,10 @@ import {
 } from "@tabletop-playground/api";
 import { TriggerableMulticastDelegate } from "ttpg-darrell";
 import { AbstractUI } from "../../abstract-ui/abtract-ui";
-import { DRAFT_NAMESPACE_ID } from "../../../lib/draft-lib/draft-activity-start/draft-activity-start";
+import { DRAFT_NAMESPACE_ID } from "../../../lib/draft-lib/draft-activity-start/draft-activity-start-params";
 import { Milty } from "../../../lib/draft-lib/drafts/milty";
-import { ScptDraftButtonUI, ScptDraftParams } from "./scpt-draft-button-ui";
+import { ScptDraftButtonUI } from "./scpt-draft-button-ui";
+import { ScptDraftParams } from "../../../lib/draft-lib/scpt/abstract-scpt/scpt-draft-params";
 
 function _goDirect() {
   const scale: number = 1;

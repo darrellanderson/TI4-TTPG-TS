@@ -7,8 +7,8 @@ import { DraftState } from "../draft-state/draft-state";
 import {
   DraftActivityMaybeResume,
   DraftActivityStart,
-  DraftActivityStartParams,
 } from "./draft-activity-start";
+import { DraftActivityStartParams } from "./draft-activity-start-params";
 
 class MyDraft implements IDraft {
   getDraftName(): string {

@@ -16,16 +16,9 @@ import {
   ThrottleClickHandler,
   TriggerableMulticastDelegate,
 } from "ttpg-darrell";
-import { DraftActivityStartParams } from "../../../lib/draft-lib/draft-activity-start/draft-activity-start";
+import { DraftActivityStartParams } from "../../../lib/draft-lib/draft-activity-start/draft-activity-start-params";
 import { DraftStartUI } from "./draft-start-ui";
-
-export type ScptDraftParams = {
-  label: string;
-  qual?: DraftActivityStartParams;
-  prelim?: DraftActivityStartParams;
-  semi?: DraftActivityStartParams;
-  final?: DraftActivityStartParams;
-};
+import { ScptDraftParams } from "../../../lib/draft-lib/scpt/abstract-scpt/scpt-draft-params";
 
 /**
  * "YEAR" qual / prelim / semi / final.

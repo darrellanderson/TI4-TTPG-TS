@@ -16,21 +16,14 @@ import {
   SliceTiles,
 } from "../generate-slices/generate-slices";
 import { GenerateFactions } from "../generate-factions/generate-factions";
-import { IDraft } from "../drafts/idraft";
 import { ParseSlices } from "../parse/parse-slices";
 import { ParseLabels } from "../parse/parse-labels";
 import { ParseFactions } from "../parse/parse-factions";
 import { ResolveConflictsKeleres } from "../resolve-conflicts/resolve-conflicts-keleres";
-
-export const DRAFT_NAMESPACE_ID: NamespaceId = "@ti4/draft";
-
-export type DraftActivityStartParams = {
-  namespaceId: NamespaceId;
-  draft: IDraft;
-  numSlices: number;
-  numFactions: number;
-  config: string;
-};
+import {
+  DRAFT_NAMESPACE_ID,
+  DraftActivityStartParams,
+} from "./draft-activity-start-params";
 
 export class DraftActivityMaybeResume implements IGlobal {
   init(): void {

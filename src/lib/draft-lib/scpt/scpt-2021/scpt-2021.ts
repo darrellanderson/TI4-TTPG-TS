@@ -2,7 +2,7 @@ import { AbstractScpt } from "../abstract-scpt/abstract-scpt";
 import {
   DRAFT_NAMESPACE_ID,
   DraftActivityStartParams,
-} from "../../draft-activity-start/draft-activity-start";
+} from "../../draft-activity-start/draft-activity-start-params";
 import { Milty } from "../../drafts/milty";
 
 export class Scpt2021 extends AbstractScpt {

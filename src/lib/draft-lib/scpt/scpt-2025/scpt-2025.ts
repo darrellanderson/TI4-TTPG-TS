@@ -2,7 +2,7 @@ import { AbstractScpt } from "../abstract-scpt/abstract-scpt";
 import {
   DRAFT_NAMESPACE_ID,
   DraftActivityStartParams,
-} from "../../draft-activity-start/draft-activity-start";
+} from "../../draft-activity-start/draft-activity-start-params";
 import { Milty } from "../../drafts/milty";
 import { Scpt2024 } from "../scpt-2024/scpt-2024";
 import { Scpt2023 } from "../scpt-2023/scpt-2023";
@@ -33,7 +33,8 @@ export class Scpt2025 extends AbstractScpt {
     ];
 
     // Prune to player count.
-    while (slices.length > TI4.config.playerCount) {
+    const playerCount: number = this.getPlayerCount();
+    while (slices.length > playerCount) {
       const index: number = Math.floor(Math.random() * slices.length);
       slices.splice(index, 1);
       labels.splice(index, 1);
@@ -42,8 +43,8 @@ export class Scpt2025 extends AbstractScpt {
     return {
       namespaceId: DRAFT_NAMESPACE_ID,
       draft: new Milty(),
-      numSlices: TI4.config.playerCount,
-      numFactions: TI4.config.playerCount,
+      numSlices: playerCount,
+      numFactions: playerCount,
       config: `${slices.join("|")}&labels=${labels.join("|")}`,
     };
   }
@@ -70,6 +71,7 @@ export class Scpt2025 extends AbstractScpt {
   getSemi(): DraftActivityStartParams | undefined {
     return undefined;
   }
+
   getFinal(): DraftActivityStartParams | undefined {
     return undefined;
   }

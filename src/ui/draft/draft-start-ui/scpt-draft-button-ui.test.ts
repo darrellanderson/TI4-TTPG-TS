@@ -2,8 +2,9 @@ import { Button, Player } from "@tabletop-playground/api";
 import { TriggerableMulticastDelegate } from "ttpg-darrell";
 import { clickAll, MockButton, MockPlayer } from "ttpg-mock";
 import { Milty } from "../../../lib/draft-lib/drafts/milty";
-import { DRAFT_NAMESPACE_ID } from "../../../lib/draft-lib/draft-activity-start/draft-activity-start";
-import { ScptDraftButtonUI, ScptDraftParams } from "./scpt-draft-button-ui";
+import { DRAFT_NAMESPACE_ID } from "../../../lib/draft-lib/draft-activity-start/draft-activity-start-params";
+import { ScptDraftButtonUI } from "./scpt-draft-button-ui";
+import { ScptDraftParams } from "../../../lib/draft-lib/scpt/abstract-scpt/scpt-draft-params";
 
 it("constructor", () => {
   const scale = 1;

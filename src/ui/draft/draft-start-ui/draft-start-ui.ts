@@ -16,10 +16,8 @@ import {
 import { AbstractUI } from "../../abstract-ui/abtract-ui";
 import { ButtonUI } from "../../button-ui/button-ui";
 import { CONFIG } from "../../config/config";
-import {
-  DraftActivityStart,
-  DraftActivityStartParams,
-} from "../../../lib/draft-lib/draft-activity-start/draft-activity-start";
+import { DraftActivityStart } from "../../../lib/draft-lib/draft-activity-start/draft-activity-start";
+import { DraftActivityStartParams } from "../../../lib/draft-lib/draft-activity-start/draft-activity-start-params";
 import { CheckBoxUI } from "../../button-ui/checkbox-ui";
 import { DivUI } from "../../div-ui/div-ui";
 import { EditableUI } from "../../button-ui/editable-ui";

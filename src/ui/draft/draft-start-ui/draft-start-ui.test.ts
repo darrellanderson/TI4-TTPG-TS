@@ -8,7 +8,7 @@ import {
   MockPlayer,
   MockSlider,
 } from "ttpg-mock";
-import { DraftActivityStartParams } from "../../../lib/draft-lib/draft-activity-start/draft-activity-start";
+import { DraftActivityStartParams } from "../../../lib/draft-lib/draft-activity-start/draft-activity-start-params";
 import { DraftStartUI } from "./draft-start-ui";
 import { Milty } from "../../../lib/draft-lib/drafts/milty";
 

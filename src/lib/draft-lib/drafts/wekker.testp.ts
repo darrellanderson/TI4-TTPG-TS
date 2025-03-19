@@ -1,8 +1,6 @@
 import { IDraft } from "./idraft";
-import {
-  DraftActivityStart,
-  DraftActivityStartParams,
-} from "../draft-activity-start/draft-activity-start";
+import { DraftActivityStart } from "../draft-activity-start/draft-activity-start";
+import { DraftActivityStartParams } from "../draft-activity-start/draft-activity-start-params";
 import { DraftState } from "../draft-state/draft-state";
 import { Wekker } from "./wekker";
 

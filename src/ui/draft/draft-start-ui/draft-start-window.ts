@@ -8,7 +8,7 @@ import { DraftStartUI } from "./draft-start-ui";
 import {
   DRAFT_NAMESPACE_ID,
   DraftActivityStartParams,
-} from "../../../lib/draft-lib/draft-activity-start/draft-activity-start";
+} from "../../../lib/draft-lib/draft-activity-start/draft-activity-start-params";
 import { Milty } from "../../../lib/draft-lib/drafts/milty";
 
 export class DraftStartWindow {
