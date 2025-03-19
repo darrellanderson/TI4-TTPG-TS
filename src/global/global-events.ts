@@ -6,6 +6,7 @@ import {
   CombatRollType,
   CombatRoll,
 } from "../lib/combat-lib/combat-roll/combat-roll";
+import { DraftActivityStartParams } from "../lib/draft-lib/draft-activity-start/draft-activity-start-params";
 import { System } from "../lib/system-lib/system/system";
 
 /**
@@ -97,6 +98,13 @@ export class GlobalEvents {
    */
   public readonly onObjectFellThroughTable = new TriggerableMulticastDelegate<
     (object: GameObject) => void
+  >();
+
+  /**
+   * Called when a player asks to start a slice draft.
+   */
+  public readonly onSliceDraftRequest = new TriggerableMulticastDelegate<
+    (draftActivityStartParams: DraftActivityStartParams) => void
   >();
 
   /**

@@ -17,14 +17,12 @@ import {
   TriggerableMulticastDelegate,
 } from "ttpg-darrell";
 import { DraftActivityStartParams } from "../../../lib/draft-lib/draft-activity-start/draft-activity-start-params";
-import { DraftStartUI } from "./draft-start-ui";
 import { ScptDraftParams } from "../../../lib/draft-lib/scpt/abstract-scpt/scpt-draft-params";
 
 /**
  * "YEAR" qual / prelim / semi / final.
  *
- * SCPT draft goes right to the draft, not the "DraftStartUI" (which would be
- * used to set slice and faction count).
+ * SCPT draft goes right to the draft.
  */
 export class ScptDraftButtonUI extends AbstractUI {
   private readonly _scptDraftParams: ScptDraftParams;
@@ -35,7 +33,7 @@ export class ScptDraftButtonUI extends AbstractUI {
       this._scptDraftParams.qual;
     if (draftActivityStartParams) {
       this._onDraftStarted.trigger();
-      new DraftStartUI(1, draftActivityStartParams).startDraft();
+      TI4.events.onSliceDraftRequest.trigger(draftActivityStartParams);
     }
   };
   _prelimHandler = (_button: Button, _player: Player): void => {
@@ -43,7 +41,7 @@ export class ScptDraftButtonUI extends AbstractUI {
       this._scptDraftParams.prelim;
     if (draftActivityStartParams) {
       this._onDraftStarted.trigger();
-      new DraftStartUI(1, draftActivityStartParams).startDraft();
+      TI4.events.onSliceDraftRequest.trigger(draftActivityStartParams);
     }
   };
   _semiHandler = (_button: Button, _player: Player): void => {
@@ -51,7 +49,7 @@ export class ScptDraftButtonUI extends AbstractUI {
       this._scptDraftParams.semi;
     if (draftActivityStartParams) {
       this._onDraftStarted.trigger();
-      new DraftStartUI(1, draftActivityStartParams).startDraft();
+      TI4.events.onSliceDraftRequest.trigger(draftActivityStartParams);
     }
   };
   _finalHandler = (_button: Button, _player: Player): void => {
@@ -59,7 +57,7 @@ export class ScptDraftButtonUI extends AbstractUI {
       this._scptDraftParams.final;
     if (draftActivityStartParams) {
       this._onDraftStarted.trigger();
-      new DraftStartUI(1, draftActivityStartParams).startDraft();
+      TI4.events.onSliceDraftRequest.trigger(draftActivityStartParams);
     }
   };
 
