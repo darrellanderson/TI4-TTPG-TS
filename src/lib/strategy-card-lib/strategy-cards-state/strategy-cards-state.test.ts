@@ -71,6 +71,9 @@ it("add/active/remove", () => {
   const strategyCardState = new StrategyCardsState("@test/test");
   const playerSlot: PlayerSlot = 10;
 
+  strategyCardState.setLastPlayerSlotPlayed(1, playerSlot);
+  expect(strategyCardState.getLastPlayerSlotPlayed(1)).toEqual(playerSlot);
+
   const active = strategyCardState.active(playerSlot);
   expect(active).toEqual([]);
 
@@ -103,6 +106,7 @@ it("add/active/remove", () => {
   expect(loadFromPersistence.active(playerSlot2)).toEqual([
     { number: 1, state: "1-state-player2" },
   ]);
+  expect(loadFromPersistence.getLastPlayerSlotPlayed(1)).toEqual(playerSlot);
 
   strategyCardState.remove(playerSlot, 1);
   expect(strategyCardState.active(playerSlot)).toEqual([

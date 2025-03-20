@@ -19,6 +19,7 @@ export class StrategyCardsState {
       StrategyCardsState.strategyCardToNumber(strategyCard);
     if (strategyCardNumber !== undefined) {
       this.addOrUpdate(playerSlot, strategyCardNumber, "");
+      this.setLastPlayerSlotPlayed(strategyCardNumber, playerSlot);
     }
   };
 
@@ -26,6 +27,10 @@ export class StrategyCardsState {
   private readonly _playerSlotToActive: Map<
     PlayerSlot,
     Array<StrategyCardNumberAndState>
+  > = new Map();
+  private readonly _strategyCardNumberToLastPlayerSlotPlayed: Map<
+    number,
+    PlayerSlot
   > = new Map();
 
   static strategyCardToNumber(strategyCard: GameObject): number | undefined {
@@ -65,9 +70,20 @@ export class StrategyCardsState {
 
   _save(): void {
     const packed = [];
+
+    const strategyCardNumberAndLastPlayerSlotPlayed: Array<number> = [];
+    for (const [strategyCardNumber, playerSlot] of this
+      ._strategyCardNumberToLastPlayerSlotPlayed) {
+      strategyCardNumberAndLastPlayerSlotPlayed.push(
+        strategyCardNumber,
+        playerSlot
+      );
+    }
+    packed.push(strategyCardNumberAndLastPlayerSlotPlayed);
+
+    // playerSlotToActive.
     for (const [playerSlot, active] of this._playerSlotToActive.entries()) {
-      const packedEntry = [];
-      packedEntry.push(playerSlot);
+      const packedEntry: Array<number | string> = [playerSlot];
       for (const activeEntry of active) {
         packedEntry.push(activeEntry.number, activeEntry.state);
       }
@@ -78,10 +94,25 @@ export class StrategyCardsState {
   }
 
   _load(): void {
+    this._strategyCardNumberToLastPlayerSlotPlayed.clear();
     this._playerSlotToActive.clear();
     const json: string | undefined = world.getSavedData(this._persistenceKey);
     if (json && json.length > 0) {
       const entries = JSON.parse(json);
+
+      const strategyCardNumberAndLastPlayerSlotPlayed: Array<number> =
+        entries.shift();
+      while (strategyCardNumberAndLastPlayerSlotPlayed.length > 0) {
+        const strategyCardNumber: number =
+          strategyCardNumberAndLastPlayerSlotPlayed.shift() as number;
+        const playerSlot: PlayerSlot =
+          strategyCardNumberAndLastPlayerSlotPlayed.shift() as PlayerSlot;
+        this._strategyCardNumberToLastPlayerSlotPlayed.set(
+          strategyCardNumber,
+          playerSlot
+        );
+      }
+
       for (const entry of entries) {
         const playerSlot: number = entry.shift() as number;
         const active: Array<StrategyCardNumberAndState> =
@@ -145,5 +176,22 @@ export class StrategyCardsState {
       active.splice(index, 1);
     }
     this._save();
+  }
+
+  setLastPlayerSlotPlayed(
+    strategyCardNumber: number,
+    playerSlot: PlayerSlot
+  ): void {
+    this._strategyCardNumberToLastPlayerSlotPlayed.set(
+      strategyCardNumber,
+      playerSlot
+    );
+    this._save();
+  }
+
+  getLastPlayerSlotPlayed(strategyCardNumber: number): PlayerSlot | undefined {
+    return this._strategyCardNumberToLastPlayerSlotPlayed.get(
+      strategyCardNumber
+    );
   }
 }
