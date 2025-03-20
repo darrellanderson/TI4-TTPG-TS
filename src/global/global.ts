@@ -57,6 +57,7 @@ import { RightClickScorePublic } from "../context-menu/right-click-score/right-c
 import { RSwapSplitCombine } from "./r-swap-split-combine";
 import { SetupPlayerSlotColors } from "../setup/setup-player-slot-colors/setup-player-slot-colors";
 import { ShuffleDecks } from "./shuffle-decks";
+import { StrategyCardState } from "../lib/strategy-card-lib/strategy-card-state/strategy-card-state";
 import { SystemAttachmentRegistry } from "../lib/system-lib/registry/system-attachment-registry";
 import { SystemRegistry } from "../lib/system-lib/registry/system-registry";
 import { TechRegistry } from "../lib/tech-lib/registry/tech-registry";
@@ -105,6 +106,9 @@ export class TI4Class {
   public readonly playerName = new PlayerName();
   public readonly playerSeats = new PlayerSeats();
   public readonly removeRegistry = new RemoveRegistry().loadDefaultData();
+  public readonly strategyCardState = new StrategyCardState(
+    "@strategy-card-state/ti4"
+  );
   public readonly systemAttachmentRegistry =
     new SystemAttachmentRegistry().loadDefaultData();
   public readonly systemRegistry = new SystemRegistry().loadDefaultData();
