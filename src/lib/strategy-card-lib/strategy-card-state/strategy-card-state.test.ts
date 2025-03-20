@@ -2,8 +2,7 @@ import { PlayerSlot } from "ttpg-darrell";
 import { StrategyCardState } from "./strategy-card-state";
 
 it("constructor", () => {
-  const strategyCardState = new StrategyCardState("@test/test");
-  expect(strategyCardState).toBeDefined();
+  new StrategyCardState("@test/test");
 });
 
 it("add/active/remove", () => {
@@ -27,10 +26,20 @@ it("add/active/remove", () => {
     { number: 2, state: "2-state" },
   ]);
 
+  // Second player slot.
+  const playerSlot2: PlayerSlot = 20;
+  strategyCardState.addOrUpdate(playerSlot2, 1, "1-state-player2");
+  expect(strategyCardState.active(playerSlot2)).toEqual([
+    { number: 1, state: "1-state-player2" },
+  ]);
+
   const loadFromPersistence = new StrategyCardState("@test/test");
   expect(loadFromPersistence.active(playerSlot)).toEqual([
     { number: 1, state: "1-state-updated" },
     { number: 2, state: "2-state" },
+  ]);
+  expect(loadFromPersistence.active(playerSlot2)).toEqual([
+    { number: 1, state: "1-state-player2" },
   ]);
 
   strategyCardState.remove(playerSlot, 1);

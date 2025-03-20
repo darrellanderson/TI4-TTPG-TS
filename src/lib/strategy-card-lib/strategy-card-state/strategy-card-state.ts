@@ -1,5 +1,5 @@
-import { world } from "@tabletop-playground/api";
-import { NamespaceId, PlayerSlot } from "ttpg-darrell";
+import { GameObject, world } from "@tabletop-playground/api";
+import { NamespaceId, NSID, ParsedNSID, PlayerSlot } from "ttpg-darrell";
 
 export type StrategyCardNumberAndState = {
   number: number;
@@ -16,26 +16,63 @@ export class StrategyCardState {
     Array<StrategyCardNumberAndState>
   > = new Map();
 
+  static strategyCardToNumber(strategyCard: GameObject): number | undefined {
+    const nsid: string = NSID.get(strategyCard);
+    const parsed: ParsedNSID | undefined = NSID.parse(nsid);
+    const firstNamePart: string | undefined = parsed?.nameParts[0];
+    if (firstNamePart === "leadership") {
+      return 1;
+    } else if (firstNamePart === "diplomacy") {
+      return 2;
+    } else if (firstNamePart === "politics") {
+      return 3;
+    } else if (firstNamePart === "construction") {
+      return 4;
+    } else if (firstNamePart === "trade") {
+      return 5;
+    } else if (firstNamePart === "warfare") {
+      return 6;
+    } else if (firstNamePart === "technology") {
+      return 7;
+    } else if (firstNamePart === "imperial") {
+      return 8;
+    }
+    return undefined;
+  }
+
   constructor(persistenceKey: NamespaceId) {
     this._persistenceKey = persistenceKey;
     this._load();
   }
 
   _save(): void {
-    const json: string = JSON.stringify(
-      Array.from(this._playerSlotToActive.entries())
-    );
+    const packed = [];
+    for (const [playerSlot, active] of this._playerSlotToActive.entries()) {
+      const packedEntry = [];
+      packedEntry.push(playerSlot);
+      for (const activeEntry of active) {
+        packedEntry.push(activeEntry.number, activeEntry.state);
+      }
+      packed.push(packedEntry);
+    }
+    const json: string = JSON.stringify(packed);
     world.setSavedData(json, this._persistenceKey);
   }
 
   _load(): void {
+    this._playerSlotToActive.clear();
     const json: string | undefined = world.getSavedData(this._persistenceKey);
     if (json && json.length > 0) {
-      const entries: Array<[PlayerSlot, Array<StrategyCardNumberAndState>]> =
-        JSON.parse(json);
-      this._playerSlotToActive.clear();
+      const entries = JSON.parse(json);
       for (const entry of entries) {
-        this._playerSlotToActive.set(entry[0], entry[1]);
+        const playerSlot: number = entry.shift() as number;
+        const active: Array<StrategyCardNumberAndState> =
+          this._getMutableActive(playerSlot);
+        while (entry.length > 0) {
+          const number: number = entry.shift() as number;
+          const state: string = entry.shift() as string;
+          active.push({ number, state });
+        }
       }
     }
   }
