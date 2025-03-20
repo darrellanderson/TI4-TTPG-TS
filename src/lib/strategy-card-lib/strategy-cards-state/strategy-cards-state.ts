@@ -9,14 +9,14 @@ export type StrategyCardNumberAndState = {
 /**
  * Per-player set of active strategy cards, in order of play.
  */
-export class StrategyCardState {
+export class StrategyCardsState {
   public onStrategyCardPlayedHandler = (
     strategyCard: GameObject,
     player: Player
   ): void => {
     const playerSlot: PlayerSlot = player.getSlot();
     const strategyCardNumber: number | undefined =
-      StrategyCardState.strategyCardToNumber(strategyCard);
+      StrategyCardsState.strategyCardToNumber(strategyCard);
     if (strategyCardNumber !== undefined) {
       this.addOrUpdate(playerSlot, strategyCardNumber, "");
     }
