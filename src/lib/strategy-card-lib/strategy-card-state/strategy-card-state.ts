@@ -1,4 +1,4 @@
-import { GameObject, world } from "@tabletop-playground/api";
+import { GameObject, Player, world } from "@tabletop-playground/api";
 import { NamespaceId, NSID, ParsedNSID, PlayerSlot } from "ttpg-darrell";
 
 export type StrategyCardNumberAndState = {
@@ -10,6 +10,18 @@ export type StrategyCardNumberAndState = {
  * Per-player set of active strategy cards, in order of play.
  */
 export class StrategyCardState {
+  public onStrategyCardPlayedHandler = (
+    strategyCard: GameObject,
+    player: Player
+  ): void => {
+    const playerSlot: PlayerSlot = player.getSlot();
+    const strategyCardNumber: number | undefined =
+      StrategyCardState.strategyCardToNumber(strategyCard);
+    if (strategyCardNumber !== undefined) {
+      this.addOrUpdate(playerSlot, strategyCardNumber, "");
+    }
+  };
+
   private readonly _persistenceKey: NamespaceId;
   private readonly _playerSlotToActive: Map<
     PlayerSlot,
@@ -43,6 +55,12 @@ export class StrategyCardState {
   constructor(persistenceKey: NamespaceId) {
     this._persistenceKey = persistenceKey;
     this._load();
+
+    TI4.events.onStrategyCardPlayed.add(this.onStrategyCardPlayedHandler);
+  }
+
+  destroy(): void {
+    TI4.events.onStrategyCardPlayed.remove(this.onStrategyCardPlayedHandler);
   }
 
   _save(): void {

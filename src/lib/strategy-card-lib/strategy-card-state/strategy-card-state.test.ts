@@ -1,8 +1,70 @@
+import { GameObject, Player } from "@tabletop-playground/api";
 import { PlayerSlot } from "ttpg-darrell";
+import { MockGameObject, MockPlayer } from "ttpg-mock";
 import { StrategyCardState } from "./strategy-card-state";
 
-it("constructor", () => {
+it("static strategyCardToNumber", () => {
+  const leadership: GameObject = MockGameObject.simple(
+    "tile.strategy-card:base/leadership"
+  );
+  expect(StrategyCardState.strategyCardToNumber(leadership)).toEqual(1);
+
+  const diplomacy: GameObject = MockGameObject.simple(
+    "tile.strategy-card:base/diplomacy"
+  );
+  expect(StrategyCardState.strategyCardToNumber(diplomacy)).toEqual(2);
+
+  const politics: GameObject = MockGameObject.simple(
+    "tile.strategy-card:base/politics"
+  );
+  expect(StrategyCardState.strategyCardToNumber(politics)).toEqual(3);
+
+  const construction: GameObject = MockGameObject.simple(
+    "tile.strategy-card:base/construction"
+  );
+  expect(StrategyCardState.strategyCardToNumber(construction)).toEqual(4);
+
+  const trade: GameObject = MockGameObject.simple(
+    "tile.strategy-card:base/trade"
+  );
+  expect(StrategyCardState.strategyCardToNumber(trade)).toEqual(5);
+
+  const warfare: GameObject = MockGameObject.simple(
+    "tile.strategy-card:base/warfare"
+  );
+  expect(StrategyCardState.strategyCardToNumber(warfare)).toEqual(6);
+
+  const technology: GameObject = MockGameObject.simple(
+    "tile.strategy-card:base/technology"
+  );
+  expect(StrategyCardState.strategyCardToNumber(technology)).toEqual(7);
+
+  const imperial: GameObject = MockGameObject.simple(
+    "tile.strategy-card:base/imperial"
+  );
+  expect(StrategyCardState.strategyCardToNumber(imperial)).toEqual(8);
+
+  const unknown: GameObject = MockGameObject.simple(
+    "tile.strategy-card:base/unknown"
+  );
+  expect(StrategyCardState.strategyCardToNumber(unknown)).toBeUndefined();
+
+  const invalid: GameObject = MockGameObject.simple("_not_nsid_");
+  expect(StrategyCardState.strategyCardToNumber(invalid)).toBeUndefined();
+});
+
+it("constructor/destroy", () => {
+  new StrategyCardState("@test/test").destroy();
+});
+
+it("event", () => {
   new StrategyCardState("@test/test");
+
+  const strategyCard: GameObject = MockGameObject.simple(
+    "tile.strategy-card:base/leadership"
+  );
+  const player: Player = new MockPlayer();
+  TI4.events.onStrategyCardPlayed.trigger(strategyCard, player);
 });
 
 it("add/active/remove", () => {
