@@ -35,7 +35,18 @@ export class OnStrategyCardPlayed implements IGlobal {
       TI4.events.onStrategyCardPlayed.trigger(object, player);
 
       // Show UI.
-      this.recreateStrategyCardWindow();
+      if (this._strategyCardsWindow) {
+        for (const playerSeat of TI4.playerSeats.getAllSeats()) {
+          const playerSlot: number = playerSeat.playerSlot;
+          // Hide if currently visible.
+          if (this._strategyCardsWindow.isAttachedForPlayer(playerSlot)) {
+            this._strategyCardsWindow.toggleForPlayer(playerSlot);
+          }
+          // (re)create with the new contents.
+          this._strategyCardsWindow.toggleForPlayer(playerSlot);
+        }
+      }
+
       if (this._strategyCardsWindow !== undefined) {
         this._strategyCardsWindow.attach();
       }
@@ -50,7 +61,7 @@ export class OnStrategyCardPlayed implements IGlobal {
     for (const obj of world.getAllObjects(skipContained)) {
       this._maybeAdd(obj);
     }
-    this.recreateStrategyCardWindow(); // empty contents
+    this.createStrategyCardWindow(); // empty contents
   }
 
   _maybeAdd(obj: GameObject): void {
@@ -63,7 +74,7 @@ export class OnStrategyCardPlayed implements IGlobal {
     }
   }
 
-  recreateStrategyCardWindow(): void {
+  createStrategyCardWindow(): void {
     if (this._strategyCardsWindow !== undefined) {
       this._strategyCardsWindow.destroy();
       this._strategyCardsWindow = undefined;
@@ -80,6 +91,10 @@ export class OnStrategyCardPlayed implements IGlobal {
       windowTitle
     );
     abstractWindow.getMutableWindowParams().addToggleMenuItem = true;
-    this._strategyCardsWindow = abstractWindow.createWindow();
+
+    const playerSlots: Array<number> = TI4.playerSeats
+      .getAllSeats()
+      .map((playerSeat) => playerSeat.playerSlot);
+    this._strategyCardsWindow = abstractWindow.createWindow(playerSlots);
   }
 }
