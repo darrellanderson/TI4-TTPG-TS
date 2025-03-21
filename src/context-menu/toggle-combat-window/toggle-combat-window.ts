@@ -16,6 +16,10 @@ export class ToggleCombatWindow implements IGlobal {
     _system: System,
     _player: Player
   ): void => {
+    this._createWindow();
+  };
+
+  _createWindow(): void {
     if (this._window) {
       this._window.destroy();
       this._window = undefined;
@@ -35,9 +39,10 @@ export class ToggleCombatWindow implements IGlobal {
     );
     abstractWindow.getMutableWindowParams().addToggleMenuItem = true;
     this._window = abstractWindow.createWindow();
-  };
+  }
 
   init(): void {
+    this._createWindow(); // empty contents
     TI4.events.onSystemActivated.add(this._onSystemActivatedHandler);
   }
 }

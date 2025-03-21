@@ -1,13 +1,23 @@
 import {
+  Color,
   GameObject,
   globalEvents,
   Player,
   world,
 } from "@tabletop-playground/api";
-import { IGlobal, NSID } from "ttpg-darrell";
+import { Broadcast, IGlobal, NamespaceId, NSID, Window } from "ttpg-darrell";
+import { StrategyCardsState } from "../../lib/strategy-card-lib/strategy-cards-state/strategy-cards-state";
+import {
+  AbstractWindow,
+  CreateAbstractUIParams,
+} from "../../ui/abstract-window/abstract-window";
+import { LeadershipUI } from "../../ui/strategy-card-ui/leadership-ui/leadership-ui";
 
 export class OnStrategyCardPlayed implements IGlobal {
   public static readonly ACTION_NAME: string = "*Play Strategy Card";
+  public readonly _strategyCardsState: StrategyCardsState =
+    new StrategyCardsState("@strategy-cards/ti4");
+  private _strategyCardsWindow: Window | undefined = undefined;
 
   private readonly _onCustomAction = (
     object: GameObject,
@@ -15,7 +25,20 @@ export class OnStrategyCardPlayed implements IGlobal {
     identifier: string
   ): void => {
     if (identifier === OnStrategyCardPlayed.ACTION_NAME) {
+      // Report.
+      const playerName: string = TI4.playerName.getByPlayer(player);
+      const msg: string = `${playerName} played ${object.getName()}`;
+      const color: Color = world.getSlotColor(player.getSlot());
+      Broadcast.broadcastAll(msg, color);
+
+      // Tell listeners.
       TI4.events.onStrategyCardPlayed.trigger(object, player);
+
+      // Show UI.
+      this.recreateStrategyCardWindow();
+      if (this._strategyCardsWindow !== undefined) {
+        this._strategyCardsWindow.attach();
+      }
     }
   };
 
@@ -27,6 +50,7 @@ export class OnStrategyCardPlayed implements IGlobal {
     for (const obj of world.getAllObjects(skipContained)) {
       this._maybeAdd(obj);
     }
+    this.recreateStrategyCardWindow(); // empty contents
   }
 
   _maybeAdd(obj: GameObject): void {
@@ -37,5 +61,25 @@ export class OnStrategyCardPlayed implements IGlobal {
       obj.onCustomAction.remove(this._onCustomAction);
       obj.onCustomAction.add(this._onCustomAction);
     }
+  }
+
+  recreateStrategyCardWindow(): void {
+    if (this._strategyCardsWindow !== undefined) {
+      this._strategyCardsWindow.destroy();
+      this._strategyCardsWindow = undefined;
+    }
+
+    const createAbstractUI = (params: CreateAbstractUIParams) => {
+      return new LeadershipUI(params.scale, true);
+    };
+    const namespaceId: NamespaceId | undefined = "@window/strategy-cards";
+    const windowTitle: string = "Strat Cards";
+    const abstractWindow: AbstractWindow = new AbstractWindow(
+      createAbstractUI,
+      namespaceId,
+      windowTitle
+    );
+    abstractWindow.getMutableWindowParams().addToggleMenuItem = true;
+    this._strategyCardsWindow = abstractWindow.createWindow();
   }
 }

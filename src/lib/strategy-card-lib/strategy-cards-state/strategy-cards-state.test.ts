@@ -1,6 +1,6 @@
 import { GameObject, Player } from "@tabletop-playground/api";
 import { PlayerSlot } from "ttpg-darrell";
-import { MockGameObject, MockPlayer } from "ttpg-mock";
+import { MockCardHolder, MockGameObject, MockPlayer } from "ttpg-mock";
 import { StrategyCardsState } from "./strategy-cards-state";
 
 it("static strategyCardToNumber", () => {
@@ -58,6 +58,11 @@ it("constructor/destroy", () => {
 });
 
 it("event", () => {
+  new MockCardHolder({
+    templateMetadata: "card-holder:base/player-hand",
+    owningPlayerSlot: 10,
+  });
+
   new StrategyCardsState("@test/test");
 
   const strategyCard: GameObject = MockGameObject.simple(

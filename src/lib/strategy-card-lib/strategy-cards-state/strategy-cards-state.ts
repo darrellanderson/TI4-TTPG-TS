@@ -14,12 +14,15 @@ export class StrategyCardsState {
     strategyCard: GameObject,
     player: Player
   ): void => {
-    const playerSlot: PlayerSlot = player.getSlot();
+    const playingPlayerSlot: PlayerSlot = player.getSlot();
     const strategyCardNumber: number | undefined =
       StrategyCardsState.strategyCardToNumber(strategyCard);
     if (strategyCardNumber !== undefined) {
-      this.addOrUpdate(playerSlot, strategyCardNumber, "");
-      this.setLastPlayerSlotPlayed(strategyCardNumber, playerSlot);
+      this.setLastPlayerSlotPlayed(strategyCardNumber, playingPlayerSlot);
+      for (const playerSeat of TI4.playerSeats.getAllSeats()) {
+        const playerSlot: PlayerSlot = playerSeat.playerSlot;
+        this.addOrUpdate(playerSlot, strategyCardNumber, "");
+      }
     }
   };
 
