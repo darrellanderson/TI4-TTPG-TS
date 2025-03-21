@@ -1,11 +1,11 @@
 import { Border, ScreenUIElement, world } from "@tabletop-playground/api";
 import { AbstractUI } from "../../abstract-ui/abtract-ui";
-import { LeadershipUI } from "./leadership-ui";
+import { CardLeadershipUI } from "./card-leadership-ui";
 
 function go() {
   const scale: number = 1;
   const isPlay: boolean = true;
-  const abstractUi: AbstractUI = new LeadershipUI(scale, isPlay);
+  const abstractUi: AbstractUI = new CardLeadershipUI(scale, isPlay);
 
   const screenUI = new ScreenUIElement();
   screenUI.positionX = 0.5;

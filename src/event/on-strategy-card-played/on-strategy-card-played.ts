@@ -11,7 +11,7 @@ import {
   AbstractWindow,
   CreateAbstractUIParams,
 } from "../../ui/abstract-window/abstract-window";
-import { LeadershipUI } from "../../ui/strategy-card-ui/leadership-ui/leadership-ui";
+import { CardLeadershipUI } from "../../ui/strategy-card-ui/card-leadership-ui/card-leadership-ui";
 
 export class OnStrategyCardPlayed implements IGlobal {
   public static readonly ACTION_NAME: string = "*Play Strategy Card";
@@ -70,7 +70,7 @@ export class OnStrategyCardPlayed implements IGlobal {
     }
 
     const createAbstractUI = (params: CreateAbstractUIParams) => {
-      return new LeadershipUI(params.scale, true);
+      return new CardLeadershipUI(params.scale, true);
     };
     const namespaceId: NamespaceId | undefined = "@window/strategy-cards";
     const windowTitle: string = "Strat Cards";
