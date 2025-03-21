@@ -27,6 +27,7 @@ export type CreateAbstractUIType = (
 export class AbstractWindow {
   private readonly _namespaceId: NamespaceId | undefined;
   private readonly _windowParams: WindowParams;
+  private _addHost: boolean = false;
 
   static getPlayerSlotToTransform(): {
     [key: number]: {
@@ -112,6 +113,11 @@ export class AbstractWindow {
     };
   }
 
+  addHost(): this {
+    this._addHost = true;
+    return this;
+  }
+
   getMutableWindowParams(): WindowParams {
     return this._windowParams;
   }
@@ -131,7 +137,7 @@ export class AbstractWindow {
         break;
       }
     }
-    if (host >= 0 && !playerSlots.includes(host)) {
+    if (host >= 0 && !playerSlots.includes(host) && this._addHost) {
       playerSlots.push(host);
     }
 

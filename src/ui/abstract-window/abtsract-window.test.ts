@@ -22,7 +22,8 @@ it("constuctor, createWindow", () => {
     title
   );
 
-  abstractWindow.getMutableWindowParams().disableClose = true;
+  new MockPlayer({ isHost: true, slot: 1 });
+  abstractWindow.addHost().getMutableWindowParams().disableClose = true;
 
   const playerSlots: Array<number> = [10];
   const window: Window = abstractWindow.createWindow(playerSlots);
