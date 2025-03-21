@@ -180,7 +180,7 @@ export class DraftActivityStart {
       namespaceId,
       windowTitle
     );
-    abstractWindow.getMutableWindowParams().disableClose = true;
+    abstractWindow.addHost().getMutableWindowParams().disableClose = true;
     const window: Window = abstractWindow.createWindow();
     window.attach();
 
