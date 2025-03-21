@@ -27,9 +27,3 @@ it("custom action name", () => {
   strategyCard._customActionAsPlayer(player, identifier);
   strategyCard._customActionAsPlayer(player, identifier); // again
 });
-
-it("createStrategyCardWindow", () => {
-  const onStrategyCardPlayed = new OnStrategyCardPlayed();
-  onStrategyCardPlayed.createStrategyCardWindow();
-  onStrategyCardPlayed.createStrategyCardWindow(); // again
-});

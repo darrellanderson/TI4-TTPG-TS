@@ -63,6 +63,7 @@ import { TechRegistry } from "../lib/tech-lib/registry/tech-registry";
 import { ToggleBorders } from "../context-menu/toggle-borders/toggle-borders";
 import { ToggleCombatWindow } from "../context-menu/toggle-combat-window/toggle-combat-window";
 import { ToggleMapTool } from "../context-menu/toggle-map-tool/toggle-map-tool";
+import { ToggleStratCards } from "../context-menu/toggle-strat-cards/toggle-strat-cards";
 import { UnitAttrsRegistry } from "../lib/unit-lib/registry/unit-attrs-registry";
 import { UnitModifierActiveIdle } from "../lib/unit-lib/unit-modifier/unit-modifier-active-idle";
 import { UnitModifierRegistry } from "../lib/unit-lib/registry/unit-modifier-registry";
@@ -161,6 +162,7 @@ export function resetGlobalThisTI4(): TI4Class {
     new ToggleBorders(),
     new ToggleCombatWindow(),
     new ToggleMapTool(),
+    new ToggleStratCards(),
     new UnitModifierActiveIdle(),
     new UnpackFactionContextMenuItem(),
     new WhisperReporter(),
