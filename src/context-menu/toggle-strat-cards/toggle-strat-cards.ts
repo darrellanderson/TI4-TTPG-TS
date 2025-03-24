@@ -5,7 +5,8 @@ import {
   AbstractWindow,
   CreateAbstractUIParams,
 } from "../../ui/abstract-window/abstract-window";
-import { CardLeadershipUI } from "../../ui/strategy-card-ui/card-leadership-ui/card-leadership-ui";
+import { AbstractUI } from "../../ui/abstract-ui/abtract-ui";
+import { ButtonUI } from "../../ui/button-ui/button-ui";
 
 /**
  *  Manage window with active strategy cards.
@@ -43,8 +44,8 @@ export class ToggleStratCards implements IGlobal {
   }
 
   _createWindow(): Window {
-    const createAbstractUI = (params: CreateAbstractUIParams) => {
-      return new CardLeadershipUI(params.scale, true);
+    const createAbstractUI = (params: CreateAbstractUIParams): AbstractUI => {
+      return new ButtonUI(params.scale);
     };
     const namespaceId: NamespaceId | undefined = "@window/strategy-cards";
     const windowTitle: string = "Strat Cards";

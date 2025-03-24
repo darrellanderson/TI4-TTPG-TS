@@ -151,7 +151,11 @@ export class StrategyCardsState {
     });
   }
 
-  addOrUpdate(playerSlot: number, strategyCardNumber: number, state: string) {
+  addOrUpdate(
+    playerSlot: number,
+    strategyCardNumber: number,
+    state: string
+  ): this {
     const active: Array<StrategyCardNumberAndState> =
       this._getMutableActive(playerSlot);
     let strategyCardNumberAndState: StrategyCardNumberAndState | undefined =
@@ -166,9 +170,10 @@ export class StrategyCardsState {
       strategyCardNumberAndState.state = state;
     }
     this._save();
+    return this;
   }
 
-  remove(playerSlot: number, strategyCardNumber: number) {
+  remove(playerSlot: number, strategyCardNumber: number): this {
     const active: Array<StrategyCardNumberAndState> =
       this._getMutableActive(playerSlot);
     const index: number = active.findIndex(
@@ -179,17 +184,19 @@ export class StrategyCardsState {
       active.splice(index, 1);
     }
     this._save();
+    return this;
   }
 
   setLastPlayerSlotPlayed(
     strategyCardNumber: number,
     playerSlot: PlayerSlot
-  ): void {
+  ): this {
     this._strategyCardNumberToLastPlayerSlotPlayed.set(
       strategyCardNumber,
       playerSlot
     );
     this._save();
+    return this;
   }
 
   getLastPlayerSlotPlayed(strategyCardNumber: number): PlayerSlot | undefined {

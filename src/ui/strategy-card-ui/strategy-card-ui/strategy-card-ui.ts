@@ -6,11 +6,9 @@ import {
   TextJustification,
   world,
 } from "@tabletop-playground/api";
-import {
-  Broadcast,
-  ThrottleClickHandler,
-  TriggerableMulticastDelegate,
-} from "ttpg-darrell";
+import { Broadcast, PlayerSlot, ThrottleClickHandler } from "ttpg-darrell";
+
+import { StrategyCardsState } from "../../../lib/strategy-card-lib/strategy-cards-state/strategy-cards-state";
 
 import { AbstractUI } from "../../abstract-ui/abtract-ui";
 import { ButtonUI } from "../../button-ui/button-ui";
@@ -21,46 +19,45 @@ import { VerticalUIBuilder } from "../../panel/vertical-ui-builder";
 
 const packageId: string = refPackageId;
 
+export interface IStrategyCardBody {
+  getStrategyCardNumber(): number;
+  getBody(): AbstractUI | undefined;
+  getReport(): string | undefined;
+}
+
 /**
  * 2x wide, with an abstract body below the title.
  * [Play|Follow] [Pass]
  */
-export abstract class AbstractStrategyCardUI extends AbstractUI {
-  public readonly onCloseClicked: TriggerableMulticastDelegate<() => void> =
-    new TriggerableMulticastDelegate<() => void>();
+export class StrategyCardUI extends AbstractUI {
+  private readonly _strategyCardsState: StrategyCardsState;
+  private readonly _strategyCardBody: IStrategyCardBody;
+  private readonly _playerSlot: PlayerSlot;
 
+  private readonly _isPlay: boolean;
   private readonly _name: string;
   private readonly _ui: AbstractUI;
+  private readonly _buttonPlay: Button;
+  private readonly _buttonPass: Button;
 
-  private readonly _onPlay = new ThrottleClickHandler<Button>(
+  private readonly _onPlayOrFollow = new ThrottleClickHandler<Button>(
     (_button: Button, player: Player): void => {
       const playerSlot: number = player.getSlot();
       const playerName: string = TI4.playerName.getBySlot(playerSlot);
-      const parts: Array<string> = [`${playerName} plays ${this._name}`];
-      const report: string | undefined = this.getReport();
+      const parts: Array<string> = [
+        `${playerName} ${this._isPlay ? "plays" : "follows"} ${this._name}`,
+      ];
+      const report: string | undefined = this._strategyCardBody.getReport();
       if (report) {
         parts.push(report);
       }
       const msg: string = parts.join(" : ");
       const color: Color = world.getSlotColor(playerSlot);
       Broadcast.chatAll(msg, color);
-      this.onCloseClicked.trigger();
-    }
-  ).get();
-
-  private readonly _onFollow = new ThrottleClickHandler<Button>(
-    (_button: Button, player: Player): void => {
-      const playerSlot: number = player.getSlot();
-      const playerName: string = TI4.playerName.getBySlot(playerSlot);
-      const parts: Array<string> = [`${playerName} follows ${this._name}`];
-      const report: string | undefined = this.getReport();
-      if (report) {
-        parts.push(report);
-      }
-      const msg: string = parts.join(" : ");
-      const color: Color = world.getSlotColor(playerSlot);
-      Broadcast.chatAll(msg, color);
-      this.onCloseClicked.trigger();
+      this._strategyCardsState.remove(
+        this._playerSlot,
+        this._strategyCardBody.getStrategyCardNumber()
+      );
     }
   ).get();
 
@@ -68,19 +65,26 @@ export abstract class AbstractStrategyCardUI extends AbstractUI {
     (_button: Button, player: Player): void => {
       const playerSlot: number = player.getSlot();
       const playerName: string = TI4.playerName.getBySlot(playerSlot);
-      const msg: string = `${playerName} passes ${this._name}`;
+      const msg: string = `${playerName} passes on ${this._name}`;
       const color: Color = world.getSlotColor(playerSlot);
       Broadcast.chatAll(msg, color);
-      this.onCloseClicked.trigger();
+      this._strategyCardsState.remove(
+        this._playerSlot,
+        this._strategyCardBody.getStrategyCardNumber()
+      );
     }
   ).get();
 
   constructor(
     scale: number,
-    name: string,
-    isPlay: boolean,
-    body: AbstractUI | undefined
+    strategyCardsState: StrategyCardsState,
+    strategyCardBody: IStrategyCardBody,
+    playerSlot: PlayerSlot
   ) {
+    const strategyCardNumber: number = strategyCardBody.getStrategyCardNumber();
+    const body: AbstractUI | undefined = strategyCardBody.getBody();
+
+    const name: string = "";
     const titleUi: LabelUI = new LabelUI(scale);
     titleUi
       .getText()
@@ -89,19 +93,16 @@ export abstract class AbstractStrategyCardUI extends AbstractUI {
       .setJustification(TextJustification.Left)
       .setText(name.toUpperCase());
 
+    const isPlay: boolean =
+      strategyCardsState.getLastPlayerSlotPlayed(strategyCardNumber) ===
+      playerSlot;
     const buttonPlay: ButtonUI = new ButtonUI(scale);
-    buttonPlay.getButton().setText("Play");
-
-    const buttonFollow: ButtonUI = new ButtonUI(scale);
-    buttonFollow.getButton().setText("Follow");
+    buttonPlay.getButton().setText(isPlay ? "Play" : "Follow");
 
     const buttonPass: ButtonUI = new ButtonUI(scale);
     buttonPass.getButton().setText("Pass");
 
-    const bottomUis: AbstractUI[] = [
-      isPlay ? buttonPlay : buttonFollow,
-      buttonPass,
-    ];
+    const bottomUis: AbstractUI[] = [buttonPlay, buttonPass];
     const bottomRow: AbstractUI = new HorizontalUIBuilder()
       .setSpacing(CONFIG.SPACING * scale)
       .addUIs(bottomUis)
@@ -118,20 +119,28 @@ export abstract class AbstractStrategyCardUI extends AbstractUI {
       .build();
 
     super(ui.getWidget(), ui.getSize());
+    this._strategyCardsState = strategyCardsState;
+    this._strategyCardBody = strategyCardBody;
+    this._playerSlot = playerSlot;
+    this._isPlay = isPlay;
     this._name = name;
     this._ui = ui;
+    this._buttonPlay = buttonPlay.getButton();
+    this._buttonPass = buttonPass.getButton();
 
-    buttonPlay.getButton().onClicked.add(this._onPlay);
-    buttonFollow.getButton().onClicked.add(this._onFollow);
+    buttonPlay.getButton().onClicked.add(this._onPlayOrFollow);
     buttonPass.getButton().onClicked.add(this._onPass);
   }
 
   destroy(): void {
     this._ui.destroy();
-    this.onCloseClicked.clear();
   }
 
-  getReport(): string | undefined {
-    return undefined;
+  getButtonPlay(): Button {
+    return this._buttonPlay;
+  }
+
+  getButtonPass(): Button {
+    return this._buttonPass;
   }
 }

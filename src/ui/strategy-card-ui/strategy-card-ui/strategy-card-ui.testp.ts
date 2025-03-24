@@ -1,9 +1,9 @@
 import { Border, ScreenUIElement, world } from "@tabletop-playground/api";
 import { AbstractUI } from "../../abstract-ui/abtract-ui";
-import { AbstractStrategyCardUI } from "./abstract-strategy-card-ui";
+import { StrategyCardUI } from "./strategy-card-ui";
 import { ButtonUI } from "../../button-ui/button-ui";
 
-class MyAbstractStrategyCardUI extends AbstractStrategyCardUI {}
+class MyAbstractStrategyCardUI extends StrategyCardUI {}
 
 function go() {
   const scale: number = 1;
