@@ -34,12 +34,32 @@ export class ToggleStratCards implements IGlobal {
     }
   };
 
+  private readonly _onStrategyCardsStateChangedHandler = (): void => {
+    // For each player, show window if they have an active strategy card.
+    // Likewise, hide if no active strategy card.
+    const window: Window | undefined = this._strategyCardsWindow;
+    if (window) {
+      for (const playerSeat of TI4.playerSeats.getAllSeats()) {
+        const playerSlot: number = playerSeat.playerSlot;
+        const isActive: boolean =
+          this._strategyCardsState.active(playerSlot).length > 0;
+        const isAttached: boolean = window.isAttachedForPlayer(playerSlot);
+        if (isActive !== isAttached) {
+          window.toggleForPlayer(playerSlot);
+        }
+      }
+    }
+  };
+
   constructor() {
     this._strategyCardsState = new StrategyCardsState("@strategy-cards/ti4");
   }
 
   init(): void {
     TI4.events.onStrategyCardPlayed.add(this._onStrategyCardPlayedHandler);
+    this._strategyCardsState.onStrategyCardsStateChanged.add(
+      this._onStrategyCardsStateChangedHandler
+    );
     this._strategyCardsWindow = this._createWindow();
   }
 
