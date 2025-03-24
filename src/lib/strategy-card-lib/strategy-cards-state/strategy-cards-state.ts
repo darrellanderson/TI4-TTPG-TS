@@ -1,5 +1,11 @@
 import { GameObject, Player, world } from "@tabletop-playground/api";
-import { NamespaceId, NSID, ParsedNSID, PlayerSlot } from "ttpg-darrell";
+import {
+  NamespaceId,
+  NSID,
+  ParsedNSID,
+  PlayerSlot,
+  TriggerableMulticastDelegate,
+} from "ttpg-darrell";
 
 export type StrategyCardNumberAndState = {
   number: number;
@@ -10,7 +16,11 @@ export type StrategyCardNumberAndState = {
  * Per-player set of active strategy cards, in order of play.
  */
 export class StrategyCardsState {
-  public onStrategyCardPlayedHandler = (
+  public readonly onStrategyCardsStateChanged: TriggerableMulticastDelegate<
+    () => void
+  > = new TriggerableMulticastDelegate<() => void>();
+
+  private readonly onStrategyCardPlayedHandler = (
     strategyCard: GameObject,
     player: Player
   ): void => {
@@ -170,6 +180,7 @@ export class StrategyCardsState {
       strategyCardNumberAndState.state = state;
     }
     this._save();
+    this.onStrategyCardsStateChanged.trigger();
     return this;
   }
 
@@ -184,6 +195,7 @@ export class StrategyCardsState {
       active.splice(index, 1);
     }
     this._save();
+    this.onStrategyCardsStateChanged.trigger();
     return this;
   }
 
@@ -196,6 +208,7 @@ export class StrategyCardsState {
       playerSlot
     );
     this._save();
+    this.onStrategyCardsStateChanged.trigger();
     return this;
   }
 
