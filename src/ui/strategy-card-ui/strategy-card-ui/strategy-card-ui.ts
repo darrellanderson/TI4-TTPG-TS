@@ -20,8 +20,9 @@ import { VerticalUIBuilder } from "../../panel/vertical-ui-builder";
 const packageId: string = refPackageId;
 
 export interface IStrategyCardBody {
+  getStrategyCardName(): string;
   getStrategyCardNumber(): number;
-  getBody(): AbstractUI | undefined;
+  getBody(scale: number): AbstractUI | undefined;
   getReport(): string | undefined;
 }
 
@@ -82,9 +83,9 @@ export class StrategyCardUI extends AbstractUI {
     playerSlot: PlayerSlot
   ) {
     const strategyCardNumber: number = strategyCardBody.getStrategyCardNumber();
-    const body: AbstractUI | undefined = strategyCardBody.getBody();
+    const body: AbstractUI | undefined = strategyCardBody.getBody(scale);
 
-    const name: string = "";
+    const name: string = strategyCardBody.getStrategyCardName();
     const titleUi: LabelUI = new LabelUI(scale);
     titleUi
       .getText()

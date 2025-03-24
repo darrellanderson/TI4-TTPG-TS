@@ -111,6 +111,7 @@ export class StrategyCardsState {
     this._playerSlotToActive.clear();
     const json: string | undefined = world.getSavedData(this._persistenceKey);
     if (json && json.length > 0) {
+      console.log("xxxxxxx", json);
       const entries = JSON.parse(json);
 
       const strategyCardNumberAndLastPlayerSlotPlayed: Array<number> =

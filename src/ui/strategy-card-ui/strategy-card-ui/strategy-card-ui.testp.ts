@@ -1,20 +1,36 @@
 import { Border, ScreenUIElement, world } from "@tabletop-playground/api";
 import { AbstractUI } from "../../abstract-ui/abtract-ui";
-import { StrategyCardUI } from "./strategy-card-ui";
-import { ButtonUI } from "../../button-ui/button-ui";
+import { IStrategyCardBody, StrategyCardUI } from "./strategy-card-ui";
+import { StrategyCardsState } from "lib/strategy-card-lib/strategy-cards-state/strategy-cards-state";
+import { LabelUI } from "ui/button-ui/label-ui";
 
-class MyAbstractStrategyCardUI extends StrategyCardUI {}
+class MyAbstractStrategyCardBody implements IStrategyCardBody {
+  getStrategyCardName(): string {
+    return "test";
+  }
+  getStrategyCardNumber(): number {
+    return 1;
+  }
+  getBody(scale: number): AbstractUI | undefined {
+    const ui: LabelUI = new LabelUI(scale);
+    ui.getText().setText("test body");
+    return ui;
+  }
+  getReport(): string | undefined {
+    return "my report";
+  }
+}
 
 function go() {
   const scale: number = 1;
-  const name: string = "name";
-  const isPlay: boolean = true;
-  const body: AbstractUI | undefined = new ButtonUI(scale);
-  const abstractUi: AbstractUI = new MyAbstractStrategyCardUI(
+  const strategyCardsState = new StrategyCardsState("@test-strat-card/test");
+  const strategyCardBody = new MyAbstractStrategyCardBody();
+  const playerSlot = 10;
+  const abstractUi: AbstractUI = new StrategyCardUI(
     scale,
-    name,
-    isPlay,
-    body
+    strategyCardsState,
+    strategyCardBody,
+    playerSlot
   );
 
   const screenUI = new ScreenUIElement();
@@ -36,4 +52,12 @@ function go() {
   world.addScreenUI(screenUI);
 }
 
-setTimeout(go, 100);
+function goWrapper() {
+  try {
+    go();
+  } catch (e) {
+    console.error("Error in goWrapper:", e);
+  }
+}
+
+setTimeout(goWrapper, 100);

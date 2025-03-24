@@ -8,6 +8,9 @@ import { IStrategyCardBody, StrategyCardUI } from "./strategy-card-ui";
 import { StrategyCardsState } from "../../../lib/strategy-card-lib/strategy-cards-state/strategy-cards-state";
 
 class MyStrategyCardBodyReport implements IStrategyCardBody {
+  getStrategyCardName(): string {
+    return "test";
+  }
   getStrategyCardNumber(): number {
     return 1;
   }
@@ -20,6 +23,9 @@ class MyStrategyCardBodyReport implements IStrategyCardBody {
 }
 
 class MyStrategyCardBodyNoReport implements IStrategyCardBody {
+  getStrategyCardName(): string {
+    return "test";
+  }
   getStrategyCardNumber(): number {
     return 1;
   }
