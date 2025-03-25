@@ -10,6 +10,7 @@ import { Broadcast, PlayerSlot, ThrottleClickHandler } from "ttpg-darrell";
 
 import { StrategyCardsState } from "../../../lib/strategy-card-lib/strategy-cards-state/strategy-cards-state";
 
+import { AbstractStrategyCardBody } from "../abstract-strategy-card-body/abstract-strategy-card-body";
 import { AbstractUI } from "../../abstract-ui/abtract-ui";
 import { ButtonUI } from "../../button-ui/button-ui";
 import { CONFIG } from "../../config/config";
@@ -19,20 +20,13 @@ import { VerticalUIBuilder } from "../../panel/vertical-ui-builder";
 
 const packageId: string = refPackageId;
 
-export interface IStrategyCardBody {
-  getStrategyCardName(): string;
-  getStrategyCardNumber(): number;
-  getBody(scale: number): AbstractUI | undefined;
-  getReport(): string | undefined;
-}
-
 /**
  * 2x wide, with an abstract body below the title.
  * [Play|Follow] [Pass]
  */
 export class StrategyCardUI extends AbstractUI {
   private readonly _strategyCardsState: StrategyCardsState;
-  private readonly _strategyCardBody: IStrategyCardBody;
+  private readonly _strategyCardBody: AbstractStrategyCardBody;
   private readonly _playerSlot: PlayerSlot;
 
   private readonly _isPlay: boolean;
@@ -79,7 +73,7 @@ export class StrategyCardUI extends AbstractUI {
   constructor(
     scale: number,
     strategyCardsState: StrategyCardsState,
-    strategyCardBody: IStrategyCardBody,
+    strategyCardBody: AbstractStrategyCardBody,
     playerSlot: PlayerSlot
   ) {
     const strategyCardNumber: number = strategyCardBody.getStrategyCardNumber();

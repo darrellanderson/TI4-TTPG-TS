@@ -1,10 +1,14 @@
 import { Border, ScreenUIElement, world } from "@tabletop-playground/api";
+import { AbstractStrategyCardBody } from "../abstract-strategy-card-body/abstract-strategy-card-body";
 import { AbstractUI } from "../../abstract-ui/abtract-ui";
-import { IStrategyCardBody, StrategyCardUI } from "./strategy-card-ui";
-import { StrategyCardsState } from "lib/strategy-card-lib/strategy-cards-state/strategy-cards-state";
-import { LabelUI } from "ui/button-ui/label-ui";
+import { LabelUI } from "../../button-ui/label-ui";
+import { StrategyCardUI } from "./strategy-card-ui";
+import { StrategyCardsState } from "../../../lib/strategy-card-lib/strategy-cards-state/strategy-cards-state";
 
-class MyAbstractStrategyCardBody implements IStrategyCardBody {
+class MyAbstractStrategyCardBody extends AbstractStrategyCardBody {
+  constructor(strategyCardsState: StrategyCardsState, playerSlot: number) {
+    super(strategyCardsState, 1, playerSlot);
+  }
   getStrategyCardName(): string {
     return "test";
   }
@@ -23,9 +27,12 @@ class MyAbstractStrategyCardBody implements IStrategyCardBody {
 
 function go() {
   const scale: number = 1;
-  const strategyCardsState = new StrategyCardsState("@test-strat-card/test");
-  const strategyCardBody = new MyAbstractStrategyCardBody();
   const playerSlot = 10;
+  const strategyCardsState = new StrategyCardsState("@test-strat-card/test");
+  const strategyCardBody = new MyAbstractStrategyCardBody(
+    strategyCardsState,
+    playerSlot
+  );
   const abstractUi: AbstractUI = new StrategyCardUI(
     scale,
     strategyCardsState,

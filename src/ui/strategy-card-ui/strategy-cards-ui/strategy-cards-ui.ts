@@ -8,6 +8,8 @@ import { VerticalUIBuilder } from "../../panel/vertical-ui-builder";
  * UI with all active strategy cards.
  */
 export class StrategyCardsUI extends AbstractUI {
+  private readonly _ui: AbstractUI;
+
   constructor(
     scale: number,
     _strategyCardsState: StrategyCardsState,
@@ -17,9 +19,10 @@ export class StrategyCardsUI extends AbstractUI {
       .setSpacing(CONFIG.SPACING * scale)
       .build();
     super(ui.getWidget(), ui.getSize());
+    this._ui = ui;
   }
 
-  getReport(): string | undefined {
-    return undefined;
+  destroy(): void {
+    this._ui.destroy();
   }
 }

@@ -4,10 +4,20 @@ import { clickAll } from "ttpg-mock";
 
 import { AbstractUI } from "../../abstract-ui/abtract-ui";
 import { ButtonUI } from "../../button-ui/button-ui";
-import { IStrategyCardBody, StrategyCardUI } from "./strategy-card-ui";
+import { StrategyCardUI } from "./strategy-card-ui";
 import { StrategyCardsState } from "../../../lib/strategy-card-lib/strategy-cards-state/strategy-cards-state";
+import { AbstractStrategyCardBody } from "../abstract-strategy-card-body/abstract-strategy-card-body";
 
-class MyStrategyCardBodyReport implements IStrategyCardBody {
+class MyStrategyCardBodyReport extends AbstractStrategyCardBody {
+  constructor() {
+    const strategyCardsState: StrategyCardsState = new StrategyCardsState(
+      "@test/test"
+    );
+    const strategyCardNumber: number = 1;
+    const playerSlot: PlayerSlot = 10;
+    super(strategyCardsState, strategyCardNumber, playerSlot);
+  }
+
   getStrategyCardName(): string {
     return "test";
   }
@@ -22,7 +32,16 @@ class MyStrategyCardBodyReport implements IStrategyCardBody {
   }
 }
 
-class MyStrategyCardBodyNoReport implements IStrategyCardBody {
+class MyStrategyCardBodyNoReport extends AbstractStrategyCardBody {
+  constructor() {
+    const strategyCardsState: StrategyCardsState = new StrategyCardsState(
+      "@test/test-no-report"
+    );
+    const strategyCardNumber: number = 1;
+    const playerSlot: PlayerSlot = 10;
+    super(strategyCardsState, strategyCardNumber, playerSlot);
+  }
+
   getStrategyCardName(): string {
     return "test";
   }
@@ -42,7 +61,7 @@ it("constructor/getters/destroy", () => {
   const strategyCardsState: StrategyCardsState = new StrategyCardsState(
     "@test/test"
   );
-  const body: IStrategyCardBody = new MyStrategyCardBodyReport();
+  const body: AbstractStrategyCardBody = new MyStrategyCardBodyReport();
   const playerSlot: PlayerSlot = 10;
   const ui: StrategyCardUI = new StrategyCardUI(
     scale,
@@ -60,7 +79,7 @@ it("getReport 1", () => {
   const strategyCardsState: StrategyCardsState = new StrategyCardsState(
     "@test/test"
   ).setLastPlayerSlotPlayed(1, 10);
-  const body: IStrategyCardBody = new MyStrategyCardBodyReport();
+  const body: AbstractStrategyCardBody = new MyStrategyCardBodyReport();
   const playerSlot: PlayerSlot = 10;
   const widget: Widget = new StrategyCardUI(
     scale,
@@ -76,7 +95,7 @@ it("getReport 2", () => {
   const strategyCardsState: StrategyCardsState = new StrategyCardsState(
     "@test/test"
   ).setLastPlayerSlotPlayed(1, 11);
-  const body: IStrategyCardBody = new MyStrategyCardBodyNoReport();
+  const body: AbstractStrategyCardBody = new MyStrategyCardBodyNoReport();
   const playerSlot: PlayerSlot = 10;
   const widget: Widget = new StrategyCardUI(
     scale,
