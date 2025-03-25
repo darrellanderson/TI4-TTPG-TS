@@ -1,10 +1,18 @@
+import { PlayerSlot } from "ttpg-darrell";
 import { AbstractUI } from "../../abstract-ui/abtract-ui";
 import {
   StrategyCardNumberAndState,
   StrategyCardsState,
 } from "../../../lib/strategy-card-lib/strategy-cards-state/strategy-cards-state";
-import { PlayerSlot } from "ttpg-darrell";
 
+/**
+ * Manage the contents of a strategy card UI (betweent the title and the
+ * play/pass buttons).
+ *
+ * Body can be empty.  Also provides optional additional report text.
+ *
+ * Use getState/setState to preserve any data needed to regenerate the body.
+ */
 export abstract class AbstractStrategyCardBody {
   private readonly _strategyCardsState: StrategyCardsState;
   private readonly _strategyCardNumber: number;
@@ -37,6 +45,18 @@ export abstract class AbstractStrategyCardBody {
       this._strategyCardNumber,
       state
     );
+  }
+
+  isPlayingPlayer(): boolean {
+    const lastPlayerSlotPlayed: PlayerSlot | undefined =
+      this._strategyCardsState.getLastPlayerSlotPlayed(
+        this._strategyCardNumber
+      );
+    return lastPlayerSlotPlayed === this._playerSlot;
+  }
+
+  getPlayerSlot(): PlayerSlot {
+    return this._playerSlot;
   }
 
   abstract getStrategyCardName(): string;

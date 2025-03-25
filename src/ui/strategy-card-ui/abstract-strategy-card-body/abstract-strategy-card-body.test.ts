@@ -27,6 +27,8 @@ it("constructor, simple getters", () => {
   );
   const playerSlot: PlayerSlot = 10;
   const body = new MyAbstractStrategyCardBody(strategyCardsState, playerSlot);
+  expect(body.isPlayingPlayer()).toBe(false);
+  expect(body.getPlayerSlot()).toBe(10);
   expect(body.getStrategyCardName()).toBe("MyName");
   expect(body.getStrategyCardNumber()).toBe(1);
   expect(body.getBody(1)).toBeUndefined();
