@@ -59,8 +59,11 @@ export abstract class AbstractStrategyCardBody {
     return this._playerSlot;
   }
 
+  getStrategyCardNumber(): number {
+    return this._strategyCardNumber;
+  }
+
   abstract getStrategyCardName(): string;
-  abstract getStrategyCardNumber(): number;
   abstract getBody(scale: number): AbstractUI | undefined;
   abstract getReport(): string | undefined;
 }

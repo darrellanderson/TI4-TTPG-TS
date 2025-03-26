@@ -2,7 +2,7 @@ import { PlayerSlot } from "ttpg-darrell";
 import { AbstractUI } from "../../abstract-ui/abtract-ui";
 import { AbstractStrategyCardBody } from "../abstract-strategy-card-body/abstract-strategy-card-body";
 import { CONFIG } from "../../config/config";
-import { BodyLeadership } from "../body-leadership/body-leadership";
+import { BodyLeadership } from "../body-1-leadership/body-leadership";
 import { LongLabelUI } from "../../button-ui/long-label-ui";
 import {
   StrategyCardNumberAndState,

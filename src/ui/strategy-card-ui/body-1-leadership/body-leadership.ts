@@ -33,10 +33,6 @@ export class BodyLeadership extends AbstractStrategyCardBody {
     return "Leadership";
   }
 
-  getStrategyCardNumber(): number {
-    return 1;
-  }
-
   getBody(scale: number): AbstractUI | undefined {
     const numTokensSlider: SliderWithValueUI = new SliderWithValueUI(scale);
 
