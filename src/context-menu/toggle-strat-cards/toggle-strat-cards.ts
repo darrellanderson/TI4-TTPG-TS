@@ -141,6 +141,10 @@ export class ToggleStratCards implements IGlobal {
     world.addCustomAction(ToggleStratCards.TOGGLE_ACTION_NAME);
   }
 
+  getStrategyCardsState(): StrategyCardsState {
+    return this._strategyCardsState;
+  }
+
   _createWindow(playerSlot: PlayerSlot): Window {
     const createAbstractUI = (params: CreateAbstractUIParams): AbstractUI => {
       return new StrategyCardsUI(
