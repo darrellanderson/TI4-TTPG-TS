@@ -2,7 +2,6 @@ import { PlayerSlot } from "ttpg-darrell";
 import { AbstractUI } from "../../abstract-ui/abtract-ui";
 import { AbstractStrategyCardBody } from "../abstract-strategy-card-body/abstract-strategy-card-body";
 import { CONFIG } from "../../config/config";
-import { BodyLeadership } from "../body-1-leadership/body-leadership";
 import { LongLabelUI } from "../../button-ui/long-label-ui";
 import {
   StrategyCardNumberAndState,
@@ -10,6 +9,15 @@ import {
 } from "../../../lib/strategy-card-lib/strategy-cards-state/strategy-cards-state";
 import { StrategyCardUI } from "../strategy-card-ui/strategy-card-ui";
 import { VerticalUIBuilder } from "../../panel/vertical-ui-builder";
+
+import { BodyLeadership } from "../body-1-leadership/body-leadership";
+import { BodyDiplomacy } from "../body-2-diplomacy/body-diplomacy";
+import { BodyPolitics } from "../body-3-politics/body-politics";
+import { BodyConstruction } from "../body-4-construction/body-construction";
+import { BodyTrade } from "../body-5-trade/body-trade";
+import { BodyWarfare } from "../body-6-warfare/body-warfare";
+import { BodyTechnology } from "../body-7-technology/body-technology";
+import { BodyImperial } from "../body-8-imperial/body-imperial";
 
 /**
  * UI with all active strategy cards.
@@ -27,9 +35,24 @@ export class StrategyCardsUI extends AbstractUI {
       strategyCardsState.active(playerSlot);
 
     numbersAndStates.forEach((numberAndState, _index): void => {
+      const strategyCardNumber: number = numberAndState.number;
       let body: AbstractStrategyCardBody | undefined = undefined;
-      if (numberAndState.number === 1) {
+      if (strategyCardNumber === 1) {
         body = new BodyLeadership(strategyCardsState, playerSlot);
+      } else if (strategyCardNumber === 2) {
+        body = new BodyDiplomacy(strategyCardsState, playerSlot);
+      } else if (strategyCardNumber === 3) {
+        body = new BodyPolitics(strategyCardsState, playerSlot);
+      } else if (strategyCardNumber === 4) {
+        body = new BodyConstruction(strategyCardsState, playerSlot);
+      } else if (strategyCardNumber === 5) {
+        body = new BodyTrade(strategyCardsState, playerSlot);
+      } else if (strategyCardNumber === 6) {
+        body = new BodyWarfare(strategyCardsState, playerSlot);
+      } else if (strategyCardNumber === 7) {
+        body = new BodyTechnology(strategyCardsState, playerSlot);
+      } else if (strategyCardNumber === 8) {
+        body = new BodyImperial(strategyCardsState, playerSlot);
       }
       if (body) {
         const ui: AbstractUI = new StrategyCardUI(
