@@ -1,6 +1,7 @@
 import {
   Button,
   Color,
+  HorizontalAlignment,
   Player,
   refPackageId,
   TextJustification,
@@ -110,6 +111,7 @@ export class StrategyCardUI extends AbstractUI {
     uis.push(bottomRow);
     const ui: AbstractUI = new VerticalUIBuilder()
       .setSpacing(CONFIG.SPACING * scale)
+      .setHorizontalAlignment(HorizontalAlignment.Center)
       .addUIs(uis)
       .build();
 
