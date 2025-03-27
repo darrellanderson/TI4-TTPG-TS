@@ -1,8 +1,9 @@
-import { Player, Slider } from "@tabletop-playground/api";
+import { Player, Slider, TextJustification } from "@tabletop-playground/api";
 import { AbstractUI } from "../../abstract-ui/abtract-ui";
 import { AbstractStrategyCardBody } from "../abstract-strategy-card-body/abstract-strategy-card-body";
 import { CONFIG } from "../../config/config";
 import { HorizontalUIBuilder } from "../../panel/horizontal-ui-builder";
+import { LabelUI } from "../../button-ui/label-ui";
 import { SliderWithValueUI } from "../../button-ui/slider-with-value-ui";
 import { StrategyCardsState } from "../../../lib/strategy-card-lib/strategy-cards-state/strategy-cards-state";
 
@@ -34,27 +35,30 @@ export class BodyLeadership extends AbstractStrategyCardBody {
   }
 
   getBody(scale: number): AbstractUI | undefined {
-    const numTokensSlider: SliderWithValueUI = new SliderWithValueUI(scale);
+    const numTokensLabel: LabelUI = new LabelUI(scale);
+    numTokensLabel
+      .getText()
+      .setJustification(TextJustification.Right)
+      .setText("Gain tokens:");
 
+    const numTokensSlider: SliderWithValueUI = new SliderWithValueUI(scale);
     numTokensSlider
       .getSlider()
       .setMinValue(0)
-      .setMaxValue(10)
+      .setMaxValue(16)
       .setValue(this._tokenCount);
-
+    numTokensSlider.getSlider().onValueChanged.add(this._onSliderChanged);
     if (this.isPlayingPlayer()) {
       numTokensSlider.getSlider().setMinValue(3);
     }
 
-    numTokensSlider.getSlider().onValueChanged.add(this._onSliderChanged);
-
     return new HorizontalUIBuilder()
       .setSpacing(CONFIG.SPACING * scale)
-      .addUIs([numTokensSlider])
+      .addUIs([numTokensLabel, numTokensSlider])
       .build();
   }
 
   getReport(): string | undefined {
-    return `retrieved ${this._tokenCount} tokens`;
+    return `gained ${this._tokenCount} tokens`;
   }
 }

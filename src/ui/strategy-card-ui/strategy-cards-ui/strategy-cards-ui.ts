@@ -2,6 +2,7 @@ import { PlayerSlot } from "ttpg-darrell";
 import { AbstractUI } from "../../abstract-ui/abtract-ui";
 import { AbstractStrategyCardBody } from "../abstract-strategy-card-body/abstract-strategy-card-body";
 import { CONFIG } from "../../config/config";
+import { DivUI } from "../../div-ui/div-ui";
 import { LongLabelUI } from "../../button-ui/long-label-ui";
 import {
   StrategyCardNumberAndState,
@@ -34,7 +35,14 @@ export class StrategyCardsUI extends AbstractUI {
     const numbersAndStates: Array<StrategyCardNumberAndState> =
       strategyCardsState.active(playerSlot);
 
-    numbersAndStates.forEach((numberAndState, _index): void => {
+    numbersAndStates.forEach((numberAndState, index: number): void => {
+      if (index > 0) {
+        const scaledLength: number =
+          (CONFIG.BUTTON_WIDTH * 2 + CONFIG.SPACING) * scale;
+        const div: AbstractUI = new DivUI(scale, scaledLength, "horizontal");
+        uis.push(div);
+      }
+
       const strategyCardNumber: number = numberAndState.number;
       let body: AbstractStrategyCardBody | undefined = undefined;
       if (strategyCardNumber === 1) {

@@ -3458,9 +3458,9 @@ tslib@^2.4.0:
   integrity sha512-oJFu94HQb+KVduSUQL7wnpmqnfmLsOA/nAh6b6EH0wCEoK0/mPeXU6c3wKDV83MkOuHPRHtSXKKU99IBazS/2w==
 
 ttpg-darrell@^1.1.14:
-  version "1.1.23"
-  resolved "https://registry.yarnpkg.com/ttpg-darrell/-/ttpg-darrell-1.1.23.tgz#24fc033f4be8c7683acbc55226b7b332686ca42a"
-  integrity sha512-ch0VbHD00od0904P8PvpNF7PVhXfnPDLtkJiyBxHf6wxIsTx5MtLjkPfb9I20jrJUX/gauPxQwXWcjJR1fYZ3w==
+  version "1.1.24"
+  resolved "https://registry.yarnpkg.com/ttpg-darrell/-/ttpg-darrell-1.1.24.tgz#7d52561dbbbef080f26a75de94e20ba9b3c86d24"
+  integrity sha512-tfF+9Nn1ln3+i5S7mGsemtATrARNkB36esNOunu/q9TFzn/uXvDTyzlMGgnb4Wa/8afFFu+4/8zEQZRRbuRnfg==
   dependencies:
     "@tabletop-playground/api" "^0.39.0"
     fastest-levenshtein "^1.0.16"
@@ -3468,9 +3468,9 @@ ttpg-darrell@^1.1.14:
     zod "^3.22.4"
 
 ttpg-mock@^1.0.48:
-  version "1.0.57"
-  resolved "https://registry.yarnpkg.com/ttpg-mock/-/ttpg-mock-1.0.57.tgz#b6614fafa76ccd7f839a6651e3ce704c399d36c2"
-  integrity sha512-tgLoSgtKpinoniE/Of+x0gpM0VacWr6R2q3vTvQPDZHSdHl3c8oIu2cC/86HM0Z9TjDvV3yMyge2n9WPA4Wn4w==
+  version "1.0.59"
+  resolved "https://registry.yarnpkg.com/ttpg-mock/-/ttpg-mock-1.0.59.tgz#fcc8fef4cb906f030a1f47c334785e548abff52d"
+  integrity sha512-eFi7ue4TQ9xCX3aUhJ+XdMz1drJ531gzNPLFkd1RKHu+r1AP7aiXUCfuxPzWffju6BMBTmRGLQwO9JgWLoWT/w==
   dependencies:
     "@tabletop-playground/api" "^0.41.0"
     three "^0.158.0"
