@@ -1,9 +1,17 @@
-import { CheckBox, Color, Player, world } from "@tabletop-playground/api";
-import { PlayerSlot } from "ttpg-darrell";
+import {
+  CheckBox,
+  Color,
+  Player,
+  TextJustification,
+  world,
+} from "@tabletop-playground/api";
+import { Broadcast, PlayerSlot } from "ttpg-darrell";
 import { AbstractStrategyCardBody } from "../abstract-strategy-card-body/abstract-strategy-card-body";
 import { AbstractUI } from "../../abstract-ui/abtract-ui";
 import { CheckBoxUI } from "../../button-ui/checkbox-ui";
 import { CONFIG } from "../../config/config";
+import { HorizontalUIBuilder } from "../../panel/horizontal-ui-builder";
+import { LongLabelUI } from "../../button-ui/long-label-ui";
 import { StrategyCardsState } from "../../../lib/strategy-card-lib/strategy-cards-state/strategy-cards-state";
 import { PlayerSeatType } from "../../../lib/player-lib/player-seats/player-seats";
 import { VerticalUIBuilder } from "../../panel/vertical-ui-builder";
@@ -33,6 +41,11 @@ export class BodyTrade extends AbstractStrategyCardBody {
       return undefined;
     }
 
+    const playingPlayerSlot: PlayerSlot = this.getPlayerSlot();
+    const playingPlayerName: string =
+      TI4.playerName.getBySlot(playingPlayerSlot);
+    const playingPlayerColor: Color = world.getSlotColor(playingPlayerSlot);
+
     const availableSlots: Array<PlayerSlot> = TI4.playerSeats
       .getAllSeats()
       .map((playerSeat: PlayerSeatType): PlayerSlot => playerSeat.playerSlot)
@@ -40,15 +53,15 @@ export class BodyTrade extends AbstractStrategyCardBody {
 
     const uis: Array<AbstractUI> = availableSlots.map(
       (slot: PlayerSlot): AbstractUI => {
-        const colorName: string | undefined =
-          TI4.playerColor.getSlotColorName(slot);
-        const color: Color = world.getSlotColor(slot);
+        const targetPlayerName: string = TI4.playerName.getBySlot(slot);
+        const targetColor: Color = world.getSlotColor(slot);
 
         const checkBoxUi: CheckBoxUI = new CheckBoxUI(scale);
         checkBoxUi.getCheckBox().setIsChecked(this._checkedSlots.has(slot));
-        if (colorName) {
-          checkBoxUi.getCheckBox().setText(colorName).setTextColor(color);
-        }
+        checkBoxUi
+          .getCheckBox()
+          .setText(targetPlayerName)
+          .setTextColor(targetColor);
         checkBoxUi
           .getCheckBox()
           .onCheckStateChanged.add(
@@ -59,8 +72,12 @@ export class BodyTrade extends AbstractStrategyCardBody {
             ): void => {
               if (isChecked) {
                 this._checkedSlots.add(slot);
+                const msg: string = `${playingPlayerName} refreshes ${targetPlayerName}.`;
+                Broadcast.chatAll(msg, playingPlayerColor);
               } else {
                 this._checkedSlots.delete(slot);
+                const msg: string = `${playingPlayerName} un-refreshes ${targetPlayerName}.`;
+                Broadcast.chatAll(msg, playingPlayerColor);
               }
               const json: string = JSON.stringify(
                 Array.from(this._checkedSlots)
@@ -73,9 +90,32 @@ export class BodyTrade extends AbstractStrategyCardBody {
       }
     );
 
+    const half: number = Math.ceil(uis.length / 2);
+    const uis1: Array<AbstractUI> = uis.slice(0, half);
+    const uis2: Array<AbstractUI> = uis.slice(half);
+
+    const left: AbstractUI = new VerticalUIBuilder()
+      .setSpacing(-CONFIG.SPACING * scale)
+      .addUIs(uis1)
+      .build();
+    const right: AbstractUI = new VerticalUIBuilder()
+      .setSpacing(-CONFIG.SPACING * scale)
+      .addUIs(uis2)
+      .build();
+    const bottom: AbstractUI = new HorizontalUIBuilder()
+      .setSpacing(CONFIG.SPACING * scale)
+      .addUIs([left, right])
+      .build();
+
+    const width2x: number = (CONFIG.BUTTON_WIDTH * 2 + CONFIG.SPACING) * scale;
+    const label: LongLabelUI = new LongLabelUI(width2x, scale);
+    label
+      .getText()
+      .setJustification(TextJustification.Left)
+      .setText("Refresh players:");
     return new VerticalUIBuilder()
       .setSpacing(CONFIG.SPACING * scale)
-      .addUIs(uis)
+      .addUIs([label, bottom])
       .build();
   }
 

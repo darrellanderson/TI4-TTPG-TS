@@ -69,7 +69,8 @@ it("constructor/getters/destroy", () => {
     body,
     playerSlot
   );
-  ui.getButtonPlay();
+  ui.getButtonPlayingPlayerFinished();
+  ui.getButtonFollow();
   ui.getButtonPass();
   ui.destroy();
 });

@@ -18,6 +18,8 @@ it("constructor/getters", () => {
   // Get for playing player.
   strategyCardsState.setLastPlayerSlotPlayed(5, playerSlot);
   expect(body.getBody(1)).toBeDefined();
+
+  body.getBody(1)?.destroy();
 });
 
 it("clickAll", () => {

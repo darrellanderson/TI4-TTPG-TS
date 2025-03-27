@@ -1,7 +1,6 @@
 import {
   Button,
   Color,
-  HorizontalAlignment,
   Player,
   refPackageId,
   TextJustification,
@@ -17,6 +16,7 @@ import { ButtonUI } from "../../button-ui/button-ui";
 import { CONFIG } from "../../config/config";
 import { HorizontalUIBuilder } from "../../panel/horizontal-ui-builder";
 import { LabelUI } from "../../button-ui/label-ui";
+import { LongButtonUI } from "../../button-ui/long-button-ui";
 import { VerticalUIBuilder } from "../../panel/vertical-ui-builder";
 
 const packageId: string = refPackageId;
@@ -33,7 +33,8 @@ export class StrategyCardUI extends AbstractUI {
   private readonly _isPlay: boolean;
   private readonly _name: string;
   private readonly _ui: AbstractUI;
-  private readonly _buttonPlay: Button;
+  private readonly _buttonPlayingPlayerFinished: Button;
+  private readonly _buttonFollow: Button;
   private readonly _buttonPass: Button;
 
   private readonly _onPlayOrFollow = new ThrottleClickHandler<Button>(
@@ -41,7 +42,7 @@ export class StrategyCardUI extends AbstractUI {
       const playerSlot: number = player.getSlot();
       const playerName: string = TI4.playerName.getBySlot(playerSlot);
       const parts: Array<string> = [
-        `${playerName} ${this._isPlay ? "plays" : "follows"} ${this._name}`,
+        `${playerName} ${this._isPlay ? "played" : "follows"} ${this._name}`,
       ];
       const report: string | undefined = this._strategyCardBody.getReport();
       if (report) {
@@ -92,26 +93,37 @@ export class StrategyCardUI extends AbstractUI {
     const isPlay: boolean =
       strategyCardsState.getLastPlayerSlotPlayed(strategyCardNumber) ===
       playerSlot;
-    const buttonPlay: ButtonUI = new ButtonUI(scale);
-    buttonPlay.getButton().setText(isPlay ? "Play" : "Follow");
+
+    const width2x: number = (CONFIG.BUTTON_WIDTH * 2 + CONFIG.SPACING) * scale;
+    const buttonPlayingPlayerFinished: LongButtonUI = new LongButtonUI(
+      width2x,
+      scale
+    );
+    buttonPlayingPlayerFinished.getButton().setText("Finished");
+
+    const buttonFollow: ButtonUI = new ButtonUI(scale);
+    buttonFollow.getButton().setText("Follow");
 
     const buttonPass: ButtonUI = new ButtonUI(scale);
     buttonPass.getButton().setText("Pass");
 
-    const bottomUis: AbstractUI[] = [buttonPlay, buttonPass];
-    const bottomRow: AbstractUI = new HorizontalUIBuilder()
-      .setSpacing(CONFIG.SPACING * scale)
-      .addUIs(bottomUis)
-      .build();
+    let bottomUi: AbstractUI;
+    if (isPlay) {
+      bottomUi = buttonPlayingPlayerFinished;
+    } else {
+      bottomUi = new HorizontalUIBuilder()
+        .setSpacing(CONFIG.SPACING * scale)
+        .addUIs([buttonFollow, buttonPass])
+        .build();
+    }
 
     const uis: Array<AbstractUI> = [titleUi];
     if (body) {
       uis.push(body);
     }
-    uis.push(bottomRow);
+    uis.push(bottomUi);
     const ui: AbstractUI = new VerticalUIBuilder()
       .setSpacing(CONFIG.SPACING * scale)
-      .setHorizontalAlignment(HorizontalAlignment.Center)
       .addUIs(uis)
       .build();
 
@@ -122,10 +134,12 @@ export class StrategyCardUI extends AbstractUI {
     this._isPlay = isPlay;
     this._name = name;
     this._ui = ui;
-    this._buttonPlay = buttonPlay.getButton();
+    this._buttonPlayingPlayerFinished = buttonPlayingPlayerFinished.getButton();
+    this._buttonFollow = buttonFollow.getButton();
     this._buttonPass = buttonPass.getButton();
 
-    buttonPlay.getButton().onClicked.add(this._onPlayOrFollow);
+    buttonPlayingPlayerFinished.getButton().onClicked.add(this._onPlayOrFollow);
+    buttonFollow.getButton().onClicked.add(this._onPlayOrFollow);
     buttonPass.getButton().onClicked.add(this._onPass);
   }
 
@@ -133,8 +147,12 @@ export class StrategyCardUI extends AbstractUI {
     this._ui.destroy();
   }
 
-  getButtonPlay(): Button {
-    return this._buttonPlay;
+  getButtonPlayingPlayerFinished(): Button {
+    return this._buttonPlayingPlayerFinished;
+  }
+
+  getButtonFollow(): Button {
+    return this._buttonFollow;
   }
 
   getButtonPass(): Button {
