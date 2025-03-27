@@ -60,7 +60,8 @@ export class BodyTrade extends AbstractStrategyCardBody {
         checkBoxUi.getCheckBox().setIsChecked(this._checkedSlots.has(slot));
         checkBoxUi
           .getCheckBox()
-          .setText(targetPlayerName)
+          .setBold(true)
+          .setText(" " + targetPlayerName)
           .setTextColor(targetColor);
         checkBoxUi
           .getCheckBox()
