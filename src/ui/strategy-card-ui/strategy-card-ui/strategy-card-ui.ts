@@ -18,6 +18,8 @@ import { HorizontalUIBuilder } from "../../panel/horizontal-ui-builder";
 import { LabelUI } from "../../button-ui/label-ui";
 import { LongButtonUI } from "../../button-ui/long-button-ui";
 import { VerticalUIBuilder } from "../../panel/vertical-ui-builder";
+import { CreateZoomedUiType, ZoomableUI } from "../../zoomable-ui/zoomable-ui";
+import { ZoomedStrategyCardUI } from "./zoomed-strategy-card-ui";
 
 const packageId: string = refPackageId;
 
@@ -90,6 +92,14 @@ export class StrategyCardUI extends AbstractUI {
       .setJustification(TextJustification.Left)
       .setText(name.toUpperCase());
 
+    const createZoomedStrategyCardUI: CreateZoomedUiType =
+      ZoomedStrategyCardUI.generateCreateZoomedUi(strategyCardNumber);
+    const zoomableTitleUi: ZoomableUI = new ZoomableUI(
+      titleUi,
+      scale,
+      createZoomedStrategyCardUI
+    );
+
     const isPlay: boolean =
       strategyCardsState.getLastPlayerSlotPlayed(strategyCardNumber) ===
       playerSlot;
@@ -117,7 +127,7 @@ export class StrategyCardUI extends AbstractUI {
         .build();
     }
 
-    const uis: Array<AbstractUI> = [titleUi];
+    const uis: Array<AbstractUI> = [zoomableTitleUi];
     if (body) {
       uis.push(body);
     }
