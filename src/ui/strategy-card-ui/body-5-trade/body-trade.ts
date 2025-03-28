@@ -10,8 +10,7 @@ import { AbstractStrategyCardBody } from "../abstract-strategy-card-body/abstrac
 import { AbstractUI } from "../../abstract-ui/abtract-ui";
 import { CheckBoxUI } from "../../button-ui/checkbox-ui";
 import { CONFIG } from "../../config/config";
-import { HorizontalUIBuilder } from "../../panel/horizontal-ui-builder";
-import { LongLabelUI } from "../../button-ui/long-label-ui";
+import { LabelUI } from "../../button-ui/label-ui";
 import { StrategyCardsState } from "../../../lib/strategy-card-lib/strategy-cards-state/strategy-cards-state";
 import { PlayerSeatType } from "../../../lib/player-lib/player-seats/player-seats";
 import { VerticalUIBuilder } from "../../panel/vertical-ui-builder";
@@ -91,32 +90,15 @@ export class BodyTrade extends AbstractStrategyCardBody {
       }
     );
 
-    const half: number = Math.ceil(uis.length / 2);
-    const uis1: Array<AbstractUI> = uis.slice(0, half);
-    const uis2: Array<AbstractUI> = uis.slice(half);
-
-    const left: AbstractUI = new VerticalUIBuilder()
-      .setSpacing(-CONFIG.SPACING * scale)
-      .addUIs(uis1)
-      .build();
-    const right: AbstractUI = new VerticalUIBuilder()
-      .setSpacing(-CONFIG.SPACING * scale)
-      .addUIs(uis2)
-      .build();
-    const bottom: AbstractUI = new HorizontalUIBuilder()
-      .setSpacing(CONFIG.SPACING * scale)
-      .addUIs([left, right])
-      .build();
-
-    const width2x: number = (CONFIG.BUTTON_WIDTH * 2 + CONFIG.SPACING) * scale;
-    const label: LongLabelUI = new LongLabelUI(width2x, scale);
+    const label: LabelUI = new LabelUI(scale);
     label
       .getText()
       .setJustification(TextJustification.Left)
       .setText("Refresh players:");
+
     return new VerticalUIBuilder()
-      .setSpacing(CONFIG.SPACING * scale)
-      .addUIs([label, bottom])
+      .setSpacing(-CONFIG.SPACING * scale)
+      .addUIs([label, ...uis])
       .build();
   }
 

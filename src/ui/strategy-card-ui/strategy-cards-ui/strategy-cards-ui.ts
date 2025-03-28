@@ -3,7 +3,7 @@ import { AbstractUI } from "../../abstract-ui/abtract-ui";
 import { AbstractStrategyCardBody } from "../abstract-strategy-card-body/abstract-strategy-card-body";
 import { CONFIG } from "../../config/config";
 import { DivUI } from "../../div-ui/div-ui";
-import { LongLabelUI } from "../../button-ui/long-label-ui";
+import { LabelUI } from "../../button-ui/label-ui";
 import {
   StrategyCardNumberAndState,
   StrategyCardsState,
@@ -37,8 +37,7 @@ export class StrategyCardsUI extends AbstractUI {
 
     numbersAndStates.forEach((numberAndState, index: number): void => {
       if (index > 0) {
-        const scaledLength: number =
-          (CONFIG.BUTTON_WIDTH * 2 + CONFIG.SPACING) * scale;
+        const scaledLength: number = CONFIG.BUTTON_WIDTH * scale;
         const div: AbstractUI = new DivUI(scale, scaledLength, "horizontal");
         uis.push(div);
       }
@@ -74,10 +73,8 @@ export class StrategyCardsUI extends AbstractUI {
     });
 
     if (uis.length === 0) {
-      const scaledWidth: number =
-        (CONFIG.BUTTON_WIDTH * 2 + CONFIG.SPACING) * scale;
-      const empty: LongLabelUI = new LongLabelUI(scaledWidth, scale);
-      empty.getText().setText("No active Strategy Cards");
+      const empty: LabelUI = new LabelUI(scale);
+      empty.getText().setText("No Strategy Cards");
       uis.push(empty);
     }
 

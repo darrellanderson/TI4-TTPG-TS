@@ -14,9 +14,7 @@ import { AbstractStrategyCardBody } from "../abstract-strategy-card-body/abstrac
 import { AbstractUI } from "../../abstract-ui/abtract-ui";
 import { ButtonUI } from "../../button-ui/button-ui";
 import { CONFIG } from "../../config/config";
-import { HorizontalUIBuilder } from "../../panel/horizontal-ui-builder";
 import { LabelUI } from "../../button-ui/label-ui";
-import { LongButtonUI } from "../../button-ui/long-button-ui";
 import { VerticalUIBuilder } from "../../panel/vertical-ui-builder";
 import { CreateZoomedUiType, ZoomableUI } from "../../zoomable-ui/zoomable-ui";
 import { ZoomedStrategyCardUI } from "./zoomed-strategy-card-ui";
@@ -88,7 +86,7 @@ export class StrategyCardUI extends AbstractUI {
     titleUi
       .getText()
       .setFont("handel-gothic-regular.ttf", packageId)
-      .setFontSize(CONFIG.FONT_SIZE * scale * 1.5)
+      .setFontSize(CONFIG.FONT_SIZE * scale * 1.1)
       .setJustification(TextJustification.Left)
       .setText(name.toUpperCase());
 
@@ -104,11 +102,7 @@ export class StrategyCardUI extends AbstractUI {
       strategyCardsState.getLastPlayerSlotPlayed(strategyCardNumber) ===
       playerSlot;
 
-    const width2x: number = (CONFIG.BUTTON_WIDTH * 2 + CONFIG.SPACING) * scale;
-    const buttonPlayingPlayerFinished: LongButtonUI = new LongButtonUI(
-      width2x,
-      scale
-    );
+    const buttonPlayingPlayerFinished: ButtonUI = new ButtonUI(scale);
     buttonPlayingPlayerFinished.getButton().setText("Finished");
 
     const buttonFollow: ButtonUI = new ButtonUI(scale);
@@ -117,21 +111,16 @@ export class StrategyCardUI extends AbstractUI {
     const buttonPass: ButtonUI = new ButtonUI(scale);
     buttonPass.getButton().setText("Pass");
 
-    let bottomUi: AbstractUI;
-    if (isPlay) {
-      bottomUi = buttonPlayingPlayerFinished;
-    } else {
-      bottomUi = new HorizontalUIBuilder()
-        .setSpacing(CONFIG.SPACING * scale)
-        .addUIs([buttonFollow, buttonPass])
-        .build();
-    }
-
     const uis: Array<AbstractUI> = [zoomableTitleUi];
     if (body) {
       uis.push(body);
     }
-    uis.push(bottomUi);
+    if (isPlay) {
+      uis.push(buttonPlayingPlayerFinished);
+    } else {
+      uis.push(buttonFollow, buttonPass);
+    }
+
     const ui: AbstractUI = new VerticalUIBuilder()
       .setSpacing(CONFIG.SPACING * scale)
       .addUIs(uis)

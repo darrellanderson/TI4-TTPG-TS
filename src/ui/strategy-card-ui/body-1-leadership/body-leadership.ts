@@ -2,10 +2,10 @@ import { Player, Slider, TextJustification } from "@tabletop-playground/api";
 import { AbstractUI } from "../../abstract-ui/abtract-ui";
 import { AbstractStrategyCardBody } from "../abstract-strategy-card-body/abstract-strategy-card-body";
 import { CONFIG } from "../../config/config";
-import { HorizontalUIBuilder } from "../../panel/horizontal-ui-builder";
 import { LabelUI } from "../../button-ui/label-ui";
 import { SliderWithValueUI } from "../../button-ui/slider-with-value-ui";
 import { StrategyCardsState } from "../../../lib/strategy-card-lib/strategy-cards-state/strategy-cards-state";
+import { VerticalUIBuilder } from "../../panel/vertical-ui-builder";
 
 export class BodyLeadership extends AbstractStrategyCardBody {
   private _tokenCount: number = 0;
@@ -38,7 +38,7 @@ export class BodyLeadership extends AbstractStrategyCardBody {
     const numTokensLabel: LabelUI = new LabelUI(scale);
     numTokensLabel
       .getText()
-      .setJustification(TextJustification.Right)
+      .setJustification(TextJustification.Left)
       .setText("Gain tokens:");
 
     const numTokensSlider: SliderWithValueUI = new SliderWithValueUI(scale);
@@ -52,7 +52,7 @@ export class BodyLeadership extends AbstractStrategyCardBody {
       numTokensSlider.getSlider().setMinValue(3);
     }
 
-    return new HorizontalUIBuilder()
+    return new VerticalUIBuilder()
       .setSpacing(CONFIG.SPACING * scale)
       .addUIs([numTokensLabel, numTokensSlider])
       .build();
