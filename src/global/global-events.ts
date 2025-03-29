@@ -133,4 +133,11 @@ export class GlobalEvents {
   public readonly onSystemChanged = new TriggerableMulticastDelegate<
     (system: System) => void
   >();
+
+  /**
+   * Show tech chooser to the given player.
+   */
+  public readonly onTechChooserRequest = new TriggerableMulticastDelegate<
+    (playerSlot: number) => void
+  >();
 }
