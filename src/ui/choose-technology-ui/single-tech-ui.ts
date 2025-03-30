@@ -51,13 +51,8 @@ export class SingleTechUI extends AbstractUI {
     const techButtonUi: ButtonUI = new ButtonUI(scale);
     techButtonUi.getButton().setText(tech.getName());
 
-    canvas.addChild(
-      techButtonUi.getButton(),
-      0,
-      0,
-      techButtonUi.getSize().w,
-      techButtonUi.getSize().h
-    );
+    const bsize: UI_SIZE = techButtonUi.getSize();
+    canvas.addChild(techButtonUi.getWidget(), 0, 0, bsize.w, bsize.h);
 
     const box: Widget = new LayoutBox()
       .setOverrideWidth(size.w)
