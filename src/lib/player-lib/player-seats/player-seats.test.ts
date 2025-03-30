@@ -81,3 +81,23 @@ it("getSeatIndexByPlayerSlotOrThrow", () => {
   expect(playerSeats.getSeatIndexByPlayerSlotOrThrow(1)).toBe(0);
   expect(() => playerSeats.getSeatIndexByPlayerSlotOrThrow(2)).toThrow();
 });
+
+it("getCardHolderByPlayerSlot", () => {
+  const cardHolder = new MockCardHolder({
+    templateMetadata: "card-holder:base/player-hand",
+    owningPlayerSlot: 1,
+  });
+  const playerSeats = new PlayerSeats();
+  expect(playerSeats.getCardHolderByPlayerSlot(1)).toBe(cardHolder);
+  expect(playerSeats.getCardHolderByPlayerSlot(2)).toBeUndefined();
+});
+
+it("getCardHolderByPlayerSlotOrThrow", () => {
+  const cardHolder = new MockCardHolder({
+    templateMetadata: "card-holder:base/player-hand",
+    owningPlayerSlot: 1,
+  });
+  const playerSeats = new PlayerSeats();
+  expect(playerSeats.getCardHolderByPlayerSlotOrThrow(1)).toBe(cardHolder);
+  expect(() => playerSeats.getCardHolderByPlayerSlotOrThrow(2)).toThrow();
+});

@@ -1,5 +1,4 @@
 import {
-  GameObject,
   MockCard,
   MockCardDetails,
   MockCardHolder,
@@ -100,82 +99,4 @@ it("unpack/remove (missing all starting tech)", () => {
   expect(() => {
     unpack.unpack();
   }).toThrow(/starting tech/);
-});
-
-it("_getTechDeckOrThrow", () => {
-  const faction: Faction = TI4.factionRegistry.getByNsid(
-    "faction:base/arborec"
-  )!;
-  const playerSlot: number = 10;
-
-  const techDeck: Card = new MockCard();
-  const snapPoint: SnapPoint = new MockSnapPoint({
-    tags: ["deck-technology"],
-    snappedObject: techDeck,
-  });
-  new MockGameObject({
-    templateMetadata: "mat.player:base/technology-deck",
-    owningPlayerSlot: playerSlot,
-    snapPoints: [snapPoint],
-  });
-
-  const unpack = new UnpackStartingTech(faction, playerSlot);
-  const result: Card = unpack._getTechDeckOrThrow();
-  expect(result).toBe(techDeck);
-});
-
-it("_getTechDeckOrThrow (missing snap point)", () => {
-  const faction: Faction = TI4.factionRegistry.getByNsid(
-    "faction:base/arborec"
-  )!;
-  const playerSlot: number = 10;
-
-  const unpack = new UnpackStartingTech(faction, playerSlot);
-  expect(() => {
-    unpack._getTechDeckOrThrow();
-  }).toThrow(/no snap point/);
-});
-
-it("_getTechDeckOrThrow (no snapped object)", () => {
-  const faction: Faction = TI4.factionRegistry.getByNsid(
-    "faction:base/arborec"
-  )!;
-  const playerSlot: number = 10;
-
-  const snapPoint: SnapPoint = new MockSnapPoint({
-    tags: ["deck-technology"],
-  });
-  new MockGameObject({
-    templateMetadata: "mat.player:base/technology-deck",
-    owningPlayerSlot: playerSlot,
-    snapPoints: [snapPoint],
-  });
-
-  const unpack = new UnpackStartingTech(faction, playerSlot);
-  expect(() => {
-    unpack._getTechDeckOrThrow();
-  }).toThrow(/no snapped object/);
-});
-
-it("_getTechDeckOrThrow (snapped object not a card)", () => {
-  const faction: Faction = TI4.factionRegistry.getByNsid(
-    "faction:base/arborec"
-  )!;
-  const playerSlot: number = 10;
-
-  const snappedObject: GameObject = new MockGameObject();
-  const snapPoint: SnapPoint = new MockSnapPoint({
-    tags: ["deck-technology"],
-    snappedObject: snappedObject,
-  });
-  new MockGameObject({
-    templateMetadata: "mat.player:base/technology-deck",
-    owningPlayerSlot: playerSlot,
-    snapPoints: [snapPoint],
-  });
-
-  const unpack = new UnpackStartingTech(faction, playerSlot);
-  expect(() => {
-    unpack._getTechDeckOrThrow();
-  }).toThrow(/not a card/);
 });

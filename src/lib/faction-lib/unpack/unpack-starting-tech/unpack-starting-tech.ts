@@ -1,13 +1,9 @@
-import {
-  Card,
-  CardHolder,
-  GameObject,
-  SnapPoint,
-} from "@tabletop-playground/api";
+import { Card, CardHolder } from "@tabletop-playground/api";
 import { CardUtil, Find, NSID } from "ttpg-darrell";
 
 import { AbstractUnpack } from "../abstract-unpack/abstract-unpack";
 import { Faction } from "../../faction/faction";
+import { FindPlayerTechDeck } from "../../../tech-lib/find-player-tech-deck/find-player-tech-deck";
 
 export class UnpackStartingTech extends AbstractUnpack {
   private readonly _cardUtil: CardUtil = new CardUtil();
@@ -61,20 +57,6 @@ export class UnpackStartingTech extends AbstractUnpack {
   }
 
   _getTechDeckOrThrow(): Card {
-    const snapPoint: SnapPoint | undefined = this._find.findSnapPointByTag(
-      "deck-technology",
-      this.getPlayerSlot()
-    );
-    if (!snapPoint) {
-      throw new Error("Missing tech deck (no snap point)");
-    }
-    const snapped: GameObject | undefined = snapPoint.getSnappedObject();
-    if (!snapped) {
-      throw new Error("Missing tech deck (no snapped object)");
-    }
-    if (!(snapped instanceof Card)) {
-      throw new Error("Missing tech deck (not a card)");
-    }
-    return snapped;
+    return new FindPlayerTechDeck().getTechDeckOrThrow(this.getPlayerSlot());
   }
 }

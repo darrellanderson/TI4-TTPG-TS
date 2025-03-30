@@ -13,6 +13,10 @@ export class TechRegistry {
     return Array.from(this._nsidToTech.keys());
   }
 
+  getAllTechs(): Array<Tech> {
+    return Array.from(this._nsidToTech.values());
+  }
+
   getByNsid(nsid: string): Tech | undefined {
     return this._nsidToTech.get(nsid);
   }

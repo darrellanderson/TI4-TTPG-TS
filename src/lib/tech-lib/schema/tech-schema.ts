@@ -27,6 +27,6 @@ export const TechSchema = z
       .strict(),
     isFactionTech: z.boolean().optional(),
   })
-  .strict();
-// .readonly();
+  .strict()
+  .readonly();
 export type TechSchemaType = z.infer<typeof TechSchema>;

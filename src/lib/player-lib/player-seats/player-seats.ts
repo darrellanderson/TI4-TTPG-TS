@@ -65,4 +65,23 @@ export class PlayerSeats {
     }
     return seatIndex;
   }
+
+  getCardHolderByPlayerSlot(playerSlot: number): CardHolder | undefined {
+    const seats: Array<PlayerSeatType> = this.getAllSeats();
+    const seat: PlayerSeatType | undefined = seats.find(
+      (candidate: PlayerSeatType) => {
+        return candidate.playerSlot === playerSlot;
+      }
+    );
+    return seat?.cardHolder;
+  }
+
+  getCardHolderByPlayerSlotOrThrow(playerSlot: number): CardHolder {
+    const cardHolder: CardHolder | undefined =
+      this.getCardHolderByPlayerSlot(playerSlot);
+    if (!cardHolder) {
+      throw new Error(`Card holder for player slot ${playerSlot} not found.`);
+    }
+    return cardHolder;
+  }
 }

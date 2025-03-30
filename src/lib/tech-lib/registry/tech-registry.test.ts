@@ -15,6 +15,13 @@ it("constructor", () => {
   new TechRegistry();
 });
 
+it("getters", () => {
+  const techRegistry = new TechRegistry();
+  techRegistry.getAllNsids();
+  techRegistry.getAllTechs();
+  techRegistry.getByNsid("card.technology.red:base/plasma-scoring");
+});
+
 it("load (empty)", () => {
   const registry = new TechRegistry();
   registry.load("source", []);
