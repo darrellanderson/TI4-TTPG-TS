@@ -1,7 +1,7 @@
 import { PlayerSlot } from "ttpg-darrell";
 
 import { Faction } from "../../lib/faction-lib/faction/faction";
-import { RemoveByNsidOrSource } from "../../lib/remove-lib/remove-by-nsid-or-source/remove-by-nsid-or-source";
+import { PlayerWithFactionTechs } from "../../lib/tech-lib/player-with-faction-techs/player-with-faction-techs";
 import { TechColorType } from "../../lib/tech-lib/schema/tech-schema";
 import { Tech } from "../../lib/tech-lib/tech/tech";
 
@@ -19,43 +19,23 @@ export class ChooseTechnologyUI extends AbstractUI {
     techColor: TechColorType,
     faction: Faction | undefined
   ): AbstractUI {
-    // Apply remove rules (e.g. codex replacement).
-    const removeByNsidOrSource: RemoveByNsidOrSource =
-      TI4.removeRegistry.createRemoveFromRegistryAndConfig();
-    const factionTechNsids: Set<string> = new Set<string>();
-    if (faction) {
-      for (const nsid of faction.getFactionTechNsids()) {
-        factionTechNsids.add(nsid);
-      }
-    }
-
-    // Get all techs.
-    let techs: Array<Tech> = TI4.techRegistry
-      .getAllTechs()
+    const techs: Array<Tech> = new PlayerWithFactionTechs(faction)
+      .get()
       .filter((tech: Tech): boolean => {
-        if (tech.getColor() !== techColor) {
-          return false;
-        }
-        if (tech.isFactionTech() && !factionTechNsids.has(tech.getNsid())) {
-          return false;
-        }
-        if (removeByNsidOrSource.shouldRemove(tech.getNsid())) {
-          return false;
-        }
-        return true;
+        return tech.getColor() === techColor;
       });
     Tech.sortByLevel(techs);
 
-    // Remove base unit upgrades when faction tech is present.
-    const removeNsidNames: Set<string> = new Set<string>();
-    for (const tech of techs) {
-      if (tech.replacesNsidName()) {
-        removeNsidNames.add(tech.getNsid());
-      }
+    if (faction) {
+      const nsids: Array<string> = techs
+        .filter((tech: Tech): boolean => {
+          return tech.getColor() === "unit-upgrade";
+        })
+        .map((tech: Tech): string => {
+          return tech.getNsid();
+        });
+      nsids.sort();
     }
-    techs = techs.filter((tech: Tech): boolean => {
-      return !removeNsidNames.has(tech.getNsidName());
-    });
 
     const uis: Array<AbstractUI> = techs.map((tech: Tech): AbstractUI => {
       return new SingleTechUI(scale, tech, faction);

@@ -88,7 +88,6 @@ export class SingleTechUI extends AbstractUI {
     if (tech.isFactionTech() && faction) {
       const img: string = faction.getIcon();
       const imgPackageId: string = faction.getIconPackageId();
-      console.log(img, imgPackageId);
       x = bsize.w - prereqSize - margin;
       const image: Widget = new ImageWidget().setImage(img, imgPackageId);
       canvas.addChild(image, x, y, prereqSize, prereqSize);

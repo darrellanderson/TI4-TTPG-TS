@@ -26,7 +26,7 @@ export const TechSchema = z
       })
       .strict(),
     isFactionTech: z.boolean().optional(),
-    replacesNsidName: z.string().min(1).optional(), // unit upgrade
+    replacesNsidName: z.string().min(1).optional(), // faction unit upgrade override this base unit upgrade, e.g. "carrier-2"
   })
   .strict()
   .readonly();

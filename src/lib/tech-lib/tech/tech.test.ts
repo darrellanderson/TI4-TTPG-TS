@@ -118,6 +118,7 @@ it("getPrerequisites", () => {
   expect(tech.getPrerequisites("green")).toEqual(2);
   expect(tech.getPrerequisites("red")).toEqual(3);
   expect(tech.getPrerequisites("yellow")).toEqual(4);
+  expect(tech.getPrerequisites("none")).toEqual(0);
 });
 
 it("getPrerequisites (none)", () => {
