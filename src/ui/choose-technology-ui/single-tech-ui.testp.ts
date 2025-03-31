@@ -5,6 +5,8 @@ import {
   world,
 } from "@tabletop-playground/api";
 import { AbstractUI } from "../abstract-ui/abtract-ui";
+import { Faction } from "../../lib/faction-lib/faction/faction";
+import { PlayerTechSummary } from "../../lib/tech-lib/player-tech-summary/player-tech-summary";
 import { SingleTechUI } from "./single-tech-ui";
 import { Tech } from "../../lib/tech-lib/tech/tech";
 
@@ -13,7 +15,14 @@ function go() {
   const tech: Tech = TI4.techRegistry.getByNsid(
     "card.technology.blue:base/antimass-deflectors"
   )!;
-  const abstractUi: AbstractUI = new SingleTechUI(scale, tech, undefined);
+  const faction: Faction | undefined = undefined;
+  const playerTechSummary: PlayerTechSummary = new PlayerTechSummary(10);
+  const abstractUi: AbstractUI = new SingleTechUI(
+    scale,
+    tech,
+    faction,
+    playerTechSummary
+  );
 
   const widget: Widget = abstractUi.getWidget();
 

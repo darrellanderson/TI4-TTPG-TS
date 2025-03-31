@@ -10,13 +10,16 @@ import {
   Widget,
 } from "@tabletop-playground/api";
 import { CardUtil, ThrottleClickHandler } from "ttpg-darrell";
+
+import { Faction } from "../../lib/faction-lib/faction/faction";
+import { FindPlayerTechDeck } from "../../lib/tech-lib/find-player-tech-deck/find-player-tech-deck";
+import { PlayerTechSummary } from "../../lib/tech-lib/player-tech-summary/player-tech-summary";
 import { Tech } from "../../lib/tech-lib/tech/tech";
+import { TechColorType } from "../../lib/tech-lib/schema/tech-schema";
+
 import { AbstractUI, UI_SIZE } from "../abstract-ui/abtract-ui";
 import { CONFIG } from "../config/config";
 import { ButtonUI } from "../button-ui/button-ui";
-import { Faction } from "../../lib/faction-lib/faction/faction";
-import { FindPlayerTechDeck } from "../../lib/tech-lib/find-player-tech-deck/find-player-tech-deck";
-import { TechColorType } from "../../lib/tech-lib/schema/tech-schema";
 
 const packageId: string = refPackageId;
 const MAX_NAME_LENGTH: number = 20;
@@ -48,7 +51,12 @@ export class SingleTechUI extends AbstractUI {
     }
   ).get();
 
-  constructor(scale: number, tech: Tech, faction: Faction | undefined) {
+  constructor(
+    scale: number,
+    tech: Tech,
+    faction: Faction | undefined,
+    playerTechSummary: PlayerTechSummary
+  ) {
     const size: UI_SIZE = {
       w: CONFIG.BUTTON_WIDTH * scale,
       h: CONFIG.BUTTON_HEIGHT * scale * 1.3,
@@ -61,7 +69,10 @@ export class SingleTechUI extends AbstractUI {
     if (name.length > MAX_NAME_LENGTH) {
       name = name.substring(0, MAX_NAME_LENGTH - 3) + "...";
     }
-    techButtonUi.getButton().setText(name);
+    techButtonUi
+      .getButton()
+      .setEnabled(!playerTechSummary.isOwned(tech.getNsid()))
+      .setText(name);
 
     // Add the tech button.
     const bsize: UI_SIZE = techButtonUi.getSize();
@@ -78,7 +89,9 @@ export class SingleTechUI extends AbstractUI {
       const enabled: string = `ui/tech/${color}-enabled.png`;
       const disabled: string = `ui/tech/${color}-disabled.png`;
       for (let i = 0; i < count; i++) {
-        const image: Widget = new ImageWidget().setImage(enabled, packageId);
+        const isEnabled: boolean = i < playerTechSummary.getOwnedCount(color);
+        const use: string = isEnabled ? enabled : disabled;
+        const image: Widget = new ImageWidget().setImage(use, packageId);
         canvas.addChild(image, x, y, prereqSize, prereqSize);
         x += prereqSize;
       }

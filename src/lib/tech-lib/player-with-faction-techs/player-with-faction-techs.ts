@@ -9,12 +9,6 @@ import { Tech } from "../tech/tech";
 export class PlayerWithFactionTechs {
   private readonly _faction: Faction | undefined;
 
-  static getOwnedTechs(playerSlot: number): Array<Tech> {
-    const techs: Array<Tech> = [];
-    // TODO XXX
-    return techs;
-  }
-
   constructor(faction: Faction | undefined) {
     this._faction = faction;
   }

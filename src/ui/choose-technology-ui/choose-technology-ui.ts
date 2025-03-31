@@ -1,6 +1,7 @@
 import { PlayerSlot } from "ttpg-darrell";
 
 import { Faction } from "../../lib/faction-lib/faction/faction";
+import { PlayerTechSummary } from "../../lib/tech-lib/player-tech-summary/player-tech-summary";
 import { PlayerWithFactionTechs } from "../../lib/tech-lib/player-with-faction-techs/player-with-faction-techs";
 import { TechColorType } from "../../lib/tech-lib/schema/tech-schema";
 import { Tech } from "../../lib/tech-lib/tech/tech";
@@ -17,7 +18,8 @@ export class ChooseTechnologyUI extends AbstractUI {
   static _getTechColumn(
     scale: number,
     techColor: TechColorType,
-    faction: Faction | undefined
+    faction: Faction | undefined,
+    playerTechSummary: PlayerTechSummary
   ): AbstractUI {
     const techs: Array<Tech> = new PlayerWithFactionTechs(faction)
       .get()
@@ -38,7 +40,7 @@ export class ChooseTechnologyUI extends AbstractUI {
     }
 
     const uis: Array<AbstractUI> = techs.map((tech: Tech): AbstractUI => {
-      return new SingleTechUI(scale, tech, faction);
+      return new SingleTechUI(scale, tech, faction, playerTechSummary);
     });
 
     return new VerticalUIBuilder()
@@ -50,13 +52,41 @@ export class ChooseTechnologyUI extends AbstractUI {
   constructor(scale: number, playerSlot: PlayerSlot) {
     const faction: Faction | undefined =
       TI4.factionRegistry.getByPlayerSlot(playerSlot);
+    const playerTechSummary: PlayerTechSummary = new PlayerTechSummary(
+      playerSlot
+    );
 
     const uis: Array<AbstractUI> = [
-      ChooseTechnologyUI._getTechColumn(scale, "blue", faction),
-      ChooseTechnologyUI._getTechColumn(scale, "green", faction),
-      ChooseTechnologyUI._getTechColumn(scale, "red", faction),
-      ChooseTechnologyUI._getTechColumn(scale, "yellow", faction),
-      ChooseTechnologyUI._getTechColumn(scale, "unit-upgrade", faction),
+      ChooseTechnologyUI._getTechColumn(
+        scale,
+        "blue",
+        faction,
+        playerTechSummary
+      ),
+      ChooseTechnologyUI._getTechColumn(
+        scale,
+        "green",
+        faction,
+        playerTechSummary
+      ),
+      ChooseTechnologyUI._getTechColumn(
+        scale,
+        "red",
+        faction,
+        playerTechSummary
+      ),
+      ChooseTechnologyUI._getTechColumn(
+        scale,
+        "yellow",
+        faction,
+        playerTechSummary
+      ),
+      ChooseTechnologyUI._getTechColumn(
+        scale,
+        "unit-upgrade",
+        faction,
+        playerTechSummary
+      ),
     ];
 
     const ui: AbstractUI = new HorizontalUIBuilder()
