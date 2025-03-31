@@ -14,6 +14,8 @@ import { CONFIG } from "../config/config";
 import { ButtonUI } from "../button-ui/button-ui";
 import { FindPlayerTechDeck } from "../../lib/tech-lib/find-player-tech-deck/find-player-tech-deck";
 
+const MAX_NAME_LENGTH: number = 20;
+
 export class SingleTechUI extends AbstractUI {
   private readonly _tech: Tech;
 
@@ -34,6 +36,7 @@ export class SingleTechUI extends AbstractUI {
           (candidateNsid: string): boolean => nsid === candidateNsid
         );
         if (card) {
+          card.setRotation([0, 0, 180]);
           cardHolder.insert(card, 0);
         }
       }
@@ -43,13 +46,17 @@ export class SingleTechUI extends AbstractUI {
   constructor(scale: number, tech: Tech) {
     const size: UI_SIZE = {
       w: CONFIG.BUTTON_WIDTH * scale,
-      h: CONFIG.BUTTON_HEIGHT * scale * 1.1,
+      h: CONFIG.BUTTON_HEIGHT * scale * 1.5,
     };
 
     const canvas: Canvas = new Canvas();
 
     const techButtonUi: ButtonUI = new ButtonUI(scale);
-    techButtonUi.getButton().setText(tech.getName());
+    let name: string = tech.getName();
+    if (name.length > MAX_NAME_LENGTH) {
+      name = name.substring(0, MAX_NAME_LENGTH - 3) + "...";
+    }
+    techButtonUi.getButton().setText(name);
 
     const bsize: UI_SIZE = techButtonUi.getSize();
     canvas.addChild(techButtonUi.getWidget(), 0, 0, bsize.w, bsize.h);

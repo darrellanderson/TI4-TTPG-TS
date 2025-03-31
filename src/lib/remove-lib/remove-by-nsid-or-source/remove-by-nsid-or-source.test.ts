@@ -19,7 +19,11 @@ it("delete basic by source", () => {
   const dele: GameObject = MockGameObject.simple("type:source.dele/name");
   const keep: GameObject = MockGameObject.simple("type:source.keep/name");
 
-  new RemoveByNsidOrSource().addSource("source.dele").removeAll();
+  const remove = new RemoveByNsidOrSource()
+    .addSource("source.dele")
+    .removeAll();
+  expect(remove.shouldRemove("type:source.dele/name")).toBe(true);
+  expect(remove.shouldRemove("type:source.keep/name")).toBe(false);
 
   expect(dele.isValid()).toBe(false);
   expect(keep.isValid()).toBe(true);

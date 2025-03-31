@@ -50,7 +50,7 @@ export class RemoveByNsidOrSource {
     return this._removeNsids.has(nsid);
   }
 
-  removeOne(obj: GameObject) {
+  removeOne(obj: GameObject): this {
     // Cards.
     if (obj instanceof Card) {
       // Cards.
@@ -68,12 +68,18 @@ export class RemoveByNsidOrSource {
         DeletedItemsContainer.destroyWithoutCopying(obj);
       }
     }
+    return this;
   }
 
-  removeAll(): void {
+  removeAll(): this {
     const skipContained: boolean = false;
     for (const obj of world.getAllObjects(skipContained)) {
       this.removeOne(obj);
     }
+    return this;
+  }
+
+  shouldRemove(nsid: string): boolean {
+    return this._shouldRemove(nsid);
   }
 }
