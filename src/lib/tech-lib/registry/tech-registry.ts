@@ -50,6 +50,16 @@ export class TechRegistry {
       if (this._nsidToTech.has(nsid)) {
         throw new Error(`duplicate nsid: ${nsid}`);
       }
+      if (
+        tech.isFactionTech() &&
+        tech.getColor() === "unit-upgrade" &&
+        !tech.replacesNsidName()
+      ) {
+        throw new Error(
+          `unit-upgrade tech must have replacesNsidName: ${nsid}`
+        );
+      }
+
       this._nsidToTech.set(nsid, tech);
     }
     return this;

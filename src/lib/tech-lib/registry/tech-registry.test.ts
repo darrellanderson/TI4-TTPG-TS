@@ -85,6 +85,23 @@ it("load (duplicate)", () => {
   }).toThrow();
 });
 
+it("load (faction unit-upgrade tech without replacesNsidName)", () => {
+  const schema: TechSchemaType = {
+    name: "my-name",
+    nsidName: "my-nsid-name",
+    color: "unit-upgrade",
+    prerequisites: {
+      green: 1,
+      red: 2,
+    },
+    isFactionTech: true,
+  };
+  const registry = new TechRegistry();
+  expect(() => {
+    registry.load("source", [schema]);
+  }).toThrow();
+});
+
 it("loadDefaultData", () => {
   const registry = new TechRegistry();
   let tech: Tech | undefined;

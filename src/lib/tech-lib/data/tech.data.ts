@@ -9,6 +9,7 @@ export const SOURCE_TO_TECH_DATA: Record<string, Array<TechSchemaType>> = {
       prerequisites: { blue: 2 },
       abbr: "Adv Carrier II",
       isFactionTech: true,
+      replacesNsidName: "carrier-2",
     },
     {
       nsidName: "antimass-deflectors",
@@ -105,6 +106,7 @@ export const SOURCE_TO_TECH_DATA: Record<string, Array<TechSchemaType>> = {
       prerequisites: { blue: 2, yellow: 1 },
       abbr: "Exotrireme II",
       isFactionTech: true,
+      replacesNsidName: "dreadnought-2",
     },
     {
       nsidName: "fighter-2",
@@ -127,6 +129,7 @@ export const SOURCE_TO_TECH_DATA: Record<string, Array<TechSchemaType>> = {
       prerequisites: { yellow: 2 },
       abbr: "FF II",
       isFactionTech: true,
+      replacesNsidName: "space-dock-2",
     },
     {
       nsidName: "graviton-laser-system",
@@ -157,6 +160,7 @@ export const SOURCE_TO_TECH_DATA: Record<string, Array<TechSchemaType>> = {
       prerequisites: { green: 1, blue: 1 },
       abbr: " HCF II",
       isFactionTech: true,
+      replacesNsidName: "fighter-2",
     },
     {
       nsidName: "hyper-metabolism",
@@ -226,6 +230,7 @@ export const SOURCE_TO_TECH_DATA: Record<string, Array<TechSchemaType>> = {
       prerequisites: { green: 1 },
       abbr: "Letani II",
       isFactionTech: true,
+      replacesNsidName: "infantry-2",
     },
     {
       nsidName: "lightwave-deflector",
@@ -325,6 +330,7 @@ export const SOURCE_TO_TECH_DATA: Record<string, Array<TechSchemaType>> = {
       prerequisites: { red: 3, yellow: 1 },
       abbr: "PWS II",
       isFactionTech: true,
+      replacesNsidName: "war-sun-2",
     },
     {
       nsidName: "quantum-datahub-node",
@@ -371,6 +377,7 @@ export const SOURCE_TO_TECH_DATA: Record<string, Array<TechSchemaType>> = {
       prerequisites: { green: 2 },
       abbr: "Spec Ops II",
       isFactionTech: true,
+      replacesNsidName: "infantry-2",
     },
     {
       nsidName: "super-dreadnought-2",
@@ -379,6 +386,7 @@ export const SOURCE_TO_TECH_DATA: Record<string, Array<TechSchemaType>> = {
       prerequisites: { blue: 2, yellow: 1 },
       abbr: "SuperDread II",
       isFactionTech: true,
+      replacesNsidName: "dreadnought-2",
     },
     {
       nsidName: "transit-diodes",
@@ -486,6 +494,7 @@ export const SOURCE_TO_TECH_DATA: Record<string, Array<TechSchemaType>> = {
       prerequisites: { green: 2 },
       abbr: "Crimson Legin II",
       isFactionTech: true,
+      replacesNsidName: "infantry-2",
     },
     {
       nsidName: "dark-energy-tap",
@@ -501,6 +510,7 @@ export const SOURCE_TO_TECH_DATA: Record<string, Array<TechSchemaType>> = {
       prerequisites: { yellow: 2 },
       abbr: "Dim Tear II",
       isFactionTech: true,
+      replacesNsidName: "space-dock-2",
     },
     {
       nsidName: "genetic-recombination",
@@ -517,6 +527,7 @@ export const SOURCE_TO_TECH_DATA: Record<string, Array<TechSchemaType>> = {
       prerequisites: { red: 1, yellow: 1 },
       abbr: "Hel-Titan II",
       isFactionTech: true,
+      replacesNsidName: "pds-2",
     },
     {
       nsidName: "memoria-2",
@@ -525,6 +536,7 @@ export const SOURCE_TO_TECH_DATA: Record<string, Array<TechSchemaType>> = {
       prerequisites: { green: 1, blue: 1, yellow: 1 },
       abbr: "Memoria II",
       isFactionTech: true,
+      replacesNsidName: "flagship-2",
     },
     {
       nsidName: "pre-fab-arcologies",
@@ -555,6 +567,7 @@ export const SOURCE_TO_TECH_DATA: Record<string, Array<TechSchemaType>> = {
       prerequisites: { red: 1, green: 1, yellow: 1 },
       abbr: "Sat Eng II",
       isFactionTech: true,
+      replacesNsidName: "cruiser-2",
     },
     {
       nsidName: "scanlink-drone-network",
@@ -584,6 +597,7 @@ export const SOURCE_TO_TECH_DATA: Record<string, Array<TechSchemaType>> = {
       prerequisites: { red: 2 },
       abbr: "Strike Wing II",
       isFactionTech: true,
+      replacesNsidName: "destroyer-2",
     },
     {
       nsidName: "supercharge",

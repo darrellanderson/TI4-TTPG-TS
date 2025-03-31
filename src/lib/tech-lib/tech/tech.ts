@@ -50,4 +50,8 @@ export class Tech {
   isFactionTech(): boolean {
     return this._params.isFactionTech ? true : false;
   }
+
+  replacesNsidName(): string | undefined {
+    return this._params.replacesNsidName;
+  }
 }

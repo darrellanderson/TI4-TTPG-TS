@@ -26,6 +26,7 @@ export const TechSchema = z
       })
       .strict(),
     isFactionTech: z.boolean().optional(),
+    replacesNsidName: z.string().min(1).optional(), // unit upgrade
   })
   .strict()
   .readonly();
