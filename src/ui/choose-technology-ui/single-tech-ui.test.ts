@@ -21,7 +21,7 @@ it("constructor/destroy", () => {
   if (!tech) {
     throw new Error("Tech not found");
   }
-  const ui: AbstractUI = new SingleTechUI(scale, tech);
+  const ui: AbstractUI = new SingleTechUI(scale, tech, undefined);
   clickAll(ui.getWidget());
   ui.destroy();
 });
@@ -64,7 +64,7 @@ it("clickall", () => {
   if (!tech) {
     throw new Error("Tech not found");
   }
-  const ui: AbstractUI = new SingleTechUI(scale, tech);
+  const ui: AbstractUI = new SingleTechUI(scale, tech, undefined);
   const player: Player = new MockPlayer({ slot: playerSlot });
   clickAll(ui.getWidget(), player);
   ui.destroy();

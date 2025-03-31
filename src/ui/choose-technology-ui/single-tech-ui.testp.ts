@@ -13,7 +13,7 @@ function go() {
   const tech: Tech = TI4.techRegistry.getByNsid(
     "card.technology.blue:base/antimass-deflectors"
   )!;
-  const abstractUi: AbstractUI = new SingleTechUI(scale, tech);
+  const abstractUi: AbstractUI = new SingleTechUI(scale, tech, undefined);
 
   const widget: Widget = abstractUi.getWidget();
 

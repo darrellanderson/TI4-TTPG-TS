@@ -100,3 +100,36 @@ it("getLevel", () => {
   const tech2: Tech = new Tech("my-source", schema2);
   expect(tech2.getLevel()).toEqual(3);
 });
+
+it("getPrerequisites", () => {
+  const schema: TechSchemaType = {
+    nsidName: "my-nsid-name",
+    name: "my-name",
+    color: "blue",
+    prerequisites: {
+      blue: 1,
+      green: 2,
+      red: 3,
+      yellow: 4,
+    },
+  };
+  const tech: Tech = new Tech("my-source", schema);
+  expect(tech.getPrerequisites("blue")).toEqual(1);
+  expect(tech.getPrerequisites("green")).toEqual(2);
+  expect(tech.getPrerequisites("red")).toEqual(3);
+  expect(tech.getPrerequisites("yellow")).toEqual(4);
+});
+
+it("getPrerequisites (none)", () => {
+  const schema: TechSchemaType = {
+    nsidName: "my-nsid-name",
+    name: "my-name",
+    color: "blue",
+    prerequisites: {},
+  };
+  const tech: Tech = new Tech("my-source", schema);
+  expect(tech.getPrerequisites("blue")).toEqual(0);
+  expect(tech.getPrerequisites("green")).toEqual(0);
+  expect(tech.getPrerequisites("red")).toEqual(0);
+  expect(tech.getPrerequisites("yellow")).toEqual(0);
+});

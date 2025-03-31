@@ -47,6 +47,19 @@ export class Tech {
     return this._params.nsidName;
   }
 
+  getPrerequisites(color: TechColorType): number {
+    if (color === "blue") {
+      return this._params.prerequisites.blue ?? 0;
+    } else if (color === "green") {
+      return this._params.prerequisites.green ?? 0;
+    } else if (color === "red") {
+      return this._params.prerequisites.red ?? 0;
+    } else if (color === "yellow") {
+      return this._params.prerequisites.yellow ?? 0;
+    }
+    return 0;
+  }
+
   isFactionTech(): boolean {
     return this._params.isFactionTech ? true : false;
   }

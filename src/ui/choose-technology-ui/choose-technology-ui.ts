@@ -58,7 +58,7 @@ export class ChooseTechnologyUI extends AbstractUI {
     });
 
     const uis: Array<AbstractUI> = techs.map((tech: Tech): AbstractUI => {
-      return new SingleTechUI(scale, tech);
+      return new SingleTechUI(scale, tech, faction);
     });
 
     return new VerticalUIBuilder()
