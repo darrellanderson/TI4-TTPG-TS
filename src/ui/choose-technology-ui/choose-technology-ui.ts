@@ -11,6 +11,7 @@ import { CONFIG } from "../config/config";
 import { HorizontalUIBuilder } from "../panel/horizontal-ui-builder";
 import { SingleTechUI } from "./single-tech-ui";
 import { VerticalUIBuilder } from "../panel/vertical-ui-builder";
+import { TechCardMutableUI } from "./tech-card-mutable-ui";
 
 export class ChooseTechnologyUI extends AbstractUI {
   private readonly _ui: AbstractUI;
@@ -56,7 +57,11 @@ export class ChooseTechnologyUI extends AbstractUI {
       playerSlot
     );
 
+    const currentChoice: TechCardMutableUI = new TechCardMutableUI(scale);
+    currentChoice.setCardNsid("card.technology.blue:base/antimass-deflectors");
+
     const uis: Array<AbstractUI> = [
+      currentChoice,
       ChooseTechnologyUI._getTechColumn(
         scale,
         "blue",
