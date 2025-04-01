@@ -20,7 +20,7 @@ import { SystemAdjacencyHyperlane } from "./system-adjacency-hyperlane";
 import {
   ADJACENCY_LINE_TAG,
   DisplayPDSAdjacency,
-} from "context-menu/display-pds-adjacency/display-pds-adjacency";
+} from "../../../context-menu/display-pds-adjacency/display-pds-adjacency";
 
 /**
  * Draw hyperlane links, for verification and debugging.

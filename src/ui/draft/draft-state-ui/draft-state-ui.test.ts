@@ -7,8 +7,8 @@ import { MILTY_SLICE_SHAPE } from "../../../lib/draft-lib/drafts/milty";
 import {
   SliceShape,
   SliceTiles,
-} from "lib/draft-lib/generate-slices/generate-slices";
-import { CreateZoomedUiType } from "ui/zoomable-ui/zoomable-ui";
+} from "../../../lib/draft-lib/generate-slices/generate-slices";
+import { CreateZoomedUiType } from "../../zoomable-ui/zoomable-ui";
 
 beforeEach(() => {
   // Player seats looks for card holders.

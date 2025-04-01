@@ -1,3 +1,4 @@
+import { GameObject, Player } from "@tabletop-playground/api";
 import {
   MockCardHolder,
   MockGameObject,
@@ -5,8 +6,7 @@ import {
   MockPlayer,
 } from "ttpg-mock";
 import { ToggleStratCards } from "./toggle-strat-cards";
-import { GameObject, Player } from "@tabletop-playground/api";
-import { StrategyCardsState } from "lib/strategy-card-lib/strategy-cards-state/strategy-cards-state";
+import { StrategyCardsState } from "../../lib/strategy-card-lib/strategy-cards-state/strategy-cards-state";
 
 it("constructor/init", () => {
   new ToggleStratCards().init();

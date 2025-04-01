@@ -5,7 +5,7 @@ import {
   Widget,
   world,
 } from "@tabletop-playground/api";
-import { AbstractUI } from "ui/abstract-ui/abtract-ui";
+import { AbstractUI } from "../abstract-ui/abtract-ui";
 import { VerticalUIBuilder } from "./vertical-ui-builder";
 
 class MyAbstractUI extends AbstractUI {

@@ -1,11 +1,11 @@
-import { CombatRoll } from "lib/combat-lib/combat-roll/combat-roll";
+import { CombatRoll } from "../../combat-lib/combat-roll/combat-roll";
 import {
   UnitModifierOwnerType,
   UnitModifierPriorityType,
   UnitModifierSchemaType,
   UnitModifierTriggerType,
 } from "../schema/unit-modifier-schema";
-import { NsidNameSchemaType } from "lib/system-lib/schema/basic-types-schema";
+import { NsidNameSchemaType } from "../../system-lib/schema/basic-types-schema";
 
 export class UnitModifier {
   private readonly _params: UnitModifierSchemaType;

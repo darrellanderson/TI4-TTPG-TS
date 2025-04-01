@@ -10,7 +10,7 @@ import { CardUtil, DeletedItemsContainer, Find, NSID } from "ttpg-darrell";
 
 import { AbstractUnpack } from "../abstract-unpack/abstract-unpack";
 import { Faction } from "../../faction/faction";
-import { RemoveByNsidOrSource } from "lib/remove-lib/remove-by-nsid-or-source/remove-by-nsid-or-source";
+import { RemoveByNsidOrSource } from "../../../remove-lib/remove-by-nsid-or-source/remove-by-nsid-or-source";
 
 export class UnpackLeaders extends AbstractUnpack {
   private readonly _cardUtil: CardUtil = new CardUtil();

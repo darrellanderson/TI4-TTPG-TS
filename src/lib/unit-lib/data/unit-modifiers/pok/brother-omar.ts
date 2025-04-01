@@ -1,6 +1,6 @@
 import { CombatRoll } from "../../../../combat-lib/combat-roll/combat-roll";
 import { UnitModifierSchemaType } from "../../../schema/unit-modifier-schema";
-import { UnitAttrs } from "lib/unit-lib/unit-attrs/unit-attrs";
+import { UnitAttrs } from "../../../unit-attrs/unit-attrs";
 
 export const BrotherOmar: UnitModifierSchemaType = {
   name: "Brother Omar",

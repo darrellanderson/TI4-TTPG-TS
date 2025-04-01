@@ -2,7 +2,7 @@ import { refObject, Vector, world } from "@tabletop-playground/api";
 import { LayoutObjectsSize } from "ttpg-darrell";
 
 import { LayoutPlayerAreas } from "./layout-player-areas";
-import { SetupPlayerSlotColors } from "setup/setup-player-slot-colors/setup-player-slot-colors";
+import { SetupPlayerSlotColors } from "../../setup-player-slot-colors/setup-player-slot-colors";
 
 new SetupPlayerSlotColors().setup();
 

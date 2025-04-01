@@ -13,7 +13,7 @@ import { Broadcast, HexType } from "ttpg-darrell";
 
 import { OnSystemActivated } from "../event/on-system-activated/on-system-activated";
 import { System } from "../lib/system-lib/system/system";
-import { UnitPlastic } from "lib/unit-lib/unit-plastic/unit-plastic";
+import { UnitPlastic } from "../lib/unit-lib/unit-plastic/unit-plastic";
 
 const PACKAGE_ID: string = refPackageId;
 const ACTION_WARP_IN: string = "*Warp In";

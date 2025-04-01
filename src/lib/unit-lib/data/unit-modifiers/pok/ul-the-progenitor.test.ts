@@ -1,6 +1,6 @@
 import { OPPONENT, placeGameObjects, SELF } from "../abstract.test";
 import { CombatRoll } from "../../../../combat-lib/combat-roll/combat-roll";
-import { UnitType } from "lib/unit-lib/schema/unit-attrs-schema";
+import { UnitType } from "../../../schema/unit-attrs-schema";
 
 it("registry", () => {
   const nsid = "card.leader.hero:pok/ul-the-progenitor";

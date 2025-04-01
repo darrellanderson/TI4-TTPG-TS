@@ -1,7 +1,7 @@
 import { OPPONENT, placeGameObjects, SELF } from "../abstract.test";
 import { CombatRoll } from "../../../../combat-lib/combat-roll/combat-roll";
 import { UnitAttrs } from "../../../unit-attrs/unit-attrs";
-import { UnitType } from "lib/unit-lib/schema/unit-attrs-schema";
+import { UnitType } from "../../../schema/unit-attrs-schema";
 
 it("registry", () => {
   const nsid = "card.action:base/experimental-battlestation";

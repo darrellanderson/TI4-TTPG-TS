@@ -5,7 +5,7 @@ import {
   PLAYER_SLOT,
 } from "../abstract-unpack/abstract-unpack.testp";
 import { UnpackAll } from "./unpack-all";
-import { Faction } from "lib/faction-lib/faction/faction";
+import { Faction } from "../../../faction-lib/faction/faction";
 
 new AbstractUnpackTestP(new UnpackAll(FACTION, PLAYER_SLOT));
 

@@ -14,7 +14,7 @@ import {
 } from "ttpg-darrell";
 
 import { LayoutConfig } from "../layout-config";
-import { Tech } from "lib/tech-lib/tech/tech";
+import { Tech } from "../../../lib/tech-lib/tech/tech";
 
 export class LayoutMats {
   private readonly _layout: LayoutObjects;

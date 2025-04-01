@@ -1,8 +1,8 @@
 import { Widget } from "@tabletop-playground/api";
+import { clickAll, MockCardHolder } from "ttpg-mock";
 import { StrategyCardsState } from "../../../lib/strategy-card-lib/strategy-cards-state/strategy-cards-state";
 import { BodyTrade } from "./body-trade";
-import { clickAll, MockCardHolder } from "ttpg-mock";
-import { AbstractUI } from "ui/abstract-ui/abtract-ui";
+import { AbstractUI } from "../../abstract-ui/abtract-ui";
 
 it("constructor/getters", () => {
   const strategyCardsState: StrategyCardsState = new StrategyCardsState(

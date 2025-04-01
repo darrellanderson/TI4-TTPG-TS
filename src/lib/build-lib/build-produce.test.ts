@@ -2,7 +2,7 @@ import { GameObject } from "@tabletop-playground/api";
 import { MockGameObject } from "ttpg-mock";
 
 import { BuildProduce } from "./build-produce";
-import { UnitAttrsSet } from "lib/unit-lib/unit-attrs-set/unit-attrs-set";
+import { UnitAttrsSet } from "../unit-lib/unit-attrs-set/unit-attrs-set";
 
 it("constructor", () => {
   const unitAttrsSet: UnitAttrsSet =

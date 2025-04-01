@@ -1,6 +1,6 @@
 import { Color, GameObject } from "@tabletop-playground/api";
-import { Faction } from "lib/faction-lib/faction/faction";
 import { Spawn } from "ttpg-darrell";
+import { Faction } from "../faction-lib/faction/faction";
 
 export class SpawnControlToken {
   spawnControlToken(playerSlot: number): GameObject | undefined {

@@ -8,7 +8,7 @@ import { HexType } from "ttpg-darrell";
 
 import { MapUI } from "../map-ui/map-ui";
 import { CreateZoomedUiType, ZoomableUI } from "./zoomable-ui";
-import { AbstractUI } from "ui/abstract-ui/abtract-ui";
+import { AbstractUI } from "../abstract-ui/abtract-ui";
 
 function go() {
   const mapString: string = "19 -110 -111 1 91";

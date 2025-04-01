@@ -1,6 +1,6 @@
 import { Container, GameObject, ObjectType } from "@tabletop-playground/api";
-import { SystemSchemaType } from "lib/system-lib/schema/system-schema";
 import { LayoutObjects, Spawn } from "ttpg-darrell";
+import { SystemSchemaType } from "../../../lib/system-lib/schema/system-schema";
 
 export class LayoutSystemContainer {
   private readonly _layout: LayoutObjects;

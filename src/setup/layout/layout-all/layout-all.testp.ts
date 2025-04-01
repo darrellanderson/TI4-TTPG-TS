@@ -1,8 +1,8 @@
 import { GameObject, refObject, Vector, world } from "@tabletop-playground/api";
+import { DeletedItemsContainer } from "ttpg-darrell";
 
 import { LayoutAll } from "./layout-all";
-import { SetupPlayerSlotColors } from "setup/setup-player-slot-colors/setup-player-slot-colors";
-import { DeletedItemsContainer } from "ttpg-darrell";
+import { SetupPlayerSlotColors } from "../../setup-player-slot-colors/setup-player-slot-colors";
 
 const refObjectCopy: GameObject = refObject;
 

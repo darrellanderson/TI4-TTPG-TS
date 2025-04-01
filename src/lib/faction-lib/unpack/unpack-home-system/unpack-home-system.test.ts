@@ -2,8 +2,8 @@ import { MockCardHolder, MockGameObject } from "ttpg-mock";
 import { UnpackHomeSystem } from "./unpack-home-system";
 import { Faction } from "../../faction/faction";
 import { GameObject } from "@tabletop-playground/api";
-import { SourceAndPackageIdSchemaType } from "lib/system-lib/schema/basic-types-schema";
-import { FactionSchemaType } from "lib/faction-lib/schema/faction-schema";
+import { SourceAndPackageIdSchemaType } from "../../../system-lib/schema/basic-types-schema";
+import { FactionSchemaType } from "../../../faction-lib/schema/faction-schema";
 
 it("unpack/remove (arborec)", () => {
   const faction: Faction = TI4.factionRegistry.getByNsid(

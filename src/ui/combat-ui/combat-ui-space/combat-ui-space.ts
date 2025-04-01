@@ -5,7 +5,7 @@ import { AbstractUI } from "../../abstract-ui/abtract-ui";
 import { ButtonUI } from "../../button-ui/button-ui";
 import { CONFIG } from "../../config/config";
 import { VerticalUIBuilder } from "../../panel/vertical-ui-builder";
-import { Faction } from "lib/faction-lib/faction/faction";
+import { Faction } from "../../../lib/faction-lib/faction/faction";
 
 export class CombatUISpace extends AbstractUI {
   private readonly _spaceCannonOffense: Button;

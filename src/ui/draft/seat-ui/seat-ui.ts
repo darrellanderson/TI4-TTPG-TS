@@ -8,7 +8,7 @@ import {
   world,
 } from "@tabletop-playground/api";
 import { BOX_H, BOX_W, FONT_SIZE } from "../faction-ui/faction-ui";
-import { PlayerSeatType } from "lib/player-lib/player-seats/player-seats";
+import { PlayerSeatType } from "../../../lib/player-lib/player-seats/player-seats";
 import { AbstractUI } from "../../abstract-ui/abtract-ui";
 
 export class SeatUI extends AbstractUI {

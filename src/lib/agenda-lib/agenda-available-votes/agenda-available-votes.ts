@@ -1,6 +1,6 @@
 import { Card, Vector, world } from "@tabletop-playground/api";
-import { Planet } from "lib/system-lib/planet/planet";
 import { CardUtil, Find, NSID, PlayerSlot } from "ttpg-darrell";
+import { Planet } from "../../system-lib/planet/planet";
 
 export class AgendaAvailableVotes {
   private readonly _cardUtil: CardUtil = new CardUtil();

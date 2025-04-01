@@ -6,12 +6,12 @@ import {
 } from "@tabletop-playground/api";
 import { DraftState } from "../../../lib/draft-lib/draft-state/draft-state";
 import { DraftStateUI } from "./draft-state-ui";
-import { MILTY_SLICE_SHAPE } from "lib/draft-lib/drafts/milty";
+import { MILTY_SLICE_SHAPE } from "../../../lib/draft-lib/drafts/milty";
 import {
   AbstractWindow,
   CreateAbstractUIParams,
-} from "ui/abstract-window/abstract-window";
-import { AbstractUI } from "ui/abstract-ui/abtract-ui";
+} from "../../abstract-window/abstract-window";
+import { AbstractUI } from "../../abstract-ui/abtract-ui";
 
 const draftState: DraftState = new DraftState("@test/draft-state")
   .setSliceShape(MILTY_SLICE_SHAPE)

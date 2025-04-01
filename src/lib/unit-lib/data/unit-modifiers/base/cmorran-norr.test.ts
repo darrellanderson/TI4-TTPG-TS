@@ -5,7 +5,7 @@ import { UnitAttrs } from "../../../unit-attrs/unit-attrs";
 import {
   UnitAttrsSchemaType,
   UnitType,
-} from "lib/unit-lib/schema/unit-attrs-schema";
+} from "../../../schema/unit-attrs-schema";
 
 it("registry", () => {
   const nsid = "unit:base/cmorran-norr";

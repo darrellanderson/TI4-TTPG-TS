@@ -5,9 +5,9 @@ import {
   world,
 } from "@tabletop-playground/api";
 
-import { AbstractUI } from "ui/abstract-ui/abtract-ui";
+import { AbstractUI } from "../../abstract-ui/abtract-ui";
 import { AgendaRiderUI } from "./agenda-rider-ui";
-import { AgendaState } from "lib/agenda-lib/agenda-state/agenda-state";
+import { AgendaState } from "../../../lib/agenda-lib/agenda-state/agenda-state";
 
 function go() {
   const agendaState: AgendaState = new AgendaState("@test/test");

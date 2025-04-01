@@ -6,7 +6,7 @@ import {
   world,
 } from "@tabletop-playground/api";
 
-import { AbstractUI } from "ui/abstract-ui/abtract-ui";
+import { AbstractUI } from "../../abstract-ui/abtract-ui";
 import { AgendaCardUI } from "./agenda-card-ui";
 
 function go() {

@@ -1,4 +1,4 @@
-import { Faction } from "lib/faction-lib/faction/faction";
+import { Faction } from "../../../lib/faction-lib/faction/faction";
 import { ParseFactions } from "./parse-factions";
 
 it("parse", () => {

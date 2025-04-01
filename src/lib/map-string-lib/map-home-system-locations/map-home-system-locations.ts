@@ -1,6 +1,6 @@
 import { Color, GameObject, Vector, world } from "@tabletop-playground/api";
-import { PlayerSeatType } from "lib/player-lib/player-seats/player-seats";
 import { Find, HexType, Spawn } from "ttpg-darrell";
+import { PlayerSeatType } from "../../player-lib/player-seats/player-seats";
 
 type HomeSystemDir = "N" | "NE" | "SE" | "S" | "SW" | "NW";
 type HomeSystemHexes = {

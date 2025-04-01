@@ -1,5 +1,5 @@
 import { globalEvents, Player, Vector, world } from "@tabletop-playground/api";
-import { PlayerSeatType } from "lib/player-lib/player-seats/player-seats";
+import { PlayerSeatType } from "../../player-lib/player-seats/player-seats";
 
 export class NumpadKeyLookSeat {
   private readonly _onScriptButtonPressed = (

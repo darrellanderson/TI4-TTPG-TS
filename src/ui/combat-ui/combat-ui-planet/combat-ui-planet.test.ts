@@ -1,9 +1,9 @@
-import { System } from "lib/system-lib/system/system";
-import { CombatUIPlanet } from "./combat-ui-planet";
-import { Planet } from "lib/system-lib/planet/planet";
-import { MockButton, MockGameObject, MockPlayer } from "ttpg-mock";
 import { Player } from "@tabletop-playground/api";
-import { CombatRollType } from "lib/combat-lib/combat-roll/combat-roll";
+import { MockButton, MockGameObject, MockPlayer } from "ttpg-mock";
+import { System } from "../../../lib/system-lib/system/system";
+import { CombatUIPlanet } from "./combat-ui-planet";
+import { Planet } from "../../../lib/system-lib/planet/planet";
+import { CombatRollType } from "../../../lib/combat-lib/combat-roll/combat-roll";
 
 // Systems must exist for registry to know about them.
 beforeEach(() => {

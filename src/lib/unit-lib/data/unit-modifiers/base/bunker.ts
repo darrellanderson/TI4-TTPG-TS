@@ -1,4 +1,4 @@
-import { CombatAttrs } from "lib/unit-lib/unit-attrs/combat-attrs";
+import { CombatAttrs } from "../../../unit-attrs/combat-attrs";
 import { CombatRoll } from "../../../../combat-lib/combat-roll/combat-roll";
 import { UnitModifierSchemaType } from "../../../schema/unit-modifier-schema";
 

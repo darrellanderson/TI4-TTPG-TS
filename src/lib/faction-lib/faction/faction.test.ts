@@ -1,4 +1,4 @@
-import { SourceAndPackageIdSchemaType } from "lib/system-lib/schema/basic-types-schema";
+import { SourceAndPackageIdSchemaType } from "../../system-lib/schema/basic-types-schema";
 import { FactionSchemaType } from "../schema/faction-schema";
 import { Faction } from "./faction";
 

@@ -1,4 +1,4 @@
-import { UnitAttrs } from "lib/unit-lib/unit-attrs/unit-attrs";
+import { UnitAttrs } from "../../../unit-attrs/unit-attrs";
 import {
   CombatRoll,
   CombatRollParams,

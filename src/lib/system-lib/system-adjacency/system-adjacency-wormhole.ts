@@ -1,8 +1,8 @@
+import { Card, GameObject, Vector } from "@tabletop-playground/api";
 import { Adjacency, CardUtil, Find, HexType } from "ttpg-darrell";
 import { System } from "../system/system";
-import { Card, GameObject, Vector } from "@tabletop-playground/api";
 import { UnitModifierActiveIdle } from "../../unit-lib/unit-modifier/unit-modifier-active-idle";
-import { Faction } from "lib/faction-lib/faction/faction";
+import { Faction } from "../../faction-lib/faction/faction";
 
 export class SystemAdjacencyWormhole {
   public static WORMHOMES: Array<string> = [
