@@ -8,8 +8,8 @@ import {
 } from "@tabletop-playground/api";
 import { CardUtil, DeletedItemsContainer, Spawn } from "ttpg-darrell";
 import { AbstractUI, UI_SIZE } from "../abstract-ui/abtract-ui";
+import { CreateZoomedUiType } from "../zoomable-ui/zoomable-ui";
 import { ZoomableUiFullyClickable } from "../zoomable-ui/zoomable-ui-fully-clickable";
-import { CreateZoomedUiType } from "ui/zoomable-ui/zoomable-ui";
 
 const packageId: string = refPackageId;
 
