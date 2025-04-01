@@ -8,29 +8,62 @@ import {
 } from "@tabletop-playground/api";
 import { CardUtil, DeletedItemsContainer, Spawn } from "ttpg-darrell";
 import { AbstractUI, UI_SIZE } from "../abstract-ui/abtract-ui";
+import { ZoomableUiFullyClickable } from "../zoomable-ui/zoomable-ui-fully-clickable";
+import { CreateZoomedUiType } from "ui/zoomable-ui/zoomable-ui";
 
 const packageId: string = refPackageId;
 
-export class TechCardMutableUI extends AbstractUI {
-  private readonly _cardUitl: CardUtil = new CardUtil();
-  private readonly _imageWidget: ImageWidget;
-
-  constructor(scale: number) {
+export class UnzoomedTechCardMutableUI extends AbstractUI {
+  constructor(scale: number, imageWidget: ImageWidget) {
     const resize: number = 0.48;
     const size: UI_SIZE = {
       w: 750 * scale * resize,
       h: 500 * scale * resize,
     };
-    const imageWidget: ImageWidget = new ImageWidget().setImage(
-      "card/technology/unknown/base/base.back.jpg",
-      packageId
-    );
     const box: LayoutBox = new LayoutBox()
       .setOverrideWidth(size.w)
       .setOverrideHeight(size.h)
       .setChild(imageWidget);
     super(box, size);
+  }
+}
+
+export class ZoomedTechCardUI extends AbstractUI {
+  constructor(scale: number, imageWidget: ImageWidget) {
+    const extraScale: number = 1.2;
+    const size: UI_SIZE = {
+      w: 750 * scale * extraScale,
+      h: 500 * scale * extraScale,
+    };
+    imageWidget.setImageSize(size.w, size.h);
+    super(imageWidget, size);
+  }
+}
+
+export class TechCardMutableUI extends ZoomableUiFullyClickable {
+  private readonly _cardUitl: CardUtil = new CardUtil();
+  private readonly _imageWidget: ImageWidget;
+  private readonly _imageWidget2: ImageWidget;
+
+  constructor(scale: number) {
+    const imageWidget: ImageWidget = new ImageWidget().setImage(
+      "card/technology/unknown/base/base.back.jpg",
+      packageId
+    );
+    const imageWidget2: ImageWidget = new ImageWidget().setImage(
+      "card/technology/unknown/base/base.back.jpg",
+      packageId
+    );
+    const unzoomedUi: AbstractUI = new UnzoomedTechCardMutableUI(
+      scale,
+      imageWidget
+    );
+    const createZoomedUI: CreateZoomedUiType = (_scale: number): AbstractUI => {
+      return new ZoomedTechCardUI(scale, this._imageWidget2);
+    };
+    super(unzoomedUi, scale, createZoomedUI);
     this._imageWidget = imageWidget;
+    this._imageWidget2 = imageWidget2;
   }
 
   clearCard(): void {
@@ -38,10 +71,15 @@ export class TechCardMutableUI extends AbstractUI {
       "card/technology/unknown/base/base.back.jpg",
       packageId
     );
+    this._imageWidget2.setImage(
+      "card/technology/unknown/base/base.back.jpg",
+      packageId
+    );
   }
 
   setCard(card: Card): void {
     this._imageWidget.setSourceCard(card);
+    this._imageWidget2.setSourceCard(card);
   }
 
   /**

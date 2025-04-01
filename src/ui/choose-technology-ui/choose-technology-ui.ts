@@ -2,10 +2,17 @@ import {
   Button,
   Card,
   CardHolder,
+  Color,
   HorizontalAlignment,
   Player,
+  world,
 } from "@tabletop-playground/api";
-import { CardUtil, PlayerSlot, ThrottleClickHandler } from "ttpg-darrell";
+import {
+  Broadcast,
+  CardUtil,
+  PlayerSlot,
+  ThrottleClickHandler,
+} from "ttpg-darrell";
 
 import { Faction } from "../../lib/faction-lib/faction/faction";
 import { FindPlayerTechDeck } from "../../lib/tech-lib/find-player-tech-deck/find-player-tech-deck";
@@ -51,6 +58,12 @@ export class ChooseTechnologyUI extends AbstractUI {
         if (card) {
           card.setRotation([0, 0, 180]);
           cardHolder.insert(card, 0);
+
+          const playerName: string = TI4.playerName.getByPlayer(player);
+          const techName: string = this._currentTechSelection.getName();
+          const msg: string = `${playerName} selected ${techName}`;
+          const color: Color = world.getSlotColor(playerSlot);
+          Broadcast.chatAll(msg, color);
         }
       }
     }
