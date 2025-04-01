@@ -26,6 +26,8 @@ export class UnzoomedTechCardMutableUI extends AbstractUI {
 }
 
 export class ZoomedTechCardUI extends AbstractUI {
+  private readonly _imageWidget: ImageWidget;
+
   constructor(scale: number, cardJson: string | undefined) {
     const extraScale: number = 1.2;
     const size: UI_SIZE = {
@@ -52,6 +54,7 @@ export class ZoomedTechCardUI extends AbstractUI {
     }
 
     super(imageWidget, size);
+    this._imageWidget = imageWidget;
   }
 }
 
@@ -59,6 +62,8 @@ export class TechCardMutableUI extends ZoomableUiFullyClickable {
   private readonly _cardUitl: CardUtil = new CardUtil();
   private readonly _imageWidget: ImageWidget;
   private _cardJson: string | undefined = undefined;
+
+  readonly _createZoomedUI: CreateZoomedUiType;
 
   constructor(scale: number) {
     const imageWidget: ImageWidget = new ImageWidget().setImage(
@@ -70,11 +75,14 @@ export class TechCardMutableUI extends ZoomableUiFullyClickable {
       scale,
       imageWidget
     );
+
     const createZoomedUI: CreateZoomedUiType = (_scale: number): AbstractUI => {
       return new ZoomedTechCardUI(scale, this._cardJson);
     };
+
     super(unzoomedUi, scale, createZoomedUI);
     this._imageWidget = imageWidget;
+    this._createZoomedUI = createZoomedUI;
   }
 
   clearCard(): void {
