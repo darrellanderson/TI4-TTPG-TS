@@ -1,6 +1,14 @@
-import { PlayerSlot } from "ttpg-darrell";
+import {
+  Button,
+  Card,
+  CardHolder,
+  HorizontalAlignment,
+  Player,
+} from "@tabletop-playground/api";
+import { CardUtil, PlayerSlot, ThrottleClickHandler } from "ttpg-darrell";
 
 import { Faction } from "../../lib/faction-lib/faction/faction";
+import { FindPlayerTechDeck } from "../../lib/tech-lib/find-player-tech-deck/find-player-tech-deck";
 import { PlayerTechSummary } from "../../lib/tech-lib/player-tech-summary/player-tech-summary";
 import { PlayerWithFactionTechs } from "../../lib/tech-lib/player-with-faction-techs/player-with-faction-techs";
 import { TechColorType } from "../../lib/tech-lib/schema/tech-schema";
@@ -12,15 +20,48 @@ import { HorizontalUIBuilder } from "../panel/horizontal-ui-builder";
 import { SingleTechUI } from "./single-tech-ui";
 import { VerticalUIBuilder } from "../panel/vertical-ui-builder";
 import { TechCardMutableUI } from "./tech-card-mutable-ui";
+import { DivUI } from "../div-ui/div-ui";
+import { ButtonUI } from "../button-ui/button-ui";
 
 export class ChooseTechnologyUI extends AbstractUI {
   private readonly _ui: AbstractUI;
+  private readonly _currentChoiceUi: TechCardMutableUI;
+  private _currentTechSelection: Tech | undefined;
+
+  _setCurrentTechSelection(tech: Tech | undefined): void {
+    this._currentTechSelection = tech;
+  }
+
+  readonly _onFetchTechClickHandler = new ThrottleClickHandler<Button>(
+    (_button: Button, player: Player): void => {
+      const playerSlot: number = player.getSlot();
+      const cardHolder: CardHolder | undefined =
+        TI4.playerSeats.getCardHolderByPlayerSlot(playerSlot);
+      const techDeck: Card | undefined = new FindPlayerTechDeck().getTechDeck(
+        playerSlot
+      );
+
+      if (cardHolder && techDeck && this._currentTechSelection) {
+        // Look for the tech in the tech deck.
+        const nsid: string = this._currentTechSelection.getNsid();
+        const card: Card | undefined = new CardUtil().filterCards(
+          techDeck,
+          (candidateNsid: string): boolean => nsid === candidateNsid
+        );
+        if (card) {
+          card.setRotation([0, 0, 180]);
+          cardHolder.insert(card, 0);
+        }
+      }
+    }
+  ).get();
 
   static _getTechColumn(
     scale: number,
     techColor: TechColorType,
     faction: Faction | undefined,
-    playerTechSummary: PlayerTechSummary
+    playerTechSummary: PlayerTechSummary,
+    onTechSelected: (tech: Tech) => void
   ): AbstractUI {
     const techs: Array<Tech> = new PlayerWithFactionTechs(faction)
       .get()
@@ -41,7 +82,17 @@ export class ChooseTechnologyUI extends AbstractUI {
     }
 
     const uis: Array<AbstractUI> = techs.map((tech: Tech): AbstractUI => {
-      return new SingleTechUI(scale, tech, faction, playerTechSummary);
+      const singleTechUi: SingleTechUI = new SingleTechUI(
+        scale,
+        tech,
+        faction,
+        playerTechSummary
+      );
+      const button: Button = singleTechUi.getButton();
+      button.onClicked.add((_button: Button, _player: Player): void => {
+        onTechSelected(tech);
+      });
+      return singleTechUi;
     });
 
     return new VerticalUIBuilder()
@@ -58,39 +109,70 @@ export class ChooseTechnologyUI extends AbstractUI {
     );
 
     const currentChoice: TechCardMutableUI = new TechCardMutableUI(scale);
-    currentChoice.setCardNsid("card.technology.blue:base/antimass-deflectors");
 
+    const selectTechButton: ButtonUI = new ButtonUI(scale);
+    selectTechButton.getButton().setText("Draw tech to hand").setEnabled(false);
+
+    const closeButton: ButtonUI = new ButtonUI(scale);
+    closeButton.getButton().setText("Close");
+    closeButton.getButton().onClicked.add(
+      new ThrottleClickHandler<Button>(
+        (_button: Button, _player: Player): void => {
+          TI4.events.onTechChooserRequest.trigger(playerSlot);
+        }
+      ).get()
+    );
+
+    const leftPanel: AbstractUI = new VerticalUIBuilder()
+      .setSpacing(CONFIG.SPACING * scale)
+      .setHorizontalAlignment(HorizontalAlignment.Center)
+      .addUIs([currentChoice, selectTechButton, closeButton])
+      .build();
+
+    const onTechSelected = (tech: Tech): void => {
+      this._currentTechSelection = tech;
+      this._currentChoiceUi.setCardNsid(tech.getNsid());
+      selectTechButton.getButton().setEnabled(true);
+    };
+
+    const scaledDivHeight: number = leftPanel.getSize().h;
     const uis: Array<AbstractUI> = [
-      currentChoice,
+      leftPanel,
+      new DivUI(scale, scaledDivHeight, "vertical"),
       ChooseTechnologyUI._getTechColumn(
         scale,
         "blue",
         faction,
-        playerTechSummary
+        playerTechSummary,
+        onTechSelected
       ),
       ChooseTechnologyUI._getTechColumn(
         scale,
         "green",
         faction,
-        playerTechSummary
+        playerTechSummary,
+        onTechSelected
       ),
       ChooseTechnologyUI._getTechColumn(
         scale,
         "red",
         faction,
-        playerTechSummary
+        playerTechSummary,
+        onTechSelected
       ),
       ChooseTechnologyUI._getTechColumn(
         scale,
         "yellow",
         faction,
-        playerTechSummary
+        playerTechSummary,
+        onTechSelected
       ),
       ChooseTechnologyUI._getTechColumn(
         scale,
         "unit-upgrade",
         faction,
-        playerTechSummary
+        playerTechSummary,
+        onTechSelected
       ),
     ];
 
@@ -100,6 +182,9 @@ export class ChooseTechnologyUI extends AbstractUI {
       .build();
     super(ui.getWidget(), ui.getSize());
     this._ui = ui;
+    this._currentChoiceUi = currentChoice;
+
+    selectTechButton.getButton().onClicked.add(this._onFetchTechClickHandler);
   }
 
   destroy(): void {

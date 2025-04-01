@@ -10,13 +10,11 @@ import { ChooseTechnologyUI } from "../../ui/choose-technology-ui/choose-technol
 export class ToggleTechChooser implements IGlobal {
   private _techChooserWindow: Window | undefined = undefined;
 
+  // Toggles window.
   private readonly _onTechChooserRequestHandler = (
     playerSlot: number
   ): void => {
-    if (
-      this._techChooserWindow &&
-      !this._techChooserWindow.isAttachedForPlayer(playerSlot)
-    ) {
+    if (this._techChooserWindow) {
       this._techChooserWindow.toggleForPlayer(playerSlot);
     }
   };

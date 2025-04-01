@@ -3,14 +3,17 @@ import {
   GameObject,
   ImageWidget,
   LayoutBox,
+  refPackageId,
   Vector,
 } from "@tabletop-playground/api";
 import { CardUtil, DeletedItemsContainer, Spawn } from "ttpg-darrell";
 import { AbstractUI, UI_SIZE } from "../abstract-ui/abtract-ui";
 
+const packageId: string = refPackageId;
+
 export class TechCardMutableUI extends AbstractUI {
   private readonly _cardUitl: CardUtil = new CardUtil();
-  private readonly _box: LayoutBox;
+  private readonly _imageWidget: ImageWidget;
 
   constructor(scale: number) {
     const resize: number = 0.48;
@@ -18,21 +21,27 @@ export class TechCardMutableUI extends AbstractUI {
       w: 750 * scale * resize,
       h: 500 * scale * resize,
     };
+    const imageWidget: ImageWidget = new ImageWidget().setImage(
+      "card/technology/unknown/base/base.back.jpg",
+      packageId
+    );
     const box: LayoutBox = new LayoutBox()
       .setOverrideWidth(size.w)
-      .setOverrideHeight(size.h);
+      .setOverrideHeight(size.h)
+      .setChild(imageWidget);
     super(box, size);
-    this._box = box;
+    this._imageWidget = imageWidget;
   }
 
   clearCard(): void {
-    this._box.setChild(undefined);
+    this._imageWidget.setImage(
+      "card/technology/unknown/base/base.back.jpg",
+      packageId
+    );
   }
 
   setCard(card: Card): void {
-    const image: ImageWidget = new ImageWidget();
-    image.setSourceCard(card);
-    this._box.setChild(image);
+    this._imageWidget.setSourceCard(card);
   }
 
   /**

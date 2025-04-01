@@ -1,18 +1,13 @@
 import {
   Button,
   Canvas,
-  Card,
-  CardHolder,
   ImageWidget,
   LayoutBox,
-  Player,
   refPackageId,
   Widget,
 } from "@tabletop-playground/api";
-import { CardUtil, ThrottleClickHandler } from "ttpg-darrell";
 
 import { Faction } from "../../lib/faction-lib/faction/faction";
-import { FindPlayerTechDeck } from "../../lib/tech-lib/find-player-tech-deck/find-player-tech-deck";
 import { PlayerTechSummary } from "../../lib/tech-lib/player-tech-summary/player-tech-summary";
 import { Tech } from "../../lib/tech-lib/tech/tech";
 import { TechColorType } from "../../lib/tech-lib/schema/tech-schema";
@@ -25,31 +20,7 @@ const packageId: string = refPackageId;
 const MAX_NAME_LENGTH: number = 20;
 
 export class SingleTechUI extends AbstractUI {
-  private readonly _tech: Tech;
-
-  private readonly _onTechClicked = new ThrottleClickHandler<Button>(
-    (_button: Button, player: Player): void => {
-      const playerSlot: number = player.getSlot();
-      const cardHolder: CardHolder | undefined =
-        TI4.playerSeats.getCardHolderByPlayerSlot(playerSlot);
-      const techDeck: Card | undefined = new FindPlayerTechDeck().getTechDeck(
-        playerSlot
-      );
-
-      if (cardHolder && techDeck) {
-        // Look for the tech in the tech deck.
-        const nsid: string = this._tech.getNsid();
-        const card: Card | undefined = new CardUtil().filterCards(
-          techDeck,
-          (candidateNsid: string): boolean => nsid === candidateNsid
-        );
-        if (card) {
-          card.setRotation([0, 0, 180]);
-          cardHolder.insert(card, 0);
-        }
-      }
-    }
-  ).get();
+  private readonly _button: Button;
 
   constructor(
     scale: number,
@@ -112,7 +83,10 @@ export class SingleTechUI extends AbstractUI {
       .setChild(canvas);
 
     super(box, size);
-    this._tech = tech;
-    techButtonUi.getButton().onClicked.add(this._onTechClicked);
+    this._button = techButtonUi.getButton();
+  }
+
+  getButton(): Button {
+    return this._button;
   }
 }
