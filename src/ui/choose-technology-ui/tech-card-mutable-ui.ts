@@ -2,7 +2,6 @@ import {
   Card,
   GameObject,
   ImageWidget,
-  LayoutBox,
   refPackageId,
   Vector,
   world,
@@ -16,16 +15,13 @@ const packageId: string = refPackageId;
 
 export class UnzoomedTechCardMutableUI extends AbstractUI {
   constructor(scale: number, imageWidget: ImageWidget) {
-    const resize: number = 0.48;
+    const resize: number = 0.4;
     const size: UI_SIZE = {
       w: 750 * scale * resize,
       h: 500 * scale * resize,
     };
-    const box: LayoutBox = new LayoutBox()
-      .setOverrideWidth(size.w)
-      .setOverrideHeight(size.h)
-      .setChild(imageWidget);
-    super(box, size);
+    imageWidget.setImageSize(size.w, size.h);
+    super(imageWidget, size);
   }
 }
 
