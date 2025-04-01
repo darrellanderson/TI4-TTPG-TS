@@ -23,6 +23,7 @@ export type CreateZoomedUiType = (scale: number) => AbstractUI;
 const packageId: string = refPackageId;
 const __playerSlotToZoomedScreenUiElement: Map<number, ScreenUIElement> =
   new Map();
+const __playerSlotToZoomedAbstractUI: Map<number, AbstractUI> = new Map();
 
 /**
  * Create a new UI containing the given UI and adding a zoom button.
@@ -45,6 +46,12 @@ export class ZoomableUI extends AbstractUI {
       if (screenUiElement !== undefined) {
         __playerSlotToZoomedScreenUiElement.delete(player.getSlot());
         world.removeScreenUIElement(screenUiElement);
+      }
+      const abstractUi: AbstractUI | undefined =
+        __playerSlotToZoomedAbstractUI.get(player.getSlot());
+      if (abstractUi !== undefined) {
+        __playerSlotToZoomedAbstractUI.delete(player.getSlot());
+        abstractUi.destroy();
       }
     };
   }
@@ -97,6 +104,7 @@ export class ZoomableUI extends AbstractUI {
         player.getSlot(),
         screenUiElement
       );
+      __playerSlotToZoomedAbstractUI.set(player.getSlot(), zoomedUi);
     };
   }
 

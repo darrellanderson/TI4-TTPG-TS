@@ -4,9 +4,9 @@ import {
   LayoutBox,
   Widget,
 } from "@tabletop-playground/api";
+import { ThrottleClickHandler } from "ttpg-darrell";
 import { AbstractUI, UI_SIZE } from "../abstract-ui/abtract-ui";
 import { CreateZoomedUiType, ZoomableUI } from "./zoomable-ui";
-import { ThrottleClickHandler } from "ttpg-darrell";
 
 /**
  * Make the unzoomed UI clickable, show the zoomed version when clicked.

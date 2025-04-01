@@ -29,41 +29,52 @@ export class UnzoomedTechCardMutableUI extends AbstractUI {
 }
 
 export class ZoomedTechCardUI extends AbstractUI {
+  private readonly _box: LayoutBox;
+
   constructor(scale: number, imageWidget: ImageWidget) {
     const extraScale: number = 1.2;
     const size: UI_SIZE = {
       w: 750 * scale * extraScale,
       h: 500 * scale * extraScale,
     };
-    imageWidget.setImageSize(size.w, size.h);
-    super(imageWidget, size);
+    const box: LayoutBox = new LayoutBox()
+      .setOverrideWidth(size.w)
+      .setOverrideHeight(size.h)
+      .setChild(imageWidget);
+    super(box, size);
+    this._box = box;
+  }
+
+  onDestroy(): void {
+    this._box.setChild(undefined);
   }
 }
 
 export class TechCardMutableUI extends ZoomableUiFullyClickable {
   private readonly _cardUitl: CardUtil = new CardUtil();
   private readonly _imageWidget: ImageWidget;
-  private readonly _imageWidget2: ImageWidget;
+  private readonly _imageWidgetForZoom: ImageWidget;
 
   constructor(scale: number) {
     const imageWidget: ImageWidget = new ImageWidget().setImage(
       "card/technology/unknown/base/base.back.jpg",
       packageId
     );
-    const imageWidget2: ImageWidget = new ImageWidget().setImage(
+    const imageWidgetForZoom: ImageWidget = new ImageWidget().setImage(
       "card/technology/unknown/base/base.back.jpg",
       packageId
     );
+
     const unzoomedUi: AbstractUI = new UnzoomedTechCardMutableUI(
       scale,
       imageWidget
     );
     const createZoomedUI: CreateZoomedUiType = (_scale: number): AbstractUI => {
-      return new ZoomedTechCardUI(scale, this._imageWidget2);
+      return new ZoomedTechCardUI(scale, this._imageWidgetForZoom);
     };
     super(unzoomedUi, scale, createZoomedUI);
     this._imageWidget = imageWidget;
-    this._imageWidget2 = imageWidget2;
+    this._imageWidgetForZoom = imageWidgetForZoom;
   }
 
   clearCard(): void {
@@ -71,7 +82,7 @@ export class TechCardMutableUI extends ZoomableUiFullyClickable {
       "card/technology/unknown/base/base.back.jpg",
       packageId
     );
-    this._imageWidget2.setImage(
+    this._imageWidgetForZoom.setImage(
       "card/technology/unknown/base/base.back.jpg",
       packageId
     );
@@ -79,7 +90,7 @@ export class TechCardMutableUI extends ZoomableUiFullyClickable {
 
   setCard(card: Card): void {
     this._imageWidget.setSourceCard(card);
-    this._imageWidget2.setSourceCard(card);
+    this._imageWidgetForZoom.setSourceCard(card);
   }
 
   /**
