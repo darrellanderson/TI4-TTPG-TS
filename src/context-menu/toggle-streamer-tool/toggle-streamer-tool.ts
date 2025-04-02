@@ -5,14 +5,14 @@ import {
   CreateAbstractUIType,
 } from "../../ui/abstract-window/abstract-window";
 import { AbstractUI } from "../../ui/abstract-ui/abtract-ui";
-import { StreamerUI } from "../../ui/streamer-ui/streamer-ui";
+import { StreamerToolUI } from "../../ui/streamer-tool-ui/streamer-tool-ui";
 
 export class ToggleStreamerTool implements IGlobal {
   init(): void {
     const createAbstractUI: CreateAbstractUIType = (
       params: CreateAbstractUIParams
     ): AbstractUI => {
-      return new StreamerUI(params.scale);
+      return new StreamerToolUI(params.scale);
     };
 
     const namespaceId: NamespaceId | undefined = undefined;

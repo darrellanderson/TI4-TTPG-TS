@@ -3,7 +3,7 @@ import { LabelUI } from "../button-ui/label-ui";
 import { CONFIG } from "../config/config";
 import { VerticalUIBuilder } from "../panel/vertical-ui-builder";
 
-export class StreamerUI extends AbstractUI {
+export class StreamerToolUI extends AbstractUI {
   private readonly _ui: AbstractUI;
 
   constructor(scale: number) {
