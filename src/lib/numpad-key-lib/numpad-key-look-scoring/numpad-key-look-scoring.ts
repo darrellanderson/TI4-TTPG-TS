@@ -33,9 +33,9 @@ export class NumpadKeyLookScoring {
       return;
     }
 
-    const lookAt: Vector = obj.getPosition();
+    const lookAt: Vector = obj.getPosition().add([-13, 0, 0]);
     lookAt.z = world.getTableHeight();
-    const lookFrom: Vector = lookAt.add([-10, 0, 70]);
+    const lookFrom: Vector = lookAt.add([-10, 0, 60]);
     const rot = lookFrom.findLookAtRotation(lookAt);
     player.setPositionAndRotation(lookFrom, rot);
   };

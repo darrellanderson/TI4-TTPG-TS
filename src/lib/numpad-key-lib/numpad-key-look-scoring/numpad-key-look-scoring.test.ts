@@ -23,7 +23,7 @@ it("look scoring", () => {
 
   // Now there's a look-at object.
   mockGlobalEvents._scriptButtonPressedAsPlayer(player, 19, false, false);
-  expect(player.getPosition().toString()).toBe("(X=90,Y=100,Z=70)");
+  expect(player.getPosition().toString()).toBe("(X=77,Y=100,Z=60)");
 
   numpadKey.destroy();
 });

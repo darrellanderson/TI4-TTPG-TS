@@ -1,5 +1,8 @@
 import { Broadcast, IGlobal, PlayerSlot, TurnOrder } from "ttpg-darrell";
 
+/**
+ * Clear passed state when all players have passed.
+ */
 export class OnTurnStateChanged implements IGlobal {
   private readonly _onTurnStateChanged = (turnOrder: TurnOrder): void => {
     // If all players have passed, reset passed and inform.
@@ -7,12 +10,13 @@ export class OnTurnStateChanged implements IGlobal {
     const activeIndex: number = playerSlots.findIndex(
       (playerSlot: PlayerSlot) => turnOrder.getPassed(playerSlot) === false
     );
-    if (activeIndex === -1) {
+    if (activeIndex === -1 && playerSlots.length > 0) {
       playerSlots.forEach((playerSlot: PlayerSlot) => {
         turnOrder.setPassed(playerSlot, false);
       });
       const msg: string = "All players have passed";
       Broadcast.broadcastAll(msg);
+      TI4.events.onAllPlayersPassed.trigger();
     }
   };
 

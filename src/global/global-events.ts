@@ -39,6 +39,10 @@ export class GlobalEvents {
     (agendaState: AgendaState) => void
   >();
 
+  public readonly onAllPlayersPassed = new TriggerableMulticastDelegate<
+    () => void
+  >();
+
   /**
    * Called when a player clicks a combat-initiating button.
    *
