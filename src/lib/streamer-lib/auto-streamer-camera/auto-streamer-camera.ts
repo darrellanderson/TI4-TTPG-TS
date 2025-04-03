@@ -1,5 +1,5 @@
 import { GameObject, Player, Vector, world } from "@tabletop-playground/api";
-import { PlayerSlot, TurnOrder } from "ttpg-darrell";
+import { NamespaceId, PlayerSlot, TurnOrder } from "ttpg-darrell";
 
 import { Scoreboard } from "../../score-lib/scoreboard/scoreboard";
 import { System } from "../../system-lib/system/system";
@@ -14,10 +14,9 @@ import { System } from "../../system-lib/system/system";
  * No camera movement necessary for agenda, agenda UI is on screen.
  */
 export class AutoStreamerCamera {
-  private static __instance: AutoStreamerCamera | null = null;
-
   private readonly _streamerPlayerSlots: Set<PlayerSlot> = new Set();
   private readonly _scoreboard: Scoreboard = new Scoreboard();
+  private readonly _namespaceId: NamespaceId;
 
   private readonly _onAllPlayersPassed = (): void => {
     this._lookAtScoring();
@@ -34,29 +33,27 @@ export class AutoStreamerCamera {
     this._lookAtFullMap();
   };
 
-  static getInstance(): AutoStreamerCamera {
-    if (this.__instance === null) {
-      this.__instance = new AutoStreamerCamera();
-    }
-    return this.__instance;
-  }
+  constructor(namespaceId: NamespaceId) {
+    this._namespaceId = namespaceId;
 
-  // Private: must use getInstance
-  private constructor() {
     TI4.events.onAllPlayersPassed.add(this._onAllPlayersPassed);
     TI4.events.onSystemActivated.add(this._onSystemActivated);
     TurnOrder.onTurnStateChanged.add(this._onTurnStateChanged);
+
+    this._load();
   }
 
   destroy(): void {
     TI4.events.onAllPlayersPassed.remove(this._onAllPlayersPassed);
     TI4.events.onSystemActivated.remove(this._onSystemActivated);
     TurnOrder.onTurnStateChanged.remove(this._onTurnStateChanged);
-    AutoStreamerCamera.__instance = null;
+
+    world.setSavedData("", this._namespaceId);
   }
 
   addStreamerPlayerSlot(playerSlot: PlayerSlot): void {
     this._streamerPlayerSlots.add(playerSlot);
+    this._save();
   }
 
   hasStreamerPlayerSlot(playerSlot: PlayerSlot): boolean {
@@ -65,6 +62,23 @@ export class AutoStreamerCamera {
 
   removeStreamerPlayerSlot(playerSlot: PlayerSlot): void {
     this._streamerPlayerSlots.delete(playerSlot);
+    this._save();
+  }
+
+  _load(): void {
+    this._streamerPlayerSlots.clear();
+    const json: string | undefined = world.getSavedData(this._namespaceId);
+    if (json && json.length > 0) {
+      const playerSlots: PlayerSlot[] = JSON.parse(json);
+      for (const playerSlot of playerSlots) {
+        this._streamerPlayerSlots.add(playerSlot);
+      }
+    }
+  }
+
+  _save(): void {
+    const json: string = JSON.stringify(Array.from(this._streamerPlayerSlots));
+    world.setSavedData(json, this._namespaceId);
   }
 
   _lookAtSystem(system: System): void {
