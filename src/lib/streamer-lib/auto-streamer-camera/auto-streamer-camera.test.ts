@@ -6,7 +6,11 @@ import { System } from "../../system-lib/system/system";
 import { TurnOrder } from "ttpg-darrell";
 
 it("constructor/destroy", () => {
-  new AutoStreamerCamera("@test/test").destroy();
+  const autoStreamerCamera: AutoStreamerCamera = new AutoStreamerCamera(
+    "@test/test"
+  );
+  autoStreamerCamera.init();
+  autoStreamerCamera.destroy();
 });
 
 it("events", () => {
@@ -18,6 +22,7 @@ it("events", () => {
   const autoStreamerCamera: AutoStreamerCamera = new AutoStreamerCamera(
     "@test/test"
   ); // register event listeners
+  autoStreamerCamera.init();
 
   MockGameObject.simple("token:base/scoreboard"); // to find scoring area
   MockGameObject.simple("tile.system:base/18"); // so system exists
@@ -34,6 +39,7 @@ it("events", () => {
   const loadedFromState: AutoStreamerCamera = new AutoStreamerCamera(
     "@test/test"
   );
+  loadedFromState.init();
   expect(loadedFromState.hasStreamerPlayerSlot(playerSlot)).toBe(true);
 
   let eventCount: number = 0;
@@ -50,4 +56,5 @@ it("events", () => {
   autoStreamerCamera.removeStreamerPlayerSlot(playerSlot);
   expect(autoStreamerCamera.hasStreamerPlayerSlot(playerSlot)).toBe(false);
   autoStreamerCamera.destroy();
+  loadedFromState.destroy();
 });

@@ -22,6 +22,7 @@ import { addObjectTemplatesToMockWorld } from "../nsid/nsid-to-template-id.test"
 import { ActivateSystem } from "../context-menu/system/activate-system/activate-system";
 import { AgendaActivityMaybeResume } from "../lib/agenda-lib/agenda-activity-start/agenda-activity-start";
 import { AllBorders } from "../lib/border-lib/all-borders/all-borders";
+import { AutoStreamerCamera } from "../lib/streamer-lib/auto-streamer-camera/auto-streamer-camera";
 import { Config } from "../lib/config/config";
 import { ControlTokenSystem } from "../context-menu/system/control-token-system/control-token-system";
 import { CreateAndAttachEndTurnButtonUI } from "../ui/end-turn-button-ui/create-and-attach-end-turn-button-ui";
@@ -97,6 +98,9 @@ export class TI4Class {
   public readonly events = Object.freeze(new GlobalEvents());
 
   // Libraries.
+  public readonly autoStreamerCamera = new AutoStreamerCamera(
+    "@auto-streamer-camera/ti4"
+  );
   public readonly borders = new AllBorders();
   public readonly config = new Config("@config/ti4");
   public readonly hex = new Hex(HEX_LAYOUT_POINTY, 5.77735 * 1.5);

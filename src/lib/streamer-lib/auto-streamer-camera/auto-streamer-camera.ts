@@ -1,5 +1,5 @@
 import { GameObject, Player, Vector, world } from "@tabletop-playground/api";
-import { NamespaceId, PlayerSlot, TurnOrder } from "ttpg-darrell";
+import { IGlobal, NamespaceId, PlayerSlot, TurnOrder } from "ttpg-darrell";
 
 import { Scoreboard } from "../../score-lib/scoreboard/scoreboard";
 import { System } from "../../system-lib/system/system";
@@ -13,7 +13,7 @@ import { System } from "../../system-lib/system/system";
  *
  * No camera movement necessary for agenda, agenda UI is on screen.
  */
-export class AutoStreamerCamera {
+export class AutoStreamerCamera implements IGlobal {
   private readonly _streamerPlayerSlots: Set<PlayerSlot> = new Set();
   private readonly _scoreboard: Scoreboard = new Scoreboard();
   private readonly _namespaceId: NamespaceId;
@@ -35,12 +35,13 @@ export class AutoStreamerCamera {
 
   constructor(namespaceId: NamespaceId) {
     this._namespaceId = namespaceId;
+    this._load();
+  }
 
+  init(): void {
     TI4.events.onAllPlayersPassed.add(this._onAllPlayersPassed);
     TI4.events.onSystemActivated.add(this._onSystemActivated);
     TurnOrder.onTurnStateChanged.add(this._onTurnStateChanged);
-
-    this._load();
   }
 
   destroy(): void {
