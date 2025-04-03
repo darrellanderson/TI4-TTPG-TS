@@ -32,6 +32,7 @@ import { DisplayPDSAdjacency } from "../context-menu/display-pds-adjacency/displ
 import { DraftActivityMaybeResume } from "../lib/draft-lib/draft-activity-start/draft-activity-start";
 import { FactionRegistry } from "../lib/faction-lib/registry/faction-registry";
 import { GlobalEvents } from "./global-events";
+import { HideMouseCursor } from "../lib/streamer-lib/hide-mouse-cursor/hide-mouse-cursor";
 import { NumpadKeyAll } from "../lib/numpad-key-lib/numpad-key-all/numpad-key-all";
 import { OnAgendaCard } from "../event/on-agenda-card/on-agenda-card";
 import { OnCombatClicked } from "../event/on-combat-clicked/on-combat-clicked";
@@ -107,6 +108,9 @@ export class TI4Class {
   public readonly factionRegistry = new FactionRegistry()
     .loadDefaultData()
     .loadDefaultRewriteNsid();
+  public readonly hideMouseCursor = new HideMouseCursor(
+    "@hide-mouse-cursor/ti4"
+  );
   public readonly planetAttachmentRegistry =
     new PlanetAttachmentRegistry().loadDefaultData();
   public readonly playerColor = new PlayerColor("@player-color/ti4");
