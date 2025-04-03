@@ -140,7 +140,7 @@ export class HideMouseCursor implements IGlobal {
 
     // Visualize for initial testing?
     zone.setColor([0, 1, 0, 0.5]);
-    zone.setAlwaysVisible(true);
+    zone.setAlwaysVisible(false);
 
     return zone;
   }
