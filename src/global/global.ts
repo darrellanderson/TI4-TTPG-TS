@@ -73,6 +73,7 @@ import { UnitAttrsRegistry } from "../lib/unit-lib/registry/unit-attrs-registry"
 import { UnitModifierActiveIdle } from "../lib/unit-lib/unit-modifier/unit-modifier-active-idle";
 import { UnitModifierRegistry } from "../lib/unit-lib/registry/unit-modifier-registry";
 import { UnpackFactionContextMenuItem } from "../context-menu/unpack-faction/unpack-faction";
+import { UseStreamerBuddy } from "../lib/streamer-lib/use-streamer-buddy/use-streamer-buddy";
 
 import * as NSID_TO_TEMPLATE_ID from "../nsid/nsid-to-template-id.json";
 Spawn.inject(NSID_TO_TEMPLATE_ID);
@@ -126,6 +127,9 @@ export class TI4Class {
   public readonly unitAttrsRegistry = new UnitAttrsRegistry().loadDefaultData();
   public readonly unitModifierRegistry =
     new UnitModifierRegistry().loadDefaultData();
+  public readonly useStreamerBuddy = new UseStreamerBuddy(
+    "@use-streamer-buddy/ti4"
+  );
 }
 
 // Also place "TI4" in the global namespace.
