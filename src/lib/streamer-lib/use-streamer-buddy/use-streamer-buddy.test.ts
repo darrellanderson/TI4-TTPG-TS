@@ -17,6 +17,7 @@ it("set/get", () => {
   loadFromState.init();
   expect(loadFromState.getUseStreamerBuddy()).toBe(true);
 
+  loadFromState.setUseStreamerBuddy(false);
   useStreamerBuddy.setUseStreamerBuddy(false);
 });
 

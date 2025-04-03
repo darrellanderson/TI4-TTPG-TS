@@ -12,7 +12,7 @@ export class ToggleStreamerTool implements IGlobal {
     const createAbstractUI: CreateAbstractUIType = (
       params: CreateAbstractUIParams
     ): AbstractUI => {
-      return new StreamerToolUI(params.scale);
+      return new StreamerToolUI(params.scale, params.playerSlot);
     };
 
     const namespaceId: NamespaceId | undefined = undefined;

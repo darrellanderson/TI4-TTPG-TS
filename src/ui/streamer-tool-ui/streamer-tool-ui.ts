@@ -1,3 +1,4 @@
+import { PlayerSlot } from "ttpg-darrell";
 import { AbstractUI } from "../abstract-ui/abtract-ui";
 import { CheckBoxUI } from "../button-ui/checkbox-ui";
 import { CONFIG } from "../config/config";
@@ -8,7 +9,7 @@ import { VerticalUIBuilder } from "../panel/vertical-ui-builder";
 export class StreamerToolUI extends AbstractUI {
   private readonly _ui: AbstractUI;
 
-  constructor(scale: number) {
+  constructor(scale: number, _playerSlot: PlayerSlot) {
     const labelTimestamp: LabelUI = new LabelUI(scale);
     labelTimestamp.getText().setText("Game timestamp:");
 

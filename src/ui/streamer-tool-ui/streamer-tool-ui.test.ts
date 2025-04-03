@@ -3,6 +3,7 @@ import { StreamerToolUI } from "./streamer-tool-ui";
 
 it("constructor", () => {
   const scale: number = 1;
-  const streamerUi: AbstractUI = new StreamerToolUI(scale);
+  const playerSlot: number = 10;
+  const streamerUi: AbstractUI = new StreamerToolUI(scale, playerSlot);
   streamerUi.destroy();
 });
