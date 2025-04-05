@@ -9,8 +9,8 @@ it("constructor", () => {
 
 it("get (empty)", () => {
   const dataActiveSystem = new DataActiveSystem();
+  expect(dataActiveSystem.getFieldName()).toBe("activeSystem");
   expect(dataActiveSystem.getRootData()).toBeUndefined();
-  expect(dataActiveSystem.getPlayerData()).toBeUndefined();
 });
 
 it("get (with data)", () => {

@@ -1,13 +1,13 @@
 import { OnSystemActivated } from "../../../event/on-system-activated/on-system-activated";
 import { System } from "../../system-lib/system/system";
-import { AbstractGameData } from "../abstract-game-data/abstract-game-data";
+import { AbstractRootGameData } from "../abstract-game-data/abstract-game-data";
 
 export type DataActiveSystemType = {
   tile: number;
   planets: Array<string>;
 };
 
-export class DataActiveSystem extends AbstractGameData<DataActiveSystemType> {
+export class DataActiveSystem extends AbstractRootGameData<DataActiveSystemType> {
   getFieldName(): string {
     return "activeSystem";
   }
