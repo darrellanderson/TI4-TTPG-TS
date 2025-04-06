@@ -1,4 +1,4 @@
-import { UpdatorActiveSystemType } from "../updator-active-system/updator-active-system";
+import { UpdatorActiveSystemType } from "../updator-active-system/updator-active-system-type";
 
 export type PerPlayerGameData = {
   name?: string;

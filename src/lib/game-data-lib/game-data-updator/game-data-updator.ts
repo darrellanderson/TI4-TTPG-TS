@@ -1,4 +1,4 @@
-import { globalEvents } from "ttpg-mock";
+import { globalEvents } from "@tabletop-playground/api";
 import { GameData, PerPlayerGameData } from "../game-data/game-data";
 import { IGameDataUpdator } from "../i-game-data-updator/i-game-data-updator";
 
@@ -10,8 +10,10 @@ export class GameDataUpdator {
   private _gameData: GameData = GameDataUpdator.createGameData();
   private _nextProcessIndex: number = 0;
   private _intervalHandle: NodeJS.Timer | undefined = undefined;
+  private _cycleStartTimestamp: number = 0;
 
   readonly _onPeriodicUpdateStart = (): void => {
+    this._cycleStartTimestamp = Date.now();
     globalEvents.onTick.remove(this._onPeriodicUpdateStart);
     globalEvents.onTick.add(this._onTickHandler);
   };
@@ -20,11 +22,15 @@ export class GameDataUpdator {
     const finishedCycle: boolean = this._processNext();
     if (finishedCycle) {
       globalEvents.onTick.remove(this._onTickHandler);
+      TI4.events.onGameData.trigger(this._gameData);
     }
-    this._intervalHandle = setTimeout(
-      this._onPeriodicUpdateStart,
-      DELAY_BETWEEN_UPDATE_CYCLES_MSECS
+    const now: number = Date.now();
+    const elapsedTime: number = now - this._cycleStartTimestamp;
+    const delay: number = Math.max(
+      DELAY_BETWEEN_UPDATE_CYCLES_MSECS - elapsedTime,
+      100
     );
+    this._intervalHandle = setTimeout(this._onPeriodicUpdateStart, delay);
   };
 
   static createGameData(): GameData {

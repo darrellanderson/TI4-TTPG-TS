@@ -2,21 +2,20 @@ import { OnSystemActivated } from "../../../event/on-system-activated/on-system-
 import { System } from "../../system-lib/system/system";
 import { GameData } from "../game-data/game-data";
 import { IGameDataUpdator } from "../i-game-data-updator/i-game-data-updator";
-
-export type UpdatorActiveSystemType = {
-  tile: number;
-  planets: Array<string>;
-};
+import { UpdatorActiveSystemType } from "./updator-active-system-type";
 
 export class UpdatorActiveSystem implements IGameDataUpdator {
   update(gameData: GameData): void {
-    const activeSystem: System | undefined =
+    const lastActivatedSystem: System | undefined =
       OnSystemActivated.getLastActivatedSystem();
-    if (activeSystem) {
-      gameData.activeSystem = {
-        tile: activeSystem.getSystemTileNumber(),
-        planets: activeSystem.getPlanets().map((planet) => planet.getName()),
+    if (lastActivatedSystem) {
+      const activeSystem: UpdatorActiveSystemType = {
+        tile: lastActivatedSystem.getSystemTileNumber(),
+        planets: lastActivatedSystem
+          .getPlanets()
+          .map((planet) => planet.getName()),
       };
+      gameData.activeSystem = activeSystem;
     } else {
       delete gameData.activeSystem;
     }

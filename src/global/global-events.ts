@@ -7,6 +7,7 @@ import {
   CombatRoll,
 } from "../lib/combat-lib/combat-roll/combat-roll";
 import { DraftActivityStartParams } from "../lib/draft-lib/draft-activity-start/draft-activity-start-params";
+import { GameData } from "../lib/game-data-lib/game-data/game-data";
 import { System } from "../lib/system-lib/system/system";
 
 /**
@@ -75,6 +76,13 @@ export class GlobalEvents {
    */
   public readonly onFactionChanged = new TriggerableMulticastDelegate<
     (playerSlot: number) => void
+  >();
+
+  /**
+   * Called after all game data updators finished this cycle.
+   */
+  public readonly onGameData = new TriggerableMulticastDelegate<
+    (gameData: GameData) => void
   >();
 
   /**
