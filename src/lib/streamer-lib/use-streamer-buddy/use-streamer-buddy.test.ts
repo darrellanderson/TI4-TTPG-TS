@@ -1,3 +1,5 @@
+import { GameData } from "../../game-data-lib/game-data/game-data";
+import { GameDataUpdator } from "../../game-data-lib/game-data-updator/game-data-updator";
 import { UseStreamerBuddy } from "./use-streamer-buddy";
 
 it("constructor/init", () => {
@@ -21,8 +23,14 @@ it("set/get", () => {
   useStreamerBuddy.setUseStreamerBuddy(false);
 });
 
-it("_intervalRunnable", () => {
+it("_onGameData", () => {
+  // fetch(url: string, options?: FetchOptions): Promise<FetchResponse>
+  jest.spyOn(global, "fetch").mockImplementation();
+
   const useStreamerBuddy = new UseStreamerBuddy("@test/test");
   useStreamerBuddy.init();
-  useStreamerBuddy._intervalRunnable();
+  useStreamerBuddy.setUseStreamerBuddy(true);
+
+  const gameData: GameData = GameDataUpdator.createGameData();
+  useStreamerBuddy._onGameData(gameData);
 });

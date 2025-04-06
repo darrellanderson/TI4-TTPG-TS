@@ -1,13 +1,23 @@
 import { world } from "@tabletop-playground/api";
 import { IGlobal, NamespaceId } from "ttpg-darrell";
+import { GameData } from "../../game-data-lib/game-data/game-data";
 
 export class UseStreamerBuddy implements IGlobal {
   private readonly _namespaceId: NamespaceId;
   private _useStreeamerBuddy: boolean = false;
-  private _intervalHandle: NodeJS.Timeout | undefined = undefined;
 
-  readonly _intervalRunnable: () => void = () => {
-    // TODO XXX
+  readonly _onGameData = (gameData: GameData): void => {
+    if (this._useStreeamerBuddy) {
+      const json: string = JSON.stringify(gameData);
+      const url: string = `http://localhsot:8080/postkey_ttpg?key=buddy&timestamp=${TI4.config.timestamp}`;
+
+      const fetchOptions = {
+        headers: { "Content-type": "application/json;charset=UTF-8" },
+        body: json, // timestamp got added
+        method: "POST",
+      };
+      fetch(url, fetchOptions);
+    }
   };
 
   constructor(namespaceId: NamespaceId) {
@@ -17,9 +27,7 @@ export class UseStreamerBuddy implements IGlobal {
 
   init(): void {
     this._load();
-    if (this._useStreeamerBuddy) {
-      this._startUsingStreamerBuddy();
-    }
+    TI4.events.onGameData.add(this._onGameData);
   }
 
   getUseStreamerBuddy(): boolean {
@@ -29,18 +37,6 @@ export class UseStreamerBuddy implements IGlobal {
   setUseStreamerBuddy(useStreamerBuddy: boolean): void {
     this._useStreeamerBuddy = useStreamerBuddy;
     this._save();
-
-    if (this._intervalHandle) {
-      clearInterval(this._intervalHandle);
-      this._intervalHandle = undefined;
-    }
-    if (this._useStreeamerBuddy) {
-      this._startUsingStreamerBuddy();
-    }
-  }
-
-  private _startUsingStreamerBuddy(): void {
-    this._intervalHandle = setInterval(this._intervalRunnable, 3000);
   }
 
   private _load(): void {
