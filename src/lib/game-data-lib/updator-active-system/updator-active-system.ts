@@ -16,8 +16,6 @@ export class UpdatorActiveSystem implements IGameDataUpdator {
           .map((planet) => planet.getName()),
       };
       gameData.activeSystem = activeSystem;
-    } else {
-      delete gameData.activeSystem;
     }
   }
 }

@@ -7,20 +7,21 @@ const DELAY_BETWEEN_UPDATE_CYCLES_MSECS = 3000;
 export class GameDataUpdator {
   private readonly _updators: Array<IGameDataUpdator>;
 
-  private _gameData: GameData = GameDataUpdator.createGameData();
+  private _gameData: GameData | undefined = undefined;
   private _nextProcessIndex: number = 0;
   private _intervalHandle: NodeJS.Timer | undefined = undefined;
   private _cycleStartTimestamp: number = 0;
 
   readonly _onPeriodicUpdateStart = (): void => {
     this._cycleStartTimestamp = Date.now();
+    this._gameData = GameDataUpdator.createGameData();
     globalEvents.onTick.remove(this._onPeriodicUpdateStart);
     globalEvents.onTick.add(this._onTickHandler);
   };
 
   readonly _onTickHandler = (): void => {
     const finishedCycle: boolean = this._processNext();
-    if (finishedCycle) {
+    if (finishedCycle && this._gameData) {
       globalEvents.onTick.remove(this._onTickHandler);
       TI4.events.onGameData.trigger(this._gameData);
     }
@@ -69,7 +70,7 @@ export class GameDataUpdator {
       this._updators[this._nextProcessIndex];
     this._nextProcessIndex =
       (this._nextProcessIndex + 1) % this._updators.length;
-    if (updator) {
+    if (updator && this._gameData) {
       updator.update(this._gameData);
     }
     return this._nextProcessIndex === 0;

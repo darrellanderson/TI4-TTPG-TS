@@ -31,6 +31,8 @@ import { DiplomacySystem } from "../context-menu/system/diplomacy-system/diploma
 import { DisplayPDSAdjacency } from "../context-menu/display-pds-adjacency/display-pds-adjacency";
 import { DraftActivityMaybeResume } from "../lib/draft-lib/draft-activity-start/draft-activity-start";
 import { FactionRegistry } from "../lib/faction-lib/registry/faction-registry";
+import { GameDataUpdator } from "../lib/game-data-lib/game-data-updator/game-data-updator";
+import { GAME_DATA_UPDATORS } from "../lib/game-data-lib/game-data-updators/game-data-updators";
 import { GlobalEvents } from "./global-events";
 import { HideMouseCursor } from "../lib/streamer-lib/hide-mouse-cursor/hide-mouse-cursor";
 import { NumpadKeyAll } from "../lib/numpad-key-lib/numpad-key-all/numpad-key-all";
@@ -109,6 +111,7 @@ export class TI4Class {
   public readonly factionRegistry = new FactionRegistry()
     .loadDefaultData()
     .loadDefaultRewriteNsid();
+  public readonly gameDataUpdator = new GameDataUpdator(GAME_DATA_UPDATORS);
   public readonly hideMouseCursor = new HideMouseCursor(
     "@hide-mouse-cursor/ti4"
   );

@@ -63,3 +63,10 @@ it("_onTickHandler", () => {
   const gameDataUpdator: GameDataUpdator = new GameDataUpdator(updators);
   gameDataUpdator._onTickHandler();
 });
+
+it("update cycle (start, tick)", () => {
+  const updators: Array<IGameDataUpdator> = [new MyUpdator()];
+  const gameDataUpdator: GameDataUpdator = new GameDataUpdator(updators);
+  gameDataUpdator._onPeriodicUpdateStart();
+  gameDataUpdator._onTickHandler();
+});
