@@ -1,4 +1,4 @@
-import { globalEvents } from "@tabletop-playground/api";
+import { GameWorld } from "@tabletop-playground/api";
 import { GameData, PerPlayerGameData } from "../game-data/game-data";
 import { IGameDataUpdator } from "../i-game-data-updator/i-game-data-updator";
 
@@ -10,28 +10,16 @@ export class GameDataUpdator {
   private _gameData: GameData | undefined = undefined;
   private _nextProcessIndex: number = 0;
   private _intervalHandle: NodeJS.Timer | undefined = undefined;
-  private _cycleStartTimestamp: number = 0;
 
-  readonly _onPeriodicUpdateStart = (): void => {
-    this._cycleStartTimestamp = Date.now();
-    this._gameData = GameDataUpdator.createGameData();
-    globalEvents.onTick.remove(this._onPeriodicUpdateStart);
-    globalEvents.onTick.add(this._onTickHandler);
-  };
-
-  readonly _onTickHandler = (): void => {
+  readonly _onInterval = (): void => {
+    if (!this._gameData) {
+      this._gameData = GameDataUpdator.createGameData();
+    }
     const finishedCycle: boolean = this._processNext();
     if (finishedCycle && this._gameData) {
-      globalEvents.onTick.remove(this._onTickHandler);
       TI4.events.onGameData.trigger(this._gameData);
+      this._gameData = undefined;
     }
-    const now: number = Date.now();
-    const elapsedTime: number = now - this._cycleStartTimestamp;
-    const delay: number = Math.max(
-      DELAY_BETWEEN_UPDATE_CYCLES_MSECS - elapsedTime,
-      100
-    );
-    this._intervalHandle = setTimeout(this._onPeriodicUpdateStart, delay);
   };
 
   static createGameData(): GameData {
@@ -47,7 +35,7 @@ export class GameDataUpdator {
   static getPlayerData(
     gameData: GameData,
     playerIndex: number
-  ): PerPlayerGameData | undefined {
+  ): PerPlayerGameData {
     const playerData: PerPlayerGameData | undefined =
       gameData.players[playerIndex];
     if (!playerData) {
@@ -76,18 +64,31 @@ export class GameDataUpdator {
     return this._nextProcessIndex === 0;
   }
 
-  startPeriodicUpdates(): void {
+  startPeriodicUpdates(): this {
     if (this._intervalHandle) {
       clearInterval(this._intervalHandle);
       this._intervalHandle = undefined;
     }
-    this._intervalHandle = setInterval(this._onPeriodicUpdateStart, 3000);
+    const intervalMsecs: number = Math.ceil(
+      DELAY_BETWEEN_UPDATE_CYCLES_MSECS / (this._updators.length + 1) // in case zero
+    );
+    this._intervalHandle = setInterval(this._onInterval, intervalMsecs);
+    return this;
   }
 
-  stopPeriodicUpdates(): void {
+  stopPeriodicUpdates(): this {
     if (this._intervalHandle) {
       clearInterval(this._intervalHandle);
       this._intervalHandle = undefined;
     }
+    return this;
+  }
+
+  startPeriodicUpdatesInProduction(): this {
+    this.startPeriodicUpdates();
+    if (GameWorld.getExecutionReason() === "unittest") {
+      this.stopPeriodicUpdates();
+    }
+    return this;
   }
 }

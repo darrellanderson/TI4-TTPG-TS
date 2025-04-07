@@ -52,21 +52,10 @@ it("_processNext", () => {
   expect(gameDataUpdator._processNext()).toBe(true);
 });
 
-it("_onPeriodicUpdateStart", () => {
+it("_onInterval", () => {
   const updators: Array<IGameDataUpdator> = [new MyUpdator()];
   const gameDataUpdator: GameDataUpdator = new GameDataUpdator(updators);
-  gameDataUpdator._onPeriodicUpdateStart();
-});
-
-it("_onTickHandler", () => {
-  const updators: Array<IGameDataUpdator> = [new MyUpdator()];
-  const gameDataUpdator: GameDataUpdator = new GameDataUpdator(updators);
-  gameDataUpdator._onTickHandler();
-});
-
-it("update cycle (start, tick)", () => {
-  const updators: Array<IGameDataUpdator> = [new MyUpdator()];
-  const gameDataUpdator: GameDataUpdator = new GameDataUpdator(updators);
-  gameDataUpdator._onPeriodicUpdateStart();
-  gameDataUpdator._onTickHandler();
+  gameDataUpdator._onInterval();
+  gameDataUpdator._onInterval();
+  gameDataUpdator._onInterval();
 });

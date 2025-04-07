@@ -2,6 +2,7 @@ import { UpdatorActiveSystemType } from "../updator-active-system/updator-active
 
 export type PerPlayerGameData = {
   name?: string;
+  color?: string;
 };
 
 /**

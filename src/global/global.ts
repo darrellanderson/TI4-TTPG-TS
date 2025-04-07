@@ -111,7 +111,9 @@ export class TI4Class {
   public readonly factionRegistry = new FactionRegistry()
     .loadDefaultData()
     .loadDefaultRewriteNsid();
-  public readonly gameDataUpdator = new GameDataUpdator(GAME_DATA_UPDATORS);
+  public readonly gameDataUpdator = new GameDataUpdator(
+    GAME_DATA_UPDATORS
+  ).startPeriodicUpdatesInProduction();
   public readonly hideMouseCursor = new HideMouseCursor(
     "@hide-mouse-cursor/ti4"
   );

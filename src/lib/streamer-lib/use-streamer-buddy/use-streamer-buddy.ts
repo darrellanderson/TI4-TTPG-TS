@@ -9,11 +9,10 @@ export class UseStreamerBuddy implements IGlobal {
   readonly _onGameData = (gameData: GameData): void => {
     if (this._useStreeamerBuddy) {
       const json: string = JSON.stringify(gameData);
-      const url: string = `http://localhsot:8080/postkey_ttpg?key=buddy&timestamp=${TI4.config.timestamp}`;
-
+      const url: string = `http://localhost:8080/postkey_ttpg?key=buddy&timestamp=${TI4.config.timestamp}`;
       const fetchOptions = {
         headers: { "Content-type": "application/json;charset=UTF-8" },
-        body: json, // timestamp got added
+        body: json,
         method: "POST",
       };
       fetch(url, fetchOptions);
