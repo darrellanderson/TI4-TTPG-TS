@@ -1,7 +1,7 @@
-import { OnSystemActivated } from "../../../event/on-system-activated/on-system-activated";
-import { System } from "../../system-lib/system/system";
-import { GameData } from "../game-data/game-data";
-import { IGameDataUpdator } from "../i-game-data-updator/i-game-data-updator";
+import { OnSystemActivated } from "../../../../event/on-system-activated/on-system-activated";
+import { System } from "../../../system-lib/system/system";
+import { GameData } from "../../game-data/game-data";
+import { IGameDataUpdator } from "../../i-game-data-updator/i-game-data-updator";
 import { UpdatorActiveSystemType } from "./updator-active-system-type";
 
 export class UpdatorActiveSystem implements IGameDataUpdator {

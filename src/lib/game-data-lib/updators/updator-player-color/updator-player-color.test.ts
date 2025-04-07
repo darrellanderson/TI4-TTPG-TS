@@ -1,7 +1,7 @@
 import { MockCardHolder } from "ttpg-mock";
-import { GameDataUpdator } from "../game-data-updator/game-data-updator";
+import { GameDataUpdator } from "../../game-data-updator/game-data-updator";
 import { UpdatorPlayerColor } from "./updator-player-color";
-import { GAME_DATA_UPDATORS } from "../game-data-updators/game-data-updators";
+import { GAME_DATA_UPDATORS } from "../../game-data-updators/game-data-updators";
 
 it("registered", () => {
   const index: number = GAME_DATA_UPDATORS.findIndex((updator) => {

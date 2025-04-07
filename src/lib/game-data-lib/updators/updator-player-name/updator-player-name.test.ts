@@ -1,9 +1,9 @@
 import { Player } from "@tabletop-playground/api";
 import { MockCardHolder, MockPlayer, mockWorld } from "ttpg-mock";
-import { GameData } from "../game-data/game-data";
-import { GameDataUpdator } from "../game-data-updator/game-data-updator";
+import { GameData } from "../../game-data/game-data";
+import { GameDataUpdator } from "../../game-data-updator/game-data-updator";
 import { UpdatorPlayerName } from "./updator-player-name";
-import { GAME_DATA_UPDATORS } from "../game-data-updators/game-data-updators";
+import { GAME_DATA_UPDATORS } from "../../game-data-updators/game-data-updators";
 
 it("registered", () => {
   const index: number = GAME_DATA_UPDATORS.findIndex((updator) => {

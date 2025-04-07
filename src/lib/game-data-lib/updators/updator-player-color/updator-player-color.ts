@@ -1,7 +1,7 @@
 import { PlayerSeatType } from "lib/player-lib/player-seats/player-seats";
-import { GameData, PerPlayerGameData } from "../game-data/game-data";
-import { IGameDataUpdator } from "../i-game-data-updator/i-game-data-updator";
-import { GameDataUpdator } from "../game-data-updator/game-data-updator";
+import { GameData, PerPlayerGameData } from "../../game-data/game-data";
+import { IGameDataUpdator } from "../../i-game-data-updator/i-game-data-updator";
+import { GameDataUpdator } from "../../game-data-updator/game-data-updator";
 
 export class UpdatorPlayerColor implements IGameDataUpdator {
   update(gameData: GameData): void {
