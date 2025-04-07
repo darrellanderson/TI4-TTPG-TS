@@ -17,11 +17,16 @@ it("data", () => {
     templateMetadata: "card-holder:base/player-hand",
     owningPlayerSlot: 10,
   });
+  new MockCardHolder({
+    templateMetadata: "card-holder:base/player-hand",
+    owningPlayerSlot: 11,
+  });
 
-  const player: Player = new MockPlayer({ name: "my-player-name", slot: 10 });
-  mockWorld._addPlayer(player);
+  const player10: Player = new MockPlayer({ name: "my-player-name", slot: 10 });
+  mockWorld._addPlayer(player10);
 
   const gameData: GameData = GameDataUpdator.createGameData();
   new UpdatorPlayerName().update(gameData);
   expect(gameData.players[0]?.name).toEqual("my-player-name");
+  expect(gameData.players[1]?.name).toEqual("");
 });
