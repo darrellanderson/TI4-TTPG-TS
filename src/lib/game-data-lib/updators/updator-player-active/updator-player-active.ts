@@ -6,7 +6,7 @@ export class UpdatorPlayerActive implements IGameDataUpdator {
     gameData.players.forEach((player: PerPlayerGameData, seatIndex: number) => {
       const playerSlot: number =
         TI4.playerSeats.getPlayerSlotBySeatIndex(seatIndex);
-      player.active = TI4.turnOrder.getPassed(playerSlot);
+      player.active = !TI4.turnOrder.getPassed(playerSlot);
     });
   }
 }
