@@ -15,6 +15,26 @@ it("data", () => {
     templateMetadata: "card-holder:base/player-hand",
     owningPlayerSlot: 10,
   });
+  new MockCardHolder({
+    templateMetadata: "card-holder:base/player-hand",
+    owningPlayerSlot: 11,
+  });
+  new MockCardHolder({
+    templateMetadata: "card-holder:base/player-hand",
+    owningPlayerSlot: 12,
+  });
+  new MockCardHolder({
+    templateMetadata: "card-holder:base/player-hand",
+    owningPlayerSlot: 13,
+  });
+  new MockCardHolder({
+    templateMetadata: "card-holder:base/player-hand",
+    owningPlayerSlot: 14,
+  });
+  new MockCardHolder({
+    templateMetadata: "card-holder:base/player-hand",
+    owningPlayerSlot: 15,
+  });
   const gameData = GameDataUpdator.createGameData();
   new UpdatorPlayerColor().update(gameData);
   expect(gameData.players[0]?.color).toEqual("green");

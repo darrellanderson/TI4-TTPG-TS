@@ -11,19 +11,6 @@ it("satic createGameData", () => {
   expect(gameData).toBeDefined();
 });
 
-it("static getPlayerData", () => {
-  const gameData: GameData = GameDataUpdator.createGameData();
-  const playerData = GameDataUpdator.getPlayerData(gameData, 0);
-  expect(playerData).toBeDefined();
-});
-
-it("static getPlayerData (invalid index)", () => {
-  const gameData: GameData = GameDataUpdator.createGameData();
-  expect(() => {
-    GameDataUpdator.getPlayerData(gameData, 100);
-  }).toThrow();
-});
-
 it("constructor", () => {
   const updators: Array<IGameDataUpdator> = [new MyUpdator()];
   new GameDataUpdator(updators);

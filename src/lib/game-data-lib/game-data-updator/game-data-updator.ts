@@ -1,5 +1,5 @@
 import { GameWorld } from "@tabletop-playground/api";
-import { GameData, PerPlayerGameData } from "../game-data/game-data";
+import { GameData } from "../game-data/game-data";
 import { IGameDataUpdator } from "../i-game-data-updator/i-game-data-updator";
 
 const DELAY_BETWEEN_UPDATE_CYCLES_MSECS = 3000;
@@ -32,18 +32,6 @@ export class GameDataUpdator {
     return gameData;
   }
 
-  static getPlayerData(
-    gameData: GameData,
-    playerIndex: number
-  ): PerPlayerGameData {
-    const playerData: PerPlayerGameData | undefined =
-      gameData.players[playerIndex];
-    if (!playerData) {
-      throw new Error(`Player data not found for index ${playerIndex}`);
-    }
-    return playerData;
-  }
-
   constructor(updators: Array<IGameDataUpdator>) {
     this._updators = updators;
   }
@@ -59,7 +47,11 @@ export class GameDataUpdator {
     this._nextProcessIndex =
       (this._nextProcessIndex + 1) % this._updators.length;
     if (updator && this._gameData) {
-      updator.update(this._gameData);
+      try {
+        updator.update(this._gameData);
+      } catch (_error) {
+        // skip
+      }
     }
     return this._nextProcessIndex === 0;
   }
