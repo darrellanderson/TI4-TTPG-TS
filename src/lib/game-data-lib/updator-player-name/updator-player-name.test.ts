@@ -3,6 +3,14 @@ import { MockCardHolder, MockPlayer, mockWorld } from "ttpg-mock";
 import { GameData } from "../game-data/game-data";
 import { GameDataUpdator } from "../game-data-updator/game-data-updator";
 import { UpdatorPlayerName } from "./updator-player-name";
+import { GAME_DATA_UPDATORS } from "../game-data-updators/game-data-updators";
+
+it("registered", () => {
+  const index: number = GAME_DATA_UPDATORS.findIndex((updator) => {
+    return updator instanceof UpdatorPlayerName;
+  });
+  expect(index).toBeGreaterThanOrEqual(0);
+});
 
 it("data", () => {
   new MockCardHolder({
