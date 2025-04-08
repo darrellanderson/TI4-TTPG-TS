@@ -1,10 +1,12 @@
-import { UpdatorConfigType } from "../updators/updator-config/updator-config-type";
 import { UpdatorActiveSystemType } from "../updators/updator-active-system/updator-active-system-type";
+import { UpdatorConfigType } from "../updators/updator-config/updator-config-type";
+import { UpdatorObjectivesType } from "../updators/updator-objectives/updator-objectives-type";
 
 export type PerPlayerGameData = {
   active?: boolean;
   color?: string;
   name?: string;
+  objectives?: Array<string>;
   score?: number;
 };
 
@@ -19,6 +21,7 @@ export type GameData = {
   // hexSummary?: string
   laws?: Array<string>; // card names
   mapString?: string;
+  objectives?: UpdatorObjectivesType;
   scoreboard?: number; // game to 10/14 points
   setupTimestamp?: number; // epoch time (seconds)
 };
