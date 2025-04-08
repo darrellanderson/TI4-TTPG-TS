@@ -5,7 +5,7 @@ import { z } from "zod";
 export const ConfigSchema = z
   .object({
     playerCount: z.number().int().min(1).max(8),
-    timestamp: z.number(), // Unix timestamp, seconds since epoch.
+    timestamp: z.number(), // game start Unix timestamp, seconds since epoch.
     sources: z.array(z.string()),
   })
   .strict();

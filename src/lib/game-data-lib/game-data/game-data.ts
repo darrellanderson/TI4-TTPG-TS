@@ -12,5 +12,7 @@ export type PerPlayerGameData = {
  */
 export type GameData = {
   players: Array<PerPlayerGameData>;
+
   activeSystem?: UpdatorActiveSystemType;
+  setupTimestamp?: number; // epoch time (seconds)
 };
