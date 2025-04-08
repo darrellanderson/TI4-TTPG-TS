@@ -2,6 +2,7 @@ import { IGameDataUpdator } from "../i-game-data-updator/i-game-data-updator";
 
 import { UpdatorActiveSystem } from "../updators/updator-active-system/updator-active-system";
 import { UpdatorConfig } from "../updators/updator-config/updator-config";
+import { UpdatorLaws } from "../updators/updator-laws/updator-laws";
 import { UpdatorSetupTimestamp } from "../updators/updator-setup-timestamp/updator-setup-timestamp";
 
 import { UpdatorPlayerActive } from "../updators/updator-player-active/updator-player-active";
@@ -13,6 +14,7 @@ import { UpdatorScoreboard } from "../updators/updator-scoreboard/updator-scoreb
 export const GAME_DATA_UPDATORS: Array<IGameDataUpdator> = [
   new UpdatorActiveSystem(),
   new UpdatorConfig(),
+  new UpdatorLaws(),
   new UpdatorScoreboard(),
   new UpdatorSetupTimestamp(),
 

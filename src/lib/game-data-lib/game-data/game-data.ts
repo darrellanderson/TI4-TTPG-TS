@@ -16,6 +16,8 @@ export type GameData = {
 
   activeSystem?: UpdatorActiveSystemType;
   config?: UpdatorConfigType;
+  // hexSummary?: string
+  laws?: Array<string>; // card names
   scoreboard?: number; // game to 10/14 points
   setupTimestamp?: number; // epoch time (seconds)
 };
