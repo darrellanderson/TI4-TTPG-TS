@@ -16,6 +16,7 @@ it("save/restore", () => {
   config = new Config("@config/test");
   expect(config.playerCount).toBe(6);
   expect(config.timestamp).toBe(0);
+  expect(config.sources).toContain("pok");
 
   config.setPlayerCount(3);
   config.setSources(["base", "pok"]);
