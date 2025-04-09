@@ -1,7 +1,7 @@
-import { GameData } from "lib/game-data-lib/game-data/game-data";
-import { IGameDataUpdator } from "lib/game-data-lib/i-game-data-updator/i-game-data-updator";
-import { UpdatorObjectivesType } from "./updator-objectives-type";
 import { Card, GameObject } from "@tabletop-playground/api";
+import { GameData } from "../../game-data/game-data";
+import { IGameDataUpdator } from "../../i-game-data-updator/i-game-data-updator";
+import { UpdatorObjectivesType } from "./updator-objectives-type";
 
 export const OTHER_SCORABLE_NSIDS = new Set([
   "card.action:base/imperial-rider",
@@ -32,7 +32,9 @@ export class UpdatorObjectives implements IGameDataUpdator {
       "Public Objectives I": [],
       "Public Objectives II": [],
       "Secret Objectives": [],
+      Agenda: [],
       Other: [],
+      Relics: [],
     };
     return objectives;
   }
