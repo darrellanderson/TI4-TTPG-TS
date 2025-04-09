@@ -5,9 +5,9 @@ import { Card, GameObject } from "@tabletop-playground/api";
 
 export const OTHER_SCORABLE_NSIDS = new Set([
   "card.action:base/imperial-rider",
-  "card.agenda:base.only/holy-planet-of-ixth",
-  "card.agenda:base.only/shard-of-the-throne",
-  "card.agenda:base.only/the-crown-of-emphidia",
+  "card.agenda:base/holy-planet-of-ixth",
+  "card.agenda:base/shard-of-the-throne",
+  "card.agenda:base/the-crown-of-emphidia",
   "card.agenda:base/mutiny",
   "card.agenda:base/seed-of-an-empire",
   "card.agenda:pok/political-censure",

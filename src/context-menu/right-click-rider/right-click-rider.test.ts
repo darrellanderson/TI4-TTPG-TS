@@ -18,10 +18,8 @@ it("static _getOutcomeNames", () => {
 });
 
 it("static _isRider", () => {
-  expect(RightClickRider._isRider("my-type:my-source/my-name")).toBe(false);
-  expect(RightClickRider._isRider("my-type:my-source/my-name|rider")).toBe(
-    true
-  );
+  expect(RightClickRider._isRider("")).toBe(false);
+  expect(RightClickRider._isRider("rider")).toBe(true);
 });
 
 it("constructor/init", () => {

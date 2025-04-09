@@ -42,8 +42,8 @@ export class RightClickRider implements IGlobal {
    * @param obj
    * @returns
    */
-  static _isRider(nsid: string): boolean {
-    return nsid.endsWith("|rider");
+  static _isRider(nsidExtra: string): boolean {
+    return nsidExtra.includes("rider");
   }
 
   init(): void {
@@ -79,8 +79,8 @@ export class RightClickRider implements IGlobal {
   }
 
   _maybeAddGameObject(obj: GameObject): void {
-    const nsid: string = NSID.get(obj);
-    if (RightClickRider._isRider(nsid)) {
+    const nsidExtra: string = NSID.getExtra(obj);
+    if (RightClickRider._isRider(nsidExtra)) {
       this._riderObjIds.add(obj.getId());
       obj.onCustomAction.remove(this._onCustomActionHanlder);
       obj.onCustomAction.add(this._onCustomActionHanlder);
