@@ -2,6 +2,25 @@ import { MockCard, MockPlayer } from "ttpg-mock";
 import { RightClickScorePublic } from "./right-click-score-public";
 import { Card, Player } from "@tabletop-playground/api";
 
+it("static isScorablePublic", () => {
+  let card: Card;
+
+  card = MockCard.simple("card.objective.public-1:my-source/my-name");
+  expect(RightClickScorePublic.isScorablePublic(card)).toBe(true);
+
+  card = MockCard.simple("card.objective.public-2:my-source/my-name");
+  expect(RightClickScorePublic.isScorablePublic(card)).toBe(true);
+
+  card = MockCard.simple("card.objective.secret:my-source/my-name");
+  expect(RightClickScorePublic.isScorablePublic(card)).toBe(false);
+
+  card = MockCard.simple("card.agenda:my-source/my-name");
+  expect(RightClickScorePublic.isScorablePublic(card)).toBe(false);
+
+  card = MockCard.simple("card.agenda:my-source/my-name|scorable-public");
+  expect(RightClickScorePublic.isScorablePublic(card)).toBe(true);
+});
+
 it("init", () => {
   new RightClickScorePublic().init();
 });

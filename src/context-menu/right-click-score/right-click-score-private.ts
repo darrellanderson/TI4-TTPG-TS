@@ -16,20 +16,17 @@ import { PlaceControlTokenOnCard } from "../../lib/control-token-lib/place-contr
  */
 export class RightClickScorePrivate implements IGlobal {
   private readonly _actionName: string = "*Score (private)";
-  private readonly _prefixes: Array<string> = [
-    "card.objective.secret",
 
-    /* These changed to |scorrable-private NSID extra
-    // Can also give full NSIDs.
-    "card.action:base/imperial-rider",
-    "card.agenda:base/holy-planet-of-ixth",
-    "card.agenda:base/shard-of-the-throne",
-    "card.agenda:base/the-crown-of-emphidia",
-    "card.agenda:pok/political-censure",
-    "card.relic:pok/shard-of-the-throne",
-    "card.relic:pok/the-crown-of-emphidia",
-    */
-  ];
+  public static isScorablePrivate(card: Card): boolean {
+    const nsid: string = NSID.get(card);
+    const nsidExtra: string = NSID.getExtra(card);
+    return (
+      nsid.startsWith("card.objective.secret") ||
+      nsidExtra.includes("scorable-private") ||
+      (nsid.startsWith("card.promissory") &&
+        nsid.endsWith("support-for-the-throne"))
+    );
+  }
 
   private readonly _customActionHandler = (
     card: Card,
@@ -51,14 +48,7 @@ export class RightClickScorePrivate implements IGlobal {
   }
 
   _maybeAddContextMenuItem(card: Card): void {
-    const nsid: string = NSID.get(card);
-    const nsidExtra: string = NSID.getExtra(card);
-    if (
-      this._prefixes.some((prefix) => nsid.startsWith(prefix)) ||
-      nsidExtra.includes("scorable-private") ||
-      (nsid.startsWith("card.promissory") &&
-        nsid.endsWith("support-for-the-throne"))
-    ) {
+    if (RightClickScorePrivate.isScorablePrivate(card)) {
       card.removeCustomAction(this._actionName);
       card.addCustomAction(this._actionName);
       card.onCustomAction.remove(this._customActionHandler);

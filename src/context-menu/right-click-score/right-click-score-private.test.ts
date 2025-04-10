@@ -2,6 +2,22 @@ import { MockCard, MockGameObject, MockPlayer, MockSnapPoint } from "ttpg-mock";
 import { RightClickScorePrivate } from "./right-click-score-private";
 import { Card, GameObject, Player, SnapPoint } from "@tabletop-playground/api";
 
+it("static isScorablePrivate", () => {
+  let card: Card;
+
+  card = MockCard.simple("card.objective.secret:my-source/my-name");
+  expect(RightClickScorePrivate.isScorablePrivate(card)).toBe(true);
+
+  card = MockCard.simple("card.agenda:my-source/my-name");
+  expect(RightClickScorePrivate.isScorablePrivate(card)).toBe(false);
+
+  card = MockCard.simple("card.agenda:my-source/my-name|scorable-private");
+  expect(RightClickScorePrivate.isScorablePrivate(card)).toBe(true);
+
+  card = MockCard.simple("card.promissory:my-source/support-for-the-throne");
+  expect(RightClickScorePrivate.isScorablePrivate(card)).toBe(true);
+});
+
 it("init", () => {
   new RightClickScorePrivate().init();
 });

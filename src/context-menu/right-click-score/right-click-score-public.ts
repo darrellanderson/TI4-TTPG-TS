@@ -10,17 +10,15 @@ import { PlaceControlTokenOnCard } from "../../lib/control-token-lib/place-contr
  */
 export class RightClickScorePublic {
   private readonly _actionName: string = "*Score (public)";
-  private readonly _prefixes: Array<string> = [
-    "card.objective.public-1",
-    "card.objective.public-2",
 
-    /* These changed to |scorrable-private NSID extra
-    // Can also give full NSIDs.
-    "card.agenda:base/mutiny",
-    "card.agenda:base/seed-of-an-empire",
-    */
-  ];
-
+  public static isScorablePublic(card: Card): boolean {
+    const nsid: string = NSID.get(card);
+    const nsidExtra: string = NSID.getExtra(card);
+    return (
+      nsid.startsWith("card.objective.public-") ||
+      nsidExtra.includes("scorable-public")
+    );
+  }
   private readonly _customActionHandler = (
     card: Card,
     player: Player,
@@ -41,12 +39,7 @@ export class RightClickScorePublic {
   }
 
   _maybeAddContextMenuItem(card: Card): void {
-    const nsid: string = NSID.get(card);
-    const nsidExtra: string = NSID.getExtra(card);
-    if (
-      this._prefixes.some((prefix) => nsid.startsWith(prefix)) ||
-      nsidExtra.includes("scorable-public")
-    ) {
+    if (RightClickScorePublic.isScorablePublic(card)) {
       card.removeCustomAction(this._actionName);
       card.addCustomAction(this._actionName);
       card.onCustomAction.remove(this._customActionHandler);
