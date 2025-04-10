@@ -122,6 +122,13 @@ async function main() {
       continue;
     }
 
+    // Strip off any "|extra" part.
+    const parts: Array<string> = nsid.split("|");
+    const nsidBase: string | undefined = parts[0];
+    if (nsidBase) {
+      nsid = nsidBase;
+    }
+
     console.log(`accepting "${jsonFilename}: ${nsid}"`);
     if (nsidToTemplateId[nsid]) {
       throw new Error(`Duplicate NSID "${nsid}"`);
