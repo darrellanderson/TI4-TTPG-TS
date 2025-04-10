@@ -1,8 +1,16 @@
-import { Card } from "@tabletop-playground/api";
+import { Card, GameObject } from "@tabletop-playground/api";
 import { NSID } from "ttpg-darrell";
-import { MockCard, MockCardDetails, MockSnapPoint } from "ttpg-mock";
+import {
+  MockCard,
+  MockCardDetails,
+  MockCardHolder,
+  MockGameObject,
+  MockSnapPoint,
+} from "ttpg-mock";
 import { UpdatorObjectives } from "./updator-objectives";
 import { UpdatorObjectivesType } from "./updator-objectives-type";
+import { GameData } from "../../game-data/game-data";
+import { GameDataUpdator } from "../../game-data-updator/game-data-updator";
 
 it("constructor", () => {
   new UpdatorObjectives();
@@ -116,5 +124,126 @@ it("_fillObjectivesType", () => {
     "Public Objectives II": ["Achieve Supremacy"],
     Relics: ["The Obsidian"],
     "Secret Objectives": ["Adapt New Strategies"],
+  });
+});
+
+it("_fillObjectivesType (secret made public)", () => {
+  new MockCard({
+    cardDetails: [
+      new MockCardDetails({
+        metadata: "card.objective.secret:base/secret-1",
+        name: "secret-1",
+      }),
+    ],
+    snappedToPoint: new MockSnapPoint({
+      parentObject: MockGameObject.simple("mat:base/objective-1"),
+    }),
+  });
+
+  new MockCard({
+    cardDetails: [
+      new MockCardDetails({
+        metadata: "card.objective.secret:base/secret-2",
+        name: "secret-2",
+      }),
+    ],
+    snappedToPoint: new MockSnapPoint({
+      parentObject: MockGameObject.simple("mat:base/objective-2"),
+    }),
+  });
+
+  new MockCard({
+    cardDetails: [
+      new MockCardDetails({
+        metadata: "card.objective.secret:base/secret-3",
+        name: "secret-3",
+      }),
+    ],
+    snappedToPoint: new MockSnapPoint({
+      parentObject: MockGameObject.simple("mat:base/agenda-laws"),
+    }),
+  });
+
+  const updatorObjectives = new UpdatorObjectives();
+  const cards: Array<Card> = updatorObjectives._getRelevantCards();
+  expect(cards.length).toBe(3);
+
+  const objectivesType: UpdatorObjectivesType =
+    updatorObjectives._fillObjectivesType(cards);
+  expect(objectivesType).toEqual({
+    Agenda: [],
+    Other: [],
+    "Public Objectives I": ["secret-1", "secret-2", "secret-3"],
+    "Public Objectives II": [],
+    Relics: [],
+    "Secret Objectives": [],
+  });
+});
+
+it("update", () => {
+  // Establish seat.
+  new MockCardHolder({
+    templateMetadata: "card-holder:base/player-hand",
+    owningPlayerSlot: 10,
+    position: [-100, 0, 0],
+  });
+  new MockCardHolder({
+    templateMetadata: "card-holder:base/player-hand",
+    owningPlayerSlot: 11,
+    position: [-200, 0, 0],
+  });
+
+  const cardHolder = new MockCardHolder({
+    templateMetadata: "card-holder:base/player-scoring",
+    owningPlayerSlot: 10,
+  });
+
+  // Secret in scoring card holder.
+  new MockCard({
+    cardDetails: [
+      new MockCardDetails({
+        metadata: "card.objective.secret:base/adapt-new-strategies",
+        name: "Adapt New Strategies",
+      }),
+    ],
+    cardHolder,
+  });
+
+  // Public with a control token.
+  new MockCard({
+    cardDetails: [
+      new MockCardDetails({
+        metadata: "card.objective.public-1:pok/amass-wealth",
+        name: "Amass Wealth",
+      }),
+    ],
+    position: [100, 0, 0],
+  });
+  new MockGameObject({
+    templateMetadata: "token.control:base/arborec",
+    owningPlayerSlot: 11,
+    position: [100, 0, 0],
+  });
+
+  const gameData: GameData = GameDataUpdator.createGameData();
+  new UpdatorObjectives().update(gameData);
+
+  expect(gameData).toEqual({
+    objectives: {
+      Agenda: [],
+      Other: [],
+      "Public Objectives I": ["Amass Wealth"],
+      "Public Objectives II": [],
+      Relics: [],
+      "Secret Objectives": ["Adapt New Strategies"],
+    },
+    players: [
+      { objectives: ["Adapt New Strategies"] },
+      { objectives: ["Amass Wealth"] },
+      { objectives: [] },
+      { objectives: [] },
+      { objectives: [] },
+      { objectives: [] },
+    ],
   });
 });

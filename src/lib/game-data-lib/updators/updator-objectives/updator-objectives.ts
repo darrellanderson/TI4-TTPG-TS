@@ -1,12 +1,15 @@
 import {
   Card,
   CardDetails,
+  CardHolder,
   GameObject,
   SnapPoint,
+  StaticObject,
+  Vector,
   world,
 } from "@tabletop-playground/api";
-import { NSID } from "ttpg-darrell";
-import { GameData } from "../../game-data/game-data";
+import { Atop, NSID, PlayerSlot } from "ttpg-darrell";
+import { GameData, PerPlayerGameData } from "../../game-data/game-data";
 import { IGameDataUpdator } from "../../i-game-data-updator/i-game-data-updator";
 import { UpdatorObjectivesType } from "./updator-objectives-type";
 import { RightClickScorePrivate } from "../../../../context-menu/right-click-score/right-click-score-private";
@@ -21,9 +24,56 @@ export class UpdatorObjectives implements IGameDataUpdator {
     gameData.objectives = this._fillObjectivesType(objectiveCards);
 
     // Per-player scored objectives.
+    const playerSlotToCardNames: Map<PlayerSlot, Array<string>> = new Map();
+    for (const objectiveCard of objectiveCards) {
+      const cardDetails: CardDetails = objectiveCard.getCardDetails();
+      const cardName: string = cardDetails.name;
 
-    // If a secret objective is on an "extra" slot on the stage 1/2 mat count it as a public.
-    // TODO XXX
+      // Is card in a player-scoring card holder?
+      const cardHolder: CardHolder | undefined = objectiveCard.getHolder();
+      if (cardHolder) {
+        const holderNsid: string = NSID.get(cardHolder);
+        const owningPlayerSlot: number = cardHolder.getOwningPlayerSlot();
+        if (holderNsid === "card-holder:base/player-scoring") {
+          let cardNames: Array<string> | undefined =
+            playerSlotToCardNames.get(owningPlayerSlot);
+          if (!cardNames) {
+            cardNames = [];
+            playerSlotToCardNames.set(owningPlayerSlot, cardNames);
+          }
+          cardNames.push(cardName);
+        }
+      }
+
+      // Look for control tokens on card.
+      const atop: Atop = new Atop(objectiveCard);
+      for (const controlToken of controlTokens) {
+        const pos: Vector = controlToken.getPosition();
+        if (atop.isAtop(pos)) {
+          const owningPlayerSlot: number = controlToken.getOwningPlayerSlot();
+          let cardNames: Array<string> | undefined =
+            playerSlotToCardNames.get(owningPlayerSlot);
+          if (!cardNames) {
+            cardNames = [];
+            playerSlotToCardNames.set(owningPlayerSlot, cardNames);
+          }
+          cardNames.push(cardName);
+        }
+      }
+    }
+    gameData.players.forEach(
+      (playerData: PerPlayerGameData, seatIndex: number): void => {
+        const playerSlot: number =
+          TI4.playerSeats.getPlayerSlotBySeatIndex(seatIndex);
+        const cardNames: Array<string> | undefined =
+          playerSlotToCardNames.get(playerSlot);
+        if (cardNames) {
+          playerData.objectives = cardNames;
+        } else {
+          playerData.objectives = [];
+        }
+      }
+    );
   }
 
   _getControlTokens(): Array<GameObject> {
@@ -86,7 +136,26 @@ export class UpdatorObjectives implements IGameDataUpdator {
       } else if (nsid.startsWith("card.objective.public-2:")) {
         public2s.push(card);
       } else if (nsid.startsWith("card.objective.secret:")) {
-        secrets.push(card);
+        // If a secret objective is on an "extra" slot on the stage 1/2 mat count it as a public.
+        let consumed: boolean = false;
+        const snapPoint: SnapPoint | undefined = card.getSnappedToPoint();
+        if (snapPoint) {
+          const mat: StaticObject | undefined = snapPoint.getParentObject();
+          if (mat) {
+            const matNsid: string = NSID.get(mat);
+            if (
+              matNsid === "mat:base/objective-1" ||
+              matNsid === "mat:base/objective-2" ||
+              matNsid === "mat:base/agenda-laws"
+            ) {
+              public1s.push(card);
+              consumed = true;
+            }
+          }
+        }
+        if (!consumed) {
+          secrets.push(card);
+        }
       } else if (nsid.startsWith("card.relic:")) {
         relics.push(card);
       } else {
