@@ -91,7 +91,7 @@
         "5": "card.agenda:pok/galactic-crisis-pact",
         "6": "card.agenda:pok/minister-of-antiquities",
         "7": "card.agenda:pok/nexus-sovereignty",
-        "8": "card.agenda:pok/political-censure",
+        "8": "card.agenda:pok/political-censure|scorable-private",
         "9": "card.agenda:pok/rearmament-agreement",
         "10": "card.agenda:pok/representative-government",
         "11": "card.agenda:pok/research-grant-reallocation",

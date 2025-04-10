@@ -19,6 +19,7 @@ export class RightClickScorePrivate implements IGlobal {
   private readonly _prefixes: Array<string> = [
     "card.objective.secret",
 
+    /* These changed to |scorrable-private NSID extra
     // Can also give full NSIDs.
     "card.action:base/imperial-rider",
     "card.agenda:base/holy-planet-of-ixth",
@@ -27,6 +28,7 @@ export class RightClickScorePrivate implements IGlobal {
     "card.agenda:pok/political-censure",
     "card.relic:pok/shard-of-the-throne",
     "card.relic:pok/the-crown-of-emphidia",
+    */
   ];
 
   private readonly _customActionHandler = (
@@ -50,8 +52,10 @@ export class RightClickScorePrivate implements IGlobal {
 
   _maybeAddContextMenuItem(card: Card): void {
     const nsid: string = NSID.get(card);
+    const nsidExtra: string = NSID.getExtra(card);
     if (
       this._prefixes.some((prefix) => nsid.startsWith(prefix)) ||
+      nsidExtra.includes("scorable-private") ||
       (nsid.startsWith("card.promissory") &&
         nsid.endsWith("support-for-the-throne"))
     ) {
@@ -67,7 +71,7 @@ export class RightClickScorePrivate implements IGlobal {
 
     // Special case for "classified documents leaks" where a secret objective
     // becomes public.  If the secret is on the agenda/laws mat treat is as
-    // public.
+    // public (or in the "extra" slot on the stage 1/2 mat).
     let isPublic: boolean = false;
     const snappedToPoint: SnapPoint | undefined = card.getSnappedToPoint();
     if (snappedToPoint) {

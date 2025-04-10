@@ -50,7 +50,11 @@ it("validate NSIDs appear in assets/Templates", () => {
       const match: RegExpMatchArray | null = line.match(regex);
       const nsid: string | undefined = match?.[1];
       if (nsid) {
-        templateNsids.add(nsid);
+        const parts: Array<string> = nsid.split("|");
+        const firstPart: string | undefined = parts[0];
+        if (firstPart) {
+          templateNsids.add(firstPart);
+        }
       }
     }
   }
