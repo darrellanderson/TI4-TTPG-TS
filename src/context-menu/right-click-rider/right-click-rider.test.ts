@@ -17,9 +17,11 @@ it("static _getOutcomeNames", () => {
   expect(RightClickRider._getOutcomeNames(agendaState)).toEqual(["foo", "bar"]);
 });
 
-it("static _isRider", () => {
-  expect(RightClickRider._isRider("")).toBe(false);
-  expect(RightClickRider._isRider("rider")).toBe(true);
+it("static isRider", () => {
+  const no: GameObject = MockGameObject.simple("type:source/name");
+  const yes: GameObject = MockGameObject.simple("type:source/name|rider|foo");
+  expect(RightClickRider.isRider(no)).toBe(false);
+  expect(RightClickRider.isRider(yes)).toBe(true);
 });
 
 it("constructor/init", () => {

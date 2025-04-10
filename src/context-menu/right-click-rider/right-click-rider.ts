@@ -25,6 +25,11 @@ export class RightClickRider implements IGlobal {
   private _outcomeNames: Array<string> = [];
   private _outcomeNamesJoined: string = "";
 
+  public static isRider(obj: GameObject): boolean {
+    const nsidExtras: Array<string> = NSID.getExtras(obj);
+    return nsidExtras.includes("rider");
+  }
+
   static _getOutcomeNames(agendaState: AgendaState): Array<string> {
     const outcomeNames: Array<string> = [];
     for (let i: number = 0; i < agendaState.getNumOutcomes(); i++) {
@@ -34,16 +39,6 @@ export class RightClickRider implements IGlobal {
       }
     }
     return outcomeNames;
-  }
-
-  /**
-   * Should this object have rider context menu options?
-   *
-   * @param obj
-   * @returns
-   */
-  static _isRider(nsidExtra: string): boolean {
-    return nsidExtra.includes("rider");
   }
 
   init(): void {
@@ -79,8 +74,7 @@ export class RightClickRider implements IGlobal {
   }
 
   _maybeAddGameObject(obj: GameObject): void {
-    const nsidExtra: string = NSID.getExtra(obj);
-    if (RightClickRider._isRider(nsidExtra)) {
+    if (RightClickRider.isRider(obj)) {
       this._riderObjIds.add(obj.getId());
       obj.onCustomAction.remove(this._onCustomActionHanlder);
       obj.onCustomAction.add(this._onCustomActionHanlder);

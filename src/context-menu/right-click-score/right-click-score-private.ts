@@ -19,10 +19,10 @@ export class RightClickScorePrivate implements IGlobal {
 
   public static isScorablePrivate(card: Card): boolean {
     const nsid: string = NSID.get(card);
-    const nsidExtra: string = NSID.getExtra(card);
+    const nsidExtras: Array<string> = NSID.getExtras(card);
     return (
       nsid.startsWith("card.objective.secret") ||
-      nsidExtra.includes("scorable-private") ||
+      nsidExtras.includes("scorable-private") ||
       (nsid.startsWith("card.promissory") &&
         nsid.endsWith("support-for-the-throne"))
     );

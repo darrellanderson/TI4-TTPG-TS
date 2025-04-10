@@ -13,10 +13,10 @@ export class RightClickScorePublic {
 
   public static isScorablePublic(card: Card): boolean {
     const nsid: string = NSID.get(card);
-    const nsidExtra: string = NSID.getExtra(card);
+    const nsidExtras: Array<string> = NSID.getExtras(card);
     return (
       nsid.startsWith("card.objective.public-") ||
-      nsidExtra.includes("scorable-public")
+      nsidExtras.includes("scorable-public")
     );
   }
   private readonly _customActionHandler = (
