@@ -1,4 +1,4 @@
-import { Card, GameObject } from "@tabletop-playground/api";
+import { Card } from "@tabletop-playground/api";
 import { NSID } from "ttpg-darrell";
 import {
   MockCard,
