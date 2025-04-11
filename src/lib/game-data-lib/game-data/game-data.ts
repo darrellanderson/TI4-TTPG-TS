@@ -8,6 +8,8 @@ export type PerPlayerGameData = {
   color?: string;
   commandTokens?: UpdatorPlayerCommandTokensType;
   custodiansPoints?: number;
+  factionFull?: string; // "The Federation of Sol"
+  factionShort?: string; // "Sol"
   laws?: Array<string>; // card names
   name?: string;
   objectives?: Array<string>; // card names
