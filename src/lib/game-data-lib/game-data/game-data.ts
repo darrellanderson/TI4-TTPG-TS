@@ -7,6 +7,7 @@ export type PerPlayerGameData = {
   active?: boolean;
   color?: string;
   commandTokens?: UpdatorPlayerCommandTokensType;
+  custodiansPoints?: number;
   laws?: Array<string>; // card names
   name?: string;
   objectives?: Array<string>; // card names
