@@ -1,10 +1,12 @@
 import { UpdatorActiveSystemType } from "../updators/updator-active-system/updator-active-system-type";
 import { UpdatorConfigType } from "../updators/updator-config/updator-config-type";
 import { UpdatorObjectivesType } from "../updators/updator-objectives/updator-objectives-type";
+import { UpdatorPlayerCommandTokensType } from "../updators/updator-player-command-tokens/updator-player-command-tokens-type";
 
 export type PerPlayerGameData = {
   active?: boolean;
   color?: string;
+  commandTokens?: UpdatorPlayerCommandTokensType;
   laws?: Array<string>; // card names
   name?: string;
   objectives?: Array<string>; // card names

@@ -9,6 +9,7 @@ import { UpdatorSetupTimestamp } from "../updators/updator-setup-timestamp/updat
 
 import { UpdatorPlayerActive } from "../updators/updator-player-active/updator-player-active";
 import { UpdatorPlayerColor } from "../updators/updator-player-color/updator-player-color";
+import { UpdatorPlayerCommandTokens } from "../updators/updator-player-command-tokens/updator-player-command-tokens";
 import { UpdatorPlayerName } from "../updators/updator-player-name/updator-player-name";
 import { UpdatorPlayerScore } from "../updators/updator-player-score/updator-player-score";
 
@@ -23,6 +24,7 @@ export const GAME_DATA_UPDATORS: Array<IGameDataUpdator> = [
   // Per-player updators.
   new UpdatorPlayerActive(),
   new UpdatorPlayerColor(),
+  new UpdatorPlayerCommandTokens(),
   new UpdatorPlayerName(),
   new UpdatorPlayerScore(),
 ];
