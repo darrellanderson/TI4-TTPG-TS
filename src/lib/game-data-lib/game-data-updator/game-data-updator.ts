@@ -1,4 +1,5 @@
 import { GameWorld } from "@tabletop-playground/api";
+import { ErrorHandler } from "ttpg-darrell";
 import { GameData } from "../game-data/game-data";
 import { IGameDataUpdator } from "../i-game-data-updator/i-game-data-updator";
 
@@ -12,14 +13,7 @@ export class GameDataUpdator {
   private _intervalHandle: NodeJS.Timer | undefined = undefined;
 
   readonly _onInterval = (): void => {
-    if (!this._gameData) {
-      this._gameData = GameDataUpdator.createGameData();
-    }
-    const finishedCycle: boolean = this._processNext();
-    if (finishedCycle && this._gameData) {
-      TI4.events.onGameData.trigger(this._gameData);
-      this._gameData = undefined;
-    }
+    this._processNext();
   };
 
   static createGameData(): GameData {
@@ -42,6 +36,10 @@ export class GameDataUpdator {
    * @returns true if all updators have been processed this cycle
    */
   _processNext(): boolean {
+    if (!this._gameData) {
+      this._gameData = GameDataUpdator.createGameData();
+    }
+
     const updator: IGameDataUpdator | undefined =
       this._updators[this._nextProcessIndex];
     this._nextProcessIndex =
@@ -49,11 +47,19 @@ export class GameDataUpdator {
     if (updator && this._gameData) {
       try {
         updator.update(this._gameData);
-      } catch (_error) {
-        // skip
+      } catch (error) {
+        const stack: string | undefined = new Error(error).stack;
+        if (stack) {
+          ErrorHandler.onError.trigger(stack);
+        }
       }
     }
-    return this._nextProcessIndex === 0;
+    const finishedCycle: boolean = this._nextProcessIndex === 0;
+    if (finishedCycle && this._gameData) {
+      TI4.events.onGameData.trigger(this._gameData);
+      this._gameData = undefined;
+    }
+    return finishedCycle;
   }
 
   startPeriodicUpdates(): this {
