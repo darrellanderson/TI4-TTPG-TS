@@ -5,8 +5,9 @@ import { UpdatorObjectivesType } from "../updators/updator-objectives/updator-ob
 export type PerPlayerGameData = {
   active?: boolean;
   color?: string;
+  laws?: Array<string>; // card names
   name?: string;
-  objectives?: Array<string>;
+  objectives?: Array<string>; // card names
   score?: number;
 };
 

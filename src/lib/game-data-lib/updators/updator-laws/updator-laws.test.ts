@@ -1,6 +1,11 @@
 import { Card } from "@tabletop-playground/api";
-import { CardUtil, Facing } from "ttpg-darrell";
-import { MockCard, MockCardDetails } from "ttpg-mock";
+import { Atop, CardUtil, Facing } from "ttpg-darrell";
+import {
+  MockCard,
+  MockCardDetails,
+  MockCardHolder,
+  MockGameObject,
+} from "ttpg-mock";
 
 import { GameData } from "../../game-data/game-data";
 import { GAME_DATA_UPDATORS } from "../../game-data-updators/game-data-updators";
@@ -15,6 +20,12 @@ it("registered", () => {
 });
 
 it("data", () => {
+  new MockCardHolder({
+    templateMetadata: "card-holder:base/player-hand",
+    owningPlayerSlot: 10,
+  });
+  expect(TI4.playerSeats.getPlayerSlotBySeatIndex(0)).toEqual(10);
+
   const card: Card = new MockCard({
     cardDetails: [
       new MockCardDetails({
@@ -36,7 +47,24 @@ it("data", () => {
     true
   );
 
+  const controlToken = new MockGameObject({
+    templateMetadata: "token.control:base/arborec",
+    owningPlayerSlot: 10,
+  });
+  expect(controlToken.getOwningPlayerSlot()).toEqual(10);
+  expect(new Atop(card).isAtop(controlToken.getPosition())).toBe(true);
+
   const gameData: GameData = GameDataUpdator.createGameData();
   new UpdatorLaws().update(gameData);
-  expect(gameData.laws).toEqual(["Representative Government"]);
+  expect(gameData).toEqual({
+    laws: ["Representative Government"],
+    players: [
+      { laws: ["Representative Government"] },
+      { laws: [] },
+      { laws: [] },
+      { laws: [] },
+      { laws: [] },
+      { laws: [] },
+    ],
+  });
 });
