@@ -21,6 +21,10 @@ export type PerPlayerGameData = {
   planetTotals?: UpdatorPlayerPlanetTotalsType;
   score?: number;
   technologies?: Array<string>; // abbr names
+
+  commodities?: number;
+  tradeGoods?: number;
+  maxCommodities?: number;
 };
 
 /**

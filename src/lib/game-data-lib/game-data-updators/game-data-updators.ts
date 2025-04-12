@@ -17,6 +17,7 @@ import { UpdatorPlayerName } from "../updators/updator-player-name/updator-playe
 import { UpdatorPlayerPlanetTotals } from "../updators/updator-player-planet-totals/updator-player-planet-totals";
 import { UpdatorPlayerScore } from "../updators/updator-player-score/updator-player-score";
 import { UpdatorPlayerTech } from "../updators/updator-player-tech/updator-player-tech";
+import { UpdatorPlayerTradegoods } from "../updators/updator-player-tradegoods/updator-player-tradegoods";
 
 export const GAME_DATA_UPDATORS: Array<IGameDataUpdator> = [
   new UpdatorActiveSystem(),
@@ -37,4 +38,5 @@ export const GAME_DATA_UPDATORS: Array<IGameDataUpdator> = [
   new UpdatorPlayerPlanetTotals(),
   new UpdatorPlayerScore(),
   new UpdatorPlayerTech(),
+  new UpdatorPlayerTradegoods(),
 ];
