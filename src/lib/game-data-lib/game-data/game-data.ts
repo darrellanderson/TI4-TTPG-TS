@@ -4,6 +4,7 @@ import { UpdatorObjectivesType } from "../updators/updator-objectives/updator-ob
 import { UpdatorPlayerCommandTokensType } from "../updators/updator-player-command-tokens/updator-player-command-tokens-type";
 import { UpdatorPlayerLeadersType } from "../updators/updator-player-leaders/updator-player-leaders-type";
 import { UpdatorPlayerHandSummaryType } from "../updators/updator-player-hand-summary/updator-player-hand-summary-type";
+import { UpdatorPlayerPlanetTotalsType } from "../updators/updator-player-planet-totals/updator-player-planet-totals-type";
 
 export type PerPlayerGameData = {
   active?: boolean;
@@ -17,6 +18,7 @@ export type PerPlayerGameData = {
   leaders?: UpdatorPlayerLeadersType;
   name?: string;
   objectives?: Array<string>; // card names
+  planetTotals?: UpdatorPlayerPlanetTotalsType;
   score?: number;
 };
 

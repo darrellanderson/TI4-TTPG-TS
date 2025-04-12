@@ -14,6 +14,7 @@ import { UpdatorPlayerFaction } from "../updators/updator-player-faction/updator
 import { UpdatorPlayerHandSummary } from "../updators/updator-player-hand-summary/updator-player-hand-summary";
 import { UpdatorPlayerLeaders } from "../updators/updator-player-leaders/updator-player-leaders";
 import { UpdatorPlayerName } from "../updators/updator-player-name/updator-player-name";
+import { UpdatorPlayerPlanetTotals } from "../updators/updator-player-planet-totals/updator-player-planet-totals";
 import { UpdatorPlayerScore } from "../updators/updator-player-score/updator-player-score";
 
 export const GAME_DATA_UPDATORS: Array<IGameDataUpdator> = [
@@ -32,5 +33,6 @@ export const GAME_DATA_UPDATORS: Array<IGameDataUpdator> = [
   new UpdatorPlayerHandSummary(),
   new UpdatorPlayerLeaders(),
   new UpdatorPlayerName(),
+  new UpdatorPlayerPlanetTotals(),
   new UpdatorPlayerScore(),
 ];
