@@ -20,6 +20,7 @@ export type PerPlayerGameData = {
   objectives?: Array<string>; // card names
   planetTotals?: UpdatorPlayerPlanetTotalsType;
   score?: number;
+  technologies?: Array<string>; // abbr names
 };
 
 /**
