@@ -2,6 +2,7 @@ import { UpdatorActiveSystemType } from "../updators/updator-active-system/updat
 import { UpdatorConfigType } from "../updators/updator-config/updator-config-type";
 import { UpdatorObjectivesType } from "../updators/updator-objectives/updator-objectives-type";
 import { UpdatorPlayerCommandTokensType } from "../updators/updator-player-command-tokens/updator-player-command-tokens-type";
+import { UpdatorPlayerLeadersType } from "../updators/updator-player-leaders/updator-player-leaders-type";
 import { UpdatorPlayerHandSummaryType } from "../updators/updator-player-hand-summary/updator-player-hand-summary-type";
 
 export type PerPlayerGameData = {
@@ -13,6 +14,7 @@ export type PerPlayerGameData = {
   factionShort?: string; // "Sol"
   handSummary?: UpdatorPlayerHandSummaryType;
   laws?: Array<string>; // card names
+  leaders?: UpdatorPlayerLeadersType;
   name?: string;
   objectives?: Array<string>; // card names
   score?: number;
