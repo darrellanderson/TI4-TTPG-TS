@@ -2,6 +2,7 @@ import { UpdatorActiveSystemType } from "../updators/updator-active-system/updat
 import { UpdatorConfigType } from "../updators/updator-config/updator-config-type";
 import { UpdatorObjectivesType } from "../updators/updator-objectives/updator-objectives-type";
 import { UpdatorPlayerCommandTokensType } from "../updators/updator-player-command-tokens/updator-player-command-tokens-type";
+import { UpdatorPlayerHandSummaryType } from "../updators/updator-player-hand-summary/updator-player-hand-summary-type";
 
 export type PerPlayerGameData = {
   active?: boolean;
@@ -10,6 +11,7 @@ export type PerPlayerGameData = {
   custodiansPoints?: number;
   factionFull?: string; // "The Federation of Sol"
   factionShort?: string; // "Sol"
+  handSummary?: UpdatorPlayerHandSummaryType;
   laws?: Array<string>; // card names
   name?: string;
   objectives?: Array<string>; // card names

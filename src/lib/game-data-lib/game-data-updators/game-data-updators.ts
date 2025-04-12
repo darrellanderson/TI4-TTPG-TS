@@ -11,6 +11,7 @@ import { UpdatorPlayerActive } from "../updators/updator-player-active/updator-p
 import { UpdatorPlayerColor } from "../updators/updator-player-color/updator-player-color";
 import { UpdatorPlayerCommandTokens } from "../updators/updator-player-command-tokens/updator-player-command-tokens";
 import { UpdatorPlayerFaction } from "../updators/updator-player-faction/updator-player-faction";
+import { UpdatorPlayerHandSummary } from "../updators/updator-player-hand-summary/updator-player-hand-summary";
 import { UpdatorPlayerName } from "../updators/updator-player-name/updator-player-name";
 import { UpdatorPlayerScore } from "../updators/updator-player-score/updator-player-score";
 
@@ -27,6 +28,7 @@ export const GAME_DATA_UPDATORS: Array<IGameDataUpdator> = [
   new UpdatorPlayerColor(),
   new UpdatorPlayerCommandTokens(),
   new UpdatorPlayerFaction(),
+  new UpdatorPlayerHandSummary(),
   new UpdatorPlayerName(),
   new UpdatorPlayerScore(),
 ];
