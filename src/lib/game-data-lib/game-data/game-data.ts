@@ -5,6 +5,7 @@ import { UpdatorPlayerCommandTokensType } from "../updators/updator-player-comma
 import { UpdatorPlayerLeadersType } from "../updators/updator-player-leaders/updator-player-leaders-type";
 import { UpdatorPlayerHandSummaryType } from "../updators/updator-player-hand-summary/updator-player-hand-summary-type";
 import { UpdatorPlayerPlanetTotalsType } from "../updators/updator-player-planet-totals/updator-player-planet-totals-type";
+import { UpdatorTimerType } from "../updators/updator-timer/updator-timer-type";
 
 export type PerPlayerGameData = {
   active?: boolean;
@@ -43,4 +44,6 @@ export type GameData = {
   round?: number;
   scoreboard?: number; // game to 10/14 points
   setupTimestamp?: number; // epoch time (seconds)
+  speaker?: string; // player color
+  timer?: UpdatorTimerType;
 };
