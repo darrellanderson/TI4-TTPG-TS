@@ -4,6 +4,7 @@ import { UpdatorActiveSystem } from "../updators/updator-active-system/updator-a
 import { UpdatorConfig } from "../updators/updator-config/updator-config";
 import { UpdatorLaws } from "../updators/updator-laws/updator-laws";
 import { UpdatorMapString } from "../updators/updator-map-string/updator-map-string";
+import { UpdatorRound } from "../updators/updator-round/updator-round";
 import { UpdatorScoreboard } from "../updators/updator-scoreboard/updator-scoreboard";
 import { UpdatorSetupTimestamp } from "../updators/updator-setup-timestamp/updator-setup-timestamp";
 
@@ -18,12 +19,14 @@ import { UpdatorPlayerPlanetTotals } from "../updators/updator-player-planet-tot
 import { UpdatorPlayerScore } from "../updators/updator-player-score/updator-player-score";
 import { UpdatorPlayerTech } from "../updators/updator-player-tech/updator-player-tech";
 import { UpdatorPlayerTradegoods } from "../updators/updator-player-tradegoods/updator-player-tradegoods";
+import { UpdatorPlayerTurnOrder } from "../updators/updator-player-turn-order/updator-player-turn-order";
 
 export const GAME_DATA_UPDATORS: Array<IGameDataUpdator> = [
   new UpdatorActiveSystem(),
   new UpdatorConfig(),
   new UpdatorLaws(),
   new UpdatorMapString(),
+  new UpdatorRound(),
   new UpdatorScoreboard(),
   new UpdatorSetupTimestamp(),
 
@@ -39,4 +42,5 @@ export const GAME_DATA_UPDATORS: Array<IGameDataUpdator> = [
   new UpdatorPlayerScore(),
   new UpdatorPlayerTech(),
   new UpdatorPlayerTradegoods(),
+  new UpdatorPlayerTurnOrder(),
 ];

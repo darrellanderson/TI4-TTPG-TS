@@ -21,6 +21,7 @@ export type PerPlayerGameData = {
   planetTotals?: UpdatorPlayerPlanetTotalsType;
   score?: number;
   technologies?: Array<string>; // abbr names
+  turnOrder?: number; // index in turn order array
 
   commodities?: number;
   tradeGoods?: number;
@@ -39,6 +40,7 @@ export type GameData = {
   laws?: Array<string>; // card names
   mapString?: string;
   objectives?: UpdatorObjectivesType;
+  round?: number;
   scoreboard?: number; // game to 10/14 points
   setupTimestamp?: number; // epoch time (seconds)
 };
