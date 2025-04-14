@@ -46,4 +46,6 @@ export type GameData = {
   setupTimestamp?: number; // epoch time (seconds)
   speaker?: string; // player color
   timer?: UpdatorTimerType;
+  timestamp?: number; // epoch time (seconds)
+  turn?: string; // player color
 };

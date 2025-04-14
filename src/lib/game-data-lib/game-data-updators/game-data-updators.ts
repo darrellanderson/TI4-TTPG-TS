@@ -9,6 +9,8 @@ import { UpdatorScoreboard } from "../updators/updator-scoreboard/updator-scoreb
 import { UpdatorSetupTimestamp } from "../updators/updator-setup-timestamp/updator-setup-timestamp";
 import { UpdatorSpeaker } from "../updators/updator-speaker/updator-speaker";
 import { UpdatorTimer } from "../updators/updator-timer/updator-timer";
+import { UpdatorTimestamp } from "../updators/updator-timestamp/updator-timestamp";
+import { UpdatorTurn } from "../updators/updator-turn/udpator-turn";
 
 import { UpdatorPlayerActive } from "../updators/updator-player-active/updator-player-active";
 import { UpdatorPlayerColor } from "../updators/updator-player-color/updator-player-color";
@@ -33,6 +35,8 @@ export const GAME_DATA_UPDATORS: Array<IGameDataUpdator> = [
   new UpdatorSetupTimestamp(),
   new UpdatorSpeaker(),
   new UpdatorTimer(),
+  new UpdatorTimestamp(),
+  new UpdatorTurn(),
 
   // Per-player updators.
   new UpdatorPlayerActive(),
