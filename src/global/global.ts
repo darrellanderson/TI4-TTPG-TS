@@ -67,6 +67,7 @@ import { SystemRegistry } from "../lib/system-lib/registry/system-registry";
 import { TechRegistry } from "../lib/tech-lib/registry/tech-registry";
 import { ToggleBorders } from "../context-menu/toggle-borders/toggle-borders";
 import { ToggleCombatWindow } from "../context-menu/toggle-combat-window/toggle-combat-window";
+import { ToggleHelp } from "../context-menu/toggle-help/toggle-help";
 import { ToggleMapTool } from "../context-menu/toggle-map-tool/toggle-map-tool";
 import { ToggleStratCards } from "../context-menu/toggle-strat-cards/toggle-strat-cards";
 import { ToggleStreamerTool } from "../context-menu/toggle-streamer-tool/toggle-streamer-tool";
@@ -182,6 +183,7 @@ export function resetGlobalThisTI4(): TI4Class {
     new ShuffleDecks(),
     new ToggleBorders(),
     new ToggleCombatWindow(),
+    new ToggleHelp(),
     new ToggleMapTool(),
     new ToggleStratCards(),
     new ToggleStreamerTool(),

@@ -1,68 +1,91 @@
-import { HorizontalAlignment, refPackageId } from "@tabletop-playground/api";
+import {
+  CheckBox,
+  HorizontalAlignment,
+  Player,
+} from "@tabletop-playground/api";
 import { CONFIG } from "../config/config";
 import { AbstractUI } from "../abstract-ui/abtract-ui";
 import { CheckBoxUI } from "../button-ui/checkbox-ui";
 import { HorizontalUIBuilder } from "../panel/horizontal-ui-builder";
 import { LongRichTextUI } from "../button-ui/long-richtext-ui";
 import { VerticalUIBuilder } from "../panel/vertical-ui-builder";
-import { TwoIconLabel } from "./two-icon-label-ui";
 import { ButtonUI } from "../button-ui/button-ui";
-
-const packageId: string = refPackageId;
 
 export class StartGameUI extends AbstractUI {
   constructor(scale: number) {
     const scaledWidth: number =
       (CONFIG.BUTTON_WIDTH * 2 + CONFIG.SPACING) * scale;
 
-    const windowHeader: LongRichTextUI = new LongRichTextUI(scaledWidth, scale);
-    windowHeader.getRichText().setText("[b]WINDOW CONTROLS:[/b]");
-
-    const growShrinkWindow: TwoIconLabel = new TwoIconLabel(scale)
-      .setIcon1("ui/window/grow.png", packageId)
-      .setIcon2("ui/window/shrink.png", packageId)
-      .setLabel(": [b]Grow[/b] or [b]shrink[/b] the window");
-    const warpWindow: TwoIconLabel = new TwoIconLabel(scale)
-      .setIcon1("ui/1x1-transparent.png", packageId)
-      .setIcon2("ui/window/to-screen.png", packageId)
-      .setLabel(": [b]Swap[/b] between screen / player-area");
-    const collapseExpandWindow: TwoIconLabel = new TwoIconLabel(scale)
-      .setIcon1("ui/window/collapse.png", packageId)
-      .setIcon2("ui/window/expand.png", packageId)
-      .setLabel(": [b]Collapse[/b] or [b]expand[/b] the window");
-    const closeWindow: TwoIconLabel = new TwoIconLabel(scale)
-      .setIcon1("ui/1x1-transparent.png", packageId)
-      .setIcon2("ui/window/close.png", packageId)
-      .setLabel(": [b]Close[/b] (right click table to reopen)");
-
     const gameHeader: LongRichTextUI = new LongRichTextUI(scaledWidth, scale);
     gameHeader.getRichText().setText("[b]GAME CONFIG:[/b]");
 
+    const applySource = (source: string, enabled: boolean): void => {
+      const sources: Array<string> = TI4.config.sources;
+      const index: number = sources.indexOf(source);
+      if (index > -1) {
+        sources.splice(index, 1);
+      }
+      if (enabled) {
+        sources.push(source);
+      }
+      TI4.config.setSources(sources);
+    };
+
     const checkBoxPok: CheckBoxUI = new CheckBoxUI(scale);
-    checkBoxPok.getCheckBox().setText("Prophecy of Kings");
-    checkBoxPok.getCheckBox().setIsChecked(TI4.config.sources.includes("pok"));
+    checkBoxPok
+      .getCheckBox()
+      .setText("Prophecy of Kings")
+      .setIsChecked(TI4.config.sources.includes("pok"))
+      .onCheckStateChanged.add(
+        (_checkBox: CheckBox, _player: Player, isChecked: boolean): void => {
+          applySource("pok", isChecked);
+        }
+      );
 
     const checkBoxBoxShaped: CheckBoxUI = new CheckBoxUI(scale);
-    checkBoxBoxShaped.getCheckBox().setText("Box Shaped");
-    checkBoxBoxShaped.getCheckBox().setEnabled(false);
+    checkBoxBoxShaped
+      .getCheckBox()
+      .setText("Box Shaped")
+      .setEnabled(false)
+      .setIsChecked(TI4.config.sources.includes("box-shaped"))
+      .onCheckStateChanged.add(
+        (_checkBox: CheckBox, _player: Player, isChecked: boolean): void => {
+          applySource("box-shaped", isChecked);
+        }
+      );
 
     const checkBoxCodex1: CheckBoxUI = new CheckBoxUI(scale);
-    checkBoxCodex1.getCheckBox().setText("Codex 1: Ordinian");
     checkBoxCodex1
       .getCheckBox()
-      .setIsChecked(TI4.config.sources.includes("codex.ordinian"));
+      .setText("Codex 1: Ordinian")
+      .setIsChecked(TI4.config.sources.includes("codex.ordinian"))
+      .onCheckStateChanged.add(
+        (_checkBox: CheckBox, _player: Player, isChecked: boolean): void => {
+          applySource("codex.ordinian", isChecked);
+        }
+      );
 
     const checkBoxCodex2: CheckBoxUI = new CheckBoxUI(scale);
-    checkBoxCodex2.getCheckBox().setText("Codex 2: Affinity");
     checkBoxCodex2
       .getCheckBox()
-      .setIsChecked(TI4.config.sources.includes("codex.affinity"));
+      .setText("Codex 2: Affinity")
+      .setIsChecked(TI4.config.sources.includes("codex.affinity"))
+      .onCheckStateChanged.add(
+        (_checkBox: CheckBox, _player: Player, isChecked: boolean): void => {
+          applySource("codex.affinity", isChecked);
+        }
+      );
 
     const checkBoxCodex3: CheckBoxUI = new CheckBoxUI(scale);
-    checkBoxCodex3.getCheckBox().setText("Codex 3: Vigil");
     checkBoxCodex3
       .getCheckBox()
-      .setIsChecked(TI4.config.sources.includes("codex.vigil"));
+      .setText("Codex 3: Vigil")
+      .setIsChecked(TI4.config.sources.includes("codex.vigil"))
+      .onCheckStateChanged.add(
+        (_checkBox: CheckBox, _player: Player, isChecked: boolean): void => {
+          applySource("codex.vigil", isChecked);
+        }
+      );
 
     const left: AbstractUI = new VerticalUIBuilder()
       .setSpacing(CONFIG.SPACING * scale)
@@ -83,16 +106,7 @@ export class StartGameUI extends AbstractUI {
     const ui: AbstractUI = new VerticalUIBuilder()
       .setSpacing(CONFIG.SPACING * scale)
       .setHorizontalAlignment(HorizontalAlignment.Center)
-      .addUIs([
-        windowHeader,
-        growShrinkWindow,
-        warpWindow,
-        collapseExpandWindow,
-        closeWindow,
-        gameHeader,
-        config,
-        startGameButton,
-      ])
+      .addUIs([gameHeader, config, startGameButton])
       .build();
     super(ui.getWidget(), ui.getSize());
   }
