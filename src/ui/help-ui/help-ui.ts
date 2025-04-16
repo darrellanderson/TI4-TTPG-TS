@@ -103,6 +103,15 @@ export class HelpUI extends AbstractUI {
       .setJustification(TextJustification.Left)
       .setText("R: swap fighter/infantry token/plastic; 1/3 TGs");
 
+    const keyCtrlNumberWide: LongRichTextUI = new LongRichTextUI(
+      scaledWidth,
+      scale
+    );
+    keyCtrlNumberWide
+      .getRichText()
+      .setJustification(TextJustification.Left)
+      .setText("Ctrl-numpad#: look at player area for player #");
+
     const left: AbstractUI = new VerticalUIBuilder()
       .setSpacing(CONFIG.SPACING * scale)
       .addUIs([key1, key2, key3, key4, key5])
@@ -127,6 +136,7 @@ export class HelpUI extends AbstractUI {
         numpadHeader,
         numpadKeys,
         keyRWide,
+        keyCtrlNumberWide,
       ])
       .build();
     super(ui.getWidget(), ui.getSize());
