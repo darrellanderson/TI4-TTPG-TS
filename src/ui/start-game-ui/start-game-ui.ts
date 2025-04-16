@@ -1,4 +1,5 @@
 import {
+  Button,
   CheckBox,
   HorizontalAlignment,
   Player,
@@ -14,6 +15,7 @@ import { VerticalUIBuilder } from "../panel/vertical-ui-builder";
 import { ButtonUI } from "../button-ui/button-ui";
 import { LabelUI } from "../button-ui/label-ui";
 import { SliderWithValueUI } from "../button-ui/slider-with-value-ui";
+import { ThrottleClickHandler } from "ttpg-darrell";
 
 export class StartGameUI extends AbstractUI {
   constructor(scale: number) {
@@ -127,7 +129,18 @@ export class StartGameUI extends AbstractUI {
       .build();
 
     const startGameButton: ButtonUI = new ButtonUI(scale);
-    startGameButton.getButton().setText("Start Game");
+    startGameButton
+      .getButton()
+      .setText("Start Game")
+      .onClicked.add(
+        new ThrottleClickHandler<Button>(
+          (_button: Button, _player: Player): void => {
+            TI4.config.setTimestamp(Date.now() / 1000);
+            // TI4.config has the player count, sources, etc.
+            TI4.events.onStartGameRequest.trigger();
+          }
+        ).get()
+      );
 
     const ui: AbstractUI = new VerticalUIBuilder()
       .setSpacing(CONFIG.SPACING * scale)

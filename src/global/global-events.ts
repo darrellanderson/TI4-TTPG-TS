@@ -120,6 +120,13 @@ export class GlobalEvents {
   >();
 
   /**
+   * Called when a player asks to start a game.
+   */
+  public readonly onStartGameRequest = new TriggerableMulticastDelegate<
+    () => void
+  >();
+
+  /**
    * Called when a player plays a strategy card.
    */
   public readonly onStrategyCardPlayed = new TriggerableMulticastDelegate<
