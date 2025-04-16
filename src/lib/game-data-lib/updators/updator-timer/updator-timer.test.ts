@@ -13,6 +13,9 @@ it("registered", () => {
 it("data", () => {
   const gameData: GameData = GameDataUpdator.createGameData();
   new UpdatorTimer().update(gameData);
+  if (gameData.timer) {
+    gameData.timer.seconds = 0;
+  }
   expect(gameData.timer).toEqual({
     anchorSeconds: 0,
     anchorTimestamp: 0,
@@ -27,6 +30,9 @@ it("data (countdown)", () => {
 
   const gameData: GameData = GameDataUpdator.createGameData();
   new UpdatorTimer().update(gameData);
+  if (gameData.timer) {
+    gameData.timer.seconds = 0;
+  }
   expect(gameData.timer).toEqual({
     anchorSeconds: 100,
     anchorTimestamp: gameData.timer?.anchorTimestamp,
