@@ -3,19 +3,22 @@ import {
   CheckBox,
   HorizontalAlignment,
   Player,
+  refPackageId,
   Slider,
   TextJustification,
 } from "@tabletop-playground/api";
+import { ThrottleClickHandler } from "ttpg-darrell";
 import { CONFIG } from "../config/config";
 import { AbstractUI } from "../abstract-ui/abtract-ui";
+import { ButtonUI } from "../button-ui/button-ui";
 import { CheckBoxUI } from "../button-ui/checkbox-ui";
 import { HorizontalUIBuilder } from "../panel/horizontal-ui-builder";
-import { LongRichTextUI } from "../button-ui/long-richtext-ui";
-import { VerticalUIBuilder } from "../panel/vertical-ui-builder";
-import { ButtonUI } from "../button-ui/button-ui";
 import { LabelUI } from "../button-ui/label-ui";
+import { LongRichTextUI } from "../button-ui/long-richtext-ui";
 import { SliderWithValueUI } from "../button-ui/slider-with-value-ui";
-import { ThrottleClickHandler } from "ttpg-darrell";
+import { VerticalUIBuilder } from "../panel/vertical-ui-builder";
+
+const packageId: string = refPackageId;
 
 export class StartGameUI extends AbstractUI {
   constructor(scale: number) {
@@ -23,7 +26,12 @@ export class StartGameUI extends AbstractUI {
       (CONFIG.BUTTON_WIDTH * 2 + CONFIG.SPACING) * scale;
 
     const gameHeader: LongRichTextUI = new LongRichTextUI(scaledWidth, scale);
-    gameHeader.getRichText().setText("[b]GAME CONFIG:[/b]");
+    gameHeader
+      .getRichText()
+      .setFont("ambroise-firmin-bold.otf", packageId)
+      .setFontSize(CONFIG.FONT_SIZE * scale * 2.2)
+      .setBold(true)
+      .setText("TWILIGHT IMPERIUM");
 
     const numPlayersLabel: LabelUI = new LabelUI(scale);
     numPlayersLabel

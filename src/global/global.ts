@@ -62,6 +62,8 @@ import { RightClickScorePublic } from "../context-menu/right-click-score/right-c
 import { RSwapSplitCombine } from "./r-swap-split-combine";
 import { SetupPlayerSlotColors } from "../setup/setup-player-slot-colors/setup-player-slot-colors";
 import { ShuffleDecks } from "./shuffle-decks";
+import { StartGame } from "../lib/start-game-lib/start-game";
+import { StartGameWindow } from "../lib/start-game-lib/start-game-window";
 import { SystemAttachmentRegistry } from "../lib/system-lib/registry/system-attachment-registry";
 import { SystemRegistry } from "../lib/system-lib/registry/system-registry";
 import { TechRegistry } from "../lib/tech-lib/registry/tech-registry";
@@ -181,6 +183,8 @@ export function resetGlobalThisTI4(): TI4Class {
     new RightClickScorePublic(),
     new RSwapSplitCombine(),
     new ShuffleDecks(),
+    new StartGame(),
+    new StartGameWindow(),
     new ToggleBorders(),
     new ToggleCombatWindow(),
     new ToggleHelp(),
