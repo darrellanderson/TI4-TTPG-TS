@@ -47,6 +47,7 @@ import { OnStrategyCardPlayed } from "../event/on-strategy-card-played/on-strate
 import { OnSystemActivated } from "../event/on-system-activated/on-system-activated";
 import { OnTurnStateChanged } from "../event/on-turn-state-changed/on-turn-state-changed";
 import { PlanetAttachmentRegistry } from "../lib/system-lib/registry/planet-attachment-registry";
+import { PlayerActionPhaseTime } from "../lib/player-lib/player-action-phase-time/player-action-phase-time";
 import { PlayerColor } from "../lib/player-lib/player-color/player-color";
 import { PlayerName } from "../lib/player-lib/player-name/player-name";
 import { PlayerSeats } from "../lib/player-lib/player-seats/player-seats";
@@ -122,6 +123,9 @@ export class TI4Class {
   );
   public readonly planetAttachmentRegistry =
     new PlanetAttachmentRegistry().loadDefaultData();
+  public readonly playerActionPhaseTime = new PlayerActionPhaseTime(
+    "@player-action-phase-time/ti4"
+  );
   public readonly playerColor = new PlayerColor("@player-color/ti4");
   public readonly playerName = new PlayerName();
   public readonly playerSeats = new PlayerSeats();

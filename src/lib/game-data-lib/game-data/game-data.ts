@@ -21,6 +21,8 @@ export type PerPlayerGameData = {
   objectives?: Array<string>; // card names
   planetTotals?: UpdatorPlayerPlanetTotalsType;
   score?: number;
+  strategyCards?: Array<string>; // strategy card names
+  strategyCardsFaceDown?: Array<string>; // strategy card names
   technologies?: Array<string>; // abbr names
   turnOrder?: number; // index in turn order array
 
