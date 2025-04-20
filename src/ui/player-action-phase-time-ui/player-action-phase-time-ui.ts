@@ -16,7 +16,7 @@ export class PlayerActionPhaseTimeUI extends AbstractUI {
   private readonly _roundToSeatIndexToTimeText: Array<Array<Text>> = [];
   private intervalHandle: NodeJS.Timeout | undefined = undefined;
 
-  private readonly _onInterval = (): void => {
+  readonly _onInterval = (): void => {
     this.update();
   };
 
@@ -107,42 +107,50 @@ export class PlayerActionPhaseTimeUI extends AbstractUI {
         seatIndex < TI4.config.playerCount;
         seatIndex++
       ) {
-        const seatIndexToTimeText: Array<Text> | undefined =
-          this._roundToSeatIndexToTimeText[round];
-        if (!seatIndexToTimeText) {
-          continue;
-        }
-        const text: Text | undefined = seatIndexToTimeText[seatIndex];
-        if (!text) {
-          continue;
-        }
-        if (round === 0) {
-          // First column, header and player names.
-          if (seatIndex === -1) {
-            text.setText("Action phase time");
-          } else {
-            const playerSlot: number =
-              TI4.playerSeats.getPlayerSlotBySeatIndex(seatIndex);
-            text.setText(TI4.playerName.getBySlot(playerSlot));
-          }
-        } else {
-          if (seatIndex === -1) {
-            // First row, header.
-            text.setText(`Rnd ${round}`);
-          } else {
-            // Player action phase time.
-            const totalSeconds: number = TI4.playerActionPhaseTime.getSeconds(
-              round,
-              seatIndex
-            );
-            const minutes: number = Math.floor(totalSeconds / 60);
-            const seconds: number = totalSeconds % 60;
-            const secondsString: string =
-              seconds < 10 ? `0${seconds}` : `${seconds}`;
-            const textString: string = `${minutes}:${secondsString}`;
-            text.setText(textString);
-          }
-        }
+        this._updateRoundAndSeatIndex(round, seatIndex);
+      }
+    }
+  }
+
+  _formatTime(seconds: number): string {
+    const minutes: number = Math.floor(seconds / 60);
+    const secondsRemainder: number = seconds % 60;
+    const secondsString: string =
+      secondsRemainder < 10 ? `0${secondsRemainder}` : `${secondsRemainder}`;
+    return `${minutes}:${secondsString}`;
+  }
+
+  _updateRoundAndSeatIndex(round: number, seatIndex: number) {
+    const seatIndexToTimeText: Array<Text> | undefined =
+      this._roundToSeatIndexToTimeText[round];
+    if (!seatIndexToTimeText) {
+      return;
+    }
+    const text: Text | undefined = seatIndexToTimeText[seatIndex];
+    if (!text) {
+      return;
+    }
+    if (round === 0) {
+      // First column, header and player names.
+      if (seatIndex === -1) {
+        text.setText("Action phase time");
+      } else {
+        const playerSlot: number =
+          TI4.playerSeats.getPlayerSlotBySeatIndex(seatIndex);
+        text.setText(TI4.playerName.getBySlot(playerSlot));
+      }
+    } else {
+      if (seatIndex === -1) {
+        // First row, header.
+        text.setText(`Rnd ${round}`);
+      } else {
+        // Player action phase time.
+        const totalSeconds: number = TI4.playerActionPhaseTime.getSeconds(
+          round,
+          seatIndex
+        );
+        const textString: string = this._formatTime(totalSeconds);
+        text.setText(textString);
       }
     }
   }
