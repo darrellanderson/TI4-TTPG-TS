@@ -1,6 +1,6 @@
-import { world } from "@tabletop-playground/api";
-import { GameData } from "lib/game-data-lib/game-data/game-data";
+import { GameWorld, world } from "@tabletop-playground/api";
 import { IGlobal, NamespaceId } from "ttpg-darrell";
+import { GameData } from "../../game-data-lib/game-data/game-data";
 
 export class PlayerActionPhaseTime implements IGlobal {
   private readonly _namespaceId: NamespaceId | undefined;
@@ -50,7 +50,7 @@ export class PlayerActionPhaseTime implements IGlobal {
     this._round = gameData.round ?? 0;
   };
 
-  private readonly _onInterval = (): void => {
+  readonly _onInterval = (): void => {
     if (this.isActiveActionPhase()) {
       const activePlayerSlot = TI4.turnOrder.getCurrentTurn();
       const seatIndex: number =
@@ -89,7 +89,13 @@ export class PlayerActionPhaseTime implements IGlobal {
 
   init(): void {
     TI4.events.onGameData.add(this._onGameData);
-    this._intervalHandle = setInterval(this._onInterval, 1000);
+    this._maybeStartInterval(GameWorld.getExecutionReason());
+  }
+
+  _maybeStartInterval(executionReason: string): void {
+    if (executionReason !== "unittest") {
+      this._intervalHandle = setInterval(this._onInterval, 1000);
+    }
   }
 
   destroy(): void {

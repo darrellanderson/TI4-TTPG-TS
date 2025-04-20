@@ -43,3 +43,8 @@ it("data", () => {
     strategyCardsFaceDown: ["Diplomacy"],
   });
 });
+
+it("data, no mat", () => {
+  const gameData: GameData = GameDataUpdator.createGameData();
+  new UpdatorPlayerStrategyCards().update(gameData);
+});

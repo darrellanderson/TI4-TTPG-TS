@@ -1,3 +1,4 @@
+import { CheckBox, Player, TextBox, world } from "@tabletop-playground/api";
 import { Broadcast, PlayerSlot } from "ttpg-darrell";
 import { AbstractUI } from "../abstract-ui/abtract-ui";
 import { CheckBoxUI } from "../button-ui/checkbox-ui";
@@ -5,7 +6,6 @@ import { CONFIG } from "../config/config";
 import { EditableUI } from "../button-ui/editable-ui";
 import { LabelUI } from "../button-ui/label-ui";
 import { VerticalUIBuilder } from "../panel/vertical-ui-builder";
-import { CheckBox, Player, TextBox, world } from "@tabletop-playground/api";
 
 export class StreamerToolUI extends AbstractUI {
   private readonly _ui: AbstractUI;

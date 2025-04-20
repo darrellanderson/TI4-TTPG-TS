@@ -5,6 +5,7 @@ import { PlayerActionPhaseTime } from "./player-action-phase-time";
 
 it("constructor/init/destroy", () => {
   const playerActionPhaseTime = new PlayerActionPhaseTime(undefined);
+  playerActionPhaseTime._maybeStartInterval("definitely-real");
   playerActionPhaseTime.init();
   playerActionPhaseTime.destroy();
 });
@@ -14,8 +15,6 @@ it("event, interval", () => {
     templateMetadata: "card-holder:base/player-hand",
     owningPlayerSlot: 10,
   });
-
-  jest.useFakeTimers();
 
   const timerValue: number = 0;
   const timerDirection: DirectionType = 1;
@@ -39,8 +38,8 @@ it("event, interval", () => {
   expect(playerActionPhaseTime.isActiveActionPhase()).toBe(true);
   expect(playerActionPhaseTime.getSeconds(1, 0)).toBe(0);
 
-  jest.runOnlyPendingTimers();
-  jest.runOnlyPendingTimers(); // again
+  playerActionPhaseTime._onInterval();
+  playerActionPhaseTime._onInterval(); // again
 
   expect(playerActionPhaseTime.isActiveActionPhase()).toBe(true);
   expect(playerActionPhaseTime.getSeconds(1, 0)).toBe(2);
