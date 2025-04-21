@@ -1,13 +1,23 @@
-import { Vector, world } from "@tabletop-playground/api";
+import {
+  GameObject,
+  ObjectType,
+  Vector,
+  world,
+} from "@tabletop-playground/api";
 import { IGlobal } from "ttpg-darrell";
 import { RemoveByNsidOrSource } from "../remove-lib/remove-by-nsid-or-source/remove-by-nsid-or-source";
 import { LayoutAll } from "../../setup/layout/layout-all/layout-all";
 import { scrubAll } from "../../setup/layout/layout-all/scrub-all";
+import { Scoreboard } from "../score-lib/scoreboard/scoreboard";
 
 export class StartGame implements IGlobal {
   private readonly _onStartGameRequest = (): void => {
+    TI4.config.setTimestamp(Date.now() / 1000);
+    TI4.timer.start(0, 1); // count up from zero
+
     this._applyPlayerCount();
     this._doRemove();
+    this._maybeFlipScoreboard();
   };
 
   init(): void {
@@ -35,5 +45,14 @@ export class StartGame implements IGlobal {
     const remove: RemoveByNsidOrSource =
       TI4.removeRegistry.createRemoveFromRegistryAndConfig();
     remove.removeAll();
+  }
+
+  _maybeFlipScoreboard(): void {
+    const scoreboard: GameObject | undefined = new Scoreboard().getScoreboard();
+    if (TI4.config.gamePoints === 14 && scoreboard) {
+      scoreboard.setObjectType(ObjectType.Regular);
+      scoreboard.setRotation([0, 0, 180]);
+      scoreboard.setObjectType(ObjectType.Ground);
+    }
   }
 }

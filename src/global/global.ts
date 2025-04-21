@@ -31,6 +31,7 @@ import { DiplomacySystem } from "../context-menu/system/diplomacy-system/diploma
 import { DisplayPDSAdjacency } from "../context-menu/display-pds-adjacency/display-pds-adjacency";
 import { DraftActivityMaybeResume } from "../lib/draft-lib/draft-activity-start/draft-activity-start";
 import { FactionRegistry } from "../lib/faction-lib/registry/faction-registry";
+import { GameDataExport } from "../lib/game-data-lib/game-data-export/game-data-export";
 import { GameDataUpdator } from "../lib/game-data-lib/game-data-updator/game-data-updator";
 import { GAME_DATA_UPDATORS } from "../lib/game-data-lib/game-data-updators/game-data-updators";
 import { GlobalEvents } from "./global-events";
@@ -39,6 +40,7 @@ import { NumpadKeyAll } from "../lib/numpad-key-lib/numpad-key-all/numpad-key-al
 import { OnAgendaCard } from "../event/on-agenda-card/on-agenda-card";
 import { OnCombatClicked } from "../event/on-combat-clicked/on-combat-clicked";
 import { OnCombatResult } from "../event/on-combat-result/on-combat-result";
+import { OnGameEnd } from "../event/on-game-end/on-game-end";
 import { OnObjectFellThroughTable } from "../event/on-object-fell-through-table/on-object-fell-through-table";
 import { OnPlayerChangeColorRequest } from "../event/on-player-change-color-request/on-player-change-color-request";
 import { OnPlayerChangedColor } from "../event/on-player-changed-color/on-player-changed-color";
@@ -164,12 +166,14 @@ export function resetGlobalThisTI4(): TI4Class {
     new DiceGroupCleanup(),
     new DiplomacySystem(),
     new DisplayPDSAdjacency(),
+    new GameDataExport(),
     new LeaveSeat(),
     new NumpadKeyAll(),
     new OnAgendaCard(),
     new OnCardBecameSingletonOrDeck(),
     new OnCombatClicked(),
     new OnCombatResult(),
+    new OnGameEnd(),
     new OnObjectFellThroughTable().setRelocateTo(new Vector(0, -250, 0)),
     new OnPlayerChangeColorRequest(),
     new OnPlayerChangedColor(),

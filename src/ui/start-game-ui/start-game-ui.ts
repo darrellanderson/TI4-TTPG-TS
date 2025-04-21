@@ -50,6 +50,39 @@ export class StartGameUI extends AbstractUI {
         }
       );
 
+    const is14PointGame: CheckBoxUI = new CheckBoxUI(scale);
+    is14PointGame
+      .getCheckBox()
+      .setText("14 point game")
+      .setIsChecked(TI4.config.gamePoints === 14)
+      .onCheckStateChanged.add(
+        (_checkBox: CheckBox, _player: Player, isChecked: boolean): void => {
+          TI4.config.setGamePoints(isChecked ? 14 : 10);
+        }
+      );
+
+    const sendGameData: CheckBoxUI = new CheckBoxUI(scale);
+    sendGameData
+      .getCheckBox()
+      .setText("Send game data")
+      .setIsChecked(TI4.config.exportGameData)
+      .onCheckStateChanged.add(
+        (_checkBox: CheckBox, _player: Player, isChecked: boolean): void => {
+          TI4.config.setExportGameData(isChecked);
+        }
+      );
+
+    const sendErrors: CheckBoxUI = new CheckBoxUI(scale);
+    sendErrors
+      .getCheckBox()
+      .setText("Send error reports")
+      .setIsChecked(TI4.config.reportErrors)
+      .onCheckStateChanged.add(
+        (_checkBox: CheckBox, _player: Player, isChecked: boolean): void => {
+          TI4.config.setReportErrors(isChecked);
+        }
+      );
+
     const applySource = (source: string, enabled: boolean): void => {
       const sources: Array<string> = TI4.config.sources;
       const index: number = sources.indexOf(source);
@@ -120,12 +153,14 @@ export class StartGameUI extends AbstractUI {
 
     const left: AbstractUI = new VerticalUIBuilder()
       .setSpacing(CONFIG.SPACING * scale)
-      .addUIs([numPlayersLabel, checkBoxPok, checkBoxBoxShaped])
+      .addUIs([numPlayersLabel, is14PointGame, sendGameData, sendErrors])
       .build();
     const right: AbstractUI = new VerticalUIBuilder()
       .setSpacing(CONFIG.SPACING * scale)
       .addUIs([
         numPlayersSlider,
+        checkBoxPok,
+        checkBoxBoxShaped,
         checkBoxCodex1,
         checkBoxCodex2,
         checkBoxCodex3,
@@ -143,8 +178,6 @@ export class StartGameUI extends AbstractUI {
       .onClicked.add(
         new ThrottleClickHandler<Button>(
           (_button: Button, _player: Player): void => {
-            TI4.config.setTimestamp(Date.now() / 1000);
-            TI4.timer.start(0, 1); // count up from zero
             // TI4.config has the player count, sources, etc.
             TI4.events.onStartGameRequest.trigger();
           }

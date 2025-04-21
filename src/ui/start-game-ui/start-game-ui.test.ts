@@ -9,9 +9,12 @@ it("constructor", () => {
 it("clickAll", () => {
   const scale: number = 1;
   const startGameUI = new StartGameUI(scale);
-  try {
-    clickAll(startGameUI.getWidget());
-  } catch (_e) {
-    // full setup requires more state than the mock objects provide
-  }
+
+  // Game start needs more state than mock can set up simply.
+  // Instead, clear the event handler.
+  TI4.events.onStartGameRequest.clear();
+
+  clickAll(startGameUI.getWidget());
+  clickAll(startGameUI.getWidget());
+  TI4.timer.stop();
 });

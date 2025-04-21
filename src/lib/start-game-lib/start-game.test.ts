@@ -1,4 +1,4 @@
-import { MockCardHolder } from "ttpg-mock";
+import { MockCardHolder, MockGameObject } from "ttpg-mock";
 import { StartGame } from "./start-game";
 
 it("constructor/init", () => {
@@ -21,6 +21,7 @@ it("event", () => {
   } catch (_e) {
     // full setup requires more state than the mock objects provide
   }
+  TI4.timer.stop();
 });
 
 it("event (correct player count)", () => {
@@ -39,4 +40,15 @@ it("event (correct player count)", () => {
   TI4.config.setPlayerCount(3);
   new StartGame().init();
   TI4.events.onStartGameRequest.trigger();
+  TI4.timer.stop();
+});
+
+it("event (scoreboard)", () => {
+  MockGameObject.simple("token:base/scoreboard");
+  TI4.config.setPlayerCount(14);
+  new StartGame().init();
+  expect(() => {
+    TI4.events.onStartGameRequest.trigger();
+  }).toThrow();
+  TI4.timer.stop();
 });

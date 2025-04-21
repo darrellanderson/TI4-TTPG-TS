@@ -70,6 +70,11 @@ export class GlobalEvents {
   >();
 
   /**
+   * Triggered when a player scores the final pooint.
+   */
+  public readonly onGameEnd = new TriggerableMulticastDelegate<() => void>();
+
+  /**
    * Called after a player has changed their faction.
    *
    * @param playerSlot The player slot of the player seat that changed.
