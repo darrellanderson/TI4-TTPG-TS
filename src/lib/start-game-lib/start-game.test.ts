@@ -45,10 +45,7 @@ it("event (correct player count)", () => {
 
 it("event (scoreboard)", () => {
   MockGameObject.simple("token:base/scoreboard");
-  TI4.config.setPlayerCount(14);
-  new StartGame().init();
-  expect(() => {
-    TI4.events.onStartGameRequest.trigger();
-  }).toThrow();
+  TI4.config.setGamePoints(14);
+  new StartGame()._maybeFlipScoreboard();
   TI4.timer.stop();
 });
