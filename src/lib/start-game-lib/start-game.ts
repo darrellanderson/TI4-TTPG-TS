@@ -50,8 +50,11 @@ export class StartGame implements IGlobal {
   _maybeFlipScoreboard(): void {
     const scoreboard: GameObject | undefined = new Scoreboard().getScoreboard();
     if (TI4.config.gamePoints === 14 && scoreboard) {
+      const above: Vector = scoreboard.getPosition().add(new Vector(0, 0, 3));
       scoreboard.setObjectType(ObjectType.Regular);
+      scoreboard.setPosition(above);
       scoreboard.setRotation([0, 0, 180]);
+      scoreboard.snapToGround();
       scoreboard.setObjectType(ObjectType.Ground);
     }
   }

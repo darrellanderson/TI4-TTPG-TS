@@ -8,6 +8,7 @@ it("constructor/init", () => {
   } catch (_e) {
     // full setup requires more state than the mock objects provide
   }
+  TI4.timer.stop();
 });
 
 it("constructor/init (already started)", () => {
