@@ -6,6 +6,10 @@ it("constructor/destroy", () => {
     templateMetadata: "card-holder:base/player-hand",
     owningPlayerSlot: 10,
   });
+  new MockCardHolder({
+    templateMetadata: "card-holder:base/player-hand",
+    owningPlayerSlot: 11,
+  });
 
   const scale: number = 1;
   const playerActionPhaseTimeUI: PlayerActionPhaseTimeUI =

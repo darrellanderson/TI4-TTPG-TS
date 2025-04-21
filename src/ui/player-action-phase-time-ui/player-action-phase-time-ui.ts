@@ -1,4 +1,5 @@
 import {
+  Border,
   Color,
   HorizontalBox,
   LayoutBox,
@@ -71,7 +72,16 @@ export class PlayerActionPhaseTimeUI extends AbstractUI {
         CONFIG.SPACING * scale
       );
       const weight: number = round === 0 ? labelWeight : timeWeight;
-      horizontalBox.addChild(verticalBox, weight);
+
+      // Use a dark background on alternating columns.
+      let widget: Widget = verticalBox;
+      if (round % 2 === 1) {
+        const border: Border = new Border()
+          .setColor(CONFIG.DARKER)
+          .setChild(verticalBox);
+        widget = border;
+      }
+      horizontalBox.addChild(widget, weight);
 
       const seatIndexToTimeText: Array<Text> = [];
       this._roundToSeatIndexToTimeText[round] = seatIndexToTimeText;
@@ -91,10 +101,10 @@ export class PlayerActionPhaseTimeUI extends AbstractUI {
           text.setTextColor(color);
         }
         if (round > 0) {
-          text.setJustification(TextJustification.Right);
+          text.setJustification(TextJustification.Center);
         }
         seatIndexToTimeText[seatIndex] = text;
-        verticalBox.addChild(text);
+        verticalBox.addChild(text, 1);
       }
     }
     return horizontalBox;
@@ -133,7 +143,7 @@ export class PlayerActionPhaseTimeUI extends AbstractUI {
     if (round === 0) {
       // First column, header and player names.
       if (seatIndex === -1) {
-        text.setText("Action phase time");
+        text.setText("Action phase time".toUpperCase());
       } else {
         const playerSlot: number =
           TI4.playerSeats.getPlayerSlotBySeatIndex(seatIndex);
@@ -142,7 +152,7 @@ export class PlayerActionPhaseTimeUI extends AbstractUI {
     } else {
       if (seatIndex === -1) {
         // First row, header.
-        text.setText(`Rnd ${round}`);
+        text.setText(`${round}`);
       } else {
         // Player action phase time.
         const totalSeconds: number = TI4.playerActionPhaseTime.getSeconds(

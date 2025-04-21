@@ -144,6 +144,7 @@ export class StartGameUI extends AbstractUI {
         new ThrottleClickHandler<Button>(
           (_button: Button, _player: Player): void => {
             TI4.config.setTimestamp(Date.now() / 1000);
+            TI4.timer.start(0, 1); // count up from zero
             // TI4.config has the player count, sources, etc.
             TI4.events.onStartGameRequest.trigger();
           }
