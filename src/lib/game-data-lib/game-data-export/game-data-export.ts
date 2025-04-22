@@ -1,6 +1,6 @@
 import { IGlobal } from "ttpg-darrell";
 import { GameData } from "../game-data/game-data";
-import { GameWorld } from "@tabletop-playground/api";
+import { GameWorld, world } from "@tabletop-playground/api";
 
 const EXPORT_INTERVAL_MSECS = 15 * 60 * 1000; // 15 minutes
 
@@ -9,7 +9,12 @@ const EXPORT_INTERVAL_MSECS = 15 * 60 * 1000; // 15 minutes
  */
 export class GameDataExport implements IGlobal {
   private readonly _onGameData = (gameData: GameData): void => {
-    if (this._sendNextGameData && TI4.config.exportGameData) {
+    if (
+      this._sendNextGameData &&
+      TI4.config.exportGameData &&
+      TI4.config.timestamp > 0 &&
+      world.getAllPlayers().length > 0
+    ) {
       this._sendNextGameData = false;
       this._send(gameData);
     }

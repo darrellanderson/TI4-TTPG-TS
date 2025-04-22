@@ -1,3 +1,4 @@
+import { MockPlayer, mockWorld } from "ttpg-mock";
 import { GameDataUpdator } from "../game-data-updator/game-data-updator";
 import { GameData } from "../game-data/game-data";
 import { GameDataExport } from "./game-data-export";
@@ -11,6 +12,10 @@ it("constructor/init/destroy", () => {
 it("onGameEnd/onGameData", () => {
   // fetch(url: string, options?: FetchOptions): Promise<FetchResponse>
   jest.spyOn(global, "fetch").mockImplementation();
+
+  mockWorld._addPlayer(new MockPlayer());
+  mockWorld._addPlayer(new MockPlayer());
+  TI4.config.setTimestamp(1);
 
   const gameDataExport = new GameDataExport();
   gameDataExport.init();
