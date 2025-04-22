@@ -6,8 +6,15 @@ import {
   UIElement,
   UIPresentationStyle,
   Vector,
+  world,
 } from "@tabletop-playground/api";
 import { ColorLib, ColorsType, NSID, ParsedNSID } from "ttpg-darrell";
+
+// There's a TTPG bug where container UI causes problems such as
+// looping animation of objects entering.  It is fixed in dev, but
+// we need to wait for the next release.  In the meantime, use world
+// UI and hope players don't move the containers.
+const PLACE_UI_WORLD: boolean = true;
 
 const SCALE: number = 4;
 
@@ -35,7 +42,7 @@ if (nsid.startsWith("container.token:")) {
 const widget: ImageWidget = new ImageWidget()
   .setImage(iconImage)
   .setImageSize(128, 128)
-  .setTintColor(new Color(1, 1, 1));
+  .setTintColor(new Color(1, 1, 1, 1));
 
 const ui: UIElement = new UIElement();
 ui.position = new Vector(0, 0, -1.7);
@@ -53,12 +60,19 @@ outline.presentationStyle = ui.presentationStyle;
 outline.scale = ui.scale;
 outline.widget = new ImageWidget()
   .setImage(outlineImage)
-  .setImageSize(128, 128);
+  .setImageSize(128, 128)
+  .setTintColor(new Color(1, 1, 1, 1));
 
 // Owner not set at creation time, wait a frame.
 const obj: GameObject = refObject;
-obj.addUI(ui);
-obj.addUI(outline);
+if (PLACE_UI_WORLD) {
+  ui.position = obj.localPositionToWorld(ui.position);
+  world.addUI(ui);
+  world.addUI(outline);
+} else {
+  obj.addUI(ui);
+  obj.addUI(outline);
+}
 
 const update = (): void => {
   const owner: number = obj.getOwningPlayerSlot();
