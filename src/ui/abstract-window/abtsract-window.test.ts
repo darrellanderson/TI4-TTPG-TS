@@ -57,3 +57,21 @@ it("constuctor, createWindow (default player slots)", () => {
 
   window.attach().detach();
 });
+
+it("invalidate size", () => {
+  const createAbstractUI: CreateAbstractUIType = (
+    params: CreateAbstractUIParams
+  ): AbstractUI => {
+    return new ButtonUI(params.scale);
+  };
+  const namespaceId = "@test/test";
+  const title: string = "Test Window";
+  const abstractWindow = new AbstractWindow(
+    createAbstractUI,
+    namespaceId,
+    title
+  );
+
+  abstractWindow.getMutableWindowParams().disableClose = true;
+  abstractWindow.invalidateSize();
+});

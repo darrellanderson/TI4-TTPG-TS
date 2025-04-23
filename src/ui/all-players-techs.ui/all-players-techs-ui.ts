@@ -1,4 +1,10 @@
-import { Border, Color, LayoutBox, Widget } from "@tabletop-playground/api";
+import {
+  Border,
+  Color,
+  LayoutBox,
+  Widget,
+  world,
+} from "@tabletop-playground/api";
 import { ColorLib } from "ttpg-darrell";
 import {
   GameData,
@@ -11,6 +17,8 @@ import { HorizontalUIBuilder } from "../panel/horizontal-ui-builder";
 import { VerticalUIBuilder } from "../panel/vertical-ui-builder";
 import { TechColorType } from "../../lib/tech-lib/schema/tech-schema";
 import { Tech } from "../../lib/tech-lib/tech/tech";
+
+const MAX_NAME_LENGTH: number = 20;
 
 export class AllPlayersTechsUI extends AbstractUI {
   static getTechNameToColor(): Map<string, Color> {
@@ -40,33 +48,55 @@ export class AllPlayersTechsUI extends AbstractUI {
     const techColorToColor: Map<string, Color> =
       AllPlayersTechsUI.getTechNameToColor();
 
-    const cols: Array<AbstractUI> = gameData.players.map(
-      (player: PerPlayerGameData): AbstractUI => {
-        const techNames: Array<string> = player.technologies ?? [];
-        const rows: Array<AbstractUI> = techNames.map(
-          (techName: string): AbstractUI => {
-            const techUi: LabelUI = new LabelUI(scale);
-            techUi.getText().setText(techName);
-            const color: Color | undefined = techColorToColor.get(techName);
-            if (color) {
-              techUi.getText().setTextColor(color);
-            }
-            return techUi;
-          }
-        );
+    const cols: Array<AbstractUI> = [];
+    for (
+      let seatIndex: number = 0;
+      seatIndex < TI4.config.playerCount;
+      seatIndex++
+    ) {
+      const player: PerPlayerGameData | undefined = gameData.players[seatIndex];
 
-        // Add header with player name.
-        const playerName: string = player.name ?? "";
-        const playerNameUi: LabelUI = new LabelUI(scale);
-        playerNameUi.getText().setText(playerName);
-        rows.unshift(playerNameUi);
+      const rows: Array<AbstractUI> = [];
 
-        return new VerticalUIBuilder()
-          .setSpacing(-8 * scale)
-          .addUIs(rows)
-          .build();
-      }
-    );
+      // Add header with player name.
+      const playerName: string = player?.name ?? "";
+      const playerNameUi: LabelUI = new LabelUI(scale);
+      playerNameUi.getText().setText(playerName);
+
+      const playerSlot: number =
+        TI4.playerSeats.getPlayerSlotBySeatIndex(seatIndex);
+      const color: Color = world.getSlotColor(playerSlot);
+      playerNameUi.getText().setTextColor(color);
+
+      rows.push(playerNameUi);
+
+      // Add techs.
+      const techNames: Array<string> = player?.technologies ?? [];
+      techNames.forEach((techName: string): void => {
+        const techUi: LabelUI = new LabelUI(scale);
+
+        // Apply color before potentially truncating the name.
+        const playerColor: Color | undefined = techColorToColor.get(techName);
+        if (playerColor) {
+          techUi.getText().setTextColor(playerColor);
+        }
+
+        // Truncate the name if it is too long.
+        if (techName.length > MAX_NAME_LENGTH) {
+          techName = techName.substring(0, MAX_NAME_LENGTH - 3) + "...";
+        }
+        techUi.getText().setText(techName);
+
+        rows.push(techUi);
+      });
+
+      const col: AbstractUI = new VerticalUIBuilder()
+        .setSpacing(0 * scale)
+        .addUIs(rows)
+        .build();
+
+      cols.push(col);
+    }
 
     const abstractUi: AbstractUI = new HorizontalUIBuilder()
       .setSpacing(CONFIG.SPACING * scale)

@@ -25,6 +25,7 @@ export type CreateAbstractUIType = (
  * Not actually an "abstract" class, but deals in AbstractUIs.
  */
 export class AbstractWindow {
+  private readonly _createAbstractUI: CreateAbstractUIType;
   private readonly _namespaceId: NamespaceId | undefined;
   private readonly _windowParams: WindowParams;
   private _addHost: boolean = false;
@@ -59,6 +60,7 @@ export class AbstractWindow {
     namespaceId: NamespaceId | undefined,
     windowTitle: string
   ) {
+    this._createAbstractUI = createAbstractUI;
     this._namespaceId = namespaceId;
 
     const defaultParams: CreateAbstractUIParams = {
@@ -110,6 +112,21 @@ export class AbstractWindow {
         },
         playerSlotToTransform: AbstractWindow.getPlayerSlotToTransform(),
       },
+    };
+  }
+
+  invalidateSize(): void {
+    const defaultParams: CreateAbstractUIParams = {
+      playerSlot: -1,
+      scale: 1,
+    };
+    const defaultUi: AbstractUI = this._createAbstractUI(defaultParams);
+    const defaultSize: UI_SIZE = defaultUi.getSize();
+    defaultUi.destroy();
+
+    this._windowParams.size = {
+      width: defaultSize.w,
+      height: defaultSize.h,
     };
   }
 

@@ -6,7 +6,10 @@ it("constructor", () => {
     players: [
       {
         name: "my-name",
-        technologies: ["Antimass Deflectors"],
+        technologies: [
+          "Antimass Deflectors",
+          "long name will be truncated super long text",
+        ],
       },
     ],
   };
