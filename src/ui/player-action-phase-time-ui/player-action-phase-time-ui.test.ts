@@ -41,12 +41,16 @@ it("formatTime", () => {
   const scale: number = 1;
   const playerActionPhaseTimeUI: PlayerActionPhaseTimeUI =
     new PlayerActionPhaseTimeUI(scale);
-  expect(playerActionPhaseTimeUI._formatTime(0)).toBe("0:00");
-  expect(playerActionPhaseTimeUI._formatTime(1)).toBe("0:01");
-  expect(playerActionPhaseTimeUI._formatTime(59)).toBe("0:59");
-  expect(playerActionPhaseTimeUI._formatTime(60)).toBe("1:00");
-  expect(playerActionPhaseTimeUI._formatTime(61)).toBe("1:01");
-  expect(playerActionPhaseTimeUI._formatTime(119)).toBe("1:59");
-  expect(playerActionPhaseTimeUI._formatTime(120)).toBe("2:00");
+  expect(PlayerActionPhaseTimeUI._formatTime(0)).toBe("0:00");
+  expect(PlayerActionPhaseTimeUI._formatTime(1)).toBe("0:01");
+  expect(PlayerActionPhaseTimeUI._formatTime(59)).toBe("0:59");
+  expect(PlayerActionPhaseTimeUI._formatTime(60)).toBe("1:00");
+  expect(PlayerActionPhaseTimeUI._formatTime(61)).toBe("1:01");
+  expect(PlayerActionPhaseTimeUI._formatTime(119)).toBe("1:59");
+  expect(PlayerActionPhaseTimeUI._formatTime(120)).toBe("2:00");
+  expect(PlayerActionPhaseTimeUI._formatTime(121)).toBe("2:01");
+  expect(PlayerActionPhaseTimeUI._formatTime(3599)).toBe("59:59");
+  expect(PlayerActionPhaseTimeUI._formatTime(3600)).toBe("1:00:00");
+  expect(PlayerActionPhaseTimeUI._formatTime(3601)).toBe("1:00:01");
   playerActionPhaseTimeUI.destroy();
 });

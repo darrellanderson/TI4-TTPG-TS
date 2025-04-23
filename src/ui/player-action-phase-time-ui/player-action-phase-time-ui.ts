@@ -11,7 +11,6 @@ import {
 } from "@tabletop-playground/api";
 import { AbstractUI } from "../abstract-ui/abtract-ui";
 import { CONFIG } from "../config/config";
-import { PlayerSeatType } from "../../lib/player-lib/player-seats/player-seats";
 
 export class PlayerActionPhaseTimeUI extends AbstractUI {
   private readonly _roundToSeatIndexToTimeText: Array<Array<Text>> = [];
@@ -21,6 +20,33 @@ export class PlayerActionPhaseTimeUI extends AbstractUI {
     this.update();
   };
 
+  static _formatTime(secondsTotal: number): string {
+    const hours: number = Math.floor(secondsTotal / 3600);
+    const minutes: number = Math.floor(secondsTotal / 60) % 60;
+    const seconds: number = secondsTotal % 60;
+
+    const hoursString: string = `${hours}`;
+
+    let minutesString: string = `${minutes}`;
+    if (hours > 0 && minutes < 10) {
+      minutesString = `0${minutes}`;
+    }
+
+    let secondsString: string = `${seconds}`;
+    if (seconds < 10) {
+      secondsString = `0${seconds}`;
+    }
+
+    const parts = [];
+    if (hours > 0) {
+      parts.push(hoursString);
+    }
+    parts.push(minutesString);
+    parts.push(secondsString);
+
+    return parts.join(":");
+  }
+
   constructor(scale: number) {
     const numStandardWidths: number = 3;
     const numPlayers: number = TI4.config.playerCount;
@@ -29,9 +55,9 @@ export class PlayerActionPhaseTimeUI extends AbstractUI {
         CONFIG.SPACING * (numStandardWidths - 1)) *
       scale;
     const scaledHeight: number =
-      (CONFIG.BUTTON_HEIGHT * (numPlayers + 1) + CONFIG.SPACING * numPlayers) *
+      (CONFIG.BUTTON_HEIGHT * (numPlayers + 2) + CONFIG.SPACING * numPlayers) *
       scale *
-      0.65; // +1 for header, extra scale b/c tighter than usual ui
+      0.65; // +2 for header/footer, extra scale b/c tighter than usual ui
 
     const box: LayoutBox = new LayoutBox()
       .setOverrideWidth(scaledWidth)
@@ -52,13 +78,6 @@ export class PlayerActionPhaseTimeUI extends AbstractUI {
   }
 
   _createInnerWidget(scale: number): Widget {
-    const playerNames: Array<string> = TI4.playerSeats
-      .getAllSeats()
-      .map((playerSeat: PlayerSeatType): string => {
-        const playerSlot: number = playerSeat.playerSlot;
-        return TI4.playerName.getBySlot(playerSlot);
-      });
-
     const labelWeight: number = 1;
     const timeWeight: number = 0.4;
     const horizontalBox: HorizontalBox = new HorizontalBox().setChildDistance(
@@ -86,8 +105,8 @@ export class PlayerActionPhaseTimeUI extends AbstractUI {
       const seatIndexToTimeText: Array<Text> = [];
       this._roundToSeatIndexToTimeText[round] = seatIndexToTimeText;
       for (
-        let seatIndex: number = -1;
-        seatIndex < playerNames.length;
+        let seatIndex: number = -1; // extra for header
+        seatIndex < TI4.config.playerCount + 1; // extra for TOTAL
         seatIndex++
       ) {
         const playerSlot: number =
@@ -113,21 +132,13 @@ export class PlayerActionPhaseTimeUI extends AbstractUI {
   update() {
     for (let round: number = 0; round <= 6; round++) {
       for (
-        let seatIndex: number = -1;
-        seatIndex < TI4.config.playerCount;
+        let seatIndex: number = -1; // extra for header
+        seatIndex < TI4.config.playerCount + 1; // extra for TOTAL
         seatIndex++
       ) {
         this._updateRoundAndSeatIndex(round, seatIndex);
       }
     }
-  }
-
-  _formatTime(seconds: number): string {
-    const minutes: number = Math.floor(seconds / 60);
-    const secondsRemainder: number = seconds % 60;
-    const secondsString: string =
-      secondsRemainder < 10 ? `0${secondsRemainder}` : `${secondsRemainder}`;
-    return `${minutes}:${secondsString}`;
   }
 
   _updateRoundAndSeatIndex(round: number, seatIndex: number) {
@@ -143,7 +154,9 @@ export class PlayerActionPhaseTimeUI extends AbstractUI {
     if (round === 0) {
       // First column, header and player names.
       if (seatIndex === -1) {
-        text.setText("Action phase time".toUpperCase());
+        text.setText("ROUND");
+      } else if (seatIndex >= TI4.config.playerCount) {
+        text.setText("TOTAL");
       } else {
         const playerSlot: number =
           TI4.playerSeats.getPlayerSlotBySeatIndex(seatIndex);
@@ -153,13 +166,23 @@ export class PlayerActionPhaseTimeUI extends AbstractUI {
       if (seatIndex === -1) {
         // First row, header.
         text.setText(`${round}`);
+      } else if (seatIndex >= TI4.config.playerCount) {
+        // Last row, TOTAL.
+        let totalSeconds: number = 0;
+        for (let i = 0; i < TI4.config.playerCount; i++) {
+          totalSeconds += TI4.playerActionPhaseTime.getSeconds(round, i);
+        }
+        const textString: string =
+          PlayerActionPhaseTimeUI._formatTime(totalSeconds);
+        text.setText(textString);
       } else {
         // Player action phase time.
         const totalSeconds: number = TI4.playerActionPhaseTime.getSeconds(
           round,
           seatIndex
         );
-        const textString: string = this._formatTime(totalSeconds);
+        const textString: string =
+          PlayerActionPhaseTimeUI._formatTime(totalSeconds);
         text.setText(textString);
       }
     }

@@ -8,7 +8,7 @@ import { GameData } from "../../lib/game-data-lib/game-data/game-data";
 import { PlayerActionPhaseTimeUI } from "../../ui/player-action-phase-time-ui/player-action-phase-time-ui";
 import { AbstractUI } from "../../ui/abstract-ui/abtract-ui";
 
-export class TogggleActionPhaseTimes implements IGlobal {
+export class ToggleActionPhaseTimes implements IGlobal {
   private _gameData: GameData = { players: [] };
 
   private readonly _onGameData = (gameData: GameData): void => {

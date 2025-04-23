@@ -70,7 +70,7 @@ import { StartGameWindow } from "../lib/start-game-lib/start-game-window";
 import { SystemAttachmentRegistry } from "../lib/system-lib/registry/system-attachment-registry";
 import { SystemRegistry } from "../lib/system-lib/registry/system-registry";
 import { TechRegistry } from "../lib/tech-lib/registry/tech-registry";
-import { TogggleActionPhaseTimes } from "../context-menu/toggle-action-phase-times/toggle-action-phase-times";
+import { ToggleActionPhaseTimes } from "../context-menu/toggle-action-phase-times/toggle-action-phase-times";
 import { ToggleAllPlayersTech } from "../context-menu/toggle-all-players-tech/toggle-all-players-tech";
 import { ToggleBorders } from "../context-menu/toggle-borders/toggle-borders";
 import { ToggleCombatWindow } from "../context-menu/toggle-combat-window/toggle-combat-window";
@@ -196,7 +196,7 @@ export function resetGlobalThisTI4(): TI4Class {
     new ShuffleDecks(),
     new StartGame(),
     new StartGameWindow(),
-    new TogggleActionPhaseTimes(),
+    new ToggleActionPhaseTimes(),
     new ToggleAllPlayersTech(),
     new ToggleBorders(),
     new ToggleCombatWindow(),

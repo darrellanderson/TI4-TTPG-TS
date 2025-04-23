@@ -1,5 +1,5 @@
-import { TogggleActionPhaseTimes } from "./toggle-action-phase-times";
+import { ToggleActionPhaseTimes } from "./toggle-action-phase-times";
 
 it("consturctor/init", () => {
-  new TogggleActionPhaseTimes().init;
+  new ToggleActionPhaseTimes().init;
 });
