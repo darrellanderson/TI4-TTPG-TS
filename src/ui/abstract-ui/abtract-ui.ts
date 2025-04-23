@@ -16,7 +16,7 @@ export type UI_SIZE = {
  * Needing everything at constructor time is a bit of a pain, but it's the best
  * way to ensure that the UI is immutable.
  */
-export abstract class AbstractUI {
+export class AbstractUI {
   private readonly _widget: Widget;
   private readonly _width: number = 0;
   private readonly _height: number = 0;
