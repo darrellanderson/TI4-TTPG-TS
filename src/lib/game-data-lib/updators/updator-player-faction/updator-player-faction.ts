@@ -1,10 +1,7 @@
-import { Faction } from "lib/faction-lib/faction/faction";
-import {
-  GameData,
-  PerPlayerGameData,
-} from "lib/game-data-lib/game-data/game-data";
-import { IGameDataUpdator } from "lib/game-data-lib/i-game-data-updator/i-game-data-updator";
 import { PlayerSlot } from "ttpg-darrell";
+import { Faction } from "../../../faction-lib/faction/faction";
+import { GameData, PerPlayerGameData } from "../../game-data/game-data";
+import { IGameDataUpdator } from "../../i-game-data-updator/i-game-data-updator";
 
 export class UpdatorPlayerFaction implements IGameDataUpdator {
   update(gameData: GameData): void {

@@ -1,4 +1,4 @@
-import { GameData } from "lib/game-data-lib/game-data/game-data";
+import { GameData } from "../../game-data/game-data";
 import { GAME_DATA_UPDATORS } from "../../game-data-updators/game-data-updators";
 import { UpdatorSetupTimestamp } from "./updator-setup-timestamp";
 import { GameDataUpdator } from "../../game-data-updator/game-data-updator";

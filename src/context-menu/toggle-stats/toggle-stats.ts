@@ -6,7 +6,7 @@ import {
 } from "../../ui/abstract-window/abstract-window";
 import { AbstractUI } from "../../ui/abstract-ui/abtract-ui";
 import { StatsUI } from "../../ui/stats-ui/stats-ui";
-import { GameData } from "lib/game-data-lib/game-data/game-data";
+import { GameData } from "../../lib/game-data-lib/game-data/game-data";
 
 export class ToggleStats implements IGlobal {
   private _lastGameData: GameData = { players: [] };

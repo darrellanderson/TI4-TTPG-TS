@@ -1,8 +1,8 @@
 import { Card, Vector, world } from "@tabletop-playground/api";
+import { CardUtil, Find, NSID, PlayerSlot } from "ttpg-darrell";
 import { GameData, PerPlayerGameData } from "../../game-data/game-data";
 import { IGameDataUpdator } from "../../i-game-data-updator/i-game-data-updator";
-import { CardUtil, Find, NSID, PlayerSlot } from "ttpg-darrell";
-import { Tech } from "lib/tech-lib/tech/tech";
+import { Tech } from "../../../tech-lib/tech/tech";
 
 export class UpdatorPlayerTech implements IGameDataUpdator {
   private readonly _cardUtil: CardUtil = new CardUtil();

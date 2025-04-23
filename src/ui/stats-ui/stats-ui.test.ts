@@ -1,4 +1,4 @@
-import { GameData } from "lib/game-data-lib/game-data/game-data";
+import { GameData } from "../../lib/game-data-lib/game-data/game-data";
 import { StatsUI } from "./stats-ui";
 
 it("constructor/destroy", () => {

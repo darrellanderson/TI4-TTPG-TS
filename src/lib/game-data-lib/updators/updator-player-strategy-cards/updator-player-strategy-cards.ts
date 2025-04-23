@@ -1,10 +1,7 @@
 import { GameObject, Vector, world } from "@tabletop-playground/api";
-import {
-  GameData,
-  PerPlayerGameData,
-} from "lib/game-data-lib/game-data/game-data";
-import { IGameDataUpdator } from "lib/game-data-lib/i-game-data-updator/i-game-data-updator";
 import { Atop, Facing, Find, NSID, PlayerSlot } from "ttpg-darrell";
+import { GameData, PerPlayerGameData } from "../../game-data/game-data";
+import { IGameDataUpdator } from "../../i-game-data-updator/i-game-data-updator";
 
 export class UpdatorPlayerStrategyCards implements IGameDataUpdator {
   private readonly _find: Find = new Find();
