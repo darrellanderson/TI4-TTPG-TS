@@ -74,6 +74,7 @@ import { ToggleBorders } from "../context-menu/toggle-borders/toggle-borders";
 import { ToggleCombatWindow } from "../context-menu/toggle-combat-window/toggle-combat-window";
 import { ToggleHelp } from "../context-menu/toggle-help/toggle-help";
 import { ToggleMapTool } from "../context-menu/toggle-map-tool/toggle-map-tool";
+import { ToggleStats } from "../context-menu/toggle-stats/toggle-stats";
 import { ToggleStratCards } from "../context-menu/toggle-strat-cards/toggle-strat-cards";
 import { ToggleStreamerTool } from "../context-menu/toggle-streamer-tool/toggle-streamer-tool";
 import { ToggleTechChooser } from "../context-menu/toggle-tech-chooser/toggle-tech-chooser";
@@ -197,6 +198,7 @@ export function resetGlobalThisTI4(): TI4Class {
     new ToggleCombatWindow(),
     new ToggleHelp(),
     new ToggleMapTool(),
+    new ToggleStats(),
     new ToggleStratCards(),
     new ToggleStreamerTool(),
     new ToggleTechChooser(),

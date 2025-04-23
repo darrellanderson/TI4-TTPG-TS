@@ -2,6 +2,7 @@ import {
   HorizontalBox,
   LayoutBox,
   Text,
+  TextJustification,
   Widget,
 } from "@tabletop-playground/api";
 import { AbstractUI, UI_SIZE } from "../abstract-ui/abtract-ui";
@@ -24,11 +25,23 @@ class StatsEntry {
   constructor(scale: number) {
     const fontSize: number = CONFIG.FONT_SIZE * scale;
 
-    this._name = new Text().setFontSize(fontSize);
-    this._resources = new Text().setFontSize(fontSize);
-    this._influence = new Text().setFontSize(fontSize);
-    this._tradegoods = new Text().setFontSize(fontSize);
-    this._commandTokens = new Text().setFontSize(fontSize);
+    this._name = new Text()
+      .setFontSize(fontSize)
+      .setJustification(TextJustification.Left);
+    this._resources = new Text()
+      .setFontSize(fontSize)
+      .setJustification(TextJustification.Center);
+    this._influence = new Text()
+      .setFontSize(fontSize)
+      .setJustification(TextJustification.Center);
+
+    this._tradegoods = new Text()
+      .setFontSize(fontSize)
+      .setJustification(TextJustification.Center);
+
+    this._commandTokens = new Text()
+      .setFontSize(fontSize)
+      .setJustification(TextJustification.Center);
 
     const panel: Widget = new HorizontalBox()
       .addChild(this._name, 3)
@@ -36,7 +49,7 @@ class StatsEntry {
       .addChild(this._influence, 2)
       .addChild(this._tradegoods, 2)
       .addChild(this._commandTokens, 3);
-    const size: UI_SIZE = { w: 100 * scale, h: 20 * scale };
+    const size: UI_SIZE = { w: 350 * scale, h: 20 * scale };
     const box: Widget = new LayoutBox()
       .setOverrideWidth(size.w)
       .setOverrideHeight(size.h)
