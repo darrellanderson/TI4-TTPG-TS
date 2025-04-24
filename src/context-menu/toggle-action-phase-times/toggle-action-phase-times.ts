@@ -23,7 +23,7 @@ export class ToggleActionPhaseTimes implements IGlobal {
     };
 
     const namespaceId: NamespaceId | undefined = undefined;
-    const windowTitle: string = "Action Phase Times";
+    const windowTitle: string = "Action Phase Time";
     const abstractWindow: AbstractWindow = new AbstractWindow(
       createAbstractUI,
       namespaceId,
