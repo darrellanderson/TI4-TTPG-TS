@@ -67,6 +67,7 @@ outline.widget = new ImageWidget()
 const obj: GameObject = refObject;
 if (PLACE_UI_WORLD) {
   ui.position = obj.localPositionToWorld(ui.position);
+  outline.position = ui.position;
   world.addUI(ui);
   world.addUI(outline);
 } else {
