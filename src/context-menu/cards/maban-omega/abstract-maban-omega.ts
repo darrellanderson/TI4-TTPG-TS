@@ -5,10 +5,10 @@ import {
   Color,
   GameObject,
   Player,
+  Vector,
   world,
 } from "@tabletop-playground/api";
 import { AbstractRightClickCard, Find, NSID, PlayerSlot } from "ttpg-darrell";
-import { Vector } from "ttpg-mock";
 
 const ACTION_NAME: string = "*Maban Omega";
 
