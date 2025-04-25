@@ -57,11 +57,14 @@ import { RemoveRegistry } from "../lib/remove-lib/registry/remove-registry";
 import { ReportCommandTokenPutGet } from "../lib/command-token-lib/report-command-token-put-get/report-command-token-put-get";
 import { ReportRemaining } from "../context-menu/report-remaining/report-remaining";
 import { RightClickExplore } from "../context-menu/system/explore-system/right-click-explore";
+import { RightClickInfantry2 } from "../context-menu/cards/infantry-2/right-click-infantry-2";
+import { RightClickLetaniWarrior2 } from "../context-menu/cards/infantry-2/right-click-letani-warrior-2";
 import { RightClickPurge } from "../context-menu/right-click-purge/right-click-purge";
 import { RightClickRider } from "../context-menu/right-click-rider/right-click-rider";
 import { RightClickRift } from "../context-menu/right-click-rift/right-click-rift";
 import { RightClickScorePrivate } from "../context-menu/right-click-score/right-click-score-private";
 import { RightClickScorePublic } from "../context-menu/right-click-score/right-click-score-public";
+import { RightClickSpecOps2 } from "../context-menu/cards/infantry-2/right-click-spec-ops-2";
 import { RSwapSplitCombine } from "./r-swap-split-combine";
 import { SetupPlayerSlotColors } from "../setup/setup-player-slot-colors/setup-player-slot-colors";
 import { ShuffleDecks } from "./shuffle-decks";
@@ -187,11 +190,14 @@ export function resetGlobalThisTI4(): TI4Class {
     new ReportCommandTokenPutGet(),
     new ReportRemaining(),
     new RightClickExplore(),
+    new RightClickInfantry2(),
+    new RightClickLetaniWarrior2(),
     new RightClickPurge(),
     new RightClickRider(),
     new RightClickRift(),
     new RightClickScorePrivate(),
     new RightClickScorePublic(),
+    new RightClickSpecOps2(),
     new RSwapSplitCombine(),
     new ShuffleDecks(),
     new StartGame(),
