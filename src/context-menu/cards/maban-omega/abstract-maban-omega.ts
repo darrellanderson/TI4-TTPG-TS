@@ -8,9 +8,15 @@ import {
   Vector,
   world,
 } from "@tabletop-playground/api";
-import { AbstractRightClickCard, Find, NSID, PlayerSlot } from "ttpg-darrell";
+import {
+  AbstractRightClickCard,
+  Broadcast,
+  Find,
+  NSID,
+  PlayerSlot,
+} from "ttpg-darrell";
 
-const ACTION_NAME: string = "*Maban Omega";
+export const MABAN_OMEGA_ACTION_NAME: string = "*Maban Omega";
 
 /**
  * Naalu commander omega "card.leader.commander:codex.vigil/maban.omega"
@@ -27,11 +33,11 @@ export abstract class AbstractMabanOmega extends AbstractRightClickCard {
       player: Player,
       identifier: string
     ): void => {
-      if (identifier === ACTION_NAME) {
-        //
+      if (identifier === MABAN_OMEGA_ACTION_NAME) {
+        this.doMabanOmegaAction(object, player);
       }
     };
-    super(cardNsid, ACTION_NAME, customActionHandler);
+    super(cardNsid, MABAN_OMEGA_ACTION_NAME, customActionHandler);
   }
 
   isCommanderActive(): boolean {
@@ -89,8 +95,8 @@ export abstract class AbstractMabanOmega extends AbstractRightClickCard {
     return promissoryNotes;
   }
 
-  getAgendaDeckTopBottom(): Array<string> {
-    const agendaCardNames: Array<string> = [];
+  getAgendaDeckTopBottom(): { top: string; bottom: string } | undefined {
+    let result: { top: string; bottom: string } | undefined = undefined;
 
     const deckSnapPointTag: string = "deck-agenda";
     const agendaDeck: Card | undefined =
@@ -102,22 +108,58 @@ export abstract class AbstractMabanOmega extends AbstractRightClickCard {
         allCardDetails[allCardDetails.length - 1];
       const bottom: CardDetails | undefined = allCardDetails[0];
       if (top && bottom) {
-        agendaCardNames.push(top.name);
-        agendaCardNames.push(bottom.name);
+        result = {
+          top: top.name,
+          bottom: bottom.name,
+        };
       }
     }
 
-    return agendaCardNames;
+    return result;
   }
 
   doMabanOmegaAction(object: GameObject, player: Player): void {
     const playerName: string = TI4.playerName.getByPlayer(player);
     const color: Color = world.getSlotColor(player.getSlot());
     if (!this.isOwningPlayer(object, player)) {
+      const msg: string = `Maban: You are not the owner of this card.`;
+      Broadcast.chatOne(player, msg, color);
       return;
     }
     if (!this.isCommanderActive()) {
+      const msg: string = `Maban: Commander is not active.`;
+      Broadcast.chatOne(player, msg, color);
       return;
     }
+
+    const msgParts: Array<string> = [];
+
+    const neighboringPlayerSlots: Array<PlayerSlot> =
+      this.getNeighboringPlayerSlots(player);
+    for (const neighboringPlayerSlot of neighboringPlayerSlots) {
+      const neighborName: string = TI4.playerName.getBySlot(
+        neighboringPlayerSlot
+      );
+      const promisssoryNotes: Array<string> = this.getPromissoryNotes(
+        neighboringPlayerSlot
+      );
+      const msg: string = `Maban: ${neighborName} promissory notes: ${promisssoryNotes.join(
+        ", "
+      )}`;
+      msgParts.push(msg);
+    }
+
+    const agendaDeckTopBottom: { top: string; bottom: string } | undefined =
+      this.getAgendaDeckTopBottom();
+    if (agendaDeckTopBottom) {
+      const msg: string = `Maban: Agenda deck top: ${agendaDeckTopBottom.top}, bottom: ${agendaDeckTopBottom.bottom}`;
+      msgParts.push(msg);
+    }
+
+    const globalMsg: string = `${playerName} used Maban Omega`;
+    Broadcast.chatAll(globalMsg, color);
+
+    const msg: string = msgParts.join("\n");
+    Broadcast.chatOne(player, msg, color);
   }
 }
