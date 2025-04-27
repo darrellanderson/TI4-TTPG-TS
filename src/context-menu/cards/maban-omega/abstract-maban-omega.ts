@@ -157,7 +157,7 @@ export abstract class AbstractMabanOmega extends AbstractRightClickCard {
     }
 
     const globalMsg: string = `${playerName} used Maban Omega`;
-    Broadcast.chatAll(globalMsg, color);
+    Broadcast.broadcastAll(globalMsg, color);
 
     const msg: string = msgParts.join("\n");
     Broadcast.chatOne(player, msg, color);

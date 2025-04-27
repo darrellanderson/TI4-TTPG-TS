@@ -61,6 +61,7 @@ import { RightClickInfantry2 } from "../context-menu/cards/infantry-2/right-clic
 import { RightClickLetaniWarrior2 } from "../context-menu/cards/infantry-2/right-click-letani-warrior-2";
 import { RightClickMabanOmega } from "../context-menu/cards/maban-omega/right-click-maban-omega";
 import { RightClickMabanOmegaAlliance } from "../context-menu/cards/maban-omega/right-click-maban-omega-alliance";
+import { RightClickMageonImplants } from "../context-menu/cards/mageon-implants/right-click-mageon-implants";
 import { RightClickPurge } from "../context-menu/right-click-purge/right-click-purge";
 import { RightClickRider } from "../context-menu/right-click-rider/right-click-rider";
 import { RightClickRift } from "../context-menu/right-click-rift/right-click-rift";
@@ -196,6 +197,7 @@ export function resetGlobalThisTI4(): TI4Class {
     new RightClickLetaniWarrior2(),
     new RightClickMabanOmega(),
     new RightClickMabanOmegaAlliance(),
+    new RightClickMageonImplants(),
     new RightClickPurge(),
     new RightClickRider(),
     new RightClickRift(),
