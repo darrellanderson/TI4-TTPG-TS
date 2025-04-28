@@ -56,7 +56,9 @@ import { PlayerSeats } from "../lib/player-lib/player-seats/player-seats";
 import { RemoveRegistry } from "../lib/remove-lib/registry/remove-registry";
 import { ReportCommandTokenPutGet } from "../lib/command-token-lib/report-command-token-put-get/report-command-token-put-get";
 import { ReportRemaining } from "../context-menu/report-remaining/report-remaining";
+import { RightClickAgenda } from "../context-menu/right-click-agenda/right-click-agenda";
 import { RightClickExplore } from "../context-menu/system/explore-system/right-click-explore";
+import { RightClickIihqModernization } from "../context-menu/cards/iihq-modernization/right-click-iihq-modernization";
 import { RightClickInfantry2 } from "../context-menu/cards/infantry-2/right-click-infantry-2";
 import { RightClickLetaniWarrior2 } from "../context-menu/cards/infantry-2/right-click-letani-warrior-2";
 import { RightClickMabanOmega } from "../context-menu/cards/maban-omega/right-click-maban-omega";
@@ -192,7 +194,9 @@ export function resetGlobalThisTI4(): TI4Class {
     new OnTurnStateChanged(),
     new ReportCommandTokenPutGet(),
     new ReportRemaining(),
+    new RightClickAgenda(),
     new RightClickExplore(),
+    new RightClickIihqModernization(),
     new RightClickInfantry2(),
     new RightClickLetaniWarrior2(),
     new RightClickMabanOmega(),
