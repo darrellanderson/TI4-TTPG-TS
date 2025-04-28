@@ -71,6 +71,7 @@ import { RightClickRift } from "../context-menu/right-click-rift/right-click-rif
 import { RightClickScorePrivate } from "../context-menu/right-click-score/right-click-score-private";
 import { RightClickScorePublic } from "../context-menu/right-click-score/right-click-score-public";
 import { RightClickSpecOps2 } from "../context-menu/cards/infantry-2/right-click-spec-ops-2";
+import { RightClickStellarConverter } from "../context-menu/cards/stellar-converter/right-click-stellar-converter";
 import { RSwapSplitCombine } from "./r-swap-split-combine";
 import { SetupPlayerSlotColors } from "../setup/setup-player-slot-colors/setup-player-slot-colors";
 import { ShuffleDecks } from "./shuffle-decks";
@@ -210,6 +211,7 @@ export function resetGlobalThisTI4(): TI4Class {
     new RightClickScorePrivate(),
     new RightClickScorePublic(),
     new RightClickSpecOps2(),
+    new RightClickStellarConverter(),
     new RSwapSplitCombine(),
     new ShuffleDecks(),
     new StartGame(),
