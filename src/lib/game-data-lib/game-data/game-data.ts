@@ -17,10 +17,10 @@ export type PerPlayerGameData = {
   handSummary?: UpdatorPlayerHandSummaryType;
   laws?: Array<string>; // card names
   leaders?: UpdatorPlayerLeadersType;
-  name?: string;
   objectives?: Array<string>; // card names
   planetTotals?: UpdatorPlayerPlanetTotalsType;
   score?: number;
+  steamName?: string;
   strategyCards?: Array<string>; // strategy card names
   strategyCardsFaceDown?: Array<string>; // strategy card names
   technologies?: Array<string>; // abbr names

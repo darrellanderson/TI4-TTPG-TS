@@ -10,7 +10,7 @@ export class UpdatorPlayerName implements IGameDataUpdator {
         const playerSlot: PlayerSlot | undefined =
           TI4.playerSeats.getPlayerSlotBySeatIndex(seatIndex);
         const player: Player | undefined = world.getPlayerBySlot(playerSlot);
-        playerData.name = player ? player.getName() : "";
+        playerData.steamName = player ? player.getName() : "";
       }
     );
   }

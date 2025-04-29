@@ -59,7 +59,7 @@ export class AllPlayersTechsUI extends AbstractUI {
       const rows: Array<AbstractUI> = [];
 
       // Add header with player name.
-      const playerName: string = player?.name ?? "";
+      const playerName: string = player?.steamName ?? "";
       const playerNameUi: LabelUI = new LabelUI(scale);
       playerNameUi.getText().setText(playerName);
 

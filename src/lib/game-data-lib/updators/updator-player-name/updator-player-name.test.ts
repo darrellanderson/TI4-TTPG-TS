@@ -27,6 +27,6 @@ it("data", () => {
 
   const gameData: GameData = GameDataUpdator.createGameData();
   new UpdatorPlayerName().update(gameData);
-  expect(gameData.players[0]?.name).toEqual("my-player-name");
-  expect(gameData.players[1]?.name).toEqual("");
+  expect(gameData.players[0]?.steamName).toEqual("my-player-name");
+  expect(gameData.players[1]?.steamName).toEqual("");
 });

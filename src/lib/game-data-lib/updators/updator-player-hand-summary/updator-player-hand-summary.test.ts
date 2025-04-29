@@ -22,7 +22,7 @@ it("data", () => {
       MockCard.simple("card.action:base/c"),
       MockCard.simple("card.promissory:base/a"),
       MockCard.simple("card.promissory:base/b"),
-      MockCard.simple("card.secret:base/a"),
+      MockCard.simple("card.objective.secret:base/a"),
     ],
   });
 

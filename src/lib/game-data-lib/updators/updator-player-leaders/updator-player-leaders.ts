@@ -64,9 +64,9 @@ export class UpdatorPlayerLeaders implements IGameDataUpdator {
         }
 
         player.leaders = {
-          agent: agentActive,
-          commander: commanderActive,
-          hero: heroActive,
+          agent: agentActive ? "unlocked" : "locked",
+          commander: commanderActive ? "unlocked" : "locked",
+          hero: heroActive ? "unlocked" : "locked",
         };
       }
     );

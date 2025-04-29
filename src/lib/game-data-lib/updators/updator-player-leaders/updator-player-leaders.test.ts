@@ -60,12 +60,22 @@ it("data", () => {
   new UpdatorPlayerLeaders().update(gameData);
   expect(gameData).toEqual({
     players: [
-      { leaders: { agent: false, commander: false, hero: false } },
-      { leaders: { agent: true, commander: true, hero: true } },
-      { leaders: { agent: true, commander: true, hero: true } },
-      { leaders: { agent: true, commander: true, hero: true } },
-      { leaders: { agent: true, commander: true, hero: true } },
-      { leaders: { agent: true, commander: true, hero: true } },
+      { leaders: { agent: "locked", commander: "locked", hero: "locked" } },
+      {
+        leaders: { agent: "unlocked", commander: "unlocked", hero: "unlocked" },
+      },
+      {
+        leaders: { agent: "unlocked", commander: "unlocked", hero: "unlocked" },
+      },
+      {
+        leaders: { agent: "unlocked", commander: "unlocked", hero: "unlocked" },
+      },
+      {
+        leaders: { agent: "unlocked", commander: "unlocked", hero: "unlocked" },
+      },
+      {
+        leaders: { agent: "unlocked", commander: "unlocked", hero: "unlocked" },
+      },
     ],
   });
 });

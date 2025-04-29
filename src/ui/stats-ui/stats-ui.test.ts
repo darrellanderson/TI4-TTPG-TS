@@ -12,7 +12,7 @@ it("update", () => {
   const gameData: GameData = {
     players: [
       {
-        name: "my-name",
+        steamName: "my-name",
         planetTotals: {
           resources: { avail: 1, total: 2 },
           influence: { avail: 3, total: 4 },

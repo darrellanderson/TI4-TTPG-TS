@@ -21,11 +21,11 @@ export class UpdatorPlayerHandSummary implements IGameDataUpdator {
         if (cardHolder) {
           cardHolder.getCards().forEach((card: Card): void => {
             const nsid: string = NSID.get(card);
-            if (nsid.startsWith("card.action")) {
+            if (nsid.startsWith("card.action:")) {
               actionCount++;
             } else if (nsid.startsWith("card.promissory")) {
               promissoryCount++;
-            } else if (nsid.startsWith("card.secret")) {
+            } else if (nsid.startsWith("card.objective.secret:")) {
               secretCount++;
             }
           });

@@ -1,5 +1,5 @@
 export type UpdatorPlayerLeadersType = {
-  agent?: boolean;
-  commander?: boolean;
-  hero?: boolean;
+  agent?: "locked" | "unlocked";
+  commander?: "locked" | "unlocked";
+  hero?: "locked" | "unlocked";
 };

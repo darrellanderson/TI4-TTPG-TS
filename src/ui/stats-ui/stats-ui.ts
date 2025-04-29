@@ -70,7 +70,7 @@ class StatsEntry {
   }
 
   update(player: PerPlayerGameData): void {
-    this._name.setText(player.name ?? "");
+    this._name.setText(player.steamName ?? "");
     this._resources.setText(
       [
         `${player.planetTotals?.resources.avail ?? ""}`,
