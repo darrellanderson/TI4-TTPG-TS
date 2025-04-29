@@ -1,0 +1,119 @@
+{
+  "Type": "Generic",
+  "GUID": "DEC4B068CAF75C411FF07D82DF0B23D3",
+  "Name": "infantry Token",
+  "Metadata": "unit:base/infantry.token",
+  "CollisionType": "Regular",
+  "Friction": 0.7,
+  "Restitution": 0,
+  "Density": 1,
+  "SurfaceType": "Plastic",
+  "Roughness": 1,
+  "Metallic": 0,
+  "PrimaryColor": {
+    "R": 8,
+    "G": 255,
+    "B": 22
+  },
+  "SecondaryColor": {
+    "R": 0,
+    "G": 0,
+    "B": 0
+  },
+  "Flippable": true,
+  "AutoStraighten": false,
+  "ShouldSnap": false,
+  "ScriptName": "",
+  "Blueprint": "",
+  "Models": [
+    {
+      "Model": "icon/unit/infantry-outlined.png",
+      "ShapeAccuracy": 10,
+      "Offset": {
+        "X": 0,
+        "Y": 0,
+        "Z": 0.1
+      },
+      "Scale": {
+        "X": 4,
+        "Y": 4,
+        "Z": 0.2
+      },
+      "Rotation": {
+        "X": 0,
+        "Y": 0,
+        "Z": 135
+      },
+      "Texture": "icon/unit/infantry-outlined.png",
+      "NormalMap": "",
+      "ExtraMap": "icon/unit/infantry-mask.png",
+      "ExtraMap2": "",
+      "IsTransparent": false,
+      "CastShadow": true,
+      "IsTwoSided": false,
+      "UseOverrides": true,
+      "SurfaceType": "Plastic"
+    },
+    {
+      "Model": "icon/unit/infantry-outlined.png",
+      "ShapeAccuracy": 10,
+      "Offset": {
+        "X": 0,
+        "Y": 0,
+        "Z": -0.1
+      },
+      "Scale": {
+        "X": 4,
+        "Y": 4,
+        "Z": 0.2
+      },
+      "Rotation": {
+        "X": 0,
+        "Y": 0,
+        "Z": 135
+      },
+      "Texture": "icon/unit/infantry-sustained.png",
+      "NormalMap": "",
+      "ExtraMap": "icon/unit/infantry-sustained-mask.png",
+      "ExtraMap2": "",
+      "IsTransparent": false,
+      "CastShadow": true,
+      "IsTwoSided": false,
+      "UseOverrides": true,
+      "SurfaceType": "Plastic"
+    }
+  ],
+  "Collision": [
+    {
+      "Model": "icon/unit/infantry-outlined.png",
+      "ShapeAccuracy": 4,
+      "Offset": {
+        "X": 0,
+        "Y": 0,
+        "Z": 0
+      },
+      "Scale": {
+        "X": 4,
+        "Y": 4,
+        "Z": 0.4
+      },
+      "Rotation": {
+        "X": 0,
+        "Y": 0,
+        "Z": 135
+      },
+      "Type": "Convex",
+      "ConvexCollision": true
+    }
+  ],
+  "Lights": [],
+  "SnapPointsGlobal": false,
+  "SnapPoints": [],
+  "ZoomViewDirection": {
+    "X": 0,
+    "Y": 0,
+    "Z": 0
+  },
+  "GroundAccessibility": "Nothing",
+  "Tags": []
+}
