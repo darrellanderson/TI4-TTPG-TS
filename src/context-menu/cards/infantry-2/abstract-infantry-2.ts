@@ -1,6 +1,7 @@
 import {
   Color,
   GameObject,
+  GameWorld,
   Player,
   Vector,
   world,
@@ -86,6 +87,7 @@ export class AbstractInfantry2 extends AbstractRightClickCard {
       });
     }
     const params: DiceGroupParams = {
+      doFakeRoll: GameWorld.getExecutionReason() === "unittest",
       diceParams,
       player,
       position: rollPos,

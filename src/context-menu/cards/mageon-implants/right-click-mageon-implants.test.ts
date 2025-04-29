@@ -11,9 +11,10 @@ import {
   MockCardDetails,
   MockCardHolder,
   MockPlayer,
+  mockWorld,
 } from "ttpg-mock";
 import {
-  MAGEON_IMPLANTS_ACTION_PREFIX,
+  MAGEON_IMPLANTS_ACTION,
   MAGEON_IMPLANTS_NSID,
   RightClickMageonImplants,
 } from "./right-click-mageon-implants";
@@ -21,28 +22,6 @@ import { Find, PlayerSlot } from "ttpg-darrell";
 
 it("constructor/init", () => {
   new RightClickMageonImplants().init();
-});
-
-it("onPlayerChangedColor", () => {
-  new RightClickMageonImplants().init();
-
-  const playerSlot: number = 10;
-  const colorName: string = "red";
-  const colorHex: string = "#ff0000";
-  const clickingPlayer: Player = new MockPlayer();
-  TI4.events.onPlayerChangedColor.trigger(
-    playerSlot,
-    colorName,
-    colorHex,
-    clickingPlayer
-  );
-});
-
-it("_onSingletonCardCreated", () => {
-  new RightClickMageonImplants().init();
-
-  MockCard.simple(MAGEON_IMPLANTS_NSID);
-  process.flushTicks();
 });
 
 it("_onCustomAction", () => {
@@ -70,8 +49,7 @@ it("_onCustomAction", () => {
   expect(object).toBe(card);
 
   const player: Player = new MockPlayer();
-  const actionName: string = MAGEON_IMPLANTS_ACTION_PREFIX + colorName;
-  card._customActionAsPlayer(player, actionName);
+  card._customActionAsPlayer(player, MAGEON_IMPLANTS_ACTION);
 });
 
 it("getActionCardNames", () => {
@@ -127,34 +105,16 @@ it("reportActionCardNames", () => {
   );
   expect(mageonOwnerSlot).toEqual(10);
 
-  const clickingPlayer: Player = new MockPlayer({ slot: 10 });
-  const targetPlayerSlot: PlayerSlot = 11;
+  const clickingPlayerSlot: PlayerSlot = 10;
+  const reportToPlayerSlot: PlayerSlot = 11;
   const actionCardNames: Array<string> = ["a"];
+
+  const reportToPlayer: Player = new MockPlayer({ slot: reportToPlayerSlot });
+  mockWorld._addPlayer(reportToPlayer);
+
   rightClickMageonImplants.reportActionCardNames(
-    card,
-    clickingPlayer,
-    targetPlayerSlot,
-    actionCardNames
-  );
-});
-
-it("reportActionCardNames (not owner))", () => {
-  new MockCardHolder({
-    templateMetadata: "card-holder:base/player-hand",
-    owningPlayerSlot: 10,
-  });
-
-  const rightClickMageonImplants: RightClickMageonImplants =
-    new RightClickMageonImplants();
-
-  const card: Card = MockCard.simple(MAGEON_IMPLANTS_NSID);
-  const clickingPlayer: Player = new MockPlayer({ slot: 11 });
-  const targetPlayerSlot: PlayerSlot = 10;
-  const actionCardNames: Array<string> = ["a"];
-  rightClickMageonImplants.reportActionCardNames(
-    card,
-    clickingPlayer,
-    targetPlayerSlot,
+    clickingPlayerSlot,
+    reportToPlayerSlot,
     actionCardNames
   );
 });

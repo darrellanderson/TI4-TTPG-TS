@@ -22,10 +22,12 @@ it("constructor/init", () => {
 });
 
 it("custom action", () => {
+  new MyInfantry2().init(); // must happen before creating the card
+
   const card: MockCard = MockCard.simple(MY_NSID);
   MockGameObject.simple("unit:base/infantry");
 
-  new MyInfantry2();
+  process.flushTicks();
 
   const player: Player = new MockPlayer();
   card._customActionAsPlayer(player, ACTION_NAME);
@@ -112,17 +114,4 @@ it("_onRollFinished", () => {
     { diceParams, value: 9, hit: true },
   ];
   myInfantry2._onRollFinished(diceResults, player);
-});
-
-it("custom action", () => {
-  jest.useFakeTimers();
-
-  new MyInfantry2().init();
-  const card: MockCard = MockCard.simple(MY_NSID);
-  process.flushTicks();
-
-  const player: Player = new MockPlayer();
-  card._customActionAsPlayer(player, ACTION_NAME);
-
-  jest.clearAllTimers();
 });

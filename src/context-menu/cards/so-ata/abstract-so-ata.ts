@@ -1,11 +1,12 @@
 import { Card, GameObject, Player } from "@tabletop-playground/api";
 import { IGlobal, NSID, OnCardBecameSingletonOrDeck } from "ttpg-darrell";
 
-export const ACTION_REPORT_ACTION_CARDS: string = "*So Ata: Action Cards";
+export const ACTION_REPORT_ACTION_CARDS: string =
+  "*Tell Owning Player My Action Cards";
 export const ACTION_REPORT_PROMISSORY_NOTES: string =
-  "*So Ata: Promissory Notes";
+  "Tell Owning Player My Promissory Notes";
 export const ACTION_REPORT_SECRET_OBJECTIVES: string =
-  "*So Ata: Secret Objectives";
+  "*Tell Owning Player My Secret Objectives";
 
 /**
  * Yssaril commander "card.leader.commander:pok/so-ata"
