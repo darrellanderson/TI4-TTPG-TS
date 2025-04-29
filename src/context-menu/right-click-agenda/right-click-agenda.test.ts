@@ -25,7 +25,8 @@ it("_onSingletonCardMadeDeck", () => {
 });
 
 it("place top", () => {
-  new RightClickAgenda().init();
+  // Use global version.
+  // new RightClickAgenda().init();
 
   const agendaDeck: Card = MockCard.simple("card.agenda:orig:orig");
   new MockGameObject({
@@ -51,7 +52,8 @@ it("place top", () => {
 });
 
 it("place bottom", () => {
-  new RightClickAgenda().init();
+  // Use global version.
+  // new RightClickAgenda().init();
 
   const agendaDeck: Card = MockCard.simple("card.agenda:orig:orig");
   new MockGameObject({
