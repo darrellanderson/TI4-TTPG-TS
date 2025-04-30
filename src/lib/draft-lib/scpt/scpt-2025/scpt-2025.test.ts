@@ -6,3 +6,8 @@ it("constructor, getters", () => {
   const scpt: AbstractScpt = new Scpt2025();
   scpt.getScptDraftParams();
 });
+
+it("_placeFinalsOuterSystemsAndWormholes", () => {
+  const scpt: Scpt2025 = new Scpt2025();
+  scpt._placeFinalsOuterSystemsAndWormholes();
+});
