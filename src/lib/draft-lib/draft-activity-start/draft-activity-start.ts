@@ -139,6 +139,10 @@ export class DraftActivityStart {
         TI4.turnOrder.setTurnOrder(order, direction, first);
       }
 
+      if (params.onStart) {
+        params.onStart();
+      }
+
       this.resume();
     }
 

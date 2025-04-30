@@ -215,6 +215,28 @@ export class Scpt2025 extends AbstractScpt {
   }
 
   getFinal(): DraftActivityStartParams | undefined {
-    return undefined;
+    const slices: Array<string> = [];
+    const labels: Array<string> = [];
+    const factions: Array<string> = [
+      "sol",
+      "xxcha",
+      "jolnar",
+      "keleres-mentak",
+      "creuss",
+      "naalu",
+    ];
+
+    return {
+      namespaceId: DRAFT_NAMESPACE_ID,
+      draft: new Milty(),
+      numSlices: 6,
+      numFactions: 6,
+      config: `${slices.join("|")}&labels=${labels.join("|")}&factions=${factions.join("|")}`,
+      onStart: (): void => {
+        this._placeFinalsOuterSystemsAndWormholes();
+      },
+    };
   }
+
+  _placeFinalsOuterSystemsAndWormholes(): void {}
 }
