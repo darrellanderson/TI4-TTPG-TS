@@ -9,4 +9,7 @@ export type DraftActivityStartParams = {
   numSlices: number;
   numFactions: number;
   config: string;
+
+  // Optional on-start setup.
+  onStart?: () => void;
 };

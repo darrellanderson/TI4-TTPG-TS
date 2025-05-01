@@ -39,7 +39,7 @@ export type GameData = {
 
   activeSystem?: UpdatorActiveSystemType;
   config?: UpdatorConfigType;
-  // hexSummary?: string
+  hexSummary?: string;
   laws?: Array<string>; // card names
   mapString?: string;
   objectives?: UpdatorObjectivesType;

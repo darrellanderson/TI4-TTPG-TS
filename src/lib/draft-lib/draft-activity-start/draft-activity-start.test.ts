@@ -56,6 +56,9 @@ it("static resumeIfInProgress (true)", () => {
     numSlices: 2,
     numFactions: 2,
     config: "",
+    onStart: () => {
+      // Do nothing.
+    },
   };
   const errors: Array<string> = [];
   const draftActivityStart = new DraftActivityStart();

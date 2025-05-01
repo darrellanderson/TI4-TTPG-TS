@@ -1,8 +1,11 @@
+import { GameObject, Rotator, Vector, world } from "@tabletop-playground/api";
+import { Spawn } from "ttpg-darrell";
 import { AbstractScpt } from "../abstract-scpt/abstract-scpt";
 import {
   DRAFT_NAMESPACE_ID,
   DraftActivityStartParams,
 } from "../../draft-activity-start/draft-activity-start-params";
+import { MapStringLoad } from "../../../map-string-lib/map-string/map-string-load";
 import { Milty } from "../../drafts/milty";
 import { Scpt2024 } from "../scpt-2024/scpt-2024";
 import { Scpt2023 } from "../scpt-2023/scpt-2023";
@@ -215,6 +218,73 @@ export class Scpt2025 extends AbstractScpt {
   }
 
   getFinal(): DraftActivityStartParams | undefined {
-    return undefined;
+    const slices: Array<string> = [];
+    const labels: Array<string> = [];
+    const factions: Array<string> = [
+      "sol",
+      "xxcha",
+      "jolnar",
+      "keleres-mentak",
+      "creuss",
+      "naalu",
+    ];
+
+    return {
+      namespaceId: DRAFT_NAMESPACE_ID,
+      draft: new Milty(),
+      numSlices: 6,
+      numFactions: 6,
+      config: `${slices.join("|")}&labels=${labels.join("|")}&factions=${factions.join("|")}`,
+      onStart: (): void => {
+        this._placeFinalsOuterSystemsAndWormholes();
+      },
+    };
+  }
+
+  /**
+   * Place some systems and wormholes away from the main map.
+   */
+  _placeFinalsOuterSystemsAndWormholes(): void {
+    const mapString: string =
+      "{-1} -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 0 -1 -1 0 -1 -1 0 -1 -1 0 -1 -1 0 -1 -1 0 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 65 48 47 66 46 49 69";
+    new MapStringLoad().load(mapString);
+
+    // Spawn wormhole tokens (only gamma on the map for now, must visit to get others).
+    const nsidAndPositions = [
+      {
+        nsid: "token.attachment.system:pok/wormhole-gamma",
+        pos: new Vector(20.375, 13.738, 0),
+      },
+      {
+        nsid: "token.attachment.system:pok/wormhole-gamma",
+        pos: new Vector(2.991, 23.931, 0),
+      },
+      {
+        nsid: "token.attachment.system:base/wormhole-alpha.creuss",
+        pos: new Vector(16.24, 13.354, 0),
+      },
+      {
+        nsid: "token.attachment.system:base/wormhole-alpha.creuss",
+        pos: new Vector(5.706, 21.77, 0),
+      },
+      {
+        nsid: "token.attachment.system:base/wormhole-beta.creuss",
+        pos: new Vector(16.088, 15.474, 0),
+      },
+      {
+        nsid: "token.attachment.system:base/wormhole-beta.creuss",
+        pos: new Vector(3.957, 20.639, 0),
+      },
+    ];
+    const rot = new Rotator(0, 0, 180);
+    // eslint-disable-next-line prefer-const
+    for (let { nsid, pos } of nsidAndPositions) {
+      pos = pos.multiply(2.5399); // recorded positions in wrong units
+      pos.z = world.getTableHeight() + 3;
+      const wormhole: GameObject | undefined = Spawn.spawn(nsid, pos, rot);
+      if (wormhole) {
+        wormhole.snapToGround();
+      }
+    }
   }
 }
