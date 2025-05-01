@@ -43,6 +43,7 @@ export type GameData = {
   laws?: Array<string>; // card names
   mapString?: string;
   objectives?: UpdatorObjectivesType;
+  platform?: string;
   round?: number;
   scoreboard?: number; // game to 10/14 points
   setupTimestamp?: number; // epoch time (seconds)

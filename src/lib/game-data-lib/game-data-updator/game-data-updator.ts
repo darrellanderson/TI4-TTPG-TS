@@ -23,6 +23,7 @@ export class GameDataUpdator {
     for (let i = 0; i < TI4.config.playerCount; i++) {
       gameData.players.push({});
     }
+    gameData.platform = "ttpg";
     return gameData;
   }
 
