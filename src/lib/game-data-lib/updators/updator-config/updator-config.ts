@@ -13,5 +13,6 @@ export class UpdatorConfig implements IGameDataUpdator {
       codex4: false,
     };
     gameData.config = config;
+    gameData.platform = "ttpg";
   }
 }
