@@ -48,6 +48,7 @@ import { OnSliceDraftRequest } from "../event/on-slice-draft-request/on-slice-dr
 import { OnStrategyCardPlayed } from "../event/on-strategy-card-played/on-strategy-card-played";
 import { OnSystemActivated } from "../event/on-system-activated/on-system-activated";
 import { OnTurnStateChanged } from "../event/on-turn-state-changed/on-turn-state-changed";
+import { OnWhisper } from "event/on-whisper/on-whisper";
 import { PlanetAttachmentRegistry } from "../lib/system-lib/registry/planet-attachment-registry";
 import { PlayerActionPhaseTime } from "../lib/player-lib/player-action-phase-time/player-action-phase-time";
 import { PlayerColor } from "../lib/player-lib/player-color/player-color";
@@ -194,6 +195,7 @@ export function resetGlobalThisTI4(): TI4Class {
     new OnStrategyCardPlayed(),
     new OnSystemActivated(),
     new OnTurnStateChanged(),
+    new OnWhisper(),
     new ReportCommandTokenPutGet(),
     new ReportRemaining(),
     new RightClickAgenda(),
