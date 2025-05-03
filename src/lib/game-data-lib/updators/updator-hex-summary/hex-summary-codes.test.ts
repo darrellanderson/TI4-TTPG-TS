@@ -139,6 +139,7 @@ it("attachment (planet)", () => {
     attachment: true,
     code: "z",
     planetIndex: 0,
+    hex: "<0,0,0>",
   });
 });
 
@@ -167,6 +168,7 @@ it("unitEntity (infantry)", () => {
     colorCode: "G",
     count: 1,
     planetIndex: -1,
+    hex: "<0,0,0>",
   });
 });
 
@@ -186,6 +188,7 @@ it("unitEntity (mech)", () => {
     count: 1,
     colorCode: "G",
     planetIndex: -1,
+    hex: "<0,0,0>",
   });
 });
 
@@ -202,6 +205,7 @@ it("tokenEntity", () => {
     colorCode: "G",
     planetIndex: -1,
     token: true,
+    hex: "<0,0,0>",
   });
 });
 

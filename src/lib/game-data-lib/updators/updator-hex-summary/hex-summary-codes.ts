@@ -1,5 +1,5 @@
 import { GameObject, Vector } from "@tabletop-playground/api";
-import { Facing, NSID, ParsedNSID, PlayerSlot } from "ttpg-darrell";
+import { Facing, HexType, NSID, ParsedNSID, PlayerSlot } from "ttpg-darrell";
 import { UnitPlastic } from "../../../unit-lib/unit-plastic/unit-plastic";
 import { System } from "../../../system-lib/system/system";
 import { Planet } from "../../../system-lib/planet/planet";
@@ -18,6 +18,7 @@ export type EntityType = {
   colorCode?: string;
   token?: boolean;
   attachment?: boolean;
+  hex?: HexType;
 };
 
 // Upper case signals color.  No-color entries always first.
@@ -155,9 +156,24 @@ export const ATTACHMENT_NSID_TO_TYPE_AND_CODE: Record<
 };
 
 export class HexSummaryCodes {
+  private readonly _hexToSystem: Map<HexType, System> = new Map();
+
+  constructor() {
+    for (const system of TI4.systemRegistry.getAllSystemsWithObjs()) {
+      const pos: Vector = system.getObj().getPosition();
+      const hex: HexType = TI4.hex.fromPosition(pos);
+      this._hexToSystem.set(hex, system);
+    }
+  }
+
+  getHexToSystem(): Map<HexType, System> {
+    return this._hexToSystem;
+  }
+
   _getPlanetIndex(obj: GameObject): number {
     const pos: Vector = obj.getPosition();
-    const system: System | undefined = TI4.systemRegistry.getByPosition(pos);
+    const hex: HexType = TI4.hex.fromPosition(pos);
+    const system: System | undefined = this._hexToSystem.get(hex);
     if (system) {
       const planet: Planet | undefined = system.getPlanetClosest(pos);
       if (planet) {
@@ -212,11 +228,14 @@ export class HexSummaryCodes {
       if (plastic.getUnit() === "infantry" || plastic.getUnit() === "mech") {
         planetIndex = this._getPlanetIndex(plastic.getObj());
       }
+      const pos: Vector = plastic.getObj().getPosition();
+      const hex: HexType = TI4.hex.fromPosition(pos);
       return {
         code,
         colorCode,
         count,
         planetIndex,
+        hex,
       };
     }
   }
@@ -226,7 +245,9 @@ export class HexSummaryCodes {
     if (code) {
       const colorCode: string | undefined = this._colorCode(obj);
       const planetIndex: number = this._getPlanetIndex(obj);
-      return { code, count: 1, colorCode, planetIndex, token: true };
+      const pos: Vector = obj.getPosition();
+      const hex: HexType = TI4.hex.fromPosition(pos);
+      return { code, count: 1, colorCode, planetIndex, token: true, hex };
     }
   }
 
@@ -244,11 +265,15 @@ export class HexSummaryCodes {
         planetIndex = this._getPlanetIndex(obj);
       }
 
+      const pos: Vector = obj.getPosition();
+      const hex: HexType = TI4.hex.fromPosition(pos);
+
       return {
         code,
         count: 1,
         attachment: true,
         planetIndex,
+        hex,
       };
     }
   }
