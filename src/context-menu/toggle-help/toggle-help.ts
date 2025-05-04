@@ -5,14 +5,14 @@ import {
   CreateAbstractUIType,
 } from "../../ui/abstract-window/abstract-window";
 import { AbstractUI } from "../../ui/abstract-ui/abtract-ui";
-import { HelpUI } from "../../ui/help-ui/help-ui";
+import { HelpWithExtrasUI } from "../../ui/help-ui/help-with-extras-ui";
 
 export class ToggleHelp implements IGlobal {
   init(): void {
     const createAbstractUI: CreateAbstractUIType = (
       params: CreateAbstractUIParams
     ): AbstractUI => {
-      return new HelpUI(params.scale);
+      return new HelpWithExtrasUI(params.scale);
     };
 
     const namespaceId: NamespaceId | undefined = undefined;
