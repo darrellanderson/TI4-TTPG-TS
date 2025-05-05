@@ -8,6 +8,7 @@ import { Faction } from "../../faction-lib/faction/faction";
 const SliceShapeSchema = z.array(z.string()).readonly().default([]);
 
 export const DraftStateSchema = z.object({
+  baseMap: z.string().default(""), // map string for non-slice systems
   sliceShape: SliceShapeSchema,
   sliceShapeOverrides: z.array(SliceShapeSchema.nullable()).default([]),
   slices: z.array(z.array(z.number()).readonly()).readonly().default([]),
@@ -98,6 +99,17 @@ export class DraftState {
     }
 
     return true;
+  }
+
+  setBaseMap(baseMap: string): this {
+    this._data.baseMap = baseMap;
+    this._save();
+    this.onDraftStateChanged.trigger(this);
+    return this;
+  }
+
+  getBaseMap(): string {
+    return this._data.baseMap;
   }
 
   setSliceShape(sliceShape: SliceShape): this {

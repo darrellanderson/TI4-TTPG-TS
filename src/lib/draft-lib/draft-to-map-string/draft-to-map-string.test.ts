@@ -112,3 +112,12 @@ it("static map string", () => {
     "{18} -114 -115 2 -111 -112 -113 -114 -1 -115 -1 1 -1 -111 -1 -112 -1 -113 -1 -114 -1 -1 -115 -1 -1 5 -1 -1 -111 -1 -1 -112 -1 -1 -113"
   );
 });
+
+it("_addBaseMap", () => {
+  const draftToMapString = new DraftToMapString(MILTY_SLICE_SHAPE);
+  const mapString: string = draftToMapString._addBaseMap(
+    "{18} -1 -1 3 4",
+    "{18} 1 2"
+  );
+  expect(mapString).toBe("{18} 1 2 3 4");
+});

@@ -46,6 +46,13 @@ it("constructor, isDraftInProgress, destroy", () => {
   expect(DraftState.isDraftInProgress(namespaceId)).toBeFalsy();
 });
 
+it("base map", () => {
+  const state: DraftState = new DraftState("@test/draft-state");
+  expect(state.getBaseMap()).toEqual("");
+  state.setBaseMap("test");
+  expect(state.getBaseMap()).toEqual("test");
+});
+
 it("slice shape", () => {
   const state: DraftState = new DraftState("@test/draft-state");
   expect(state.getSliceShape(0)).toEqual([]);

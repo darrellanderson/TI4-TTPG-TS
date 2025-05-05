@@ -10,6 +10,11 @@ import { MapUI } from "../../../ui/map-ui/map-ui";
 import { PlayerSeatType } from "../../player-lib/player-seats/player-seats";
 import { SeatUI } from "../../../ui/draft/seat-ui/seat-ui";
 import { SliceShape, SliceTiles } from "../generate-slices/generate-slices";
+import {
+  MapStringEntry,
+  MapStringParser,
+} from "../../map-string-lib/map-string/map-string-parser";
+import { MapStringFormat } from "../../map-string-lib/map-string/map-string-format";
 
 export type MapStringAndHexToPlayerName = {
   mapString: string;
@@ -74,6 +79,13 @@ export class DraftToMapString {
         seatIndexToFaction,
         seatIndexToPlayerName
       );
+
+    // Add base map overrides (systems not laid out by slices).
+    const baseMap: string = draftState.getBaseMap();
+    const oldMap: string = mapStringAndHexToPlayerName.mapString;
+    const newMap: string = draftToMapString._addBaseMap(oldMap, baseMap);
+    mapStringAndHexToPlayerName.mapString = newMap;
+
     return mapStringAndHexToPlayerName;
   }
 
@@ -205,5 +217,17 @@ export class DraftToMapString {
         mapStringEntries[i] = "-1";
       }
     }
+  }
+
+  _addBaseMap(oldMap: string, baseMap: string): string {
+    const parser: MapStringParser = new MapStringParser();
+    const entries: Array<MapStringEntry> = parser.parseOrThrow(oldMap);
+    const baseEntries: Array<MapStringEntry> = parser.parseOrThrow(baseMap);
+    baseEntries.forEach((baseEntry: MapStringEntry, index: number) => {
+      if (baseEntry.tile > 0) {
+        entries[index] = baseEntry;
+      }
+    });
+    return new MapStringFormat().format(entries);
   }
 }
