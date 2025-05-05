@@ -1,6 +1,5 @@
 import { world } from "@tabletop-playground/api";
 import { Direction, IGlobal, NamespaceId, Shuffle, Window } from "ttpg-darrell";
-
 import { AbstractUI } from "../../../ui/abstract-ui/abtract-ui";
 import {
   AbstractWindow,
@@ -51,6 +50,7 @@ export class DraftActivityStart {
     let slices: Array<SliceTiles> | undefined = new ParseSlices(
       sliceSize
     ).parseSlices(config, errors);
+
     if (slices === undefined) {
       slices = new GenerateSlices(generateSlicesParams).generateSlices(
         numSlices
