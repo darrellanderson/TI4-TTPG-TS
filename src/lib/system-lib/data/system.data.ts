@@ -2,7 +2,8 @@ import { SystemSchemaType } from "../schema/system-schema";
 
 export const SOURCE_TO_SYSTEM_DATA: Record<string, Array<SystemSchemaType>> = {
   base: [
-    { tile: 0, isExcludeFromDraft: true },
+    { tile: -2, isExcludeFromDraft: true }, // slice build helper
+    { tile: 0, isExcludeFromDraft: true }, // home system placeholder
     {
       tile: 1,
       isHome: true,
