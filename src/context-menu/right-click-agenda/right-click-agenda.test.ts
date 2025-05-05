@@ -4,7 +4,7 @@ import {
   ACTION_PLACE_TOP,
   RightClickAgenda,
 } from "./right-click-agenda";
-import { Card, Player } from "@tabletop-playground/api";
+import { Card, GameObject, Player } from "@tabletop-playground/api";
 import { NSID } from "ttpg-darrell";
 
 it("constructor/init", () => {
@@ -76,4 +76,62 @@ it("place bottom", () => {
     "card.agenda:my-source/my-name",
     "card.agenda:orig:orig",
   ]);
+});
+
+it("_onStrategyCardPlayed", () => {
+  const strategyCard: GameObject = MockGameObject.simple(
+    "tile.strategy-card:base/politics"
+  );
+  const player: Player = new MockPlayer();
+  TI4.events.onStrategyCardPlayed.trigger(strategyCard, player);
+});
+
+it("_getAgendaDeck", () => {
+  const agendaDeck: Card = new MockCard();
+  new MockGameObject({
+    snapPoints: [
+      new MockSnapPoint({
+        tags: ["deck-agenda"],
+        snappedObject: agendaDeck,
+      }),
+    ],
+  });
+
+  const rightClickAgenda: RightClickAgenda = new RightClickAgenda();
+  const deck: Card | undefined = rightClickAgenda._getAgendaDeck();
+  expect(deck).toEqual(agendaDeck);
+});
+
+it("_clearAgendaDeckDescription", () => {
+  const agendaDeck: Card = new MockCard({ description: "old desc" });
+  new MockGameObject({
+    snapPoints: [
+      new MockSnapPoint({
+        tags: ["deck-agenda"],
+        snappedObject: agendaDeck,
+      }),
+    ],
+  });
+  expect(agendaDeck.getDescription()).toEqual("old desc");
+
+  const rightClickAgenda: RightClickAgenda = new RightClickAgenda();
+  rightClickAgenda._clearAgendaDeckDescription();
+  expect(agendaDeck.getDescription()).toEqual("");
+});
+
+it("_addAgendaDeckDescription", () => {
+  const agendaDeck: Card = new MockCard({ description: "old desc" });
+  new MockGameObject({
+    snapPoints: [
+      new MockSnapPoint({
+        tags: ["deck-agenda"],
+        snappedObject: agendaDeck,
+      }),
+    ],
+  });
+  expect(agendaDeck.getDescription()).toEqual("old desc");
+
+  const rightClickAgenda: RightClickAgenda = new RightClickAgenda();
+  rightClickAgenda._addAgendaDeckDescription("new desc");
+  expect(agendaDeck.getDescription()).toEqual("old desc\nnew desc");
 });

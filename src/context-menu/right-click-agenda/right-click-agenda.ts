@@ -1,4 +1,4 @@
-import { Card, Player } from "@tabletop-playground/api";
+import { Card, GameObject, Player } from "@tabletop-playground/api";
 import { Find, IGlobal, NSID, OnCardBecameSingletonOrDeck } from "ttpg-darrell";
 
 export const ACTION_PLACE_TOP: string = "*Place Agenda Top";
@@ -38,10 +38,49 @@ export class RightClickAgenda implements IGlobal {
   ) => {
     if (identifier === ACTION_PLACE_TOP) {
       this._place(true, object);
+      this._addAgendaDeckDescription(ACTION_PLACE_TOP);
     } else if (identifier === ACTION_PLACE_BOTTOM) {
       this._place(false, object);
+      this._addAgendaDeckDescription(ACTION_PLACE_BOTTOM);
     }
   };
+
+  private readonly _onStrategyCardPlayed = (
+    strategyCard: GameObject,
+    _player: Player
+  ): void => {
+    const nsid: string = NSID.get(strategyCard);
+    if (nsid.startsWith("tile.strategy-card:") && nsid.includes("/politics")) {
+      this._clearAgendaDeckDescription();
+    }
+  };
+
+  _getAgendaDeck(): Card | undefined {
+    const deckSnapPointTag: string = "deck-agenda";
+    const discardSnapPointTag: string = "discard-agenda";
+    const shuffleDiscard: boolean = true;
+    const deck: Card | undefined = this._find.findDeckOrDiscard(
+      deckSnapPointTag,
+      discardSnapPointTag,
+      shuffleDiscard
+    );
+    return deck;
+  }
+
+  _clearAgendaDeckDescription(): void {
+    const deck: Card | undefined = this._getAgendaDeck();
+    if (deck) {
+      deck.setDescription("");
+    }
+  }
+
+  _addAgendaDeckDescription(value: string): void {
+    const deck: Card | undefined = this._getAgendaDeck();
+    if (deck) {
+      const oldDesc: string = deck.getDescription();
+      deck.setDescription(oldDesc + "\n" + value);
+    }
+  }
 
   init(): void {
     OnCardBecameSingletonOrDeck.onSingletonCardCreated.add(
@@ -50,6 +89,7 @@ export class RightClickAgenda implements IGlobal {
     OnCardBecameSingletonOrDeck.onSingletonCardMadeDeck.add(
       this._onSingletonCardMadeDeck
     );
+    TI4.events.onStrategyCardPlayed.add(this._onStrategyCardPlayed);
   }
 
   _place(isTop: boolean, card: Card): void {
