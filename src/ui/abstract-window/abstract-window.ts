@@ -139,6 +139,13 @@ export class AbstractWindow {
     return this._windowParams;
   }
 
+  moveWindowLeftOfTurnOrder(): this {
+    if (this._windowParams.screen) {
+      this._windowParams.screen.pos.u = 0.814;
+    }
+    return this;
+  }
+
   createWindow(playerSlots?: Array<number>): Window {
     if (!playerSlots) {
       playerSlots = TI4.playerSeats

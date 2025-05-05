@@ -1,4 +1,4 @@
-import { IGlobal, NamespaceId, Window } from "ttpg-darrell";
+import { IGlobal, NamespaceId, Window, WindowParams } from "ttpg-darrell";
 import { AbstractUI } from "../../ui/abstract-ui/abtract-ui";
 import {
   AbstractWindow,
@@ -27,8 +27,13 @@ export class StartGameWindow implements IGlobal {
       namespaceId,
       windowTitle
     );
-    abstractWindow.getMutableWindowParams().disableClose = true;
-    abstractWindow.getMutableWindowParams().disableWarpScreenWorld = true;
+
+    // Turn order updates with config changes, pops to top of UIs.
+    abstractWindow.moveWindowLeftOfTurnOrder();
+
+    const windowParams: WindowParams = abstractWindow.getMutableWindowParams();
+    windowParams.disableClose = true;
+    windowParams.disableWarpScreenWorld = true;
 
     // Unlike most windows, set this one up for all player slots.
     const playerSlots: Array<number> = Array.from({ length: 20 }, (_e, i) => i);
