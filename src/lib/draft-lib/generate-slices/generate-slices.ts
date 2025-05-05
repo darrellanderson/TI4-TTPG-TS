@@ -68,6 +68,7 @@ export class SliceInProgress {
 export class GenerateSlices {
   private readonly _params: GenerateSlicesParams;
   private readonly _slicesInProgress: Array<SliceInProgress> = [];
+  private readonly _blacklistSystemTileNumbers: Set<number> = new Set();
 
   constructor(params: GenerateSlicesParams) {
     // Slice shape includes home system as first entry.
@@ -76,6 +77,13 @@ export class GenerateSlices {
     }
 
     this._params = Object.freeze(params);
+  }
+
+  setBlacklistSystemTileNumbers(systemTileNumbers: Array<number>) {
+    this._blacklistSystemTileNumbers.clear();
+    for (const systemTileNumber of systemTileNumbers) {
+      this._blacklistSystemTileNumbers.add(systemTileNumber);
+    }
   }
 
   generateSlices(sliceCount: number): Array<SliceTiles> {
@@ -140,6 +148,10 @@ export class GenerateSlices {
   _getShuffledSystems(): Array<System> {
     let systems: Array<System> =
       TI4.systemRegistry.getAllDraftableSystemsFilteredByConfigSources();
+    systems = systems.filter((system) => {
+      const tileNumber: number = system.getSystemTileNumber();
+      return !this._blacklistSystemTileNumbers.has(tileNumber);
+    });
     systems = new Shuffle<System>().shuffle(systems);
     return systems;
   }

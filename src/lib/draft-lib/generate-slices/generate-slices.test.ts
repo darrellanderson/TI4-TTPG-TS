@@ -106,6 +106,15 @@ it("constructor (makeup, shape mismatch", () => {
   }).toThrow();
 });
 
+it("blacklist", () => {
+  const generator = new GenerateSlices({
+    sliceMakeup: ["high", "med", "low", "red"],
+    sliceShape: ["<0,0,0>", "<1,0,-1>", "<2,0,-2>", "<3,0,-3>", "<4,0,-4>"],
+  });
+  generator.setBlacklistSystemTileNumbers([19, 20]);
+  generator.generateSlices(6);
+});
+
 it("generateSlices", () => {
   const generator = new GenerateSlices({
     sliceMakeup: ["high", "med", "low", "red"],
