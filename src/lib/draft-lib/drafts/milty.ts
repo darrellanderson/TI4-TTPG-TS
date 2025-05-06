@@ -37,6 +37,10 @@ export const MILTY_SLICE_SHAPE_ALT: SliceShape = [
 ];
 
 export class Milty implements IDraft {
+  public isEnabled(): boolean {
+    return true;
+  }
+
   public getDraftName(): string {
     return "Milty Draft";
   }

@@ -11,6 +11,10 @@ import {
 import { DraftActivityStartParams } from "./draft-activity-start-params";
 
 class MyDraft implements IDraft {
+  public isEnabled(): boolean {
+    return true;
+  }
+
   getDraftName(): string {
     return "My Draft";
   }

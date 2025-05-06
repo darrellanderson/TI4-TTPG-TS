@@ -36,6 +36,10 @@ export const WEKKER_SLICE_SHAPE_L: SliceShape = [
 ];
 
 export class Wekker implements IDraft {
+  public isEnabled(): boolean {
+    return true;
+  }
+
   public getDraftName(): string {
     return "Wekker Draft";
   }

@@ -24,6 +24,7 @@ import {
   DraftActivityStartParams,
 } from "./draft-activity-start-params";
 import { ParseBaseMap } from "../parse/parse-base-map";
+import { MapStringParser } from "../../map-string-lib/map-string/map-string-parser";
 
 export class DraftActivityMaybeResume implements IGlobal {
   init(): void {
@@ -103,10 +104,9 @@ export class DraftActivityStart {
     }
 
     // Slices.
-    const blacklistSystemTileNumbers: Array<number> = this._draftState
-      .getBaseMap()
-      .split(",")
-      .map((s) => parseInt(s));
+    const blacklistSystemTileNumbers: Array<number> = new MapStringParser()
+      .parse(this._draftState.getBaseMap(), [])
+      .map((mapStringEntry) => mapStringEntry.tile);
 
     const sliceParams: GenerateSlicesParams =
       params.draft.getGenerateSlicesParams();

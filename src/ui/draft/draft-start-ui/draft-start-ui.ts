@@ -30,11 +30,12 @@ import { VerticalUIBuilder } from "../../panel/vertical-ui-builder";
 import { Milty } from "../../../lib/draft-lib/drafts/milty";
 import { Wekker } from "../../../lib/draft-lib/drafts/wekker";
 import { ScptDraftsUi } from "./scpt-drafts-ui";
+import { NucleusDraft } from "../../../lib/draft-lib/drafts/nucleus";
 
 export class DraftStartUI extends AbstractUI {
   public readonly onDraftStarted;
 
-  private readonly _idrafts: Array<IDraft> = [new Milty(), new Wekker()];
+  private readonly _idrafts: Array<IDraft>;
   private readonly _params: DraftActivityStartParams;
   private readonly _draftCheckBoxes: Array<CheckBox>;
 
@@ -51,7 +52,14 @@ export class DraftStartUI extends AbstractUI {
           const useThis: boolean =
             draftCheckBox.getText() === checkBox.getText();
           draftCheckBox.setIsChecked(useThis);
+          console.log(
+            "xxxx1",
+            draftCheckBox.getText(),
+            checkBox.getText(),
+            useThis
+          );
           if (useThis && iDraft) {
+            console.log("xxxx", iDraft.getDraftName());
             // Set the current draft to the one selected by the player.
             this._params.draft = iDraft;
           }
@@ -106,13 +114,18 @@ export class DraftStartUI extends AbstractUI {
       .setText("Slice shape:")
       .setJustification(TextJustification.Right);
 
-    const iDrafts: Array<IDraft> = [new Milty(), new Wekker()];
+    const iDrafts: Array<IDraft> = [
+      new Milty(),
+      new Wekker(),
+      new NucleusDraft(),
+    ];
     const draftCheckBoxUIs: Array<CheckBoxUI> = iDrafts.map(
       (idraft: IDraft): CheckBoxUI => {
         const checkBoxUi: CheckBoxUI = new CheckBoxUI(scale);
-        checkBoxUi.getCheckBox().setText(idraft.getDraftName());
         checkBoxUi
           .getCheckBox()
+          .setEnabled(idraft.isEnabled())
+          .setText(idraft.getDraftName())
           .setIsChecked(idraft.getDraftName() === params.draft.getDraftName());
         return checkBoxUi;
       }
@@ -202,6 +215,7 @@ export class DraftStartUI extends AbstractUI {
     super(ui.getWidget(), ui.getSize());
 
     this.onDraftStarted = onDraftStarted;
+    this._idrafts = iDrafts;
     this._params = params;
     this._draftCheckBoxes = draftCheckBoxUIs.map(
       (checkBoxUI: CheckBoxUI): CheckBox => {
