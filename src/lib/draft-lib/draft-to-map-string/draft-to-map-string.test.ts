@@ -121,3 +121,10 @@ it("_addBaseMap", () => {
   );
   expect(mapString).toBe("{18} 1 2 3 4");
 });
+
+it("_addBaseMap", () => {
+  const draftToMapString = new DraftToMapString(MILTY_SLICE_SHAPE);
+  expect(() => {
+    draftToMapString._addBaseMap("{18} 1", "{18} 2");
+  }).toThrow();
+});

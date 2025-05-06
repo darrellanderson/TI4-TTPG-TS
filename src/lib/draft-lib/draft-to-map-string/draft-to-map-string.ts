@@ -225,6 +225,11 @@ export class DraftToMapString {
     const baseEntries: Array<MapStringEntry> = parser.parseOrThrow(baseMap);
     baseEntries.forEach((baseEntry: MapStringEntry, index: number) => {
       if (baseEntry.tile > 0) {
+        const entry: MapStringEntry | undefined = entries[index];
+        if (entry && entry.tile !== baseEntry.tile && entry.tile > 0) {
+          // Tile already exists, do not override.
+          throw new Error("base map overrides existing tile: " + entry.tile);
+        }
         entries[index] = baseEntry;
       }
     });
