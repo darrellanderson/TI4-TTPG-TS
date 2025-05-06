@@ -16,7 +16,7 @@ class MyDraft implements IDraft {
   }
 
   getGenerateSlicesParams(): GenerateSlicesParams {
-    return { sliceMakeup: ["high"], sliceShape: ["<0,0,0>", "<1,0,-1>"] };
+    return { sliceMakeups: [["high"]], sliceShape: ["<0,0,0>", "<1,0,-1>"] };
   }
   createEmptyDraftState(namespaceId: NamespaceId): DraftState {
     return new DraftState(namespaceId).setSliceShape(["<0,0,0>", "<1,0,-1>"]);
@@ -76,7 +76,7 @@ it("constructor", () => {
 it("getGenerateSlicesParams", () => {
   const draft: IDraft = new MyDraft();
   expect(draft.getGenerateSlicesParams()).toEqual({
-    sliceMakeup: ["high"],
+    sliceMakeups: [["high"]],
     sliceShape: ["<0,0,0>", "<1,0,-1>"],
   });
 });
@@ -129,7 +129,7 @@ it("createDraftState (parse all)", () => {
     draft: new MyDraft(),
     numSlices: 2,
     numFactions: 2,
-    config: "19|20&factions=arborec|ul&labels=a|b|c&base=1 2",
+    config: "19|20&factions=arborec|ul&labels=a|b|c&base=1,2",
   };
   const errors: Array<string> = [];
   const draftActivityStart = new DraftActivityStart();

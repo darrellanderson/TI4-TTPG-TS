@@ -18,9 +18,10 @@ import {
 
 export type SliceTiles = ReadonlyArray<number>;
 export type SliceShape = ReadonlyArray<HexType>;
+export type SliceMakeup = ReadonlyArray<SystemTierType>;
 
 export type GenerateSlicesParams = {
-  sliceMakeup: ReadonlyArray<SystemTierType>;
+  sliceMakeups: ReadonlyArray<SliceMakeup>;
   sliceShape: SliceShape;
   minAlphaWormholes?: number;
   minBetaWormholes?: number;
@@ -72,25 +73,33 @@ export class GenerateSlices {
 
   constructor(params: GenerateSlicesParams) {
     // Slice shape includes home system as first entry.
-    if (params.sliceShape.length !== params.sliceMakeup.length + 1) {
-      throw new Error("slice shape and makeup mismatch");
-    }
+    params.sliceMakeups.forEach((sliceMakeup: SliceMakeup): void => {
+      if (params.sliceShape.length !== sliceMakeup.length + 1) {
+        throw new Error("slice shape and makeup mismatch");
+      }
+    });
 
     this._params = Object.freeze(params);
   }
 
-  setBlacklistSystemTileNumbers(systemTileNumbers: Array<number>) {
+  setBlacklistSystemTileNumbers(systemTileNumbers: Array<number>): this {
     this._blacklistSystemTileNumbers.clear();
     for (const systemTileNumber of systemTileNumbers) {
       this._blacklistSystemTileNumbers.add(systemTileNumber);
     }
+    return this;
   }
 
   generateSlices(sliceCount: number): Array<SliceTiles> {
     for (let i = 0; i < sliceCount; i++) {
-      const makeup: ReadonlyArray<SystemTierType> =
-        new Shuffle<SystemTierType>().shuffle([...this._params.sliceMakeup]);
-      this._slicesInProgress.push(new SliceInProgress(makeup));
+      const makeups: ReadonlyArray<SliceMakeup> = this._params.sliceMakeups;
+      const index: number = Math.floor(Math.random() * makeups.length);
+      let sliceMakeup: SliceMakeup | undefined = makeups[index];
+
+      if (sliceMakeup) {
+        sliceMakeup = new Shuffle<SystemTierType>().shuffle([...sliceMakeup]);
+        this._slicesInProgress.push(new SliceInProgress(sliceMakeup));
+      }
     }
 
     // Get all candidate systems, split off promoted.

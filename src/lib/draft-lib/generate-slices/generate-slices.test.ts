@@ -92,7 +92,7 @@ describe("SliceInProgress", () => {
 
 it("constructor", () => {
   new GenerateSlices({
-    sliceMakeup: ["high"],
+    sliceMakeups: [["high"]],
     sliceShape: ["<0,0,0>", "<1,0,-1>"],
   });
 });
@@ -100,7 +100,7 @@ it("constructor", () => {
 it("constructor (makeup, shape mismatch", () => {
   expect(() => {
     new GenerateSlices({
-      sliceMakeup: ["high", "med"],
+      sliceMakeups: [["high", "med"]],
       sliceShape: ["<0,0,0>", "<1,0,-1>"],
     });
   }).toThrow();
@@ -108,7 +108,7 @@ it("constructor (makeup, shape mismatch", () => {
 
 it("blacklist", () => {
   const generator = new GenerateSlices({
-    sliceMakeup: ["high", "med", "low", "red"],
+    sliceMakeups: [["high", "med", "low", "red"]],
     sliceShape: ["<0,0,0>", "<1,0,-1>", "<2,0,-2>", "<3,0,-3>", "<4,0,-4>"],
   });
   generator.setBlacklistSystemTileNumbers([19, 20]);
@@ -117,7 +117,7 @@ it("blacklist", () => {
 
 it("generateSlices", () => {
   const generator = new GenerateSlices({
-    sliceMakeup: ["high", "med", "low", "red"],
+    sliceMakeups: [["high", "med", "low", "red"]],
     sliceShape: ["<0,0,0>", "<1,0,-1>", "<2,0,-2>", "<3,0,-3>", "<4,0,-4>"],
     minAlphaWormholes: 1,
     minBetaWormholes: 1,
@@ -129,7 +129,7 @@ it("generateSlices", () => {
 
 it("_getShuffledSystems", () => {
   const generateSlices = new GenerateSlices({
-    sliceMakeup: ["high"],
+    sliceMakeups: [["high"]],
     sliceShape: ["<0,0,0>", "<1,0,-1>"],
   });
   const systems: Array<System> = generateSlices._getShuffledSystems();
@@ -138,7 +138,7 @@ it("_getShuffledSystems", () => {
 
 it("_getSystemsForTier", () => {
   const generateSlices = new GenerateSlices({
-    sliceMakeup: ["high", "med"],
+    sliceMakeups: [["high", "med"]],
     sliceShape: ["<0,0,0>", "<1,0,-1>", "<2,0,-2>"],
   });
   const systems: Array<System> = generateSlices._getShuffledSystems();
@@ -152,7 +152,7 @@ it("_getSystemsForTier", () => {
 
 it("_getSystemsForTier (none in tier)", () => {
   const generateSlices = new GenerateSlices({
-    sliceMakeup: ["high", "med"],
+    sliceMakeups: [["high", "med"]],
     sliceShape: ["<0,0,0>", "<1,0,-1>", "<2,0,-2>"],
   });
   const system: System | undefined =
@@ -171,7 +171,7 @@ it("_getSystemsForTier (none in tier)", () => {
 
 it("_getSystemsForTier (none)", () => {
   const generateSlices = new GenerateSlices({
-    sliceMakeup: ["high", "med"],
+    sliceMakeups: [["high", "med"]],
     sliceShape: ["<0,0,0>", "<1,0,-1>", "<2,0,-2>"],
   });
   const systems: Array<System> = [];
@@ -182,7 +182,7 @@ it("_getSystemsForTier (none)", () => {
 
 it("_getShortestSliceWithTier", () => {
   const generateSlices = new GenerateSlices({
-    sliceMakeup: ["high", "med"],
+    sliceMakeups: [["high", "med"]],
     sliceShape: ["<0,0,0>", "<1,0,-1>", "<2,0,-2>"],
   });
   generateSlices._getShortestSliceWithTier("high");
@@ -190,7 +190,7 @@ it("_getShortestSliceWithTier", () => {
 
 it("_score (multiple legendaries)", () => {
   const generateSlices = new GenerateSlices({
-    sliceMakeup: ["high", "med"],
+    sliceMakeups: [["high", "med"]],
     sliceShape: ["<0,0,0>", "<1,0,-1>", "<2,0,-2>"],
   });
   const sliceInProgress = new SliceInProgress(["high", "med"]);
@@ -209,7 +209,7 @@ it("_score (multiple legendaries)", () => {
 
 it("_score (multiple wormholes1Gwq)", () => {
   const generateSlices = new GenerateSlices({
-    sliceMakeup: ["high", "med"],
+    sliceMakeups: [["high", "med"]],
     sliceShape: ["<0,0,0>", "<1,0,-1>", "<2,0,-2>"],
   });
   const sliceInProgress = new SliceInProgress(["high", "med"]);
@@ -228,7 +228,7 @@ it("_score (multiple wormholes1Gwq)", () => {
 
 it("_promoteWormholesAndLegendaries", () => {
   const generateSlices = new GenerateSlices({
-    sliceMakeup: ["high", "med"],
+    sliceMakeups: [["high", "med"]],
     sliceShape: ["<0,0,0>", "<1,0,-1>", "<2,0,-2>"],
     minAlphaWormholes: 1,
     minBetaWormholes: 1,
@@ -242,7 +242,7 @@ it("_promoteWormholesAndLegendaries", () => {
 
 it("_promoteWormholesAndLegendaries (defaults)", () => {
   const generateSlices = new GenerateSlices({
-    sliceMakeup: ["high", "med"],
+    sliceMakeups: [["high", "med"]],
     sliceShape: ["<0,0,0>", "<1,0,-1>", "<2,0,-2>"],
   });
   const systems: Array<System> = TI4.systemRegistry.getAllSystemsWithObjs();
@@ -253,7 +253,7 @@ it("_promoteWormholesAndLegendaries (defaults)", () => {
 
 it("_hasAdjacentAnomalies", () => {
   const generateSlices = new GenerateSlices({
-    sliceMakeup: ["high", "med"],
+    sliceMakeups: [["high", "med"]],
     sliceShape: ["<0,0,0>", "<1,0,-1>", "<2,0,-2>"],
   });
   let slice: Array<number>;
@@ -267,7 +267,7 @@ it("_hasAdjacentAnomalies", () => {
 
 it("_hasAdjacentAnomalies (slice length mismatch)", () => {
   const generateSlices = new GenerateSlices({
-    sliceMakeup: ["high", "med"],
+    sliceMakeups: [["high", "med"]],
     sliceShape: ["<0,0,0>", "<1,0,-1>", "<2,0,-2>"],
   });
   const slice: Array<number> = [19, 20, 21];
@@ -278,7 +278,7 @@ it("_hasAdjacentAnomalies (slice length mismatch)", () => {
 
 it("_separateAnomalies", () => {
   const generateSlices = new GenerateSlices({
-    sliceMakeup: ["high", "med", "low"],
+    sliceMakeups: [["high", "med", "low"]],
     sliceShape: ["<0,0,0>", "<1,0,-1>", "<2,0,-2>", "<3,0,-3>"],
   });
 
@@ -308,7 +308,7 @@ it("_permutator", () => {
   };
 
   const generateSlices = new GenerateSlices({
-    sliceMakeup: ["high"],
+    sliceMakeups: [["high"]],
     sliceShape: ["<0,0,0>", "<1,0,-1>"],
   });
   const permuted: Array<number> | undefined = generateSlices._permutator(

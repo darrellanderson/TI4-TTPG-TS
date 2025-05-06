@@ -43,7 +43,7 @@ export class Milty implements IDraft {
 
   public getGenerateSlicesParams(): GenerateSlicesParams {
     return {
-      sliceMakeup: MILTY_SLICE_MAKEUP,
+      sliceMakeups: [MILTY_SLICE_MAKEUP],
       sliceShape: MILTY_SLICE_SHAPE,
       minAlphaWormholes: new WeightedChoice<number>([
         { weight: 1, value: 2 },

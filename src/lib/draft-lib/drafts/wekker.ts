@@ -42,7 +42,7 @@ export class Wekker implements IDraft {
 
   public getGenerateSlicesParams(): GenerateSlicesParams {
     return {
-      sliceMakeup: MILTY_SLICE_MAKEUP,
+      sliceMakeups: [MILTY_SLICE_MAKEUP],
       sliceShape: WEKKER_SLICE_SHAPE,
       minAlphaWormholes: new WeightedChoice<number>([
         { weight: 1, value: 2 },

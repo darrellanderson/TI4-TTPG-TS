@@ -45,6 +45,7 @@ export class DraftActivityStart {
     config: string,
     numSlices: number,
     generateSlicesParams: GenerateSlicesParams,
+    blacklistSystemTileNumbers: Array<number>,
     errors: Array<string>
   ): Array<SliceTiles> {
     const sliceSize: number = generateSlicesParams.sliceShape.length - 1;
@@ -53,9 +54,9 @@ export class DraftActivityStart {
     ).parseSlices(config, errors);
 
     if (slices === undefined) {
-      slices = new GenerateSlices(generateSlicesParams).generateSlices(
-        numSlices
-      );
+      slices = new GenerateSlices(generateSlicesParams)
+        .setBlacklistSystemTileNumbers(blacklistSystemTileNumbers)
+        .generateSlices(numSlices);
     }
     return slices;
   }
@@ -92,13 +93,28 @@ export class DraftActivityStart {
   start(params: DraftActivityStartParams, errors: Array<string>): boolean {
     this._draftState = params.draft.createEmptyDraftState(DRAFT_NAMESPACE_ID);
 
+    // Base map.
+    const baseMap: string | undefined = DraftActivityStart.getBaseMap(
+      params.config,
+      errors
+    );
+    if (baseMap !== undefined) {
+      this._draftState.setBaseMap(baseMap);
+    }
+
     // Slices.
+    const blacklistSystemTileNumbers: Array<number> = this._draftState
+      .getBaseMap()
+      .split(",")
+      .map((s) => parseInt(s));
+
     const sliceParams: GenerateSlicesParams =
       params.draft.getGenerateSlicesParams();
     const slices: Array<SliceTiles> = DraftActivityStart.getOrGenerateSlices(
       params.config,
       params.numSlices,
       sliceParams,
+      blacklistSystemTileNumbers,
       errors
     );
     this._draftState.setSlices(slices);
@@ -128,15 +144,6 @@ export class DraftActivityStart {
       errors.push(
         `Faction count (${this._draftState.getFactions().length}) is less than player count (${TI4.config.playerCount})`
       );
-    }
-
-    // Base map.
-    const baseMap: string | undefined = DraftActivityStart.getBaseMap(
-      params.config,
-      errors
-    );
-    if (baseMap !== undefined) {
-      this._draftState.setBaseMap(baseMap);
     }
 
     const speakerIndex: number = Math.floor(
