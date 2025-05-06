@@ -23,6 +23,7 @@ import {
   DRAFT_NAMESPACE_ID,
   DraftActivityStartParams,
 } from "./draft-activity-start-params";
+import { ParseBaseMap } from "../parse/parse-base-map";
 
 export class DraftActivityMaybeResume implements IGlobal {
   init(): void {
@@ -76,6 +77,14 @@ export class DraftActivityStart {
     return factions;
   }
 
+  static getBaseMap(config: string, errors: Array<string>): string | undefined {
+    const baseMap: string | undefined = new ParseBaseMap().parseBaseMap(
+      config,
+      errors
+    );
+    return baseMap;
+  }
+
   getDraftState(): DraftState | undefined {
     return this._draftState;
   }
@@ -119,6 +128,15 @@ export class DraftActivityStart {
       errors.push(
         `Faction count (${this._draftState.getFactions().length}) is less than player count (${TI4.config.playerCount})`
       );
+    }
+
+    // Base map.
+    const baseMap: string | undefined = DraftActivityStart.getBaseMap(
+      params.config,
+      errors
+    );
+    if (baseMap !== undefined) {
+      this._draftState.setBaseMap(baseMap);
     }
 
     const speakerIndex: number = Math.floor(

@@ -20,7 +20,14 @@ export class ParseBaseMap {
     }
 
     config = config.toLowerCase();
-    new MapStringParser().parse(config, errors);
-    return config.length > 0 ? config : undefined;
+    const mapParserErrors: Array<string> = [];
+    new MapStringParser().parse(config, mapParserErrors);
+    if (mapParserErrors.length > 0) {
+      errors.push("base map bad tiles: " + mapParserErrors.join(", "));
+    }
+    if (config.length === 0 || errors.length > 0) {
+      return undefined;
+    }
+    return config;
   }
 }

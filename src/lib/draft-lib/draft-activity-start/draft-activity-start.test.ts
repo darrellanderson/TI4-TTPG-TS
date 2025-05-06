@@ -129,7 +129,7 @@ it("createDraftState (parse all)", () => {
     draft: new MyDraft(),
     numSlices: 2,
     numFactions: 2,
-    config: "19|20&factions=arborec|ul&labels=a|b|c",
+    config: "19|20&factions=arborec|ul&labels=a|b|c&base=1 2",
   };
   const errors: Array<string> = [];
   const draftActivityStart = new DraftActivityStart();
