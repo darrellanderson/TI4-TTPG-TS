@@ -276,6 +276,27 @@ export class GenerateSlices {
    * @param systems
    */
   _promoteWormholesAndLegendaries(systems: Array<System>): Array<System> {
+    // Blacklist systems are already placed on the map, with
+    // slices getting added around them.  Remove blacklist
+    // numbers from the promotion counts.
+    const blackListSystems: Array<System> = [];
+    for (const tile of this._blacklistSystemTileNumbers) {
+      const system: System | undefined =
+        TI4.systemRegistry.getBySystemTileNumber(tile);
+      if (system) {
+        blackListSystems.push(system);
+      }
+    }
+    const blacklistedAlphas: number = blackListSystems.filter((system) =>
+      system.getWormholes().includes("alpha")
+    ).length;
+    const blacklistedBetas: number = blackListSystems.filter((system) =>
+      system.getWormholes().includes("beta")
+    ).length;
+    const blacklistedLegendaries: number = blackListSystems.filter((system) =>
+      system.isLegendary()
+    ).length;
+
     // Move candidates from input systems to promoted.
     let count: number;
     let promoteCandidates: Array<System>;
@@ -294,18 +315,21 @@ export class GenerateSlices {
     };
 
     count = this._params.minAlphaWormholes || 0;
+    count -= blacklistedAlphas;
     promoteCandidates = systems.filter((system) =>
       system.getWormholes().includes("alpha")
     );
     doPromotion();
 
     count = this._params.minBetaWormholes || 0;
+    count -= blacklistedBetas;
     promoteCandidates = systems.filter((system) =>
       system.getWormholes().includes("beta")
     );
     doPromotion();
 
     count = this._params.minLegendary || 0;
+    count -= blacklistedLegendaries;
     promoteCandidates = systems.filter((system) => system.isLegendary());
     doPromotion();
 
