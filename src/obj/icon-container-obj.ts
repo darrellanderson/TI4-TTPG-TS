@@ -2,19 +2,27 @@ import {
   Color,
   GameObject,
   ImageWidget,
+  ObjectType,
   refObject,
   UIElement,
   UIPresentationStyle,
   Vector,
   world,
 } from "@tabletop-playground/api";
-import { ColorLib, ColorsType, NSID, ParsedNSID } from "ttpg-darrell";
+import {
+  ColorLib,
+  ColorsType,
+  DeletedItemsContainer,
+  NSID,
+  ParsedNSID,
+} from "ttpg-darrell";
 
 // There's a TTPG bug where container UI causes problems such as
 // looping animation of objects entering.  It is fixed in dev, but
-// we need to wait for the next release.  In the meantime, use world
-// UI and hope players don't move the containers.
-const PLACE_UI_WORLD: boolean = true;
+// we need to wait for the next release.  In the meantime, create a
+// second GameObject to host the UI (cannot use world because there
+// are too many for the object size).
+const PLACE_UI_ALTERNATE: boolean = true;
 
 const SCALE: number = 4;
 
@@ -65,17 +73,50 @@ outline.widget = new ImageWidget()
 
 // Owner not set at creation time, wait a frame.
 const obj: GameObject = refObject;
-if (PLACE_UI_WORLD) {
-  ui.position = obj.localPositionToWorld(ui.position);
-  outline.position = ui.position;
-  world.addUI(ui);
-  world.addUI(outline);
-} else {
-  obj.addUI(ui);
-  obj.addUI(outline);
+obj.addUI(ui);
+obj.addUI(outline);
+
+const altId: string = obj.getId() + "-alt";
+let altObject: GameObject | undefined = world.getObjectById(altId);
+if (PLACE_UI_ALTERNATE) {
+  obj.removeUIElement(ui);
+  obj.removeUIElement(outline);
+
+  const altPos: Vector = obj.getPosition().subtract([0, 0, 100]);
+  if (!altObject) {
+    const templateId = "83FDE12C4E6D912B16B85E9A00422F43"; // cube
+    altObject = world.createObjectFromTemplate(templateId, altPos);
+    if (altObject) {
+      altObject.setId(altId);
+      altObject.setObjectType(ObjectType.NonInteractive);
+    }
+  }
+  if (altObject) {
+    altObject.setPosition(altPos);
+    ui.position = altObject.worldPositionToLocal(
+      obj.localPositionToWorld(ui.position)
+    );
+    altObject.addUI(ui);
+
+    outline.position = altObject.worldPositionToLocal(
+      obj.localPositionToWorld(outline.position)
+    );
+    altObject.addUI(outline);
+  }
+} else if (altObject) {
+  // Use the original object.
+  DeletedItemsContainer.destroyWithoutCopying(altObject);
 }
 
 const update = (): void => {
+  // Object might have moved.  If using the alternate object, move it too.
+  if (PLACE_UI_ALTERNATE && altObject) {
+    const altPos: Vector = obj.getPosition().subtract([0, 0, 100]);
+    altObject.setObjectType(ObjectType.Regular);
+    altObject.setPosition(altPos);
+    altObject.setObjectType(ObjectType.NonInteractive);
+  }
+
   const owner: number = obj.getOwningPlayerSlot();
   if (nsid.startsWith("container.unit") && owner === 19) {
     // Anonymous units.
