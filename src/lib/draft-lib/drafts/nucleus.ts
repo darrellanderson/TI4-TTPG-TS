@@ -1,17 +1,33 @@
 import { Vector } from "@tabletop-playground/api";
 import { HexType, NamespaceId, Shuffle } from "ttpg-darrell";
 import { DraftState } from "../draft-state/draft-state";
-import { GenerateSlicesParams } from "../generate-slices/generate-slices";
+import {
+  GenerateSlicesParams,
+  SliceShape,
+  SliceTiles,
+} from "../generate-slices/generate-slices";
 import { IDraft } from "./idraft";
 import { System } from "../../system-lib/system/system";
 import { MapStringHex } from "../../map-string-lib/map-string/map-string-hex";
 import { SystemTier } from "../../system-lib/system/system-tier";
+import { DraftToMapString } from "../draft-to-map-string/draft-to-map-string";
+import {
+  MapStringEntry,
+  MapStringParser,
+} from "../../map-string-lib/map-string/map-string-parser";
 
 export const NUCLEUS_SLICE_SHAPE: ReadonlyArray<HexType> = [
   "<0,0,0>", // home system
   "<1,-1,0>", // left
   "<1,0,-1>", // front
   "<0,1,-1>", // right
+];
+
+export const NUCLEUS_SLICE_SHAPE_ALT: ReadonlyArray<HexType> = [
+  "<0,0,0>", // home system
+  "<1,-1,0>", // left
+  "<2,0,-2>", // front (pushed forward)
+  "<1,0,-1>", // right (pushed forward)
 ];
 
 export const NUCLEUS_MAP_STRING: string =
@@ -46,17 +62,26 @@ export class NucleusDraft implements IDraft {
   createEmptyDraftState(namespaceId: NamespaceId): DraftState {
     const draftState: DraftState = new DraftState(namespaceId);
     draftState.setSliceShape(NUCLEUS_SLICE_SHAPE);
-
-    // Create the inner "nucleus" systems.
-    // Get the map string parts including the '-1's.
-    const entries: Array<number> = NUCLEUS_MAP_STRING.split(" ").map(
-      (s: string): number => {
-        return parseInt(s, 10);
-      }
-    );
+    if (TI4.config.playerCount === 7) {
+      draftState.overrideSliceShape(3, NUCLEUS_SLICE_SHAPE_ALT);
+    } else if (TI4.config.playerCount === 8) {
+      draftState.overrideSliceShape(3, NUCLEUS_SLICE_SHAPE_ALT);
+      draftState.overrideSliceShape(7, NUCLEUS_SLICE_SHAPE_ALT);
+    }
 
     // Get the indexes of the "1" entries.
     const mapStringIndexes: Array<number> = this._getNucleusMapStringIndexes();
+
+    // Get the map string parts including the '-1's.
+    const entries: Array<number> = [];
+    mapStringIndexes.forEach((index: number): void => {
+      entries[index] = 1;
+    });
+    for (let i: number = 0; i < entries.length; i++) {
+      if (entries[i] !== 1) {
+        entries[i] = -1;
+      }
+    }
 
     // Add wormholes.
     const numWormholes: number | undefined = new Shuffle<number>().choice(
@@ -110,13 +135,54 @@ export class NucleusDraft implements IDraft {
   }
 
   _getNucleusMapStringIndexes(): Array<number> {
-    const nucleusMapStringIndexes: Array<number> = NUCLEUS_MAP_STRING.split(" ")
-      .map((s: string, index: number): number => {
-        return s === "1" ? index : -1;
-      })
-      .filter((i: number): boolean => {
-        return i !== -1;
+    // Leverage draft state to map string.
+    // Use the milty eq+far front slice shape.
+    const nucluesDraftState: DraftState = new DraftState(
+      "@nucleus-inner/ti4"
+    ).setSliceShape([
+      "<0,0,0>", // home
+      "<2,-1,-1>", // left-eq
+      "<2,0,-2>", // front-far
+    ]);
+
+    const altShape: SliceShape = [
+      "<0,0,0>", // home system
+      "<2,-1,-1>", // left-eq
+      "<3,-1,-2>", // front-far (pushed forward)
+    ];
+    if (TI4.config.playerCount === 7) {
+      nucluesDraftState.overrideSliceShape(3, altShape);
+    } else if (TI4.config.playerCount === 8) {
+      nucluesDraftState.overrideSliceShape(3, altShape);
+      nucluesDraftState.overrideSliceShape(7, altShape);
+    }
+
+    const slices: Array<SliceTiles> = [];
+    for (let seatIndex = 0; seatIndex < TI4.config.playerCount; seatIndex++) {
+      const playerSlot: number = 10 + seatIndex;
+      nucluesDraftState.setSliceIndexToPlayerSlot(seatIndex, playerSlot);
+      nucluesDraftState.setSeatIndexToPlayerSlot(seatIndex, playerSlot);
+      slices.push([1, 1]);
+    }
+    nucluesDraftState.setSlices(slices);
+
+    const mapString: string =
+      DraftToMapString.fromDraftState(nucluesDraftState).mapString;
+    nucluesDraftState.destroy();
+
+    const parsed: Array<MapStringEntry> = new MapStringParser()
+      .parseOrThrow(mapString)
+      .filter((entry: MapStringEntry): boolean => {
+        return entry.tile !== 18;
       });
+
+    const nucleusMapStringIndexes: Array<number> = [];
+    parsed.forEach((entry: MapStringEntry, index): void => {
+      if (entry.tile === 1) {
+        nucleusMapStringIndexes.push(index);
+      }
+    });
+
     return nucleusMapStringIndexes;
   }
 

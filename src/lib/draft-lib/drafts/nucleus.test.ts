@@ -1,4 +1,4 @@
-import { MockGameObject } from "ttpg-mock";
+import { MockCardHolder, MockGameObject } from "ttpg-mock";
 import { NucleusDraft } from "./nucleus";
 import { System } from "../../system-lib/system/system";
 
@@ -19,9 +19,51 @@ it("getGenerateSlicesParams", () => {
 });
 
 it("_getNucleusMapStringIndexes", () => {
+  // Create card holder for TI4.playerSeats to use.
+  for (const playerSlot of [10, 11, 12, 13, 14, 15]) {
+    new MockCardHolder({
+      templateMetadata: "card-holder:base/player-hand",
+      owningPlayerSlot: playerSlot,
+    });
+  }
+
   const nucleus = new NucleusDraft();
   const indexes = nucleus._getNucleusMapStringIndexes();
   expect(indexes).toEqual([0, 1, 2, 3, 4, 5, 7, 9, 11, 13, 15, 17]);
+});
+
+it("_getNucleusMapStringIndexes (7p)", () => {
+  TI4.config.setPlayerCount(7);
+
+  // Create card holder for TI4.playerSeats to use.
+  for (const playerSlot of [10, 11, 12, 13, 14, 15, 16]) {
+    new MockCardHolder({
+      templateMetadata: "card-holder:base/player-hand",
+      owningPlayerSlot: playerSlot,
+    });
+  }
+
+  const nucleus = new NucleusDraft();
+  const indexes = nucleus._getNucleusMapStringIndexes();
+  expect(indexes).toEqual([1, 2, 5, 6, 7, 9, 11, 12, 13, 14, 16, 17, 28, 35]);
+});
+
+it("_getNucleusMapStringIndexes (8p)", () => {
+  TI4.config.setPlayerCount(8);
+
+  // Create card holder for TI4.playerSeats to use.
+  for (const playerSlot of [10, 11, 12, 13, 14, 15, 16, 17]) {
+    new MockCardHolder({
+      templateMetadata: "card-holder:base/player-hand",
+      owningPlayerSlot: playerSlot,
+    });
+  }
+
+  const nucleus = new NucleusDraft();
+  const indexes = nucleus._getNucleusMapStringIndexes();
+  expect(indexes).toEqual([
+    2, 5, 6, 7, 8, 10, 11, 12, 13, 14, 16, 17, 19, 26, 28, 35,
+  ]);
 });
 
 it("_getScattered", () => {
@@ -105,6 +147,64 @@ it("_fillEntriesOrThrow (non-1 entry))", () => {
 });
 
 it("createEmptyDraftState", () => {
+  // Create card holder for TI4.playerSeats to use.
+  for (const playerSlot of [10, 11, 12, 13, 14, 15]) {
+    new MockCardHolder({
+      templateMetadata: "card-holder:base/player-hand",
+      owningPlayerSlot: playerSlot,
+    });
+  }
+
+  // Systems must exist for registry to know about them.
+  for (const tile of TI4.systemRegistry.getAllSystemTileNumbers()) {
+    const nsid: string | undefined =
+      TI4.systemRegistry.tileNumberToSystemTileObjNsid(tile);
+    if (nsid) {
+      MockGameObject.simple(nsid);
+    }
+  }
+
+  const nucleus = new NucleusDraft();
+  const draftState = nucleus.createEmptyDraftState("@test/test");
+  expect(draftState).toBeDefined();
+});
+
+it("createEmptyDraftState (7p)", () => {
+  TI4.config.setPlayerCount(7);
+
+  // Create card holder for TI4.playerSeats to use.
+  for (const playerSlot of [10, 11, 12, 13, 14, 15, 16]) {
+    new MockCardHolder({
+      templateMetadata: "card-holder:base/player-hand",
+      owningPlayerSlot: playerSlot,
+    });
+  }
+
+  // Systems must exist for registry to know about them.
+  for (const tile of TI4.systemRegistry.getAllSystemTileNumbers()) {
+    const nsid: string | undefined =
+      TI4.systemRegistry.tileNumberToSystemTileObjNsid(tile);
+    if (nsid) {
+      MockGameObject.simple(nsid);
+    }
+  }
+
+  const nucleus = new NucleusDraft();
+  const draftState = nucleus.createEmptyDraftState("@test/test");
+  expect(draftState).toBeDefined();
+});
+
+it("createEmptyDraftState (8p)", () => {
+  TI4.config.setPlayerCount(8);
+
+  // Create card holder for TI4.playerSeats to use.
+  for (const playerSlot of [10, 11, 12, 13, 14, 15, 16, 17]) {
+    new MockCardHolder({
+      templateMetadata: "card-holder:base/player-hand",
+      owningPlayerSlot: playerSlot,
+    });
+  }
+
   // Systems must exist for registry to know about them.
   for (const tile of TI4.systemRegistry.getAllSystemTileNumbers()) {
     const nsid: string | undefined =
