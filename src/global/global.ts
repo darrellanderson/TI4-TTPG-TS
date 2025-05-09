@@ -36,6 +36,7 @@ import { GameDataUpdator } from "../lib/game-data-lib/game-data-updator/game-dat
 import { GAME_DATA_UPDATORS } from "../lib/game-data-lib/game-data-updators/game-data-updators";
 import { GlobalEvents } from "./global-events";
 import { HideMouseCursor } from "../lib/streamer-lib/hide-mouse-cursor/hide-mouse-cursor";
+import { LastGameData } from "../lib/game-data-lib/last-game-data/last-game-data";
 import { NumpadKeyAll } from "../lib/numpad-key-lib/numpad-key-all/numpad-key-all";
 import { OnAgendaCard } from "../event/on-agenda-card/on-agenda-card";
 import { OnCombatClicked } from "../event/on-combat-clicked/on-combat-clicked";
@@ -137,6 +138,7 @@ export class TI4Class {
   public readonly hideMouseCursor = new HideMouseCursor(
     "@hide-mouse-cursor/ti4"
   );
+  public readonly lastGameData = new LastGameData();
   public readonly planetAttachmentRegistry =
     new PlanetAttachmentRegistry().loadDefaultData();
   public readonly playerActionPhaseTime = new PlayerActionPhaseTime(
