@@ -6,9 +6,9 @@ import { UnitPlastic } from "../../unit-lib/unit-plastic/unit-plastic";
 import { UnitType } from "../../unit-lib/schema/unit-attrs-schema";
 import { UnitAttrs } from "../../unit-lib/unit-attrs/unit-attrs";
 import { PlayerSeatType } from "../../player-lib/player-seats/player-seats";
-import { Faction } from "lib/faction-lib/faction/faction";
-import { System } from "lib/system-lib/system/system";
-import { Planet } from "lib/system-lib/planet/planet";
+import { Faction } from "../../faction-lib/faction/faction";
+import { System } from "../../system-lib/system/system";
+import { Planet } from "../../system-lib/planet/planet";
 
 export class GoalCounter {
   private readonly _find: Find = new Find();
