@@ -38,7 +38,7 @@ const NUM_REDS: Array<number> = [5, 6];
 
 export class NucleusDraft implements IDraft {
   public isEnabled(): boolean {
-    return TI4.config.playerCount === 6;
+    return true;
   }
 
   getDraftName(): string {
