@@ -131,7 +131,7 @@ export class NucleusDraft implements IDraft {
   _getScattered(
     mapStringIndexes: Array<number>,
     want: number,
-    iterations: number = 20
+    iterations: number = 50
   ): Array<number> {
     if (mapStringIndexes.length < want) {
       throw new Error(
@@ -194,12 +194,7 @@ export class NucleusDraft implements IDraft {
     const wormholes: Array<number> = TI4.systemRegistry
       .getAllSystemsWithObjs(skipContained)
       .filter((system: System): boolean => {
-        return (
-          system.getClass() === "map" &&
-          !system.isHome() &&
-          !system.isExcludeFromDraft() &&
-          system.getWormholes().length > 0
-        );
+        return !system.isExcludeFromDraft() && system.getWormholes().length > 0;
       })
       .map((system: System): number => {
         return system.getSystemTileNumber();
@@ -214,8 +209,6 @@ export class NucleusDraft implements IDraft {
       .getAllSystemsWithObjs(skipContained)
       .filter((system: System): boolean => {
         return (
-          system.getClass() === "map" &&
-          !system.isHome() &&
           !system.isExcludeFromDraft() &&
           system.getWormholes().length === 0 &&
           systemTier.getTier(system) === "red"
@@ -234,8 +227,6 @@ export class NucleusDraft implements IDraft {
       .getAllSystemsWithObjs(skipContained)
       .filter((system: System): boolean => {
         return (
-          system.getClass() === "map" &&
-          !system.isHome() &&
           !system.isExcludeFromDraft() &&
           system.getWormholes().length === 0 &&
           systemTier.getTier(system) !== "red"

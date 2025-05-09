@@ -52,14 +52,7 @@ export class DraftStartUI extends AbstractUI {
           const useThis: boolean =
             draftCheckBox.getText() === checkBox.getText();
           draftCheckBox.setIsChecked(useThis);
-          console.log(
-            "xxxx1",
-            draftCheckBox.getText(),
-            checkBox.getText(),
-            useThis
-          );
           if (useThis && iDraft) {
-            console.log("xxxx", iDraft.getDraftName());
             // Set the current draft to the one selected by the player.
             this._params.draft = iDraft;
           }

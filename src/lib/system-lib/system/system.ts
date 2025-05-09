@@ -522,7 +522,12 @@ export class System {
    * @returns {boolean}
    */
   isExcludeFromDraft(): boolean {
-    return this._params.isExcludeFromDraft ?? false;
+    return (
+      this.getClass() !== "map" ||
+      this.isHome() ||
+      this.isHyperlane() ||
+      this._params.isExcludeFromDraft === true
+    );
   }
 
   /**
