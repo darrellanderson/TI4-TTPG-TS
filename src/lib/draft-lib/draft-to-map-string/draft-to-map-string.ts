@@ -27,6 +27,10 @@ export class DraftToMapString {
   private readonly _seatIndexToAnchorHex: Map<number, HexType> = new Map();
 
   static fromDraftState(draftState: DraftState): MapStringAndHexToPlayerName {
+    if (draftState.getSpeakerIndex() < 0) {
+      throw new Error("Draft state must have a speaker index.");
+    }
+
     const seatIndexToSliceTiles: Map<number, SliceTiles> = new Map();
     const seatIndexToFaction: Map<number, Faction> = new Map();
     const seatIndexToPlayerName: Map<number, string> = new Map();

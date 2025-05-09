@@ -113,6 +113,14 @@ it("static map string", () => {
   );
 });
 
+it("static map string (missing speaker index)", () => {
+  const state: DraftState = new DraftState("@test/draft-state");
+
+  expect(() => {
+    DraftToMapString.fromDraftState(state);
+  }).toThrow();
+});
+
 it("_addBaseMap", () => {
   const draftToMapString = new DraftToMapString(MILTY_SLICE_SHAPE);
   const mapString: string = draftToMapString._addBaseMap(

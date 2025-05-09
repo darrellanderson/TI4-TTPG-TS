@@ -15,6 +15,7 @@ import {
   MapStringEntry,
   MapStringParser,
 } from "../../map-string-lib/map-string/map-string-parser";
+import { MILTY_SLICE_SHAPE, MILTY_SLICE_SHAPE_ALT } from "./milty";
 
 export const NUCLEUS_SLICE_SHAPE: ReadonlyArray<HexType> = [
   "<0,0,0>", // home system
@@ -60,8 +61,9 @@ export class NucleusDraft implements IDraft {
   }
 
   createEmptyDraftState(namespaceId: NamespaceId): DraftState {
-    const draftState: DraftState = new DraftState(namespaceId);
-    draftState.setSliceShape(NUCLEUS_SLICE_SHAPE);
+    const draftState: DraftState = new DraftState(namespaceId)
+      .setSpeakerIndex(0)
+      .setSliceShape(NUCLEUS_SLICE_SHAPE);
     if (TI4.config.playerCount === 7) {
       draftState.overrideSliceShape(3, NUCLEUS_SLICE_SHAPE_ALT);
     } else if (TI4.config.playerCount === 8) {
@@ -136,25 +138,18 @@ export class NucleusDraft implements IDraft {
 
   _getNucleusMapStringIndexes(): Array<number> {
     // Leverage draft state to map string.
-    // Use the milty eq+far front slice shape.
-    const nucluesDraftState: DraftState = new DraftState(
-      "@nucleus-inner/ti4"
-    ).setSliceShape([
-      "<0,0,0>", // home
-      "<2,-1,-1>", // left-eq
-      "<2,0,-2>", // front-far
-    ]);
+    // Use the milty slice shape, setting the eq+far to 1
+    // and the rest to 2 (need values everywhere for hyperlane
+    // addition to shift to open slots)
+    const nucluesDraftState: DraftState = new DraftState("@nucleus-inner/ti4")
+      .setSliceShape(MILTY_SLICE_SHAPE)
+      .setSpeakerIndex(0);
 
-    const altShape: SliceShape = [
-      "<0,0,0>", // home system
-      "<2,-1,-1>", // left-eq
-      "<3,-1,-2>", // front-far (pushed forward)
-    ];
     if (TI4.config.playerCount === 7) {
-      nucluesDraftState.overrideSliceShape(3, altShape);
+      nucluesDraftState.overrideSliceShape(3, MILTY_SLICE_SHAPE_ALT);
     } else if (TI4.config.playerCount === 8) {
-      nucluesDraftState.overrideSliceShape(3, altShape);
-      nucluesDraftState.overrideSliceShape(7, altShape);
+      nucluesDraftState.overrideSliceShape(3, MILTY_SLICE_SHAPE_ALT);
+      nucluesDraftState.overrideSliceShape(7, MILTY_SLICE_SHAPE_ALT);
     }
 
     const slices: Array<SliceTiles> = [];
@@ -162,7 +157,7 @@ export class NucleusDraft implements IDraft {
       const playerSlot: number = 10 + seatIndex;
       nucluesDraftState.setSliceIndexToPlayerSlot(seatIndex, playerSlot);
       nucluesDraftState.setSeatIndexToPlayerSlot(seatIndex, playerSlot);
-      slices.push([1, 1]);
+      slices.push([2, 2, 2, 1, 1]);
     }
     nucluesDraftState.setSlices(slices);
 

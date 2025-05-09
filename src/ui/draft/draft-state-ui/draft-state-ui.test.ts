@@ -172,7 +172,9 @@ it("_getCreateZoomedSliceUi", () => {
 });
 
 it("_getCreateZoomedMapUi", () => {
-  const draftState: DraftState = new DraftState("@test/draft-state");
+  const draftState: DraftState = new DraftState(
+    "@test/draft-state"
+  ).setSpeakerIndex(0);
 
   const createZoomedMapUi = DraftStateUI._getCreatedZoomedMapUi(draftState);
   const scale = 1;

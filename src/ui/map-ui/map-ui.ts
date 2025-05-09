@@ -131,10 +131,11 @@ export class MapUI extends AbstractUI {
       const system: System | undefined =
         TI4.systemRegistry.getBySystemTileNumber(entry.tile);
       if (system && system.isHyperlane()) {
-        // Cannot rotate images, use a gray tile for hyperlanes.
+        // Cannot rotate images, use a special tile for hyperlanes.
+        console.log("map-ui.ts: hyperlane tile");
         const c = 0.03;
         img
-          .setImage("tile/system/tile-000.png", packageId)
+          .setImage("tile/system/hyperlane.png", packageId)
           .setTintColor([c, c, c, 1]);
       } else if (system) {
         img.setImage(system.getImg(), system.getImgPackageId());
@@ -221,7 +222,7 @@ export class MapUI extends AbstractUI {
           TI4.systemRegistry.getBySystemTileNumber(entry.tile);
         if (system && system.isHyperlane()) {
           // Cannot rotate images, use a blank tile for hyperlanes, tint later
-          img.setImage("tile/system/tile-000.png", packageId);
+          img.setImage("tile/system/hyperlane.png", packageId);
         } else if (system) {
           img.setImage(system.getImg(), system.getImgPackageId());
         } else {
