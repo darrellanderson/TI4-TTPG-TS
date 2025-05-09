@@ -11,6 +11,11 @@ it("constructor", () => {
   new Wekker();
 });
 
+it("isEnabled", () => {
+  const wekker = new Wekker();
+  expect(wekker.isEnabled()).toBe(true);
+});
+
 it("getDraftName", () => {
   const wekker = new Wekker();
   const draftName = wekker.getDraftName();

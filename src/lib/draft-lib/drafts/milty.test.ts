@@ -6,6 +6,11 @@ it("constructor", () => {
   new Milty();
 });
 
+it("isEnabled", () => {
+  const milty = new Milty();
+  expect(milty.isEnabled()).toBe(true);
+});
+
 it("getDraftName", () => {
   const milty = new Milty();
   const draftName = milty.getDraftName();
