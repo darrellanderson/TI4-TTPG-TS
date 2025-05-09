@@ -23,12 +23,17 @@ beforeEach(() => {
 });
 
 it("constructor", () => {
-  const draftState: DraftState = new DraftState("@test/test");
+  const draftState: DraftState = new DraftState("@test/test").setSpeakerIndex(
+    0
+  );
+
   new DraftActivityFinish(draftState);
 });
 
 it("finishAll", () => {
-  const draftState: DraftState = new DraftState("@test/test");
+  const draftState: DraftState = new DraftState("@test/test").setSpeakerIndex(
+    0
+  );
   const draftActivityFinish: DraftActivityFinish = new DraftActivityFinish(
     draftState
   );
@@ -40,7 +45,10 @@ it("movePlayersToSeats", () => {
 
   const player: Player = new MockPlayer({ slot: 10 });
 
-  const draftState: DraftState = new DraftState("@test/test");
+  const draftState: DraftState = new DraftState("@test/test").setSpeakerIndex(
+    0
+  );
+
   const draftActivityFinish: DraftActivityFinish = new DraftActivityFinish(
     draftState
   );
@@ -59,7 +67,10 @@ it("moveSpeakerToken", () => {
 
   const speakerToken: GameObject = MockGameObject.simple("token:base/speaker");
 
-  const draftState: DraftState = new DraftState("@test/test");
+  const draftState: DraftState = new DraftState("@test/test").setSpeakerIndex(
+    0
+  );
+
   const draftActivityFinish: DraftActivityFinish = new DraftActivityFinish(
     draftState
   );
@@ -74,7 +85,10 @@ it("moveSpeakerToken", () => {
 });
 
 it("unpackFactions", () => {
-  const draftState: DraftState = new DraftState("@test/test");
+  const draftState: DraftState = new DraftState("@test/test").setSpeakerIndex(
+    0
+  );
+
   draftState.setFactions([
     TI4.factionRegistry.getByNsidOrThrow("faction:base/arborec"),
   ]);
@@ -90,9 +104,9 @@ it("unpackFactions", () => {
 });
 
 it("unpackMap", () => {
-  const draftState: DraftState = new Milty().createEmptyDraftState(
-    "@test/test"
-  );
+  const draftState: DraftState = new Milty()
+    .createEmptyDraftState("@test/test")
+    .setSpeakerIndex(0);
   const draftActivityFinish: DraftActivityFinish = new DraftActivityFinish(
     draftState
   );
@@ -117,7 +131,10 @@ it("unpackMap", () => {
 });
 
 it("set turn order", () => {
-  const draftState: DraftState = new DraftState("@test/test");
+  const draftState: DraftState = new DraftState("@test/test").setSpeakerIndex(
+    0
+  );
+
   const draftActivityFinish: DraftActivityFinish = new DraftActivityFinish(
     draftState
   );

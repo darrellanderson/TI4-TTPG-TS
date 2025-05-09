@@ -3,7 +3,6 @@ import { HexType, NamespaceId, Shuffle } from "ttpg-darrell";
 import { DraftState } from "../draft-state/draft-state";
 import {
   GenerateSlicesParams,
-  SliceShape,
   SliceTiles,
 } from "../generate-slices/generate-slices";
 import { IDraft } from "./idraft";

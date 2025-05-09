@@ -132,7 +132,6 @@ export class MapUI extends AbstractUI {
         TI4.systemRegistry.getBySystemTileNumber(entry.tile);
       if (system && system.isHyperlane()) {
         // Cannot rotate images, use a special tile for hyperlanes.
-        console.log("map-ui.ts: hyperlane tile");
         const c = 0.03;
         img
           .setImage("tile/system/hyperlane.png", packageId)
