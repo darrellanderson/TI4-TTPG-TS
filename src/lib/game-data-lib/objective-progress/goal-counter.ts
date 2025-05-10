@@ -426,4 +426,53 @@ export class GoalCounter {
 
     return result;
   }
+
+  countPlanetsWithStructuresOutsidePlayersHome(): Map<PlayerSlot, number> {
+    const result = new Map<PlayerSlot, number>();
+
+    const structureNsids: Set<string> = new Set([
+      "unit:base/space-dock",
+      "unit:base/space-dock.token",
+      "unit:base/pds",
+      "unit:base/pds.token",
+    ]);
+
+    const playerSlotToPlanetCards: Map<
+      PlayerSlot,
+      Array<Card>
+    > = this._getPlayerSlotToPlanetCards();
+
+    const playerSlotToHomePlanetCardNsids: Map<
+      PlayerSlot,
+      Set<string>
+    > = this._getPlayerSlotToHomePlanetCardNsids();
+
+    const hexToSystem: Map<string, System> = new Map();
+    TI4.systemRegistry
+      .getAllSystemsWithObjs()
+      .forEach((system: System): void => {
+        const pos: Vector = system.getObj().getPosition();
+        const hex: HexType = TI4.hex.fromPosition(pos);
+        hexToSystem.set(hex, system);
+      });
+
+    const skipContained: boolean = true;
+    for (const obj of world.getAllObjects(skipContained)) {
+      const nsid: string = NSID.get(obj);
+      if (structureNsids.has(nsid)) {
+        const pos: Vector = obj.getPosition();
+        const hex: HexType = TI4.hex.fromPosition(pos);
+        const system: System | undefined = hexToSystem.get(hex);
+        if (system) {
+          const planet: Planet | undefined = system.getPlanetClosest(pos);
+          if (planet) {
+            const planetCardNsid: string = planet.getPlanetCardNsid();
+            const playerSlot: PlayerSlot = obj.getOwningPlayerSlot();
+          }
+        }
+      }
+    }
+
+    return result;
+  }
 }
