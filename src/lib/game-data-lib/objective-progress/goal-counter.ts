@@ -1,4 +1,4 @@
-import { Card, Vector, world } from "@tabletop-playground/api";
+import { Card, GameObject, Vector, world } from "@tabletop-playground/api";
 import { Find, HexType, NSID, PlayerSlot } from "ttpg-darrell";
 import { GameData, PerPlayerGameData } from "../game-data/game-data";
 import { UpdatorPlayerPlanetTotalsType } from "../updators/updator-player-planet-totals/updator-player-planet-totals-type";
@@ -9,9 +9,94 @@ import { PlayerSeatType } from "../../player-lib/player-seats/player-seats";
 import { Faction } from "../../faction-lib/faction/faction";
 import { System } from "../../system-lib/system/system";
 import { Planet } from "../../system-lib/planet/planet";
+import { PlanetAttachment } from "../../system-lib/planet-attachment/planet-attachment";
 
 export class GoalCounter {
   private readonly _find: Find = new Find();
+
+  _getSystemHexes(): Set<HexType> {
+    const result: Set<HexType> = new Set();
+    TI4.systemRegistry.getAllSystemsWithObjs().forEach((system) => {
+      const pos: Vector = system.getObj().getPosition();
+      const hex: HexType = TI4.hex.fromPosition(pos);
+      result.add(hex);
+    });
+    return result;
+  }
+
+  _getPlayerSlotToPlanetCards(): Map<PlayerSlot, Array<Card>> {
+    const result = new Map<PlayerSlot, Array<Card>>();
+
+    // Do not count planet cards on system tiles.
+    const validHexes: Set<HexType> = this._getSystemHexes();
+
+    const skipContained: boolean = true;
+    for (const obj of world.getAllObjects(skipContained)) {
+      if (obj instanceof Card) {
+        const nsid: string = NSID.get(obj);
+        if (nsid.startsWith("card.planet:")) {
+          const pos: Vector = obj.getPosition();
+          const hex: HexType = TI4.hex.fromPosition(pos);
+          if (!validHexes.has(hex)) {
+            const playerSlot: PlayerSlot =
+              this._find.closestOwnedCardHolderOwner(pos);
+            let cards: Array<Card> | undefined = result.get(playerSlot);
+            if (!cards) {
+              cards = [];
+              result.set(playerSlot, cards);
+            }
+            cards.push(obj);
+          }
+        }
+      }
+    }
+    return result;
+  }
+
+  _getPlayerSlotToHomePlanetCardNsids(): Map<PlayerSlot, Set<string>> {
+    const playerSlotToHomePlanetCardNsids: Map<
+      PlayerSlot,
+      Set<string>
+    > = new Map();
+
+    const playerSlotToFaction: Map<PlayerSlot, Faction> =
+      TI4.factionRegistry.getPlayerSlotToFaction();
+
+    playerSlotToFaction.forEach((faction: Faction, playerSlot: PlayerSlot) => {
+      const homeTile: number = faction.getHomeSystemTileNumber();
+      const homeSystem: System | undefined =
+        TI4.systemRegistry.getBySystemTileNumber(homeTile);
+      if (homeSystem) {
+        // Get my home planet card nsids.
+        const myHomePlanetNsids: Set<string> = new Set();
+        homeSystem.getPlanets().forEach((planet: Planet): void => {
+          const nsid: string = planet.getPlanetCardNsid();
+          myHomePlanetNsids.add(nsid);
+        });
+        playerSlotToHomePlanetCardNsids.set(playerSlot, myHomePlanetNsids);
+      }
+    });
+
+    return playerSlotToHomePlanetCardNsids;
+  }
+
+  _getAllHomePlanetCardNsids(): Set<string> {
+    const allHomePlanetCardNsids: Set<string> = new Set();
+
+    const playerSlotToHomePlanetCardNsids: Map<
+      PlayerSlot,
+      Set<string>
+    > = this._getPlayerSlotToHomePlanetCardNsids();
+    playerSlotToHomePlanetCardNsids.forEach(
+      (myHomePlanetNsids: Set<string>, _playerSlot: PlayerSlot) => {
+        myHomePlanetNsids.forEach((nsid: string): void => {
+          allHomePlanetCardNsids.add(nsid);
+        });
+      }
+    );
+
+    return allHomePlanetCardNsids;
+  }
 
   /**
    * Count per-player number of flagships and war suns.
@@ -21,17 +106,22 @@ export class GoalCounter {
   countFlagshipsAndWarSuns(): Map<PlayerSlot, number> {
     const result = new Map<PlayerSlot, number>();
 
-    const skipContained: boolean = true;
-    for (const obj of world.getAllObjects(skipContained)) {
-      const nsid: string = NSID.get(obj);
-      if (
-        nsid.startsWith("unit:base/flagship") ||
-        nsid.startsWith("unit:base/war-sun")
-      ) {
-        const playerSlot: PlayerSlot = obj.getOwningPlayerSlot();
-        const count: number = result.get(playerSlot) || 0;
-        result.set(playerSlot, count + 1);
+    // Get all flagships and war suns (UnitPlastic restricts to valid hexes).
+    const plastics: Array<UnitPlastic> = UnitPlastic.getAll().filter(
+      (plastic: UnitPlastic): boolean => {
+        const nsid: string = NSID.get(plastic.getObj());
+        return (
+          nsid.startsWith("unit:base/flagship") ||
+          nsid.startsWith("unit:base/war-sun")
+        );
       }
+    );
+
+    for (const plastic of plastics) {
+      const obj: GameObject = plastic.getObj();
+      const playerSlot: PlayerSlot = obj.getOwningPlayerSlot();
+      const count: number = result.get(playerSlot) || 0;
+      result.set(playerSlot, count + 1);
     }
 
     return result;
@@ -69,14 +159,6 @@ export class GoalCounter {
   countMaxNonFighterShipsInSingleSystem(): Map<PlayerSlot, number> {
     const result = new Map<PlayerSlot, number>();
 
-    // Get valid hexes (must be on a system tile).
-    const validHexes: Set<HexType> = new Set();
-    TI4.systemRegistry.getAllSystemsWithObjs().forEach((system) => {
-      const pos: Vector = system.getObj().getPosition();
-      const hex: HexType = TI4.hex.fromPosition(pos);
-      validHexes.add(hex);
-    });
-
     // Non-fighter ship UnitTypes.
     const nonFighterShips: Set<UnitType> = new Set();
     TI4.unitAttrsRegistry
@@ -89,13 +171,10 @@ export class GoalCounter {
         }
       });
 
-    // Get all non-fighter ships in valid hexes.
+    // Get all non-fighter ships (UnitPlastic restricts to valid hexes).
     const plastics: Array<UnitPlastic> = UnitPlastic.getAll().filter(
       (plastic: UnitPlastic): boolean => {
-        return (
-          nonFighterShips.has(plastic.getUnit()) &&
-          validHexes.has(plastic.getHex())
-        );
+        return nonFighterShips.has(plastic.getUnit());
       }
     );
 
@@ -130,28 +209,6 @@ export class GoalCounter {
       }
     }
 
-    return result;
-  }
-
-  _getPlayerSlotToPlanetCards(): Map<PlayerSlot, Array<Card>> {
-    const result = new Map<PlayerSlot, Array<Card>>();
-    const skipContained: boolean = true;
-    for (const obj of world.getAllObjects(skipContained)) {
-      if (obj instanceof Card) {
-        const nsid: string = NSID.get(obj);
-        if (nsid.startsWith("card.planet:")) {
-          const pos: Vector = obj.getPosition();
-          const playerSlot: PlayerSlot =
-            this._find.closestOwnedCardHolderOwner(pos);
-          let cards: Array<Card> | undefined = result.get(playerSlot);
-          if (!cards) {
-            cards = [];
-            result.set(playerSlot, cards);
-          }
-          cards.push(obj);
-        }
-      }
-    }
     return result;
   }
 
@@ -204,35 +261,18 @@ export class GoalCounter {
   countPlanetsInOthersHome(): Map<PlayerSlot, number> {
     const result = new Map<PlayerSlot, number>();
 
-    const playerSlotToFaction: Map<PlayerSlot, Faction> =
-      TI4.factionRegistry.getPlayerSlotToFaction();
-
-    const allHomePlanetCardNsids: Set<string> = new Set();
-    const playerSlotToHomePlanetCardNsids: Map<
-      PlayerSlot,
-      Set<string>
-    > = new Map();
-
-    playerSlotToFaction.forEach((faction: Faction, playerSlot: PlayerSlot) => {
-      const homeTile: number = faction.getHomeSystemTileNumber();
-      const homeSystem: System | undefined =
-        TI4.systemRegistry.getBySystemTileNumber(homeTile);
-      if (homeSystem) {
-        // Get my home planet card nsids.
-        const myHomePlanetNsids: Set<string> = new Set();
-        homeSystem.getPlanets().forEach((planet: Planet): void => {
-          const nsid: string = planet.getPlanetCardNsid();
-          myHomePlanetNsids.add(nsid);
-          allHomePlanetCardNsids.add(nsid);
-        });
-        playerSlotToHomePlanetCardNsids.set(playerSlot, myHomePlanetNsids);
-      }
-    });
-
     const playerSlotToPlanetCards: Map<
       PlayerSlot,
       Array<Card>
     > = this._getPlayerSlotToPlanetCards();
+
+    const playerSlotToHomePlanetCardNsids: Map<
+      PlayerSlot,
+      Set<string>
+    > = this._getPlayerSlotToHomePlanetCardNsids();
+
+    const allHomePlanetCardNsids: Set<string> =
+      this._getAllHomePlanetCardNsids();
 
     TI4.playerSeats
       .getAllSeats()
@@ -256,6 +296,133 @@ export class GoalCounter {
           result.set(playerSlot, count);
         }
       });
+
+    return result;
+  }
+
+  countPlanetsNonHome(
+    excludeCustodiaVigilia: boolean
+  ): Map<PlayerSlot, number> {
+    const result = new Map<PlayerSlot, number>();
+
+    const allHomePlanetCardNsids: Set<string> =
+      this._getAllHomePlanetCardNsids();
+
+    const playerSlotToPlanetCards: Map<
+      PlayerSlot,
+      Array<Card>
+    > = this._getPlayerSlotToPlanetCards();
+
+    TI4.playerSeats
+      .getAllSeats()
+      .forEach((playerSeat: PlayerSeatType): void => {
+        const playerSlot: PlayerSlot = playerSeat.playerSlot;
+        const planetCards: Array<Card> | undefined =
+          playerSlotToPlanetCards.get(playerSlot);
+        if (planetCards) {
+          let count: number = 0;
+          planetCards.forEach((planetCard: Card): void => {
+            const nsid: string = NSID.get(planetCard);
+            if (
+              excludeCustodiaVigilia &&
+              nsid === "card.planet:codex.vigil/custodia-vigilia"
+            ) {
+              return;
+            }
+            if (!allHomePlanetCardNsids.has(nsid)) {
+              count += 1;
+            }
+          });
+          result.set(playerSlot, count);
+        }
+      });
+
+    return result;
+  }
+
+  countPlanetTraits(): Map<
+    PlayerSlot,
+    {
+      cultural: number;
+      industrial: number;
+      hazardous: number;
+    }
+  > {
+    const result = new Map<
+      PlayerSlot,
+      {
+        cultural: number;
+        industrial: number;
+        hazardous: number;
+      }
+    >();
+
+    const gameData: GameData | undefined = TI4.lastGameData.getLastGameData();
+    if (gameData) {
+      gameData.players.forEach((player: PerPlayerGameData, index: number) => {
+        const playerSlot: PlayerSlot =
+          TI4.playerSeats.getPlayerSlotBySeatIndex(index);
+        let entry:
+          | {
+              cultural: number;
+              industrial: number;
+              hazardous: number;
+            }
+          | undefined = result.get(playerSlot);
+        if (!entry) {
+          entry = {
+            cultural: 0,
+            industrial: 0,
+            hazardous: 0,
+          };
+          result.set(playerSlot, entry);
+        }
+        const planetTotals: UpdatorPlayerPlanetTotalsType | undefined =
+          player.planetTotals;
+        if (planetTotals) {
+          entry.cultural += planetTotals.traits.cultural;
+          entry.industrial += planetTotals.traits.industrial;
+          entry.hazardous += planetTotals.traits.hazardous;
+        }
+      });
+    }
+
+    return result;
+  }
+
+  countPlanetsWithAttachments(): Map<PlayerSlot, number> {
+    const result = new Map<PlayerSlot, number>();
+
+    const playerSlotToPlanetCards: Map<
+      PlayerSlot,
+      Array<Card>
+    > = this._getPlayerSlotToPlanetCards();
+
+    const ignoreAttachments: Set<string> = new Set([
+      "token.attachment.planet:pok/sleeper-token",
+      "token.attachment.planet:codex.vigil/custodia-vigilia",
+    ]);
+
+    playerSlotToPlanetCards.forEach(
+      (cards: Array<Card>, playerSlot: PlayerSlot): void => {
+        let count: number = 0;
+        cards.forEach((card: Card): void => {
+          const nsid: string = NSID.get(card);
+          const planet: Planet | undefined =
+            TI4.systemRegistry.getPlanetByPlanetCardNsid(nsid);
+          if (planet) {
+            count += planet
+              .getAttachments()
+              .filter((attachment: PlanetAttachment): boolean => {
+                // Some attachments are not *actually* attachments for this purpose.
+                const attachmentNsid: string = NSID.get(attachment.getObj());
+                return !ignoreAttachments.has(attachmentNsid);
+              }).length;
+          }
+        });
+        result.set(playerSlot, count);
+      }
+    );
 
     return result;
   }
