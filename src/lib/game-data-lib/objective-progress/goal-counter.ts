@@ -430,23 +430,6 @@ export class GoalCounter {
   countPlanetsWithStructuresOutsidePlayersHome(): Map<PlayerSlot, number> {
     const result = new Map<PlayerSlot, number>();
 
-    const structureNsids: Set<string> = new Set([
-      "unit:base/space-dock",
-      "unit:base/space-dock.token",
-      "unit:base/pds",
-      "unit:base/pds.token",
-    ]);
-
-    const playerSlotToPlanetCards: Map<
-      PlayerSlot,
-      Array<Card>
-    > = this._getPlayerSlotToPlanetCards();
-
-    const playerSlotToHomePlanetCardNsids: Map<
-      PlayerSlot,
-      Set<string>
-    > = this._getPlayerSlotToHomePlanetCardNsids();
-
     const hexToSystem: Map<string, System> = new Map();
     TI4.systemRegistry
       .getAllSystemsWithObjs()
@@ -456,6 +439,14 @@ export class GoalCounter {
         hexToSystem.set(hex, system);
       });
 
+    // Assign structures to planets.
+    const planetToStructureOwners: Map<Planet, Array<GameObject>> = new Map();
+    const structureNsids: Set<string> = new Set([
+      "unit:base/space-dock",
+      "unit:base/space-dock.token",
+      "unit:base/pds",
+      "unit:base/pds.token",
+    ]);
     const skipContained: boolean = true;
     for (const obj of world.getAllObjects(skipContained)) {
       const nsid: string = NSID.get(obj);
@@ -472,6 +463,17 @@ export class GoalCounter {
         }
       }
     }
+
+    // Which planets each player controls (ignores cards on system tiles).
+    const playerSlotToPlanetCards: Map<
+      PlayerSlot,
+      Array<Card>
+    > = this._getPlayerSlotToPlanetCards();
+
+    const playerSlotToHomePlanetCardNsids: Map<
+      PlayerSlot,
+      Set<string>
+    > = this._getPlayerSlotToHomePlanetCardNsids();
 
     return result;
   }
