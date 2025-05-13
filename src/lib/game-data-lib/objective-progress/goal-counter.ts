@@ -839,11 +839,16 @@ export class GoalCounter {
       hexes.add(hex);
     });
 
+    const playerSlotToHomeSystemHex: Map<PlayerSlot, HexType> =
+      this._getPlayerSlotToHomeSystemHex();
+
     playerSlotToUnitHexes.forEach(
       (unitHexes: Set<HexType>, playerSlot: PlayerSlot): void => {
+        const homeHex: HexType | undefined =
+          playerSlotToHomeSystemHex.get(playerSlot);
         let count: number = 0;
         for (const hex of unitHexes) {
-          if (edgeHexes.has(hex)) {
+          if (edgeHexes.has(hex) && hex !== homeHex) {
             count += 1;
           }
         }
