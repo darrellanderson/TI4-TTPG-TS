@@ -868,6 +868,7 @@ export class GoalCounter {
       green: number;
       red: number;
       yellow: number;
+      unitUpgrade: number;
     }
   > {
     const result = new Map<
@@ -877,6 +878,7 @@ export class GoalCounter {
         green: number;
         red: number;
         yellow: number;
+        unitUpgrade: number;
       }
     >();
 
@@ -894,6 +896,7 @@ export class GoalCounter {
               green: number;
               red: number;
               yellow: number;
+              unitUpgrade: number;
             }
           | undefined = result.get(playerSlot);
         if (!entry) {
@@ -902,6 +905,7 @@ export class GoalCounter {
             green: 0,
             red: 0,
             yellow: 0,
+            unitUpgrade: 0,
           };
           result.set(playerSlot, entry);
         }
@@ -914,6 +918,8 @@ export class GoalCounter {
           entry.red += 1;
         } else if (color === "yellow") {
           entry.yellow += 1;
+        } else if (color === "unit-upgrade") {
+          entry.unitUpgrade += 1;
         }
       }
     }

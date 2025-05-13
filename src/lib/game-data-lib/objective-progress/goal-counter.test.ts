@@ -405,6 +405,7 @@ it("countTechnologyColors", () => {
   MockCard.simple("card.technology.green:base/bioplasmosis");
   MockCard.simple("card.technology.red:pok/ai-development-algorithm");
   MockCard.simple("card.technology.yellow:pok/aerie-hololattice");
+  MockCard.simple("card.technology.unit-upgrade:base/carrier-2");
 
   const counts: Map<
     PlayerSlot,
@@ -416,6 +417,7 @@ it("countTechnologyColors", () => {
     green: 1,
     red: 1,
     yellow: 1,
+    unitUpgrade: 1,
   });
 });
 
