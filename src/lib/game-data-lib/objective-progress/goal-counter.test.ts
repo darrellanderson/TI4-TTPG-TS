@@ -418,3 +418,23 @@ it("countTechnologyColors", () => {
     yellow: 1,
   });
 });
+
+it("countTokensInTacticAndStrategy", () => {
+  const gameData: GameData = {
+    players: [
+      {
+        commandTokens: {
+          fleet: 1,
+          strategy: 2,
+          tactics: 3,
+        },
+      },
+    ],
+  };
+  TI4.events.onGameData.trigger(gameData);
+  expect(TI4.lastGameData.getLastGameData()).toEqual(gameData);
+
+  const counts = new GoalCounter().countTokensInTacticAndStrategy();
+  expect(counts.size).toBe(1);
+  expect(counts.get(12)).toEqual(5);
+});

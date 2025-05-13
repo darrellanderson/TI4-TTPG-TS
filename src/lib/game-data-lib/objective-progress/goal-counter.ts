@@ -12,6 +12,7 @@ import { Planet } from "../../system-lib/planet/planet";
 import { PlanetAttachment } from "../../system-lib/planet-attachment/planet-attachment";
 import { SystemAdjacency } from "../../system-lib/system-adjacency/system-adjacency";
 import { Tech } from "../../tech-lib/tech/tech";
+import { UpdatorPlayerCommandTokensType } from "../updators/updator-player-command-tokens/updator-player-command-tokens-type";
 
 export class GoalCounter {
   private readonly _find: Find = new Find();
@@ -915,6 +916,27 @@ export class GoalCounter {
           entry.yellow += 1;
         }
       }
+    }
+
+    return result;
+  }
+
+  countTokensInTacticAndStrategy(): Map<PlayerSlot, number> {
+    const result = new Map<PlayerSlot, number>();
+
+    const gameData: GameData | undefined = TI4.lastGameData.getLastGameData();
+    if (gameData) {
+      gameData.players.forEach((player: PerPlayerGameData, index: number) => {
+        const playerSlot: PlayerSlot =
+          TI4.playerSeats.getPlayerSlotBySeatIndex(index);
+        const commandTokensType: UpdatorPlayerCommandTokensType | undefined =
+          player.commandTokens;
+        if (commandTokensType) {
+          const value: number =
+            commandTokensType.tactics + commandTokensType.strategy;
+          result.set(playerSlot, value);
+        }
+      });
     }
 
     return result;
