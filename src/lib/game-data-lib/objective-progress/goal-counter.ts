@@ -1,5 +1,5 @@
 import { Card, GameObject, Vector, world } from "@tabletop-playground/api";
-import { Find, HexType, NSID, PlayerSlot } from "ttpg-darrell";
+import { Find, Hex, HexType, NSID, PlayerSlot } from "ttpg-darrell";
 import { GameData, PerPlayerGameData } from "../game-data/game-data";
 import { UpdatorPlayerPlanetTotalsType } from "../updators/updator-player-planet-totals/updator-player-planet-totals-type";
 import { UnitPlastic } from "../../unit-lib/unit-plastic/unit-plastic";
@@ -10,6 +10,7 @@ import { Faction } from "../../faction-lib/faction/faction";
 import { System } from "../../system-lib/system/system";
 import { Planet } from "../../system-lib/planet/planet";
 import { PlanetAttachment } from "../../system-lib/planet-attachment/planet-attachment";
+import { SystemAdjacency } from "../../system-lib/system-adjacency/system-adjacency";
 
 export class GoalCounter {
   private readonly _find: Find = new Find();
@@ -96,6 +97,52 @@ export class GoalCounter {
     );
 
     return allHomePlanetCardNsids;
+  }
+
+  _getPlayerSlotToHomeSystemHex(): Map<PlayerSlot, HexType> {
+    const playerSlotToHomeSystemHex: Map<PlayerSlot, HexType> = new Map();
+    TI4.factionRegistry
+      .getPlayerSlotToFaction()
+      .forEach((faction: Faction, playerSlot: PlayerSlot): void => {
+        const homeTile: number = faction.getHomeSystemTileNumber();
+        const homeSystem: System | undefined =
+          TI4.systemRegistry.getBySystemTileNumber(homeTile);
+        if (homeSystem) {
+          const pos: Vector = homeSystem.getObj().getPosition();
+          const hex: HexType = TI4.hex.fromPosition(pos);
+          playerSlotToHomeSystemHex.set(playerSlot, hex);
+        }
+      });
+    return playerSlotToHomeSystemHex;
+  }
+
+  _getPlayerSlotToControlledPlanetHexes(): Map<PlayerSlot, Set<HexType>> {
+    const playerSlotToControlledPlanetHexes: Map<
+      PlayerSlot,
+      Set<HexType>
+    > = new Map();
+
+    UnitPlastic.getAll().forEach((plastic: UnitPlastic): void => {
+      const unitType: UnitType = plastic.getUnit();
+      if (
+        unitType === "control-token" ||
+        unitType === "infantry" ||
+        unitType === "mech" ||
+        unitType === "pds" ||
+        unitType === "space-dock"
+      ) {
+        const playerSlot: PlayerSlot = plastic.getOwningPlayerSlot();
+        const hex: HexType = plastic.getHex();
+        let hexes: Set<HexType> | undefined =
+          playerSlotToControlledPlanetHexes.get(playerSlot);
+        if (!hexes) {
+          hexes = new Set();
+          playerSlotToControlledPlanetHexes.set(playerSlot, hexes);
+        }
+        hexes.add(hex);
+      }
+    });
+    return playerSlotToControlledPlanetHexes;
   }
 
   /**
@@ -430,50 +477,379 @@ export class GoalCounter {
   countPlanetsWithStructuresOutsidePlayersHome(): Map<PlayerSlot, number> {
     const result = new Map<PlayerSlot, number>();
 
-    const hexToSystem: Map<string, System> = new Map();
+    const structures: Array<UnitPlastic> = UnitPlastic.getAll().filter(
+      (plastic: UnitPlastic): boolean => {
+        return (
+          plastic.getUnit() === "space-dock" || plastic.getUnit() === "pds"
+        );
+      }
+    );
+
+    UnitPlastic.assignPlanets(structures);
+
+    // Per-player structures.
+    const playerSlotToStructures: Map<
+      PlayerSlot,
+      Array<UnitPlastic>
+    > = new Map();
+    structures.forEach((structure: UnitPlastic): void => {
+      const playerSlot: PlayerSlot = structure.getOwningPlayerSlot();
+      let playerStructures: Array<UnitPlastic> | undefined =
+        playerSlotToStructures.get(playerSlot);
+      if (!playerStructures) {
+        playerStructures = [];
+        playerSlotToStructures.set(playerSlot, playerStructures);
+      }
+      playerStructures.push(structure);
+    });
+
+    // Per-player home systems.
+    const playerSlotToHomePlanetCardNsids: Map<
+      PlayerSlot,
+      Set<string>
+    > = this._getPlayerSlotToHomePlanetCardNsids();
+
+    playerSlotToStructures.forEach(
+      (playerStructures: Array<UnitPlastic>, playerSlot: PlayerSlot): void => {
+        const homeNsids: Set<string> | undefined =
+          playerSlotToHomePlanetCardNsids.get(playerSlot) || new Set();
+        const nonHomePlanets: Set<string> = new Set();
+        playerStructures.forEach((structure: UnitPlastic): void => {
+          const planet: Planet | undefined = structure.getPlanetClosest();
+          if (planet) {
+            const nsid: string = planet.getPlanetCardNsid();
+            if (!homeNsids.has(nsid)) {
+              nonHomePlanets.add(nsid);
+            }
+          }
+        });
+        const count: number = nonHomePlanets.size;
+        result.set(playerSlot, count);
+      }
+    );
+
+    return result;
+  }
+
+  countPlanetsWithTechSpecialties(): Map<PlayerSlot, number> {
+    const result = new Map<PlayerSlot, number>();
+
+    const playerSlotToPlanetCards: Map<
+      PlayerSlot,
+      Array<Card>
+    > = this._getPlayerSlotToPlanetCards();
+    playerSlotToPlanetCards.forEach(
+      (cards: Array<Card>, playerSlot: PlayerSlot): void => {
+        let count: number = 0;
+        cards.forEach((card: Card): void => {
+          const nsid: string = NSID.get(card);
+          const planet: Planet | undefined =
+            TI4.systemRegistry.getPlanetByPlanetCardNsid(nsid);
+          if (planet && planet.getTechs().length > 0) {
+            count += 1;
+          }
+        });
+        result.set(playerSlot, count);
+      }
+    );
+
+    return result;
+  }
+
+  countStructures(): Map<PlayerSlot, number> {
+    const result = new Map<PlayerSlot, number>();
+
+    const structures: Array<UnitPlastic> = UnitPlastic.getAll().filter(
+      (plastic: UnitPlastic): boolean => {
+        return (
+          plastic.getUnit() === "space-dock" || plastic.getUnit() === "pds"
+        );
+      }
+    );
+
+    // Per-player structures.
+    const playerSlotToStructures: Map<
+      PlayerSlot,
+      Array<UnitPlastic>
+    > = new Map();
+    structures.forEach((structure: UnitPlastic): void => {
+      const playerSlot: PlayerSlot = structure.getOwningPlayerSlot();
+      let playerStructures: Array<UnitPlastic> | undefined =
+        playerSlotToStructures.get(playerSlot);
+      if (!playerStructures) {
+        playerStructures = [];
+        playerSlotToStructures.set(playerSlot, playerStructures);
+      }
+      playerStructures.push(structure);
+    });
+
+    playerSlotToStructures.forEach(
+      (playerStructures: Array<UnitPlastic>, playerSlot: PlayerSlot): void => {
+        const count: number = playerStructures.length;
+        result.set(playerSlot, count);
+      }
+    );
+
+    return result;
+  }
+
+  countSystemsWithControlledPlanetsInOrAdjToOthersHome(): Map<
+    PlayerSlot,
+    number
+  > {
+    const result = new Map<PlayerSlot, number>();
+
+    const playerSlotToHomeSystemHex: Map<PlayerSlot, HexType> =
+      this._getPlayerSlotToHomeSystemHex();
+
+    const allHomeSystemHexes: ReadonlyArray<HexType> = [
+      ...playerSlotToHomeSystemHex.values(),
+    ];
+
+    const playerSlotToControlledPlanetHexes: Map<
+      PlayerSlot,
+      Set<HexType>
+    > = this._getPlayerSlotToControlledPlanetHexes();
+
+    // Final control check, different factions may have different
+    // adjacency rules.
+    const systemAdjacency: SystemAdjacency = new SystemAdjacency();
+    playerSlotToHomeSystemHex.forEach(
+      (homeSystemHex: HexType, playerSlot: PlayerSlot): void => {
+        const otherHomeSystemHexes: ReadonlyArray<HexType> =
+          allHomeSystemHexes.filter((hex: HexType): boolean => {
+            return hex !== homeSystemHex;
+          });
+
+        const adjHexes: Set<HexType> = new Set();
+        const faction: Faction | undefined =
+          TI4.factionRegistry.getByPlayerSlot(playerSlot);
+        otherHomeSystemHexes.forEach((otherHomeSystemHex: HexType): void => {
+          systemAdjacency
+            .getAdjHexes(otherHomeSystemHex, faction)
+            .forEach((adjHex: HexType): void => {
+              adjHexes.add(adjHex);
+            });
+        });
+
+        const controlledHexes: Set<HexType> | undefined =
+          playerSlotToControlledPlanetHexes.get(playerSlot);
+        if (controlledHexes) {
+          let count: number = 0;
+          controlledHexes.forEach((controlledHex: HexType): void => {
+            if (adjHexes.has(controlledHex)) {
+              count += 1;
+            }
+          });
+
+          result.set(playerSlot, count);
+        }
+      }
+    );
+
+    return result;
+  }
+
+  countSystemsWithoutPlanetsWithUnits(): Map<PlayerSlot, number> {
+    const result = new Map<PlayerSlot, number>();
+
+    const emptySystemHexes: Set<HexType> = new Set();
+    TI4.systemRegistry
+      .getAllSystemsWithObjs()
+      .forEach((system: System): void => {
+        if (system.getPlanets().length === 0) {
+          const pos: Vector = system.getObj().getPosition();
+          const hex: HexType = TI4.hex.fromPosition(pos);
+          emptySystemHexes.add(hex);
+        }
+      });
+
+    UnitPlastic.getAll().forEach((plastic: UnitPlastic): void => {
+      if (emptySystemHexes.has(plastic.getHex())) {
+        const playerSlot: PlayerSlot = plastic.getOwningPlayerSlot();
+        let count: number = result.get(playerSlot) || 0;
+        count += 1;
+        result.set(playerSlot, count);
+      }
+    });
+
+    return result;
+  }
+
+  countSystemsWithShipsAdjToMecatol(): Map<PlayerSlot, number> {
+    const result = new Map<PlayerSlot, number>();
+
+    let mecatolHex: HexType = "<0,0,0>";
+    const mecatol: System | undefined =
+      TI4.systemRegistry.getBySystemTileNumber(18);
+    if (mecatol) {
+      const pos: Vector = mecatol.getObj().getPosition();
+      mecatolHex = TI4.hex.fromPosition(pos);
+    }
+
+    const shipTypes: Set<UnitType> = new Set();
+    TI4.unitAttrsRegistry
+      .defaultUnitAttrsSet()
+      .getAll()
+      .forEach((unitAttrs: UnitAttrs): void => {
+        const unitType: UnitType = unitAttrs.getUnit();
+        if (unitAttrs.isShip()) {
+          shipTypes.add(unitType);
+        }
+      });
+
+    const playerSlotToShipHexes: Map<PlayerSlot, Set<HexType>> = new Map();
+    UnitPlastic.getAll().forEach((plastic: UnitPlastic): void => {
+      const unitType: UnitType = plastic.getUnit();
+      if (shipTypes.has(unitType)) {
+        const playerSlot: PlayerSlot = plastic.getOwningPlayerSlot();
+        const hex: HexType = plastic.getHex();
+        let hexes: Set<HexType> | undefined =
+          playerSlotToShipHexes.get(playerSlot);
+        if (!hexes) {
+          hexes = new Set();
+          playerSlotToShipHexes.set(playerSlot, hexes);
+        }
+        hexes.add(hex);
+      }
+    });
+
+    // Different factions may have different adjacency rules.
+    const systemAdjacency: SystemAdjacency = new SystemAdjacency();
+    TI4.playerSeats.getAllSeats().forEach((seat: PlayerSeatType): void => {
+      const playerSlot: PlayerSlot = seat.playerSlot;
+      const faction: Faction | undefined =
+        TI4.factionRegistry.getByPlayerSlot(playerSlot);
+      const adjHexes: Set<HexType> = systemAdjacency.getAdjHexes(
+        mecatolHex,
+        faction
+      );
+
+      const shipHexes: Set<HexType> | undefined =
+        playerSlotToShipHexes.get(playerSlot);
+
+      if (shipHexes) {
+        let count: number = 0;
+        for (const hex of shipHexes) {
+          if (adjHexes.has(hex)) {
+            count += 1;
+          }
+        }
+        result.set(playerSlot, count);
+      }
+    });
+
+    return result;
+  }
+
+  countSystemsWithUnitsInLegendaryMecatolOrAnomaly(): Map<PlayerSlot, number> {
+    const result = new Map<PlayerSlot, number>();
+
+    const targetHexes: Set<HexType> = new Set();
+    TI4.systemRegistry
+      .getAllSystemsWithObjs()
+      .forEach((system: System): void => {
+        if (
+          system.getSystemTileNumber() === 18 ||
+          system.isLegendary() ||
+          system.getAnomalies().length > 0
+        ) {
+          const pos: Vector = system.getObj().getPosition();
+          const hex: HexType = TI4.hex.fromPosition(pos);
+          targetHexes.add(hex);
+        }
+      });
+
+    const playerSlotToUnitHexes: Map<PlayerSlot, Set<HexType>> = new Map();
+    UnitPlastic.getAll().forEach((plastic: UnitPlastic): void => {
+      const playerSlot: PlayerSlot = plastic.getOwningPlayerSlot();
+      const hex: HexType = plastic.getHex();
+      let hexes: Set<HexType> | undefined =
+        playerSlotToUnitHexes.get(playerSlot);
+      if (!hexes) {
+        hexes = new Set();
+        playerSlotToUnitHexes.set(playerSlot, hexes);
+      }
+      hexes.add(hex);
+    });
+
+    TI4.playerSeats.getAllSeats().forEach((seat: PlayerSeatType): void => {
+      const playerSlot: PlayerSlot = seat.playerSlot;
+      const unitHexes: Set<HexType> | undefined =
+        playerSlotToUnitHexes.get(playerSlot);
+      if (unitHexes) {
+        let count: number = 0;
+        for (const hex of unitHexes) {
+          if (targetHexes.has(hex)) {
+            count += 1;
+          }
+        }
+        result.set(playerSlot, count);
+      }
+    });
+
+    return result;
+  }
+
+  countSystemsWithUnitsOnEdgeOfGameBoardOtherThanHome(): Map<
+    PlayerSlot,
+    number
+  > {
+    const result = new Map<PlayerSlot, number>();
+
+    const edgeHexes: Set<HexType> = new Set();
+    const edgeSystemClasses: Set<string> = new Set(["edge", "off-map"]);
+
+    const mapHexes: Set<HexType> = new Set();
     TI4.systemRegistry
       .getAllSystemsWithObjs()
       .forEach((system: System): void => {
         const pos: Vector = system.getObj().getPosition();
         const hex: HexType = TI4.hex.fromPosition(pos);
-        hexToSystem.set(hex, system);
+        const systemClass: string = system.getClass();
+        if (systemClass === "map") {
+          mapHexes.add(hex);
+        } else if (edgeSystemClasses.has(systemClass)) {
+          edgeHexes.add(hex);
+        }
       });
 
-    // Assign structures to planets.
-    const planetToStructureOwners: Map<Planet, Array<GameObject>> = new Map();
-    const structureNsids: Set<string> = new Set([
-      "unit:base/space-dock",
-      "unit:base/space-dock.token",
-      "unit:base/pds",
-      "unit:base/pds.token",
-    ]);
-    const skipContained: boolean = true;
-    for (const obj of world.getAllObjects(skipContained)) {
-      const nsid: string = NSID.get(obj);
-      if (structureNsids.has(nsid)) {
-        const pos: Vector = obj.getPosition();
-        const hex: HexType = TI4.hex.fromPosition(pos);
-        const system: System | undefined = hexToSystem.get(hex);
-        if (system) {
-          const planet: Planet | undefined = system.getPlanetClosest(pos);
-          if (planet) {
-            const planetCardNsid: string = planet.getPlanetCardNsid();
-            const playerSlot: PlayerSlot = obj.getOwningPlayerSlot();
+    // Look for edge systems just looking at the map hexes.
+    mapHexes.forEach((hex: HexType): void => {
+      const offMapNeighbors: Array<HexType> = Hex.neighbors(hex).filter(
+        (neighbor: HexType): boolean => {
+          return !mapHexes.has(neighbor);
+        }
+      );
+      if (offMapNeighbors.length > 0) {
+        edgeHexes.add(hex);
+      }
+    });
+
+    const playerSlotToUnitHexes: Map<PlayerSlot, Set<HexType>> = new Map();
+    UnitPlastic.getAll().forEach((plastic: UnitPlastic): void => {
+      const playerSlot: PlayerSlot = plastic.getOwningPlayerSlot();
+      const hex: HexType = plastic.getHex();
+      let hexes: Set<HexType> | undefined =
+        playerSlotToUnitHexes.get(playerSlot);
+      if (!hexes) {
+        hexes = new Set();
+        playerSlotToUnitHexes.set(playerSlot, hexes);
+      }
+      hexes.add(hex);
+    });
+
+    playerSlotToUnitHexes.forEach(
+      (unitHexes: Set<HexType>, playerSlot: PlayerSlot): void => {
+        let count: number = 0;
+        for (const hex of unitHexes) {
+          if (edgeHexes.has(hex)) {
+            count += 1;
           }
         }
+        result.set(playerSlot, count);
       }
-    }
-
-    // Which planets each player controls (ignores cards on system tiles).
-    const playerSlotToPlanetCards: Map<
-      PlayerSlot,
-      Array<Card>
-    > = this._getPlayerSlotToPlanetCards();
-
-    const playerSlotToHomePlanetCardNsids: Map<
-      PlayerSlot,
-      Set<string>
-    > = this._getPlayerSlotToHomePlanetCardNsids();
+    );
 
     return result;
   }

@@ -75,6 +75,30 @@ it("_getAllHomePlanetCardNsids", () => {
   expect(allHomePlanetCardNsids.has("card.planet:base/jord")).toBe(true);
 });
 
+it("_getPlayerSlotToHomeSystemHex", () => {
+  MockGameObject.simple("tile.system:base/1");
+  MockGameObject.simple("tile.system:base/12", { position: [0, 10, 0] });
+  MockGameObject.simple("sheet.faction:base/sol");
+  MockGameObject.simple("sheet.faction:base/jolnar", { position: [0, 10, 0] });
+  const playerSlotToHomeSystemHex: Map<PlayerSlot, HexType> =
+    new GoalCounter()._getPlayerSlotToHomeSystemHex();
+  expect(playerSlotToHomeSystemHex.size).toBe(2);
+  expect(playerSlotToHomeSystemHex.get(10)?.toString()).toBe("<0,0,0>");
+  expect(playerSlotToHomeSystemHex.get(11)?.toString()).toBe("<0,1,-1>");
+});
+
+it("_getPlayerSlotToControlledPlanetHexes", () => {
+  MockGameObject.simple("tile.system:base/1");
+  MockGameObject.simple("unit:base/infantry", { owningPlayerSlot: 10 });
+  const playerSlotToControlledPlanetHexes: Map<
+    PlayerSlot,
+    Set<HexType>
+  > = new GoalCounter()._getPlayerSlotToControlledPlanetHexes();
+  expect(playerSlotToControlledPlanetHexes.size).toBe(1);
+  expect(playerSlotToControlledPlanetHexes.get(10)?.size).toBe(1);
+  expect(playerSlotToControlledPlanetHexes.get(10)?.has("<0,0,0>")).toBe(true);
+});
+
 it("countFlagshipsAndWarSuns", () => {
   MockGameObject.simple("tile.system:base/18");
   MockGameObject.simple("unit:base/flagship", { owningPlayerSlot: 10 });
@@ -237,6 +261,141 @@ it("countPlanetsWithAttachments", () => {
 
   const counts: Map<PlayerSlot, number> =
     new GoalCounter().countPlanetsWithAttachments();
+  expect(counts.size).toBe(1);
+  expect(counts.get(10)).toBe(1);
+});
+
+it("countPlanetsWithStructuresOutsidePlayersHome", () => {
+  MockGameObject.simple("tile.system:base/1", { position: [0, 10, 0] });
+  MockGameObject.simple("tile.system:base/18");
+  MockGameObject.simple("sheet.faction:base/sol");
+  MockGameObject.simple("unit:base/pds.token", { owningPlayerSlot: 10 });
+  MockGameObject.simple("unit:base/pds.token", {
+    owningPlayerSlot: 10,
+    position: [0, 10, 0],
+  });
+
+  const counts: Map<PlayerSlot, number> =
+    new GoalCounter().countPlanetsWithStructuresOutsidePlayersHome();
+  expect(counts.size).toBe(1);
+  expect(counts.get(10)).toBe(1);
+});
+
+it("countPlanetsWithTechSpecialties", () => {
+  MockGameObject.simple("tile.system:base/19", { position: [0, 10, 0] });
+  MockCard.simple("card.planet:base/wellon");
+
+  const system: System | undefined =
+    TI4.systemRegistry.getBySystemTileNumber(19);
+  expect(system).toBeDefined();
+
+  const planet: Planet | undefined =
+    TI4.systemRegistry.getPlanetByPlanetCardNsid("card.planet:base/wellon");
+  expect(planet).toBeDefined();
+
+  const playerSlotToPlanetCards: Map<
+    PlayerSlot,
+    Array<Card>
+  > = new GoalCounter()._getPlayerSlotToPlanetCards();
+  expect(playerSlotToPlanetCards.size).toBe(1);
+  expect(playerSlotToPlanetCards.get(10)?.length).toBe(1);
+
+  const counts: Map<PlayerSlot, number> =
+    new GoalCounter().countPlanetsWithTechSpecialties();
+  expect(counts.size).toBe(1);
+  expect(counts.get(10)).toBe(1);
+});
+
+it("countStructures", () => {
+  MockGameObject.simple("tile.system:base/1", { position: [0, 10, 0] });
+  MockGameObject.simple("unit:base/pds.token", { owningPlayerSlot: 10 });
+
+  const counts: Map<PlayerSlot, number> = new GoalCounter().countStructures();
+  expect(counts.size).toBe(1);
+  expect(counts.get(10)).toBe(1);
+});
+
+it("countSystemsWithControlledPlanetsInOrAdjToOthersHome", () => {
+  MockGameObject.simple("tile.system:base/1"); // need system tiles to get systems
+  MockGameObject.simple("tile.system:base/12", { position: [0, -10, 0] });
+  MockGameObject.simple("sheet.faction:base/sol");
+  MockGameObject.simple("sheet.faction:base/jolnar", { position: [0, 10, 0] });
+  MockGameObject.simple("unit:base/pds", {
+    owningPlayerSlot: 10,
+  });
+  MockGameObject.simple("unit:base/pds", {
+    owningPlayerSlot: 10,
+    position: [0, 10, 0],
+  });
+
+  expect(TI4.factionRegistry.getByPlayerSlot(10)?.getAbbr()).toBe("Sol");
+  expect(TI4.factionRegistry.getByPlayerSlot(11)?.getAbbr()).toBe("Jol-Nar");
+  expect(TI4.systemRegistry.getBySystemTileNumber(1)).toBeDefined();
+  expect(TI4.systemRegistry.getBySystemTileNumber(12)).toBeDefined();
+
+  const counts: Map<PlayerSlot, number> =
+    new GoalCounter().countSystemsWithControlledPlanetsInOrAdjToOthersHome();
+  expect(counts.size).toBe(1);
+  expect(counts.get(10)).toBe(1);
+});
+
+it("countSystemsWithoutPlanetsWithUnits", () => {
+  MockGameObject.simple("tile.system:base/39"); // no planets
+  MockGameObject.simple("unit:base/fighter", {
+    owningPlayerSlot: 10,
+  });
+
+  const system: System | undefined =
+    TI4.systemRegistry.getBySystemTileNumber(39);
+  expect(system).toBeDefined();
+  expect(system?.getPlanets().length).toBe(0);
+
+  const counts: Map<PlayerSlot, number> =
+    new GoalCounter().countSystemsWithoutPlanetsWithUnits();
+  expect(counts.size).toBe(1);
+  expect(counts.get(10)).toBe(1);
+});
+
+it("countSystemsWithShipsAdjToMecatol", () => {
+  MockGameObject.simple("tile.system:base/18");
+  MockGameObject.simple("tile.system:base/1", {
+    position: TI4.hex.toPosition("<1,0,-1>"),
+  });
+  MockGameObject.simple("unit:base/fighter", {
+    position: TI4.hex.toPosition("<1,0,-1>"),
+    owningPlayerSlot: 10,
+  });
+
+  const counts: Map<PlayerSlot, number> =
+    new GoalCounter().countSystemsWithShipsAdjToMecatol();
+  expect(counts.size).toBe(1);
+  expect(counts.get(10)).toBe(1);
+});
+
+it("countSystemsWithUnitsInLegendaryMecatolOrAnomaly", () => {
+  MockGameObject.simple("tile.system:base/18");
+  MockGameObject.simple("unit:base/fighter", {
+    owningPlayerSlot: 10,
+  });
+
+  const counts: Map<PlayerSlot, number> =
+    new GoalCounter().countSystemsWithUnitsInLegendaryMecatolOrAnomaly();
+  expect(counts.size).toBe(1);
+  expect(counts.get(10)).toBe(1);
+});
+
+it("countSystemsWithUnitsOnEdgeOfGameBoardOtherThanHome", () => {
+  MockGameObject.simple("tile.system:base/18");
+  MockGameObject.simple("tile.system:base/51", {
+    position: TI4.hex.toPosition("<1,0,-1>"),
+  }); // off-map
+  MockGameObject.simple("unit:base/fighter", {
+    position: TI4.hex.toPosition("<1,0,-1>"),
+    owningPlayerSlot: 10,
+  });
+
+  const counts: Map<PlayerSlot, number> =
+    new GoalCounter().countSystemsWithUnitsOnEdgeOfGameBoardOtherThanHome();
   expect(counts.size).toBe(1);
   expect(counts.get(10)).toBe(1);
 });

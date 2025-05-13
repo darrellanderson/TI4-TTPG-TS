@@ -13,10 +13,22 @@ export class ToggleCombatWindow implements IGlobal {
   private _window: Window | undefined = undefined;
 
   readonly _onSystemActivatedHandler = (
-    _system: System,
-    _player: Player
+    system: System,
+    player: Player
   ): void => {
     this._createWindow();
+
+    const playerSlots: Array<number> = this._getRelevantPlayerSlots(
+      system,
+      player
+    );
+    if (this._window && playerSlots.length > 1) {
+      for (const playerSlot of playerSlots) {
+        if (!this._window.isAttachedForPlayer(playerSlot)) {
+          this._window.toggleForPlayer(playerSlot);
+        }
+      }
+    }
   };
 
   _createWindow(): void {
@@ -44,5 +56,20 @@ export class ToggleCombatWindow implements IGlobal {
   init(): void {
     this._createWindow(); // empty contents
     TI4.events.onSystemActivated.add(this._onSystemActivatedHandler);
+  }
+
+  /**
+   * Activating player, players with units in the system, and players
+   * with PDS2 adjacent.
+   *
+   * @returns
+   */
+  _getRelevantPlayerSlots(_system: System, player: Player): Array<number> {
+    const playersSlotsSet: Set<number> = new Set<number>();
+
+    // Activating player.
+    playersSlotsSet.add(player.getSlot());
+
+    return Array.from(playersSlotsSet);
   }
 }
