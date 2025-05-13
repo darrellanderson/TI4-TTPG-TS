@@ -399,3 +399,22 @@ it("countSystemsWithUnitsOnEdgeOfGameBoardOtherThanHome", () => {
   expect(counts.size).toBe(1);
   expect(counts.get(10)).toBe(1);
 });
+
+it("countTechnologyColors", () => {
+  MockCard.simple("card.technology.blue:pok/aetherstream");
+  MockCard.simple("card.technology.green:base/bioplasmosis");
+  MockCard.simple("card.technology.red:pok/ai-development-algorithm");
+  MockCard.simple("card.technology.yellow:pok/aerie-hololattice");
+
+  const counts: Map<
+    PlayerSlot,
+    { blue: number; green: number; red: number; yellow: number }
+  > = new GoalCounter().countTechnologyColors();
+  expect(counts.size).toBe(1);
+  expect(counts.get(10)).toEqual({
+    blue: 1,
+    green: 1,
+    red: 1,
+    yellow: 1,
+  });
+});

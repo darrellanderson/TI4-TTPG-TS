@@ -11,6 +11,7 @@ import { System } from "../../system-lib/system/system";
 import { Planet } from "../../system-lib/planet/planet";
 import { PlanetAttachment } from "../../system-lib/planet-attachment/planet-attachment";
 import { SystemAdjacency } from "../../system-lib/system-adjacency/system-adjacency";
+import { Tech } from "../../tech-lib/tech/tech";
 
 export class GoalCounter {
   private readonly _find: Find = new Find();
@@ -855,6 +856,66 @@ export class GoalCounter {
         result.set(playerSlot, count);
       }
     );
+
+    return result;
+  }
+
+  countTechnologyColors(): Map<
+    PlayerSlot,
+    {
+      blue: number;
+      green: number;
+      red: number;
+      yellow: number;
+    }
+  > {
+    const result = new Map<
+      PlayerSlot,
+      {
+        blue: number;
+        green: number;
+        red: number;
+        yellow: number;
+      }
+    >();
+
+    const skipContained: boolean = true;
+    for (const obj of world.getAllObjects(skipContained)) {
+      const nsid: string = NSID.get(obj);
+      const tech: Tech | undefined = TI4.techRegistry.getByNsid(nsid);
+      if (tech) {
+        const pos: Vector = obj.getPosition();
+        const playerSlot: PlayerSlot =
+          this._find.closestOwnedCardHolderOwner(pos);
+        let entry:
+          | {
+              blue: number;
+              green: number;
+              red: number;
+              yellow: number;
+            }
+          | undefined = result.get(playerSlot);
+        if (!entry) {
+          entry = {
+            blue: 0,
+            green: 0,
+            red: 0,
+            yellow: 0,
+          };
+          result.set(playerSlot, entry);
+        }
+        const color: string = tech.getColor();
+        if (color === "blue") {
+          entry.blue += 1;
+        } else if (color === "green") {
+          entry.green += 1;
+        } else if (color === "red") {
+          entry.red += 1;
+        } else if (color === "yellow") {
+          entry.yellow += 1;
+        }
+      }
+    }
 
     return result;
   }
