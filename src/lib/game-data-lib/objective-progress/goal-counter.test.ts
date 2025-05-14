@@ -11,6 +11,7 @@ import { GameData } from "../game-data/game-data";
 import { Faction } from "../../faction-lib/faction/faction";
 import { System } from "../../system-lib/system/system";
 import { Planet } from "../../system-lib/planet/planet";
+import { GoalProgress, GoalProgressType } from "./goal-progress";
 
 beforeEach(() => {
   new MockCardHolder({
@@ -112,6 +113,13 @@ it("countFlagshipsAndWarSuns", () => {
     new GoalCounter().countFlagshipsAndWarSuns();
   expect(counts.size).toBe(1);
   expect(counts.get(10)).toBe(3);
+
+  // Also test goal progress.
+  const progress: GoalProgressType = new GoalProgress().flagshipOrWarSun(2);
+  expect(progress).toEqual({
+    header: "Flagship or War Sun",
+    values: [undefined, { success: true, value: 3 }],
+  });
 });
 
 it("countInfResTgs", () => {
@@ -143,6 +151,24 @@ it("countInfResTgs", () => {
   counts = new GoalCounter().countInfResTgs();
   expect(counts.size).toBe(1);
   expect(counts.get(12)).toEqual({ inf: 1, res: 2, tgs: 3 });
+
+  // Also test goal progress.
+  let progress: GoalProgressType;
+  progress = new GoalProgress().influence(2);
+  expect(progress).toEqual({
+    header: "INF/TGS",
+    values: [{ success: true, value: "1/3" }],
+  });
+  progress = new GoalProgress().resources(2);
+  expect(progress).toEqual({
+    header: "RES/TGS",
+    values: [{ success: true, value: "2/3" }],
+  });
+  progress = new GoalProgress().infResTgs(3);
+  expect(progress).toEqual({
+    header: "INF/RES/TGS",
+    values: [{ success: false, value: "1/2/3" }],
+  });
 });
 
 it("countMaxNonFighterShipsInSingleSystem", () => {
@@ -155,10 +181,20 @@ it("countMaxNonFighterShipsInSingleSystem", () => {
     new GoalCounter().countMaxNonFighterShipsInSingleSystem();
   expect(counts.size).toBe(1);
   expect(counts.get(10)).toBe(2);
+
+  // Also test goal progress.
+  const progress: GoalProgressType =
+    new GoalProgress().maxNonFighterShipsInSingleSystem(2);
+  expect(progress).toEqual({
+    header: "Non-figher ships",
+    values: [undefined, { success: true, value: 2 }],
+  });
 });
 
 it("countPlanetsAndGetNeighbors", () => {
   MockCard.simple("card.planet:base/jord");
+  MockCard.simple("card.planet:base/nar");
+  MockCard.simple("card.planet:base/jol", { position: [0, 10, 0] });
 
   const counts: Map<
     PlayerSlot,
@@ -166,8 +202,24 @@ it("countPlanetsAndGetNeighbors", () => {
   > = new GoalCounter().countPlanetsAndGetNeighbors();
   expect(counts.size).toBe(3);
   expect(counts.get(10)).toEqual({
-    planets: 1,
+    planets: 2,
     neighbors: [11, 12],
+  });
+  expect(counts.get(11)).toEqual({
+    planets: 1,
+    neighbors: [12, 10],
+  });
+
+  // Also test goal progress.
+  const progress: GoalProgressType =
+    new GoalProgress().morePlanetsThan2Neighbors();
+  expect(progress).toEqual({
+    header: "Planets",
+    values: [
+      { success: false, value: 0 },
+      { success: true, value: 2 },
+      { success: false, value: 1 },
+    ],
   });
 });
 
@@ -199,6 +251,13 @@ it("countPlanetsInOthersHome", () => {
     new GoalCounter().countPlanetsInOthersHome();
   expect(counts.size).toBe(1);
   expect(counts.get(10)).toBe(1);
+
+  // Also test goal progress.
+  const progress: GoalProgressType = new GoalProgress().planetsInOthersHome(1);
+  expect(progress).toEqual({
+    header: "Planets others' home",
+    values: [undefined, { success: true, value: 1 }],
+  });
 });
 
 it("countPlanetsNonHome", () => {
@@ -217,6 +276,16 @@ it("countPlanetsNonHome", () => {
   count = new GoalCounter().countPlanetsNonHome(false);
   expect(count.size).toBe(1);
   expect(count.get(10)).toBe(2);
+
+  // Also test goal progress.
+  const progress: GoalProgressType = new GoalProgress().planetsNonHome(
+    2,
+    false
+  );
+  expect(progress).toEqual({
+    header: "Planets non-home",
+    values: [undefined, { success: true, value: 2 }],
+  });
 });
 
 it("countPlanetTraits", () => {
@@ -246,6 +315,13 @@ it("countPlanetTraits", () => {
   > = new GoalCounter().countPlanetTraits();
   expect(counts.size).toBe(1);
   expect(counts.get(12)).toEqual({ cultural: 1, hazardous: 2, industrial: 3 });
+
+  // Also test goal progress.
+  const progress: GoalProgressType = new GoalProgress().planetsSameTrait(3);
+  expect(progress).toEqual({
+    header: "CUL/IND/HAZ",
+    values: [{ success: true, value: "1/3/2" }],
+  });
 });
 
 it("countPlanetsWithAttachments", () => {
@@ -274,6 +350,15 @@ it("countPlanetsWithAttachments", () => {
     new GoalCounter().countPlanetsWithAttachments();
   expect(counts.size).toBe(1);
   expect(counts.get(10)).toBe(1);
+
+  // Also test goal progress.
+  const progress: GoalProgressType = new GoalProgress().planetsWithAttachments(
+    1
+  );
+  expect(progress).toEqual({
+    header: "Planets w/attach",
+    values: [undefined, { success: true, value: 1 }],
+  });
 });
 
 it("countPlanetsWithStructuresOutsidePlayersHome", () => {
@@ -290,6 +375,14 @@ it("countPlanetsWithStructuresOutsidePlayersHome", () => {
     new GoalCounter().countPlanetsWithStructuresOutsidePlayersHome();
   expect(counts.size).toBe(1);
   expect(counts.get(10)).toBe(1);
+
+  // Also test goal progress.
+  const progress: GoalProgressType =
+    new GoalProgress().planetsWithStructuresOutsidePlayersHome(1);
+  expect(progress).toEqual({
+    header: "Planets w/structures non-home",
+    values: [undefined, { success: true, value: 1 }],
+  });
 });
 
 it("countPlanetsWithTechSpecialties", () => {
@@ -315,6 +408,14 @@ it("countPlanetsWithTechSpecialties", () => {
     new GoalCounter().countPlanetsWithTechSpecialties();
   expect(counts.size).toBe(1);
   expect(counts.get(10)).toBe(1);
+
+  // Also test goal progress.
+  const progress: GoalProgressType =
+    new GoalProgress().planetsWithTechSpecialties(1);
+  expect(progress).toEqual({
+    header: "Planets w/tech",
+    values: [undefined, { success: true, value: 1 }],
+  });
 });
 
 it("countStructures", () => {
@@ -324,6 +425,13 @@ it("countStructures", () => {
   const counts: Map<PlayerSlot, number> = new GoalCounter().countStructures();
   expect(counts.size).toBe(1);
   expect(counts.get(10)).toBe(1);
+
+  // Also test goal progress.
+  const progress: GoalProgressType = new GoalProgress().structures(1);
+  expect(progress).toEqual({
+    header: "Structures",
+    values: [undefined, { success: true, value: 1 }],
+  });
 });
 
 it("countSystemsWithControlledPlanetsInOrAdjToOthersHome", () => {
@@ -348,6 +456,43 @@ it("countSystemsWithControlledPlanetsInOrAdjToOthersHome", () => {
     new GoalCounter().countSystemsWithControlledPlanetsInOrAdjToOthersHome();
   expect(counts.size).toBe(1);
   expect(counts.get(10)).toBe(1);
+
+  // Also test goal progress.
+  const progress: GoalProgressType =
+    new GoalProgress().systemsWithControlledPlanetsInOrAdjToOthersHome(1);
+  expect(progress).toEqual({
+    header: "Systems",
+    values: [undefined, { success: true, value: 1 }],
+  });
+});
+
+it("countSystemsWithFlagshipOrWarSunAlsoOthersHomeOrMecatol", () => {
+  MockGameObject.simple("tile.system:base/18"); // need system tiles to get systems
+  MockGameObject.simple("tile.system:base/1", { position: [0, -10, 0] }); // need system tiles to get systems
+  MockGameObject.simple("tile.system:base/12", { position: [0, 10, 0] });
+  MockGameObject.simple("sheet.faction:base/sol", { position: [0, -10, 0] });
+  MockGameObject.simple("sheet.faction:base/jolnar", { position: [0, 10, 0] });
+  MockGameObject.simple("unit:base/flagship", {
+    owningPlayerSlot: 10,
+    position: [0, 0, 0], // mecatol
+  });
+  MockGameObject.simple("unit:base/war-sun", {
+    owningPlayerSlot: 10,
+    position: [0, 10, 0], // home system
+  });
+
+  const counts: Map<PlayerSlot, number> =
+    new GoalCounter().countSystemsWithFlagshipOrWarSunAlsoOthersHomeOrMecatol();
+  expect(counts.size).toBe(1);
+  expect(counts.get(10)).toBe(2);
+
+  // Also test goal progress.
+  const progress: GoalProgressType =
+    new GoalProgress().systemsWithFlagshipOrWarSunAlsoOthersHomeOrMecatol(2);
+  expect(progress).toEqual({
+    header: "Systems",
+    values: [undefined, { success: true, value: 2 }],
+  });
 });
 
 it("countSystemsWithoutPlanetsWithUnits", () => {
@@ -365,6 +510,14 @@ it("countSystemsWithoutPlanetsWithUnits", () => {
     new GoalCounter().countSystemsWithoutPlanetsWithUnits();
   expect(counts.size).toBe(1);
   expect(counts.get(10)).toBe(1);
+
+  // Also test goal progress.
+  const progress: GoalProgressType =
+    new GoalProgress().systemsWithoutPlanetsWithUnits(1);
+  expect(progress).toEqual({
+    header: "Systems",
+    values: [undefined, { success: true, value: 1 }],
+  });
 });
 
 it("countSystemsWithShipsAdjToMecatol", () => {
@@ -381,6 +534,14 @@ it("countSystemsWithShipsAdjToMecatol", () => {
     new GoalCounter().countSystemsWithShipsAdjToMecatol();
   expect(counts.size).toBe(1);
   expect(counts.get(10)).toBe(1);
+
+  // Also test goal progress.
+  const progress: GoalProgressType =
+    new GoalProgress().systemsWithShipsAdjToMecatol(1);
+  expect(progress).toEqual({
+    header: "Systems",
+    values: [undefined, { success: true, value: 1 }],
+  });
 });
 
 it("countSystemsWithUnitsInLegendaryMecatolOrAnomaly", () => {
@@ -404,6 +565,14 @@ it("countSystemsWithUnitsInLegendaryMecatolOrAnomaly", () => {
     new GoalCounter().countSystemsWithUnitsInLegendaryMecatolOrAnomaly();
   expect(counts.size).toBe(1);
   expect(counts.get(10)).toBe(3);
+
+  // Also test goal progress.
+  const progress: GoalProgressType =
+    new GoalProgress().systemsWithUnitsInLegendaryMecatolOrAnomaly(3);
+  expect(progress).toEqual({
+    header: "Systems",
+    values: [undefined, { success: true, value: 3 }],
+  });
 });
 
 it("countSystemsWithUnitsOnEdgeOfGameBoardOtherThanHome", () => {
@@ -420,13 +589,27 @@ it("countSystemsWithUnitsOnEdgeOfGameBoardOtherThanHome", () => {
     new GoalCounter().countSystemsWithUnitsOnEdgeOfGameBoardOtherThanHome();
   expect(counts.size).toBe(1);
   expect(counts.get(10)).toBe(1);
+
+  // Also test goal progress.
+  const progress: GoalProgressType =
+    new GoalProgress().systemsWithUnitsOnEdgeOfGameBoardOtherThanHome(1);
+  expect(progress).toEqual({
+    header: "Systems",
+    values: [undefined, { success: true, value: 1 }],
+  });
 });
 
 it("countTechnologyColors", () => {
+  // 2x each for N-in-2-colors check.
+  MockCard.simple("card.technology.blue:pok/aetherstream");
   MockCard.simple("card.technology.blue:pok/aetherstream");
   MockCard.simple("card.technology.green:base/bioplasmosis");
+  MockCard.simple("card.technology.green:base/bioplasmosis");
+  MockCard.simple("card.technology.red:pok/ai-development-algorithm");
   MockCard.simple("card.technology.red:pok/ai-development-algorithm");
   MockCard.simple("card.technology.yellow:pok/aerie-hololattice");
+  MockCard.simple("card.technology.yellow:pok/aerie-hololattice");
+  MockCard.simple("card.technology.unit-upgrade:base/carrier-2");
   MockCard.simple("card.technology.unit-upgrade:base/carrier-2");
 
   const counts: Map<
@@ -435,11 +618,18 @@ it("countTechnologyColors", () => {
   > = new GoalCounter().countTechnologyColors();
   expect(counts.size).toBe(1);
   expect(counts.get(10)).toEqual({
-    blue: 1,
-    green: 1,
-    red: 1,
-    yellow: 1,
-    unitUpgrade: 1,
+    blue: 2,
+    green: 2,
+    red: 2,
+    yellow: 2,
+    unitUpgrade: 2,
+  });
+
+  // Also test goal progress.
+  const progress: GoalProgressType = new GoalProgress().twoTechInColors(2);
+  expect(progress).toEqual({
+    header: "BLUE/GREEN/YELLOW/RED",
+    values: [undefined, { success: true, value: "2/2/2/2" }],
   });
 });
 
@@ -461,4 +651,12 @@ it("countTokensInTacticAndStrategy", () => {
   const counts = new GoalCounter().countTokensInTacticAndStrategy();
   expect(counts.size).toBe(1);
   expect(counts.get(12)).toEqual(5);
+
+  // Also test goal progress.
+  const progress: GoalProgressType =
+    new GoalProgress().tokensInTacticAndStrategy(5);
+  expect(progress).toEqual({
+    header: "Tokens",
+    values: [{ success: true, value: 5 }],
+  });
 });

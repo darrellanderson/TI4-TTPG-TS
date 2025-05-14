@@ -652,6 +652,80 @@ export class GoalCounter {
     return result;
   }
 
+  countSystemsWithFlagshipOrWarSunAlsoOthersHomeOrMecatol(): Map<
+    PlayerSlot,
+    number
+  > {
+    const result = new Map<PlayerSlot, number>();
+
+    // Get all flagship and war sun hexes.
+    const playerSlotToFlaghipOrWarSunHexes: Map<
+      PlayerSlot,
+      Set<HexType>
+    > = new Map();
+    UnitPlastic.getAll().forEach((plastic: UnitPlastic): void => {
+      const nsid: string = NSID.get(plastic.getObj());
+      if (
+        nsid.startsWith("unit:base/flagship") ||
+        nsid.startsWith("unit:base/war-sun")
+      ) {
+        const playerSlot: PlayerSlot = plastic.getOwningPlayerSlot();
+        const hex: HexType = plastic.getHex();
+        let hexes: Set<HexType> | undefined =
+          playerSlotToFlaghipOrWarSunHexes.get(playerSlot);
+        if (!hexes) {
+          hexes = new Set();
+          playerSlotToFlaghipOrWarSunHexes.set(playerSlot, hexes);
+        }
+        hexes.add(hex);
+      }
+    });
+
+    // Get per-player and all home system hexes.
+    const playerSlotToHomeSystemHex: Map<PlayerSlot, HexType> =
+      this._getPlayerSlotToHomeSystemHex();
+    const allHomeSystemHexes: Set<HexType> = new Set();
+    playerSlotToHomeSystemHex.forEach(
+      (homeSystemHex: HexType, _playerSlot: PlayerSlot): void => {
+        allHomeSystemHexes.add(homeSystemHex);
+      }
+    );
+
+    // Get Mecatol hex.
+    let mecatolHex: HexType = "<0,0,0>";
+    const mecatol: System | undefined =
+      TI4.systemRegistry.getBySystemTileNumber(18);
+    if (mecatol) {
+      const pos: Vector = mecatol.getObj().getPosition();
+      mecatolHex = TI4.hex.fromPosition(pos);
+    }
+
+    // Count per-player.  (Map.forEach gets cranky with the HexType type.)
+    const playerSlots: Array<PlayerSlot> = Array.from(
+      playerSlotToFlaghipOrWarSunHexes.keys()
+    );
+    playerSlots.forEach((playerSlot: PlayerSlot): void => {
+      const hexes: Set<HexType> | undefined =
+        playerSlotToFlaghipOrWarSunHexes.get(playerSlot);
+      const myHomeHex: HexType | undefined =
+        playerSlotToHomeSystemHex.get(playerSlot);
+      if (hexes) {
+        let count: number = 0;
+        hexes.forEach((hex: HexType): void => {
+          if (
+            (allHomeSystemHexes.has(hex) || hex === mecatolHex) &&
+            hex !== myHomeHex
+          ) {
+            count += 1;
+          }
+        });
+        result.set(playerSlot, count);
+      }
+    });
+
+    return result;
+  }
+
   countSystemsWithoutPlanetsWithUnits(): Map<PlayerSlot, number> {
     const result = new Map<PlayerSlot, number>();
 
