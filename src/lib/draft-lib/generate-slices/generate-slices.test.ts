@@ -323,4 +323,12 @@ it("milty", () => {
   const generateSlices = new GenerateSlices(params);
   const slices: Array<SliceTiles> = generateSlices.generateSlices(6);
   expect(slices.length).toBe(6);
+
+  const seen: Set<number> = new Set();
+  for (const slice of slices) {
+    for (const tile of slice) {
+      expect(seen.has(tile)).toBe(false);
+      seen.add(tile);
+    }
+  }
 });

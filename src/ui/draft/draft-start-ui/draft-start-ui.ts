@@ -31,6 +31,7 @@ import { Milty } from "../../../lib/draft-lib/drafts/milty";
 import { Wekker } from "../../../lib/draft-lib/drafts/wekker";
 import { ScptDraftsUi } from "./scpt-drafts-ui";
 import { NucleusDraft } from "../../../lib/draft-lib/drafts/nucleus";
+import { BagDraft } from "../../../lib/draft-lib/drafts/bag-draft";
 
 export class DraftStartUI extends AbstractUI {
   public readonly onDraftStarted;
@@ -111,6 +112,7 @@ export class DraftStartUI extends AbstractUI {
       new Milty(),
       new Wekker(),
       new NucleusDraft(),
+      new BagDraft(),
     ];
     const draftCheckBoxUIs: Array<CheckBoxUI> = iDrafts.map(
       (idraft: IDraft): CheckBoxUI => {
@@ -225,11 +227,19 @@ export class DraftStartUI extends AbstractUI {
   }
 
   startDraft(): void {
-    const errors: Array<string> = new Array<string>();
-    new DraftActivityStart().start(this._params, errors);
-    if (errors.length > 0) {
-      const msg: string = errors.join("\n");
-      Broadcast.chatAll("Draft start errors:\n" + msg);
+    // Bag draft requires a custom setup.
+    if (
+      this._params.draft &&
+      this._params.draft.getDraftName() === "Bag Draft"
+    ) {
+      new BagDraft().createDraftObjects();
+    } else {
+      const errors: Array<string> = new Array<string>();
+      new DraftActivityStart().start(this._params, errors);
+      if (errors.length > 0) {
+        const msg: string = errors.join("\n");
+        Broadcast.chatAll("Draft start errors:\n" + msg);
+      }
     }
   }
 }

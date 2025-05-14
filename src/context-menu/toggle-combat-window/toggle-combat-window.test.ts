@@ -18,7 +18,11 @@ it("event", () => {
   if (!system) {
     throw new Error("System not found");
   }
-  const player: Player = new MockPlayer();
+
+  // Add a different player's unit.
+  MockGameObject.simple("unit:base/fighter", { owningPlayerSlot: 11 });
+
+  const player: Player = new MockPlayer({ slot: 10 });
   TI4.events.onSystemActivated.trigger(system, player);
   TI4.events.onSystemActivated.trigger(system, player); // repeat to close old
 });

@@ -1,5 +1,5 @@
-import { Player } from "@tabletop-playground/api";
-import { IGlobal, NamespaceId, Window } from "ttpg-darrell";
+import { Player, Vector } from "@tabletop-playground/api";
+import { HexType, IGlobal, NamespaceId, Window } from "ttpg-darrell";
 import { AbstractUI } from "../../ui/abstract-ui/abtract-ui";
 import {
   AbstractWindow,
@@ -8,6 +8,7 @@ import {
 } from "../../ui/abstract-window/abstract-window";
 import { CombatUIAllSimple } from "../../ui/combat-ui/combat-ui-all-simple/combat-ui-all-simple";
 import { System } from "../../lib/system-lib/system/system";
+import { UnitPlastic } from "../../lib/unit-lib/unit-plastic/unit-plastic";
 
 export class ToggleCombatWindow implements IGlobal {
   private _window: Window | undefined = undefined;
@@ -64,11 +65,20 @@ export class ToggleCombatWindow implements IGlobal {
    *
    * @returns
    */
-  _getRelevantPlayerSlots(_system: System, player: Player): Array<number> {
+  _getRelevantPlayerSlots(system: System, player: Player): Array<number> {
     const playersSlotsSet: Set<number> = new Set<number>();
 
     // Activating player.
     playersSlotsSet.add(player.getSlot());
+
+    // Units in system.
+    const pos: Vector = system.getObj().getPosition();
+    const hex: HexType = TI4.hex.fromPosition(pos);
+    UnitPlastic.getAll().forEach((unit: UnitPlastic): void => {
+      if (unit.getHex() === hex) {
+        playersSlotsSet.add(unit.getOwningPlayerSlot());
+      }
+    });
 
     return Array.from(playersSlotsSet);
   }

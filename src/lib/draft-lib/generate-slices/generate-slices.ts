@@ -135,8 +135,17 @@ export class GenerateSlices {
           );
 
           // Choose and add system.
-          this._chooseAndAddNextSystem(sliceInProgress, systemsForTier);
+          const choice: System = this._chooseAndAddNextSystem(
+            sliceInProgress,
+            systemsForTier
+          );
           sliceInProgress.removeRemainingTier(tier);
+
+          // Remove choice from systems.
+          const index: number = systems.indexOf(choice);
+          if (index !== -1) {
+            systems.splice(index, 1);
+          }
         }
 
         // If more to go, put back in pending.
@@ -202,7 +211,7 @@ export class GenerateSlices {
   _chooseAndAddNextSystem(
     sliceInProgress: SliceInProgress,
     systems: Array<System>
-  ): void {
+  ): System {
     const options: WeightedChoiceOption<System>[] = systems.map(
       (system): WeightedChoiceOption<System> => {
         return { weight: this._score(sliceInProgress, system), value: system };
@@ -210,6 +219,7 @@ export class GenerateSlices {
     );
     const system: System = new WeightedChoice<System>(options).choice();
     sliceInProgress.addSystem(system);
+    return system;
   }
 
   _score(sliceInProgress: SliceInProgress, system: System): number {

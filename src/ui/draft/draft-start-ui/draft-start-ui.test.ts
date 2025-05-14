@@ -11,6 +11,7 @@ import {
 import { DraftActivityStartParams } from "../../../lib/draft-lib/draft-activity-start/draft-activity-start-params";
 import { DraftStartUI } from "./draft-start-ui";
 import { Milty } from "../../../lib/draft-lib/drafts/milty";
+import { BagDraft } from "../../../lib/draft-lib/drafts/bag-draft";
 
 it("constructor", () => {
   const scale: number = 1;
@@ -145,5 +146,25 @@ it("startDraft", () => {
     "test"
   );
 
-  draftStartUI.startDraft();
+  // draft needs systems to exist; let the draft tests validate that.
+  expect(() => {
+    draftStartUI.startDraft();
+  }).toThrow();
+});
+
+it("startDraft (bag draft)", () => {
+  const scale: number = 1;
+  const params: DraftActivityStartParams = {
+    namespaceId: "@test/test",
+    draft: new BagDraft(),
+    numSlices: 2,
+    numFactions: 2,
+    config: "",
+  };
+  const draftStartUI = new DraftStartUI(scale, params);
+
+  // draft needs systems to exist; let the draft tests validate that.
+  expect(() => {
+    draftStartUI.startDraft();
+  }).toThrow();
 });
