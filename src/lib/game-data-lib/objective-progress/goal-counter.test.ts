@@ -90,6 +90,10 @@ it("_getPlayerSlotToHomeSystemHex", () => {
 it("_getPlayerSlotToControlledPlanetHexes", () => {
   MockGameObject.simple("tile.system:base/1");
   MockGameObject.simple("unit:base/infantry", { owningPlayerSlot: 10 });
+  MockGameObject.simple("unit:base/mech", { owningPlayerSlot: 10 });
+  MockGameObject.simple("unit:base/pds", { owningPlayerSlot: 10 });
+  MockGameObject.simple("unit:base/space-dock", { owningPlayerSlot: 10 });
+  MockGameObject.simple("token.control:base/arborec", { owningPlayerSlot: 10 });
   const playerSlotToControlledPlanetHexes: Map<
     PlayerSlot,
     Set<HexType>
@@ -111,6 +115,14 @@ it("countFlagshipsAndWarSuns", () => {
 });
 
 it("countInfResTgs", () => {
+  let counts: Map<PlayerSlot, { inf: number; res: number; tgs: number }>;
+
+  // Try with empty player data.
+  TI4.events.onGameData.trigger({ players: [{}] });
+  counts = new GoalCounter().countInfResTgs();
+  expect(counts.size).toBe(1);
+  expect(counts.get(12)).toEqual({ inf: 0, res: 0, tgs: 0 });
+
   const gameData: GameData = {
     players: [
       {
@@ -128,8 +140,7 @@ it("countInfResTgs", () => {
   TI4.events.onGameData.trigger(gameData);
   expect(TI4.lastGameData.getLastGameData()).toEqual(gameData);
 
-  const counts: Map<PlayerSlot, { inf: number; res: number; tgs: number }> =
-    new GoalCounter().countInfResTgs();
+  counts = new GoalCounter().countInfResTgs();
   expect(counts.size).toBe(1);
   expect(counts.get(12)).toEqual({ inf: 1, res: 2, tgs: 3 });
 });
@@ -373,15 +384,26 @@ it("countSystemsWithShipsAdjToMecatol", () => {
 });
 
 it("countSystemsWithUnitsInLegendaryMecatolOrAnomaly", () => {
-  MockGameObject.simple("tile.system:base/18");
+  MockGameObject.simple("tile.system:base/18", { position: [0, 0, 0] }); // mecatol
+  MockGameObject.simple("tile.system:pok/65", { position: [0, 10, 0] }); // legendary
+  MockGameObject.simple("tile.system:base/41", { position: [0, 20, 0] }); // anomaly
   MockGameObject.simple("unit:base/fighter", {
     owningPlayerSlot: 10,
+    position: [0, 0, 0],
+  });
+  MockGameObject.simple("unit:base/fighter", {
+    owningPlayerSlot: 10,
+    position: [0, 10, 0],
+  });
+  MockGameObject.simple("unit:base/fighter", {
+    owningPlayerSlot: 10,
+    position: [0, 20, 0],
   });
 
   const counts: Map<PlayerSlot, number> =
     new GoalCounter().countSystemsWithUnitsInLegendaryMecatolOrAnomaly();
   expect(counts.size).toBe(1);
-  expect(counts.get(10)).toBe(1);
+  expect(counts.get(10)).toBe(3);
 });
 
 it("countSystemsWithUnitsOnEdgeOfGameBoardOtherThanHome", () => {

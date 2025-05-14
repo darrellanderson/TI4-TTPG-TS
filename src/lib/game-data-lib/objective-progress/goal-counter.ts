@@ -514,13 +514,13 @@ export class GoalCounter {
     playerSlotToStructures.forEach(
       (playerStructures: Array<UnitPlastic>, playerSlot: PlayerSlot): void => {
         const homeNsids: Set<string> | undefined =
-          playerSlotToHomePlanetCardNsids.get(playerSlot) || new Set();
+          playerSlotToHomePlanetCardNsids.get(playerSlot);
         const nonHomePlanets: Set<string> = new Set();
         playerStructures.forEach((structure: UnitPlastic): void => {
           const planet: Planet | undefined = structure.getPlanetClosest();
           if (planet) {
             const nsid: string = planet.getPlanetCardNsid();
-            if (!homeNsids.has(nsid)) {
+            if (homeNsids && !homeNsids.has(nsid)) {
               nonHomePlanets.add(nsid);
             }
           }
