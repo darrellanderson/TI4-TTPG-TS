@@ -164,6 +164,11 @@ it("countInfResTgs", () => {
     header: "RES/TGS",
     values: [{ success: true, value: "2/3" }],
   });
+  progress = new GoalProgress().tradegoods(2);
+  expect(progress).toEqual({
+    header: "TGS",
+    values: [{ success: true, value: 3 }],
+  });
   progress = new GoalProgress().infResTgs(3);
   expect(progress).toEqual({
     header: "INF/RES/TGS",
@@ -626,10 +631,16 @@ it("countTechnologyColors", () => {
   });
 
   // Also test goal progress.
-  const progress: GoalProgressType = new GoalProgress().twoTechInColors(2);
+  let progress: GoalProgressType;
+  progress = new GoalProgress().twoTechInColors(2);
   expect(progress).toEqual({
     header: "BLUE/GREEN/YELLOW/RED",
     values: [undefined, { success: true, value: "2/2/2/2" }],
+  });
+  progress = new GoalProgress().techUnitUpgrades(2);
+  expect(progress).toEqual({
+    header: "Unit upgrades",
+    values: [undefined, { success: true, value: 2 }],
   });
 });
 

@@ -7,7 +7,13 @@
 import fs from "fs";
 import klawSync from "klaw-sync";
 
-import { GOAL_DATA_ENTRIES } from "./goal.data";
+import { GOAL_DATA_ENTRIES, GoalDataEntry } from "./goal.data";
+
+it("goal data entries", () => {
+  GOAL_DATA_ENTRIES.forEach((entry: GoalDataEntry): void => {
+    entry.get();
+  });
+});
 
 it("validate NSIDs appear in assets/Templates", () => {
   // Scan templates for NSIDs.

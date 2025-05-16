@@ -93,6 +93,7 @@ export const GOAL_DATA_ENTRIES: Array<GoalDataEntry> = [
     nsid: "card.objective.public-1:base/expand-borders",
     get: () => {
       // 6 planets non-home
+      // IN A SYSTEM, therefore not including custodia vigilia
       const excludeCustodiaVigilia = true;
       return goalProgress.planetsNonHome(6, excludeCustodiaVigilia);
     },

@@ -435,7 +435,7 @@ export class GoalProgress {
 
   techUnitUpgrades(needed: number): GoalProgressType {
     return {
-      header: "Tech/Unit Upgrades",
+      header: "Unit upgrades",
       values: toSeats<{
         blue: number;
         green: number;

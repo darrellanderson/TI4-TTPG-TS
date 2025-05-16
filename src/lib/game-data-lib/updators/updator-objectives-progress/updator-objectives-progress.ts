@@ -12,11 +12,11 @@ export class UpdatorObjectivesProgress implements IGameDataUpdator {
     throw new Error("Method not implemented.");
   }
 
-  _goalDataEntryToStage(goalDataEntry: GoalDataEntry): number {
+  _nsidToStage(nsid: string): number {
     let stage: number = 0;
-    if (goalDataEntry.nsid.includes(".public-1:")) {
+    if (nsid.includes(".public-1:")) {
       stage = 1;
-    } else if (goalDataEntry.nsid.includes(".public-2:")) {
+    } else if (nsid.includes(".public-2:")) {
       stage = 2;
     }
     return stage;
@@ -71,7 +71,7 @@ export class UpdatorObjectivesProgress implements IGameDataUpdator {
     return {
       name: goalDataEntry.name,
       abbr: goalDataEntry.abbr,
-      stage: this._goalDataEntryToStage(goalDataEntry),
+      stage: this._nsidToStage(goalDataEntry.nsid),
       progress: {
         header: goalProgress.header,
         values: this._goalProgressToValues(goalProgress),

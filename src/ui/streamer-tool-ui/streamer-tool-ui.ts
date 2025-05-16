@@ -120,6 +120,7 @@ export class StreamerToolUI extends AbstractUI {
         labelTimestamp,
         editableTimestamp,
         hideMouseCursor,
+        whisperSpy,
         useStreamerBuddy,
         autoStreamerCamera,
       ])
