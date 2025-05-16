@@ -1,6 +1,6 @@
 import { UpdatorActiveSystemType } from "../updators/updator-active-system/updator-active-system-type";
 import { UpdatorConfigType } from "../updators/updator-config/updator-config-type";
-import { UpdatorObjectiveProgressType } from "../updators/updator-objectives-progress/updator-objective-progress-type";
+import { UpdatorObjectiveProgressType } from "../updators/updator-objectives-progress/updator-objectives-progress-type";
 import { UpdatorObjectivesType } from "../updators/updator-objectives/updator-objectives-type";
 import { UpdatorPlayerCommandTokensType } from "../updators/updator-player-command-tokens/updator-player-command-tokens-type";
 import { UpdatorPlayerLeadersType } from "../updators/updator-player-leaders/updator-player-leaders-type";
@@ -43,7 +43,7 @@ export type GameData = {
   hexSummary?: string;
   laws?: Array<string>; // card names
   mapString?: string;
-  objectivesProgress?: UpdatorObjectiveProgressType;
+  objectivesProgress?: Array<UpdatorObjectiveProgressType>;
   objectives?: UpdatorObjectivesType;
   platform?: string;
   round?: number;
