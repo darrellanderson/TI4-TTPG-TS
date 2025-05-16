@@ -18,6 +18,11 @@ const ACTION_RETURN_STRATEGY_CARDS = "*Return strategy cards";
 refObject.addCustomAction(ACTION_PLACE_TGS);
 refObject.addCustomAction(ACTION_RETURN_STRATEGY_CARDS);
 
+// Watch out for multiple players using the action at the same time.
+const MIN_DELAY_BETWEEN_REPEATS: number = 3000; // msecs
+let _lastPlaceTgsTimestamp: number = 0;
+let _lastReturnStrategyCardsTimestamp: number = 0;
+
 const _initiativeOrder: InitiativeOrder = new InitiativeOrder();
 const _placeTGsUnpicked: PlaceTgsUnpicked = new PlaceTgsUnpicked();
 const _returnStrategyCards: ReturnStrategyCard = new ReturnStrategyCard();
@@ -28,13 +33,25 @@ refObject.onCustomAction.add(
     const playerName: string = TI4.playerName.getByPlayer(player);
     const playerColor: Color = world.getSlotColor(player.getSlot());
 
-    if (identifier === ACTION_PLACE_TGS) {
+    const now: number = Date.now();
+
+    if (
+      identifier === ACTION_PLACE_TGS &&
+      now - _lastPlaceTgsTimestamp > MIN_DELAY_BETWEEN_REPEATS
+    ) {
+      _lastPlaceTgsTimestamp = now;
+
       _initiativeOrder.setTurnOrderFromStrategyCards();
       _placeTGsUnpicked.placeTgsUnpicked();
 
       const msg: string = `${playerName} placed TGs and set turns`;
       Broadcast.chatAll(msg, playerColor);
-    } else if (identifier === ACTION_RETURN_STRATEGY_CARDS) {
+    } else if (
+      identifier === ACTION_RETURN_STRATEGY_CARDS &&
+      now - _lastReturnStrategyCardsTimestamp > MIN_DELAY_BETWEEN_REPEATS
+    ) {
+      _lastReturnStrategyCardsTimestamp = now;
+
       _returnStrategyCards.returnAllStrategyCardsRespecingPoliticalStability();
       _readyLib.readyAll();
 
