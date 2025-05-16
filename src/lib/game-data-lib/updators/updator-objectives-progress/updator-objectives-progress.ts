@@ -1,4 +1,3 @@
-import { NSID, ParsedNSID } from "ttpg-darrell";
 import { GoalDataEntry } from "../../objective-progress/goal.data";
 import { GameData } from "../../game-data/game-data";
 import { IGameDataUpdator } from "../../i-game-data-updator/i-game-data-updator";
@@ -11,21 +10,6 @@ import { UpdatorObjectiveProgressType } from "./updator-objectives-progress-type
 export class UpdatorObjectivesProgress implements IGameDataUpdator {
   update(_gameData: GameData): void {
     throw new Error("Method not implemented.");
-  }
-
-  _nsidToName(nsid: string): string {
-    const parsed: ParsedNSID | undefined = NSID.parse(nsid);
-    const firstNamePart: string | undefined = parsed?.nameParts[0];
-    if (!firstNamePart) {
-      return nsid;
-    }
-
-    const noCap = new Set(["a", "of", "the"]);
-    const name = firstNamePart
-      .split("-")
-      .map((s) => (noCap.has(s) ? s : s.charAt(0).toUpperCase() + s.slice(1)))
-      .join(" ");
-    return name;
   }
 
   _goalDataEntryToStage(goalDataEntry: GoalDataEntry): number {
@@ -85,7 +69,7 @@ export class UpdatorObjectivesProgress implements IGameDataUpdator {
     goalProgress: GoalProgressType
   ): UpdatorObjectiveProgressType {
     return {
-      name: this._nsidToName(goalDataEntry.nsid),
+      name: goalDataEntry.name,
       abbr: goalDataEntry.abbr,
       stage: this._goalDataEntryToStage(goalDataEntry),
       progress: {

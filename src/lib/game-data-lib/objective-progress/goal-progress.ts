@@ -90,6 +90,26 @@ export class GoalProgress {
     };
   }
 
+  tradegoods(needed: number): GoalProgressType {
+    return {
+      header: "TGS",
+      values: toSeats<{ inf: number; res: number; tgs: number }>(
+        this._goalCounter.countInfResTgs()
+      ).map(
+        (value: {
+          inf: number;
+          res: number;
+          tgs: number;
+        }): GoalProgressPerPlayerType => {
+          return {
+            value: value.tgs,
+            success: value.tgs >= needed,
+          };
+        }
+      ),
+    };
+  }
+
   /*
    * Spend N inf, N res, N tgs
    */
@@ -382,12 +402,14 @@ export class GoalProgress {
         green: number;
         red: number;
         yellow: number;
+        unitUpgrade: number;
       }>(this._goalCounter.countTechnologyColors()).map(
         (value: {
           blue: number;
           green: number;
           red: number;
           yellow: number;
+          unitUpgrade: number;
         }): GoalProgressPerPlayerType => {
           let numTwo: number = 0;
           if (value.blue >= 2) {
@@ -405,6 +427,32 @@ export class GoalProgress {
           return {
             value: `${value.blue}/${value.green}/${value.yellow}/${value.red}`,
             success: numTwo >= needed,
+          };
+        }
+      ),
+    };
+  }
+
+  techUnitUpgrades(needed: number): GoalProgressType {
+    return {
+      header: "Tech/Unit Upgrades",
+      values: toSeats<{
+        blue: number;
+        green: number;
+        red: number;
+        yellow: number;
+        unitUpgrade: number;
+      }>(this._goalCounter.countTechnologyColors()).map(
+        (value: {
+          blue: number;
+          green: number;
+          red: number;
+          yellow: number;
+          unitUpgrade: number;
+        }): GoalProgressPerPlayerType => {
+          return {
+            value: value.unitUpgrade,
+            success: value.unitUpgrade >= needed,
           };
         }
       ),
