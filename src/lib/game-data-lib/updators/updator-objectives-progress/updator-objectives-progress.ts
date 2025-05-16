@@ -22,6 +22,13 @@ export class UpdatorObjectivesProgress implements IGameDataUpdator {
     return stage;
   }
 
+  /**
+   * Transform to the game data format.  Right now they're the same
+   * except for handling undefined values ("can't happen" in practice).
+   *
+   * @param goalProgress
+   * @returns
+   */
   _goalProgressToValues(
     goalProgress: GoalProgressType
   ): Array<{ value: string | number | boolean; success: boolean }> {
@@ -49,6 +56,12 @@ export class UpdatorObjectivesProgress implements IGameDataUpdator {
     return result;
   }
 
+  /**
+   * Which seat indexes scored the goal?
+   *
+   * @param goalProgress
+   * @returns
+   */
   _getProgressToScoredBy(goalProgress: GoalProgressType): Array<number> {
     const result: Array<number> = [];
     goalProgress.values.forEach(
