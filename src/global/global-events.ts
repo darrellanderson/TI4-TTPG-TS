@@ -91,6 +91,13 @@ export class GlobalEvents {
   >();
 
   /**
+   * Called when an object fall below the table.
+   */
+  public readonly onObjectFellThroughTable = new TriggerableMulticastDelegate<
+    (object: GameObject) => void
+  >();
+
+  /**
    * Called when a player clicks a player color change button.
    */
   public readonly onPlayerChangeColorRequest = new TriggerableMulticastDelegate<
@@ -108,13 +115,6 @@ export class GlobalEvents {
       colorHex: string,
       clickingPlayer: Player
     ) => void
-  >();
-
-  /**
-   * Called when an object fall below the table.
-   */
-  public readonly onObjectFellThroughTable = new TriggerableMulticastDelegate<
-    (object: GameObject) => void
   >();
 
   /**

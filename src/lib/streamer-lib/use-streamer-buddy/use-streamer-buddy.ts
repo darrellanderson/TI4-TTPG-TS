@@ -1,8 +1,16 @@
 import { world } from "@tabletop-playground/api";
-import { IGlobal, NamespaceId } from "ttpg-darrell";
+import {
+  IGlobal,
+  NamespaceId,
+  TriggerableMulticastDelegate,
+} from "ttpg-darrell";
 import { GameData } from "../../game-data-lib/game-data/game-data";
 
 export class UseStreamerBuddy implements IGlobal {
+  public readonly onStreamerBuddyChanged = new TriggerableMulticastDelegate<
+    (isActive: boolean) => void
+  >();
+
   private readonly _namespaceId: NamespaceId;
   private _useStreeamerBuddy: boolean = false;
 
@@ -25,7 +33,6 @@ export class UseStreamerBuddy implements IGlobal {
   }
 
   init(): void {
-    this._load();
     TI4.events.onGameData.add(this._onGameData);
   }
 
@@ -36,6 +43,7 @@ export class UseStreamerBuddy implements IGlobal {
   setUseStreamerBuddy(useStreamerBuddy: boolean): void {
     this._useStreeamerBuddy = useStreamerBuddy;
     this._save();
+    this.onStreamerBuddyChanged.trigger(this._useStreeamerBuddy);
   }
 
   private _load(): void {
