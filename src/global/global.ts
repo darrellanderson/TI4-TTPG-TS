@@ -39,6 +39,7 @@ import { HideMouseCursor } from "../lib/streamer-lib/hide-mouse-cursor/hide-mous
 import { LastGameData } from "../lib/game-data-lib/last-game-data/last-game-data";
 import { NumpadKeyAll } from "../lib/numpad-key-lib/numpad-key-all/numpad-key-all";
 import { OnAgendaCard } from "../event/on-agenda-card/on-agenda-card";
+import { OnChatMessage } from "../event/on-chat-message/on-chat-message";
 import { OnCombatClicked } from "../event/on-combat-clicked/on-combat-clicked";
 import { OnCombatResult } from "../event/on-combat-result/on-combat-result";
 import { OnGameEnd } from "../event/on-game-end/on-game-end";
@@ -97,6 +98,7 @@ import { UnitModifierActiveIdle } from "../lib/unit-lib/unit-modifier/unit-modif
 import { UnitModifierRegistry } from "../lib/unit-lib/registry/unit-modifier-registry";
 import { UnpackFactionContextMenuItem } from "../context-menu/unpack-faction/unpack-faction";
 import { UseStreamerBuddy } from "../lib/streamer-lib/use-streamer-buddy/use-streamer-buddy";
+import { WhisperSpy } from "../lib/streamer-lib/whisper-spy/whisper-spy";
 
 import * as NSID_TO_TEMPLATE_ID from "../nsid/nsid-to-template-id.json";
 Spawn.inject(NSID_TO_TEMPLATE_ID);
@@ -160,6 +162,7 @@ export class TI4Class {
   public readonly useStreamerBuddy = new UseStreamerBuddy(
     "@use-streamer-buddy/ti4"
   );
+  public readonly whisperSpy = new WhisperSpy("@whisper-spy/ti4");
 }
 
 // Also place "TI4" in the global namespace.
@@ -187,6 +190,7 @@ export function resetGlobalThisTI4(): TI4Class {
     new NumpadKeyAll(),
     new OnAgendaCard(),
     new OnCardBecameSingletonOrDeck(),
+    new OnChatMessage(),
     new OnCombatClicked(),
     new OnCombatResult(),
     new OnGameEnd(),

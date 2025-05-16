@@ -9,10 +9,12 @@ it("init/destroy", () => {
 });
 
 it("event", () => {
-  new OnPlayerChangeColorRequest().init();
+  const onPlayerChangeColorRequest = new OnPlayerChangeColorRequest();
+  onPlayerChangeColorRequest.init();
   const playerSlot: number = 10;
   const clickingPlayer: Player = new MockPlayer();
   TI4.events.onPlayerChangeColorRequest.trigger(playerSlot, clickingPlayer);
+  onPlayerChangeColorRequest._closeWindow();
 });
 
 it("cancel handler", () => {

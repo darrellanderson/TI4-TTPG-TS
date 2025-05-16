@@ -51,6 +51,27 @@ export class StreamerToolUI extends AbstractUI {
         }
       );
 
+    const whisperSpy: CheckBoxUI = new CheckBoxUI(scale);
+    whisperSpy.getCheckBox().setText("Whisper spy");
+    if (player) {
+      whisperSpy.getCheckBox().setIsChecked(TI4.whisperSpy.hasReportTo(player));
+    }
+    whisperSpy
+      .getCheckBox()
+      .onCheckStateChanged.add(
+        (
+          _checkBox: CheckBox,
+          clickingPlayer: Player,
+          isChecked: boolean
+        ): void => {
+          if (isChecked) {
+            TI4.whisperSpy.addReportTo(clickingPlayer);
+          } else {
+            TI4.whisperSpy.removeReportTo(clickingPlayer);
+          }
+        }
+      );
+
     const useStreamerBuddy: CheckBoxUI = new CheckBoxUI(scale);
     useStreamerBuddy.getCheckBox().setText("Streamer buddy");
     useStreamerBuddy
