@@ -14,9 +14,9 @@ export class OnChatMessage implements IGlobal {
     const parts: Array<string> = message.split(" ");
     parts.forEach((part: string): void => {
       if (part.startsWith("@")) {
-        const playerName: string = part.substring(1);
+        const playerName: string = part.substring(1).toLowerCase();
         for (const player of world.getAllPlayers()) {
-          if (player.getName().startsWith(playerName)) {
+          if (player.getName().toLowerCase().startsWith(playerName)) {
             OnWhisper.chirpAtPlayer(player);
           }
         }
