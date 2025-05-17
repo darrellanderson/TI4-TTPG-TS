@@ -23,6 +23,9 @@ export class ToggleHelp implements IGlobal {
       windowTitle
     );
     abstractWindow.getMutableWindowParams().addToggleMenuItem = true;
+    abstractWindow.getMutableWindowParams().addToggleMenuTooltip = TI4.locale(
+      "tooltip.toggle-help"
+    );
 
     // Unlike most windows, set this one up for all player slots.
     const playerSlots: Array<number> = Array.from({ length: 20 }, (_e, i) => i);

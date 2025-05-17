@@ -11,6 +11,7 @@ import {
   HEX_LAYOUT_POINTY, // TTPG inverts x/y axis
   IGlobal,
   LeaveSeat,
+  locale,
   OnCardBecameSingletonOrDeck,
   Spawn,
   Timer,
@@ -101,6 +102,8 @@ import { UnpackFactionContextMenuItem } from "../context-menu/unpack-faction/unp
 import { UseStreamerBuddy } from "../lib/streamer-lib/use-streamer-buddy/use-streamer-buddy";
 import { WhisperSpy } from "../lib/streamer-lib/whisper-spy/whisper-spy";
 
+import { LOCALE_CONTENT_MENUS } from "../locale/locale-context-menus";
+
 import * as NSID_TO_TEMPLATE_ID from "../nsid/nsid-to-template-id.json";
 Spawn.inject(NSID_TO_TEMPLATE_ID);
 
@@ -122,6 +125,9 @@ export function registerErrorHandler() {
 registerErrorHandler();
 
 export class TI4Class {
+  // Strings.
+  public readonly locale = locale;
+
   // Events.
   public readonly events = Object.freeze(new GlobalEvents());
 
@@ -178,6 +184,8 @@ declare global {
 export function resetGlobalThisTI4(): TI4Class {
   globalThis.TI4 = new TI4Class();
   Object.freeze(globalThis.TI4);
+
+  TI4.locale.inject(LOCALE_CONTENT_MENUS);
 
   // Run any delayed initialization, things that need globalThis.TI4 to be set.
   // These are "init" functions in the class objects.
@@ -265,6 +273,7 @@ export function resetGlobalThisTI4(): TI4Class {
     }
   }
   GlobalInit.runGlobalInit(iGlobals);
+
   return globalThis.TI4;
 }
 

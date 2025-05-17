@@ -138,7 +138,10 @@ export class ToggleStratCards implements IGlobal {
       this._onStrategyCardsStateChangedHandler
     );
     globalEvents.onCustomAction.add(this._onCustomActionHandler);
-    world.addCustomAction(ToggleStratCards.TOGGLE_ACTION_NAME);
+    world.addCustomAction(
+      ToggleStratCards.TOGGLE_ACTION_NAME,
+      TI4.locale("tooltip.toggle-strat-cards")
+    );
   }
 
   getStrategyCardsState(): StrategyCardsState {

@@ -51,6 +51,10 @@ export class ToggleCombatWindow implements IGlobal {
       windowTitle
     );
     abstractWindow.getMutableWindowParams().addToggleMenuItem = true;
+    abstractWindow.getMutableWindowParams().addToggleMenuTooltip = TI4.locale(
+      "tooltip.toggle-combat-window"
+    );
+
     this._window = abstractWindow.createWindow();
   }
 

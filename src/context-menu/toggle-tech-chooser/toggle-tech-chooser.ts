@@ -35,6 +35,10 @@ export class ToggleTechChooser implements IGlobal {
       windowTitle
     );
     abstractWindow.getMutableWindowParams().addToggleMenuItem = true;
+    abstractWindow.getMutableWindowParams().addToggleMenuTooltip = TI4.locale(
+      "tooltip.toggle-tech-chooser"
+    );
+
     this._techChooserWindow = abstractWindow.createWindow();
 
     // Listen for the request event.

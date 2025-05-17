@@ -23,6 +23,10 @@ export class ToggleStreamerTool implements IGlobal {
       windowTitle
     );
     abstractWindow.getMutableWindowParams().addToggleMenuItem = true;
+    abstractWindow.getMutableWindowParams().addToggleMenuTooltip = TI4.locale(
+      "tooltip.toggle-streamer-tool"
+    );
+
     abstractWindow.createWindow();
   }
 }

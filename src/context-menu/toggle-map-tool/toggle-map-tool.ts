@@ -23,6 +23,10 @@ export class ToggleMapTool implements IGlobal {
       windowTitle
     );
     abstractWindow.getMutableWindowParams().addToggleMenuItem = true;
+    abstractWindow.getMutableWindowParams().addToggleMenuTooltip = TI4.locale(
+      "tooltip.toggle-map-tool"
+    );
+
     abstractWindow.createWindow();
   }
 }

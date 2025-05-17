@@ -32,6 +32,10 @@ export class ToggleStats implements IGlobal {
       windowTitle
     );
     abstractWindow.getMutableWindowParams().addToggleMenuItem = true;
+    abstractWindow.getMutableWindowParams().addToggleMenuTooltip = TI4.locale(
+      "tooltip.toggle-stats"
+    );
+
     abstractWindow.createWindow();
 
     TI4.events.onGameData.add(this._onGameData);

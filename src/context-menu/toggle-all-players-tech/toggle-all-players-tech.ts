@@ -46,6 +46,8 @@ export class ToggleAllPlayersTech implements IGlobal {
       windowTitle
     );
     this._abstractWindow.getMutableWindowParams().addToggleMenuItem = true;
+    this._abstractWindow.getMutableWindowParams().addToggleMenuTooltip =
+      TI4.locale("tooltip.toggle-all-players-tech");
 
     // Unlike most windows, set this one up for all player slots.
     const playerSlots: Array<number> = Array.from({ length: 20 }, (_e, i) => i);
