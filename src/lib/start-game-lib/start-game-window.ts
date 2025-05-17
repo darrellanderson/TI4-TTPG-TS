@@ -28,12 +28,18 @@ export class StartGameWindow implements IGlobal {
       windowTitle
     );
 
-    // Turn order updates with config changes, pops to top of UIs.
-    abstractWindow.moveWindowLeftOfTurnOrder();
-
     const windowParams: WindowParams = abstractWindow.getMutableWindowParams();
     windowParams.disableClose = true;
     windowParams.disableWarpScreenWorld = true;
+
+    // Turn order updates with config changes, pops to top of UIs.
+    // Center horizontally.
+    if (windowParams.screen?.anchor) {
+      windowParams.screen.anchor.u = 0.5;
+    }
+    if (windowParams.screen?.pos) {
+      windowParams.screen.pos.u = 0.5;
+    }
 
     // Unlike most windows, set this one up for all player slots.
     const playerSlots: Array<number> = Array.from({ length: 20 }, (_e, i) => i);
