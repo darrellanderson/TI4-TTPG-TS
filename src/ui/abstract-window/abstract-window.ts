@@ -44,7 +44,7 @@ export class AbstractWindow {
     } = {};
     for (const playerSeat of TI4.playerSeats.getAllSeats()) {
       const playerSlot: number = playerSeat.playerSlot;
-      const pos: Vector = playerSeat.cardHolder.getPosition().add([0, 0, 3]);
+      const pos: Vector = playerSeat.cardHolder.getPosition().add([0, 0, 4]);
       pos.x = pos.x * 0.75; // move toward middle
       const rot: Rotator = new Rotator(0, 0, 0);
       playerSlotToTransform[playerSlot] = {

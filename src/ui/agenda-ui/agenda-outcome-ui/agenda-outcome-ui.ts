@@ -31,6 +31,12 @@ export class AgendaOutcomeUI extends AbstractUI {
       const seatIndex: number =
         TI4.playerSeats.getSeatIndexByPlayerSlot(playerSlot);
       this._agendaState.setSeatOutcomeChoice(seatIndex, this._outcomeIndex);
+
+      // If the player has cast zero votes, set votes to 1 so that the
+      // chosen outcome is visible (must have a vote to display).
+      if (this._agendaState.getSeatVotesForOutcome(seatIndex) === 0) {
+        this._agendaState.setSeatVotesForOutcome(seatIndex, 1);
+      }
     }
   ).get();
 

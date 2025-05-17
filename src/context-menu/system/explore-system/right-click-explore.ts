@@ -11,6 +11,7 @@ import {
   Broadcast,
   DeletedItemsContainer,
   Find,
+  HexType,
   IGlobal,
   NSID,
 } from "ttpg-darrell";
@@ -30,7 +31,11 @@ export class RightClickExplore implements IGlobal {
     identifier: string
   ): void => {
     if (identifier === "*Explore Frontier") {
-      this._exploreFrontierToken(obj, player);
+      const frontierTokenObj: GameObject | undefined =
+        this._getFrontierToken(obj);
+      if (frontierTokenObj) {
+        this._exploreFrontierToken(frontierTokenObj, player);
+      }
       return;
     }
 
@@ -72,8 +77,6 @@ export class RightClickExplore implements IGlobal {
     const nsid: string = NSID.get(obj);
     if (nsid.startsWith("tile.system:")) {
       this._setSystemCustomActions(obj);
-    } else if (nsid === "token.attachment.system:pok/frontier") {
-      this._setFrontierTokenCustomActions(obj);
     }
   }
 
@@ -94,15 +97,12 @@ export class RightClickExplore implements IGlobal {
           }
         }
       }
+      const actionFrontier: string = `*Explore Frontier`;
+      systemTileObj.removeCustomAction(actionFrontier);
+      if (system.getPlanets().length === 0) {
+        systemTileObj.addCustomAction(actionFrontier);
+      }
     }
-  }
-
-  _setFrontierTokenCustomActions(frontierTokenObj: GameObject) {
-    frontierTokenObj.onCustomAction.remove(this._customActionHandler);
-    frontierTokenObj.onCustomAction.add(this._customActionHandler);
-    const actionName: string = `*Explore Frontier`;
-    frontierTokenObj.removeCustomAction(actionName);
-    frontierTokenObj.addCustomAction(actionName);
   }
 
   _getExploreDeck(trait: TraitSchemaType | "frontier"): Card | undefined {
@@ -115,6 +115,21 @@ export class RightClickExplore implements IGlobal {
       shuffleDiscard
     );
     return deck;
+  }
+
+  _getFrontierToken(systemTileObj: GameObject): GameObject | undefined {
+    const pos: Vector = systemTileObj.getPosition();
+    const systemHex: HexType = TI4.hex.fromPosition(pos);
+    const skipContained: boolean = true;
+    for (const obj of world.getAllObjects(skipContained)) {
+      const nsid: string = NSID.get(obj);
+      if (nsid === "token.attachment.system:pok/frontier") {
+        const objHex: HexType = TI4.hex.fromPosition(obj.getPosition());
+        if (systemHex === objHex) {
+          return obj;
+        }
+      }
+    }
   }
 
   _explorePlanet(
@@ -165,7 +180,6 @@ export class RightClickExplore implements IGlobal {
     }
     if (card) {
       const pos: Vector = frontierTokenObj.getPosition();
-      DeletedItemsContainer.destroyWithoutCopying(frontierTokenObj);
 
       const system: System | undefined = TI4.systemRegistry.getByPosition(pos);
       if (system) {

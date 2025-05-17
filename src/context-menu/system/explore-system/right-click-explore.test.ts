@@ -60,7 +60,9 @@ it("trigger custom action (system)", () => {
 });
 
 it("trigger custom action (frontier)", () => {
-  MockGameObject.simple("tile.system:base/19");
+  const systemObj: MockGameObject = MockGameObject.simple(
+    "tile.system:base/19"
+  );
 
   const player: Player = new MockPlayer();
   const token: MockGameObject = MockGameObject.simple(
@@ -87,9 +89,9 @@ it("trigger custom action (frontier)", () => {
   });
 
   expect(token.isValid()).toBe(true);
-  token._customActionAsPlayer(player, "*Explore Frontier");
+  systemObj._customActionAsPlayer(player, "*Explore Frontier");
   expect(token.isValid()).toBe(false); // explore destroys token
-  token._customActionAsPlayer(player, "*Explore Frontier"); // again
+  systemObj._customActionAsPlayer(player, "*Explore Frontier"); // again
 });
 
 it("_maybeAddPlanetAttachment", () => {

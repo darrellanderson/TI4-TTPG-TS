@@ -1,0 +1,6 @@
+Reset everything script:
+- setup/layout/layout-all/layout-all.testp.ts
+
+Other steps:
+- Rotation step = 30°
+- Always snap = true

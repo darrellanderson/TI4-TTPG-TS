@@ -146,30 +146,29 @@ export class BuildArea {
     const zoneId: string = "zone:" + this._obj.getId();
     let zone: Zone | undefined = world.getZoneById(zoneId);
 
+    const pos: Vector = this._obj.getPosition();
+    pos.z = world.getTableHeight() + HEIGHT / 2;
     if (!zone) {
-      const pos: Vector = this._obj.getPosition();
-      pos.z = world.getTableHeight() + HEIGHT / 2;
-
-      const scale: Vector = this._obj.getExtent(false, false).multiply(2);
-      scale.x = scale.x - 0.1; // inset slightly to prefent "z fighting" on edges
-      scale.y = scale.y - 0.1;
-      scale.z = HEIGHT;
-
-      const playerSlot: number = this._obj.getOwningPlayerSlot();
-      const color: Color =
-        TI4.playerColor.getSlotPlasticColorOrThrow(playerSlot);
-      color.a = 0.1;
-
       zone = world.createZone(pos);
-      zone.setColor(color);
-      zone.setId(zoneId);
-      zone.setScale(scale);
-      zone.setSlotOwns(playerSlot, true);
-      zone.setStacking(ZonePermission.Nobody);
-      zone.setObjectVisibility(ZonePermission.Everybody);
-      zone.setInserting(ZonePermission.Everybody);
     }
 
+    const scale: Vector = this._obj.getExtent(false, false).multiply(2);
+    scale.x = scale.x - 0.1; // inset slightly to prefent "z fighting" on edges
+    scale.y = scale.y - 0.1;
+    scale.z = HEIGHT;
+
+    const playerSlot: number = this._obj.getOwningPlayerSlot();
+    const color: Color = TI4.playerColor.getSlotPlasticColorOrThrow(playerSlot);
+    color.a = 0.1;
+
+    zone.setPosition(pos);
+    zone.setColor(color);
+    zone.setId(zoneId);
+    zone.setScale(scale);
+    zone.setSlotOwns(playerSlot, true);
+    zone.setStacking(ZonePermission.Nobody);
+    zone.setObjectVisibility(ZonePermission.Everybody);
+    zone.setInserting(ZonePermission.Everybody);
     zone.setAlwaysVisible(false);
     return zone;
   }

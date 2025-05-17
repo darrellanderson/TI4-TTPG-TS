@@ -1,4 +1,5 @@
 import {
+  globalEvents,
   Player,
   Vector,
   world,
@@ -6,7 +7,6 @@ import {
   ZonePermission,
 } from "@tabletop-playground/api";
 import { IGlobal, NamespaceId, NSID, PlayerSlot } from "ttpg-darrell";
-import { globalEvents } from "ttpg-mock";
 
 export class HideMouseCursor implements IGlobal {
   private readonly _namespaceId: NamespaceId;

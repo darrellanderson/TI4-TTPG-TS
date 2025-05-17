@@ -10,7 +10,10 @@ import { ThrottleClickHandler } from "ttpg-darrell";
 
 import { AbstractUI } from "../../abstract-ui/abtract-ui";
 import { AgendaAvailableVotesUI } from "../agenda-available-votes-ui/agenda-available-votes-ui";
-import { AgendaCardUI } from "../agenda-card-ui/agenda-card-ui";
+import {
+  AgendaCardFaceDownUI,
+  AgendaCardUI,
+} from "../agenda-card-ui/agenda-card-ui";
 import { AgendaHowToUI } from "../agenda-how-to-ui/agenda-how-to-ui";
 import { AgendaOutcomeUI } from "../agenda-outcome-ui/agenda-outcome-ui";
 import { AgendaState } from "../../../lib/agenda-lib/agenda-state/agenda-state";
@@ -46,6 +49,11 @@ export class AgendaStateUI extends AbstractUI {
     if (!agendaCard || !(agendaCard instanceof Card)) {
       throw new Error("Agenda card missing or not card");
     }
+
+    if (!agendaCard.isFaceUp()) {
+      return new AgendaCardFaceDownUI(scale);
+    }
+
     return new AgendaCardUI(agendaCard, scale);
   }
 
@@ -250,6 +258,13 @@ export class AgendaStateUI extends AbstractUI {
       const outcomeUI: AbstractUI = new AgendaOutcomeUI(agendaState, i, scale);
       outcomeUIs.push(outcomeUI);
     }
+
+    agendaState.onAgendaStateChanged.add((): void => {
+      const numOutcomes: number = agendaState.getNumOutcomes();
+      outcomeUIs.forEach((outcomeUI: AbstractUI, index: number) => {
+        outcomeUI.getWidget().setVisible(index < numOutcomes);
+      });
+    });
 
     return new VerticalUIBuilder()
       .setSpacing(CONFIG.SPACING * scale)
