@@ -35,6 +35,7 @@ import { GameDataExport } from "../lib/game-data-lib/game-data-export/game-data-
 import { GameDataUpdator } from "../lib/game-data-lib/game-data-updator/game-data-updator";
 import { GAME_DATA_UPDATORS } from "../lib/game-data-lib/game-data-updators/game-data-updators";
 import { GlobalEvents } from "./global-events";
+import { GoalReporter } from "../lib/game-data-lib/objective-progress/goal-reporter";
 import { HideMouseCursor } from "../lib/streamer-lib/hide-mouse-cursor/hide-mouse-cursor";
 import { LastGameData } from "../lib/game-data-lib/last-game-data/last-game-data";
 import { NumpadKeyAll } from "../lib/numpad-key-lib/numpad-key-all/numpad-key-all";
@@ -137,6 +138,7 @@ export class TI4Class {
   public readonly gameDataUpdator = new GameDataUpdator(
     GAME_DATA_UPDATORS
   ).startPeriodicUpdatesInProduction();
+  public readonly goalReporter = new GoalReporter();
   public readonly hideMouseCursor = new HideMouseCursor(
     "@hide-mouse-cursor/ti4"
   );

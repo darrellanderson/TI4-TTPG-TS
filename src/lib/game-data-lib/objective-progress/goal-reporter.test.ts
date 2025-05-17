@@ -8,11 +8,50 @@ import fs from "fs";
 import klawSync from "klaw-sync";
 
 import { GOAL_DATA_ENTRIES, GoalDataEntry } from "./goal.data";
+import { GoalReporter } from "./goal-reporter";
+import { MockCardHolder } from "ttpg-mock";
+import { GoalProgressType } from "./goal-progress";
 
 it("goal data entries", () => {
   GOAL_DATA_ENTRIES.forEach((entry: GoalDataEntry): void => {
     entry.get();
   });
+});
+
+it("streamer buddy toggle", () => {
+  const goalReporter: GoalReporter = new GoalReporter();
+  goalReporter.init();
+
+  TI4.useStreamerBuddy.setUseStreamerBuddy(true);
+  TI4.useStreamerBuddy.setUseStreamerBuddy(false);
+});
+
+it("interval handler", () => {
+  jest.useFakeTimers();
+
+  new MockCardHolder({
+    templateMetadata: "card-holder:base/player-hand",
+    owningPlayerSlot: 10,
+  });
+
+  const goalReporter: GoalReporter = new GoalReporter();
+  goalReporter.init();
+  TI4.useStreamerBuddy.setUseStreamerBuddy(true);
+
+  jest.advanceTimersByTime(1000);
+});
+
+it("getters", () => {
+  const goalReporter: GoalReporter = new GoalReporter();
+  goalReporter.init();
+
+  const goalData: ReadonlyArray<GoalDataEntry> =
+    goalReporter.getAllGoalDataEntries();
+  expect(goalData).toHaveLength(GOAL_DATA_ENTRIES.length);
+
+  const progress: GoalProgressType | undefined =
+    goalReporter.getGoalProgress("type:source/name");
+  expect(progress).toBeUndefined();
 });
 
 it("validate NSIDs appear in assets/Templates", () => {

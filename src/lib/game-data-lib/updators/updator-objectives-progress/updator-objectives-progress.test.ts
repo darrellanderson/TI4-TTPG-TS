@@ -1,6 +1,8 @@
-import { GoalProgressType } from "lib/game-data-lib/objective-progress/goal-progress";
+import { GoalProgressType } from "../../objective-progress/goal-progress";
 import { UpdatorObjectivesProgress } from "./updator-objectives-progress";
-import { GoalDataEntry } from "lib/game-data-lib/objective-progress/goal.data";
+import { GoalDataEntry } from "../../objective-progress/goal.data";
+import { GameData } from "../../game-data/game-data";
+import { GameDataUpdator } from "../../game-data-updator/game-data-updator";
 
 it("constructor", () => {
   new UpdatorObjectivesProgress();
@@ -89,4 +91,21 @@ it("_getObjectiveProgress", () => {
     },
     stage: 1,
   });
+});
+
+it("update", () => {
+  jest.useFakeTimers();
+
+  const updator: UpdatorObjectivesProgress = new UpdatorObjectivesProgress();
+  const gameData: GameData = GameDataUpdator.createGameData();
+
+  // Initially empty, does not active until streamer buddy is active.
+  updator.update(gameData);
+  expect(gameData.objectivesProgress).toEqual([]);
+
+  TI4.useStreamerBuddy.setUseStreamerBuddy(true);
+  jest.advanceTimersByTime(1000);
+
+  updator.update(gameData);
+  expect(gameData.objectivesProgress?.length).toBeGreaterThan(0);
 });

@@ -9,7 +9,7 @@ export type GoalDataEntry = {
   get: () => GoalProgressType;
 };
 
-export const GOAL_DATA_ENTRIES: Array<GoalDataEntry> = [
+export const GOAL_DATA_ENTRIES: ReadonlyArray<GoalDataEntry> = [
   {
     abbr: "3 INF 3 RES 3 TG",
     name: "Amass Wealth",
@@ -409,4 +409,4 @@ export const GOAL_DATA_ENTRIES: Array<GoalDataEntry> = [
       return goalProgress.planetsSameTrait(6);
     },
   },
-];
+].map((x) => Object.freeze(x));

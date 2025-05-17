@@ -8,8 +8,21 @@ import {
 import { UpdatorObjectiveProgressType } from "./updator-objectives-progress-type";
 
 export class UpdatorObjectivesProgress implements IGameDataUpdator {
-  update(_gameData: GameData): void {
-    throw new Error("Method not implemented.");
+  update(gameData: GameData): void {
+    const progress: Array<UpdatorObjectiveProgressType> = [];
+
+    const goalData: ReadonlyArray<GoalDataEntry> =
+      TI4.goalReporter.getAllGoalDataEntries();
+    goalData.forEach((goalDataEntry: GoalDataEntry): void => {
+      const goalNsid: string = goalDataEntry.nsid;
+      const goalProgress: GoalProgressType | undefined =
+        TI4.goalReporter.getGoalProgress(goalNsid);
+      if (goalProgress) {
+        progress.push(this._getObjectiveProgress(goalDataEntry, goalProgress));
+      }
+    });
+
+    gameData.objectivesProgress = progress;
   }
 
   _nsidToStage(nsid: string): number {
