@@ -33,6 +33,11 @@ export class StartGameUI extends AbstractUI {
       .setBold(true)
       .setText("TWILIGHT IMPERIUM");
 
+    const helpInfo: LongRichTextUI = new LongRichTextUI(scaledWidth, scale);
+    helpInfo
+      .getRichText()
+      .setText("New?  Right-click the table, [b]*Toggle Help[/b]");
+
     const numPlayersLabel: LabelUI = new LabelUI(scale);
     numPlayersLabel
       .getText()
@@ -187,7 +192,7 @@ export class StartGameUI extends AbstractUI {
     const ui: AbstractUI = new VerticalUIBuilder()
       .setSpacing(CONFIG.SPACING * scale)
       .setHorizontalAlignment(HorizontalAlignment.Center)
-      .addUIs([gameHeader, config, startGameButton])
+      .addUIs([gameHeader, config, startGameButton, helpInfo])
       .build();
     super(ui.getWidget(), ui.getSize());
   }
