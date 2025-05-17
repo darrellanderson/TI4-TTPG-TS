@@ -35,6 +35,9 @@ export class RightClickExplore implements IGlobal {
         this._getFrontierToken(obj);
       if (frontierTokenObj) {
         this._exploreFrontierToken(frontierTokenObj, player);
+      } else {
+        const msg: string = "Explore failed: missing frontier token";
+        Broadcast.chatOne(player, msg);
       }
       return;
     }

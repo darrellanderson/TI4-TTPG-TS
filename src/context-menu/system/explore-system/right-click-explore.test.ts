@@ -95,6 +95,9 @@ it("trigger custom action (frontier)", () => {
   // Create new token and explore again.
   MockGameObject.simple("token.attachment.system:pok/frontier");
   systemObj._customActionAsPlayer(player, "*Explore Frontier"); // again
+
+  // Again, but missing frontier token.
+  systemObj._customActionAsPlayer(player, "*Explore Frontier"); // again
 });
 
 it("_maybeAddPlanetAttachment", () => {
