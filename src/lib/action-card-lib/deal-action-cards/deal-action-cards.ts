@@ -102,9 +102,6 @@ export class DealActionCards {
         card = deck;
         deck = undefined;
       }
-      if (card) {
-        card.setRotation([0, 0, 180]);
-      }
       if (
         card !== undefined &&
         !this._cardUtil.dealToHolder(card, playerSlot)
