@@ -3,6 +3,7 @@ import { NSID } from "ttpg-darrell";
 import {
   MockCard,
   MockCardDetails,
+  MockCardHolder,
   MockContainer,
   MockGameObject,
   MockPlayer,
@@ -13,13 +14,43 @@ import { Planet } from "../../../lib/system-lib/planet/planet";
 import { RightClickExplore } from "./right-click-explore";
 import { System } from "../../../lib/system-lib/system/system";
 
+it("static _checkIsDistantSuns (true)", () => {
+  new MockCardHolder({ templateMetadata: "card-holder:base/player-hand" });
+  MockGameObject.simple("sheet.faction:pok/naazrokha");
+
+  const distantSuns: boolean = RightClickExplore._checkIsDistantSuns();
+  expect(distantSuns).toBe(true);
+});
+
+it("static _checkIsDistantSuns (false)", () => {
+  const distantSuns: boolean = RightClickExplore._checkIsDistantSuns();
+  expect(distantSuns).toBe(false);
+});
+
 it("constructor", () => {
   new MockGameObject(); // so there is an object in the world
   new RightClickExplore().init();
 });
 
+it("faction changed", () => {
+  new RightClickExplore();
+
+  // No Naaz-Rokha.
+  TI4.events.onFactionChanged.trigger(1);
+
+  // Yes Naaz-Rokha.
+  new MockCardHolder({ templateMetadata: "card-holder:base/player-hand" });
+  MockGameObject.simple("sheet.faction:pok/naazrokha");
+  TI4.events.onFactionChanged.trigger(1);
+});
+
 it("trigger custom action (system)", () => {
+  new MockCardHolder({ templateMetadata: "card-holder:base/player-hand" });
+  MockGameObject.simple("sheet.faction:pok/naazrokha");
+
   const rightClickExplore = new RightClickExplore();
+  rightClickExplore.init();
+
   const player: Player = new MockPlayer();
   const system: MockGameObject = MockGameObject.simple("tile.system:base/19");
 
@@ -57,12 +88,15 @@ it("trigger custom action (system)", () => {
 
   // Again, one card left.
   system._customActionAsPlayer(player, "*Explore Wellon (industrial)");
+
+  // Distant suns explore.
+  system._customActionAsPlayer(player, "*Distant-Suns Wellon (industrial)");
 });
 
 it("trigger custom action (frontier)", () => {
   const systemObj: MockGameObject = MockGameObject.simple(
-    "tile.system:base/19"
-  );
+    "tile.system:base/39"
+  ); // no planets
 
   const player: Player = new MockPlayer();
   const token: MockGameObject = MockGameObject.simple(

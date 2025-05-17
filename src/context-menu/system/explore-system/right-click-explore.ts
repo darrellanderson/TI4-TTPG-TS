@@ -24,6 +24,33 @@ import { SystemAttachment } from "../../../lib/system-lib/system-attachment/syst
 
 export class RightClickExplore implements IGlobal {
   private readonly _find: Find = new Find();
+  private _isDistantSuns: boolean = false;
+
+  static _checkIsDistantSuns(): boolean {
+    for (const faction of TI4.factionRegistry
+      .getPlayerSlotToFaction()
+      .values()) {
+      if (
+        faction.getAbilityNsids().includes("faction-ability:pok/distant-suns")
+      ) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  private readonly _onFactionsChanged = (): void => {
+    const before: boolean = this._isDistantSuns;
+    this._isDistantSuns = RightClickExplore._checkIsDistantSuns();
+
+    // If the Distant Suns ability was added or removed, update tiles.
+    if (this._isDistantSuns !== before) {
+      const skipContained = false;
+      for (const obj of world.getAllObjects(skipContained)) {
+        this._maybeSetCustomActions(obj);
+      }
+    }
+  };
 
   private readonly _customActionHandler = (
     obj: GameObject,
@@ -47,19 +74,24 @@ export class RightClickExplore implements IGlobal {
     );
     if (system) {
       const parts: string[] = identifier.split(" ");
+      const actionPart: string | undefined = parts.shift(); // remove "*Explore"
       let trait: string | undefined = parts.pop();
-      parts.shift(); // remove "*Explore"
       const planetName: string = parts.join(" ");
-      if (trait && planetName) {
+      if (actionPart && trait && planetName) {
         trait = trait.substring(1, trait.length - 1); // remove parens
         for (const planet of system.getPlanets()) {
           if (planet.getName() === planetName) {
-            this._explorePlanet(
-              system,
-              planet,
-              trait as TraitSchemaType,
-              player
-            );
+            if (actionPart === "*Explore") {
+              this._explorePlanet(
+                system,
+                planet,
+                trait as TraitSchemaType,
+                player
+              );
+            }
+            if (actionPart === "*Distant-Suns") {
+              // TODO
+            }
           }
         }
       }
@@ -67,6 +99,8 @@ export class RightClickExplore implements IGlobal {
   };
 
   init(): void {
+    this._isDistantSuns = RightClickExplore._checkIsDistantSuns();
+
     const skipContained = false;
     for (const obj of world.getAllObjects(skipContained)) {
       this._maybeSetCustomActions(obj);
@@ -74,6 +108,8 @@ export class RightClickExplore implements IGlobal {
     globalEvents.onObjectCreated.add((obj: GameObject): void => {
       this._maybeSetCustomActions(obj);
     });
+
+    TI4.events.onFactionChanged.add(this._onFactionsChanged);
   }
 
   _maybeSetCustomActions(obj: GameObject): void {
@@ -90,6 +126,8 @@ export class RightClickExplore implements IGlobal {
     if (system) {
       systemTileObj.onCustomAction.remove(this._customActionHandler);
       systemTileObj.onCustomAction.add(this._customActionHandler);
+
+      // Regular explore actions.
       for (const planet of system.getPlanets()) {
         const planetName: string = planet.getName();
         for (const trait of ["cultural", "hazardous", "industrial"]) {
@@ -100,6 +138,21 @@ export class RightClickExplore implements IGlobal {
           }
         }
       }
+
+      // Add Distant Suns actions.
+      for (const planet of system.getPlanets()) {
+        const planetName: string = planet.getName();
+        for (const trait of ["cultural", "hazardous", "industrial"]) {
+          const actionName: string = `*Distant-Suns ${planetName} (${trait})`;
+          const tooltip: string = "Naaz-Rokha with mech: draw 2, choose 1";
+          systemTileObj.removeCustomAction(actionName);
+          if (this._isDistantSuns && planet.getTraits().includes(trait)) {
+            systemTileObj.addCustomAction(actionName, tooltip);
+          }
+        }
+      }
+
+      // Frontier exploration.
       const actionFrontier: string = `*Explore Frontier`;
       systemTileObj.removeCustomAction(actionFrontier);
       if (system.getPlanets().length === 0) {
