@@ -99,6 +99,7 @@ import { UnitAttrsRegistry } from "../lib/unit-lib/registry/unit-attrs-registry"
 import { UnitModifierActiveIdle } from "../lib/unit-lib/unit-modifier/unit-modifier-active-idle";
 import { UnitModifierRegistry } from "../lib/unit-lib/registry/unit-modifier-registry";
 import { UnpackFactionContextMenuItem } from "../context-menu/unpack-faction/unpack-faction";
+import { UpdatorHistory } from "../lib/game-data-lib/updators/updator-history/updator-history";
 import { UseStreamerBuddy } from "../lib/streamer-lib/use-streamer-buddy/use-streamer-buddy";
 import { WhisperSpy } from "../lib/streamer-lib/whisper-spy/whisper-spy";
 
@@ -260,6 +261,13 @@ export function resetGlobalThisTI4(): TI4Class {
         new CreateAndAttachTurnOrderUI(),
       ]
     );
+  }
+
+  // Some game data updators need IGlobal.  This is a hack.
+  for (const updator of GAME_DATA_UPDATORS) {
+    if (updator instanceof UpdatorHistory) {
+      iGlobals.push(updator);
+    }
   }
 
   // Finally run any "after everything else" init functions.

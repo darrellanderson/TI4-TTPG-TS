@@ -3,6 +3,7 @@ import { IGameDataUpdator } from "../i-game-data-updator/i-game-data-updator";
 import { UpdatorActiveSystem } from "../updators/updator-active-system/updator-active-system";
 import { UpdatorConfig } from "../updators/updator-config/updator-config";
 import { UpdatorHexSummary } from "../updators/updator-hex-summary/updator-hex-summary";
+import { UpdatorHistory } from "../updators/updator-history/updator-history";
 import { UpdatorLaws } from "../updators/updator-laws/updator-laws";
 import { UpdatorMapString } from "../updators/updator-map-string/updator-map-string";
 import { UpdatorObjectives } from "../updators/updator-objectives/updator-objectives";
@@ -34,6 +35,7 @@ export const GAME_DATA_UPDATORS: Array<IGameDataUpdator> = [
   new UpdatorActiveSystem(),
   new UpdatorConfig(),
   new UpdatorHexSummary(),
+  new UpdatorHistory(),
   new UpdatorLaws(),
   new UpdatorMapString(),
   new UpdatorObjectives(),
