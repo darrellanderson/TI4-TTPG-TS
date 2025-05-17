@@ -73,3 +73,21 @@ it("constructor/event/destroy", () => {
   agendaState.setOutcomeName(0, "For");
   agendaStateUI.destroy();
 });
+
+it("constructor (agenda card face down)", () => {
+  const agendaCard: Card = MockCard.simple("card.agenda:my-source/my-name", {
+    isFaceUp: false,
+  });
+  expect(agendaCard.isFaceUp()).toBe(false);
+  const agendaState: AgendaState = new AgendaState("@test/test").setAgendaObjId(
+    agendaCard.getId()
+  );
+  const seatIndex: number = 0;
+  const scale: number = 1;
+  const agendaStateUI: AgendaStateUI = new AgendaStateUI(
+    agendaState,
+    seatIndex,
+    scale
+  );
+  agendaStateUI.destroy();
+});

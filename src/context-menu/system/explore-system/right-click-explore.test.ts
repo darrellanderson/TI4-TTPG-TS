@@ -91,6 +91,9 @@ it("trigger custom action (frontier)", () => {
   expect(token.isValid()).toBe(true);
   systemObj._customActionAsPlayer(player, "*Explore Frontier");
   expect(token.isValid()).toBe(false); // explore destroys token
+
+  // Create new token and explore again.
+  MockGameObject.simple("token.attachment.system:pok/frontier");
   systemObj._customActionAsPlayer(player, "*Explore Frontier"); // again
 });
 

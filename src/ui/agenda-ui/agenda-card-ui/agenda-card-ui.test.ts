@@ -1,6 +1,6 @@
 import { Card } from "@tabletop-playground/api";
 import { MockCard } from "ttpg-mock";
-import { AgendaCardUI } from "./agenda-card-ui";
+import { AgendaCardFaceDownUI, AgendaCardUI } from "./agenda-card-ui";
 
 it("constructor", () => {
   const agendaCard: Card = new MockCard();
@@ -13,4 +13,9 @@ it("_getCreateZoomedUI", () => {
   const scale = 1;
   const createZoomedUI = AgendaCardUI._getCreateZoomedUI(agendaCard, scale);
   createZoomedUI();
+});
+
+it("constructor face down", () => {
+  const scale = 1;
+  new AgendaCardFaceDownUI(scale);
 });

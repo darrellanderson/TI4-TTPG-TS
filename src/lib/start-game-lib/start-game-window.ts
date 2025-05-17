@@ -34,10 +34,8 @@ export class StartGameWindow implements IGlobal {
 
     // Turn order updates with config changes, pops to top of UIs.
     // Center horizontally.
-    if (windowParams.screen?.anchor) {
+    if (windowParams.screen) {
       windowParams.screen.anchor.u = 0.5;
-    }
-    if (windowParams.screen?.pos) {
       windowParams.screen.pos.u = 0.5;
     }
 
