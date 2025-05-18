@@ -4,7 +4,7 @@ import {
   Vector,
   world,
 } from "@tabletop-playground/api";
-import { NSID } from "ttpg-darrell";
+import { HexType, NSID } from "ttpg-darrell";
 
 /**
  * Lift and drop objects over a system tile.
@@ -22,17 +22,16 @@ export class SystemReserveSpace {
     // Lift everything (except the system tile) in the area.
     // Sort by z position (bottom to top).
     const pos: Vector = this._systemTileObj.getPosition();
+    const hex: HexType = TI4.hex.fromPosition(pos);
     const extent: Vector = this._systemTileObj.getExtent(true, false);
     extent.z = 10;
     this._liftedObjs = world
       .boxOverlap(pos, extent)
       .filter((obj: GameObject): boolean => {
         const nsid: string = NSID.get(obj);
-        if (nsid.startsWith("tile.system:")) {
-          // Ignore system tiles.
-          return false;
-        }
-        return true;
+        const objPos: Vector = obj.getPosition();
+        const objHex: HexType = TI4.hex.fromPosition(objPos);
+        return !nsid.startsWith("tile.system:") && objHex === hex;
       })
       .sort((a, b) => a.getPosition().z - b.getPosition().z);
 
