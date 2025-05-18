@@ -1,4 +1,4 @@
-import { GameObject, Vector } from "@tabletop-playground/api";
+import { GameObject, ObjectType, Vector } from "@tabletop-playground/api";
 import { DeletedItemsContainer, Find, Spawn } from "ttpg-darrell";
 
 import { AbstractUnpack } from "../abstract-unpack/abstract-unpack";
@@ -120,11 +120,14 @@ export class UnpackHomeSystem extends AbstractUnpack {
     if (surrogatSystemTileeObj) {
       surrogatSystemTileeObj.setPosition(homePos);
       surrogatSystemTileeObj.snapToGround();
+      surrogatSystemTileeObj.setObjectType(ObjectType.Ground);
       homeSystemTileObj.setPosition(factionSheetPos);
       homeSystemTileObj.snapToGround();
+      // Do not lock, player wants to move it somewhere.
     } else {
       homeSystemTileObj.setPosition(homePos);
       homeSystemTileObj.snapToGround();
+      homeSystemTileObj.setObjectType(ObjectType.Ground);
     }
   }
 

@@ -1,4 +1,10 @@
-import { GameObject, Vector, world } from "@tabletop-playground/api";
+import {
+  GameObject,
+  ObjectType,
+  Vector,
+  world,
+} from "@tabletop-playground/api";
+import { NSID } from "ttpg-darrell";
 
 /**
  * Lift and drop objects over a system tile.
@@ -20,11 +26,19 @@ export class SystemReserveSpace {
     extent.z = 10;
     this._liftedObjs = world
       .boxOverlap(pos, extent)
-      .filter((obj) => obj !== this._systemTileObj)
+      .filter((obj: GameObject): boolean => {
+        const nsid: string = NSID.get(obj);
+        if (nsid.startsWith("tile.system:")) {
+          // Ignore system tiles.
+          return false;
+        }
+        return true;
+      })
       .sort((a, b) => a.getPosition().z - b.getPosition().z);
 
     for (const obj of this._liftedObjs) {
       const above = obj.getPosition().add(new Vector(0, 0, 5));
+      obj.setObjectType(ObjectType.Regular);
       obj.setPosition(above);
     }
 

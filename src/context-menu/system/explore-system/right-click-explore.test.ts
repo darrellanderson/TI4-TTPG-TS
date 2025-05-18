@@ -1,6 +1,14 @@
-import { Card, Container, GameObject, Player } from "@tabletop-playground/api";
+import {
+  Card,
+  Container,
+  GameObject,
+  Player,
+  Widget,
+  world,
+} from "@tabletop-playground/api";
 import { NSID } from "ttpg-darrell";
 import {
+  clickAll,
   MockCard,
   MockCardDetails,
   MockCardHolder,
@@ -190,4 +198,133 @@ it("_maybeAddSystemAttachment", () => {
 
   const rightClickExplore = new RightClickExplore();
   rightClickExplore._maybeAddSystemAttachment(system, cardNsid);
+});
+
+it("_exploreDistantSuns (only one card)", () => {
+  const systemTileObj: GameObject = MockGameObject.simple(
+    "tile.system:base/19"
+  );
+  const system: System | undefined = TI4.systemRegistry.getBySystemTileObjId(
+    systemTileObj.getId()
+  );
+  if (!system) {
+    throw new Error("system not found"); // for TypeScript
+  }
+  const planet: Planet | undefined = system.getPlanets()[0];
+  if (!planet) {
+    throw new Error("planet not found"); // for TypeScript
+  }
+  const player: Player = new MockPlayer();
+
+  const deck: Card = new MockCard({
+    cardDetails: [
+      new MockCardDetails({
+        metadata: "card.exploration.industrial:pok/my-name-1",
+      }),
+    ],
+  });
+  const _mat: GameObject = MockGameObject.simple("mat.deck:pok/exploration", {
+    snapPoints: [
+      new MockSnapPoint({
+        tags: ["deck-exploration-industrial"],
+        snappedObject: deck,
+      }),
+    ],
+  });
+
+  const rightClickExplore = new RightClickExplore();
+  rightClickExplore._exploreDistantSuns(system, planet, "industrial", player);
+});
+
+it("_exploreDistantSuns (two cards)", () => {
+  const systemTileObj: GameObject = MockGameObject.simple(
+    "tile.system:base/19"
+  );
+  const system: System | undefined = TI4.systemRegistry.getBySystemTileObjId(
+    systemTileObj.getId()
+  );
+  if (!system) {
+    throw new Error("system not found"); // for TypeScript
+  }
+  const planet: Planet | undefined = system.getPlanets()[0];
+  if (!planet) {
+    throw new Error("planet not found"); // for TypeScript
+  }
+  const player: Player = new MockPlayer();
+
+  const deck: Card = new MockCard({
+    cardDetails: [
+      new MockCardDetails({
+        metadata: "card.exploration.industrial:pok/my-name-1",
+      }),
+      new MockCardDetails({
+        metadata: "card.exploration.industrial:pok/my-name-2",
+      }),
+    ],
+  });
+  const _mat: GameObject = MockGameObject.simple("mat.deck:pok/exploration", {
+    snapPoints: [
+      new MockSnapPoint({
+        tags: ["deck-exploration-industrial"],
+        snappedObject: deck,
+      }),
+    ],
+  });
+
+  const rightClickExplore = new RightClickExplore();
+  rightClickExplore._exploreDistantSuns(system, planet, "industrial", player);
+});
+
+it("_exploreDistantSuns (three cards)", () => {
+  const systemTileObj: GameObject = MockGameObject.simple(
+    "tile.system:base/19"
+  );
+  const system: System | undefined = TI4.systemRegistry.getBySystemTileObjId(
+    systemTileObj.getId()
+  );
+  if (!system) {
+    throw new Error("system not found"); // for TypeScript
+  }
+  const planet: Planet | undefined = system.getPlanets()[0];
+  if (!planet) {
+    throw new Error("planet not found"); // for TypeScript
+  }
+  const player: Player = new MockPlayer();
+
+  const deck: Card = new MockCard({
+    cardDetails: [
+      new MockCardDetails({
+        metadata: "card.exploration.industrial:pok/my-name-1",
+      }),
+      new MockCardDetails({
+        metadata: "card.exploration.industrial:pok/my-name-2",
+      }),
+      new MockCardDetails({
+        metadata: "card.exploration.industrial:pok/my-name-3",
+      }),
+    ],
+  });
+  const _mat: GameObject = MockGameObject.simple("mat.deck:pok/exploration", {
+    snapPoints: [
+      new MockSnapPoint({
+        tags: ["deck-exploration-industrial"],
+        snappedObject: deck,
+      }),
+    ],
+  });
+
+  const rightClickExplore = new RightClickExplore();
+  rightClickExplore._exploreDistantSuns(system, planet, "industrial", player);
+
+  // Click all the buttons.
+  const widgets: Array<Widget> = [];
+  for (const obj of world.getAllObjects()) {
+    for (const ui of obj.getUIs()) {
+      const widget: Widget = ui.widget;
+      widgets.push(widget);
+    }
+  }
+  for (const widget of widgets) {
+    clickAll(widget);
+  }
 });

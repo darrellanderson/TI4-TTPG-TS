@@ -1,9 +1,12 @@
 import {
+  Button,
   Card,
   Container,
   GameObject,
   globalEvents,
   Player,
+  Rotator,
+  UIElement,
   Vector,
   world,
 } from "@tabletop-playground/api";
@@ -11,6 +14,7 @@ import {
   Broadcast,
   DeletedItemsContainer,
   Find,
+  GarbageContainer,
   HexType,
   IGlobal,
   NSID,
@@ -90,7 +94,12 @@ export class RightClickExplore implements IGlobal {
               );
             }
             if (actionPart === "*Distant-Suns") {
-              // TODO
+              this._exploreDistantSuns(
+                system,
+                planet,
+                trait as TraitSchemaType,
+                player
+              );
             }
           }
         }
@@ -205,22 +214,32 @@ export class RightClickExplore implements IGlobal {
       }
     }
     if (card) {
-      const cardNsid: string = NSID.get(card);
-      this._maybeAddPlanetAttachment(planet, cardNsid);
-      this._maybeAddSystemAttachment(system, cardNsid);
-
-      const pos: Vector = planet.getPosition();
-      const animSpeed: number = 1;
-      card.setPosition(pos.add([0, 0, 10]), animSpeed);
-      card.setRotation([0, 0, 180]);
-      card.snapToGround();
-
-      const playerName: string = TI4.playerName.getByPlayer(player);
-      const planetName: string = planet.getName();
-      const cardName: string = card.getCardDetails().name;
-      const msg: string = `${playerName} explored ${planetName} (${trait}): ${cardName}`;
-      Broadcast.chatAll(msg, player.getPlayerColor());
+      this._applyExploreCardToPlanet(card, trait, system, planet, player);
     }
+  }
+
+  _applyExploreCardToPlanet(
+    card: Card,
+    trait: TraitSchemaType,
+    system: System,
+    planet: Planet,
+    player: Player
+  ): void {
+    const cardNsid: string = NSID.get(card);
+    this._maybeAddPlanetAttachment(planet, cardNsid);
+    this._maybeAddSystemAttachment(system, cardNsid);
+
+    const pos: Vector = planet.getPosition();
+    const animSpeed: number = 1;
+    card.setPosition(pos.add([0, 0, 10]), animSpeed);
+    card.setRotation([0, 0, 180]);
+    card.snapToGround();
+
+    const playerName: string = TI4.playerName.getByPlayer(player);
+    const planetName: string = planet.getName();
+    const cardName: string = card.getCardDetails().name;
+    const msg: string = `${playerName} explored ${planetName} (${trait}): ${cardName}`;
+    Broadcast.chatAll(msg, player.getPlayerColor());
   }
 
   _exploreFrontierToken(frontierTokenObj: GameObject, player: Player): void {
@@ -290,6 +309,87 @@ export class RightClickExplore implements IGlobal {
           systemAttachment.doLayout();
         }
       }
+    }
+  }
+
+  _exploreDistantSuns(
+    system: System,
+    planet: Planet,
+    trait: TraitSchemaType,
+    player: Player
+  ): void {
+    let deck: Card | undefined = this._getExploreDeck(trait);
+    let card1: Card | undefined = undefined;
+    let card2: Card | undefined = undefined;
+    if (deck) {
+      if (deck.getStackSize() > 1) {
+        card1 = deck.takeCards(1);
+      } else if (deck.getStackSize() === 1) {
+        card1 = deck;
+        deck = undefined;
+      }
+    }
+    if (deck) {
+      if (deck.getStackSize() > 1) {
+        card2 = deck.takeCards(1);
+      } else if (deck.getStackSize() === 1) {
+        card2 = deck;
+        deck = undefined;
+      }
+    }
+    if (card1 && !card2) {
+      this._applyExploreCardToPlanet(card1, trait, system, planet, player);
+    } else if (card1 && card2) {
+      const pos: Vector = planet.getPosition();
+      const d: number = 2;
+      const left: Vector = pos.add([0, -d, 3]);
+      const right: Vector = pos.add([0, d, 3]);
+
+      card1.setPosition(left, 1);
+      card1.setRotation([0, 0, 180]);
+      card1.snapToGround();
+
+      card2.setPosition(right, 1);
+      card2.setRotation([0, 0, 180]);
+      card2.snapToGround();
+
+      this._addChoice(card1, (): void => {
+        this._removeUIs(card1);
+        this._removeUIs(card2);
+        this._applyExploreCardToPlanet(card1, trait, system, planet, player);
+        GarbageContainer.tryRecycle(card2, player);
+      });
+      this._addChoice(card2, (): void => {
+        this._removeUIs(card1);
+        this._removeUIs(card2);
+        this._applyExploreCardToPlanet(card2, trait, system, planet, player);
+        GarbageContainer.tryRecycle(card1, player);
+      });
+    }
+  }
+
+  _addChoice(card: Card, callback: () => void): void {
+    const scale: number = 2;
+
+    const button: Button = new Button()
+      .setFontSize(7 * scale)
+      .setText("Choose");
+    button.onClicked.add(callback);
+
+    const ui = new UIElement();
+    ui.widget = button;
+
+    const extent = card.getExtent(false, false);
+    ui.position = new Vector(-extent.x, 0, -extent.z - 0.1);
+    ui.rotation = new Rotator(180, 180, 0);
+    ui.scale = 1 / scale;
+
+    card.addUI(ui);
+  }
+
+  _removeUIs(card: Card): void {
+    for (const ui of card.getUIs()) {
+      card.removeUIElement(ui);
     }
   }
 }
