@@ -21,10 +21,13 @@ export class AgendaHowToUI extends AbstractUI {
     const widget: Widget = new Border().setColor([c, c, c, 1]).setChild(box);
     super(widget, size);
 
+    // Temporary workaround for rich text: need to set size for bold/etc elements.
+    const fontSize: number = Math.round(CONFIG.FONT_SIZE * scale);
+
     const msg: string = [
-      "[b]Play when[/b] to skip to the next turn (handle then when with the table).",
-      "[b]No whens[/b] to skip your whens this round, you get another chance next round if anyone plays a when.",
-      "[b]Never whens[/b] to skip every time.",
+      `[b][size=${fontSize}]Play when[/size][/b] to skip to the next turn (handle then when with the table).`,
+      `[b][size=${fontSize}]No whens[/size][/b] to skip your whens this round, you get another chance next round if anyone plays a when.`,
+      `[b][size=${fontSize}]Never whens[/size][/b] to skip every time.`,
       "Repeat for afters (right click many afters to assign the outcome), then vote.",
       "You may click early, it will be processed on your turn.",
     ].join(" ");

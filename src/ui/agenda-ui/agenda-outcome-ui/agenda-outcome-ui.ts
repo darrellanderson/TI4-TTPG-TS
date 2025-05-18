@@ -71,6 +71,9 @@ export class AgendaOutcomeUI extends AbstractUI {
     outcomeNameUi.getButton().onClicked.add(this._onOutcomeClicked);
     outcomeNameUi.onEdited.add(this._onEdited);
 
+    // Temporary workaround for rich text: need to set size for bold/etc elements.
+    const fontSize: number = Math.round(CONFIG.FONT_SIZE * scale);
+
     agendaState.onAgendaStateChanged.add(() => {
       // Outcome name.
       const outcomeName: string =
@@ -87,7 +90,9 @@ export class AgendaOutcomeUI extends AbstractUI {
           const playerSlot: number = seat.playerSlot;
           const color: Color = world.getSlotColor(playerSlot);
           const colorHex: string = color.toHex().substring(0, 6).toLowerCase();
-          richVotes.push(`[color=#${colorHex}]${votes}[/color]`);
+          richVotes.push(
+            `[color=#${colorHex}][size=${fontSize}]${votes}[/size][/color]`
+          );
           totalVotes += votes;
         }
       });
@@ -95,7 +100,7 @@ export class AgendaOutcomeUI extends AbstractUI {
       if (richVotes.length > 0) {
         summary += ` (${richVotes.join(", ")})`;
       }
-      summary = `[b]${summary}[/b]`;
+      summary = `[b][size=${fontSize}]${summary}[/size][/b]`;
       voteSummary.getRichText().setText(summary);
     });
   }

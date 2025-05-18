@@ -11,7 +11,7 @@ import { LongRichTextUI } from "../../button-ui/long-richtext-ui";
  * Or a vote +- counter?  Tokens you can flip to ignore might be cleanest.
  */
 export class AgendaAvailableVotesUI extends LongRichTextUI {
-  static getAvailableVotesRichText(): string {
+  static getAvailableVotesRichText(fontSize: number): string {
     const playerSlotToAvailableVotes: Map<PlayerSlot, number> =
       new AgendaAvailableVotes().getPlayerSlotToAvailableVotes();
 
@@ -19,7 +19,9 @@ export class AgendaAvailableVotesUI extends LongRichTextUI {
     for (const [playerSlot, availableVotes] of playerSlotToAvailableVotes) {
       const color: Color = world.getSlotColor(playerSlot);
       const colorHex: string = color.toHex().substring(0, 6).toLowerCase();
-      entries.push(`[color=#${colorHex}]${availableVotes}[/color]`);
+      entries.push(
+        `[color=#${colorHex}][size=${fontSize}]${availableVotes}[/size][/color]`
+      );
     }
 
     return "[b]" + entries.join("  |  ") + "[/b]";
@@ -31,7 +33,10 @@ export class AgendaAvailableVotesUI extends LongRichTextUI {
   }
 
   update(): this {
-    const richText: string = AgendaAvailableVotesUI.getAvailableVotesRichText();
+    // Temporary workaround for rich text: need to set size for bold/etc elements.
+    const fontSize: number = Math.round(this.getRichText().getFontSize());
+    const richText: string =
+      AgendaAvailableVotesUI.getAvailableVotesRichText(fontSize);
     this.getRichText().setText(richText);
     return this;
   }
