@@ -80,6 +80,7 @@ import { RightClickStellarConverter } from "../context-menu/cards/stellar-conver
 import { RSwapSplitCombine } from "./r-swap-split-combine";
 import { SetupPlayerSlotColors } from "../setup/setup-player-slot-colors/setup-player-slot-colors";
 import { ShuffleDecks } from "./shuffle-decks";
+import { SlashCommandRegistry } from "../lib/slash-command-lib/slash-command-registry/slash-command-registry";
 import { StartGame } from "../lib/start-game-lib/start-game";
 import { StartGameWindow } from "../lib/start-game-lib/start-game-window";
 import { SystemAttachmentRegistry } from "../lib/system-lib/registry/system-attachment-registry";
@@ -159,6 +160,8 @@ export class TI4Class {
   public readonly playerName = new PlayerName();
   public readonly playerSeats = new PlayerSeats();
   public readonly removeRegistry = new RemoveRegistry().loadDefaultData();
+  public readonly slashCommandRegistry =
+    new SlashCommandRegistry().loadDefaultData();
   public readonly systemAttachmentRegistry =
     new SystemAttachmentRegistry().loadDefaultData();
   public readonly systemRegistry = new SystemRegistry().loadDefaultData();
