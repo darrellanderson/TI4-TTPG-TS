@@ -14,28 +14,43 @@ export class HelpUI extends AbstractUI {
     const scaledWidth: number =
       (CONFIG.BUTTON_WIDTH * 2 + CONFIG.SPACING) * scale;
 
+    // Temporary workaround for rich text: need to set size for bold/etc elements.
+    const fontSize: number = Math.round(CONFIG.FONT_SIZE * scale);
+
     const windowHeader: LongRichTextUI = new LongRichTextUI(scaledWidth, scale);
-    windowHeader.getRichText().setText("[b]WINDOW CONTROLS:[/b]");
+    windowHeader
+      .getRichText()
+      .setText(`[b][size=${fontSize}]WINDOW CONTROLS:[/b]`);
 
     const growShrinkWindow: TwoIconLabel = new TwoIconLabel(scale)
       .setIcon1("ui/window/shrink.png", packageId)
       .setIcon2("ui/window/grow.png", packageId)
-      .setLabel(": [b]Shrink[/b] or [b]grow[/b] the window");
+      .setLabel(
+        `: [b][size=${fontSize}]Shrink[/size][/b] or [b][size=${fontSize}]grow[/size][/b] the window`
+      );
     const warpWindow: TwoIconLabel = new TwoIconLabel(scale)
       .setIcon1("ui/1x1-transparent.png", packageId)
       .setIcon2("ui/window/to-screen.png", packageId)
-      .setLabel(": [b]Swap[/b] between screen / player-area");
+      .setLabel(
+        `: [b][size=${fontSize}]Swap[/size][/b] between screen / player-area`
+      );
     const collapseExpandWindow: TwoIconLabel = new TwoIconLabel(scale)
       .setIcon1("ui/window/collapse.png", packageId)
       .setIcon2("ui/window/expand.png", packageId)
-      .setLabel(": [b]Collapse[/b] or [b]expand[/b] the window");
+      .setLabel(
+        `: [b][size=${fontSize}]Collapse[/size][/b] or [b][size=${fontSize}]expand[/size][/b] the window`
+      );
     const closeWindow: TwoIconLabel = new TwoIconLabel(scale)
       .setIcon1("ui/1x1-transparent.png", packageId)
       .setIcon2("ui/window/close.png", packageId)
-      .setLabel(": [b]Close[/b] (right click table to reopen)");
+      .setLabel(
+        `: [b][size=${fontSize}]Close[/size][/b] (right click table to reopen)`
+      );
 
     const numpadHeader: LongRichTextUI = new LongRichTextUI(scaledWidth, scale);
-    numpadHeader.getRichText().setText("[b]NUMPAD KEYS:[/b]");
+    numpadHeader
+      .getRichText()
+      .setText(`[b][size=${fontSize}]NUMPAD KEYS:[/size][/b]`);
 
     const key1: LabelUI = new LabelUI(scale);
     key1

@@ -6,8 +6,8 @@ it("static getAvailableVotesRichText", () => {
     templateMetadata: "card-holder:base/player-hand",
     owningPlayerSlot: 10,
   });
-  const result: string = AgendaAvailableVotesUI.getAvailableVotesRichText();
-  expect(result).toEqual("[b][color=#00c702]0[/color][/b]");
+  const result: string = AgendaAvailableVotesUI.getAvailableVotesRichText(14);
+  expect(result).toEqual("[b][color=#00c702][size=14]0[/size][/color][/b]");
 });
 
 it("constructor", () => {

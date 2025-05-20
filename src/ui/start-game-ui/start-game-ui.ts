@@ -17,6 +17,7 @@ import { LabelUI } from "../button-ui/label-ui";
 import { LongRichTextUI } from "../button-ui/long-richtext-ui";
 import { SliderWithValueUI } from "../button-ui/slider-with-value-ui";
 import { VerticalUIBuilder } from "../panel/vertical-ui-builder";
+import { LongLabelUI } from "../button-ui/long-label-ui";
 
 const packageId: string = refPackageId;
 
@@ -25,9 +26,12 @@ export class StartGameUI extends AbstractUI {
     const scaledWidth: number =
       (CONFIG.BUTTON_WIDTH * 2 + CONFIG.SPACING) * scale;
 
-    const gameHeader: LongRichTextUI = new LongRichTextUI(scaledWidth, scale);
+    // Temporary workaround for rich text: need to set size for bold/etc elements.
+    const fontSize: number = Math.round(CONFIG.FONT_SIZE * scale);
+
+    const gameHeader: LongLabelUI = new LongLabelUI(scaledWidth, scale);
     gameHeader
-      .getRichText()
+      .getText()
       .setFont("ambroise-firmin-bold.otf", packageId)
       .setFontSize(CONFIG.FONT_SIZE * scale * 2.2)
       .setBold(true)
@@ -36,7 +40,9 @@ export class StartGameUI extends AbstractUI {
     const helpInfo: LongRichTextUI = new LongRichTextUI(scaledWidth, scale);
     helpInfo
       .getRichText()
-      .setText("New?  Right-click the table, [b]*Toggle Help[/b]");
+      .setText(
+        `New?  Right-click the table, [b][size=${fontSize}]*Toggle Help[/size][/b]`
+      );
 
     const numPlayersLabel: LabelUI = new LabelUI(scale);
     numPlayersLabel
