@@ -117,6 +117,7 @@ export class StartGameUI extends AbstractUI {
         }
       );
 
+    /*
     const checkBoxBoxShaped: CheckBoxUI = new CheckBoxUI(scale);
     checkBoxBoxShaped
       .getCheckBox()
@@ -128,6 +129,7 @@ export class StartGameUI extends AbstractUI {
           applySource("box-shaped", isChecked);
         }
       );
+      */
 
     const checkBoxCodex1: CheckBoxUI = new CheckBoxUI(scale);
     checkBoxCodex1
@@ -171,7 +173,7 @@ export class StartGameUI extends AbstractUI {
       .addUIs([
         numPlayersSlider,
         checkBoxPok,
-        checkBoxBoxShaped,
+        // checkBoxBoxShaped,
         checkBoxCodex1,
         checkBoxCodex2,
         checkBoxCodex3,
