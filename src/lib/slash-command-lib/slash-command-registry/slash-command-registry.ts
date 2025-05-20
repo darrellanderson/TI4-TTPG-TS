@@ -12,8 +12,9 @@ export class SlashCommandRegistry implements IGlobal {
   private readonly _onChat = (sender: Player, message: string): void => {
     if (message.startsWith("/")) {
       const argv: Array<string> = message.split(" ");
-      const command: string | undefined = argv.shift()?.toLowerCase();
+      let command: string | undefined = argv.shift();
       if (command) {
+        command = command.toLowerCase();
         const entry: SlashCommandEntry | undefined =
           this._commandToAction.get(command);
         if (entry) {
