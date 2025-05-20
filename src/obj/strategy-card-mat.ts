@@ -18,7 +18,8 @@ import { InitiativeOrder } from "../lib/strategy-card-lib/initiative-order/initi
 import { PlaceTgsUnpicked } from "../lib/strategy-card-lib/place-tgs-unpicked/place-tgs-unpicked";
 import { ReturnStrategyCard } from "../lib/strategy-card-lib/return-strategy-card/return-strategy-card";
 import { ReadyLib } from "../lib/ready-lib/ready-lib";
-import { DealActionCards } from "lib/action-card-lib/deal-action-cards/deal-action-cards";
+import { DealActionCards } from "../lib/action-card-lib/deal-action-cards/deal-action-cards";
+import { RefreshAllPlanets } from "../lib/system-lib/planet/refresh-all-planets";
 
 const ACTION_REFRESH_ALL_PLANET_CARDS = "*Refresh all planet cards";
 const ACTION_PLACE_TGS = "*Place TGs and set turns";
@@ -42,6 +43,7 @@ const _placeTGsUnpicked: PlaceTgsUnpicked = new PlaceTgsUnpicked();
 const _dealActionCards: DealActionCards = new DealActionCards();
 const _returnStrategyCards: ReturnStrategyCard = new ReturnStrategyCard();
 const _readyLib: ReadyLib = new ReadyLib();
+const _refreshAllPlanets: RefreshAllPlanets = new RefreshAllPlanets();
 
 refObject.onCustomAction.add(
   (_obj: GameObject, player: Player, identifier: string) => {
@@ -56,6 +58,8 @@ refObject.onCustomAction.add(
       now - _lastRefreshAllPlanetCardsTimestamp > MIN_DELAY_BETWEEN_REPEATS
     ) {
       _lastRefreshAllPlanetCardsTimestamp = now;
+
+      _refreshAllPlanets.refresh();
 
       const msg: string = `${playerName} refreshed all planet cards`;
       Broadcast.chatAll(msg, playerColor);

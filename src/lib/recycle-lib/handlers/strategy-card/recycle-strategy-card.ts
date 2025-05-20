@@ -58,6 +58,7 @@ export class RecycleStrategyCard extends GarbageHandler {
     }
 
     obj.setPosition(above);
+    obj.setRotation([0, 0, 0]);
     obj.snapToGround();
     obj.snap();
 
