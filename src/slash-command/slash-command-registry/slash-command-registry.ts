@@ -1,30 +1,39 @@
-import { Player } from "@tabletop-playground/api";
+import { globalEvents, Player } from "@tabletop-playground/api";
 import { IGlobal } from "ttpg-darrell";
 
-export type SlashCommandType = (argv: Array<string>, player: Player) => void;
+export type SlashCommandEntry = {
+  slashCommand: `/${string}`;
+  action: (argv: Array<string>, player: Player) => void;
+};
 
 export class SlashCommandRegistry implements IGlobal {
-  private readonly _commandToAction: Map<string, SlashCommandType> = new Map();
+  private readonly _commandToAction: Map<string, SlashCommandEntry> = new Map();
 
   private readonly _onChat = (sender: Player, message: string): void => {
     if (message.startsWith("/")) {
-      const argv: Array<string> = message.slice(1).split(" ");
-      const command: string | undefined = argv.shift();
+      const argv: Array<string> = message.split(" ");
+      const command: string | undefined = argv.shift()?.toLowerCase();
       if (command) {
-        const action: SlashCommandType | undefined =
+        const entry: SlashCommandEntry | undefined =
           this._commandToAction.get(command);
-        if (action) {
-          action(argv, sender);
+        if (entry) {
+          entry.action(argv, sender);
         }
       }
     }
   };
 
-  init(): void {}
+  init(): void {
+    globalEvents.onChatMessage.add(this._onChat);
+  }
 
-  load(commandToAction: Map<string, SlashCommandType>): this {
-    commandToAction.forEach((action: SlashCommandType, command: string) => {
-      this._commandToAction.set(command, action);
+  load(commands: Array<SlashCommandEntry>): this {
+    commands.forEach((command: SlashCommandEntry) => {
+      // Must be unique.
+      if (this._commandToAction.has(command.slashCommand)) {
+        throw new Error(`Duplicate slash command: ${command.slashCommand}`);
+      }
+      this._commandToAction.set(command.slashCommand.toLowerCase(), command);
     });
     return this;
   }
