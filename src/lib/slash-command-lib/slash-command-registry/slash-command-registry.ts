@@ -1,5 +1,5 @@
-import { globalEvents, Player } from "@tabletop-playground/api";
-import { IGlobal } from "ttpg-darrell";
+import { Color, globalEvents, Player, world } from "@tabletop-playground/api";
+import { Broadcast, IGlobal } from "ttpg-darrell";
 import { SLASH_COMMANDS } from "../data/slash-command.data";
 
 export type SlashCommandEntry = {
@@ -22,6 +22,11 @@ export class SlashCommandRegistry implements IGlobal {
           entry.action(argv, sender);
         }
       }
+
+      const playerName: string = TI4.playerName.getByPlayer(sender);
+      const color: Color = world.getSlotColor(sender.getSlot());
+      const msg: string = `${command} run by ${playerName}`;
+      Broadcast.chatAll(msg, color);
     }
   };
 
