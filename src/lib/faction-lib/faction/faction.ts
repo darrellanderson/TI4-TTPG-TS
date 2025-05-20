@@ -12,6 +12,7 @@ export class Faction {
   private readonly _sourceAndPackageId: SourceAndPackageIdSchemaType;
   private readonly _params: FactionSchemaType;
   private readonly _find: Find = new Find();
+  private readonly _injectedExtras: Map<string, number> = new Map();
 
   constructor(
     sourceAndPackageId: SourceAndPackageIdSchemaType,
@@ -90,7 +91,7 @@ export class Faction {
   }
 
   getExtraCount(nsid: string): number {
-    let result: number = 0;
+    let result: number = this._injectedExtras.get(nsid) || 0;
     if (this._params.extras) {
       for (const extra of this._params.extras) {
         if (extra.nsid === nsid) {
@@ -106,6 +107,9 @@ export class Faction {
     let result: Array<string> = [];
     if (this._params.extras) {
       result = this._params.extras.map((extra): string => extra.nsid);
+    }
+    for (const injectedExtra of this._injectedExtras.keys()) {
+      result.push(injectedExtra);
     }
     return result;
   }
@@ -257,5 +261,13 @@ export class Faction {
       }
       return `unit:${source}/${unitOverride}`;
     });
+  }
+
+  injectExtras(extras: { [nsid: string]: number }): this {
+    Object.entries(extras).forEach((value: [string, number]): void => {
+      const [nsid, count] = value;
+      this._injectedExtras.set(nsid, count);
+    });
+    return this;
   }
 }

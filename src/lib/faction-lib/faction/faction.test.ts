@@ -209,3 +209,15 @@ it("rewrite promissory omega source", () => {
     "card.promissory:codex.ordinian/stymie.omega",
   ]);
 });
+
+it("inject extras", () => {
+  const arborec: Faction = TI4.factionRegistry.getByNsid(
+    "faction:base/arborec"
+  )!;
+  expect(arborec.getExtras()).not.toContain("my-extra");
+  expect(arborec.getExtraCount("my-extra")).toEqual(0);
+
+  arborec.injectExtras({ "my-extra": 3 });
+  expect(arborec.getExtras()).toContain("my-extra");
+  expect(arborec.getExtraCount("my-extra")).toEqual(3);
+});
