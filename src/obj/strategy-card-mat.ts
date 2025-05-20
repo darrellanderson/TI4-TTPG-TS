@@ -20,16 +20,19 @@ import { ReturnStrategyCard } from "../lib/strategy-card-lib/return-strategy-car
 import { ReadyLib } from "../lib/ready-lib/ready-lib";
 import { DealActionCards } from "lib/action-card-lib/deal-action-cards/deal-action-cards";
 
+const ACTION_REFRESH_ALL_PLANET_CARDS = "*Refresh all planet cards";
 const ACTION_PLACE_TGS = "*Place TGs and set turns";
 const ACTION_DEAL_ACTION_CARDS = "*Deal action cards";
 const ACTION_RETURN_STRATEGY_CARDS = "*Return strategy cards";
 
+refObject.addCustomAction(ACTION_REFRESH_ALL_PLANET_CARDS);
 refObject.addCustomAction(ACTION_PLACE_TGS);
 refObject.addCustomAction(ACTION_DEAL_ACTION_CARDS);
 refObject.addCustomAction(ACTION_RETURN_STRATEGY_CARDS);
 
 // Watch out for multiple players using the action at the same time.
 const MIN_DELAY_BETWEEN_REPEATS: number = 3000; // msecs
+let _lastRefreshAllPlanetCardsTimestamp: number = 0;
 let _lastPlaceTgsTimestamp: number = 0;
 let _lastDealActionCardsTimestamp: number = 0;
 let _lastReturnStrategyCardsTimestamp: number = 0;
@@ -46,6 +49,17 @@ refObject.onCustomAction.add(
     const playerColor: Color = world.getSlotColor(player.getSlot());
 
     const now: number = Date.now();
+
+    // Refresh all planet cards.
+    if (
+      identifier === ACTION_REFRESH_ALL_PLANET_CARDS &&
+      now - _lastRefreshAllPlanetCardsTimestamp > MIN_DELAY_BETWEEN_REPEATS
+    ) {
+      _lastRefreshAllPlanetCardsTimestamp = now;
+
+      const msg: string = `${playerName} refreshed all planet cards`;
+      Broadcast.chatAll(msg, playerColor);
+    }
 
     // Place TGs and set turns.
     if (

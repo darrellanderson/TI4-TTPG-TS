@@ -5,8 +5,8 @@ import {
   refObject,
   Vector,
 } from "@tabletop-playground/api";
-import { System } from "../lib/system-lib/system/system";
 import { CardUtil } from "ttpg-darrell";
+import { System } from "../lib/system-lib/system/system";
 
 export class PlanetMat {
   private readonly _obj: GameObject;
