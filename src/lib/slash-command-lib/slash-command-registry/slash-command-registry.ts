@@ -5,6 +5,7 @@ import { SLASH_COMMANDS } from "../data/slash-command.data";
 export type SlashCommandEntry = {
   slashCommand: `/${string}`;
   action: (argv: Array<string>, player: Player) => void;
+  hostOnly?: boolean;
 };
 
 export class SlashCommandRegistry implements IGlobal {
@@ -19,6 +20,15 @@ export class SlashCommandRegistry implements IGlobal {
         const entry: SlashCommandEntry | undefined =
           this._commandToAction.get(command);
         if (entry) {
+          // Commands may be marked as host only.
+          if (entry.hostOnly && !sender.isHost()) {
+            const playerName: string = TI4.playerName.getByPlayer(sender);
+            const color: Color = world.getSlotColor(sender.getSlot());
+            const msg: string = `${playerName} tried to run ${command} but is not host.`;
+            Broadcast.chatAll(msg, color);
+            return;
+          }
+
           entry.action(argv, sender);
         }
       }

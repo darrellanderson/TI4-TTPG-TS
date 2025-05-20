@@ -66,6 +66,30 @@ it("event", () => {
   expect(callValues).toEqual(["foo", "bar"]);
 });
 
+it("event (host only)", () => {
+  const registry = new SlashCommandRegistry();
+  registry.init();
+
+  let callCount: number = 0;
+  const callValues: Array<string> = [];
+  const commands: Array<SlashCommandEntry> = [
+    {
+      slashCommand: "/test",
+      action: (argv: Array<string>, _player: Player) => {
+        callCount++;
+        callValues.push(...argv);
+      },
+      hostOnly: true,
+    },
+  ];
+  registry.load(commands);
+
+  const sender: Player = new MockPlayer(); // not host
+  mockGlobalEvents._chatMessageAsPlayer(sender, "/test foo bar");
+
+  expect(callCount).toBe(0);
+});
+
 it("loadDefaultData", () => {
   const registry = new SlashCommandRegistry();
   registry.init();
