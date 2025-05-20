@@ -20,15 +20,18 @@ import { ReturnStrategyCard } from "../lib/strategy-card-lib/return-strategy-car
 import { ReadyLib } from "../lib/ready-lib/ready-lib";
 import { DealActionCards } from "../lib/action-card-lib/deal-action-cards/deal-action-cards";
 import { RefreshAllPlanets } from "../lib/system-lib/planet/refresh-all-planets";
+import { ReturnCommandTokens } from "../lib/command-token-lib/return-command-tokens/return-command-tokens";
+import { AddCommandTokens } from "../lib/command-token-lib/add-command-tokens/add-command-tokens";
 
 const ACTION_REFRESH_ALL_PLANET_CARDS = "*Refresh all planet cards";
 const ACTION_PLACE_TGS = "*Place TGs and set turns";
-const ACTION_DEAL_ACTION_CARDS = "*Deal action cards";
+const ACTION_DEAL_ACTION_CARDS_AND_COMMAND_TOKENS =
+  "*Deal action cards, command tokens";
 const ACTION_RETURN_STRATEGY_CARDS = "*Return strategy cards";
 
 refObject.addCustomAction(ACTION_REFRESH_ALL_PLANET_CARDS);
 refObject.addCustomAction(ACTION_PLACE_TGS);
-refObject.addCustomAction(ACTION_DEAL_ACTION_CARDS);
+refObject.addCustomAction(ACTION_DEAL_ACTION_CARDS_AND_COMMAND_TOKENS);
 refObject.addCustomAction(ACTION_RETURN_STRATEGY_CARDS);
 
 // Watch out for multiple players using the action at the same time.
@@ -44,6 +47,8 @@ const _dealActionCards: DealActionCards = new DealActionCards();
 const _returnStrategyCards: ReturnStrategyCard = new ReturnStrategyCard();
 const _readyLib: ReadyLib = new ReadyLib();
 const _refreshAllPlanets: RefreshAllPlanets = new RefreshAllPlanets();
+const _returnCommandTokens: ReturnCommandTokens = new ReturnCommandTokens();
+const _addCommandTokens: AddCommandTokens = new AddCommandTokens();
 
 refObject.onCustomAction.add(
   (_obj: GameObject, player: Player, identifier: string) => {
@@ -59,7 +64,7 @@ refObject.onCustomAction.add(
     ) {
       _lastRefreshAllPlanetCardsTimestamp = now;
 
-      _refreshAllPlanets.refresh();
+      _refreshAllPlanets.refresh(false);
 
       const msg: string = `${playerName} refreshed all planet cards`;
       Broadcast.chatAll(msg, playerColor);
@@ -81,14 +86,18 @@ refObject.onCustomAction.add(
 
     // Deal action cards.
     else if (
-      identifier === ACTION_DEAL_ACTION_CARDS &&
+      identifier === ACTION_DEAL_ACTION_CARDS_AND_COMMAND_TOKENS &&
       now - _lastDealActionCardsTimestamp > MIN_DELAY_BETWEEN_REPEATS
     ) {
       _lastDealActionCardsTimestamp = now;
 
       _dealActionCards.dealAllActionCards();
+      _returnCommandTokens.returnAllCommandTokens(); // return before add
+      _readyLib.readyAll();
+      _refreshAllPlanets.refresh(true);
+      _addCommandTokens.addAllCommandTokens();
 
-      const msg: string = `${playerName} dealt action cards`;
+      const msg: string = `${playerName} dealt action cards, command tokens`;
       Broadcast.chatAll(msg, playerColor);
     }
 
@@ -100,7 +109,6 @@ refObject.onCustomAction.add(
       _lastReturnStrategyCardsTimestamp = now;
 
       _returnStrategyCards.returnAllStrategyCardsRespecingPoliticalStability();
-      _readyLib.readyAll();
 
       const msg: string = `${playerName} returned strategy cards`;
       Broadcast.chatAll(msg, playerColor);

@@ -25,7 +25,7 @@ it("refresh", () => {
   expect(offSystemCard.isFaceUp()).toBe(false);
 
   const refreshAllPlanets = new RefreshAllPlanets();
-  refreshAllPlanets.refresh();
+  refreshAllPlanets.refresh(true);
 
   expect(onSystemCard.isFaceUp()).toBe(false);
   expect(offSystemCard.isFaceUp()).toBe(true);
