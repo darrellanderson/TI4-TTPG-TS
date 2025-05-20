@@ -297,4 +297,8 @@ if (GameWorld.getExecutionReason() === "unittest") {
   });
 } else {
   resetGlobalThisTI4();
+  TI4.config.onConfigChanged.add(() => {
+    BugSplatRemoteReporter.setEnabled(TI4.config.reportErrors);
+  });
+  BugSplatRemoteReporter.setEnabled(TI4.config.reportErrors);
 }
