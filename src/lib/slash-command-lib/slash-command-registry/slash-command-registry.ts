@@ -1,5 +1,6 @@
 import { globalEvents, Player } from "@tabletop-playground/api";
 import { IGlobal } from "ttpg-darrell";
+import { SLASH_COMMANDS } from "../data/slash-command.data";
 
 export type SlashCommandEntry = {
   slashCommand: `/${string}`;
@@ -40,7 +41,7 @@ export class SlashCommandRegistry implements IGlobal {
   }
 
   public loadDefaultData(): this {
-    // TODO
+    this.load(SLASH_COMMANDS);
     return this;
   }
 }
