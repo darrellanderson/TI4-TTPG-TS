@@ -18,7 +18,8 @@
     "check:prettier": "prettier --check src",
     "test": "jest",
     "lint": "ESLINT_USE_FLAT_CONFIG=false eslint --ext .ts --debug src",
-    "circular": "npx madge --circular --extensions ts ./src"
+    "circular": "npx madge --circular --extensions ts ./src",
+    "types": "tsc -p tsconfig-index.json"
   },
   "devDependencies": {
     "@tabletop-playground/api": "^0.39.0",
