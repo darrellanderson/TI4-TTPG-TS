@@ -17,7 +17,6 @@ declare module "context-menu/cards/iihq-modernization/right-click-iihq-moderniza
         dealCardToPlayer(card: Card, playerSlot: number): void;
     }
 }
-declare module "context-menu/cards/iihq-modernization/right-click-iigq-modernization.test" { }
 declare module "context-menu/cards/infantry-2/abstract-infantry-2" {
     import { GameObject, Player, Vector } from "@tabletop-playground/api";
     import { AbstractRightClickCard, DiceGroupParams, DiceResult } from "ttpg-darrell";
@@ -31,7 +30,6 @@ declare module "context-menu/cards/infantry-2/abstract-infantry-2" {
         getMessage(diceResults: Array<DiceResult>, player: Player): string;
     }
 }
-declare module "context-menu/cards/infantry-2/abstract-infantry-2.test" { }
 declare module "context-menu/cards/infantry-2/right-click-infantry-2" {
     import { AbstractInfantry2 } from "context-menu/cards/infantry-2/abstract-infantry-2";
     export class RightClickInfantry2 extends AbstractInfantry2 {
@@ -74,7 +72,6 @@ declare module "context-menu/cards/maban-omega/abstract-maban-omega" {
         doMabanOmegaAction(object: GameObject, player: Player): void;
     }
 }
-declare module "context-menu/cards/maban-omega/abstract-maban-omega.test" { }
 declare module "context-menu/cards/maban-omega/right-click-maban-omega-alliance" {
     import { AbstractMabanOmega } from "context-menu/cards/maban-omega/abstract-maban-omega";
     export class RightClickMabanOmegaAlliance extends AbstractMabanOmega {
@@ -103,7 +100,6 @@ declare module "context-menu/cards/mageon-implants/right-click-mageon-implants" 
         reportActionCardNames(clickingPlayerSlot: PlayerSlot, reportToPlayerSlot: PlayerSlot, actionCardNames: string[]): void;
     }
 }
-declare module "context-menu/cards/mageon-implants/right-click-mageon-implants.test" { }
 declare module "context-menu/cards/nano-forge/right-click-nano-forge" {
     import { Vector } from "@tabletop-playground/api";
     import { AbstractRightClickCard } from "ttpg-darrell";
@@ -115,7 +111,6 @@ declare module "context-menu/cards/nano-forge/right-click-nano-forge" {
         fetchNanoForgeToken(pos: Vector): void;
     }
 }
-declare module "context-menu/cards/nano-forge/right-click-nano-forge.test" { }
 declare module "context-menu/cards/so-ata/abstract-so-ata" {
     import { IGlobal, PlayerSlot } from "ttpg-darrell";
     export const ACTION_REPORT_ACTION_CARDS: string;
@@ -139,7 +134,6 @@ declare module "context-menu/cards/so-ata/abstract-so-ata" {
         _doReport(reportCardType: ReportCardType, clickingPlayerSlot: PlayerSlot, reportToPlayerSlot: PlayerSlot, cardNames: Array<string>): void;
     }
 }
-declare module "context-menu/cards/so-ata/abstract-so-ata.test" { }
 declare module "context-menu/cards/stellar-converter/right-click-stellar-converter" {
     import { Vector } from "@tabletop-playground/api";
     import { AbstractRightClickCard } from "ttpg-darrell";
@@ -151,7 +145,6 @@ declare module "context-menu/cards/stellar-converter/right-click-stellar-convert
         fetchNanoForgeToken(pos: Vector): void;
     }
 }
-declare module "context-menu/cards/stellar-converter/right-click-stellar-converter.test" { }
 declare module "lib/system-lib/schema/basic-types-schema" {
     import { z } from "zod";
     export const AnomalySchema: z.ZodReadonly<z.ZodEnum<["asteroid-field", "gravity-rift", "nebula", "supernova"]>>;
@@ -167,30 +160,30 @@ declare module "lib/system-lib/schema/basic-types-schema" {
         sw: z.ZodOptional<z.ZodArray<z.ZodEnum<["n", "ne", "se", "s", "nw"]>, "many">>;
         nw: z.ZodOptional<z.ZodArray<z.ZodEnum<["n", "ne", "se", "s", "nw"]>, "many">>;
     }, "strict", z.ZodTypeAny, {
-        ne?: ("se" | "s" | "sw" | "nw" | "n")[] | undefined;
-        se?: ("ne" | "s" | "sw" | "nw" | "n")[] | undefined;
-        s?: ("ne" | "se" | "sw" | "nw" | "n")[] | undefined;
-        sw?: ("ne" | "se" | "s" | "nw" | "n")[] | undefined;
-        nw?: ("ne" | "se" | "s" | "nw" | "n")[] | undefined;
-        n?: ("ne" | "se" | "s" | "sw" | "nw")[] | undefined;
+        ne?: ("se" | "s" | "sw" | "nw" | "n")[];
+        se?: ("ne" | "s" | "sw" | "nw" | "n")[];
+        s?: ("ne" | "se" | "sw" | "nw" | "n")[];
+        sw?: ("ne" | "se" | "s" | "nw" | "n")[];
+        nw?: ("ne" | "se" | "s" | "nw" | "n")[];
+        n?: ("ne" | "se" | "s" | "sw" | "nw")[];
     }, {
-        ne?: ("se" | "s" | "sw" | "nw" | "n")[] | undefined;
-        se?: ("ne" | "s" | "sw" | "nw" | "n")[] | undefined;
-        s?: ("ne" | "se" | "sw" | "nw" | "n")[] | undefined;
-        sw?: ("ne" | "se" | "s" | "nw" | "n")[] | undefined;
-        nw?: ("ne" | "se" | "s" | "nw" | "n")[] | undefined;
-        n?: ("ne" | "se" | "s" | "sw" | "nw")[] | undefined;
+        ne?: ("se" | "s" | "sw" | "nw" | "n")[];
+        se?: ("ne" | "s" | "sw" | "nw" | "n")[];
+        s?: ("ne" | "se" | "sw" | "nw" | "n")[];
+        sw?: ("ne" | "se" | "s" | "nw" | "n")[];
+        nw?: ("ne" | "se" | "s" | "nw" | "n")[];
+        n?: ("ne" | "se" | "s" | "sw" | "nw")[];
     }>>;
     export type HyperlaneSchemaType = z.infer<typeof HyperlaneSchema>;
     export const LocalPositionSchema: z.ZodReadonly<z.ZodObject<{
         x: z.ZodNumber;
         y: z.ZodNumber;
     }, "strict", z.ZodTypeAny, {
-        x: number;
-        y: number;
+        x?: number;
+        y?: number;
     }, {
-        x: number;
-        y: number;
+        x?: number;
+        y?: number;
     }>>;
     export type LocalPositionSchemaType = z.infer<typeof LocalPositionSchema>;
     export const NsidNameSchema: z.ZodReadonly<z.ZodEffects<z.ZodString, string, string>>;
@@ -199,11 +192,11 @@ declare module "lib/system-lib/schema/basic-types-schema" {
         source: z.ZodReadonly<z.ZodEffects<z.ZodString, string, string>>;
         packageId: z.ZodString;
     }, "strict", z.ZodTypeAny, {
-        source: string;
-        packageId: string;
+        source?: string;
+        packageId?: string;
     }, {
-        source: string;
-        packageId: string;
+        source?: string;
+        packageId?: string;
     }>>;
     export type SourceAndPackageIdSchemaType = z.infer<typeof SourceAndPackageIdSchema>;
     export const SystemClassSchema: z.ZodReadonly<z.ZodEnum<["map", "off-map", "alt"]>>;
@@ -220,23 +213,23 @@ declare module "lib/system-lib/schema/basic-types-schema" {
             x: z.ZodNumber;
             y: z.ZodNumber;
         }, "strict", z.ZodTypeAny, {
-            x: number;
-            y: number;
+            x?: number;
+            y?: number;
         }, {
-            x: number;
-            y: number;
+            x?: number;
+            y?: number;
         }>>;
     }, "strict", z.ZodTypeAny, {
-        wormhole: string;
-        localPosition: Readonly<{
-            x: number;
-            y: number;
+        wormhole?: string;
+        localPosition?: Readonly<{
+            x?: number;
+            y?: number;
         }>;
     }, {
-        wormhole: string;
-        localPosition: Readonly<{
-            x: number;
-            y: number;
+        wormhole?: string;
+        localPosition?: Readonly<{
+            x?: number;
+            y?: number;
         }>;
     }>>;
     export type WormholeWithPositionSchemaType = z.infer<typeof WormholeWithPositionSchema>;
@@ -250,21 +243,21 @@ declare module "lib/system-lib/schema/planet-schema" {
             x: z.ZodNumber;
             y: z.ZodNumber;
         }, "strict", z.ZodTypeAny, {
-            x: number;
-            y: number;
+            x?: number;
+            y?: number;
         }, {
-            x: number;
-            y: number;
+            x?: number;
+            y?: number;
         }>>>;
         localPositionFaceDown: z.ZodOptional<z.ZodReadonly<z.ZodObject<{
             x: z.ZodNumber;
             y: z.ZodNumber;
         }, "strict", z.ZodTypeAny, {
-            x: number;
-            y: number;
+            x?: number;
+            y?: number;
         }, {
-            x: number;
-            y: number;
+            x?: number;
+            y?: number;
         }>>>;
         radius: z.ZodOptional<z.ZodNumber>;
         influence: z.ZodOptional<z.ZodNumber>;
@@ -274,41 +267,41 @@ declare module "lib/system-lib/schema/planet-schema" {
         isLegendary: z.ZodOptional<z.ZodBoolean>;
         legendaryNsidName: z.ZodOptional<z.ZodReadonly<z.ZodEffects<z.ZodString, string, string>>>;
     }, "strict", z.ZodTypeAny, {
-        name: string;
-        nsidName: string;
         localPosition?: Readonly<{
-            x: number;
-            y: number;
-        }> | undefined;
+            x?: number;
+            y?: number;
+        }>;
+        name?: string;
+        nsidName?: string;
         localPositionFaceDown?: Readonly<{
-            x: number;
-            y: number;
-        }> | undefined;
-        radius?: number | undefined;
-        influence?: number | undefined;
-        resources?: number | undefined;
-        techs?: ("green" | "blue" | "red" | "yellow")[] | undefined;
-        traits?: ("cultural" | "hazardous" | "industrial")[] | undefined;
-        isLegendary?: boolean | undefined;
-        legendaryNsidName?: string | undefined;
+            x?: number;
+            y?: number;
+        }>;
+        radius?: number;
+        influence?: number;
+        resources?: number;
+        techs?: ("blue" | "green" | "red" | "yellow")[];
+        traits?: ("cultural" | "hazardous" | "industrial")[];
+        isLegendary?: boolean;
+        legendaryNsidName?: string;
     }, {
-        name: string;
-        nsidName: string;
         localPosition?: Readonly<{
-            x: number;
-            y: number;
-        }> | undefined;
+            x?: number;
+            y?: number;
+        }>;
+        name?: string;
+        nsidName?: string;
         localPositionFaceDown?: Readonly<{
-            x: number;
-            y: number;
-        }> | undefined;
-        radius?: number | undefined;
-        influence?: number | undefined;
-        resources?: number | undefined;
-        techs?: ("green" | "blue" | "red" | "yellow")[] | undefined;
-        traits?: ("cultural" | "hazardous" | "industrial")[] | undefined;
-        isLegendary?: boolean | undefined;
-        legendaryNsidName?: string | undefined;
+            x?: number;
+            y?: number;
+        }>;
+        radius?: number;
+        influence?: number;
+        resources?: number;
+        techs?: ("blue" | "green" | "red" | "yellow")[];
+        traits?: ("cultural" | "hazardous" | "industrial")[];
+        isLegendary?: boolean;
+        legendaryNsidName?: string;
     }>>;
     export type PlanetSchemaType = z.infer<typeof PlanetSchema>;
 }
@@ -329,23 +322,23 @@ declare module "lib/system-lib/schema/system-schema" {
                 x: z.ZodNumber;
                 y: z.ZodNumber;
             }, "strict", z.ZodTypeAny, {
-                x: number;
-                y: number;
+                x?: number;
+                y?: number;
             }, {
-                x: number;
-                y: number;
+                x?: number;
+                y?: number;
             }>>;
         }, "strict", z.ZodTypeAny, {
-            wormhole: string;
-            localPosition: Readonly<{
-                x: number;
-                y: number;
+            wormhole?: string;
+            localPosition?: Readonly<{
+                x?: number;
+                y?: number;
             }>;
         }, {
-            wormhole: string;
-            localPosition: Readonly<{
-                x: number;
-                y: number;
+            wormhole?: string;
+            localPosition?: Readonly<{
+                x?: number;
+                y?: number;
             }>;
         }>>, "many">>;
         wormholesWithPositionsFaceDown: z.ZodOptional<z.ZodArray<z.ZodReadonly<z.ZodObject<{
@@ -354,23 +347,23 @@ declare module "lib/system-lib/schema/system-schema" {
                 x: z.ZodNumber;
                 y: z.ZodNumber;
             }, "strict", z.ZodTypeAny, {
-                x: number;
-                y: number;
+                x?: number;
+                y?: number;
             }, {
-                x: number;
-                y: number;
+                x?: number;
+                y?: number;
             }>>;
         }, "strict", z.ZodTypeAny, {
-            wormhole: string;
-            localPosition: Readonly<{
-                x: number;
-                y: number;
+            wormhole?: string;
+            localPosition?: Readonly<{
+                x?: number;
+                y?: number;
             }>;
         }, {
-            wormhole: string;
-            localPosition: Readonly<{
-                x: number;
-                y: number;
+            wormhole?: string;
+            localPosition?: Readonly<{
+                x?: number;
+                y?: number;
             }>;
         }>>, "many">>;
         hyperlanes: z.ZodOptional<z.ZodReadonly<z.ZodObject<{
@@ -381,19 +374,19 @@ declare module "lib/system-lib/schema/system-schema" {
             sw: z.ZodOptional<z.ZodArray<z.ZodEnum<["n", "ne", "se", "s", "nw"]>, "many">>;
             nw: z.ZodOptional<z.ZodArray<z.ZodEnum<["n", "ne", "se", "s", "nw"]>, "many">>;
         }, "strict", z.ZodTypeAny, {
-            ne?: ("se" | "s" | "sw" | "nw" | "n")[] | undefined;
-            se?: ("ne" | "s" | "sw" | "nw" | "n")[] | undefined;
-            s?: ("ne" | "se" | "sw" | "nw" | "n")[] | undefined;
-            sw?: ("ne" | "se" | "s" | "nw" | "n")[] | undefined;
-            nw?: ("ne" | "se" | "s" | "nw" | "n")[] | undefined;
-            n?: ("ne" | "se" | "s" | "sw" | "nw")[] | undefined;
+            ne?: ("se" | "s" | "sw" | "nw" | "n")[];
+            se?: ("ne" | "s" | "sw" | "nw" | "n")[];
+            s?: ("ne" | "se" | "sw" | "nw" | "n")[];
+            sw?: ("ne" | "se" | "s" | "nw" | "n")[];
+            nw?: ("ne" | "se" | "s" | "nw" | "n")[];
+            n?: ("ne" | "se" | "s" | "sw" | "nw")[];
         }, {
-            ne?: ("se" | "s" | "sw" | "nw" | "n")[] | undefined;
-            se?: ("ne" | "s" | "sw" | "nw" | "n")[] | undefined;
-            s?: ("ne" | "se" | "sw" | "nw" | "n")[] | undefined;
-            sw?: ("ne" | "se" | "s" | "nw" | "n")[] | undefined;
-            nw?: ("ne" | "se" | "s" | "nw" | "n")[] | undefined;
-            n?: ("ne" | "se" | "s" | "sw" | "nw")[] | undefined;
+            ne?: ("se" | "s" | "sw" | "nw" | "n")[];
+            se?: ("ne" | "s" | "sw" | "nw" | "n")[];
+            s?: ("ne" | "se" | "sw" | "nw" | "n")[];
+            sw?: ("ne" | "se" | "s" | "nw" | "n")[];
+            nw?: ("ne" | "se" | "s" | "nw" | "n")[];
+            n?: ("ne" | "se" | "s" | "sw" | "nw")[];
         }>>>;
         hyperlanesFaceDown: z.ZodOptional<z.ZodReadonly<z.ZodObject<{
             n: z.ZodOptional<z.ZodArray<z.ZodEnum<["ne", "se", "s", "sw", "nw"]>, "many">>;
@@ -403,19 +396,19 @@ declare module "lib/system-lib/schema/system-schema" {
             sw: z.ZodOptional<z.ZodArray<z.ZodEnum<["n", "ne", "se", "s", "nw"]>, "many">>;
             nw: z.ZodOptional<z.ZodArray<z.ZodEnum<["n", "ne", "se", "s", "nw"]>, "many">>;
         }, "strict", z.ZodTypeAny, {
-            ne?: ("se" | "s" | "sw" | "nw" | "n")[] | undefined;
-            se?: ("ne" | "s" | "sw" | "nw" | "n")[] | undefined;
-            s?: ("ne" | "se" | "sw" | "nw" | "n")[] | undefined;
-            sw?: ("ne" | "se" | "s" | "nw" | "n")[] | undefined;
-            nw?: ("ne" | "se" | "s" | "nw" | "n")[] | undefined;
-            n?: ("ne" | "se" | "s" | "sw" | "nw")[] | undefined;
+            ne?: ("se" | "s" | "sw" | "nw" | "n")[];
+            se?: ("ne" | "s" | "sw" | "nw" | "n")[];
+            s?: ("ne" | "se" | "sw" | "nw" | "n")[];
+            sw?: ("ne" | "se" | "s" | "nw" | "n")[];
+            nw?: ("ne" | "se" | "s" | "nw" | "n")[];
+            n?: ("ne" | "se" | "s" | "sw" | "nw")[];
         }, {
-            ne?: ("se" | "s" | "sw" | "nw" | "n")[] | undefined;
-            se?: ("ne" | "s" | "sw" | "nw" | "n")[] | undefined;
-            s?: ("ne" | "se" | "sw" | "nw" | "n")[] | undefined;
-            sw?: ("ne" | "se" | "s" | "nw" | "n")[] | undefined;
-            nw?: ("ne" | "se" | "s" | "nw" | "n")[] | undefined;
-            n?: ("ne" | "se" | "s" | "sw" | "nw")[] | undefined;
+            ne?: ("se" | "s" | "sw" | "nw" | "n")[];
+            se?: ("ne" | "s" | "sw" | "nw" | "n")[];
+            s?: ("ne" | "se" | "sw" | "nw" | "n")[];
+            sw?: ("ne" | "se" | "s" | "nw" | "n")[];
+            nw?: ("ne" | "se" | "s" | "nw" | "n")[];
+            n?: ("ne" | "se" | "s" | "sw" | "nw")[];
         }>>>;
         planets: z.ZodOptional<z.ZodArray<z.ZodReadonly<z.ZodObject<{
             name: z.ZodString;
@@ -424,21 +417,21 @@ declare module "lib/system-lib/schema/system-schema" {
                 x: z.ZodNumber;
                 y: z.ZodNumber;
             }, "strict", z.ZodTypeAny, {
-                x: number;
-                y: number;
+                x?: number;
+                y?: number;
             }, {
-                x: number;
-                y: number;
+                x?: number;
+                y?: number;
             }>>>;
             localPositionFaceDown: z.ZodOptional<z.ZodReadonly<z.ZodObject<{
                 x: z.ZodNumber;
                 y: z.ZodNumber;
             }, "strict", z.ZodTypeAny, {
-                x: number;
-                y: number;
+                x?: number;
+                y?: number;
             }, {
-                x: number;
-                y: number;
+                x?: number;
+                y?: number;
             }>>>;
             radius: z.ZodOptional<z.ZodNumber>;
             influence: z.ZodOptional<z.ZodNumber>;
@@ -448,161 +441,161 @@ declare module "lib/system-lib/schema/system-schema" {
             isLegendary: z.ZodOptional<z.ZodBoolean>;
             legendaryNsidName: z.ZodOptional<z.ZodReadonly<z.ZodEffects<z.ZodString, string, string>>>;
         }, "strict", z.ZodTypeAny, {
-            name: string;
-            nsidName: string;
             localPosition?: Readonly<{
-                x: number;
-                y: number;
-            }> | undefined;
+                x?: number;
+                y?: number;
+            }>;
+            name?: string;
+            nsidName?: string;
             localPositionFaceDown?: Readonly<{
-                x: number;
-                y: number;
-            }> | undefined;
-            radius?: number | undefined;
-            influence?: number | undefined;
-            resources?: number | undefined;
-            techs?: ("green" | "blue" | "red" | "yellow")[] | undefined;
-            traits?: ("cultural" | "hazardous" | "industrial")[] | undefined;
-            isLegendary?: boolean | undefined;
-            legendaryNsidName?: string | undefined;
+                x?: number;
+                y?: number;
+            }>;
+            radius?: number;
+            influence?: number;
+            resources?: number;
+            techs?: ("blue" | "green" | "red" | "yellow")[];
+            traits?: ("cultural" | "hazardous" | "industrial")[];
+            isLegendary?: boolean;
+            legendaryNsidName?: string;
         }, {
-            name: string;
-            nsidName: string;
             localPosition?: Readonly<{
-                x: number;
-                y: number;
-            }> | undefined;
+                x?: number;
+                y?: number;
+            }>;
+            name?: string;
+            nsidName?: string;
             localPositionFaceDown?: Readonly<{
-                x: number;
-                y: number;
-            }> | undefined;
-            radius?: number | undefined;
-            influence?: number | undefined;
-            resources?: number | undefined;
-            techs?: ("green" | "blue" | "red" | "yellow")[] | undefined;
-            traits?: ("cultural" | "hazardous" | "industrial")[] | undefined;
-            isLegendary?: boolean | undefined;
-            legendaryNsidName?: string | undefined;
+                x?: number;
+                y?: number;
+            }>;
+            radius?: number;
+            influence?: number;
+            resources?: number;
+            techs?: ("blue" | "green" | "red" | "yellow")[];
+            traits?: ("cultural" | "hazardous" | "industrial")[];
+            isLegendary?: boolean;
+            legendaryNsidName?: string;
         }>>, "many">>;
         imgFaceDown: z.ZodOptional<z.ZodBoolean>;
     }, "strict", z.ZodTypeAny, {
-        tile: number;
-        class?: "map" | "off-map" | "alt" | undefined;
-        isExcludeFromDraft?: boolean | undefined;
-        isHome?: boolean | undefined;
-        isHyperlane?: boolean | undefined;
-        anomalies?: ("asteroid-field" | "gravity-rift" | "nebula" | "supernova")[] | undefined;
-        wormholes?: ("alpha" | "beta" | "gamma" | "delta" | "epsilon")[] | undefined;
-        wormholesFaceDown?: ("alpha" | "beta" | "gamma" | "delta" | "epsilon")[] | undefined;
+        tile?: number;
+        class?: "map" | "off-map" | "alt";
+        isExcludeFromDraft?: boolean;
+        isHome?: boolean;
+        isHyperlane?: boolean;
+        anomalies?: ("asteroid-field" | "gravity-rift" | "nebula" | "supernova")[];
+        wormholes?: ("alpha" | "beta" | "gamma" | "delta" | "epsilon")[];
+        wormholesFaceDown?: ("alpha" | "beta" | "gamma" | "delta" | "epsilon")[];
         wormholesWithPositions?: Readonly<{
-            wormhole: string;
-            localPosition: Readonly<{
-                x: number;
-                y: number;
-            }>;
-        }>[] | undefined;
-        wormholesWithPositionsFaceDown?: Readonly<{
-            wormhole: string;
-            localPosition: Readonly<{
-                x: number;
-                y: number;
-            }>;
-        }>[] | undefined;
-        hyperlanes?: Readonly<{
-            ne?: ("se" | "s" | "sw" | "nw" | "n")[] | undefined;
-            se?: ("ne" | "s" | "sw" | "nw" | "n")[] | undefined;
-            s?: ("ne" | "se" | "sw" | "nw" | "n")[] | undefined;
-            sw?: ("ne" | "se" | "s" | "nw" | "n")[] | undefined;
-            nw?: ("ne" | "se" | "s" | "nw" | "n")[] | undefined;
-            n?: ("ne" | "se" | "s" | "sw" | "nw")[] | undefined;
-        }> | undefined;
-        hyperlanesFaceDown?: Readonly<{
-            ne?: ("se" | "s" | "sw" | "nw" | "n")[] | undefined;
-            se?: ("ne" | "s" | "sw" | "nw" | "n")[] | undefined;
-            s?: ("ne" | "se" | "sw" | "nw" | "n")[] | undefined;
-            sw?: ("ne" | "se" | "s" | "nw" | "n")[] | undefined;
-            nw?: ("ne" | "se" | "s" | "nw" | "n")[] | undefined;
-            n?: ("ne" | "se" | "s" | "sw" | "nw")[] | undefined;
-        }> | undefined;
-        planets?: Readonly<{
-            name: string;
-            nsidName: string;
+            wormhole?: string;
             localPosition?: Readonly<{
-                x: number;
-                y: number;
-            }> | undefined;
+                x?: number;
+                y?: number;
+            }>;
+        }>[];
+        wormholesWithPositionsFaceDown?: Readonly<{
+            wormhole?: string;
+            localPosition?: Readonly<{
+                x?: number;
+                y?: number;
+            }>;
+        }>[];
+        hyperlanes?: Readonly<{
+            ne?: ("se" | "s" | "sw" | "nw" | "n")[];
+            se?: ("ne" | "s" | "sw" | "nw" | "n")[];
+            s?: ("ne" | "se" | "sw" | "nw" | "n")[];
+            sw?: ("ne" | "se" | "s" | "nw" | "n")[];
+            nw?: ("ne" | "se" | "s" | "nw" | "n")[];
+            n?: ("ne" | "se" | "s" | "sw" | "nw")[];
+        }>;
+        hyperlanesFaceDown?: Readonly<{
+            ne?: ("se" | "s" | "sw" | "nw" | "n")[];
+            se?: ("ne" | "s" | "sw" | "nw" | "n")[];
+            s?: ("ne" | "se" | "sw" | "nw" | "n")[];
+            sw?: ("ne" | "se" | "s" | "nw" | "n")[];
+            nw?: ("ne" | "se" | "s" | "nw" | "n")[];
+            n?: ("ne" | "se" | "s" | "sw" | "nw")[];
+        }>;
+        planets?: Readonly<{
+            localPosition?: Readonly<{
+                x?: number;
+                y?: number;
+            }>;
+            name?: string;
+            nsidName?: string;
             localPositionFaceDown?: Readonly<{
-                x: number;
-                y: number;
-            }> | undefined;
-            radius?: number | undefined;
-            influence?: number | undefined;
-            resources?: number | undefined;
-            techs?: ("green" | "blue" | "red" | "yellow")[] | undefined;
-            traits?: ("cultural" | "hazardous" | "industrial")[] | undefined;
-            isLegendary?: boolean | undefined;
-            legendaryNsidName?: string | undefined;
-        }>[] | undefined;
-        imgFaceDown?: boolean | undefined;
+                x?: number;
+                y?: number;
+            }>;
+            radius?: number;
+            influence?: number;
+            resources?: number;
+            techs?: ("blue" | "green" | "red" | "yellow")[];
+            traits?: ("cultural" | "hazardous" | "industrial")[];
+            isLegendary?: boolean;
+            legendaryNsidName?: string;
+        }>[];
+        imgFaceDown?: boolean;
     }, {
-        tile: number;
-        class?: "map" | "off-map" | "alt" | undefined;
-        isExcludeFromDraft?: boolean | undefined;
-        isHome?: boolean | undefined;
-        isHyperlane?: boolean | undefined;
-        anomalies?: ("asteroid-field" | "gravity-rift" | "nebula" | "supernova")[] | undefined;
-        wormholes?: ("alpha" | "beta" | "gamma" | "delta" | "epsilon")[] | undefined;
-        wormholesFaceDown?: ("alpha" | "beta" | "gamma" | "delta" | "epsilon")[] | undefined;
+        tile?: number;
+        class?: "map" | "off-map" | "alt";
+        isExcludeFromDraft?: boolean;
+        isHome?: boolean;
+        isHyperlane?: boolean;
+        anomalies?: ("asteroid-field" | "gravity-rift" | "nebula" | "supernova")[];
+        wormholes?: ("alpha" | "beta" | "gamma" | "delta" | "epsilon")[];
+        wormholesFaceDown?: ("alpha" | "beta" | "gamma" | "delta" | "epsilon")[];
         wormholesWithPositions?: Readonly<{
-            wormhole: string;
-            localPosition: Readonly<{
-                x: number;
-                y: number;
-            }>;
-        }>[] | undefined;
-        wormholesWithPositionsFaceDown?: Readonly<{
-            wormhole: string;
-            localPosition: Readonly<{
-                x: number;
-                y: number;
-            }>;
-        }>[] | undefined;
-        hyperlanes?: Readonly<{
-            ne?: ("se" | "s" | "sw" | "nw" | "n")[] | undefined;
-            se?: ("ne" | "s" | "sw" | "nw" | "n")[] | undefined;
-            s?: ("ne" | "se" | "sw" | "nw" | "n")[] | undefined;
-            sw?: ("ne" | "se" | "s" | "nw" | "n")[] | undefined;
-            nw?: ("ne" | "se" | "s" | "nw" | "n")[] | undefined;
-            n?: ("ne" | "se" | "s" | "sw" | "nw")[] | undefined;
-        }> | undefined;
-        hyperlanesFaceDown?: Readonly<{
-            ne?: ("se" | "s" | "sw" | "nw" | "n")[] | undefined;
-            se?: ("ne" | "s" | "sw" | "nw" | "n")[] | undefined;
-            s?: ("ne" | "se" | "sw" | "nw" | "n")[] | undefined;
-            sw?: ("ne" | "se" | "s" | "nw" | "n")[] | undefined;
-            nw?: ("ne" | "se" | "s" | "nw" | "n")[] | undefined;
-            n?: ("ne" | "se" | "s" | "sw" | "nw")[] | undefined;
-        }> | undefined;
-        planets?: Readonly<{
-            name: string;
-            nsidName: string;
+            wormhole?: string;
             localPosition?: Readonly<{
-                x: number;
-                y: number;
-            }> | undefined;
+                x?: number;
+                y?: number;
+            }>;
+        }>[];
+        wormholesWithPositionsFaceDown?: Readonly<{
+            wormhole?: string;
+            localPosition?: Readonly<{
+                x?: number;
+                y?: number;
+            }>;
+        }>[];
+        hyperlanes?: Readonly<{
+            ne?: ("se" | "s" | "sw" | "nw" | "n")[];
+            se?: ("ne" | "s" | "sw" | "nw" | "n")[];
+            s?: ("ne" | "se" | "sw" | "nw" | "n")[];
+            sw?: ("ne" | "se" | "s" | "nw" | "n")[];
+            nw?: ("ne" | "se" | "s" | "nw" | "n")[];
+            n?: ("ne" | "se" | "s" | "sw" | "nw")[];
+        }>;
+        hyperlanesFaceDown?: Readonly<{
+            ne?: ("se" | "s" | "sw" | "nw" | "n")[];
+            se?: ("ne" | "s" | "sw" | "nw" | "n")[];
+            s?: ("ne" | "se" | "sw" | "nw" | "n")[];
+            sw?: ("ne" | "se" | "s" | "nw" | "n")[];
+            nw?: ("ne" | "se" | "s" | "nw" | "n")[];
+            n?: ("ne" | "se" | "s" | "sw" | "nw")[];
+        }>;
+        planets?: Readonly<{
+            localPosition?: Readonly<{
+                x?: number;
+                y?: number;
+            }>;
+            name?: string;
+            nsidName?: string;
             localPositionFaceDown?: Readonly<{
-                x: number;
-                y: number;
-            }> | undefined;
-            radius?: number | undefined;
-            influence?: number | undefined;
-            resources?: number | undefined;
-            techs?: ("green" | "blue" | "red" | "yellow")[] | undefined;
-            traits?: ("cultural" | "hazardous" | "industrial")[] | undefined;
-            isLegendary?: boolean | undefined;
-            legendaryNsidName?: string | undefined;
-        }>[] | undefined;
-        imgFaceDown?: boolean | undefined;
+                x?: number;
+                y?: number;
+            }>;
+            radius?: number;
+            influence?: number;
+            resources?: number;
+            techs?: ("blue" | "green" | "red" | "yellow")[];
+            traits?: ("cultural" | "hazardous" | "industrial")[];
+            isLegendary?: boolean;
+            legendaryNsidName?: string;
+        }>[];
+        imgFaceDown?: boolean;
     }>>;
     export type SystemSchemaType = z.infer<typeof SystemSchema>;
 }
@@ -627,41 +620,41 @@ declare module "lib/system-lib/schema/planet-attachment-schema" {
         isDestroyPlanet: z.ZodOptional<z.ZodBoolean>;
         flipIfNoPlanetTech: z.ZodOptional<z.ZodBoolean>;
     }, "strict", z.ZodTypeAny, {
-        name: string;
-        nsidName: string;
-        influence?: number | undefined;
-        resources?: number | undefined;
-        techs?: ("green" | "blue" | "red" | "yellow")[] | undefined;
-        traits?: ("cultural" | "hazardous" | "industrial")[] | undefined;
-        isLegendary?: boolean | undefined;
-        legendaryNsidName?: string | undefined;
-        imgFaceDown?: boolean | undefined;
-        doNotAttach?: boolean | undefined;
-        modelScale?: number | undefined;
-        influenceFaceDown?: number | undefined;
-        resourcesFaceDown?: number | undefined;
-        techsFaceDown?: ("green" | "blue" | "red" | "yellow")[] | undefined;
-        traitsFaceDown?: ("cultural" | "hazardous" | "industrial")[] | undefined;
-        isDestroyPlanet?: boolean | undefined;
-        flipIfNoPlanetTech?: boolean | undefined;
+        name?: string;
+        nsidName?: string;
+        influence?: number;
+        resources?: number;
+        techs?: ("blue" | "green" | "red" | "yellow")[];
+        traits?: ("cultural" | "hazardous" | "industrial")[];
+        isLegendary?: boolean;
+        legendaryNsidName?: string;
+        imgFaceDown?: boolean;
+        doNotAttach?: boolean;
+        modelScale?: number;
+        influenceFaceDown?: number;
+        resourcesFaceDown?: number;
+        techsFaceDown?: ("blue" | "green" | "red" | "yellow")[];
+        traitsFaceDown?: ("cultural" | "hazardous" | "industrial")[];
+        isDestroyPlanet?: boolean;
+        flipIfNoPlanetTech?: boolean;
     }, {
-        name: string;
-        nsidName: string;
-        influence?: number | undefined;
-        resources?: number | undefined;
-        techs?: ("green" | "blue" | "red" | "yellow")[] | undefined;
-        traits?: ("cultural" | "hazardous" | "industrial")[] | undefined;
-        isLegendary?: boolean | undefined;
-        legendaryNsidName?: string | undefined;
-        imgFaceDown?: boolean | undefined;
-        doNotAttach?: boolean | undefined;
-        modelScale?: number | undefined;
-        influenceFaceDown?: number | undefined;
-        resourcesFaceDown?: number | undefined;
-        techsFaceDown?: ("green" | "blue" | "red" | "yellow")[] | undefined;
-        traitsFaceDown?: ("cultural" | "hazardous" | "industrial")[] | undefined;
-        isDestroyPlanet?: boolean | undefined;
-        flipIfNoPlanetTech?: boolean | undefined;
+        name?: string;
+        nsidName?: string;
+        influence?: number;
+        resources?: number;
+        techs?: ("blue" | "green" | "red" | "yellow")[];
+        traits?: ("cultural" | "hazardous" | "industrial")[];
+        isLegendary?: boolean;
+        legendaryNsidName?: string;
+        imgFaceDown?: boolean;
+        doNotAttach?: boolean;
+        modelScale?: number;
+        influenceFaceDown?: number;
+        resourcesFaceDown?: number;
+        techsFaceDown?: ("blue" | "green" | "red" | "yellow")[];
+        traitsFaceDown?: ("cultural" | "hazardous" | "industrial")[];
+        isDestroyPlanet?: boolean;
+        flipIfNoPlanetTech?: boolean;
     }>>;
     export type PlanetAttachmentSchemaType = z.infer<typeof PlanetAttachmentSchema>;
 }
@@ -967,21 +960,21 @@ declare module "lib/system-lib/schema/system-attachment-schema" {
                 x: z.ZodNumber;
                 y: z.ZodNumber;
             }, "strict", z.ZodTypeAny, {
-                x: number;
-                y: number;
+                x?: number;
+                y?: number;
             }, {
-                x: number;
-                y: number;
+                x?: number;
+                y?: number;
             }>>>;
             localPositionFaceDown: z.ZodOptional<z.ZodReadonly<z.ZodObject<{
                 x: z.ZodNumber;
                 y: z.ZodNumber;
             }, "strict", z.ZodTypeAny, {
-                x: number;
-                y: number;
+                x?: number;
+                y?: number;
             }, {
-                x: number;
-                y: number;
+                x?: number;
+                y?: number;
             }>>>;
             radius: z.ZodOptional<z.ZodNumber>;
             influence: z.ZodOptional<z.ZodNumber>;
@@ -991,100 +984,100 @@ declare module "lib/system-lib/schema/system-attachment-schema" {
             isLegendary: z.ZodOptional<z.ZodBoolean>;
             legendaryNsidName: z.ZodOptional<z.ZodReadonly<z.ZodEffects<z.ZodString, string, string>>>;
         }, "strict", z.ZodTypeAny, {
-            name: string;
-            nsidName: string;
             localPosition?: Readonly<{
-                x: number;
-                y: number;
-            }> | undefined;
+                x?: number;
+                y?: number;
+            }>;
+            name?: string;
+            nsidName?: string;
             localPositionFaceDown?: Readonly<{
-                x: number;
-                y: number;
-            }> | undefined;
-            radius?: number | undefined;
-            influence?: number | undefined;
-            resources?: number | undefined;
-            techs?: ("green" | "blue" | "red" | "yellow")[] | undefined;
-            traits?: ("cultural" | "hazardous" | "industrial")[] | undefined;
-            isLegendary?: boolean | undefined;
-            legendaryNsidName?: string | undefined;
+                x?: number;
+                y?: number;
+            }>;
+            radius?: number;
+            influence?: number;
+            resources?: number;
+            techs?: ("blue" | "green" | "red" | "yellow")[];
+            traits?: ("cultural" | "hazardous" | "industrial")[];
+            isLegendary?: boolean;
+            legendaryNsidName?: string;
         }, {
-            name: string;
-            nsidName: string;
             localPosition?: Readonly<{
-                x: number;
-                y: number;
-            }> | undefined;
+                x?: number;
+                y?: number;
+            }>;
+            name?: string;
+            nsidName?: string;
             localPositionFaceDown?: Readonly<{
-                x: number;
-                y: number;
-            }> | undefined;
-            radius?: number | undefined;
-            influence?: number | undefined;
-            resources?: number | undefined;
-            techs?: ("green" | "blue" | "red" | "yellow")[] | undefined;
-            traits?: ("cultural" | "hazardous" | "industrial")[] | undefined;
-            isLegendary?: boolean | undefined;
-            legendaryNsidName?: string | undefined;
+                x?: number;
+                y?: number;
+            }>;
+            radius?: number;
+            influence?: number;
+            resources?: number;
+            techs?: ("blue" | "green" | "red" | "yellow")[];
+            traits?: ("cultural" | "hazardous" | "industrial")[];
+            isLegendary?: boolean;
+            legendaryNsidName?: string;
         }>>, "many">>;
     }, "strict", z.ZodTypeAny, {
-        name: string;
-        nsidName: string;
-        anomalies?: ("asteroid-field" | "gravity-rift" | "nebula" | "supernova")[] | undefined;
-        wormholes?: ("alpha" | "beta" | "gamma" | "delta" | "epsilon")[] | undefined;
-        wormholesFaceDown?: ("alpha" | "beta" | "gamma" | "delta" | "epsilon")[] | undefined;
+        name?: string;
+        nsidName?: string;
+        anomalies?: ("asteroid-field" | "gravity-rift" | "nebula" | "supernova")[];
+        wormholes?: ("alpha" | "beta" | "gamma" | "delta" | "epsilon")[];
+        wormholesFaceDown?: ("alpha" | "beta" | "gamma" | "delta" | "epsilon")[];
         planets?: Readonly<{
-            name: string;
-            nsidName: string;
             localPosition?: Readonly<{
-                x: number;
-                y: number;
-            }> | undefined;
+                x?: number;
+                y?: number;
+            }>;
+            name?: string;
+            nsidName?: string;
             localPositionFaceDown?: Readonly<{
-                x: number;
-                y: number;
-            }> | undefined;
-            radius?: number | undefined;
-            influence?: number | undefined;
-            resources?: number | undefined;
-            techs?: ("green" | "blue" | "red" | "yellow")[] | undefined;
-            traits?: ("cultural" | "hazardous" | "industrial")[] | undefined;
-            isLegendary?: boolean | undefined;
-            legendaryNsidName?: string | undefined;
-        }>[] | undefined;
-        imgFaceDown?: boolean | undefined;
-        doNotAttach?: boolean | undefined;
-        modelScale?: number | undefined;
-        isDestroyWormhole?: boolean | undefined;
+                x?: number;
+                y?: number;
+            }>;
+            radius?: number;
+            influence?: number;
+            resources?: number;
+            techs?: ("blue" | "green" | "red" | "yellow")[];
+            traits?: ("cultural" | "hazardous" | "industrial")[];
+            isLegendary?: boolean;
+            legendaryNsidName?: string;
+        }>[];
+        imgFaceDown?: boolean;
+        doNotAttach?: boolean;
+        modelScale?: number;
+        isDestroyWormhole?: boolean;
     }, {
-        name: string;
-        nsidName: string;
-        anomalies?: ("asteroid-field" | "gravity-rift" | "nebula" | "supernova")[] | undefined;
-        wormholes?: ("alpha" | "beta" | "gamma" | "delta" | "epsilon")[] | undefined;
-        wormholesFaceDown?: ("alpha" | "beta" | "gamma" | "delta" | "epsilon")[] | undefined;
+        name?: string;
+        nsidName?: string;
+        anomalies?: ("asteroid-field" | "gravity-rift" | "nebula" | "supernova")[];
+        wormholes?: ("alpha" | "beta" | "gamma" | "delta" | "epsilon")[];
+        wormholesFaceDown?: ("alpha" | "beta" | "gamma" | "delta" | "epsilon")[];
         planets?: Readonly<{
-            name: string;
-            nsidName: string;
             localPosition?: Readonly<{
-                x: number;
-                y: number;
-            }> | undefined;
+                x?: number;
+                y?: number;
+            }>;
+            name?: string;
+            nsidName?: string;
             localPositionFaceDown?: Readonly<{
-                x: number;
-                y: number;
-            }> | undefined;
-            radius?: number | undefined;
-            influence?: number | undefined;
-            resources?: number | undefined;
-            techs?: ("green" | "blue" | "red" | "yellow")[] | undefined;
-            traits?: ("cultural" | "hazardous" | "industrial")[] | undefined;
-            isLegendary?: boolean | undefined;
-            legendaryNsidName?: string | undefined;
-        }>[] | undefined;
-        imgFaceDown?: boolean | undefined;
-        doNotAttach?: boolean | undefined;
-        modelScale?: number | undefined;
-        isDestroyWormhole?: boolean | undefined;
+                x?: number;
+                y?: number;
+            }>;
+            radius?: number;
+            influence?: number;
+            resources?: number;
+            techs?: ("blue" | "green" | "red" | "yellow")[];
+            traits?: ("cultural" | "hazardous" | "industrial")[];
+            isLegendary?: boolean;
+            legendaryNsidName?: string;
+        }>[];
+        imgFaceDown?: boolean;
+        doNotAttach?: boolean;
+        modelScale?: number;
+        isDestroyWormhole?: boolean;
     }>>;
     export type SystemAttachmentSchemaType = z.infer<typeof SystemAttachmentSchema>;
 }
@@ -1443,21 +1436,21 @@ declare module "lib/unit-lib/schema/unit-attrs-schema" {
         critCount: z.ZodOptional<z.ZodNumber>;
         range: z.ZodOptional<z.ZodNumber>;
     }, "strict", z.ZodTypeAny, {
-        hit: number;
-        dice?: number | undefined;
-        extraDice?: number | undefined;
-        rerollMisses?: boolean | undefined;
-        crit?: number | undefined;
-        critCount?: number | undefined;
-        range?: number | undefined;
+        dice?: number;
+        hit?: number;
+        extraDice?: number;
+        rerollMisses?: boolean;
+        crit?: number;
+        critCount?: number;
+        range?: number;
     }, {
-        hit: number;
-        dice?: number | undefined;
-        extraDice?: number | undefined;
-        rerollMisses?: boolean | undefined;
-        crit?: number | undefined;
-        critCount?: number | undefined;
-        range?: number | undefined;
+        dice?: number;
+        hit?: number;
+        extraDice?: number;
+        rerollMisses?: boolean;
+        crit?: number;
+        critCount?: number;
+        range?: number;
     }>>;
     export type CombatAttrsSchemaType = z.infer<typeof CombatAttrsSchema>;
     export const UnitAttrsSchema: z.ZodReadonly<z.ZodObject<{
@@ -1482,21 +1475,21 @@ declare module "lib/unit-lib/schema/unit-attrs-schema" {
             critCount: z.ZodOptional<z.ZodNumber>;
             range: z.ZodOptional<z.ZodNumber>;
         }, "strict", z.ZodTypeAny, {
-            hit: number;
-            dice?: number | undefined;
-            extraDice?: number | undefined;
-            rerollMisses?: boolean | undefined;
-            crit?: number | undefined;
-            critCount?: number | undefined;
-            range?: number | undefined;
+            dice?: number;
+            hit?: number;
+            extraDice?: number;
+            rerollMisses?: boolean;
+            crit?: number;
+            critCount?: number;
+            range?: number;
         }, {
-            hit: number;
-            dice?: number | undefined;
-            extraDice?: number | undefined;
-            rerollMisses?: boolean | undefined;
-            crit?: number | undefined;
-            critCount?: number | undefined;
-            range?: number | undefined;
+            dice?: number;
+            hit?: number;
+            extraDice?: number;
+            rerollMisses?: boolean;
+            crit?: number;
+            critCount?: number;
+            range?: number;
         }>>>;
         bombardment: z.ZodOptional<z.ZodReadonly<z.ZodObject<{
             dice: z.ZodOptional<z.ZodNumber>;
@@ -1507,21 +1500,21 @@ declare module "lib/unit-lib/schema/unit-attrs-schema" {
             critCount: z.ZodOptional<z.ZodNumber>;
             range: z.ZodOptional<z.ZodNumber>;
         }, "strict", z.ZodTypeAny, {
-            hit: number;
-            dice?: number | undefined;
-            extraDice?: number | undefined;
-            rerollMisses?: boolean | undefined;
-            crit?: number | undefined;
-            critCount?: number | undefined;
-            range?: number | undefined;
+            dice?: number;
+            hit?: number;
+            extraDice?: number;
+            rerollMisses?: boolean;
+            crit?: number;
+            critCount?: number;
+            range?: number;
         }, {
-            hit: number;
-            dice?: number | undefined;
-            extraDice?: number | undefined;
-            rerollMisses?: boolean | undefined;
-            crit?: number | undefined;
-            critCount?: number | undefined;
-            range?: number | undefined;
+            dice?: number;
+            hit?: number;
+            extraDice?: number;
+            rerollMisses?: boolean;
+            crit?: number;
+            critCount?: number;
+            range?: number;
         }>>>;
         spaceCannon: z.ZodOptional<z.ZodReadonly<z.ZodObject<{
             dice: z.ZodOptional<z.ZodNumber>;
@@ -1532,21 +1525,21 @@ declare module "lib/unit-lib/schema/unit-attrs-schema" {
             critCount: z.ZodOptional<z.ZodNumber>;
             range: z.ZodOptional<z.ZodNumber>;
         }, "strict", z.ZodTypeAny, {
-            hit: number;
-            dice?: number | undefined;
-            extraDice?: number | undefined;
-            rerollMisses?: boolean | undefined;
-            crit?: number | undefined;
-            critCount?: number | undefined;
-            range?: number | undefined;
+            dice?: number;
+            hit?: number;
+            extraDice?: number;
+            rerollMisses?: boolean;
+            crit?: number;
+            critCount?: number;
+            range?: number;
         }, {
-            hit: number;
-            dice?: number | undefined;
-            extraDice?: number | undefined;
-            rerollMisses?: boolean | undefined;
-            crit?: number | undefined;
-            critCount?: number | undefined;
-            range?: number | undefined;
+            dice?: number;
+            hit?: number;
+            extraDice?: number;
+            rerollMisses?: boolean;
+            crit?: number;
+            critCount?: number;
+            range?: number;
         }>>>;
         spaceCombat: z.ZodOptional<z.ZodReadonly<z.ZodObject<{
             dice: z.ZodOptional<z.ZodNumber>;
@@ -1557,21 +1550,21 @@ declare module "lib/unit-lib/schema/unit-attrs-schema" {
             critCount: z.ZodOptional<z.ZodNumber>;
             range: z.ZodOptional<z.ZodNumber>;
         }, "strict", z.ZodTypeAny, {
-            hit: number;
-            dice?: number | undefined;
-            extraDice?: number | undefined;
-            rerollMisses?: boolean | undefined;
-            crit?: number | undefined;
-            critCount?: number | undefined;
-            range?: number | undefined;
+            dice?: number;
+            hit?: number;
+            extraDice?: number;
+            rerollMisses?: boolean;
+            crit?: number;
+            critCount?: number;
+            range?: number;
         }, {
-            hit: number;
-            dice?: number | undefined;
-            extraDice?: number | undefined;
-            rerollMisses?: boolean | undefined;
-            crit?: number | undefined;
-            critCount?: number | undefined;
-            range?: number | undefined;
+            dice?: number;
+            hit?: number;
+            extraDice?: number;
+            rerollMisses?: boolean;
+            crit?: number;
+            critCount?: number;
+            range?: number;
         }>>>;
         groundCombat: z.ZodOptional<z.ZodReadonly<z.ZodObject<{
             dice: z.ZodOptional<z.ZodNumber>;
@@ -1582,141 +1575,141 @@ declare module "lib/unit-lib/schema/unit-attrs-schema" {
             critCount: z.ZodOptional<z.ZodNumber>;
             range: z.ZodOptional<z.ZodNumber>;
         }, "strict", z.ZodTypeAny, {
-            hit: number;
-            dice?: number | undefined;
-            extraDice?: number | undefined;
-            rerollMisses?: boolean | undefined;
-            crit?: number | undefined;
-            critCount?: number | undefined;
-            range?: number | undefined;
+            dice?: number;
+            hit?: number;
+            extraDice?: number;
+            rerollMisses?: boolean;
+            crit?: number;
+            critCount?: number;
+            range?: number;
         }, {
-            hit: number;
-            dice?: number | undefined;
-            extraDice?: number | undefined;
-            rerollMisses?: boolean | undefined;
-            crit?: number | undefined;
-            critCount?: number | undefined;
-            range?: number | undefined;
+            dice?: number;
+            hit?: number;
+            extraDice?: number;
+            rerollMisses?: boolean;
+            crit?: number;
+            critCount?: number;
+            range?: number;
         }>>>;
         afbDestroyInfantryInSpace: z.ZodOptional<z.ZodNumber>;
     }, "strict", z.ZodTypeAny, {
-        name: string;
-        unit: "carrier" | "control-token" | "cruiser" | "destroyer" | "dreadnought" | "fighter" | "flagship" | "infantry" | "mech" | "pds" | "space-dock" | "war-sun";
-        nsidName?: string | undefined;
-        componentCount?: number | undefined;
-        diceColor?: string | undefined;
-        cost?: number | undefined;
-        producePerCost?: number | undefined;
-        isShip?: boolean | undefined;
-        isGround?: boolean | undefined;
-        hasSustainDamage?: boolean | undefined;
-        hasPlanetaryShield?: boolean | undefined;
-        disablePlanetaryShield?: boolean | undefined;
+        name?: string;
+        nsidName?: string;
+        unit?: "carrier" | "control-token" | "cruiser" | "destroyer" | "dreadnought" | "fighter" | "flagship" | "infantry" | "mech" | "pds" | "space-dock" | "war-sun";
+        componentCount?: number;
+        diceColor?: string;
+        cost?: number;
+        producePerCost?: number;
+        isShip?: boolean;
+        isGround?: boolean;
+        hasSustainDamage?: boolean;
+        hasPlanetaryShield?: boolean;
+        disablePlanetaryShield?: boolean;
         antiFighterBarrage?: Readonly<{
-            hit: number;
-            dice?: number | undefined;
-            extraDice?: number | undefined;
-            rerollMisses?: boolean | undefined;
-            crit?: number | undefined;
-            critCount?: number | undefined;
-            range?: number | undefined;
-        }> | undefined;
+            dice?: number;
+            hit?: number;
+            extraDice?: number;
+            rerollMisses?: boolean;
+            crit?: number;
+            critCount?: number;
+            range?: number;
+        }>;
         bombardment?: Readonly<{
-            hit: number;
-            dice?: number | undefined;
-            extraDice?: number | undefined;
-            rerollMisses?: boolean | undefined;
-            crit?: number | undefined;
-            critCount?: number | undefined;
-            range?: number | undefined;
-        }> | undefined;
+            dice?: number;
+            hit?: number;
+            extraDice?: number;
+            rerollMisses?: boolean;
+            crit?: number;
+            critCount?: number;
+            range?: number;
+        }>;
         spaceCannon?: Readonly<{
-            hit: number;
-            dice?: number | undefined;
-            extraDice?: number | undefined;
-            rerollMisses?: boolean | undefined;
-            crit?: number | undefined;
-            critCount?: number | undefined;
-            range?: number | undefined;
-        }> | undefined;
+            dice?: number;
+            hit?: number;
+            extraDice?: number;
+            rerollMisses?: boolean;
+            crit?: number;
+            critCount?: number;
+            range?: number;
+        }>;
         spaceCombat?: Readonly<{
-            hit: number;
-            dice?: number | undefined;
-            extraDice?: number | undefined;
-            rerollMisses?: boolean | undefined;
-            crit?: number | undefined;
-            critCount?: number | undefined;
-            range?: number | undefined;
-        }> | undefined;
+            dice?: number;
+            hit?: number;
+            extraDice?: number;
+            rerollMisses?: boolean;
+            crit?: number;
+            critCount?: number;
+            range?: number;
+        }>;
         groundCombat?: Readonly<{
-            hit: number;
-            dice?: number | undefined;
-            extraDice?: number | undefined;
-            rerollMisses?: boolean | undefined;
-            crit?: number | undefined;
-            critCount?: number | undefined;
-            range?: number | undefined;
-        }> | undefined;
-        afbDestroyInfantryInSpace?: number | undefined;
+            dice?: number;
+            hit?: number;
+            extraDice?: number;
+            rerollMisses?: boolean;
+            crit?: number;
+            critCount?: number;
+            range?: number;
+        }>;
+        afbDestroyInfantryInSpace?: number;
     }, {
-        name: string;
-        unit: "carrier" | "control-token" | "cruiser" | "destroyer" | "dreadnought" | "fighter" | "flagship" | "infantry" | "mech" | "pds" | "space-dock" | "war-sun";
-        nsidName?: string | undefined;
-        componentCount?: number | undefined;
-        diceColor?: string | undefined;
-        cost?: number | undefined;
-        producePerCost?: number | undefined;
-        isShip?: boolean | undefined;
-        isGround?: boolean | undefined;
-        hasSustainDamage?: boolean | undefined;
-        hasPlanetaryShield?: boolean | undefined;
-        disablePlanetaryShield?: boolean | undefined;
+        name?: string;
+        nsidName?: string;
+        unit?: "carrier" | "control-token" | "cruiser" | "destroyer" | "dreadnought" | "fighter" | "flagship" | "infantry" | "mech" | "pds" | "space-dock" | "war-sun";
+        componentCount?: number;
+        diceColor?: string;
+        cost?: number;
+        producePerCost?: number;
+        isShip?: boolean;
+        isGround?: boolean;
+        hasSustainDamage?: boolean;
+        hasPlanetaryShield?: boolean;
+        disablePlanetaryShield?: boolean;
         antiFighterBarrage?: Readonly<{
-            hit: number;
-            dice?: number | undefined;
-            extraDice?: number | undefined;
-            rerollMisses?: boolean | undefined;
-            crit?: number | undefined;
-            critCount?: number | undefined;
-            range?: number | undefined;
-        }> | undefined;
+            dice?: number;
+            hit?: number;
+            extraDice?: number;
+            rerollMisses?: boolean;
+            crit?: number;
+            critCount?: number;
+            range?: number;
+        }>;
         bombardment?: Readonly<{
-            hit: number;
-            dice?: number | undefined;
-            extraDice?: number | undefined;
-            rerollMisses?: boolean | undefined;
-            crit?: number | undefined;
-            critCount?: number | undefined;
-            range?: number | undefined;
-        }> | undefined;
+            dice?: number;
+            hit?: number;
+            extraDice?: number;
+            rerollMisses?: boolean;
+            crit?: number;
+            critCount?: number;
+            range?: number;
+        }>;
         spaceCannon?: Readonly<{
-            hit: number;
-            dice?: number | undefined;
-            extraDice?: number | undefined;
-            rerollMisses?: boolean | undefined;
-            crit?: number | undefined;
-            critCount?: number | undefined;
-            range?: number | undefined;
-        }> | undefined;
+            dice?: number;
+            hit?: number;
+            extraDice?: number;
+            rerollMisses?: boolean;
+            crit?: number;
+            critCount?: number;
+            range?: number;
+        }>;
         spaceCombat?: Readonly<{
-            hit: number;
-            dice?: number | undefined;
-            extraDice?: number | undefined;
-            rerollMisses?: boolean | undefined;
-            crit?: number | undefined;
-            critCount?: number | undefined;
-            range?: number | undefined;
-        }> | undefined;
+            dice?: number;
+            hit?: number;
+            extraDice?: number;
+            rerollMisses?: boolean;
+            crit?: number;
+            critCount?: number;
+            range?: number;
+        }>;
         groundCombat?: Readonly<{
-            hit: number;
-            dice?: number | undefined;
-            extraDice?: number | undefined;
-            rerollMisses?: boolean | undefined;
-            crit?: number | undefined;
-            critCount?: number | undefined;
-            range?: number | undefined;
-        }> | undefined;
-        afbDestroyInfantryInSpace?: number | undefined;
+            dice?: number;
+            hit?: number;
+            extraDice?: number;
+            rerollMisses?: boolean;
+            crit?: number;
+            critCount?: number;
+            range?: number;
+        }>;
+        afbDestroyInfantryInSpace?: number;
     }>>;
     export type UnitAttrsSchemaType = z.infer<typeof UnitAttrsSchema>;
 }
@@ -1775,15 +1768,15 @@ declare module "lib/faction-lib/schema/faction-schema" {
             heroes: z.ZodArray<z.ZodReadonly<z.ZodEffects<z.ZodString, string, string>>, "many">;
             mechs: z.ZodArray<z.ZodReadonly<z.ZodEffects<z.ZodString, string, string>>, "many">;
         }, "strict", z.ZodTypeAny, {
-            agents: string[];
-            commanders: string[];
-            heroes: string[];
-            mechs: string[];
+            agents?: string[];
+            commanders?: string[];
+            heroes?: string[];
+            mechs?: string[];
         }, {
-            agents: string[];
-            commanders: string[];
-            heroes: string[];
-            mechs: string[];
+            agents?: string[];
+            commanders?: string[];
+            heroes?: string[];
+            mechs?: string[];
         }>>;
         promissories: z.ZodArray<z.ZodReadonly<z.ZodEffects<z.ZodString, string, string>>, "many">;
         startingTechs: z.ZodArray<z.ZodReadonly<z.ZodEffects<z.ZodString, string, string>>, "many">;
@@ -1800,111 +1793,111 @@ declare module "lib/faction-lib/schema/faction-schema" {
             spaceDock: z.ZodOptional<z.ZodNumber>;
             warSun: z.ZodOptional<z.ZodNumber>;
         }, "strict", z.ZodTypeAny, {
-            carrier?: number | undefined;
-            cruiser?: number | undefined;
-            destroyer?: number | undefined;
-            dreadnought?: number | undefined;
-            fighter?: number | undefined;
-            flagship?: number | undefined;
-            infantry?: number | undefined;
-            mech?: number | undefined;
-            pds?: number | undefined;
-            spaceDock?: number | undefined;
-            warSun?: number | undefined;
+            carrier?: number;
+            cruiser?: number;
+            destroyer?: number;
+            dreadnought?: number;
+            fighter?: number;
+            flagship?: number;
+            infantry?: number;
+            mech?: number;
+            pds?: number;
+            spaceDock?: number;
+            warSun?: number;
         }, {
-            carrier?: number | undefined;
-            cruiser?: number | undefined;
-            destroyer?: number | undefined;
-            dreadnought?: number | undefined;
-            fighter?: number | undefined;
-            flagship?: number | undefined;
-            infantry?: number | undefined;
-            mech?: number | undefined;
-            pds?: number | undefined;
-            spaceDock?: number | undefined;
-            warSun?: number | undefined;
+            carrier?: number;
+            cruiser?: number;
+            destroyer?: number;
+            dreadnought?: number;
+            fighter?: number;
+            flagship?: number;
+            infantry?: number;
+            mech?: number;
+            pds?: number;
+            spaceDock?: number;
+            warSun?: number;
         }>>;
         unitOverrides: z.ZodArray<z.ZodReadonly<z.ZodEffects<z.ZodString, string, string>>, "many">;
         extras: z.ZodOptional<z.ZodArray<z.ZodReadonly<z.ZodObject<{
             nsid: z.ZodString;
             count: z.ZodOptional<z.ZodNumber>;
         }, "strict", z.ZodTypeAny, {
-            nsid: string;
-            count?: number | undefined;
+            nsid?: string;
+            count?: number;
         }, {
-            nsid: string;
-            count?: number | undefined;
+            nsid?: string;
+            count?: number;
         }>>, "many">>;
     }, "strict", z.ZodTypeAny, {
-        name: string;
-        nsidName: string;
-        abbr: string;
-        abilities: string[];
-        commodities: number;
-        factionTechs: string[];
-        home: number;
-        leaders: Readonly<{
-            agents: string[];
-            commanders: string[];
-            heroes: string[];
-            mechs: string[];
+        name?: string;
+        nsidName?: string;
+        abbr?: string;
+        abilities?: string[];
+        commodities?: number;
+        factionTechs?: string[];
+        home?: number;
+        homeSurrogate?: number;
+        leaders?: Readonly<{
+            agents?: string[];
+            commanders?: string[];
+            heroes?: string[];
+            mechs?: string[];
         }>;
-        promissories: string[];
-        startingTechs: string[];
-        startingUnits: Readonly<{
-            carrier?: number | undefined;
-            cruiser?: number | undefined;
-            destroyer?: number | undefined;
-            dreadnought?: number | undefined;
-            fighter?: number | undefined;
-            flagship?: number | undefined;
-            infantry?: number | undefined;
-            mech?: number | undefined;
-            pds?: number | undefined;
-            spaceDock?: number | undefined;
-            warSun?: number | undefined;
+        promissories?: string[];
+        startingTechs?: string[];
+        startingUnits?: Readonly<{
+            carrier?: number;
+            cruiser?: number;
+            destroyer?: number;
+            dreadnought?: number;
+            fighter?: number;
+            flagship?: number;
+            infantry?: number;
+            mech?: number;
+            pds?: number;
+            spaceDock?: number;
+            warSun?: number;
         }>;
-        unitOverrides: string[];
-        homeSurrogate?: number | undefined;
+        unitOverrides?: string[];
         extras?: Readonly<{
-            nsid: string;
-            count?: number | undefined;
-        }>[] | undefined;
+            nsid?: string;
+            count?: number;
+        }>[];
     }, {
-        name: string;
-        nsidName: string;
-        abbr: string;
-        abilities: string[];
-        commodities: number;
-        factionTechs: string[];
-        home: number;
-        leaders: Readonly<{
-            agents: string[];
-            commanders: string[];
-            heroes: string[];
-            mechs: string[];
+        name?: string;
+        nsidName?: string;
+        abbr?: string;
+        abilities?: string[];
+        commodities?: number;
+        factionTechs?: string[];
+        home?: number;
+        homeSurrogate?: number;
+        leaders?: Readonly<{
+            agents?: string[];
+            commanders?: string[];
+            heroes?: string[];
+            mechs?: string[];
         }>;
-        promissories: string[];
-        startingTechs: string[];
-        startingUnits: Readonly<{
-            carrier?: number | undefined;
-            cruiser?: number | undefined;
-            destroyer?: number | undefined;
-            dreadnought?: number | undefined;
-            fighter?: number | undefined;
-            flagship?: number | undefined;
-            infantry?: number | undefined;
-            mech?: number | undefined;
-            pds?: number | undefined;
-            spaceDock?: number | undefined;
-            warSun?: number | undefined;
+        promissories?: string[];
+        startingTechs?: string[];
+        startingUnits?: Readonly<{
+            carrier?: number;
+            cruiser?: number;
+            destroyer?: number;
+            dreadnought?: number;
+            fighter?: number;
+            flagship?: number;
+            infantry?: number;
+            mech?: number;
+            pds?: number;
+            spaceDock?: number;
+            warSun?: number;
         }>;
-        unitOverrides: string[];
-        homeSurrogate?: number | undefined;
+        unitOverrides?: string[];
         extras?: Readonly<{
-            nsid: string;
-            count?: number | undefined;
-        }>[] | undefined;
+            nsid?: string;
+            count?: number;
+        }>[];
     }>>;
     export type FactionSchemaType = z.infer<typeof FactionSchema>;
 }
@@ -1923,44 +1916,44 @@ declare module "lib/tech-lib/schema/tech-schema" {
             red: z.ZodOptional<z.ZodNumber>;
             yellow: z.ZodOptional<z.ZodNumber>;
         }, "strict", z.ZodTypeAny, {
-            green?: number | undefined;
-            blue?: number | undefined;
-            red?: number | undefined;
-            yellow?: number | undefined;
+            blue?: number;
+            green?: number;
+            red?: number;
+            yellow?: number;
         }, {
-            green?: number | undefined;
-            blue?: number | undefined;
-            red?: number | undefined;
-            yellow?: number | undefined;
+            blue?: number;
+            green?: number;
+            red?: number;
+            yellow?: number;
         }>;
         isFactionTech: z.ZodOptional<z.ZodBoolean>;
         replacesNsidName: z.ZodOptional<z.ZodString>;
     }, "strict", z.ZodTypeAny, {
-        name: string;
-        nsidName: string;
-        color: "green" | "blue" | "red" | "yellow" | "unit-upgrade" | "none";
-        prerequisites: {
-            green?: number | undefined;
-            blue?: number | undefined;
-            red?: number | undefined;
-            yellow?: number | undefined;
+        name?: string;
+        nsidName?: string;
+        abbr?: string;
+        color?: "blue" | "green" | "red" | "yellow" | "unit-upgrade" | "none";
+        prerequisites?: {
+            blue?: number;
+            green?: number;
+            red?: number;
+            yellow?: number;
         };
-        abbr?: string | undefined;
-        isFactionTech?: boolean | undefined;
-        replacesNsidName?: string | undefined;
+        isFactionTech?: boolean;
+        replacesNsidName?: string;
     }, {
-        name: string;
-        nsidName: string;
-        color: "green" | "blue" | "red" | "yellow" | "unit-upgrade" | "none";
-        prerequisites: {
-            green?: number | undefined;
-            blue?: number | undefined;
-            red?: number | undefined;
-            yellow?: number | undefined;
+        name?: string;
+        nsidName?: string;
+        abbr?: string;
+        color?: "blue" | "green" | "red" | "yellow" | "unit-upgrade" | "none";
+        prerequisites?: {
+            blue?: number;
+            green?: number;
+            red?: number;
+            yellow?: number;
         };
-        abbr?: string | undefined;
-        isFactionTech?: boolean | undefined;
-        replacesNsidName?: string | undefined;
+        isFactionTech?: boolean;
+        replacesNsidName?: string;
     }>>;
     export type TechSchemaType = z.infer<typeof TechSchema>;
 }
@@ -2333,13 +2326,13 @@ declare module "lib/unit-lib/schema/unit-modifier-schema" {
         nsidName: z.ZodReadonly<z.ZodEffects<z.ZodString, string, string>>;
         overrideSource: z.ZodOptional<z.ZodReadonly<z.ZodEffects<z.ZodString, string, string>>>;
     }, "strict", z.ZodTypeAny, {
-        nsidName: string;
-        cardClass: "action" | "promissory" | "mech" | "unit" | "agenda" | "agent" | "alliance" | "commander" | "faction-ability" | "hero" | "legendary" | "relic" | "technology.blue" | "technology.green" | "technology.red" | "technology.yellow" | "technology.unit-upgrade";
-        overrideSource?: string | undefined;
+        nsidName?: string;
+        cardClass?: "action" | "promissory" | "mech" | "unit" | "agenda" | "agent" | "alliance" | "commander" | "faction-ability" | "hero" | "legendary" | "relic" | "technology.blue" | "technology.green" | "technology.red" | "technology.yellow" | "technology.unit-upgrade";
+        overrideSource?: string;
     }, {
-        nsidName: string;
-        cardClass: "action" | "promissory" | "mech" | "unit" | "agenda" | "agent" | "alliance" | "commander" | "faction-ability" | "hero" | "legendary" | "relic" | "technology.blue" | "technology.green" | "technology.red" | "technology.yellow" | "technology.unit-upgrade";
-        overrideSource?: string | undefined;
+        nsidName?: string;
+        cardClass?: "action" | "promissory" | "mech" | "unit" | "agenda" | "agent" | "alliance" | "commander" | "faction-ability" | "hero" | "legendary" | "relic" | "technology.blue" | "technology.green" | "technology.red" | "technology.yellow" | "technology.unit-upgrade";
+        overrideSource?: string;
     }>>;
     export type UnitModifierTriggerType = z.infer<typeof UnitModifierTrigger>;
     export const UnitModifierOwner: z.ZodReadonly<z.ZodEnum<["self", "opponent", "any"]>>;
@@ -2355,13 +2348,13 @@ declare module "lib/unit-lib/schema/unit-modifier-schema" {
             nsidName: z.ZodReadonly<z.ZodEffects<z.ZodString, string, string>>;
             overrideSource: z.ZodOptional<z.ZodReadonly<z.ZodEffects<z.ZodString, string, string>>>;
         }, "strict", z.ZodTypeAny, {
-            nsidName: string;
-            cardClass: "action" | "promissory" | "mech" | "unit" | "agenda" | "agent" | "alliance" | "commander" | "faction-ability" | "hero" | "legendary" | "relic" | "technology.blue" | "technology.green" | "technology.red" | "technology.yellow" | "technology.unit-upgrade";
-            overrideSource?: string | undefined;
+            nsidName?: string;
+            cardClass?: "action" | "promissory" | "mech" | "unit" | "agenda" | "agent" | "alliance" | "commander" | "faction-ability" | "hero" | "legendary" | "relic" | "technology.blue" | "technology.green" | "technology.red" | "technology.yellow" | "technology.unit-upgrade";
+            overrideSource?: string;
         }, {
-            nsidName: string;
-            cardClass: "action" | "promissory" | "mech" | "unit" | "agenda" | "agent" | "alliance" | "commander" | "faction-ability" | "hero" | "legendary" | "relic" | "technology.blue" | "technology.green" | "technology.red" | "technology.yellow" | "technology.unit-upgrade";
-            overrideSource?: string | undefined;
+            nsidName?: string;
+            cardClass?: "action" | "promissory" | "mech" | "unit" | "agenda" | "agent" | "alliance" | "commander" | "faction-ability" | "hero" | "legendary" | "relic" | "technology.blue" | "technology.green" | "technology.red" | "technology.yellow" | "technology.unit-upgrade";
+            overrideSource?: string;
         }>>, "many">;
         isActiveIdle: z.ZodOptional<z.ZodBoolean>;
         owner: z.ZodReadonly<z.ZodEnum<["self", "opponent", "any"]>>;
@@ -2369,33 +2362,33 @@ declare module "lib/unit-lib/schema/unit-modifier-schema" {
         applies: z.ZodFunction<z.ZodTuple<[z.ZodAny], z.ZodUnknown>, z.ZodBoolean>;
         apply: z.ZodFunction<z.ZodTuple<[z.ZodAny], z.ZodUnknown>, z.ZodVoid>;
     }, "strict", z.ZodTypeAny, {
-        name: string;
-        description: string;
-        triggers: Readonly<{
-            nsidName: string;
-            cardClass: "action" | "promissory" | "mech" | "unit" | "agenda" | "agent" | "alliance" | "commander" | "faction-ability" | "hero" | "legendary" | "relic" | "technology.blue" | "technology.green" | "technology.red" | "technology.yellow" | "technology.unit-upgrade";
-            overrideSource?: string | undefined;
+        name?: string;
+        description?: string;
+        triggerAlways?: boolean;
+        triggers?: Readonly<{
+            nsidName?: string;
+            cardClass?: "action" | "promissory" | "mech" | "unit" | "agenda" | "agent" | "alliance" | "commander" | "faction-ability" | "hero" | "legendary" | "relic" | "technology.blue" | "technology.green" | "technology.red" | "technology.yellow" | "technology.unit-upgrade";
+            overrideSource?: string;
         }>[];
-        owner: "self" | "opponent" | "any";
-        priority: "mutate" | "mutate-late" | "adjust" | "choose";
-        applies: (args_0: any, ...args: unknown[]) => boolean;
-        apply: (args_0: any, ...args: unknown[]) => void;
-        triggerAlways?: boolean | undefined;
-        isActiveIdle?: boolean | undefined;
+        isActiveIdle?: boolean;
+        owner?: "self" | "opponent" | "any";
+        priority?: "mutate" | "mutate-late" | "adjust" | "choose";
+        applies?: (args_0: any, ...args: unknown[]) => boolean;
+        apply?: (args_0: any, ...args: unknown[]) => void;
     }, {
-        name: string;
-        description: string;
-        triggers: Readonly<{
-            nsidName: string;
-            cardClass: "action" | "promissory" | "mech" | "unit" | "agenda" | "agent" | "alliance" | "commander" | "faction-ability" | "hero" | "legendary" | "relic" | "technology.blue" | "technology.green" | "technology.red" | "technology.yellow" | "technology.unit-upgrade";
-            overrideSource?: string | undefined;
+        name?: string;
+        description?: string;
+        triggerAlways?: boolean;
+        triggers?: Readonly<{
+            nsidName?: string;
+            cardClass?: "action" | "promissory" | "mech" | "unit" | "agenda" | "agent" | "alliance" | "commander" | "faction-ability" | "hero" | "legendary" | "relic" | "technology.blue" | "technology.green" | "technology.red" | "technology.yellow" | "technology.unit-upgrade";
+            overrideSource?: string;
         }>[];
-        owner: "self" | "opponent" | "any";
-        priority: "mutate" | "mutate-late" | "adjust" | "choose";
-        applies: (args_0: any, ...args: unknown[]) => boolean;
-        apply: (args_0: any, ...args: unknown[]) => void;
-        triggerAlways?: boolean | undefined;
-        isActiveIdle?: boolean | undefined;
+        isActiveIdle?: boolean;
+        owner?: "self" | "opponent" | "any";
+        priority?: "mutate" | "mutate-late" | "adjust" | "choose";
+        applies?: (args_0: any, ...args: unknown[]) => boolean;
+        apply?: (args_0: any, ...args: unknown[]) => void;
     }>>;
     export type UnitModifierSchemaType = Omit<z.infer<typeof UnitModifierSchema>, "apply" | "applies"> & {
         applies: (combatRoll: CombatRoll) => boolean;
@@ -2514,7 +2507,6 @@ declare module "context-menu/display-pds-adjacency/display-pds-adjacency" {
         _removeAdajecncyLines(obj: GameObject): void;
     }
 }
-declare module "context-menu/display-pds-adjacency/display-pds.adjacency.test" { }
 declare module "context-menu/right-click-purge/right-click-purge" {
     import { GameObject } from "@tabletop-playground/api";
     import { IGlobal } from "ttpg-darrell";
@@ -2604,7 +2596,6 @@ declare module "context-menu/heroes/hero-dimensional-anchor/hero-dimensional-anc
         _getNonBlockadedShips(ships: Array<UnitPlastic>, blockadingPlayerSlots: Set<PlayerSlot>): Array<UnitPlastic>;
     }
 }
-declare module "context-menu/heroes/hero-dimensional-anchor/hero-dimensional-anchor.test" { }
 declare module "lib/recycle-lib/handlers/token/recycle-token-command/recycle-token-command" {
     import { GameObject } from "@tabletop-playground/api";
     import { GarbageHandler } from "ttpg-darrell";
@@ -2647,7 +2638,6 @@ declare module "context-menu/heroes/hero-helio-command-array/hero-helio-command-
         _helioCommandArray(object: GameObject, playerSlot: number): void;
     }
 }
-declare module "context-menu/heroes/hero-helio-command-array/hero-helio-command-array.test" { }
 declare module "ui/glowing-token/glowing-token" {
     import { DrawingLine, GameObject, Vector } from "@tabletop-playground/api";
     /**
@@ -2701,7 +2691,6 @@ declare module "context-menu/heroes/hero-multiverse-shift/hero-multiverse-shift"
         _getShipHexes(playerSlot: number): Set<HexType>;
     }
 }
-declare module "context-menu/heroes/hero-multiverse-shift/hero-multiverse-shift.test" { }
 declare module "context-menu/report-remaining/report-remaining" {
     import { Card, GameObject, Player } from "@tabletop-playground/api";
     import { IGlobal } from "ttpg-darrell";
@@ -2715,7 +2704,6 @@ declare module "context-menu/report-remaining/report-remaining" {
         reportRemaining(deck: Card, player: Player): void;
     }
 }
-declare module "context-menu/report-remaining/report-remaining.test" { }
 declare module "context-menu/right-click-agenda/right-click-agenda" {
     import { Card } from "@tabletop-playground/api";
     import { IGlobal } from "ttpg-darrell";
@@ -2734,8 +2722,6 @@ declare module "context-menu/right-click-agenda/right-click-agenda" {
         _place(isTop: boolean, card: Card): void;
     }
 }
-declare module "context-menu/right-click-agenda/right-click-agenda.test" { }
-declare module "context-menu/right-click-purge/right-click-purge.test" { }
 declare module "lib/agenda-lib/agenda-state/agenda-state" {
     import { NamespaceId, TriggerableMulticastDelegate } from "ttpg-darrell";
     import { z } from "zod";
@@ -2747,13 +2733,13 @@ declare module "lib/agenda-lib/agenda-state/agenda-state" {
         objId: z.ZodString;
         outcome: z.ZodNumber;
     }, "strip", z.ZodTypeAny, {
-        seat: number;
-        objId: string;
-        outcome: number;
+        seat?: number;
+        objId?: string;
+        outcome?: number;
     }, {
-        seat: number;
-        objId: string;
-        outcome: number;
+        seat?: number;
+        objId?: string;
+        outcome?: number;
     }>;
     export type AgendaRiderSchemaType = z.infer<typeof AgendaRiderSchema>;
     const AgendaSeatStateSchema: z.ZodObject<{
@@ -2764,19 +2750,19 @@ declare module "lib/agenda-lib/agenda-state/agenda-state" {
         noWhens: z.ZodDefault<z.ZodNumber>;
         noAfters: z.ZodDefault<z.ZodNumber>;
     }, "strip", z.ZodTypeAny, {
-        outcome: number;
-        avail: number;
-        votes: number;
-        lockVotes: boolean;
-        noWhens: number;
-        noAfters: number;
+        outcome?: number;
+        avail?: number;
+        votes?: number;
+        lockVotes?: boolean;
+        noWhens?: number;
+        noAfters?: number;
     }, {
-        outcome?: number | undefined;
-        avail?: number | undefined;
-        votes?: number | undefined;
-        lockVotes?: boolean | undefined;
-        noWhens?: number | undefined;
-        noAfters?: number | undefined;
+        outcome?: number;
+        avail?: number;
+        votes?: number;
+        lockVotes?: boolean;
+        noWhens?: number;
+        noAfters?: number;
     }>;
     type AgendaSeatStateSchemaType = z.infer<typeof AgendaSeatStateSchema>;
     export class AgendaState {
@@ -2886,9 +2872,6 @@ declare module "context-menu/right-click-rider/right-click-rider" {
         _onCustomActionHanlder: (obj: GameObject, player: Player, identifier: string) => void;
     }
 }
-declare module "context-menu/right-click-rider/right-click-rider.test" { }
-declare module "context-menu/right-click-rift/right-click-rift.test" { }
-declare module "context-menu/right-click-rift/right-click-rift.testp" { }
 declare module "lib/score-lib/scoreboard/scoreboard" {
     import { GameObject, Rotator, Vector } from "@tabletop-playground/api";
     export class Scoreboard {
@@ -2962,7 +2945,6 @@ declare module "context-menu/right-click-score/right-click-score-private" {
         score(card: Card, player: Player): void;
     }
 }
-declare module "context-menu/right-click-score/right-click-score-private.test" { }
 declare module "context-menu/right-click-score/right-click-score-public" {
     import { Card, Player } from "@tabletop-playground/api";
     /**
@@ -2978,7 +2960,6 @@ declare module "context-menu/right-click-score/right-click-score-public" {
         score(card: Card, player: Player): void;
     }
 }
-declare module "context-menu/right-click-score/right-click-score-public.test" { }
 declare module "lib/command-token-lib/command-token-counter/command-token-counter" {
     import { GameObject } from "@tabletop-playground/api";
     export type CommandTokenCounts = {
@@ -3003,7 +2984,6 @@ declare module "context-menu/system/activate-system/activate-system" {
         moveCommandTokenToSystem(systemTileObj: GameObject, player: Player): boolean;
     }
 }
-declare module "context-menu/system/activate-system/activate-system.test" { }
 declare module "context-menu/system/control-token-system/control-token-system" {
     import { GameObject, Player } from "@tabletop-playground/api";
     import { IGlobal } from "ttpg-darrell";
@@ -3016,7 +2996,6 @@ declare module "context-menu/system/control-token-system/control-token-system" {
         addControlToken(systemTileObj: GameObject, player: Player): boolean;
     }
 }
-declare module "context-menu/system/control-token-system/control-token-system.test" { }
 declare module "context-menu/system/diplomacy-system/diplomacy-system" {
     import { GameObject, Player } from "@tabletop-playground/api";
     import { IGlobal } from "ttpg-darrell";
@@ -3029,7 +3008,6 @@ declare module "context-menu/system/diplomacy-system/diplomacy-system" {
         _getExistingCommandTokenOwners(systemTileObj: GameObject): Set<number>;
     }
 }
-declare module "context-menu/system/diplomacy-system/diplomacy-system.test" { }
 declare module "context-menu/system/explore-system/right-click-explore" {
     import { Card, GameObject, Player } from "@tabletop-playground/api";
     import { IGlobal } from "ttpg-darrell";
@@ -3057,7 +3035,6 @@ declare module "context-menu/system/explore-system/right-click-explore" {
         _removeUIs(card: Card): void;
     }
 }
-declare module "context-menu/system/explore-system/right-click-explore.test" { }
 declare module "ui/abstract-ui/abtract-ui" {
     import { Widget } from "@tabletop-playground/api";
     export type UI_SIZE = {
@@ -3299,7 +3276,6 @@ declare module "context-menu/toggle-action-phase-times/toggle-action-phase-times
         init(): void;
     }
 }
-declare module "context-menu/toggle-action-phase-times/toggle-action-phase-times.test" { }
 declare module "ui/button-ui/label-ui" {
     import { Text } from "@tabletop-playground/api";
     import { AbstractUI } from "ui/abstract-ui/abtract-ui";
@@ -3366,7 +3342,6 @@ declare module "context-menu/toggle-all-players-tech/toggle-all-players-tech" {
         init(): void;
     }
 }
-declare module "context-menu/toggle-all-players-tech/toggle-all-players-tech.test" { }
 declare module "context-menu/toggle-borders/toggle-borders" {
     import { IGlobal } from "ttpg-darrell";
     export const TOGGLE_BORDERS_ACTION: string;
@@ -3375,7 +3350,6 @@ declare module "context-menu/toggle-borders/toggle-borders" {
         init(): void;
     }
 }
-declare module "context-menu/toggle-borders/toggle-borders.test" { }
 declare module "ui/button-ui/button-ui" {
     import { Button } from "@tabletop-playground/api";
     import { AbstractUI } from "ui/abstract-ui/abtract-ui";
@@ -3453,7 +3427,6 @@ declare module "context-menu/toggle-combat-window/toggle-combat-window" {
         _getRelevantPlayerSlots(system: System, player: Player): Array<number>;
     }
 }
-declare module "context-menu/toggle-combat-window/toggle-combat-window.test" { }
 declare module "ui/suggested-settings-ui/suggested-settings-ui" {
     import { AbstractUI } from "ui/abstract-ui/abtract-ui";
     export class SuggestedSettingsUI extends AbstractUI {
@@ -3517,7 +3490,6 @@ declare module "context-menu/toggle-help/toggle-help" {
         init(): void;
     }
 }
-declare module "context-menu/toggle-help/toggle-help.test" { }
 declare module "lib/map-string-lib/map-place/map-place-frontier-tokens" {
     import { System } from "lib/system-lib/system/system";
     export class MapPlaceFrontierTokens {
@@ -3788,27 +3760,27 @@ declare module "lib/draft-lib/draft-state/draft-state" {
         factionIndexToPlayerSlot: z.ZodDefault<z.ZodArray<z.ZodNullable<z.ZodNumber>, "many">>;
         seatIndexToPlayerSlot: z.ZodDefault<z.ZodArray<z.ZodNullable<z.ZodNumber>, "many">>;
     }, "strip", z.ZodTypeAny, {
-        sliceShape: readonly string[];
-        baseMap: string;
-        sliceShapeOverrides: (readonly string[] | null)[];
-        slices: readonly (readonly number[])[];
-        sliceLabels: string[];
-        factions: string[];
-        speakerIndex: number;
-        sliceIndexToPlayerSlot: (number | null)[];
-        factionIndexToPlayerSlot: (number | null)[];
-        seatIndexToPlayerSlot: (number | null)[];
+        sliceShape?: readonly string[];
+        baseMap?: string;
+        sliceShapeOverrides?: (readonly string[])[];
+        slices?: readonly (readonly number[])[];
+        sliceLabels?: string[];
+        factions?: string[];
+        speakerIndex?: number;
+        sliceIndexToPlayerSlot?: number[];
+        factionIndexToPlayerSlot?: number[];
+        seatIndexToPlayerSlot?: number[];
     }, {
-        sliceShape?: readonly string[] | undefined;
-        baseMap?: string | undefined;
-        sliceShapeOverrides?: (readonly string[] | null | undefined)[] | undefined;
-        slices?: readonly (readonly number[])[] | undefined;
-        sliceLabels?: string[] | undefined;
-        factions?: string[] | undefined;
-        speakerIndex?: number | undefined;
-        sliceIndexToPlayerSlot?: (number | null)[] | undefined;
-        factionIndexToPlayerSlot?: (number | null)[] | undefined;
-        seatIndexToPlayerSlot?: (number | null)[] | undefined;
+        sliceShape?: readonly string[];
+        baseMap?: string;
+        sliceShapeOverrides?: (readonly string[])[];
+        slices?: readonly (readonly number[])[];
+        sliceLabels?: string[];
+        factions?: string[];
+        speakerIndex?: number;
+        sliceIndexToPlayerSlot?: number[];
+        factionIndexToPlayerSlot?: number[];
+        seatIndexToPlayerSlot?: number[];
     }>;
     export type DraftStateSchemaType = z.infer<typeof DraftStateSchema>;
     /**
@@ -4720,11 +4692,10 @@ declare module "lib/draft-lib/drafts/bag-draft" {
 }
 declare module "ui/draft/draft-start-ui/draft-start-ui" {
     import { Button, CheckBox, MultilineTextBox, Player, Slider } from "@tabletop-playground/api";
-    import { TriggerableMulticastDelegate } from "ttpg-darrell";
     import { AbstractUI } from "ui/abstract-ui/abtract-ui";
     import { DraftActivityStartParams } from "lib/draft-lib/draft-activity-start/draft-activity-start-params";
     export class DraftStartUI extends AbstractUI {
-        readonly onDraftStarted: TriggerableMulticastDelegate<() => void>;
+        readonly onDraftStarted: any;
         private readonly _idrafts;
         private readonly _params;
         private readonly _draftCheckBoxes;
@@ -4829,7 +4800,6 @@ declare module "context-menu/toggle-map-tool/toggle-map-tool" {
         init(): void;
     }
 }
-declare module "context-menu/toggle-map-tool/toggle-map-tool.test" { }
 declare module "ui/stats-ui/stats-ui" {
     import { AbstractUI } from "ui/abstract-ui/abtract-ui";
     import { GameData } from "lib/game-data-lib/game-data/game-data";
@@ -4849,7 +4819,6 @@ declare module "context-menu/toggle-stats/toggle-stats" {
         init(): void;
     }
 }
-declare module "context-menu/toggle-stats/toggle-stats.test" { }
 declare module "lib/strategy-card-lib/strategy-cards-state/strategy-cards-state" {
     import { GameObject } from "@tabletop-playground/api";
     import { NamespaceId, PlayerSlot, TriggerableMulticastDelegate } from "ttpg-darrell";
@@ -5074,7 +5043,6 @@ declare module "context-menu/toggle-strat-cards/toggle-strat-cards" {
         _createWindow(playerSlot: PlayerSlot): Window;
     }
 }
-declare module "context-menu/toggle-strat-cards/toggle-strat-cards.test" { }
 declare module "ui/streamer-tool-ui/streamer-tool-ui" {
     import { Player, TextBox } from "@tabletop-playground/api";
     import { PlayerSlot } from "ttpg-darrell";
@@ -5092,7 +5060,6 @@ declare module "context-menu/toggle-streamer-tool/toggle-streamer-tool" {
         init(): void;
     }
 }
-declare module "context-menu/toggle-streamer-tool/toggle-streamer-tool.test" { }
 declare module "lib/tech-lib/player-tech-summary/player-tech-summary" {
     import { Tech } from "lib/tech-lib/tech/tech";
     import { TechColorType } from "lib/tech-lib/schema/tech-schema";
@@ -5216,7 +5183,6 @@ declare module "context-menu/toggle-tech-chooser/toggle-tech-chooser" {
         init(): void;
     }
 }
-declare module "context-menu/toggle-tech-chooser/toggle-tech-chooser.test" { }
 declare module "context-menu/unpack-faction/unpack-faction" {
     import { Card, GameObject } from "@tabletop-playground/api";
     import { IGlobal, PlayerSlot } from "ttpg-darrell";
@@ -5236,8 +5202,6 @@ declare module "context-menu/unpack-faction/unpack-faction" {
         _removeFaction(obj: GameObject): void;
     }
 }
-declare module "context-menu/unpack-faction/unpack-faction.test" { }
-declare module "event/on-agenda-card/on-agenda-card.test" { }
 declare module "lib/agenda-lib/agenda-turn-order/agenda-turn-order" {
     import { GameObject } from "@tabletop-playground/api";
     import { PlayerSlot } from "ttpg-darrell";
@@ -5543,7 +5507,6 @@ declare module "event/on-chat-message/on-chat-message" {
         init(): void;
     }
 }
-declare module "event/on-chat-message/on-chat-message.test" { }
 declare module "event/on-combat-clicked/on-combat-clicked" {
     import { IGlobal } from "ttpg-darrell";
     /**
@@ -5555,7 +5518,6 @@ declare module "event/on-combat-clicked/on-combat-clicked" {
         destroy(): void;
     }
 }
-declare module "event/on-combat-clicked/on-combat-clicked.test" { }
 declare module "lib/combat-lib/combat-roll-summary/combat-roll-summary" {
     import { DiceParams, DiceResult } from "ttpg-darrell";
     import { CombatRoll } from "lib/combat-lib/combat-roll/combat-roll";
@@ -5611,35 +5573,6 @@ declare module "event/on-combat-result/on-combat-result" {
         destroy(): void;
     }
 }
-declare module "event/on-combat-result/on-combat-result.test" { }
-declare module "lib/game-data-lib/i-game-data-updator/i-game-data-updator" {
-    import { GameData } from "lib/game-data-lib/game-data/game-data";
-    export interface IGameDataUpdator {
-        update(gameData: GameData): void;
-    }
-}
-declare module "lib/game-data-lib/game-data-updator/game-data-updator" {
-    import { GameData } from "lib/game-data-lib/game-data/game-data";
-    import { IGameDataUpdator } from "lib/game-data-lib/i-game-data-updator/i-game-data-updator";
-    export class GameDataUpdator {
-        private readonly _updators;
-        private _gameData;
-        private _nextProcessIndex;
-        private _intervalHandle;
-        readonly _onInterval: () => void;
-        static createGameData(): GameData;
-        constructor(updators: Array<IGameDataUpdator>);
-        /**
-         * Processes the next updator in the list.
-         *
-         * @returns true if all updators have been processed this cycle
-         */
-        _processNext(): boolean;
-        startPeriodicUpdates(): this;
-        stopPeriodicUpdates(): this;
-        startPeriodicUpdatesInProduction(): this;
-    }
-}
 declare module "event/on-game-end/on-game-end" {
     import { IGlobal } from "ttpg-darrell";
     /**
@@ -5651,7 +5584,6 @@ declare module "event/on-game-end/on-game-end" {
         init(): void;
     }
 }
-declare module "event/on-game-end/on-game-end.test" { }
 declare module "event/on-object-fell-through-table/on-object-fell-through-table" {
     import { GameObject, Vector, Zone } from "@tabletop-playground/api";
     import { IGlobal } from "ttpg-darrell";
@@ -5673,7 +5605,6 @@ declare module "event/on-object-fell-through-table/on-object-fell-through-table"
         setRelocateTo(position: Vector): this;
     }
 }
-declare module "event/on-object-fell-through-table/on-object-fell-through-table.test" { }
 declare module "ui/change-color-ui/color-choice-button" {
     import { ContentButton } from "@tabletop-playground/api";
     import { AbstractUI } from "ui/abstract-ui/abtract-ui";
@@ -5708,7 +5639,6 @@ declare module "event/on-player-change-color-request/on-player-change-color-requ
         destroy(): void;
     }
 }
-declare module "event/on-player-change-color-request/on-player-change-color-request.test" { }
 declare module "lib/player-lib/change-color/change-color" {
     import { GameObject } from "@tabletop-playground/api";
     /**
@@ -5751,14 +5681,12 @@ declare module "event/on-player-changed-color/on-player-changed-color" {
         init(): void;
     }
 }
-declare module "event/on-player-changed-color/on-player-changed-color.test" { }
 declare module "event/on-slice-draft-request/on-slice-draft-request" {
     import { IGlobal } from "ttpg-darrell";
     export class OnSliceDraftRequest implements IGlobal {
         init(): void;
     }
 }
-declare module "event/on-slice-draft-request/on-slice-draft-request.test" { }
 declare module "event/on-strategy-card-played/on-strategy-card-played" {
     import { GameObject } from "@tabletop-playground/api";
     import { IGlobal } from "ttpg-darrell";
@@ -5772,8 +5700,6 @@ declare module "event/on-strategy-card-played/on-strategy-card-played" {
         _maybeAdd(obj: GameObject): void;
     }
 }
-declare module "event/on-strategy-card-played/on-strategy-card-played.test" { }
-declare module "event/on-system-activated/on-system-activated.test" { }
 declare module "event/on-turn-state-changed/on-turn-state-changed" {
     import { IGlobal } from "ttpg-darrell";
     /**
@@ -5785,8 +5711,6 @@ declare module "event/on-turn-state-changed/on-turn-state-changed" {
         destroy(): void;
     }
 }
-declare module "event/on-turn-state-changed/on-turn-state-changed.test" { }
-declare module "event/on-whisper/on-whisper.test" { }
 declare module "global/global-events" {
     import { Card, GameObject, Player } from "@tabletop-playground/api";
     import { DiceResult, TriggerableMulticastDelegate } from "ttpg-darrell";
@@ -6032,19 +5956,19 @@ declare module "lib/config/config" {
         exportGameData: z.ZodBoolean;
         reportErrors: z.ZodBoolean;
     }, "strict", z.ZodTypeAny, {
-        playerCount: number;
-        gamePoints: number;
-        timestamp: number;
-        sources: string[];
-        exportGameData: boolean;
-        reportErrors: boolean;
+        playerCount?: number;
+        gamePoints?: number;
+        timestamp?: number;
+        sources?: string[];
+        exportGameData?: boolean;
+        reportErrors?: boolean;
     }, {
-        playerCount: number;
-        gamePoints: number;
-        timestamp: number;
-        sources: string[];
-        exportGameData: boolean;
-        reportErrors: boolean;
+        playerCount?: number;
+        gamePoints?: number;
+        timestamp?: number;
+        sources?: string[];
+        exportGameData?: boolean;
+        reportErrors?: boolean;
     }>;
     export type ConfigSchemaType = z.infer<typeof ConfigSchema>;
     export class Config {
@@ -6212,6 +6136,34 @@ declare module "lib/game-data-lib/game-data-export/game-data-export" {
         _send(gameData: GameData): void;
     }
 }
+declare module "lib/game-data-lib/i-game-data-updator/i-game-data-updator" {
+    import { GameData } from "lib/game-data-lib/game-data/game-data";
+    export interface IGameDataUpdator {
+        update(gameData: GameData): void;
+    }
+}
+declare module "lib/game-data-lib/game-data-updator/game-data-updator" {
+    import { GameData } from "lib/game-data-lib/game-data/game-data";
+    import { IGameDataUpdator } from "lib/game-data-lib/i-game-data-updator/i-game-data-updator";
+    export class GameDataUpdator {
+        private readonly _updators;
+        private _gameData;
+        private _nextProcessIndex;
+        private _intervalHandle;
+        readonly _onInterval: () => void;
+        static createGameData(): GameData;
+        constructor(updators: Array<IGameDataUpdator>);
+        /**
+         * Processes the next updator in the list.
+         *
+         * @returns true if all updators have been processed this cycle
+         */
+        _processNext(): boolean;
+        startPeriodicUpdates(): this;
+        stopPeriodicUpdates(): this;
+        startPeriodicUpdatesInProduction(): this;
+    }
+}
 declare module "lib/game-data-lib/updators/updator-active-system/updator-active-system" {
     import { GameData } from "lib/game-data-lib/game-data/game-data";
     import { IGameDataUpdator } from "lib/game-data-lib/i-game-data-updator/i-game-data-updator";
@@ -6291,9 +6243,9 @@ declare module "lib/game-data-lib/updators/updator-hex-summary/updator-hex-summa
     }
 }
 declare module "lib/game-data-lib/updators/updator-history/updator-history" {
+    import { IGlobal } from "ttpg-darrell";
     import { GameData } from "lib/game-data-lib/game-data/game-data";
     import { IGameDataUpdator } from "lib/game-data-lib/i-game-data-updator/i-game-data-updator";
-    import { IGlobal } from "ttpg-darrell";
     /**
      * Report a very minimal history of GameData per round.
      */
@@ -7852,9 +7804,6 @@ declare module "global/global" {
     }
     export function resetGlobalThisTI4(): TI4Class;
 }
-declare module "global/global.test" { }
-declare module "global/r-swap-split-combine.test" { }
-declare module "global/shuffle-decks.test" { }
 declare module "lib/action-card-lib/deal-action-cards/deal-action-cards" {
     export class DealActionCards {
         private readonly _cardUtil;
@@ -7876,25 +7825,12 @@ declare module "lib/action-card-lib/deal-action-cards/deal-action-cards" {
         dealActionCards(playerSlot: number, count: number): boolean;
     }
 }
-declare module "lib/action-card-lib/deal-action-cards/deal-action-cards.test" { }
-declare module "lib/agenda-lib/agenda-activity-start/agenda-activity-start.test" { }
-declare module "lib/agenda-lib/agenda-available-votes/agenda-available-votes.test" { }
-declare module "lib/agenda-lib/agenda-outcomes/agenda-outcomes.test" { }
-declare module "lib/agenda-lib/agenda-state/advance-no-whens-afters.test" { }
-declare module "lib/agenda-lib/agenda-state/agenda-state.test" { }
-declare module "lib/agenda-lib/agenda-state/report-final-agenda-state.test" { }
-declare module "lib/agenda-lib/agenda-turn-order/agenda-turn-order.test" { }
 declare module "lib/agenda-lib/reset-planet-cards/reset-planet-cards" {
     export class ResetPlanetCards {
         private readonly _cardUtil;
         reset(): void;
     }
 }
-declare module "lib/agenda-lib/reset-planet-cards/reset-planet-cards.test" { }
-declare module "lib/border-lib/all-borders/all-borders.test" { }
-declare module "lib/border-lib/planet-borders/planet-borders.test" { }
-declare module "lib/border-lib/space-borders/space-borders.test" { }
-declare module "lib/border-lib/space-planet-ownership/space-planet-ownership.test" { }
 declare module "lib/build-lib/build-consume" {
     import { GameObject } from "@tabletop-playground/api";
     export type BuildConsumeType = "tradegood" | "planet";
@@ -7916,7 +7852,6 @@ declare module "lib/build-lib/build-consume" {
         report(): string;
     }
 }
-declare module "lib/build-lib/build-consume.test" { }
 declare module "lib/build-lib/build-produce" {
     import { GameObject } from "@tabletop-playground/api";
     import { UnitAttrsSet } from "lib/unit-lib/unit-attrs-set/unit-attrs-set";
@@ -7937,9 +7872,6 @@ declare module "lib/build-lib/build-produce" {
         report(): string;
     }
 }
-declare module "lib/build-lib/build-produce.test" { }
-declare module "lib/combat-lib/combat-roll/combat-roll.test" { }
-declare module "lib/combat-lib/combat-roll-summary/combat-roll-summary.test" { }
 declare module "lib/recycle-lib/handlers/card/promissory/recycle-card-promissory" {
     import { GameObject } from "@tabletop-playground/api";
     import { GarbageHandler } from "ttpg-darrell";
@@ -7973,156 +7905,6 @@ declare module "lib/command-token-lib/add-command-tokens/add-command-tokens" {
         addCommandTokens(playerSlot: number, count: number): boolean;
     }
 }
-declare module "lib/command-token-lib/add-command-tokens/add-command-tokens.test" { }
-declare module "lib/command-token-lib/add-command-tokens/add-command-tokens.testp" { }
-declare module "lib/command-token-lib/command-token-counter/command-token-counter.test" { }
-declare module "lib/command-token-lib/command-token-counter/command-token-counter.testp" { }
-declare module "lib/command-token-lib/report-command-token-put-get/report-command-token-put-get.test" { }
-declare module "lib/command-token-lib/return-command-tokens/return-command-tokens.test" { }
-declare module "lib/config/config.test" { }
-declare module "lib/control-token-lib/place-control-token-on-card.test" { }
-declare module "lib/control-token-lib/spawn-control-token.test" { }
-declare module "lib/draft-lib/draft-activity-finish/draft-activity-finish.test" { }
-declare module "lib/draft-lib/draft-activity-finish/draft-activity-finish.testp" { }
-declare module "lib/draft-lib/draft-activity-start/draft-activity-start.test" { }
-declare module "lib/draft-lib/draft-state/draft-state.test" { }
-declare module "lib/draft-lib/draft-to-map-string/draft-to-map-string.test" { }
-declare module "lib/draft-lib/draft-to-map-string/draft-to-map-string.testp" { }
-declare module "lib/draft-lib/drafts/bag-draft.test" { }
-declare module "lib/draft-lib/drafts/milty.test" { }
-declare module "lib/draft-lib/drafts/milty.testp" { }
-declare module "lib/draft-lib/drafts/nucleus.test" { }
-declare module "lib/draft-lib/drafts/wekker.test" { }
-declare module "lib/draft-lib/drafts/wekker.testp" { }
-declare module "lib/draft-lib/generate-factions/generate-factions.test" { }
-declare module "lib/draft-lib/generate-slices/generate-slices.test" { }
-declare module "lib/draft-lib/parse/parse-base-map.test" { }
-declare module "lib/draft-lib/parse/parse-factions.test" { }
-declare module "lib/draft-lib/parse/parse-labels.test" { }
-declare module "lib/draft-lib/parse/parse-slices.test" { }
-declare module "lib/draft-lib/resolve-conflicts/resolve-conflicts-keleres.test" { }
-declare module "lib/draft-lib/scpt/scpt-2021/scpt-2021.test" { }
-declare module "lib/draft-lib/scpt/scpt-2022/scpt-2022.test" { }
-declare module "lib/draft-lib/scpt/scpt-2023/scpt-2023.test" { }
-declare module "lib/draft-lib/scpt/scpt-2024/scpt-2024.test" { }
-declare module "lib/draft-lib/scpt/scpt-2025/scpt-2025.test" { }
-declare module "lib/faction-lib/faction/faction.test" { }
-declare module "lib/faction-lib/registry/faction-registry.test" { }
-declare module "lib/faction-lib/schema/faction-schema.test" { }
-declare module "lib/faction-lib/unpack/abstract-unpack/abstract-unpack.test" { }
-declare module "lib/faction-lib/unpack/abstract-unpack/abstract-unpack.testp" {
-    import { AbstractUnpack } from "lib/faction-lib/unpack/abstract-unpack/abstract-unpack";
-    import { Faction } from "lib/faction-lib/faction/faction";
-    export const FACTION: Faction;
-    export const PLAYER_SLOT: number;
-    export class AbstractUnpackTestP {
-        constructor(unpack: AbstractUnpack);
-    }
-}
-declare module "lib/faction-lib/unpack/unpack-all/unpack-all.test" { }
-declare module "lib/faction-lib/unpack/unpack-all/unpack-all.testp" { }
-declare module "lib/faction-lib/unpack/unpack-command-tokens/unpack-command-tokens.test" { }
-declare module "lib/faction-lib/unpack/unpack-command-tokens/unpack-command-tokens.testp" { }
-declare module "lib/faction-lib/unpack/unpack-control-tokens/unpack-control-tokens.test" { }
-declare module "lib/faction-lib/unpack/unpack-faction-alliance/unpack-faction-alliance.test" { }
-declare module "lib/faction-lib/unpack/unpack-faction-extras/unpack-faction-extras.test" { }
-declare module "lib/faction-lib/unpack/unpack-faction-promissory/unpack-faction-promissory.test" { }
-declare module "lib/faction-lib/unpack/unpack-faction-sheet/unpack-faction-sheet.test" { }
-declare module "lib/faction-lib/unpack/unpack-faction-tech/unpack-faction-tech.test" { }
-declare module "lib/faction-lib/unpack/unpack-home-planet-cards/unpack-home-planet-cards.test" { }
-declare module "lib/faction-lib/unpack/unpack-home-system/unpack-home-system.test" { }
-declare module "lib/faction-lib/unpack/unpack-leaders/unpack-leaders.test" { }
-declare module "lib/faction-lib/unpack/unpack-starting-tech/unpack-starting-tech.test" { }
-declare module "lib/faction-lib/unpack/unpack-starting-units/unpack-starting-units.test" { }
-declare module "lib/game-data-lib/game-data/game-data.test" { }
-declare module "lib/game-data-lib/game-data-export/game-data-export.test" { }
-declare module "lib/game-data-lib/game-data-updator/game-data-updator.test" { }
-declare module "lib/game-data-lib/game-data-updators/game-data-updators.test" { }
-declare module "lib/game-data-lib/i-game-data-updator/i-game-data-updator.test" { }
-declare module "lib/game-data-lib/last-game-data/last-game-data.test" { }
-declare module "lib/game-data-lib/objective-progress/goal-counter.test" { }
-declare module "lib/game-data-lib/objective-progress/goal-progress.test" { }
-declare module "lib/game-data-lib/objective-progress/goal-reporter.test" { }
-declare module "lib/game-data-lib/updators/updator-active-system/updator-active-system.test" { }
-declare module "lib/game-data-lib/updators/updator-config/updator-config.test" { }
-declare module "lib/game-data-lib/updators/updator-hex-summary/hex-summary-codes.test" { }
-declare module "lib/game-data-lib/updators/updator-hex-summary/sort-entity-type.test" { }
-declare module "lib/game-data-lib/updators/updator-hex-summary/updator-hex-summary.test" { }
-declare module "lib/game-data-lib/updators/updator-history/updator-history.test" { }
-declare module "lib/game-data-lib/updators/updator-laws/updator-laws.test" { }
-declare module "lib/game-data-lib/updators/updator-map-string/updator-map-string.test" { }
-declare module "lib/game-data-lib/updators/updator-objectives/updator-objectives.test" { }
-declare module "lib/game-data-lib/updators/updator-objectives-progress/updator-objectives-progress.test" { }
-declare module "lib/game-data-lib/updators/updator-player-active/updator-player-active.test" { }
-declare module "lib/game-data-lib/updators/updator-player-color/updator-player-color.test" { }
-declare module "lib/game-data-lib/updators/updator-player-command-tokens/updator-player-command-tokens.test" { }
-declare module "lib/game-data-lib/updators/updator-player-custodians-points/updator-player-custodians-points.test" { }
-declare module "lib/game-data-lib/updators/updator-player-faction/updator-player-faction.test" { }
-declare module "lib/game-data-lib/updators/updator-player-hand-summary/updator-player-hand-summary.test" { }
-declare module "lib/game-data-lib/updators/updator-player-leaders/updator-player-leaders.test" { }
-declare module "lib/game-data-lib/updators/updator-player-name/updator-player-name.test" { }
-declare module "lib/game-data-lib/updators/updator-player-planet-totals/updator-player-planet-totals.test" { }
-declare module "lib/game-data-lib/updators/updator-player-score/updator-player-score.test" { }
-declare module "lib/game-data-lib/updators/updator-player-strategy-cards/updator-player-strategy-cards.test" { }
-declare module "lib/game-data-lib/updators/updator-player-tech/updator-player-tech.test" { }
-declare module "lib/game-data-lib/updators/updator-player-tradegoods/updator-player-tradegoods.test" { }
-declare module "lib/game-data-lib/updators/updator-player-turn-order/updator-player-turn-order.test" { }
-declare module "lib/game-data-lib/updators/updator-round/updator-round.test" { }
-declare module "lib/game-data-lib/updators/updator-scoreboard/updator-scoreboard.test" { }
-declare module "lib/game-data-lib/updators/updator-setup-timestamp/updator-setup-timestamp.test" { }
-declare module "lib/game-data-lib/updators/updator-speaker/updator-speaker.test" { }
-declare module "lib/game-data-lib/updators/updator-timer/updator-timer.test" { }
-declare module "lib/game-data-lib/updators/updator-timestamp/updator-timestamp.test" { }
-declare module "lib/game-data-lib/updators/updator-turn/updator-turn.test" { }
-declare module "lib/map-string-lib/data/premade-maps.test" { }
-declare module "lib/map-string-lib/map-home-system-locations/map-home-system-locations.test" { }
-declare module "lib/map-string-lib/map-place/map-place-frontier-tokens.test" { }
-declare module "lib/map-string-lib/map-place/map-place-planet-cards.test" { }
-declare module "lib/recycle-lib/handlers/system-tile/recycle-system-tile" {
-    import { GameObject } from "@tabletop-playground/api";
-    import { GarbageHandler } from "ttpg-darrell";
-    export class RecycleSystemTile extends GarbageHandler {
-        private readonly _find;
-        canRecycle(obj: GameObject): boolean;
-        recycle(obj: GameObject): boolean;
-    }
-}
-declare module "lib/map-string-lib/map-remove/map-remove-all-non-home-systems.test" { }
-declare module "lib/recycle-lib/handlers/token/recycle-token-frontier/recycle-token-frontier" {
-    import { GameObject } from "@tabletop-playground/api";
-    import { GarbageHandler } from "ttpg-darrell";
-    export class RecycleTokenFrontier extends GarbageHandler {
-        canRecycle(obj: GameObject): boolean;
-        recycle(obj: GameObject): boolean;
-    }
-}
-declare module "lib/map-string-lib/map-remove/map-remove-frontier-tokens.test" { }
-declare module "lib/recycle-lib/handlers/card/planet/recycle-card-planet" {
-    import { SimpleCardGarbageHandler } from "ttpg-darrell";
-    export class RecycleCardPlanet extends SimpleCardGarbageHandler {
-        constructor();
-    }
-}
-declare module "lib/map-string-lib/map-remove/map-remove-planet-cards.test" { }
-declare module "lib/map-string-lib/map-string/map-string-format.test" { }
-declare module "lib/map-string-lib/map-string/map-string-hex.test" { }
-declare module "lib/map-string-lib/map-string/map-string-hyperlanes.test" { }
-declare module "lib/map-string-lib/map-string/map-string-load.test" { }
-declare module "lib/map-string-lib/map-string/map-string-parser.test" { }
-declare module "lib/map-string-lib/map-string/map-string-save.test" { }
-declare module "lib/numpad-key-lib/numpad-key-all/numpad-key-all.test" { }
-declare module "lib/numpad-key-lib/numpad-key-look-active-system/numpad-key-look-active-system.test" { }
-declare module "lib/numpad-key-lib/numpad-key-look-map/numpad-key-look-map.test" { }
-declare module "lib/numpad-key-lib/numpad-key-look-my-seat/numpad-key-look-my-seat.test" { }
-declare module "lib/numpad-key-lib/numpad-key-look-scoring/numpad-key-look-scoring.test" { }
-declare module "lib/numpad-key-lib/numpad-key-look-seat/numpad-key-look-seat.test" { }
-declare module "lib/numpad-key-lib/numpad-key-recycle/numpad-key-recycle.test" { }
-declare module "lib/numpad-key-lib/numpad-key-spawn/numpad-key-spawn.test" { }
-declare module "lib/player-lib/change-color/change-color.test" { }
-declare module "lib/player-lib/player-action-phase-time/player-action-phase-time.test" { }
-declare module "lib/player-lib/player-color/player-color.test" { }
-declare module "lib/player-lib/player-name/player-name.test" { }
-declare module "lib/player-lib/player-seats/player-seats.test" { }
 declare module "lib/ready-lib/ready-lib" {
     export class ReadyLib {
         private readonly _cardUtil;
@@ -8130,21 +7912,18 @@ declare module "lib/ready-lib/ready-lib" {
         readyAll(): void;
     }
 }
-declare module "lib/ready-lib/ready-lib.test" { }
 declare module "lib/recycle-lib/handlers/card/action/recycle-card-action" {
     import { SimpleCardGarbageHandler } from "ttpg-darrell";
     export class RecycleCardAction extends SimpleCardGarbageHandler {
         constructor();
     }
 }
-declare module "lib/recycle-lib/handlers/card/action/recycle-card-action.test" { }
 declare module "lib/recycle-lib/handlers/card/agenda/recycle-card-agenda" {
     import { SimpleCardGarbageHandler } from "ttpg-darrell";
     export class RecycleCardAgenda extends SimpleCardGarbageHandler {
         constructor();
     }
 }
-declare module "lib/recycle-lib/handlers/card/agenda/recycle-card-agenda.test" { }
 declare module "lib/recycle-lib/handlers/card/alliance/recycle-card-alliance" {
     import { GameObject } from "@tabletop-playground/api";
     import { GarbageHandler } from "ttpg-darrell";
@@ -8155,42 +7934,36 @@ declare module "lib/recycle-lib/handlers/card/alliance/recycle-card-alliance" {
         recycle(obj: GameObject): boolean;
     }
 }
-declare module "lib/recycle-lib/handlers/card/alliance/recycle-card-alliance.test" { }
 declare module "lib/recycle-lib/handlers/card/exploration/cultural/recycle-card-exploration-cultural" {
     import { SimpleCardGarbageHandler } from "ttpg-darrell";
     export class RecycleCardExplorationCultural extends SimpleCardGarbageHandler {
         constructor();
     }
 }
-declare module "lib/recycle-lib/handlers/card/exploration/cultural/recycle-card-exploration-cultural.test" { }
 declare module "lib/recycle-lib/handlers/card/exploration/frontier/recycle-card-exploration-frontier" {
     import { SimpleCardGarbageHandler } from "ttpg-darrell";
     export class RecycleCardExplorationFrontier extends SimpleCardGarbageHandler {
         constructor();
     }
 }
-declare module "lib/recycle-lib/handlers/card/exploration/frontier/recycle-card-exploration-frontier.test" { }
 declare module "lib/recycle-lib/handlers/card/exploration/hazardous/recycle-card-exploration-hazardous" {
     import { SimpleCardGarbageHandler } from "ttpg-darrell";
     export class RecycleCardExplorationHazardous extends SimpleCardGarbageHandler {
         constructor();
     }
 }
-declare module "lib/recycle-lib/handlers/card/exploration/hazardous/recycle-card-exploration-hazardous.test" { }
 declare module "lib/recycle-lib/handlers/card/exploration/industrial/recycle-card-exploration-industrial" {
     import { SimpleCardGarbageHandler } from "ttpg-darrell";
     export class RecycleCardExplorationIndustrial extends SimpleCardGarbageHandler {
         constructor();
     }
 }
-declare module "lib/recycle-lib/handlers/card/exploration/industrial/recycle-card-exploration-industrial.test" { }
 declare module "lib/recycle-lib/handlers/card/faction-reference/recycle-card-faction-reference" {
     import { SimpleCardGarbageHandler } from "ttpg-darrell";
     export class RecycleCardFactionReference extends SimpleCardGarbageHandler {
         constructor();
     }
 }
-declare module "lib/recycle-lib/handlers/card/faction-reference/recycle-card-faction-reference.test" { }
 declare module "lib/recycle-lib/handlers/card/leader/recycle-card-leader" {
     import { GameObject } from "@tabletop-playground/api";
     import { GarbageHandler } from "ttpg-darrell";
@@ -8201,44 +7974,42 @@ declare module "lib/recycle-lib/handlers/card/leader/recycle-card-leader" {
         recycle(obj: GameObject): boolean;
     }
 }
-declare module "lib/recycle-lib/handlers/card/leader/recycle-card-leader.test" { }
 declare module "lib/recycle-lib/handlers/card/legendary-planet/recycle-card-legendary-planet" {
     import { SimpleCardGarbageHandler } from "ttpg-darrell";
     export class RecycleCardLegendaryPlanet extends SimpleCardGarbageHandler {
         constructor();
     }
 }
-declare module "lib/recycle-lib/handlers/card/legendary-planet/recycle-card-legendary-planet.test" { }
 declare module "lib/recycle-lib/handlers/card/objective/stage-1/recycle-card-objective-stage-1" {
     import { SimpleCardGarbageHandler } from "ttpg-darrell";
     export class RecycleCardObjectiveStage1 extends SimpleCardGarbageHandler {
         constructor();
     }
 }
-declare module "lib/recycle-lib/handlers/card/objective/stage-1/recycle-card-objective-stage-1.test" { }
 declare module "lib/recycle-lib/handlers/card/objective/stage-2/recycle-card-objective-stage-2" {
     import { SimpleCardGarbageHandler } from "ttpg-darrell";
     export class RecycleCardObjectiveStage2 extends SimpleCardGarbageHandler {
         constructor();
     }
 }
-declare module "lib/recycle-lib/handlers/card/objective/stage-2/recycle-card-objective-stage-2.test" { }
-declare module "lib/recycle-lib/handlers/card/planet/recycle-card-planet.test" { }
-declare module "lib/recycle-lib/handlers/card/promissory/recycle-card-promissory.test" { }
+declare module "lib/recycle-lib/handlers/card/planet/recycle-card-planet" {
+    import { SimpleCardGarbageHandler } from "ttpg-darrell";
+    export class RecycleCardPlanet extends SimpleCardGarbageHandler {
+        constructor();
+    }
+}
 declare module "lib/recycle-lib/handlers/card/relic/recycle-card-relic" {
     import { SimpleCardGarbageHandler } from "ttpg-darrell";
     export class RecycleCardRelic extends SimpleCardGarbageHandler {
         constructor();
     }
 }
-declare module "lib/recycle-lib/handlers/card/relic/recycle-card-relic.test" { }
 declare module "lib/recycle-lib/handlers/card/secret/recycle-card-secret" {
     import { SimpleCardGarbageHandler } from "ttpg-darrell";
     export class RecycleCardSecret extends SimpleCardGarbageHandler {
         constructor();
     }
 }
-declare module "lib/recycle-lib/handlers/card/secret/recycle-card-secret.test" { }
 declare module "lib/recycle-lib/handlers/card/technology/recycle-card-tech" {
     import { GameObject } from "@tabletop-playground/api";
     import { GarbageHandler } from "ttpg-darrell";
@@ -8249,7 +8020,6 @@ declare module "lib/recycle-lib/handlers/card/technology/recycle-card-tech" {
         recycle(card: GameObject): boolean;
     }
 }
-declare module "lib/recycle-lib/handlers/card/technology/recycle-card-tech.test" { }
 declare module "lib/recycle-lib/handlers/strategy-card/recycle-strategy-card" {
     import { GameObject } from "@tabletop-playground/api";
     import { GarbageHandler } from "ttpg-darrell";
@@ -8259,8 +8029,15 @@ declare module "lib/recycle-lib/handlers/strategy-card/recycle-strategy-card" {
         recycle(obj: GameObject): boolean;
     }
 }
-declare module "lib/recycle-lib/handlers/strategy-card/recycle-strategy-card.test" { }
-declare module "lib/recycle-lib/handlers/system-tile/recycle-system-tile.test" { }
+declare module "lib/recycle-lib/handlers/system-tile/recycle-system-tile" {
+    import { GameObject } from "@tabletop-playground/api";
+    import { GarbageHandler } from "ttpg-darrell";
+    export class RecycleSystemTile extends GarbageHandler {
+        private readonly _find;
+        canRecycle(obj: GameObject): boolean;
+        recycle(obj: GameObject): boolean;
+    }
+}
 declare module "lib/recycle-lib/handlers/token/recycle-token-attachment/recycle-token-attachment" {
     import { GameObject } from "@tabletop-playground/api";
     import { GarbageHandler } from "ttpg-darrell";
@@ -8271,8 +8048,6 @@ declare module "lib/recycle-lib/handlers/token/recycle-token-attachment/recycle-
         recycle(obj: GameObject): boolean;
     }
 }
-declare module "lib/recycle-lib/handlers/token/recycle-token-attachment/recycle-token-attachment.test" { }
-declare module "lib/recycle-lib/handlers/token/recycle-token-command/recycle-token-command.test" { }
 declare module "lib/recycle-lib/handlers/token/recycle-token-control/recycle-token-control" {
     import { GameObject } from "@tabletop-playground/api";
     import { GarbageHandler } from "ttpg-darrell";
@@ -8282,7 +8057,6 @@ declare module "lib/recycle-lib/handlers/token/recycle-token-control/recycle-tok
         recycle(obj: GameObject): boolean;
     }
 }
-declare module "lib/recycle-lib/handlers/token/recycle-token-control/recycle-token-control.test" { }
 declare module "lib/recycle-lib/handlers/token/recycle-token-fighter/recycle-token-fighter" {
     import { GameObject } from "@tabletop-playground/api";
     import { GarbageHandler } from "ttpg-darrell";
@@ -8291,8 +8065,14 @@ declare module "lib/recycle-lib/handlers/token/recycle-token-fighter/recycle-tok
         recycle(obj: GameObject): boolean;
     }
 }
-declare module "lib/recycle-lib/handlers/token/recycle-token-fighter/recycle-token-fighter.test" { }
-declare module "lib/recycle-lib/handlers/token/recycle-token-frontier/recycle-token-frontier.test" { }
+declare module "lib/recycle-lib/handlers/token/recycle-token-frontier/recycle-token-frontier" {
+    import { GameObject } from "@tabletop-playground/api";
+    import { GarbageHandler } from "ttpg-darrell";
+    export class RecycleTokenFrontier extends GarbageHandler {
+        canRecycle(obj: GameObject): boolean;
+        recycle(obj: GameObject): boolean;
+    }
+}
 declare module "lib/recycle-lib/handlers/token/recycle-token-infantry/recycle-token-infantry" {
     import { GameObject } from "@tabletop-playground/api";
     import { GarbageHandler } from "ttpg-darrell";
@@ -8301,7 +8081,6 @@ declare module "lib/recycle-lib/handlers/token/recycle-token-infantry/recycle-to
         recycle(obj: GameObject): boolean;
     }
 }
-declare module "lib/recycle-lib/handlers/token/recycle-token-infantry/recycle-token-infantry.test" { }
 declare module "lib/recycle-lib/handlers/token/recycle-token-tradegood/recycle-token-tradegood" {
     import { GameObject } from "@tabletop-playground/api";
     import { GarbageHandler } from "ttpg-darrell";
@@ -8310,7 +8089,6 @@ declare module "lib/recycle-lib/handlers/token/recycle-token-tradegood/recycle-t
         recycle(obj: GameObject): boolean;
     }
 }
-declare module "lib/recycle-lib/handlers/token/recycle-token-tradegood/recycle-token-tradegood.test" { }
 declare module "lib/recycle-lib/handlers/unit/recycle-unit" {
     import { GameObject } from "@tabletop-playground/api";
     import { GarbageHandler } from "ttpg-darrell";
@@ -8320,25 +8098,11 @@ declare module "lib/recycle-lib/handlers/unit/recycle-unit" {
         recycle(obj: GameObject): boolean;
     }
 }
-declare module "lib/recycle-lib/handlers/unit/recycle-unit.test" { }
 declare module "lib/recycle-lib/recycle-container/recycle-container" {
     import { GarbageContainer } from "ttpg-darrell";
     export class RecycleContainer extends GarbageContainer {
     }
 }
-declare module "lib/recycle-lib/recycle-container/recycle-container.test" { }
-declare module "lib/remove-lib/registry/remove-registry.test" { }
-declare module "lib/remove-lib/remove-by-nsid-or-source/remove-by-nsid-or-source.test" { }
-declare module "lib/score-lib/advance-score/advance-score.test" { }
-declare module "lib/score-lib/move-card-to-player-scored/move-card-to-player-scored.test" { }
-declare module "lib/score-lib/scoreboard/scoreboard-control-token.testp" { }
-declare module "lib/score-lib/scoreboard/scoreboard.test" { }
-declare module "lib/score-lib/scoreboard/scoreboard.testp" { }
-declare module "lib/slash-command-lib/data/commands/slash-toggle-units/slash-toggle-units.test" { }
-declare module "lib/slash-command-lib/slash-command-registry/slash-command-registry.test" { }
-declare module "lib/start-game-lib/start-game-window.test" { }
-declare module "lib/start-game-lib/start-game.test" { }
-declare module "lib/strategy-card-lib/initiative-order/initiative-order.test" { }
 declare module "lib/strategy-card-lib/place-tgs-unpicked/place-tgs-unpicked" {
     import { GameObject } from "@tabletop-playground/api";
     export class PlaceTgsUnpicked {
@@ -8347,7 +8111,6 @@ declare module "lib/strategy-card-lib/place-tgs-unpicked/place-tgs-unpicked" {
         placeTgsUnpicked(): void;
     }
 }
-declare module "lib/strategy-card-lib/place-tgs-unpicked/place-tgs-unpicked.test" { }
 declare module "lib/strategy-card-lib/return-strategy-card/return-strategy-card" {
     export class ReturnStrategyCard {
         private readonly _find;
@@ -8355,13 +8118,6 @@ declare module "lib/strategy-card-lib/return-strategy-card/return-strategy-card"
         returnAllStrategyCardsRespecingPoliticalStability(): void;
     }
 }
-declare module "lib/strategy-card-lib/return-strategy-card/return-strategy-card.test" { }
-declare module "lib/strategy-card-lib/strategy-cards-state/strategy-cards-state.test" { }
-declare module "lib/streamer-lib/auto-streamer-camera/auto-streamer-camera.test" { }
-declare module "lib/streamer-lib/hide-mouse-cursor/hide-mouse-cursor.test" { }
-declare module "lib/streamer-lib/use-streamer-buddy/use-streamer-buddy.test" { }
-declare module "lib/streamer-lib/whisper-spy/whisper-spy.test" { }
-declare module "lib/system-lib/planet/planet.test" { }
 declare module "lib/system-lib/planet/refresh-all-planets" {
     import { HexType } from "ttpg-darrell";
     export class RefreshAllPlanets {
@@ -8373,17 +8129,6 @@ declare module "lib/system-lib/planet/refresh-all-planets" {
         refresh(alsoRefreshTechAgentRelic: boolean): void;
     }
 }
-declare module "lib/system-lib/planet/refresh-all-planets.test" { }
-declare module "lib/system-lib/planet-attachment/planet-attachment-layout.test" { }
-declare module "lib/system-lib/planet-attachment/planet-attachment.test" { }
-declare module "lib/system-lib/registry/planet-attachment-registry.test" { }
-declare module "lib/system-lib/registry/system-attachment-registry.test" { }
-declare module "lib/system-lib/registry/system-registry.test" { }
-declare module "lib/system-lib/schema/basic-types-schema.test" { }
-declare module "lib/system-lib/schema/planet-attachment-schema.test" { }
-declare module "lib/system-lib/schema/planet-schema.test" { }
-declare module "lib/system-lib/schema/system-attachment-schema.test" { }
-declare module "lib/system-lib/schema/system-schema.test" { }
 declare module "lib/system-lib/system/system-labels" {
     import { DrawingLine } from "@tabletop-playground/api";
     import { System } from "lib/system-lib/system/system";
@@ -8400,126 +8145,6 @@ declare module "lib/system-lib/system/system-labels" {
         detach(): this;
     }
 }
-declare module "lib/system-lib/system/system-labels.test" { }
-declare module "lib/system-lib/system/system-labels.testp" { }
-declare module "lib/system-lib/system/system-reserve-space.test" { }
-declare module "lib/system-lib/system/system-summary.test" { }
-declare module "lib/system-lib/system/system-tier.test" { }
-declare module "lib/system-lib/system/system.test" { }
-declare module "lib/system-lib/system-adjacency/draw-hyperlanes.testp" {
-    import { GameObject } from "@tabletop-playground/api";
-    import { IGlobal } from "ttpg-darrell";
-    /**
-     * Draw hyperlane links, for verification and debugging.
-     */
-    export class DrawHyperlanes implements IGlobal {
-        private readonly _onObjectCreatedHandler;
-        private readonly _onMovementStoppedHandler;
-        init(): void;
-        _maybeProcessObject(obj: GameObject): void;
-        _update(obj: GameObject): void;
-    }
-}
-declare module "lib/system-lib/system-adjacency/system-adjacency-hyperlane.test" { }
-declare module "lib/system-lib/system-adjacency/system-adjacency-neighbor.test" { }
-declare module "lib/system-lib/system-adjacency/system-adjacency-wormhole.test" { }
-declare module "lib/system-lib/system-adjacency/system-adjacency.test" { }
-declare module "lib/system-lib/system-attachment/system-attachment.test" { }
-declare module "lib/tech-lib/find-player-tech-deck/find-player-tech-deck.test" { }
-declare module "lib/tech-lib/player-tech-summary/player-tech-summary.test" { }
-declare module "lib/tech-lib/player-with-faction-techs/player-with-faction-techs.test" { }
-declare module "lib/tech-lib/registry/tech-registry.test" { }
-declare module "lib/tech-lib/schema/tech-schema.test" { }
-declare module "lib/tech-lib/tech/tech.test" { }
-declare module "lib/unit-lib/data/unit-modifiers/abstract.test" {
-    /**
-     * Utility functions to simplify unit modifier tests.
-     * Use the ".test.ts" naming to prevent including in the mod build.
-     */
-    import { Vector } from "@tabletop-playground/api";
-    import { UnitType } from "lib/unit-lib/schema/unit-attrs-schema";
-    export const SELF: number;
-    export const OPPONENT: number;
-    export const SELF_POS: Vector;
-    export const OPPONENT_POS: Vector;
-    export const ANY_POS: Vector;
-    export function placeGameObjects(params: {
-        systemNsid?: string;
-        self?: Array<string>;
-        selfActive?: Array<string>;
-        selfUnits?: Map<UnitType, number>;
-        selfUnitsOffPlanet?: Map<UnitType, number>;
-        selfUnitsAdj?: Map<UnitType, number>;
-        opponent?: Array<string>;
-        opponentUnits?: Map<UnitType, number>;
-        opponentUnitsOffPlanet?: Map<UnitType, number>;
-        opponentUnitsAdj?: Map<UnitType, number>;
-        any?: Array<string>;
-    }): void;
-}
-declare module "lib/unit-lib/data/unit-modifiers/base/antimass-deflectors.test" { }
-declare module "lib/unit-lib/data/unit-modifiers/base/bunker.test" { }
-declare module "lib/unit-lib/data/unit-modifiers/base/cmorran-norr.test" { }
-declare module "lib/unit-lib/data/unit-modifiers/base/conventions-of-war.test" { }
-declare module "lib/unit-lib/data/unit-modifiers/base/disable.test" { }
-declare module "lib/unit-lib/data/unit-modifiers/base/experimental-battlestation.test" { }
-declare module "lib/unit-lib/data/unit-modifiers/base/fighter-prototype.test" { }
-declare module "lib/unit-lib/data/unit-modifiers/base/fourth-moon.test" { }
-declare module "lib/unit-lib/data/unit-modifiers/base/fragile.test" { }
-declare module "lib/unit-lib/data/unit-modifiers/base/matriarch.test" { }
-declare module "lib/unit-lib/data/unit-modifiers/base/mirror-computing.test" { }
-declare module "lib/unit-lib/data/unit-modifiers/base/morale-boost.test" { }
-declare module "lib/unit-lib/data/unit-modifiers/base/munitions-reserves.test" { }
-declare module "lib/unit-lib/data/unit-modifiers/base/nebula-defense.test" { }
-declare module "lib/unit-lib/data/unit-modifiers/base/plasma-scoring.test" { }
-declare module "lib/unit-lib/data/unit-modifiers/base/prophecy-of-ixth.test" { }
-declare module "lib/unit-lib/data/unit-modifiers/base/publicize-weapon-schematics.test" { }
-declare module "lib/unit-lib/data/unit-modifiers/base/regulated-conscription.test" { }
-declare module "lib/unit-lib/data/unit-modifiers/base/salai-sai-corian.test" { }
-declare module "lib/unit-lib/data/unit-modifiers/base/sarween-tools.test" { }
-declare module "lib/unit-lib/data/unit-modifiers/base/tekklar-legion.test" { }
-declare module "lib/unit-lib/data/unit-modifiers/base/the-alastor.test" { }
-declare module "lib/unit-lib/data/unit-modifiers/base/unrelenting.test" { }
-declare module "lib/unit-lib/data/unit-modifiers/codex-ordinian/blitz.test" { }
-declare module "lib/unit-lib/data/unit-modifiers/codex-ordinian/war-machine.test" { }
-declare module "lib/unit-lib/data/unit-modifiers/codex-vigil/custodia-vigilia.test" { }
-declare module "lib/unit-lib/data/unit-modifiers/codex-vigil/xxekir-grom.test" { }
-declare module "lib/unit-lib/data/unit-modifiers/pok/2ram.test" { }
-declare module "lib/unit-lib/data/unit-modifiers/pok/annihilator.test" { }
-declare module "lib/unit-lib/data/unit-modifiers/pok/articles-of-war.test" { }
-declare module "lib/unit-lib/data/unit-modifiers/pok/arvicon-rex.test" { }
-declare module "lib/unit-lib/data/unit-modifiers/pok/brother-omar.test" { }
-declare module "lib/unit-lib/data/unit-modifiers/pok/eidolon.test" { }
-declare module "lib/unit-lib/data/unit-modifiers/pok/emissary-taivra.test" { }
-declare module "lib/unit-lib/data/unit-modifiers/pok/evelyn-delouis.test" { }
-declare module "lib/unit-lib/data/unit-modifiers/pok/iconoclast.test" { }
-declare module "lib/unit-lib/data/unit-modifiers/pok/maban.test" { }
-declare module "lib/unit-lib/data/unit-modifiers/pok/moll-terminus.test" { }
-declare module "lib/unit-lib/data/unit-modifiers/pok/mordred.test" { }
-declare module "lib/unit-lib/data/unit-modifiers/pok/navarch-feng.test" { }
-declare module "lib/unit-lib/data/unit-modifiers/pok/quetzecoatl.test" { }
-declare module "lib/unit-lib/data/unit-modifiers/pok/rickar-rickani.test" { }
-declare module "lib/unit-lib/data/unit-modifiers/pok/shield-paling.test" { }
-declare module "lib/unit-lib/data/unit-modifiers/pok/strike-wing-ambuscade.test" { }
-declare module "lib/unit-lib/data/unit-modifiers/pok/supercharge.test" { }
-declare module "lib/unit-lib/data/unit-modifiers/pok/ta-zern.test" { }
-declare module "lib/unit-lib/data/unit-modifiers/pok/that-which-molds-flesh.test" { }
-declare module "lib/unit-lib/data/unit-modifiers/pok/the-cavalry.test" { }
-declare module "lib/unit-lib/data/unit-modifiers/pok/the-crown-of-thalnos.test" { }
-declare module "lib/unit-lib/data/unit-modifiers/pok/trrakan-aun-zulok.test" { }
-declare module "lib/unit-lib/data/unit-modifiers/pok/ul-the-progenitor.test" { }
-declare module "lib/unit-lib/data/unit-modifiers/pok/viscount-unlenn.test" { }
-declare module "lib/unit-lib/data/unit-modifiers/pok/visz-el-vir.test" { }
-declare module "lib/unit-lib/registry/unit-attrs-registry.test" { }
-declare module "lib/unit-lib/registry/unit-modifier-registry.test" { }
-declare module "lib/unit-lib/schema/unit-attrs-schema.test" { }
-declare module "lib/unit-lib/schema/unit-modifier-schema.test" { }
-declare module "lib/unit-lib/unit-attrs/combat-attrs.test" { }
-declare module "lib/unit-lib/unit-attrs/unit-attrs.test" { }
-declare module "lib/unit-lib/unit-attrs-set/unit-attrs-set.test" { }
-declare module "lib/unit-lib/unit-modifier/unit-modifier-active-idle.test" { }
-declare module "lib/unit-lib/unit-modifier/unit-modifier.test" { }
-declare module "lib/unit-lib/unit-plastic/unit-plastic.test" { }
 declare module "obj/agenda-laws-mat" {
     import { GameObject, Zone } from "@tabletop-playground/api";
     export class AgendaLawsMat {
@@ -8562,7 +8187,6 @@ declare module "obj/build-area" {
     }
     export function delayedCreateBuildArea(obj: GameObject, executionReason: string): void;
 }
-declare module "obj/build-area.test" { }
 declare module "obj/card-holder-player-scoring" { }
 declare module "obj/card-holder-player" { }
 declare module "obj/combat-arena-obj" {
@@ -8593,7 +8217,6 @@ declare module "obj/custodians-token" {
     }
     export function createFromObject(obj: GameObject, executionReason: string): void;
 }
-declare module "obj/custodians-token.test" { }
 declare module "obj/deleted-items-container" { }
 declare module "obj/faction-extras-container" { }
 declare module "obj/icon-container-obj" { }
@@ -8624,25 +8247,6 @@ declare module "obj/slice-build-helper" {
 declare module "obj/status-pad-obj" { }
 declare module "obj/strategy-card-mat" { }
 declare module "obj/timer-obj" { }
-declare module "setup/layout/layout-all/dele.testp" { }
-declare module "setup/layout/layout-table-decks/layout-table-decks.test" {
-    export function setupTestTableDeckSnapPoints(): void;
-}
-declare module "setup/layout/layout-scoring-area/layout-objectives.test" {
-    export function setupTestObjectivesSnapPoints(): void;
-}
-declare module "setup/layout/layout-all/layout-all.test" { }
-declare module "setup/layout/layout-all/layout-all.testp" { }
-declare module "setup/layout/layout-all/scrub-all.test" { }
-declare module "setup/layout/layout-combat-arena/layout-combat-arena.test" { }
-declare module "setup/layout/layout-fighter-inf-tg-containers/layout-fighter-containers.test" { }
-declare module "setup/layout/layout-fighter-inf-tg-containers/layout-fighter-inf-tg-containers.test" { }
-declare module "setup/layout/layout-fighter-inf-tg-containers/layout-fighter-inf-tg-containers.testp" { }
-declare module "setup/layout/layout-fighter-inf-tg-containers/layout-infantry-containers.test" { }
-declare module "setup/layout/layout-map-area/layout-map-area.test" { }
-declare module "setup/layout/layout-player-area/layout-mats.test" { }
-declare module "setup/layout/layout-player-area/layout-player-area.test" { }
-declare module "setup/layout/layout-player-area/layout-player-area.testp" { }
 declare module "setup/layout/layout-player-area/layout-player-areas" {
     import { LayoutObjects } from "ttpg-darrell";
     export class LayoutPlayerAreas {
@@ -8651,57 +8255,6 @@ declare module "setup/layout/layout-player-area/layout-player-areas" {
         getLayout(): LayoutObjects;
     }
 }
-declare module "setup/layout/layout-player-area/layout-player-areas.testp" { }
-declare module "setup/layout/layout-player-area/layout-row-troves-and-status-pad.test" { }
-declare module "setup/layout/layout-player-area/layout-sheets.test" { }
-declare module "setup/layout/layout-player-area/layout-sheets.testp" { }
-declare module "setup/layout/layout-player-area/layout-token-containers.test" { }
-declare module "setup/layout/layout-player-area/layout-trove-mat.test" { }
-declare module "setup/layout/layout-player-area/layout-unit-box.test" { }
-declare module "setup/layout/layout-player-area/layout-unit-boxes.test" { }
-declare module "setup/layout/layout-player-area/layout-unit-boxes.testp" { }
-declare module "setup/layout/layout-player-area/place-generic-promissories.test" { }
-declare module "setup/layout/layout-quick-roller/layout-quick-roller.test" { }
-declare module "setup/layout/layout-scoring-area/layout-agenda-laws-mat.test" { }
-declare module "setup/layout/layout-scoring-area/layout-player-secrets.test" { }
-declare module "setup/layout/layout-scoring-area/layout-scoring-area.test" { }
-declare module "setup/layout/layout-scoring-area/layout-scoring-area.testp" { }
-declare module "setup/layout/layout-scoring-area/layout-timer.test" { }
-declare module "setup/layout/layout-strategy-cards/layout-strategy-cards.test" { }
-declare module "setup/layout/layout-strategy-cards/layout-strategy-cards.testp" { }
-declare module "setup/layout/layout-table-containers/layout-exploration-container.test" { }
-declare module "setup/layout/layout-table-containers/layout-frontier-container.test" { }
-declare module "setup/layout/layout-table-containers/layout-system-container.test" { }
-declare module "setup/layout/layout-table-containers/layout-table-containers.test" { }
-declare module "setup/layout/layout-table-containers/layout-table-containers.testp" { }
-declare module "setup/layout/layout-table-decks/layout-table-decks.testp" { }
-declare module "setup/layout/layout-table-system-tiles/layout-table-system-tiles.test" { }
-declare module "setup/setup-player-slot-colors/setup-player-slot-colors.test" { }
-declare module "ui/abstract-ui/abstract-ui.test" { }
-declare module "ui/abstract-ui/border-contentbutton-sizing.testp" { }
-declare module "ui/abstract-window/abstract-window.testp" { }
-declare module "ui/abstract-window/abtsract-window.test" { }
-declare module "ui/agenda-ui/agenda-available-votes-ui/agenda-available-votes-ui.test" { }
-declare module "ui/agenda-ui/agenda-card-ui/agenda-card-ui.test" { }
-declare module "ui/agenda-ui/agenda-card-ui/agenda-card-ui.testp" { }
-declare module "ui/agenda-ui/agenda-choose-type-ui/agenda-choose-type-ui.test" { }
-declare module "ui/agenda-ui/agenda-how-to-ui/agenda-how-to-ui.test" { }
-declare module "ui/agenda-ui/agenda-outcome-ui/agenda-outcome-ui.test" { }
-declare module "ui/agenda-ui/agenda-outcome-ui/agenda-outcome-ui.testp" { }
-declare module "ui/agenda-ui/agenda-outcome-ui/agenda-rider-ui.test" { }
-declare module "ui/agenda-ui/agenda-outcome-ui/agenda-rider-ui.testp" { }
-declare module "ui/agenda-ui/agenda-state-ui/agenda-state-ui.test" { }
-declare module "ui/agenda-ui/agenda-vote-count-ui/agenda-vote-count-ui.test" { }
-declare module "ui/agenda-ui/agenda-vote-count-ui/agenda-vote-count-ui.testp" { }
-declare module "ui/all-players-techs.ui/all-players-techs-ui.test" { }
-declare module "ui/all-players-techs.ui/all-players-techs-ui.testp" { }
-declare module "ui/button-ui/button-ui.test" { }
-declare module "ui/button-ui/checkbox-ui.test" { }
-declare module "ui/button-ui/confirm-button-ui.test" { }
-declare module "ui/button-ui/editable-button-ui.test" { }
-declare module "ui/button-ui/editable-button-ui.testp" { }
-declare module "ui/button-ui/editable-ui.test" { }
-declare module "ui/button-ui/label-ui.test" { }
 declare module "ui/button-ui/long-button-ui" {
     import { Button } from "@tabletop-playground/api";
     import { AbstractUI } from "ui/abstract-ui/abtract-ui";
@@ -8712,17 +8265,6 @@ declare module "ui/button-ui/long-button-ui" {
         getButton(): Button;
     }
 }
-declare module "ui/button-ui/long-button-ui.test" { }
-declare module "ui/button-ui/slider-with-value-ui.testp" { }
-declare module "ui/button-ui/two-icon-label-ui.test" { }
-declare module "ui/button-ui/two-icon-label-ui.testp" { }
-declare module "ui/change-color-ui/change-color-ui.test" { }
-declare module "ui/change-color-ui/change-color-ui.testp" { }
-declare module "ui/change-color-ui/color-choice-button.test" { }
-declare module "ui/choose-technology-ui/choose-technology-ui.test" { }
-declare module "ui/choose-technology-ui/single-tech-ui.test" { }
-declare module "ui/choose-technology-ui/single-tech-ui.testp" { }
-declare module "ui/choose-technology-ui/tech-card-mutable-ui.test" { }
 declare module "ui/combat-ui/combat-ui-hex/combat-ui-hex" {
     import { AbstractUI } from "ui/abstract-ui/abtract-ui";
     export class CombatUIHex extends AbstractUI {
@@ -8748,85 +8290,3 @@ declare module "ui/combat-ui/combat-ui-all/combat-ui-all" {
         destroy(): void;
     }
 }
-declare module "ui/combat-ui/combat-ui-all/combat-ui-all.test" { }
-declare module "ui/combat-ui/combat-ui-all/combat-ui-all.testp" { }
-declare module "ui/combat-ui/combat-ui-all-simple/combat-ui-all-simple.test" { }
-declare module "ui/combat-ui/combat-ui-all-simple/combat-ui-all-simple.testp" { }
-declare module "ui/combat-ui/combat-ui-hex/combat-ui-hex.test" { }
-declare module "ui/combat-ui/combat-ui-hex/combat-ui-hex.testp" { }
-declare module "ui/combat-ui/combat-ui-planet/combat-ui-planet.test" { }
-declare module "ui/combat-ui/combat-ui-planet/combat-ui-planet.testp" { }
-declare module "ui/combat-ui/combat-ui-space/combat-ui-space.test" { }
-declare module "ui/combat-ui/combat-ui-space/combat-ui-space.testp" { }
-declare module "ui/div-ui/div-ui.test" { }
-declare module "ui/draft/draft-start-ui/draft-start-ui.test" { }
-declare module "ui/draft/draft-start-ui/draft-start-ui.testp" { }
-declare module "ui/draft/draft-start-ui/draft-start-window.test" { }
-declare module "ui/draft/draft-start-ui/draft-start-window.testp" { }
-declare module "ui/draft/draft-start-ui/scpt-draft-button-ui.test" { }
-declare module "ui/draft/draft-start-ui/scpt-draft-button-ui.testp" { }
-declare module "ui/draft/draft-start-ui/scpt-drafts.test" { }
-declare module "ui/draft/draft-state-ui/draft-state-ui.test" { }
-declare module "ui/draft/draft-state-ui/draft-state-ui.testp" { }
-declare module "ui/draft/faction-ui/faction-ui.test" { }
-declare module "ui/draft/faction-ui/faction-ui.testp" { }
-declare module "ui/draft/faction-ui/keleres-ui.test" { }
-declare module "ui/draft/faction-ui/keleres-ui.testp" { }
-declare module "ui/draft/seat-ui/seat-ui.test" { }
-declare module "ui/draft/seat-ui/seat-ui.testp" { }
-declare module "ui/draft/slice-ui/slice-ui.test" { }
-declare module "ui/draft/slice-ui/slice-ui.testp" { }
-declare module "ui/end-turn-button-ui/create-and-attach-end-turn-button-ui.test" { }
-declare module "ui/end-turn-button-ui/end-turn-button-ui.test" { }
-declare module "ui/glowing-token/glowing-token.test" { }
-declare module "ui/glowing-token/glowing-token.testp" { }
-declare module "ui/help-ui/help-ui.test" { }
-declare module "ui/help-ui/help-with-extras.test" { }
-declare module "ui/map-premade-ui/map-premade-ui.test" { }
-declare module "ui/map-premade-ui/map-premade-ui.testp" { }
-declare module "ui/map-tool-ui/map-tool-ui.test" { }
-declare module "ui/map-tool-ui/map-tool-ui.testp" { }
-declare module "ui/map-ui/map-ui.test" { }
-declare module "ui/map-ui/map-ui.testp" { }
-declare module "ui/panel/grid-ui-builder.test" { }
-declare module "ui/panel/grid-ui-builder.testp" { }
-declare module "ui/panel/horizontal-ui-builder.test" { }
-declare module "ui/panel/horizontal-ui-builder.testp" { }
-declare module "ui/panel/vertical-ui-builder.test" { }
-declare module "ui/panel/vertical-ui-builder.testp" { }
-declare module "ui/player-action-phase-time-ui/player-action-phase-time-ui.test" { }
-declare module "ui/player-action-phase-time-ui/player-action-phase-time-ui.testp" { }
-declare module "ui/start-game-ui/start-game-ui.test" { }
-declare module "ui/start-game-ui/start-game-ui.testp" { }
-declare module "ui/stats-ui/stats-ui.test" { }
-declare module "ui/strategy-card-ui/abstract-strategy-card-body/abstract-strategy-card-body.test" { }
-declare module "ui/strategy-card-ui/body-1-leadership/body-leadership.test" { }
-declare module "ui/strategy-card-ui/body-2-diplomacy/body-diplomacy.test" { }
-declare module "ui/strategy-card-ui/body-3-politics/body-politics.test" { }
-declare module "ui/strategy-card-ui/body-4-construction/body-construction.test" { }
-declare module "ui/strategy-card-ui/body-5-trade/body-trade.test" { }
-declare module "ui/strategy-card-ui/body-6-warfare/body-warfare.test" { }
-declare module "ui/strategy-card-ui/body-7-technology/body-technology.test" { }
-declare module "ui/strategy-card-ui/body-8-imperial/body-imperial.test" { }
-declare module "ui/strategy-card-ui/strategy-card-ui/strategy-card-ui.test" { }
-declare module "ui/strategy-card-ui/strategy-card-ui/strategy-card-ui.testp" { }
-declare module "ui/strategy-card-ui/strategy-card-ui/zoomed-strategy-card-ui.test" { }
-declare module "ui/strategy-card-ui/strategy-cards-ui/strategy-cards-ui.test" { }
-declare module "ui/streamer-tool-ui/streamer-tool-ui.test" { }
-declare module "ui/suggested-key-unbinds-ui/suggested-key-unbinds-ui.test" { }
-declare module "ui/suggested-settings-ui/suggested-settings-ui.test" { }
-declare module "ui/suggested-settings-ui/suggested-settings-ui.testp" { }
-declare module "ui/switcher-ui/switcher-ui.test" { }
-declare module "ui/turn-order-mini/turn-order-mini.test" { }
-declare module "ui/turn-order-ui/create-and-attach-turn-order-ui.test" { }
-declare module "ui/turn-order-ui/turn-order-entry.test" { }
-declare module "ui/turn-order-ui/turn-order-ui.test" { }
-declare module "ui/turn-order-ui/turn-order-ui.testp" { }
-declare module "ui/wrapped-clickable-ui/abstract-wrapped-clickable-ui.test" { }
-declare module "ui/wrapped-clickable-ui/wrapped-clickable-ui.test" { }
-declare module "ui/wrapped-clickable-ui/wrapped-clickable-ui.testp" { }
-declare module "ui/zoomable-ui/create-zoomed-card-ui.test" { }
-declare module "ui/zoomable-ui/zoomable-ui-fully-clickable.test" { }
-declare module "ui/zoomable-ui/zoomable-ui-fully-clickable.testp" { }
-declare module "ui/zoomable-ui/zoomable-ui.test" { }
-declare module "ui/zoomable-ui/zoomable-ui.testp" { }

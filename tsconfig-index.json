@@ -1,21 +1,17 @@
 {
   "compilerOptions": {
-    "checkJs": true,
-    "lib": ["ES2023", "DOM"],
+    "target": "es6",
     "module": "commonjs",
-    "strict": true,
-    "noUncheckedIndexedAccess": true,
-    "useUnknownInCatchVariables": false,
-    "resolveJsonModule": true,
-    "esModuleInterop": true,
-    "skipLibCheck": true,
-    "rootDir": "./src",
-    "baseUrl": "./src",
     "moduleResolution": "Node",
-    "target": "ES6",
+    "lib": ["ES2023", "DOM"],
+    "skipLibCheck": true,
+
+    "resolveJsonModule": true,
     "declaration": true,
     "emitDeclarationOnly": true,
+    "outDir": "dist",
     "outFile": "types/index.d.ts"
   },
-  "include": ["./src/**/*.ts", "./src/**/*.tsx"]
+  "include": ["./src/**/*.ts", "./src/**/*.tsx"],
+  "exclude": ["./src/**/*.test.ts", "./src/**/*.testp.ts"]
 }
