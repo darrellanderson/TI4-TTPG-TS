@@ -1,4 +1,4 @@
-import { IGlobal } from "ttpg-darrell";
+import { IGlobal, WindowParams } from "ttpg-darrell";
 import {
   AbstractWindow,
   CreateAbstractUIParams,
@@ -31,10 +31,14 @@ export class ToggleStats implements IGlobal {
       namespaceId,
       windowTitle
     );
-    abstractWindow.getMutableWindowParams().addToggleMenuItem = true;
-    abstractWindow.getMutableWindowParams().addToggleMenuTooltip = TI4.locale(
-      "tooltip.toggle-stats"
-    );
+    const params: WindowParams = abstractWindow.getMutableWindowParams();
+
+    params.addToggleMenuItem = true;
+    params.addToggleMenuTooltip = TI4.locale("tooltip.toggle-stats");
+    if (params.screen) {
+      params.screen.anchor.v = 1;
+      params.screen.pos.v = 0.95;
+    }
 
     abstractWindow.createWindow();
 

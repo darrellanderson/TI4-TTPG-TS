@@ -116,11 +116,11 @@ it("_clearAgendaDeckDescription", () => {
 
   const rightClickAgenda: RightClickAgenda = new RightClickAgenda();
   rightClickAgenda._clearAgendaDeckDescription();
-  expect(agendaDeck.getDescription()).toEqual("");
+  expect(agendaDeck.getName()).toEqual("");
 });
 
 it("_addAgendaDeckDescription", () => {
-  const agendaDeck: Card = new MockCard({ description: "old desc" });
+  const agendaDeck: Card = new MockCard({ name: "old desc" });
   new MockGameObject({
     snapPoints: [
       new MockSnapPoint({
@@ -129,9 +129,9 @@ it("_addAgendaDeckDescription", () => {
       }),
     ],
   });
-  expect(agendaDeck.getDescription()).toEqual("old desc");
+  expect(agendaDeck.getName()).toEqual("old desc");
 
   const rightClickAgenda: RightClickAgenda = new RightClickAgenda();
   rightClickAgenda._addAgendaDeckDescription("new desc");
-  expect(agendaDeck.getDescription()).toEqual("old desc\nnew desc");
+  expect(agendaDeck.getName()).toEqual("old desc\nnew desc");
 });

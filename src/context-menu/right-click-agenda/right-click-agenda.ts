@@ -38,10 +38,10 @@ export class RightClickAgenda implements IGlobal {
   ) => {
     if (identifier === ACTION_PLACE_TOP) {
       this._place(true, object);
-      this._addAgendaDeckDescription(ACTION_PLACE_TOP);
+      this._addAgendaDeckDescription("top");
     } else if (identifier === ACTION_PLACE_BOTTOM) {
       this._place(false, object);
-      this._addAgendaDeckDescription(ACTION_PLACE_BOTTOM);
+      this._addAgendaDeckDescription("bottom");
     }
   };
 
@@ -70,15 +70,19 @@ export class RightClickAgenda implements IGlobal {
   _clearAgendaDeckDescription(): void {
     const deck: Card | undefined = this._getAgendaDeck();
     if (deck) {
-      deck.setDescription("");
+      deck.setName(""); // description is only visible when face up, use name
     }
   }
 
   _addAgendaDeckDescription(value: string): void {
     const deck: Card | undefined = this._getAgendaDeck();
+    console.log("addAgendaDeckDescription", value);
     if (deck) {
-      const oldDesc: string = deck.getDescription();
-      deck.setDescription(oldDesc + "\n" + value);
+      console.log("found deck");
+      const desc: string = [...deck.getName().split("\n"), value]
+        .filter((x) => x.length > 0)
+        .join("\n");
+      deck.setName(desc); // description is only visible when face up, use name
     }
   }
 
@@ -93,10 +97,7 @@ export class RightClickAgenda implements IGlobal {
   }
 
   _place(isTop: boolean, card: Card): void {
-    const deckSnapPointTag: string = "deck-agenda";
-    const deck: Card | undefined =
-      this._find.findDeckOrDiscard(deckSnapPointTag);
-
+    const deck: Card | undefined = this._getAgendaDeck();
     if (deck) {
       const offset: number = 0;
       const animate: boolean = true;
