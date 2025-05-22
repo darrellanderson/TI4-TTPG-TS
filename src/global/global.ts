@@ -19,7 +19,6 @@ import {
   WhisperReporter,
 } from "ttpg-darrell";
 
-import { addObjectTemplatesToMockWorld } from "../nsid/nsid-to-template-id.test";
 import { ActivateSystem } from "../context-menu/system/activate-system/activate-system";
 import { AgendaActivityMaybeResume } from "../lib/agenda-lib/agenda-activity-start/agenda-activity-start";
 import { AllBorders } from "../lib/border-lib/all-borders/all-borders";
@@ -78,7 +77,6 @@ import { RightClickScorePublic } from "../context-menu/right-click-score/right-c
 import { RightClickSpecOps2 } from "../context-menu/cards/infantry-2/right-click-spec-ops-2";
 import { RightClickStellarConverter } from "../context-menu/cards/stellar-converter/right-click-stellar-converter";
 import { RSwapSplitCombine } from "./r-swap-split-combine";
-import { SetupPlayerSlotColors } from "../setup/setup-player-slot-colors/setup-player-slot-colors";
 import { ShuffleDecks } from "./shuffle-decks";
 import { SlashCommandRegistry } from "../lib/slash-command-lib/slash-command-registry/slash-command-registry";
 import { StartGame } from "../lib/start-game-lib/start-game";
@@ -289,13 +287,7 @@ export function resetGlobalThisTI4(): TI4Class {
 }
 
 // Unittests reset the globalThis.TI4 object before each test.
-if (GameWorld.getExecutionReason() === "unittest") {
-  beforeEach(() => {
-    addObjectTemplatesToMockWorld(); // does a MockWorld._reset!
-    resetGlobalThisTI4();
-    new SetupPlayerSlotColors().setup(); // normally part of table state creation
-  });
-} else {
+if (GameWorld.getExecutionReason() !== "unittest") {
   resetGlobalThisTI4();
   TI4.config.onConfigChanged.add(() => {
     BugSplatRemoteReporter.setEnabled(TI4.config.reportErrors);

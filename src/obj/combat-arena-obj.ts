@@ -136,7 +136,7 @@ export class CombatArenaObj {
   }
 }
 
-export function delayedCreateBuildArea(
+export function delayedCreateCombatArena(
   obj: GameObject,
   executionReason: string
 ): void {
@@ -148,4 +148,4 @@ export function delayedCreateBuildArea(
     });
   }
 }
-delayedCreateBuildArea(refObject, GameWorld.getExecutionReason());
+delayedCreateCombatArena(refObject, GameWorld.getExecutionReason());

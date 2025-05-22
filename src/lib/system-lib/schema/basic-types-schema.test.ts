@@ -3,9 +3,9 @@ import {
   HyperlaneSchema,
   LocalPositionSchema,
   NsidNameSchema,
+  PlanetTechSchema,
   SourceAndPackageIdSchema,
   SystemClassSchema,
-  TechSchema,
   TraitSchema,
   WormholeSchema,
   WormholeWithPositionSchema,
@@ -49,6 +49,12 @@ it("NsidNameSchema", () => {
   }).toThrow();
 });
 
+it("PlanetTechSchema", () => {
+  const data = "blue";
+  const parsed = PlanetTechSchema.parse(data);
+  expect(parsed).toEqual(data);
+});
+
 it("SourceAndPackageIdSchema", () => {
   const data = {
     source: "my-source",
@@ -61,12 +67,6 @@ it("SourceAndPackageIdSchema", () => {
 it("SystemClassSchema", () => {
   const data = "map";
   const parsed = SystemClassSchema.parse(data);
-  expect(parsed).toEqual(data);
-});
-
-it("TechSchema", () => {
-  const data = "blue";
-  const parsed = TechSchema.parse(data);
   expect(parsed).toEqual(data);
 });
 

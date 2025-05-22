@@ -30,7 +30,6 @@ const BOT = {
  */
 export class PlanetCardLayout {
   public layout(planet: Planet) {
-    console.log("PlanetCardLayout.layout", planet.getName());
     const card: Card | undefined = this._getCard(planet);
     if (card) {
       this._removeUIs(card);
