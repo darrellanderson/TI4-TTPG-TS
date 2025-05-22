@@ -25,9 +25,9 @@ export class ReportRemaining implements IGlobal {
     }
   };
 
+  // Do NOT report remaining for action, agenda decks.
+  // That can let players deduce cards in players' hands or otherwise hidden.
   private readonly _prefixes: Array<string> = [
-    "card.action",
-    "card.agenda",
     "card.exploration",
     "card.relic",
   ];
