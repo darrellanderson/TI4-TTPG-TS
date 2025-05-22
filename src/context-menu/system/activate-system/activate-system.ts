@@ -38,7 +38,9 @@ export class ActivateSystem implements IGlobal {
   _maybeAddContextMenuItem(obj: GameObject) {
     const nsid: string = NSID.get(obj);
     if (nsid.startsWith("tile.system:")) {
+      obj.removeCustomAction(this._actionName);
       obj.addCustomAction(this._actionName);
+      obj.onCustomAction.remove(this._customActionHandler);
       obj.onCustomAction.add(this._customActionHandler);
     }
   }
