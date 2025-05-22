@@ -1,6 +1,3 @@
-declare function postToAWS(json: string): void;
-declare module "_test/rotate-on-pickup" { }
-declare module "_test/ui-presentation-bug" { }
 declare module "context-menu/cards/iihq-modernization/right-click-iihq-modernization" {
     import { Card } from "@tabletop-playground/api";
     import { AbstractRightClickCard } from "ttpg-darrell";
@@ -201,8 +198,8 @@ declare module "lib/system-lib/schema/basic-types-schema" {
     export type SourceAndPackageIdSchemaType = z.infer<typeof SourceAndPackageIdSchema>;
     export const SystemClassSchema: z.ZodReadonly<z.ZodEnum<["map", "off-map", "alt"]>>;
     export type SystemClassSchemaType = z.infer<typeof SystemClassSchema>;
-    export const TechSchema: z.ZodReadonly<z.ZodEnum<["blue", "green", "red", "yellow"]>>;
-    export type TechSchemaType = z.infer<typeof TechSchema>;
+    export const PlanetTechSchema: z.ZodReadonly<z.ZodEnum<["blue", "green", "red", "yellow"]>>;
+    export type PlanetTechSchemaType = z.infer<typeof PlanetTechSchema>;
     export const TraitSchema: z.ZodReadonly<z.ZodEnum<["cultural", "hazardous", "industrial"]>>;
     export type TraitSchemaType = z.infer<typeof TraitSchema>;
     export const WormholeSchema: z.ZodReadonly<z.ZodEnum<["alpha", "beta", "gamma", "delta", "epsilon"]>>;
@@ -680,9 +677,25 @@ declare module "lib/system-lib/planet-attachment/planet-attachment-layout" {
         layout(planet: Planet): void;
     }
 }
+declare module "lib/system-lib/planet-attachment/planet-card-layout" {
+    import { Card } from "@tabletop-playground/api";
+    import { Planet } from "lib/system-lib/planet/planet";
+    import { PlanetAttachment } from "lib/system-lib/planet-attachment/planet-attachment";
+    /**
+     * Add attachment icons to planet cards.
+     */
+    export class PlanetCardLayout {
+        layout(planet: Planet): void;
+        _getCard(planet: Planet): Card | undefined;
+        _removeUIs(card: Card): void;
+        _addImageCardFace(card: Card, attachment: PlanetAttachment, index: number): void;
+        _addImageCardBack(card: Card, attachment: PlanetAttachment, index: number): void;
+    }
+}
 declare module "lib/system-lib/planet-attachment/planet-attachment" {
     import { GameObject } from "@tabletop-playground/api";
     import { PlanetAttachmentSchemaType } from "lib/system-lib/schema/planet-attachment-schema";
+    import { Planet } from "lib/system-lib/planet/planet";
     import { SourceAndPackageIdSchemaType } from "lib/system-lib/schema/basic-types-schema";
     /**
      * A planet attachment is a token game object placed on a planet to add
@@ -728,6 +741,7 @@ declare module "lib/system-lib/planet-attachment/planet-attachment" {
          */
         detach(): boolean;
         doLayout(): void;
+        doLayoutCard(planet: Planet): void;
         /**
          * Get the token image file.
          *
@@ -7905,6 +7919,18 @@ declare module "lib/command-token-lib/add-command-tokens/add-command-tokens" {
         addCommandTokens(playerSlot: number, count: number): boolean;
     }
 }
+declare module "lib/config/config.test" { }
+declare module "lib/faction-lib/unpack/abstract-unpack/abstract-unpack.testp" {
+    import { AbstractUnpack } from "lib/faction-lib/unpack/abstract-unpack/abstract-unpack";
+    import { Faction } from "lib/faction-lib/faction/faction";
+    export const FACTION: Faction;
+    export const PLAYER_SLOT: number;
+    export class AbstractUnpackTestP {
+        constructor(unpack: AbstractUnpack);
+    }
+}
+declare module "lib/game-data-lib/game-data-export/game-data-export.test" { }
+declare module "lib/player-lib/player-action-phase-time/player-action-phase-time.test" { }
 declare module "lib/ready-lib/ready-lib" {
     export class ReadyLib {
         private readonly _cardUtil;
@@ -8129,6 +8155,20 @@ declare module "lib/system-lib/planet/refresh-all-planets" {
         refresh(alsoRefreshTechAgentRelic: boolean): void;
     }
 }
+declare module "lib/system-lib/system-adjacency/draw-hyperlanes.testp" {
+    import { GameObject } from "@tabletop-playground/api";
+    import { IGlobal } from "ttpg-darrell";
+    /**
+     * Draw hyperlane links, for verification and debugging.
+     */
+    export class DrawHyperlanes implements IGlobal {
+        private readonly _onObjectCreatedHandler;
+        private readonly _onMovementStoppedHandler;
+        init(): void;
+        _maybeProcessObject(obj: GameObject): void;
+        _update(obj: GameObject): void;
+    }
+}
 declare module "lib/system-lib/system/system-labels" {
     import { DrawingLine } from "@tabletop-playground/api";
     import { System } from "lib/system-lib/system/system";
@@ -8144,6 +8184,32 @@ declare module "lib/system-lib/system/system-labels" {
         attach(): this;
         detach(): this;
     }
+}
+declare module "lib/unit-lib/data/unit-modifiers/abstract.test" {
+    /**
+     * Utility functions to simplify unit modifier tests.
+     * Use the ".test.ts" naming to prevent including in the mod build.
+     */
+    import { Vector } from "@tabletop-playground/api";
+    import { UnitType } from "lib/unit-lib/schema/unit-attrs-schema";
+    export const SELF: number;
+    export const OPPONENT: number;
+    export const SELF_POS: Vector;
+    export const OPPONENT_POS: Vector;
+    export const ANY_POS: Vector;
+    export function placeGameObjects(params: {
+        systemNsid?: string;
+        self?: Array<string>;
+        selfActive?: Array<string>;
+        selfUnits?: Map<UnitType, number>;
+        selfUnitsOffPlanet?: Map<UnitType, number>;
+        selfUnitsAdj?: Map<UnitType, number>;
+        opponent?: Array<string>;
+        opponentUnits?: Map<UnitType, number>;
+        opponentUnitsOffPlanet?: Map<UnitType, number>;
+        opponentUnitsAdj?: Map<UnitType, number>;
+        any?: Array<string>;
+    }): void;
 }
 declare module "obj/agenda-laws-mat" {
     import { GameObject, Zone } from "@tabletop-playground/api";
@@ -8187,8 +8253,6 @@ declare module "obj/build-area" {
     }
     export function delayedCreateBuildArea(obj: GameObject, executionReason: string): void;
 }
-declare module "obj/card-holder-player-scoring" { }
-declare module "obj/card-holder-player" { }
 declare module "obj/combat-arena-obj" {
     import { GameObject } from "@tabletop-playground/api";
     import { UnitPlastic } from "lib/unit-lib/unit-plastic/unit-plastic";
@@ -8203,7 +8267,7 @@ declare module "obj/combat-arena-obj" {
         warpIn(): void;
         warpOut(): void;
     }
-    export function delayedCreateBuildArea(obj: GameObject, executionReason: string): void;
+    export function delayedCreateCombatArena(obj: GameObject, executionReason: string): void;
 }
 declare module "obj/custodians-token" {
     import { GameObject } from "@tabletop-playground/api";
@@ -8217,9 +8281,6 @@ declare module "obj/custodians-token" {
     }
     export function createFromObject(obj: GameObject, executionReason: string): void;
 }
-declare module "obj/deleted-items-container" { }
-declare module "obj/faction-extras-container" { }
-declare module "obj/icon-container-obj" { }
 declare module "obj/planet-mat" {
     import { GameObject } from "@tabletop-playground/api";
     export class PlanetMat {
@@ -8228,8 +8289,6 @@ declare module "obj/planet-mat" {
         constructor(obj: GameObject);
     }
 }
-declare module "obj/quick-roller-obj" { }
-declare module "obj/recycle-container-obj" { }
 declare module "obj/slice-build-helper" {
     import { GameObject } from "@tabletop-playground/api";
     import { HexType } from "ttpg-darrell";
@@ -8244,9 +8303,6 @@ declare module "obj/slice-build-helper" {
         _getTransitiveAdjacentSystems(): Array<System>;
     }
 }
-declare module "obj/status-pad-obj" { }
-declare module "obj/strategy-card-mat" { }
-declare module "obj/timer-obj" { }
 declare module "setup/layout/layout-player-area/layout-player-areas" {
     import { LayoutObjects } from "ttpg-darrell";
     export class LayoutPlayerAreas {
@@ -8254,6 +8310,12 @@ declare module "setup/layout/layout-player-area/layout-player-areas" {
         constructor(playerCount: number);
         getLayout(): LayoutObjects;
     }
+}
+declare module "setup/layout/layout-scoring-area/layout-objectives.test" {
+    export function setupTestObjectivesSnapPoints(): void;
+}
+declare module "setup/layout/layout-table-decks/layout-table-decks.test" {
+    export function setupTestTableDeckSnapPoints(): void;
 }
 declare module "ui/button-ui/long-button-ui" {
     import { Button } from "@tabletop-playground/api";
@@ -8290,3 +8352,505 @@ declare module "ui/combat-ui/combat-ui-all/combat-ui-all" {
         destroy(): void;
     }
 }
+declare module "index" {
+    export * from "context-menu/cards/iihq-modernization/right-click-iihq-modernization";
+    export * from "context-menu/cards/infantry-2/abstract-infantry-2";
+    export * from "context-menu/cards/infantry-2/right-click-infantry-2";
+    export * from "context-menu/cards/infantry-2/right-click-letani-warrior-2";
+    export * from "context-menu/cards/infantry-2/right-click-spec-ops-2";
+    export * from "context-menu/cards/maban-omega/abstract-maban-omega";
+    export * from "context-menu/cards/maban-omega/right-click-maban-omega-alliance";
+    export * from "context-menu/cards/maban-omega/right-click-maban-omega";
+    export * from "context-menu/cards/mageon-implants/right-click-mageon-implants";
+    export * from "context-menu/cards/nano-forge/right-click-nano-forge";
+    export * from "context-menu/cards/so-ata/abstract-so-ata";
+    export * from "context-menu/cards/stellar-converter/right-click-stellar-converter";
+    export * from "context-menu/display-pds-adjacency/display-pds-adjacency";
+    export * from "context-menu/heroes/hero-dimensional-anchor/hero-dimensional-anchor";
+    export * from "context-menu/heroes/hero-helio-command-array/hero-helio-command-array";
+    export * from "context-menu/heroes/hero-multiverse-shift/hero-multiverse-shift";
+    export * from "context-menu/report-remaining/report-remaining";
+    export * from "context-menu/right-click-agenda/right-click-agenda";
+    export * from "context-menu/right-click-purge/right-click-purge";
+    export * from "context-menu/right-click-rider/right-click-rider";
+    export * from "context-menu/right-click-rift/right-click-rift";
+    export * from "context-menu/right-click-score/right-click-score-private";
+    export * from "context-menu/right-click-score/right-click-score-public";
+    export * from "context-menu/system/activate-system/activate-system";
+    export * from "context-menu/system/control-token-system/control-token-system";
+    export * from "context-menu/system/diplomacy-system/diplomacy-system";
+    export * from "context-menu/system/explore-system/right-click-explore";
+    export * from "context-menu/toggle-action-phase-times/toggle-action-phase-times";
+    export * from "context-menu/toggle-all-players-tech/toggle-all-players-tech";
+    export * from "context-menu/toggle-borders/toggle-borders";
+    export * from "context-menu/toggle-combat-window/toggle-combat-window";
+    export * from "context-menu/toggle-help/toggle-help";
+    export * from "context-menu/toggle-map-tool/toggle-map-tool";
+    export * from "context-menu/toggle-stats/toggle-stats";
+    export * from "context-menu/toggle-strat-cards/toggle-strat-cards";
+    export * from "context-menu/toggle-streamer-tool/toggle-streamer-tool";
+    export * from "context-menu/toggle-tech-chooser/toggle-tech-chooser";
+    export * from "context-menu/unpack-faction/unpack-faction";
+    export * from "event/on-agenda-card/on-agenda-card";
+    export * from "event/on-agenda-state-created/on-agenda-state-created";
+    export * from "event/on-chat-message/on-chat-message";
+    export * from "event/on-combat-clicked/on-combat-clicked";
+    export * from "event/on-combat-result/on-combat-result";
+    export * from "event/on-game-end/on-game-end";
+    export * from "event/on-object-fell-through-table/on-object-fell-through-table";
+    export * from "event/on-player-change-color-request/on-player-change-color-request";
+    export * from "event/on-player-changed-color/on-player-changed-color";
+    export * from "event/on-slice-draft-request/on-slice-draft-request";
+    export * from "event/on-strategy-card-played/on-strategy-card-played";
+    export * from "event/on-system-activated/on-system-activated";
+    export * from "event/on-turn-state-changed/on-turn-state-changed";
+    export * from "event/on-whisper/on-whisper";
+    export * from "global/global-events";
+    export * from "global/global";
+    export * from "global/r-swap-split-combine";
+    export * from "global/shuffle-decks";
+    export * from "lib/action-card-lib/deal-action-cards/deal-action-cards";
+    export * from "lib/agenda-lib/agenda-activity-start/agenda-activity-start";
+    export * from "lib/agenda-lib/agenda-available-votes/agenda-available-votes";
+    export * from "lib/agenda-lib/agenda-outcomes/agenda-outcomes";
+    export * from "lib/agenda-lib/agenda-state/advance-no-whens-afters";
+    export * from "lib/agenda-lib/agenda-state/agenda-state";
+    export * from "lib/agenda-lib/agenda-state/report-final-agenda-state";
+    export * from "lib/agenda-lib/agenda-turn-order/agenda-turn-order";
+    export * from "lib/agenda-lib/reset-planet-cards/reset-planet-cards";
+    export * from "lib/border-lib/all-borders/all-borders";
+    export * from "lib/border-lib/planet-borders/planet-borders";
+    export * from "lib/border-lib/space-borders/space-borders";
+    export * from "lib/border-lib/space-planet-ownership/space-planet-ownership";
+    export * from "lib/build-lib/build-consume";
+    export * from "lib/build-lib/build-produce";
+    export * from "lib/combat-lib/combat-roll-summary/combat-roll-summary";
+    export * from "lib/combat-lib/combat-roll/combat-roll";
+    export * from "lib/command-token-lib/add-command-tokens/add-command-tokens";
+    export * from "lib/command-token-lib/command-token-counter/command-token-counter";
+    export * from "lib/command-token-lib/report-command-token-put-get/report-command-token-put-get";
+    export * from "lib/command-token-lib/return-command-tokens/return-command-tokens";
+    export * from "lib/config/config.test";
+    export * from "lib/config/config";
+    export * from "lib/control-token-lib/place-control-token-on-card";
+    export * from "lib/control-token-lib/spawn-control-token";
+    export * from "lib/draft-lib/draft-activity-finish/draft-activity-finish";
+    export * from "lib/draft-lib/draft-activity-start/draft-activity-start-params";
+    export * from "lib/draft-lib/draft-activity-start/draft-activity-start";
+    export * from "lib/draft-lib/draft-state/draft-state";
+    export * from "lib/draft-lib/draft-to-map-string/draft-to-map-string";
+    export * from "lib/draft-lib/drafts/bag-draft";
+    export * from "lib/draft-lib/drafts/idraft";
+    export * from "lib/draft-lib/drafts/milty";
+    export * from "lib/draft-lib/drafts/nucleus";
+    export * from "lib/draft-lib/drafts/wekker";
+    export * from "lib/draft-lib/generate-factions/generate-factions";
+    export * from "lib/draft-lib/generate-slices/generate-slices";
+    export * from "lib/draft-lib/parse/parse-base-map";
+    export * from "lib/draft-lib/parse/parse-factions";
+    export * from "lib/draft-lib/parse/parse-labels";
+    export * from "lib/draft-lib/parse/parse-slices";
+    export * from "lib/draft-lib/resolve-conflicts/resolve-conflicts-keleres";
+    export * from "lib/draft-lib/scpt/abstract-scpt/abstract-scpt";
+    export * from "lib/draft-lib/scpt/abstract-scpt/scpt-draft-params";
+    export * from "lib/draft-lib/scpt/scpt-2021/scpt-2021";
+    export * from "lib/draft-lib/scpt/scpt-2022/scpt-2022";
+    export * from "lib/draft-lib/scpt/scpt-2023/scpt-2023";
+    export * from "lib/draft-lib/scpt/scpt-2024/scpt-2024";
+    export * from "lib/draft-lib/scpt/scpt-2025/scpt-2025";
+    export * from "lib/faction-lib/data/faction-nsid-rewrite.data";
+    export * from "lib/faction-lib/data/faction.data";
+    export * from "lib/faction-lib/faction/faction";
+    export * from "lib/faction-lib/registry/faction-registry";
+    export * from "lib/faction-lib/schema/faction-schema";
+    export * from "lib/faction-lib/unpack/abstract-unpack/abstract-unpack.testp";
+    export * from "lib/faction-lib/unpack/abstract-unpack/abstract-unpack";
+    export * from "lib/faction-lib/unpack/unpack-all/unpack-all";
+    export * from "lib/faction-lib/unpack/unpack-command-tokens/unpack-command-tokens";
+    export * from "lib/faction-lib/unpack/unpack-control-tokens/unpack-control-tokens";
+    export * from "lib/faction-lib/unpack/unpack-faction-alliance/unpack-faction-alliance";
+    export * from "lib/faction-lib/unpack/unpack-faction-extras/unpack-faction-extras";
+    export * from "lib/faction-lib/unpack/unpack-faction-promissory/unpack-faction-promissory";
+    export * from "lib/faction-lib/unpack/unpack-faction-sheet/unpack-faction-sheet";
+    export * from "lib/faction-lib/unpack/unpack-faction-tech/unpack-faction-tech";
+    export * from "lib/faction-lib/unpack/unpack-home-planet-cards/unpack-home-planet-cards";
+    export * from "lib/faction-lib/unpack/unpack-home-system/unpack-home-system";
+    export * from "lib/faction-lib/unpack/unpack-leaders/unpack-leaders";
+    export * from "lib/faction-lib/unpack/unpack-starting-tech/unpack-starting-tech";
+    export * from "lib/faction-lib/unpack/unpack-starting-units/unpack-starting-units";
+    export * from "lib/game-data-lib/game-data-export/game-data-export.test";
+    export * from "lib/game-data-lib/game-data-export/game-data-export";
+    export * from "lib/game-data-lib/game-data-updator/game-data-updator";
+    export * from "lib/game-data-lib/game-data-updators/game-data-updators";
+    export * from "lib/game-data-lib/game-data/game-data";
+    export * from "lib/game-data-lib/i-game-data-updator/i-game-data-updator";
+    export * from "lib/game-data-lib/last-game-data/last-game-data";
+    export * from "lib/game-data-lib/objective-progress/goal-counter";
+    export * from "lib/game-data-lib/objective-progress/goal-progress";
+    export * from "lib/game-data-lib/objective-progress/goal-reporter";
+    export * from "lib/game-data-lib/objective-progress/goal.data";
+    export * from "lib/game-data-lib/updators/updator-active-system/updator-active-system-type";
+    export * from "lib/game-data-lib/updators/updator-active-system/updator-active-system";
+    export * from "lib/game-data-lib/updators/updator-config/updator-config-type";
+    export * from "lib/game-data-lib/updators/updator-config/updator-config";
+    export * from "lib/game-data-lib/updators/updator-hex-summary/hex-summary-codes";
+    export * from "lib/game-data-lib/updators/updator-hex-summary/sort-entity-type";
+    export * from "lib/game-data-lib/updators/updator-hex-summary/updator-hex-summary";
+    export * from "lib/game-data-lib/updators/updator-history/updator-history";
+    export * from "lib/game-data-lib/updators/updator-laws/updator-laws";
+    export * from "lib/game-data-lib/updators/updator-map-string/updator-map-string";
+    export * from "lib/game-data-lib/updators/updator-objectives-progress/updator-objectives-progress-type";
+    export * from "lib/game-data-lib/updators/updator-objectives-progress/updator-objectives-progress";
+    export * from "lib/game-data-lib/updators/updator-objectives/updator-objectives-type";
+    export * from "lib/game-data-lib/updators/updator-objectives/updator-objectives";
+    export * from "lib/game-data-lib/updators/updator-player-active/updator-player-active";
+    export * from "lib/game-data-lib/updators/updator-player-color/updator-player-color";
+    export * from "lib/game-data-lib/updators/updator-player-command-tokens/updator-player-command-tokens-type";
+    export * from "lib/game-data-lib/updators/updator-player-command-tokens/updator-player-command-tokens";
+    export * from "lib/game-data-lib/updators/updator-player-custodians-points/updator-player-custodians-points";
+    export * from "lib/game-data-lib/updators/updator-player-faction/updator-player-faction";
+    export * from "lib/game-data-lib/updators/updator-player-hand-summary/updator-player-hand-summary-type";
+    export * from "lib/game-data-lib/updators/updator-player-hand-summary/updator-player-hand-summary";
+    export * from "lib/game-data-lib/updators/updator-player-leaders/updator-player-leaders-type";
+    export * from "lib/game-data-lib/updators/updator-player-leaders/updator-player-leaders";
+    export * from "lib/game-data-lib/updators/updator-player-name/updator-player-name";
+    export * from "lib/game-data-lib/updators/updator-player-planet-totals/updator-player-planet-totals-type";
+    export * from "lib/game-data-lib/updators/updator-player-planet-totals/updator-player-planet-totals";
+    export * from "lib/game-data-lib/updators/updator-player-score/updator-player-score";
+    export * from "lib/game-data-lib/updators/updator-player-strategy-cards/updator-player-strategy-cards";
+    export * from "lib/game-data-lib/updators/updator-player-tech/updator-player-tech";
+    export * from "lib/game-data-lib/updators/updator-player-tradegoods/updator-player-tradegoods";
+    export * from "lib/game-data-lib/updators/updator-player-turn-order/updator-player-turn-order";
+    export * from "lib/game-data-lib/updators/updator-round/updator-round";
+    export * from "lib/game-data-lib/updators/updator-scoreboard/updator-scoreboard";
+    export * from "lib/game-data-lib/updators/updator-setup-timestamp/updator-setup-timestamp";
+    export * from "lib/game-data-lib/updators/updator-speaker/updator-speaker";
+    export * from "lib/game-data-lib/updators/updator-timer/updator-timer-type";
+    export * from "lib/game-data-lib/updators/updator-timer/updator-timer";
+    export * from "lib/game-data-lib/updators/updator-timestamp/updator-timestamp";
+    export * from "lib/game-data-lib/updators/updator-turn/udpator-turn";
+    export * from "lib/map-string-lib/data/premade-map-type";
+    export * from "lib/map-string-lib/data/premade-maps-2p.data";
+    export * from "lib/map-string-lib/data/premade-maps-3p.data";
+    export * from "lib/map-string-lib/data/premade-maps-4p.data";
+    export * from "lib/map-string-lib/data/premade-maps-5p.data";
+    export * from "lib/map-string-lib/data/premade-maps-6p.data";
+    export * from "lib/map-string-lib/data/premade-maps-7p.data";
+    export * from "lib/map-string-lib/data/premade-maps-8p.data";
+    export * from "lib/map-string-lib/map-home-system-locations/map-home-system-locations";
+    export * from "lib/map-string-lib/map-place/map-place-frontier-tokens";
+    export * from "lib/map-string-lib/map-place/map-place-planet-cards";
+    export * from "lib/map-string-lib/map-remove/map-remove-all-non-home-systems";
+    export * from "lib/map-string-lib/map-remove/map-remove-frontier-tokens";
+    export * from "lib/map-string-lib/map-remove/map-remove-planet-cards";
+    export * from "lib/map-string-lib/map-string/map-string-format";
+    export * from "lib/map-string-lib/map-string/map-string-hex";
+    export * from "lib/map-string-lib/map-string/map-string-hyperlanes";
+    export * from "lib/map-string-lib/map-string/map-string-load";
+    export * from "lib/map-string-lib/map-string/map-string-parser";
+    export * from "lib/map-string-lib/map-string/map-string-save";
+    export * from "lib/numpad-key-lib/numpad-key-all/numpad-key-all";
+    export * from "lib/numpad-key-lib/numpad-key-look-active-system/numpad-key-look-active-system";
+    export * from "lib/numpad-key-lib/numpad-key-look-map/numpad-key-look-map";
+    export * from "lib/numpad-key-lib/numpad-key-look-my-seat/numpad-key-look-my-seat";
+    export * from "lib/numpad-key-lib/numpad-key-look-scoring/numpad-key-look-scoring";
+    export * from "lib/numpad-key-lib/numpad-key-look-seat/numpad-key-look-seat";
+    export * from "lib/numpad-key-lib/numpad-key-recycle/numpad-key-recycle";
+    export * from "lib/numpad-key-lib/numpad-key-spawn/numpad-key-spawn";
+    export * from "lib/player-lib/change-color/change-color";
+    export * from "lib/player-lib/player-action-phase-time/player-action-phase-time.test";
+    export * from "lib/player-lib/player-action-phase-time/player-action-phase-time";
+    export * from "lib/player-lib/player-color/player-color";
+    export * from "lib/player-lib/player-name/player-name";
+    export * from "lib/player-lib/player-seats/player-seats";
+    export * from "lib/ready-lib/ready-lib";
+    export * from "lib/recycle-lib/handlers/card/action/recycle-card-action";
+    export * from "lib/recycle-lib/handlers/card/agenda/recycle-card-agenda";
+    export * from "lib/recycle-lib/handlers/card/alliance/recycle-card-alliance";
+    export * from "lib/recycle-lib/handlers/card/exploration/cultural/recycle-card-exploration-cultural";
+    export * from "lib/recycle-lib/handlers/card/exploration/frontier/recycle-card-exploration-frontier";
+    export * from "lib/recycle-lib/handlers/card/exploration/hazardous/recycle-card-exploration-hazardous";
+    export * from "lib/recycle-lib/handlers/card/exploration/industrial/recycle-card-exploration-industrial";
+    export * from "lib/recycle-lib/handlers/card/faction-reference/recycle-card-faction-reference";
+    export * from "lib/recycle-lib/handlers/card/leader/recycle-card-leader";
+    export * from "lib/recycle-lib/handlers/card/legendary-planet/recycle-card-legendary-planet";
+    export * from "lib/recycle-lib/handlers/card/objective/stage-1/recycle-card-objective-stage-1";
+    export * from "lib/recycle-lib/handlers/card/objective/stage-2/recycle-card-objective-stage-2";
+    export * from "lib/recycle-lib/handlers/card/planet/recycle-card-planet";
+    export * from "lib/recycle-lib/handlers/card/promissory/recycle-card-promissory";
+    export * from "lib/recycle-lib/handlers/card/relic/recycle-card-relic";
+    export * from "lib/recycle-lib/handlers/card/secret/recycle-card-secret";
+    export * from "lib/recycle-lib/handlers/card/technology/recycle-card-tech";
+    export * from "lib/recycle-lib/handlers/strategy-card/recycle-strategy-card";
+    export * from "lib/recycle-lib/handlers/system-tile/recycle-system-tile";
+    export * from "lib/recycle-lib/handlers/token/recycle-token-attachment/recycle-token-attachment";
+    export * from "lib/recycle-lib/handlers/token/recycle-token-command/recycle-token-command";
+    export * from "lib/recycle-lib/handlers/token/recycle-token-control/recycle-token-control";
+    export * from "lib/recycle-lib/handlers/token/recycle-token-fighter/recycle-token-fighter";
+    export * from "lib/recycle-lib/handlers/token/recycle-token-frontier/recycle-token-frontier";
+    export * from "lib/recycle-lib/handlers/token/recycle-token-infantry/recycle-token-infantry";
+    export * from "lib/recycle-lib/handlers/token/recycle-token-tradegood/recycle-token-tradegood";
+    export * from "lib/recycle-lib/handlers/unit/recycle-unit";
+    export * from "lib/recycle-lib/recycle-container/recycle-container";
+    export * from "lib/remove-lib/data/remove.data";
+    export * from "lib/remove-lib/registry/remove-registry";
+    export * from "lib/remove-lib/remove-by-nsid-or-source/remove-by-nsid-or-source";
+    export * from "lib/score-lib/advance-score/advance-score";
+    export * from "lib/score-lib/move-card-to-player-scored/move-card-to-player-scored";
+    export * from "lib/score-lib/scoreboard/scoreboard";
+    export * from "lib/slash-command-lib/data/commands/slash-toggle-units/slash-toggle-units";
+    export * from "lib/slash-command-lib/data/slash-command.data";
+    export * from "lib/slash-command-lib/slash-command-registry/slash-command-registry";
+    export * from "lib/start-game-lib/start-game-window";
+    export * from "lib/start-game-lib/start-game";
+    export * from "lib/strategy-card-lib/initiative-order/initiative-order";
+    export * from "lib/strategy-card-lib/place-tgs-unpicked/place-tgs-unpicked";
+    export * from "lib/strategy-card-lib/return-strategy-card/return-strategy-card";
+    export * from "lib/strategy-card-lib/strategy-cards-state/strategy-cards-state";
+    export * from "lib/streamer-lib/auto-streamer-camera/auto-streamer-camera";
+    export * from "lib/streamer-lib/hide-mouse-cursor/hide-mouse-cursor";
+    export * from "lib/streamer-lib/use-streamer-buddy/use-streamer-buddy";
+    export * from "lib/streamer-lib/whisper-spy/whisper-spy";
+    export * from "lib/system-lib/data/planet-attachment.data";
+    export * from "lib/system-lib/data/system-attachment.data";
+    export * from "lib/system-lib/data/system-defaults";
+    export * from "lib/system-lib/data/system.data";
+    export * from "lib/system-lib/planet-attachment/planet-attachment-layout";
+    export * from "lib/system-lib/planet-attachment/planet-attachment";
+    export * from "lib/system-lib/planet-attachment/planet-card-layout";
+    export * from "lib/system-lib/planet/planet";
+    export * from "lib/system-lib/planet/refresh-all-planets";
+    export * from "lib/system-lib/registry/planet-attachment-registry";
+    export * from "lib/system-lib/registry/system-attachment-registry";
+    export * from "lib/system-lib/registry/system-registry";
+    export * from "lib/system-lib/schema/basic-types-schema";
+    export * from "lib/system-lib/schema/planet-attachment-schema";
+    export * from "lib/system-lib/schema/planet-schema";
+    export * from "lib/system-lib/schema/system-attachment-schema";
+    export * from "lib/system-lib/schema/system-schema";
+    export * from "lib/system-lib/system-adjacency/draw-hyperlanes.testp";
+    export * from "lib/system-lib/system-adjacency/system-adjacency-hyperlane";
+    export * from "lib/system-lib/system-adjacency/system-adjacency-neighbor";
+    export * from "lib/system-lib/system-adjacency/system-adjacency-wormhole";
+    export * from "lib/system-lib/system-adjacency/system-adjacency";
+    export * from "lib/system-lib/system-attachment/system-attachment";
+    export * from "lib/system-lib/system/system-labels";
+    export * from "lib/system-lib/system/system-reserve-space";
+    export * from "lib/system-lib/system/system-summary";
+    export * from "lib/system-lib/system/system-tier";
+    export * from "lib/system-lib/system/system";
+    export * from "lib/tech-lib/data/tech.data";
+    export * from "lib/tech-lib/find-player-tech-deck/find-player-tech-deck";
+    export * from "lib/tech-lib/player-tech-summary/player-tech-summary";
+    export * from "lib/tech-lib/player-with-faction-techs/player-with-faction-techs";
+    export * from "lib/tech-lib/registry/tech-registry";
+    export * from "lib/tech-lib/schema/tech-schema";
+    export * from "lib/tech-lib/tech/tech";
+    export * from "lib/unit-lib/data/unit-attrs.data";
+    export * from "lib/unit-lib/data/unit-modifier.data";
+    export * from "lib/unit-lib/data/unit-modifiers/abstract.test";
+    export * from "lib/unit-lib/data/unit-modifiers/base/antimass-deflectors";
+    export * from "lib/unit-lib/data/unit-modifiers/base/bunker";
+    export * from "lib/unit-lib/data/unit-modifiers/base/cmorran-norr";
+    export * from "lib/unit-lib/data/unit-modifiers/base/conventions-of-war";
+    export * from "lib/unit-lib/data/unit-modifiers/base/disable";
+    export * from "lib/unit-lib/data/unit-modifiers/base/experimental-battlestation";
+    export * from "lib/unit-lib/data/unit-modifiers/base/fighter-prototype";
+    export * from "lib/unit-lib/data/unit-modifiers/base/fourth-moon";
+    export * from "lib/unit-lib/data/unit-modifiers/base/fragile";
+    export * from "lib/unit-lib/data/unit-modifiers/base/matriarch";
+    export * from "lib/unit-lib/data/unit-modifiers/base/mirror-computing";
+    export * from "lib/unit-lib/data/unit-modifiers/base/morale-boost";
+    export * from "lib/unit-lib/data/unit-modifiers/base/munitions-reserves";
+    export * from "lib/unit-lib/data/unit-modifiers/base/nebula-defense";
+    export * from "lib/unit-lib/data/unit-modifiers/base/plasma-scoring";
+    export * from "lib/unit-lib/data/unit-modifiers/base/prophecy-of-ixth";
+    export * from "lib/unit-lib/data/unit-modifiers/base/publicize-weapon-schematics";
+    export * from "lib/unit-lib/data/unit-modifiers/base/regulated-conscription";
+    export * from "lib/unit-lib/data/unit-modifiers/base/salai-sai-corian";
+    export * from "lib/unit-lib/data/unit-modifiers/base/sarween-tools";
+    export * from "lib/unit-lib/data/unit-modifiers/base/tekklar-legion";
+    export * from "lib/unit-lib/data/unit-modifiers/base/the-alastor";
+    export * from "lib/unit-lib/data/unit-modifiers/base/unrelenting";
+    export * from "lib/unit-lib/data/unit-modifiers/codex-ordinian/blitz";
+    export * from "lib/unit-lib/data/unit-modifiers/codex-ordinian/war-machine";
+    export * from "lib/unit-lib/data/unit-modifiers/codex-vigil/custodia-vigilia";
+    export * from "lib/unit-lib/data/unit-modifiers/codex-vigil/xxekir-grom";
+    export * from "lib/unit-lib/data/unit-modifiers/pok/2ram";
+    export * from "lib/unit-lib/data/unit-modifiers/pok/annihilator";
+    export * from "lib/unit-lib/data/unit-modifiers/pok/articles-of-war";
+    export * from "lib/unit-lib/data/unit-modifiers/pok/arvicon-rex";
+    export * from "lib/unit-lib/data/unit-modifiers/pok/brother-omar";
+    export * from "lib/unit-lib/data/unit-modifiers/pok/eidolon";
+    export * from "lib/unit-lib/data/unit-modifiers/pok/emissary-taivra";
+    export * from "lib/unit-lib/data/unit-modifiers/pok/evelyn-delouis";
+    export * from "lib/unit-lib/data/unit-modifiers/pok/iconoclast";
+    export * from "lib/unit-lib/data/unit-modifiers/pok/maban";
+    export * from "lib/unit-lib/data/unit-modifiers/pok/moll-terminus";
+    export * from "lib/unit-lib/data/unit-modifiers/pok/mordred";
+    export * from "lib/unit-lib/data/unit-modifiers/pok/navarch-feng";
+    export * from "lib/unit-lib/data/unit-modifiers/pok/quetzecoatl";
+    export * from "lib/unit-lib/data/unit-modifiers/pok/rickar-rickani";
+    export * from "lib/unit-lib/data/unit-modifiers/pok/shield-paling";
+    export * from "lib/unit-lib/data/unit-modifiers/pok/strike-wing-ambuscade";
+    export * from "lib/unit-lib/data/unit-modifiers/pok/supercharge";
+    export * from "lib/unit-lib/data/unit-modifiers/pok/ta-zern";
+    export * from "lib/unit-lib/data/unit-modifiers/pok/that-which-molds-flesh";
+    export * from "lib/unit-lib/data/unit-modifiers/pok/the-cavalry";
+    export * from "lib/unit-lib/data/unit-modifiers/pok/the-crown-of-thalnos";
+    export * from "lib/unit-lib/data/unit-modifiers/pok/trrakan-aun-zulok";
+    export * from "lib/unit-lib/data/unit-modifiers/pok/ul-the-progenitor";
+    export * from "lib/unit-lib/data/unit-modifiers/pok/viscount-unlenn";
+    export * from "lib/unit-lib/data/unit-modifiers/pok/visz-el-vir";
+    export * from "lib/unit-lib/registry/unit-attrs-registry";
+    export * from "lib/unit-lib/registry/unit-modifier-registry";
+    export * from "lib/unit-lib/schema/unit-attrs-schema";
+    export * from "lib/unit-lib/schema/unit-modifier-schema";
+    export * from "lib/unit-lib/unit-attrs-set/unit-attrs-set";
+    export * from "lib/unit-lib/unit-attrs/combat-attrs";
+    export * from "lib/unit-lib/unit-attrs/unit-attrs";
+    export * from "lib/unit-lib/unit-modifier/unit-modifier-active-idle";
+    export * from "lib/unit-lib/unit-modifier/unit-modifier";
+    export * from "lib/unit-lib/unit-plastic/unit-plastic";
+    export * from "locale/locale-context-menus";
+    export * from "nsid/nsid-to-template-id.test";
+    export * from "obj/agenda-laws-mat";
+    export * from "obj/build-area";
+    export * from "obj/combat-arena-obj";
+    export * from "obj/custodians-token";
+    export * from "obj/planet-mat";
+    export * from "obj/slice-build-helper";
+    export * from "setup/layout/layout-all/layout-all";
+    export * from "setup/layout/layout-all/scrub-all";
+    export * from "setup/layout/layout-combat-arena/layout-combat-arena-and-unit-boxes";
+    export * from "setup/layout/layout-combat-arena/layout-combat-arena";
+    export * from "setup/layout/layout-config";
+    export * from "setup/layout/layout-fighter-inf-tg-containers/layout-fighter-containers";
+    export * from "setup/layout/layout-fighter-inf-tg-containers/layout-fighter-inf-tg-containers";
+    export * from "setup/layout/layout-fighter-inf-tg-containers/layout-infantry-containers";
+    export * from "setup/layout/layout-fighter-inf-tg-containers/layout-tradegood-containers";
+    export * from "setup/layout/layout-map-area/layout-map-area";
+    export * from "setup/layout/layout-map-area/place-generic-home-systems";
+    export * from "setup/layout/layout-player-area/layout-mats";
+    export * from "setup/layout/layout-player-area/layout-player-area";
+    export * from "setup/layout/layout-player-area/layout-player-areas";
+    export * from "setup/layout/layout-player-area/layout-row-troves-and-status-pad";
+    export * from "setup/layout/layout-player-area/layout-sheets";
+    export * from "setup/layout/layout-player-area/layout-status-pad";
+    export * from "setup/layout/layout-player-area/layout-token-containers";
+    export * from "setup/layout/layout-player-area/layout-trove-mat";
+    export * from "setup/layout/layout-player-area/layout-unit-box";
+    export * from "setup/layout/layout-player-area/layout-unit-boxes";
+    export * from "setup/layout/layout-player-area/place-generic-promissories";
+    export * from "setup/layout/layout-quick-roller/layout-quick-roller";
+    export * from "setup/layout/layout-scoring-area/layout-agenda-laws-mat";
+    export * from "setup/layout/layout-scoring-area/layout-objectives.test";
+    export * from "setup/layout/layout-scoring-area/layout-objectives";
+    export * from "setup/layout/layout-scoring-area/layout-player-secrets";
+    export * from "setup/layout/layout-scoring-area/layout-scoring-area";
+    export * from "setup/layout/layout-scoring-area/layout-timer";
+    export * from "setup/layout/layout-strategy-cards/layout-strategy-cards";
+    export * from "setup/layout/layout-table-containers/layout-exploration-container";
+    export * from "setup/layout/layout-table-containers/layout-frontier-container";
+    export * from "setup/layout/layout-table-containers/layout-system-container";
+    export * from "setup/layout/layout-table-containers/layout-table-containers";
+    export * from "setup/layout/layout-table-decks/layout-table-decks.test";
+    export * from "setup/layout/layout-table-decks/layout-table-decks";
+    export * from "setup/layout/layout-table-system-tiles/layout-table-system-tiles";
+    export * from "setup/setup-player-slot-colors/setup-player-slot-colors";
+    export * from "ui/abstract-ui/abtract-ui";
+    export * from "ui/abstract-window/abstract-window";
+    export * from "ui/agenda-ui/agenda-available-votes-ui/agenda-available-votes-ui";
+    export * from "ui/agenda-ui/agenda-card-ui/agenda-card-ui";
+    export * from "ui/agenda-ui/agenda-choose-type-ui/agenda-choose-type-ui";
+    export * from "ui/agenda-ui/agenda-how-to-ui/agenda-how-to-ui";
+    export * from "ui/agenda-ui/agenda-outcome-ui/agenda-outcome-ui";
+    export * from "ui/agenda-ui/agenda-outcome-ui/agenda-rider-ui";
+    export * from "ui/agenda-ui/agenda-state-ui/agenda-state-ui";
+    export * from "ui/agenda-ui/agenda-vote-count-ui/agenda-vote-count-ui";
+    export * from "ui/all-players-techs.ui/all-players-techs-ui";
+    export * from "ui/button-ui/button-ui";
+    export * from "ui/button-ui/checkbox-ui";
+    export * from "ui/button-ui/confirm-button-ui";
+    export * from "ui/button-ui/editable-button-ui";
+    export * from "ui/button-ui/editable-ui";
+    export * from "ui/button-ui/label-ui";
+    export * from "ui/button-ui/long-button-ui";
+    export * from "ui/button-ui/long-label-ui";
+    export * from "ui/button-ui/long-richtext-ui";
+    export * from "ui/button-ui/slider-with-value-ui";
+    export * from "ui/button-ui/two-icon-label-ui";
+    export * from "ui/change-color-ui/change-color-ui";
+    export * from "ui/change-color-ui/color-choice-button";
+    export * from "ui/choose-technology-ui/choose-technology-ui";
+    export * from "ui/choose-technology-ui/single-tech-ui";
+    export * from "ui/choose-technology-ui/tech-card-mutable-ui";
+    export * from "ui/combat-ui/combat-ui-all-simple/combat-ui-all-simple";
+    export * from "ui/combat-ui/combat-ui-all/combat-ui-all";
+    export * from "ui/combat-ui/combat-ui-hex/combat-ui-hex";
+    export * from "ui/combat-ui/combat-ui-planet/combat-ui-planet";
+    export * from "ui/combat-ui/combat-ui-space/combat-ui-space";
+    export * from "ui/config/config";
+    export * from "ui/div-ui/div-ui";
+    export * from "ui/draft/draft-start-ui/draft-start-ui";
+    export * from "ui/draft/draft-start-ui/draft-start-window";
+    export * from "ui/draft/draft-start-ui/scpt-draft-button-ui";
+    export * from "ui/draft/draft-start-ui/scpt-drafts-ui";
+    export * from "ui/draft/draft-state-ui/draft-state-ui";
+    export * from "ui/draft/faction-ui/faction-ui";
+    export * from "ui/draft/faction-ui/keleres-ui";
+    export * from "ui/draft/seat-ui/seat-ui";
+    export * from "ui/draft/slice-ui/slice-ui";
+    export * from "ui/end-turn-button-ui/create-and-attach-end-turn-button-ui";
+    export * from "ui/end-turn-button-ui/end-turn-button-ui";
+    export * from "ui/glowing-token/glowing-token";
+    export * from "ui/help-ui/help-ui";
+    export * from "ui/help-ui/help-with-extras-ui";
+    export * from "ui/map-premade-ui/map-premade-ui";
+    export * from "ui/map-tool-ui/map-tool-ui";
+    export * from "ui/map-ui/map-ui";
+    export * from "ui/panel/grid-ui-builder";
+    export * from "ui/panel/horizontal-ui-builder";
+    export * from "ui/panel/vertical-ui-builder";
+    export * from "ui/player-action-phase-time-ui/player-action-phase-time-ui";
+    export * from "ui/start-game-ui/start-game-ui";
+    export * from "ui/stats-ui/stats-ui";
+    export * from "ui/strategy-card-ui/abstract-strategy-card-body/abstract-strategy-card-body";
+    export * from "ui/strategy-card-ui/body-1-leadership/body-leadership";
+    export * from "ui/strategy-card-ui/body-2-diplomacy/body-diplomacy";
+    export * from "ui/strategy-card-ui/body-3-politics/body-politics";
+    export * from "ui/strategy-card-ui/body-4-construction/body-construction";
+    export * from "ui/strategy-card-ui/body-5-trade/body-trade";
+    export * from "ui/strategy-card-ui/body-6-warfare/body-warfare";
+    export * from "ui/strategy-card-ui/body-7-technology/body-technology";
+    export * from "ui/strategy-card-ui/body-8-imperial/body-imperial";
+    export * from "ui/strategy-card-ui/strategy-card-ui/strategy-card-ui";
+    export * from "ui/strategy-card-ui/strategy-card-ui/zoomed-strategy-card-ui";
+    export * from "ui/strategy-card-ui/strategy-cards-ui/strategy-cards-ui";
+    export * from "ui/streamer-tool-ui/streamer-tool-ui";
+    export * from "ui/suggested-key-unbinds-ui/suggested-key-unbinds-ui";
+    export * from "ui/suggested-settings-ui/suggested-settings-ui";
+    export * from "ui/switcher-ui/switcher-ui";
+    export * from "ui/turn-order-mini/turn-order-mini";
+    export * from "ui/turn-order-ui/create-and-attach-turn-order-ui";
+    export * from "ui/turn-order-ui/turn-order-entry";
+    export * from "ui/turn-order-ui/turn-order-ui";
+    export * from "ui/wrapped-clickable-ui/abstract-wrapped-clickable-ui";
+    export * from "ui/wrapped-clickable-ui/wrapped-clickable-ui";
+    export * from "ui/zoomable-ui/create-zoomed-card-ui";
+    export * from "ui/zoomable-ui/zoomable-ui-fully-clickable";
+    export * from "ui/zoomable-ui/zoomable-ui";
+}
+declare function postToAWS(json: string): void;
+declare module "_test/rotate-on-pickup" { }
+declare module "_test/ui-presentation-bug" { }
+declare module "obj/card-holder-player-scoring" { }
+declare module "obj/card-holder-player" { }
+declare module "obj/deleted-items-container" { }
+declare module "obj/faction-extras-container" { }
+declare module "obj/icon-container-obj" { }
+declare module "obj/quick-roller-obj" { }
+declare module "obj/recycle-container-obj" { }
+declare module "obj/status-pad-obj" { }
+declare module "obj/strategy-card-mat" { }
+declare module "obj/timer-obj" { }

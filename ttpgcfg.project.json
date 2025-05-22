@@ -1,10 +1,1 @@
-{
-  "name": "ti4-ttpg-ts",
-  "slug": "ti4-ttpg-ts",
-  "version": "1.0.0",
-  "guid": {
-    "dev": "F5DD9DEDA6C64881A2EEBBC273224D01",
-    "prd": "F5DD9DEDA6C64881A2EEBBC273224D02"
-  },
-  "transpile": true
-}
+{"name":"ti4-ttpg-ts","slug":"ti4-ttpg-ts","version":"1.0.0","guid":{"dev":"F5DD9DEDA6C64881A2EEBBC273224D01","prd":"F5DD9DEDA6C64881A2EEBBC273224D02"},"modId":4952680,"transpile":true}
