@@ -202,7 +202,7 @@ export class MapStringLoad {
         );
 
         if (
-          !this._tryMoveExistingSystemTileObj(
+          this._tryMoveExistingSystemTileObj(
             entry.tile,
             pos,
             rot,
