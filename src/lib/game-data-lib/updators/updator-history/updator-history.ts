@@ -1,10 +1,7 @@
 import { GameObject } from "@tabletop-playground/api";
-import {
-  GameData,
-  PerPlayerGameData,
-} from "lib/game-data-lib/game-data/game-data";
-import { IGameDataUpdator } from "lib/game-data-lib/i-game-data-updator/i-game-data-updator";
 import { Find, IGlobal } from "ttpg-darrell";
+import { GameData, PerPlayerGameData } from "../../game-data/game-data";
+import { IGameDataUpdator } from "../../i-game-data-updator/i-game-data-updator";
 
 /**
  * Report a very minimal history of GameData per round.
