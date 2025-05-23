@@ -22,7 +22,7 @@
     "types": "tsc -p tsconfig-index.json"
   },
   "devDependencies": {
-    "@tabletop-playground/api": "^0.39.0",
+    "@tabletop-playground/api": "0.41.0",
     "@types/fs-extra": "^11.0.4",
     "@types/jest": "^29.5.11",
     "@types/klaw-sync": "^6.0.5",
