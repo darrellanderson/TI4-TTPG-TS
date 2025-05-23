@@ -243,6 +243,8 @@ export class RightClickExplore implements IGlobal {
   }
 
   _exploreFrontierToken(frontierTokenObj: GameObject, player: Player): void {
+    DeletedItemsContainer.destroyWithoutCopying(frontierTokenObj);
+
     let deck: Card | undefined = this._getExploreDeck("frontier");
     let card: Card | undefined = undefined;
     if (deck) {
@@ -272,8 +274,6 @@ export class RightClickExplore implements IGlobal {
       const msg: string = `${playerName} explored frontier: ${cardName}`;
       Broadcast.chatAll(msg, player.getPlayerColor());
     }
-
-    DeletedItemsContainer.destroyWithoutCopying(frontierTokenObj);
   }
 
   _maybeAddPlanetAttachment(planet: Planet, exploreCardNsid: string): void {
