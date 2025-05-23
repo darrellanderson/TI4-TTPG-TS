@@ -98,6 +98,7 @@ export class MapToolUI extends AbstractUI {
       const msg: string = `Frontier tokens placed by ${playerName}`;
       Broadcast.chatAll(msg);
 
+      new MapRemoveFrontierTokens().removeFrontierTokens();
       new MapPlaceFrontierTokens().placeFrontierTokens();
     }
   ).get();
