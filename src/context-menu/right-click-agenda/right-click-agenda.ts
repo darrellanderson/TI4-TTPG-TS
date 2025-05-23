@@ -76,9 +76,7 @@ export class RightClickAgenda implements IGlobal {
 
   _addAgendaDeckDescription(value: string): void {
     const deck: Card | undefined = this._getAgendaDeck();
-    console.log("addAgendaDeckDescription", value);
     if (deck) {
-      console.log("found deck");
       const desc: string = [...deck.getName().split("\n"), value]
         .filter((x) => x.length > 0)
         .join("\n");

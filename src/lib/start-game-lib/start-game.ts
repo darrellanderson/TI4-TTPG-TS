@@ -39,6 +39,7 @@ export class StartGame implements IGlobal {
     const playerCount: number = TI4.config.playerCount;
     const layout: LayoutAll = new LayoutAll(playerCount);
     layout.getLayout().doLayoutAtPoint(pos, yaw);
+    world.resetScripting(); // mostly for the icon containers, they move at the end of layout
   }
 
   _doRemove(): void {

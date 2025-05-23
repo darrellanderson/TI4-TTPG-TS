@@ -22,17 +22,17 @@ it("getCardNamesWithCountsMessage", () => {
 });
 
 it("events", () => {
-  const a: Card = MockCard.simple("card.action:base/a"); // existing card
+  const a: Card = MockCard.simple("card.relic:base/a"); // existing card
 
   new ReportRemaining().init();
 
-  const b: Card = MockCard.simple("card.action:base/b"); // new card
+  const b: Card = MockCard.simple("card.relic:base/b"); // new card
   b.addCards(a);
   process.flushTicks();
 });
 
 it("trigger action", () => {
-  const card: MockCard = MockCard.simple("card.action:base/b");
+  const card: MockCard = MockCard.simple("card.relic:base/b");
   new ReportRemaining().init();
 
   const player: Player = new MockPlayer();

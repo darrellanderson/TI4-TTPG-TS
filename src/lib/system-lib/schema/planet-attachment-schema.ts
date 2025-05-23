@@ -1,5 +1,9 @@
 import { z } from "zod";
-import { NsidNameSchema, TechSchema, TraitSchema } from "./basic-types-schema";
+import {
+  NsidNameSchema,
+  PlanetTechSchema,
+  TraitSchema,
+} from "./basic-types-schema";
 
 export const PlanetAttachmentSchema = z
   .object({
@@ -13,8 +17,8 @@ export const PlanetAttachmentSchema = z
     influenceFaceDown: z.number().optional(),
     resources: z.number().optional(),
     resourcesFaceDown: z.number().optional(),
-    techs: z.array(TechSchema).optional(),
-    techsFaceDown: z.array(TechSchema).optional(),
+    techs: z.array(PlanetTechSchema).optional(),
+    techsFaceDown: z.array(PlanetTechSchema).optional(),
     traits: z.array(TraitSchema).optional(),
     traitsFaceDown: z.array(TraitSchema).optional(),
     isLegendary: z.boolean().optional(),

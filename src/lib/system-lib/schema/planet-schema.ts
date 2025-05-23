@@ -2,7 +2,7 @@ import { z } from "zod";
 import {
   LocalPositionSchema,
   NsidNameSchema,
-  TechSchema,
+  PlanetTechSchema,
   TraitSchema,
 } from "./basic-types-schema";
 
@@ -15,7 +15,7 @@ export const PlanetSchema = z
     radius: z.number().optional(),
     influence: z.number().optional(),
     resources: z.number().optional(),
-    techs: z.array(TechSchema).optional(),
+    techs: z.array(PlanetTechSchema).optional(),
     traits: z.array(TraitSchema).optional(),
     isLegendary: z.boolean().optional(),
     legendaryNsidName: NsidNameSchema.optional(), // card NSID "card.legendary-planet:${source}/${legendaryNsidName}"

@@ -11,6 +11,7 @@ import {
   SourceAndPackageIdSchema,
 } from "../schema/basic-types-schema";
 import { PlanetAttachmentLayout } from "./planet-attachment-layout";
+import { PlanetCardLayout } from "./planet-card-layout";
 
 /**
  * A planet attachment is a token game object placed on a planet to add
@@ -90,10 +91,10 @@ export class PlanetAttachment {
     this._params = params;
 
     obj.onGrab.add(() => {
-      this.detach();
+      this.detach(); // planet card updated during detach
     });
     obj.onReleased.add(() => {
-      this.attach();
+      this.attach(); // planet card updated during attach
       this.doLayout();
     });
   }
@@ -116,6 +117,7 @@ export class PlanetAttachment {
         }
         const success: boolean = this._planet.addAttachment(this);
         if (success) {
+          this.doLayoutCard(this._planet);
           TI4.events.onSystemChanged.trigger(system);
         }
         return success;
@@ -133,6 +135,7 @@ export class PlanetAttachment {
   detach(): boolean {
     if (this._planet) {
       if (this._planet.delAttachment(this)) {
+        this.doLayoutCard(this._planet);
         this._planet = undefined;
         const pos: Vector = this._obj.getPosition();
         const system: System | undefined =
@@ -150,6 +153,10 @@ export class PlanetAttachment {
     if (this._planet) {
       new PlanetAttachmentLayout().layout(this._planet);
     }
+  }
+
+  doLayoutCard(planet: Planet): void {
+    new PlanetCardLayout().layout(planet);
   }
 
   /**
