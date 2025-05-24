@@ -82,13 +82,13 @@ it("_getObjectiveProgress", () => {
     name: "my-name",
     progress: {
       header: "my-header",
-      scoredBy: [2],
       values: [
         { success: false, value: "" },
         { success: false, value: 2 },
         { success: true, value: 3 },
       ],
     },
+    scoredBy: [2],
     stage: 1,
   });
 });

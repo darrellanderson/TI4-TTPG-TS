@@ -8,6 +8,6 @@ export type UpdatorObjectiveProgressType = {
   progress: {
     header: string;
     values: Array<{ value: string | number | boolean; success: boolean }>;
-    scoredBy: Array<number>;
   };
+  scoredBy: Array<number>;
 };

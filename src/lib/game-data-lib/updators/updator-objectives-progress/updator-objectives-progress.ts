@@ -101,8 +101,8 @@ export class UpdatorObjectivesProgress implements IGameDataUpdator {
       progress: {
         header: goalProgress.header,
         values: this._goalProgressToValues(goalProgress),
-        scoredBy: this._getProgressToScoredBy(goalProgress),
       },
+      scoredBy: this._getProgressToScoredBy(goalProgress),
     };
   }
 }
