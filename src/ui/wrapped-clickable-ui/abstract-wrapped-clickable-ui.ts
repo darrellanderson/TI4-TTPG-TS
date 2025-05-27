@@ -31,7 +31,7 @@ export abstract class AbstractWrappedClickableUI extends AbstractUI {
     }
     this._owningPlayerSlot = owningPlayerSlot;
 
-    let color: Color = new Color(0, 0, 0, 0);
+    let color: Color = new Color(0, 0, 0, 1);
     if (owningPlayerSlot !== -1) {
       color = world.getSlotColor(owningPlayerSlot);
     }

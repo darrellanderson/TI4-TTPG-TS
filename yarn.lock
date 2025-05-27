@@ -936,11 +936,6 @@
   resolved "https://registry.yarnpkg.com/@tabletop-playground/api/-/api-0.41.0.tgz#f80a93ed9b056b6c3c6e63cf4352fc0439f0ace9"
   integrity sha512-tAG77eYQevQ+r4UN306aktb0qo3/LmNNrZQmi6451jRoUkGHCD94HTyqwT8GUoFgZhtzzmVSefV3E7CFiXU82w==
 
-"@tabletop-playground/api@^0.39.0":
-  version "0.39.0"
-  resolved "https://registry.yarnpkg.com/@tabletop-playground/api/-/api-0.39.0.tgz#8d9265beabe26a7be96100abe8b21548df5dc390"
-  integrity sha512-lXf0XA2EL1oNjeVnQs/JPmpymKs6HCH5HMPkugaYRMsgoLgIMo9X1oL2RoE1E1HXAnCnthCT66RAhIdgaCU6HQ==
-
 "@tsconfig/node10@^1.0.7":
   version "1.0.11"
   resolved "https://registry.yarnpkg.com/@tsconfig/node10/-/node10-1.0.11.tgz#6ee46400685f130e278128c7b38b7e031ff5b2f2"
@@ -3465,11 +3460,11 @@ tslib@^2.4.0:
   integrity sha512-oJFu94HQb+KVduSUQL7wnpmqnfmLsOA/nAh6b6EH0wCEoK0/mPeXU6c3wKDV83MkOuHPRHtSXKKU99IBazS/2w==
 
 ttpg-darrell@^1.1.14:
-  version "1.1.36"
-  resolved "https://registry.yarnpkg.com/ttpg-darrell/-/ttpg-darrell-1.1.36.tgz#1574433de4c38b29983c65ec8b8998bd3d5ca1a5"
-  integrity sha512-kJoXKdIo4LWkuzHF1XNouiWx3s5Cc2rw4n6v5aTMLuKR5DH1id6XGcCtWZzRMBL7idJ7DarD3E538hyVsRL9+w==
+  version "1.1.37"
+  resolved "https://registry.yarnpkg.com/ttpg-darrell/-/ttpg-darrell-1.1.37.tgz#b1ffe6d0f9e8f5eab2f421018862699231bf0f4e"
+  integrity sha512-PhJAptlojbFnos2nJpu1xV79Pqw37gif9iiZI5eOcIjq97SYpypQKFm5+WYgC8z9zQF0iza6bMDc2z3jrYxsBA==
   dependencies:
-    "@tabletop-playground/api" "^0.39.0"
+    "@tabletop-playground/api" "0.41.0"
     fastest-levenshtein "^1.0.16"
     js-base64 "^3.7.7"
     zod "^3.22.4"
@@ -3669,7 +3664,12 @@ zip-stream@^5.0.1:
     compress-commons "^5.0.1"
     readable-stream "^3.6.0"
 
-zod@^3.22.4, zod@^3.23.8:
+zod@^3.22.4:
+  version "3.25.28"
+  resolved "https://registry.yarnpkg.com/zod/-/zod-3.25.28.tgz#8ab13d04afa05933598fd9fca32490ca92c7ea3a"
+  integrity sha512-/nt/67WYKnr5by3YS7LroZJbtcCBurDKKPBPWWzaxvVCGuG/NOsiKkrjoOhI8mJ+SQUXEbUzeB3S+6XDUEEj7Q==
+
+zod@^3.23.8:
   version "3.25.23"
   resolved "https://registry.yarnpkg.com/zod/-/zod-3.25.23.tgz#128fb02f3619a8bca6bbbf6b07b457236cf33391"
   integrity sha512-Od2bdMosahjSrSgJtakrwjMDb1zM1A3VIHCPGveZt/3/wlrTWBya2lmEh2OYe4OIu8mPTmmr0gnLHIWQXdtWBg==
