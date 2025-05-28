@@ -1,5 +1,5 @@
 import { CardHolder, Vector, world } from "@tabletop-playground/api";
-import { NSID } from "ttpg-darrell";
+import { Find, NSID, PlayerSlot } from "ttpg-darrell";
 
 export type PlayerSeatType = {
   cardHolder: CardHolder;
@@ -7,20 +7,41 @@ export type PlayerSeatType = {
 };
 
 export class PlayerSeats {
+  private readonly _find: Find = new Find();
+
+  /**
+   * A readonable place to drop something in a player area.
+   *
+   * @param seatIndex
+   * @returns
+   */
+  getDealPosition(playerSlot: PlayerSlot): Vector {
+    const seatIndex: number = this.getSeatIndexByPlayerSlot(playerSlot);
+    const seats: Array<PlayerSeatType> = this.getAllSeats();
+    const seat: PlayerSeatType | undefined = seats[seatIndex];
+
+    let pos: Vector = new Vector(0, 0, 0);
+    if (seat) {
+      pos = seat.cardHolder.getPosition();
+      pos.x *= 0.6;
+    }
+    pos.z = world.getTableHeight() + 3;
+    return pos;
+  }
+
   getAllSeats(): Array<PlayerSeatType> {
     const seats: Array<PlayerSeatType> = [];
 
     // Find all seats.
-    const skipContained: boolean = true;
-    for (const obj of world.getAllObjects(skipContained)) {
-      if (obj instanceof CardHolder && obj.getOwningPlayerSlot() >= 0) {
-        const nsid: string = NSID.get(obj);
-        if (nsid === "card-holder:base/player-hand") {
-          seats.push({
-            cardHolder: obj,
-            playerSlot: obj.getOwningPlayerSlot(),
-          });
-        }
+    const cardHolders: Array<CardHolder> = this._find.getOwnedCardHolders();
+    for (const cardHolder of cardHolders) {
+      const owner: PlayerSlot = cardHolder.getOwningPlayerSlot();
+      const nsid: string = NSID.get(cardHolder);
+      if (nsid === "card-holder:base/player-hand") {
+        seats.push({
+          cardHolder,
+          playerSlot: owner,
+        });
       }
     }
 

@@ -1,8 +1,18 @@
-import { MockCardHolder } from "ttpg-mock";
+import { MockCardHolder, Vector } from "ttpg-mock";
 import { PlayerSeats, PlayerSeatType } from "./player-seats";
 
 it("constructor", () => {
   new PlayerSeats();
+});
+
+it("getDealPosition", () => {
+  new MockCardHolder({
+    templateMetadata: "card-holder:base/player-hand",
+    owningPlayerSlot: 1,
+    position: [10, 10, 0],
+  });
+  const pos: Vector = new PlayerSeats().getDealPosition(1);
+  expect(pos.toString()).toBe("(X=6,Y=10,Z=3)");
 });
 
 it("getAllSeats", () => {
