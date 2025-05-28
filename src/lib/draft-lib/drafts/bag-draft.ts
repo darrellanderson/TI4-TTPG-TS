@@ -53,8 +53,7 @@ export class BagDraft implements IDraft {
     if (!cardHolder) {
       throw new Error("Card holder not found");
     }
-    const pos: Vector = cardHolder.getPosition();
-    pos.x = pos.x * 0.6; // move toward middle of the player area
+    const pos: Vector = TI4.playerSeats.getDealPosition(playerSlot);
 
     const above: Vector = pos.add([0, 0, 10]);
 
