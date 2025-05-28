@@ -1,0 +1,65 @@
+import { MockCardHolder, MockContainer, MockGameObject } from "ttpg-mock";
+import { RightClickAgeOfExploration } from "./right-click-age-of-exploration";
+import { System } from "../../../lib/system-lib/system/system";
+
+it("_getAvailableLegalSystems", () => {
+  const systemTileObj = MockGameObject.simple("tile.system:base/19");
+  new MockContainer({ items: [systemTileObj] });
+
+  const rightClickAgeOfExploration = new RightClickAgeOfExploration();
+  const systems: Array<System> =
+    rightClickAgeOfExploration._getAvailableLegalSystems();
+  expect(systems.length).toBe(1);
+});
+
+it("_getAvailableRedSystems", () => {
+  const systemTileObj = MockGameObject.simple("tile.system:base/19");
+  new MockContainer({ items: [systemTileObj] });
+
+  const rightClickAgeOfExploration = new RightClickAgeOfExploration();
+  const systems: Array<System> =
+    rightClickAgeOfExploration._getAvailableRedSystems();
+  expect(systems.length).toBe(0);
+});
+
+it("_getAvailableBlueSystems", () => {
+  const systemTileObj = MockGameObject.simple("tile.system:base/19");
+  new MockContainer({ items: [systemTileObj] });
+
+  const rightClickAgeOfExploration = new RightClickAgeOfExploration();
+  const systems: Array<System> =
+    rightClickAgeOfExploration._getAvailableBlueSystems();
+  expect(systems.length).toBe(1);
+});
+
+it("_getAvailableSystem", () => {
+  const systemTileObj = MockGameObject.simple("tile.system:base/19");
+  new MockContainer({ items: [systemTileObj] });
+
+  const rightClickAgeOfExploration = new RightClickAgeOfExploration();
+  let system: System | undefined;
+
+  system = rightClickAgeOfExploration._getAvailableSystem("blue");
+  expect(system).toBeDefined();
+
+  system = rightClickAgeOfExploration._getAvailableSystem("red");
+  expect(system).toBeUndefined();
+});
+
+it("_dealSystemTile", () => {
+  new MockCardHolder({
+    templateMetadata: "card-holder:base/player-hand",
+    owningPlayerSlot: 10,
+  });
+  const systemTileObj = MockGameObject.simple("tile.system:base/19");
+  new MockContainer({ items: [systemTileObj] });
+
+  const rightClickAgeOfExploration = new RightClickAgeOfExploration();
+
+  rightClickAgeOfExploration._dealSystemTile(10, "blue");
+});
+
+it("_chooseTileColor", () => {
+  const rightClickAgeOfExploration = new RightClickAgeOfExploration();
+  const _color: "red" | "blue" = rightClickAgeOfExploration._chooseTileColor();
+});
