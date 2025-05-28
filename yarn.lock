@@ -3460,9 +3460,9 @@ tslib@^2.4.0:
   integrity sha512-oJFu94HQb+KVduSUQL7wnpmqnfmLsOA/nAh6b6EH0wCEoK0/mPeXU6c3wKDV83MkOuHPRHtSXKKU99IBazS/2w==
 
 ttpg-darrell@^1.1.14:
-  version "1.1.37"
-  resolved "https://registry.yarnpkg.com/ttpg-darrell/-/ttpg-darrell-1.1.37.tgz#b1ffe6d0f9e8f5eab2f421018862699231bf0f4e"
-  integrity sha512-PhJAptlojbFnos2nJpu1xV79Pqw37gif9iiZI5eOcIjq97SYpypQKFm5+WYgC8z9zQF0iza6bMDc2z3jrYxsBA==
+  version "1.1.38"
+  resolved "https://registry.yarnpkg.com/ttpg-darrell/-/ttpg-darrell-1.1.38.tgz#0b8db4afb8ea67f0243381785fb744748de4ba61"
+  integrity sha512-dW6ko0Y8f6Ysj58EBdAYKUPB/1LF408lETW4iM3v2emoGm34WRtmvYU+ZpMH4ueyc54ehB94RuUGLuGhxOVOlA==
   dependencies:
     "@tabletop-playground/api" "0.41.0"
     fastest-levenshtein "^1.0.16"
@@ -3665,9 +3665,9 @@ zip-stream@^5.0.1:
     readable-stream "^3.6.0"
 
 zod@^3.22.4:
-  version "3.25.28"
-  resolved "https://registry.yarnpkg.com/zod/-/zod-3.25.28.tgz#8ab13d04afa05933598fd9fca32490ca92c7ea3a"
-  integrity sha512-/nt/67WYKnr5by3YS7LroZJbtcCBurDKKPBPWWzaxvVCGuG/NOsiKkrjoOhI8mJ+SQUXEbUzeB3S+6XDUEEj7Q==
+  version "3.25.32"
+  resolved "https://registry.yarnpkg.com/zod/-/zod-3.25.32.tgz#769cc684072df780fc8f38130b0cd9283a8d3818"
+  integrity sha512-OSm2xTIRfW8CV5/QKgngwmQW/8aPfGdaQFlrGoErlgg/Epm7cjb6K6VEyExfe65a3VybUOnu381edLb0dfJl0g==
 
 zod@^3.23.8:
   version "3.25.23"
