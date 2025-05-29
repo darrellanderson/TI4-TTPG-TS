@@ -258,7 +258,7 @@ it("validate NSIDs appear in assets/Templates", () => {
     if (!parsed) {
       throw new Error(`Invalid NSID: ${nsid}`);
     }
-    const source: string = parsed.sourceParts.join("-");
+    const source: string = parsed.sourceParts.join(".");
     for (const planet of schema.planets ?? []) {
       const cardNsid: string = `card.planet:${source}/${planet.nsidName}`;
       nsids.push(cardNsid);

@@ -1,0 +1,91 @@
+{
+    "Type": "Card",
+    "GUID": "BAECCE947E3FED5A16CE33D4DC08A72E",
+    "Name": "event",
+    "Metadata": "",
+    "CollisionType": "Regular",
+    "Friction": 0.7,
+    "Restitution": 0,
+    "Density": 0.5,
+    "SurfaceType": "Cardboard",
+    "Roughness": 1,
+    "Metallic": 0,
+    "PrimaryColor": {
+        "R": 255,
+        "G": 255,
+        "B": 255
+    },
+    "SecondaryColor": {
+        "R": 0,
+        "G": 0,
+        "B": 0
+    },
+    "Flippable": true,
+    "AutoStraighten": false,
+    "ShouldSnap": true,
+    "ScriptName": "",
+    "Blueprint": "",
+    "Models": [],
+    "Collision": [],
+    "SnapPointsGlobal": false,
+    "SnapPoints": [],
+    "ZoomViewDirection": {
+        "X": 0,
+        "Y": 0,
+        "Z": 0
+    },
+    "FrontTexture": "card/event/codex-liberation/codex-liberation.face.jpg",
+    "BackTexture": "card/event/codex-liberation/codex-liberation.back.jpg",
+    "HiddenTexture": "",
+    "BackIndex": -2,
+    "HiddenIndex": -1,
+    "NumHorizontal": 1,
+    "NumVertical": 4,
+    "Width": 12.9,
+    "Height": 7.5,
+    "Thickness": 0.05,
+    "HiddenInHand": true,
+    "UsedWithCardHolders": true,
+    "CanStack": true,
+    "UsePrimaryColorForSide": false,
+    "FrontTextureOverrideExposed": false,
+    "AllowFlippedInStack": false,
+    "MirrorBack": true,
+    "Model": "Rounded",
+    "Indices": [
+        0,
+        1,
+        2,
+        3
+    ],
+    "CardNames": {
+        "0": "Age of Commerce",
+        "1": "Age of Exploration",
+        "2": "Minor Factions",
+        "3": "Total War"
+    },
+    "CardMetadata": {
+        "0": "card.event:codex.liberation/age-of-commerce",
+        "1": "card.event:codex.liberation/age-of-exploration",
+        "2": "card.event:codex.liberation/minor-factions",
+        "3": "card.event:codex.liberation/total-war"
+    },
+    "CardTags": {
+        "0": [
+            "card-event"
+        ],
+        "1": [
+            "card-event"
+        ],
+        "2": [
+            "card-event"
+        ],
+        "3": [
+            "card-event"
+        ]
+    },
+    "GroundAccessibility": "ZoomAndContext",
+    "Tags": [
+        "card-event"
+    ]
+}

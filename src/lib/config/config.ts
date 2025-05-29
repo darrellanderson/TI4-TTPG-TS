@@ -40,6 +40,7 @@ export class Config {
           "codex.affinity",
           "codex.ordinian",
           "codex.vigil",
+          "codex.liberation",
         ],
         exportGameData: true,
         reportErrors: true,

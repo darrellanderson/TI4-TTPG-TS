@@ -1259,4 +1259,21 @@ export const SOURCE_TO_SYSTEM_DATA: Record<string, Array<SystemSchemaType>> = {
       ],
     },
   ],
+
+  ["codex.liberation"]: [
+    {
+      tile: 1800,
+      isExcludeFromDraft: true,
+      planets: [
+        {
+          name: "Ordinian",
+          nsidName: "ordinian",
+          resources: 2,
+          influence: 3,
+          isLegendary: true,
+          legendaryNsidName: "barren-husk",
+        },
+      ],
+    },
+  ],
 };

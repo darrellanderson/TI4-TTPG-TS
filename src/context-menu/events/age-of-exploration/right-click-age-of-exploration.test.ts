@@ -63,3 +63,14 @@ it("_chooseTileColor", () => {
   const rightClickAgeOfExploration = new RightClickAgeOfExploration();
   const _color: "red" | "blue" = rightClickAgeOfExploration._chooseTileColor();
 });
+
+it("_colorFromRoll", () => {
+  const rightClickAgeOfExploration = new RightClickAgeOfExploration();
+  let color: "red" | "blue";
+
+  color = rightClickAgeOfExploration._colorFromRoll(4);
+  expect(color).toBe("red");
+
+  color = rightClickAgeOfExploration._colorFromRoll(5);
+  expect(color).toBe("blue");
+});

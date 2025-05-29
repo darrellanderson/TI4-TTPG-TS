@@ -170,6 +170,17 @@ export class StartGameUI extends AbstractUI {
         }
       );
 
+    const checkBoxCodex4: CheckBoxUI = new CheckBoxUI(scale);
+    checkBoxCodex4
+      .getCheckBox()
+      .setText("Codex 4: Liberation")
+      .setIsChecked(TI4.config.sources.includes("codex.liberation"))
+      .onCheckStateChanged.add(
+        (_checkBox: CheckBox, _player: Player, isChecked: boolean): void => {
+          applySource("codex.liberation", isChecked);
+        }
+      );
+
     const left: AbstractUI = new VerticalUIBuilder()
       .setSpacing(CONFIG.SPACING * scale)
       .addUIs([numPlayersLabel, is14PointGame, sendGameData, sendErrors])
@@ -183,6 +194,7 @@ export class StartGameUI extends AbstractUI {
         checkBoxCodex1,
         checkBoxCodex2,
         checkBoxCodex3,
+        checkBoxCodex4,
       ])
       .build();
     const config: AbstractUI = new HorizontalUIBuilder()

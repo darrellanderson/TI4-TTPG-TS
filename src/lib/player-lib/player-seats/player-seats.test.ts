@@ -1,8 +1,9 @@
 import { MockCardHolder, Vector } from "ttpg-mock";
 import { PlayerSeats, PlayerSeatType } from "./player-seats";
 
-it("constructor", () => {
-  new PlayerSeats();
+it("constructor/init", () => {
+  new PlayerSeats().init();
+  TI4.events.onStartGameComplete.trigger();
 });
 
 it("getDealPosition", () => {

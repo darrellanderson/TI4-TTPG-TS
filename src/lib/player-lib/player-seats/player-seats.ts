@@ -1,13 +1,21 @@
 import { CardHolder, Vector, world } from "@tabletop-playground/api";
-import { Find, NSID, PlayerSlot } from "ttpg-darrell";
+import { Find, IGlobal, NSID, PlayerSlot } from "ttpg-darrell";
 
 export type PlayerSeatType = {
   cardHolder: CardHolder;
   playerSlot: number;
 };
 
-export class PlayerSeats {
-  private readonly _find: Find = new Find();
+export class PlayerSeats implements IGlobal {
+  private _find: Find = new Find();
+
+  private readonly _onStartGameComplete = (): void => {
+    this._find = new Find(); // reset the find cache
+  };
+
+  init(): void {
+    TI4.events.onStartGameComplete.add(this._onStartGameComplete);
+  }
 
   /**
    * A readonable place to drop something in a player area.

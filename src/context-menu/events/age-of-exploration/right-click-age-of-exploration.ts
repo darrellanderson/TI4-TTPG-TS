@@ -88,6 +88,10 @@ export class RightClickAgeOfExploration extends AbstractRightClickCard {
 
   _chooseTileColor(): "red" | "blue" {
     const roll: number = Math.floor(Math.random() * 10) + 1;
+    return this._colorFromRoll(roll);
+  }
+
+  _colorFromRoll(roll: number): "red" | "blue" {
     return roll <= 4 ? "red" : "blue";
   }
 }

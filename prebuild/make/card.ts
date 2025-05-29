@@ -4,6 +4,10 @@ async function go() {
   await new CreateDeck("action").go();
   await new CreateDeck("agenda").go();
   await new CreateDeck("alliance").setIsPortrait(false).go();
+  await new CreateDeck("event")
+    .setSizePx(1417, 826)
+    .setSizeWorld(12.9, 7.5)
+    .go();
   await new CreateDeck("exploration/cultural").go();
   await new CreateDeck("exploration/industrial").go();
   await new CreateDeck("exploration/hazardous").go();

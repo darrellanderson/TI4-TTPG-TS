@@ -17,6 +17,7 @@ export function setupTestTableDeckSnapPoints() {
           "deck-exploration-industrial",
           "deck-exploration-hazardous",
           "deck-exploration-frontier",
+          "deck-event",
           "deck-relic",
         ],
       }),
