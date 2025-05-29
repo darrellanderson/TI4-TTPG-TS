@@ -165,4 +165,7 @@ class QuickRoller {
   }
 }
 
-new QuickRoller(refObject);
+const obj: GameObject = refObject;
+process.nextTick((): void => {
+  new QuickRoller(obj);
+});

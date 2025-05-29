@@ -63,4 +63,6 @@ const ui: UIElement = new UIElement();
 ui.position = new Vector(0, 0, extent.z + 0.02);
 ui.widget = panel;
 
-obj.addUI(ui);
+process.nextTick((): void => {
+  obj.addUI(ui);
+});
