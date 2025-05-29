@@ -119,13 +119,14 @@ class StatusPad {
   }
 }
 
-const statusPad = new StatusPad(refObject);
+const obj: GameObject = refObject;
 process.nextTick(() => {
+  const statusPad = new StatusPad(obj);
   statusPad.update();
-});
 
-TurnOrder.onTurnStateChanged.add((turnOrder: TurnOrder): void => {
-  if (turnOrder === TI4.turnOrder) {
-    statusPad.update();
-  }
+  TurnOrder.onTurnStateChanged.add((turnOrder: TurnOrder): void => {
+    if (turnOrder === TI4.turnOrder) {
+      statusPad.update();
+    }
+  });
 });

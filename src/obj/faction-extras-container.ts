@@ -33,8 +33,6 @@ outline.widget = outlineWidget;
 
 const obj: GameObject = refObject;
 const packageId: string = refPackageId;
-obj.addUI(ui);
-obj.addUI(outline);
 
 function update() {
   const owner: number = obj.getOwningPlayerSlot();
@@ -54,6 +52,10 @@ function update() {
 }
 
 // Owner not set at creation time, wait a frame.
-process.nextTick(update);
+process.nextTick(() => {
+  obj.addUI(ui);
+  obj.addUI(outline);
+  update();
+});
 
 TI4.events.onFactionChanged.add(update);

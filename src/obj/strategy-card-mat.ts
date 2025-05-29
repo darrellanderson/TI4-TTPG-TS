@@ -134,4 +134,7 @@ _uiElement.rotation = new Rotator(0, 90, 0);
 _uiElement.widget = _title;
 _uiElement.scale = 1 / SCALE;
 
-refObject.addUI(_uiElement);
+const obj: GameObject = refObject;
+process.nextTick(() => {
+  obj.addUI(_uiElement);
+});
