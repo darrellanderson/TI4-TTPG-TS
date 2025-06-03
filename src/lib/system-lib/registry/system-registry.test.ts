@@ -99,6 +99,7 @@ it("loadDefaultData", () => {
   expect(registry.rawBySystemTileNumber(1)).toBeUndefined();
   registry.loadDefaultData();
   expect(registry.rawBySystemTileNumber(1)).toBeDefined();
+  expect(registry.rawAllPlanetCardNsids()).toContain("card.planet:base/jord");
   registry.destroy();
 });
 

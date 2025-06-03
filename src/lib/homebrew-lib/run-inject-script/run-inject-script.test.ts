@@ -41,6 +41,7 @@ it("package at init time", () => {
     );
 
   new RunInjectScript().init();
+  process.flushTicks();
 });
 
 it("package added later", () => {
@@ -51,4 +52,5 @@ it("package added later", () => {
   const runInjectScript = new RunInjectScript();
   runInjectScript.init();
   runInjectScript._onPackageAdded(pkg);
+  process.flushTicks();
 });
