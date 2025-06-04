@@ -1,7 +1,7 @@
 {
     "Type": "Card",
     "GUID": "4FBD7542E1E3DEE9AA18E1D2AC749B7A",
-    "Name": "leader 2/2",
+    "Name": "leader 2/3",
     "Metadata": "",
     "CollisionType": "Regular",
     "Friction": 0.7,
@@ -39,8 +39,8 @@
     "HiddenTexture": "",
     "BackIndex": -3,
     "HiddenIndex": -1,
-    "NumHorizontal": 1,
-    "NumVertical": 2,
+    "NumHorizontal": 5,
+    "NumVertical": 8,
     "Width": 6.3,
     "Height": 4.2,
     "Thickness": 0.05,
@@ -54,21 +54,249 @@
     "Model": "Rounded",
     "Indices": [
         0,
-        1
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39
     ],
     "CardNames": {
-        "0": "Watcher",
-        "1": "ZS Thunderbolt M2"
+        "0": "Rickar Rickani",
+        "1": "Rowl Sarrig",
+        "2": "Sai Seravus",
+        "3": "So Ata",
+        "4": "S'ula Mentarion",
+        "5": "Ta Zern",
+        "6": "That Which Molds Flesh",
+        "7": "Trrakan Aun Zulok",
+        "8": "Tungstantus",
+        "9": "Xuange",
+        "10": "Adjudicator Ba'al",
+        "11": "Ahk-Syl Siven",
+        "12": "Airo Shir Aur",
+        "13": "Conservator Procyon",
+        "14": "Dannel of the Tenth",
+        "15": "Darktalon Treilla",
+        "16": "Gurno Aggero",
+        "17": "Harrugh Gefhara",
+        "18": "Hesh and Prit",
+        "19": "Ipswitch, Loose Cannon",
+        "20": "It Feeds on Carrion",
+        "21": "Jace X, 4th Air Legion",
+        "22": "Kyver, Blade and Key",
+        "23": "Letani Miasmiala",
+        "24": "Mathis Mathinus",
+        "25": "Mirik Aun Sissiri",
+        "26": "Riftwalker Meian",
+        "27": "Rin, the Master's Legacy",
+        "28": "Sh'val, Harbinger",
+        "29": "The Helmsman",
+        "30": "The Oracle",
+        "31": "Ul the Progenitor",
+        "32": "Unit.dsgn.FLAYESH",
+        "33": "Xxekir Grom",
+        "34": "Aerie Sentinel",
+        "35": "Annihilator",
+        "36": "Blackshade Infiltrator",
+        "37": "Dunlain Reaper",
+        "38": "Eidolon",
+        "39": "Ember Colossus"
     },
     "CardMetadata": {
-        "0": "card.leader.mech:pok/watcher",
-        "1": "card.leader.mech:pok/zs-thunderbolt-m2"
+        "0": "card.leader.commander:pok/rickar-rickani",
+        "1": "card.leader.commander:pok/rowl-sarrig",
+        "2": "card.leader.commander:pok/sai-seravus",
+        "3": "card.leader.commander:pok/so-ata",
+        "4": "card.leader.commander:pok/sula-mentarion",
+        "5": "card.leader.commander:pok/ta-zern",
+        "6": "card.leader.commander:pok/that-which-molds-flesh",
+        "7": "card.leader.commander:pok/trrakan-aun-zulok",
+        "8": "card.leader.commander:pok/tungstantus",
+        "9": "card.leader.commander:pok/xuange",
+        "10": "card.leader.hero:pok/adjudicator-baal",
+        "11": "card.leader.hero:pok/ahksyl-siven",
+        "12": "card.leader.hero:pok/airo-shir-aur",
+        "13": "card.leader.hero:pok/conservator-procyon",
+        "14": "card.leader.hero:pok/dannel-of-the-tenth",
+        "15": "card.leader.hero:pok/darktalon-treilla",
+        "16": "card.leader.hero:pok/gurno-aggero",
+        "17": "card.leader.hero:pok/harrugh-gefhara",
+        "18": "card.leader.hero:pok/hesh-and-prit",
+        "19": "card.leader.hero:pok/ipswitch-loose-cannon",
+        "20": "card.leader.hero:pok/it-feeds-on-carrion",
+        "21": "card.leader.hero:pok/jace-x-4th-air-legion",
+        "22": "card.leader.hero:pok/kyver-blade-and-key",
+        "23": "card.leader.hero:pok/letani-miasmiala",
+        "24": "card.leader.hero:pok/mathis-mathinus",
+        "25": "card.leader.hero:pok/mirik-aun-sissiri",
+        "26": "card.leader.hero:pok/riftwalker-meian",
+        "27": "card.leader.hero:pok/rin-the-masters-legacy",
+        "28": "card.leader.hero:pok/shval-harbinger",
+        "29": "card.leader.hero:pok/the-helmsman",
+        "30": "card.leader.hero:pok/the-oracle",
+        "31": "card.leader.hero:pok/ul-the-progenitor",
+        "32": "card.leader.hero:pok/unitdsgnflayesh",
+        "33": "card.leader.hero:pok/xxekir-grom",
+        "34": "card.leader.mech:pok/aerie-sentinel",
+        "35": "card.leader.mech:pok/annihilator",
+        "36": "card.leader.mech:pok/blackshade-infiltrator",
+        "37": "card.leader.mech:pok/dunlain-reaper",
+        "38": "card.leader.mech:pok/eidolon",
+        "39": "card.leader.mech:pok/ember-colossus"
     },
     "CardTags": {
         "0": [
             "card-leader"
         ],
         "1": [
+            "card-leader"
+        ],
+        "2": [
+            "card-leader"
+        ],
+        "3": [
+            "card-leader"
+        ],
+        "4": [
+            "card-leader"
+        ],
+        "5": [
+            "card-leader"
+        ],
+        "6": [
+            "card-leader"
+        ],
+        "7": [
+            "card-leader"
+        ],
+        "8": [
+            "card-leader"
+        ],
+        "9": [
+            "card-leader"
+        ],
+        "10": [
+            "card-leader"
+        ],
+        "11": [
+            "card-leader"
+        ],
+        "12": [
+            "card-leader"
+        ],
+        "13": [
+            "card-leader"
+        ],
+        "14": [
+            "card-leader"
+        ],
+        "15": [
+            "card-leader"
+        ],
+        "16": [
+            "card-leader"
+        ],
+        "17": [
+            "card-leader"
+        ],
+        "18": [
+            "card-leader"
+        ],
+        "19": [
+            "card-leader"
+        ],
+        "20": [
+            "card-leader"
+        ],
+        "21": [
+            "card-leader"
+        ],
+        "22": [
+            "card-leader"
+        ],
+        "23": [
+            "card-leader"
+        ],
+        "24": [
+            "card-leader"
+        ],
+        "25": [
+            "card-leader"
+        ],
+        "26": [
+            "card-leader"
+        ],
+        "27": [
+            "card-leader"
+        ],
+        "28": [
+            "card-leader"
+        ],
+        "29": [
+            "card-leader"
+        ],
+        "30": [
+            "card-leader"
+        ],
+        "31": [
+            "card-leader"
+        ],
+        "32": [
+            "card-leader"
+        ],
+        "33": [
+            "card-leader"
+        ],
+        "34": [
+            "card-leader"
+        ],
+        "35": [
+            "card-leader"
+        ],
+        "36": [
+            "card-leader"
+        ],
+        "37": [
+            "card-leader"
+        ],
+        "38": [
+            "card-leader"
+        ],
+        "39": [
             "card-leader"
         ]
     },

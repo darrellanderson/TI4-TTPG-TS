@@ -1,7 +1,7 @@
 {
     "Type": "Card",
-    "GUID": "0D4E84353AC77BF9626D41E675759186",
-    "Name": "agenda",
+    "GUID": "FA55090DB1A3FBD409F14E5DE72F7081",
+    "Name": "agenda 1/2",
     "Metadata": "",
     "CollisionType": "Regular",
     "Friction": 0.7,
@@ -34,12 +34,12 @@
         "Y": 0,
         "Z": 0
     },
-    "FrontTexture": "card/agenda/base/base.face.jpg",
+    "FrontTexture": "card/agenda/base/base.face.0.jpg",
     "BackTexture": "card/agenda/base/base.back.jpg",
     "HiddenTexture": "",
     "BackIndex": -2,
     "HiddenIndex": -1,
-    "NumHorizontal": 12,
+    "NumHorizontal": 8,
     "NumVertical": 5,
     "Width": 4.2,
     "Height": 6.3,
@@ -92,17 +92,7 @@
         36,
         37,
         38,
-        39,
-        40,
-        41,
-        42,
-        43,
-        44,
-        45,
-        46,
-        47,
-        48,
-        49
+        39
     ],
     "CardNames": {
         "0": "Anti-Intellectual Revolution",
@@ -144,17 +134,7 @@
         "36": "Research Team: Cybernetic",
         "37": "Research Team: Propulsion",
         "38": "Research Team: Warfare",
-        "39": "Seed of an Empire",
-        "40": "Senate Sanctuary",
-        "41": "Shard of the Throne",
-        "42": "Shared Research",
-        "43": "Swords to Plowshares",
-        "44": "Terraforming Initiative",
-        "45": "The Crown of Emphidia",
-        "46": "The Crown of Thalnos",
-        "47": "Unconventional Measures",
-        "48": "Wormhole Reconstruction",
-        "49": "Wormhole Research"
+        "39": "Seed of an Empire"
     },
     "CardMetadata": {
         "0": "card.agenda:base/antiintellectual-revolution",
@@ -196,17 +176,7 @@
         "36": "card.agenda:base/research-team-cybernetic",
         "37": "card.agenda:base/research-team-propulsion",
         "38": "card.agenda:base/research-team-warfare",
-        "39": "card.agenda:base/seed-of-an-empire|scorable-public",
-        "40": "card.agenda:base/senate-sanctuary",
-        "41": "card.agenda:base/shard-of-the-throne|scorable-private",
-        "42": "card.agenda:base/shared-research",
-        "43": "card.agenda:base/swords-to-plowshares",
-        "44": "card.agenda:base/terraforming-initiative",
-        "45": "card.agenda:base/the-crown-of-emphidia|scorable-private",
-        "46": "card.agenda:base/the-crown-of-thalnos",
-        "47": "card.agenda:base/unconventional-measures",
-        "48": "card.agenda:base/wormhole-reconstruction",
-        "49": "card.agenda:base/wormhole-research"
+        "39": "card.agenda:base/seed-of-an-empire|scorable-public"
     },
     "CardTags": {
         "0": [
@@ -327,36 +297,6 @@
             "card-agenda"
         ],
         "39": [
-            "card-agenda"
-        ],
-        "40": [
-            "card-agenda"
-        ],
-        "41": [
-            "card-agenda"
-        ],
-        "42": [
-            "card-agenda"
-        ],
-        "43": [
-            "card-agenda"
-        ],
-        "44": [
-            "card-agenda"
-        ],
-        "45": [
-            "card-agenda"
-        ],
-        "46": [
-            "card-agenda"
-        ],
-        "47": [
-            "card-agenda"
-        ],
-        "48": [
-            "card-agenda"
-        ],
-        "49": [
             "card-agenda"
         ]
     },

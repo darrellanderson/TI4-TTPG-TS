@@ -1,7 +1,7 @@
 {
     "Type": "Card",
-    "GUID": "DEAFA1A9A512A5006D5478A5E0836663",
-    "Name": "planet",
+    "GUID": "739458CAB082DB7578E85833F4B522CA",
+    "Name": "planet 1/2",
     "Metadata": "",
     "CollisionType": "Regular",
     "Friction": 0.7,
@@ -34,13 +34,13 @@
         "Y": 0,
         "Z": 0
     },
-    "FrontTexture": "card/planet/base/base.face.jpg",
-    "BackTexture": "card/planet/base/base.back.jpg",
+    "FrontTexture": "card/planet/base/base.face.0.jpg",
+    "BackTexture": "card/planet/base/base.back.0.jpg",
     "HiddenTexture": "",
     "BackIndex": -3,
     "HiddenIndex": -1,
-    "NumHorizontal": 11,
-    "NumVertical": 6,
+    "NumHorizontal": 8,
+    "NumVertical": 5,
     "Width": 4.2,
     "Height": 6.3,
     "Thickness": 0.05,
@@ -92,26 +92,7 @@
         36,
         37,
         38,
-        39,
-        40,
-        41,
-        42,
-        43,
-        44,
-        45,
-        46,
-        47,
-        48,
-        49,
-        50,
-        51,
-        52,
-        53,
-        54,
-        55,
-        56,
-        57,
-        58
+        39
     ],
     "CardNames": {
         "0": "[​0.0.0]",
@@ -153,26 +134,7 @@
         "36": "New Albion",
         "37": "Quann",
         "38": "Qucen'n",
-        "39": "Quinarra",
-        "40": "Ragh",
-        "41": "Rarron",
-        "42": "Resculon",
-        "43": "Retillion",
-        "44": "Sakulag",
-        "45": "Saudor",
-        "46": "Shalloq",
-        "47": "Starpoint",
-        "48": "Tar'Mann",
-        "49": "Tequ'Ran",
-        "50": "Thibah",
-        "51": "Torkan",
-        "52": "Tren'Lak",
-        "53": "Vefut II",
-        "54": "Wellon",
-        "55": "Winnu",
-        "56": "Wren Terra",
-        "57": "Xxehan",
-        "58": "Zohbat"
+        "39": "Quinarra"
     },
     "CardMetadata": {
         "0": "card.planet:base/000",
@@ -214,26 +176,7 @@
         "36": "card.planet:base/new-albion",
         "37": "card.planet:base/quann",
         "38": "card.planet:base/qucenn",
-        "39": "card.planet:base/quinarra",
-        "40": "card.planet:base/ragh",
-        "41": "card.planet:base/rarron",
-        "42": "card.planet:base/resculon",
-        "43": "card.planet:base/retillion",
-        "44": "card.planet:base/sakulag",
-        "45": "card.planet:base/saudor",
-        "46": "card.planet:base/shalloq",
-        "47": "card.planet:base/starpoint",
-        "48": "card.planet:base/tarmann",
-        "49": "card.planet:base/tequran",
-        "50": "card.planet:base/thibah",
-        "51": "card.planet:base/torkan",
-        "52": "card.planet:base/trenlak",
-        "53": "card.planet:base/vefut-ii",
-        "54": "card.planet:base/wellon",
-        "55": "card.planet:base/winnu",
-        "56": "card.planet:base/wren-terra",
-        "57": "card.planet:base/xxehan",
-        "58": "card.planet:base/zohbat"
+        "39": "card.planet:base/quinarra"
     },
     "CardTags": {
         "0": [
@@ -354,63 +297,6 @@
             "card-planet"
         ],
         "39": [
-            "card-planet"
-        ],
-        "40": [
-            "card-planet"
-        ],
-        "41": [
-            "card-planet"
-        ],
-        "42": [
-            "card-planet"
-        ],
-        "43": [
-            "card-planet"
-        ],
-        "44": [
-            "card-planet"
-        ],
-        "45": [
-            "card-planet"
-        ],
-        "46": [
-            "card-planet"
-        ],
-        "47": [
-            "card-planet"
-        ],
-        "48": [
-            "card-planet"
-        ],
-        "49": [
-            "card-planet"
-        ],
-        "50": [
-            "card-planet"
-        ],
-        "51": [
-            "card-planet"
-        ],
-        "52": [
-            "card-planet"
-        ],
-        "53": [
-            "card-planet"
-        ],
-        "54": [
-            "card-planet"
-        ],
-        "55": [
-            "card-planet"
-        ],
-        "56": [
-            "card-planet"
-        ],
-        "57": [
-            "card-planet"
-        ],
-        "58": [
             "card-planet"
         ]
     },

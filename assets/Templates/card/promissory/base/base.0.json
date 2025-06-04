@@ -1,7 +1,7 @@
 {
     "Type": "Card",
-    "GUID": "E1D7FE40B708881F69411BE62E1D0137",
-    "Name": "promissory",
+    "GUID": "9AC4CAAEC8D5C3973C512689815C4BB2",
+    "Name": "promissory 1/2",
     "Metadata": "",
     "CollisionType": "Regular",
     "Friction": 0.7,
@@ -34,12 +34,12 @@
         "Y": 0,
         "Z": 0
     },
-    "FrontTexture": "card/promissory/base/base.face.jpg",
+    "FrontTexture": "card/promissory/base/base.face.0.jpg",
     "BackTexture": "card/promissory/base/base.back.jpg",
     "HiddenTexture": "",
     "BackIndex": -2,
     "HiddenIndex": -1,
-    "NumHorizontal": 12,
+    "NumHorizontal": 8,
     "NumVertical": 5,
     "Width": 4.2,
     "Height": 6.3,
@@ -92,16 +92,7 @@
         36,
         37,
         38,
-        39,
-        40,
-        41,
-        42,
-        43,
-        44,
-        45,
-        46,
-        47,
-        48
+        39
     ],
     "CardNames": {
         "0": "Acquiescence",
@@ -143,16 +134,7 @@
         "36": "Support for the Throne (White)",
         "37": "Support for the Throne (Yellow)",
         "38": "Tekklar Legion",
-        "39": "Trade Agreement (Blue)",
-        "40": "Trade Agreement (Green)",
-        "41": "Trade Agreement (Orange)",
-        "42": "Trade Agreement (Pink)",
-        "43": "Trade Agreement (Purple)",
-        "44": "Trade Agreement (Red)",
-        "45": "Trade Agreement (White)",
-        "46": "Trade Agreement (Yellow)",
-        "47": "Trade Convoys",
-        "48": "War Funding"
+        "39": "Trade Agreement (Blue)"
     },
     "CardMetadata": {
         "0": "card.promissory:base/acquiescence",
@@ -194,16 +176,7 @@
         "36": "card.promissory.white:base/support-for-the-throne",
         "37": "card.promissory.yellow:base/support-for-the-throne",
         "38": "card.promissory:base/tekklar-legion",
-        "39": "card.promissory.blue:base/trade-agreement",
-        "40": "card.promissory.green:base/trade-agreement",
-        "41": "card.promissory.orange:base/trade-agreement",
-        "42": "card.promissory.pink:base/trade-agreement",
-        "43": "card.promissory.purple:base/trade-agreement",
-        "44": "card.promissory.red:base/trade-agreement",
-        "45": "card.promissory.white:base/trade-agreement",
-        "46": "card.promissory.yellow:base/trade-agreement",
-        "47": "card.promissory:base/trade-convoys",
-        "48": "card.promissory:base/war-funding"
+        "39": "card.promissory.blue:base/trade-agreement"
     },
     "CardTags": {
         "0": [
@@ -324,33 +297,6 @@
             "card-promissory"
         ],
         "39": [
-            "card-promissory"
-        ],
-        "40": [
-            "card-promissory"
-        ],
-        "41": [
-            "card-promissory"
-        ],
-        "42": [
-            "card-promissory"
-        ],
-        "43": [
-            "card-promissory"
-        ],
-        "44": [
-            "card-promissory"
-        ],
-        "45": [
-            "card-promissory"
-        ],
-        "46": [
-            "card-promissory"
-        ],
-        "47": [
-            "card-promissory"
-        ],
-        "48": [
             "card-promissory"
         ]
     },

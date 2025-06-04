@@ -1,0 +1,121 @@
+{
+    "Type": "Card",
+    "GUID": "A2E6ED9A972BEE71E66ADF1B06B28B0F",
+    "Name": "promissory 2/2",
+    "Metadata": "",
+    "CollisionType": "Regular",
+    "Friction": 0.7,
+    "Restitution": 0,
+    "Density": 0.5,
+    "SurfaceType": "Cardboard",
+    "Roughness": 1,
+    "Metallic": 0,
+    "PrimaryColor": {
+        "R": 255,
+        "G": 255,
+        "B": 255
+    },
+    "SecondaryColor": {
+        "R": 0,
+        "G": 0,
+        "B": 0
+    },
+    "Flippable": true,
+    "AutoStraighten": false,
+    "ShouldSnap": true,
+    "ScriptName": "",
+    "Blueprint": "",
+    "Models": [],
+    "Collision": [],
+    "SnapPointsGlobal": false,
+    "SnapPoints": [],
+    "ZoomViewDirection": {
+        "X": 0,
+        "Y": 0,
+        "Z": 0
+    },
+    "FrontTexture": "card/promissory/base/base.face.1.jpg",
+    "BackTexture": "card/promissory/base/base.back.jpg",
+    "HiddenTexture": "",
+    "BackIndex": -2,
+    "HiddenIndex": -1,
+    "NumHorizontal": 2,
+    "NumVertical": 5,
+    "Width": 4.2,
+    "Height": 6.3,
+    "Thickness": 0.05,
+    "HiddenInHand": true,
+    "UsedWithCardHolders": true,
+    "CanStack": true,
+    "UsePrimaryColorForSide": false,
+    "FrontTextureOverrideExposed": false,
+    "AllowFlippedInStack": false,
+    "MirrorBack": true,
+    "Model": "Rounded",
+    "Indices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8
+    ],
+    "CardNames": {
+        "0": "Trade Agreement (Green)",
+        "1": "Trade Agreement (Orange)",
+        "2": "Trade Agreement (Pink)",
+        "3": "Trade Agreement (Purple)",
+        "4": "Trade Agreement (Red)",
+        "5": "Trade Agreement (White)",
+        "6": "Trade Agreement (Yellow)",
+        "7": "Trade Convoys",
+        "8": "War Funding"
+    },
+    "CardMetadata": {
+        "0": "card.promissory.green:base/trade-agreement",
+        "1": "card.promissory.orange:base/trade-agreement",
+        "2": "card.promissory.pink:base/trade-agreement",
+        "3": "card.promissory.purple:base/trade-agreement",
+        "4": "card.promissory.red:base/trade-agreement",
+        "5": "card.promissory.white:base/trade-agreement",
+        "6": "card.promissory.yellow:base/trade-agreement",
+        "7": "card.promissory:base/trade-convoys",
+        "8": "card.promissory:base/war-funding"
+    },
+    "CardTags": {
+        "0": [
+            "card-promissory"
+        ],
+        "1": [
+            "card-promissory"
+        ],
+        "2": [
+            "card-promissory"
+        ],
+        "3": [
+            "card-promissory"
+        ],
+        "4": [
+            "card-promissory"
+        ],
+        "5": [
+            "card-promissory"
+        ],
+        "6": [
+            "card-promissory"
+        ],
+        "7": [
+            "card-promissory"
+        ],
+        "8": [
+            "card-promissory"
+        ]
+    },
+    "GroundAccessibility": "ZoomAndContext",
+    "Tags": [
+        "card-promissory"
+    ]
+}
