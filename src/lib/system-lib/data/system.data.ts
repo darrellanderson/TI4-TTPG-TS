@@ -1240,6 +1240,25 @@ export const SOURCE_TO_SYSTEM_DATA: Record<string, Array<SystemSchemaType>> = {
       //hyperlaneFaceDown: [[3, 4], [], [], [0], [0], []],
       imgFaceDown: true,
     },
+
+    // Planets without a system.
+    {
+      tile: -8,
+      isExcludeFromDraft: true,
+      planets: [
+        {
+          name: "Mirage",
+          nsidName: "mirage",
+          resources: 1,
+          influence: 2,
+          traits: ["cultural"],
+          localPosition: { x: 0.4, y: 0.15 },
+          radius: 2.7,
+          isLegendary: true,
+          legendaryNsidName: "mirage-flight-academy",
+        },
+      ],
+    },
   ],
 
   ["codex.vigil"]: [

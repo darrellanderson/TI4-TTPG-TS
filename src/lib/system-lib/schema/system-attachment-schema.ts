@@ -12,7 +12,6 @@ export const SystemAttachmentSchema = z
     nsidName: NsidNameSchema, // NSID "token.attachment.system:${source}/${nsidName}"
     imgFaceDown: z.boolean().optional(), // has separate back image?
     doNotAttach: z.boolean().optional(), // do not attach, or add to registry
-    modelScale: z.number().optional(), // override default x/y size
 
     anomalies: z.array(AnomalySchema).optional(),
     wormholes: z.array(WormholeSchema).optional(),
