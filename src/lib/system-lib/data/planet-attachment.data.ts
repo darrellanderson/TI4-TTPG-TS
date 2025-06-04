@@ -34,13 +34,11 @@ export const SOURCE_TO_PLANET_ATTACHMENT_DATA: Record<
     {
       name: "Sleeper Token",
       nsidName: "sleeper-token",
-      modelScale: 1.5,
       doNotAttach: true,
     },
     {
       name: "Stellar Converter",
       nsidName: "stellar-converter",
-      modelScale: 2,
       isDestroyPlanet: true,
     },
 

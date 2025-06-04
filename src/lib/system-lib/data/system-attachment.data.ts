@@ -23,26 +23,22 @@ export const SOURCE_TO_SYSTEM_ATTACHMENT_DATA: Record<
       name: "Dimensional Tear",
       nsidName: "dimensional-tear.vuilraith",
       imgFaceDown: true,
-      modelScale: 1.5,
       anomalies: ["gravity-rift"],
     },
     {
       name: "Dimensional Tear",
       nsidName: "dimensional-tear.nekro",
       imgFaceDown: true,
-      modelScale: 1.5,
       anomalies: ["gravity-rift"],
     },
     {
       name: "Frontier",
       nsidName: "frontier",
       doNotAttach: true,
-      modelScale: 1.25,
     },
     {
       name: "Ion Storm",
       nsidName: "ion-storm",
-      modelScale: 1.5,
       imgFaceDown: true,
       wormholes: ["alpha"],
       wormholesFaceDown: ["beta"],
@@ -51,7 +47,6 @@ export const SOURCE_TO_SYSTEM_ATTACHMENT_DATA: Record<
       name: "Gamma Wormhole",
       //cardNsid: "card.exploration.cultural:pok/gamma-wormhole",
       nsidName: "wormhole-gamma",
-      modelScale: 1.5,
       wormholes: ["gamma"],
     },
     {
@@ -64,7 +59,6 @@ export const SOURCE_TO_SYSTEM_ATTACHMENT_DATA: Record<
       name: "Mirage",
       //cardNsid: "card.exploration.frontier:pok/mirage",
       nsidName: "mirage",
-      modelScale: 1.5,
       planets: [
         {
           name: "Mirage",

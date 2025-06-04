@@ -260,6 +260,27 @@ export class SystemRegistry {
   }
 
   /**
+   * Get all planet card NSIDs, including from missing systems
+   * (e.g. home systems might not exist in the system box).
+   */
+  public rawAllPlanetCardNsids(): Array<string> {
+    const planetCardNsids: Set<string> = new Set();
+    this._systemTileNumberToSchemaAndSource.forEach(
+      (schemaAndSource: SchemaAndSource): void => {
+        const schema: SystemSchemaType = schemaAndSource.schema;
+        const source: string = schemaAndSource.sourceAndPackageId.source;
+        if (schema.planets) {
+          for (const planet of schema.planets) {
+            const planetCardNsid: string = `card.planet:${source}/${planet.nsidName}`;
+            planetCardNsids.add(planetCardNsid);
+          }
+        }
+      }
+    );
+    return Array.from(planetCardNsids);
+  }
+
+  /**
    * Get the raw system schema associated with the tile number.
    *
    * @param tileNumber
