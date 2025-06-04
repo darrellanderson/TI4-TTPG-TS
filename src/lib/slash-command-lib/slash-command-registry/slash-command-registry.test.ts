@@ -1,9 +1,25 @@
 import { Player } from "@tabletop-playground/api";
-import {
-  SlashCommandEntry,
-  SlashCommandRegistry,
-} from "./slash-command-registry";
+import { SlashCommandRegistry } from "./slash-command-registry";
 import { mockGlobalEvents, MockPlayer } from "ttpg-mock";
+import { AbstractSlashCommand } from "../data/commands/abstract-slash-command/abstract-slash-command";
+
+class MySlashCommand extends AbstractSlashCommand {
+  public _callCount: number = 0;
+  public _callValues: Array<string> = [];
+
+  getSlashCommand(): `/${string}` {
+    return "/my-command";
+  }
+
+  isHostOnly(): boolean {
+    return true;
+  }
+
+  run(_argv: Array<string>, _player: Player): void {
+    this._callCount++;
+    this._callValues.push(..._argv);
+  }
+}
 
 it("constructor/init", () => {
   const registry = new SlashCommandRegistry();
@@ -14,12 +30,7 @@ it("load", () => {
   const registry = new SlashCommandRegistry();
   registry.init();
 
-  const commands: Array<SlashCommandEntry> = [
-    {
-      slashCommand: "/test",
-      action: (_argv: Array<string>, _player: Player) => {},
-    },
-  ];
+  const commands: Array<AbstractSlashCommand> = [new MySlashCommand()];
   registry.load(commands);
 });
 
@@ -27,67 +38,44 @@ it("load (dup)", () => {
   const registry = new SlashCommandRegistry();
   registry.init();
 
-  const commands: Array<SlashCommandEntry> = [
-    {
-      slashCommand: "/test",
-      action: (_argv: Array<string>, _player: Player) => {},
-    },
-    {
-      slashCommand: "/test",
-      action: (_argv: Array<string>, _player: Player) => {},
-    },
+  const commands: Array<AbstractSlashCommand> = [
+    new MySlashCommand(),
+    new MySlashCommand(),
   ];
+
   expect(() => {
     registry.load(commands);
-  }).toThrow(/Duplicate slash command: \/test/);
+  }).toThrow(/Duplicate slash command: \/my-command/);
 });
 
-it("event", () => {
+it("event (is-host)", () => {
+  const mySlashCommand = new MySlashCommand();
+  const commands: Array<AbstractSlashCommand> = [mySlashCommand];
+
   const registry = new SlashCommandRegistry();
   registry.init();
-
-  let callCount: number = 0;
-  const callValues: Array<string> = [];
-  const commands: Array<SlashCommandEntry> = [
-    {
-      slashCommand: "/test",
-      action: (argv: Array<string>, _player: Player) => {
-        callCount++;
-        callValues.push(...argv);
-      },
-    },
-  ];
   registry.load(commands);
 
-  const sender: Player = new MockPlayer();
-  mockGlobalEvents._chatMessageAsPlayer(sender, "/test foo bar");
+  const sender: Player = new MockPlayer({ isHost: true });
+  mockGlobalEvents._chatMessageAsPlayer(sender, "/my-command foo bar");
 
-  expect(callCount).toBe(1);
-  expect(callValues).toEqual(["foo", "bar"]);
+  expect(mySlashCommand._callCount).toBe(1);
+  expect(mySlashCommand._callValues).toEqual(["foo", "bar"]);
 });
 
 it("event (host only)", () => {
+  const mySlashCommand = new MySlashCommand();
+  const commands: Array<AbstractSlashCommand> = [mySlashCommand];
+
   const registry = new SlashCommandRegistry();
   registry.init();
-
-  let callCount: number = 0;
-  const callValues: Array<string> = [];
-  const commands: Array<SlashCommandEntry> = [
-    {
-      slashCommand: "/test",
-      action: (argv: Array<string>, _player: Player) => {
-        callCount++;
-        callValues.push(...argv);
-      },
-      hostOnly: true,
-    },
-  ];
   registry.load(commands);
 
-  const sender: Player = new MockPlayer(); // not host
-  mockGlobalEvents._chatMessageAsPlayer(sender, "/test foo bar");
+  const sender: Player = new MockPlayer({ isHost: false });
+  mockGlobalEvents._chatMessageAsPlayer(sender, "/my-command foo bar");
 
-  expect(callCount).toBe(0);
+  expect(mySlashCommand._callCount).toBe(0);
+  expect(mySlashCommand._callValues).toEqual([]);
 });
 
 it("loadDefaultData", () => {

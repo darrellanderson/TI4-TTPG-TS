@@ -1,11 +1,20 @@
-import { SlashCommandEntry } from "lib/slash-command-lib/slash-command-registry/slash-command-registry";
 import { SlashToggleUnits } from "./slash-toggle-units";
 import { Container, GameObject, Player } from "@tabletop-playground/api";
 import { MockContainer, MockGameObject, MockPlayer } from "ttpg-mock";
+import { AbstractSlashCommand } from "../abstract-slash-command/abstract-slash-command";
+
+it("getSlashCommand", () => {
+  const cmd: AbstractSlashCommand = new SlashToggleUnits();
+  expect(cmd.getSlashCommand()).toBe("/toggleunits");
+});
+
+it("isHostOnly", () => {
+  const cmd: AbstractSlashCommand = new SlashToggleUnits();
+  expect(cmd.isHostOnly()).toBe(true);
+});
 
 it("call", () => {
-  const cmd: SlashCommandEntry = SlashToggleUnits;
-  expect(cmd.slashCommand).toBe("/toggleunits");
+  const cmd: AbstractSlashCommand = new SlashToggleUnits();
 
   const unitInContainer: GameObject = MockGameObject.simple(
     "unit:base/destroyer"
@@ -19,12 +28,12 @@ it("call", () => {
 
   const argv: Array<string> = [];
   const player: Player = new MockPlayer();
-  cmd.action(argv, player);
+  cmd.run(argv, player);
 
   expect(unitInContainer.isValid()).toBe(false);
   expect(unitOnTable.isValid()).toBe(false);
   expect(container.getNumItems()).toBe(1);
 
   // Repeat, swapping back.
-  cmd.action(argv, player);
+  cmd.run(argv, player);
 });

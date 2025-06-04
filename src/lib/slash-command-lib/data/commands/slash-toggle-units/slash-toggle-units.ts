@@ -9,12 +9,18 @@ import {
   world,
 } from "@tabletop-playground/api";
 import { DeletedItemsContainer, NSID, Spawn } from "ttpg-darrell";
-import { SlashCommandEntry } from "../../../slash-command-registry/slash-command-registry";
+import { AbstractSlashCommand } from "../abstract-slash-command/abstract-slash-command";
 
-export const SlashToggleUnits: SlashCommandEntry = {
-  slashCommand: "/toggleunits",
-  hostOnly: true,
-  action: (_argv: Array<string>, _player: Player): void => {
+export class SlashToggleUnits implements AbstractSlashCommand {
+  getSlashCommand(): `/${string}` {
+    return "/toggleunits";
+  }
+
+  isHostOnly(): boolean {
+    return true;
+  }
+
+  run(_argv: Array<string>, _player: Player): void {
     // Get all units, even in containers.
     const units: Array<GameObject> = [];
     const skipContained: boolean = false;
@@ -66,5 +72,5 @@ export const SlashToggleUnits: SlashCommandEntry = {
         }
       }
     }
-  },
-};
+  }
+}
