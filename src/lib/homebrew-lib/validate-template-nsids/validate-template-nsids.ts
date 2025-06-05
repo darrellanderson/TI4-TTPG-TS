@@ -32,8 +32,11 @@ export class ValidateTemplateNsids extends AbstractValidate {
    * @param nsid
    */
   _checkNsid(nsid: string): string | undefined {
+    if (nsid === "default") {
+      return undefined; // Skip the default NSID, it is a special case.
+    }
     const obj: GameObject | undefined = Spawn.spawn(nsid);
-    if (!obj && nsid !== "default" && !nsid.startsWith("table:")) {
+    if (!obj && !nsid.startsWith("table:")) {
       return `NSID "${nsid}" does not spawn an object`;
     }
     if (obj && !(obj instanceof Card)) {

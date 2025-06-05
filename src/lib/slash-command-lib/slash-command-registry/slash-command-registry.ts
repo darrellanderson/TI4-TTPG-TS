@@ -26,13 +26,13 @@ export class SlashCommandRegistry implements IGlobal {
           }
 
           entry.run(argv, sender);
+
+          const playerName: string = TI4.playerName.getByPlayer(sender);
+          const color: Color = world.getSlotColor(sender.getSlot());
+          const msg: string = `${playerName} ran "${command}"`;
+          Broadcast.chatAll(msg, color);
         }
       }
-
-      const playerName: string = TI4.playerName.getByPlayer(sender);
-      const color: Color = world.getSlotColor(sender.getSlot());
-      const msg: string = `${playerName} ran "${command}"`;
-      Broadcast.chatAll(msg, color);
     }
   };
 
