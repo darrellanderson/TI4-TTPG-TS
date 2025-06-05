@@ -1,6 +1,6 @@
 import { Player } from "@tabletop-playground/api";
-import { SlashCommandRegistry } from "./slash-command-registry";
 import { mockGlobalEvents, MockPlayer } from "ttpg-mock";
+import { SlashCommandRegistry } from "./slash-command-registry";
 import { AbstractSlashCommand } from "../data/commands/abstract-slash-command/abstract-slash-command";
 
 class MySlashCommand extends AbstractSlashCommand {

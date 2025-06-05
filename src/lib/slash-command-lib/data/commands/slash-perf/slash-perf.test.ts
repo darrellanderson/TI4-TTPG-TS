@@ -1,3 +1,4 @@
+import { MockPlayer } from "ttpg-mock";
 import { AbstractSlashCommand } from "../abstract-slash-command/abstract-slash-command";
 import { SlashPerf } from "./slash-perf";
 
@@ -13,7 +14,7 @@ it("isHostOnly", () => {
 
 it("run", () => {
   const cmd: AbstractSlashCommand = new SlashPerf();
-  const player = { getSlot: () => 1 } as any;
+  const player = new MockPlayer({ isHost: true });
   expect(() => cmd.run([], player)).not.toThrow();
 
   // Run again to toggle off.

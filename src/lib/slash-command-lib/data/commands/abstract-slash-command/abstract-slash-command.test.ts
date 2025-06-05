@@ -1,6 +1,6 @@
 import { Player } from "@tabletop-playground/api";
-import { AbstractSlashCommand } from "./abstract-slash-command";
 import { MockPlayer } from "ttpg-mock";
+import { AbstractSlashCommand } from "./abstract-slash-command";
 
 class MySlashCommand extends AbstractSlashCommand {
   getSlashCommand(): `/${string}` {
