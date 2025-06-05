@@ -3,6 +3,16 @@ import { ValidatePlanetCards } from "./validate-planet-cards";
 import { MockCard, MockCardDetails } from "ttpg-mock";
 import { Spawn } from "ttpg-darrell";
 
+it("getCommandName", () => {
+  const commandName: string = new ValidatePlanetCards().getCommandName();
+  expect(commandName).toBe("planet-cards");
+});
+
+it("getDescription", () => {
+  const description: string = new ValidatePlanetCards().getDescription();
+  expect(description).toBeDefined();
+});
+
 it("getErrors", () => {
   const deckNsid: string = "card.planet:my-source";
   const templateId: string = "abcd1234";

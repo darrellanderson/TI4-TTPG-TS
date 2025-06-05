@@ -1,10 +1,19 @@
 import { Card } from "@tabletop-playground/api";
 import { DeletedItemsContainer, NSID, Spawn } from "ttpg-darrell";
+import { AbstractValidate } from "../abstract-validate/abstract-validate";
 
 /**
  * Get planet cards NSIDs, spawn planet decks and make sure all nsids exist.
  */
-export class ValidatePlanetCards {
+export class ValidatePlanetCards extends AbstractValidate {
+  getCommandName(): string {
+    return "planet-cards";
+  }
+
+  getDescription(): string {
+    return "Validate planet cards in the system registry match the planet cards in the decks (and vice versa).";
+  }
+
   getErrors(erros: Array<string>): void {
     const registeredNsids: Set<string> = this._getRegisteredPlanetCardNsids();
 
