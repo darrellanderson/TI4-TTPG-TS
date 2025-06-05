@@ -1,0 +1,307 @@
+{
+    "Type": "Card",
+    "GUID": "9AC4CAAEC8D5C3973C512689815C4BB2",
+    "Name": "promissory 1/2",
+    "Metadata": "",
+    "CollisionType": "Regular",
+    "Friction": 0.7,
+    "Restitution": 0,
+    "Density": 0.5,
+    "SurfaceType": "Cardboard",
+    "Roughness": 1,
+    "Metallic": 0,
+    "PrimaryColor": {
+        "R": 255,
+        "G": 255,
+        "B": 255
+    },
+    "SecondaryColor": {
+        "R": 0,
+        "G": 0,
+        "B": 0
+    },
+    "Flippable": true,
+    "AutoStraighten": false,
+    "ShouldSnap": true,
+    "ScriptName": "",
+    "Blueprint": "",
+    "Models": [],
+    "Collision": [],
+    "SnapPointsGlobal": false,
+    "SnapPoints": [],
+    "ZoomViewDirection": {
+        "X": 0,
+        "Y": 0,
+        "Z": 0
+    },
+    "FrontTexture": "card/promissory/base/base.face.0.jpg",
+    "BackTexture": "card/promissory/base/base.back.jpg",
+    "HiddenTexture": "",
+    "BackIndex": -2,
+    "HiddenIndex": -1,
+    "NumHorizontal": 8,
+    "NumVertical": 5,
+    "Width": 4.2,
+    "Height": 6.3,
+    "Thickness": 0.05,
+    "HiddenInHand": true,
+    "UsedWithCardHolders": true,
+    "CanStack": true,
+    "UsePrimaryColorForSide": false,
+    "FrontTextureOverrideExposed": false,
+    "AllowFlippedInStack": false,
+    "MirrorBack": true,
+    "Model": "Rounded",
+    "Indices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39
+    ],
+    "CardNames": {
+        "0": "Acquiescence",
+        "1": "Antivirus",
+        "2": "Ceasefire (Blue)",
+        "3": "Ceasefire (Green)",
+        "4": "Ceasefire (Orange)",
+        "5": "Ceasefire (Pink)",
+        "6": "Ceasefire (Purple)",
+        "7": "Ceasefire (Red)",
+        "8": "Ceasefire (White)",
+        "9": "Ceasefire (Yellow)",
+        "10": "Creuss Iff",
+        "11": "Cybernetic Enhancements",
+        "12": "Fires of the Gashlai",
+        "13": "Gift of Prescience",
+        "14": "Greyfire Mutagen",
+        "15": "Military Support",
+        "16": "Political Favor",
+        "17": "Political Secret (Blue)",
+        "18": "Political Secret (Green)",
+        "19": "Political Secret (Orange)",
+        "20": "Political Secret (Pink)",
+        "21": "Political Secret (Purple)",
+        "22": "Political Secret (Red)",
+        "23": "Political Secret (White)",
+        "24": "Political Secret (Yellow)",
+        "25": "Promise of Protection",
+        "26": "Ragh's Call",
+        "27": "Research Agreement",
+        "28": "Spy Net",
+        "29": "Stymie",
+        "30": "Support for the Throne (Blue)",
+        "31": "Support for the Throne (Green)",
+        "32": "Support for the Throne (Orange)",
+        "33": "Support for the Throne (Pink)",
+        "34": "Support for the Throne (Purple)",
+        "35": "Support for the Throne (Red)",
+        "36": "Support for the Throne (White)",
+        "37": "Support for the Throne (Yellow)",
+        "38": "Tekklar Legion",
+        "39": "Trade Agreement (Blue)"
+    },
+    "CardMetadata": {
+        "0": "card.promissory:base/acquiescence",
+        "1": "card.promissory:base/antivirus",
+        "2": "card.promissory.blue:base/ceasefire",
+        "3": "card.promissory.green:base/ceasefire",
+        "4": "card.promissory.orange:base/ceasefire",
+        "5": "card.promissory.pink:base/ceasefire",
+        "6": "card.promissory.purple:base/ceasefire",
+        "7": "card.promissory.red:base/ceasefire",
+        "8": "card.promissory.white:base/ceasefire",
+        "9": "card.promissory.yellow:base/ceasefire",
+        "10": "card.promissory:base/creuss-iff",
+        "11": "card.promissory:base/cybernetic-enhancements",
+        "12": "card.promissory:base/fires-of-the-gashlai",
+        "13": "card.promissory:base/gift-of-prescience",
+        "14": "card.promissory:base/greyfire-mutagen",
+        "15": "card.promissory:base/military-support",
+        "16": "card.promissory:base/political-favor",
+        "17": "card.promissory.blue:base/political-secret",
+        "18": "card.promissory.green:base/political-secret",
+        "19": "card.promissory.orange:base/political-secret",
+        "20": "card.promissory.pink:base/political-secret",
+        "21": "card.promissory.purple:base/political-secret",
+        "22": "card.promissory.red:base/political-secret",
+        "23": "card.promissory.white:base/political-secret",
+        "24": "card.promissory.yellow:base/political-secret",
+        "25": "card.promissory:base/promise-of-protection",
+        "26": "card.promissory:base/raghs-call",
+        "27": "card.promissory:base/research-agreement",
+        "28": "card.promissory:base/spy-net",
+        "29": "card.promissory:base/stymie",
+        "30": "card.promissory.blue:base/support-for-the-throne",
+        "31": "card.promissory.green:base/support-for-the-throne",
+        "32": "card.promissory.orange:base/support-for-the-throne",
+        "33": "card.promissory.pink:base/support-for-the-throne",
+        "34": "card.promissory.purple:base/support-for-the-throne",
+        "35": "card.promissory.red:base/support-for-the-throne",
+        "36": "card.promissory.white:base/support-for-the-throne",
+        "37": "card.promissory.yellow:base/support-for-the-throne",
+        "38": "card.promissory:base/tekklar-legion",
+        "39": "card.promissory.blue:base/trade-agreement"
+    },
+    "CardTags": {
+        "0": [
+            "card-promissory"
+        ],
+        "1": [
+            "card-promissory"
+        ],
+        "2": [
+            "card-promissory"
+        ],
+        "3": [
+            "card-promissory"
+        ],
+        "4": [
+            "card-promissory"
+        ],
+        "5": [
+            "card-promissory"
+        ],
+        "6": [
+            "card-promissory"
+        ],
+        "7": [
+            "card-promissory"
+        ],
+        "8": [
+            "card-promissory"
+        ],
+        "9": [
+            "card-promissory"
+        ],
+        "10": [
+            "card-promissory"
+        ],
+        "11": [
+            "card-promissory"
+        ],
+        "12": [
+            "card-promissory"
+        ],
+        "13": [
+            "card-promissory"
+        ],
+        "14": [
+            "card-promissory"
+        ],
+        "15": [
+            "card-promissory"
+        ],
+        "16": [
+            "card-promissory"
+        ],
+        "17": [
+            "card-promissory"
+        ],
+        "18": [
+            "card-promissory"
+        ],
+        "19": [
+            "card-promissory"
+        ],
+        "20": [
+            "card-promissory"
+        ],
+        "21": [
+            "card-promissory"
+        ],
+        "22": [
+            "card-promissory"
+        ],
+        "23": [
+            "card-promissory"
+        ],
+        "24": [
+            "card-promissory"
+        ],
+        "25": [
+            "card-promissory"
+        ],
+        "26": [
+            "card-promissory"
+        ],
+        "27": [
+            "card-promissory"
+        ],
+        "28": [
+            "card-promissory"
+        ],
+        "29": [
+            "card-promissory"
+        ],
+        "30": [
+            "card-promissory"
+        ],
+        "31": [
+            "card-promissory"
+        ],
+        "32": [
+            "card-promissory"
+        ],
+        "33": [
+            "card-promissory"
+        ],
+        "34": [
+            "card-promissory"
+        ],
+        "35": [
+            "card-promissory"
+        ],
+        "36": [
+            "card-promissory"
+        ],
+        "37": [
+            "card-promissory"
+        ],
+        "38": [
+            "card-promissory"
+        ],
+        "39": [
+            "card-promissory"
+        ]
+    },
+    "GroundAccessibility": "ZoomAndContext",
+    "Tags": [
+        "card-promissory"
+    ]
+}

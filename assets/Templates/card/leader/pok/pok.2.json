@@ -1,0 +1,175 @@
+{
+    "Type": "Card",
+    "GUID": "B4D3D07758C5C0429DA8DB13140B8BB0",
+    "Name": "leader 3/3",
+    "Metadata": "",
+    "CollisionType": "Regular",
+    "Friction": 0.7,
+    "Restitution": 0,
+    "Density": 0.5,
+    "SurfaceType": "Cardboard",
+    "Roughness": 1,
+    "Metallic": 0,
+    "PrimaryColor": {
+        "R": 255,
+        "G": 255,
+        "B": 255
+    },
+    "SecondaryColor": {
+        "R": 0,
+        "G": 0,
+        "B": 0
+    },
+    "Flippable": true,
+    "AutoStraighten": false,
+    "ShouldSnap": true,
+    "ScriptName": "",
+    "Blueprint": "",
+    "Models": [],
+    "Collision": [],
+    "SnapPointsGlobal": false,
+    "SnapPoints": [],
+    "ZoomViewDirection": {
+        "X": 0,
+        "Y": 0,
+        "Z": 0
+    },
+    "FrontTexture": "card/leader/pok/pok.face.2.jpg",
+    "BackTexture": "card/leader/pok/pok.back.2.jpg",
+    "HiddenTexture": "",
+    "BackIndex": -3,
+    "HiddenIndex": -1,
+    "NumHorizontal": 5,
+    "NumVertical": 4,
+    "Width": 6.3,
+    "Height": 4.2,
+    "Thickness": 0.05,
+    "HiddenInHand": true,
+    "UsedWithCardHolders": true,
+    "CanStack": true,
+    "UsePrimaryColorForSide": false,
+    "FrontTextureOverrideExposed": false,
+    "AllowFlippedInStack": false,
+    "MirrorBack": true,
+    "Model": "Rounded",
+    "Indices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17
+    ],
+    "CardNames": {
+        "0": "Hecatoncheires",
+        "1": "Icarus Drive",
+        "2": "Iconoclast",
+        "3": "Indomitus",
+        "4": "Letani Behemoth",
+        "5": "Moll Terminus",
+        "6": "Mordred",
+        "7": "Moyin's Ashes",
+        "8": "Pride of Kenara",
+        "9": "Quantum Manipulator",
+        "10": "Reanimator",
+        "11": "Reclaimer",
+        "12": "Scavenger Zeta",
+        "13": "Shield Paling",
+        "14": "Starlancer",
+        "15": "Valkyrie Exoskeleton",
+        "16": "Watcher",
+        "17": "ZS Thunderbolt M2"
+    },
+    "CardMetadata": {
+        "0": "card.leader.mech:pok/hecatoncheires",
+        "1": "card.leader.mech:pok/icarus-drive",
+        "2": "card.leader.mech:pok/iconoclast",
+        "3": "card.leader.mech:pok/indomitus",
+        "4": "card.leader.mech:pok/letani-behemoth",
+        "5": "card.leader.mech:pok/moll-terminus",
+        "6": "card.leader.mech:pok/mordred",
+        "7": "card.leader.mech:pok/moyins-ashes",
+        "8": "card.leader.mech:pok/pride-of-kenara",
+        "9": "card.leader.mech:pok/quantum-manipulator",
+        "10": "card.leader.mech:pok/reanimator",
+        "11": "card.leader.mech:pok/reclaimer",
+        "12": "card.leader.mech:pok/scavenger-zeta",
+        "13": "card.leader.mech:pok/shield-paling",
+        "14": "card.leader.mech:pok/starlancer",
+        "15": "card.leader.mech:pok/valkyrie-exoskeleton",
+        "16": "card.leader.mech:pok/watcher",
+        "17": "card.leader.mech:pok/zs-thunderbolt-m2"
+    },
+    "CardTags": {
+        "0": [
+            "card-leader"
+        ],
+        "1": [
+            "card-leader"
+        ],
+        "2": [
+            "card-leader"
+        ],
+        "3": [
+            "card-leader"
+        ],
+        "4": [
+            "card-leader"
+        ],
+        "5": [
+            "card-leader"
+        ],
+        "6": [
+            "card-leader"
+        ],
+        "7": [
+            "card-leader"
+        ],
+        "8": [
+            "card-leader"
+        ],
+        "9": [
+            "card-leader"
+        ],
+        "10": [
+            "card-leader"
+        ],
+        "11": [
+            "card-leader"
+        ],
+        "12": [
+            "card-leader"
+        ],
+        "13": [
+            "card-leader"
+        ],
+        "14": [
+            "card-leader"
+        ],
+        "15": [
+            "card-leader"
+        ],
+        "16": [
+            "card-leader"
+        ],
+        "17": [
+            "card-leader"
+        ]
+    },
+    "GroundAccessibility": "ZoomAndContext",
+    "Tags": [
+        "card-leader"
+    ]
+}

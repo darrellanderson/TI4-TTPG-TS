@@ -31,14 +31,15 @@ export class LayoutTableDecks {
   constructor() {
     this._layout = new LayoutObjects();
 
-    const baseMat: GameObject = Spawn.spawnOrThrow("mat.deck:base/base");
     const explorationMat: GameObject = Spawn.spawnOrThrow(
       "mat.deck:pok/exploration"
     );
+    const baseMat: GameObject = Spawn.spawnOrThrow("mat.deck:base/base");
+    const planetMat: GameObject = Spawn.spawnOrThrow("mat.deck:base/planet");
     const factionReferenceMat: GameObject = Spawn.spawnOrThrow(
       "mat.deck:base/faction-reference"
     );
-    const planetMat: GameObject = Spawn.spawnOrThrow("mat.deck:base/planet");
+    const eventMat: GameObject = Spawn.spawnOrThrow("mat.deck:base/event");
 
     const planetsAndBase: LayoutObjects = new LayoutObjects()
       .setChildDistance(LayoutConfig.spacingWide)
@@ -49,15 +50,23 @@ export class LayoutTableDecks {
         baseMat.setObjectType(ObjectType.Ground);
       });
 
+    const factionAndEvent: LayoutObjects = new LayoutObjects()
+      .setChildDistance(LayoutConfig.spacingWide)
+      .add(factionReferenceMat)
+      .add(eventMat)
+      .addAfterLayout(() => {
+        factionReferenceMat.setObjectType(ObjectType.Ground);
+        eventMat.setObjectType(ObjectType.Ground);
+      });
+
     this._layout
       .setChildDistance(LayoutConfig.spacingWide)
       .setIsVertical(true)
       .add(explorationMat)
       .add(planetsAndBase)
-      .add(factionReferenceMat)
+      .add(factionAndEvent)
       .addAfterLayout(() => {
         explorationMat.setObjectType(ObjectType.Ground);
-        factionReferenceMat.setObjectType(ObjectType.Ground);
       });
 
     this._layout.addAfterLayout(() => {
@@ -96,17 +105,29 @@ export class LayoutTableDecks {
         "card.faction-reference",
         "deck-faction-reference"
       );
+      LayoutTableDecks._spawnDeck("card.event", "deck-event");
     });
 
     const speakerToken: GameObject = Spawn.spawnOrThrow("token:base/speaker");
+    const codex4scenario: GameObject = Spawn.spawnOrThrow(
+      "container:codex.liberation/liberation-scenario"
+    );
+
     this._layout.addAfterLayout(() => {
       const center: Vector = this._layout.getCenter();
       const { h } = this._layout.calculateSize();
-      const extent: Vector = speakerToken.getExtent(false, false);
-      const dx: number = h / 2 + LayoutConfig.spacingWide + extent.x;
-      const pos: Vector = center.add([-dx, 0, 10]);
+      let extent: Vector = speakerToken.getExtent(false, false);
+      let dx: number = h / 2 + LayoutConfig.spacingWide + extent.x;
+      let pos: Vector = center.add([-dx, 0, 10]);
       speakerToken.setPosition(pos);
       speakerToken.snapToGround();
+
+      extent = codex4scenario.getExtent(false, false);
+      dx = LayoutConfig.spacingWide + extent.x;
+      pos = pos.add([-dx, 0, 10]);
+      codex4scenario.setPosition(pos);
+      codex4scenario.snapToGround();
+      codex4scenario.setObjectType(ObjectType.Ground);
     });
   }
 

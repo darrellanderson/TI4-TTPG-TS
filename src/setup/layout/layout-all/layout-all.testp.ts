@@ -10,6 +10,8 @@ function go() {
   console.log("LAYOUT-ALL.TESTP");
   scrubAll(refObjectCopy);
 
+  //world.setSavedData("", "@config/ti4");
+
   TI4.config.setPlayerCount(6);
 
   new SetupPlayerSlotColors().setup();
@@ -21,6 +23,10 @@ function go() {
   const playerCount: number = TI4.config.playerCount;
   const layout: LayoutAll = new LayoutAll(playerCount);
   layout.getLayout().doLayoutAtPoint(pos, yaw);
+
+  //process.flushTicks();
+  //refObjectCopy.setScript("");
+  //world.resetScripting();
 }
 
 setTimeout(go, 1000);

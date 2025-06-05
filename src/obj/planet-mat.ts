@@ -39,6 +39,7 @@ export class PlanetMat {
         const actionName: string = "*Fetch " + planet.getName();
         const nsid: string = planet.getPlanetCardNsid();
         this._actionNameToPlanetCardNsid.set(actionName, nsid);
+        this._obj.addCustomAction(actionName);
       }
     });
   }

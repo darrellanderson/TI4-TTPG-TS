@@ -102,6 +102,10 @@ import { UpdatorHistory } from "../lib/game-data-lib/updators/updator-history/up
 import { UseStreamerBuddy } from "../lib/streamer-lib/use-streamer-buddy/use-streamer-buddy";
 import { WhisperSpy } from "../lib/streamer-lib/whisper-spy/whisper-spy";
 
+// Events
+import { RightClickAgeOfExploration } from "../context-menu/events/age-of-exploration/right-click-age-of-exploration";
+import { RightClickMinorFactions } from "../context-menu/events/minor-factions/right-click-minor-factions";
+
 import { LOCALE_CONTENT_MENUS } from "../locale/locale-context-menus";
 
 import * as NSID_TO_TEMPLATE_ID from "../nsid/nsid-to-template-id.json";
@@ -249,6 +253,10 @@ export function resetGlobalThisTI4(): TI4Class {
     new UnitModifierActiveIdle(),
     new UnpackFactionContextMenuItem(),
     new WhisperReporter(),
+
+    // Events.
+    new RightClickAgeOfExploration(),
+    new RightClickMinorFactions(),
   ];
 
   // Add UI and some bug workarounds to production runs.

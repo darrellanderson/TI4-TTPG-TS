@@ -125,6 +125,14 @@ export class GlobalEvents {
   >();
 
   /**
+   * Called after start game request finishes, game is ready to start.
+   * Used for any extra at-start setup.
+   */
+  public readonly onStartGameComplete = new TriggerableMulticastDelegate<
+    () => void
+  >();
+
+  /**
    * Called when a player asks to start a game.
    */
   public readonly onStartGameRequest = new TriggerableMulticastDelegate<

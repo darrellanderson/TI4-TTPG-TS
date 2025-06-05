@@ -1,7 +1,7 @@
 {
     "Type": "Card",
     "GUID": "CA4A2F259E3CCE4EB371325BF2D415C5",
-    "Name": "leader 1/2",
+    "Name": "leader 1/3",
     "Metadata": "",
     "CollisionType": "Regular",
     "Friction": 0.7,
@@ -39,8 +39,8 @@
     "HiddenTexture": "",
     "BackIndex": -3,
     "HiddenIndex": -1,
-    "NumHorizontal": 8,
-    "NumVertical": 12,
+    "NumHorizontal": 5,
+    "NumVertical": 8,
     "Width": 6.3,
     "Height": 4.2,
     "Thickness": 0.05,
@@ -92,63 +92,7 @@
         36,
         37,
         38,
-        39,
-        40,
-        41,
-        42,
-        43,
-        44,
-        45,
-        46,
-        47,
-        48,
-        49,
-        50,
-        51,
-        52,
-        53,
-        54,
-        55,
-        56,
-        57,
-        58,
-        59,
-        60,
-        61,
-        62,
-        63,
-        64,
-        65,
-        66,
-        67,
-        68,
-        69,
-        70,
-        71,
-        72,
-        73,
-        74,
-        75,
-        76,
-        77,
-        78,
-        79,
-        80,
-        81,
-        82,
-        83,
-        84,
-        85,
-        86,
-        87,
-        88,
-        89,
-        90,
-        91,
-        92,
-        93,
-        94,
-        95
+        39
     ],
     "CardNames": {
         "0": "Acamar",
@@ -190,63 +134,7 @@
         "36": "Magmus",
         "37": "Navarch Feng",
         "38": "Nekro Acidos",
-        "39": "Rear Admiral Farran",
-        "40": "Rickar Rickani",
-        "41": "Rowl Sarrig",
-        "42": "Sai Seravus",
-        "43": "So Ata",
-        "44": "S'ula Mentarion",
-        "45": "Ta Zern",
-        "46": "That Which Molds Flesh",
-        "47": "Trrakan Aun Zulok",
-        "48": "Tungstantus",
-        "49": "Xuange",
-        "50": "Adjudicator Ba'al",
-        "51": "Ahk-Syl Siven",
-        "52": "Airo Shir Aur",
-        "53": "Conservator Procyon",
-        "54": "Dannel of the Tenth",
-        "55": "Darktalon Treilla",
-        "56": "Gurno Aggero",
-        "57": "Harrugh Gefhara",
-        "58": "Hesh and Prit",
-        "59": "Ipswitch, Loose Cannon",
-        "60": "It Feeds on Carrion",
-        "61": "Jace X, 4th Air Legion",
-        "62": "Kyver, Blade and Key",
-        "63": "Letani Miasmiala",
-        "64": "Mathis Mathinus",
-        "65": "Mirik Aun Sissiri",
-        "66": "Riftwalker Meian",
-        "67": "Rin, the Master's Legacy",
-        "68": "Sh'val, Harbinger",
-        "69": "The Helmsman",
-        "70": "The Oracle",
-        "71": "Ul the Progenitor",
-        "72": "Unit.dsgn.FLAYESH",
-        "73": "Xxekir Grom",
-        "74": "Aerie Sentinel",
-        "75": "Annihilator",
-        "76": "Blackshade Infiltrator",
-        "77": "Dunlain Reaper",
-        "78": "Eidolon",
-        "79": "Ember Colossus",
-        "80": "Hecatoncheires",
-        "81": "Icarus Drive",
-        "82": "Iconoclast",
-        "83": "Indomitus",
-        "84": "Letani Behemoth",
-        "85": "Moll Terminus",
-        "86": "Mordred",
-        "87": "Moyin's Ashes",
-        "88": "Pride of Kenara",
-        "89": "Quantum Manipulator",
-        "90": "Reanimator",
-        "91": "Reclaimer",
-        "92": "Scavenger Zeta",
-        "93": "Shield Paling",
-        "94": "Starlancer",
-        "95": "Valkyrie Exoskeleton"
+        "39": "Rear Admiral Farran"
     },
     "CardMetadata": {
         "0": "card.leader.agent:pok/acamar",
@@ -288,63 +176,7 @@
         "36": "card.leader.commander:pok/magmus",
         "37": "card.leader.commander:pok/navarch-feng",
         "38": "card.leader.commander:pok/nekro-acidos",
-        "39": "card.leader.commander:pok/rear-admiral-farran",
-        "40": "card.leader.commander:pok/rickar-rickani",
-        "41": "card.leader.commander:pok/rowl-sarrig",
-        "42": "card.leader.commander:pok/sai-seravus",
-        "43": "card.leader.commander:pok/so-ata",
-        "44": "card.leader.commander:pok/sula-mentarion",
-        "45": "card.leader.commander:pok/ta-zern",
-        "46": "card.leader.commander:pok/that-which-molds-flesh",
-        "47": "card.leader.commander:pok/trrakan-aun-zulok",
-        "48": "card.leader.commander:pok/tungstantus",
-        "49": "card.leader.commander:pok/xuange",
-        "50": "card.leader.hero:pok/adjudicator-baal",
-        "51": "card.leader.hero:pok/ahksyl-siven",
-        "52": "card.leader.hero:pok/airo-shir-aur",
-        "53": "card.leader.hero:pok/conservator-procyon",
-        "54": "card.leader.hero:pok/dannel-of-the-tenth",
-        "55": "card.leader.hero:pok/darktalon-treilla",
-        "56": "card.leader.hero:pok/gurno-aggero",
-        "57": "card.leader.hero:pok/harrugh-gefhara",
-        "58": "card.leader.hero:pok/hesh-and-prit",
-        "59": "card.leader.hero:pok/ipswitch-loose-cannon",
-        "60": "card.leader.hero:pok/it-feeds-on-carrion",
-        "61": "card.leader.hero:pok/jace-x-4th-air-legion",
-        "62": "card.leader.hero:pok/kyver-blade-and-key",
-        "63": "card.leader.hero:pok/letani-miasmiala",
-        "64": "card.leader.hero:pok/mathis-mathinus",
-        "65": "card.leader.hero:pok/mirik-aun-sissiri",
-        "66": "card.leader.hero:pok/riftwalker-meian",
-        "67": "card.leader.hero:pok/rin-the-masters-legacy",
-        "68": "card.leader.hero:pok/shval-harbinger",
-        "69": "card.leader.hero:pok/the-helmsman",
-        "70": "card.leader.hero:pok/the-oracle",
-        "71": "card.leader.hero:pok/ul-the-progenitor",
-        "72": "card.leader.hero:pok/unitdsgnflayesh",
-        "73": "card.leader.hero:pok/xxekir-grom",
-        "74": "card.leader.mech:pok/aerie-sentinel",
-        "75": "card.leader.mech:pok/annihilator",
-        "76": "card.leader.mech:pok/blackshade-infiltrator",
-        "77": "card.leader.mech:pok/dunlain-reaper",
-        "78": "card.leader.mech:pok/eidolon",
-        "79": "card.leader.mech:pok/ember-colossus",
-        "80": "card.leader.mech:pok/hecatoncheires",
-        "81": "card.leader.mech:pok/icarus-drive",
-        "82": "card.leader.mech:pok/iconoclast",
-        "83": "card.leader.mech:pok/indomitus",
-        "84": "card.leader.mech:pok/letani-behemoth",
-        "85": "card.leader.mech:pok/moll-terminus",
-        "86": "card.leader.mech:pok/mordred",
-        "87": "card.leader.mech:pok/moyins-ashes",
-        "88": "card.leader.mech:pok/pride-of-kenara",
-        "89": "card.leader.mech:pok/quantum-manipulator",
-        "90": "card.leader.mech:pok/reanimator",
-        "91": "card.leader.mech:pok/reclaimer",
-        "92": "card.leader.mech:pok/scavenger-zeta",
-        "93": "card.leader.mech:pok/shield-paling",
-        "94": "card.leader.mech:pok/starlancer",
-        "95": "card.leader.mech:pok/valkyrie-exoskeleton"
+        "39": "card.leader.commander:pok/rear-admiral-farran"
     },
     "CardTags": {
         "0": [
@@ -465,174 +297,6 @@
             "card-leader"
         ],
         "39": [
-            "card-leader"
-        ],
-        "40": [
-            "card-leader"
-        ],
-        "41": [
-            "card-leader"
-        ],
-        "42": [
-            "card-leader"
-        ],
-        "43": [
-            "card-leader"
-        ],
-        "44": [
-            "card-leader"
-        ],
-        "45": [
-            "card-leader"
-        ],
-        "46": [
-            "card-leader"
-        ],
-        "47": [
-            "card-leader"
-        ],
-        "48": [
-            "card-leader"
-        ],
-        "49": [
-            "card-leader"
-        ],
-        "50": [
-            "card-leader"
-        ],
-        "51": [
-            "card-leader"
-        ],
-        "52": [
-            "card-leader"
-        ],
-        "53": [
-            "card-leader"
-        ],
-        "54": [
-            "card-leader"
-        ],
-        "55": [
-            "card-leader"
-        ],
-        "56": [
-            "card-leader"
-        ],
-        "57": [
-            "card-leader"
-        ],
-        "58": [
-            "card-leader"
-        ],
-        "59": [
-            "card-leader"
-        ],
-        "60": [
-            "card-leader"
-        ],
-        "61": [
-            "card-leader"
-        ],
-        "62": [
-            "card-leader"
-        ],
-        "63": [
-            "card-leader"
-        ],
-        "64": [
-            "card-leader"
-        ],
-        "65": [
-            "card-leader"
-        ],
-        "66": [
-            "card-leader"
-        ],
-        "67": [
-            "card-leader"
-        ],
-        "68": [
-            "card-leader"
-        ],
-        "69": [
-            "card-leader"
-        ],
-        "70": [
-            "card-leader"
-        ],
-        "71": [
-            "card-leader"
-        ],
-        "72": [
-            "card-leader"
-        ],
-        "73": [
-            "card-leader"
-        ],
-        "74": [
-            "card-leader"
-        ],
-        "75": [
-            "card-leader"
-        ],
-        "76": [
-            "card-leader"
-        ],
-        "77": [
-            "card-leader"
-        ],
-        "78": [
-            "card-leader"
-        ],
-        "79": [
-            "card-leader"
-        ],
-        "80": [
-            "card-leader"
-        ],
-        "81": [
-            "card-leader"
-        ],
-        "82": [
-            "card-leader"
-        ],
-        "83": [
-            "card-leader"
-        ],
-        "84": [
-            "card-leader"
-        ],
-        "85": [
-            "card-leader"
-        ],
-        "86": [
-            "card-leader"
-        ],
-        "87": [
-            "card-leader"
-        ],
-        "88": [
-            "card-leader"
-        ],
-        "89": [
-            "card-leader"
-        ],
-        "90": [
-            "card-leader"
-        ],
-        "91": [
-            "card-leader"
-        ],
-        "92": [
-            "card-leader"
-        ],
-        "93": [
-            "card-leader"
-        ],
-        "94": [
-            "card-leader"
-        ],
-        "95": [
             "card-leader"
         ]
     },

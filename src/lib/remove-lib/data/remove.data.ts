@@ -1,6 +1,8 @@
 /**
  * When including a given source, remove the linked NSIDs (e.g., with PoK
  * remove some base game agendas).
+ *
+ * Include sources without remove directives, that way we can remove the source too.
  */
 export const SOURCE_TO_REMOVE_NSIDS: Record<string, Array<string>> = {
   pok: [
@@ -30,6 +32,7 @@ export const SOURCE_TO_REMOVE_NSIDS: Record<string, Array<string>> = {
     "card.promissory:base/stymie",
     "card.promissory:base/acquiescence",
   ],
+  ["codex.affinity"]: [],
   ["codex.vigil"]: [
     "card.alliance:pok/naalu",
     "card.alliance:pok/yin",
@@ -47,4 +50,5 @@ export const SOURCE_TO_REMOVE_NSIDS: Record<string, Array<string>> = {
     "card.objective.secret:base/turn-their-fleets-to-dust",
     "card.objective.secret:pok/fight-with-precision",
   ],
+  ["codex.liberation"]: [],
 };

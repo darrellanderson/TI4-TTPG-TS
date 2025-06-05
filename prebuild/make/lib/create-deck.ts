@@ -10,8 +10,8 @@ import {
 export class CreateDeck {
   private readonly _cardType: string;
   private _portrait: boolean = true;
-  private _wPx: number = 340;
-  private _hPx: number = 510;
+  private _wPx: number = 500; // 340;
+  private _hPx: number = 750; // 510;
   private _wWorld: number = 4.2;
   private _hWorld: number = 6.3;
 

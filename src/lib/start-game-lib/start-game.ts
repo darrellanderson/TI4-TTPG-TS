@@ -18,6 +18,8 @@ export class StartGame implements IGlobal {
     this._applyPlayerCount();
     this._doRemove();
     this._maybeFlipScoreboard();
+
+    TI4.events.onStartGameComplete.trigger();
   };
 
   init(): void {
