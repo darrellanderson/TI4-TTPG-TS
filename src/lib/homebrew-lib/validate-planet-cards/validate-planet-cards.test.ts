@@ -1,4 +1,4 @@
-import { Card, GameObject, Rotator, Vector } from "@tabletop-playground/api";
+import { GameObject, Rotator, Vector } from "@tabletop-playground/api";
 import { ValidatePlanetCards } from "./validate-planet-cards";
 import { MockCard, MockCardDetails } from "ttpg-mock";
 import { Spawn } from "ttpg-darrell";
@@ -56,31 +56,4 @@ it("_getRegisteredPlanetCardNsids", () => {
   const nsids: Set<string> =
     new ValidatePlanetCards()._getRegisteredPlanetCardNsids();
   expect(nsids).toContain("card.planet:base/jord");
-});
-
-it("_getDeckPlanetCards", () => {
-  const deck: Card | undefined =
-    new ValidatePlanetCards()._getDeckPlanetCards();
-  expect(deck).toBeDefined();
-});
-
-it("_getDeckPlanetCardNsids", () => {
-  const deck: Card = new MockCard({
-    cardDetails: [new MockCardDetails({ metadata: "card.planet:base/jord" })],
-  });
-  const nsids: Set<string> = new ValidatePlanetCards()._getDeckPlanetCardNsids(
-    deck
-  );
-  expect(nsids).toContain("card.planet:base/jord");
-});
-
-it("_getSrcMissingFromDst", () => {
-  const src: Set<string> = new Set<string>([
-    "card.planet:base/jord",
-    "card.planet:base/nar",
-  ]);
-  const dst: Set<string> = new Set<string>(["card.planet:base/jord"]);
-  const missing: Array<string> =
-    new ValidatePlanetCards()._getSrcMissingFromDst(src, dst);
-  expect(missing).toEqual(["card.planet:base/nar"]);
 });

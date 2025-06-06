@@ -5,10 +5,12 @@ import { AbstractValidate } from "../../../../homebrew-lib/abstract-validate/abs
 
 import { ValidatePlanetCards } from "../../../../homebrew-lib/validate-planet-cards/validate-planet-cards";
 import { ValidateTemplateNsids } from "../../../../homebrew-lib/validate-template-nsids/validate-template-nsids";
+import { ValidateSystems } from "../../../../homebrew-lib/validate-systems/validate-systems";
 
 export class SlashValidate extends AbstractSlashCommand {
   private readonly _validates: Array<AbstractValidate> = [
     new ValidatePlanetCards(),
+    new ValidateSystems(),
     new ValidateTemplateNsids(),
   ];
 
