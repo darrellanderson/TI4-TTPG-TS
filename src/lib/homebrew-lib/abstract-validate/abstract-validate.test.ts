@@ -13,7 +13,14 @@ class MyAbstractValidate extends AbstractValidate {
   getErrors(_errors: Array<string>): void {}
 }
 
-it("_getDeckPlanetCardNsids", () => {
+it("getCardNsids (no decks)", () => {
+  const nsids: Set<string> = new MyAbstractValidate().getCardNsids(
+    "card.my-type:"
+  );
+  expect(nsids.size).toBe(0);
+});
+
+it("getCardNsids", () => {
   const deck: Card = new MockCard({
     cardDetails: [new MockCardDetails({ metadata: "card.my-type:base/jord" })],
   });
