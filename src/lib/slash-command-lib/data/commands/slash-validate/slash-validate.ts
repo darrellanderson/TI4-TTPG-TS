@@ -3,12 +3,14 @@ import { Broadcast } from "ttpg-darrell";
 import { AbstractSlashCommand } from "../abstract-slash-command/abstract-slash-command";
 import { AbstractValidate } from "../../../../homebrew-lib/abstract-validate/abstract-validate";
 
+import { ValidateAttachments } from "../../../../homebrew-lib/validate-attachments/validate-attachments";
 import { ValidatePlanetCards } from "../../../../homebrew-lib/validate-planet-cards/validate-planet-cards";
-import { ValidateTemplateNsids } from "../../../../homebrew-lib/validate-template-nsids/validate-template-nsids";
 import { ValidateSystems } from "../../../../homebrew-lib/validate-systems/validate-systems";
+import { ValidateTemplateNsids } from "../../../../homebrew-lib/validate-template-nsids/validate-template-nsids";
 
 export class SlashValidate extends AbstractSlashCommand {
   private readonly _validates: Array<AbstractValidate> = [
+    new ValidateAttachments(),
     new ValidatePlanetCards(),
     new ValidateSystems(),
     new ValidateTemplateNsids(),
