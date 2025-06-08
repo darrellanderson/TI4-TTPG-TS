@@ -1,4 +1,4 @@
-import { GameWorld, Vector } from "@tabletop-playground/api";
+import { GameWorld, Vector, world } from "@tabletop-playground/api";
 import {
   BugCardHolderAssignment,
   BugSplatRemoteReporter,
@@ -302,3 +302,5 @@ if (GameWorld.getExecutionReason() !== "unittest") {
   });
   BugSplatRemoteReporter.setEnabled(TI4.config.reportErrors);
 }
+
+world.setShowDiceRollMessages(false); // Disable default TTPG messages for dice rolls.
