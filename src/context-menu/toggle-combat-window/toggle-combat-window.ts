@@ -1,4 +1,4 @@
-import { Player, Vector } from "@tabletop-playground/api";
+import { globalEvents, Player, Vector, world } from "@tabletop-playground/api";
 import { HexType, IGlobal, NamespaceId, Window } from "ttpg-darrell";
 import { AbstractUI } from "../../ui/abstract-ui/abtract-ui";
 import {
@@ -9,6 +9,8 @@ import {
 import { CombatUIAllSimple } from "../../ui/combat-ui/combat-ui-all-simple/combat-ui-all-simple";
 import { System } from "../../lib/system-lib/system/system";
 import { UnitPlastic } from "../../lib/unit-lib/unit-plastic/unit-plastic";
+
+export const ACTION_TOGGLE_COMBAT: string = "*Toggle Combat";
 
 export class ToggleCombatWindow implements IGlobal {
   private _window: Window | undefined = undefined;
@@ -58,9 +60,29 @@ export class ToggleCombatWindow implements IGlobal {
     this._window = abstractWindow.createWindow();
   }
 
+  /**
+   * This window gets recreated whenever a system is activated.
+   * Do not use the default toggle action, because it will move
+   * to the end of the list on recreate.
+   *
+   * @param player
+   * @param action
+   */
+  private readonly onCustomAction = (player: Player, action: string): void => {
+    if (action === ACTION_TOGGLE_COMBAT) {
+      if (this._window) {
+        this._window.toggleForPlayer(player.getSlot());
+      }
+    }
+  };
+
   init(): void {
     this._createWindow(); // empty contents
     TI4.events.onSystemActivated.add(this._onSystemActivatedHandler);
+
+    const tooltip: string = TI4.locale("tooltip.toggle-combat-window");
+    world.addCustomAction(ACTION_TOGGLE_COMBAT, tooltip);
+    globalEvents.onCustomAction.add(this.onCustomAction);
   }
 
   /**
