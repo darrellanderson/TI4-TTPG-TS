@@ -96,7 +96,7 @@ export class CombatRollSummary {
       modifiers.push("no modifiers");
     }
 
-    return `${playerName} rolled ${totalHits} hits: ${combinedUnitResults} (${modifiers.join(", ")})`;
+    return `${playerName} rolled ${totalHits} hits: ${combinedUnitResults}\nModifiers: ${modifiers.join(", ")}`;
   }
 
   /**

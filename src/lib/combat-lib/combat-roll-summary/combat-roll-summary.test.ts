@@ -104,7 +104,9 @@ it("getSimpleSummary", () => {
 
   expect(
     CombatRollSummary.getSimpleSummary(combatRoll, unitRollsSummaries)
-  ).toEqual("green rolled 2 hits: Carrier (9|10): 9## (no modifiers)");
+  ).toEqual(
+    "green rolled 2 hits: Carrier (9|10): 9##\nModifiers: no modifiers"
+  );
 });
 
 it("broadcast", () => {
