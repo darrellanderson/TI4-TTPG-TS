@@ -1,3 +1,4 @@
+import { UnitPlastic } from "lib/unit-lib/unit-plastic/unit-plastic";
 import { CombatRoll } from "../../../../combat-lib/combat-roll/combat-roll";
 import { UnitModifierSchemaType } from "../../../schema/unit-modifier-schema";
 
@@ -15,13 +16,17 @@ export const Eidolon: UnitModifierSchemaType = {
     );
   },
   apply: (combatRoll: CombatRoll): void => {
+    const mechs: Array<UnitPlastic> = combatRoll.self.unitPlasticHex.filter(
+      (plastic): boolean => plastic.getUnit() === "mech"
+    );
+
     let count: number = 0;
     if (combatRoll.getRollType() === "spaceCombat") {
-      count = combatRoll.self.unitPlasticHex.filter(
+      count = mechs.filter(
         (plastic): boolean => plastic.getPlanetExact() === undefined
       ).length;
     } else if (combatRoll.getRollType() === "groundCombat") {
-      count = combatRoll.self.unitPlasticHex.filter(
+      count = mechs.filter(
         (plastic): boolean => plastic.getPlanetExact() === combatRoll.planet
       ).length;
     }
