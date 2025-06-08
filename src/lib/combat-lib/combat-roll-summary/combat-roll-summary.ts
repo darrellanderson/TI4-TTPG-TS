@@ -1,8 +1,9 @@
+import { Color, world } from "@tabletop-playground/api";
 import { Broadcast, DiceGroup, DiceParams, DiceResult } from "ttpg-darrell";
+import { CombatAttrs } from "../../unit-lib/unit-attrs/combat-attrs";
 import { CombatRoll } from "../combat-roll/combat-roll";
 import { UnitType } from "../../unit-lib/schema/unit-attrs-schema";
 import { UnitAttrs } from "../../unit-lib/unit-attrs/unit-attrs";
-import { Color, world } from "@tabletop-playground/api";
 
 export type UnitRollsSummary = {
   diceParams: DiceParams;
@@ -68,6 +69,9 @@ export class CombatRollSummary {
     combatRoll: CombatRoll,
     unitRollsSummaries: Map<UnitType, UnitRollsSummary>
   ): string {
+    const unitToCombatAttrs: Map<UnitType, CombatAttrs> =
+      combatRoll._getUnitToCombatAttrs();
+
     let totalHits: number = 0;
     const unitResults: Array<string> = [];
     for (const [unit, unitRollsSummary] of unitRollsSummaries.entries()) {
@@ -81,7 +85,18 @@ export class CombatRollSummary {
         if (unitRollsSummary.diceParams.crit) {
           critValue = `|${unitRollsSummary.diceParams.crit}`;
         }
-        const formatted: string = `${unitName} (${hitValue}${critValue}): ${unitRollsSummary.diceWithHitsCritsAndRerolls}`;
+
+        let dice: string = "";
+        const combatAttrs: CombatAttrs | undefined =
+          unitToCombatAttrs.get(unit);
+        if (combatAttrs) {
+          const diceCount: number = combatAttrs.getDice();
+          if (diceCount > 1) {
+            dice = `x${diceCount}`;
+          }
+        }
+
+        const formatted: string = `${unitName} (${hitValue}${critValue}${dice}): ${unitRollsSummary.diceWithHitsCritsAndRerolls}`;
         unitResults.push(formatted);
       }
     }
