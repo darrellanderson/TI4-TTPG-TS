@@ -279,7 +279,11 @@ it("validate NSIDs appear in assets/Templates", () => {
       const match: RegExpMatchArray | null = line.match(regex);
       const nsid: string | undefined = match?.[1];
       if (nsid) {
-        templateNsids.add(nsid);
+        const parts: Array<string> = nsid.split("|");
+        const first: string | undefined = parts[0];
+        if (first) {
+          templateNsids.add(first);
+        }
       }
     }
   }

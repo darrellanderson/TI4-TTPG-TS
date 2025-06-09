@@ -4,6 +4,7 @@ import { AbstractSlashCommand } from "../abstract-slash-command/abstract-slash-c
 import { AbstractValidate } from "../../../../homebrew-lib/abstract-validate/abstract-validate";
 
 import { ValidateAttachments } from "../../../../homebrew-lib/validate-attachments/validate-attachments";
+import { ValidateFactions } from "../../../..//homebrew-lib/validate-factions/validate-factions";
 import { ValidatePlanetCards } from "../../../../homebrew-lib/validate-planet-cards/validate-planet-cards";
 import { ValidateSystems } from "../../../../homebrew-lib/validate-systems/validate-systems";
 import { ValidateTemplateNsids } from "../../../../homebrew-lib/validate-template-nsids/validate-template-nsids";
@@ -11,6 +12,7 @@ import { ValidateTemplateNsids } from "../../../../homebrew-lib/validate-templat
 export class SlashValidate extends AbstractSlashCommand {
   private readonly _validates: Array<AbstractValidate> = [
     new ValidateAttachments(),
+    new ValidateFactions(),
     new ValidatePlanetCards(),
     new ValidateSystems(),
     new ValidateTemplateNsids(),
