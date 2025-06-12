@@ -164,6 +164,7 @@ it("getByNsidNameMaybeOmegaToo", () => {
   const nsids: Array<string> = techs.map((tech) => tech.getNsid());
   expect(nsids.sort()).toEqual([
     "card.technology.red:base/magen-defense-grid",
+    "card.technology.red:codex.liberation/magen-defense-grid",
     "card.technology.red:codex.ordinian/magen-defense-grid.omega",
   ]);
 });

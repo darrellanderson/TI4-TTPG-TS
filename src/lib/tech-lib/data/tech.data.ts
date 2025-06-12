@@ -690,4 +690,20 @@ export const SOURCE_TO_TECH_DATA: Record<string, Array<TechSchemaType>> = {
       isFactionTech: true,
     },
   ],
+  "codex.liberation": [
+    {
+      nsidName: "magen-defense-grid",
+      name: "Magen Defense Grid",
+      color: "red",
+      prerequisites: { red: 1 },
+      abbr: "Magen",
+    },
+    {
+      nsidName: "x89-bacterial-weapon",
+      name: "X-89 Bacterial Weapon",
+      color: "green",
+      prerequisites: { green: 3 },
+      abbr: "X-89 B.W.",
+    },
+  ],
 };

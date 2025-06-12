@@ -50,5 +50,10 @@ export const SOURCE_TO_REMOVE_NSIDS: Record<string, Array<string>> = {
     "card.objective.secret:base/turn-their-fleets-to-dust",
     "card.objective.secret:pok/fight-with-precision",
   ],
-  ["codex.liberation"]: [],
+  ["codex.liberation"]: [
+    "card.technology.green:base/x89-bacterial-weapon",
+    "card.technology.green:codex.ordinian/x89-bacterial-weapon.omega",
+    "card.technology.red:base/magen-defense-grid",
+    "card.technology.red:codex.ordinian/magen-defense-grid.omega",
+  ],
 };

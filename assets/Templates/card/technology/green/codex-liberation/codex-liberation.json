@@ -1,7 +1,7 @@
 {
     "Type": "Card",
-    "GUID": "1B0B4051C385D3D705A7E518135D9B2A",
-    "Name": "technology/red",
+    "GUID": "D80C64233EFDEE807EF17D40D02B133B",
+    "Name": "technology/green",
     "Metadata": "",
     "CollisionType": "Regular",
     "Friction": 0.7,
@@ -34,13 +34,13 @@
         "Y": 0,
         "Z": 0
     },
-    "FrontTexture": "card/technology/red/codex-liberation/codex-liberation.face.jpg",
-    "BackTexture": "card/technology/red/codex-liberation/codex-liberation.back.jpg",
+    "FrontTexture": "card/technology/green/codex-liberation/codex-liberation.face.jpg",
+    "BackTexture": "card/technology/green/codex-liberation/codex-liberation.back.jpg",
     "HiddenTexture": "",
     "BackIndex": -2,
     "HiddenIndex": -1,
     "NumHorizontal": 1,
-    "NumVertical": 2,
+    "NumVertical": 1,
     "Width": 6.3,
     "Height": 4.2,
     "Thickness": 0.05,
@@ -53,30 +53,23 @@
     "MirrorBack": true,
     "Model": "Rounded",
     "Indices": [
-        0,
-        1
+        0
     ],
     "CardNames": {
-        "0": "Error Error",
-        "1": "Magen Defense Grid"
+        "0": "X-89 Bacterial Weapon"
     },
     "CardMetadata": {
-        "0": "card.technology.red:codex.liberation/error-error|scenario",
-        "1": "card.technology.red:codex.liberation/magen-defense-grid"
+        "0": "card.technology.green:codex.liberation/x89-bacterial-weapon"
     },
     "CardTags": {
         "0": [
-            "card-technology-red",
-            "card-technology"
-        ],
-        "1": [
-            "card-technology-red",
+            "card-technology-green",
             "card-technology"
         ]
     },
     "GroundAccessibility": "ZoomAndContext",
     "Tags": [
-        "card-technology-red",
+        "card-technology-green",
         "card-technology"
     ]
 }
