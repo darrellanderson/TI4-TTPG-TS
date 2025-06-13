@@ -48,7 +48,7 @@ class ContainerLiberationScenario {
 
     // Spawn techs.
     const redTechs: GameObject | undefined = Spawn.spawn(
-      "card.technology.red:codex.liberation/error-error"
+      "card.technology.red:codex.liberation/0"
     );
     if (redTechs) {
       this._addToContainer(redTechs);
