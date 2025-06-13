@@ -83,6 +83,9 @@ add("base", TheAlastor);
 import { Unrelenting } from "./unit-modifiers/base/unrelenting";
 add("base", Unrelenting);
 
+import { X89BacterialWeapon } from "./unit-modifiers/codex-liberation/x89-bacterial-weapon";
+add("codex.liberation", X89BacterialWeapon);
+
 import { Blitz } from "./unit-modifiers/codex-ordinian/blitz";
 add("codex.ordinian", Blitz);
 
