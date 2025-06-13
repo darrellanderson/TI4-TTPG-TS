@@ -740,4 +740,10 @@ export const PREMADE_MAPS_6P: Array<PremadeMapType> = [
     comments:
       "Poor. Average efficient slice is 5/1 with 1 skip. 10 non-planet systems. 6 “fringe” slice(s). 1 Legendary slice(s).",
   },
+  {
+    name: "Codex Liberation Ordinian",
+    mapString:
+      "{1800} 21 35 77 63 48 70 68 60 47 76 25 66 30 72 27 26 22 75 01 74 67 08 62 79 14 31 29 53 41 34 17 65 45 57 64 49",
+    playerCount: 6,
+  },
 ];

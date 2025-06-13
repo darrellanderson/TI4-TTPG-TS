@@ -1,10 +1,12 @@
 import {
   Button,
   HorizontalAlignment,
+  LayoutBox,
   Player,
   TextBox,
   TextJustification,
   VerticalAlignment,
+  Widget,
 } from "@tabletop-playground/api";
 import {
   HexType,
@@ -44,7 +46,18 @@ export class MapPremadeUI extends AbstractUI {
   ): void => {
     text = text.toLowerCase();
     this._premadeMapButtons.forEach((button: Button): void => {
-      button.setVisible(button.getText().toLowerCase().includes(text));
+      const isVisible: boolean = button.getText().toLowerCase().includes(text);
+      button.setVisible(isVisible);
+
+      const parent: Widget | undefined = button.getParent();
+      if (parent && parent instanceof LayoutBox) {
+        parent.setVisible(isVisible);
+
+        const grandParent: Widget | undefined = parent.getParent();
+        if (grandParent && grandParent instanceof LayoutBox) {
+          grandParent.setVisible(isVisible);
+        }
+      }
     });
   };
 
