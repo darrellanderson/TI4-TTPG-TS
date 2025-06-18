@@ -5,6 +5,7 @@ export type GenericTokenType = {
   isRider?: boolean;
   modelScale?: number;
   model?: string; // assets/Textures/token/${model}.obj
+  script?: string;
 };
 
 export const SOURCE_TO_GENERIC_TOKENS: Record<
@@ -42,7 +43,12 @@ export const SOURCE_TO_GENERIC_TOKENS: Record<
       modelScale: 6.56,
       model: "scoreboard",
     },
-    { name: "Speaker", nsidName: "speaker", model: "speaker" },
+    {
+      name: "Speaker",
+      nsidName: "speaker",
+      model: "speaker",
+      script: "obj/speaker-token.js",
+    },
     {
       name: "Tradegood/Commodity x1",
       nsidName: "tradegood-commodity-1",

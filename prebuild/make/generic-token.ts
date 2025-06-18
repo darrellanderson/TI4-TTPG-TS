@@ -24,6 +24,7 @@ type GenericTokenInfo = {
   modelScale: number;
   modelFace: string;
   modelBack: string;
+  script: string;
   templateFile: string;
 };
 
@@ -64,6 +65,7 @@ for (const [source, genericTokens] of Object.entries(
       modelScale,
       modelFace,
       modelBack,
+      script: genericToken.script ?? "",
       templateFile,
     });
   }
@@ -116,6 +118,7 @@ for (const info of infos) {
   json.Collision[0].Model = `token/${info.modelFace}.col.obj`;
   json.Collision[0].Scale.X *= info.modelScale;
   json.Collision[0].Scale.Y *= info.modelScale;
+  json.ScriptName = info.script;
 
   if (info.modelBack === "") {
     json.Models.pop();
