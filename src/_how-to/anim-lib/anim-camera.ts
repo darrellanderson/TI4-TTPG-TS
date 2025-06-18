@@ -48,7 +48,7 @@ export class AnimCamera {
       p1: dstPos,
       r0: srcRot,
       r1: dstRot,
-      speed: 20,
+      speed: 30,
     });
 
     return new Promise<void>((resolve) => {

@@ -55,6 +55,7 @@ export class AnimOpen {
 
     return new Promise<void>((resolve) => {
       let crossMsecs: number = 0;
+      let startedAnimCamera: boolean = false;
       carrier.getObj().onTick.add(() => {
         if (crossMsecs === 0 && carrier.getObj().getPosition().x > 40) {
           crossMsecs = Date.now();
@@ -75,7 +76,8 @@ export class AnimOpen {
           dreadnought.getObj().setPrimaryColor(color);
           dreadnought.getObj().setSecondaryColor(color);
 
-          if (tint <= 0) {
+          if (tint <= 0 && !startedAnimCamera) {
+            startedAnimCamera = true;
             const p1: Vector = new Vector(0, 0, world.getTableHeight() + 70);
             AnimCamera.simple(p1).then(resolve);
           }
