@@ -1,31 +1,19 @@
 import {
   Color,
-  GameObject,
   Player,
-  refObject,
   UIElement,
   Vector,
   world,
 } from "@tabletop-playground/api";
-import { AnimActor } from "./anim-actor";
+import { AnimActor } from "../anim-lib/anim-actor";
 import { AnimLaser } from "./anim-laser";
 import { UiTitle } from "./ui-title";
+import { AnimCamera } from "_how-to/anim-lib/anim-camera";
 
 export class AnimOpen {
-  constructor(obj: GameObject) {
-    const actionName: string = "*Anim-open";
-    obj.addCustomAction(actionName);
-    obj.onCustomAction.add(
-      (_obj: GameObject, player: Player, action: string): void => {
-        if (action === actionName) {
-          this.go(player);
-        }
-      }
-    );
-  }
-
-  go(player: Player): void {
-    const ui: UIElement = new UiTitle()._createTitleUI();
+  go(player: Player): Promise<void> {
+    const uiTitle: UiTitle = new UiTitle();
+    const ui: UIElement = uiTitle._createTitleUI();
     world.addUI(ui);
 
     const z: number = world.getTableHeight() + 5;
@@ -35,12 +23,6 @@ export class AnimOpen {
     player.setPositionAndRotation(
       lookFrom,
       lookFrom.findLookAtRotation(lookAt)
-    );
-    console.log(
-      "Player position set to:",
-      player.getPosition().toString(),
-      "expected",
-      lookFrom.toString()
     );
 
     const carrier: AnimActor = new AnimActor({
@@ -65,7 +47,40 @@ export class AnimOpen {
       carrier.getObj(),
       dreadnought.getObj()
     );
+
+    carrier.onDestroyed.add(() => {
+      dreadnought.destroy();
+      world.removeUIElement(ui);
+    });
+
+    return new Promise<void>((resolve) => {
+      let crossMsecs: number = 0;
+      carrier.getObj().onTick.add(() => {
+        if (crossMsecs === 0 && carrier.getObj().getPosition().x > 40) {
+          crossMsecs = Date.now();
+        }
+        if (crossMsecs > 0) {
+          const msecs: number = Date.now() - crossMsecs;
+          const tint: number = Math.max((3000 - msecs) / 3000, 0);
+          uiTitle.tint(tint);
+
+          let color: Color;
+          color = carrier.getObj().getPrimaryColor();
+          color.a = tint;
+          carrier.getObj().setPrimaryColor(color);
+          carrier.getObj().setSecondaryColor(color);
+
+          color = dreadnought.getObj().getPrimaryColor();
+          color.a = tint;
+          dreadnought.getObj().setPrimaryColor(color);
+          dreadnought.getObj().setSecondaryColor(color);
+
+          if (tint <= 0) {
+            const p1: Vector = new Vector(0, 0, world.getTableHeight() + 70);
+            AnimCamera.simple(p1).then(resolve);
+          }
+        }
+      });
+    });
   }
 }
-
-new AnimOpen(refObject);

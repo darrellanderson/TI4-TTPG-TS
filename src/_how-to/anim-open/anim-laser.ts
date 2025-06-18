@@ -8,6 +8,8 @@ import {
 
 /**
  * Periodically show a laser beam between two game objects.
+ *
+ * Destroys iteslf when the source object is destroyed.
  */
 export class AnimLaser {
   private readonly _src: GameObject;
@@ -15,16 +17,16 @@ export class AnimLaser {
   private _lines: Array<DrawingLine> | undefined = undefined;
 
   private readonly _onTick = (obj: GameObject, _deltaMsecs: number): void => {
-    if (!obj.isValid()) {
-      obj.onTick.remove(this._onTick);
-      return;
-    }
-
     if (this._lines) {
       this._lines.forEach((line) => {
         world.removeDrawingLineObject(line);
       });
       this._lines = undefined;
+      return;
+    }
+
+    if (!obj.isValid()) {
+      obj.onTick.remove(this._onTick);
       return;
     }
 

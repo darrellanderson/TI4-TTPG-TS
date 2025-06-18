@@ -1,5 +1,5 @@
 import { Color, GameObject, Rotator, Vector } from "@tabletop-playground/api";
-import { Spawn } from "ttpg-darrell";
+import { Spawn, TriggerableMulticastDelegate } from "ttpg-darrell";
 
 export type AnimActorParams = {
   nsid: string;
@@ -10,7 +10,13 @@ export type AnimActorParams = {
   speed: number;
 };
 
+/**
+ * Animate a game object.
+ */
 export class AnimActor {
+  public readonly onDestroyed: TriggerableMulticastDelegate<() => void> =
+    new TriggerableMulticastDelegate<() => void>();
+
   private readonly _params: AnimActorParams;
   private readonly _obj: GameObject;
 
@@ -25,23 +31,31 @@ export class AnimActor {
     obj.setPosition(dstPos);
 
     if (srcPos.distance(dstPos) < 0.01) {
-      obj.onTick.remove(this._onTick);
-      obj.destroy();
+      this.destroy();
     }
   };
 
   constructor(params: AnimActorParams) {
     this._params = params;
 
-    const rot: Rotator = params.p1.findLookAtRotation(params.p0);
+    const rot: Rotator = this._params.p1.findLookAtRotation(params.p0);
     this._obj = Spawn.spawnOrThrow(params.nsid, params.p0, rot);
     this._obj.setScale(new Vector(1, 1, 1).multiply(params.scale));
     this._obj.setPrimaryColor(params.color);
     this._obj.setPosition(params.p0);
     this._obj.toggleLock();
-
     this._obj.setTags(["_deleted_items_ignore_"]);
     this._obj.onTick.add(this._onTick);
+  }
+
+  destroy(): void {
+    this._obj.onTick.remove(this._onTick);
+    if (this._obj.isValid()) {
+      this._obj.destroy();
+      process.nextTick(() => {
+        this.onDestroyed.trigger();
+      });
+    }
   }
 
   getObj(): GameObject {
