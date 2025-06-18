@@ -61,6 +61,7 @@ import { RemoveRegistry } from "../lib/remove-lib/registry/remove-registry";
 import { ReportCommandTokenPutGet } from "../lib/command-token-lib/report-command-token-put-get/report-command-token-put-get";
 import { ReportRemaining } from "../context-menu/report-remaining/report-remaining";
 import { RightClickAgenda } from "../context-menu/right-click-agenda/right-click-agenda";
+import { RightClickDelete } from "../context-menu/right-click-delete/right-click-delete";
 import { RightClickExplore } from "../context-menu/system/explore-system/right-click-explore";
 import { RightClickIihqModernization } from "../context-menu/cards/iihq-modernization/right-click-iihq-modernization";
 import { RightClickInfantry2 } from "../context-menu/cards/infantry-2/right-click-infantry-2";
@@ -257,6 +258,9 @@ export function resetGlobalThisTI4(): TI4Class {
     // Events.
     new RightClickAgeOfExploration(),
     new RightClickMinorFactions(),
+
+    // Do these last to be below "real" right click options.
+    new RightClickDelete(),
   ];
 
   // Add UI and some bug workarounds to production runs.
