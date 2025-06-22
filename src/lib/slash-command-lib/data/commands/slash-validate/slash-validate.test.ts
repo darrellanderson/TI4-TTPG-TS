@@ -1,7 +1,7 @@
 import { MockPlayer } from "ttpg-mock";
 import { Spawn } from "ttpg-darrell";
 import { SlashValidate } from "./slash-validate";
-import { ValidateTemplateNsids } from "../../../../homebrew-lib/validate-template-nsids/validate-template-nsids";
+import { ValidateTemplateNsids } from "../../../../homebrew-lib/validate/validate-template-nsids/validate-template-nsids";
 
 it("getSlashCommand", () => {
   const slashValidate = new SlashValidate();

@@ -1,5 +1,5 @@
-import { SourceAndPackageIdSchemaType } from "../../system-lib/schema/basic-types-schema";
-import { SystemSchemaType } from "../../system-lib/schema/system-schema";
+import { SourceAndPackageIdSchemaType } from "../../../system-lib/schema/basic-types-schema";
+import { SystemSchemaType } from "../../../system-lib/schema/system-schema";
 import { ValidateSystems } from "./validate-systems";
 
 it("getCommandName", () => {

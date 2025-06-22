@@ -14,10 +14,13 @@ class MyAbstractValidate extends AbstractValidate {
 }
 
 it("getCardNsids (no decks)", () => {
+  // Spawn logs to console when nothing matches (probably an error).
+  const mock = jest.spyOn(global.console, "log").mockImplementation(() => {});
   const nsids: Set<string> = new MyAbstractValidate().getCardNsids(
     "card.my-type:"
   );
   expect(nsids.size).toBe(0);
+  mock.mockRestore();
 });
 
 it("getCardNsids", () => {

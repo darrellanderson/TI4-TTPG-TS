@@ -1,13 +1,13 @@
 import { Player } from "@tabletop-playground/api";
 import { Broadcast } from "ttpg-darrell";
 import { AbstractSlashCommand } from "../abstract-slash-command/abstract-slash-command";
-import { AbstractValidate } from "../../../../homebrew-lib/abstract-validate/abstract-validate";
+import { AbstractValidate } from "../../../../homebrew-lib/validate/abstract-validate/abstract-validate";
 
-import { ValidateAttachments } from "../../../../homebrew-lib/validate-attachments/validate-attachments";
-import { ValidateFactions } from "../../../..//homebrew-lib/validate-factions/validate-factions";
-import { ValidatePlanetCards } from "../../../../homebrew-lib/validate-planet-cards/validate-planet-cards";
-import { ValidateSystems } from "../../../../homebrew-lib/validate-systems/validate-systems";
-import { ValidateTemplateNsids } from "../../../../homebrew-lib/validate-template-nsids/validate-template-nsids";
+import { ValidateAttachments } from "../../../../homebrew-lib/validate/validate-attachments/validate-attachments";
+import { ValidateFactions } from "../../../../homebrew-lib/validate/validate-factions/validate-factions";
+import { ValidatePlanetCards } from "../../../../homebrew-lib/validate/validate-planet-cards/validate-planet-cards";
+import { ValidateSystems } from "../../../../homebrew-lib/validate/validate-systems/validate-systems";
+import { ValidateTemplateNsids } from "../../../../homebrew-lib/validate/validate-template-nsids/validate-template-nsids";
 
 export class SlashValidate extends AbstractSlashCommand {
   private readonly _validates: Array<AbstractValidate> = [
