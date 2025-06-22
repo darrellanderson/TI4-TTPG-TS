@@ -10,9 +10,9 @@ it("constructor/init", () => {
 it("package at init time", () => {
   const pkg: Package = new MockPackage({
     isAllowed: true,
-    scriptFiles: ["inject.js"],
+    scriptFiles: ["inject.js", "foo/inject.js"],
   });
-  expect(pkg.getScriptFiles()).toEqual(["inject.js"]);
+  expect(pkg.getScriptFiles()).toEqual(["inject.js", "foo/inject.js"]);
   mockWorld._reset({
     packages: [pkg],
   });
