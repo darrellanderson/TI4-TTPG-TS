@@ -7,6 +7,22 @@ import {
   MockSnapPoint,
 } from "ttpg-mock";
 
+it("static shouldSpawnMissingCards", () => {
+  const deckNsids: Array<string> = [
+    "card.action:base/0",
+    "card.agenda:base/0",
+    "card.exploration.cultural:pok/0",
+    "card.faction-reference:base/0",
+    "card.legendary-planet:base/0",
+    "card.objective.public-1:base/0",
+    "card.planet:base/0",
+    "card.relic:base/0",
+  ];
+  for (const deckNsid of deckNsids) {
+    expect(SpawnMissingCards.shouldSpawnMissingCards(deckNsid)).toBe(true);
+  }
+});
+
 it("_spawnDeck", () => {
   const spawnMissingCards = new SpawnMissingCards();
   const deckNsid = "card.action:base/0";

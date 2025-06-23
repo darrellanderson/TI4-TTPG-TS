@@ -16,6 +16,21 @@ export class SpawnMissingCards {
   private readonly _cardUtil: CardUtil = new CardUtil();
   private readonly _find: Find = new Find();
 
+  static shouldSpawnMissingCards(deckNsid: string): boolean {
+    // Generic technology requires spawning for each player.
+    // Ignore tech for now.
+    return (
+      deckNsid.startsWith("card.action") ||
+      deckNsid.startsWith("card.agenda") ||
+      deckNsid.startsWith("card.exploration.") ||
+      deckNsid.startsWith("card.faction-reference") ||
+      deckNsid.startsWith("card.legendary-planet") ||
+      deckNsid.startsWith("card.objective.") ||
+      deckNsid.startsWith("card.planet") ||
+      deckNsid.startsWith("card.relic")
+    );
+  }
+
   spawnAndAddMissingCards(deckNsid: string): void {
     const existingDeck: Card | undefined = this._getExistingDeck(deckNsid);
     if (existingDeck) {
@@ -44,8 +59,12 @@ export class SpawnMissingCards {
   _getExistingDeck(deckNsid: string): Card | undefined {
     const parsed: ParsedNSID | undefined = NSID.parse(deckNsid);
     if (parsed && deckNsid.startsWith("card.")) {
-      const cardType: string | undefined = parsed.typeParts[1];
+      // Handle card.exploration.cultural, etc.
+      let cardType: string | undefined = parsed.typeParts.slice(1).join("-");
       if (cardType) {
+        // Public objectives omit the stage from the deck tag.
+        cardType = cardType.replace("-stage-", "-");
+
         const snapPointTag: string = `deck-${cardType}`;
         const deck: Card | undefined =
           this._find.findDeckOrDiscard(snapPointTag);
