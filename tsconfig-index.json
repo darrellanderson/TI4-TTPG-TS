@@ -13,5 +13,11 @@
     "outFile": "types/index.d.ts"
   },
   "include": ["./src/**/*.ts", "./src/**/*.tsx"],
-  "exclude": ["./src/**/*.test.ts", "./src/**/*.testp.ts"]
+  "exclude": [
+    "./src/**/*.test.ts",
+    "./src/**/*.testp.ts",
+    "./src/_how-to/**/*.ts",
+    "./src/_test/**/*.ts",
+    "./src/obj/**/*.ts"
+  ]
 }

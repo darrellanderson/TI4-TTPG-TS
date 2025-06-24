@@ -1,6 +1,6 @@
 import { GameObject, Player, refObject } from "@tabletop-playground/api";
-import { PlayerSeatType } from "lib/player-lib/player-seats/player-seats";
 import { Broadcast } from "ttpg-darrell";
+import { PlayerSeatType } from "../lib/player-lib/player-seats/player-seats";
 
 const ACTION_NAME = "*Choose Random Player";
 
