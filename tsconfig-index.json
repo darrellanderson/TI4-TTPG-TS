@@ -1,16 +1,17 @@
 {
   "compilerOptions": {
-    "target": "es6",
-    "module": "system",
-    "moduleResolution": "Node",
-    "lib": ["ES2023", "DOM"],
-    "skipLibCheck": true,
-
-    "strict": true,
-    "stripInternal": true,
     "declaration": true,
     "emitDeclarationOnly": true,
-    "outFile": "types/index.d.ts"
+    "outFile": "types/index.d.ts",
+    "module": "system",
+    "stripInternal": true,
+    "target": "es6",
+    "lib": ["ES2023", "DOM"],
+    "strict": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "moduleResolution": "Node"
   },
   "include": ["./src/**/*.ts", "./src/**/*.tsx"],
   "exclude": [
