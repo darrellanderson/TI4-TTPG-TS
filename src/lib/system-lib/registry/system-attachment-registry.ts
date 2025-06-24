@@ -118,7 +118,8 @@ export class SystemAttachmentRegistry {
       try {
         SourceAndPackageIdSchema.parse(sourceAndPackageId);
         SystemAttachmentSchema.parse(systemAttachmentSchemaType);
-      } catch (e) {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      } catch (e: any) {
         const msg = `error: ${e.message}\nparsing: ${JSON.stringify(
           systemAttachmentSchemaType
         )}`;

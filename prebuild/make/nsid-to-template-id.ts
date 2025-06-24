@@ -15,7 +15,7 @@ import * as path from "path";
 
 const args = {
   i: "assets/Templates",
-  o: "src/nsid/nsid-to-template-id.json",
+  o: "src/nsid/nsid-to-template-id.ts",
 };
 
 async function main() {
@@ -136,10 +136,11 @@ async function main() {
     nsidToTemplateId[nsid] = templateId;
   }
 
-  const data =
+  const json: string =
     JSON.stringify(nsidToTemplateId, Object.keys(nsidToTemplateId).sort(), 4) +
     "\n";
-  fs.writeFileSync(args.o, data);
+  const ts: string = `export const NSID_TO_TEMPLATE_ID: { [key: string]: string } = ${json};\n`;
+  fs.writeFileSync(args.o, ts);
 }
 
 main();

@@ -45,7 +45,8 @@ export class UnitModifierRegistry {
       try {
         NsidNameSchema.parse(source);
         UnitModifierSchema.parse(unitModifierSchema);
-      } catch (e) {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      } catch (e: any) {
         const msg = `error: ${e.message}\nparsing: ${JSON.stringify(
           unitModifierSchema
         )}`;

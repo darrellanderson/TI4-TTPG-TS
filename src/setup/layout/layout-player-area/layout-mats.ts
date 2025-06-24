@@ -71,7 +71,6 @@ export class LayoutMats {
       );
       const pos: Vector = snapPoint.getGlobalPosition().add([0, 0, 10]);
 
-      console.log("TECH DECKS:\n", nsids.sort().join("\n"));
       const deck: GameObject = Spawn.spawnMergeDecksOrThrow(nsids, pos);
 
       // Remove faction tech.
@@ -91,7 +90,6 @@ export class LayoutMats {
         let result: boolean = false;
         const tech: Tech | undefined = TI4.techRegistry.getByNsid(nsid);
         if (!tech || tech.isFactionTech()) {
-          console.log(`Removing tech: ${nsid}`);
           result = true;
         }
         return result;

@@ -539,7 +539,8 @@ export class CombatRoll {
           this._modifiers.push(modifier);
           modifier.apply(this);
         }
-      } catch (e) {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      } catch (e: any) {
         errors.push(e);
       }
     }

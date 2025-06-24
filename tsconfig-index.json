@@ -1,15 +1,15 @@
 {
   "compilerOptions": {
     "target": "es6",
-    "module": "commonjs",
+    "module": "system",
     "moduleResolution": "Node",
     "lib": ["ES2023", "DOM"],
     "skipLibCheck": true,
 
-    "resolveJsonModule": true,
+    "strict": true,
+    "stripInternal": true,
     "declaration": true,
     "emitDeclarationOnly": true,
-    "outDir": "dist",
     "outFile": "types/index.d.ts"
   },
   "include": ["./src/**/*.ts", "./src/**/*.tsx"],

@@ -73,7 +73,8 @@ export class SystemAttachment {
     try {
       SystemAttachmentSchema.parse(params); // validate the schema
       SourceAndPackageIdSchema.parse(sourceAndPackageId); // validate the schema
-    } catch (e) {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    } catch (e: any) {
       const msg = `error: ${e.message}\nparsing: ${JSON.stringify(params)}`;
       throw new Error(msg);
     }

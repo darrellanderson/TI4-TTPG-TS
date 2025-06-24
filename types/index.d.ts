@@ -157,30 +157,30 @@ declare module "lib/system-lib/schema/basic-types-schema" {
         sw: z.ZodOptional<z.ZodArray<z.ZodEnum<["n", "ne", "se", "s", "nw"]>, "many">>;
         nw: z.ZodOptional<z.ZodArray<z.ZodEnum<["n", "ne", "se", "s", "nw"]>, "many">>;
     }, "strict", z.ZodTypeAny, {
-        ne?: ("se" | "s" | "sw" | "nw" | "n")[];
-        se?: ("ne" | "s" | "sw" | "nw" | "n")[];
-        s?: ("ne" | "se" | "sw" | "nw" | "n")[];
-        sw?: ("ne" | "se" | "s" | "nw" | "n")[];
-        nw?: ("ne" | "se" | "s" | "nw" | "n")[];
-        n?: ("ne" | "se" | "s" | "sw" | "nw")[];
+        ne?: ("se" | "s" | "sw" | "nw" | "n")[] | undefined;
+        se?: ("ne" | "s" | "sw" | "nw" | "n")[] | undefined;
+        s?: ("ne" | "se" | "sw" | "nw" | "n")[] | undefined;
+        sw?: ("ne" | "se" | "s" | "nw" | "n")[] | undefined;
+        nw?: ("ne" | "se" | "s" | "nw" | "n")[] | undefined;
+        n?: ("ne" | "se" | "s" | "sw" | "nw")[] | undefined;
     }, {
-        ne?: ("se" | "s" | "sw" | "nw" | "n")[];
-        se?: ("ne" | "s" | "sw" | "nw" | "n")[];
-        s?: ("ne" | "se" | "sw" | "nw" | "n")[];
-        sw?: ("ne" | "se" | "s" | "nw" | "n")[];
-        nw?: ("ne" | "se" | "s" | "nw" | "n")[];
-        n?: ("ne" | "se" | "s" | "sw" | "nw")[];
+        ne?: ("se" | "s" | "sw" | "nw" | "n")[] | undefined;
+        se?: ("ne" | "s" | "sw" | "nw" | "n")[] | undefined;
+        s?: ("ne" | "se" | "sw" | "nw" | "n")[] | undefined;
+        sw?: ("ne" | "se" | "s" | "nw" | "n")[] | undefined;
+        nw?: ("ne" | "se" | "s" | "nw" | "n")[] | undefined;
+        n?: ("ne" | "se" | "s" | "sw" | "nw")[] | undefined;
     }>>;
     export type HyperlaneSchemaType = z.infer<typeof HyperlaneSchema>;
     export const LocalPositionSchema: z.ZodReadonly<z.ZodObject<{
         x: z.ZodNumber;
         y: z.ZodNumber;
     }, "strict", z.ZodTypeAny, {
-        x?: number;
-        y?: number;
+        x: number;
+        y: number;
     }, {
-        x?: number;
-        y?: number;
+        x: number;
+        y: number;
     }>>;
     export type LocalPositionSchemaType = z.infer<typeof LocalPositionSchema>;
     export const NsidNameSchema: z.ZodReadonly<z.ZodEffects<z.ZodString, string, string>>;
@@ -189,11 +189,11 @@ declare module "lib/system-lib/schema/basic-types-schema" {
         source: z.ZodReadonly<z.ZodEffects<z.ZodString, string, string>>;
         packageId: z.ZodString;
     }, "strict", z.ZodTypeAny, {
-        source?: string;
-        packageId?: string;
+        source: string;
+        packageId: string;
     }, {
-        source?: string;
-        packageId?: string;
+        source: string;
+        packageId: string;
     }>>;
     export type SourceAndPackageIdSchemaType = z.infer<typeof SourceAndPackageIdSchema>;
     export const SystemClassSchema: z.ZodReadonly<z.ZodEnum<["map", "off-map", "alt"]>>;
@@ -210,23 +210,23 @@ declare module "lib/system-lib/schema/basic-types-schema" {
             x: z.ZodNumber;
             y: z.ZodNumber;
         }, "strict", z.ZodTypeAny, {
-            x?: number;
-            y?: number;
+            x: number;
+            y: number;
         }, {
-            x?: number;
-            y?: number;
+            x: number;
+            y: number;
         }>>;
     }, "strict", z.ZodTypeAny, {
-        wormhole?: string;
-        localPosition?: Readonly<{
-            x?: number;
-            y?: number;
+        wormhole: string;
+        localPosition: Readonly<{
+            x: number;
+            y: number;
         }>;
     }, {
-        wormhole?: string;
-        localPosition?: Readonly<{
-            x?: number;
-            y?: number;
+        wormhole: string;
+        localPosition: Readonly<{
+            x: number;
+            y: number;
         }>;
     }>>;
     export type WormholeWithPositionSchemaType = z.infer<typeof WormholeWithPositionSchema>;
@@ -240,21 +240,21 @@ declare module "lib/system-lib/schema/planet-schema" {
             x: z.ZodNumber;
             y: z.ZodNumber;
         }, "strict", z.ZodTypeAny, {
-            x?: number;
-            y?: number;
+            x: number;
+            y: number;
         }, {
-            x?: number;
-            y?: number;
+            x: number;
+            y: number;
         }>>>;
         localPositionFaceDown: z.ZodOptional<z.ZodReadonly<z.ZodObject<{
             x: z.ZodNumber;
             y: z.ZodNumber;
         }, "strict", z.ZodTypeAny, {
-            x?: number;
-            y?: number;
+            x: number;
+            y: number;
         }, {
-            x?: number;
-            y?: number;
+            x: number;
+            y: number;
         }>>>;
         radius: z.ZodOptional<z.ZodNumber>;
         influence: z.ZodOptional<z.ZodNumber>;
@@ -264,41 +264,41 @@ declare module "lib/system-lib/schema/planet-schema" {
         isLegendary: z.ZodOptional<z.ZodBoolean>;
         legendaryNsidName: z.ZodOptional<z.ZodReadonly<z.ZodEffects<z.ZodString, string, string>>>;
     }, "strict", z.ZodTypeAny, {
+        name: string;
+        nsidName: string;
         localPosition?: Readonly<{
-            x?: number;
-            y?: number;
-        }>;
-        name?: string;
-        nsidName?: string;
+            x: number;
+            y: number;
+        }> | undefined;
         localPositionFaceDown?: Readonly<{
-            x?: number;
-            y?: number;
-        }>;
-        radius?: number;
-        influence?: number;
-        resources?: number;
-        techs?: ("blue" | "green" | "red" | "yellow")[];
-        traits?: ("cultural" | "hazardous" | "industrial")[];
-        isLegendary?: boolean;
-        legendaryNsidName?: string;
+            x: number;
+            y: number;
+        }> | undefined;
+        radius?: number | undefined;
+        influence?: number | undefined;
+        resources?: number | undefined;
+        techs?: ("blue" | "green" | "red" | "yellow")[] | undefined;
+        traits?: ("cultural" | "hazardous" | "industrial")[] | undefined;
+        isLegendary?: boolean | undefined;
+        legendaryNsidName?: string | undefined;
     }, {
+        name: string;
+        nsidName: string;
         localPosition?: Readonly<{
-            x?: number;
-            y?: number;
-        }>;
-        name?: string;
-        nsidName?: string;
+            x: number;
+            y: number;
+        }> | undefined;
         localPositionFaceDown?: Readonly<{
-            x?: number;
-            y?: number;
-        }>;
-        radius?: number;
-        influence?: number;
-        resources?: number;
-        techs?: ("blue" | "green" | "red" | "yellow")[];
-        traits?: ("cultural" | "hazardous" | "industrial")[];
-        isLegendary?: boolean;
-        legendaryNsidName?: string;
+            x: number;
+            y: number;
+        }> | undefined;
+        radius?: number | undefined;
+        influence?: number | undefined;
+        resources?: number | undefined;
+        techs?: ("blue" | "green" | "red" | "yellow")[] | undefined;
+        traits?: ("cultural" | "hazardous" | "industrial")[] | undefined;
+        isLegendary?: boolean | undefined;
+        legendaryNsidName?: string | undefined;
     }>>;
     export type PlanetSchemaType = z.infer<typeof PlanetSchema>;
 }
@@ -319,23 +319,23 @@ declare module "lib/system-lib/schema/system-schema" {
                 x: z.ZodNumber;
                 y: z.ZodNumber;
             }, "strict", z.ZodTypeAny, {
-                x?: number;
-                y?: number;
+                x: number;
+                y: number;
             }, {
-                x?: number;
-                y?: number;
+                x: number;
+                y: number;
             }>>;
         }, "strict", z.ZodTypeAny, {
-            wormhole?: string;
-            localPosition?: Readonly<{
-                x?: number;
-                y?: number;
+            wormhole: string;
+            localPosition: Readonly<{
+                x: number;
+                y: number;
             }>;
         }, {
-            wormhole?: string;
-            localPosition?: Readonly<{
-                x?: number;
-                y?: number;
+            wormhole: string;
+            localPosition: Readonly<{
+                x: number;
+                y: number;
             }>;
         }>>, "many">>;
         wormholesWithPositionsFaceDown: z.ZodOptional<z.ZodArray<z.ZodReadonly<z.ZodObject<{
@@ -344,23 +344,23 @@ declare module "lib/system-lib/schema/system-schema" {
                 x: z.ZodNumber;
                 y: z.ZodNumber;
             }, "strict", z.ZodTypeAny, {
-                x?: number;
-                y?: number;
+                x: number;
+                y: number;
             }, {
-                x?: number;
-                y?: number;
+                x: number;
+                y: number;
             }>>;
         }, "strict", z.ZodTypeAny, {
-            wormhole?: string;
-            localPosition?: Readonly<{
-                x?: number;
-                y?: number;
+            wormhole: string;
+            localPosition: Readonly<{
+                x: number;
+                y: number;
             }>;
         }, {
-            wormhole?: string;
-            localPosition?: Readonly<{
-                x?: number;
-                y?: number;
+            wormhole: string;
+            localPosition: Readonly<{
+                x: number;
+                y: number;
             }>;
         }>>, "many">>;
         hyperlanes: z.ZodOptional<z.ZodReadonly<z.ZodObject<{
@@ -371,19 +371,19 @@ declare module "lib/system-lib/schema/system-schema" {
             sw: z.ZodOptional<z.ZodArray<z.ZodEnum<["n", "ne", "se", "s", "nw"]>, "many">>;
             nw: z.ZodOptional<z.ZodArray<z.ZodEnum<["n", "ne", "se", "s", "nw"]>, "many">>;
         }, "strict", z.ZodTypeAny, {
-            ne?: ("se" | "s" | "sw" | "nw" | "n")[];
-            se?: ("ne" | "s" | "sw" | "nw" | "n")[];
-            s?: ("ne" | "se" | "sw" | "nw" | "n")[];
-            sw?: ("ne" | "se" | "s" | "nw" | "n")[];
-            nw?: ("ne" | "se" | "s" | "nw" | "n")[];
-            n?: ("ne" | "se" | "s" | "sw" | "nw")[];
+            ne?: ("se" | "s" | "sw" | "nw" | "n")[] | undefined;
+            se?: ("ne" | "s" | "sw" | "nw" | "n")[] | undefined;
+            s?: ("ne" | "se" | "sw" | "nw" | "n")[] | undefined;
+            sw?: ("ne" | "se" | "s" | "nw" | "n")[] | undefined;
+            nw?: ("ne" | "se" | "s" | "nw" | "n")[] | undefined;
+            n?: ("ne" | "se" | "s" | "sw" | "nw")[] | undefined;
         }, {
-            ne?: ("se" | "s" | "sw" | "nw" | "n")[];
-            se?: ("ne" | "s" | "sw" | "nw" | "n")[];
-            s?: ("ne" | "se" | "sw" | "nw" | "n")[];
-            sw?: ("ne" | "se" | "s" | "nw" | "n")[];
-            nw?: ("ne" | "se" | "s" | "nw" | "n")[];
-            n?: ("ne" | "se" | "s" | "sw" | "nw")[];
+            ne?: ("se" | "s" | "sw" | "nw" | "n")[] | undefined;
+            se?: ("ne" | "s" | "sw" | "nw" | "n")[] | undefined;
+            s?: ("ne" | "se" | "sw" | "nw" | "n")[] | undefined;
+            sw?: ("ne" | "se" | "s" | "nw" | "n")[] | undefined;
+            nw?: ("ne" | "se" | "s" | "nw" | "n")[] | undefined;
+            n?: ("ne" | "se" | "s" | "sw" | "nw")[] | undefined;
         }>>>;
         hyperlanesFaceDown: z.ZodOptional<z.ZodReadonly<z.ZodObject<{
             n: z.ZodOptional<z.ZodArray<z.ZodEnum<["ne", "se", "s", "sw", "nw"]>, "many">>;
@@ -393,19 +393,19 @@ declare module "lib/system-lib/schema/system-schema" {
             sw: z.ZodOptional<z.ZodArray<z.ZodEnum<["n", "ne", "se", "s", "nw"]>, "many">>;
             nw: z.ZodOptional<z.ZodArray<z.ZodEnum<["n", "ne", "se", "s", "nw"]>, "many">>;
         }, "strict", z.ZodTypeAny, {
-            ne?: ("se" | "s" | "sw" | "nw" | "n")[];
-            se?: ("ne" | "s" | "sw" | "nw" | "n")[];
-            s?: ("ne" | "se" | "sw" | "nw" | "n")[];
-            sw?: ("ne" | "se" | "s" | "nw" | "n")[];
-            nw?: ("ne" | "se" | "s" | "nw" | "n")[];
-            n?: ("ne" | "se" | "s" | "sw" | "nw")[];
+            ne?: ("se" | "s" | "sw" | "nw" | "n")[] | undefined;
+            se?: ("ne" | "s" | "sw" | "nw" | "n")[] | undefined;
+            s?: ("ne" | "se" | "sw" | "nw" | "n")[] | undefined;
+            sw?: ("ne" | "se" | "s" | "nw" | "n")[] | undefined;
+            nw?: ("ne" | "se" | "s" | "nw" | "n")[] | undefined;
+            n?: ("ne" | "se" | "s" | "sw" | "nw")[] | undefined;
         }, {
-            ne?: ("se" | "s" | "sw" | "nw" | "n")[];
-            se?: ("ne" | "s" | "sw" | "nw" | "n")[];
-            s?: ("ne" | "se" | "sw" | "nw" | "n")[];
-            sw?: ("ne" | "se" | "s" | "nw" | "n")[];
-            nw?: ("ne" | "se" | "s" | "nw" | "n")[];
-            n?: ("ne" | "se" | "s" | "sw" | "nw")[];
+            ne?: ("se" | "s" | "sw" | "nw" | "n")[] | undefined;
+            se?: ("ne" | "s" | "sw" | "nw" | "n")[] | undefined;
+            s?: ("ne" | "se" | "sw" | "nw" | "n")[] | undefined;
+            sw?: ("ne" | "se" | "s" | "nw" | "n")[] | undefined;
+            nw?: ("ne" | "se" | "s" | "nw" | "n")[] | undefined;
+            n?: ("ne" | "se" | "s" | "sw" | "nw")[] | undefined;
         }>>>;
         planets: z.ZodOptional<z.ZodArray<z.ZodReadonly<z.ZodObject<{
             name: z.ZodString;
@@ -414,21 +414,21 @@ declare module "lib/system-lib/schema/system-schema" {
                 x: z.ZodNumber;
                 y: z.ZodNumber;
             }, "strict", z.ZodTypeAny, {
-                x?: number;
-                y?: number;
+                x: number;
+                y: number;
             }, {
-                x?: number;
-                y?: number;
+                x: number;
+                y: number;
             }>>>;
             localPositionFaceDown: z.ZodOptional<z.ZodReadonly<z.ZodObject<{
                 x: z.ZodNumber;
                 y: z.ZodNumber;
             }, "strict", z.ZodTypeAny, {
-                x?: number;
-                y?: number;
+                x: number;
+                y: number;
             }, {
-                x?: number;
-                y?: number;
+                x: number;
+                y: number;
             }>>>;
             radius: z.ZodOptional<z.ZodNumber>;
             influence: z.ZodOptional<z.ZodNumber>;
@@ -438,161 +438,161 @@ declare module "lib/system-lib/schema/system-schema" {
             isLegendary: z.ZodOptional<z.ZodBoolean>;
             legendaryNsidName: z.ZodOptional<z.ZodReadonly<z.ZodEffects<z.ZodString, string, string>>>;
         }, "strict", z.ZodTypeAny, {
+            name: string;
+            nsidName: string;
             localPosition?: Readonly<{
-                x?: number;
-                y?: number;
-            }>;
-            name?: string;
-            nsidName?: string;
+                x: number;
+                y: number;
+            }> | undefined;
             localPositionFaceDown?: Readonly<{
-                x?: number;
-                y?: number;
-            }>;
-            radius?: number;
-            influence?: number;
-            resources?: number;
-            techs?: ("blue" | "green" | "red" | "yellow")[];
-            traits?: ("cultural" | "hazardous" | "industrial")[];
-            isLegendary?: boolean;
-            legendaryNsidName?: string;
+                x: number;
+                y: number;
+            }> | undefined;
+            radius?: number | undefined;
+            influence?: number | undefined;
+            resources?: number | undefined;
+            techs?: ("blue" | "green" | "red" | "yellow")[] | undefined;
+            traits?: ("cultural" | "hazardous" | "industrial")[] | undefined;
+            isLegendary?: boolean | undefined;
+            legendaryNsidName?: string | undefined;
         }, {
+            name: string;
+            nsidName: string;
             localPosition?: Readonly<{
-                x?: number;
-                y?: number;
-            }>;
-            name?: string;
-            nsidName?: string;
+                x: number;
+                y: number;
+            }> | undefined;
             localPositionFaceDown?: Readonly<{
-                x?: number;
-                y?: number;
-            }>;
-            radius?: number;
-            influence?: number;
-            resources?: number;
-            techs?: ("blue" | "green" | "red" | "yellow")[];
-            traits?: ("cultural" | "hazardous" | "industrial")[];
-            isLegendary?: boolean;
-            legendaryNsidName?: string;
+                x: number;
+                y: number;
+            }> | undefined;
+            radius?: number | undefined;
+            influence?: number | undefined;
+            resources?: number | undefined;
+            techs?: ("blue" | "green" | "red" | "yellow")[] | undefined;
+            traits?: ("cultural" | "hazardous" | "industrial")[] | undefined;
+            isLegendary?: boolean | undefined;
+            legendaryNsidName?: string | undefined;
         }>>, "many">>;
         imgFaceDown: z.ZodOptional<z.ZodBoolean>;
     }, "strict", z.ZodTypeAny, {
-        tile?: number;
-        class?: "map" | "off-map" | "alt";
-        isExcludeFromDraft?: boolean;
-        isHome?: boolean;
-        isHyperlane?: boolean;
-        anomalies?: ("asteroid-field" | "gravity-rift" | "nebula" | "supernova")[];
-        wormholes?: ("alpha" | "beta" | "gamma" | "delta" | "epsilon")[];
-        wormholesFaceDown?: ("alpha" | "beta" | "gamma" | "delta" | "epsilon")[];
+        tile: number;
+        class?: "map" | "off-map" | "alt" | undefined;
+        isExcludeFromDraft?: boolean | undefined;
+        isHome?: boolean | undefined;
+        isHyperlane?: boolean | undefined;
+        anomalies?: ("asteroid-field" | "gravity-rift" | "nebula" | "supernova")[] | undefined;
+        wormholes?: ("alpha" | "beta" | "gamma" | "delta" | "epsilon")[] | undefined;
+        wormholesFaceDown?: ("alpha" | "beta" | "gamma" | "delta" | "epsilon")[] | undefined;
         wormholesWithPositions?: Readonly<{
-            wormhole?: string;
-            localPosition?: Readonly<{
-                x?: number;
-                y?: number;
+            wormhole: string;
+            localPosition: Readonly<{
+                x: number;
+                y: number;
             }>;
-        }>[];
+        }>[] | undefined;
         wormholesWithPositionsFaceDown?: Readonly<{
-            wormhole?: string;
-            localPosition?: Readonly<{
-                x?: number;
-                y?: number;
+            wormhole: string;
+            localPosition: Readonly<{
+                x: number;
+                y: number;
             }>;
-        }>[];
+        }>[] | undefined;
         hyperlanes?: Readonly<{
-            ne?: ("se" | "s" | "sw" | "nw" | "n")[];
-            se?: ("ne" | "s" | "sw" | "nw" | "n")[];
-            s?: ("ne" | "se" | "sw" | "nw" | "n")[];
-            sw?: ("ne" | "se" | "s" | "nw" | "n")[];
-            nw?: ("ne" | "se" | "s" | "nw" | "n")[];
-            n?: ("ne" | "se" | "s" | "sw" | "nw")[];
-        }>;
+            ne?: ("se" | "s" | "sw" | "nw" | "n")[] | undefined;
+            se?: ("ne" | "s" | "sw" | "nw" | "n")[] | undefined;
+            s?: ("ne" | "se" | "sw" | "nw" | "n")[] | undefined;
+            sw?: ("ne" | "se" | "s" | "nw" | "n")[] | undefined;
+            nw?: ("ne" | "se" | "s" | "nw" | "n")[] | undefined;
+            n?: ("ne" | "se" | "s" | "sw" | "nw")[] | undefined;
+        }> | undefined;
         hyperlanesFaceDown?: Readonly<{
-            ne?: ("se" | "s" | "sw" | "nw" | "n")[];
-            se?: ("ne" | "s" | "sw" | "nw" | "n")[];
-            s?: ("ne" | "se" | "sw" | "nw" | "n")[];
-            sw?: ("ne" | "se" | "s" | "nw" | "n")[];
-            nw?: ("ne" | "se" | "s" | "nw" | "n")[];
-            n?: ("ne" | "se" | "s" | "sw" | "nw")[];
-        }>;
+            ne?: ("se" | "s" | "sw" | "nw" | "n")[] | undefined;
+            se?: ("ne" | "s" | "sw" | "nw" | "n")[] | undefined;
+            s?: ("ne" | "se" | "sw" | "nw" | "n")[] | undefined;
+            sw?: ("ne" | "se" | "s" | "nw" | "n")[] | undefined;
+            nw?: ("ne" | "se" | "s" | "nw" | "n")[] | undefined;
+            n?: ("ne" | "se" | "s" | "sw" | "nw")[] | undefined;
+        }> | undefined;
         planets?: Readonly<{
+            name: string;
+            nsidName: string;
             localPosition?: Readonly<{
-                x?: number;
-                y?: number;
-            }>;
-            name?: string;
-            nsidName?: string;
+                x: number;
+                y: number;
+            }> | undefined;
             localPositionFaceDown?: Readonly<{
-                x?: number;
-                y?: number;
-            }>;
-            radius?: number;
-            influence?: number;
-            resources?: number;
-            techs?: ("blue" | "green" | "red" | "yellow")[];
-            traits?: ("cultural" | "hazardous" | "industrial")[];
-            isLegendary?: boolean;
-            legendaryNsidName?: string;
-        }>[];
-        imgFaceDown?: boolean;
+                x: number;
+                y: number;
+            }> | undefined;
+            radius?: number | undefined;
+            influence?: number | undefined;
+            resources?: number | undefined;
+            techs?: ("blue" | "green" | "red" | "yellow")[] | undefined;
+            traits?: ("cultural" | "hazardous" | "industrial")[] | undefined;
+            isLegendary?: boolean | undefined;
+            legendaryNsidName?: string | undefined;
+        }>[] | undefined;
+        imgFaceDown?: boolean | undefined;
     }, {
-        tile?: number;
-        class?: "map" | "off-map" | "alt";
-        isExcludeFromDraft?: boolean;
-        isHome?: boolean;
-        isHyperlane?: boolean;
-        anomalies?: ("asteroid-field" | "gravity-rift" | "nebula" | "supernova")[];
-        wormholes?: ("alpha" | "beta" | "gamma" | "delta" | "epsilon")[];
-        wormholesFaceDown?: ("alpha" | "beta" | "gamma" | "delta" | "epsilon")[];
+        tile: number;
+        class?: "map" | "off-map" | "alt" | undefined;
+        isExcludeFromDraft?: boolean | undefined;
+        isHome?: boolean | undefined;
+        isHyperlane?: boolean | undefined;
+        anomalies?: ("asteroid-field" | "gravity-rift" | "nebula" | "supernova")[] | undefined;
+        wormholes?: ("alpha" | "beta" | "gamma" | "delta" | "epsilon")[] | undefined;
+        wormholesFaceDown?: ("alpha" | "beta" | "gamma" | "delta" | "epsilon")[] | undefined;
         wormholesWithPositions?: Readonly<{
-            wormhole?: string;
-            localPosition?: Readonly<{
-                x?: number;
-                y?: number;
+            wormhole: string;
+            localPosition: Readonly<{
+                x: number;
+                y: number;
             }>;
-        }>[];
+        }>[] | undefined;
         wormholesWithPositionsFaceDown?: Readonly<{
-            wormhole?: string;
-            localPosition?: Readonly<{
-                x?: number;
-                y?: number;
+            wormhole: string;
+            localPosition: Readonly<{
+                x: number;
+                y: number;
             }>;
-        }>[];
+        }>[] | undefined;
         hyperlanes?: Readonly<{
-            ne?: ("se" | "s" | "sw" | "nw" | "n")[];
-            se?: ("ne" | "s" | "sw" | "nw" | "n")[];
-            s?: ("ne" | "se" | "sw" | "nw" | "n")[];
-            sw?: ("ne" | "se" | "s" | "nw" | "n")[];
-            nw?: ("ne" | "se" | "s" | "nw" | "n")[];
-            n?: ("ne" | "se" | "s" | "sw" | "nw")[];
-        }>;
+            ne?: ("se" | "s" | "sw" | "nw" | "n")[] | undefined;
+            se?: ("ne" | "s" | "sw" | "nw" | "n")[] | undefined;
+            s?: ("ne" | "se" | "sw" | "nw" | "n")[] | undefined;
+            sw?: ("ne" | "se" | "s" | "nw" | "n")[] | undefined;
+            nw?: ("ne" | "se" | "s" | "nw" | "n")[] | undefined;
+            n?: ("ne" | "se" | "s" | "sw" | "nw")[] | undefined;
+        }> | undefined;
         hyperlanesFaceDown?: Readonly<{
-            ne?: ("se" | "s" | "sw" | "nw" | "n")[];
-            se?: ("ne" | "s" | "sw" | "nw" | "n")[];
-            s?: ("ne" | "se" | "sw" | "nw" | "n")[];
-            sw?: ("ne" | "se" | "s" | "nw" | "n")[];
-            nw?: ("ne" | "se" | "s" | "nw" | "n")[];
-            n?: ("ne" | "se" | "s" | "sw" | "nw")[];
-        }>;
+            ne?: ("se" | "s" | "sw" | "nw" | "n")[] | undefined;
+            se?: ("ne" | "s" | "sw" | "nw" | "n")[] | undefined;
+            s?: ("ne" | "se" | "sw" | "nw" | "n")[] | undefined;
+            sw?: ("ne" | "se" | "s" | "nw" | "n")[] | undefined;
+            nw?: ("ne" | "se" | "s" | "nw" | "n")[] | undefined;
+            n?: ("ne" | "se" | "s" | "sw" | "nw")[] | undefined;
+        }> | undefined;
         planets?: Readonly<{
+            name: string;
+            nsidName: string;
             localPosition?: Readonly<{
-                x?: number;
-                y?: number;
-            }>;
-            name?: string;
-            nsidName?: string;
+                x: number;
+                y: number;
+            }> | undefined;
             localPositionFaceDown?: Readonly<{
-                x?: number;
-                y?: number;
-            }>;
-            radius?: number;
-            influence?: number;
-            resources?: number;
-            techs?: ("blue" | "green" | "red" | "yellow")[];
-            traits?: ("cultural" | "hazardous" | "industrial")[];
-            isLegendary?: boolean;
-            legendaryNsidName?: string;
-        }>[];
-        imgFaceDown?: boolean;
+                x: number;
+                y: number;
+            }> | undefined;
+            radius?: number | undefined;
+            influence?: number | undefined;
+            resources?: number | undefined;
+            techs?: ("blue" | "green" | "red" | "yellow")[] | undefined;
+            traits?: ("cultural" | "hazardous" | "industrial")[] | undefined;
+            isLegendary?: boolean | undefined;
+            legendaryNsidName?: string | undefined;
+        }>[] | undefined;
+        imgFaceDown?: boolean | undefined;
     }>>;
     export type SystemSchemaType = z.infer<typeof SystemSchema>;
 }
@@ -616,39 +616,39 @@ declare module "lib/system-lib/schema/planet-attachment-schema" {
         isDestroyPlanet: z.ZodOptional<z.ZodBoolean>;
         flipIfNoPlanetTech: z.ZodOptional<z.ZodBoolean>;
     }, "strict", z.ZodTypeAny, {
-        name?: string;
-        nsidName?: string;
-        influence?: number;
-        resources?: number;
-        techs?: ("blue" | "green" | "red" | "yellow")[];
-        traits?: ("cultural" | "hazardous" | "industrial")[];
-        isLegendary?: boolean;
-        legendaryNsidName?: string;
-        imgFaceDown?: boolean;
-        doNotAttach?: boolean;
-        influenceFaceDown?: number;
-        resourcesFaceDown?: number;
-        techsFaceDown?: ("blue" | "green" | "red" | "yellow")[];
-        traitsFaceDown?: ("cultural" | "hazardous" | "industrial")[];
-        isDestroyPlanet?: boolean;
-        flipIfNoPlanetTech?: boolean;
+        name: string;
+        nsidName: string;
+        influence?: number | undefined;
+        resources?: number | undefined;
+        techs?: ("blue" | "green" | "red" | "yellow")[] | undefined;
+        traits?: ("cultural" | "hazardous" | "industrial")[] | undefined;
+        isLegendary?: boolean | undefined;
+        legendaryNsidName?: string | undefined;
+        imgFaceDown?: boolean | undefined;
+        doNotAttach?: boolean | undefined;
+        influenceFaceDown?: number | undefined;
+        resourcesFaceDown?: number | undefined;
+        techsFaceDown?: ("blue" | "green" | "red" | "yellow")[] | undefined;
+        traitsFaceDown?: ("cultural" | "hazardous" | "industrial")[] | undefined;
+        isDestroyPlanet?: boolean | undefined;
+        flipIfNoPlanetTech?: boolean | undefined;
     }, {
-        name?: string;
-        nsidName?: string;
-        influence?: number;
-        resources?: number;
-        techs?: ("blue" | "green" | "red" | "yellow")[];
-        traits?: ("cultural" | "hazardous" | "industrial")[];
-        isLegendary?: boolean;
-        legendaryNsidName?: string;
-        imgFaceDown?: boolean;
-        doNotAttach?: boolean;
-        influenceFaceDown?: number;
-        resourcesFaceDown?: number;
-        techsFaceDown?: ("blue" | "green" | "red" | "yellow")[];
-        traitsFaceDown?: ("cultural" | "hazardous" | "industrial")[];
-        isDestroyPlanet?: boolean;
-        flipIfNoPlanetTech?: boolean;
+        name: string;
+        nsidName: string;
+        influence?: number | undefined;
+        resources?: number | undefined;
+        techs?: ("blue" | "green" | "red" | "yellow")[] | undefined;
+        traits?: ("cultural" | "hazardous" | "industrial")[] | undefined;
+        isLegendary?: boolean | undefined;
+        legendaryNsidName?: string | undefined;
+        imgFaceDown?: boolean | undefined;
+        doNotAttach?: boolean | undefined;
+        influenceFaceDown?: number | undefined;
+        resourcesFaceDown?: number | undefined;
+        techsFaceDown?: ("blue" | "green" | "red" | "yellow")[] | undefined;
+        traitsFaceDown?: ("cultural" | "hazardous" | "industrial")[] | undefined;
+        isDestroyPlanet?: boolean | undefined;
+        flipIfNoPlanetTech?: boolean | undefined;
     }>>;
     export type PlanetAttachmentSchemaType = z.infer<typeof PlanetAttachmentSchema>;
 }
@@ -970,21 +970,21 @@ declare module "lib/system-lib/schema/system-attachment-schema" {
                 x: z.ZodNumber;
                 y: z.ZodNumber;
             }, "strict", z.ZodTypeAny, {
-                x?: number;
-                y?: number;
+                x: number;
+                y: number;
             }, {
-                x?: number;
-                y?: number;
+                x: number;
+                y: number;
             }>>>;
             localPositionFaceDown: z.ZodOptional<z.ZodReadonly<z.ZodObject<{
                 x: z.ZodNumber;
                 y: z.ZodNumber;
             }, "strict", z.ZodTypeAny, {
-                x?: number;
-                y?: number;
+                x: number;
+                y: number;
             }, {
-                x?: number;
-                y?: number;
+                x: number;
+                y: number;
             }>>>;
             radius: z.ZodOptional<z.ZodNumber>;
             influence: z.ZodOptional<z.ZodNumber>;
@@ -994,98 +994,98 @@ declare module "lib/system-lib/schema/system-attachment-schema" {
             isLegendary: z.ZodOptional<z.ZodBoolean>;
             legendaryNsidName: z.ZodOptional<z.ZodReadonly<z.ZodEffects<z.ZodString, string, string>>>;
         }, "strict", z.ZodTypeAny, {
+            name: string;
+            nsidName: string;
             localPosition?: Readonly<{
-                x?: number;
-                y?: number;
-            }>;
-            name?: string;
-            nsidName?: string;
+                x: number;
+                y: number;
+            }> | undefined;
             localPositionFaceDown?: Readonly<{
-                x?: number;
-                y?: number;
-            }>;
-            radius?: number;
-            influence?: number;
-            resources?: number;
-            techs?: ("blue" | "green" | "red" | "yellow")[];
-            traits?: ("cultural" | "hazardous" | "industrial")[];
-            isLegendary?: boolean;
-            legendaryNsidName?: string;
+                x: number;
+                y: number;
+            }> | undefined;
+            radius?: number | undefined;
+            influence?: number | undefined;
+            resources?: number | undefined;
+            techs?: ("blue" | "green" | "red" | "yellow")[] | undefined;
+            traits?: ("cultural" | "hazardous" | "industrial")[] | undefined;
+            isLegendary?: boolean | undefined;
+            legendaryNsidName?: string | undefined;
         }, {
+            name: string;
+            nsidName: string;
             localPosition?: Readonly<{
-                x?: number;
-                y?: number;
-            }>;
-            name?: string;
-            nsidName?: string;
+                x: number;
+                y: number;
+            }> | undefined;
             localPositionFaceDown?: Readonly<{
-                x?: number;
-                y?: number;
-            }>;
-            radius?: number;
-            influence?: number;
-            resources?: number;
-            techs?: ("blue" | "green" | "red" | "yellow")[];
-            traits?: ("cultural" | "hazardous" | "industrial")[];
-            isLegendary?: boolean;
-            legendaryNsidName?: string;
+                x: number;
+                y: number;
+            }> | undefined;
+            radius?: number | undefined;
+            influence?: number | undefined;
+            resources?: number | undefined;
+            techs?: ("blue" | "green" | "red" | "yellow")[] | undefined;
+            traits?: ("cultural" | "hazardous" | "industrial")[] | undefined;
+            isLegendary?: boolean | undefined;
+            legendaryNsidName?: string | undefined;
         }>>, "many">>;
     }, "strict", z.ZodTypeAny, {
-        name?: string;
-        nsidName?: string;
-        anomalies?: ("asteroid-field" | "gravity-rift" | "nebula" | "supernova")[];
-        wormholes?: ("alpha" | "beta" | "gamma" | "delta" | "epsilon")[];
-        wormholesFaceDown?: ("alpha" | "beta" | "gamma" | "delta" | "epsilon")[];
+        name: string;
+        nsidName: string;
+        anomalies?: ("asteroid-field" | "gravity-rift" | "nebula" | "supernova")[] | undefined;
+        wormholes?: ("alpha" | "beta" | "gamma" | "delta" | "epsilon")[] | undefined;
+        wormholesFaceDown?: ("alpha" | "beta" | "gamma" | "delta" | "epsilon")[] | undefined;
         planets?: Readonly<{
+            name: string;
+            nsidName: string;
             localPosition?: Readonly<{
-                x?: number;
-                y?: number;
-            }>;
-            name?: string;
-            nsidName?: string;
+                x: number;
+                y: number;
+            }> | undefined;
             localPositionFaceDown?: Readonly<{
-                x?: number;
-                y?: number;
-            }>;
-            radius?: number;
-            influence?: number;
-            resources?: number;
-            techs?: ("blue" | "green" | "red" | "yellow")[];
-            traits?: ("cultural" | "hazardous" | "industrial")[];
-            isLegendary?: boolean;
-            legendaryNsidName?: string;
-        }>[];
-        imgFaceDown?: boolean;
-        doNotAttach?: boolean;
-        isDestroyWormhole?: boolean;
+                x: number;
+                y: number;
+            }> | undefined;
+            radius?: number | undefined;
+            influence?: number | undefined;
+            resources?: number | undefined;
+            techs?: ("blue" | "green" | "red" | "yellow")[] | undefined;
+            traits?: ("cultural" | "hazardous" | "industrial")[] | undefined;
+            isLegendary?: boolean | undefined;
+            legendaryNsidName?: string | undefined;
+        }>[] | undefined;
+        imgFaceDown?: boolean | undefined;
+        doNotAttach?: boolean | undefined;
+        isDestroyWormhole?: boolean | undefined;
     }, {
-        name?: string;
-        nsidName?: string;
-        anomalies?: ("asteroid-field" | "gravity-rift" | "nebula" | "supernova")[];
-        wormholes?: ("alpha" | "beta" | "gamma" | "delta" | "epsilon")[];
-        wormholesFaceDown?: ("alpha" | "beta" | "gamma" | "delta" | "epsilon")[];
+        name: string;
+        nsidName: string;
+        anomalies?: ("asteroid-field" | "gravity-rift" | "nebula" | "supernova")[] | undefined;
+        wormholes?: ("alpha" | "beta" | "gamma" | "delta" | "epsilon")[] | undefined;
+        wormholesFaceDown?: ("alpha" | "beta" | "gamma" | "delta" | "epsilon")[] | undefined;
         planets?: Readonly<{
+            name: string;
+            nsidName: string;
             localPosition?: Readonly<{
-                x?: number;
-                y?: number;
-            }>;
-            name?: string;
-            nsidName?: string;
+                x: number;
+                y: number;
+            }> | undefined;
             localPositionFaceDown?: Readonly<{
-                x?: number;
-                y?: number;
-            }>;
-            radius?: number;
-            influence?: number;
-            resources?: number;
-            techs?: ("blue" | "green" | "red" | "yellow")[];
-            traits?: ("cultural" | "hazardous" | "industrial")[];
-            isLegendary?: boolean;
-            legendaryNsidName?: string;
-        }>[];
-        imgFaceDown?: boolean;
-        doNotAttach?: boolean;
-        isDestroyWormhole?: boolean;
+                x: number;
+                y: number;
+            }> | undefined;
+            radius?: number | undefined;
+            influence?: number | undefined;
+            resources?: number | undefined;
+            techs?: ("blue" | "green" | "red" | "yellow")[] | undefined;
+            traits?: ("cultural" | "hazardous" | "industrial")[] | undefined;
+            isLegendary?: boolean | undefined;
+            legendaryNsidName?: string | undefined;
+        }>[] | undefined;
+        imgFaceDown?: boolean | undefined;
+        doNotAttach?: boolean | undefined;
+        isDestroyWormhole?: boolean | undefined;
     }>>;
     export type SystemAttachmentSchemaType = z.infer<typeof SystemAttachmentSchema>;
 }
@@ -1444,21 +1444,21 @@ declare module "lib/unit-lib/schema/unit-attrs-schema" {
         critCount: z.ZodOptional<z.ZodNumber>;
         range: z.ZodOptional<z.ZodNumber>;
     }, "strict", z.ZodTypeAny, {
-        dice?: number;
-        hit?: number;
-        extraDice?: number;
-        rerollMisses?: boolean;
-        crit?: number;
-        critCount?: number;
-        range?: number;
+        hit: number;
+        dice?: number | undefined;
+        extraDice?: number | undefined;
+        rerollMisses?: boolean | undefined;
+        crit?: number | undefined;
+        critCount?: number | undefined;
+        range?: number | undefined;
     }, {
-        dice?: number;
-        hit?: number;
-        extraDice?: number;
-        rerollMisses?: boolean;
-        crit?: number;
-        critCount?: number;
-        range?: number;
+        hit: number;
+        dice?: number | undefined;
+        extraDice?: number | undefined;
+        rerollMisses?: boolean | undefined;
+        crit?: number | undefined;
+        critCount?: number | undefined;
+        range?: number | undefined;
     }>>;
     export type CombatAttrsSchemaType = z.infer<typeof CombatAttrsSchema>;
     export const UnitAttrsSchema: z.ZodReadonly<z.ZodObject<{
@@ -1483,21 +1483,21 @@ declare module "lib/unit-lib/schema/unit-attrs-schema" {
             critCount: z.ZodOptional<z.ZodNumber>;
             range: z.ZodOptional<z.ZodNumber>;
         }, "strict", z.ZodTypeAny, {
-            dice?: number;
-            hit?: number;
-            extraDice?: number;
-            rerollMisses?: boolean;
-            crit?: number;
-            critCount?: number;
-            range?: number;
+            hit: number;
+            dice?: number | undefined;
+            extraDice?: number | undefined;
+            rerollMisses?: boolean | undefined;
+            crit?: number | undefined;
+            critCount?: number | undefined;
+            range?: number | undefined;
         }, {
-            dice?: number;
-            hit?: number;
-            extraDice?: number;
-            rerollMisses?: boolean;
-            crit?: number;
-            critCount?: number;
-            range?: number;
+            hit: number;
+            dice?: number | undefined;
+            extraDice?: number | undefined;
+            rerollMisses?: boolean | undefined;
+            crit?: number | undefined;
+            critCount?: number | undefined;
+            range?: number | undefined;
         }>>>;
         bombardment: z.ZodOptional<z.ZodReadonly<z.ZodObject<{
             dice: z.ZodOptional<z.ZodNumber>;
@@ -1508,21 +1508,21 @@ declare module "lib/unit-lib/schema/unit-attrs-schema" {
             critCount: z.ZodOptional<z.ZodNumber>;
             range: z.ZodOptional<z.ZodNumber>;
         }, "strict", z.ZodTypeAny, {
-            dice?: number;
-            hit?: number;
-            extraDice?: number;
-            rerollMisses?: boolean;
-            crit?: number;
-            critCount?: number;
-            range?: number;
+            hit: number;
+            dice?: number | undefined;
+            extraDice?: number | undefined;
+            rerollMisses?: boolean | undefined;
+            crit?: number | undefined;
+            critCount?: number | undefined;
+            range?: number | undefined;
         }, {
-            dice?: number;
-            hit?: number;
-            extraDice?: number;
-            rerollMisses?: boolean;
-            crit?: number;
-            critCount?: number;
-            range?: number;
+            hit: number;
+            dice?: number | undefined;
+            extraDice?: number | undefined;
+            rerollMisses?: boolean | undefined;
+            crit?: number | undefined;
+            critCount?: number | undefined;
+            range?: number | undefined;
         }>>>;
         spaceCannon: z.ZodOptional<z.ZodReadonly<z.ZodObject<{
             dice: z.ZodOptional<z.ZodNumber>;
@@ -1533,21 +1533,21 @@ declare module "lib/unit-lib/schema/unit-attrs-schema" {
             critCount: z.ZodOptional<z.ZodNumber>;
             range: z.ZodOptional<z.ZodNumber>;
         }, "strict", z.ZodTypeAny, {
-            dice?: number;
-            hit?: number;
-            extraDice?: number;
-            rerollMisses?: boolean;
-            crit?: number;
-            critCount?: number;
-            range?: number;
+            hit: number;
+            dice?: number | undefined;
+            extraDice?: number | undefined;
+            rerollMisses?: boolean | undefined;
+            crit?: number | undefined;
+            critCount?: number | undefined;
+            range?: number | undefined;
         }, {
-            dice?: number;
-            hit?: number;
-            extraDice?: number;
-            rerollMisses?: boolean;
-            crit?: number;
-            critCount?: number;
-            range?: number;
+            hit: number;
+            dice?: number | undefined;
+            extraDice?: number | undefined;
+            rerollMisses?: boolean | undefined;
+            crit?: number | undefined;
+            critCount?: number | undefined;
+            range?: number | undefined;
         }>>>;
         spaceCombat: z.ZodOptional<z.ZodReadonly<z.ZodObject<{
             dice: z.ZodOptional<z.ZodNumber>;
@@ -1558,21 +1558,21 @@ declare module "lib/unit-lib/schema/unit-attrs-schema" {
             critCount: z.ZodOptional<z.ZodNumber>;
             range: z.ZodOptional<z.ZodNumber>;
         }, "strict", z.ZodTypeAny, {
-            dice?: number;
-            hit?: number;
-            extraDice?: number;
-            rerollMisses?: boolean;
-            crit?: number;
-            critCount?: number;
-            range?: number;
+            hit: number;
+            dice?: number | undefined;
+            extraDice?: number | undefined;
+            rerollMisses?: boolean | undefined;
+            crit?: number | undefined;
+            critCount?: number | undefined;
+            range?: number | undefined;
         }, {
-            dice?: number;
-            hit?: number;
-            extraDice?: number;
-            rerollMisses?: boolean;
-            crit?: number;
-            critCount?: number;
-            range?: number;
+            hit: number;
+            dice?: number | undefined;
+            extraDice?: number | undefined;
+            rerollMisses?: boolean | undefined;
+            crit?: number | undefined;
+            critCount?: number | undefined;
+            range?: number | undefined;
         }>>>;
         groundCombat: z.ZodOptional<z.ZodReadonly<z.ZodObject<{
             dice: z.ZodOptional<z.ZodNumber>;
@@ -1583,141 +1583,141 @@ declare module "lib/unit-lib/schema/unit-attrs-schema" {
             critCount: z.ZodOptional<z.ZodNumber>;
             range: z.ZodOptional<z.ZodNumber>;
         }, "strict", z.ZodTypeAny, {
-            dice?: number;
-            hit?: number;
-            extraDice?: number;
-            rerollMisses?: boolean;
-            crit?: number;
-            critCount?: number;
-            range?: number;
+            hit: number;
+            dice?: number | undefined;
+            extraDice?: number | undefined;
+            rerollMisses?: boolean | undefined;
+            crit?: number | undefined;
+            critCount?: number | undefined;
+            range?: number | undefined;
         }, {
-            dice?: number;
-            hit?: number;
-            extraDice?: number;
-            rerollMisses?: boolean;
-            crit?: number;
-            critCount?: number;
-            range?: number;
+            hit: number;
+            dice?: number | undefined;
+            extraDice?: number | undefined;
+            rerollMisses?: boolean | undefined;
+            crit?: number | undefined;
+            critCount?: number | undefined;
+            range?: number | undefined;
         }>>>;
         afbDestroyInfantryInSpace: z.ZodOptional<z.ZodNumber>;
     }, "strict", z.ZodTypeAny, {
-        name?: string;
-        nsidName?: string;
-        unit?: "carrier" | "control-token" | "cruiser" | "destroyer" | "dreadnought" | "fighter" | "flagship" | "infantry" | "mech" | "pds" | "space-dock" | "war-sun";
-        componentCount?: number;
-        diceColor?: string;
-        cost?: number;
-        producePerCost?: number;
-        isShip?: boolean;
-        isGround?: boolean;
-        hasSustainDamage?: boolean;
-        hasPlanetaryShield?: boolean;
-        disablePlanetaryShield?: boolean;
+        name: string;
+        unit: "carrier" | "control-token" | "cruiser" | "destroyer" | "dreadnought" | "fighter" | "flagship" | "infantry" | "mech" | "pds" | "space-dock" | "war-sun";
+        nsidName?: string | undefined;
+        componentCount?: number | undefined;
+        diceColor?: string | undefined;
+        cost?: number | undefined;
+        producePerCost?: number | undefined;
+        isShip?: boolean | undefined;
+        isGround?: boolean | undefined;
+        hasSustainDamage?: boolean | undefined;
+        hasPlanetaryShield?: boolean | undefined;
+        disablePlanetaryShield?: boolean | undefined;
         antiFighterBarrage?: Readonly<{
-            dice?: number;
-            hit?: number;
-            extraDice?: number;
-            rerollMisses?: boolean;
-            crit?: number;
-            critCount?: number;
-            range?: number;
-        }>;
+            hit: number;
+            dice?: number | undefined;
+            extraDice?: number | undefined;
+            rerollMisses?: boolean | undefined;
+            crit?: number | undefined;
+            critCount?: number | undefined;
+            range?: number | undefined;
+        }> | undefined;
         bombardment?: Readonly<{
-            dice?: number;
-            hit?: number;
-            extraDice?: number;
-            rerollMisses?: boolean;
-            crit?: number;
-            critCount?: number;
-            range?: number;
-        }>;
+            hit: number;
+            dice?: number | undefined;
+            extraDice?: number | undefined;
+            rerollMisses?: boolean | undefined;
+            crit?: number | undefined;
+            critCount?: number | undefined;
+            range?: number | undefined;
+        }> | undefined;
         spaceCannon?: Readonly<{
-            dice?: number;
-            hit?: number;
-            extraDice?: number;
-            rerollMisses?: boolean;
-            crit?: number;
-            critCount?: number;
-            range?: number;
-        }>;
+            hit: number;
+            dice?: number | undefined;
+            extraDice?: number | undefined;
+            rerollMisses?: boolean | undefined;
+            crit?: number | undefined;
+            critCount?: number | undefined;
+            range?: number | undefined;
+        }> | undefined;
         spaceCombat?: Readonly<{
-            dice?: number;
-            hit?: number;
-            extraDice?: number;
-            rerollMisses?: boolean;
-            crit?: number;
-            critCount?: number;
-            range?: number;
-        }>;
+            hit: number;
+            dice?: number | undefined;
+            extraDice?: number | undefined;
+            rerollMisses?: boolean | undefined;
+            crit?: number | undefined;
+            critCount?: number | undefined;
+            range?: number | undefined;
+        }> | undefined;
         groundCombat?: Readonly<{
-            dice?: number;
-            hit?: number;
-            extraDice?: number;
-            rerollMisses?: boolean;
-            crit?: number;
-            critCount?: number;
-            range?: number;
-        }>;
-        afbDestroyInfantryInSpace?: number;
+            hit: number;
+            dice?: number | undefined;
+            extraDice?: number | undefined;
+            rerollMisses?: boolean | undefined;
+            crit?: number | undefined;
+            critCount?: number | undefined;
+            range?: number | undefined;
+        }> | undefined;
+        afbDestroyInfantryInSpace?: number | undefined;
     }, {
-        name?: string;
-        nsidName?: string;
-        unit?: "carrier" | "control-token" | "cruiser" | "destroyer" | "dreadnought" | "fighter" | "flagship" | "infantry" | "mech" | "pds" | "space-dock" | "war-sun";
-        componentCount?: number;
-        diceColor?: string;
-        cost?: number;
-        producePerCost?: number;
-        isShip?: boolean;
-        isGround?: boolean;
-        hasSustainDamage?: boolean;
-        hasPlanetaryShield?: boolean;
-        disablePlanetaryShield?: boolean;
+        name: string;
+        unit: "carrier" | "control-token" | "cruiser" | "destroyer" | "dreadnought" | "fighter" | "flagship" | "infantry" | "mech" | "pds" | "space-dock" | "war-sun";
+        nsidName?: string | undefined;
+        componentCount?: number | undefined;
+        diceColor?: string | undefined;
+        cost?: number | undefined;
+        producePerCost?: number | undefined;
+        isShip?: boolean | undefined;
+        isGround?: boolean | undefined;
+        hasSustainDamage?: boolean | undefined;
+        hasPlanetaryShield?: boolean | undefined;
+        disablePlanetaryShield?: boolean | undefined;
         antiFighterBarrage?: Readonly<{
-            dice?: number;
-            hit?: number;
-            extraDice?: number;
-            rerollMisses?: boolean;
-            crit?: number;
-            critCount?: number;
-            range?: number;
-        }>;
+            hit: number;
+            dice?: number | undefined;
+            extraDice?: number | undefined;
+            rerollMisses?: boolean | undefined;
+            crit?: number | undefined;
+            critCount?: number | undefined;
+            range?: number | undefined;
+        }> | undefined;
         bombardment?: Readonly<{
-            dice?: number;
-            hit?: number;
-            extraDice?: number;
-            rerollMisses?: boolean;
-            crit?: number;
-            critCount?: number;
-            range?: number;
-        }>;
+            hit: number;
+            dice?: number | undefined;
+            extraDice?: number | undefined;
+            rerollMisses?: boolean | undefined;
+            crit?: number | undefined;
+            critCount?: number | undefined;
+            range?: number | undefined;
+        }> | undefined;
         spaceCannon?: Readonly<{
-            dice?: number;
-            hit?: number;
-            extraDice?: number;
-            rerollMisses?: boolean;
-            crit?: number;
-            critCount?: number;
-            range?: number;
-        }>;
+            hit: number;
+            dice?: number | undefined;
+            extraDice?: number | undefined;
+            rerollMisses?: boolean | undefined;
+            crit?: number | undefined;
+            critCount?: number | undefined;
+            range?: number | undefined;
+        }> | undefined;
         spaceCombat?: Readonly<{
-            dice?: number;
-            hit?: number;
-            extraDice?: number;
-            rerollMisses?: boolean;
-            crit?: number;
-            critCount?: number;
-            range?: number;
-        }>;
+            hit: number;
+            dice?: number | undefined;
+            extraDice?: number | undefined;
+            rerollMisses?: boolean | undefined;
+            crit?: number | undefined;
+            critCount?: number | undefined;
+            range?: number | undefined;
+        }> | undefined;
         groundCombat?: Readonly<{
-            dice?: number;
-            hit?: number;
-            extraDice?: number;
-            rerollMisses?: boolean;
-            crit?: number;
-            critCount?: number;
-            range?: number;
-        }>;
-        afbDestroyInfantryInSpace?: number;
+            hit: number;
+            dice?: number | undefined;
+            extraDice?: number | undefined;
+            rerollMisses?: boolean | undefined;
+            crit?: number | undefined;
+            critCount?: number | undefined;
+            range?: number | undefined;
+        }> | undefined;
+        afbDestroyInfantryInSpace?: number | undefined;
     }>>;
     export type UnitAttrsSchemaType = z.infer<typeof UnitAttrsSchema>;
 }
@@ -1776,15 +1776,15 @@ declare module "lib/faction-lib/schema/faction-schema" {
             heroes: z.ZodArray<z.ZodReadonly<z.ZodEffects<z.ZodString, string, string>>, "many">;
             mechs: z.ZodArray<z.ZodReadonly<z.ZodEffects<z.ZodString, string, string>>, "many">;
         }, "strict", z.ZodTypeAny, {
-            agents?: string[];
-            commanders?: string[];
-            heroes?: string[];
-            mechs?: string[];
+            agents: string[];
+            commanders: string[];
+            heroes: string[];
+            mechs: string[];
         }, {
-            agents?: string[];
-            commanders?: string[];
-            heroes?: string[];
-            mechs?: string[];
+            agents: string[];
+            commanders: string[];
+            heroes: string[];
+            mechs: string[];
         }>>;
         promissories: z.ZodArray<z.ZodReadonly<z.ZodEffects<z.ZodString, string, string>>, "many">;
         startingTechs: z.ZodArray<z.ZodReadonly<z.ZodEffects<z.ZodString, string, string>>, "many">;
@@ -1801,111 +1801,111 @@ declare module "lib/faction-lib/schema/faction-schema" {
             spaceDock: z.ZodOptional<z.ZodNumber>;
             warSun: z.ZodOptional<z.ZodNumber>;
         }, "strict", z.ZodTypeAny, {
-            carrier?: number;
-            cruiser?: number;
-            destroyer?: number;
-            dreadnought?: number;
-            fighter?: number;
-            flagship?: number;
-            infantry?: number;
-            mech?: number;
-            pds?: number;
-            spaceDock?: number;
-            warSun?: number;
+            carrier?: number | undefined;
+            cruiser?: number | undefined;
+            destroyer?: number | undefined;
+            dreadnought?: number | undefined;
+            fighter?: number | undefined;
+            flagship?: number | undefined;
+            infantry?: number | undefined;
+            mech?: number | undefined;
+            pds?: number | undefined;
+            spaceDock?: number | undefined;
+            warSun?: number | undefined;
         }, {
-            carrier?: number;
-            cruiser?: number;
-            destroyer?: number;
-            dreadnought?: number;
-            fighter?: number;
-            flagship?: number;
-            infantry?: number;
-            mech?: number;
-            pds?: number;
-            spaceDock?: number;
-            warSun?: number;
+            carrier?: number | undefined;
+            cruiser?: number | undefined;
+            destroyer?: number | undefined;
+            dreadnought?: number | undefined;
+            fighter?: number | undefined;
+            flagship?: number | undefined;
+            infantry?: number | undefined;
+            mech?: number | undefined;
+            pds?: number | undefined;
+            spaceDock?: number | undefined;
+            warSun?: number | undefined;
         }>>;
         unitOverrides: z.ZodArray<z.ZodReadonly<z.ZodEffects<z.ZodString, string, string>>, "many">;
         extras: z.ZodOptional<z.ZodArray<z.ZodReadonly<z.ZodObject<{
             nsid: z.ZodString;
             count: z.ZodOptional<z.ZodNumber>;
         }, "strict", z.ZodTypeAny, {
-            nsid?: string;
-            count?: number;
+            nsid: string;
+            count?: number | undefined;
         }, {
-            nsid?: string;
-            count?: number;
+            nsid: string;
+            count?: number | undefined;
         }>>, "many">>;
     }, "strict", z.ZodTypeAny, {
-        name?: string;
-        nsidName?: string;
-        abbr?: string;
-        abilities?: string[];
-        commodities?: number;
-        factionTechs?: string[];
-        home?: number;
-        homeSurrogate?: number;
-        leaders?: Readonly<{
-            agents?: string[];
-            commanders?: string[];
-            heroes?: string[];
-            mechs?: string[];
+        name: string;
+        nsidName: string;
+        abbr: string;
+        abilities: string[];
+        commodities: number;
+        factionTechs: string[];
+        home: number;
+        leaders: Readonly<{
+            agents: string[];
+            commanders: string[];
+            heroes: string[];
+            mechs: string[];
         }>;
-        promissories?: string[];
-        startingTechs?: string[];
-        startingUnits?: Readonly<{
-            carrier?: number;
-            cruiser?: number;
-            destroyer?: number;
-            dreadnought?: number;
-            fighter?: number;
-            flagship?: number;
-            infantry?: number;
-            mech?: number;
-            pds?: number;
-            spaceDock?: number;
-            warSun?: number;
+        promissories: string[];
+        startingTechs: string[];
+        startingUnits: Readonly<{
+            carrier?: number | undefined;
+            cruiser?: number | undefined;
+            destroyer?: number | undefined;
+            dreadnought?: number | undefined;
+            fighter?: number | undefined;
+            flagship?: number | undefined;
+            infantry?: number | undefined;
+            mech?: number | undefined;
+            pds?: number | undefined;
+            spaceDock?: number | undefined;
+            warSun?: number | undefined;
         }>;
-        unitOverrides?: string[];
+        unitOverrides: string[];
+        homeSurrogate?: number | undefined;
         extras?: Readonly<{
-            nsid?: string;
-            count?: number;
-        }>[];
+            nsid: string;
+            count?: number | undefined;
+        }>[] | undefined;
     }, {
-        name?: string;
-        nsidName?: string;
-        abbr?: string;
-        abilities?: string[];
-        commodities?: number;
-        factionTechs?: string[];
-        home?: number;
-        homeSurrogate?: number;
-        leaders?: Readonly<{
-            agents?: string[];
-            commanders?: string[];
-            heroes?: string[];
-            mechs?: string[];
+        name: string;
+        nsidName: string;
+        abbr: string;
+        abilities: string[];
+        commodities: number;
+        factionTechs: string[];
+        home: number;
+        leaders: Readonly<{
+            agents: string[];
+            commanders: string[];
+            heroes: string[];
+            mechs: string[];
         }>;
-        promissories?: string[];
-        startingTechs?: string[];
-        startingUnits?: Readonly<{
-            carrier?: number;
-            cruiser?: number;
-            destroyer?: number;
-            dreadnought?: number;
-            fighter?: number;
-            flagship?: number;
-            infantry?: number;
-            mech?: number;
-            pds?: number;
-            spaceDock?: number;
-            warSun?: number;
+        promissories: string[];
+        startingTechs: string[];
+        startingUnits: Readonly<{
+            carrier?: number | undefined;
+            cruiser?: number | undefined;
+            destroyer?: number | undefined;
+            dreadnought?: number | undefined;
+            fighter?: number | undefined;
+            flagship?: number | undefined;
+            infantry?: number | undefined;
+            mech?: number | undefined;
+            pds?: number | undefined;
+            spaceDock?: number | undefined;
+            warSun?: number | undefined;
         }>;
-        unitOverrides?: string[];
+        unitOverrides: string[];
+        homeSurrogate?: number | undefined;
         extras?: Readonly<{
-            nsid?: string;
-            count?: number;
-        }>[];
+            nsid: string;
+            count?: number | undefined;
+        }>[] | undefined;
     }>>;
     export type FactionSchemaType = z.infer<typeof FactionSchema>;
 }
@@ -1924,44 +1924,44 @@ declare module "lib/tech-lib/schema/tech-schema" {
             red: z.ZodOptional<z.ZodNumber>;
             yellow: z.ZodOptional<z.ZodNumber>;
         }, "strict", z.ZodTypeAny, {
-            blue?: number;
-            green?: number;
-            red?: number;
-            yellow?: number;
+            blue?: number | undefined;
+            green?: number | undefined;
+            red?: number | undefined;
+            yellow?: number | undefined;
         }, {
-            blue?: number;
-            green?: number;
-            red?: number;
-            yellow?: number;
+            blue?: number | undefined;
+            green?: number | undefined;
+            red?: number | undefined;
+            yellow?: number | undefined;
         }>;
         isFactionTech: z.ZodOptional<z.ZodBoolean>;
         replacesNsidName: z.ZodOptional<z.ZodString>;
     }, "strict", z.ZodTypeAny, {
-        name?: string;
-        nsidName?: string;
-        abbr?: string;
-        color?: "blue" | "green" | "red" | "yellow" | "unit-upgrade" | "none";
-        prerequisites?: {
-            blue?: number;
-            green?: number;
-            red?: number;
-            yellow?: number;
+        name: string;
+        nsidName: string;
+        color: "blue" | "green" | "red" | "yellow" | "unit-upgrade" | "none";
+        prerequisites: {
+            blue?: number | undefined;
+            green?: number | undefined;
+            red?: number | undefined;
+            yellow?: number | undefined;
         };
-        isFactionTech?: boolean;
-        replacesNsidName?: string;
+        abbr?: string | undefined;
+        isFactionTech?: boolean | undefined;
+        replacesNsidName?: string | undefined;
     }, {
-        name?: string;
-        nsidName?: string;
-        abbr?: string;
-        color?: "blue" | "green" | "red" | "yellow" | "unit-upgrade" | "none";
-        prerequisites?: {
-            blue?: number;
-            green?: number;
-            red?: number;
-            yellow?: number;
+        name: string;
+        nsidName: string;
+        color: "blue" | "green" | "red" | "yellow" | "unit-upgrade" | "none";
+        prerequisites: {
+            blue?: number | undefined;
+            green?: number | undefined;
+            red?: number | undefined;
+            yellow?: number | undefined;
         };
-        isFactionTech?: boolean;
-        replacesNsidName?: string;
+        abbr?: string | undefined;
+        isFactionTech?: boolean | undefined;
+        replacesNsidName?: string | undefined;
     }>>;
     export type TechSchemaType = z.infer<typeof TechSchema>;
 }
@@ -2334,13 +2334,13 @@ declare module "lib/unit-lib/schema/unit-modifier-schema" {
         nsidName: z.ZodReadonly<z.ZodEffects<z.ZodString, string, string>>;
         overrideSource: z.ZodOptional<z.ZodReadonly<z.ZodEffects<z.ZodString, string, string>>>;
     }, "strict", z.ZodTypeAny, {
-        nsidName?: string;
-        cardClass?: "action" | "promissory" | "mech" | "unit" | "agenda" | "agent" | "alliance" | "commander" | "faction-ability" | "hero" | "legendary" | "relic" | "technology.blue" | "technology.green" | "technology.red" | "technology.yellow" | "technology.unit-upgrade";
-        overrideSource?: string;
+        nsidName: string;
+        cardClass: "action" | "promissory" | "mech" | "unit" | "agenda" | "agent" | "alliance" | "commander" | "faction-ability" | "hero" | "legendary" | "relic" | "technology.blue" | "technology.green" | "technology.red" | "technology.yellow" | "technology.unit-upgrade";
+        overrideSource?: string | undefined;
     }, {
-        nsidName?: string;
-        cardClass?: "action" | "promissory" | "mech" | "unit" | "agenda" | "agent" | "alliance" | "commander" | "faction-ability" | "hero" | "legendary" | "relic" | "technology.blue" | "technology.green" | "technology.red" | "technology.yellow" | "technology.unit-upgrade";
-        overrideSource?: string;
+        nsidName: string;
+        cardClass: "action" | "promissory" | "mech" | "unit" | "agenda" | "agent" | "alliance" | "commander" | "faction-ability" | "hero" | "legendary" | "relic" | "technology.blue" | "technology.green" | "technology.red" | "technology.yellow" | "technology.unit-upgrade";
+        overrideSource?: string | undefined;
     }>>;
     export type UnitModifierTriggerType = z.infer<typeof UnitModifierTrigger>;
     export const UnitModifierOwner: z.ZodReadonly<z.ZodEnum<["self", "opponent", "any"]>>;
@@ -2356,13 +2356,13 @@ declare module "lib/unit-lib/schema/unit-modifier-schema" {
             nsidName: z.ZodReadonly<z.ZodEffects<z.ZodString, string, string>>;
             overrideSource: z.ZodOptional<z.ZodReadonly<z.ZodEffects<z.ZodString, string, string>>>;
         }, "strict", z.ZodTypeAny, {
-            nsidName?: string;
-            cardClass?: "action" | "promissory" | "mech" | "unit" | "agenda" | "agent" | "alliance" | "commander" | "faction-ability" | "hero" | "legendary" | "relic" | "technology.blue" | "technology.green" | "technology.red" | "technology.yellow" | "technology.unit-upgrade";
-            overrideSource?: string;
+            nsidName: string;
+            cardClass: "action" | "promissory" | "mech" | "unit" | "agenda" | "agent" | "alliance" | "commander" | "faction-ability" | "hero" | "legendary" | "relic" | "technology.blue" | "technology.green" | "technology.red" | "technology.yellow" | "technology.unit-upgrade";
+            overrideSource?: string | undefined;
         }, {
-            nsidName?: string;
-            cardClass?: "action" | "promissory" | "mech" | "unit" | "agenda" | "agent" | "alliance" | "commander" | "faction-ability" | "hero" | "legendary" | "relic" | "technology.blue" | "technology.green" | "technology.red" | "technology.yellow" | "technology.unit-upgrade";
-            overrideSource?: string;
+            nsidName: string;
+            cardClass: "action" | "promissory" | "mech" | "unit" | "agenda" | "agent" | "alliance" | "commander" | "faction-ability" | "hero" | "legendary" | "relic" | "technology.blue" | "technology.green" | "technology.red" | "technology.yellow" | "technology.unit-upgrade";
+            overrideSource?: string | undefined;
         }>>, "many">;
         isActiveIdle: z.ZodOptional<z.ZodBoolean>;
         owner: z.ZodReadonly<z.ZodEnum<["self", "opponent", "any"]>>;
@@ -2370,33 +2370,33 @@ declare module "lib/unit-lib/schema/unit-modifier-schema" {
         applies: z.ZodFunction<z.ZodTuple<[z.ZodAny], z.ZodUnknown>, z.ZodBoolean>;
         apply: z.ZodFunction<z.ZodTuple<[z.ZodAny], z.ZodUnknown>, z.ZodVoid>;
     }, "strict", z.ZodTypeAny, {
-        name?: string;
-        description?: string;
-        triggerAlways?: boolean;
-        triggers?: Readonly<{
-            nsidName?: string;
-            cardClass?: "action" | "promissory" | "mech" | "unit" | "agenda" | "agent" | "alliance" | "commander" | "faction-ability" | "hero" | "legendary" | "relic" | "technology.blue" | "technology.green" | "technology.red" | "technology.yellow" | "technology.unit-upgrade";
-            overrideSource?: string;
+        name: string;
+        description: string;
+        triggers: Readonly<{
+            nsidName: string;
+            cardClass: "action" | "promissory" | "mech" | "unit" | "agenda" | "agent" | "alliance" | "commander" | "faction-ability" | "hero" | "legendary" | "relic" | "technology.blue" | "technology.green" | "technology.red" | "technology.yellow" | "technology.unit-upgrade";
+            overrideSource?: string | undefined;
         }>[];
-        isActiveIdle?: boolean;
-        owner?: "self" | "opponent" | "any";
-        priority?: "mutate" | "mutate-late" | "adjust" | "choose";
-        applies?: (args_0: any, ...args_1: unknown[]) => boolean;
-        apply?: (args_0: any, ...args_1: unknown[]) => void;
+        owner: "self" | "opponent" | "any";
+        priority: "mutate" | "mutate-late" | "adjust" | "choose";
+        applies: (args_0: any, ...args_1: unknown[]) => boolean;
+        apply: (args_0: any, ...args_1: unknown[]) => void;
+        triggerAlways?: boolean | undefined;
+        isActiveIdle?: boolean | undefined;
     }, {
-        name?: string;
-        description?: string;
-        triggerAlways?: boolean;
-        triggers?: Readonly<{
-            nsidName?: string;
-            cardClass?: "action" | "promissory" | "mech" | "unit" | "agenda" | "agent" | "alliance" | "commander" | "faction-ability" | "hero" | "legendary" | "relic" | "technology.blue" | "technology.green" | "technology.red" | "technology.yellow" | "technology.unit-upgrade";
-            overrideSource?: string;
+        name: string;
+        description: string;
+        triggers: Readonly<{
+            nsidName: string;
+            cardClass: "action" | "promissory" | "mech" | "unit" | "agenda" | "agent" | "alliance" | "commander" | "faction-ability" | "hero" | "legendary" | "relic" | "technology.blue" | "technology.green" | "technology.red" | "technology.yellow" | "technology.unit-upgrade";
+            overrideSource?: string | undefined;
         }>[];
-        isActiveIdle?: boolean;
-        owner?: "self" | "opponent" | "any";
-        priority?: "mutate" | "mutate-late" | "adjust" | "choose";
-        applies?: (args_0: any, ...args_1: unknown[]) => boolean;
-        apply?: (args_0: any, ...args_1: unknown[]) => void;
+        owner: "self" | "opponent" | "any";
+        priority: "mutate" | "mutate-late" | "adjust" | "choose";
+        applies: (args_0: any, ...args_1: unknown[]) => boolean;
+        apply: (args_0: any, ...args_1: unknown[]) => void;
+        triggerAlways?: boolean | undefined;
+        isActiveIdle?: boolean | undefined;
     }>>;
     export type UnitModifierSchemaType = Omit<z.infer<typeof UnitModifierSchema>, "apply" | "applies"> & {
         applies: (combatRoll: CombatRoll) => boolean;
@@ -2830,13 +2830,13 @@ declare module "lib/agenda-lib/agenda-state/agenda-state" {
         objId: z.ZodString;
         outcome: z.ZodNumber;
     }, "strip", z.ZodTypeAny, {
-        seat?: number;
-        objId?: string;
-        outcome?: number;
+        seat: number;
+        objId: string;
+        outcome: number;
     }, {
-        seat?: number;
-        objId?: string;
-        outcome?: number;
+        seat: number;
+        objId: string;
+        outcome: number;
     }>;
     export type AgendaRiderSchemaType = z.infer<typeof AgendaRiderSchema>;
     const AgendaSeatStateSchema: z.ZodObject<{
@@ -2847,19 +2847,19 @@ declare module "lib/agenda-lib/agenda-state/agenda-state" {
         noWhens: z.ZodDefault<z.ZodNumber>;
         noAfters: z.ZodDefault<z.ZodNumber>;
     }, "strip", z.ZodTypeAny, {
-        outcome?: number;
-        avail?: number;
-        votes?: number;
-        lockVotes?: boolean;
-        noWhens?: number;
-        noAfters?: number;
+        outcome: number;
+        avail: number;
+        votes: number;
+        lockVotes: boolean;
+        noWhens: number;
+        noAfters: number;
     }, {
-        outcome?: number;
-        avail?: number;
-        votes?: number;
-        lockVotes?: boolean;
-        noWhens?: number;
-        noAfters?: number;
+        outcome?: number | undefined;
+        avail?: number | undefined;
+        votes?: number | undefined;
+        lockVotes?: boolean | undefined;
+        noWhens?: number | undefined;
+        noAfters?: number | undefined;
     }>;
     type AgendaSeatStateSchemaType = z.infer<typeof AgendaSeatStateSchema>;
     export class AgendaState {
@@ -3844,27 +3844,27 @@ declare module "lib/draft-lib/draft-state/draft-state" {
         factionIndexToPlayerSlot: z.ZodDefault<z.ZodArray<z.ZodNullable<z.ZodNumber>, "many">>;
         seatIndexToPlayerSlot: z.ZodDefault<z.ZodArray<z.ZodNullable<z.ZodNumber>, "many">>;
     }, "strip", z.ZodTypeAny, {
-        sliceShape?: readonly string[];
-        baseMap?: string;
-        sliceShapeOverrides?: (readonly string[])[];
-        slices?: readonly (readonly number[])[];
-        sliceLabels?: string[];
-        factions?: string[];
-        speakerIndex?: number;
-        sliceIndexToPlayerSlot?: number[];
-        factionIndexToPlayerSlot?: number[];
-        seatIndexToPlayerSlot?: number[];
+        sliceShape: readonly string[];
+        baseMap: string;
+        sliceShapeOverrides: (readonly string[] | null)[];
+        slices: readonly (readonly number[])[];
+        sliceLabels: string[];
+        factions: string[];
+        speakerIndex: number;
+        sliceIndexToPlayerSlot: (number | null)[];
+        factionIndexToPlayerSlot: (number | null)[];
+        seatIndexToPlayerSlot: (number | null)[];
     }, {
-        sliceShape?: readonly string[];
-        baseMap?: string;
-        sliceShapeOverrides?: (readonly string[])[];
-        slices?: readonly (readonly number[])[];
-        sliceLabels?: string[];
-        factions?: string[];
-        speakerIndex?: number;
-        sliceIndexToPlayerSlot?: number[];
-        factionIndexToPlayerSlot?: number[];
-        seatIndexToPlayerSlot?: number[];
+        sliceShape?: readonly string[] | undefined;
+        baseMap?: string | undefined;
+        sliceShapeOverrides?: (readonly string[] | null | undefined)[] | undefined;
+        slices?: readonly (readonly number[])[] | undefined;
+        sliceLabels?: string[] | undefined;
+        factions?: string[] | undefined;
+        speakerIndex?: number | undefined;
+        sliceIndexToPlayerSlot?: (number | null)[] | undefined;
+        factionIndexToPlayerSlot?: (number | null)[] | undefined;
+        seatIndexToPlayerSlot?: (number | null)[] | undefined;
     }>;
     export type DraftStateSchemaType = z.infer<typeof DraftStateSchema>;
     /**
@@ -4776,10 +4776,11 @@ declare module "lib/draft-lib/drafts/bag-draft" {
 }
 declare module "ui/draft/draft-start-ui/draft-start-ui" {
     import { Button, CheckBox, MultilineTextBox, Player, Slider } from "@tabletop-playground/api";
+    import { TriggerableMulticastDelegate } from "ttpg-darrell";
     import { AbstractUI } from "ui/abstract-ui/abtract-ui";
     import { DraftActivityStartParams } from "lib/draft-lib/draft-activity-start/draft-activity-start-params";
     export class DraftStartUI extends AbstractUI {
-        readonly onDraftStarted: any;
+        readonly onDraftStarted: TriggerableMulticastDelegate<() => void>;
         private readonly _idrafts;
         private readonly _params;
         private readonly _draftCheckBoxes;
@@ -6042,19 +6043,19 @@ declare module "lib/config/config" {
         exportGameData: z.ZodBoolean;
         reportErrors: z.ZodBoolean;
     }, "strict", z.ZodTypeAny, {
-        playerCount?: number;
-        gamePoints?: number;
-        timestamp?: number;
-        sources?: string[];
-        exportGameData?: boolean;
-        reportErrors?: boolean;
+        playerCount: number;
+        gamePoints: number;
+        timestamp: number;
+        sources: string[];
+        exportGameData: boolean;
+        reportErrors: boolean;
     }, {
-        playerCount?: number;
-        gamePoints?: number;
-        timestamp?: number;
-        sources?: string[];
-        exportGameData?: boolean;
-        reportErrors?: boolean;
+        playerCount: number;
+        gamePoints: number;
+        timestamp: number;
+        sources: string[];
+        exportGameData: boolean;
+        reportErrors: boolean;
     }>;
     export type ConfigSchemaType = z.infer<typeof ConfigSchema>;
     export class Config {
@@ -7929,6 +7930,11 @@ declare module "locale/locale-context-menus" {
         [key: string]: string;
     };
 }
+declare module "nsid/nsid-to-template-id" {
+    export const NSID_TO_TEMPLATE_ID: {
+        [key: string]: string;
+    };
+}
 declare module "global/global" {
     import { Hex, Timer, TurnOrder } from "ttpg-darrell";
     import { AllBorders } from "lib/border-lib/all-borders/all-borders";
@@ -8427,110 +8433,6 @@ declare module "lib/system-lib/system/system-labels" {
         detach(): this;
     }
 }
-declare module "obj/agenda-laws-mat" {
-    import { GameObject, Zone } from "@tabletop-playground/api";
-    export class AgendaLawsMat {
-        private readonly _obj;
-        private readonly _firstSnapPoint;
-        private readonly _zone;
-        private readonly onSnappedToHandler;
-        private readonly onEndOverlapHandler;
-        constructor(obj: GameObject);
-        _findOrCreateZone(): Zone;
-    }
-}
-declare module "obj/build-area" {
-    import { GameObject, UIElement, Zone } from "@tabletop-playground/api";
-    import { BuildConsume } from "lib/build-lib/build-consume";
-    import { BuildProduce } from "lib/build-lib/build-produce";
-    export class BuildArea {
-        private readonly _obj;
-        private readonly _zone;
-        private readonly _summaryText;
-        private readonly _ui;
-        private _lastActivatedSystemTileObj;
-        private _lastActivatedActionName;
-        _onUpdateHandler: () => void;
-        constructor(obj: GameObject);
-        _addUI(): UIElement;
-        _findOrCreateZone(): Zone;
-        _getSystemTileHome(): GameObject | undefined;
-        _getSystemTileLastActivated(): GameObject | undefined;
-        _getProduceAndConsume(): {
-            produce: BuildProduce;
-            consume: BuildConsume;
-        };
-        _warpToHome(): void;
-        _warpToLastActivated(): void;
-        getSummary(): string;
-        togglePrivacyMode(): this;
-        update(): void;
-        report(): void;
-    }
-    export function delayedCreateBuildArea(obj: GameObject, executionReason: string): void;
-}
-declare module "obj/card-holder-player-scoring" { }
-declare module "obj/card-holder-player" { }
-declare module "obj/combat-arena-obj" {
-    import { GameObject } from "@tabletop-playground/api";
-    import { UnitPlastic } from "lib/unit-lib/unit-plastic/unit-plastic";
-    export class CombatArenaObj {
-        private readonly _obj;
-        private readonly _img;
-        private readonly _onSystemActivatedHandler;
-        constructor(obj: GameObject);
-        _addUI(): void;
-        _setSystemImage(systemTileNumber: number): void;
-        _getPlasticsInSystemOrArena(): Array<UnitPlastic>;
-        warpIn(): void;
-        warpOut(): void;
-    }
-    export function delayedCreateCombatArena(obj: GameObject, executionReason: string): void;
-}
-declare module "obj/container-liberation-scenario" { }
-declare module "obj/custodians-token" {
-    import { GameObject } from "@tabletop-playground/api";
-    export class CustodiansToken {
-        private readonly _obj;
-        private readonly _find;
-        private readonly _actionName;
-        private readonly _customActionHandler;
-        constructor(obj: GameObject);
-        score(playerSlot: number): void;
-    }
-    export function createFromObject(obj: GameObject, executionReason: string): void;
-}
-declare module "obj/deleted-items-container" { }
-declare module "obj/faction-extras-container" { }
-declare module "obj/icon-container-obj" { }
-declare module "obj/planet-mat" {
-    import { GameObject } from "@tabletop-playground/api";
-    export class PlanetMat {
-        private readonly _obj;
-        private readonly _actionNameToPlanetCardNsid;
-        constructor(obj: GameObject);
-    }
-}
-declare module "obj/quick-roller-obj" { }
-declare module "obj/recycle-container-obj" { }
-declare module "obj/slice-build-helper" {
-    import { GameObject } from "@tabletop-playground/api";
-    import { HexType } from "ttpg-darrell";
-    import { System } from "lib/system-lib/system/system";
-    export class SliceBuildHelper {
-        private readonly _obj;
-        private readonly _text;
-        private readonly _intervalHandle;
-        constructor(obj: GameObject);
-        update(): void;
-        _getHexToSystem(): Map<HexType, System>;
-        _getTransitiveAdjacentSystems(): Array<System>;
-    }
-}
-declare module "obj/speaker-token" { }
-declare module "obj/status-pad-obj" { }
-declare module "obj/strategy-card-mat" { }
-declare module "obj/timer-obj" { }
 declare module "setup/layout/layout-player-area/layout-player-areas" {
     import { LayoutObjects } from "ttpg-darrell";
     export class LayoutPlayerAreas {
