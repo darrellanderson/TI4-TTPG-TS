@@ -47,7 +47,8 @@ export class GameDataUpdator {
     if (updator && this._gameData) {
       try {
         updator.update(this._gameData);
-      } catch (error) {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      } catch (error: any) {
         const stack: string | undefined = new Error(error).stack;
         if (stack) {
           ErrorHandler.onError.trigger(stack);

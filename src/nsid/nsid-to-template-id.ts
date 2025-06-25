@@ -1,4 +1,4 @@
-{
+export const NSID_TO_TEMPLATE_ID: { [key: string]: string } = {
     "card-holder:base/player-hand": "C93CE175DC4EA3679EE718A49B4C1744",
     "card-holder:base/player-scoring": "5A40B63B5041487C37DA0FACE374EF06",
     "card.action:base/0": "C4AED0E50FF0484E656324696ED3D050",
@@ -371,3 +371,4 @@
     "unit:pok/mech": "0DD223987D0E248F597A54E4973C7DFF",
     "unit:pok/mech.token": "D81D7BD2A82AF14B14B9C7CA597175F1"
 }
+;

@@ -1,17 +1,24 @@
 {
   "compilerOptions": {
-    "target": "es6",
-    "module": "commonjs",
-    "moduleResolution": "Node",
-    "lib": ["ES2023", "DOM"],
-    "skipLibCheck": true,
-
-    "resolveJsonModule": true,
     "declaration": true,
     "emitDeclarationOnly": true,
-    "outDir": "dist",
-    "outFile": "types/index.d.ts"
+    "outFile": "types/index.d.ts",
+    "module": "system",
+    "stripInternal": true,
+    "target": "es6",
+    "lib": ["ES2023", "DOM"],
+    "strict": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "moduleResolution": "Node"
   },
   "include": ["./src/**/*.ts", "./src/**/*.tsx"],
-  "exclude": ["./src/**/*.test.ts", "./src/**/*.testp.ts"]
+  "exclude": [
+    "./src/**/*.test.ts",
+    "./src/**/*.testp.ts",
+    "./src/_how-to/**/*.ts",
+    "./src/_test/**/*.ts",
+    "./src/obj/**/*.ts"
+  ]
 }

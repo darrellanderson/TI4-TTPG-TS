@@ -110,7 +110,8 @@ export class PlanetAttachmentRegistry {
       try {
         SourceAndPackageIdSchema.parse(sourceAndPackageId);
         PlanetAttachmentSchema.parse(planetAttachmentSchemaType);
-      } catch (e) {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      } catch (e: any) {
         const msg = `error: ${e.message}\nparsing: ${JSON.stringify(
           planetAttachmentSchemaType
         )}`;

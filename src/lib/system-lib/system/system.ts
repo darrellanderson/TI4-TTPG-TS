@@ -124,7 +124,8 @@ export class System {
     try {
       SourceAndPackageIdSchema.parse(sourceAndPackageId); // validate the schema
       SystemSchema.parse(params); // validate the schema
-    } catch (e) {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    } catch (e: any) {
       const msg = `error: ${e.message}\nparsing: ${JSON.stringify(params)}`;
       throw new Error(msg);
     }

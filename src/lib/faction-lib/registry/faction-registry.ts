@@ -99,7 +99,8 @@ export class FactionRegistry {
       try {
         SourceAndPackageIdSchema.parse(sourceAndPackageId);
         FactionSchema.parse(factionSchemaType);
-      } catch (e) {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      } catch (e: any) {
         const msg = `error: ${e.message}\nparsing: ${JSON.stringify(
           factionSchemaType
         )}`;

@@ -44,7 +44,8 @@ export class UnitAttrsRegistry {
       try {
         NsidNameSchema.parse(source);
         UnitAttrsSchema.parse(unitAttrs);
-      } catch (e) {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      } catch (e: any) {
         const msg = `error: ${e.message}\nparsing: ${JSON.stringify(
           unitAttrs
         )}`;

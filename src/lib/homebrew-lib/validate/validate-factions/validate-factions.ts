@@ -1,5 +1,5 @@
 import { Spawn } from "ttpg-darrell";
-import { Faction } from "../../faction-lib/faction/faction";
+import { Faction } from "../../../faction-lib/faction/faction";
 import { AbstractValidate } from "../abstract-validate/abstract-validate";
 
 export class ValidateFactions extends AbstractValidate {

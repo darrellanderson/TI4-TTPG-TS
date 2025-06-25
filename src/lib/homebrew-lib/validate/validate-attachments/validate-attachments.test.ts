@@ -1,6 +1,6 @@
-import { PlanetAttachmentSchemaType } from "../../system-lib/schema/planet-attachment-schema";
-import { SourceAndPackageIdSchemaType } from "../../system-lib/schema/basic-types-schema";
-import { SystemAttachmentSchemaType } from "../../system-lib/schema/system-attachment-schema";
+import { PlanetAttachmentSchemaType } from "../../../system-lib/schema/planet-attachment-schema";
+import { SourceAndPackageIdSchemaType } from "../../../system-lib/schema/basic-types-schema";
+import { SystemAttachmentSchemaType } from "../../../system-lib/schema/system-attachment-schema";
 import { ValidateAttachments } from "./validate-attachments";
 
 it("getCommandName", () => {

@@ -109,7 +109,7 @@ import { RightClickMinorFactions } from "../context-menu/events/minor-factions/r
 
 import { LOCALE_CONTENT_MENUS } from "../locale/locale-context-menus";
 
-import * as NSID_TO_TEMPLATE_ID from "../nsid/nsid-to-template-id.json";
+import { NSID_TO_TEMPLATE_ID } from "../nsid/nsid-to-template-id";
 Spawn.inject(NSID_TO_TEMPLATE_ID);
 
 Find.ignoreOwnedCardHolderNsid("card-holder:base/player-scoring");

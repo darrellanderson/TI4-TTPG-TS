@@ -1,4 +1,4 @@
-import { UnitPlastic } from "lib/unit-lib/unit-plastic/unit-plastic";
+import { UnitPlastic } from "../../../unit-plastic/unit-plastic";
 import { CombatRoll } from "../../../../combat-lib/combat-roll/combat-roll";
 import { UnitModifierSchemaType } from "../../../schema/unit-modifier-schema";
 

@@ -108,7 +108,8 @@ export class SystemRegistry {
       try {
         SystemSchema.parse(systemSchemaType);
         SourceAndPackageIdSchema.parse(sourceAndPackageId);
-      } catch (e) {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      } catch (e: any) {
         const msg = `error: ${e.message}\nparsing: ${JSON.stringify(
           systemSchemaType
         )}`;
