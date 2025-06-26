@@ -1,24 +1,31 @@
 {
   "compilerOptions": {
-    "declaration": true,
-    "emitDeclarationOnly": true,
-    "outFile": "types/index.d.ts",
-    "module": "system",
-    "stripInternal": true,
-    "target": "es6",
+    "checkJs": true,
     "lib": ["ES2023", "DOM"],
+    "module": "commonjs",
     "strict": true,
+    "noUncheckedIndexedAccess": true,
+    "useUnknownInCatchVariables": false,
+    "resolveJsonModule": true,
     "esModuleInterop": true,
     "skipLibCheck": true,
-    "forceConsistentCasingInFileNames": true,
-    "moduleResolution": "Node"
+    "jsx": "react",
+    "jsxFactory": "jsxInTTPG",
+    "jsxFragmentFactory": "jsxFrag",
+    "rootDir": "./src",
+    "baseUrl": "./src",
+    "outDir": "./types",
+    "moduleResolution": "Node",
+    "target": "ES6",
+    "sourceMap": true,
+    "declaration": true,
+    "emitDeclarationOnly": true
   },
   "include": ["./src/**/*.ts", "./src/**/*.tsx"],
   "exclude": [
     "./src/**/*.test.ts",
     "./src/**/*.testp.ts",
-    "./src/_how-to/**/*.ts",
-    "./src/_test/**/*.ts",
-    "./src/obj/**/*.ts"
+    "./src/_how-to.ts",
+    "./src/_test"
   ]
 }

@@ -8,7 +8,8 @@ import * as fs from "fs-extra";
 import { OLD_TEMPLATE_ID_TO_CARD_NSIDS } from "./old-template-id-to-card-nsids";
 import { NEW_CARD_NSID_TO_TEMPLATE_ID_AND_INDEX } from "./new-card-nsid-to-template-id";
 
-const vtsFilename: string | undefined = process.argv[2];
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const vtsFilename: string | undefined = (process as any).argv[2];
 if (!vtsFilename || !vtsFilename.endsWith(".vts")) {
   throw new Error(`bad vtsFilename "${vtsFilename}"`);
 }
