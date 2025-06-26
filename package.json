@@ -14,7 +14,7 @@
     "purge": "ttpg-scripts purge",
     "libpack": "ttpg-scripts libpack",
     "watch": "ttpg-scripts watch",
-    "prepublish": "yarn index; tsc -p tsconfig-index.json",
+    "prepublish": "yarn index && tsc -p tsconfig-index.json",
     "postpublish": "ttpg-scripts postpublish",
     "check:prettier": "prettier --check src",
     "test": "jest",
