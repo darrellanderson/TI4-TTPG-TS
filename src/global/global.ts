@@ -37,6 +37,7 @@ import { GAME_DATA_UPDATORS } from "../lib/game-data-lib/game-data-updators/game
 import { GlobalEvents } from "./global-events";
 import { GoalReporter } from "../lib/game-data-lib/objective-progress/goal-reporter";
 import { HideMouseCursor } from "../lib/streamer-lib/hide-mouse-cursor/hide-mouse-cursor";
+import { HomebrewRegistry } from "../lib/homebrew-lib/homebrew-registry/homebrew-registry";
 import { LastGameData } from "../lib/game-data-lib/last-game-data/last-game-data";
 import { NumpadKeyAll } from "../lib/numpad-key-lib/numpad-key-all/numpad-key-all";
 import { OnAgendaCard } from "../event/on-agenda-card/on-agenda-card";
@@ -77,6 +78,7 @@ import { RightClickScorePrivate } from "../context-menu/right-click-score/right-
 import { RightClickScorePublic } from "../context-menu/right-click-score/right-click-score-public";
 import { RightClickSpecOps2 } from "../context-menu/cards/infantry-2/right-click-spec-ops-2";
 import { RightClickStellarConverter } from "../context-menu/cards/stellar-converter/right-click-stellar-converter";
+import { RunInjectScript } from "../lib/homebrew-lib/run-inject-script/run-inject-script";
 import { RSwapSplitCombine } from "./r-swap-split-combine";
 import { ShuffleDecks } from "./shuffle-decks";
 import { SlashCommandRegistry } from "../lib/slash-command-lib/slash-command-registry/slash-command-registry";
@@ -153,6 +155,7 @@ export class TI4Class {
   public readonly hideMouseCursor = new HideMouseCursor(
     "@hide-mouse-cursor/ti4"
   );
+  public readonly homebrewRegistry = new HomebrewRegistry();
   public readonly lastGameData = new LastGameData();
   public readonly planetAttachmentRegistry =
     new PlanetAttachmentRegistry().loadDefaultData();
@@ -237,6 +240,7 @@ export function resetGlobalThisTI4(): TI4Class {
     new RightClickScorePublic(),
     new RightClickSpecOps2(),
     new RightClickStellarConverter(),
+    new RunInjectScript(),
     new RSwapSplitCombine(),
     new ShuffleDecks(),
     new StartGame(),

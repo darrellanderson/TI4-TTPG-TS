@@ -28,6 +28,10 @@ export class RunInjectScript implements IGlobal {
   _maybeRunInjectScript(pkg: Package): void {
     pkg.getScriptFiles().forEach((scriptFile: string) => {
       if (scriptFile === "inject.js" || scriptFile.endsWith("/inject.js")) {
+        process.nextTick(() => {
+          console.log(`Running inject script for package: ${pkg.getName()}`);
+        });
+        // If the script is inject.js, run it.
         // Create a new object, set the script to this, delete next frame.
         const obj: GameObject | undefined = Spawn.spawn(
           RUN_SCRIPT_NSID,
@@ -35,7 +39,7 @@ export class RunInjectScript implements IGlobal {
         );
         if (obj) {
           obj.setObjectType(ObjectType.NonInteractive);
-          obj.setScript("inject.js", pkg.getUniqueId());
+          obj.setScript(scriptFile, pkg.getUniqueId());
           process.nextTick(() => {
             DeletedItemsContainer.destroyWithoutCopying(obj);
           });

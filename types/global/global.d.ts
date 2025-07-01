@@ -7,6 +7,7 @@ import { GameDataUpdator } from "../lib/game-data-lib/game-data-updator/game-dat
 import { GlobalEvents } from "./global-events";
 import { GoalReporter } from "../lib/game-data-lib/objective-progress/goal-reporter";
 import { HideMouseCursor } from "../lib/streamer-lib/hide-mouse-cursor/hide-mouse-cursor";
+import { HomebrewRegistry } from "../lib/homebrew-lib/homebrew-registry/homebrew-registry";
 import { LastGameData } from "../lib/game-data-lib/last-game-data/last-game-data";
 import { PlanetAttachmentRegistry } from "../lib/system-lib/registry/planet-attachment-registry";
 import { PlayerActionPhaseTime } from "../lib/player-lib/player-action-phase-time/player-action-phase-time";
@@ -41,6 +42,7 @@ export declare class TI4Class {
     readonly gameDataUpdator: GameDataUpdator;
     readonly goalReporter: GoalReporter;
     readonly hideMouseCursor: HideMouseCursor;
+    readonly homebrewRegistry: HomebrewRegistry;
     readonly lastGameData: LastGameData;
     readonly planetAttachmentRegistry: PlanetAttachmentRegistry;
     readonly playerActionPhaseTime: PlayerActionPhaseTime;
