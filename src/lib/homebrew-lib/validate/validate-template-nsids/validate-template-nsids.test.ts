@@ -42,7 +42,7 @@ it("getErrors", () => {
       }
     );
 
-  Spawn.inject({ "my-nsid": "abc123" });
+  Spawn.inject({ "my-nsid": "abc123", default: "aaaaa" });
 
   const errors: Array<string> = [];
   new ValidateTemplateNsids().getErrors(errors);

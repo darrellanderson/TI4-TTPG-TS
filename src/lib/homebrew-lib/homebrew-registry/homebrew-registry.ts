@@ -5,6 +5,8 @@ import { SystemAttachmentSchemaType } from "../../system-lib/schema/system-attac
 import { SystemSchemaType } from "../../system-lib/schema/system-schema";
 import { UnitAttrsSchemaType } from "../../unit-lib/schema/unit-attrs-schema";
 import { UnitModifierSchemaType } from "../../unit-lib/schema/unit-modifier-schema";
+import { Spawn } from "ttpg-darrell";
+import { SpawnMissingCards } from "../spawn-missing-cards/spawn-missing-cards";
 
 export type HomebrewModuleType = {
   // Each of source and package id uniquely identifies a module.
@@ -21,6 +23,8 @@ export type HomebrewModuleType = {
   unitModifiers?: Array<UnitModifierSchemaType>;
 
   remove?: Array<string>; // NSIDs
+
+  nsidToTemplateId?: { [key: string]: string };
 };
 
 /**
@@ -63,6 +67,17 @@ export class HomebrewRegistry {
 
     if (params.remove) {
       TI4.removeRegistry.load(params.sourceAndPackageId.source, params.remove);
+    }
+
+    if (params.nsidToTemplateId) {
+      Spawn.inject(params.nsidToTemplateId);
+
+      const spawnMissingCards = new SpawnMissingCards();
+      for (const nsid of Object.keys(params.nsidToTemplateId)) {
+        if (SpawnMissingCards.shouldSpawnMissingCards(nsid)) {
+          spawnMissingCards.spawnAndAddMissingCards(nsid);
+        }
+      }
     }
   }
 }

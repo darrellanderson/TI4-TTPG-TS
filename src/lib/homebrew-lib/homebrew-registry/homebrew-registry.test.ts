@@ -14,5 +14,6 @@ it("load", () => {
     unitAttrs: [],
     unitModifiers: [],
     remove: [],
+    nsidToTemplateId: { ["card.action:homebrew/0"]: "templateId" },
   });
 });
