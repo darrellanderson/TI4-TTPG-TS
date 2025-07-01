@@ -1,10 +1,11 @@
 {
   "name": "ti4-ttpg-ts-types",
-  "version": "1.0.5",
+  "version": "1.0.7",
   "description": "index.d.ts types for ti4-ttpg-ts",
   "types": "index.d.ts",
   "files": [
-    "index.d.ts"
+    "index.d.ts",
+    "**/*.d.ts"
   ],
   "scripts": {},
   "license": "Unlicense",

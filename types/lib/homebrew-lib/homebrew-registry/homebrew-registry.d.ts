@@ -14,6 +14,9 @@ export type HomebrewModuleType = {
     unitAttrs?: Array<UnitAttrsSchemaType>;
     unitModifiers?: Array<UnitModifierSchemaType>;
     remove?: Array<string>;
+    nsidToTemplateId?: {
+        [key: string]: string;
+    };
 };
 /**
  * Homebrew modules register via this class.
