@@ -59,22 +59,11 @@ export class System {
     return undefined;
   }
 
-  static schemaToImg(
-    sourceAndPackageId: SourceAndPackageIdSchemaType,
-    schema: SystemSchemaType,
-    useBack: boolean
-  ): string {
+  static schemaToImg(schema: SystemSchemaType, useBack: boolean): string {
     const filename: string = `tile-${schema.tile.toString().padStart(3, "0")}${
       useBack ? ".back" : ""
     }.png`;
-    let img: string = `tile/system/${filename}`;
-
-    // Homebrew prepends source to group all related files.
-    const source: string = sourceAndPackageId.source;
-    if (source.startsWith("homebrew")) {
-      img = `${source}/${img}`;
-    }
-
+    const img: string = `tile/system/${filename}`;
     return img;
   }
 
@@ -340,7 +329,7 @@ export class System {
   getImg(): string {
     const useBack: boolean =
       (this._params.imgFaceDown && !Facing.isFaceUp(this._obj)) || false;
-    return System.schemaToImg(this._sourceAndPackageId, this._params, useBack);
+    return System.schemaToImg(this._params, useBack);
   }
 
   /**

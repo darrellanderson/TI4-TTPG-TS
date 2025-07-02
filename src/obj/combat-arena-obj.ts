@@ -4,7 +4,6 @@ import {
   ImageWidget,
   Player,
   refObject,
-  refPackageId,
   UIElement,
   Vector,
   world,
@@ -15,7 +14,6 @@ import { OnSystemActivated } from "../event/on-system-activated/on-system-activa
 import { System } from "../lib/system-lib/system/system";
 import { UnitPlastic } from "../lib/unit-lib/unit-plastic/unit-plastic";
 
-const PACKAGE_ID: string = refPackageId;
 const ACTION_WARP_IN: string = "*Warp In";
 const ACTION_WARP_OUT: string = "*Warp Out";
 
@@ -74,9 +72,13 @@ export class CombatArenaObj {
   }
 
   _setSystemImage(systemTileNumber: number): void {
-    const s: string = systemTileNumber.toString().padStart(3, "0");
-    const imgAsset: string = `tile/system/tile-${s}.png`;
-    this._img.setImage(imgAsset, PACKAGE_ID);
+    const system: System | undefined =
+      TI4.systemRegistry.getBySystemTileNumber(systemTileNumber);
+    if (system) {
+      const img: string = system.getImg();
+      const packageId: string = system.getImgPackageId();
+      this._img.setImage(img, packageId);
+    }
   }
 
   _getPlasticsInSystemOrArena(): Array<UnitPlastic> {

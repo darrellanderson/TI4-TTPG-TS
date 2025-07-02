@@ -274,7 +274,7 @@ it("getImg (homebrew)", () => {
       tile: 1000,
     }
   );
-  expect(system.getImg()).toBe(`homebrew-x/tile/system/tile-1000.png`);
+  expect(system.getImg()).toBe(`tile/system/tile-1000.png`);
 });
 
 it("getName (empty)", () => {
