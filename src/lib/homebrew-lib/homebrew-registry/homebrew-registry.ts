@@ -38,6 +38,7 @@ export class HomebrewRegistry {
     if (params.factions) {
       TI4.factionRegistry.load(params.sourceAndPackageId, params.factions);
     }
+
     if (params.systems) {
       TI4.systemRegistry.load(params.sourceAndPackageId, params.systems);
     }
