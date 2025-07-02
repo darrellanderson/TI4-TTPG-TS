@@ -7,6 +7,7 @@ import { UnitAttrsSchemaType } from "../../unit-lib/schema/unit-attrs-schema";
 import { UnitModifierSchemaType } from "../../unit-lib/schema/unit-modifier-schema";
 import { Spawn } from "ttpg-darrell";
 import { SpawnMissingCards } from "../spawn-missing-cards/spawn-missing-cards";
+import { TechSchemaType } from "lib/tech-lib/schema/tech-schema";
 
 export type HomebrewModuleType = {
   // Each of source and package id uniquely identifies a module.
@@ -21,6 +22,8 @@ export type HomebrewModuleType = {
 
   unitAttrs?: Array<UnitAttrsSchemaType>;
   unitModifiers?: Array<UnitModifierSchemaType>;
+
+  technologies?: Array<TechSchemaType>;
 
   remove?: Array<string>; // NSIDs
 
@@ -62,6 +65,13 @@ export class HomebrewRegistry {
       TI4.unitModifierRegistry.load(
         params.sourceAndPackageId.source,
         params.unitModifiers
+      );
+    }
+
+    if (params.technologies) {
+      TI4.techRegistry.load(
+        params.sourceAndPackageId.source,
+        params.technologies
       );
     }
 
