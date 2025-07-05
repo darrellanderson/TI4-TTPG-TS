@@ -23,6 +23,8 @@ export class AnimCamera {
   public readonly onDestroyed: TriggerableMulticastDelegate<() => void> =
     new TriggerableMulticastDelegate<() => void>();
 
+  public static readonly CAMERA_Z: number = 70;
+
   /**
    * Look at the table-height dspPos from a slight southern position.
    *
