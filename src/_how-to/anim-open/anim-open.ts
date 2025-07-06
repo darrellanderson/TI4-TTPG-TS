@@ -16,7 +16,7 @@ export class AnimOpen {
     const ui: UIElement = uiTitle._createTitleUI();
     world.addUI(ui);
 
-    const z: number = world.getTableHeight() + 5;
+    const shipZ: number = world.getTableHeight() + 5;
 
     const lookFrom: Vector = new Vector(-9, 0, world.getTableHeight() + 1);
     const lookAt: Vector = new Vector(0, 0, lookFrom.z - 0.1);
@@ -29,8 +29,8 @@ export class AnimOpen {
       nsid: "unit:base/carrier",
       scale: 1,
       color: new Color(1, 1, 1, 1),
-      p0: new Vector(-60, 10, z),
-      p1: new Vector(120, -20, z),
+      p0: new Vector(-60, 10, shipZ),
+      p1: new Vector(120, -20, shipZ),
       speed: 5,
     });
 
@@ -38,8 +38,8 @@ export class AnimOpen {
       nsid: "unit:base/dreadnought",
       scale: 3,
       color: new Color(1, 1, 1, 1),
-      p0: new Vector(-90, 15, z),
-      p1: new Vector(120, -20, z),
+      p0: new Vector(-90, 15, shipZ),
+      p1: new Vector(120, -20, shipZ),
       speed: 5,
     });
 
@@ -78,8 +78,9 @@ export class AnimOpen {
 
           if (tint <= 0 && !startedAnimCamera) {
             startedAnimCamera = true;
-            const p1: Vector = new Vector(0, 0, world.getTableHeight() + 70);
-            AnimCamera.simple(p1).then(resolve);
+            const p1: Vector = new Vector(0, 0, 0);
+            const z: number = world.getTableHeight() + 70;
+            AnimCamera.simple(p1, z).then(resolve);
           }
         }
       });

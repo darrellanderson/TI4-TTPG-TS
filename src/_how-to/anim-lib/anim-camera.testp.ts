@@ -19,7 +19,8 @@ const r0: Rotator = lookFrom.findLookAtRotation(lookAt);
 const p1: Vector = new Vector(0, 0, world.getTableHeight() + 70);
 
 function go() {
-  AnimCamera.simple(p1).then(() => {
+  const z: number = 70;
+  AnimCamera.simple(p1, z).then(() => {
     console.log("AnimCamera done");
   });
 }

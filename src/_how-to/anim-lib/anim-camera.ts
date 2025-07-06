@@ -1,11 +1,12 @@
 import {
+  GameObject,
   globalEvents,
   Player,
   Rotator,
   Vector,
   world,
 } from "@tabletop-playground/api";
-import { TriggerableMulticastDelegate } from "ttpg-darrell";
+import { Find, TriggerableMulticastDelegate } from "ttpg-darrell";
 
 export type AnimCameraParams = {
   player: Player;
@@ -31,7 +32,7 @@ export class AnimCamera {
    * @param dstPos
    * @returns
    */
-  static simple(lookAt: Vector): Promise<void> {
+  static simple(lookAt: Vector, z: number): Promise<void> {
     const player: Player | undefined = world.getAllPlayers()[0];
     if (!player) {
       throw new Error("No player found");
@@ -40,9 +41,8 @@ export class AnimCamera {
     const srcPos: Vector = player.getPosition();
     const srcRot: Rotator = player.getRotation();
 
-    const observeZ: number = lookAt.z;
     lookAt.z = world.getTableHeight();
-    const dstPos: Vector = lookAt.add([-10, 0, observeZ]);
+    const dstPos: Vector = lookAt.add([-10, 0, z]);
     const dstRot: Rotator = dstPos.findLookAtRotation(lookAt);
     const animCamera = new AnimCamera({
       player,
@@ -58,6 +58,20 @@ export class AnimCamera {
         resolve();
       });
     });
+  }
+
+  static simpleObj(nsid: string, z: number): Promise<void> {
+    const skipContained: boolean = true;
+    const obj: GameObject | undefined = new Find().findGameObject(
+      nsid,
+      undefined,
+      skipContained
+    );
+    if (!obj) {
+      throw new Error(`Object with NSID ${nsid} not found`);
+    }
+    const pos: Vector = obj.getPosition();
+    return AnimCamera.simple(pos, z);
   }
 
   private readonly _params: AnimCameraParams;
