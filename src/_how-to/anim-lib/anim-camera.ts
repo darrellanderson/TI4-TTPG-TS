@@ -68,7 +68,9 @@ export class AnimCamera {
       skipContained
     );
     if (!obj) {
-      throw new Error(`Object with NSID ${nsid} not found`);
+      const msg: string = `Object with NSID ${nsid} not found`;
+      console.error(msg);
+      throw new Error(msg);
     }
     const pos: Vector = obj.getPosition();
     return AnimCamera.simple(pos, z);
