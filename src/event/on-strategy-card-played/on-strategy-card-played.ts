@@ -5,7 +5,7 @@ import {
   Player,
   world,
 } from "@tabletop-playground/api";
-import { Broadcast, IGlobal, NSID } from "ttpg-darrell";
+import { Broadcast, Facing, IGlobal, NSID } from "ttpg-darrell";
 
 /**
  * Adds a custom action to strategy cards, and triggers an event when played.
@@ -19,6 +19,11 @@ export class OnStrategyCardPlayed implements IGlobal {
     identifier: string
   ): void => {
     if (identifier === OnStrategyCardPlayed.ACTION_NAME) {
+      // Flip if not already flipped.
+      if (Facing.isFaceUp(object)) {
+        object.flipOrUpright();
+      }
+
       // Report.
       const playerName: string = TI4.playerName.getByPlayer(player);
       const msg: string = `${playerName} played ${object.getName()}`;
