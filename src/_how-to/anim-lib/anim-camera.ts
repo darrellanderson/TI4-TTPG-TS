@@ -6,7 +6,7 @@ import {
   Vector,
   world,
 } from "@tabletop-playground/api";
-import { Find, TriggerableMulticastDelegate } from "ttpg-darrell";
+import { TriggerableMulticastDelegate } from "ttpg-darrell";
 
 export type AnimCameraParams = {
   player: Player;
@@ -60,18 +60,7 @@ export class AnimCamera {
     });
   }
 
-  static simpleObj(nsid: string, z: number): Promise<void> {
-    const skipContained: boolean = true;
-    const obj: GameObject | undefined = new Find().findGameObject(
-      nsid,
-      undefined,
-      skipContained
-    );
-    if (!obj) {
-      const msg: string = `Object with NSID ${nsid} not found`;
-      console.error(msg);
-      throw new Error(msg);
-    }
+  static simpleObj(obj: GameObject, z: number): Promise<void> {
     const pos: Vector = obj.getPosition();
     return AnimCamera.simple(pos, z);
   }

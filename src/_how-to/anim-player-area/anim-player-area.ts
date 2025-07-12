@@ -1,33 +1,61 @@
+import { GameObject } from "@tabletop-playground/api";
 import { AnimCamera } from "_how-to/anim-lib/anim-camera";
 import { AnimDelay } from "_how-to/anim-lib/anim-delay";
-import { PlayerSlot } from "ttpg-darrell";
+import { AnimHighlight } from "_how-to/anim-lib/anim-highlight";
+import { Find, PlayerSlot } from "ttpg-darrell";
 
 export class AnimPlayerArea {
+  private readonly _find: Find = new Find();
   private readonly _playerSlot: PlayerSlot;
 
   constructor(playerSlot: PlayerSlot) {
     this._playerSlot = playerSlot;
   }
 
+  _getObj(nsid: string): GameObject {
+    const skipContained: boolean = true;
+    const obj: GameObject | undefined = new Find().findGameObject(
+      nsid,
+      this._playerSlot,
+      skipContained
+    );
+    if (!obj) {
+      const msg: string = `Object with NSID ${nsid} not found`;
+      console.error(msg);
+      throw new Error(msg);
+    }
+    return obj;
+  }
+
   async fullTour(): Promise<void> {
     const z: number = AnimCamera.CAMERA_Z;
+    let obj: GameObject;
 
-    await AnimCamera.simpleObj("sheet.faction:base/generic", z);
+    obj = this._getObj("sheet.faction:base/generic");
+    await AnimCamera.simpleObj(obj, z);
     await AnimDelay.simple(1000);
 
+    obj = this._getObj("mat.player:base/build");
+    await AnimCamera.simpleObj(obj, z);
+    AnimHighlight.simple(obj, 1000);
     await AnimDelay.simple(1000);
 
-    await AnimCamera.simpleObj("mat.player:base/build", z);
+    obj = this._getObj("mat.player:base/planet");
+    await AnimCamera.simpleObj(obj, z);
+    AnimHighlight.simple(obj, 1000);
     await AnimDelay.simple(1000);
-    await AnimCamera.simpleObj("mat.player:base/planet", z);
+
+    obj = this._getObj("mat.player:base/technology");
+    await AnimCamera.simpleObj(obj, z);
+    AnimHighlight.simple(obj, 1000);
     await AnimDelay.simple(1000);
-    await AnimCamera.simpleObj("mat.player:base/technology", z);
   }
 
   async miniTour(): Promise<void> {
     const z: number = AnimCamera.CAMERA_Z;
 
-    await AnimCamera.simpleObj("sheet.faction:base/generic", z);
+    const obj: GameObject = this._getObj("sheet.faction:base/generic");
+    await AnimCamera.simpleObj(obj, z);
     await AnimDelay.simple(1000);
   }
 }
