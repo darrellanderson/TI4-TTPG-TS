@@ -1,8 +1,8 @@
-import { GameObject } from "@tabletop-playground/api";
+import { GameObject, Vector, world } from "@tabletop-playground/api";
 import { AnimCamera } from "_how-to/anim-lib/anim-camera";
 import { AnimDelay } from "_how-to/anim-lib/anim-delay";
 import { AnimHighlight } from "_how-to/anim-lib/anim-highlight";
-import { Find, PlayerSlot } from "ttpg-darrell";
+import { Find, NSID, PlayerSlot } from "ttpg-darrell";
 
 export class AnimPlayerArea {
   private readonly _find: Find = new Find();
@@ -27,12 +27,41 @@ export class AnimPlayerArea {
     return obj;
   }
 
+  _getTroves(): Array<GameObject> {
+    const troves: Array<GameObject> = [];
+    const skipContained: boolean = true;
+    for (const obj of world.getAllObjects(skipContained)) {
+      const nsid: string = NSID.get(obj);
+      if (nsid === "mat.player:base/trove") {
+        const pos: Vector = obj.getPosition();
+        const closest: number = this._find.closestOwnedCardHolderOwner(pos);
+        if (closest === this._playerSlot) {
+          troves.push(obj);
+        }
+      }
+    }
+    return troves;
+  }
+
   async fullTour(): Promise<void> {
     const z: number = AnimCamera.CAMERA_Z;
     let obj: GameObject;
 
     obj = this._getObj("sheet.faction:base/generic");
     await AnimCamera.simpleObj(obj, z);
+    await AnimDelay.simple(1000);
+
+    obj = this._getObj("mat:base/status-pad");
+    await AnimCamera.simpleObj(obj, z);
+    AnimHighlight.simple(obj, 1000);
+    await AnimDelay.simple(1000);
+
+    await AnimDelay.simple(1000);
+
+    const troves: Array<GameObject> = this._getTroves();
+    for (const trove of troves) {
+      AnimHighlight.simple(trove, 1000);
+    }
     await AnimDelay.simple(1000);
 
     obj = this._getObj("mat.player:base/build");
