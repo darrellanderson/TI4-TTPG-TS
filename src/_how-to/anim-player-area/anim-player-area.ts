@@ -56,6 +56,7 @@ export class AnimPlayerArea {
     AnimHighlight.simple(obj, 1000);
     await AnimDelay.simple(1000);
 
+    // Camera doesn't move, add a short delay before re-highlighting.
     await AnimDelay.simple(1000);
 
     const troves: Array<GameObject> = this._getTroves();
@@ -75,6 +76,11 @@ export class AnimPlayerArea {
     await AnimDelay.simple(1000);
 
     obj = this._getObj("mat.player:base/technology");
+    await AnimCamera.simpleObj(obj, z);
+    AnimHighlight.simple(obj, 1000);
+    await AnimDelay.simple(1000);
+
+    obj = this._getObj("card-holder:base/player-hand");
     await AnimCamera.simpleObj(obj, z);
     AnimHighlight.simple(obj, 1000);
     await AnimDelay.simple(1000);
