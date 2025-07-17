@@ -1,5 +1,5 @@
-To open the map tool right click the table and select it.
+Open the map tool by right clicking the table and select it.
 
-From the map tool you can choose a premade map, build a map from a map string, or start a slice draft.
+The map tool lets you choose a premade map, build a map from a map string, or start a slice draft.
 
-Once the map is present, you can place planet cards and frontier tokens.
+Once the map is present, the map tool can place planet cards and frontier tokens.

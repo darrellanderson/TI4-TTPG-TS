@@ -1,7 +1,7 @@
-Swap, Split, Combine
+The "r" key does several things: Swap, Split, and Combine.
 
-Hover over an infantry or fighter and press 'r' to swap it between plastic and a cardboard token.
+Swap: Hover over an infantry or fighter and press 'r' to swap it between plastic and a cardboard token.
 
-Hover over a x3 token, 'r' will split it into 3 x1 tokens.
+Split: Hover over a x3 token, 'r' will split it into 3 x1 tokens.
 
-Drag to select multiple tokens and press 'r' to join them from x1 to x3 versions.
+Combine: Drag to select multiple tokens and press 'r' to join them from x1 to x3 versions.
