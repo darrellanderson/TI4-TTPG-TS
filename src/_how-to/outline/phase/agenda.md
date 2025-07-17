@@ -2,4 +2,4 @@ During the agenda phase place the current agenda in the reserved spot. This open
 
 If you place the agenda card face down players do not see the agenda.
 
-When playing a rider right click it to assign the predicted outcome. The rider will appear next to that choice, players can click it to view the full card text.
+After an outcome type is selected, you can right click a rider to assign the predicted outcome. The rider will appear next to that choice, players can click it to view the full card text.
