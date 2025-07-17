@@ -1,4 +1,4 @@
-Start a game with a slice and faction draft by right clicking the table and opening the map tool, then select the slice draft option and your preferred draft type.
+Start a game with a slice and faction draft by right clicking the table and opening the map tool, then select the slice draft option and your preferred draft type. Check out the "nucleus" draft.
 
 Click the zoom button to view larger versions of slices or the full map, click the zoomed version to close it.
 
