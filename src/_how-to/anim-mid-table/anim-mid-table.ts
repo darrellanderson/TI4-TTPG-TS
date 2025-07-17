@@ -24,9 +24,9 @@ export class AnimMidTable {
 
     let obj: GameObject;
 
-    obj = this._getObj("tile.system:base/18");
-    await AnimCamera.simpleObj(obj, z);
-    await AnimDelay.simple(1000);
+    //obj = this._getObj("tile.system:base/18");
+    //await AnimCamera.simpleObj(obj, z);
+    //await AnimDelay.simple(1000);
 
     obj = this._getObj("mat:base/strategy-card");
     await AnimCamera.simpleObj(obj, z);

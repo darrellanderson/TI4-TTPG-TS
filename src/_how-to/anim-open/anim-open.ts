@@ -1,4 +1,5 @@
 import {
+  CardHolder,
   Color,
   Player,
   UIElement,
@@ -12,6 +13,17 @@ import { AnimCamera } from "_how-to/anim-lib/anim-camera";
 
 export class AnimOpen {
   go(player: Player): Promise<void> {
+    for (const ui of world.getScreenUIs()) {
+      world.removeScreenUIElement(ui);
+    }
+    for (const obj of world.getAllObjects()) {
+      if (obj instanceof CardHolder) {
+        for (const ui of obj.getUIs()) {
+          obj.removeUIElement(ui);
+        }
+      }
+    }
+
     const uiTitle: UiTitle = new UiTitle();
     const ui: UIElement = uiTitle._createTitleUI();
     world.addUI(ui);
@@ -79,8 +91,11 @@ export class AnimOpen {
           if (tint <= 0 && !startedAnimCamera) {
             startedAnimCamera = true;
             const p1: Vector = new Vector(0, 0, 0);
-            const z: number = world.getTableHeight() + 70;
-            AnimCamera.simple(p1, z).then(resolve);
+            const z: number = 320;
+            AnimCamera.simple(p1, z).then(() => {
+              world.removeUIElement(ui);
+              resolve();
+            });
           }
         }
       });

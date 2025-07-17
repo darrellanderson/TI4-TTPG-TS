@@ -1,3 +1,4 @@
+import { GameObject, Player, refObject } from "@tabletop-playground/api";
 import { AnimMidTable } from "./anim-mid-table";
 
 function go() {
@@ -7,6 +8,12 @@ function go() {
   });
 }
 
-process.nextTick(() => {
-  go();
-});
+const actionName: string = "*Anim-table";
+refObject.addCustomAction(actionName);
+refObject.onCustomAction.add(
+  (_obj: GameObject, _player: Player, action: string): void => {
+    if (action === actionName) {
+      go();
+    }
+  }
+);

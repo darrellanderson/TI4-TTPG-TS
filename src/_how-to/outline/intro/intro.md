@@ -1,3 +1,3 @@
 Welcome to Twilight Imperium on Tabletop Playground.
 
-This is for players already familiar with the game, describing how to get the most from the TI4 Tabletop Playground mod.
+This video is for players already familiar with the Twilight Imperium board game, showing you how to get the most from the unofficial TI4 Tabletop Playground mod.
