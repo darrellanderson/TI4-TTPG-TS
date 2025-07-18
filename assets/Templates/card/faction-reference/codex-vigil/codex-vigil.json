@@ -58,9 +58,9 @@
         2
     ],
     "CardNames": {
-        "0": "Keleres-Argent Faction Token",
-        "1": "Keleres-Mentak Faction Token",
-        "2": "Keleres-Xxcha Faction Token"
+        "0": "Keleres-Argent",
+        "1": "Keleres-Mentak",
+        "2": "Keleres-Xxcha"
     },
     "CardMetadata": {
         "0": "card.faction-reference:codex.vigil/keleres-argent",
