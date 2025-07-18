@@ -18,6 +18,13 @@ export class OnTurnStateChanged implements IGlobal {
       Broadcast.broadcastAll(msg);
       TI4.events.onAllPlayersPassed.trigger();
     }
+
+    // If the active player passes, end turn.
+    const currentPlayer: PlayerSlot = turnOrder.getCurrentTurn();
+    const isCurrentPlayerPassed: boolean = turnOrder.getPassed(currentPlayer);
+    if (isCurrentPlayerPassed) {
+      turnOrder.nextTurn();
+    }
   };
 
   init(): void {

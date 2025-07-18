@@ -1,4 +1,4 @@
-During the action phase players activate systems by dropping a command token on them. As a convenience, they can also right click the system tile for the option to move the token for them.
+During the action phase players activate systems by dropping a command token on them. As a convenience, players can also right click the system tile for the option to move the token for them.
 
 You can also right click a system to explore planets or place diplomacy tokens. If Naaz-Rokha is in the game, it adds a distant suns explore option Naaz-Rokha can use when they have a mech in the system.
 
