@@ -15,7 +15,7 @@ it("moveCard", () => {
 
   new MockCardHolder({
     templateMetadata: "card-holder:base/player-scoring",
-    savedData: { owner: playerSlot.toString() },
+    owningPlayerSlot: playerSlot,
   });
 
   expect(moveCardToPlayerScored.moveCard(card, playerSlot)).toBe(true);

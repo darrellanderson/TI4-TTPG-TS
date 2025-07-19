@@ -36,6 +36,7 @@ export class AgendaLawsMat {
     object: GameObject
   ): void => {
     const id: string = this._obj.getSavedData(KEY_AGENDA_CARD_OBJ_ID);
+    console.log("onEndOverlapHandler", id, object.getId());
     if (object instanceof Card && object.getId() === id) {
       console.log("onAgendaCardRemoved", object.getCardDetails().name);
       this._obj.setSavedData("", KEY_AGENDA_CARD_OBJ_ID);
@@ -63,11 +64,22 @@ export class AgendaLawsMat {
       pos.z = world.getTableHeight() + HEIGHT / 2;
       this._zone.setPosition(pos);
     });
+
+    process.nextTick(() => {
+      console.log("AgendaLawsMat created", this._obj.getId());
+    });
   }
 
   _findOrCreateZone(): Zone {
     const zoneId: string = "zone:" + this._obj.getId();
     let zone: Zone | undefined = world.getZoneById(zoneId);
+
+    // Always recreate the zone -- once it appeared to be a in a bad state
+    // where onEndOverlap was not being called.
+    if (zone) {
+      zone.destroy();
+      zone = undefined;
+    }
 
     const pos: Vector = this._firstSnapPoint.getGlobalPosition();
     pos.z = world.getTableHeight() + HEIGHT / 2;

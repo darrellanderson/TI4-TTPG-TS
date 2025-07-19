@@ -1,21 +1,16 @@
-import { Card, CardHolder, world } from "@tabletop-playground/api";
-import { NSID } from "ttpg-darrell";
+import { Card, CardHolder } from "@tabletop-playground/api";
+import { Find } from "ttpg-darrell";
 
 export class MoveCardToPlayerScored {
   _getPlayerScoringCardHolder(playerSlot: number): CardHolder | undefined {
+    const nsid: string = `card-holder:base/player-scoring`;
     const skipContained: boolean = true;
-    for (const obj of world.getAllObjects(skipContained)) {
-      if (obj instanceof CardHolder) {
-        const nsid: string = NSID.get(obj);
-        if (nsid === "card-holder:base/player-scoring") {
-          const ownerStr: string = obj.getSavedData("owner");
-          const owner: number = parseInt(ownerStr);
-          if (owner === playerSlot) {
-            return obj;
-          }
-        }
-      }
-    }
+    const cardHolder: CardHolder | undefined = new Find().findCardHolder(
+      nsid,
+      playerSlot,
+      skipContained
+    );
+    return cardHolder;
   }
 
   moveCard(card: Card, playerSlot: number): boolean {
