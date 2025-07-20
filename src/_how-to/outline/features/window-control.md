@@ -1,0 +1,1 @@
+Some of the game interface appears in floating windows. Players can grow or shrink these, temporarily collapse the window, warp them between the screen and the world (usually above their player area), or close them completely. Not every option is always available, and most closable windows have a "right click the table to re-open them".

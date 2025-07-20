@@ -10,7 +10,7 @@ import {
   Widget,
   world,
 } from "@tabletop-playground/api";
-import { HexType, IGlobal } from "ttpg-darrell";
+import { Broadcast, HexType, IGlobal } from "ttpg-darrell";
 
 import { System } from "../../lib/system-lib/system/system";
 import { UnitAttrs } from "../../lib/unit-lib/unit-attrs/unit-attrs";
@@ -65,6 +65,14 @@ export class RightClickRift implements IGlobal {
       obj.onReleased.remove(onReleasedHandler);
     };
     unitObj.onReleased.add(onReleasedHandler);
+
+    // Also report in chat.
+    const plastic: UnitPlastic | undefined = UnitPlastic.getOne(unitObj);
+    if (plastic) {
+      Broadcast.chatAll(
+        `${plastic?.getUnit} rolled ${rollValue}: (${isSurvivor ? "survived" : "destroyed"})`
+      );
+    }
   }
 
   static getShipsInRift(riftObj: GameObject): Array<GameObject> {
@@ -97,6 +105,7 @@ export class RightClickRift implements IGlobal {
   }
 
   static rollRift(riftObj: GameObject): void {
+    Broadcast.chatAll(`Rolling for all ships in the rift`);
     const ships: Array<GameObject> = RightClickRift.getShipsInRift(riftObj);
     for (const ship of ships) {
       const rollValue: number = Math.floor(Math.random() * 10) + 1;
