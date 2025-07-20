@@ -5,6 +5,7 @@ import { SlashPerf } from "./slash-perf";
 it("getSlashCommand", () => {
   const cmd: AbstractSlashCommand = new SlashPerf();
   expect(cmd.getSlashCommand()).toBe("/perf");
+  expect(cmd.getDescription()).toBeDefined();
 });
 
 it("isHostOnly", () => {

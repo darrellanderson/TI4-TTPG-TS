@@ -22,6 +22,10 @@ export class SlashValidate extends AbstractSlashCommand {
     return "/validate";
   }
 
+  getDescription(): string {
+    return "Run various validations on the game state (e.g. verify homebrew).";
+  }
+
   isHostOnly(): boolean {
     return true;
   }

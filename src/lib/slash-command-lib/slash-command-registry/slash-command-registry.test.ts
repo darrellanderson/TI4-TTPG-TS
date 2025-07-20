@@ -11,6 +11,10 @@ class MySlashCommand extends AbstractSlashCommand {
     return "/my-command";
   }
 
+  getDescription(): string {
+    return "This is a test command.";
+  }
+
   isHostOnly(): boolean {
     return true;
   }

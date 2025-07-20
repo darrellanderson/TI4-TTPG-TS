@@ -6,6 +6,7 @@ import { AbstractSlashCommand } from "../abstract-slash-command/abstract-slash-c
 it("getSlashCommand", () => {
   const cmd: AbstractSlashCommand = new SlashToggleUnits();
   expect(cmd.getSlashCommand()).toBe("/toggleunits");
+  expect(cmd.getDescription()).toBeDefined();
 });
 
 it("isHostOnly", () => {

@@ -6,6 +6,7 @@ import { ValidateTemplateNsids } from "../../../../homebrew-lib/validate/validat
 it("getSlashCommand", () => {
   const slashValidate = new SlashValidate();
   expect(slashValidate.getSlashCommand()).toBe("/validate");
+  expect(slashValidate.getDescription()).toBeDefined();
 });
 
 it("isHostOnly", () => {

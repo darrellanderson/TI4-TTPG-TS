@@ -16,6 +16,10 @@ export class SlashToggleUnits implements AbstractSlashCommand {
     return "/toggleunits";
   }
 
+  getDescription(): string {
+    return "Toggle units between their plastic and token versions.";
+  }
+
   isHostOnly(): boolean {
     return true;
   }

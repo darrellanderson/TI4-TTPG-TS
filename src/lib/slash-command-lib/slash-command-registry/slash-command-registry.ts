@@ -8,6 +8,8 @@ export class SlashCommandRegistry implements IGlobal {
     new Map();
 
   private readonly _onChat = (sender: Player, message: string): void => {
+    message = message.trim();
+
     if (message.startsWith("/")) {
       const argv: Array<string> = message.split(" ");
       let command: string | undefined = argv.shift();
@@ -32,6 +34,15 @@ export class SlashCommandRegistry implements IGlobal {
           const msg: string = `${playerName} ran "${command}"`;
           Broadcast.chatAll(msg, color);
         }
+      }
+    }
+
+    if (message === "/") {
+      Broadcast.chatOne(sender, "Available slash commands:");
+      for (const actions of this._commandToAction.values()) {
+        const command: string = actions.getSlashCommand();
+        const description: string = actions.getDescription();
+        Broadcast.chatOne(sender, `${command}: ${description}`);
       }
     }
   };

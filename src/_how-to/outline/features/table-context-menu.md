@@ -1,0 +1,1 @@
+Several features are available by right clicking the table, such as viewing all players' tech, seeing a short per-player summary, streamer tools, and so on. We'll go into some of these in more detail shortly.

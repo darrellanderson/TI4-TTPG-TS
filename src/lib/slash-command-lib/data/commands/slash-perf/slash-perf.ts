@@ -9,6 +9,10 @@ export class SlashPerf extends AbstractSlashCommand {
     return "/perf";
   }
 
+  getDescription(): string {
+    return "Toggle the performance widget (FPS).";
+  }
+
   isHostOnly(): boolean {
     return true;
   }
