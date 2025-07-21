@@ -2,6 +2,7 @@ ttpgcfg.local.json
 dev
 .DS_Store
 assets/Thumbnails
+build
 
 # Logs
 logs
