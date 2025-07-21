@@ -5,7 +5,7 @@ import { SystemAttachmentSchemaType } from "../../system-lib/schema/system-attac
 import { SystemSchemaType } from "../../system-lib/schema/system-schema";
 import { UnitAttrsSchemaType } from "../../unit-lib/schema/unit-attrs-schema";
 import { UnitModifierSchemaType } from "../../unit-lib/schema/unit-modifier-schema";
-import { TechSchemaType } from "lib/tech-lib/schema/tech-schema";
+import { TechSchemaType } from "../../tech-lib/schema/tech-schema";
 export type HomebrewModuleType = {
     sourceAndPackageId: SourceAndPackageIdSchemaType;
     factions?: Array<FactionSchemaType>;
