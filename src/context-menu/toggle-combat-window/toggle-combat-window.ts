@@ -15,7 +15,7 @@ import {
   CombatRollParams,
 } from "../../lib/combat-lib/combat-roll/combat-roll";
 import { UnitAttrs } from "../../lib/unit-lib/unit-attrs/unit-attrs";
-import { CombatAttrs } from "lib/unit-lib/unit-attrs/combat-attrs";
+import { CombatAttrs } from "../../lib/unit-lib/unit-attrs/combat-attrs";
 
 export const ACTION_TOGGLE_COMBAT: string = "*Toggle Combat";
 
