@@ -26,6 +26,7 @@ export class ToggleCombatWindow implements IGlobal {
   ): void => {
     this._createWindow();
 
+    // Open for players activating or with units in the system.
     const playerSlots: Array<number> = this._getRelevantPlayerSlots(
       system,
       player
@@ -37,7 +38,24 @@ export class ToggleCombatWindow implements IGlobal {
         }
       }
     }
+
+    // Open for PDS2 adjacent players.
+    const adjPds2PlayerSlots: Array<number> =
+      this._getAdjPds2PlayerSlots(system);
+    if (this._window) {
+      for (const playerSlot of adjPds2PlayerSlots) {
+        if (!this._window.isAttachedForPlayer(playerSlot)) {
+          this._window.toggleForPlayer(playerSlot);
+        }
+      }
+    }
   };
+
+  _isAttached(playerSlot: number): boolean {
+    return (
+      this._window !== undefined && this._window.isAttachedForPlayer(playerSlot)
+    );
+  }
 
   _createWindow(): void {
     if (this._window) {
@@ -109,35 +127,32 @@ export class ToggleCombatWindow implements IGlobal {
     return Array.from(playersSlotsSet);
   }
 
-  _getAdjPds2PlayerSlots(
-    system: System,
-    activatingPlayer: Player,
-    skip: Array<number>
-  ): Array<number> {
+  _hasAdjPds2(system: System, playerSlot: number): boolean {
+    const pos: Vector = system.getObj().getPosition();
+    const hex: HexType = TI4.hex.fromPosition(pos);
+    const params: CombatRollParams = {
+      rollType: "spaceCannonOffense",
+      hex,
+      activatingPlayerSlot: playerSlot,
+      rollingPlayerSlot: playerSlot,
+    };
+    const combatRoll: CombatRoll = CombatRoll.createCooked(params);
+    const range: number = combatRoll.self.unitAttrsSet
+      .getOrThrow("pds")
+      .getSpaceCannonOrThrow()
+      .getRange();
+    return range > 0 && combatRoll.self.hasUnitAdj("pds");
+  }
+
+  _getAdjPds2PlayerSlots(system: System): Array<number> {
     const checkPlayerSlots: Array<number> = TI4.playerSeats
       .getAllSeats()
       .map((playerSeat: PlayerSeatType): number => {
         return playerSeat.playerSlot;
-      })
-      .filter((playerSlot: number): boolean => {
-        return !skip.includes(playerSlot);
       });
 
-    const pos: Vector = system.getObj().getPosition();
-    const hex: HexType = TI4.hex.fromPosition(pos);
     return checkPlayerSlots.filter((playerSlot: number): boolean => {
-      const params: CombatRollParams = {
-        rollType: "spaceCannonOffense",
-        hex,
-        activatingPlayerSlot: activatingPlayer.getSlot(),
-        rollingPlayerSlot: playerSlot,
-      };
-      const combatRoll: CombatRoll = CombatRoll.createCooked(params);
-      const range: number = combatRoll.self.unitAttrsSet
-        .getOrThrow("pds")
-        .getSpaceCannonOrThrow()
-        .getRange();
-      return range > 0 && combatRoll.self.hasUnitAdj("pds");
+      return this._hasAdjPds2(system, playerSlot);
     });
   }
 }
