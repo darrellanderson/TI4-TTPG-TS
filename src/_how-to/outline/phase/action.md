@@ -2,7 +2,7 @@ During the action phase players activate systems during their turn by dropping a
 
 Players can also right click a system to explore planets or place control and diplomacy tokens. If Naaz-Rokha is in the game, it adds a distant suns explore option Naaz-Rokha can use when they have a mech in the system.
 
-If you activate a system with other players' units, or you have units in a system another player activates, the combat window pops up. Adjacent PDS players aren't told they can participate, they need to notice they can fire and right click the table to open their combat window.
+The combat window pops up when you activate a system with other players' units, or if another player activates a system where you have units or is in space cannon range.
 
 Play action cards and the like by placing them face up in or nearest to your play area BEFORE clicking the combat button, and remember to trash them after use.
 

@@ -14,6 +14,8 @@ import {
   CombatRoll,
   CombatRollParams,
 } from "../../lib/combat-lib/combat-roll/combat-roll";
+import { UnitAttrs } from "../../lib/unit-lib/unit-attrs/unit-attrs";
+import { CombatAttrs } from "lib/unit-lib/unit-attrs/combat-attrs";
 
 export const ACTION_TOGGLE_COMBAT: string = "*Toggle Combat";
 
@@ -137,11 +139,19 @@ export class ToggleCombatWindow implements IGlobal {
       rollingPlayerSlot: playerSlot,
     };
     const combatRoll: CombatRoll = CombatRoll.createCooked(params);
-    const range: number = combatRoll.self.unitAttrsSet
-      .getOrThrow("pds")
-      .getSpaceCannonOrThrow()
-      .getRange();
-    return range > 0 && combatRoll.self.hasUnitAdj("pds");
+
+    // Check ALL units for ranged space cannon, it is not just PDS!
+    const unitAttrsArray: Array<UnitAttrs> =
+      combatRoll.self.unitAttrsSet.getAll();
+    for (const unitAttrs of unitAttrsArray) {
+      if (combatRoll.self.hasUnitAdj(unitAttrs.getUnit())) {
+        const spaceCannon: CombatAttrs | undefined = unitAttrs.getSpaceCannon();
+        if (spaceCannon && spaceCannon.getRange() > 0) {
+          return true; // Found a unit with a ranged space cannon.
+        }
+      }
+    }
+    return false; // No ranged space cannon found.
   }
 
   _getAdjPds2PlayerSlots(system: System): Array<number> {
