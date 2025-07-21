@@ -59,14 +59,14 @@ export declare const SystemAttachmentSchema: z.ZodReadonly<z.ZodObject<{
     }, {
         name: string;
         nsidName: string;
-        localPosition?: Readonly<{
+        localPosition?: {
             x: number;
             y: number;
-        }> | undefined;
-        localPositionFaceDown?: Readonly<{
+        } | undefined;
+        localPositionFaceDown?: {
             x: number;
             y: number;
-        }> | undefined;
+        } | undefined;
         radius?: number | undefined;
         influence?: number | undefined;
         resources?: number | undefined;
@@ -78,9 +78,12 @@ export declare const SystemAttachmentSchema: z.ZodReadonly<z.ZodObject<{
 }, "strict", z.ZodTypeAny, {
     name: string;
     nsidName: string;
+    imgFaceDown?: boolean | undefined;
+    doNotAttach?: boolean | undefined;
     anomalies?: ("asteroid-field" | "gravity-rift" | "nebula" | "supernova")[] | undefined;
     wormholes?: ("alpha" | "beta" | "gamma" | "delta" | "epsilon")[] | undefined;
     wormholesFaceDown?: ("alpha" | "beta" | "gamma" | "delta" | "epsilon")[] | undefined;
+    isDestroyWormhole?: boolean | undefined;
     planets?: Readonly<{
         name: string;
         nsidName: string;
@@ -100,26 +103,26 @@ export declare const SystemAttachmentSchema: z.ZodReadonly<z.ZodObject<{
         isLegendary?: boolean | undefined;
         legendaryNsidName?: string | undefined;
     }>[] | undefined;
-    imgFaceDown?: boolean | undefined;
-    doNotAttach?: boolean | undefined;
-    isDestroyWormhole?: boolean | undefined;
 }, {
     name: string;
     nsidName: string;
+    imgFaceDown?: boolean | undefined;
+    doNotAttach?: boolean | undefined;
     anomalies?: ("asteroid-field" | "gravity-rift" | "nebula" | "supernova")[] | undefined;
     wormholes?: ("alpha" | "beta" | "gamma" | "delta" | "epsilon")[] | undefined;
     wormholesFaceDown?: ("alpha" | "beta" | "gamma" | "delta" | "epsilon")[] | undefined;
-    planets?: Readonly<{
+    isDestroyWormhole?: boolean | undefined;
+    planets?: {
         name: string;
         nsidName: string;
-        localPosition?: Readonly<{
+        localPosition?: {
             x: number;
             y: number;
-        }> | undefined;
-        localPositionFaceDown?: Readonly<{
+        } | undefined;
+        localPositionFaceDown?: {
             x: number;
             y: number;
-        }> | undefined;
+        } | undefined;
         radius?: number | undefined;
         influence?: number | undefined;
         resources?: number | undefined;
@@ -127,9 +130,6 @@ export declare const SystemAttachmentSchema: z.ZodReadonly<z.ZodObject<{
         traits?: ("cultural" | "hazardous" | "industrial")[] | undefined;
         isLegendary?: boolean | undefined;
         legendaryNsidName?: string | undefined;
-    }>[] | undefined;
-    imgFaceDown?: boolean | undefined;
-    doNotAttach?: boolean | undefined;
-    isDestroyWormhole?: boolean | undefined;
+    }[] | undefined;
 }>>;
 export type SystemAttachmentSchemaType = z.infer<typeof SystemAttachmentSchema>;

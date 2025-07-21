@@ -59,11 +59,11 @@ export declare const UnitModifierSchema: z.ZodReadonly<z.ZodObject<{
 }, {
     name: string;
     description: string;
-    triggers: Readonly<{
+    triggers: {
         nsidName: string;
         cardClass: "action" | "promissory" | "mech" | "unit" | "agenda" | "agent" | "alliance" | "commander" | "faction-ability" | "hero" | "legendary" | "relic" | "technology.blue" | "technology.green" | "technology.red" | "technology.yellow" | "technology.unit-upgrade";
         overrideSource?: string | undefined;
-    }>[];
+    }[];
     owner: "self" | "opponent" | "any";
     priority: "mutate" | "mutate-late" | "adjust" | "choose";
     applies: (args_0: any, ...args: unknown[]) => boolean;

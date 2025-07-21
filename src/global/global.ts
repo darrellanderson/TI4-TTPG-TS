@@ -116,10 +116,12 @@ Spawn.inject(NSID_TO_TEMPLATE_ID);
 
 Find.ignoreOwnedCardHolderNsid("card-holder:base/player-scoring");
 
+if (GameWorld.getExecutionReason() !== "unittest") {
+  console.log("--- Welcome to TI4 ---");
+}
+
 export function registerErrorHandler() {
   if (GameWorld.getExecutionReason() !== "unittest") {
-    console.log("--- Welcome to TI4 ---");
-
     // Initialize error handing when running in production.
     new ErrorHandler().init();
     new BugSplatRemoteReporter({

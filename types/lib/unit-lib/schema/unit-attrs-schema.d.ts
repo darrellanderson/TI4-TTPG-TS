@@ -169,9 +169,9 @@ export declare const UnitAttrsSchema: z.ZodReadonly<z.ZodObject<{
 }, "strict", z.ZodTypeAny, {
     name: string;
     unit: "carrier" | "control-token" | "cruiser" | "destroyer" | "dreadnought" | "fighter" | "flagship" | "infantry" | "mech" | "pds" | "space-dock" | "war-sun";
-    nsidName?: string | undefined;
     componentCount?: number | undefined;
     diceColor?: string | undefined;
+    nsidName?: string | undefined;
     cost?: number | undefined;
     producePerCost?: number | undefined;
     isShip?: boolean | undefined;
@@ -228,9 +228,9 @@ export declare const UnitAttrsSchema: z.ZodReadonly<z.ZodObject<{
 }, {
     name: string;
     unit: "carrier" | "control-token" | "cruiser" | "destroyer" | "dreadnought" | "fighter" | "flagship" | "infantry" | "mech" | "pds" | "space-dock" | "war-sun";
-    nsidName?: string | undefined;
     componentCount?: number | undefined;
     diceColor?: string | undefined;
+    nsidName?: string | undefined;
     cost?: number | undefined;
     producePerCost?: number | undefined;
     isShip?: boolean | undefined;
@@ -238,7 +238,7 @@ export declare const UnitAttrsSchema: z.ZodReadonly<z.ZodObject<{
     hasSustainDamage?: boolean | undefined;
     hasPlanetaryShield?: boolean | undefined;
     disablePlanetaryShield?: boolean | undefined;
-    antiFighterBarrage?: Readonly<{
+    antiFighterBarrage?: {
         hit: number;
         dice?: number | undefined;
         extraDice?: number | undefined;
@@ -246,8 +246,8 @@ export declare const UnitAttrsSchema: z.ZodReadonly<z.ZodObject<{
         crit?: number | undefined;
         critCount?: number | undefined;
         range?: number | undefined;
-    }> | undefined;
-    bombardment?: Readonly<{
+    } | undefined;
+    bombardment?: {
         hit: number;
         dice?: number | undefined;
         extraDice?: number | undefined;
@@ -255,8 +255,8 @@ export declare const UnitAttrsSchema: z.ZodReadonly<z.ZodObject<{
         crit?: number | undefined;
         critCount?: number | undefined;
         range?: number | undefined;
-    }> | undefined;
-    spaceCannon?: Readonly<{
+    } | undefined;
+    spaceCannon?: {
         hit: number;
         dice?: number | undefined;
         extraDice?: number | undefined;
@@ -264,8 +264,8 @@ export declare const UnitAttrsSchema: z.ZodReadonly<z.ZodObject<{
         crit?: number | undefined;
         critCount?: number | undefined;
         range?: number | undefined;
-    }> | undefined;
-    spaceCombat?: Readonly<{
+    } | undefined;
+    spaceCombat?: {
         hit: number;
         dice?: number | undefined;
         extraDice?: number | undefined;
@@ -273,8 +273,8 @@ export declare const UnitAttrsSchema: z.ZodReadonly<z.ZodObject<{
         crit?: number | undefined;
         critCount?: number | undefined;
         range?: number | undefined;
-    }> | undefined;
-    groundCombat?: Readonly<{
+    } | undefined;
+    groundCombat?: {
         hit: number;
         dice?: number | undefined;
         extraDice?: number | undefined;
@@ -282,7 +282,7 @@ export declare const UnitAttrsSchema: z.ZodReadonly<z.ZodObject<{
         crit?: number | undefined;
         critCount?: number | undefined;
         range?: number | undefined;
-    }> | undefined;
+    } | undefined;
     afbDestroyInfantryInSpace?: number | undefined;
 }>>;
 export type UnitAttrsSchemaType = z.infer<typeof UnitAttrsSchema>;

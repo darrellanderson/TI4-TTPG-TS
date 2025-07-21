@@ -28,10 +28,10 @@ export declare const SystemSchema: z.ZodReadonly<z.ZodObject<{
         }>;
     }, {
         wormhole: string;
-        localPosition: Readonly<{
+        localPosition: {
             x: number;
             y: number;
-        }>;
+        };
     }>>, "many">>;
     wormholesWithPositionsFaceDown: z.ZodOptional<z.ZodArray<z.ZodReadonly<z.ZodObject<{
         wormhole: z.ZodString;
@@ -53,10 +53,10 @@ export declare const SystemSchema: z.ZodReadonly<z.ZodObject<{
         }>;
     }, {
         wormhole: string;
-        localPosition: Readonly<{
+        localPosition: {
             x: number;
             y: number;
-        }>;
+        };
     }>>, "many">>;
     hyperlanes: z.ZodOptional<z.ZodReadonly<z.ZodObject<{
         n: z.ZodOptional<z.ZodArray<z.ZodEnum<["ne", "se", "s", "sw", "nw"]>, "many">>;
@@ -66,19 +66,19 @@ export declare const SystemSchema: z.ZodReadonly<z.ZodObject<{
         sw: z.ZodOptional<z.ZodArray<z.ZodEnum<["n", "ne", "se", "s", "nw"]>, "many">>;
         nw: z.ZodOptional<z.ZodArray<z.ZodEnum<["n", "ne", "se", "s", "nw"]>, "many">>;
     }, "strict", z.ZodTypeAny, {
+        n?: ("ne" | "se" | "s" | "sw" | "nw")[] | undefined;
         ne?: ("se" | "s" | "sw" | "nw" | "n")[] | undefined;
         se?: ("ne" | "s" | "sw" | "nw" | "n")[] | undefined;
         s?: ("ne" | "se" | "sw" | "nw" | "n")[] | undefined;
         sw?: ("ne" | "se" | "s" | "nw" | "n")[] | undefined;
         nw?: ("ne" | "se" | "s" | "nw" | "n")[] | undefined;
-        n?: ("ne" | "se" | "s" | "sw" | "nw")[] | undefined;
     }, {
+        n?: ("ne" | "se" | "s" | "sw" | "nw")[] | undefined;
         ne?: ("se" | "s" | "sw" | "nw" | "n")[] | undefined;
         se?: ("ne" | "s" | "sw" | "nw" | "n")[] | undefined;
         s?: ("ne" | "se" | "sw" | "nw" | "n")[] | undefined;
         sw?: ("ne" | "se" | "s" | "nw" | "n")[] | undefined;
         nw?: ("ne" | "se" | "s" | "nw" | "n")[] | undefined;
-        n?: ("ne" | "se" | "s" | "sw" | "nw")[] | undefined;
     }>>>;
     hyperlanesFaceDown: z.ZodOptional<z.ZodReadonly<z.ZodObject<{
         n: z.ZodOptional<z.ZodArray<z.ZodEnum<["ne", "se", "s", "sw", "nw"]>, "many">>;
@@ -88,19 +88,19 @@ export declare const SystemSchema: z.ZodReadonly<z.ZodObject<{
         sw: z.ZodOptional<z.ZodArray<z.ZodEnum<["n", "ne", "se", "s", "nw"]>, "many">>;
         nw: z.ZodOptional<z.ZodArray<z.ZodEnum<["n", "ne", "se", "s", "nw"]>, "many">>;
     }, "strict", z.ZodTypeAny, {
+        n?: ("ne" | "se" | "s" | "sw" | "nw")[] | undefined;
         ne?: ("se" | "s" | "sw" | "nw" | "n")[] | undefined;
         se?: ("ne" | "s" | "sw" | "nw" | "n")[] | undefined;
         s?: ("ne" | "se" | "sw" | "nw" | "n")[] | undefined;
         sw?: ("ne" | "se" | "s" | "nw" | "n")[] | undefined;
         nw?: ("ne" | "se" | "s" | "nw" | "n")[] | undefined;
-        n?: ("ne" | "se" | "s" | "sw" | "nw")[] | undefined;
     }, {
+        n?: ("ne" | "se" | "s" | "sw" | "nw")[] | undefined;
         ne?: ("se" | "s" | "sw" | "nw" | "n")[] | undefined;
         se?: ("ne" | "s" | "sw" | "nw" | "n")[] | undefined;
         s?: ("ne" | "se" | "sw" | "nw" | "n")[] | undefined;
         sw?: ("ne" | "se" | "s" | "nw" | "n")[] | undefined;
         nw?: ("ne" | "se" | "s" | "nw" | "n")[] | undefined;
-        n?: ("ne" | "se" | "s" | "sw" | "nw")[] | undefined;
     }>>>;
     planets: z.ZodOptional<z.ZodArray<z.ZodReadonly<z.ZodObject<{
         name: z.ZodString;
@@ -153,14 +153,14 @@ export declare const SystemSchema: z.ZodReadonly<z.ZodObject<{
     }, {
         name: string;
         nsidName: string;
-        localPosition?: Readonly<{
+        localPosition?: {
             x: number;
             y: number;
-        }> | undefined;
-        localPositionFaceDown?: Readonly<{
+        } | undefined;
+        localPositionFaceDown?: {
             x: number;
             y: number;
-        }> | undefined;
+        } | undefined;
         radius?: number | undefined;
         influence?: number | undefined;
         resources?: number | undefined;
@@ -194,20 +194,20 @@ export declare const SystemSchema: z.ZodReadonly<z.ZodObject<{
         }>;
     }>[] | undefined;
     hyperlanes?: Readonly<{
+        n?: ("ne" | "se" | "s" | "sw" | "nw")[] | undefined;
         ne?: ("se" | "s" | "sw" | "nw" | "n")[] | undefined;
         se?: ("ne" | "s" | "sw" | "nw" | "n")[] | undefined;
         s?: ("ne" | "se" | "sw" | "nw" | "n")[] | undefined;
         sw?: ("ne" | "se" | "s" | "nw" | "n")[] | undefined;
         nw?: ("ne" | "se" | "s" | "nw" | "n")[] | undefined;
-        n?: ("ne" | "se" | "s" | "sw" | "nw")[] | undefined;
     }> | undefined;
     hyperlanesFaceDown?: Readonly<{
+        n?: ("ne" | "se" | "s" | "sw" | "nw")[] | undefined;
         ne?: ("se" | "s" | "sw" | "nw" | "n")[] | undefined;
         se?: ("ne" | "s" | "sw" | "nw" | "n")[] | undefined;
         s?: ("ne" | "se" | "sw" | "nw" | "n")[] | undefined;
         sw?: ("ne" | "se" | "s" | "nw" | "n")[] | undefined;
         nw?: ("ne" | "se" | "s" | "nw" | "n")[] | undefined;
-        n?: ("ne" | "se" | "s" | "sw" | "nw")[] | undefined;
     }> | undefined;
     planets?: Readonly<{
         name: string;
@@ -238,47 +238,47 @@ export declare const SystemSchema: z.ZodReadonly<z.ZodObject<{
     anomalies?: ("asteroid-field" | "gravity-rift" | "nebula" | "supernova")[] | undefined;
     wormholes?: ("alpha" | "beta" | "gamma" | "delta" | "epsilon")[] | undefined;
     wormholesFaceDown?: ("alpha" | "beta" | "gamma" | "delta" | "epsilon")[] | undefined;
-    wormholesWithPositions?: Readonly<{
+    wormholesWithPositions?: {
         wormhole: string;
-        localPosition: Readonly<{
+        localPosition: {
             x: number;
             y: number;
-        }>;
-    }>[] | undefined;
-    wormholesWithPositionsFaceDown?: Readonly<{
+        };
+    }[] | undefined;
+    wormholesWithPositionsFaceDown?: {
         wormhole: string;
-        localPosition: Readonly<{
+        localPosition: {
             x: number;
             y: number;
-        }>;
-    }>[] | undefined;
-    hyperlanes?: Readonly<{
+        };
+    }[] | undefined;
+    hyperlanes?: {
+        n?: ("ne" | "se" | "s" | "sw" | "nw")[] | undefined;
         ne?: ("se" | "s" | "sw" | "nw" | "n")[] | undefined;
         se?: ("ne" | "s" | "sw" | "nw" | "n")[] | undefined;
         s?: ("ne" | "se" | "sw" | "nw" | "n")[] | undefined;
         sw?: ("ne" | "se" | "s" | "nw" | "n")[] | undefined;
         nw?: ("ne" | "se" | "s" | "nw" | "n")[] | undefined;
+    } | undefined;
+    hyperlanesFaceDown?: {
         n?: ("ne" | "se" | "s" | "sw" | "nw")[] | undefined;
-    }> | undefined;
-    hyperlanesFaceDown?: Readonly<{
         ne?: ("se" | "s" | "sw" | "nw" | "n")[] | undefined;
         se?: ("ne" | "s" | "sw" | "nw" | "n")[] | undefined;
         s?: ("ne" | "se" | "sw" | "nw" | "n")[] | undefined;
         sw?: ("ne" | "se" | "s" | "nw" | "n")[] | undefined;
         nw?: ("ne" | "se" | "s" | "nw" | "n")[] | undefined;
-        n?: ("ne" | "se" | "s" | "sw" | "nw")[] | undefined;
-    }> | undefined;
-    planets?: Readonly<{
+    } | undefined;
+    planets?: {
         name: string;
         nsidName: string;
-        localPosition?: Readonly<{
+        localPosition?: {
             x: number;
             y: number;
-        }> | undefined;
-        localPositionFaceDown?: Readonly<{
+        } | undefined;
+        localPositionFaceDown?: {
             x: number;
             y: number;
-        }> | undefined;
+        } | undefined;
         radius?: number | undefined;
         influence?: number | undefined;
         resources?: number | undefined;
@@ -286,7 +286,7 @@ export declare const SystemSchema: z.ZodReadonly<z.ZodObject<{
         traits?: ("cultural" | "hazardous" | "industrial")[] | undefined;
         isLegendary?: boolean | undefined;
         legendaryNsidName?: string | undefined;
-    }>[] | undefined;
+    }[] | undefined;
     imgFaceDown?: boolean | undefined;
 }>>;
 export type SystemSchemaType = z.infer<typeof SystemSchema>;

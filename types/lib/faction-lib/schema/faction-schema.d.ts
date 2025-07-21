@@ -117,15 +117,15 @@ export declare const FactionSchema: z.ZodReadonly<z.ZodObject<{
     commodities: number;
     factionTechs: string[];
     home: number;
-    leaders: Readonly<{
+    leaders: {
         agents: string[];
         commanders: string[];
         heroes: string[];
         mechs: string[];
-    }>;
+    };
     promissories: string[];
     startingTechs: string[];
-    startingUnits: Readonly<{
+    startingUnits: {
         carrier?: number | undefined;
         cruiser?: number | undefined;
         destroyer?: number | undefined;
@@ -137,12 +137,12 @@ export declare const FactionSchema: z.ZodReadonly<z.ZodObject<{
         pds?: number | undefined;
         spaceDock?: number | undefined;
         warSun?: number | undefined;
-    }>;
+    };
     unitOverrides: string[];
     homeSurrogate?: number | undefined;
-    extras?: Readonly<{
+    extras?: {
         nsid: string;
         count?: number | undefined;
-    }>[] | undefined;
+    }[] | undefined;
 }>>;
 export type FactionSchemaType = z.infer<typeof FactionSchema>;

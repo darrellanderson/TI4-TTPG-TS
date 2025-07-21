@@ -50,14 +50,14 @@ export declare const PlanetSchema: z.ZodReadonly<z.ZodObject<{
 }, {
     name: string;
     nsidName: string;
-    localPosition?: Readonly<{
+    localPosition?: {
         x: number;
         y: number;
-    }> | undefined;
-    localPositionFaceDown?: Readonly<{
+    } | undefined;
+    localPositionFaceDown?: {
         x: number;
         y: number;
-    }> | undefined;
+    } | undefined;
     radius?: number | undefined;
     influence?: number | undefined;
     resources?: number | undefined;

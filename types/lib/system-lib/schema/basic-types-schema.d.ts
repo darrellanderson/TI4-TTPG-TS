@@ -12,19 +12,19 @@ export declare const HyperlaneSchema: z.ZodReadonly<z.ZodObject<{
     sw: z.ZodOptional<z.ZodArray<z.ZodEnum<["n", "ne", "se", "s", "nw"]>, "many">>;
     nw: z.ZodOptional<z.ZodArray<z.ZodEnum<["n", "ne", "se", "s", "nw"]>, "many">>;
 }, "strict", z.ZodTypeAny, {
+    n?: ("ne" | "se" | "s" | "sw" | "nw")[] | undefined;
     ne?: ("se" | "s" | "sw" | "nw" | "n")[] | undefined;
     se?: ("ne" | "s" | "sw" | "nw" | "n")[] | undefined;
     s?: ("ne" | "se" | "sw" | "nw" | "n")[] | undefined;
     sw?: ("ne" | "se" | "s" | "nw" | "n")[] | undefined;
     nw?: ("ne" | "se" | "s" | "nw" | "n")[] | undefined;
-    n?: ("ne" | "se" | "s" | "sw" | "nw")[] | undefined;
 }, {
+    n?: ("ne" | "se" | "s" | "sw" | "nw")[] | undefined;
     ne?: ("se" | "s" | "sw" | "nw" | "n")[] | undefined;
     se?: ("ne" | "s" | "sw" | "nw" | "n")[] | undefined;
     s?: ("ne" | "se" | "sw" | "nw" | "n")[] | undefined;
     sw?: ("ne" | "se" | "s" | "nw" | "n")[] | undefined;
     nw?: ("ne" | "se" | "s" | "nw" | "n")[] | undefined;
-    n?: ("ne" | "se" | "s" | "sw" | "nw")[] | undefined;
 }>>;
 export type HyperlaneSchemaType = z.infer<typeof HyperlaneSchema>;
 export declare const LocalPositionSchema: z.ZodReadonly<z.ZodObject<{
@@ -79,9 +79,9 @@ export declare const WormholeWithPositionSchema: z.ZodReadonly<z.ZodObject<{
     }>;
 }, {
     wormhole: string;
-    localPosition: Readonly<{
+    localPosition: {
         x: number;
         y: number;
-    }>;
+    };
 }>>;
 export type WormholeWithPositionSchemaType = z.infer<typeof WormholeWithPositionSchema>;

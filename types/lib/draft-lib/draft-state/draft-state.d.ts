@@ -25,10 +25,10 @@ export declare const DraftStateSchema: z.ZodObject<{
     factionIndexToPlayerSlot: (number | null)[];
     seatIndexToPlayerSlot: (number | null)[];
 }, {
-    sliceShape?: readonly string[] | undefined;
     baseMap?: string | undefined;
-    sliceShapeOverrides?: (readonly string[] | null | undefined)[] | undefined;
-    slices?: readonly (readonly number[])[] | undefined;
+    sliceShape?: string[] | undefined;
+    sliceShapeOverrides?: (string[] | null | undefined)[] | undefined;
+    slices?: number[][] | undefined;
     sliceLabels?: string[] | undefined;
     factions?: string[] | undefined;
     speakerIndex?: number | undefined;

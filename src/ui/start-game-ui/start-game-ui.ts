@@ -67,14 +67,20 @@ export class StartGameUI extends AbstractUI {
         }
       );
 
-    const is14PointGame: CheckBoxUI = new CheckBoxUI(scale);
-    is14PointGame
-      .getCheckBox()
-      .setText("14 point game")
-      .setIsChecked(TI4.config.gamePoints === 14)
-      .onCheckStateChanged.add(
-        (_checkBox: CheckBox, _player: Player, isChecked: boolean): void => {
-          TI4.config.setGamePoints(isChecked ? 14 : 10);
+    const gamePointsLabel: LabelUI = new LabelUI(scale);
+    gamePointsLabel
+      .getText()
+      .setJustification(TextJustification.Right)
+      .setText("Game Points:");
+    const gamePointsSlider: SliderWithValueUI = new SliderWithValueUI(scale);
+    gamePointsSlider
+      .getSlider()
+      .setMinValue(8)
+      .setMaxValue(14)
+      .setValue(TI4.config.gamePoints)
+      .onValueChanged.add(
+        (_slider: Slider, _player: Player, value: number): void => {
+          TI4.config.setGamePoints(value);
         }
       );
 
@@ -123,11 +129,10 @@ export class StartGameUI extends AbstractUI {
         }
       );
 
-    /*
     const checkBoxBoxShaped: CheckBoxUI = new CheckBoxUI(scale);
     checkBoxBoxShaped
       .getCheckBox()
-      .setText("Box Shaped")
+      .setText("█████████████")
       .setEnabled(false)
       .setIsChecked(TI4.config.sources.includes("box-shaped"))
       .onCheckStateChanged.add(
@@ -135,7 +140,6 @@ export class StartGameUI extends AbstractUI {
           applySource("box-shaped", isChecked);
         }
       );
-      */
 
     const checkBoxCodex1: CheckBoxUI = new CheckBoxUI(scale);
     checkBoxCodex1
@@ -183,14 +187,15 @@ export class StartGameUI extends AbstractUI {
 
     const left: AbstractUI = new VerticalUIBuilder()
       .setSpacing(CONFIG.SPACING * scale)
-      .addUIs([numPlayersLabel, is14PointGame, sendGameData, sendErrors])
+      .addUIs([numPlayersLabel, gamePointsLabel, sendGameData, sendErrors])
       .build();
     const right: AbstractUI = new VerticalUIBuilder()
       .setSpacing(CONFIG.SPACING * scale)
       .addUIs([
         numPlayersSlider,
+        gamePointsSlider,
         checkBoxPok,
-        // checkBoxBoxShaped,
+        checkBoxBoxShaped,
         checkBoxCodex1,
         checkBoxCodex2,
         checkBoxCodex3,

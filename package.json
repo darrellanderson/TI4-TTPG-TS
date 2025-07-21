@@ -43,6 +43,6 @@
   },
   "dependencies": {
     "ttpg-darrell": "^1.1.14",
-    "zod": "^3.23.8"
+    "zod": "3.22.4"
   }
 }

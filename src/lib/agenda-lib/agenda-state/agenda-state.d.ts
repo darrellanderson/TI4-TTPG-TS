@@ -32,8 +32,8 @@ declare const AgendaSeatStateSchema: z.ZodObject<{
     noWhens: number;
     noAfters: number;
 }, {
-    outcome?: number | undefined;
     avail?: number | undefined;
+    outcome?: number | undefined;
     votes?: number | undefined;
     lockVotes?: boolean | undefined;
     noWhens?: number | undefined;
