@@ -1,7 +1,7 @@
 import { GameObject } from "@tabletop-playground/api";
-import { AnimCamera } from "_how-to/anim-lib/anim-camera";
-import { AnimDelay } from "_how-to/anim-lib/anim-delay";
 import { Find } from "ttpg-darrell";
+import { AnimCamera } from "../anim-lib/anim-camera";
+import { AnimDelay } from "../anim-lib/anim-delay";
 
 export class AnimMidTable {
   _getObj(nsid: string): GameObject {

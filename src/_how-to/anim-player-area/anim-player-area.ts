@@ -1,8 +1,8 @@
 import { GameObject, Vector, world } from "@tabletop-playground/api";
-import { AnimCamera } from "_how-to/anim-lib/anim-camera";
-import { AnimDelay } from "_how-to/anim-lib/anim-delay";
-import { AnimHighlight } from "_how-to/anim-lib/anim-highlight";
 import { Find, NSID, PlayerSlot } from "ttpg-darrell";
+import { AnimCamera } from "../anim-lib/anim-camera";
+import { AnimDelay } from "../anim-lib/anim-delay";
+import { AnimHighlight } from "../anim-lib/anim-highlight";
 
 export class AnimPlayerArea {
   private readonly _find: Find = new Find();

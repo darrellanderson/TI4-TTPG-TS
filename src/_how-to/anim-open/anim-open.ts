@@ -9,7 +9,7 @@ import {
 import { AnimActor } from "../anim-lib/anim-actor";
 import { AnimLaser } from "./anim-laser";
 import { UiTitle } from "./ui-title";
-import { AnimCamera } from "_how-to/anim-lib/anim-camera";
+import { AnimCamera } from "../anim-lib/anim-camera";
 
 export class AnimOpen {
   go(player: Player): Promise<void> {

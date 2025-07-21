@@ -20,7 +20,7 @@
     "test": "jest",
     "lint": "ESLINT_USE_FLAT_CONFIG=false eslint --ext .ts --debug src",
     "circular": "npx madge --circular --extensions ts ./src",
-    "index": "grep -r src -e export -l | sort | uniq | grep -v \"^src/index\" | sed -e \"s/.ts$//\" | sed -e \"s#^src/##\" | awk '{print \"export * from \\\"./\" $1 \"\\\";\"}' > src/index.ts"
+    "index": "grep -r src -e export -l | sort | uniq | grep -v -e \"^src/index\" -e \"^src/_how-to\" -e \"^src/_test\" | sed -e \"s/.ts$//\" | sed -e \"s#^src/##\" | awk '{print \"export * from \\\"./\" $1 \"\\\";\"}' > src/index.ts"
   },
   "devDependencies": {
     "@tabletop-playground/api": "0.41.0",

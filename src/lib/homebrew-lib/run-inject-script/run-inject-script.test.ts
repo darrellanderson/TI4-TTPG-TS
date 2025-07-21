@@ -8,6 +8,10 @@ it("constructor/init", () => {
 });
 
 it("package at init time", () => {
+  const mockConsole = jest
+    .spyOn(global.console, "log")
+    .mockImplementation(() => {});
+
   const pkg: Package = new MockPackage({
     isAllowed: true,
     scriptFiles: ["inject.js", "foo/inject.js"],
@@ -42,9 +46,15 @@ it("package at init time", () => {
 
   new RunInjectScript().init();
   process.flushTicks();
+
+  mockConsole.mockRestore();
 });
 
 it("package added later", () => {
+  const mockConsole = jest
+    .spyOn(global.console, "log")
+    .mockImplementation(() => {});
+
   const pkg: Package = new MockPackage({
     isAllowed: true,
     scriptFiles: ["inject.js"],
@@ -53,4 +63,6 @@ it("package added later", () => {
   runInjectScript.init();
   runInjectScript._onPackageAdded(pkg);
   process.flushTicks();
+
+  mockConsole.mockRestore();
 });

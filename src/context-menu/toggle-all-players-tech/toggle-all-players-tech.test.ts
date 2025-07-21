@@ -1,4 +1,4 @@
-import { GameData } from "lib/game-data-lib/game-data/game-data";
+import { GameData } from "../../lib/game-data-lib/game-data/game-data";
 import { ToggleAllPlayersTech } from "./toggle-all-players-tech";
 
 it("constructor/init", () => {

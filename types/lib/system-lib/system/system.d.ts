@@ -32,7 +32,7 @@ export declare class System {
      * @returns
      */
     static nsidToSystemTileNumber(nsid: string): number | undefined;
-    static schemaToImg(sourceAndPackageId: SourceAndPackageIdSchemaType, schema: SystemSchemaType, useBack: boolean): string;
+    static schemaToImg(schema: SystemSchemaType, useBack: boolean): string;
     /**
      * Generate the NSID for a system tile from its source and schema.
      *

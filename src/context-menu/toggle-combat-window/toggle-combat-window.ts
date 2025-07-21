@@ -9,6 +9,11 @@ import {
 import { CombatUIAllSimple } from "../../ui/combat-ui/combat-ui-all-simple/combat-ui-all-simple";
 import { System } from "../../lib/system-lib/system/system";
 import { UnitPlastic } from "../../lib/unit-lib/unit-plastic/unit-plastic";
+import { PlayerSeatType } from "../../lib/player-lib/player-seats/player-seats";
+import {
+  CombatRoll,
+  CombatRollParams,
+} from "../../lib/combat-lib/combat-roll/combat-roll";
 
 export const ACTION_TOGGLE_COMBAT: string = "*Toggle Combat";
 
@@ -102,5 +107,37 @@ export class ToggleCombatWindow implements IGlobal {
     });
 
     return Array.from(playersSlotsSet);
+  }
+
+  _getAdjPds2PlayerSlots(
+    system: System,
+    activatingPlayer: Player,
+    skip: Array<number>
+  ): Array<number> {
+    const checkPlayerSlots: Array<number> = TI4.playerSeats
+      .getAllSeats()
+      .map((playerSeat: PlayerSeatType): number => {
+        return playerSeat.playerSlot;
+      })
+      .filter((playerSlot: number): boolean => {
+        return !skip.includes(playerSlot);
+      });
+
+    const pos: Vector = system.getObj().getPosition();
+    const hex: HexType = TI4.hex.fromPosition(pos);
+    return checkPlayerSlots.filter((playerSlot: number): boolean => {
+      const params: CombatRollParams = {
+        rollType: "spaceCannonOffense",
+        hex,
+        activatingPlayerSlot: activatingPlayer.getSlot(),
+        rollingPlayerSlot: playerSlot,
+      };
+      const combatRoll: CombatRoll = CombatRoll.createCooked(params);
+      const range: number = combatRoll.self.unitAttrsSet
+        .getOrThrow("pds")
+        .getSpaceCannonOrThrow()
+        .getRange();
+      return range > 0 && combatRoll.self.hasUnitAdj("pds");
+    });
   }
 }

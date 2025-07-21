@@ -3,6 +3,7 @@ import { AbstractSlashCommand } from "../abstract-slash-command/abstract-slash-c
 export declare class SlashPerf extends AbstractSlashCommand {
     private _perfWidget;
     getSlashCommand(): `/${string}`;
+    getDescription(): string;
     isHostOnly(): boolean;
     run(_argv: Array<string>, player: Player): void;
 }

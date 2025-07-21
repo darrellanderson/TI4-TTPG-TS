@@ -23,4 +23,5 @@ export declare class ToggleCombatWindow implements IGlobal {
      * @returns
      */
     _getRelevantPlayerSlots(system: System, player: Player): Array<number>;
+    _getAdjPds2PlayerSlots(system: System, activatingPlayer: Player, skip: Array<number>): Array<number>;
 }

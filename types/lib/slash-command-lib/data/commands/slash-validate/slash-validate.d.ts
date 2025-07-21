@@ -3,6 +3,7 @@ import { AbstractSlashCommand } from "../abstract-slash-command/abstract-slash-c
 export declare class SlashValidate extends AbstractSlashCommand {
     private readonly _validates;
     getSlashCommand(): `/${string}`;
+    getDescription(): string;
     isHostOnly(): boolean;
     run(argv: Array<string>, player: Player): void;
 }
