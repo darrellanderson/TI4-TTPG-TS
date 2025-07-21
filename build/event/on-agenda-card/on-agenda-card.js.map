@@ -1,1 +1,0 @@
-{"version":3,"file":"on-agenda-card.js","sourceRoot":"","sources":["../../../src/event/on-agenda-card/on-agenda-card.ts"],"names":[],"mappings":";;;AAEA,4GAAuG;AAEvG,MAAa,YAAY;IACvB,IAAI;QACF,GAAG,CAAC,MAAM,CAAC,YAAY,CAAC,GAAG,CAAC,CAAC,UAAgB,EAAE,OAAe,EAAE,EAAE;YAChE,IAAI,2CAAmB,EAAE,CAAC,KAAK,CAAC,UAAU,CAAC,CAAC;QAC9C,CAAC,CAAC,CAAC;IACL,CAAC;CACF;AAND,oCAMC"}
