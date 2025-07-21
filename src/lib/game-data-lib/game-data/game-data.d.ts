@@ -1,0 +1,53 @@
+import { UpdatorActiveSystemType } from "../updators/updator-active-system/updator-active-system-type";
+import { UpdatorConfigType } from "../updators/updator-config/updator-config-type";
+import { UpdatorObjectiveProgressType } from "../updators/updator-objectives-progress/updator-objectives-progress-type";
+import { UpdatorObjectivesType } from "../updators/updator-objectives/updator-objectives-type";
+import { UpdatorPlayerCommandTokensType } from "../updators/updator-player-command-tokens/updator-player-command-tokens-type";
+import { UpdatorPlayerLeadersType } from "../updators/updator-player-leaders/updator-player-leaders-type";
+import { UpdatorPlayerHandSummaryType } from "../updators/updator-player-hand-summary/updator-player-hand-summary-type";
+import { UpdatorPlayerPlanetTotalsType } from "../updators/updator-player-planet-totals/updator-player-planet-totals-type";
+import { UpdatorTimerType } from "../updators/updator-timer/updator-timer-type";
+export type PerPlayerGameData = {
+    active?: boolean;
+    color?: string;
+    commandTokens?: UpdatorPlayerCommandTokensType;
+    custodiansPoints?: number;
+    factionFull?: string;
+    factionShort?: string;
+    handSummary?: UpdatorPlayerHandSummaryType;
+    laws?: Array<string>;
+    leaders?: UpdatorPlayerLeadersType;
+    objectives?: Array<string>;
+    planetTotals?: UpdatorPlayerPlanetTotalsType;
+    score?: number;
+    steamName?: string;
+    strategyCards?: Array<string>;
+    strategyCardsFaceDown?: Array<string>;
+    technologies?: Array<string>;
+    turnOrder?: number;
+    commodities?: number;
+    tradeGoods?: number;
+    maxCommodities?: number;
+};
+/**
+ * JSON-serializable game data (NOT a class).
+ */
+export type GameData = {
+    players: Array<PerPlayerGameData>;
+    activeSystem?: UpdatorActiveSystemType;
+    config?: UpdatorConfigType;
+    hexSummary?: string;
+    history?: Array<GameData>;
+    laws?: Array<string>;
+    mapString?: string;
+    objectivesProgress?: Array<UpdatorObjectiveProgressType>;
+    objectives?: UpdatorObjectivesType;
+    platform?: string;
+    round?: number;
+    scoreboard?: number;
+    setupTimestamp?: number;
+    speaker?: string;
+    timer?: UpdatorTimerType;
+    timestamp?: number;
+    turn?: string;
+};
