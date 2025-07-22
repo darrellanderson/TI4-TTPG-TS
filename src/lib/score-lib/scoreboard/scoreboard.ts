@@ -1,4 +1,11 @@
-import { GameObject, Rotator, Vector, world } from "@tabletop-playground/api";
+import {
+  Color,
+  DrawingLine,
+  GameObject,
+  Rotator,
+  Vector,
+  world,
+} from "@tabletop-playground/api";
 import { Atop, Facing, Find, NSID } from "ttpg-darrell";
 
 import { PlayerSeatType } from "../../player-lib/player-seats/player-seats";
@@ -7,6 +14,40 @@ const SCOREBOARD_LOCAL_WIDTH = 43;
 
 export class Scoreboard {
   private readonly _find: Find = new Find();
+
+  applyGamePoints(gamePoints: number): this {
+    const faceUp: boolean = gamePoints <= 10;
+    const srcScore: number = gamePoints;
+    const dstScore: number = faceUp ? 10 : 14;
+    const src: Vector | undefined = this._getLocalCenter(srcScore + 0.6);
+    const dst: Vector | undefined = this._getLocalCenter(dstScore + 0.4);
+    const scoreboard: GameObject | undefined = this.getScoreboard();
+
+    if (scoreboard && src && dst && srcScore < dstScore) {
+      // Remove any existing line.
+      for (const line of scoreboard.getDrawingLines()) {
+        scoreboard.removeDrawingLineObject(line);
+      }
+
+      // Draw a line.
+      const z: number = faceUp ? 0.2 : -0.2;
+      src.z = z;
+      dst.z = z;
+      const normal: Vector = new Vector(0, 0, faceUp ? 1 : -1);
+
+      console.log("xxx", src.toString(), dst.toString(), normal.toString());
+
+      const line: DrawingLine = new DrawingLine();
+      line.color = new Color(0, 0, 0, 1);
+      line.normals = [normal];
+      line.points = [src, dst];
+      line.rounded = false;
+      line.thickness = 4;
+      scoreboard.addDrawingLine(line);
+    }
+
+    return this;
+  }
 
   _getLocalCenter(score: number): Vector | undefined {
     const scoreboard: GameObject | undefined = this.getScoreboard();

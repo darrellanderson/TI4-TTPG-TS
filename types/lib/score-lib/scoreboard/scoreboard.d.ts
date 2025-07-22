@@ -1,6 +1,7 @@
 import { GameObject, Rotator, Vector } from "@tabletop-playground/api";
 export declare class Scoreboard {
     private readonly _find;
+    applyGamePoints(gamePoints: number): this;
     _getLocalCenter(score: number): Vector | undefined;
     /**
      * Get all control tokens on the scoreboard (normally just one).
