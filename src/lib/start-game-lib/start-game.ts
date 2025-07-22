@@ -52,7 +52,7 @@ export class StartGame implements IGlobal {
 
   _maybeFlipScoreboard(): void {
     const scoreboard: GameObject | undefined = new Scoreboard().getScoreboard();
-    if (TI4.config.gamePoints === 14 && scoreboard) {
+    if (TI4.config.gamePoints > 10 && scoreboard) {
       const above: Vector = scoreboard.getPosition().add(new Vector(0, 0, 3));
       scoreboard.setObjectType(ObjectType.Regular);
       scoreboard.setPosition(above);
