@@ -247,11 +247,26 @@ export class CombatRoll {
     const unitModifiers: Array<UnitModifier> = [];
     const skipContained: boolean = true;
 
+    // Support for placing a modifier on an object to apply it to all players.
+    const atopApplyToAll: Array<GameObject> = [];
+    const atopApplyToAllNsids: Set<string> = new Set([
+      "test:test/atopApplyToAll",
+    ]);
+
+    const atopIgnore: Array<GameObject> = [];
+    const atopIgnoreNsids: Set<string> = new Set(["test:test/atopIgnore"]);
+
     // Control tokens on cards take precedence over cards being near players.
     // Find all control tokens early, reuse when asked.
     const controlTokens: Array<GameObject> = [];
     for (const obj of world.getAllObjects(skipContained)) {
       const nsid: string = NSID.get(obj);
+      if (atopApplyToAllNsids.has(nsid)) {
+        atopApplyToAll.push(obj);
+      }
+      if (atopIgnoreNsids.has(nsid)) {
+        atopIgnore.push(obj);
+      }
       if (nsid.startsWith("token.control:")) {
         controlTokens.push(obj);
       }
@@ -308,6 +323,17 @@ export class CombatRoll {
           }
         }
 
+        // If atopIgnore, ignore this modifier.
+        if (obj) {
+          for (const atopObj of atopIgnore) {
+            const atop: Atop = new Atop(atopObj);
+            if (atop.isAtop(obj.getPosition())) {
+              useModifier = false;
+              break;
+            }
+          }
+        }
+
         if (useModifier) {
           // Control token takes precedence for ownership, otherwise closest player.
           if (obj) {
@@ -319,9 +345,20 @@ export class CombatRoll {
           }
           const isSelf: boolean = owningPlayerSlot === selfSlot;
           const isOpponent: boolean = owningPlayerSlot === opponentSlot;
-          const requireAny: boolean = modifier.getOwner() === "any";
+          let requireAny: boolean = modifier.getOwner() === "any";
           const requireSelf: boolean = modifier.getOwner() === "self";
           const requireOpponent: boolean = modifier.getOwner() === "opponent";
+
+          // If atopApplyToAll, apply to all players.
+          if (obj) {
+            for (const atopObj of atopApplyToAll) {
+              const atop: Atop = new Atop(atopObj);
+              if (atop.isAtop(obj.getPosition())) {
+                requireAny = true;
+                break;
+              }
+            }
+          }
 
           if (
             requireAny ||

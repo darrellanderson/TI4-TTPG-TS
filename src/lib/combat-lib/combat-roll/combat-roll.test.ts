@@ -500,6 +500,80 @@ it("_findUnitModifiers (control token)", () => {
   expect(combatRoll.getUnitModifierNames()).toEqual([]);
 });
 
+it("_findUnitModifiers (atop apply to all)", () => {
+  TI4.unitModifierRegistry.load("my-source", [
+    {
+      name: "my-modifier",
+      description: "my-description",
+      owner: "self",
+      priority: "mutate",
+      triggers: [{ cardClass: "agenda", nsidName: "my-nsid-name" }],
+      applies: (_combatRoll: CombatRoll): boolean => {
+        return true;
+      },
+      apply: (_combatRoll: CombatRoll): void => {},
+    },
+  ]);
+  MockCard.simple("card.agenda:my-source/my-nsid-name");
+
+  let combatRoll: CombatRoll;
+
+  combatRoll = CombatRoll.createCooked({
+    rollType: "spaceCombat",
+    hex: "<0,0,0>",
+    activatingPlayerSlot: 1,
+    rollingPlayerSlot: 2,
+  });
+  expect(combatRoll.getUnitModifierNames()).toEqual([]);
+
+  MockCard.simple("test:test/atopApplyToAll");
+  combatRoll = CombatRoll.createCooked({
+    rollType: "spaceCombat",
+    hex: "<0,0,0>",
+    activatingPlayerSlot: 1,
+    rollingPlayerSlot: 2,
+  });
+  expect(combatRoll.getUnitModifierNames()).toEqual(["my-modifier"]);
+});
+
+it("_findUnitModifiers (atop ignore)", () => {
+  TI4.unitModifierRegistry.load("my-source", [
+    {
+      name: "my-modifier",
+      description: "my-description",
+      owner: "self",
+      priority: "mutate",
+      triggers: [{ cardClass: "agenda", nsidName: "my-nsid-name" }],
+      applies: (_combatRoll: CombatRoll): boolean => {
+        return true;
+      },
+      apply: (_combatRoll: CombatRoll): void => {},
+    },
+  ]);
+  MockCard.simple("card.agenda:my-source/my-nsid-name");
+
+  new MockCardHolder({ owningPlayerSlot: 2 });
+
+  let combatRoll: CombatRoll;
+
+  combatRoll = CombatRoll.createCooked({
+    rollType: "spaceCombat",
+    hex: "<0,0,0>",
+    activatingPlayerSlot: 1,
+    rollingPlayerSlot: 2,
+  });
+  expect(combatRoll.getUnitModifierNames()).toEqual(["my-modifier"]);
+
+  MockCard.simple("test:test/atopIgnore");
+  combatRoll = CombatRoll.createCooked({
+    rollType: "spaceCombat",
+    hex: "<0,0,0>",
+    activatingPlayerSlot: 1,
+    rollingPlayerSlot: 2,
+  });
+  expect(combatRoll.getUnitModifierNames()).toEqual([]);
+});
+
 it("_findUnitModifiers (faction ability)", () => {
   const sourceAndPackageId: SourceAndPackageIdSchemaType = {
     source: "my-source",
