@@ -35,8 +35,6 @@ export class Scoreboard {
       dst.z = z;
       const normal: Vector = new Vector(0, 0, faceUp ? 1 : -1);
 
-      console.log("xxx", src.toString(), dst.toString(), normal.toString());
-
       const line: DrawingLine = new DrawingLine();
       line.color = new Color(0, 0, 0, 1);
       line.normals = [normal];

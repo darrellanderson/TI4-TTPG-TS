@@ -132,7 +132,7 @@ export class StartGameUI extends AbstractUI {
     const checkBoxBoxShaped: CheckBoxUI = new CheckBoxUI(scale);
     checkBoxBoxShaped
       .getCheckBox()
-      .setText("█████████████")
+      .setText("Box Shaped Thing")
       .setEnabled(false)
       .setIsChecked(TI4.config.sources.includes("box-shaped"))
       .onCheckStateChanged.add(

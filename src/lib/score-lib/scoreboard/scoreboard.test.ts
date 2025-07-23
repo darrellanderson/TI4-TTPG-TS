@@ -7,6 +7,13 @@ it("constructor", () => {
   new Scoreboard();
 });
 
+it("applyGamePoints", () => {
+  MockGameObject.simple("token:base/scoreboard");
+  const scoreboardLib: Scoreboard = new Scoreboard();
+  scoreboardLib.applyGamePoints(8);
+  scoreboardLib.applyGamePoints(12);
+});
+
 it("_getPlayerSlotToAtopControlTokens", () => {
   MockGameObject.simple("token:base/scoreboard");
   MockGameObject.simple("token.control:base/sol", {

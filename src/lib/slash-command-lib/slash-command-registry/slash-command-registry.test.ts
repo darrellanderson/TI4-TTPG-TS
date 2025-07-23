@@ -61,6 +61,7 @@ it("event (is-host)", () => {
   registry.load(commands);
 
   const sender: Player = new MockPlayer({ isHost: true });
+  mockGlobalEvents._chatMessageAsPlayer(sender, "/"); // List commands
   mockGlobalEvents._chatMessageAsPlayer(sender, "/my-command foo bar");
 
   expect(mySlashCommand._callCount).toBe(1);
