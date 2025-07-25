@@ -52,6 +52,14 @@ it("static schemaToNsid", () => {
   );
 
   trigger = {
+    cardClass: "event",
+    nsidName: "my-nsid-name",
+  };
+  expect(UnitModifier.schemaTriggerToNsid("my-source", trigger)).toBe(
+    "card.event:my-source/my-nsid-name"
+  );
+
+  trigger = {
     cardClass: "unit",
     nsidName: "my-nsid-name",
   };

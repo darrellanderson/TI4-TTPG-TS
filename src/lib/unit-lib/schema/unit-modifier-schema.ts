@@ -9,6 +9,7 @@ export const UnitModifierCardClass = z
     "agent",
     "alliance",
     "commander",
+    "event",
     "faction-ability", // not a card
     "hero",
     "legendary",
@@ -39,7 +40,7 @@ export const UnitModifierOwner = z.enum(["self", "opponent", "any"]).readonly();
 export type UnitModifierOwnerType = z.infer<typeof UnitModifierOwner>;
 
 export const UnitModifierPriority = z
-  .enum(["mutate", "mutate-late", "adjust", "choose"])
+  .enum(["mutate", "mutate-late", "adjust", "adjust-late", "choose"])
   .readonly();
 export type UnitModifierPriorityType = z.infer<typeof UnitModifierPriority>;
 
