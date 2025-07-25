@@ -209,12 +209,21 @@ it("validate NSIDs appear in assets/Templates", () => {
     .loadDefaultData()
     .getAllNsids()
     .filter((nsid) => nsid.startsWith("card."));
-  const missing: Array<string> = [];
+  let missing: Array<string> = [];
   for (const nsid of nsids) {
     if (!templateNsids.has(nsid) && !templateNsids.has(nsid + ".1")) {
       missing.push(nsid);
     }
   }
+
+  missing = missing.filter((nsid) => {
+    // Ignore test source.
+    if (nsid.includes(":test/")) {
+      return false;
+    }
+    return true;
+  });
+
   if (missing.length > 0) {
     console.log("missing", missing.join("\n"));
   }
