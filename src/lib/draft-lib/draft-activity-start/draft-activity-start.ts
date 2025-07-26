@@ -87,6 +87,32 @@ export class DraftActivityStart {
     return baseMap;
   }
 
+  static getMinorFactions(factions: Array<Faction>): Array<string> {
+    const inUseNsids: Array<string> = factions.map(
+      (faction: Faction): string => {
+        return faction.getNsid();
+      }
+    );
+    const availableFactions: Array<Faction> = TI4.factionRegistry
+      .getAllFactionsFilteredByConfigSources()
+      .filter((faction: Faction): boolean => {
+        return (
+          !inUseNsids.includes(faction.getNsid()) &&
+          faction.getHomeSurrogateTileNumber() === -1
+        );
+      });
+    const shuffledFactions: Array<Faction> = new Shuffle<Faction>().shuffle(
+      availableFactions
+    );
+    const useFactions: Array<Faction> = shuffledFactions.slice(
+      0,
+      TI4.config.playerCount
+    );
+    return useFactions.map((faction: Faction): string => {
+      return faction.getHomeSystemTileNumber().toString();
+    });
+  }
+
   getDraftState(): DraftState | undefined {
     return this._draftState;
   }
@@ -150,6 +176,14 @@ export class DraftActivityStart {
       Math.random() * TI4.config.playerCount
     );
     this._draftState.setSpeakerIndex(speakerIndex);
+
+    // Minor factions.
+    if (this._draftState.getOpaqueType() === "minorFactions") {
+      const opaques: Array<string> = DraftActivityStart.getMinorFactions(
+        this._draftState.getFactions()
+      );
+      this._draftState.setOpaques(opaques);
+    }
 
     const success: boolean = errors.length === 0;
     if (success) {

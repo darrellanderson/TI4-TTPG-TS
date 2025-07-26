@@ -101,6 +101,15 @@ export class DraftState {
       return false;
     }
 
+    const chosenOpaqueCount: number = [
+      ...this._data.opaqueIndexToPlayerSlot.values(),
+    ].filter((playerSlot: number | null): boolean => {
+      return playerSlot !== null && playerSlot >= 0;
+    }).length;
+    if (this._data.opaqueType && chosenOpaqueCount < playerCount) {
+      return false;
+    }
+
     return true;
   }
 

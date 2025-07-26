@@ -15,6 +15,7 @@ function go() {
   const seatIndexToSliceTiles: Map<number, SliceTiles> = new Map();
   const seatIndexToFaction: Map<number, Faction> = new Map();
   const setIndexToPlayerName: Map<number, string> = new Map();
+  const seatIndexToOpaque: Map<number, string> = new Map();
 
   seatIndexToSliceTiles.set(1, [21, 22, 23, 24, 25]);
   seatIndexToSliceTiles.set(2, [31, 32, 33, 34, 35]);
@@ -30,7 +31,9 @@ function go() {
   ).buildMapString(
     seatIndexToSliceTiles,
     seatIndexToFaction,
-    setIndexToPlayerName
+    setIndexToPlayerName,
+    seatIndexToOpaque,
+    null
   );
   console.log("xxx", mapString);
   new MapStringLoad().load(mapString);

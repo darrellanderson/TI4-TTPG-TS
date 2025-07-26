@@ -298,6 +298,7 @@ export class DraftStateUI extends AbstractUI {
       .build();
 
     const opaqueButtons: Array<WrappedClickableUI> = [];
+    const zoomableOpaqueButtons: Array<ZoomableUI> = [];
     const opaqueType: string | null = draftState.getOpaqueType();
     for (let index = 0; index < draftState.getOpaques().length; index++) {
       const opaque: string | undefined = draftState.getOpaques()[index];
@@ -310,6 +311,18 @@ export class DraftStateUI extends AbstractUI {
             DraftStateUI._createOpaqueClickHandler(draftState, index)
           );
         opaqueButtons.push(clickable);
+
+        const createZoomedUi: CreateZoomedUiType = (
+          scale2: number
+        ): AbstractUI => {
+          return new OpaqueUI(opaque, draftState, scale2 * 3.5);
+        };
+        const zoomableOpaqueButton = new ZoomableUI(
+          clickable,
+          scale,
+          createZoomedUi
+        );
+        zoomableOpaqueButtons.push(zoomableOpaqueButton);
       }
     }
 
@@ -365,7 +378,7 @@ export class DraftStateUI extends AbstractUI {
 
     if (opaqueButtons.length > 0) {
       const opaqueGrid: AbstractUI = new GridUIBuilder()
-        .addUIs(opaqueButtons)
+        .addUIs(zoomableOpaqueButtons)
         .setMaxRows(4)
         .setSpacing(SPACING * scale)
         .build();

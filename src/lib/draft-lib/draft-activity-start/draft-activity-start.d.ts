@@ -17,6 +17,7 @@ export declare class DraftActivityStart {
     static getSliceLabels(config: string): Array<string> | undefined;
     static getOrGenerateFactions(config: string, numFactions: number, errors: Array<string>): Array<Faction>;
     static getBaseMap(config: string, errors: Array<string>): string | undefined;
+    static getMinorFactions(factions: Array<Faction>): Array<string>;
     getDraftState(): DraftState | undefined;
     start(params: DraftActivityStartParams, errors: Array<string>): boolean;
     resume(): this;

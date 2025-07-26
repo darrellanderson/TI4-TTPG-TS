@@ -221,4 +221,7 @@ it("isComplete", () => {
 
   state.setSeatIndexToPlayerSlot(0, 3);
   expect(state.isComplete()).toBe(true);
+
+  state.setOpaqueType("minorFactions");
+  expect(state.isComplete()).toBe(false);
 });

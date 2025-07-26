@@ -34,6 +34,7 @@ export class DraftToMapString {
     const seatIndexToSliceTiles: Map<number, SliceTiles> = new Map();
     const seatIndexToFaction: Map<number, Faction> = new Map();
     const seatIndexToPlayerName: Map<number, string> = new Map();
+    const seatIndexToOpaque: Map<number, string> = new Map();
 
     for (let seatIndex = 0; seatIndex < TI4.config.playerCount; seatIndex++) {
       const playerSlot: number = draftState.getSeatIndexToPlayerSlot(seatIndex);
@@ -60,6 +61,15 @@ export class DraftToMapString {
         if (player) {
           seatIndexToPlayerName.set(seatIndex, player.getName());
         }
+
+        // Opaque.
+        draftState.getOpaques().forEach((opaque: string, opaqueIndex) => {
+          if (
+            draftState.getOpaqueIndexToPlayerSlot(opaqueIndex) === playerSlot
+          ) {
+            seatIndexToOpaque.set(seatIndex, opaque);
+          }
+        });
       } else {
         // Unclaimed seat, use speaker order as label.
         const speakerIndex: number = draftState.getSpeakerIndex();
@@ -81,7 +91,9 @@ export class DraftToMapString {
       draftToMapString.buildMapString(
         seatIndexToSliceTiles,
         seatIndexToFaction,
-        seatIndexToPlayerName
+        seatIndexToPlayerName,
+        seatIndexToOpaque,
+        draftState.getOpaqueType()
       );
 
     // Add base map overrides (systems not laid out by slices).
@@ -125,7 +137,9 @@ export class DraftToMapString {
   buildMapString(
     seatIndexToSliceTiles: Map<number, SliceTiles>,
     seatIndexToFaction: Map<number, Faction>,
-    seatIndexToPlayerName: Map<number, string>
+    seatIndexToPlayerName: Map<number, string>,
+    seatIndexToOpaque: Map<number, string>,
+    opaqueType: string | null
   ): MapStringAndHexToPlayerName {
     const mapStringEntries: Array<string> = ["{18}"];
     const hexToPlayerName: Map<HexType, string> = new Map();
@@ -197,6 +211,27 @@ export class DraftToMapString {
           }
           mapStringEntries[mapStringIndex] = tile.toString();
         });
+
+        const opaque: string | undefined = seatIndexToOpaque.get(seatIndex);
+        if (opaqueType === "minorFactions") {
+          const shapeOffset = TI4.hex.toPosition("<2,-1,-1>"); // left-eq
+
+          // Rotate offset in direction.
+          let dx = cos * shapeOffset.x - sin * shapeOffset.y;
+          let dy = sin * shapeOffset.x + cos * shapeOffset.y;
+
+          dx += anchorPos.x;
+          dy += anchorPos.y;
+
+          const pos: Vector = new Vector(dx, dy, 0);
+          const hex: HexType = TI4.hex.fromPosition(pos);
+          const mapStringIndex: number = mapStringHex.hexToIndex(hex);
+          if (opaque) {
+            mapStringEntries[mapStringIndex] = opaque;
+          } else {
+            mapStringEntries[mapStringIndex] = "0";
+          }
+        }
       }
     }
 

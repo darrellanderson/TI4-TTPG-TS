@@ -35,6 +35,8 @@ it("map string", () => {
   const seatIndexToSliceTiles: Map<number, SliceTiles> = new Map();
   const seatIndexToFaction: Map<number, Faction> = new Map();
   const seatIndexToPlayerName: Map<number, string> = new Map();
+  const seatIndexToOpaque: Map<number, string> = new Map();
+  const opaqueType: string | null = "minorFactions";
 
   seatIndexToSliceTiles.set(4, [21, 22, 23, 24, 25]);
 
@@ -52,16 +54,20 @@ it("map string", () => {
 
   seatIndexToPlayerName.set(4, "MyName");
 
+  seatIndexToOpaque.set(4, "2");
+
   const { mapString, hexToPlayerName } = new DraftToMapString(
     MILTY_SLICE_SHAPE
   ).buildMapString(
     seatIndexToSliceTiles,
     seatIndexToFaction,
-    seatIndexToPlayerName
+    seatIndexToPlayerName,
+    seatIndexToOpaque,
+    opaqueType
   );
 
   expect(mapString).toBe(
-    "{18} 25 -115 -110 -111 -112 -113 22 24 -115 -115 -110 -110 -111 -111 -112 -112 -113 -113 5 21 -115 1 -115 -110 -110 -110 -111 -111 -111 -112 -112 -112 -113 -113 -113 23"
+    "{18} 25 -115 -110 -111 -112 -113 22 2 -115 0 -110 0 -111 0 -112 0 -113 0 5 21 -115 1 -115 -110 -110 -110 -111 -111 -111 -112 -112 -112 -113 -113 -113 23"
   );
   expect(Array.from(hexToPlayerName.keys()).join(",")).toBe("<3,0,-3>");
   expect(hexToPlayerName.get("<3,0,-3>")).toBe("MyName");

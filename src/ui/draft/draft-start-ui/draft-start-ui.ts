@@ -32,6 +32,7 @@ import { Wekker } from "../../../lib/draft-lib/drafts/wekker";
 import { ScptDraftsUi } from "./scpt-drafts-ui";
 import { NucleusDraft } from "../../../lib/draft-lib/drafts/nucleus";
 import { BagDraft } from "../../../lib/draft-lib/drafts/bag-draft";
+import { MinorFactionsDraft } from "../../../lib/draft-lib/drafts/minor-factions";
 
 export class DraftStartUI extends AbstractUI {
   public readonly onDraftStarted;
@@ -110,6 +111,7 @@ export class DraftStartUI extends AbstractUI {
 
     const iDrafts: Array<IDraft> = [
       new Milty(),
+      new MinorFactionsDraft(),
       new Wekker(),
       new NucleusDraft(),
       new BagDraft(),
