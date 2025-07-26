@@ -65,10 +65,18 @@ export class RightClickAgeOfExploration extends AbstractRightClickCard {
   }
 
   _getAvailableSystem(tileColor: "red" | "blue"): System | undefined {
-    const systems: Array<System> =
+    let systems: Array<System> =
       tileColor === "red"
         ? this._getAvailableRedSystems()
         : this._getAvailableBlueSystems();
+
+    // If we run out of systems try the other color.
+    if (systems.length === 0) {
+      systems =
+        tileColor === "red"
+          ? this._getAvailableBlueSystems()
+          : this._getAvailableRedSystems();
+    }
     const index: number = Math.floor(Math.random() * systems.length);
     return systems[index];
   }
