@@ -9,4 +9,5 @@ export declare class DraftActivityFinish {
     unpackFactions(): this;
     unpackMap(): this;
     setTurnOrder(): this;
+    dealMinorFactionAlliances(): this;
 }

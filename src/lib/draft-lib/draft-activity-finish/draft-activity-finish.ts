@@ -12,6 +12,8 @@ import {
 } from "../../map-string-lib/map-string/map-string-parser";
 import { PlayerSeatType } from "../../player-lib/player-seats/player-seats";
 import { UnpackAll } from "../../faction-lib/unpack/unpack-all/unpack-all";
+import { System } from "../../system-lib/system/system";
+import { RightClickMinorFactions } from "../../../context-menu/events/minor-factions/right-click-minor-factions";
 
 export class DraftActivityFinish {
   private readonly _draftState: DraftState;
@@ -27,6 +29,11 @@ export class DraftActivityFinish {
     this.unpackFactions();
     this.unpackMap();
     this.setTurnOrder();
+
+    if (this._draftState.getOpaqueType() === "minorFactions") {
+      this.dealMinorFactionAlliances();
+    }
+
     this._draftState.destroy();
 
     return this;
@@ -117,13 +124,21 @@ export class DraftActivityFinish {
       this._draftState
     ).mapString;
 
+    const exclude: Set<number> = new Set();
+    if (this._draftState.getOpaqueType() === "minorFactions") {
+      this._draftState.getOpaques().forEach((opaque: string) => {
+        const tile: number = Number.parseInt(opaque, 10);
+        exclude.add(tile);
+      });
+    }
+
     const mapStringEntries: Array<MapStringEntry> =
       new MapStringParser().parseOrThrow(mapString);
     mapStringEntries.forEach((entry: MapStringEntry) => {
       const tile: number = entry.tile;
       const faction: Faction | undefined =
         TI4.factionRegistry.getByHomeSystemTileNumber(tile);
-      if (faction) {
+      if (faction && !exclude.has(tile)) {
         entry.tile = 0;
         entry.rot = undefined;
         entry.side = undefined;
@@ -147,6 +162,24 @@ export class DraftActivityFinish {
       order.push(((speakerIndex + i) % playerCount) + 10);
     }
     TI4.turnOrder.setTurnOrder(order, "forward", speakerIndex);
+
+    return this;
+  }
+
+  dealMinorFactionAlliances(): this {
+    const systemTileObjs: Array<GameObject> = [];
+
+    const opaques: Array<string> = this._draftState.getOpaques();
+    opaques.forEach((opaque: string) => {
+      const tile: number = Number.parseInt(opaque, 10);
+      const system: System | undefined =
+        TI4.systemRegistry.getBySystemTileNumber(tile);
+      if (system) {
+        systemTileObjs.push(system.getObj());
+      }
+    });
+
+    RightClickMinorFactions.dealAllianceCards(systemTileObjs);
 
     return this;
   }

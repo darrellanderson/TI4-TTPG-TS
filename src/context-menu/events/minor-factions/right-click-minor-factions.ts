@@ -1,7 +1,9 @@
-import { GameObject, Player, Vector } from "@tabletop-playground/api";
+import { Card, GameObject, Player, Vector } from "@tabletop-playground/api";
 import {
   AbstractRightClickCard,
   Broadcast,
+  CardUtil,
+  DeletedItemsContainer,
   NSID,
   PlayerSlot,
   Shuffle,
@@ -9,6 +11,7 @@ import {
 } from "ttpg-darrell";
 import { Faction } from "../../../lib/faction-lib/faction/faction";
 import { PlayerSeatType } from "../../../lib/player-lib/player-seats/player-seats";
+import { System } from "../../../lib/system-lib/system/system";
 
 export const MINOR_FACTIONS_ACTION_NAME: string = "*Deal home systems";
 
@@ -122,5 +125,47 @@ export class RightClickMinorFactions extends AbstractRightClickCard {
           systemTileObj.snapToGround();
         }
       });
+
+    RightClickMinorFactions.dealAllianceCards(systemTileObjs);
+  }
+
+  static dealAllianceCards(systemTileObjs: Array<GameObject>): void {
+    const cardUtil: CardUtil = new CardUtil();
+
+    // Spawn alliance deck.
+    const nsids: Array<string> = Spawn.getAllNsids().filter((nsid: string) =>
+      nsid.startsWith("card.alliance:")
+    );
+    const deck: Card = Spawn.spawnMergeDecksOrThrow(nsids);
+
+    // Remove any sources/nsids based on game config.
+    TI4.removeRegistry.createRemoveFromRegistryAndConfig().removeOne(deck);
+
+    for (const systemTileObj of systemTileObjs) {
+      const system: System | undefined =
+        TI4.systemRegistry.getBySystemTileObjId(systemTileObj.getId());
+      if (system) {
+        const tile: number = system.getSystemTileNumber();
+        const faction: Faction | undefined =
+          TI4.factionRegistry.getByHomeSystemTileNumber(tile);
+        if (faction) {
+          const allianceCardNsids: Array<string> = faction.getAllianceNsids();
+          const card: Card | undefined = cardUtil.filterCards(
+            deck,
+            (nsid: string): boolean => {
+              return allianceCardNsids.includes(nsid);
+            }
+          );
+          if (card) {
+            const above = systemTileObj.getPosition().add([0, 0, 10]);
+            card.setRotation([0, 0, 180]);
+            card.setPosition(above);
+            card.snapToGround();
+          }
+        }
+      }
+    }
+
+    DeletedItemsContainer.destroyWithoutCopying(deck);
   }
 }

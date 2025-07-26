@@ -93,6 +93,20 @@ export class DraftActivityStart {
         return faction.getNsid();
       }
     );
+
+    if (
+      inUseNsids.includes("faction:codex.vigil/keleres-argent") ||
+      inUseNsids.includes("faction:codex.vigil/keleres-mentak") ||
+      inUseNsids.includes("faction:codex.vigil/keleres-xxcha")
+    ) {
+      inUseNsids.push("faction:base/argent");
+      inUseNsids.push("faction:base/mentak");
+      inUseNsids.push("faction:base/xxcha");
+    }
+    inUseNsids.push("faction:codex.vigil/keleres-argent");
+    inUseNsids.push("faction:codex.vigil/keleres-mentak");
+    inUseNsids.push("faction:codex.vigil/keleres-xxcha");
+
     const availableFactions: Array<Faction> = TI4.factionRegistry
       .getAllFactionsFilteredByConfigSources()
       .filter((faction: Faction): boolean => {

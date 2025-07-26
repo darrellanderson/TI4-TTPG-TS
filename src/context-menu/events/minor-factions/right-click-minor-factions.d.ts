@@ -16,4 +16,5 @@ export declare class RightClickMinorFactions extends AbstractRightClickCard {
     _getAvailableHomeSystemNsids(): Array<string>;
     _getHomeSystemTiles(count: number): Array<GameObject>;
     _dealHomeSystemTiles(): void;
+    static dealAllianceCards(systemTileObjs: Array<GameObject>): void;
 }
