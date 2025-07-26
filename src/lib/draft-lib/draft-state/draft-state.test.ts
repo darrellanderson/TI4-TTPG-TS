@@ -110,6 +110,13 @@ it("factions", () => {
   ]);
 });
 
+it("opaques", () => {
+  const state: DraftState = new DraftState("@test/draft-state");
+  expect(state.getOpaques()).toEqual([]);
+  state.setOpaques(["opaque1", "opaque2"]);
+  expect(state.getOpaques()).toEqual(["opaque1", "opaque2"]);
+});
+
 it("speaker index", () => {
   const state: DraftState = new DraftState("@test/draft-state");
   expect(state.getSpeakerIndex()).toBe(-1);
@@ -163,6 +170,15 @@ it("seatIndexToPlayerSlot", () => {
   expect(state.getSeatIndexToPlayerSlot(0)).toBe(1);
   state.setSeatIndexToPlayerSlot(0, -1);
   expect(state.getSeatIndexToPlayerSlot(0)).toBe(-1);
+});
+
+it("opaqueIndexToPlayerSlot", () => {
+  const state: DraftState = new DraftState("@test/draft-state");
+  expect(state.getOpaqueIndexToPlayerSlot(0)).toBe(-1);
+  state.setOpaqueToPlayerSlot(0, 1);
+  expect(state.getOpaqueIndexToPlayerSlot(0)).toBe(1);
+  state.setOpaqueToPlayerSlot(0, -1);
+  expect(state.getOpaqueIndexToPlayerSlot(0)).toBe(-1);
 });
 
 it("load from state where a lower index is missing", () => {
