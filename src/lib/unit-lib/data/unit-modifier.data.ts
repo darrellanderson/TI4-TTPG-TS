@@ -175,3 +175,6 @@ add("pok", ViscountUnlenn);
 
 import { ViszElVir } from "./unit-modifiers/pok/visz-el-vir";
 add("pok", ViszElVir);
+
+import { MoraleBoostExtra } from "./unit-modifiers/test/morale-boost-extra";
+add("test", MoraleBoostExtra);

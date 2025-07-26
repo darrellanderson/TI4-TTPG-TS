@@ -33,17 +33,23 @@ it("_getAvailableBlueSystems", () => {
 });
 
 it("_getAvailableSystem", () => {
-  const systemTileObj = MockGameObject.simple("tile.system:base/19");
-  new MockContainer({ items: [systemTileObj] });
-
   const rightClickAgeOfExploration = new RightClickAgeOfExploration();
   let system: System | undefined;
 
   system = rightClickAgeOfExploration._getAvailableSystem("blue");
-  expect(system).toBeDefined();
+  expect(system).toBeUndefined();
 
   system = rightClickAgeOfExploration._getAvailableSystem("red");
   expect(system).toBeUndefined();
+
+  const systemTileObj = MockGameObject.simple("tile.system:base/19");
+  new MockContainer({ items: [systemTileObj] });
+
+  system = rightClickAgeOfExploration._getAvailableSystem("blue");
+  expect(system?.getSystemTileNumber()).toBe(19);
+
+  system = rightClickAgeOfExploration._getAvailableSystem("red");
+  expect(system?.getSystemTileNumber()).toBe(19);
 });
 
 it("_dealSystemTile", () => {

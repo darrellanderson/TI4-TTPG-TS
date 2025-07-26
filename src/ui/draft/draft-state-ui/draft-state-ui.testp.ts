@@ -30,7 +30,9 @@ const draftState: DraftState = new DraftState("@test/draft-state")
       (nsid) => TI4.factionRegistry.getByNsidOrThrow(nsid)
     )
   )
-  .setSpeakerIndex(1);
+  .setSpeakerIndex(1)
+  .setOpaqueType("minorFactions")
+  .setOpaques(["1", "2", "3", "4", "5", "6", "7", "8"]);
 
 function _goDirect() {
   const draftStateUi = new DraftStateUI(draftState, 1);

@@ -38,6 +38,7 @@ import { CreateZoomedUiType, ZoomableUI } from "../../zoomable-ui/zoomable-ui";
 import { AbstractWrappedClickableUI } from "../../wrapped-clickable-ui/abstract-wrapped-clickable-ui";
 import { KeleresUI } from "../faction-ui/keleres-ui";
 import { ConfirmButtonUI } from "../../button-ui/confirm-button-ui";
+import { OpaqueUI } from "../opaque-ui/opaque-ui";
 
 const SPACING: number = 12;
 
@@ -137,6 +138,32 @@ export class DraftStateUI extends AbstractUI {
         DraftStateUI._maybeAdvanceTurn(player);
       } else if (currentSlot === playerSlot) {
         draftState.setSeatIndexToPlayerSlot(sliceIndex, -1);
+      }
+    };
+    return new ThrottleClickHandler<ContentButton>(handler).get();
+  }
+
+  static _createOpaqueClickHandler(
+    draftState: DraftState,
+    opaqueIndex: number
+  ): (_button: ContentButton, player: Player) => void {
+    const handler = (_button: ContentButton, player: Player): void => {
+      const playerSlot: number = player.getSlot();
+      const currentSlot: number =
+        draftState.getOpaqueIndexToPlayerSlot(opaqueIndex);
+      if (currentSlot === -1) {
+        // If there was a different candidate selected, clear it.
+        for (let i = 0; i < draftState.getOpaques().length; i++) {
+          if (draftState.getOpaqueIndexToPlayerSlot(i) === playerSlot) {
+            draftState.setOpaqueToPlayerSlot(i, -1);
+          }
+        }
+
+        // Select this candidate.
+        draftState.setOpaqueToPlayerSlot(opaqueIndex, playerSlot);
+        DraftStateUI._maybeAdvanceTurn(player);
+      } else if (currentSlot === playerSlot) {
+        draftState.setOpaqueToPlayerSlot(opaqueIndex, -1);
       }
     };
     return new ThrottleClickHandler<ContentButton>(handler).get();
@@ -270,6 +297,22 @@ export class DraftStateUI extends AbstractUI {
       .setSpacing(SPACING * scale)
       .build();
 
+    const opaqueButtons: Array<WrappedClickableUI> = [];
+    const opaqueType: string | null = draftState.getOpaqueType();
+    for (let index = 0; index < draftState.getOpaques().length; index++) {
+      const opaque: string | undefined = draftState.getOpaques()[index];
+      if (opaque && opaqueType !== null) {
+        const opaqueUi: AbstractUI = new OpaqueUI(opaque, draftState, scale);
+        const clickable = new WrappedClickableUI(opaqueUi, scale);
+        clickable
+          .getContentButton()
+          .onClicked.add(
+            DraftStateUI._createOpaqueClickHandler(draftState, index)
+          );
+        opaqueButtons.push(clickable);
+      }
+    }
+
     const mapStringAndHexToPlayerName: MapStringAndHexToPlayerName =
       DraftToMapString.fromDraftState(draftState);
     const mapString: string = mapStringAndHexToPlayerName.mapString;
@@ -313,8 +356,30 @@ export class DraftStateUI extends AbstractUI {
       .addUIs([zoomableMapUi, turnOrderMini, finishAndCancelButtons])
       .build();
 
+    let panelUis: Array<AbstractUI> = [
+      sliceGrid,
+      factionGrid,
+      seatGrid,
+      mapOverTurnOrder,
+    ];
+
+    if (opaqueButtons.length > 0) {
+      const opaqueGrid: AbstractUI = new GridUIBuilder()
+        .addUIs(opaqueButtons)
+        .setMaxRows(4)
+        .setSpacing(SPACING * scale)
+        .build();
+      panelUis = [
+        sliceGrid,
+        factionGrid,
+        seatGrid,
+        opaqueGrid,
+        mapOverTurnOrder,
+      ];
+    }
+
     const panel: AbstractUI = new HorizontalUIBuilder()
-      .addUIs([sliceGrid, factionGrid, seatGrid, mapOverTurnOrder])
+      .addUIs(panelUis)
       .setPadding(SPACING * scale)
       .setSpacing(SPACING * scale)
       .build();
@@ -341,6 +406,13 @@ export class DraftStateUI extends AbstractUI {
         const playerSlot: number = draftState.getSeatIndexToPlayerSlot(index);
         button.setOwningPlayerSlot(playerSlot);
       });
+      opaqueButtons.forEach(
+        (button: WrappedClickableUI, index: number): void => {
+          const playerSlot: number =
+            draftState.getOpaqueIndexToPlayerSlot(index);
+          button.setOwningPlayerSlot(playerSlot);
+        }
+      );
 
       const newMapStringAndHexToPlayerName: MapStringAndHexToPlayerName =
         DraftToMapString.fromDraftState(draftState);

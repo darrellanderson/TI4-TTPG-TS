@@ -14,10 +14,13 @@ export const DraftStateSchema = z.object({
   slices: z.array(z.array(z.number()).readonly()).readonly().default([]),
   sliceLabels: z.array(z.string()).default([]),
   factions: z.array(z.string()).default([]),
+  opaque: z.array(z.string()).default([]),
+  opaqueType: z.string().nullable().default(null),
   speakerIndex: z.number().default(-1),
   sliceIndexToPlayerSlot: z.array(z.number().nullable()).default([]),
   factionIndexToPlayerSlot: z.array(z.number().nullable()).default([]),
   seatIndexToPlayerSlot: z.array(z.number().nullable()).default([]),
+  opaqueIndexToPlayerSlot: z.array(z.number().nullable()).default([]),
 });
 
 export type DraftStateSchemaType = z.infer<typeof DraftStateSchema>;
@@ -179,6 +182,28 @@ export class DraftState {
     return factions;
   }
 
+  setOpaques(opaque: Array<string>): this {
+    this._data.opaque = [...opaque];
+    this._save();
+    this.onDraftStateChanged.trigger(this);
+    return this;
+  }
+
+  getOpaques(): Array<string> {
+    return this._data.opaque;
+  }
+
+  setOpaqueType(opaqueType: string | null): this {
+    this._data.opaqueType = opaqueType;
+    this._save();
+    this.onDraftStateChanged.trigger(this);
+    return this;
+  }
+
+  getOpaqueType(): string | null {
+    return this._data.opaqueType;
+  }
+
   setSpeakerIndex(speakerIndex: number): this {
     this._data.speakerIndex = speakerIndex;
     this._save();
@@ -242,5 +267,16 @@ export class DraftState {
 
   getSeatIndexToPlayerSlot(seatIndex: number): number {
     return this._data.seatIndexToPlayerSlot[seatIndex] ?? -1;
+  }
+
+  setOpaqueToPlayerSlot(opaqueIndex: number, playerSlot: number): this {
+    this._data.opaqueIndexToPlayerSlot[opaqueIndex] = playerSlot;
+    this._save();
+    this.onDraftStateChanged.trigger(this);
+    return this;
+  }
+
+  getOpaqueIndexToPlayerSlot(opaqueIndex: number): number {
+    return this._data.opaqueIndexToPlayerSlot[opaqueIndex] ?? -1;
   }
 }

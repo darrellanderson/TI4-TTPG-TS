@@ -21,6 +21,7 @@ export class UnitModifier {
       case "action":
       case "agenda":
       case "alliance":
+      case "event":
       case "promissory":
       case "relic":
       case "technology.blue":
@@ -48,7 +49,8 @@ export class UnitModifier {
       mutate: 1,
       "mutate-late": 2,
       adjust: 3,
-      choose: 4,
+      "adjust-late": 4,
+      choose: 5,
     };
     return modifiers.sort((a, b) => {
       const aValue: number = priorityToSortValue[a.getPriority()];
