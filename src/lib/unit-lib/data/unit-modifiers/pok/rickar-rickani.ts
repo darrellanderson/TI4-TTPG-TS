@@ -16,6 +16,9 @@ export const RickarRickani: UnitModifierSchemaType = {
   ],
   applies: (combatRoll: CombatRoll): boolean => {
     const system: System | undefined = combatRoll.system;
+
+    const commanderNsid: string = "card.leader.commander:pok/rickar-rickani";
+
     if (
       system &&
       (combatRoll.getRollType() === "spaceCombat" ||
@@ -23,7 +26,7 @@ export const RickarRickani: UnitModifierSchemaType = {
     ) {
       // Is Mecatol?
       if (system.getSystemTileNumber() === 18) {
-        return true;
+        return combatRoll.isCommanderUnlocked(commanderNsid);
       }
 
       // Has a legendary planet?
@@ -31,7 +34,7 @@ export const RickarRickani: UnitModifierSchemaType = {
       if (planets) {
         for (const planet of planets) {
           if (planet.isLegendary()) {
-            return true;
+            return combatRoll.isCommanderUnlocked(commanderNsid);
           }
         }
       }
@@ -43,7 +46,7 @@ export const RickarRickani: UnitModifierSchemaType = {
         faction &&
         system.getSystemTileNumber() === faction.getHomeSystemTileNumber()
       ) {
-        return true;
+        return combatRoll.isCommanderUnlocked(commanderNsid);
       }
     }
     return false;

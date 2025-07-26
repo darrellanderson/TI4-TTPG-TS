@@ -13,10 +13,10 @@ export class AgendaAvailableVotes {
     let card: Card | undefined;
 
     // Xxcha commander.
-    let xxchaCommanderUnlocked: boolean = false;
     nsid = "card.leader.commander:pok/elder-qanoj";
     card = this._find.findCard(nsid);
     const allowFaceDown: boolean = false;
+    let xxchaCommanderUnlocked: boolean = card === undefined; // enable if missing (e.g. minor factions)
     if (card && this._cardUtil.isLooseCard(card, allowFaceDown)) {
       const pos: Vector = card.getPosition();
       const playerSlot: number = this._find.closestOwnedCardHolderOwner(pos);

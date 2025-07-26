@@ -20,12 +20,16 @@ export const TrrakanAunZulok: UnitModifierSchemaType = {
     { cardClass: "alliance", nsidName: "argent" },
   ],
   applies: (combatRoll: CombatRoll): boolean => {
+    const commandersNsid: string =
+      "card.leader.commander:pok/trrakan-aun-zulok";
+
     const rollType: CombatRollType = combatRoll.getRollType();
     return (
-      rollType === "antiFighterBarrage" ||
-      rollType === "bombardment" ||
-      rollType === "spaceCannonDefense" ||
-      rollType === "spaceCannonOffense"
+      (rollType === "antiFighterBarrage" ||
+        rollType === "bombardment" ||
+        rollType === "spaceCannonDefense" ||
+        rollType === "spaceCannonOffense") &&
+      combatRoll.isCommanderUnlocked(commandersNsid)
     );
   },
   apply: (combatRoll: CombatRoll): void => {

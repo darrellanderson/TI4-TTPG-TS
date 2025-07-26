@@ -11,7 +11,11 @@ export const _2ram: UnitModifierSchemaType = {
   owner: "self",
   priority: "mutate-late",
   applies: (combatRoll: CombatRoll): boolean => {
-    return combatRoll.getRollType() === "bombardment";
+    const commanderNsid: string = "card.leader.commander:pok/2ram";
+    return (
+      combatRoll.getRollType() === "bombardment" &&
+      combatRoll.isCommanderUnlocked(commanderNsid)
+    );
   },
   apply: (combatRoll: CombatRoll): void => {
     for (const unitAttrs of combatRoll.self.unitAttrsSet.getAll()) {

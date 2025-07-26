@@ -13,7 +13,12 @@ export const ThatWhichMoldsFlesh: UnitModifierSchemaType = {
     { cardClass: "alliance", nsidName: "vuilraith" },
   ],
   applies: (combatRoll: CombatRoll): boolean => {
-    return combatRoll.getRollType() === "production";
+    const commanderNsid: string =
+      "card.leader.commander:pok/that-which-molds-flesh";
+    return (
+      combatRoll.getRollType() === "production" &&
+      combatRoll.isCommanderUnlocked(commanderNsid)
+    );
   },
   apply: (combatRoll: CombatRoll): void => {
     const infantryAttrs: UnitAttrs | undefined =

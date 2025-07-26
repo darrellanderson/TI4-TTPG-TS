@@ -13,7 +13,12 @@ export const Maban: UnitModifierSchemaType = {
     { cardClass: "alliance", nsidName: "naalu" },
   ],
   applies: (combatRoll: CombatRoll): boolean => {
-    return combatRoll.getRollType() === "production";
+    const commanderNsid: string = "card.leader.commander:pok/maban";
+    // Only applies to production rolls.
+    return (
+      combatRoll.getRollType() === "production" &&
+      combatRoll.isCommanderUnlocked(commanderNsid)
+    );
   },
   apply: (combatRoll: CombatRoll): void => {
     const fighterAttrs: UnitAttrs =

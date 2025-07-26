@@ -17,12 +17,14 @@ export const TaZern: UnitModifierSchemaType = {
     { cardClass: "alliance", nsidName: "jolnar" },
   ],
   applies: (combatRoll: CombatRoll): boolean => {
+    const commanderNsid: string = "card.leader.commander:pok/ta-zern";
     const rollType: CombatRollType = combatRoll.getRollType();
     return (
-      rollType === "antiFighterBarrage" ||
-      rollType === "bombardment" ||
-      rollType === "spaceCannonDefense" ||
-      rollType === "spaceCannonOffense"
+      (rollType === "antiFighterBarrage" ||
+        rollType === "bombardment" ||
+        rollType === "spaceCannonDefense" ||
+        rollType === "spaceCannonOffense") &&
+      combatRoll.isCommanderUnlocked(commanderNsid)
     );
   },
   apply: (combatRoll: CombatRoll): void => {

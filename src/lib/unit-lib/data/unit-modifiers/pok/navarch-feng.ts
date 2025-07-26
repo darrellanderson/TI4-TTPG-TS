@@ -12,7 +12,11 @@ export const NavarchFeng: UnitModifierSchemaType = {
     { cardClass: "alliance", nsidName: "nomad" },
   ],
   applies: (combatRoll: CombatRoll): boolean => {
-    return combatRoll.getRollType() === "production";
+    const commanderNsid: string = "card.leader.commander:pok/navarch-feng";
+    return (
+      combatRoll.getRollType() === "production" &&
+      combatRoll.isCommanderUnlocked(commanderNsid)
+    );
   },
   apply: (combatRoll: CombatRoll): void => {
     const flagshipAttrs: UnitAttrs =

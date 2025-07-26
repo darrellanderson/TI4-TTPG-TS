@@ -174,6 +174,21 @@ export class CombatRoll {
     }
   }
 
+  isCommanderUnlocked(cardNsid: string): boolean {
+    const owner: number = -1;
+    const skipContained: boolean = true;
+    const card: Card | undefined = this.find.findCard(
+      cardNsid,
+      owner,
+      skipContained
+    );
+    if (!card) {
+      return true; // missing card is unlocked
+    }
+    const allowFaceDown: boolean = false;
+    return this._cardUtil.isLooseCard(card, allowFaceDown);
+  }
+
   _findUnitPlastics(): Array<UnitPlastic> {
     const unitPlastics: Array<UnitPlastic> = UnitPlastic.getAll().filter(
       (unitPlastic): boolean => {

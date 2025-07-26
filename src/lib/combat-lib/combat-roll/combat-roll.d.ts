@@ -59,6 +59,7 @@ export declare class CombatRoll {
     readonly find: Find;
     static createCooked(params: CombatRollParams): CombatRoll;
     constructor(params: CombatRollParams);
+    isCommanderUnlocked(cardNsid: string): boolean;
     _findUnitPlastics(): Array<UnitPlastic>;
     _findUnitAttrOverrides(playerSlot: number): Array<UnitAttrsSchemaType>;
     _findUnitModifiers(selfSlot: number, opponentSlot: number): Array<UnitModifier>;

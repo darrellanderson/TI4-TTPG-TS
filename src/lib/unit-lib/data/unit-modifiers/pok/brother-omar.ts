@@ -13,7 +13,11 @@ export const BrotherOmar: UnitModifierSchemaType = {
     { cardClass: "alliance", nsidName: "yin" },
   ],
   applies: (combatRoll: CombatRoll): boolean => {
-    return combatRoll.getRollType() === "production";
+    const commanderNsid: string = "card.leader.commander:pok/brother-omar";
+    return (
+      combatRoll.getRollType() === "production" &&
+      combatRoll.isCommanderUnlocked(commanderNsid)
+    );
   },
   apply: (combatRoll: CombatRoll): void => {
     const infantryAttrs: UnitAttrs =
