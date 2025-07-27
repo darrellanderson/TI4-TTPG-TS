@@ -41,6 +41,7 @@ import { HomebrewRegistry } from "../lib/homebrew-lib/homebrew-registry/homebrew
 import { LastGameData } from "../lib/game-data-lib/last-game-data/last-game-data";
 import { NumpadKeyAll } from "../lib/numpad-key-lib/numpad-key-all/numpad-key-all";
 import { OnAgendaCard } from "../event/on-agenda-card/on-agenda-card";
+import { OnAgendaStateCreated } from "../event/on-agenda-state-created/on-agenda-state-created";
 import { OnChatMessage } from "../event/on-chat-message/on-chat-message";
 import { OnCombatClicked } from "../event/on-combat-clicked/on-combat-clicked";
 import { OnCombatResult } from "../event/on-combat-result/on-combat-result";
@@ -211,6 +212,7 @@ export function resetGlobalThisTI4(): TI4Class {
     new LeaveSeat(),
     new NumpadKeyAll(),
     new OnAgendaCard(),
+    new OnAgendaStateCreated(),
     new OnCardBecameSingletonOrDeck(),
     new OnChatMessage(),
     new OnCombatClicked(),

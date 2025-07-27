@@ -1,6 +1,7 @@
 import { PlayerSlot } from "ttpg-darrell";
 import { AgendaState } from "./agenda-state";
 import { AgendaTurnOrder } from "../agenda-turn-order/agenda-turn-order";
+import { GameWorld } from "@tabletop-playground/api";
 
 /**
  * Advance turn and/or phase when the current player has no whens or afters
@@ -8,6 +9,7 @@ import { AgendaTurnOrder } from "../agenda-turn-order/agenda-turn-order";
  */
 export class AdvanceNoWhensAfters {
   private readonly _agendaState: AgendaState;
+  private _active: boolean = false;
 
   private readonly _onAgendaStateChangedHandler = () => {
     this.maybeAdvance();
@@ -15,10 +17,17 @@ export class AdvanceNoWhensAfters {
 
   constructor(agendaState: AgendaState) {
     this._agendaState = agendaState;
-    this._agendaState.onAgendaStateChanged.add(
-      this._onAgendaStateChangedHandler
-    );
-    this.maybeAdvance();
+  }
+
+  activate(): this {
+    if (!this._active && GameWorld.getExecutionReason() !== "unittest") {
+      this._active = true;
+      this._agendaState.onAgendaStateChanged.add(
+        this._onAgendaStateChangedHandler
+      );
+      this.maybeAdvance();
+    }
+    return this;
   }
 
   _isLastPlayerInTurnOrder(): boolean {
@@ -27,7 +36,7 @@ export class AdvanceNoWhensAfters {
     return currentTurn === turnOrder[turnOrder.length - 1];
   }
 
-  _isWhenPlayed(): boolean {
+  _anyUncommitedWhens(): boolean {
     const playerCount: number = TI4.config.playerCount;
     for (let seatIndex = 0; seatIndex < playerCount; seatIndex++) {
       if (this._agendaState.getSeatNoWhens(seatIndex) === "unknown") {
@@ -37,10 +46,30 @@ export class AdvanceNoWhensAfters {
     return false;
   }
 
-  _isAfterPlayed(): boolean {
+  _isWhenPlayed(): boolean {
+    const playerCount: number = TI4.config.playerCount;
+    for (let seatIndex = 0; seatIndex < playerCount; seatIndex++) {
+      if (this._agendaState.getSeatNoWhens(seatIndex) === "play") {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  _anyUncommitedAfters(): boolean {
     const playerCount: number = TI4.config.playerCount;
     for (let seatIndex = 0; seatIndex < playerCount; seatIndex++) {
       if (this._agendaState.getSeatNoAfters(seatIndex) === "unknown") {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  _isAfterPlayed(): boolean {
+    const playerCount: number = TI4.config.playerCount;
+    for (let seatIndex = 0; seatIndex < playerCount; seatIndex++) {
+      if (this._agendaState.getSeatNoAfters(seatIndex) === "play") {
         return true;
       }
     }
@@ -71,11 +100,18 @@ export class AdvanceNoWhensAfters {
     );
   }
 
+  _isSkipTurnVoting(): boolean {
+    const current: PlayerSlot = TI4.turnOrder.getCurrentTurn();
+    const seatIndex: number = TI4.playerSeats.getSeatIndexByPlayerSlot(current);
+    const voteLocked: boolean = this._agendaState.getSeatVotesLocked(seatIndex);
+    return voteLocked;
+  }
+
   _resetWhens(): void {
     const playerCount: number = TI4.config.playerCount;
     for (let seatIndex = 0; seatIndex < playerCount; seatIndex++) {
       // "never" is sticky, but "no" gets cleared.
-      if (this._agendaState.getSeatNoWhens(seatIndex) === "no") {
+      if (this._agendaState.getSeatNoWhens(seatIndex) !== "never") {
         this._agendaState.setSeatNoWhens(seatIndex, "unknown");
       }
     }
@@ -85,7 +121,7 @@ export class AdvanceNoWhensAfters {
     const playerCount: number = TI4.config.playerCount;
     for (let seatIndex = 0; seatIndex < playerCount; seatIndex++) {
       // "never" is sticky, but "no" gets cleared.
-      if (this._agendaState.getSeatNoAfters(seatIndex) === "no") {
+      if (this._agendaState.getSeatNoAfters(seatIndex) !== "never") {
         this._agendaState.setSeatNoAfters(seatIndex, "unknown");
       }
     }
@@ -93,6 +129,10 @@ export class AdvanceNoWhensAfters {
 
   _maybeAdvancePhaseWhens(): boolean {
     if (this._agendaState.getPhase() !== "whens") {
+      return false;
+    }
+
+    if (this._anyUncommitedWhens()) {
       return false;
     }
 
@@ -106,7 +146,7 @@ export class AdvanceNoWhensAfters {
         this._resetWhens();
         TI4.turnOrder.nextTurn();
       });
-      return true;
+      return true; // handled
     }
 
     const order: Array<PlayerSlot> =
@@ -123,6 +163,10 @@ export class AdvanceNoWhensAfters {
 
   _maybeAdvancePhaseAfters(): boolean {
     if (this._agendaState.getPhase() !== "afters") {
+      return false;
+    }
+
+    if (this._anyUncommitedAfters()) {
       return false;
     }
 
@@ -176,16 +220,27 @@ export class AdvanceNoWhensAfters {
     return true;
   }
 
+  _maybeSkipTurnVoting(): boolean {
+    if (this._agendaState.getPhase() !== "voting") {
+      return false;
+    }
+
+    if (!this._isSkipTurnVoting()) {
+      return false;
+    }
+
+    TI4.turnOrder.nextTurn();
+    return true;
+  }
+
   maybeAdvance(): boolean {
-    /*
     // Do phase advance checks first, then skip turns.
     return (
       this._maybeAdvancePhaseWhens() ||
       this._maybeAdvancePhaseAfters() ||
       this._maybeSkipTurnWhens() ||
-      this._maybeSkipTurnAfters()
+      this._maybeSkipTurnAfters() ||
+      this._maybeSkipTurnVoting()
     );
-    */
-    return false;
   }
 }
