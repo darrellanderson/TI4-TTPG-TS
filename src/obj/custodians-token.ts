@@ -7,6 +7,7 @@ import {
   Vector,
   world,
 } from "@tabletop-playground/api";
+import { AdvanceScore } from "lib/score-lib/advance-score/advance-score";
 import { Find } from "ttpg-darrell";
 
 export class CustodiansToken {
@@ -64,6 +65,7 @@ export class CustodiansToken {
         controlToken.snapToGround();
       }
     }
+    new AdvanceScore().addToScore(playerSlot, 1);
   }
 }
 
