@@ -3,6 +3,7 @@ dev
 .DS_Store
 assets/Thumbnails
 build
+src/lib/*/schema/*-schema.d.ts
 
 # Logs
 logs
