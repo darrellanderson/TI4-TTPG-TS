@@ -7,8 +7,8 @@ import {
   Vector,
   world,
 } from "@tabletop-playground/api";
-import { AdvanceScore } from "lib/score-lib/advance-score/advance-score";
 import { Find } from "ttpg-darrell";
+import { AdvanceScore } from "../lib/score-lib/advance-score/advance-score";
 
 export class CustodiansToken {
   private readonly _obj: GameObject;
