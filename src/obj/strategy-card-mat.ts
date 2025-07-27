@@ -94,7 +94,7 @@ refObject.onCustomAction.add(
       _dealActionCards.dealAllActionCards();
       _returnCommandTokens.returnAllCommandTokens(); // return before add
       _readyLib.readyAll();
-      _refreshAllPlanets.refresh(true);
+      //_refreshAllPlanets.refresh(true); // readyLib does this
       _addCommandTokens.addAllCommandTokens();
 
       const msg: string = `${playerName} dealt action cards, command tokens`;
