@@ -70,7 +70,7 @@ export class RightClickRift implements IGlobal {
     const plastic: UnitPlastic | undefined = UnitPlastic.getOne(unitObj);
     if (plastic) {
       Broadcast.chatAll(
-        `${plastic.getUnit} rolled ${rollValue}: (${isSurvivor ? "survived" : "destroyed"})`
+        `${plastic.getUnit()} rolled ${rollValue}: (${isSurvivor ? "survived" : "destroyed"})`
       );
     }
   }
