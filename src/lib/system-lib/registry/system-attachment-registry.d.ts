@@ -1,3 +1,4 @@
+import { GameObject } from "@tabletop-playground/api";
 import { SystemAttachment } from "../system-attachment/system-attachment";
 import { SourceAndPackageIdSchemaType } from "../schema/basic-types-schema";
 import { SystemAttachmentSchemaType } from "../schema/system-attachment-schema";
@@ -6,6 +7,7 @@ export declare class SystemAttachmentRegistry {
     private readonly _attachmentObjIdToSystemAttachment;
     private readonly _onObjectCreatedHandler;
     private readonly _onObjectDestroyedHandler;
+    _maybeRegister(obj: GameObject): void;
     constructor();
     destroy(): void;
     /**

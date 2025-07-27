@@ -1,3 +1,4 @@
+import { GameObject } from "@tabletop-playground/api";
 import { SourceAndPackageIdSchemaType } from "../schema/basic-types-schema";
 import { PlanetAttachment } from "../planet-attachment/planet-attachment";
 import { PlanetAttachmentSchemaType } from "../schema/planet-attachment-schema";
@@ -6,6 +7,7 @@ export declare class PlanetAttachmentRegistry {
     private readonly _attachmentObjIdToPlanetAttachment;
     private readonly _onObjectCreatedHandler;
     private readonly _onObjectDestroyedHandler;
+    _maybeRegister(obj: GameObject): void;
     constructor();
     destroy(): void;
     /**

@@ -36,10 +36,23 @@ export class SystemAttachmentRegistry {
   > = new Map();
 
   private readonly _onObjectCreatedHandler = (obj: GameObject): void => {
+    this._maybeRegister(obj);
+  };
+
+  private readonly _onObjectDestroyedHandler = (obj: GameObject): void => {
+    const objId: string = obj.getId();
+    if (this._attachmentObjIdToSystemAttachment.has(objId)) {
+      this._attachmentObjIdToSystemAttachment.delete(objId);
+    }
+  };
+
+  _maybeRegister(obj: GameObject): void {
     const nsid: string = NSID.get(obj);
     const schemaAndSource: SchemaAndSource | undefined =
       this._nsidToSchemaAndSource.get(nsid);
-    if (schemaAndSource) {
+    const alreadyRegistered: boolean =
+      this._attachmentObjIdToSystemAttachment.has(obj.getId());
+    if (schemaAndSource && !alreadyRegistered) {
       // Register a fresh system object for this system tile object.
       const systemAttachment: SystemAttachment = new SystemAttachment(
         obj,
@@ -51,14 +64,7 @@ export class SystemAttachmentRegistry {
         systemAttachment
       );
     }
-  };
-
-  private readonly _onObjectDestroyedHandler = (obj: GameObject): void => {
-    const objId: string = obj.getId();
-    if (this._attachmentObjIdToSystemAttachment.has(objId)) {
-      this._attachmentObjIdToSystemAttachment.delete(objId);
-    }
-  };
+  }
 
   constructor() {
     globalEvents.onObjectCreated.add(this._onObjectCreatedHandler);
@@ -146,12 +152,7 @@ export class SystemAttachmentRegistry {
       for (const objId of objIds) {
         const obj: GameObject | undefined = world.getObjectById(objId);
         if (obj && obj.isValid()) {
-          const attachment = new SystemAttachment(
-            obj,
-            sourceAndPackageId,
-            systemAttachmentSchemaType
-          );
-          this._attachmentObjIdToSystemAttachment.set(objId, attachment);
+          this._maybeRegister(obj);
         }
       }
     }

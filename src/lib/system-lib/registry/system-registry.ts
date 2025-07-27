@@ -39,13 +39,27 @@ export class SystemRegistry {
   private readonly _systemTileObjIdToSystem: Map<string, System> = new Map();
 
   private readonly _onObjectCreatedHandler = (obj: GameObject): void => {
+    this._maybeRegister(obj);
+  };
+
+  private readonly _onObjectDestroyedHandler = (obj: GameObject): void => {
+    const objId: string = obj.getId();
+    if (this._systemTileObjIdToSystem.has(objId)) {
+      this._systemTileObjIdToSystem.delete(objId);
+    }
+  };
+
+  _maybeRegister(obj: GameObject): void {
     const nsid: string = NSID.get(obj);
     const systemTileNumber: number | undefined =
       System.nsidToSystemTileNumber(nsid);
     if (systemTileNumber !== undefined) {
       const schemaAndSource: SchemaAndSource | undefined =
         this._systemTileNumberToSchemaAndSource.get(systemTileNumber);
-      if (schemaAndSource) {
+      const alreadyRegistered: boolean = this._systemTileObjIdToSystem.has(
+        obj.getId()
+      );
+      if (schemaAndSource && !alreadyRegistered) {
         // Register a fresh system object for this system tile object.
         const system: System = new System(
           obj,
@@ -55,14 +69,7 @@ export class SystemRegistry {
         this._systemTileObjIdToSystem.set(obj.getId(), system);
       }
     }
-  };
-
-  private readonly _onObjectDestroyedHandler = (obj: GameObject): void => {
-    const objId: string = obj.getId();
-    if (this._systemTileObjIdToSystem.has(objId)) {
-      this._systemTileObjIdToSystem.delete(objId);
-    }
-  };
+  }
 
   constructor() {
     globalEvents.onObjectCreated.add(this._onObjectCreatedHandler);
@@ -131,8 +138,7 @@ export class SystemRegistry {
       // Instantiate for any existing system tile objects.
       const objs: Array<GameObject> = tileToObjs.get(tileNumber) ?? [];
       for (const obj of objs) {
-        const system = new System(obj, sourceAndPackageId, systemSchemaType);
-        this._systemTileObjIdToSystem.set(obj.getId(), system);
+        this._maybeRegister(obj);
       }
     }
 
