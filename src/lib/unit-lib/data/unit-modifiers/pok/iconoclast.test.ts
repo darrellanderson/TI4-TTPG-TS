@@ -23,7 +23,7 @@ it("default", () => {
 
   const mechAttrs: UnitAttrs = combatRoll.self.unitAttrsSet.getOrThrow("mech");
   const groundCombat: CombatAttrs = mechAttrs.getGroundCombatOrThrow();
-  expect(groundCombat.getHit()).toBe(13);
+  expect(groundCombat.getHit()).toBe(6);
 });
 
 it("modifier (mech, no fragment)", () => {
@@ -42,7 +42,7 @@ it("modifier (mech, no fragment)", () => {
 
   const mechAttrs: UnitAttrs = combatRoll.self.unitAttrsSet.getOrThrow("mech");
   const groundCombat: CombatAttrs = mechAttrs.getGroundCombatOrThrow();
-  expect(groundCombat.getHit()).toBe(13);
+  expect(groundCombat.getHit()).toBe(6);
 });
 
 it("modifier (mech, fragment)", () => {
@@ -62,5 +62,5 @@ it("modifier (mech, fragment)", () => {
 
   const mechAttrs: UnitAttrs = combatRoll.self.unitAttrsSet.getOrThrow("mech");
   const groundCombat: CombatAttrs = mechAttrs.getGroundCombatOrThrow();
-  expect(groundCombat.getHit()).toBe(11);
+  expect(groundCombat.getHit()).toBe(4);
 });

@@ -1268,7 +1268,7 @@ it("createDiceParamsArray (ground)", () => {
   diceParamsArray = combatRoll.createDiceParamsArray();
   expect(diceParamsArray).toEqual([
     {
-      hit: 13,
+      hit: 6,
       id: "mech",
       name: "Mech",
       primaryColor: { a: 1, b: 0, g: 0, r: 0 },

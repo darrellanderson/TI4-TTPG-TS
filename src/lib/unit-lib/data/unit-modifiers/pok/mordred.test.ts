@@ -21,7 +21,7 @@ it("default", () => {
 
   const mechAttrs: UnitAttrs = combatRoll.self.unitAttrsSet.getOrThrow("mech");
   const groundCombat: CombatAttrs = mechAttrs.getGroundCombatOrThrow();
-  expect(groundCombat.getHit()).toBe(13);
+  expect(groundCombat.getHit()).toBe(6);
 });
 
 it("modifier (mech, no x/y token)", () => {
@@ -40,7 +40,7 @@ it("modifier (mech, no x/y token)", () => {
 
   const mechAttrs: UnitAttrs = combatRoll.self.unitAttrsSet.getOrThrow("mech");
   const groundCombat: CombatAttrs = mechAttrs.getGroundCombatOrThrow();
-  expect(groundCombat.getHit()).toBe(13);
+  expect(groundCombat.getHit()).toBe(6);
 });
 
 it("modifier (mech, x/y token)", () => {
@@ -60,5 +60,5 @@ it("modifier (mech, x/y token)", () => {
 
   const mechAttrs: UnitAttrs = combatRoll.self.unitAttrsSet.getOrThrow("mech");
   const groundCombat: CombatAttrs = mechAttrs.getGroundCombatOrThrow();
-  expect(groundCombat.getHit()).toBe(11);
+  expect(groundCombat.getHit()).toBe(4);
 });

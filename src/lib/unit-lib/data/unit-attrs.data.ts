@@ -502,7 +502,7 @@ export const SOURCE_TO_UNIT_ATTRS_DATA: Record<
       cost: 2,
       hasSustainDamage: true,
       isGround: true,
-      groundCombat: { hit: 13 }, // placeholder, should be overridden
+      groundCombat: { hit: 6 },
     },
     {
       name: "Aerie Sentinel",
