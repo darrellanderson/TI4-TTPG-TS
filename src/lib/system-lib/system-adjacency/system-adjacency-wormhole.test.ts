@@ -82,7 +82,7 @@ it("creuss flagship", () => {
 });
 
 it("card wormhole_reconstruction", () => {
-  MockCard.simple("card.agenda:base/wormhole_reconstruction");
+  MockCard.simple("card.agenda:base/wormhole-reconstruction");
   const adjacency: Adjacency = new Adjacency();
   new SystemAdjacencyWormhole()._applyCards(adjacency);
   expect(
@@ -104,7 +104,7 @@ it("card wormhole_reconstruction", () => {
 });
 
 it("card wormhole_reconstruction (face down)", () => {
-  MockCard.simple("card.agenda:base/wormhole_reconstruction", {
+  MockCard.simple("card.agenda:base/wormhole-reconstruction", {
     isFaceUp: false,
   });
   const adjacency: Adjacency = new Adjacency();
@@ -128,8 +128,8 @@ it("card wormhole_reconstruction (face down)", () => {
 });
 
 it("card wormhole_reconstruction (in discard)", () => {
-  MockCard.simple("card.agenda:base/wormhole_reconstruction", {
-    snappedToPoint: new MockSnapPoint({ tags: ["discard"] }),
+  MockCard.simple("card.agenda:base/wormhole-reconstruction", {
+    snappedToPoint: new MockSnapPoint({ tags: ["discard-agenda"] }),
   });
   const adjacency: Adjacency = new Adjacency();
   new SystemAdjacencyWormhole()._applyCards(adjacency);
@@ -152,7 +152,7 @@ it("card wormhole_reconstruction (in discard)", () => {
 });
 
 it("card lost_star_chart", () => {
-  MockCard.simple("card.action:base/lost_star_chart");
+  MockCard.simple("card.action:base/lost-star-chart");
   const adjacency: Adjacency = new Adjacency();
   new SystemAdjacencyWormhole()._applyCards(adjacency);
   expect(
@@ -174,7 +174,7 @@ it("card lost_star_chart", () => {
 });
 
 it("card lost_star_chart (face down)", () => {
-  MockCard.simple("card.action:base/lost_star_chart", {
+  MockCard.simple("card.action:base/lost-star-chart", {
     isFaceUp: false,
   });
   const adjacency: Adjacency = new Adjacency();
@@ -198,8 +198,8 @@ it("card lost_star_chart (face down)", () => {
 });
 
 it("card lost_star_chart (in discard)", () => {
-  MockCard.simple("card.action:base/lost_star_chart", {
-    snappedToPoint: new MockSnapPoint({ tags: ["discard"] }),
+  MockCard.simple("card.action:base/lost-star-chart", {
+    snappedToPoint: new MockSnapPoint({ tags: ["discard-action"] }),
   });
   const adjacency: Adjacency = new Adjacency();
   new SystemAdjacencyWormhole()._applyCards(adjacency);
@@ -224,9 +224,7 @@ it("card lost_star_chart (in discard)", () => {
 it("card emissary_taivra (active)", () => {
   let adjacency: Adjacency;
   adjacency = new Adjacency();
-  const card: Card = MockCard.simple(
-    "card.leader.agent.creuss:pok/emissary_taivra"
-  );
+  const card: Card = MockCard.simple("card.leader.agent:pok/emissary-taivra");
   expect(UnitModifierActiveIdle.isActive(card)).toBe(false);
 
   adjacency = new Adjacency();

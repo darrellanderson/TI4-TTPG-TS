@@ -100,9 +100,12 @@ export class SystemAdjacencyWormhole {
   _applyCards(adjacency: Adjacency): void {
     let card: Card | undefined;
     const allowFaceDown: boolean = false;
-    const rejectSnapPointTags: Array<string> = ["discard"];
+    const rejectSnapPointTags: Array<string> = [
+      "discard-agenda",
+      "discard-action",
+    ];
 
-    card = this._find.findCard("card.agenda:base/wormhole_reconstruction");
+    card = this._find.findCard("card.agenda:base/wormhole-reconstruction");
     if (
       card &&
       this._cardUtil.isLooseCard(card, allowFaceDown, rejectSnapPointTags)
@@ -121,7 +124,7 @@ export class SystemAdjacencyWormhole {
       });
     }
 
-    card = this._find.findCard("card.action:base/lost_star_chart");
+    card = this._find.findCard("card.action:base/lost-star-chart");
     if (
       card &&
       this._cardUtil.isLooseCard(card, allowFaceDown, rejectSnapPointTags)
@@ -145,7 +148,7 @@ export class SystemAdjacencyWormhole {
     // wormhole: You may exhaust this card; if you do, that system is
     // adjacent to all other systems that contain a wormhole during
     // this tactical action."
-    card = this._find.findCard("card.leader.agent.creuss:pok/emissary_taivra");
+    card = this._find.findCard("card.leader.agent:pok/emissary-taivra");
     if (
       card &&
       this._cardUtil.isLooseCard(card, allowFaceDown, rejectSnapPointTags) &&
