@@ -116,8 +116,8 @@ it("addCommandTokens", () => {
   expect(token1.getContainer()).toBeUndefined();
   expect(token2.getContainer()).toBeUndefined();
   expect(token3.getContainer()).toBeDefined();
-  expect(token1.getPosition().toString()).toBe("(X=33,Y=16,Z=0)");
-  expect(token2.getPosition().toString()).toBe("(X=33,Y=18,Z=0)");
+  expect(token1.getPosition().toString()).toBe("(X=11.5,Y=-3,Z=0)");
+  expect(token2.getPosition().toString()).toBe("(X=11.5,Y=-1,Z=0)");
 });
 
 it("addCommandTokens (no container)", () => {
@@ -192,5 +192,5 @@ it("addCommandTokens (not enough tokens)", () => {
   expect(addCommandTokens.addCommandTokens(playerSlot, count)).toBe(false);
 
   expect(token1.getContainer()).toBeUndefined();
-  expect(token1.getPosition().toString()).toBe("(X=33,Y=16,Z=0)");
+  expect(token1.getPosition().toString()).toBe("(X=11.5,Y=-3,Z=0)");
 });
