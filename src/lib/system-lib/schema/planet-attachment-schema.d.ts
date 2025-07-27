@@ -25,8 +25,8 @@ export declare const PlanetAttachmentSchema: z.ZodReadonly<z.ZodObject<{
     influenceFaceDown?: number | undefined;
     resources?: number | undefined;
     resourcesFaceDown?: number | undefined;
-    techs?: ("blue" | "green" | "red" | "yellow")[] | undefined;
-    techsFaceDown?: ("blue" | "green" | "red" | "yellow")[] | undefined;
+    techs?: ("red" | "blue" | "green" | "yellow")[] | undefined;
+    techsFaceDown?: ("red" | "blue" | "green" | "yellow")[] | undefined;
     traits?: ("cultural" | "hazardous" | "industrial")[] | undefined;
     traitsFaceDown?: ("cultural" | "hazardous" | "industrial")[] | undefined;
     isLegendary?: boolean | undefined;
@@ -42,8 +42,8 @@ export declare const PlanetAttachmentSchema: z.ZodReadonly<z.ZodObject<{
     influenceFaceDown?: number | undefined;
     resources?: number | undefined;
     resourcesFaceDown?: number | undefined;
-    techs?: ("blue" | "green" | "red" | "yellow")[] | undefined;
-    techsFaceDown?: ("blue" | "green" | "red" | "yellow")[] | undefined;
+    techs?: ("red" | "blue" | "green" | "yellow")[] | undefined;
+    techsFaceDown?: ("red" | "blue" | "green" | "yellow")[] | undefined;
     traits?: ("cultural" | "hazardous" | "industrial")[] | undefined;
     traitsFaceDown?: ("cultural" | "hazardous" | "industrial")[] | undefined;
     isLegendary?: boolean | undefined;

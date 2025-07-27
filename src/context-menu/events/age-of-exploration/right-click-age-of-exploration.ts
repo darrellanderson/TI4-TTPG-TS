@@ -4,7 +4,7 @@ import {
   Player,
   Vector,
 } from "@tabletop-playground/api";
-import { AbstractRightClickCard, PlayerSlot } from "ttpg-darrell";
+import { AbstractRightClickCard } from "ttpg-darrell";
 import { System } from "../../../lib/system-lib/system/system";
 import {
   SystemTier,
@@ -24,18 +24,22 @@ export class RightClickAgeOfExploration extends AbstractRightClickCard {
     const cardNsidPrefix: string =
       "card.event:codex.liberation/age-of-exploration";
     const customActionHandler = (
-      _object: GameObject,
+      object: GameObject,
       _player: Player,
-      _identifier: string
+      identifier: string
     ): void => {
-      // Custom action logic goes here
+      if (identifier == AGE_OF_EXPLORATION_ACTION_NAME) {
+        const pos: Vector = object.getPosition();
+        const tileColor: "red" | "blue" = this._chooseTileColor();
+        this._dealSystemTile(pos, tileColor);
+      }
     };
     super(cardNsidPrefix, AGE_OF_EXPLORATION_ACTION_NAME, customActionHandler);
   }
 
   _getAvailableLegalSystems(): Array<System> {
     const skipContained: boolean = false;
-    return TI4.systemRegistry
+    const result: Array<System> = TI4.systemRegistry
       .getAllSystemsWithObjs(skipContained)
       .filter((system: System): boolean => {
         return (
@@ -43,6 +47,7 @@ export class RightClickAgeOfExploration extends AbstractRightClickCard {
           !system.isExcludeFromDraft()
         );
       });
+    return result;
   }
 
   _getAvailableRedSystems(): Array<System> {
@@ -81,14 +86,14 @@ export class RightClickAgeOfExploration extends AbstractRightClickCard {
     return systems[index];
   }
 
-  _dealSystemTile(playerSlot: PlayerSlot, tileColor: "red" | "blue"): void {
+  _dealSystemTile(pos: Vector, tileColor: "red" | "blue"): void {
+    const above: Vector = pos.add([0, 0, 10]);
     const system: System | undefined = this._getAvailableSystem(tileColor);
     if (system) {
       const obj: GameObject = system.getObj();
-      const pos: Vector = TI4.playerSeats.getDealPosition(playerSlot);
       const container: Container | undefined = obj.getContainer();
       if (container) {
-        container.take(obj, pos);
+        container.take(obj, above);
         obj.snapToGround();
       }
     }

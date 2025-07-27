@@ -1,6 +1,7 @@
-import { MockCardHolder, MockContainer, MockGameObject } from "ttpg-mock";
+import { MockContainer, MockGameObject } from "ttpg-mock";
 import { RightClickAgeOfExploration } from "./right-click-age-of-exploration";
 import { System } from "../../../lib/system-lib/system/system";
+import { Vector } from "@tabletop-playground/api";
 
 it("_getAvailableLegalSystems", () => {
   const systemTileObj = MockGameObject.simple("tile.system:base/19");
@@ -53,16 +54,12 @@ it("_getAvailableSystem", () => {
 });
 
 it("_dealSystemTile", () => {
-  new MockCardHolder({
-    templateMetadata: "card-holder:base/player-hand",
-    owningPlayerSlot: 10,
-  });
   const systemTileObj = MockGameObject.simple("tile.system:base/19");
   new MockContainer({ items: [systemTileObj] });
 
   const rightClickAgeOfExploration = new RightClickAgeOfExploration();
-
-  rightClickAgeOfExploration._dealSystemTile(10, "blue");
+  const pos: Vector = new Vector(0, 0, 0);
+  rightClickAgeOfExploration._dealSystemTile(pos, "blue");
 });
 
 it("_chooseTileColor", () => {

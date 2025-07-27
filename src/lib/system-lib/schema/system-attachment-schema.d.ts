@@ -52,7 +52,7 @@ export declare const SystemAttachmentSchema: z.ZodReadonly<z.ZodObject<{
         radius?: number | undefined;
         influence?: number | undefined;
         resources?: number | undefined;
-        techs?: ("blue" | "green" | "red" | "yellow")[] | undefined;
+        techs?: ("red" | "blue" | "green" | "yellow")[] | undefined;
         traits?: ("cultural" | "hazardous" | "industrial")[] | undefined;
         isLegendary?: boolean | undefined;
         legendaryNsidName?: string | undefined;
@@ -70,7 +70,7 @@ export declare const SystemAttachmentSchema: z.ZodReadonly<z.ZodObject<{
         radius?: number | undefined;
         influence?: number | undefined;
         resources?: number | undefined;
-        techs?: ("blue" | "green" | "red" | "yellow")[] | undefined;
+        techs?: ("red" | "blue" | "green" | "yellow")[] | undefined;
         traits?: ("cultural" | "hazardous" | "industrial")[] | undefined;
         isLegendary?: boolean | undefined;
         legendaryNsidName?: string | undefined;
@@ -98,7 +98,7 @@ export declare const SystemAttachmentSchema: z.ZodReadonly<z.ZodObject<{
         radius?: number | undefined;
         influence?: number | undefined;
         resources?: number | undefined;
-        techs?: ("blue" | "green" | "red" | "yellow")[] | undefined;
+        techs?: ("red" | "blue" | "green" | "yellow")[] | undefined;
         traits?: ("cultural" | "hazardous" | "industrial")[] | undefined;
         isLegendary?: boolean | undefined;
         legendaryNsidName?: string | undefined;
@@ -126,7 +126,7 @@ export declare const SystemAttachmentSchema: z.ZodReadonly<z.ZodObject<{
         radius?: number | undefined;
         influence?: number | undefined;
         resources?: number | undefined;
-        techs?: ("blue" | "green" | "red" | "yellow")[] | undefined;
+        techs?: ("red" | "blue" | "green" | "yellow")[] | undefined;
         traits?: ("cultural" | "hazardous" | "industrial")[] | undefined;
         isLegendary?: boolean | undefined;
         legendaryNsidName?: string | undefined;

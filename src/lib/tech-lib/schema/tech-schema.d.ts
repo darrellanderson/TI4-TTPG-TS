@@ -27,7 +27,7 @@ export declare const TechSchema: z.ZodReadonly<z.ZodObject<{
 }, "strict", z.ZodTypeAny, {
     name: string;
     nsidName: string;
-    color: "blue" | "green" | "red" | "yellow" | "unit-upgrade" | "none";
+    color: "red" | "blue" | "green" | "yellow" | "unit-upgrade" | "none";
     prerequisites: {
         blue?: number | undefined;
         green?: number | undefined;
@@ -40,7 +40,7 @@ export declare const TechSchema: z.ZodReadonly<z.ZodObject<{
 }, {
     name: string;
     nsidName: string;
-    color: "blue" | "green" | "red" | "yellow" | "unit-upgrade" | "none";
+    color: "red" | "blue" | "green" | "yellow" | "unit-upgrade" | "none";
     prerequisites: {
         blue?: number | undefined;
         green?: number | undefined;
