@@ -9,7 +9,7 @@ beforeEach(() => {
     const nsid: string | undefined =
       TI4.systemRegistry.tileNumberToSystemTileObjNsid(tile);
     if (nsid) {
-      MockGameObject.simple(nsid);
+      MockGameObject.simple(nsid).setPosition([100, 0, 0]);
     }
   }
 });

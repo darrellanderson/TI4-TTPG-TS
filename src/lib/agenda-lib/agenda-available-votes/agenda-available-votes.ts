@@ -1,5 +1,5 @@
 import { Card, Vector, world } from "@tabletop-playground/api";
-import { CardUtil, Find, NSID, PlayerSlot } from "ttpg-darrell";
+import { CardUtil, Find, HexType, NSID, PlayerSlot } from "ttpg-darrell";
 import { Planet } from "../../system-lib/planet/planet";
 
 export class AgendaAvailableVotes {
@@ -90,16 +90,26 @@ export class AgendaAvailableVotes {
   _getFaceUpPlanetCards(): Array<Card> {
     const cards: Array<Card> = [];
 
+    // Ignore planet cards on system tiles.
+    const systemHexes: Set<HexType> = new Set<HexType>();
+    for (const system of TI4.systemRegistry.getAllSystemsWithObjs()) {
+      const pos: Vector = system.getObj().getPosition();
+      const hex: HexType = TI4.hex.fromPosition(pos);
+      systemHexes.add(hex);
+    }
+
     const skipContained: boolean = true;
     const allowFaceDown: boolean = false;
     const rejectSnapPointTags: Array<string> = ["deck-planet"];
 
     for (const obj of world.getAllObjects(skipContained)) {
       const nsid: string = NSID.get(obj);
+
       if (
         nsid.startsWith("card.planet:") &&
         obj instanceof Card &&
-        this._cardUtil.isLooseCard(obj, allowFaceDown, rejectSnapPointTags)
+        this._cardUtil.isLooseCard(obj, allowFaceDown, rejectSnapPointTags) &&
+        !systemHexes.has(TI4.hex.fromPosition(obj.getPosition()))
       ) {
         const planet: Planet | undefined =
           TI4.systemRegistry.getPlanetByPlanetCardNsid(nsid);
@@ -131,35 +141,27 @@ export class AgendaAvailableVotes {
     const xxekirGromOmegaPlayerSlots: Set<PlayerSlot> =
       this._getXxekirGromOmegaPlayerSlots();
 
-    const skipContained: boolean = true;
-    const allowFaceDown: boolean = false;
-    const rejectSnapPointTags: Array<string> = ["deck-planet"];
-    for (const obj of world.getAllObjects(skipContained)) {
-      const nsid: string = NSID.get(obj);
-      if (
-        nsid.startsWith("card.planet:") &&
-        obj instanceof Card &&
-        this._cardUtil.isLooseCard(obj, allowFaceDown, rejectSnapPointTags)
-      ) {
-        const planet: Planet | undefined =
-          TI4.systemRegistry.getPlanetByPlanetCardNsid(nsid);
-        if (planet) {
-          const pos: Vector = obj.getPosition();
-          const playerSlot: number =
-            this._find.closestOwnedCardHolderOwner(pos);
+    const faceUpPlanetCards: Array<Card> = this._getFaceUpPlanetCards();
+    for (const planetCard of faceUpPlanetCards) {
+      const nsid: string = NSID.get(planetCard);
 
-          let votes: number = playerSlotToAvailableVotes.get(playerSlot) ?? 0;
-          votes += planet.getInfluence();
-          const bonus: number | undefined =
-            playerSlotToPerPlanetBonus.get(playerSlot);
-          if (bonus !== undefined) {
-            votes += bonus;
-          }
-          if (xxekirGromOmegaPlayerSlots.has(playerSlot)) {
-            votes += planet.getResources();
-          }
-          playerSlotToAvailableVotes.set(playerSlot, votes);
+      const planet: Planet | undefined =
+        TI4.systemRegistry.getPlanetByPlanetCardNsid(nsid);
+      if (planet) {
+        const pos: Vector = planetCard.getPosition();
+        const playerSlot: number = this._find.closestOwnedCardHolderOwner(pos);
+
+        let votes: number = playerSlotToAvailableVotes.get(playerSlot) ?? 0;
+        votes += planet.getInfluence();
+        const bonus: number | undefined =
+          playerSlotToPerPlanetBonus.get(playerSlot);
+        if (bonus !== undefined) {
+          votes += bonus;
         }
+        if (xxekirGromOmegaPlayerSlots.has(playerSlot)) {
+          votes += planet.getResources();
+        }
+        playerSlotToAvailableVotes.set(playerSlot, votes);
       }
     }
 
