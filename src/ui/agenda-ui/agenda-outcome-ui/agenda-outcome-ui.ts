@@ -72,7 +72,9 @@ export class AgendaOutcomeUI extends AbstractUI {
     outcomeNameUi.onEdited.add(this._onEdited);
 
     // Temporary workaround for rich text: need to set size for bold/etc elements.
-    const fontSize: number = Math.round(CONFIG.FONT_SIZE * scale);
+    let fontSize: number = Math.round(CONFIG.FONT_SIZE * scale);
+    fontSize = Math.max(fontSize, 6);
+    fontSize = Math.min(fontSize, 24);
 
     agendaState.onAgendaStateChanged.add(() => {
       // Outcome name.

@@ -15,7 +15,9 @@ export class HelpUI extends AbstractUI {
       (CONFIG.BUTTON_WIDTH * 2 + CONFIG.SPACING) * scale;
 
     // Temporary workaround for rich text: need to set size for bold/etc elements.
-    const fontSize: number = Math.round(CONFIG.FONT_SIZE * scale);
+    let fontSize: number = Math.round(CONFIG.FONT_SIZE * scale);
+    fontSize = Math.max(fontSize, 6);
+    fontSize = Math.min(fontSize, 24);
 
     const windowHeader: LongRichTextUI = new LongRichTextUI(scaledWidth, scale);
     windowHeader

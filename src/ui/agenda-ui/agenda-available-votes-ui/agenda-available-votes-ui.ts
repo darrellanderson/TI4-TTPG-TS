@@ -15,6 +15,9 @@ export class AgendaAvailableVotesUI extends LongRichTextUI {
     const playerSlotToAvailableVotes: Map<PlayerSlot, number> =
       new AgendaAvailableVotes().getPlayerSlotToAvailableVotes();
 
+    fontSize = Math.max(fontSize, 6);
+    fontSize = Math.min(fontSize, 24);
+
     const entries: Array<string> = [];
     for (const [playerSlot, availableVotes] of playerSlotToAvailableVotes) {
       const color: Color = world.getSlotColor(playerSlot);
