@@ -130,7 +130,8 @@ export class AddCommandTokens {
       return false;
     }
 
-    let pos: Vector = new Vector(33, 16, 5);
+    const localPos: Vector = new Vector(11.5, -3, 5);
+    let pos: Vector = sheet.localPositionToWorld(localPos);
     const commandTokens: Array<GameObject> = container.getItems();
     let successCount: number = 0;
     for (let i = 0; i < count; i++) {
