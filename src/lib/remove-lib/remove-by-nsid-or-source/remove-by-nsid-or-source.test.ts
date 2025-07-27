@@ -72,23 +72,3 @@ it("delete card by nsid", () => {
   nsids = NSID.getDeck(deck);
   expect(nsids).toEqual(["type:source.keep/name"]);
 });
-
-it("delete card by scenario", () => {
-  const deck: Card = new MockCard({
-    cardDetails: [
-      new MockCardDetails({ metadata: "type:source.dele/name|scenario" }),
-      new MockCardDetails({ metadata: "type:source.keep/name" }),
-    ],
-  });
-
-  let nsids: Array<string> = [];
-  nsids = NSID.getDeck(deck);
-  expect(nsids).toEqual([
-    "type:source.dele/name|scenario",
-    "type:source.keep/name",
-  ]);
-
-  new RemoveByNsidOrSource().removeAll();
-  nsids = NSID.getDeck(deck);
-  expect(nsids).toEqual(["type:source.keep/name"]);
-});

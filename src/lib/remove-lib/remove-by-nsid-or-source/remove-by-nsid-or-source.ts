@@ -21,9 +21,6 @@ export class RemoveByNsidOrSource {
       const source = parsed.sourceParts.join(".");
       remove = this._removeSources.has(source);
     }
-    if (nsid.endsWith("|scenario")) {
-      return true;
-    }
     return remove;
   };
 

@@ -66,7 +66,7 @@ it("validate NSIDs appear in assets/Templates", () => {
 
   const missing: Array<string> = [];
   for (const nsid of nsids) {
-    if (!templateNsids.has(nsid) && !templateNsids.has(nsid + ".1")) {
+    if (!templateNsids.has(nsid)) {
       missing.push(nsid);
     }
   }

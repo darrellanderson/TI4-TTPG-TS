@@ -55,5 +55,9 @@ export const SOURCE_TO_REMOVE_NSIDS: Record<string, Array<string>> = {
     "card.technology.green:codex.ordinian/x89-bacterial-weapon.omega",
     "card.technology.red:base/magen-defense-grid",
     "card.technology.red:codex.ordinian/magen-defense-grid.omega",
+    "card.objective.public-1:codex.liberation/liberate-ordinian",
+    "card.objective.public-2:codex.liberation/control-ordinian",
+    "card.technology.red:codex.liberation/error-error",
+    "card.technology.yellow:codex.liberation/null-reference",
   ],
 };
