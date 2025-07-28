@@ -145,3 +145,16 @@ it("set turn order", () => {
   const turnOrder: Array<number> = TI4.turnOrder.getTurnOrder();
   expect(turnOrder).toEqual([10, 11, 12, 13, 14, 15]);
 });
+
+it("dealMinorFactionAlliances", () => {
+  const draftState: DraftState = new DraftState("@test/test")
+    .setOpaqueType("minorFactions")
+    .setOpaques(["1", "2"])
+    .setOpaqueToPlayerSlot(0, 10);
+
+  const draftActivityFinish: DraftActivityFinish = new DraftActivityFinish(
+    draftState
+  );
+
+  draftActivityFinish.dealMinorFactionAlliances();
+});

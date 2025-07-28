@@ -67,3 +67,9 @@ it("custom action handler", () => {
   const player: Player = new MockPlayer();
   card._customActionAsPlayer(player, MINOR_FACTIONS_ACTION_NAME);
 });
+
+it("_dealAllianceCard", () => {
+  const systemTileObj: GameObject = MockGameObject.simple("tile.system:base/1");
+  const card: MockCard = MockCard.simple("card.alliance:base/1");
+  RightClickMinorFactions._dealAllianceCard(card, systemTileObj);
+});

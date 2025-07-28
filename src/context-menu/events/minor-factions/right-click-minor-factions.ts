@@ -156,16 +156,23 @@ export class RightClickMinorFactions extends AbstractRightClickCard {
               return allianceCardNsids.includes(nsid);
             }
           );
-          if (card) {
-            const above = systemTileObj.getPosition().add([0, 0, 10]);
-            card.setRotation([0, 0, 180]);
-            card.setPosition(above);
-            card.snapToGround();
-          }
+          RightClickMinorFactions._dealAllianceCard(card, systemTileObj);
         }
       }
     }
 
     DeletedItemsContainer.destroyWithoutCopying(deck);
+  }
+
+  static _dealAllianceCard(
+    card: Card | undefined,
+    systemTileObj: GameObject
+  ): void {
+    if (card) {
+      const above = systemTileObj.getPosition().add([0, 0, 10]);
+      card.setRotation([0, 0, 180]);
+      card.setPosition(above);
+      card.snapToGround();
+    }
   }
 }
