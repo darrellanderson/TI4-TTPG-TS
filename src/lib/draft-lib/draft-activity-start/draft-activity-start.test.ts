@@ -9,6 +9,8 @@ import {
   DraftActivityStart,
 } from "./draft-activity-start";
 import { DraftActivityStartParams } from "./draft-activity-start-params";
+import { Faction } from "../../faction-lib/faction/faction";
+import { MinorFactionsDraft } from "../drafts/minor-factions";
 
 class MyDraft implements IDraft {
   public isEnabled(): boolean {
@@ -107,8 +109,8 @@ it("createDraftState (generate all)", () => {
   expect(errors).toEqual([]);
 });
 
-it("createDraftState (generate all, too few)", () => {
-  TI4.config.setPlayerCount(6);
+it("createDraftState (generate all)", () => {
+  TI4.config.setPlayerCount(2);
   const params: DraftActivityStartParams = {
     namespaceId: "@test/test",
     draft: new MyDraft(),
@@ -119,11 +121,23 @@ it("createDraftState (generate all, too few)", () => {
   const errors: Array<string> = [];
   const draftActivityStart = new DraftActivityStart();
   const success: boolean = draftActivityStart.start(params, errors);
-  expect(success).toBe(false);
-  expect(errors).toEqual([
-    "Slice count (2) is less than player count (6)",
-    "Faction count (2) is less than player count (6)",
-  ]);
+  expect(success).toBe(true);
+  expect(errors).toEqual([]);
+});
+
+it("createDraftState (minor factions)", () => {
+  TI4.config.setPlayerCount(6);
+  const params: DraftActivityStartParams = {
+    namespaceId: "@test/test",
+    draft: new MinorFactionsDraft(),
+    numSlices: 6,
+    numFactions: 6,
+    config: "",
+  };
+  const errors: Array<string> = [];
+  const draftActivityStart = new DraftActivityStart();
+  const success: boolean = draftActivityStart.start(params, errors);
+  expect(success).toBe(true);
 });
 
 it("createDraftState (parse all)", () => {
@@ -152,4 +166,16 @@ it("createDraftState (parse all)", () => {
 it("resume (not in progress)", () => {
   const draftActivityStart = new DraftActivityStart();
   expect(() => draftActivityStart.resume()).toThrow();
+});
+
+it("getMinorFactions", () => {
+  expect(TI4.config.sources).toContain("codex.vigil");
+  const arborec: Faction = TI4.factionRegistry.getByNsidOrThrow(
+    "faction:base/arborec"
+  );
+  const keleres: Faction = TI4.factionRegistry.getByNsidOrThrow(
+    "faction:codex.vigil/keleres-xxcha"
+  );
+  const factions: Array<Faction> = [arborec, keleres];
+  DraftActivityStart.getMinorFactions(factions);
 });

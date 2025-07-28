@@ -19,8 +19,11 @@ export class AdvanceNoWhensAfters {
     this._agendaState = agendaState;
   }
 
-  activate(): this {
-    if (!this._active && GameWorld.getExecutionReason() !== "unittest") {
+  activate(force?: boolean): this {
+    if (
+      !this._active &&
+      (force || GameWorld.getExecutionReason() !== "unittest")
+    ) {
       this._active = true;
       this._agendaState.onAgendaStateChanged.add(
         this._onAgendaStateChangedHandler

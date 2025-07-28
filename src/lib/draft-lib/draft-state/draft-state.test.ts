@@ -224,4 +224,7 @@ it("isComplete", () => {
 
   state.setOpaqueType("minorFactions");
   expect(state.isComplete()).toBe(false);
+
+  state.setOpaqueToPlayerSlot(0, 4);
+  expect(state.isComplete()).toBe(true);
 });

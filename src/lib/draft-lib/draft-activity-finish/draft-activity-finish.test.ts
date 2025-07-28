@@ -40,6 +40,17 @@ it("finishAll", () => {
   draftActivityFinish.finishAll();
 });
 
+it("finishAll (minor factions)", () => {
+  const draftState: DraftState = new DraftState("@test/test")
+    .setSpeakerIndex(0)
+    .setOpaqueType("minorFactions")
+    .setOpaques(["1", "2"]);
+  const draftActivityFinish: DraftActivityFinish = new DraftActivityFinish(
+    draftState
+  );
+  draftActivityFinish.finishAll();
+});
+
 it("movePlayersToSeats", () => {
   expect(TI4.playerSeats.getAllSeats().length).toBe(6);
 
@@ -147,6 +158,7 @@ it("set turn order", () => {
 });
 
 it("dealMinorFactionAlliances", () => {
+  MockGameObject.simple("tile.system:base/1");
   const draftState: DraftState = new DraftState("@test/test")
     .setOpaqueType("minorFactions")
     .setOpaques(["1", "2"])

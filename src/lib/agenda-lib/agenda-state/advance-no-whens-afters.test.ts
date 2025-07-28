@@ -151,6 +151,26 @@ it("_maybeAdvancePhaseWhens (wrong phase)", () => {
   expect(agendaState.getPhase()).toBe("voting");
 });
 
+it("_maybeAdvancePhaseWhens (uncommited when)", () => {
+  const order: Array<PlayerSlot> = [10, 11];
+  TI4.turnOrder.setTurnOrder(order, "forward", 10);
+
+  const agendaState: AgendaState = new AgendaState("@test/test");
+  const advanceNoWhensAfters: AdvanceNoWhensAfters = new AdvanceNoWhensAfters(
+    agendaState
+  );
+  agendaState.setPhase("whens");
+  agendaState.setSeatNoWhens(0, "unknown");
+  agendaState.setSeatNoWhens(1, "no");
+
+  expect(advanceNoWhensAfters._isLastPlayerInTurnOrder()).toBe(false);
+
+  const success: boolean = advanceNoWhensAfters._maybeAdvancePhaseWhens();
+  expect(success).toBe(false);
+  expect(agendaState.getPhase()).toBe("whens");
+  expect(TI4.turnOrder.getCurrentTurn()).toBe(10);
+});
+
 it("_maybeAdvancePhaseWhens (not last in turn order)", () => {
   const order: Array<PlayerSlot> = [10, 11];
   TI4.turnOrder.setTurnOrder(order, "forward", 10);
@@ -160,6 +180,8 @@ it("_maybeAdvancePhaseWhens (not last in turn order)", () => {
     agendaState
   );
   agendaState.setPhase("whens");
+  agendaState.setSeatNoWhens(0, "no");
+  agendaState.setSeatNoWhens(1, "no");
 
   expect(advanceNoWhensAfters._isLastPlayerInTurnOrder()).toBe(false);
 
@@ -227,12 +249,30 @@ it("_maybeAdvancePhaseAfters (wrong phase)", () => {
   expect(agendaState.getPhase()).toBe("whens");
 });
 
+it("_maybeAdvancePhaseAfters (uncommited after)", () => {
+  const order: Array<PlayerSlot> = [10, 11];
+  TI4.turnOrder.setTurnOrder(order, "forward", 10);
+
+  const agendaState: AgendaState = new AgendaState("@test/test");
+  agendaState.setPhase("afters");
+  const advanceNoWhensAfters: AdvanceNoWhensAfters = new AdvanceNoWhensAfters(
+    agendaState
+  );
+
+  const success: boolean = advanceNoWhensAfters._maybeAdvancePhaseAfters();
+  expect(success).toBe(false);
+  expect(agendaState.getPhase()).toBe("afters");
+  expect(TI4.turnOrder.getCurrentTurn()).toBe(10);
+});
+
 it("_maybeAdvancePhaseAfters (not last in turn order)", () => {
   const order: Array<PlayerSlot> = [10, 11];
   TI4.turnOrder.setTurnOrder(order, "forward", 10);
 
   const agendaState: AgendaState = new AgendaState("@test/test");
   agendaState.setPhase("afters");
+  agendaState.setSeatNoAfters(0, "no");
+  agendaState.setSeatNoAfters(1, "no");
   const advanceNoWhensAfters: AdvanceNoWhensAfters = new AdvanceNoWhensAfters(
     agendaState
   );
@@ -398,6 +438,43 @@ it("_maybeSkipTurnAfters (skip)", () => {
   expect(TI4.turnOrder.getCurrentTurn()).toBe(11);
 });
 
+it("_maybeSkipTurnVoting (wrong phase)", () => {
+  const agendaState: AgendaState = new AgendaState("@test/test");
+  agendaState.setPhase("whens");
+  const advanceNoWhensAfters: AdvanceNoWhensAfters = new AdvanceNoWhensAfters(
+    agendaState
+  );
+  const success: boolean = advanceNoWhensAfters._maybeSkipTurnVoting();
+  expect(success).toBe(false);
+});
+
+it("_maybeSkipTurnVoting (no skip)", () => {
+  const order: Array<PlayerSlot> = [10, 11];
+  TI4.turnOrder.setTurnOrder(order, "forward", 10);
+
+  const agendaState: AgendaState = new AgendaState("@test/test");
+  agendaState.setPhase("voting");
+  const advanceNoWhensAfters: AdvanceNoWhensAfters = new AdvanceNoWhensAfters(
+    agendaState
+  );
+  const success: boolean = advanceNoWhensAfters._maybeSkipTurnVoting();
+  expect(success).toBe(false);
+});
+
+it("_maybeSkipTurnVoting (skip)", () => {
+  const order: Array<PlayerSlot> = [10, 11];
+  TI4.turnOrder.setTurnOrder(order, "forward", 10);
+
+  const agendaState: AgendaState = new AgendaState("@test/test");
+  agendaState.setPhase("voting");
+  const advanceNoWhensAfters: AdvanceNoWhensAfters = new AdvanceNoWhensAfters(
+    agendaState
+  );
+  agendaState.setSeatVotesLocked(0, true);
+  const success: boolean = advanceNoWhensAfters._maybeSkipTurnVoting();
+  expect(success).toBe(true);
+});
+
 it("maybeAdvance", () => {
   const seats: Array<number> = TI4.playerSeats
     .getAllSeats()
@@ -413,4 +490,13 @@ it("maybeAdvance", () => {
   const success: boolean = advanceNoWhensAfters.maybeAdvance();
   expect(success).toBe(false);
   expect(agendaState.getPhase()).toBe("voting");
+});
+
+it("activate", () => {
+  const agendaState: AgendaState = new AgendaState("@test/test");
+  const advanceNoWhensAfters: AdvanceNoWhensAfters = new AdvanceNoWhensAfters(
+    agendaState
+  );
+  advanceNoWhensAfters.activate(true);
+  agendaState.setPhase("whens");
 });

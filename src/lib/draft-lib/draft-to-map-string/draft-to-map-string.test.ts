@@ -108,7 +108,9 @@ it("static map string", () => {
     .setSpeakerIndex(2)
     .setSliceIndexToPlayerSlot(0, 1)
     .setFactionIndexToPlayerSlot(0, 1)
-    .setSeatIndexToPlayerSlot(0, 1);
+    .setSeatIndexToPlayerSlot(0, 1)
+    .setOpaques(["1"])
+    .setOpaqueToPlayerSlot(0, 1);
 
   const mapStringAndHexToPlayerName: MapStringAndHexToPlayerName =
     DraftToMapString.fromDraftState(state);

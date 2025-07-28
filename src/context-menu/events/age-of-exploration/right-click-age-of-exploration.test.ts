@@ -1,7 +1,10 @@
-import { MockContainer, MockGameObject } from "ttpg-mock";
-import { RightClickAgeOfExploration } from "./right-click-age-of-exploration";
+import { MockCard, MockContainer, MockGameObject, MockPlayer } from "ttpg-mock";
+import {
+  AGE_OF_EXPLORATION_ACTION_NAME,
+  RightClickAgeOfExploration,
+} from "./right-click-age-of-exploration";
 import { System } from "../../../lib/system-lib/system/system";
-import { Vector } from "@tabletop-playground/api";
+import { Player, Vector } from "@tabletop-playground/api";
 
 it("_getAvailableLegalSystems", () => {
   const systemTileObj = MockGameObject.simple("tile.system:base/19");
@@ -76,4 +79,16 @@ it("_colorFromRoll", () => {
 
   color = rightClickAgeOfExploration._colorFromRoll(5);
   expect(color).toBe("blue");
+});
+
+it("context menu", () => {
+  const rightClickAgeOfExploration = new RightClickAgeOfExploration();
+  rightClickAgeOfExploration.init();
+
+  const card: MockCard = MockCard.simple(
+    "card.event:codex.liberation/age-of-exploration"
+  );
+  process.flushTicks();
+  const player: Player = new MockPlayer();
+  card._customActionAsPlayer(player, AGE_OF_EXPLORATION_ACTION_NAME);
 });

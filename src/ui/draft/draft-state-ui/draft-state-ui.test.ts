@@ -31,6 +31,8 @@ it("constructor", () => {
     TI4.factionRegistry.getByNsidOrThrow("faction:codex.vigil/keleres-argent"),
   ]);
   draftState.setSpeakerIndex(0);
+  draftState.setOpaqueType("minorFactions");
+  draftState.setOpaques(["1"]);
 
   const scale: number = 1;
   const draftStateUi = new DraftStateUI(draftState, scale);

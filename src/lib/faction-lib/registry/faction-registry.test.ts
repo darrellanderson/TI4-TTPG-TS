@@ -134,6 +134,9 @@ it("loadDefaultData", () => {
   registry.loadDefaultData();
   expect(registry.getByNsid("faction:base/arborec")).toBeDefined();
   expect(registry.getByNsidOrThrow("faction:base/arborec")).toBeDefined();
+  expect(
+    registry.getByNsidOrThrow("faction:codex.vigil/keleres-argent")
+  ).toBeDefined();
   expect(registry.getAllFactions()).not.toHaveLength(0);
 });
 
