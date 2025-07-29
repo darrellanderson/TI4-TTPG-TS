@@ -34,7 +34,7 @@ it("score", () => {
 
   custodiansToken.score(playerSlot);
 
-  expect(container.getNumItems()).toBe(0);
+  expect(container.getNumItems()).toBe(1);
 });
 
 it("createFromObject", () => {

@@ -777,6 +777,7 @@ export class CombatRoll {
           hex: this._params.hex,
           activatingPlayerSlot: this._params.activatingPlayerSlot,
           rollingPlayerSlot: 19,
+          planetName: this._params.planetName,
         });
         anonRoll.roll(player, position);
       }
