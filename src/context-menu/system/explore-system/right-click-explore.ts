@@ -251,6 +251,7 @@ export class RightClickExplore implements IGlobal {
   }
 
   _exploreFrontierToken(frontierTokenObj: GameObject, player: Player): void {
+    const pos: Vector = frontierTokenObj.getPosition();
     DeletedItemsContainer.destroyWithoutCopying(frontierTokenObj);
 
     let deck: Card | undefined = this._getExploreDeck("frontier");
@@ -264,8 +265,6 @@ export class RightClickExplore implements IGlobal {
       }
     }
     if (card) {
-      const pos: Vector = frontierTokenObj.getPosition();
-
       const system: System | undefined = TI4.systemRegistry.getByPosition(pos);
       if (system) {
         const cardNsid: string = NSID.get(card);
