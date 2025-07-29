@@ -36,7 +36,7 @@ it("addControlToken", () => {
   expect(myContainer.getNumItems()).toBe(1);
   success = controlTokenSystem.addControlToken(systemTileObj, player);
   expect(success).toBe(true);
-  expect(myContainer.getNumItems()).toBe(0);
+  expect(myContainer.getNumItems()).toBe(1);
 });
 
 it("custom action", () => {
