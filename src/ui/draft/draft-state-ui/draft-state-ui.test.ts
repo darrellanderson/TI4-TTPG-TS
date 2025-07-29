@@ -141,6 +141,25 @@ it("_createSeatClickHandler", () => {
   expect(draftState.getSeatIndexToPlayerSlot(sliceIndex)).toBe(10);
 });
 
+it("_createOpaqueClickHandler", () => {
+  const draftState: DraftState = new DraftState("@test/draft-state");
+  draftState.setOpaqueType("minorFactions");
+  draftState.setOpaques(["1", "2", "3"]);
+
+  const handler: (button: ContentButton, player: Player) => void =
+    DraftStateUI._createOpaqueClickHandler(draftState, 0);
+  handler(new ContentButton(), new MockPlayer({ slot: 10 }));
+
+  // Click again to clear.
+  jest.spyOn(Date, "now").mockReturnValue(Date.now() + 1000); // dodge throttling
+  handler(new ContentButton(), new MockPlayer({ slot: 10 }));
+
+  // Select a different item, click to swap.
+  draftState.setOpaqueToPlayerSlot(1, 10);
+  jest.spyOn(Date, "now").mockReturnValue(Date.now() + 2000); // dodge throttling
+  handler(new ContentButton(), new MockPlayer({ slot: 10 }));
+});
+
 it("_createFinishClickHandler", () => {
   const draftState: DraftState = new DraftState("@test/draft-state");
   const handler: (button: Button, player: Player) => void =
