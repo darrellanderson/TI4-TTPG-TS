@@ -51,7 +51,14 @@ export class ControlTokenSystem implements IGlobal {
       return false;
     }
     const pos: Vector = systemTileObj.getPosition().add([0, 0, 10]);
-    const token: GameObject | undefined = container.takeAt(0, pos);
+    const showAnimation: boolean = true;
+    const keep: boolean = true;
+    const token: GameObject | undefined = container.takeAt(
+      0,
+      pos,
+      showAnimation,
+      keep
+    );
     if (!token) {
       return false;
     }

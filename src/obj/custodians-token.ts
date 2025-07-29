@@ -41,7 +41,14 @@ export class CustodiansToken {
     );
     if (container) {
       const pos: Vector = container.getPosition().add([0, 0, 10]);
-      const controlToken: GameObject | undefined = container.takeAt(0, pos);
+      const showAnimation: boolean = true;
+      const keep: boolean = true;
+      const controlToken: GameObject | undefined = container.takeAt(
+        0,
+        pos,
+        showAnimation,
+        keep
+      );
       if (controlToken) {
         const controlTokenExtent: Vector = controlToken.getExtent(false, false);
         const custodiansTokenExtent: Vector = this._obj.getExtent(false, false);

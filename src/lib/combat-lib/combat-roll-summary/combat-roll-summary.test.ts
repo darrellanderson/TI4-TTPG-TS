@@ -110,7 +110,7 @@ it("getSimpleSummary", () => {
   expect(
     CombatRollSummary.getSimpleSummary(combatRoll, unitRollsSummaries)
   ).toEqual(
-    "green rolled 2 hits: Carrier (9|10): 9##\nModifiers: no modifiers"
+    "green rolled Space Combat 2 hits: Carrier (9|10): 9##\nModifiers: no modifiers"
   );
 });
 
@@ -163,7 +163,9 @@ it("getSimpleSummary (extra dice)", () => {
 
   expect(
     CombatRollSummary.getSimpleSummary(combatRoll, unitRollsSummaries)
-  ).toEqual("green rolled 1 hits: War Sun (9x3): 9#\nModifiers: no modifiers");
+  ).toEqual(
+    "green rolled Space Combat 1 hits: War Sun (9x3): 9#\nModifiers: no modifiers"
+  );
 });
 
 it("broadcast", () => {
