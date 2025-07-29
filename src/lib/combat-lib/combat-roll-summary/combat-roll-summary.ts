@@ -1,7 +1,7 @@
 import { Color, world } from "@tabletop-playground/api";
 import { Broadcast, DiceGroup, DiceParams, DiceResult } from "ttpg-darrell";
 import { CombatAttrs } from "../../unit-lib/unit-attrs/combat-attrs";
-import { CombatRoll } from "../combat-roll/combat-roll";
+import { CombatRoll, CombatRollType } from "../combat-roll/combat-roll";
 import { UnitType } from "../../unit-lib/schema/unit-attrs-schema";
 import { UnitAttrs } from "../../unit-lib/unit-attrs/unit-attrs";
 
@@ -111,7 +111,20 @@ export class CombatRollSummary {
       modifiers.push("no modifiers");
     }
 
-    return `${playerName} rolled ${totalHits} hits: ${combinedUnitResults}\nModifiers: ${modifiers.join(", ")}`;
+    const rollTypeToLabel: Map<CombatRollType, string> = new Map();
+    rollTypeToLabel.set("ambush", "Ambush");
+    rollTypeToLabel.set("spaceCannonOffense", "Space Cannon Offense");
+    rollTypeToLabel.set("antiFighterBarrage", "Anti-Fighter Barrage");
+    rollTypeToLabel.set("spaceCombat", "Space Combat");
+    rollTypeToLabel.set("bombardment", "Bombardment");
+    rollTypeToLabel.set("spaceCannonDefense", "Space Cannon Defense");
+    rollTypeToLabel.set("groundCombat", "Ground Combat");
+    rollTypeToLabel.set("production", "Production");
+    const rollType: string | undefined = rollTypeToLabel.get(
+      combatRoll.getRollType()
+    );
+
+    return `${playerName} rolled ${rollType} ${totalHits} hits: ${combinedUnitResults}\nModifiers: ${modifiers.join(", ")}`;
   }
 
   /**
