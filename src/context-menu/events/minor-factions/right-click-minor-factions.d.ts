@@ -1,5 +1,6 @@
 import { Card, GameObject } from "@tabletop-playground/api";
 import { AbstractRightClickCard } from "ttpg-darrell";
+import { System } from "../../../lib/system-lib/system/system";
 export declare const MINOR_FACTIONS_ACTION_NAME: string;
 /**
  * Give each player:
@@ -18,4 +19,5 @@ export declare class RightClickMinorFactions extends AbstractRightClickCard {
     _dealHomeSystemTiles(): void;
     static dealAllianceCards(systemTileObjs: Array<GameObject>): void;
     static _dealAllianceCard(card: Card | undefined, systemTileObj: GameObject): void;
+    static _enableAllTraits(system: System): void;
 }

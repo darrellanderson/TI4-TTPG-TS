@@ -52,6 +52,19 @@ it("faction changed", () => {
   TI4.events.onFactionChanged.trigger(1);
 });
 
+it("system changed", () => {
+  new RightClickExplore();
+
+  MockGameObject.simple("tile.system:base/19");
+  const system: System | undefined =
+    TI4.systemRegistry.getBySystemTileNumber(19);
+  if (!system) {
+    throw new Error("system not found");
+  }
+
+  TI4.events.onSystemChanged.trigger(system);
+});
+
 it("trigger custom action (system)", () => {
   new MockCardHolder({ templateMetadata: "card-holder:base/player-hand" });
   MockGameObject.simple("sheet.faction:pok/naazrokha");

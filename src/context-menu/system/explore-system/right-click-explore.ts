@@ -56,6 +56,10 @@ export class RightClickExplore implements IGlobal {
     }
   };
 
+  private readonly _onSystemChanged = (system: System): void => {
+    this._setSystemCustomActions(system.getObj());
+  };
+
   private readonly _customActionHandler = (
     obj: GameObject,
     player: Player,
@@ -117,6 +121,7 @@ export class RightClickExplore implements IGlobal {
     globalEvents.onObjectCreated.add((obj: GameObject): void => {
       this._maybeSetCustomActions(obj);
     });
+    TI4.events.onSystemChanged.add(this._onSystemChanged);
 
     TI4.events.onFactionChanged.add(this._onFactionsChanged);
   }
@@ -136,13 +141,16 @@ export class RightClickExplore implements IGlobal {
       systemTileObj.onCustomAction.remove(this._customActionHandler);
       systemTileObj.onCustomAction.add(this._customActionHandler);
 
+      const allTraits: boolean =
+        system.getObj().getSavedData("minorFactionsTraits") === "true";
+
       // Regular explore actions.
       for (const planet of system.getPlanets()) {
         const planetName: string = planet.getName();
         for (const trait of ["cultural", "hazardous", "industrial"]) {
           const actionName: string = `*Explore ${planetName} (${trait})`;
           systemTileObj.removeCustomAction(actionName);
-          if (planet.getTraits().includes(trait)) {
+          if (planet.getTraits().includes(trait) || allTraits) {
             systemTileObj.addCustomAction(actionName);
           }
         }

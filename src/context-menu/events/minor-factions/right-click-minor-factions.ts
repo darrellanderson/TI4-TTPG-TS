@@ -158,6 +158,7 @@ export class RightClickMinorFactions extends AbstractRightClickCard {
           );
           RightClickMinorFactions._dealAllianceCard(card, systemTileObj);
         }
+        RightClickMinorFactions._enableAllTraits(system);
       }
     }
 
@@ -174,5 +175,10 @@ export class RightClickMinorFactions extends AbstractRightClickCard {
       card.setPosition(above);
       card.snapToGround();
     }
+  }
+
+  static _enableAllTraits(system: System): void {
+    system.getObj().setSavedData("true", "minorFactionsTraits");
+    TI4.events.onSystemChanged.trigger(system);
   }
 }
