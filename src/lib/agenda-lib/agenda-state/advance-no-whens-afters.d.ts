@@ -8,7 +8,7 @@ export declare class AdvanceNoWhensAfters {
     private _active;
     private readonly _onAgendaStateChangedHandler;
     constructor(agendaState: AgendaState);
-    activate(): this;
+    activate(force?: boolean): this;
     _isLastPlayerInTurnOrder(): boolean;
     _anyUncommitedWhens(): boolean;
     _isWhenPlayed(): boolean;

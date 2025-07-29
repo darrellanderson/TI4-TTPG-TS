@@ -1,4 +1,4 @@
-import { GameObject } from "@tabletop-playground/api";
+import { Card, GameObject } from "@tabletop-playground/api";
 import { AbstractRightClickCard } from "ttpg-darrell";
 export declare const MINOR_FACTIONS_ACTION_NAME: string;
 /**
@@ -17,4 +17,5 @@ export declare class RightClickMinorFactions extends AbstractRightClickCard {
     _getHomeSystemTiles(count: number): Array<GameObject>;
     _dealHomeSystemTiles(): void;
     static dealAllianceCards(systemTileObjs: Array<GameObject>): void;
+    static _dealAllianceCard(card: Card | undefined, systemTileObj: GameObject): void;
 }
