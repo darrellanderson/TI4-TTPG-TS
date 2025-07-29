@@ -40,7 +40,7 @@
     "BackIndex": -2,
     "HiddenIndex": -1,
     "NumHorizontal": 1,
-    "NumVertical": 3,
+    "NumVertical": 6,
     "Width": 8.8,
     "Height": 6.3,
     "Thickness": 0.05,
@@ -55,17 +55,26 @@
     "Indices": [
         0,
         1,
-        2
+        2,
+        3,
+        4,
+        5
     ],
     "CardNames": {
         "0": "Keleres-Argent",
         "1": "Keleres-Mentak",
-        "2": "Keleres-Xxcha"
+        "2": "Keleres-Xxcha",
+        "3": "Naalu Collective",
+        "4": "Xxcha Kingdom",
+        "5": "Yin Brotherhood"
     },
     "CardMetadata": {
         "0": "card.faction-reference:codex.vigil/keleres-argent",
         "1": "card.faction-reference:codex.vigil/keleres-mentak",
-        "2": "card.faction-reference:codex.vigil/keleres-xxcha"
+        "2": "card.faction-reference:codex.vigil/keleres-xxcha",
+        "3": "card.faction-reference:codex.vigil/naalu",
+        "4": "card.faction-reference:codex.vigil/xxcha",
+        "5": "card.faction-reference:codex-vigil/yin"
     },
     "CardTags": {
         "0": [
@@ -75,6 +84,15 @@
             "card-faction-reference"
         ],
         "2": [
+            "card-faction-reference"
+        ],
+        "3": [
+            "card-faction-reference"
+        ],
+        "4": [
+            "card-faction-reference"
+        ],
+        "5": [
             "card-faction-reference"
         ]
     },
