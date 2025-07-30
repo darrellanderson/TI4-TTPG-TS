@@ -180,6 +180,7 @@ export class DraftActivityFinish {
     });
 
     RightClickMinorFactions.dealAllianceCards(systemTileObjs);
+    RightClickMinorFactions.enableExplorationTraits(systemTileObjs);
 
     return this;
   }

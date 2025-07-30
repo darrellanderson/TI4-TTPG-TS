@@ -4,6 +4,7 @@ import {
   Broadcast,
   CardUtil,
   DeletedItemsContainer,
+  Find,
   NSID,
   PlayerSlot,
   Shuffle,
@@ -13,7 +14,8 @@ import { Faction } from "../../../lib/faction-lib/faction/faction";
 import { PlayerSeatType } from "../../../lib/player-lib/player-seats/player-seats";
 import { System } from "../../../lib/system-lib/system/system";
 
-export const MINOR_FACTIONS_ACTION_NAME: string = "*Deal home systems";
+export const ACTION_DEAL_HOME_SYSTEMS: string = "*Deal home systems";
+export const ACTION_DEAL_ALLIANCE_CARDS: string = "*Deal alliance cards";
 
 /**
  * Give each player:
@@ -31,15 +33,23 @@ export class RightClickMinorFactions extends AbstractRightClickCard {
       player: Player,
       identifier: string
     ): void => {
-      if (identifier === MINOR_FACTIONS_ACTION_NAME) {
+      if (identifier === ACTION_DEAL_HOME_SYSTEMS) {
         const playerName: string = TI4.playerName.getByPlayer(player);
         const msg: string = `${playerName} dealing minor faction home systems.`;
         Broadcast.chatAll(msg);
 
-        this._dealHomeSystemTiles();
+        const systemTileObjs: Array<GameObject> = this._dealHomeSystemTiles();
+        RightClickMinorFactions.dealAllianceCards(systemTileObjs);
+        RightClickMinorFactions.enableExplorationTraits(systemTileObjs);
+      } else if (identifier === ACTION_DEAL_ALLIANCE_CARDS) {
+        const systemTileObjs: Array<GameObject> =
+          this._findMinorFactionSystemTileObjs();
+        RightClickMinorFactions.dealAllianceCards(systemTileObjs);
+        RightClickMinorFactions.enableExplorationTraits(systemTileObjs);
       }
     };
-    super(cardNsidPrefix, MINOR_FACTIONS_ACTION_NAME, customActionHandler);
+    super(cardNsidPrefix, ACTION_DEAL_HOME_SYSTEMS, customActionHandler);
+    this.addCustomActionName(ACTION_DEAL_ALLIANCE_CARDS);
   }
 
   _getInPlayFactionHomeSystemNsids(): Set<string> {
@@ -109,7 +119,7 @@ export class RightClickMinorFactions extends AbstractRightClickCard {
     return systemTileObjs;
   }
 
-  _dealHomeSystemTiles(): void {
+  _dealHomeSystemTiles(): Array<GameObject> {
     const systemTileObjs: Array<GameObject> = this._getHomeSystemTiles(
       TI4.config.playerCount
     );
@@ -126,7 +136,38 @@ export class RightClickMinorFactions extends AbstractRightClickCard {
         }
       });
 
-    RightClickMinorFactions.dealAllianceCards(systemTileObjs);
+    return systemTileObjs;
+  }
+
+  /**
+   * Find minor faction home system tiles: home system tiles without a faction sheet.
+   *
+   * @param count
+   * @returns
+   */
+  _findMinorFactionSystemTileObjs(): Array<GameObject> {
+    const systemTileObjs: Array<GameObject> = [];
+    const skipContained: boolean = true;
+    for (const system of TI4.systemRegistry.getAllSystemsWithObjs(
+      skipContained
+    )) {
+      const faction: Faction | undefined =
+        TI4.factionRegistry.getByHomeSystemTileNumber(
+          system.getSystemTileNumber()
+        );
+      if (faction) {
+        const factionSheetNsid: string = faction.getFactionSheetNsid();
+        const factionSheet: GameObject | undefined = new Find().findGameObject(
+          factionSheetNsid,
+          undefined,
+          skipContained
+        );
+        if (!factionSheet) {
+          systemTileObjs.push(system.getObj());
+        }
+      }
+    }
+    return systemTileObjs;
   }
 
   static dealAllianceCards(systemTileObjs: Array<GameObject>): void {
@@ -158,7 +199,6 @@ export class RightClickMinorFactions extends AbstractRightClickCard {
           );
           RightClickMinorFactions._dealAllianceCard(card, systemTileObj);
         }
-        RightClickMinorFactions._enableAllTraits(system);
       }
     }
 
@@ -177,8 +217,19 @@ export class RightClickMinorFactions extends AbstractRightClickCard {
     }
   }
 
-  static _enableAllTraits(system: System): void {
-    system.getObj().setSavedData("true", "minorFactionsTraits");
-    TI4.events.onSystemChanged.trigger(system);
+  static enableExplorationTraits(systemTileObjs: Array<GameObject>): void {
+    for (const systemTileObj of systemTileObjs) {
+      RightClickMinorFactions._enableAllTraits(systemTileObj);
+    }
+  }
+
+  static _enableAllTraits(systemTileObj: GameObject): void {
+    systemTileObj.setSavedData("true", "minorFactionsTraits");
+    const system: System | undefined = TI4.systemRegistry.getBySystemTileObjId(
+      systemTileObj.getId()
+    );
+    if (system) {
+      TI4.events.onSystemChanged.trigger(system);
+    }
   }
 }

@@ -6,9 +6,11 @@ import {
   MockPlayer,
 } from "ttpg-mock";
 import {
-  MINOR_FACTIONS_ACTION_NAME,
+  ACTION_DEAL_ALLIANCE_CARDS,
+  ACTION_DEAL_HOME_SYSTEMS,
   RightClickMinorFactions,
 } from "./right-click-minor-factions";
+import { Faction } from "../../../lib/faction-lib/faction/faction";
 
 it("_getInPlayFactionHomeSystemNsids", () => {
   const nsid: string = "tile.system:base/1";
@@ -56,6 +58,20 @@ it("_dealHomeSystemTiles", () => {
   rightClickMinorFactions._dealHomeSystemTiles();
 });
 
+it("_findMinorFactionSystemTileObjs", () => {
+  const tile1: GameObject = MockGameObject.simple("tile.system:base/1");
+
+  const faction: Faction | undefined =
+    TI4.factionRegistry.getByHomeSystemTileNumber(1);
+  expect(faction).toBeDefined();
+
+  const rightClickMinorFactions = new RightClickMinorFactions();
+  const systemTileObjs: Array<GameObject> =
+    rightClickMinorFactions._findMinorFactionSystemTileObjs();
+  expect(systemTileObjs.length).toBe(1);
+  expect(systemTileObjs).toEqual([tile1]);
+});
+
 it("custom action handler", () => {
   const card: MockCard = MockCard.simple(
     "card.event:codex.liberation/minor-factions"
@@ -65,7 +81,8 @@ it("custom action handler", () => {
   process.flushTicks(); // needed for AbstractRightClickCard
 
   const player: Player = new MockPlayer();
-  card._customActionAsPlayer(player, MINOR_FACTIONS_ACTION_NAME);
+  card._customActionAsPlayer(player, ACTION_DEAL_HOME_SYSTEMS);
+  card._customActionAsPlayer(player, ACTION_DEAL_ALLIANCE_CARDS);
 });
 
 it("_dealAllianceCard", () => {
