@@ -199,6 +199,15 @@ export class DraftStateUI extends AbstractUI {
     };
   };
 
+  static _createZoomedOpaqueUi = (
+    draftState: DraftState,
+    opaque: string
+  ): CreateZoomedUiType => {
+    return (scale: number): AbstractUI => {
+      return new OpaqueUI(opaque, draftState, scale * 3.5);
+    };
+  };
+
   static _getCreatedZoomedMapUi = (
     draftState: DraftState
   ): CreateZoomedUiType => {
@@ -312,11 +321,8 @@ export class DraftStateUI extends AbstractUI {
           );
         opaqueButtons.push(clickable);
 
-        const createZoomedUi: CreateZoomedUiType = (
-          scale2: number
-        ): AbstractUI => {
-          return new OpaqueUI(opaque, draftState, scale2 * 3.5);
-        };
+        const createZoomedUi: CreateZoomedUiType =
+          DraftStateUI._createZoomedOpaqueUi(draftState, opaque);
         const zoomableOpaqueButton = new ZoomableUI(
           clickable,
           scale,

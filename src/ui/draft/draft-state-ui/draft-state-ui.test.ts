@@ -160,6 +160,15 @@ it("_createOpaqueClickHandler", () => {
   handler(new ContentButton(), new MockPlayer({ slot: 10 }));
 });
 
+it("_createZoomedOpaqueUi", () => {
+  const draftState: DraftState = new DraftState(
+    "@test/draft-state"
+  ).setOpaqueType("minorFactions");
+  const createZoomedOpaqueUi: CreateZoomedUiType =
+    DraftStateUI._createZoomedOpaqueUi(draftState, "1");
+  createZoomedOpaqueUi(1);
+});
+
 it("_createFinishClickHandler", () => {
   const draftState: DraftState = new DraftState("@test/draft-state");
   const handler: (button: Button, player: Player) => void =
