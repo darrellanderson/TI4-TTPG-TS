@@ -59,6 +59,16 @@ it("static schemaToNsid (missing nsidName)", () => {
   }).toThrow();
 });
 
+it("static schemaToNsid (override)", () => {
+  const nsid = UnitAttrs.schemaToNsid("my-source", {
+    name: "my-name",
+    unit: "carrier",
+    nsidName: "__use-override__", // required field for schemaToNsid
+    overrideNsid: "my-type:my-source/my-nsid-name",
+  });
+  expect(nsid).toBe("my-type:my-source/my-nsid-name");
+});
+
 it("static sortByOverrideOrder", () => {
   const attrs: Array<UnitAttrsSchemaType> = [
     { name: "my-name-b", unit: "carrier", nsidName: "b" },

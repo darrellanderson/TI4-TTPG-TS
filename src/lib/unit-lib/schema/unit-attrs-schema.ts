@@ -46,6 +46,7 @@ export const UnitAttrsSchema = z
     // Faction attr or tech ("card.technology.unit:{source}/{nsidName}").
     // Missing: base unit, "x": faction base unit, "x-2": unit upgrade.
     nsidName: NsidNameSchema.optional(),
+    overrideNsid: z.string().optional(), // full nsid, including type:source/nsidName
 
     cost: z.number().optional(),
     producePerCost: z.number().optional(), // e.g. 2 for fighters
@@ -66,6 +67,8 @@ export const UnitAttrsSchema = z
 
     // Destroyer Strike Wing Alpha 2's AFB can destroy infantry in space.
     afbDestroyInfantryInSpace: z.number().optional(),
+
+    onlyIfFaceDown: z.boolean().optional(), // apply unit attrs only if the card is face down
   })
   .strict()
   .readonly();

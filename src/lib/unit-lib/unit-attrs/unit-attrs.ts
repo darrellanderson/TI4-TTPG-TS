@@ -56,7 +56,9 @@ export class UnitAttrs {
     }
 
     const nsidNameFirstPart: string | undefined = schema.nsidName.split(".")[0];
-    if (nsidNameFirstPart && nsidNameFirstPart.endsWith("-2")) {
+    if (schema.overrideNsid) {
+      return schema.overrideNsid; // full nsid, including type:source/nsidName
+    } else if (nsidNameFirstPart && nsidNameFirstPart.endsWith("-2")) {
       return `card.technology.unit-upgrade:${source}/${schema.nsidName}`;
     } else if (schema.unit === "mech") {
       return `card.leader.mech:${source}/${schema.nsidName}`;

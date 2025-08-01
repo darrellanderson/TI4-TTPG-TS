@@ -6,7 +6,7 @@ import {
   MockPlayer,
   MockVector,
 } from "ttpg-mock";
-import { CardUtil, DiceParams, DiceResult } from "ttpg-darrell";
+import { CardUtil, DiceParams, DiceResult, Facing } from "ttpg-darrell";
 
 import { CombatAttrs } from "../../unit-lib/unit-attrs/combat-attrs";
 import {
@@ -242,10 +242,62 @@ it("_findUnitAttrOverrides (standard unit upgrade)", () => {
     new CardUtil().isLooseCard(card, allowFaceDown, rejectSnapPointTags)
   ).toBe(true);
 
-  const overrides: Array<UnitAttrsSchemaType> =
+  let overrides: Array<UnitAttrsSchemaType> =
     combatRoll._findUnitAttrOverrides(2);
-  const names: Array<string> = overrides.map((override) => override.name);
+  let names: Array<string> = overrides.map((override) => override.name);
   expect(names).toEqual(["Carrier II"]);
+
+  // Make sure face down cards are not included.
+  card.flipOrUpright();
+  expect(Facing.isFaceUp(card)).toBe(false);
+  overrides = combatRoll._findUnitAttrOverrides(2);
+  names = overrides.map((override) => override.name);
+  expect(names).toEqual([]);
+});
+
+it("_findUnitAttrOverrides (only if face down)", () => {
+  // Need a card holder to be closest to assign cards.
+  new MockCardHolder({ owningPlayerSlot: 2 });
+
+  const params: CombatRollParams = {
+    rollType: "spaceCombat",
+    hex: "<0,0,0>",
+    activatingPlayerSlot: 1,
+    rollingPlayerSlot: 2,
+  };
+  const combatRoll: CombatRoll = new CombatRoll(params);
+
+  const schema: UnitAttrsSchemaType = {
+    name: "Only If Face Down",
+    unit: "carrier",
+    overrideNsid: "my-type:my-source/only-if-face-down",
+    nsidName: "__use-override__", // required field for schemaToNsid
+    onlyIfFaceDown: true, // apply only if the card is face down
+  };
+  TI4.unitAttrsRegistry.load("my-source", [schema]);
+
+  const nsid: string = "my-type:my-source/only-if-face-down";
+  expect(nsid).toEqual(UnitAttrs.schemaToNsid("my-source", schema));
+  expect(TI4.unitAttrsRegistry.rawByNsid(nsid)).toBeDefined();
+
+  const card: Card = MockCard.simple(nsid);
+  expect(card.isFaceUp()).toBe(true);
+  const allowFaceDown: boolean = false;
+  const rejectSnapPointTags: Array<string> = [];
+  expect(
+    new CardUtil().isLooseCard(card, allowFaceDown, rejectSnapPointTags)
+  ).toBe(true);
+
+  let overrides: Array<UnitAttrsSchemaType> =
+    combatRoll._findUnitAttrOverrides(2);
+  let names: Array<string> = overrides.map((override) => override.name);
+  expect(names).toEqual([]);
+
+  card.flipOrUpright();
+  expect(Facing.isFaceUp(card)).toBe(false);
+  overrides = combatRoll._findUnitAttrOverrides(2);
+  names = overrides.map((override) => override.name);
+  expect(names).toEqual(["Only If Face Down"]);
 });
 
 it("_findUnitModifiers (self, opponent)", () => {

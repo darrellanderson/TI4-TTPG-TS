@@ -14,6 +14,7 @@ import {
   DiceGroupParams,
   DiceParams,
   DiceResult,
+  Facing,
   Find,
   HexType,
   NSID,
@@ -215,14 +216,24 @@ export class CombatRoll {
       if (attrs) {
         let useAttrs: boolean = true;
         if (obj instanceof Card) {
-          const allowFaceDown: boolean = false;
+          const allowFaceDown: boolean = true;
           const rejectSnapPointTags: Array<string> = ["discard"];
           useAttrs = this._cardUtil.isLooseCard(
             obj,
             allowFaceDown,
             rejectSnapPointTags
           );
+          if (useAttrs) {
+            const isFaceUp: boolean = Facing.isFaceUp(obj);
+            if (attrs.onlyIfFaceDown && isFaceUp) {
+              useAttrs = false; // only apply if face down
+            }
+            if (!attrs.onlyIfFaceDown && !isFaceUp) {
+              useAttrs = false; // only apply if face up
+            }
+          }
         }
+
         if (useAttrs) {
           const pos: Vector = obj.getPosition();
           const closest: number = this.find.closestOwnedCardHolderOwner(pos);
