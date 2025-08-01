@@ -110,6 +110,9 @@ import { WhisperSpy } from "../lib/streamer-lib/whisper-spy/whisper-spy";
 import { RightClickAgeOfExploration } from "../context-menu/events/age-of-exploration/right-click-age-of-exploration";
 import { RightClickMinorFactions } from "../context-menu/events/minor-factions/right-click-minor-factions";
 
+// Breakthroughs
+import { RightClickYinAscendant } from "../context-menu/breakthroughs/yin-ascendant/right-click-yin-ascendant";
+
 import { LOCALE_CONTENT_MENUS } from "../locale/locale-context-menus";
 
 import { NSID_TO_TEMPLATE_ID } from "../nsid/nsid-to-template-id";
@@ -244,6 +247,7 @@ export function resetGlobalThisTI4(): TI4Class {
     new RightClickScorePublic(),
     new RightClickSpecOps2(),
     new RightClickStellarConverter(),
+    new RightClickYinAscendant(),
     new RunInjectScript(),
     new RSwapSplitCombine(),
     new ShuffleDecks(),

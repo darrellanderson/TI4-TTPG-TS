@@ -10,9 +10,9 @@ export const ACTION_FETCH_STELLAR_CONVERTER: string =
   "*Fetch Stellar Converter Token";
 
 export const STELLAR_CONVERTER_NSID: string =
-  "card.relic:codex.affinity/nanoforge";
+  "card.relic:pok/stellar-converter";
 export const STELLAR_CONVERTER_TOKEN_NSID: string =
-  "token.attachment.planet:codex.affinity/nanoforge";
+  "token.attachment.planet:pok/stellar-converter";
 
 export class RightClickStellarConverter extends AbstractRightClickCard {
   constructor() {
