@@ -33,7 +33,7 @@ export class RightClickYinAscendant extends AbstractRightClickCard {
       }
     };
     super(
-      "card.breakthrough:fractured-edge/yin-ascendant",
+      "card.breakthrough:thunders-edge/yin-ascendant",
       ACTION_YIN_ASCENDANT,
       customActionHandler
     );

@@ -11,7 +11,7 @@ it("constructor/init/event", () => {
   rightClickYinAscendant.init();
 
   const card: MockCard = MockCard.simple(
-    "card.breakthrough:fractured-edge/yin-ascendant"
+    "card.breakthrough:thunders-edge/yin-ascendant"
   );
   process.flushTicks(); // register the custom action handler
 
