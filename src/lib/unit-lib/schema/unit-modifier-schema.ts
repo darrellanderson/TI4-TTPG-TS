@@ -8,6 +8,7 @@ export const UnitModifierCardClass = z
     "agenda",
     "agent",
     "alliance",
+    "breakthrough",
     "commander",
     "event",
     "faction-ability", // not a card

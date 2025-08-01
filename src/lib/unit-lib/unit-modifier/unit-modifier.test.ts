@@ -44,6 +44,14 @@ it("static schemaToNsid", () => {
   );
 
   trigger = {
+    cardClass: "breakthrough",
+    nsidName: "my-nsid-name",
+  };
+  expect(UnitModifier.schemaTriggerToNsid("my-source", trigger)).toBe(
+    "card.breakthrough:my-source/my-nsid-name"
+  );
+
+  trigger = {
     cardClass: "commander",
     nsidName: "my-nsid-name",
   };

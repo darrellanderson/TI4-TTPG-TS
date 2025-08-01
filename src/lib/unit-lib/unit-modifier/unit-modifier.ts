@@ -21,6 +21,7 @@ export class UnitModifier {
       case "action":
       case "agenda":
       case "alliance":
+      case "breakthrough":
       case "event":
       case "promissory":
       case "relic":
