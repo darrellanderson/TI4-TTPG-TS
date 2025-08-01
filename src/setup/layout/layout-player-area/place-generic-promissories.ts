@@ -45,10 +45,8 @@ export class PlaceGenericPromissories {
   }
 
   _getPromissoryDeck(): Card {
-    const deckNsids: Array<string> = Spawn.getAllNsids().filter(
-      (nsid: string) => nsid.startsWith("card.promissory")
-    );
-    const deck: Card = Spawn.spawnMergeDecksOrThrow(deckNsids);
+    const deck: Card =
+      Spawn.spawnMergeDecksWithNsidPrefixOrThrow("card.promissory");
     return deck;
   }
 

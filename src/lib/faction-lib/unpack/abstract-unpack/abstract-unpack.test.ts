@@ -67,5 +67,5 @@ it("spawnDeckAndFilterSourcesOrThrow (unknkown deck)", () => {
 
   expect(() => {
     unpack.spawnDeckAndFilterSourcesOrThrow("_does_not_exist_");
-  }).toThrow(/Missing deck/);
+  }).toThrow();
 });

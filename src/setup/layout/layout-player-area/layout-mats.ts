@@ -66,12 +66,11 @@ export class LayoutMats {
 
   _spawnTechDeck(snapPoint: SnapPoint | undefined): void {
     if (snapPoint) {
-      const nsids: Array<string> = Spawn.getAllNsids().filter((nsid: string) =>
-        nsid.startsWith("card.technology")
-      );
       const pos: Vector = snapPoint.getGlobalPosition().add([0, 0, 10]);
-
-      const deck: GameObject = Spawn.spawnMergeDecksOrThrow(nsids, pos);
+      const deck: GameObject = Spawn.spawnMergeDecksWithNsidPrefixOrThrow(
+        "card.technology",
+        pos
+      );
 
       // Remove faction tech.
       if (deck instanceof Card) {

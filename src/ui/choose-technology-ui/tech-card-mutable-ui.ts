@@ -105,11 +105,11 @@ export class TechCardMutableUI extends ZoomableUiFullyClickable {
    * @returns
    */
   setCardNsid(techNsid: string): void {
-    const nsids: Array<string> = Spawn.getAllNsids().filter((nsid: string) =>
-      nsid.startsWith("card.technology")
-    );
     const pos: Vector = new Vector(0, 0, 100);
-    const deck: GameObject = Spawn.spawnMergeDecksOrThrow(nsids, pos);
+    const deck: GameObject = Spawn.spawnMergeDecksWithNsidPrefixOrThrow(
+      "card.technology",
+      pos
+    );
 
     if (deck instanceof Card) {
       const card: Card | undefined = this._cardUitl.filterCards(

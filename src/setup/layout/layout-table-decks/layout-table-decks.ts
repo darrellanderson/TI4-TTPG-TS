@@ -18,12 +18,11 @@ export class LayoutTableDecks {
       throw new Error(`Snap point not found: ${snapPointTag}`);
     }
 
-    const nsids: Array<string> = Spawn.getAllNsids().filter((nsid: string) =>
-      nsid.startsWith(nsidPrefix)
-    );
     const pos: Vector = snapPoint.getGlobalPosition().add([0, 0, 10]);
-
-    const deck: GameObject = Spawn.spawnMergeDecksOrThrow(nsids, pos);
+    const deck: GameObject = Spawn.spawnMergeDecksWithNsidPrefixOrThrow(
+      nsidPrefix,
+      pos
+    );
     deck.snapToGround();
     deck.snap();
   }

@@ -174,10 +174,8 @@ export class RightClickMinorFactions extends AbstractRightClickCard {
     const cardUtil: CardUtil = new CardUtil();
 
     // Spawn alliance deck.
-    const nsids: Array<string> = Spawn.getAllNsids().filter((nsid: string) =>
-      nsid.startsWith("card.alliance:")
-    );
-    const deck: Card = Spawn.spawnMergeDecksOrThrow(nsids);
+    const deck: Card =
+      Spawn.spawnMergeDecksWithNsidPrefixOrThrow("card.alliance:");
 
     // Remove any sources/nsids based on game config.
     TI4.removeRegistry.createRemoveFromRegistryAndConfig().removeOne(deck);
