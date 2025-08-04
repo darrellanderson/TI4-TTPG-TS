@@ -6,6 +6,27 @@ import { System } from "../../system-lib/system/system";
 import { UnitPlastic } from "./unit-plastic";
 import { UnitType } from "../schema/unit-attrs-schema";
 
+it("static getClosestPlastic", () => {
+  const plastic1: UnitPlastic | undefined = UnitPlastic.getOne(
+    MockGameObject.simple("unit:base/fighter", { position: [1, 0, 0] })
+  );
+  const plastic2: UnitPlastic | undefined = UnitPlastic.getOne(
+    MockGameObject.simple("unit:base/infantry", { position: [2, 0, 0] })
+  );
+  if (!plastic1 || !plastic2) {
+    throw new Error("Plastics not found");
+  }
+
+  const plastics: Array<UnitPlastic> = [plastic1, plastic2];
+  let closest: UnitPlastic | undefined;
+
+  closest = UnitPlastic.getClosestPlastic(new Vector(1, 0, 0), plastics);
+  expect(closest).toBe(plastic1);
+
+  closest = UnitPlastic.getClosestPlastic(new Vector(2, 0, 0), plastics);
+  expect(closest).toBe(plastic2);
+});
+
 it("constructor", () => {
   const unit: UnitType = "infantry";
   const count: number = 1;

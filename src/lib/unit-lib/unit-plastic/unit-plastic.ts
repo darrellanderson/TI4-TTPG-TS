@@ -24,6 +24,23 @@ export class UnitPlastic {
   private _planetClosest: Planet | undefined;
   private _planetExact: Planet | undefined;
 
+  public static getClosestPlastic(
+    pos: Vector,
+    plastics: Array<UnitPlastic>
+  ): UnitPlastic | undefined {
+    let closest: UnitPlastic | undefined = undefined;
+    let closestDistance = Infinity;
+    for (const plastic of plastics) {
+      const pos2: Vector = plastic.getPos();
+      const distance = pos.subtract(pos2).magnitudeSquared();
+      if (distance < closestDistance) {
+        closestDistance = distance;
+        closest = plastic;
+      }
+    }
+    return closest;
+  }
+
   /**
    * Convert a game object to a unit plastic entry (is it applies).
    *
