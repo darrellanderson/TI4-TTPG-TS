@@ -1,10 +1,13 @@
-import { Card, GameObject, Vector } from "@tabletop-playground/api";
-import { Adjacency, CardUtil, Find, HexType } from "ttpg-darrell";
+import { Card, GameObject, Vector, world } from "@tabletop-playground/api";
+import { Adjacency, Atop, CardUtil, Find, HexType } from "ttpg-darrell";
 import { System } from "../system/system";
 import { UnitModifierActiveIdle } from "../../unit-lib/unit-modifier/unit-modifier-active-idle";
 import { Faction } from "../../faction-lib/faction/faction";
+import { OnSystemActivated } from "../../../event/on-system-activated/on-system-activated";
 
 export class SystemAdjacencyWormhole {
+  private static __combatArenaObjId: string | undefined = undefined;
+
   public static WORMHOMES: Array<string> = [
     "alpha",
     "beta",
@@ -15,6 +18,58 @@ export class SystemAdjacencyWormhole {
 
   private readonly _cardUtil: CardUtil = new CardUtil();
   private readonly _find: Find = new Find();
+
+  public static getCombatArenaObj(): GameObject | undefined {
+    const matNsid: string = "mat:base/combat-arena";
+
+    // Check the cache.
+    if (this.__combatArenaObjId) {
+      const obj: GameObject | undefined = world.getObjectById(
+        this.__combatArenaObjId
+      );
+      if (obj && obj.isValid()) {
+        return obj;
+      }
+    }
+
+    // Scan the table.
+    const owningPlayerSlot: number = -1; // not owned by a player.
+    const skipContained: boolean = true;
+    const foundObj = new Find().findGameObject(
+      matNsid,
+      owningPlayerSlot,
+      skipContained
+    );
+    if (foundObj) {
+      this.__combatArenaObjId = foundObj.getId();
+      return foundObj;
+    }
+  }
+
+  /**
+   * Get the hex for a position, with support for treating the
+   * combat arena as the active system.
+   *
+   * @param pos
+   * @returns
+   */
+  static getSystemHex(pos: Vector): HexType {
+    const combatArenaObj: GameObject | undefined =
+      SystemAdjacencyWormhole.getCombatArenaObj();
+    if (combatArenaObj) {
+      const atop: Atop = new Atop(combatArenaObj);
+      if (atop.isAtop(pos)) {
+        // Position in the combat arena, use the active system.
+        const activeSystem: System | undefined =
+          OnSystemActivated.getLastActivatedSystem();
+        if (activeSystem) {
+          const systemPos: Vector = activeSystem.getObj().getPosition();
+          return TI4.hex.fromPosition(systemPos);
+        }
+      }
+    }
+    return TI4.hex.fromPosition(pos);
+  }
 
   public addTags(
     hexToSystem: Map<HexType, System>,
@@ -81,7 +136,7 @@ export class SystemAdjacencyWormhole {
     );
     if (creussFlagship) {
       const pos: Vector = creussFlagship.getPosition();
-      const hex: HexType = TI4.hex.fromPosition(pos);
+      const hex: HexType = SystemAdjacencyWormhole.getSystemHex(pos);
       adjacency.addLink({
         src: hex,
         dst: "delta",

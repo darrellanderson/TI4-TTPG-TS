@@ -1,12 +1,61 @@
-import { Card } from "@tabletop-playground/api";
+import { Card, GameObject, Player } from "@tabletop-playground/api";
 import { Adjacency, HexType } from "ttpg-darrell";
-import { MockCard, MockGameObject, MockSnapPoint } from "ttpg-mock";
+import { MockCard, MockGameObject, MockPlayer, MockSnapPoint } from "ttpg-mock";
 
 import { Faction } from "../../faction-lib/faction/faction";
 import { System } from "../system/system";
 import { SystemAdjacencyWormhole } from "./system-adjacency-wormhole";
 import { SystemAdjacency } from "./system-adjacency";
 import { UnitModifierActiveIdle } from "../../unit-lib/unit-modifier/unit-modifier-active-idle";
+
+it("static getCombatArenaObj", () => {
+  let obj: GameObject | undefined;
+
+  obj = SystemAdjacencyWormhole.getCombatArenaObj();
+  expect(obj).toBeUndefined();
+
+  const mat: GameObject = MockGameObject.simple("mat:base/combat-arena");
+  obj = SystemAdjacencyWormhole.getCombatArenaObj();
+  expect(obj).toBe(mat);
+
+  // Again, find the cached object.
+  obj = SystemAdjacencyWormhole.getCombatArenaObj();
+  expect(obj).toBe(mat);
+});
+
+it("static getSystemHex", () => {
+  let hex: HexType;
+
+  const systemTileObj: GameObject = MockGameObject.simple(
+    "tile.system:base/25",
+    { position: [10, 0, 0] }
+  );
+  const systemTileHex: HexType = TI4.hex.fromPosition(
+    systemTileObj.getPosition()
+  );
+  expect(systemTileHex).toEqual("<1,0,-1>");
+  hex = SystemAdjacencyWormhole.getSystemHex(systemTileObj.getPosition());
+  expect(hex).toEqual(systemTileHex);
+
+  const matObj: GameObject = MockGameObject.simple("mat:base/combat-arena", {
+    position: [30, 0, 0],
+  });
+  const matHex: HexType = TI4.hex.fromPosition(matObj.getPosition());
+  expect(matHex).toEqual("<2,0,-2>");
+  hex = SystemAdjacencyWormhole.getSystemHex(matObj.getPosition());
+  expect(hex).toEqual(matHex);
+
+  const system: System | undefined =
+    TI4.systemRegistry.getBySystemTileNumber(25);
+  if (!system) {
+    throw new Error("System not found");
+  }
+  const player: Player = new MockPlayer();
+  TI4.events.onSystemActivated.trigger(system, player);
+
+  hex = SystemAdjacencyWormhole.getSystemHex(matObj.getPosition());
+  expect(hex).toEqual(systemTileHex);
+});
 
 it("constructor", () => {
   new SystemAdjacencyWormhole();
