@@ -48,11 +48,7 @@ export class ReportRemaining implements IGlobal {
     if (obj instanceof Card) {
       const nsids: Array<string> = NSID.getDeck(obj);
       const nsid: string | undefined = nsids[0];
-      if (
-        nsid &&
-        nsids.length > 1 &&
-        this._prefixes.some((prefix) => nsid.startsWith(prefix))
-      ) {
+      if (nsid && this._prefixes.some((prefix) => nsid.startsWith(prefix))) {
         obj.removeCustomAction(this._actionName);
         obj.addCustomAction(this._actionName);
         obj.onCustomAction.remove(this._customActionHandler);
