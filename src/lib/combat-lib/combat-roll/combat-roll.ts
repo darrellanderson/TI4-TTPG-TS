@@ -126,7 +126,7 @@ export class CombatRoll {
   private readonly _cardUtil: CardUtil = new CardUtil();
 
   private readonly _params: CombatRollParams;
-  private readonly _adjHexes: Set<HexType>;
+  private readonly _adjHexes: ReadonlySet<HexType>;
   private readonly _modifiers: Array<UnitModifier> = [];
 
   // Unit modifers may look into and modify unit attributes.
@@ -188,6 +188,14 @@ export class CombatRoll {
     }
     const allowFaceDown: boolean = false;
     return this._cardUtil.isLooseCard(card, allowFaceDown);
+  }
+
+  getHex(): HexType {
+    return this._params.hex;
+  }
+
+  getAdjHexes(): ReadonlySet<HexType> {
+    return this._adjHexes;
   }
 
   _findUnitPlastics(): Array<UnitPlastic> {
@@ -618,6 +626,17 @@ export class CombatRoll {
       throw new Error(joined);
     }
     return this;
+  }
+
+  /**
+   * Get the combat attrs for the current roll type.
+   *
+   * @returns
+   */
+  public getUnitCombatAttrs(unit: UnitType): CombatAttrs | undefined {
+    const unitToCombatAttrs: Map<UnitType, CombatAttrs> =
+      this._getUnitToCombatAttrs();
+    return unitToCombatAttrs.get(unit);
   }
 
   public bestHitUnitWithCombatAttrs(): BestUnitWithCombatAttrs | undefined {

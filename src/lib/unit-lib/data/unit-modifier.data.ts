@@ -176,5 +176,8 @@ add("pok", ViscountUnlenn);
 import { ViszElVir } from "./unit-modifiers/pok/visz-el-vir";
 add("pok", ViszElVir);
 
+import { Galvanize } from "./unit-modifiers/thunders-edge/galvanize";
+add("thunders-edge", Galvanize);
+
 import { MoraleBoostExtra } from "./unit-modifiers/test/morale-boost-extra";
 add("test", MoraleBoostExtra);

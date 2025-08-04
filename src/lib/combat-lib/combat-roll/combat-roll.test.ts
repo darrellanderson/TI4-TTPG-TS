@@ -101,6 +101,8 @@ it("constructor", () => {
   const combatRoll: CombatRoll = new CombatRoll(params);
   expect(combatRoll.getRollType()).toBe("spaceCombat");
   expect(combatRoll.getActivatingPlayerSlot()).toBe(1);
+  expect(combatRoll.getHex()).toEqual("<0,0,0>");
+  expect(combatRoll.getAdjHexes().size).toEqual(0);
 });
 
 it("_getCombatAttrs (spaceCannonOffense)", () => {
@@ -1090,6 +1092,18 @@ it("applyUnitPlastic (assign units)", () => {
   expect(combatRoll.opponent.unitPlasticAdj.map((x) => x.getUnit())).toEqual([
     "dreadnought",
   ]);
+});
+
+it("getUnitCombatAttrs", () => {
+  const combatRoll: CombatRoll = new CombatRoll({
+    rollType: "spaceCombat",
+    hex: "<0,0,0>",
+    activatingPlayerSlot: 1,
+    rollingPlayerSlot: 2,
+  });
+  const combatAttrs: CombatAttrs | undefined =
+    combatRoll.getUnitCombatAttrs("carrier");
+  expect(combatAttrs?.getHit()).toBe(9);
 });
 
 it("bestHitUnitWithCombatAttrs", () => {
