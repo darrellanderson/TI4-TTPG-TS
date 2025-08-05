@@ -26,7 +26,8 @@ it("default", () => {
   const fighter: UnitAttrs =
     combatRoll.self.unitAttrsSet.getOrThrow("flagship");
   const spaceCombat: CombatAttrs = fighter.getSpaceCombatOrThrow();
-  expect(spaceCombat.getHit()).toBe(13);
+  expect(spaceCombat.getHit()).toBe(7);
+  expect(spaceCombat.getDice()).toBe(2);
 });
 
 it("modifier, no controlled systems", () => {
@@ -48,6 +49,7 @@ it("modifier, no controlled systems", () => {
     combatRoll.self.unitAttrsSet.getOrThrow("flagship");
   const spaceCombat: CombatAttrs = fighter.getSpaceCombatOrThrow();
   expect(spaceCombat.getHit()).toBe(9);
+  expect(spaceCombat.getDice()).toBe(1);
 });
 
 it("modifier, no controlled systems", () => {
@@ -73,4 +75,5 @@ it("modifier, no controlled systems", () => {
     combatRoll.self.unitAttrsSet.getOrThrow("flagship");
   const spaceCombat: CombatAttrs = fighter.getSpaceCombatOrThrow();
   expect(spaceCombat.getHit()).toBe(8);
+  expect(spaceCombat.getDice()).toBe(1);
 });

@@ -150,7 +150,7 @@ export const SOURCE_TO_UNIT_ATTRS_DATA: Record<
       hasSustainDamage: true,
       isShip: true,
       diceColor: "#000000",
-      spaceCombat: { hit: 13 }, // placeholder, should be overridden
+      spaceCombat: { dice: 2, hit: 7 }, // often overridded
     },
     {
       name: "[0.0.1]", // L1Z1X
@@ -194,7 +194,7 @@ export const SOURCE_TO_UNIT_ATTRS_DATA: Record<
       name: "Hil Colish", // Creuss
       unit: "flagship",
       nsidName: "hil-colish",
-      spaceCombat: { hit: 5 },
+      spaceCombat: { dice: 1, hit: 5 },
     },
     {
       name: "J.N.S. Hylarim", // Jol-Nar
@@ -219,7 +219,7 @@ export const SOURCE_TO_UNIT_ATTRS_DATA: Record<
       name: "Salai Sai Corian", // Winnu
       unit: "flagship",
       nsidName: "salai-sai-corian",
-      spaceCombat: { hit: 7 },
+      spaceCombat: { dice: 1, hit: 7 },
     },
     {
       name: "Son of Ragh", // Saar
@@ -347,6 +347,8 @@ export const SOURCE_TO_UNIT_ATTRS_DATA: Record<
       isShip: true,
       hasSustainDamage: true,
       disablePlanetaryShield: true,
+      bombardment: { dice: 3, hit: 3 },
+      spaceCombat: { dice: 3, hit: 3 },
       diceColor: "#ff8000",
     },
     {
@@ -354,24 +356,18 @@ export const SOURCE_TO_UNIT_ATTRS_DATA: Record<
       unit: "war-sun",
       nsidName: "war-sun-2", // must have -2 suffix to be tech card
       cost: 12,
-      bombardment: { dice: 3, hit: 3 },
-      spaceCombat: { dice: 3, hit: 3 },
     },
     {
       name: "Prototype War Sun",
       unit: "war-sun",
       nsidName: "prototype-war-sun",
       cost: 12,
-      bombardment: { dice: 3, hit: 3 },
-      spaceCombat: { dice: 3, hit: 3 },
     },
     {
       name: "Prototype War Sun II",
       unit: "war-sun",
       nsidName: "prototype-war-sun-2",
       cost: 10,
-      bombardment: { dice: 3, hit: 3 },
-      spaceCombat: { dice: 3, hit: 3 },
     },
   ],
 
@@ -665,7 +661,7 @@ export const SOURCE_TO_UNIT_ATTRS_DATA: Record<
       name: "The Egeiro",
       unit: "flagship",
       nsidName: "the-egeiro",
-      spaceCombat: { hit: 9 },
+      spaceCombat: { dice: 1, hit: 9 },
     },
   ],
 };

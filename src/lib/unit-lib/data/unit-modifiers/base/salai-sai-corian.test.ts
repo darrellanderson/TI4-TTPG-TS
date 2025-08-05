@@ -24,7 +24,7 @@ it("default", () => {
   const flagship: UnitAttrs =
     combatRoll.self.unitAttrsSet.getOrThrow("flagship");
   const spaceCombat: CombatAttrs = flagship.getSpaceCombatOrThrow();
-  expect(spaceCombat.getDice()).toBe(1);
+  expect(spaceCombat.getDice()).toBe(2);
 });
 
 it("modifier", () => {
