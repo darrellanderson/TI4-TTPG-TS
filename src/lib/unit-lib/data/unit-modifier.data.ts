@@ -179,5 +179,8 @@ add("pok", ViszElVir);
 import { Galvanize } from "./unit-modifiers/thunders-edge/galvanize";
 add("thunders-edge", Galvanize);
 
+import { TheEgeiro } from "./unit-modifiers/thunders-edge/the-egeiro";
+add("thunders-edge", TheEgeiro);
+
 import { MoraleBoostExtra } from "./unit-modifiers/test/morale-boost-extra";
 add("test", MoraleBoostExtra);

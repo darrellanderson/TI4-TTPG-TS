@@ -659,4 +659,13 @@ export const SOURCE_TO_UNIT_ATTRS_DATA: Record<
       nsidName: "dimensional-tear-2",
     },
   ],
+
+  "thunders-edge": [
+    {
+      name: "The Egeiro",
+      unit: "flagship",
+      nsidName: "the-egeiro",
+      spaceCombat: { hit: 9 },
+    },
+  ],
 };
