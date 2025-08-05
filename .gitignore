@@ -4,6 +4,8 @@ dev
 assets/Thumbnails
 build
 src/lib/*/schema/*-schema.d.ts
+src/**/*.d.ts
+!src/index.d.ts
 
 # Logs
 logs

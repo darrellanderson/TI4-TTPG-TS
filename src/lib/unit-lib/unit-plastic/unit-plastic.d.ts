@@ -19,6 +19,8 @@ export declare class UnitPlastic {
     private _system;
     private _planetClosest;
     private _planetExact;
+    private _linkedPlastic;
+    static getClosestPlastic(pos: Vector, plastics: Array<UnitPlastic>): UnitPlastic | undefined;
     /**
      * Convert a game object to a unit plastic entry (is it applies).
      *
@@ -50,6 +52,7 @@ export declare class UnitPlastic {
     constructor(unit: UnitType, count: number, obj: GameObject, pos: Vector);
     getCount(): number;
     getHex(): HexType;
+    getLinkedPlastic(): UnitPlastic | undefined;
     getPos(): Vector;
     getObj(): GameObject;
     getOwningPlayerSlot(): number;

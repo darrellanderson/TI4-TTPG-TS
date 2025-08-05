@@ -23,6 +23,7 @@ export class UnitPlastic {
   private _system: System | undefined;
   private _planetClosest: Planet | undefined;
   private _planetExact: Planet | undefined;
+  private _linkedPlastic: UnitPlastic | undefined;
 
   public static getClosestPlastic(
     pos: Vector,
@@ -77,6 +78,8 @@ export class UnitPlastic {
       }
     } else if (nsid.startsWith("token.control:")) {
       unit = "control-token";
+    } else if (nsid === "token:thunders-edge:galvanize") {
+      unit = "galvanize-token";
     }
 
     if (unit) {
@@ -136,6 +139,8 @@ export class UnitPlastic {
    */
   public static assignOwners(entries: Array<UnitPlastic>): void {
     const hexToEntries: Map<HexType, Array<UnitPlastic>> = new Map();
+
+    // Group all plastics by hex.
     for (const entry of entries) {
       const hex: HexType = entry._hex;
       let hexEntries: Array<UnitPlastic> | undefined = hexToEntries.get(hex);
@@ -145,10 +150,15 @@ export class UnitPlastic {
       }
       hexEntries.push(entry);
     }
+
+    // Assign owners.
     for (const hexEntries of hexToEntries.values()) {
+      // Delay reassignment to require linked units are real plastic.
+      const anonPlasticToLinkedPlastic: Map<UnitPlastic, UnitPlastic> =
+        new Map();
       for (const entry of hexEntries) {
         if (entry._owningPlayerSlot < 0) {
-          let bestPlayerSlot: number = -1;
+          let bestPlastic: UnitPlastic | undefined;
           let bestDSq: number = Number.MAX_VALUE;
           const p0: Vector = entry._pos;
           for (const other of hexEntries) {
@@ -157,13 +167,21 @@ export class UnitPlastic {
               const dSq: number = p0.subtract(p1).magnitudeSquared();
               if (dSq < bestDSq) {
                 bestDSq = dSq;
-                bestPlayerSlot = other._owningPlayerSlot;
+                bestPlastic = other;
               }
             }
           }
           // May still be -1 if no other player-owned units are present.
-          entry._owningPlayerSlot = bestPlayerSlot;
+          if (bestPlastic) {
+            anonPlasticToLinkedPlastic.set(entry, bestPlastic);
+          }
         }
+      }
+
+      // Apply reassignment now that we've found all best matches.
+      for (const [entry, bestPlastic] of anonPlasticToLinkedPlastic) {
+        entry._owningPlayerSlot = bestPlastic._owningPlayerSlot;
+        entry._linkedPlastic = bestPlastic;
       }
     }
   }
@@ -208,6 +226,10 @@ export class UnitPlastic {
 
   getHex(): HexType {
     return this._hex;
+  }
+
+  getLinkedPlastic(): UnitPlastic | undefined {
+    return this._linkedPlastic;
   }
 
   getPos(): Vector {

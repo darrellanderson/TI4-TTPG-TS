@@ -60,6 +60,8 @@ export declare class CombatRoll {
     static createCooked(params: CombatRollParams): CombatRoll;
     constructor(params: CombatRollParams);
     isCommanderUnlocked(cardNsid: string): boolean;
+    getHex(): HexType;
+    getAdjHexes(): ReadonlySet<HexType>;
     _findUnitPlastics(): Array<UnitPlastic>;
     _findUnitAttrOverrides(playerSlot: number): Array<UnitAttrsSchemaType>;
     _findUnitModifiers(selfSlot: number, opponentSlot: number): Array<UnitModifier>;
@@ -69,6 +71,12 @@ export declare class CombatRoll {
     applyUnitOverries(): this;
     applyUnitModifiers(errors: Array<Error>): this;
     applyUnitModifiersOrThrow(): this;
+    /**
+     * Get the combat attrs for the current roll type.
+     *
+     * @returns
+     */
+    getUnitCombatAttrs(unit: UnitType): CombatAttrs | undefined;
     bestHitUnitWithCombatAttrs(): BestUnitWithCombatAttrs | undefined;
     _pruneToUnitsClosestToPlanet(): this;
     _checkCancelBombardment(): boolean;

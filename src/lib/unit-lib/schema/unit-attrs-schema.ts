@@ -10,6 +10,7 @@ export const UnitSchema = z
     "dreadnought",
     "fighter",
     "flagship",
+    "galvanize-token", // leverage fighter/infantry token logic for closest plastic
     "infantry",
     "mech",
     "pds",

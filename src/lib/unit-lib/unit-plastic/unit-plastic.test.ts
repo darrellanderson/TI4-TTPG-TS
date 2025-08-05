@@ -144,6 +144,20 @@ it("getOne (control-token)", () => {
   expect(entry?.getUnit()).toBe("control-token");
 });
 
+it("getOne (galvanize-token)", () => {
+  const obj: GameObject = new MockGameObject({
+    templateMetadata: "token:thunders-edge:galvanize",
+  });
+  const entry: UnitPlastic | undefined = UnitPlastic.getOne(obj);
+  expect(entry?.getCount()).toBe(1);
+  expect(entry?.getHex()).toBe("<0,0,0>");
+  expect(entry?.getObj()).toBe(obj);
+  expect(entry?.getOwningPlayerSlot()).toBe(-1);
+  expect(entry?.getPlanetClosest()).toBeUndefined();
+  expect(entry?.getPlanetExact()).toBeUndefined();
+  expect(entry?.getUnit()).toBe("galvanize-token");
+});
+
 it("getAll (empty)", () => {
   const result: Array<UnitPlastic> = UnitPlastic.getAll();
   expect(result).toEqual([]);
@@ -184,10 +198,12 @@ it("assignOwners", () => {
   );
   expect(plastic.getOwningPlayerSlot()).toBe(2);
   expect(token.getOwningPlayerSlot()).toBe(-1);
+  expect(token.getLinkedPlastic()).toBeUndefined();
 
   UnitPlastic.assignOwners([plastic, token]);
   expect(plastic.getOwningPlayerSlot()).toBe(2);
   expect(token.getOwningPlayerSlot()).toBe(2);
+  expect(token.getLinkedPlastic()).toBe(plastic);
 });
 
 it("assignPlanets", () => {
