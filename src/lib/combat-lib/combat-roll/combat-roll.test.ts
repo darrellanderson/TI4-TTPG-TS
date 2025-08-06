@@ -80,6 +80,28 @@ it("data hasUnit", () => {
   expect(data.hasUnit("fighter")).toBe(true);
 });
 
+it("data hasUnitAdj", () => {
+  const data: CombatRollPerPlayerData = new CombatRollPerPlayerData();
+  expect(data.hasUnitAdj("infantry")).toBe(false);
+  expect(data.hasUnitAdj("fighter")).toBe(false);
+
+  data.unitPlasticAdj.push(
+    new UnitPlastic(
+      "infantry",
+      1,
+      new MockGameObject(),
+      new MockVector(0, 0, 0)
+    )
+  );
+  expect(data.hasUnitAdj("infantry")).toBe(true);
+  expect(data.hasUnitAdj("fighter")).toBe(false);
+
+  data.overrideUnitCountAdj.set("infantry", 0);
+  data.overrideUnitCountAdj.set("fighter", 1);
+  expect(data.hasUnitAdj("infantry")).toBe(false);
+  expect(data.hasUnitAdj("fighter")).toBe(true);
+});
+
 it("static createCooked", () => {
   const params: CombatRollParams = {
     rollType: "spaceCombat",

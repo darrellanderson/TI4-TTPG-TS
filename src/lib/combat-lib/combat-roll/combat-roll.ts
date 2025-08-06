@@ -104,7 +104,11 @@ export class CombatRollPerPlayerData {
   }
 
   getCountAdj(unit: UnitType): number {
-    let count: number = 0;
+    let count: number | undefined = this.overrideUnitCountAdj.get(unit);
+    if (count !== undefined) {
+      return count;
+    }
+    count = 0;
     for (const unitPlastic of this.unitPlasticAdj) {
       if (unitPlastic.getUnit() === unit) {
         count += unitPlastic.getCount();

@@ -2,6 +2,9 @@ import { CombatAttrs } from "../../../unit-attrs/combat-attrs";
 import { CombatRoll } from "../../../../combat-lib/combat-roll/combat-roll";
 import { UnitModifierSchemaType } from "../../../schema/unit-modifier-schema";
 
+/**
+ * Test modifier that applies extra to the "Morale Boost" modifier.
+ */
 export const MoraleBoostExtra: UnitModifierSchemaType = {
   name: "Morale Boost Extra",
   description: "MORALE BOOST now applies +2 to combat rolls",

@@ -18,6 +18,7 @@ export const ANY_POS = new Vector(200, 0, 0);
 
 export function placeGameObjects(params: {
   systemNsid?: string; // default is tile 1
+  systemNsidAdj?: string; // default is tile 2
   self?: Array<string>;
   selfActive?: Array<string>;
   selfUnits?: Map<UnitType, number>;
@@ -37,7 +38,8 @@ export function placeGameObjects(params: {
   // Create tile (at origin) and adjacent tile (2).
   const systemNsid: string = params.systemNsid ?? "tile.system:base/1";
   MockGameObject.simple(systemNsid);
-  MockGameObject.simple("tile.system:base/2", { position: adjHexPos });
+  const systemNsidAdj: string = params.systemNsidAdj ?? "tile.system:base/2";
+  MockGameObject.simple(systemNsidAdj, { position: adjHexPos });
 
   // Upgrades and modifiers get assigned to the closest card holder owner.
   new MockCardHolder({
