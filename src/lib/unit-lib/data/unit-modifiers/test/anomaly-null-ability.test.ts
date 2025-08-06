@@ -18,10 +18,7 @@ it("_hasNullAbilityAnomaly", () => {
     TI4.systemRegistry.getBySystemTileNumber(44);
   expect(_hasNullAbilityAnomaly(tile44)).toBe(true);
 
-  MockGameObject.simple("tile.system:base/45");
-  const tile45: System | undefined =
-    TI4.systemRegistry.getBySystemTileNumber(45);
-  expect(_hasNullAbilityAnomaly(tile45)).toBe(true);
+  expect(_hasNullAbilityAnomaly(undefined)).toBe(false);
 });
 
 it("_countAdjacentPdsInAnomaly", () => {
@@ -72,9 +69,7 @@ it("modifier", () => {
       "card.event:test/anomaly-null-ability",
     ],
     selfUnits: new Map([["pds", 1]]),
-    selfUnitsAdj: new Map([["pds", 1]]),
     systemNsid: "tile.system:base/44",
-    systemNsidAdj: "tile.system:base/45",
   });
   const combatRoll: CombatRoll = CombatRoll.createCooked({
     rollType: "spaceCannonOffense",
@@ -83,7 +78,7 @@ it("modifier", () => {
     rollingPlayerSlot: SELF,
   });
   expect(_hasNullAbilityAnomaly(combatRoll.system)).toBe(true);
-  expect(_countAdjacentPdsInAnomaly(combatRoll)).toBe(1);
+  expect(_countAdjacentPdsInAnomaly(combatRoll)).toBe(0);
 
   expect(combatRoll.getUnitModifierNames()).toEqual(["Anomaly Null Ability"]);
   expect(combatRoll.self.getCount("pds")).toBe(1);
@@ -91,4 +86,30 @@ it("modifier", () => {
   expect(
     combatRoll.self.unitAttrsSet.getOrThrow("pds").getSpaceCannon()
   ).toBeUndefined();
+});
+
+it("modifier (adj)", () => {
+  placeGameObjects({
+    self: [
+      "card.technology.unit-upgrade:base/pds-2",
+      "card.event:test/anomaly-null-ability",
+    ],
+    selfUnitsAdj: new Map([["pds", 1]]),
+    systemNsidAdj: "tile.system:base/44",
+  });
+  const combatRoll: CombatRoll = CombatRoll.createCooked({
+    rollType: "spaceCannonOffense",
+    hex: "<0,0,0>",
+    activatingPlayerSlot: OPPONENT,
+    rollingPlayerSlot: SELF,
+  });
+  expect(_hasNullAbilityAnomaly(combatRoll.system)).toBe(false);
+  expect(_countAdjacentPdsInAnomaly(combatRoll)).toBe(1);
+
+  expect(combatRoll.getUnitModifierNames()).toEqual(["Anomaly Null Ability"]);
+  expect(combatRoll.self.getCount("pds")).toBe(0);
+  expect(combatRoll.self.getCountAdj("pds")).toBe(0);
+  expect(
+    combatRoll.self.unitAttrsSet.getOrThrow("pds").getSpaceCannon()
+  ).toBeDefined();
 });
