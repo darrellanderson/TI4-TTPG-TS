@@ -1,3 +1,4 @@
+import { UnitPlastic } from "../../../unit-plastic/unit-plastic";
 import {
   CombatRoll,
   CombatRollType,
@@ -24,10 +25,28 @@ export const ExperimentalBattlestation: UnitModifierSchemaType = {
     );
   },
   apply: (combatRoll: CombatRoll): void => {
+    // A galvanized space dock adds an extra dice.
+    // Look for one and use a synthetic unit.  Do not modify
+    // the existing space dock and override the count, let a
+    // faction have space docks with space cannon.
+    const isGalvanizedSpaceDock = (unitPlastic: UnitPlastic): boolean => {
+      const linkedPlastic: UnitPlastic | undefined =
+        unitPlastic.getLinkedPlastic();
+      return (
+        unitPlastic.getUnit() === "galvanize-token" &&
+        linkedPlastic !== undefined &&
+        linkedPlastic.getUnit() === "space-dock"
+      );
+    };
+    const hasGalvanizedSpaceDock: boolean =
+      combatRoll.self.unitPlasticHex.some(isGalvanizedSpaceDock) ||
+      combatRoll.self.unitPlasticAdj.some(isGalvanizedSpaceDock);
+    const extraDice: number = hasGalvanizedSpaceDock ? 1 : 0;
+
     const schema: UnitAttrsSchemaType = {
       unit: "experimental-battlestation" as UnitType,
       name: "Experimental Battlestation",
-      spaceCannon: { hit: 5, dice: 3, range: 1 },
+      spaceCannon: { hit: 5, dice: 3, range: 1, extraDice },
     };
     combatRoll.self.addSyntheticUnit(schema, 1);
   },
