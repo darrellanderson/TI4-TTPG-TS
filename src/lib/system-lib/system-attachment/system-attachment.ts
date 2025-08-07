@@ -149,7 +149,6 @@ export class SystemAttachment {
 
       const localPos = this._params.planets?.[0]?.localPosition;
       if (localPos) {
-        console.log("xxx", JSON.stringify(localPos));
         pos = this._system
           .getObj()
           .localPositionToWorld([localPos.x, localPos.y, 0]);

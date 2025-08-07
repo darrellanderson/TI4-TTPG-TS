@@ -240,6 +240,13 @@ it("attach/detach", () => {
     {
       name: "my-name",
       nsidName: "my-nsid-name",
+      planets: [
+        {
+          name: "my-planet-name",
+          nsidName: "my-planet-nsid",
+          localPosition: { x: 0, y: 0 },
+        },
+      ],
     }
   );
   let success: boolean = false;
@@ -261,21 +268,25 @@ it("attach/detach", () => {
   expect(onSystemChangedCound).toBe(0);
 
   success = attachment.attach();
+  attachment.doLayout();
   expect(success).toBe(true);
   expect(system.hasAttachment(attachment)).toBe(true);
   expect(onSystemChangedCound).toBe(1);
 
   success = attachment.attach();
+  attachment.doLayout();
   expect(success).toBe(false); // already attached
   expect(system.hasAttachment(attachment)).toBe(true);
   expect(onSystemChangedCound).toBe(1);
 
   success = attachment.detach();
+  attachment.doLayout();
   expect(success).toBe(true);
   expect(system.hasAttachment(attachment)).toBe(false);
   expect(onSystemChangedCound).toBe(2);
 
   success = attachment.detach();
+  attachment.doLayout();
   expect(success).toBe(false);
   expect(system.hasAttachment(attachment)).toBe(false);
   expect(onSystemChangedCound).toBe(2);

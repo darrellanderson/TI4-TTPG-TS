@@ -1,4 +1,4 @@
-import { MockGameObject } from "ttpg-mock";
+import { MockGameObject, ObjectType } from "ttpg-mock";
 import { SystemReserveSpace } from "./system-reserve-space";
 
 it("constructor", () => {
@@ -8,7 +8,7 @@ it("constructor", () => {
 
 it("lift/drop", () => {
   const systemTileObj = new MockGameObject();
-  new MockGameObject(); // other object
+  new MockGameObject({ objectType: ObjectType.Ground }); // other object
   new MockGameObject(); // other object
   new SystemReserveSpace(systemTileObj).lift().drop();
 });
