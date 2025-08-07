@@ -1,4 +1,4 @@
-import { GameObject, Vector } from "@tabletop-playground/api";
+import { GameObject, ObjectType, Vector } from "@tabletop-playground/api";
 import { Facing, NSID } from "ttpg-darrell";
 
 import {
@@ -145,10 +145,20 @@ export class SystemAttachment {
   doLayout(): void {
     if (this._system) {
       const reserve = new SystemReserveSpace(this._system.getObj()).lift();
-      const pos = this._obj.getPosition();
+      let pos = this._obj.getPosition();
+
+      const localPos = this._params.planets?.[0]?.localPosition;
+      if (localPos) {
+        console.log("xxx", JSON.stringify(localPos));
+        pos = this._system
+          .getObj()
+          .localPositionToWorld([localPos.x, localPos.y, 0]);
+      }
+
       pos.z = this._system.getObj().getPosition().z + 3;
       this._obj.setPosition(pos);
       this._obj.snapToGround();
+      this._obj.setObjectType(ObjectType.Ground);
       reserve.drop();
     }
   }

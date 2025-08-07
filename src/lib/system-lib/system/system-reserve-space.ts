@@ -12,6 +12,7 @@ import { HexType, NSID } from "ttpg-darrell";
  */
 export class SystemReserveSpace {
   private readonly _systemTileObj: GameObject;
+  private readonly _lockedLiftedObjIds: Set<string> = new Set();
   private _liftedObjs: Array<GameObject> = [];
 
   constructor(systemTileObj: GameObject) {
@@ -36,6 +37,9 @@ export class SystemReserveSpace {
       .sort((a, b) => a.getPosition().z - b.getPosition().z);
 
     for (const obj of this._liftedObjs) {
+      if (obj.getObjectType() === ObjectType.Ground) {
+        this._lockedLiftedObjIds.add(obj.getId());
+      }
       const above = obj.getPosition().add(new Vector(0, 0, 5));
       obj.setObjectType(ObjectType.Regular);
       obj.setPosition(above);
@@ -48,6 +52,9 @@ export class SystemReserveSpace {
     // Drop everything lifted (in bottom to top order).
     for (const obj of this._liftedObjs) {
       obj.snapToGround();
+      if (this._lockedLiftedObjIds.has(obj.getId())) {
+        obj.setObjectType(ObjectType.Ground);
+      }
     }
     this._liftedObjs = [];
     return this;

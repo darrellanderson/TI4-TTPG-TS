@@ -66,8 +66,7 @@ export const SOURCE_TO_SYSTEM_ATTACHMENT_DATA: Record<
           resources: 1,
           influence: 2,
           traits: ["cultural"],
-          //localPosition: { x: 3, y: -1.88 }, // "top-left" pos, should enforce it?
-          localPosition: { x: 0.4, y: 0.15 },
+          localPosition: { x: 3, y: -1.88 }, // "top-left" pos
           radius: 2.7,
           isLegendary: true,
           legendaryNsidName: "mirage-flight-academy",
