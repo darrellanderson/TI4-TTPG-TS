@@ -47,5 +47,7 @@ export class RightClickTokenBoom implements IGlobal {
     }
   }
 
-  _boom(_obj: GameObject, _player: Player): void {}
+  _boom(_obj: GameObject, _player: Player): void {
+    // TODO
+  }
 }
