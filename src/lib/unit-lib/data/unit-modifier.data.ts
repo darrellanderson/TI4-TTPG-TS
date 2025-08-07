@@ -187,3 +187,6 @@ add("test", AnomalyNullAbility);
 
 import { MoraleBoostExtra } from "./unit-modifiers/test/morale-boost-extra";
 add("test", MoraleBoostExtra);
+
+import { SystemClassBonus } from "./unit-modifiers/test/system-class-bonus";
+add("test", SystemClassBonus);
