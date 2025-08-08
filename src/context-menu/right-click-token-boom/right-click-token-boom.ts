@@ -85,10 +85,10 @@ export class RightClickTokenBoom implements IGlobal {
       );
 
       // Get target units.
-      const areaToUnitToCount: Map<string, Map<UnitType, number>> = new Map<
+      const areaToPlastics: Map<
         string,
-        Map<UnitType, number>
-      >();
+        Array<UnitPlastic>
+      > = this._getAreaToPlastics(targetPlastics);
     }
   }
 
@@ -99,13 +99,16 @@ export class RightClickTokenBoom implements IGlobal {
    * @returns
    */
   _getPlasticInHex(hex: HexType): Array<UnitPlastic> {
-    const plastics: Array<UnitPlastic> = UnitPlastic.getAll();
-
-    return plastics.filter((plastic: UnitPlastic): boolean => {
-      const plasticPos: Vector = plastic.getObj().getPosition();
-      const plasticHex: HexType = TI4.hex.fromPosition(plasticPos);
-      return plasticHex === hex;
-    });
+    const plastics: Array<UnitPlastic> = UnitPlastic.getAll().filter(
+      (plastic: UnitPlastic): boolean => {
+        const plasticPos: Vector = plastic.getObj().getPosition();
+        const plasticHex: HexType = TI4.hex.fromPosition(plasticPos);
+        return plasticHex === hex;
+      }
+    );
+    UnitPlastic.assignOwners(plastics);
+    UnitPlastic.assignPlanets(plastics);
+    return plastics;
   }
 
   /**
