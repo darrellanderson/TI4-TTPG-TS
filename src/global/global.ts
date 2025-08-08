@@ -28,7 +28,7 @@ import { ControlTokenSystem } from "../context-menu/system/control-token-system/
 import { CreateAndAttachEndTurnButtonUI } from "../ui/end-turn-button-ui/create-and-attach-end-turn-button-ui";
 import { CreateAndAttachTurnOrderUI } from "../ui/turn-order-ui/create-and-attach-turn-order-ui";
 import { DiplomacySystem } from "../context-menu/system/diplomacy-system/diplomacy-system";
-import { DisplayPDSAdjacency } from "../context-menu/display-pds-adjacency/display-pds-adjacency";
+//import { DisplayPDSAdjacency } from "../context-menu/display-pds-adjacency/display-pds-adjacency";
 import { DraftActivityMaybeResume } from "../lib/draft-lib/draft-activity-start/draft-activity-start";
 import { FactionRegistry } from "../lib/faction-lib/registry/faction-registry";
 import { GameDataExport } from "../lib/game-data-lib/game-data-export/game-data-export";
@@ -210,7 +210,7 @@ export function resetGlobalThisTI4(): TI4Class {
     new ControlTokenSystem(),
     new DiceGroupCleanup(),
     new DiplomacySystem(),
-    new DisplayPDSAdjacency(),
+    // new DisplayPDSAdjacency(),
     new GameDataExport(),
     new LeaveSeat(),
     new NumpadKeyAll(),
