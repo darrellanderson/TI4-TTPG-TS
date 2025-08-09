@@ -1,11 +1,16 @@
 import {
+  Border,
   GameObject,
   globalEvents,
   Player,
+  RichText,
+  UIElement,
+  UIPresentationStyle,
   Vector,
+  Widget,
   world,
 } from "@tabletop-playground/api";
-import { Broadcast, HexType, IGlobal, NSID } from "ttpg-darrell";
+import { Broadcast, HexType, IGlobal, NSID, PlayerSlot } from "ttpg-darrell";
 import {
   CombatRoll,
   CombatRollType,
@@ -79,16 +84,26 @@ export class RightClickTokenBoom implements IGlobal {
       const unitModifiers: Array<string> = [];
       const hitValue: number | undefined = this._getHitValue(
         hex,
-        player,
+        player.getSlot(),
         galvanizedPlastic.getUnit(),
         unitModifiers
       );
+      if (unitModifiers.length === 0) {
+        unitModifiers.push("none");
+      }
 
       // Get target units.
       const areaToPlastics: Map<
         string,
         Array<UnitPlastic>
       > = this._getAreaToPlastics(targetPlastics);
+
+      const msg: string = `Rolling boom!  Hits on ${hitValue} (Modifiers: ${unitModifiers.join(", ")})`;
+      Broadcast.chatAll(msg);
+
+      if (hitValue !== undefined) {
+        this._rollBoom(areaToPlastics, hitValue);
+      }
     }
   }
 
@@ -107,7 +122,11 @@ export class RightClickTokenBoom implements IGlobal {
       }
     );
     UnitPlastic.assignOwners(plastics);
-    UnitPlastic.assignPlanets(plastics);
+    UnitPlastic.assignPlanets(
+      plastics.filter((plastic: UnitPlastic): boolean => {
+        return !this._isShip(plastic.getUnit());
+      })
+    );
     return plastics;
   }
 
@@ -165,7 +184,7 @@ export class RightClickTokenBoom implements IGlobal {
 
   _getHitValue(
     hex: HexType,
-    player: Player,
+    playerSlot: PlayerSlot,
     galvanizedUnit: UnitType,
     unitModifiers: Array<string>
   ): number | undefined {
@@ -175,7 +194,7 @@ export class RightClickTokenBoom implements IGlobal {
     const combatRoll: CombatRoll = CombatRoll.createCooked({
       hex,
       rollType,
-      rollingPlayerSlot: player.getSlot(),
+      rollingPlayerSlot: playerSlot,
       activatingPlayerSlot: -1,
     });
     const bakedUnitAttrs: UnitAttrs =
@@ -212,5 +231,75 @@ export class RightClickTokenBoom implements IGlobal {
       areaPlastics.push(plastic);
     }
     return areaToPlastics;
+  }
+
+  _rollBoom(
+    areaToPlastics: Map<string, Array<UnitPlastic>>,
+    hitValue: number
+  ): void {
+    for (const [area, plastics] of areaToPlastics.entries()) {
+      Broadcast.chatAll(area.toUpperCase());
+      for (const plastic of plastics) {
+        const rollValues: Array<number> = [];
+        for (let i: number = 0; i < plastic.getCount(); i++) {
+          const rollValue: number = Math.floor(Math.random() * 10) + 1;
+          rollValues.push(rollValue);
+        }
+        this._applyBoomResult(plastic.getObj(), rollValues, hitValue);
+      }
+    }
+  }
+
+  _applyBoomResult(
+    unitObj: GameObject,
+    rollValues: Array<number>,
+    hitValue: number
+  ): void {
+    const extraZ: number = 0.5;
+    const currentRotation: boolean = true;
+    const includeGeometry: boolean = false;
+    const extent: Vector = unitObj.getExtent(currentRotation, includeGeometry);
+    const above: Vector = unitObj.getPosition().add([0, 0, extent.z + extraZ]);
+    const localAbove: Vector = unitObj.worldPositionToLocal(above);
+
+    const bbTexts: Array<string> = [];
+    for (const rollValue of rollValues) {
+      const isHit: boolean = rollValue >= hitValue;
+      const bbColor: string = isHit ? "#00ff00" : "#ff0000";
+      const symbol: string = isHit ? "X" : "√";
+      bbTexts.push(`[color=${bbColor}]${rollValue}${symbol}[/color]`);
+    }
+
+    const scale: number = 4;
+    const widget: Widget = new RichText()
+      .setBold(true)
+      .setFontSize(12 * scale)
+      .setText(bbTexts.join(""));
+
+    const c = 0.02;
+    const ui: UIElement = new UIElement();
+    ui.position = localAbove;
+    ui.presentationStyle = UIPresentationStyle.ViewAligned;
+    ui.scale = 1 / scale;
+    ui.useTransparency = true;
+    ui.widget = new Border().setColor([c, c, c, 0.3]).setChild(widget);
+    unitObj.addUI(ui);
+
+    const onReleasedHandler = (obj: GameObject): void => {
+      obj.removeUIElement(ui);
+      obj.onReleased.remove(onReleasedHandler);
+    };
+    unitObj.onReleased.add(onReleasedHandler);
+
+    // Also report in chat.
+    const plastic: UnitPlastic | undefined = UnitPlastic.getOne(unitObj);
+    if (plastic) {
+      const playerName: string = TI4.playerName.getBySlot(
+        plastic.getOwningPlayerSlot()
+      );
+      Broadcast.chatAll(
+        `${plastic.getUnit()} (${playerName}) rolled ${rollValues.join(", ")})`
+      );
+    }
   }
 }

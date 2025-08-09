@@ -146,7 +146,7 @@ it("getOne (control-token)", () => {
 
 it("getOne (galvanize-token)", () => {
   const obj: GameObject = new MockGameObject({
-    templateMetadata: "token:thunders-edge:galvanize",
+    templateMetadata: "token:thunders-edge/galvanize",
   });
   const entry: UnitPlastic | undefined = UnitPlastic.getOne(obj);
   expect(entry?.getCount()).toBe(1);

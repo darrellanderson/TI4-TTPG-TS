@@ -35,7 +35,7 @@ it("modifier", () => {
   });
 
   const token: GameObject = MockGameObject.simple(
-    "token:thunders-edge:galvanize"
+    "token:thunders-edge/galvanize"
   );
   expect(token.getOwningPlayerSlot()).toBe(-1);
 
@@ -74,7 +74,7 @@ it("modifier (adj)", () => {
   });
 
   const token: GameObject = MockGameObject.simple(
-    "token:thunders-edge:galvanize",
+    "token:thunders-edge/galvanize",
     { position: TI4.hex.toPosition("<1,0,-1>") }
   );
   expect(token.getOwningPlayerSlot()).toBe(-1);

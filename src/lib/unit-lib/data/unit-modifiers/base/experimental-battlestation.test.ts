@@ -60,10 +60,10 @@ it("modifier + galvanized", () => {
     self: ["card.action:base/experimental-battlestation"],
     selfUnitsAdj: new Map([["space-dock", 1]]),
   });
-  MockGameObject.simple("token:thunders-edge:galvanize", {
+  MockGameObject.simple("token:thunders-edge/galvanize", {
     position: TI4.hex.toPosition("<0,0,0>"),
   });
-  MockGameObject.simple("token:thunders-edge:galvanize", {
+  MockGameObject.simple("token:thunders-edge/galvanize", {
     position: TI4.hex.toPosition("<1,0,-1>"),
   });
 

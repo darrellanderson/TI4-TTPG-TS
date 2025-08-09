@@ -78,7 +78,7 @@ export class UnitPlastic {
       }
     } else if (nsid.startsWith("token.control:")) {
       unit = "control-token";
-    } else if (nsid === "token:thunders-edge:galvanize") {
+    } else if (nsid === "token:thunders-edge/galvanize") {
       unit = "galvanize-token";
     }
 
