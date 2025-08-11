@@ -14,7 +14,7 @@ export declare class DraftToMapString {
     constructor(sliceShape: SliceShape);
     overrideSliceShape(seatIndex: number, sliceShape: SliceShape): this;
     _getSliceShape(seatIndex: number): SliceShape;
-    buildMapString(seatIndexToSliceTiles: Map<number, SliceTiles>, seatIndexToFaction: Map<number, Faction>, seatIndexToPlayerName: Map<number, string>): MapStringAndHexToPlayerName;
+    buildMapString(seatIndexToSliceTiles: Map<number, SliceTiles>, seatIndexToFaction: Map<number, Faction>, seatIndexToPlayerName: Map<number, string>, seatIndexToOpaque: Map<number, string>, opaqueType: string | null): MapStringAndHexToPlayerName;
     _fillMissingMapStringEntries(mapStringEntries: Array<string>): void;
     _addBaseMap(oldMap: string, baseMap: string): string;
 }

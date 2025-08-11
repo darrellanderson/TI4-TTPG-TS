@@ -10,9 +10,11 @@ export declare class DraftStateUI extends AbstractUI {
     static _createSliceClickHandler(draftState: DraftState, sliceIndex: number): (_button: ContentButton, player: Player) => void;
     static _createFactionClickHandler(draftState: DraftState, sliceIndex: number): (_button: ContentButton, player: Player) => void;
     static _createSeatClickHandler(draftState: DraftState, sliceIndex: number): (_button: ContentButton, player: Player) => void;
+    static _createOpaqueClickHandler(draftState: DraftState, opaqueIndex: number): (_button: ContentButton, player: Player) => void;
     static _createFinishClickHandler(draftState: DraftState): (button: Button, player: Player) => void;
     static _createCancelClickHandler(draftState: DraftState): (button: Button, player: Player) => void;
     static _getCreateZoomedSliceUi: (slice: SliceTiles, sliceShape: SliceShape, color: Color) => CreateZoomedUiType;
+    static _createZoomedOpaqueUi: (draftState: DraftState, opaque: string) => CreateZoomedUiType;
     static _getCreatedZoomedMapUi: (draftState: DraftState) => CreateZoomedUiType;
     static _getSliceColorOrThrow: (index: number) => Color;
     constructor(draftState: DraftState, scale: number);

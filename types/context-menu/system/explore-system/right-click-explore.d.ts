@@ -8,6 +8,7 @@ export declare class RightClickExplore implements IGlobal {
     private _isDistantSuns;
     static _checkIsDistantSuns(): boolean;
     private readonly _onFactionsChanged;
+    private readonly _onSystemChanged;
     private readonly _customActionHandler;
     init(): void;
     _maybeSetCustomActions(obj: GameObject): void;

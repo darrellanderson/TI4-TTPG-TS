@@ -1,4 +1,5 @@
-import { AbstractRightClickCard, PlayerSlot } from "ttpg-darrell";
+import { Vector } from "@tabletop-playground/api";
+import { AbstractRightClickCard } from "ttpg-darrell";
 import { System } from "../../../lib/system-lib/system/system";
 export declare const AGE_OF_EXPLORATION_ACTION_NAME: string;
 /**
@@ -13,7 +14,7 @@ export declare class RightClickAgeOfExploration extends AbstractRightClickCard {
     _getAvailableRedSystems(): Array<System>;
     _getAvailableBlueSystems(): Array<System>;
     _getAvailableSystem(tileColor: "red" | "blue"): System | undefined;
-    _dealSystemTile(playerSlot: PlayerSlot, tileColor: "red" | "blue"): void;
+    _dealSystemTile(pos: Vector, tileColor: "red" | "blue"): void;
     _chooseTileColor(): "red" | "blue";
     _colorFromRoll(roll: number): "red" | "blue";
 }

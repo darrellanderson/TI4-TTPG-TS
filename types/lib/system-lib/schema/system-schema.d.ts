@@ -1,7 +1,7 @@
 import { z } from "zod";
 export declare const SystemSchema: z.ZodReadonly<z.ZodObject<{
     tile: z.ZodNumber;
-    class: z.ZodOptional<z.ZodReadonly<z.ZodEnum<["map", "off-map", "alt"]>>>;
+    class: z.ZodOptional<z.ZodReadonly<z.ZodEnum<["map", "off-map", "fracture", "alt"]>>>;
     isExcludeFromDraft: z.ZodOptional<z.ZodBoolean>;
     isHome: z.ZodOptional<z.ZodBoolean>;
     isHyperlane: z.ZodOptional<z.ZodBoolean>;
@@ -172,7 +172,7 @@ export declare const SystemSchema: z.ZodReadonly<z.ZodObject<{
     imgFaceDown: z.ZodOptional<z.ZodBoolean>;
 }, "strict", z.ZodTypeAny, {
     tile: number;
-    class?: "map" | "off-map" | "alt" | undefined;
+    class?: "map" | "off-map" | "fracture" | "alt" | undefined;
     isExcludeFromDraft?: boolean | undefined;
     isHome?: boolean | undefined;
     isHyperlane?: boolean | undefined;
@@ -231,7 +231,7 @@ export declare const SystemSchema: z.ZodReadonly<z.ZodObject<{
     imgFaceDown?: boolean | undefined;
 }, {
     tile: number;
-    class?: "map" | "off-map" | "alt" | undefined;
+    class?: "map" | "off-map" | "fracture" | "alt" | undefined;
     isExcludeFromDraft?: boolean | undefined;
     isHome?: boolean | undefined;
     isHyperlane?: boolean | undefined;

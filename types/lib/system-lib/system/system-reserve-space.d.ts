@@ -5,6 +5,7 @@ import { GameObject } from "@tabletop-playground/api";
  */
 export declare class SystemReserveSpace {
     private readonly _systemTileObj;
+    private readonly _lockedLiftedObjIds;
     private _liftedObjs;
     constructor(systemTileObj: GameObject);
     lift(): this;

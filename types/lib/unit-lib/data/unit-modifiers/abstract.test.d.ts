@@ -11,6 +11,7 @@ export declare const OPPONENT_POS: Vector;
 export declare const ANY_POS: Vector;
 export declare function placeGameObjects(params: {
     systemNsid?: string;
+    systemNsidAdj?: string;
     self?: Array<string>;
     selfActive?: Array<string>;
     selfUnits?: Map<UnitType, number>;

@@ -1,5 +1,5 @@
 import { z } from "zod";
-export declare const UnitSchema: z.ZodReadonly<z.ZodEnum<["carrier", "control-token", "cruiser", "destroyer", "dreadnought", "fighter", "flagship", "infantry", "mech", "pds", "space-dock", "war-sun"]>>;
+export declare const UnitSchema: z.ZodReadonly<z.ZodEnum<["carrier", "control-token", "cruiser", "destroyer", "dreadnought", "fighter", "flagship", "galvanize-token", "infantry", "mech", "pds", "space-dock", "war-sun"]>>;
 export type UnitType = z.infer<typeof UnitSchema>;
 export declare const CombatAttrsSchema: z.ZodReadonly<z.ZodObject<{
     dice: z.ZodOptional<z.ZodNumber>;
@@ -29,10 +29,11 @@ export declare const CombatAttrsSchema: z.ZodReadonly<z.ZodObject<{
 export type CombatAttrsSchemaType = z.infer<typeof CombatAttrsSchema>;
 export declare const UnitAttrsSchema: z.ZodReadonly<z.ZodObject<{
     name: z.ZodString;
-    unit: z.ZodReadonly<z.ZodEnum<["carrier", "control-token", "cruiser", "destroyer", "dreadnought", "fighter", "flagship", "infantry", "mech", "pds", "space-dock", "war-sun"]>>;
+    unit: z.ZodReadonly<z.ZodEnum<["carrier", "control-token", "cruiser", "destroyer", "dreadnought", "fighter", "flagship", "galvanize-token", "infantry", "mech", "pds", "space-dock", "war-sun"]>>;
     componentCount: z.ZodOptional<z.ZodNumber>;
     diceColor: z.ZodOptional<z.ZodString>;
     nsidName: z.ZodOptional<z.ZodReadonly<z.ZodEffects<z.ZodString, string, string>>>;
+    overrideNsid: z.ZodOptional<z.ZodString>;
     cost: z.ZodOptional<z.ZodNumber>;
     producePerCost: z.ZodOptional<z.ZodNumber>;
     isShip: z.ZodOptional<z.ZodBoolean>;
@@ -166,12 +167,14 @@ export declare const UnitAttrsSchema: z.ZodReadonly<z.ZodObject<{
         range?: number | undefined;
     }>>>;
     afbDestroyInfantryInSpace: z.ZodOptional<z.ZodNumber>;
+    onlyIfFaceDown: z.ZodOptional<z.ZodBoolean>;
 }, "strict", z.ZodTypeAny, {
     name: string;
-    unit: "carrier" | "control-token" | "cruiser" | "destroyer" | "dreadnought" | "fighter" | "flagship" | "infantry" | "mech" | "pds" | "space-dock" | "war-sun";
+    unit: "carrier" | "control-token" | "cruiser" | "destroyer" | "dreadnought" | "fighter" | "flagship" | "galvanize-token" | "infantry" | "mech" | "pds" | "space-dock" | "war-sun";
     componentCount?: number | undefined;
     diceColor?: string | undefined;
     nsidName?: string | undefined;
+    overrideNsid?: string | undefined;
     cost?: number | undefined;
     producePerCost?: number | undefined;
     isShip?: boolean | undefined;
@@ -225,12 +228,14 @@ export declare const UnitAttrsSchema: z.ZodReadonly<z.ZodObject<{
         range?: number | undefined;
     }> | undefined;
     afbDestroyInfantryInSpace?: number | undefined;
+    onlyIfFaceDown?: boolean | undefined;
 }, {
     name: string;
-    unit: "carrier" | "control-token" | "cruiser" | "destroyer" | "dreadnought" | "fighter" | "flagship" | "infantry" | "mech" | "pds" | "space-dock" | "war-sun";
+    unit: "carrier" | "control-token" | "cruiser" | "destroyer" | "dreadnought" | "fighter" | "flagship" | "galvanize-token" | "infantry" | "mech" | "pds" | "space-dock" | "war-sun";
     componentCount?: number | undefined;
     diceColor?: string | undefined;
     nsidName?: string | undefined;
+    overrideNsid?: string | undefined;
     cost?: number | undefined;
     producePerCost?: number | undefined;
     isShip?: boolean | undefined;
@@ -284,5 +289,6 @@ export declare const UnitAttrsSchema: z.ZodReadonly<z.ZodObject<{
         range?: number | undefined;
     } | undefined;
     afbDestroyInfantryInSpace?: number | undefined;
+    onlyIfFaceDown?: boolean | undefined;
 }>>;
 export type UnitAttrsSchemaType = z.infer<typeof UnitAttrsSchema>;

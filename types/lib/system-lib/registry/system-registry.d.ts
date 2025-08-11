@@ -1,4 +1,4 @@
-import { Vector } from "@tabletop-playground/api";
+import { GameObject, Vector } from "@tabletop-playground/api";
 import { Planet } from "../planet/planet";
 import { SystemSchemaType } from "../schema/system-schema";
 import { System } from "../system/system";
@@ -11,6 +11,7 @@ export declare class SystemRegistry {
     private readonly _systemTileObjIdToSystem;
     private readonly _onObjectCreatedHandler;
     private readonly _onObjectDestroyedHandler;
+    _maybeRegister(obj: GameObject): void;
     constructor();
     destroy(): void;
     /**

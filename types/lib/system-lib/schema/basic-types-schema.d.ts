@@ -51,7 +51,7 @@ export declare const SourceAndPackageIdSchema: z.ZodReadonly<z.ZodObject<{
     packageId: string;
 }>>;
 export type SourceAndPackageIdSchemaType = z.infer<typeof SourceAndPackageIdSchema>;
-export declare const SystemClassSchema: z.ZodReadonly<z.ZodEnum<["map", "off-map", "alt"]>>;
+export declare const SystemClassSchema: z.ZodReadonly<z.ZodEnum<["map", "off-map", "fracture", "alt"]>>;
 export type SystemClassSchemaType = z.infer<typeof SystemClassSchema>;
 export declare const PlanetTechSchema: z.ZodReadonly<z.ZodEnum<["blue", "green", "red", "yellow"]>>;
 export type PlanetTechSchemaType = z.infer<typeof PlanetTechSchema>;
