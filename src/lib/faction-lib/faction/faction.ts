@@ -14,12 +14,19 @@ export class Faction {
   private readonly _find: Find = new Find();
   private readonly _injectedExtras: Map<string, number> = new Map();
 
+  private _defaultBreakthroughs: Array<string> = [];
+
   constructor(
     sourceAndPackageId: SourceAndPackageIdSchemaType,
     params: FactionSchemaType
   ) {
     this._sourceAndPackageId = sourceAndPackageId;
     this._params = params;
+  }
+
+  // XXX TEMPORARY
+  setDefaultBreakthroughs(breakthroughs: Array<string>): void {
+    this._defaultBreakthroughs = breakthroughs;
   }
 
   getAbbr(): string {
@@ -62,6 +69,20 @@ export class Faction {
       result.push(after);
     }
     return result;
+  }
+
+  getBreakthroughNsids(): Array<string> {
+    let source: string = this._sourceAndPackageId.source;
+    if (source === "base" || source === "pok" || source === "codex.vigil") {
+      source = "thunders-edge"; // breakthrough added in TE
+    }
+    return (this._params.breakthroughs ?? this._defaultBreakthroughs).map(
+      (breakthrough): string => {
+        return TI4.factionRegistry.rewriteNsid(
+          `card.breakthrough:${source}/${breakthrough}`
+        );
+      }
+    );
   }
 
   getCommanderNsids(): Array<string> {

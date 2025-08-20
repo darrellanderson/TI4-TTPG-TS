@@ -4,6 +4,7 @@ import { Faction } from "../../faction/faction";
 import { UnpackControlTokens } from "../unpack-control-tokens/unpack-control-tokens";
 import { UnpackCommandTokens } from "../unpack-command-tokens/unpack-command-tokens";
 import { UnpackFactionAlliance } from "../unpack-faction-alliance/unpack-faction-alliance";
+import { UnpackFactionBreakthrough } from "../unpack-faction-breakthrough/unpack-faction-breakthrough";
 import { UnpackFactionExtras } from "../unpack-faction-extras/unpack-faction-extras";
 import { UnpackFactionPromissory } from "../unpack-faction-promissory/unpack-faction-promissory";
 import { UnpackFactionSheet } from "../unpack-faction-sheet/unpack-faction-sheet";
@@ -24,6 +25,7 @@ export class UnpackAll extends AbstractUnpack {
       new UnpackCommandTokens(faction, playerSlot),
       new UnpackControlTokens(faction, playerSlot),
       new UnpackFactionAlliance(faction, playerSlot),
+      new UnpackFactionBreakthrough(faction, playerSlot),
       new UnpackFactionExtras(faction, playerSlot),
       new UnpackFactionPromissory(faction, playerSlot),
       new UnpackFactionSheet(faction, playerSlot),

@@ -12,6 +12,7 @@ it("constructor", () => {
     name: "my-name",
     abbr: "my-abbr",
     abilities: ["my-ability"],
+    breakthroughs: ["my-breakthrough"],
     commodities: 1,
     home: 2,
     leaders: {
@@ -38,6 +39,9 @@ it("constructor", () => {
   ]);
   expect(faction.getAllianceNsids()).toEqual([
     "card.alliance:my-source/my-nsid-name",
+  ]);
+  expect(faction.getBreakthroughNsids()).toEqual([
+    "card.breakthrough:my-source/my-breakthrough",
   ]);
   expect(faction.getCommanderNsids()).toEqual([
     "card.leader.commander:my-source/my-commander",
@@ -220,4 +224,38 @@ it("inject extras", () => {
   arborec.injectExtras({ "my-extra": 3 });
   expect(arborec.getExtras()).toContain("my-extra");
   expect(arborec.getExtraCount("my-extra")).toEqual(3);
+});
+
+it("missing breakthroughs", () => {
+  const sourceAndPackageId: SourceAndPackageIdSchemaType = {
+    source: "base",
+    packageId: "my-package-id",
+  };
+  const schema: FactionSchemaType = {
+    nsidName: "my-nsid-name",
+    name: "my-name",
+    abbr: "my-abbr",
+    abilities: ["my-ability"],
+    commodities: 1,
+    home: 2,
+    leaders: {
+      agents: ["my-agent"],
+      commanders: ["my-commander"],
+      heroes: ["my-hero"],
+      mechs: ["my-mech"],
+    },
+    promissories: ["my-promissory"],
+    startingTechs: ["antimass-deflectors"], // looks up in tech registry
+    startingUnits: { carrier: 3 },
+    factionTechs: ["plasma-scoring"], // looks up in tech registry
+    unitOverrides: ["my-unit-override", "my-mech"],
+    extras: [{ nsid: "my-extra-1" }, { nsid: "my-extra-2", count: 2 }],
+  };
+  const faction: Faction = new Faction(sourceAndPackageId, schema);
+  expect(faction.getBreakthroughNsids()).toEqual([]);
+
+  faction.setDefaultBreakthroughs(["my-breakthrough"]);
+  expect(faction.getBreakthroughNsids()).toEqual([
+    "card.breakthrough:thunders-edge/my-breakthrough",
+  ]);
 });
