@@ -6,7 +6,9 @@ export declare class Faction {
     private readonly _params;
     private readonly _find;
     private readonly _injectedExtras;
+    private _defaultBreakthroughs;
     constructor(sourceAndPackageId: SourceAndPackageIdSchemaType, params: FactionSchemaType);
+    setDefaultBreakthroughs(breakthroughs: Array<string>): void;
     getAbbr(): string;
     getAbilityNsids(): Array<string>;
     getAgentNsids(): Array<string>;
@@ -15,6 +17,7 @@ export declare class Faction {
      * @returns
      */
     getAllianceNsids(): Array<string>;
+    getBreakthroughNsids(): Array<string>;
     getCommanderNsids(): Array<string>;
     getCommandTokenNsid(): string;
     getCommodities(): number;
