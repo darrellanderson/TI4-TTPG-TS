@@ -46,7 +46,7 @@ for (const [source, systemAttachmentSchemas] of Object.entries(
     let modelFileFace: string = "token/round.obj";
     let modelFileBack: string = "token/round.obj";
     let modelCollider: string = "token/round.col.obj";
-    const modelScale = systemAttachmentSchema.modelScale ?? 1;
+    const modelScale = 1;
 
     // Rewrite some outliers.
     if (nsidName.startsWith("dimensional-tear")) {

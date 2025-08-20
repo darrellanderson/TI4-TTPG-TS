@@ -166,3 +166,12 @@ it("_rollBoom", () => {
   spaceObj._releaseAsPlayer(player, false);
   groundObj._releaseAsPlayer(player, false);
 });
+
+it("_applyBoomResult", () => {
+  const obj: GameObject = new MockGameObject();
+  const rollValues: Array<number> = [1, 2, 3];
+  const hitValue: number = 2;
+
+  const rightClickTokenBoom = new RightClickTokenBoom();
+  rightClickTokenBoom._applyBoomResult(obj, rollValues, hitValue);
+});

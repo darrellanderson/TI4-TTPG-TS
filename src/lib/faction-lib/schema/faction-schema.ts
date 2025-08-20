@@ -10,6 +10,7 @@ export const FactionSchema = z
     abbr: z.string().min(1), // abbreviation
 
     abilities: z.array(NsidNameSchema),
+    breakthroughs: z.array(NsidNameSchema).optional(),
     commodities: z.number().int().min(0),
     factionTechs: z.array(NsidNameSchema).min(2), // omega versions listed separately, can have more than 2
     home: z.number().int().min(0),
