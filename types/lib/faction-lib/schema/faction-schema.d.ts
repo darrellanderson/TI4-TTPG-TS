@@ -4,6 +4,7 @@ export declare const FactionSchema: z.ZodReadonly<z.ZodObject<{
     name: z.ZodString;
     abbr: z.ZodString;
     abilities: z.ZodArray<z.ZodReadonly<z.ZodEffects<z.ZodString, string, string>>, "many">;
+    breakthroughs: z.ZodOptional<z.ZodArray<z.ZodReadonly<z.ZodEffects<z.ZodString, string, string>>, "many">>;
     commodities: z.ZodNumber;
     factionTechs: z.ZodArray<z.ZodReadonly<z.ZodEffects<z.ZodString, string, string>>, "many">;
     home: z.ZodNumber;
@@ -104,6 +105,7 @@ export declare const FactionSchema: z.ZodReadonly<z.ZodObject<{
         warSun?: number | undefined;
     }>;
     unitOverrides: string[];
+    breakthroughs?: string[] | undefined;
     homeSurrogate?: number | undefined;
     extras?: Readonly<{
         nsid: string;
@@ -139,6 +141,7 @@ export declare const FactionSchema: z.ZodReadonly<z.ZodObject<{
         warSun?: number | undefined;
     };
     unitOverrides: string[];
+    breakthroughs?: string[] | undefined;
     homeSurrogate?: number | undefined;
     extras?: {
         nsid: string;
