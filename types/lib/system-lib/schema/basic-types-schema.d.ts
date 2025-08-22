@@ -1,5 +1,5 @@
 import { z } from "zod";
-export declare const AnomalySchema: z.ZodReadonly<z.ZodEnum<["asteroid-field", "gravity-rift", "nebula", "supernova"]>>;
+export declare const AnomalySchema: z.ZodReadonly<z.ZodEnum<["asteroid-field", "gravity-rift", "nebula", "scar", "supernova"]>>;
 export type AnomalySchemaType = z.infer<typeof AnomalySchema>;
 /**
  * Connect edge to set of edges.

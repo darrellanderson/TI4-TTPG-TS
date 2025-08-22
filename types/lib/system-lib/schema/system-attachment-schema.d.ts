@@ -4,7 +4,7 @@ export declare const SystemAttachmentSchema: z.ZodReadonly<z.ZodObject<{
     nsidName: z.ZodReadonly<z.ZodEffects<z.ZodString, string, string>>;
     imgFaceDown: z.ZodOptional<z.ZodBoolean>;
     doNotAttach: z.ZodOptional<z.ZodBoolean>;
-    anomalies: z.ZodOptional<z.ZodArray<z.ZodReadonly<z.ZodEnum<["asteroid-field", "gravity-rift", "nebula", "supernova"]>>, "many">>;
+    anomalies: z.ZodOptional<z.ZodArray<z.ZodReadonly<z.ZodEnum<["asteroid-field", "gravity-rift", "nebula", "scar", "supernova"]>>, "many">>;
     wormholes: z.ZodOptional<z.ZodArray<z.ZodReadonly<z.ZodEnum<["alpha", "beta", "gamma", "delta", "epsilon"]>>, "many">>;
     wormholesFaceDown: z.ZodOptional<z.ZodArray<z.ZodReadonly<z.ZodEnum<["alpha", "beta", "gamma", "delta", "epsilon"]>>, "many">>;
     isDestroyWormhole: z.ZodOptional<z.ZodBoolean>;
@@ -37,6 +37,7 @@ export declare const SystemAttachmentSchema: z.ZodReadonly<z.ZodObject<{
         techs: z.ZodOptional<z.ZodArray<z.ZodReadonly<z.ZodEnum<["blue", "green", "red", "yellow"]>>, "many">>;
         traits: z.ZodOptional<z.ZodArray<z.ZodReadonly<z.ZodEnum<["cultural", "hazardous", "industrial"]>>, "many">>;
         isLegendary: z.ZodOptional<z.ZodBoolean>;
+        isSpaceStation: z.ZodOptional<z.ZodBoolean>;
         legendaryNsidName: z.ZodOptional<z.ZodReadonly<z.ZodEffects<z.ZodString, string, string>>>;
     }, "strict", z.ZodTypeAny, {
         name: string;
@@ -55,6 +56,7 @@ export declare const SystemAttachmentSchema: z.ZodReadonly<z.ZodObject<{
         techs?: ("blue" | "green" | "red" | "yellow")[] | undefined;
         traits?: ("cultural" | "hazardous" | "industrial")[] | undefined;
         isLegendary?: boolean | undefined;
+        isSpaceStation?: boolean | undefined;
         legendaryNsidName?: string | undefined;
     }, {
         name: string;
@@ -73,6 +75,7 @@ export declare const SystemAttachmentSchema: z.ZodReadonly<z.ZodObject<{
         techs?: ("blue" | "green" | "red" | "yellow")[] | undefined;
         traits?: ("cultural" | "hazardous" | "industrial")[] | undefined;
         isLegendary?: boolean | undefined;
+        isSpaceStation?: boolean | undefined;
         legendaryNsidName?: string | undefined;
     }>>, "many">>;
 }, "strict", z.ZodTypeAny, {
@@ -80,7 +83,7 @@ export declare const SystemAttachmentSchema: z.ZodReadonly<z.ZodObject<{
     nsidName: string;
     imgFaceDown?: boolean | undefined;
     doNotAttach?: boolean | undefined;
-    anomalies?: ("asteroid-field" | "gravity-rift" | "nebula" | "supernova")[] | undefined;
+    anomalies?: ("asteroid-field" | "gravity-rift" | "nebula" | "scar" | "supernova")[] | undefined;
     wormholes?: ("alpha" | "beta" | "gamma" | "delta" | "epsilon")[] | undefined;
     wormholesFaceDown?: ("alpha" | "beta" | "gamma" | "delta" | "epsilon")[] | undefined;
     isDestroyWormhole?: boolean | undefined;
@@ -101,6 +104,7 @@ export declare const SystemAttachmentSchema: z.ZodReadonly<z.ZodObject<{
         techs?: ("blue" | "green" | "red" | "yellow")[] | undefined;
         traits?: ("cultural" | "hazardous" | "industrial")[] | undefined;
         isLegendary?: boolean | undefined;
+        isSpaceStation?: boolean | undefined;
         legendaryNsidName?: string | undefined;
     }>[] | undefined;
 }, {
@@ -108,7 +112,7 @@ export declare const SystemAttachmentSchema: z.ZodReadonly<z.ZodObject<{
     nsidName: string;
     imgFaceDown?: boolean | undefined;
     doNotAttach?: boolean | undefined;
-    anomalies?: ("asteroid-field" | "gravity-rift" | "nebula" | "supernova")[] | undefined;
+    anomalies?: ("asteroid-field" | "gravity-rift" | "nebula" | "scar" | "supernova")[] | undefined;
     wormholes?: ("alpha" | "beta" | "gamma" | "delta" | "epsilon")[] | undefined;
     wormholesFaceDown?: ("alpha" | "beta" | "gamma" | "delta" | "epsilon")[] | undefined;
     isDestroyWormhole?: boolean | undefined;
@@ -129,6 +133,7 @@ export declare const SystemAttachmentSchema: z.ZodReadonly<z.ZodObject<{
         techs?: ("blue" | "green" | "red" | "yellow")[] | undefined;
         traits?: ("cultural" | "hazardous" | "industrial")[] | undefined;
         isLegendary?: boolean | undefined;
+        isSpaceStation?: boolean | undefined;
         legendaryNsidName?: string | undefined;
     }[] | undefined;
 }>>;

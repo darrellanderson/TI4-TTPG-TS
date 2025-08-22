@@ -28,6 +28,7 @@ export declare const PlanetSchema: z.ZodReadonly<z.ZodObject<{
     techs: z.ZodOptional<z.ZodArray<z.ZodReadonly<z.ZodEnum<["blue", "green", "red", "yellow"]>>, "many">>;
     traits: z.ZodOptional<z.ZodArray<z.ZodReadonly<z.ZodEnum<["cultural", "hazardous", "industrial"]>>, "many">>;
     isLegendary: z.ZodOptional<z.ZodBoolean>;
+    isSpaceStation: z.ZodOptional<z.ZodBoolean>;
     legendaryNsidName: z.ZodOptional<z.ZodReadonly<z.ZodEffects<z.ZodString, string, string>>>;
 }, "strict", z.ZodTypeAny, {
     name: string;
@@ -46,6 +47,7 @@ export declare const PlanetSchema: z.ZodReadonly<z.ZodObject<{
     techs?: ("blue" | "green" | "red" | "yellow")[] | undefined;
     traits?: ("cultural" | "hazardous" | "industrial")[] | undefined;
     isLegendary?: boolean | undefined;
+    isSpaceStation?: boolean | undefined;
     legendaryNsidName?: string | undefined;
 }, {
     name: string;
@@ -64,6 +66,7 @@ export declare const PlanetSchema: z.ZodReadonly<z.ZodObject<{
     techs?: ("blue" | "green" | "red" | "yellow")[] | undefined;
     traits?: ("cultural" | "hazardous" | "industrial")[] | undefined;
     isLegendary?: boolean | undefined;
+    isSpaceStation?: boolean | undefined;
     legendaryNsidName?: string | undefined;
 }>>;
 export type PlanetSchemaType = z.infer<typeof PlanetSchema>;

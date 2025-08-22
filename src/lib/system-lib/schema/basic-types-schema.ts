@@ -1,7 +1,7 @@
 import { z } from "zod";
 
 export const AnomalySchema = z
-  .enum(["asteroid-field", "gravity-rift", "nebula", "supernova"])
+  .enum(["asteroid-field", "gravity-rift", "nebula", "scar", "supernova"])
   .readonly();
 export type AnomalySchemaType = z.infer<typeof AnomalySchema>;
 
