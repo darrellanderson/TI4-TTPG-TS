@@ -36,6 +36,7 @@ export const SystemSchema = z
     hyperlanesFaceDown: HyperlaneSchema.optional(),
 
     planets: z.array(PlanetSchema).optional(),
+    planetsFaceDown: z.array(PlanetSchema).optional(),
 
     // System tile image, PNG transparent square, fill to left/right edge.
     imgFaceDown: z.boolean().optional(), // has a custom back image

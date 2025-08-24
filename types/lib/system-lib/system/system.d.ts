@@ -22,6 +22,7 @@ export declare class System {
     private readonly _sourceAndPackageId;
     private readonly _params;
     private readonly _planets;
+    private readonly _planetsFaceDown;
     private readonly _wormholes;
     private readonly _wormholesFaceDown;
     private readonly _attachments;

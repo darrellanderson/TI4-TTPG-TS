@@ -609,3 +609,25 @@ it("isLegendary (default)", () => {
   );
   expect(system.isLegendary()).toBe(false);
 });
+
+it("planetsFaceDown", () => {
+  const obj: GameObject = new MockGameObject({
+    templateMetadata: "tile.system:my-source/1000",
+  });
+  const system = new System(
+    obj,
+    { source: "my-source", packageId: "my-package-id" },
+    {
+      tile: 1000,
+      planets: [{ name: "my-name", nsidName: "my-nsid-name" }],
+      planetsFaceDown: [{ name: "my-name-2", nsidName: "my-nsid-name-2" }],
+    }
+  );
+  expect(
+    system.getPlanets().map((planet: Planet): string => planet.getName())
+  ).toEqual(["my-name"]);
+  obj.setRotation([0, 0, 180]);
+  expect(
+    system.getPlanets().map((planet: Planet): string => planet.getName())
+  ).toEqual(["my-name-2"]);
+});

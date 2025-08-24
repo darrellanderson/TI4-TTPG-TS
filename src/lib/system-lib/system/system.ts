@@ -31,6 +31,7 @@ export class System {
   private readonly _sourceAndPackageId: SourceAndPackageIdSchemaType;
   private readonly _params: SystemSchemaType;
   private readonly _planets: Array<Planet> = [];
+  private readonly _planetsFaceDown: Array<Planet> = [];
   private readonly _wormholes: Array<WormholeWithLocalPosition> = [];
   private readonly _wormholesFaceDown:
     | Array<WormholeWithLocalPosition>
@@ -155,6 +156,30 @@ export class System {
           }
 
           this._planets.push(planet);
+        }
+      }
+    }
+
+    if (params.planetsFaceDown) {
+      for (let i = 0; i < params.planetsFaceDown.length; i++) {
+        const planetParams: PlanetSchemaType | undefined =
+          params.planetsFaceDown[i];
+        if (planetParams) {
+          const planet: Planet = new Planet(
+            this._obj,
+            this._sourceAndPackageId,
+            planetParams
+          );
+          if (!planetParams.localPosition) {
+            const pos: Vector = System.standardLocalPosition(
+              i,
+              numPositionEntities,
+              this.isHome()
+            );
+            planet.setLocalPosition(pos);
+          }
+
+          this._planetsFaceDown.push(planet);
         }
       }
     }
@@ -375,7 +400,7 @@ export class System {
   getPlanetClosest(position: Vector): Planet | undefined {
     let closestPlanet: Planet | undefined = undefined;
     let closestDsq: number = Number.MAX_VALUE;
-    for (const planet of this._planets) {
+    for (const planet of this.getPlanets()) {
       const planetPosition: Vector = planet.getPosition();
       const dSq: number = position.subtract(planetPosition).magnitudeSquared();
       if (dSq < closestDsq) {
@@ -412,7 +437,11 @@ export class System {
    */
   getPlanets(): Array<Planet> {
     const result: Array<Planet> = [];
-    result.push(...this._planets);
+    if (this._params.planetsFaceDown && !Facing.isFaceUp(this._obj)) {
+      result.push(...this._planetsFaceDown);
+    } else {
+      result.push(...this._planets);
+    }
     for (const attachment of this._attachments) {
       result.push(...attachment.getPlanets());
     }
