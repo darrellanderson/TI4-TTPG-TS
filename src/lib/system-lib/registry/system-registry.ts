@@ -129,6 +129,17 @@ export class SystemRegistry {
         throw new Error(`Duplicate system tile number: ${tileNumber}`);
       }
 
+      // Face down planet count must match face up (planet position logic).
+      if (
+        systemSchemaType.planetsFaceDown &&
+        systemSchemaType.planetsFaceDown.length !==
+          systemSchemaType.planets?.length
+      ) {
+        throw new Error(
+          `Face down planet count must match face up: ${tileNumber}`
+        );
+      }
+
       // Register system.
       this._systemTileNumberToSchemaAndSource.set(tileNumber, {
         sourceAndPackageId,

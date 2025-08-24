@@ -281,3 +281,40 @@ it("validate NSIDs appear in assets/Templates", () => {
   }
   expect(missing).toHaveLength(0);
 });
+
+it("planets face down length must match face up", () => {
+  const registry = new SystemRegistry().load(
+    { source: "my-source", packageId: "my-package-id" },
+    [
+      {
+        tile: 1000,
+        planetsFaceDown: [
+          {
+            name: "x",
+            nsidName: "x",
+          },
+        ],
+        planets: [
+          {
+            name: "x",
+            nsidName: "x",
+          },
+        ],
+      },
+    ]
+  );
+  expect(() =>
+    registry.load({ source: "my-source", packageId: "my-package-id" }, [
+      {
+        tile: 1001,
+        planetsFaceDown: [
+          {
+            name: "x",
+            nsidName: "x",
+          },
+        ],
+      },
+    ])
+  ).toThrow(/Face down planet count must match face up/);
+  registry.destroy();
+});
