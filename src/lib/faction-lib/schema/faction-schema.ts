@@ -55,6 +55,8 @@ export const FactionSchema = z
           .readonly()
       )
       .optional(),
+
+    skipFactionReferenceCard: z.boolean().optional(), // does not have a reference card
   })
   .strict()
   .readonly();
