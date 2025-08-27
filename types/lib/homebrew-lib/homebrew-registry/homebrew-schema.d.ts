@@ -1661,4 +1661,3 @@ export declare const HomebrewModuleSchema: z.ZodObject<{
     nsidToTemplateId?: Record<string, string> | undefined;
 }>;
 export type HomebrewModuleType = z.infer<typeof HomebrewModuleSchema>;
-export declare function validateHomebrewModule(homebrew: HomebrewModuleType): void;
