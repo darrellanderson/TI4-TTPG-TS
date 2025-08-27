@@ -19,14 +19,14 @@ export const HomebrewModuleSchema = z.object({
   planetAttachments: z.array(PlanetAttachmentSchema).optional(),
   systemAttachments: z.array(SystemAttachmentSchema).optional(),
 
-  unitAttrs: z.array(UnitAttrsSchema),
-  unitModifiers: z.array(UnitModifierSchema),
+  unitAttrs: z.array(UnitAttrsSchema).optional(),
+  unitModifiers: z.array(UnitModifierSchema).optional(),
 
-  technologies: z.array(TechSchema),
+  technologies: z.array(TechSchema).optional(),
 
-  remove: z.array(z.string()), // NSIDs
+  remove: z.array(z.string()).optional(), // NSIDs
 
-  nsidToTemplateId: z.record(z.string(), z.string()),
+  nsidToTemplateId: z.record(z.string(), z.string()).optional(),
 });
 
 export type HomebrewModuleType = z.infer<typeof HomebrewModuleSchema>;

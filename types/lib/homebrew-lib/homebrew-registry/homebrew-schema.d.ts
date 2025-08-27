@@ -760,7 +760,7 @@ export declare const HomebrewModuleSchema: z.ZodObject<{
             legendaryNsidName?: string | undefined;
         }[] | undefined;
     }>>, "many">>;
-    unitAttrs: z.ZodArray<z.ZodReadonly<z.ZodObject<{
+    unitAttrs: z.ZodOptional<z.ZodArray<z.ZodReadonly<z.ZodObject<{
         name: z.ZodString;
         unit: z.ZodReadonly<z.ZodEnum<["carrier", "control-token", "cruiser", "destroyer", "dreadnought", "fighter", "flagship", "galvanize-token", "infantry", "mech", "pds", "space-dock", "war-sun"]>>;
         componentCount: z.ZodOptional<z.ZodNumber>;
@@ -1023,8 +1023,8 @@ export declare const HomebrewModuleSchema: z.ZodObject<{
         } | undefined;
         afbDestroyInfantryInSpace?: number | undefined;
         onlyIfFaceDown?: boolean | undefined;
-    }>>, "many">;
-    unitModifiers: z.ZodArray<z.ZodReadonly<z.ZodObject<{
+    }>>, "many">>;
+    unitModifiers: z.ZodOptional<z.ZodArray<z.ZodReadonly<z.ZodObject<{
         name: z.ZodString;
         description: z.ZodString;
         triggerAlways: z.ZodOptional<z.ZodBoolean>;
@@ -1074,8 +1074,8 @@ export declare const HomebrewModuleSchema: z.ZodObject<{
         apply: (args_0: any, ...args: unknown[]) => void;
         triggerAlways?: boolean | undefined;
         isActiveIdle?: boolean | undefined;
-    }>>, "many">;
-    technologies: z.ZodArray<z.ZodReadonly<z.ZodObject<{
+    }>>, "many">>;
+    technologies: z.ZodOptional<z.ZodArray<z.ZodReadonly<z.ZodObject<{
         nsidName: z.ZodReadonly<z.ZodEffects<z.ZodString, string, string>>;
         name: z.ZodString;
         abbr: z.ZodOptional<z.ZodString>;
@@ -1124,107 +1124,14 @@ export declare const HomebrewModuleSchema: z.ZodObject<{
         abbr?: string | undefined;
         isFactionTech?: boolean | undefined;
         replacesNsidName?: string | undefined;
-    }>>, "many">;
-    remove: z.ZodArray<z.ZodString, "many">;
-    nsidToTemplateId: z.ZodRecord<z.ZodString, z.ZodString>;
+    }>>, "many">>;
+    remove: z.ZodOptional<z.ZodArray<z.ZodString, "many">>;
+    nsidToTemplateId: z.ZodOptional<z.ZodRecord<z.ZodString, z.ZodString>>;
 }, "strip", z.ZodTypeAny, {
-    remove: string[];
     sourceAndPackageId: Readonly<{
         source: string;
         packageId: string;
     }>;
-    unitAttrs: Readonly<{
-        name: string;
-        unit: "carrier" | "control-token" | "cruiser" | "destroyer" | "dreadnought" | "fighter" | "flagship" | "galvanize-token" | "infantry" | "mech" | "pds" | "space-dock" | "war-sun";
-        componentCount?: number | undefined;
-        diceColor?: string | undefined;
-        nsidName?: string | undefined;
-        overrideNsid?: string | undefined;
-        cost?: number | undefined;
-        producePerCost?: number | undefined;
-        isShip?: boolean | undefined;
-        isGround?: boolean | undefined;
-        hasSustainDamage?: boolean | undefined;
-        hasPlanetaryShield?: boolean | undefined;
-        disablePlanetaryShield?: boolean | undefined;
-        antiFighterBarrage?: Readonly<{
-            hit: number;
-            dice?: number | undefined;
-            extraDice?: number | undefined;
-            rerollMisses?: boolean | undefined;
-            crit?: number | undefined;
-            critCount?: number | undefined;
-            range?: number | undefined;
-        }> | undefined;
-        bombardment?: Readonly<{
-            hit: number;
-            dice?: number | undefined;
-            extraDice?: number | undefined;
-            rerollMisses?: boolean | undefined;
-            crit?: number | undefined;
-            critCount?: number | undefined;
-            range?: number | undefined;
-        }> | undefined;
-        spaceCannon?: Readonly<{
-            hit: number;
-            dice?: number | undefined;
-            extraDice?: number | undefined;
-            rerollMisses?: boolean | undefined;
-            crit?: number | undefined;
-            critCount?: number | undefined;
-            range?: number | undefined;
-        }> | undefined;
-        spaceCombat?: Readonly<{
-            hit: number;
-            dice?: number | undefined;
-            extraDice?: number | undefined;
-            rerollMisses?: boolean | undefined;
-            crit?: number | undefined;
-            critCount?: number | undefined;
-            range?: number | undefined;
-        }> | undefined;
-        groundCombat?: Readonly<{
-            hit: number;
-            dice?: number | undefined;
-            extraDice?: number | undefined;
-            rerollMisses?: boolean | undefined;
-            crit?: number | undefined;
-            critCount?: number | undefined;
-            range?: number | undefined;
-        }> | undefined;
-        afbDestroyInfantryInSpace?: number | undefined;
-        onlyIfFaceDown?: boolean | undefined;
-    }>[];
-    unitModifiers: Readonly<{
-        name: string;
-        description: string;
-        triggers: Readonly<{
-            nsidName: string;
-            cardClass: "action" | "promissory" | "mech" | "unit" | "agenda" | "agent" | "alliance" | "breakthrough" | "commander" | "event" | "faction-ability" | "hero" | "legendary" | "relic" | "technology.blue" | "technology.green" | "technology.red" | "technology.yellow" | "technology.unit-upgrade";
-            overrideSource?: string | undefined;
-        }>[];
-        owner: "self" | "opponent" | "any";
-        priority: "mutate" | "mutate-late" | "adjust" | "adjust-late" | "choose";
-        applies: (args_0: any, ...args: unknown[]) => boolean;
-        apply: (args_0: any, ...args: unknown[]) => void;
-        triggerAlways?: boolean | undefined;
-        isActiveIdle?: boolean | undefined;
-    }>[];
-    technologies: Readonly<{
-        name: string;
-        nsidName: string;
-        color: "blue" | "green" | "red" | "yellow" | "unit-upgrade" | "none";
-        prerequisites: {
-            blue?: number | undefined;
-            green?: number | undefined;
-            red?: number | undefined;
-            yellow?: number | undefined;
-        };
-        abbr?: string | undefined;
-        isFactionTech?: boolean | undefined;
-        replacesNsidName?: string | undefined;
-    }>[];
-    nsidToTemplateId: Record<string, string>;
     factions?: Readonly<{
         name: string;
         nsidName: string;
@@ -1393,13 +1300,7 @@ export declare const HomebrewModuleSchema: z.ZodObject<{
             legendaryNsidName?: string | undefined;
         }>[] | undefined;
     }>[] | undefined;
-}, {
-    remove: string[];
-    sourceAndPackageId: {
-        source: string;
-        packageId: string;
-    };
-    unitAttrs: {
+    unitAttrs?: Readonly<{
         name: string;
         unit: "carrier" | "control-token" | "cruiser" | "destroyer" | "dreadnought" | "fighter" | "flagship" | "galvanize-token" | "infantry" | "mech" | "pds" | "space-dock" | "war-sun";
         componentCount?: number | undefined;
@@ -1413,7 +1314,7 @@ export declare const HomebrewModuleSchema: z.ZodObject<{
         hasSustainDamage?: boolean | undefined;
         hasPlanetaryShield?: boolean | undefined;
         disablePlanetaryShield?: boolean | undefined;
-        antiFighterBarrage?: {
+        antiFighterBarrage?: Readonly<{
             hit: number;
             dice?: number | undefined;
             extraDice?: number | undefined;
@@ -1421,8 +1322,8 @@ export declare const HomebrewModuleSchema: z.ZodObject<{
             crit?: number | undefined;
             critCount?: number | undefined;
             range?: number | undefined;
-        } | undefined;
-        bombardment?: {
+        }> | undefined;
+        bombardment?: Readonly<{
             hit: number;
             dice?: number | undefined;
             extraDice?: number | undefined;
@@ -1430,8 +1331,8 @@ export declare const HomebrewModuleSchema: z.ZodObject<{
             crit?: number | undefined;
             critCount?: number | undefined;
             range?: number | undefined;
-        } | undefined;
-        spaceCannon?: {
+        }> | undefined;
+        spaceCannon?: Readonly<{
             hit: number;
             dice?: number | undefined;
             extraDice?: number | undefined;
@@ -1439,8 +1340,8 @@ export declare const HomebrewModuleSchema: z.ZodObject<{
             crit?: number | undefined;
             critCount?: number | undefined;
             range?: number | undefined;
-        } | undefined;
-        spaceCombat?: {
+        }> | undefined;
+        spaceCombat?: Readonly<{
             hit: number;
             dice?: number | undefined;
             extraDice?: number | undefined;
@@ -1448,8 +1349,8 @@ export declare const HomebrewModuleSchema: z.ZodObject<{
             crit?: number | undefined;
             critCount?: number | undefined;
             range?: number | undefined;
-        } | undefined;
-        groundCombat?: {
+        }> | undefined;
+        groundCombat?: Readonly<{
             hit: number;
             dice?: number | undefined;
             extraDice?: number | undefined;
@@ -1457,26 +1358,26 @@ export declare const HomebrewModuleSchema: z.ZodObject<{
             crit?: number | undefined;
             critCount?: number | undefined;
             range?: number | undefined;
-        } | undefined;
+        }> | undefined;
         afbDestroyInfantryInSpace?: number | undefined;
         onlyIfFaceDown?: boolean | undefined;
-    }[];
-    unitModifiers: {
+    }>[] | undefined;
+    unitModifiers?: Readonly<{
         name: string;
         description: string;
-        triggers: {
+        triggers: Readonly<{
             nsidName: string;
             cardClass: "action" | "promissory" | "mech" | "unit" | "agenda" | "agent" | "alliance" | "breakthrough" | "commander" | "event" | "faction-ability" | "hero" | "legendary" | "relic" | "technology.blue" | "technology.green" | "technology.red" | "technology.yellow" | "technology.unit-upgrade";
             overrideSource?: string | undefined;
-        }[];
+        }>[];
         owner: "self" | "opponent" | "any";
         priority: "mutate" | "mutate-late" | "adjust" | "adjust-late" | "choose";
         applies: (args_0: any, ...args: unknown[]) => boolean;
         apply: (args_0: any, ...args: unknown[]) => void;
         triggerAlways?: boolean | undefined;
         isActiveIdle?: boolean | undefined;
-    }[];
-    technologies: {
+    }>[] | undefined;
+    technologies?: Readonly<{
         name: string;
         nsidName: string;
         color: "blue" | "green" | "red" | "yellow" | "unit-upgrade" | "none";
@@ -1489,8 +1390,14 @@ export declare const HomebrewModuleSchema: z.ZodObject<{
         abbr?: string | undefined;
         isFactionTech?: boolean | undefined;
         replacesNsidName?: string | undefined;
-    }[];
-    nsidToTemplateId: Record<string, string>;
+    }>[] | undefined;
+    remove?: string[] | undefined;
+    nsidToTemplateId?: Record<string, string> | undefined;
+}, {
+    sourceAndPackageId: {
+        source: string;
+        packageId: string;
+    };
     factions?: {
         name: string;
         nsidName: string;
@@ -1659,5 +1566,98 @@ export declare const HomebrewModuleSchema: z.ZodObject<{
             legendaryNsidName?: string | undefined;
         }[] | undefined;
     }[] | undefined;
+    unitAttrs?: {
+        name: string;
+        unit: "carrier" | "control-token" | "cruiser" | "destroyer" | "dreadnought" | "fighter" | "flagship" | "galvanize-token" | "infantry" | "mech" | "pds" | "space-dock" | "war-sun";
+        componentCount?: number | undefined;
+        diceColor?: string | undefined;
+        nsidName?: string | undefined;
+        overrideNsid?: string | undefined;
+        cost?: number | undefined;
+        producePerCost?: number | undefined;
+        isShip?: boolean | undefined;
+        isGround?: boolean | undefined;
+        hasSustainDamage?: boolean | undefined;
+        hasPlanetaryShield?: boolean | undefined;
+        disablePlanetaryShield?: boolean | undefined;
+        antiFighterBarrage?: {
+            hit: number;
+            dice?: number | undefined;
+            extraDice?: number | undefined;
+            rerollMisses?: boolean | undefined;
+            crit?: number | undefined;
+            critCount?: number | undefined;
+            range?: number | undefined;
+        } | undefined;
+        bombardment?: {
+            hit: number;
+            dice?: number | undefined;
+            extraDice?: number | undefined;
+            rerollMisses?: boolean | undefined;
+            crit?: number | undefined;
+            critCount?: number | undefined;
+            range?: number | undefined;
+        } | undefined;
+        spaceCannon?: {
+            hit: number;
+            dice?: number | undefined;
+            extraDice?: number | undefined;
+            rerollMisses?: boolean | undefined;
+            crit?: number | undefined;
+            critCount?: number | undefined;
+            range?: number | undefined;
+        } | undefined;
+        spaceCombat?: {
+            hit: number;
+            dice?: number | undefined;
+            extraDice?: number | undefined;
+            rerollMisses?: boolean | undefined;
+            crit?: number | undefined;
+            critCount?: number | undefined;
+            range?: number | undefined;
+        } | undefined;
+        groundCombat?: {
+            hit: number;
+            dice?: number | undefined;
+            extraDice?: number | undefined;
+            rerollMisses?: boolean | undefined;
+            crit?: number | undefined;
+            critCount?: number | undefined;
+            range?: number | undefined;
+        } | undefined;
+        afbDestroyInfantryInSpace?: number | undefined;
+        onlyIfFaceDown?: boolean | undefined;
+    }[] | undefined;
+    unitModifiers?: {
+        name: string;
+        description: string;
+        triggers: {
+            nsidName: string;
+            cardClass: "action" | "promissory" | "mech" | "unit" | "agenda" | "agent" | "alliance" | "breakthrough" | "commander" | "event" | "faction-ability" | "hero" | "legendary" | "relic" | "technology.blue" | "technology.green" | "technology.red" | "technology.yellow" | "technology.unit-upgrade";
+            overrideSource?: string | undefined;
+        }[];
+        owner: "self" | "opponent" | "any";
+        priority: "mutate" | "mutate-late" | "adjust" | "adjust-late" | "choose";
+        applies: (args_0: any, ...args: unknown[]) => boolean;
+        apply: (args_0: any, ...args: unknown[]) => void;
+        triggerAlways?: boolean | undefined;
+        isActiveIdle?: boolean | undefined;
+    }[] | undefined;
+    technologies?: {
+        name: string;
+        nsidName: string;
+        color: "blue" | "green" | "red" | "yellow" | "unit-upgrade" | "none";
+        prerequisites: {
+            blue?: number | undefined;
+            green?: number | undefined;
+            red?: number | undefined;
+            yellow?: number | undefined;
+        };
+        abbr?: string | undefined;
+        isFactionTech?: boolean | undefined;
+        replacesNsidName?: string | undefined;
+    }[] | undefined;
+    remove?: string[] | undefined;
+    nsidToTemplateId?: Record<string, string> | undefined;
 }>;
 export type HomebrewModuleType = z.infer<typeof HomebrewModuleSchema>;
