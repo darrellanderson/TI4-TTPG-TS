@@ -19,6 +19,8 @@ export const SystemAttachmentSchema = z
     isDestroyWormhole: z.boolean().optional(),
 
     planets: z.array(PlanetSchema).optional(),
+
+    customModel: z.boolean().optional(), // for auto-generation, do not create round token version
   })
   .strict()
   .readonly();

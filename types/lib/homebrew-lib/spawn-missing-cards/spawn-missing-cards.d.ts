@@ -7,6 +7,7 @@ export declare class SpawnMissingCards {
     private readonly _cardUtil;
     private readonly _find;
     static shouldSpawnMissingCards(deckNsid: string): boolean;
+    static shouldShuffleDeck(deckNsid: string): boolean;
     spawnAndAddMissingCards(deckNsid: string): void;
     _spawnDeck(deckNsid: string): Card | undefined;
     /**

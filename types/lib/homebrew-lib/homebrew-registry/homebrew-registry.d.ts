@@ -25,4 +25,10 @@ export type HomebrewModuleType = {
  */
 export declare class HomebrewRegistry {
     load(params: HomebrewModuleType): void;
+    /**
+     * AFTER loading registries, spawn nsids.
+     *
+     * @param params
+     */
+    addMissingItems(params: HomebrewModuleType): void;
 }

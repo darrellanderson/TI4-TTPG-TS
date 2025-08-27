@@ -78,6 +78,7 @@ export declare const SystemAttachmentSchema: z.ZodReadonly<z.ZodObject<{
         isSpaceStation?: boolean | undefined;
         legendaryNsidName?: string | undefined;
     }>>, "many">>;
+    customModel: z.ZodOptional<z.ZodBoolean>;
 }, "strict", z.ZodTypeAny, {
     name: string;
     nsidName: string;
@@ -107,6 +108,7 @@ export declare const SystemAttachmentSchema: z.ZodReadonly<z.ZodObject<{
         isSpaceStation?: boolean | undefined;
         legendaryNsidName?: string | undefined;
     }>[] | undefined;
+    customModel?: boolean | undefined;
 }, {
     name: string;
     nsidName: string;
@@ -136,5 +138,6 @@ export declare const SystemAttachmentSchema: z.ZodReadonly<z.ZodObject<{
         isSpaceStation?: boolean | undefined;
         legendaryNsidName?: string | undefined;
     }[] | undefined;
+    customModel?: boolean | undefined;
 }>>;
 export type SystemAttachmentSchemaType = z.infer<typeof SystemAttachmentSchema>;
