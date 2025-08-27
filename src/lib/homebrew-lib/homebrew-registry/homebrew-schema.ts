@@ -31,6 +31,8 @@ export const HomebrewModuleSchema = z.object({
 
 export type HomebrewModuleType = z.infer<typeof HomebrewModuleSchema>;
 
+/*
 export function validateHomebrewModule(homebrew: HomebrewModuleType): void {
   HomebrewModuleSchema.parse(homebrew);
 }
+*/
