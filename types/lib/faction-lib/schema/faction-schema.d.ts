@@ -75,6 +75,7 @@ export declare const FactionSchema: z.ZodReadonly<z.ZodObject<{
         nsid: string;
         count?: number | undefined;
     }>>, "many">>;
+    isExcludeFromDraft: z.ZodOptional<z.ZodBoolean>;
     skipFactionReferenceCard: z.ZodOptional<z.ZodBoolean>;
 }, "strict", z.ZodTypeAny, {
     name: string;
@@ -112,6 +113,7 @@ export declare const FactionSchema: z.ZodReadonly<z.ZodObject<{
         nsid: string;
         count?: number | undefined;
     }>[] | undefined;
+    isExcludeFromDraft?: boolean | undefined;
     skipFactionReferenceCard?: boolean | undefined;
 }, {
     name: string;
@@ -149,6 +151,7 @@ export declare const FactionSchema: z.ZodReadonly<z.ZodObject<{
         nsid: string;
         count?: number | undefined;
     }[] | undefined;
+    isExcludeFromDraft?: boolean | undefined;
     skipFactionReferenceCard?: boolean | undefined;
 }>>;
 export type FactionSchemaType = z.infer<typeof FactionSchema>;

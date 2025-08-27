@@ -45,4 +45,5 @@ export declare class Faction {
     injectExtras(extras: {
         [nsid: string]: number;
     }): this;
+    isExcludeFromDraft(): boolean;
 }

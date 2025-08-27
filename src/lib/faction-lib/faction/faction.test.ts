@@ -86,6 +86,7 @@ it("constructor", () => {
     "unit:my-source/my-unit-override",
     "card.leader.mech:my-source/my-mech",
   ]);
+  expect(faction.isExcludeFromDraft()).toEqual(false);
 });
 
 it("constructor (base source get pok mech)", () => {

@@ -8,8 +8,11 @@ export class GenerateFactions {
    * @param count
    */
   generate(count: number): Array<Faction> {
-    let factions: Array<Faction> =
-      TI4.factionRegistry.getAllFactionsFilteredByConfigSources();
+    let factions: Array<Faction> = TI4.factionRegistry
+      .getAllFactionsFilteredByConfigSources()
+      .filter((faction: Faction): boolean => {
+        return !faction.isExcludeFromDraft();
+      });
     factions = new Shuffle<Faction>().shuffle(factions);
 
     return this._resolveOrThrow(count, factions);

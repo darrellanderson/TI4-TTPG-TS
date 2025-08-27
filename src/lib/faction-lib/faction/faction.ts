@@ -291,4 +291,8 @@ export class Faction {
     });
     return this;
   }
+
+  isExcludeFromDraft(): boolean {
+    return this._params.isExcludeFromDraft ?? false;
+  }
 }

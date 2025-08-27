@@ -56,6 +56,7 @@ export const FactionSchema = z
       )
       .optional(),
 
+    isExcludeFromDraft: z.boolean().optional(),
     skipFactionReferenceCard: z.boolean().optional(), // does not have a reference card
   })
   .strict()
