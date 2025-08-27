@@ -1,4 +1,5 @@
-import { Spawn } from "ttpg-darrell";
+import { Container, GameObject, world } from "@tabletop-playground/api";
+import { Find, GarbageContainer, NSID, Spawn } from "ttpg-darrell";
 import { SpawnMissingCards } from "../spawn-missing-cards/spawn-missing-cards";
 
 import { FactionSchemaType } from "../../faction-lib/schema/faction-schema";
@@ -38,6 +39,12 @@ export type HomebrewModuleType = {
  */
 export class HomebrewRegistry {
   public load(params: HomebrewModuleType): void {
+    const sources: Array<string> = TI4.config.sources;
+    if (!sources.includes(params.sourceAndPackageId.source)) {
+      sources.push(params.sourceAndPackageId.source);
+      TI4.config.setSources(sources);
+    }
+
     if (params.factions) {
       TI4.factionRegistry.load(params.sourceAndPackageId, params.factions);
     }
@@ -85,7 +92,75 @@ export class HomebrewRegistry {
 
     if (params.nsidToTemplateId) {
       Spawn.inject(params.nsidToTemplateId);
+    }
 
+    this.addMissingItems(params);
+  }
+
+  /**
+   * AFTER loading registries, spawn nsids.
+   *
+   * @param params
+   */
+  public addMissingItems(params: HomebrewModuleType): void {
+    const source: string = params.sourceAndPackageId.source;
+    const find: Find = new Find();
+
+    const allNsids: Set<string> = new Set();
+    const skipContained: boolean = false;
+    for (const obj of world.getAllObjects(skipContained)) {
+      const nsid: string = NSID.get(obj);
+      if (nsid.length > 0) {
+        allNsids.add(nsid);
+      }
+    }
+
+    if (params.systems) {
+      params.systems.forEach((system: SystemSchemaType): void => {
+        const nsid: string | undefined =
+          TI4.systemRegistry.tileNumberToSystemTileObjNsid(system.tile);
+        if (!system.isHome && system.tile > 0 && nsid && !allNsids.has(nsid)) {
+          const obj: GameObject = Spawn.spawnOrThrow(nsid);
+          GarbageContainer.tryRecycle(obj, undefined);
+        }
+      });
+    }
+
+    if (params.planetAttachments) {
+      const container: Container | undefined = find.findContainer(
+        "container:pok/exploration",
+        undefined, // no owner
+        true // skip contained
+      );
+      params.planetAttachments.forEach(
+        (schema: PlanetAttachmentSchemaType): void => {
+          const nsid: string = `token.attachment.planet:${source}/${schema.nsidName}`;
+          if (!allNsids.has(nsid) && container) {
+            const obj: GameObject = Spawn.spawnOrThrow(nsid);
+            container.addObjects([obj]);
+          }
+        }
+      );
+    }
+
+    if (params.systemAttachments) {
+      const container: Container | undefined = find.findContainer(
+        "container:pok/exploration",
+        undefined, // no owner
+        true // skip contained
+      );
+      params.systemAttachments.forEach(
+        (schema: SystemAttachmentSchemaType): void => {
+          const nsid: string = `token.attachment.system:${source}/${schema.nsidName}`;
+          if (!allNsids.has(nsid) && container) {
+            const obj: GameObject = Spawn.spawnOrThrow(nsid);
+            container.addObjects([obj]);
+          }
+        }
+      );
+    }
+
+    if (params.nsidToTemplateId) {
       const spawnMissingCards = new SpawnMissingCards();
       for (const nsid of Object.keys(params.nsidToTemplateId)) {
         if (SpawnMissingCards.shouldSpawnMissingCards(nsid)) {

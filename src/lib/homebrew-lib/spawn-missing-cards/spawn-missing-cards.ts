@@ -31,12 +31,25 @@ export class SpawnMissingCards {
     );
   }
 
+  static shouldShuffleDeck(deckNsid: string): boolean {
+    return (
+      deckNsid.startsWith("card.action") ||
+      deckNsid.startsWith("card.agenda") ||
+      deckNsid.startsWith("card.exploration.") ||
+      deckNsid.startsWith("card.objective.") ||
+      deckNsid.startsWith("card.relic")
+    );
+  }
+
   spawnAndAddMissingCards(deckNsid: string): void {
     const existingDeck: Card | undefined = this._getExistingDeck(deckNsid);
     if (existingDeck) {
       const spawnedDeck: Card | undefined = this._spawnDeck(deckNsid);
       if (spawnedDeck) {
         this._addMissingCards(spawnedDeck, existingDeck);
+        if (SpawnMissingCards.shouldShuffleDeck(deckNsid)) {
+          spawnedDeck.shuffle();
+        }
       }
     }
   }
