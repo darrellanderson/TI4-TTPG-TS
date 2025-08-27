@@ -15,7 +15,7 @@
     "libpack": "ttpg-scripts libpack",
     "watch": "ttpg-scripts watch",
     "index": "yarn cti ./src -e _how-to -e _test -i '*.test.ts' && find . -name 'index.ts.bak' -exec rm {} \\;",
-    "prepublish": "yarn index && tsc -p tsconfig.json && tsc -p tsconfig-index.json",
+    "prepublish": "tsc -p tsconfig.json && tsc -p tsconfig-index.json",
     "postpublish": "ttpg-scripts postpublish",
     "check:prettier": "prettier --check src",
     "test": "jest",
