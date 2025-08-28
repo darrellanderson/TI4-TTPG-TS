@@ -23,6 +23,7 @@ export class SpawnMissingCards {
       deckNsid.startsWith("card.action") ||
       deckNsid.startsWith("card.agenda") ||
       deckNsid.startsWith("card.exploration.") ||
+      deckNsid.startsWith("card.event") ||
       deckNsid.startsWith("card.faction-reference") ||
       deckNsid.startsWith("card.legendary-planet") ||
       deckNsid.startsWith("card.objective.") ||
