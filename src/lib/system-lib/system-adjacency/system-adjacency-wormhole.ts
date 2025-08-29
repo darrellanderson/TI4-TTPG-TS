@@ -74,6 +74,16 @@ export class SystemAdjacencyWormhole {
     return TI4.hex.fromPosition(pos);
   }
 
+  _useWormhole(wormhole: string, faction: Faction | undefined): boolean {
+    if (
+      wormhole === "epsilon" &&
+      (!faction || !faction.getAbilityNsidNames().includes("sundered"))
+    ) {
+      return false;
+    }
+    return true;
+  }
+
   public addTags(
     hexToSystem: Map<HexType, System>,
     adjacency: Adjacency,
@@ -82,6 +92,10 @@ export class SystemAdjacencyWormhole {
     // Add wormholes in systems (inclues attachments).
     for (const [hex, system] of hexToSystem) {
       for (const wormhole of system.getWormholes()) {
+        if (!this._useWormhole(wormhole, faction)) {
+          continue;
+        }
+
         // System into wormhole.
         adjacency.addLink({
           src: hex,

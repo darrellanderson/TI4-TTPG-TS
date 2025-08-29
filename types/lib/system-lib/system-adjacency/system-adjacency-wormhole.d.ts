@@ -19,6 +19,7 @@ export declare class SystemAdjacencyWormhole {
      * @returns
      */
     static getSystemHex(pos: Vector): HexType;
+    _useWormhole(wormhole: string, faction: Faction | undefined): boolean;
     addTags(hexToSystem: Map<HexType, System>, adjacency: Adjacency, faction: Faction | undefined): void;
     _applyFaction(faction: Faction, adjacency: Adjacency): void;
     _applyCreussFlagship(adjacency: Adjacency): void;

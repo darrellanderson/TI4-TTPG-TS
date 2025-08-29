@@ -33,6 +33,10 @@ export class Faction {
     return this._params.abbr;
   }
 
+  getAbilityNsidNames(): Array<string> {
+    return this._params.abilities;
+  }
+
   getAbilityNsids(): Array<string> {
     const source: string = this._sourceAndPackageId.source;
     return this._params.abilities.map((ability): string => {

@@ -27,10 +27,12 @@ it("constructor", () => {
     factionTechs: ["plasma-scoring"], // looks up in tech registry
     unitOverrides: ["my-unit-override", "my-mech"],
     extras: [{ nsid: "my-extra-1" }, { nsid: "my-extra-2", count: 2 }],
+    isExcludeFromDraft: true,
   };
   const faction: Faction = new Faction(sourceAndPackageId, schema);
 
   expect(faction.getAbbr()).toEqual("my-abbr");
+  expect(faction.getAbilityNsidNames()).toEqual(["my-ability"]);
   expect(faction.getAbilityNsids()).toEqual([
     "faction-ability:my-source/my-ability",
   ]);
@@ -86,7 +88,7 @@ it("constructor", () => {
     "unit:my-source/my-unit-override",
     "card.leader.mech:my-source/my-mech",
   ]);
-  expect(faction.isExcludeFromDraft()).toEqual(false);
+  expect(faction.isExcludeFromDraft()).toEqual(true);
 });
 
 it("constructor (base source get pok mech)", () => {

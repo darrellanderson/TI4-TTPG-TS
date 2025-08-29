@@ -10,6 +10,7 @@ export declare class Faction {
     constructor(sourceAndPackageId: SourceAndPackageIdSchemaType, params: FactionSchemaType);
     setDefaultBreakthroughs(breakthroughs: Array<string>): void;
     getAbbr(): string;
+    getAbilityNsidNames(): Array<string>;
     getAbilityNsids(): Array<string>;
     getAgentNsids(): Array<string>;
     /**
