@@ -24,6 +24,7 @@ export declare const TechSchema: z.ZodReadonly<z.ZodObject<{
     }>;
     isFactionTech: z.ZodOptional<z.ZodBoolean>;
     replacesNsidName: z.ZodOptional<z.ZodString>;
+    customModel: z.ZodOptional<z.ZodBoolean>;
 }, "strict", z.ZodTypeAny, {
     name: string;
     nsidName: string;
@@ -37,6 +38,7 @@ export declare const TechSchema: z.ZodReadonly<z.ZodObject<{
     abbr?: string | undefined;
     isFactionTech?: boolean | undefined;
     replacesNsidName?: string | undefined;
+    customModel?: boolean | undefined;
 }, {
     name: string;
     nsidName: string;
@@ -50,5 +52,6 @@ export declare const TechSchema: z.ZodReadonly<z.ZodObject<{
     abbr?: string | undefined;
     isFactionTech?: boolean | undefined;
     replacesNsidName?: string | undefined;
+    customModel?: boolean | undefined;
 }>>;
 export type TechSchemaType = z.infer<typeof TechSchema>;
