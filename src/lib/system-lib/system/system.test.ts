@@ -532,6 +532,18 @@ it("getWormholesWithPosition", () => {
   expect(summary).toEqual(["beta:(X=1,Y=2,Z=3)"]);
 });
 
+it("isEgress", () => {
+  const system = new System(
+    new MockGameObject({ templateMetadata: "tile.system:my-source/1000" }),
+    { source: "my-source", packageId: "my-package-id" },
+    {
+      tile: 1000,
+      egress: true,
+    }
+  );
+  expect(system.isEgress()).toBe(true);
+});
+
 it("isExcludeFromDraft", () => {
   const system = new System(
     new MockGameObject({ templateMetadata: "tile.system:my-source/1000" }),
@@ -585,6 +597,18 @@ it("isHyperlane (default)", () => {
     }
   );
   expect(system.isHyperlane()).toBe(false);
+});
+
+it("isIngress", () => {
+  const system = new System(
+    new MockGameObject({ templateMetadata: "tile.system:my-source/1000" }),
+    { source: "my-source", packageId: "my-package-id" },
+    {
+      tile: 1000,
+      ingress: true,
+    }
+  );
+  expect(system.isIngress()).toBe(true);
 });
 
 it("isLegendary", () => {

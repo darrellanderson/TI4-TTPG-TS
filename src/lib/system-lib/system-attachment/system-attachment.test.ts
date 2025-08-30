@@ -353,3 +353,35 @@ it("isDestroyWormhole (default)", () => {
   );
   expect(attachment.isDestroyWormhole()).toBe(false);
 });
+
+it("ingress", () => {
+  const attachment = new SystemAttachment(
+    new MockGameObject({
+      templateMetadata: "token.attachment.system:my-source/my-nsid-name",
+    }),
+    { source: "my-source", packageId: "my-package-id" },
+    {
+      name: "my-name",
+      nsidName: "my-nsid-name",
+      ingress: true,
+    }
+  );
+  expect(attachment.isIngress()).toBe(true);
+  expect(attachment.isEgress()).toBe(false);
+});
+
+it("egress", () => {
+  const attachment = new SystemAttachment(
+    new MockGameObject({
+      templateMetadata: "token.attachment.system:my-source/my-nsid-name",
+    }),
+    { source: "my-source", packageId: "my-package-id" },
+    {
+      name: "my-name",
+      nsidName: "my-nsid-name",
+      egress: true,
+    }
+  );
+  expect(attachment.isEgress()).toBe(true);
+  expect(attachment.isIngress()).toBe(false);
+});

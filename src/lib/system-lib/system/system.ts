@@ -535,6 +535,14 @@ export class System {
     return result;
   }
 
+  isEgress(): boolean {
+    let result: boolean = this._params.egress ?? false;
+    for (const attachment of this._attachments) {
+      result ||= attachment.isEgress();
+    }
+    return result;
+  }
+
   /**
    * exlude from draft?
    *
@@ -565,6 +573,14 @@ export class System {
    */
   isHyperlane(): boolean {
     return this._params.isHyperlane ?? false;
+  }
+
+  isIngress(): boolean {
+    let result: boolean = this._params.ingress ?? false;
+    for (const attachment of this._attachments) {
+      result ||= attachment.isIngress();
+    }
+    return result;
   }
 
   isLegendary(): boolean {

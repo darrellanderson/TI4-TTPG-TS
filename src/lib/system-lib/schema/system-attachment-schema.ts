@@ -20,6 +20,9 @@ export const SystemAttachmentSchema = z
 
     planets: z.array(PlanetSchema).optional(),
 
+    ingress: z.boolean().optional(),
+    egress: z.boolean().optional(),
+
     customModel: z.boolean().optional(), // for auto-generation, do not create round token version
   })
   .strict()
