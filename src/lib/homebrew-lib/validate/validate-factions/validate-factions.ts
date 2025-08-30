@@ -12,11 +12,24 @@ export class ValidateFactions extends AbstractValidate {
   }
 
   getErrors(errors: Array<string>): void {
+    const registeredBreakthroughNsids: Set<string> =
+      this.getCardNsids("card.breakthrough");
     const registeredLeaderNsids: Set<string> = this.getCardNsids("card.leader");
     const registeredTechNsids: Set<string> =
       this.getCardNsids("card.technology");
 
+    const allUnitNsids: Set<string> = new Set(
+      TI4.unitAttrsRegistry.getAllNsids()
+    );
+
     TI4.factionRegistry.getAllFactions().forEach((faction: Faction): void => {
+      const breakthroughNsids: Array<string> =
+        this._getBreakthroughNsids(faction);
+      const missingBreakthroughs: Array<string> = this.getSrcMissingFromDst(
+        new Set(breakthroughNsids),
+        registeredBreakthroughNsids
+      );
+
       const leaderNsids: Array<string> = this._getLeaderNsids(faction);
       const missingLeaders: Array<string> = this.getSrcMissingFromDst(
         new Set(leaderNsids),
@@ -37,6 +50,7 @@ export class ValidateFactions extends AbstractValidate {
       );
 
       const missing: Array<string> = [
+        ...missingBreakthroughs,
         ...missingLeaders,
         ...missingTech,
         ...missingOther,
@@ -44,7 +58,18 @@ export class ValidateFactions extends AbstractValidate {
       if (missing.length > 0) {
         errors.push(`${faction.getName()} is missing ${missing.join(", ")}`);
       }
+
+      // Check units known.
+      faction.getUnitOverrideNsids().forEach((nsid: string): void => {
+        if (!allUnitNsids.has(nsid)) {
+          missing.push(`${faction.getName()} references unknown unit ${nsid}`);
+        }
+      });
     });
+  }
+
+  _getBreakthroughNsids(faction: Faction): Array<string> {
+    return faction.getBreakthroughNsids();
   }
 
   _getLeaderNsids(faction: Faction): Array<string> {

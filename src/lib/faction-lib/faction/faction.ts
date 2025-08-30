@@ -268,8 +268,6 @@ export class Faction {
       result[unit] = count;
     }
 
-    // his._params.startingUnits;
-
     return result;
   }
 
