@@ -243,6 +243,8 @@ export declare const SystemSchema: z.ZodReadonly<z.ZodObject<{
         legendaryNsidName?: string | undefined;
     }>>, "many">>;
     imgFaceDown: z.ZodOptional<z.ZodBoolean>;
+    ingress: z.ZodOptional<z.ZodBoolean>;
+    egress: z.ZodOptional<z.ZodBoolean>;
 }, "strict", z.ZodTypeAny, {
     tile: number;
     class?: "map" | "off-map" | "fracture" | "alt" | undefined;
@@ -323,6 +325,8 @@ export declare const SystemSchema: z.ZodReadonly<z.ZodObject<{
         legendaryNsidName?: string | undefined;
     }>[] | undefined;
     imgFaceDown?: boolean | undefined;
+    ingress?: boolean | undefined;
+    egress?: boolean | undefined;
 }, {
     tile: number;
     class?: "map" | "off-map" | "fracture" | "alt" | undefined;
@@ -403,5 +407,7 @@ export declare const SystemSchema: z.ZodReadonly<z.ZodObject<{
         legendaryNsidName?: string | undefined;
     }[] | undefined;
     imgFaceDown?: boolean | undefined;
+    ingress?: boolean | undefined;
+    egress?: boolean | undefined;
 }>>;
 export type SystemSchemaType = z.infer<typeof SystemSchema>;

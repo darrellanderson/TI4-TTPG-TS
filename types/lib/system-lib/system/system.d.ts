@@ -163,6 +163,7 @@ export declare class System {
      * @returns {Array<WormholeWithGlobalPosition>}
      */
     getWormholesWithPositions(): Array<WormholeWithPosition>;
+    isEgress(): boolean;
     /**
      * exlude from draft?
      *
@@ -181,5 +182,6 @@ export declare class System {
      * @returns {boolean}
      */
     isHyperlane(): boolean;
+    isIngress(): boolean;
     isLegendary(): boolean;
 }

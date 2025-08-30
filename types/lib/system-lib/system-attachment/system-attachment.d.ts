@@ -105,4 +105,6 @@ export declare class SystemAttachment {
      * @returns {boolean} True if the system attachment destroys wormholes.
      */
     isDestroyWormhole(): boolean;
+    isIngress(): boolean;
+    isEgress(): boolean;
 }
