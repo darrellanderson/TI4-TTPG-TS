@@ -9,7 +9,7 @@ import {
 } from "ttpg-darrell";
 
 import { System } from "../system/system";
-import { SystemAdjacencyBreach } from "./system-adjaaency-breach";
+import { SystemAdjacencyBreach } from "./system-adjacency-breach";
 import { SystemAdjacencyHyperlane } from "./system-adjacency-hyperlane";
 import { SystemAdjacencyIngress } from "./system-adjacency-ingress";
 import { SystemAdjacencyNeighbor } from "./system-adjacency-neighbor";

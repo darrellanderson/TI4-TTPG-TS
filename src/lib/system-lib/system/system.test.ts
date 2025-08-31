@@ -129,16 +129,27 @@ it("attachment management", () => {
     {
       name: "my-name",
       nsidName: "my-nsid-name",
+      isBreach: true,
+      isIngress: true,
+      isEgress: true,
     }
   );
   expect(system.hasAttachment(attachment)).toBe(false);
   expect(system.getAttachments()).toEqual([]);
+
+  expect(system.isBreach()).toBe(false);
+  expect(system.isIngress()).toBe(false);
+  expect(system.isEgress()).toBe(false);
 
   let success: boolean;
   success = system.addAttachment(attachment);
   expect(success).toBe(true);
   expect(system.hasAttachment(attachment)).toBe(true);
   expect(system.getAttachments()).toEqual([attachment]);
+
+  expect(system.isBreach()).toBe(true);
+  expect(system.isIngress()).toBe(true);
+  expect(system.isEgress()).toBe(true);
 
   success = system.addAttachment(attachment);
   expect(success).toBe(false); // already added
@@ -539,6 +550,8 @@ it("isBreach", () => {
     { tile: 1000, isBreach: true }
   );
   expect(system.isBreach()).toBe(true);
+  expect(system.isEgress()).toBe(false);
+  expect(system.isIngress()).toBe(false);
 });
 
 it("isEgress", () => {
@@ -550,7 +563,9 @@ it("isEgress", () => {
       isEgress: true,
     }
   );
+  expect(system.isBreach()).toBe(false);
   expect(system.isEgress()).toBe(true);
+  expect(system.isIngress()).toBe(false);
 });
 
 it("isExcludeFromDraft", () => {

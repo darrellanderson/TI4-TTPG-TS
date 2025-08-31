@@ -92,25 +92,23 @@ export class SystemAdjacencyWormhole {
     // Add wormholes in systems (inclues attachments).
     for (const [hex, system] of hexToSystem) {
       for (const wormhole of system.getWormholes()) {
-        if (!this._useWormhole(wormhole, faction)) {
-          continue;
+        if (this._useWormhole(wormhole, faction)) {
+          // System into wormhole.
+          adjacency.addLink({
+            src: hex,
+            dst: wormhole,
+            distance: 0.5,
+            isTransit: true,
+          });
+
+          // Wormhole into system.
+          adjacency.addLink({
+            src: wormhole,
+            dst: hex,
+            distance: 0.5,
+            isTransit: false,
+          });
         }
-
-        // System into wormhole.
-        adjacency.addLink({
-          src: hex,
-          dst: wormhole,
-          distance: 0.5,
-          isTransit: true,
-        });
-
-        // Wormhole into system.
-        adjacency.addLink({
-          src: wormhole,
-          dst: hex,
-          distance: 0.5,
-          isTransit: false,
-        });
       }
     }
 

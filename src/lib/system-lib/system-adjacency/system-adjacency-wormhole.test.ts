@@ -317,3 +317,53 @@ it("card emissary_taivra (active)", () => {
     })
   ).toBe(true);
 });
+
+it("_useWormhole", () => {
+  const adjacency: SystemAdjacencyWormhole = new SystemAdjacencyWormhole();
+  const wormhole = "epsilon";
+  let faction = new Faction(
+    {
+      source: "my-source",
+      packageId: "my-package-id",
+    },
+    {
+      name: "My Faction",
+      nsidName: "my-factin",
+      abbr: "my-abbr",
+      abilities: [],
+      leaders: { agents: [], commanders: [], heroes: [], mechs: [] },
+      home: 1,
+      commodities: 3,
+      promissories: [],
+      factionTechs: [],
+      startingTechs: [],
+      startingUnits: {},
+      unitOverrides: [],
+    }
+  );
+
+  expect(adjacency._useWormhole(wormhole, faction)).toBe(false);
+
+  faction = new Faction(
+    {
+      source: "my-source",
+      packageId: "my-package-id",
+    },
+    {
+      name: "My Faction",
+      nsidName: "my-factin",
+      abbr: "my-abbr",
+      abilities: ["sundered"],
+      leaders: { agents: [], commanders: [], heroes: [], mechs: [] },
+      home: 1,
+      commodities: 3,
+      promissories: [],
+      factionTechs: [],
+      startingTechs: [],
+      startingUnits: {},
+      unitOverrides: [],
+    }
+  );
+
+  expect(adjacency._useWormhole(wormhole, faction)).toBe(true);
+});

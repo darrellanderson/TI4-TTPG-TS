@@ -381,6 +381,7 @@ it("ingress", () => {
       isIngress: true,
     }
   );
+  expect(attachment.isBreach()).toBe(false);
   expect(attachment.isIngress()).toBe(true);
   expect(attachment.isEgress()).toBe(false);
 });

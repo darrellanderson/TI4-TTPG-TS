@@ -92,6 +92,14 @@ it("addTags", () => {
   ).toBe(true);
   expect(
     adjacency.hasLink({
+      src: "<2,0,-2>",
+      dst: "<0,0,0>",
+      distance: 1,
+      isTransit: false,
+    })
+  ).toBe(true);
+  expect(
+    adjacency.hasLink({
       src: "<0,0,0>",
       dst: "<3,0,-3>",
       distance: 1,
