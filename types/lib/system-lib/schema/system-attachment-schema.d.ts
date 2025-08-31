@@ -80,7 +80,7 @@ export declare const SystemAttachmentSchema: z.ZodReadonly<z.ZodObject<{
     }>>, "many">>;
     isIngress: z.ZodOptional<z.ZodBoolean>;
     isEgress: z.ZodOptional<z.ZodBoolean>;
-    isBreach: z.ZodOptional<z.ZodBoolean>;
+    isBreachFaceUp: z.ZodOptional<z.ZodBoolean>;
     customModel: z.ZodOptional<z.ZodBoolean>;
 }, "strict", z.ZodTypeAny, {
     name: string;
@@ -113,7 +113,7 @@ export declare const SystemAttachmentSchema: z.ZodReadonly<z.ZodObject<{
     }>[] | undefined;
     isIngress?: boolean | undefined;
     isEgress?: boolean | undefined;
-    isBreach?: boolean | undefined;
+    isBreachFaceUp?: boolean | undefined;
     customModel?: boolean | undefined;
 }, {
     name: string;
@@ -146,7 +146,7 @@ export declare const SystemAttachmentSchema: z.ZodReadonly<z.ZodObject<{
     }[] | undefined;
     isIngress?: boolean | undefined;
     isEgress?: boolean | undefined;
-    isBreach?: boolean | undefined;
+    isBreachFaceUp?: boolean | undefined;
     customModel?: boolean | undefined;
 }>>;
 export type SystemAttachmentSchemaType = z.infer<typeof SystemAttachmentSchema>;
