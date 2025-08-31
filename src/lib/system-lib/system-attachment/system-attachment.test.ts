@@ -3,6 +3,7 @@ import { MockGameObject, MockPlayer } from "ttpg-mock";
 
 import { System, WormholeWithPosition } from "../system/system";
 import { SystemAttachment } from "./system-attachment";
+import { Facing } from "ttpg-darrell";
 
 it("static schemaToNsid", () => {
   expect(
@@ -355,18 +356,23 @@ it("isDestroyWormhole (default)", () => {
 });
 
 it("breach", () => {
+  const obj: GameObject = new MockGameObject({
+    templateMetadata: "token.attachment.system:my-source/my-nsid-name",
+  });
   const attachment = new SystemAttachment(
-    new MockGameObject({
-      templateMetadata: "token.attachment.system:my-source/my-nsid-name",
-    }),
+    obj,
     { source: "my-source", packageId: "my-package-id" },
     {
       name: "my-name",
       nsidName: "my-nsid-name",
-      isBreach: true,
+      isBreachFaceUp: true,
     }
   );
   expect(attachment.isBreach()).toBe(true);
+
+  obj.setRotation([0, 0, 180]);
+  expect(Facing.isFaceUp(obj)).toBe(false);
+  expect(attachment.isBreach()).toBe(false);
 });
 
 it("ingress", () => {
@@ -381,7 +387,6 @@ it("ingress", () => {
       isIngress: true,
     }
   );
-  expect(attachment.isBreach()).toBe(false);
   expect(attachment.isIngress()).toBe(true);
   expect(attachment.isEgress()).toBe(false);
 });

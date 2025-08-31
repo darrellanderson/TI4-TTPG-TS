@@ -276,7 +276,11 @@ export class SystemAttachment {
   }
 
   isBreach(): boolean {
-    return this._params.isBreach || false;
+    let result: boolean = false;
+    if (this._params.isBreachFaceUp && Facing.isFaceUp(this._obj)) {
+      result = true;
+    }
+    return result;
   }
 
   isIngress(): boolean {

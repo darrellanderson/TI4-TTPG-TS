@@ -16,6 +16,7 @@
     "baseUrl": "./src",
     "outDir": "./build",
     "moduleResolution": "node16",
+    "isolatedModules": true,
     "target": "ES6",
     "sourceMap": true,
     "declaration": true,

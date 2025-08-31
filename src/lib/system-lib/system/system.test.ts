@@ -129,7 +129,7 @@ it("attachment management", () => {
     {
       name: "my-name",
       nsidName: "my-nsid-name",
-      isBreach: true,
+      isBreachFaceUp: true,
       isIngress: true,
       isEgress: true,
     }

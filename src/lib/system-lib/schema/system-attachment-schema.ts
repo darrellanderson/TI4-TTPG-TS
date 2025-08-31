@@ -22,7 +22,7 @@ export const SystemAttachmentSchema = z
 
     isIngress: z.boolean().optional(),
     isEgress: z.boolean().optional(),
-    isBreach: z.boolean().optional(),
+    isBreachFaceUp: z.boolean().optional(),
 
     customModel: z.boolean().optional(), // for auto-generation, do not create round token version
   })
