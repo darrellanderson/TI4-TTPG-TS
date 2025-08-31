@@ -275,11 +275,15 @@ export class SystemAttachment {
     return this._params.isDestroyWormhole || false;
   }
 
+  isBreach(): boolean {
+    return this._params.isBreach || false;
+  }
+
   isIngress(): boolean {
-    return this._params.ingress || false;
+    return this._params.isIngress || false;
   }
 
   isEgress(): boolean {
-    return this._params.egress || false;
+    return this._params.isEgress || false;
   }
 }

@@ -535,8 +535,16 @@ export class System {
     return result;
   }
 
+  isBreach(): boolean {
+    let result: boolean = this._params.isBreach ?? false;
+    for (const attachment of this._attachments) {
+      result ||= attachment.isBreach();
+    }
+    return result;
+  }
+
   isEgress(): boolean {
-    let result: boolean = this._params.egress ?? false;
+    let result: boolean = this._params.isEgress ?? false;
     for (const attachment of this._attachments) {
       result ||= attachment.isEgress();
     }
@@ -576,7 +584,7 @@ export class System {
   }
 
   isIngress(): boolean {
-    let result: boolean = this._params.ingress ?? false;
+    let result: boolean = this._params.isIngress ?? false;
     for (const attachment of this._attachments) {
       result ||= attachment.isIngress();
     }

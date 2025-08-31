@@ -9,13 +9,17 @@ import {
 } from "ttpg-darrell";
 
 import { System } from "../system/system";
+import { SystemAdjacencyBreach } from "./system-adjaaency-breach";
 import { SystemAdjacencyHyperlane } from "./system-adjacency-hyperlane";
+import { SystemAdjacencyIngress } from "./system-adjacency-ingress";
 import { SystemAdjacencyNeighbor } from "./system-adjacency-neighbor";
 import { SystemAdjacencyWormhole } from "./system-adjacency-wormhole";
 import { Faction } from "../../faction-lib/faction/faction";
 
 export class SystemAdjacency {
+  private readonly _breach = new SystemAdjacencyBreach();
   private readonly _hyperlane = new SystemAdjacencyHyperlane();
+  private readonly _ingress = new SystemAdjacencyIngress();
   private readonly _neighbor = new SystemAdjacencyNeighbor();
   private readonly _wormhole = new SystemAdjacencyWormhole();
 
@@ -121,7 +125,9 @@ export class SystemAdjacency {
   ): ReadonlyArray<AdjacencyPathType> {
     const adjacency: Adjacency = new Adjacency();
     const hexToSystem: Map<HexType, System> = SystemAdjacency.getHexToSystem();
+    this._breach.addTags(hexToSystem, adjacency);
     this._hyperlane.addTags(hexToSystem, adjacency);
+    this._ingress.addTags(hexToSystem, adjacency);
     this._neighbor.addTags(hexToSystem, adjacency);
     this._wormhole.addTags(hexToSystem, adjacency, faction);
     this._neighbor.removeTags(adjacency); // adjacency blocking tokens

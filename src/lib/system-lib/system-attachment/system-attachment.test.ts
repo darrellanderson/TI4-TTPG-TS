@@ -354,6 +354,21 @@ it("isDestroyWormhole (default)", () => {
   expect(attachment.isDestroyWormhole()).toBe(false);
 });
 
+it("breach", () => {
+  const attachment = new SystemAttachment(
+    new MockGameObject({
+      templateMetadata: "token.attachment.system:my-source/my-nsid-name",
+    }),
+    { source: "my-source", packageId: "my-package-id" },
+    {
+      name: "my-name",
+      nsidName: "my-nsid-name",
+      isBreach: true,
+    }
+  );
+  expect(attachment.isBreach()).toBe(true);
+});
+
 it("ingress", () => {
   const attachment = new SystemAttachment(
     new MockGameObject({
@@ -363,7 +378,7 @@ it("ingress", () => {
     {
       name: "my-name",
       nsidName: "my-nsid-name",
-      ingress: true,
+      isIngress: true,
     }
   );
   expect(attachment.isIngress()).toBe(true);
@@ -379,7 +394,7 @@ it("egress", () => {
     {
       name: "my-name",
       nsidName: "my-nsid-name",
-      egress: true,
+      isEgress: true,
     }
   );
   expect(attachment.isEgress()).toBe(true);

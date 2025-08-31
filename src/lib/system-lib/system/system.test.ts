@@ -532,13 +532,22 @@ it("getWormholesWithPosition", () => {
   expect(summary).toEqual(["beta:(X=1,Y=2,Z=3)"]);
 });
 
+it("isBreach", () => {
+  const system = new System(
+    new MockGameObject({ templateMetadata: "tile.system:my-source/1000" }),
+    { source: "my-source", packageId: "my-package-id" },
+    { tile: 1000, isBreach: true }
+  );
+  expect(system.isBreach()).toBe(true);
+});
+
 it("isEgress", () => {
   const system = new System(
     new MockGameObject({ templateMetadata: "tile.system:my-source/1000" }),
     { source: "my-source", packageId: "my-package-id" },
     {
       tile: 1000,
-      egress: true,
+      isEgress: true,
     }
   );
   expect(system.isEgress()).toBe(true);
@@ -605,7 +614,7 @@ it("isIngress", () => {
     { source: "my-source", packageId: "my-package-id" },
     {
       tile: 1000,
-      ingress: true,
+      isIngress: true,
     }
   );
   expect(system.isIngress()).toBe(true);

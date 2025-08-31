@@ -41,8 +41,9 @@ export const SystemSchema = z
     // System tile image, PNG transparent square, fill to left/right edge.
     imgFaceDown: z.boolean().optional(), // has a custom back image
 
-    ingress: z.boolean().optional(),
-    egress: z.boolean().optional(),
+    isIngress: z.boolean().optional(),
+    isEgress: z.boolean().optional(),
+    isBreach: z.boolean().optional(),
   })
   .strict()
   .readonly();

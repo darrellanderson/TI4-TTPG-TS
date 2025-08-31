@@ -25,7 +25,7 @@ it("addTags", () => {
       sourceAndPackageId,
       {
         tile: 1000,
-        ingress: true,
+        isIngress: true,
       }
     )
   );
@@ -36,7 +36,7 @@ it("addTags", () => {
       sourceAndPackageId,
       {
         tile: 1001,
-        ingress: true,
+        isIngress: true,
       }
     )
   );
@@ -47,7 +47,7 @@ it("addTags", () => {
       sourceAndPackageId,
       {
         tile: 1002,
-        egress: true,
+        isEgress: true,
       }
     )
   );
@@ -58,7 +58,7 @@ it("addTags", () => {
       sourceAndPackageId,
       {
         tile: 1003,
-        egress: true,
+        isEgress: true,
       }
     )
   );
