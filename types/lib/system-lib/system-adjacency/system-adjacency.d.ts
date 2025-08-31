@@ -3,7 +3,9 @@ import { AdjacencyNodeType, AdjacencyPathType, HexType } from "ttpg-darrell";
 import { System } from "../system/system";
 import { Faction } from "../../faction-lib/faction/faction";
 export declare class SystemAdjacency {
+    private readonly _breach;
     private readonly _hyperlane;
+    private readonly _ingress;
     private readonly _neighbor;
     private readonly _wormhole;
     static getHexToSystem(): Map<HexType, System>;

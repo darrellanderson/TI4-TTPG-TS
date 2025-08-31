@@ -78,8 +78,9 @@ export declare const SystemAttachmentSchema: z.ZodReadonly<z.ZodObject<{
         isSpaceStation?: boolean | undefined;
         legendaryNsidName?: string | undefined;
     }>>, "many">>;
-    ingress: z.ZodOptional<z.ZodBoolean>;
-    egress: z.ZodOptional<z.ZodBoolean>;
+    isIngress: z.ZodOptional<z.ZodBoolean>;
+    isEgress: z.ZodOptional<z.ZodBoolean>;
+    isBreach: z.ZodOptional<z.ZodBoolean>;
     customModel: z.ZodOptional<z.ZodBoolean>;
 }, "strict", z.ZodTypeAny, {
     name: string;
@@ -110,8 +111,9 @@ export declare const SystemAttachmentSchema: z.ZodReadonly<z.ZodObject<{
         isSpaceStation?: boolean | undefined;
         legendaryNsidName?: string | undefined;
     }>[] | undefined;
-    ingress?: boolean | undefined;
-    egress?: boolean | undefined;
+    isIngress?: boolean | undefined;
+    isEgress?: boolean | undefined;
+    isBreach?: boolean | undefined;
     customModel?: boolean | undefined;
 }, {
     name: string;
@@ -142,8 +144,9 @@ export declare const SystemAttachmentSchema: z.ZodReadonly<z.ZodObject<{
         isSpaceStation?: boolean | undefined;
         legendaryNsidName?: string | undefined;
     }[] | undefined;
-    ingress?: boolean | undefined;
-    egress?: boolean | undefined;
+    isIngress?: boolean | undefined;
+    isEgress?: boolean | undefined;
+    isBreach?: boolean | undefined;
     customModel?: boolean | undefined;
 }>>;
 export type SystemAttachmentSchemaType = z.infer<typeof SystemAttachmentSchema>;

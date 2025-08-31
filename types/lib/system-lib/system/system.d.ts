@@ -163,6 +163,7 @@ export declare class System {
      * @returns {Array<WormholeWithGlobalPosition>}
      */
     getWormholesWithPositions(): Array<WormholeWithPosition>;
+    isBreach(): boolean;
     isEgress(): boolean;
     /**
      * exlude from draft?
