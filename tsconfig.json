@@ -2,7 +2,7 @@
   "compilerOptions": {
     "checkJs": true,
     "lib": ["ES2023", "DOM"],
-    "module": "commonjs",
+    "module": "node16",
     "strict": true,
     "noUncheckedIndexedAccess": true,
     "useUnknownInCatchVariables": false,
@@ -15,7 +15,7 @@
     "rootDir": "./src",
     "baseUrl": "./src",
     "outDir": "./build",
-    "moduleResolution": "Node",
+    "moduleResolution": "node16",
     "target": "ES6",
     "sourceMap": true,
     "declaration": true,
