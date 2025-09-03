@@ -693,8 +693,10 @@ export class GoalCounter {
 
     // Get Mecatol hex.
     let mecatolHex: HexType = "<0,0,0>";
+    const mecatolTile: number =
+      TI4.systemRegistry.getMecatolRexSystemTileNumber();
     const mecatol: System | undefined =
-      TI4.systemRegistry.getBySystemTileNumber(18);
+      TI4.systemRegistry.getBySystemTileNumber(mecatolTile);
     if (mecatol) {
       const pos: Vector = mecatol.getObj().getPosition();
       mecatolHex = TI4.hex.fromPosition(pos);
@@ -756,8 +758,10 @@ export class GoalCounter {
     const result = new Map<PlayerSlot, number>();
 
     let mecatolHex: HexType = "<0,0,0>";
+    const mecatolTile: number =
+      TI4.systemRegistry.getMecatolRexSystemTileNumber();
     const mecatol: System | undefined =
-      TI4.systemRegistry.getBySystemTileNumber(18);
+      TI4.systemRegistry.getBySystemTileNumber(mecatolTile);
     if (mecatol) {
       const pos: Vector = mecatol.getObj().getPosition();
       mecatolHex = TI4.hex.fromPosition(pos);
@@ -822,11 +826,13 @@ export class GoalCounter {
     const result = new Map<PlayerSlot, number>();
 
     const targetHexes: Set<HexType> = new Set();
+    const mecatolTile: number =
+      TI4.systemRegistry.getMecatolRexSystemTileNumber();
     TI4.systemRegistry
       .getAllSystemsWithObjs()
       .forEach((system: System): void => {
         if (
-          system.getSystemTileNumber() === 18 ||
+          system.getSystemTileNumber() === mecatolTile ||
           system.isLegendary() ||
           system.getAnomalies().length > 0
         ) {

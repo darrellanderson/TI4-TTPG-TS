@@ -167,7 +167,7 @@ export class NucleusDraft implements IDraft {
     const parsed: Array<MapStringEntry> = new MapStringParser()
       .parseOrThrow(mapString)
       .filter((entry: MapStringEntry): boolean => {
-        return entry.tile !== 18;
+        return !TI4.systemRegistry.isMecatolRex(entry.tile);
       });
 
     const nucleusMapStringIndexes: Array<number> = [];

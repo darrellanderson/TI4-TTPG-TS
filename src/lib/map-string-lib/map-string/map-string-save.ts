@@ -50,7 +50,10 @@ export class MapStringSave {
 
     // 18 is the default start, prune it if there.
     // Otherwise mark the custom start as such.
-    if (entries[0] === "18") {
+    const rex: string = TI4.systemRegistry
+      .getMecatolRexSystemTileNumber()
+      .toString();
+    if (entries[0] === rex) {
       entries.shift();
     } else if (entries[0]) {
       entries[0] = `{${entries[0]}}`;

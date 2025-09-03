@@ -327,4 +327,16 @@ export class SystemRegistry {
     }
     return undefined;
   }
+
+  getMecatolRexSystemTileNumber(): number {
+    if (TI4.config.sources.includes("thunders-edge")) {
+      return 112;
+    } else {
+      return 18;
+    }
+  }
+
+  isMecatolRex(tileNumber: number): boolean {
+    return tileNumber === 18 || tileNumber === 112;
+  }
 }

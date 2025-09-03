@@ -318,3 +318,23 @@ it("planets face down length must match face up", () => {
   ).toThrow(/Face down planet count must match face up/);
   registry.destroy();
 });
+
+it("getMecatolRexSystemTileNumber", () => {
+  const registry = new SystemRegistry();
+  let tile: number;
+
+  TI4.config.setSources([]);
+  tile = registry.getMecatolRexSystemTileNumber();
+  expect(tile).toEqual(18);
+
+  TI4.config.setSources(["thunders-edge"]);
+  tile = registry.getMecatolRexSystemTileNumber();
+  expect(tile).toEqual(112);
+});
+
+it("isMecatolRex", () => {
+  const registry = new SystemRegistry();
+  expect(registry.isMecatolRex(19)).toBeFalsy();
+  expect(registry.isMecatolRex(18)).toBeTruthy();
+  expect(registry.isMecatolRex(112)).toBeTruthy();
+});

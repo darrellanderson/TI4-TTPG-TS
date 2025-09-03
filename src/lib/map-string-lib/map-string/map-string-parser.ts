@@ -91,7 +91,9 @@ export class MapStringParser {
       if (strippedFirst) {
         rawEntries[0] = strippedFirst;
       } else {
-        rawEntries.unshift("18");
+        rawEntries.unshift(
+          TI4.systemRegistry.getMecatolRexSystemTileNumber().toString()
+        );
       }
     }
 

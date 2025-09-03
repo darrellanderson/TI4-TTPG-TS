@@ -25,7 +25,8 @@ export const RickarRickani: UnitModifierSchemaType = {
         combatRoll.getRollType() === "groundCombat")
     ) {
       // Is Mecatol?
-      if (system.getSystemTileNumber() === 18) {
+      const tile: number = system.getSystemTileNumber();
+      if (TI4.systemRegistry.isMecatolRex(tile)) {
         return combatRoll.isCommanderUnlocked(commanderNsid);
       }
 
