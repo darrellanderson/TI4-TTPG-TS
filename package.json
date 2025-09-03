@@ -46,5 +46,9 @@
   "dependencies": {
     "ttpg-darrell": "^1.1.14",
     "zod": "3.22.4"
-  }
+  },
+  "files": [
+    "build/**/*.js",
+    "build/**/*.d.ts"
+  ]
 }
