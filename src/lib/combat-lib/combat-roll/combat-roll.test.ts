@@ -6,7 +6,7 @@ import {
   MockPlayer,
   MockVector,
 } from "ttpg-mock";
-import { CardUtil, DiceParams, DiceResult, Facing } from "ttpg-darrell";
+import { CardUtil, DiceParams, DiceResult, Facing, Find } from "ttpg-darrell";
 
 import { CombatAttrs } from "../../unit-lib/unit-attrs/combat-attrs";
 import {
@@ -1477,4 +1477,26 @@ it("opponent has anonymous units", () => {
   combatRoll.roll(player, position);
 
   expect(rollingPlayerSlots).toEqual([2, 19]);
+});
+
+it("nekro z", () => {
+  const position: Vector = new Vector(10, 0, 0);
+  new MockCardHolder({ owningPlayerSlot: 3, position });
+  MockGameObject.simple("sheet.faction:base/naalu", { position });
+  MockGameObject.simple("token:thunders-edge/nekro.z", { position });
+
+  expect(new Find().closestOwnedCardHolderOwner(position)).toBe(3);
+  expect(TI4.factionRegistry.getByPlayerSlot(3)?.getAbbr()).toBe("Naalu");
+
+  MockGameObject.simple("tile/system:base/37");
+  MockGameObject.simple("unit:base/flagship", { owningPlayerSlot: 2 });
+  MockGameObject.simple("unit:base/fighter", { owningPlayerSlot: 2 });
+  const combatRoll: CombatRoll = CombatRoll.createCooked({
+    rollType: "groundCombat",
+    hex: "<0,0,0>",
+    activatingPlayerSlot: 1,
+    rollingPlayerSlot: 2,
+  });
+  expect(combatRoll.self.hasUnit("flagship")).toBe(true);
+  expect(combatRoll.getUnitModifierNames()).toEqual(["Matriarch"]);
 });

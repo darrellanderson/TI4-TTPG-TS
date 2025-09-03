@@ -297,6 +297,7 @@ export class CombatRoll {
     // Control tokens on cards take precedence over cards being near players.
     // Find all control tokens early, reuse when asked.
     const controlTokens: Array<GameObject> = [];
+    const nekroZs: Array<GameObject> = [];
     for (const obj of world.getAllObjects(skipContained)) {
       const nsid: string = NSID.get(obj);
       if (atopApplyToAllNsids.has(nsid)) {
@@ -307,6 +308,9 @@ export class CombatRoll {
       }
       if (nsid.startsWith("token.control:")) {
         controlTokens.push(obj);
+      }
+      if (nsid === "token:thunders-edge/nekro.z") {
+        nekroZs.push(obj);
       }
     }
     const getControlTokenOwner = (card: GameObject): number => {
@@ -444,6 +448,28 @@ export class CombatRoll {
     for (const modifier of TI4.unitModifierRegistry.getAlways()) {
       if (modifier.applies(this)) {
         unitModifiers.push(modifier);
+      }
+    }
+
+    // Nekro Zs
+    for (const nekroZ of nekroZs) {
+      const pos: Vector = nekroZ.getPosition();
+      const playerSlot: number = this.find.closestOwnedCardHolderOwner(pos);
+      const faction: Faction | undefined =
+        TI4.factionRegistry.getByPlayerSlot(playerSlot);
+      if (faction && playerSlot !== this.self.playerSlot) {
+        faction.getUnitOverrideNsids().forEach((nsid: string): void => {
+          // Add flagship (other unit-based modifiers are on cards).
+          const unitAttrsSchema: UnitAttrsSchemaType | undefined =
+            TI4.unitAttrsRegistry.rawByNsid(nsid);
+          if (
+            unitAttrsSchema !== undefined &&
+            unitAttrsSchema.unit === "flagship" &&
+            this.self.hasUnit("flagship")
+          ) {
+            maybeAddModifier(nsid, undefined, this.self.playerSlot);
+          }
+        });
       }
     }
 
