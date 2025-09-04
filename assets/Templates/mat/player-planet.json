@@ -1,288 +1,288 @@
 {
-    "Type": "Generic",
-    "GUID": "9C996996289CFA52D50DE72183B2BD14",
-    "Name": "Player Planet Mat",
-    "Metadata": "mat.player:base/planet",
-    "CollisionType": "Regular",
-    "Friction": 0.7,
-    "Restitution": 0.1,
-    "Density": 1,
-    "SurfaceType": "Cardboard",
-    "Roughness": 1,
-    "Metallic": 0,
-    "PrimaryColor": {
-        "R": 255,
-        "G": 255,
-        "B": 255
-    },
-    "SecondaryColor": {
-        "R": 0,
-        "G": 0,
-        "B": 0
-    },
-    "Flippable": false,
-    "AutoStraighten": false,
-    "ShouldSnap": false,
-    "ScriptName": "obj/planet-mat.js",
-    "Blueprint": "",
-    "Models": [
-        {
-            "Model": "uv-cube.obj",
-            "Offset": {
-                "X": 0,
-                "Y": 0,
-                "Z": 0
-            },
-            "Scale": {
-                "X": 27.654545454545456,
-                "Y": 25.445454545454545,
-                "Z": 0.25
-            },
-            "Rotation": {
-                "X": 0,
-                "Y": 0,
-                "Z": 0
-            },
-            "Texture": "mat/player-planet/player-planet.jpg",
-            "NormalMap": "",
-            "ExtraMap": "",
-            "ExtraMap2": "",
-            "IsTransparent": false,
-            "CastShadow": true,
-            "IsTwoSided": false,
-            "UseOverrides": true,
-            "SurfaceType": "Cardboard"
-        }
-    ],
-    "Lights": [],
-    "SnapPointsGlobal": false,
-    "SnapPoints": [
-        {
-            "X": 10.186363636363637,
-            "Y": -9.98181818181818,
-            "Z": 0.125,
-            "Range": 3,
-            "SnapRotation": 2,
-            "RotationOffset": 0,
-            "Shape": 0,
-            "FlipValidity": 0,
-            "Tags": []
-        },
-        {
-            "X": 3.3954545454545464,
-            "Y": -9.98181818181818,
-            "Z": 0.125,
-            "Range": 3,
-            "SnapRotation": 2,
-            "RotationOffset": 0,
-            "Shape": 0,
-            "FlipValidity": 0,
-            "Tags": []
-        },
-        {
-            "X": -3.3954545454545446,
-            "Y": -9.98181818181818,
-            "Z": 0.125,
-            "Range": 3,
-            "SnapRotation": 2,
-            "RotationOffset": 0,
-            "Shape": 0,
-            "FlipValidity": 0,
-            "Tags": []
-        },
-        {
-            "X": -10.186363636363634,
-            "Y": -9.98181818181818,
-            "Z": 0.125,
-            "Range": 3,
-            "SnapRotation": 2,
-            "RotationOffset": 0,
-            "Shape": 0,
-            "FlipValidity": 0,
-            "Tags": []
-        },
-        {
-            "X": 10.186363636363637,
-            "Y": -4.99090909090909,
-            "Z": 0.125,
-            "Range": 3,
-            "SnapRotation": 2,
-            "RotationOffset": 0,
-            "Shape": 0,
-            "FlipValidity": 0,
-            "Tags": []
-        },
-        {
-            "X": 3.3954545454545464,
-            "Y": -4.99090909090909,
-            "Z": 0.125,
-            "Range": 3,
-            "SnapRotation": 2,
-            "RotationOffset": 0,
-            "Shape": 0,
-            "FlipValidity": 0,
-            "Tags": []
-        },
-        {
-            "X": -3.3954545454545446,
-            "Y": -4.99090909090909,
-            "Z": 0.125,
-            "Range": 3,
-            "SnapRotation": 2,
-            "RotationOffset": 0,
-            "Shape": 0,
-            "FlipValidity": 0,
-            "Tags": []
-        },
-        {
-            "X": -10.186363636363634,
-            "Y": -4.99090909090909,
-            "Z": 0.125,
-            "Range": 3,
-            "SnapRotation": 2,
-            "RotationOffset": 0,
-            "Shape": 0,
-            "FlipValidity": 0,
-            "Tags": []
-        },
-        {
-            "X": 10.186363636363637,
-            "Y": 3.552713678800501e-15,
-            "Z": 0.125,
-            "Range": 3,
-            "SnapRotation": 2,
-            "RotationOffset": 0,
-            "Shape": 0,
-            "FlipValidity": 0,
-            "Tags": []
-        },
-        {
-            "X": 3.3954545454545464,
-            "Y": 3.552713678800501e-15,
-            "Z": 0.125,
-            "Range": 3,
-            "SnapRotation": 2,
-            "RotationOffset": 0,
-            "Shape": 0,
-            "FlipValidity": 0,
-            "Tags": []
-        },
-        {
-            "X": -3.3954545454545446,
-            "Y": 3.552713678800501e-15,
-            "Z": 0.125,
-            "Range": 3,
-            "SnapRotation": 2,
-            "RotationOffset": 0,
-            "Shape": 0,
-            "FlipValidity": 0,
-            "Tags": []
-        },
-        {
-            "X": -10.186363636363634,
-            "Y": 3.552713678800501e-15,
-            "Z": 0.125,
-            "Range": 3,
-            "SnapRotation": 2,
-            "RotationOffset": 0,
-            "Shape": 0,
-            "FlipValidity": 0,
-            "Tags": []
-        },
-        {
-            "X": 10.186363636363637,
-            "Y": 4.990909090909092,
-            "Z": 0.125,
-            "Range": 3,
-            "SnapRotation": 2,
-            "RotationOffset": 0,
-            "Shape": 0,
-            "FlipValidity": 0,
-            "Tags": []
-        },
-        {
-            "X": 3.3954545454545464,
-            "Y": 4.990909090909092,
-            "Z": 0.125,
-            "Range": 3,
-            "SnapRotation": 2,
-            "RotationOffset": 0,
-            "Shape": 0,
-            "FlipValidity": 0,
-            "Tags": []
-        },
-        {
-            "X": -3.3954545454545446,
-            "Y": 4.990909090909092,
-            "Z": 0.125,
-            "Range": 3,
-            "SnapRotation": 2,
-            "RotationOffset": 0,
-            "Shape": 0,
-            "FlipValidity": 0,
-            "Tags": []
-        },
-        {
-            "X": -10.186363636363634,
-            "Y": 4.990909090909092,
-            "Z": 0.125,
-            "Range": 3,
-            "SnapRotation": 2,
-            "RotationOffset": 0,
-            "Shape": 0,
-            "FlipValidity": 0,
-            "Tags": []
-        },
-        {
-            "X": 10.186363636363637,
-            "Y": 9.981818181818184,
-            "Z": 0.125,
-            "Range": 3,
-            "SnapRotation": 2,
-            "RotationOffset": 0,
-            "Shape": 0,
-            "FlipValidity": 0,
-            "Tags": []
-        },
-        {
-            "X": 3.3954545454545464,
-            "Y": 9.981818181818184,
-            "Z": 0.125,
-            "Range": 3,
-            "SnapRotation": 2,
-            "RotationOffset": 0,
-            "Shape": 0,
-            "FlipValidity": 0,
-            "Tags": []
-        },
-        {
-            "X": -3.3954545454545446,
-            "Y": 9.981818181818184,
-            "Z": 0.125,
-            "Range": 3,
-            "SnapRotation": 2,
-            "RotationOffset": 0,
-            "Shape": 0,
-            "FlipValidity": 0,
-            "Tags": []
-        },
-        {
-            "X": -10.186363636363634,
-            "Y": 9.981818181818184,
-            "Z": 0.125,
-            "Range": 3,
-            "SnapRotation": 2,
-            "RotationOffset": 0,
-            "Shape": 0,
-            "FlipValidity": 0,
-            "Tags": []
-        }
-    ],
-    "ZoomViewDirection": {
+  "Type": "Generic",
+  "GUID": "9C996996289CFA52D50DE72183B2BD14",
+  "Name": "Player Planet Mat",
+  "Metadata": "mat.player:base/planet",
+  "CollisionType": "Regular",
+  "Friction": 0.7,
+  "Restitution": 0.1,
+  "Density": 1,
+  "SurfaceType": "Cardboard",
+  "Roughness": 1,
+  "Metallic": 0,
+  "PrimaryColor": {
+    "R": 255,
+    "G": 255,
+    "B": 255
+  },
+  "SecondaryColor": {
+    "R": 0,
+    "G": 0,
+    "B": 0
+  },
+  "Flippable": false,
+  "AutoStraighten": false,
+  "ShouldSnap": false,
+  "ScriptName": "ref-obj/planet-mat.js",
+  "Blueprint": "",
+  "Models": [
+    {
+      "Model": "uv-cube.obj",
+      "Offset": {
         "X": 0,
         "Y": 0,
-        "Z": 1
+        "Z": 0
+      },
+      "Scale": {
+        "X": 27.654545454545456,
+        "Y": 25.445454545454545,
+        "Z": 0.25
+      },
+      "Rotation": {
+        "X": 0,
+        "Y": 0,
+        "Z": 0
+      },
+      "Texture": "mat/player-planet/player-planet.jpg",
+      "NormalMap": "",
+      "ExtraMap": "",
+      "ExtraMap2": "",
+      "IsTransparent": false,
+      "CastShadow": true,
+      "IsTwoSided": false,
+      "UseOverrides": true,
+      "SurfaceType": "Cardboard"
+    }
+  ],
+  "Lights": [],
+  "SnapPointsGlobal": false,
+  "SnapPoints": [
+    {
+      "X": 10.186363636363637,
+      "Y": -9.98181818181818,
+      "Z": 0.125,
+      "Range": 3,
+      "SnapRotation": 2,
+      "RotationOffset": 0,
+      "Shape": 0,
+      "FlipValidity": 0,
+      "Tags": []
     },
-    "GroundAccessibility": "ZoomAndContext",
-    "Tags": []
+    {
+      "X": 3.3954545454545464,
+      "Y": -9.98181818181818,
+      "Z": 0.125,
+      "Range": 3,
+      "SnapRotation": 2,
+      "RotationOffset": 0,
+      "Shape": 0,
+      "FlipValidity": 0,
+      "Tags": []
+    },
+    {
+      "X": -3.3954545454545446,
+      "Y": -9.98181818181818,
+      "Z": 0.125,
+      "Range": 3,
+      "SnapRotation": 2,
+      "RotationOffset": 0,
+      "Shape": 0,
+      "FlipValidity": 0,
+      "Tags": []
+    },
+    {
+      "X": -10.186363636363634,
+      "Y": -9.98181818181818,
+      "Z": 0.125,
+      "Range": 3,
+      "SnapRotation": 2,
+      "RotationOffset": 0,
+      "Shape": 0,
+      "FlipValidity": 0,
+      "Tags": []
+    },
+    {
+      "X": 10.186363636363637,
+      "Y": -4.99090909090909,
+      "Z": 0.125,
+      "Range": 3,
+      "SnapRotation": 2,
+      "RotationOffset": 0,
+      "Shape": 0,
+      "FlipValidity": 0,
+      "Tags": []
+    },
+    {
+      "X": 3.3954545454545464,
+      "Y": -4.99090909090909,
+      "Z": 0.125,
+      "Range": 3,
+      "SnapRotation": 2,
+      "RotationOffset": 0,
+      "Shape": 0,
+      "FlipValidity": 0,
+      "Tags": []
+    },
+    {
+      "X": -3.3954545454545446,
+      "Y": -4.99090909090909,
+      "Z": 0.125,
+      "Range": 3,
+      "SnapRotation": 2,
+      "RotationOffset": 0,
+      "Shape": 0,
+      "FlipValidity": 0,
+      "Tags": []
+    },
+    {
+      "X": -10.186363636363634,
+      "Y": -4.99090909090909,
+      "Z": 0.125,
+      "Range": 3,
+      "SnapRotation": 2,
+      "RotationOffset": 0,
+      "Shape": 0,
+      "FlipValidity": 0,
+      "Tags": []
+    },
+    {
+      "X": 10.186363636363637,
+      "Y": 3.552713678800501e-15,
+      "Z": 0.125,
+      "Range": 3,
+      "SnapRotation": 2,
+      "RotationOffset": 0,
+      "Shape": 0,
+      "FlipValidity": 0,
+      "Tags": []
+    },
+    {
+      "X": 3.3954545454545464,
+      "Y": 3.552713678800501e-15,
+      "Z": 0.125,
+      "Range": 3,
+      "SnapRotation": 2,
+      "RotationOffset": 0,
+      "Shape": 0,
+      "FlipValidity": 0,
+      "Tags": []
+    },
+    {
+      "X": -3.3954545454545446,
+      "Y": 3.552713678800501e-15,
+      "Z": 0.125,
+      "Range": 3,
+      "SnapRotation": 2,
+      "RotationOffset": 0,
+      "Shape": 0,
+      "FlipValidity": 0,
+      "Tags": []
+    },
+    {
+      "X": -10.186363636363634,
+      "Y": 3.552713678800501e-15,
+      "Z": 0.125,
+      "Range": 3,
+      "SnapRotation": 2,
+      "RotationOffset": 0,
+      "Shape": 0,
+      "FlipValidity": 0,
+      "Tags": []
+    },
+    {
+      "X": 10.186363636363637,
+      "Y": 4.990909090909092,
+      "Z": 0.125,
+      "Range": 3,
+      "SnapRotation": 2,
+      "RotationOffset": 0,
+      "Shape": 0,
+      "FlipValidity": 0,
+      "Tags": []
+    },
+    {
+      "X": 3.3954545454545464,
+      "Y": 4.990909090909092,
+      "Z": 0.125,
+      "Range": 3,
+      "SnapRotation": 2,
+      "RotationOffset": 0,
+      "Shape": 0,
+      "FlipValidity": 0,
+      "Tags": []
+    },
+    {
+      "X": -3.3954545454545446,
+      "Y": 4.990909090909092,
+      "Z": 0.125,
+      "Range": 3,
+      "SnapRotation": 2,
+      "RotationOffset": 0,
+      "Shape": 0,
+      "FlipValidity": 0,
+      "Tags": []
+    },
+    {
+      "X": -10.186363636363634,
+      "Y": 4.990909090909092,
+      "Z": 0.125,
+      "Range": 3,
+      "SnapRotation": 2,
+      "RotationOffset": 0,
+      "Shape": 0,
+      "FlipValidity": 0,
+      "Tags": []
+    },
+    {
+      "X": 10.186363636363637,
+      "Y": 9.981818181818184,
+      "Z": 0.125,
+      "Range": 3,
+      "SnapRotation": 2,
+      "RotationOffset": 0,
+      "Shape": 0,
+      "FlipValidity": 0,
+      "Tags": []
+    },
+    {
+      "X": 3.3954545454545464,
+      "Y": 9.981818181818184,
+      "Z": 0.125,
+      "Range": 3,
+      "SnapRotation": 2,
+      "RotationOffset": 0,
+      "Shape": 0,
+      "FlipValidity": 0,
+      "Tags": []
+    },
+    {
+      "X": -3.3954545454545446,
+      "Y": 9.981818181818184,
+      "Z": 0.125,
+      "Range": 3,
+      "SnapRotation": 2,
+      "RotationOffset": 0,
+      "Shape": 0,
+      "FlipValidity": 0,
+      "Tags": []
+    },
+    {
+      "X": -10.186363636363634,
+      "Y": 9.981818181818184,
+      "Z": 0.125,
+      "Range": 3,
+      "SnapRotation": 2,
+      "RotationOffset": 0,
+      "Shape": 0,
+      "FlipValidity": 0,
+      "Tags": []
+    }
+  ],
+  "ZoomViewDirection": {
+    "X": 0,
+    "Y": 0,
+    "Z": 1
+  },
+  "GroundAccessibility": "ZoomAndContext",
+  "Tags": []
 }

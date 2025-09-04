@@ -1,8 +1,8 @@
 {
   "Type": "Generic",
-  "GUID": "84D5C12C94460801F0678CAE1E3C0EB8",
-  "Name": "Status Pad",
-  "Metadata": "mat:base/status-pad",
+  "GUID": "533C2D880F42E6725FFE5E82723DFF47",
+  "Name": "Slice Build Helper",
+  "Metadata": "tile.system:base/-2",
   "CollisionType": "Regular",
   "Friction": 0.7,
   "Restitution": 0.3,
@@ -12,8 +12,8 @@
   "Metallic": 0,
   "PrimaryColor": {
     "R": 255,
-    "G": 255,
-    "B": 255
+    "G": 87,
+    "B": 0
   },
   "SecondaryColor": {
     "R": 0,
@@ -23,20 +23,20 @@
   "Flippable": false,
   "AutoStraighten": false,
   "ShouldSnap": true,
-  "ScriptName": "ref-obj/status-pad-obj.js",
+  "ScriptName": "ref-obj/slice-build-helper.js",
   "Blueprint": "",
   "Models": [
     {
-      "Model": "mat/status-pad.obj",
+      "Model": "tile/system/system-tile.obj",
       "Offset": {
         "X": 0,
         "Y": 0,
         "Z": 0
       },
       "Scale": {
-        "X": 1,
-        "Y": 1,
-        "Z": 1.6499999999999999
+        "X": 1.5,
+        "Y": 1.5,
+        "Z": 1
       },
       "Rotation": {
         "X": -0,
@@ -45,7 +45,34 @@
       },
       "Texture": "",
       "NormalMap": "",
-      "ExtraMap": "mat/status-pad-mask.png",
+      "ExtraMap": "",
+      "ExtraMap2": "",
+      "IsTransparent": false,
+      "CastShadow": true,
+      "IsTwoSided": false,
+      "UseOverrides": true,
+      "SurfaceType": "Plastic"
+    },
+    {
+      "Model": "tile/system/system-tile.obj",
+      "Offset": {
+        "X": 0,
+        "Y": 0,
+        "Z": 0
+      },
+      "Scale": {
+        "X": 1.5,
+        "Y": 1.5,
+        "Z": 1
+      },
+      "Rotation": {
+        "X": 180,
+        "Y": 0,
+        "Z": 0
+      },
+      "Texture": "",
+      "NormalMap": "",
+      "ExtraMap": "",
       "ExtraMap2": "",
       "IsTransparent": false,
       "CastShadow": true,
@@ -56,15 +83,15 @@
   ],
   "Collision": [
     {
-      "Model": "token/round.col.obj",
+      "Model": "tile/system/system-tile.col.obj",
       "Offset": {
         "X": 0,
         "Y": 0,
         "Z": 0
       },
       "Scale": {
-        "X": 2.3999999999999999,
-        "Y": 2.3999999999999999,
+        "X": 1.5,
+        "Y": 1.5,
         "Z": 1
       },
       "Rotation": {
@@ -83,6 +110,6 @@
     "Y": 0,
     "Z": 0
   },
-  "GroundAccessibility": "ZoomAndContext",
+  "GroundAccessibility": "Nothing",
   "Tags": []
 }

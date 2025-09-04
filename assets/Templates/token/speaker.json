@@ -23,7 +23,7 @@
   "Flippable": true,
   "AutoStraighten": false,
   "ShouldSnap": true,
-  "ScriptName": "obj/speaker-token.js",
+  "ScriptName": "ref-obj/speaker-token.js",
   "Blueprint": "",
   "Models": [
     {
@@ -82,7 +82,5 @@
     "Z": 1
   },
   "GroundAccessibility": "ZoomAndContext",
-  "Tags": [
-    "token-speaker"
-  ]
+  "Tags": ["token-speaker"]
 }

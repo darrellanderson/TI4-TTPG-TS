@@ -1,83 +1,76 @@
 {
-	"Type": "Card Holder",
-	"GUID": "5A40B63B5041487C37DA0FACE374EF06",
-	"Name": "Player Scoring",
-	"Metadata": "card-holder:base/player-scoring",
-	"CollisionType": "Regular",
-	"Friction": 0.7,
-	"Restitution": 0.3,
-	"Density": 1,
-	"SurfaceType": "Plastic",
-	"Roughness": 1,
-	"Metallic": 0.4,
-	"PrimaryColor":
-	{
-		"R": 255,
-		"G": 255,
-		"B": 255
-	},
-	"SecondaryColor":
-	{
-		"R": 0,
-		"G": 0,
-		"B": 0
-	},
-	"Flippable": false,
-	"AutoStraighten": false,
-	"ShouldSnap": false,
-	"ScriptName": "obj/card-holder-player-scoring.js",
-	"Blueprint": "",
-	"Models": [
-		{
-			"Model": "card-holder.obj",
-			"Offset":
-			{
-				"X": 0,
-				"Y": 0,
-				"Z": 0
-			},
-			"Scale":
-			{
-				"X": 0.75,
-				"Y": 0.34999999999999998,
-				"Z": 0.5
-			},
-			"Rotation":
-			{
-				"X": -0,
-				"Y": 0,
-				"Z": 0
-			},
-			"Texture": "card-holder/card-holder.png",
-			"NormalMap": "",
-			"ExtraMap": "card-holder/card-holder-mask.png",
-			"ExtraMap2": "",
-			"IsTransparent": false,
-			"CastShadow": true,
-			"IsTwoSided": false,
-			"UseOverrides": true,
-			"SurfaceType": "Plastic"
-		}
-	],
-	"Collision": [],
-	"Lights": [],
-	"SnapPointsGlobal": false,
-	"SnapPoints": [],
-	"ZoomViewDirection":
-	{
-		"X": 0,
-		"Y": 0,
-		"Z": 0
-	},
-	"GroundAccessibility": "Nothing",
-	"Tags": [],
-	"CardsCenter":
-	{
-		"X": 0,
-		"Y": 0,
-		"Z": 0.75
-	},
-	"CardsWidth": 50,
-	"MaxCards": 50,
-	"MaxCardHeight": 10
+  "Type": "Card Holder",
+  "GUID": "5A40B63B5041487C37DA0FACE374EF06",
+  "Name": "Player Scoring",
+  "Metadata": "card-holder:base/player-scoring",
+  "CollisionType": "Regular",
+  "Friction": 0.7,
+  "Restitution": 0.3,
+  "Density": 1,
+  "SurfaceType": "Plastic",
+  "Roughness": 1,
+  "Metallic": 0.4,
+  "PrimaryColor": {
+    "R": 255,
+    "G": 255,
+    "B": 255
+  },
+  "SecondaryColor": {
+    "R": 0,
+    "G": 0,
+    "B": 0
+  },
+  "Flippable": false,
+  "AutoStraighten": false,
+  "ShouldSnap": false,
+  "ScriptName": "ref-obj/card-holder-player-scoring.js",
+  "Blueprint": "",
+  "Models": [
+    {
+      "Model": "card-holder.obj",
+      "Offset": {
+        "X": 0,
+        "Y": 0,
+        "Z": 0
+      },
+      "Scale": {
+        "X": 0.75,
+        "Y": 0.34999999999999998,
+        "Z": 0.5
+      },
+      "Rotation": {
+        "X": -0,
+        "Y": 0,
+        "Z": 0
+      },
+      "Texture": "card-holder/card-holder.png",
+      "NormalMap": "",
+      "ExtraMap": "card-holder/card-holder-mask.png",
+      "ExtraMap2": "",
+      "IsTransparent": false,
+      "CastShadow": true,
+      "IsTwoSided": false,
+      "UseOverrides": true,
+      "SurfaceType": "Plastic"
+    }
+  ],
+  "Collision": [],
+  "Lights": [],
+  "SnapPointsGlobal": false,
+  "SnapPoints": [],
+  "ZoomViewDirection": {
+    "X": 0,
+    "Y": 0,
+    "Z": 0
+  },
+  "GroundAccessibility": "Nothing",
+  "Tags": [],
+  "CardsCenter": {
+    "X": 0,
+    "Y": 0,
+    "Z": 0.75
+  },
+  "CardsWidth": 50,
+  "MaxCards": 50,
+  "MaxCardHeight": 10
 }

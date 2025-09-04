@@ -1,19 +1,19 @@
 {
-  "Type": "Card Holder",
-  "GUID": "C93CE175DC4EA3679EE718A49B4C1744",
-  "Name": "Player Hand",
-  "Metadata": "card-holder:base/player-hand",
+  "Type": "Container",
+  "GUID": "960180BEFA444FE9D7058CABC375F879",
+  "Name": "Codex 4: Liberation Scenario",
+  "Metadata": "container:codex.liberation/liberation-scenario",
   "CollisionType": "Regular",
   "Friction": 0.7,
   "Restitution": 0.3,
   "Density": 1,
   "SurfaceType": "Plastic",
   "Roughness": 1,
-  "Metallic": 0.4,
+  "Metallic": 0,
   "PrimaryColor": {
     "R": 255,
-    "G": 255,
-    "B": 255
+    "G": 242,
+    "B": 7
   },
   "SecondaryColor": {
     "R": 0,
@@ -22,20 +22,20 @@
   },
   "Flippable": false,
   "AutoStraighten": false,
-  "ShouldSnap": false,
-  "ScriptName": "ref-obj/card-holder-player.js",
+  "ShouldSnap": true,
+  "ScriptName": "ref-obj/container-liberation-scenario.js",
   "Blueprint": "",
   "Models": [
     {
-      "Model": "card-holder.obj",
+      "Model": "uv-cube.obj",
       "Offset": {
         "X": 0,
         "Y": 0,
         "Z": 0
       },
       "Scale": {
-        "X": 1,
-        "Y": 1,
+        "X": 4,
+        "Y": 4,
         "Z": 1
       },
       "Rotation": {
@@ -43,9 +43,9 @@
         "Y": 0,
         "Z": 0
       },
-      "Texture": "card-holder/card-holder.png",
+      "Texture": "",
       "NormalMap": "",
-      "ExtraMap": "card-holder/card-holder-mask.png",
+      "ExtraMap": "",
       "ExtraMap2": "",
       "IsTransparent": false,
       "CastShadow": true,
@@ -63,14 +63,6 @@
     "Y": 0,
     "Z": 0
   },
-  "GroundAccessibility": "Nothing",
-  "Tags": [],
-  "CardsCenter": {
-    "X": 0,
-    "Y": 0,
-    "Z": 1.5
-  },
-  "CardsWidth": 50,
-  "MaxCards": 50,
-  "MaxCardHeight": 10
+  "GroundAccessibility": "ZoomAndContext",
+  "Tags": []
 }

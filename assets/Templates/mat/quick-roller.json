@@ -23,7 +23,7 @@
   "Flippable": true,
   "AutoStraighten": false,
   "ShouldSnap": true,
-  "ScriptName": "obj/quick-roller-obj.js",
+  "ScriptName": "ref-obj/quick-roller-obj.js",
   "Blueprint": "",
   "Models": [
     {
