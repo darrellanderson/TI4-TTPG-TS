@@ -1,6 +1,5 @@
 // created from 'create-ts-index'
 
-export * from './system-labels.testp';
 export * from './system-labels';
 export * from './system-reserve-space';
 export * from './system-summary';

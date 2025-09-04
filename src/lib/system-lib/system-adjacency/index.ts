@@ -1,6 +1,5 @@
 // created from 'create-ts-index'
 
-export * from './draw-hyperlanes.testp';
 export * from './system-adjacency-breach';
 export * from './system-adjacency-hyperlane';
 export * from './system-adjacency-ingress';
