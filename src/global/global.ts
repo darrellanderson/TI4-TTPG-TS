@@ -1,4 +1,9 @@
-import { GameWorld, Vector, world } from "@tabletop-playground/api";
+import {
+  GameWorld,
+  refPackageId,
+  Vector,
+  world,
+} from "@tabletop-playground/api";
 import {
   BugCardHolderAssignment,
   BugSplatRemoteReporter,
@@ -118,6 +123,7 @@ import { LOCALE_CONTENT_MENUS } from "../locale/locale-context-menus";
 import { NSID_TO_TEMPLATE_ID } from "../nsid/nsid-to-template-id";
 Spawn.inject(NSID_TO_TEMPLATE_ID);
 
+const packageId: string = refPackageId;
 Find.ignoreOwnedCardHolderNsid("card-holder:base/player-scoring");
 
 if (GameWorld.getExecutionReason() !== "unittest") {
@@ -311,7 +317,13 @@ export function resetGlobalThisTI4(): TI4Class {
 }
 
 // Unittests reset the globalThis.TI4 object before each test.
-if (GameWorld.getExecutionReason() !== "unittest") {
+// Only the main TI4 mod creates the global TI4 variable, other
+// mods using the ti4-ttpg-ts npm module share the same instance.
+const isTest: boolean = GameWorld.getExecutionReason() === "unittest";
+const devId: string = "F5DD9DEDA6C64881A2EEBBC273224D01";
+const prdId: string = "F5DD9DEDA6C64881A2EEBBC273224D02";
+const isMainMod: boolean = packageId === devId || packageId === prdId;
+if (!isTest && isMainMod) {
   resetGlobalThisTI4();
   TI4.config.onConfigChanged.add(() => {
     BugSplatRemoteReporter.setEnabled(TI4.config.reportErrors);
