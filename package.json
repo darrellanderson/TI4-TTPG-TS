@@ -1,6 +1,6 @@
 {
   "name": "ti4-ttpg-ts",
-  "version": "1.0.3",
+  "version": "1.0.5",
   "description": "Twilight Imperium 4 for Tabletop Playground",
   "main": "build/index.js",
   "license": "Unlicense",
@@ -49,6 +49,9 @@
   "files": [
     "build/**/*.js",
     "build/**/*.js.map",
-    "build/**/*.d.ts"
+    "build/**/*.d.ts",
+    "!build/**/*.testp.js",
+    "!build/**/*.testp.js.map",
+    "!build/**/*.testp.d.ts"
   ]
 }
