@@ -14,7 +14,7 @@
     "purge": "ttpg-scripts purge",
     "libpack": "ttpg-scripts libpack",
     "watch": "ttpg-scripts watch",
-    "index": "yarn cti ./src -e _how-to -e _test -i 'obj/*' -i '*.test.ts' -i '*.testp.ts' && find . -name 'index.ts.bak' -exec rm {} \\;",
+    "index": "yarn cti ./src -e _how-to -e _test -e ref-obj -i '*.test.ts' -i '*.testp.ts' && find . -name 'index.ts.bak' -exec rm {} \\;",
     "prepublishOnly": "yarn index && tsc -p tsconfig.json",
     "check:prettier": "prettier --check src",
     "test": "jest",

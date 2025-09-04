@@ -127,7 +127,7 @@ for (const info of infos) {
   if (info.nsid === "token:base/custodians") {
     json.Tags = ["token-custodians"];
     json.ShouldSnap = true;
-    json.ScriptName = "obj/custodians-token.js";
+    json.ScriptName = "ref-obj/custodians-token.js";
   }
 
   if (info.nsid === "token:base/speaker") {

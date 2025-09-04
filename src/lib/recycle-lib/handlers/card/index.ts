@@ -8,7 +8,6 @@ export * from './exploration';
 export * from './faction-reference';
 export * from './leader';
 export * from './legendary-planet';
-export * from './objective';
 export * from './planet';
 export * from './promissory';
 export * from './relic';

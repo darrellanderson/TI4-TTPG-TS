@@ -6,5 +6,4 @@ export * from './game-data-updator';
 export * from './game-data-updators';
 export * from './i-game-data-updator';
 export * from './last-game-data';
-export * from './objective-progress';
 export * from './updators';

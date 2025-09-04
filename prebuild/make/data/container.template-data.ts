@@ -23,7 +23,7 @@ export const CONTAINER_TEMPLATE_DATA = {
   Flippable: true,
   AutoStraighten: false,
   ShouldSnap: false,
-  ScriptName: "obj/icon-container-obj.js",
+  ScriptName: "ref-obj/icon-container-obj.js",
   Blueprint: "",
   Models: [
     {
