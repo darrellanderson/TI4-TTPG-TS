@@ -23,7 +23,7 @@
   "Flippable": true,
   "AutoStraighten": false,
   "ShouldSnap": true,
-  "ScriptName": "obj/custodians-token.js",
+  "ScriptName": "ref-obj/custodians-token.js",
   "Blueprint": "",
   "Models": [
     {

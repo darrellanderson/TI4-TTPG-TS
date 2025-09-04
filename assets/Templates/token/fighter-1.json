@@ -1,129 +1,111 @@
 {
-	"Type": "Generic",
-	"GUID": "C9793B44A964B823C48C624BE712160C",
-	"Name": "Fighter x1",
-	"Metadata": "token:base/fighter-1",
-	"CollisionType": "Regular",
-	"Friction": 0.7,
-	"Restitution": 0.3,
-	"Density": 0.93,
-	"SurfaceType": "Cardboard",
-	"Roughness": 1,
-	"Metallic": 0,
-	"PrimaryColor":
-	{
-		"R": 255,
-		"G": 255,
-		"B": 255
-	},
-	"SecondaryColor":
-	{
-		"R": 0,
-		"G": 0,
-		"B": 0
-	},
-	"Flippable": true,
-	"AutoStraighten": false,
-	"ShouldSnap": false,
-	"ScriptName": "",
-	"Blueprint": "",
-	"Models": [
-		{
-			"Model": "token/round.obj",
-			"Offset":
-			{
-				"X": 0,
-				"Y": 0,
-				"Z": 0
-			},
-			"Scale":
-			{
-				"X": 0.80000000000000004,
-				"Y": 0.80000000000000004,
-				"Z": 1
-			},
-			"Rotation":
-			{
-				"X": -0,
-				"Y": 0,
-				"Z": 0
-			},
-			"Texture": "token/fighter-1.jpg",
-			"NormalMap": "",
-			"ExtraMap": "",
-			"ExtraMap2": "",
-			"IsTransparent": false,
-			"CastShadow": true,
-			"IsTwoSided": false,
-			"UseOverrides": true,
-			"SurfaceType": "Cardboard"
-		},
-		{
-			"Model": "token/round.obj",
-			"Offset":
-			{
-				"X": 0,
-				"Y": 0,
-				"Z": 0
-			},
-			"Scale":
-			{
-				"X": 0.80000000000000004,
-				"Y": 0.80000000000000004,
-				"Z": 1
-			},
-			"Rotation":
-			{
-				"X": 180,
-				"Y": 0,
-				"Z": 0
-			},
-			"Texture": "token/fighter-1.jpg",
-			"NormalMap": "",
-			"ExtraMap": "",
-			"ExtraMap2": "",
-			"IsTransparent": false,
-			"CastShadow": true,
-			"IsTwoSided": false,
-			"UseOverrides": true,
-			"SurfaceType": "Cardboard"
-		}
-	],
-	"Collision": [
-		{
-			"Model": "token/round.col.obj",
-			"Offset":
-			{
-				"X": 0,
-				"Y": 0,
-				"Z": 0
-			},
-			"Scale":
-			{
-				"X": 0.80000000000000004,
-				"Y": 0.80000000000000004,
-				"Z": 1
-			},
-			"Rotation":
-			{
-				"X": -0,
-				"Y": 0,
-				"Z": 0
-			},
-			"Type": "Convex"
-		}
-	],
-	"Lights": [],
-	"SnapPointsGlobal": false,
-	"SnapPoints": [],
-	"ZoomViewDirection":
-	{
-		"X": 0,
-		"Y": 0,
-		"Z": 1
-	},
-	"GroundAccessibility": "ZoomAndContext",
-	"Tags": [
-		"fighter-1"
-	]
+  "Type": "Generic",
+  "GUID": "C9793B44A964B823C48C624BE712160C",
+  "Name": "Fighter x1",
+  "Metadata": "token:base/fighter-1",
+  "CollisionType": "Regular",
+  "Friction": 0.7,
+  "Restitution": 0.3,
+  "Density": 0.93,
+  "SurfaceType": "Cardboard",
+  "Roughness": 1,
+  "Metallic": 0,
+  "PrimaryColor": {
+    "R": 255,
+    "G": 255,
+    "B": 255
+  },
+  "SecondaryColor": {
+    "R": 0,
+    "G": 0,
+    "B": 0
+  },
+  "Flippable": true,
+  "AutoStraighten": false,
+  "ShouldSnap": false,
+  "ScriptName": "",
+  "Blueprint": "",
+  "Models": [
+    {
+      "Model": "token/round.obj",
+      "Offset": {
+        "X": 0,
+        "Y": 0,
+        "Z": 0
+      },
+      "Scale": {
+        "X": 0.8,
+        "Y": 0.8,
+        "Z": 1
+      },
+      "Rotation": {
+        "X": 0,
+        "Y": 0,
+        "Z": 0
+      },
+      "Texture": "token/fighter-1.jpg",
+      "NormalMap": "",
+      "ExtraMap": "",
+      "IsTransparent": false,
+      "CastShadow": true,
+      "UseOverrides": true,
+      "SurfaceType": "Cardboard"
+    },
+    {
+      "Model": "token/round.obj",
+      "Offset": {
+        "X": 0,
+        "Y": 0,
+        "Z": 0
+      },
+      "Scale": {
+        "X": 0.8,
+        "Y": 0.8,
+        "Z": 1
+      },
+      "Rotation": {
+        "X": 180,
+        "Y": 0,
+        "Z": 0
+      },
+      "Texture": "token/fighter-1.jpg",
+      "NormalMap": "",
+      "ExtraMap": "",
+      "IsTransparent": false,
+      "CastShadow": true,
+      "UseOverrides": true,
+      "SurfaceType": "Cardboard"
+    }
+  ],
+  "Collision": [
+    {
+      "Model": "token/round.col.obj",
+      "Offset": {
+        "X": 0,
+        "Y": 0,
+        "Z": 0
+      },
+      "Scale": {
+        "X": 0.8,
+        "Y": 0.8,
+        "Z": 1
+      },
+      "Rotation": {
+        "X": 0,
+        "Y": 0,
+        "Z": 0
+      },
+      "Type": "Convex"
+    }
+  ],
+  "Lights": [],
+  "SnapPointsGlobal": false,
+  "SnapPoints": [],
+  "ZoomViewDirection": {
+    "X": 0,
+    "Y": 0,
+    "Z": 1
+  },
+  "GroundAccessibility": "ZoomAndContext",
+  "Tags": []
 }

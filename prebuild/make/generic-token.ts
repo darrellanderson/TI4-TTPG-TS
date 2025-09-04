@@ -72,16 +72,18 @@ for (const [source, genericTokens] of Object.entries(
 }
 
 // Swap to PNG if no JPG.
+const prebuildDir: string = `${__dirname}/../`;
+const assetsDir: string = `${__dirname}/../../assets/`;
 for (const info of infos) {
-  if (!fs.existsSync("./prebuild/" + info.imgFileFace)) {
+  if (!fs.existsSync(prebuildDir + info.imgFileFace)) {
     const png: string = info.imgFileFace.replace(/\.jpg$/, ".png");
-    if (fs.existsSync("./prebuild/" + png)) {
+    if (fs.existsSync(prebuildDir + png)) {
       info.imgFileFace = png;
     }
   }
-  if (!fs.existsSync("./prebuild/" + info.imgFileBack)) {
+  if (!fs.existsSync(prebuildDir + info.imgFileBack)) {
     const png: string = info.imgFileBack.replace(/\.jpg$/, ".png");
-    if (fs.existsSync("./prebuild/" + png)) {
+    if (fs.existsSync(prebuildDir + png)) {
       info.imgFileBack = png;
     }
   }
@@ -89,10 +91,10 @@ for (const info of infos) {
 // Validate the input files.
 const errors: Array<string> = [];
 for (const info of infos) {
-  if (!fs.existsSync("./prebuild/" + info.imgFileFace)) {
+  if (!fs.existsSync(prebuildDir + info.imgFileFace)) {
     errors.push(`File face not found: "${info.imgFileFace}"`);
   }
-  if (!fs.existsSync("./prebuild/" + info.imgFileBack)) {
+  if (!fs.existsSync(prebuildDir + info.imgFileBack)) {
     errors.push(`File back not found: "${info.imgFileBack}"`);
   }
 }
@@ -135,7 +137,7 @@ for (const info of infos) {
     json.ShouldSnap = true;
   }
 
-  const templateFile: string = "./assets/Templates/" + info.templateFile;
+  const templateFile: string = assetsDir + "Templates/" + info.templateFile;
   const templateDir: string = path.dirname(templateFile);
   const templateData: Buffer = Buffer.from(JSON.stringify(json, null, 2));
 
@@ -143,13 +145,13 @@ for (const info of infos) {
   fs.writeFileSync(templateFile, templateData);
 
   fs.cpSync(
-    "./prebuild/" + info.imgFileFace,
-    "./assets/Textures/" + info.imgFileFace
+    prebuildDir + info.imgFileFace,
+    assetsDir + "Textures/" + info.imgFileFace
   );
   if (info.imgFileFace !== info.imgFileBack && info.imgFileBack !== "") {
     fs.cpSync(
-      "./prebuild/" + info.imgFileBack,
-      "./assets/Textures/" + info.imgFileBack
+      prebuildDir + info.imgFileBack,
+      assetsDir + "Textures/" + info.imgFileBack
     );
   }
 }
