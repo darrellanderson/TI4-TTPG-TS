@@ -1,6 +1,6 @@
 {
   "name": "ti4-ttpg-ts",
-  "version": "1.0.8",
+  "version": "1.0.9",
   "description": "Twilight Imperium 4 for Tabletop Playground",
   "main": "build/index.js",
   "license": "Unlicense",
@@ -14,7 +14,7 @@
     "purge": "ttpg-scripts purge",
     "libpack": "ttpg-scripts libpack",
     "watch": "ttpg-scripts watch",
-    "index": "yarn cti ./src -e _how-to -e _test -i '*.test.ts' -i '*.testp.ts' && find . -name 'index.ts.bak' -exec rm {} \\;",
+    "index": "yarn cti ./src -e _how-to -e _test -i 'obj/*' -i '*.test.ts' -i '*.testp.ts' && find . -name 'index.ts.bak' -exec rm {} \\;",
     "prepublishOnly": "yarn index && tsc -p tsconfig.json",
     "check:prettier": "prettier --check src",
     "test": "jest",
