@@ -17,6 +17,8 @@ import { COMMAND_TOKEN_TEMPLATE } from "./data/command.data";
 import { CONTROL_TOKEN_TEMPLATE } from "./data/control.data";
 import { getGuid } from "./lib/guid";
 
+const prebuildDir: string = `${__dirname}/../`;
+const assetsDir: string = `${__dirname}/../../assets/`;
 for (const [source, factionDataArray] of Object.entries(
   SOURCE_TO_FACTION_DATA
 )) {
@@ -33,11 +35,11 @@ for (const [source, factionDataArray] of Object.entries(
     const textureNsidName: string = factionData.nsidName.includes("keleres")
       ? "keleres"
       : factionData.nsidName;
-    const textureFile: string = `./assets/Textures/token/command-control/${textureNsidName}.jpg`;
+    const textureFile: string = `${assetsDir}Textures/token/command-control/${textureNsidName}.jpg`;
     const textureDir: string = path.dirname(textureFile);
     fs.mkdirSync(textureDir, { recursive: true });
     fs.cpSync(
-      `./prebuild/token/command-control/${textureNsidName}.jpg`,
+      `${prebuildDir}token/command-control/${textureNsidName}.jpg`,
       textureFile
     );
 
@@ -48,7 +50,7 @@ for (const [source, factionDataArray] of Object.entries(
     commandToken.Models[0].Texture = `token/command-control/${textureNsidName}.jpg`;
     commandToken.Models[0].ExtraMap = "token/command-control/token-mask.png";
 
-    templateFile = "./assets/Templates/" + templateFile;
+    templateFile = assetsDir + "Templates/" + templateFile;
     templateDir = path.dirname(templateFile);
     templateData = Buffer.from(JSON.stringify(commandToken, null, 2));
     fs.mkdirSync(templateDir, { recursive: true });
@@ -65,7 +67,7 @@ for (const [source, factionDataArray] of Object.entries(
     controlToken.Models[0].Texture = `token/command-control/${textureNsidName}.jpg`;
     controlToken.Models[0].ExtraMap = "token/command-control/token-mask.png";
 
-    templateFile = "./assets/Templates/" + templateFile;
+    templateFile = assetsDir + "Templates/" + templateFile;
     templateDir = path.dirname(templateFile);
     templateData = Buffer.from(JSON.stringify(controlToken, null, 2));
     fs.mkdirSync(templateDir, { recursive: true });
@@ -74,6 +76,6 @@ for (const [source, factionDataArray] of Object.entries(
 }
 
 fs.cpSync(
-  "./prebuild/token/command-control/token-mask.png",
-  "./assets/Textures/token/command-control/token-mask.png"
+  `${prebuildDir}token/command-control/token-mask.png`,
+  `${assetsDir}Textures/token/command-control/token-mask.png`
 );

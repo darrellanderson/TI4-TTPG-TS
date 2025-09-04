@@ -22,6 +22,7 @@ function capitalizeFirstLetterHypenated(s: string): string {
     .join(" ");
 }
 
+const assetsDir: string = `${__dirname}/../../assets/`;
 const seen: Set<UnitType> = new Set();
 for (const unitAttrsDataArray of Object.values(SOURCE_TO_UNIT_ATTRS_DATA)) {
   for (const unitAttrsData of unitAttrsDataArray) {
@@ -45,7 +46,7 @@ for (const unitAttrsDataArray of Object.values(SOURCE_TO_UNIT_ATTRS_DATA)) {
     template.Models[0].Texture = `icon/unit/${unit}.jpg`;
     template.Models[0].ExtraMap = `icon/unit/${unit}-mask.png`;
 
-    templateFile = "./assets/Templates/" + templateFile;
+    templateFile = `${assetsDir}Templates/${templateFile}`;
     const templateDir = path.dirname(templateFile);
     const templateData = Buffer.from(JSON.stringify(template, null, 2));
     fs.mkdirSync(templateDir, { recursive: true });

@@ -29,6 +29,7 @@ function capitalizeFirstLetterHypenated(s: string): string {
     .join(" ");
 }
 
+const assetsDir: string = `${__dirname}/../../assets/`;
 for (const token of CLIP_CIRCLE_TOKENS) {
   const template = JSON.parse(JSON.stringify(CONTAINER_TEMPLATE_DATA));
 
@@ -65,7 +66,7 @@ for (const token of CLIP_CIRCLE_TOKENS) {
     template.Models[0].UseOverrides = false;
   }
 
-  templateFile = "./assets/Templates/" + templateFile;
+  templateFile = assetsDir + "Templates/" + templateFile;
   const templateDir = path.dirname(templateFile);
   const templateData = Buffer.from(JSON.stringify(template, null, 2));
   fs.mkdirSync(templateDir, { recursive: true });
