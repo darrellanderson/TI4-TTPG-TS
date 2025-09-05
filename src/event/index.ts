@@ -6,6 +6,7 @@ export * from './on-chat-message';
 export * from './on-combat-clicked';
 export * from './on-combat-result';
 export * from './on-game-end';
+export * from './on-object-fell-through-table';
 export * from './on-player-change-color-request';
 export * from './on-player-changed-color';
 export * from './on-slice-draft-request';

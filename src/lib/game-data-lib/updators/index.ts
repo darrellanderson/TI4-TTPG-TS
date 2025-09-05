@@ -6,6 +6,8 @@ export * from './updator-hex-summary';
 export * from './updator-history';
 export * from './updator-laws';
 export * from './updator-map-string';
+export * from './updator-objectives';
+export * from './updator-objectives-progress';
 export * from './updator-player-active';
 export * from './updator-player-color';
 export * from './updator-player-command-tokens';
