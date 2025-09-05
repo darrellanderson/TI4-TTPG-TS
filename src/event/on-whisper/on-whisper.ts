@@ -11,17 +11,17 @@ import { IGlobal } from "ttpg-darrell";
 const packageId: string = refPackageId;
 
 export class OnWhisper implements IGlobal {
-  static readonly __sound: Sound = world.importSound(
-    "digi-blip-hi-2x.flac",
-    packageId
-  );
+  private static __sound: Sound | undefined = undefined;
 
   static chirpAtPlayer(player: Player): void {
     const startTime: number = 0;
     const volume: number = 1;
     const loop: boolean = false;
     const players: PlayerPermission = new PlayerPermission().addPlayer(player);
-    OnWhisper.__sound.play(startTime, volume, loop, players);
+    const sound: Sound | undefined = OnWhisper.__sound;
+    if (sound) {
+      sound.play(startTime, volume, loop, players);
+    }
   }
 
   private readonly _onWhisper = (
@@ -33,6 +33,7 @@ export class OnWhisper implements IGlobal {
   };
 
   init(): void {
+    OnWhisper.__sound = world.importSound("digi-blip-hi-2x.flac", packageId);
     globalEvents.onWhisper.add(this._onWhisper);
   }
 }
