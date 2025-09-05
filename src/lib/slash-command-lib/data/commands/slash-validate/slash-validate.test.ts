@@ -1,5 +1,4 @@
 import { MockPlayer } from "ttpg-mock";
-import { Spawn } from "ttpg-darrell";
 import { SlashValidate } from "./slash-validate";
 import { ValidateTemplateNsids } from "../../../../homebrew-lib/validate/validate-template-nsids/validate-template-nsids";
 
@@ -30,7 +29,7 @@ it("run (template-nsids, nsid mismatch)", () => {
   const slashValidate = new SlashValidate();
   const player = new MockPlayer({ isHost: true });
 
-  Spawn.inject({
+  globalThis.TI4.spawn.inject({
     "my-nsid": "abc123",
   });
 

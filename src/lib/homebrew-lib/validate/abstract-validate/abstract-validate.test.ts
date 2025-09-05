@@ -27,12 +27,13 @@ it("getCardNsids", () => {
   const deck: Card = new MockCard({
     cardDetails: [new MockCardDetails({ metadata: "card.my-type:base/jord" })],
   });
-  Spawn.inject({
+  globalThis.TI4.spawn.inject({
     "card.my-type:": "abcd1234",
   });
 
+  const spawnInstance: Spawn = globalThis.TI4.spawn;
   jest
-    .spyOn(Spawn, "spawn")
+    .spyOn(spawnInstance, "spawn")
     .mockImplementation(
       (
         _nsid: string,
@@ -46,7 +47,7 @@ it("getCardNsids", () => {
       }
     );
 
-  const obj: GameObject | undefined = Spawn.spawn("a");
+  const obj: GameObject | undefined = globalThis.TI4.spawn.spawn("a");
   expect(obj).toBe(deck);
 
   const nsids: Set<string> = new MyAbstractValidate().getCardNsids(

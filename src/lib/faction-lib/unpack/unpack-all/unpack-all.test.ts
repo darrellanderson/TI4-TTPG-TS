@@ -19,9 +19,8 @@ import {
 } from "@tabletop-playground/api";
 
 it("unpack/remove", () => {
-  const faction: Faction | undefined = TI4.factionRegistry.getByNsidOrThrow(
-    "faction:base/arborec"
-  );
+  const faction: Faction | undefined =
+    globalThis.TI4.factionRegistry.getByNsidOrThrow("faction:base/arborec");
   const playerSlot: number = 10;
 
   new MockGameObject({
@@ -176,13 +175,14 @@ it("unpack/remove", () => {
   });
 
   // Spawns some decks to find cards.
+  const spawnInstance: Spawn = globalThis.TI4.spawn;
   const origSpawn: (
     nsid: string,
     position?: Vector | [x: number, y: number, z: number] | undefined,
     rotation?: Rotator | [pitch: number, yaw: number, roll: number] | undefined
-  ) => GameObject | undefined = Spawn.spawn;
+  ) => GameObject | undefined = spawnInstance.spawn;
   jest
-    .spyOn(Spawn, "spawn")
+    .spyOn(spawnInstance, "spawn")
     .mockImplementation(
       (
         nsid: string,
@@ -225,10 +225,13 @@ it("unpack/remove", () => {
             ],
           });
         }
-        return origSpawn(nsid, position, rotation);
+        return origSpawn.apply(spawnInstance, [nsid, position, rotation]);
       }
     );
 
+  if (!faction) {
+    throw new Error("Could not find faction");
+  }
   const unpack: AbstractUnpack = new UnpackAll(faction, playerSlot);
   unpack.unpack();
   unpack.remove();

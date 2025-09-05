@@ -1,5 +1,5 @@
 import { GameObject, ObjectType } from "@tabletop-playground/api";
-import { LayoutObjects, Spawn } from "ttpg-darrell";
+import { LayoutObjects } from "ttpg-darrell";
 import { LayoutConfig } from "../layout-config";
 import { LayoutTableDecks } from "../layout-table-decks/layout-table-decks";
 
@@ -8,11 +8,11 @@ export class LayoutObjectives {
   private readonly _scoreboard: GameObject;
 
   constructor() {
-    const objectivesMat1: GameObject = Spawn.spawnOrThrow(
+    const objectivesMat1: GameObject = TI4.spawn.spawnOrThrow(
       "mat:base/objective-1"
     );
-    this._scoreboard = Spawn.spawnOrThrow("token:base/scoreboard");
-    const objectivesMat2: GameObject = Spawn.spawnOrThrow(
+    this._scoreboard = TI4.spawn.spawnOrThrow("token:base/scoreboard");
+    const objectivesMat2: GameObject = TI4.spawn.spawnOrThrow(
       "mat:base/objective-2"
     );
 

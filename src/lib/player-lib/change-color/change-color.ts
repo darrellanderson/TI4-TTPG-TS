@@ -7,13 +7,7 @@ import {
   Vector,
   world,
 } from "@tabletop-playground/api";
-import {
-  CardUtil,
-  DeletedItemsContainer,
-  Find,
-  NSID,
-  Spawn,
-} from "ttpg-darrell";
+import { CardUtil, DeletedItemsContainer, Find, NSID } from "ttpg-darrell";
 
 /**
  * Change player color.
@@ -145,7 +139,7 @@ export class ChangeColor {
 
     const _getPromissoryDeck = (): Card => {
       const deck: Card =
-        Spawn.spawnMergeDecksWithNsidPrefixOrThrow("card.promissory");
+        TI4.spawn.spawnMergeDecksWithNsidPrefixOrThrow("card.promissory");
       return deck;
     };
     const promissoryDeck: Card = _getPromissoryDeck();

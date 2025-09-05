@@ -4,7 +4,7 @@ import {
   SnapPoint,
   Vector,
 } from "@tabletop-playground/api";
-import { LayoutObjects, Spawn } from "ttpg-darrell";
+import { LayoutObjects } from "ttpg-darrell";
 
 export class LayoutStrategyCards {
   private readonly _layout: LayoutObjects;
@@ -12,7 +12,7 @@ export class LayoutStrategyCards {
   constructor() {
     this._layout = new LayoutObjects();
 
-    const mat: GameObject = Spawn.spawnOrThrow("mat:base/strategy-card");
+    const mat: GameObject = TI4.spawn.spawnOrThrow("mat:base/strategy-card");
     mat.setRotation([0, -90, 0]); // mat model is rotated
 
     const strategyCardNsids: Array<string> = [
@@ -26,7 +26,7 @@ export class LayoutStrategyCards {
       "tile.strategy-card:base/imperial",
     ];
     const strategyCards: Array<GameObject> = strategyCardNsids.map((nsid) => {
-      return Spawn.spawnOrThrow(nsid);
+      return TI4.spawn.spawnOrThrow(nsid);
     });
 
     this._layout.add(mat);

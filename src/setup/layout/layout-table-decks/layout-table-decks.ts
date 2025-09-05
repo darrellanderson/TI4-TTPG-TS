@@ -4,7 +4,7 @@ import {
   SnapPoint,
   Vector,
 } from "@tabletop-playground/api";
-import { Find, LayoutObjects, Spawn } from "ttpg-darrell";
+import { Find, LayoutObjects } from "ttpg-darrell";
 import { LayoutConfig } from "../layout-config";
 
 export class LayoutTableDecks {
@@ -19,7 +19,7 @@ export class LayoutTableDecks {
     }
 
     const pos: Vector = snapPoint.getGlobalPosition().add([0, 0, 10]);
-    const deck: GameObject = Spawn.spawnMergeDecksWithNsidPrefixOrThrow(
+    const deck: GameObject = TI4.spawn.spawnMergeDecksWithNsidPrefixOrThrow(
       nsidPrefix,
       pos
     );
@@ -30,15 +30,17 @@ export class LayoutTableDecks {
   constructor() {
     this._layout = new LayoutObjects();
 
-    const explorationMat: GameObject = Spawn.spawnOrThrow(
+    const explorationMat: GameObject = TI4.spawn.spawnOrThrow(
       "mat.deck:pok/exploration"
     );
-    const baseMat: GameObject = Spawn.spawnOrThrow("mat.deck:base/base");
-    const planetMat: GameObject = Spawn.spawnOrThrow("mat.deck:base/planet");
-    const factionReferenceMat: GameObject = Spawn.spawnOrThrow(
+    const baseMat: GameObject = TI4.spawn.spawnOrThrow("mat.deck:base/base");
+    const planetMat: GameObject = TI4.spawn.spawnOrThrow(
+      "mat.deck:base/planet"
+    );
+    const factionReferenceMat: GameObject = TI4.spawn.spawnOrThrow(
       "mat.deck:base/faction-reference"
     );
-    const eventMat: GameObject = Spawn.spawnOrThrow("mat.deck:base/event");
+    const eventMat: GameObject = TI4.spawn.spawnOrThrow("mat.deck:base/event");
 
     const planetsAndBase: LayoutObjects = new LayoutObjects()
       .setChildDistance(LayoutConfig.spacingWide)
@@ -107,8 +109,9 @@ export class LayoutTableDecks {
       LayoutTableDecks._spawnDeck("card.event", "deck-event");
     });
 
-    const speakerToken: GameObject = Spawn.spawnOrThrow("token:base/speaker");
-    const codex4scenario: GameObject = Spawn.spawnOrThrow(
+    const speakerToken: GameObject =
+      TI4.spawn.spawnOrThrow("token:base/speaker");
+    const codex4scenario: GameObject = TI4.spawn.spawnOrThrow(
       "container:codex.liberation/liberation-scenario"
     );
 

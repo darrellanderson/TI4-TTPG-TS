@@ -1,4 +1,3 @@
-import { Spawn } from "ttpg-darrell";
 import {
   MockCardDetails,
   MockCardParams,
@@ -11,8 +10,8 @@ export function addObjectTemplatesToMockWorld(): void {
     [k: string]: MockGameObjectParams;
   } = {};
 
-  for (const nsid of Spawn.getAllNsids()) {
-    const templateId: string = Spawn.getTemplateIdOrThrow(nsid);
+  for (const nsid of __spawn.getAllNsids()) {
+    const templateId: string = __spawn.getTemplateIdOrThrow(nsid);
 
     if (
       nsid.startsWith("mat") ||

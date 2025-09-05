@@ -1,5 +1,5 @@
 import { Container, GameObject, Vector } from "@tabletop-playground/api";
-import { DeletedItemsContainer, Find, Spawn } from "ttpg-darrell";
+import { DeletedItemsContainer, Find } from "ttpg-darrell";
 
 import { AbstractUnpack } from "../abstract-unpack/abstract-unpack";
 import { Faction } from "../../faction/faction";
@@ -19,7 +19,7 @@ export class UnpackFactionExtras extends AbstractUnpack {
     for (const nsid of nsids) {
       const count: number = faction.getExtraCount(nsid);
       for (let i = 0; i < count; i++) {
-        const obj: GameObject = Spawn.spawnOrThrow(nsid);
+        const obj: GameObject = TI4.spawn.spawnOrThrow(nsid);
         extrasContainer.insert([obj]);
       }
     }

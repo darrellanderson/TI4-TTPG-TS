@@ -8,7 +8,7 @@ import {
   Vector,
   world,
 } from "@tabletop-playground/api";
-import { DeletedItemsContainer, NSID, Spawn } from "ttpg-darrell";
+import { DeletedItemsContainer, NSID } from "ttpg-darrell";
 import { AbstractSlashCommand } from "../abstract-slash-command/abstract-slash-command";
 
 export class SlashToggleUnits implements AbstractSlashCommand {
@@ -60,7 +60,7 @@ export class SlashToggleUnits implements AbstractSlashCommand {
       DeletedItemsContainer.destroyWithoutCopying(oldUnit);
 
       // Plastic/tokens have different heights, spawn above and snap down.
-      const newUnit: GameObject | undefined = Spawn.spawn(
+      const newUnit: GameObject | undefined = TI4.spawn.spawn(
         newNsid,
         pos.add([0, 0, 3]),
         rot

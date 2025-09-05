@@ -5,7 +5,7 @@ import {
   Package,
   world,
 } from "@tabletop-playground/api";
-import { DeletedItemsContainer, IGlobal, Spawn } from "ttpg-darrell";
+import { DeletedItemsContainer, IGlobal } from "ttpg-darrell";
 
 // Script must be bound to an object, spawn one of these to host it.
 export const RUN_SCRIPT_NSID: string = "unit:base/carrier";
@@ -34,7 +34,7 @@ export class RunInjectScript implements IGlobal {
 
         // If the script is inject.js, run it.
         // Create a new object, set the script to this, delete next frame.
-        const obj: GameObject | undefined = Spawn.spawn(
+        const obj: GameObject | undefined = TI4.spawn.spawn(
           RUN_SCRIPT_NSID,
           [0, 0, -100]
         );

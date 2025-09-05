@@ -1,4 +1,3 @@
-import { Spawn } from "ttpg-darrell";
 import { Faction } from "../../../faction-lib/faction/faction";
 import { AbstractValidate } from "../abstract-validate/abstract-validate";
 
@@ -45,7 +44,7 @@ export class ValidateFactions extends AbstractValidate {
       const otherNsids: Array<string> = this._getOtherNsids(faction);
       const missingOther: Array<string> = otherNsids.filter(
         (nsid: string): boolean => {
-          return !Spawn.has(nsid);
+          return !TI4.spawn.has(nsid);
         }
       );
 

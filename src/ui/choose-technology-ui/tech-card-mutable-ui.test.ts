@@ -1,7 +1,7 @@
 import { Card, GameObject, Rotator, Vector } from "@tabletop-playground/api";
-import { Spawn } from "ttpg-darrell";
 import { MockCard, MockCardDetails, world } from "ttpg-mock";
 import { TechCardMutableUI, ZoomedTechCardUI } from "./tech-card-mutable-ui";
+import { Spawn } from "ttpg-darrell";
 
 it("constructor/destroy", () => {
   const scale: number = 1;
@@ -19,13 +19,14 @@ it("set/clear Card", () => {
 });
 
 it("setCardNsid", () => {
+  const spawnInstance: Spawn = globalThis.TI4.spawn;
   const origSpawn: (
     nsid: string,
     position?: Vector | [x: number, y: number, z: number] | undefined,
     rotation?: Rotator | [pitch: number, yaw: number, roll: number] | undefined
-  ) => GameObject | undefined = Spawn.spawn;
+  ) => GameObject | undefined = spawnInstance.spawn;
   jest
-    .spyOn(Spawn, "spawn")
+    .spyOn(spawnInstance, "spawn")
     .mockImplementation(
       (
         nsid: string,
@@ -50,7 +51,7 @@ it("setCardNsid", () => {
             ],
           });
         }
-        return origSpawn(nsid, position, rotation);
+        return origSpawn.apply(spawnInstance, [nsid, position, rotation]);
       }
     );
 

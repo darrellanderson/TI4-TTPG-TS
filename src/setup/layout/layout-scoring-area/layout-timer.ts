@@ -1,5 +1,5 @@
 import { GameObject, ObjectType } from "@tabletop-playground/api";
-import { LayoutObjects, Spawn } from "ttpg-darrell";
+import { LayoutObjects } from "ttpg-darrell";
 
 export class LayoutTimer {
   private readonly _layout: LayoutObjects;
@@ -7,7 +7,7 @@ export class LayoutTimer {
   constructor() {
     this._layout = new LayoutObjects();
 
-    const timer: GameObject = Spawn.spawnOrThrow("mat:base/timer");
+    const timer: GameObject = TI4.spawn.spawnOrThrow("mat:base/timer");
 
     this._layout.add(timer).addAfterLayout(() => {
       timer.setObjectType(ObjectType.Ground);

@@ -1,5 +1,4 @@
 import { Color, GameObject } from "@tabletop-playground/api";
-import { Spawn } from "ttpg-darrell";
 import { Faction } from "../faction-lib/faction/faction";
 
 export class SpawnControlToken {
@@ -9,7 +8,7 @@ export class SpawnControlToken {
       TI4.factionRegistry.getByPlayerSlot(playerSlot);
     if (color && faction) {
       const nsid: string = faction.getControlTokenNsid();
-      const token: GameObject | undefined = Spawn.spawn(nsid);
+      const token: GameObject | undefined = TI4.spawn.spawn(nsid);
       if (token) {
         token.setOwningPlayerSlot(playerSlot);
         token.setPrimaryColor(color);

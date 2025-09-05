@@ -5,13 +5,7 @@ import {
   Vector,
   world,
 } from "@tabletop-playground/api";
-import {
-  AbstractRightClickCard,
-  Broadcast,
-  HexType,
-  NSID,
-  Spawn,
-} from "ttpg-darrell";
+import { AbstractRightClickCard, Broadcast, HexType, NSID } from "ttpg-darrell";
 import { RightClickPurge } from "../../right-click-purge/right-click-purge";
 import { UnitAttrs } from "../../../lib/unit-lib/unit-attrs/unit-attrs";
 import { UnitAttrsSet } from "../../../lib/unit-lib/unit-attrs-set/unit-attrs-set";
@@ -69,7 +63,7 @@ export class HeroMultiverseShift extends AbstractRightClickCard {
       if (!alreadyHaveFrontierTokenHexes.has(hex)) {
         const pos: Vector = TI4.hex.toPosition(hex).add([0, -2.5, 0]);
         pos.z = z;
-        const obj: GameObject = Spawn.spawnOrThrow(
+        const obj: GameObject = TI4.spawn.spawnOrThrow(
           "token.attachment.system:pok/frontier",
           pos
         );

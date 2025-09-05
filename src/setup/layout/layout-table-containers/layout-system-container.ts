@@ -1,5 +1,5 @@
 import { Container, GameObject, ObjectType } from "@tabletop-playground/api";
-import { LayoutObjects, Spawn } from "ttpg-darrell";
+import { LayoutObjects } from "ttpg-darrell";
 import { SystemSchemaType } from "../../../lib/system-lib/schema/system-schema";
 
 export class LayoutSystemContainer {
@@ -20,7 +20,7 @@ export class LayoutSystemContainer {
       const nsid: string | undefined =
         TI4.systemRegistry.tileNumberToSystemTileObjNsid(tileNumber);
       if (systemSchema && !systemSchema.isHome && nsid) {
-        const systemTile: GameObject = Spawn.spawnOrThrow(nsid);
+        const systemTile: GameObject = TI4.spawn.spawnOrThrow(nsid);
         systemTiles.push(systemTile);
 
         tags = systemTile.getTags();
@@ -31,7 +31,9 @@ export class LayoutSystemContainer {
       }
     }
 
-    const container: GameObject = Spawn.spawnOrThrow("container:base/systems");
+    const container: GameObject = TI4.spawn.spawnOrThrow(
+      "container:base/systems"
+    );
     if (container instanceof Container) {
       container.setMaxItems(500);
       container.insert(systemTiles);

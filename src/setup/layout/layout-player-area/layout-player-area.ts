@@ -13,7 +13,6 @@ import {
   ColorsType,
   LayoutBorder,
   LayoutObjects,
-  Spawn,
 } from "ttpg-darrell";
 
 import { LayoutConfig } from "../layout-config";
@@ -58,7 +57,7 @@ export class LayoutPlayerArea {
       .add(layoutTokenContainers);
 
     const layoutMats: LayoutObjects = new LayoutMats(playerSlot).getLayout();
-    const cardHolder: GameObject = Spawn.spawnOrThrow(
+    const cardHolder: GameObject = TI4.spawn.spawnOrThrow(
       "card-holder:base/player-hand"
     );
     cardHolder.setOwningPlayerSlot(playerSlot);

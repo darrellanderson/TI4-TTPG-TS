@@ -1,5 +1,5 @@
 import { Color, GameObject, ObjectType } from "@tabletop-playground/api";
-import { ColorLib, ColorsType, LayoutObjects, Spawn } from "ttpg-darrell";
+import { ColorLib, ColorsType, LayoutObjects } from "ttpg-darrell";
 
 export class LayoutStatusPad {
   private readonly _layout: LayoutObjects;
@@ -7,7 +7,7 @@ export class LayoutStatusPad {
   constructor(playerSlot: number) {
     this._layout = new LayoutObjects();
 
-    const statusPad: GameObject = Spawn.spawnOrThrow("mat:base/status-pad");
+    const statusPad: GameObject = TI4.spawn.spawnOrThrow("mat:base/status-pad");
     statusPad.setOwningPlayerSlot(playerSlot);
 
     const colorLib: ColorLib = new ColorLib();

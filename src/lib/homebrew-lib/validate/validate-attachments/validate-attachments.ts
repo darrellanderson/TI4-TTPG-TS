@@ -1,4 +1,3 @@
-import { Spawn } from "ttpg-darrell";
 import { AbstractValidate } from "../abstract-validate/abstract-validate";
 
 export class ValidateAttachments extends AbstractValidate {
@@ -16,14 +15,14 @@ export class ValidateAttachments extends AbstractValidate {
 
     nsids = this._getPlanetAttachmentNsids();
     for (const nsid of nsids) {
-      if (!Spawn.has(nsid)) {
+      if (!TI4.spawn.has(nsid)) {
         missingTemplateNsids.push(nsid);
       }
     }
 
     nsids = this._getSystemAttachmentNsids();
     for (const nsid of nsids) {
-      if (!Spawn.has(nsid)) {
+      if (!TI4.spawn.has(nsid)) {
         missingTemplateNsids.push(nsid);
       }
     }

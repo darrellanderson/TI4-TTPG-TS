@@ -1,5 +1,5 @@
 import { GameObject, ObjectType } from "@tabletop-playground/api";
-import { LayoutObjects, Spawn } from "ttpg-darrell";
+import { LayoutObjects } from "ttpg-darrell";
 
 import { LayoutConfig } from "../layout-config";
 import { LayoutSystemContainer } from "./layout-system-container";
@@ -17,10 +17,12 @@ export class LayoutTableContainers {
       .setChildDistance(LayoutConfig.spacing)
       .setIsVertical(true);
 
-    const deletedItems: GameObject = Spawn.spawnOrThrow(
+    const deletedItems: GameObject = TI4.spawn.spawnOrThrow(
       "container:base/deleted-items"
     );
-    const purgedItems: GameObject = Spawn.spawnOrThrow("container:base/purged");
+    const purgedItems: GameObject = TI4.spawn.spawnOrThrow(
+      "container:base/purged"
+    );
 
     this._layout
       .add(new LayoutFrontierContainer().getLayout())

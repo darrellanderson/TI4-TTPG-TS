@@ -1,5 +1,5 @@
 import { Container, GameObject, ObjectType } from "@tabletop-playground/api";
-import { LayoutObjects, Spawn } from "ttpg-darrell";
+import { LayoutObjects } from "ttpg-darrell";
 
 export class LayoutFrontierContainer {
   private readonly _layout: LayoutObjects;
@@ -7,7 +7,7 @@ export class LayoutFrontierContainer {
   constructor() {
     this._layout = new LayoutObjects();
 
-    const container: GameObject = Spawn.spawnOrThrow(
+    const container: GameObject = TI4.spawn.spawnOrThrow(
       "container.token:pok/frontier"
     );
     container.setRotation([0, 0, 180]);
@@ -28,7 +28,7 @@ export class LayoutFrontierContainer {
     }
 
     const tokenNsid: string = "token.attachment.system:pok/frontier";
-    const token: GameObject = Spawn.spawnOrThrow(tokenNsid);
+    const token: GameObject = TI4.spawn.spawnOrThrow(tokenNsid);
     tags = token.getTags();
     if (!tags.includes(tag)) {
       tags.push(tag);

@@ -6,7 +6,7 @@ import {
   Vector,
   world,
 } from "@tabletop-playground/api";
-import { CardUtil, DeletedItemsContainer, Spawn } from "ttpg-darrell";
+import { CardUtil, DeletedItemsContainer } from "ttpg-darrell";
 import { AbstractUI, UI_SIZE } from "../abstract-ui/abtract-ui";
 import { CreateZoomedUiType } from "../zoomable-ui/zoomable-ui";
 import { ZoomableUiFullyClickable } from "../zoomable-ui/zoomable-ui-fully-clickable";
@@ -106,7 +106,7 @@ export class TechCardMutableUI extends ZoomableUiFullyClickable {
    */
   setCardNsid(techNsid: string): void {
     const pos: Vector = new Vector(0, 0, 100);
-    const deck: GameObject = Spawn.spawnMergeDecksWithNsidPrefixOrThrow(
+    const deck: GameObject = TI4.spawn.spawnMergeDecksWithNsidPrefixOrThrow(
       "card.technology",
       pos
     );

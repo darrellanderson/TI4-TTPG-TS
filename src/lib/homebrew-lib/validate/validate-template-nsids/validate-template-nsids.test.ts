@@ -1,7 +1,7 @@
 import { GameObject, Rotator, Vector } from "@tabletop-playground/api";
-import { Spawn } from "ttpg-darrell";
 import { MockGameObject } from "ttpg-mock";
 import { ValidateTemplateNsids } from "./validate-template-nsids";
+import { Spawn } from "ttpg-darrell";
 
 it("getCommandName", () => {
   const commandName: string = new ValidateTemplateNsids().getCommandName();
@@ -15,15 +15,16 @@ it("getDescription", () => {
 
 it("getErrors", () => {
   const myNsid: string = "type:source/name";
-  Spawn.inject({ [myNsid]: "my-template-id" });
+  globalThis.TI4.spawn.inject({ [myNsid]: "my-template-id" });
 
+  const spawnInstance: Spawn = globalThis.TI4.spawn;
   const origSpawn: (
     nsid: string,
     position?: Vector | [x: number, y: number, z: number] | undefined,
     rotation?: Rotator | [pitch: number, yaw: number, roll: number] | undefined
-  ) => GameObject | undefined = Spawn.spawn;
+  ) => GameObject | undefined = spawnInstance.spawn;
   jest
-    .spyOn(Spawn, "spawn")
+    .spyOn(spawnInstance, "spawn")
     .mockImplementation(
       (
         nsid: string,
@@ -38,11 +39,11 @@ it("getErrors", () => {
             templateMetadata: "my-bad-nsid",
           });
         }
-        return origSpawn(nsid, position, rotation);
+        return origSpawn.apply(spawnInstance, [nsid, position, rotation]);
       }
     );
 
-  Spawn.inject({ "my-nsid": "abc123", default: "aaaaa" });
+  globalThis.TI4.spawn.inject({ "my-nsid": "abc123", default: "aaaaa" });
 
   const errors: Array<string> = [];
   new ValidateTemplateNsids().getErrors(errors);

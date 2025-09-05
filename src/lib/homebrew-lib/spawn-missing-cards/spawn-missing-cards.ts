@@ -5,7 +5,6 @@ import {
   Find,
   NSID,
   ParsedNSID,
-  Spawn,
 } from "ttpg-darrell";
 
 /**
@@ -56,7 +55,7 @@ export class SpawnMissingCards {
   }
 
   _spawnDeck(deckNsid: string): Card | undefined {
-    const obj: GameObject | undefined = Spawn.spawn(deckNsid);
+    const obj: GameObject | undefined = TI4.spawn.spawn(deckNsid);
     if (obj instanceof Card) {
       return obj;
     } else if (obj) {

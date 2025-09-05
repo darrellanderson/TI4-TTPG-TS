@@ -4,7 +4,7 @@ import {
   GameObject,
   refContainer,
 } from "@tabletop-playground/api";
-import { CardUtil, Find, Spawn } from "ttpg-darrell";
+import { CardUtil, Find } from "ttpg-darrell";
 
 /**
  * Codex 4: Liberation of Ordinian
@@ -39,7 +39,7 @@ class ContainerLiberationScenario {
     }
 
     // Spawn leaders.
-    const leaders: GameObject | undefined = Spawn.spawn(
+    const leaders: GameObject | undefined = TI4.spawn.spawn(
       "card.leader:codex.liberation/0"
     );
     if (leaders) {
@@ -47,13 +47,13 @@ class ContainerLiberationScenario {
     }
 
     // Spawn techs.
-    const redTechs: GameObject | undefined = Spawn.spawn(
+    const redTechs: GameObject | undefined = TI4.spawn.spawn(
       "card.technology.red:codex.liberation/0"
     );
     if (redTechs) {
       this._addToContainer(redTechs);
     }
-    const yellowTechs: GameObject | undefined = Spawn.spawn(
+    const yellowTechs: GameObject | undefined = TI4.spawn.spawn(
       "card.technology.yellow:codex.liberation/null-reference"
     );
     if (yellowTechs) {
@@ -61,13 +61,13 @@ class ContainerLiberationScenario {
     }
 
     // Spawn objectives.
-    const public1: GameObject | undefined = Spawn.spawn(
+    const public1: GameObject | undefined = TI4.spawn.spawn(
       "card.objective.public-1:codex.liberation/liberate-ordinian"
     );
     if (public1) {
       this._addToContainer(public1);
     }
-    const public2: GameObject | undefined = Spawn.spawn(
+    const public2: GameObject | undefined = TI4.spawn.spawn(
       "card.objective.public-2:codex.liberation/control-ordinian"
     );
     if (public2) {

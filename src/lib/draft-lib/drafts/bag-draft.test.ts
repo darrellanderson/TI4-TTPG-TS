@@ -11,9 +11,9 @@ import { BagDraft } from "./bag-draft";
 
 // Systems must exist for registry to know about them.
 beforeEach(() => {
-  for (const tile of TI4.systemRegistry.getAllSystemTileNumbers()) {
+  for (const tile of globalThis.TI4.systemRegistry.getAllSystemTileNumbers()) {
     const nsid: string | undefined =
-      TI4.systemRegistry.tileNumberToSystemTileObjNsid(tile);
+      globalThis.TI4.systemRegistry.tileNumberToSystemTileObjNsid(tile);
     if (nsid) {
       MockGameObject.simple(nsid);
     }
@@ -43,8 +43,9 @@ it("_createContainer", () => {
     owningPlayerSlot: 10,
   });
 
+  const spawnInstance: Spawn = globalThis.TI4.spawn;
   jest
-    .spyOn(Spawn, "spawn")
+    .spyOn(spawnInstance, "spawn")
     .mockImplementation(
       (
         nsid: string,
@@ -120,7 +121,7 @@ it("_fillContainer (missing systems)", () => {
 });
 
 it("createDraftObjects", () => {
-  for (let i = 0; i < TI4.config.playerCount; i++) {
+  for (let i = 0; i < globalThis.TI4.config.playerCount; i++) {
     const playerSlot: number = 10 + i;
     new MockCardHolder({
       templateMetadata: "card-holder:base/player-hand",

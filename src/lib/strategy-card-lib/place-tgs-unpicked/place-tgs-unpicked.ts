@@ -1,5 +1,5 @@
 import { GameObject, Rotator, Vector, world } from "@tabletop-playground/api";
-import { Atop, NSID, Spawn } from "ttpg-darrell";
+import { Atop, NSID } from "ttpg-darrell";
 
 export class PlaceTgsUnpicked {
   _getUnpickedStrategyCards(): Array<GameObject> {
@@ -37,7 +37,7 @@ export class PlaceTgsUnpicked {
     const pos: Vector = strategyCard.getPosition().add(noise);
     const rot: Rotator = new Rotator(0, 0, 180);
 
-    const tradeGood: GameObject | undefined = Spawn.spawn(
+    const tradeGood: GameObject | undefined = TI4.spawn.spawn(
       "token:base/tradegood-commodity-1",
       pos,
       rot

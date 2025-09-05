@@ -121,7 +121,6 @@ import { RightClickYinAscendant } from "../context-menu/breakthroughs/yin-ascend
 import { LOCALE_CONTENT_MENUS } from "../locale/locale-context-menus";
 
 import { NSID_TO_TEMPLATE_ID } from "../nsid/nsid-to-template-id";
-Spawn.inject(NSID_TO_TEMPLATE_ID);
 
 const packageId: string = refPackageId;
 Find.ignoreOwnedCardHolderNsid("card-holder:base/player-scoring");
@@ -180,6 +179,7 @@ export class TI4Class {
   public readonly removeRegistry = new RemoveRegistry().loadDefaultData();
   public readonly slashCommandRegistry =
     new SlashCommandRegistry().loadDefaultData();
+  public readonly spawn = __spawn.inject(NSID_TO_TEMPLATE_ID);
   public readonly systemAttachmentRegistry =
     new SystemAttachmentRegistry().loadDefaultData();
   public readonly systemRegistry = new SystemRegistry().loadDefaultData();
@@ -199,7 +199,9 @@ export class TI4Class {
 declare global {
   // eslint-disable-next-line no-var
   var TI4: TI4Class;
+  var __spawn: Spawn;
 }
+globalThis.__spawn = new Spawn();
 
 // Expose a reset function so tests can reset.
 // ttpg-mock resets globalEvents after each test, breaking listeners here.

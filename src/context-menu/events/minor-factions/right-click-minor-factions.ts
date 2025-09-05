@@ -8,7 +8,6 @@ import {
   NSID,
   PlayerSlot,
   Shuffle,
-  Spawn,
 } from "ttpg-darrell";
 import { Faction } from "../../../lib/faction-lib/faction/faction";
 import { PlayerSeatType } from "../../../lib/player-lib/player-seats/player-seats";
@@ -109,7 +108,7 @@ export class RightClickMinorFactions extends AbstractRightClickCard {
     while (systemTileObjs.length < count && availableNsids.length > 0) {
       const nsid: string | undefined = availableNsids.pop();
       if (nsid) {
-        const systemTileObj: GameObject | undefined = Spawn.spawn(nsid);
+        const systemTileObj: GameObject | undefined = TI4.spawn.spawn(nsid);
         if (systemTileObj) {
           systemTileObjs.push(systemTileObj);
         }
@@ -175,7 +174,7 @@ export class RightClickMinorFactions extends AbstractRightClickCard {
 
     // Spawn alliance deck.
     const deck: Card =
-      Spawn.spawnMergeDecksWithNsidPrefixOrThrow("card.alliance:");
+      TI4.spawn.spawnMergeDecksWithNsidPrefixOrThrow("card.alliance:");
 
     // Remove any sources/nsids based on game config.
     TI4.removeRegistry.createRemoveFromRegistryAndConfig().removeOne(deck);

@@ -1,4 +1,3 @@
-import { Spawn } from "ttpg-darrell";
 import { AbstractValidate } from "../abstract-validate/abstract-validate";
 
 export class ValidateSystems extends AbstractValidate {
@@ -19,7 +18,7 @@ export class ValidateSystems extends AbstractValidate {
     for (const tileNumber of tileNumbers) {
       const nsid: string | undefined =
         TI4.systemRegistry.tileNumberToSystemTileObjNsid(tileNumber);
-      if (nsid && !Spawn.has(nsid)) {
+      if (nsid && !TI4.spawn.has(nsid)) {
         missingTemplateNsids.push(nsid);
       }
     }

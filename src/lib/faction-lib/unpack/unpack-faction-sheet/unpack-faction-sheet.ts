@@ -1,7 +1,7 @@
 import { GameObject, ObjectType, Vector } from "@tabletop-playground/api";
 import { Faction } from "../../faction/faction";
 import { AbstractUnpack } from "../abstract-unpack/abstract-unpack";
-import { DeletedItemsContainer, Find, Spawn } from "ttpg-darrell";
+import { DeletedItemsContainer, Find } from "ttpg-darrell";
 
 const GENERIC_FACTION_SHEET_NSID: string = "sheet.faction:base/generic";
 
@@ -27,7 +27,7 @@ export class UnpackFactionSheet extends AbstractUnpack {
     const pos: Vector = generic.getPosition().add([0, 0, 10]);
 
     const nsid: string = this.getFaction().getFactionSheetNsid();
-    const factionSheet: GameObject = Spawn.spawnOrThrow(nsid, pos);
+    const factionSheet: GameObject = TI4.spawn.spawnOrThrow(nsid, pos);
     factionSheet.setOwningPlayerSlot(this.getPlayerSlot());
 
     DeletedItemsContainer.destroyWithoutCopying(generic);
@@ -50,7 +50,7 @@ export class UnpackFactionSheet extends AbstractUnpack {
     const pos: Vector = factionSheet.getPosition().add([0, 0, 10]);
 
     const nsid: string = GENERIC_FACTION_SHEET_NSID;
-    const generic: GameObject = Spawn.spawnOrThrow(nsid, pos);
+    const generic: GameObject = TI4.spawn.spawnOrThrow(nsid, pos);
     generic.setOwningPlayerSlot(this.getPlayerSlot());
 
     DeletedItemsContainer.destroyWithoutCopying(factionSheet);

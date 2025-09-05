@@ -1,4 +1,4 @@
-import { LayoutObjects, Spawn } from "ttpg-darrell";
+import { LayoutObjects } from "ttpg-darrell";
 
 import { LayoutConfig } from "../layout-config";
 import { UnitType } from "../../../lib/unit-lib/schema/unit-attrs-schema";
@@ -46,7 +46,7 @@ export class LayoutUnitBoxes {
     });
 
     if (row) {
-      const garbageContainer: GameObject = Spawn.spawnOrThrow(
+      const garbageContainer: GameObject = TI4.spawn.spawnOrThrow(
         "container:base/garbage"
       );
       row.add(garbageContainer);

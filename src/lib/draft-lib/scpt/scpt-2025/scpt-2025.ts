@@ -1,5 +1,4 @@
 import { GameObject, Rotator, Vector, world } from "@tabletop-playground/api";
-import { Spawn } from "ttpg-darrell";
 import { AbstractScpt } from "../abstract-scpt/abstract-scpt";
 import {
   DRAFT_NAMESPACE_ID,
@@ -281,7 +280,7 @@ export class Scpt2025 extends AbstractScpt {
     for (let { nsid, pos } of nsidAndPositions) {
       pos = pos.multiply(2.5399); // recorded positions in wrong units
       pos.z = world.getTableHeight() + 3;
-      const wormhole: GameObject | undefined = Spawn.spawn(nsid, pos, rot);
+      const wormhole: GameObject | undefined = TI4.spawn.spawn(nsid, pos, rot);
       if (wormhole) {
         wormhole.snapToGround();
       }

@@ -4,7 +4,7 @@ import {
   GameObject,
   Vector,
 } from "@tabletop-playground/api";
-import { Find, NamespaceId, PlayerSlot, Spawn } from "ttpg-darrell";
+import { Find, NamespaceId, PlayerSlot } from "ttpg-darrell";
 import { DraftState } from "../draft-state/draft-state";
 import {
   GenerateSlices,
@@ -58,7 +58,7 @@ export class BagDraft implements IDraft {
     const above: Vector = pos.add([0, 0, 10]);
 
     const nsid: string = this._containerNsid;
-    const container: GameObject | undefined = Spawn.spawn(nsid, above);
+    const container: GameObject | undefined = TI4.spawn.spawn(nsid, above);
     if (!container || !(container instanceof Container)) {
       throw new Error("Container not created or not a Container");
     }

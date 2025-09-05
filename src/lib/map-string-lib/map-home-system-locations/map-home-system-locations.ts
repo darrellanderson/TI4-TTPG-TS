@@ -1,5 +1,5 @@
 import { Color, GameObject, Vector, world } from "@tabletop-playground/api";
-import { Find, HexType, Spawn } from "ttpg-darrell";
+import { Find, HexType } from "ttpg-darrell";
 import { PlayerSeatType } from "../../player-lib/player-seats/player-seats";
 
 type HomeSystemDir = "N" | "NE" | "SE" | "S" | "SW" | "NW";
@@ -99,7 +99,7 @@ export class MapHomeSystemLocations {
     const nsid: string = "tile.system:base/0";
     const pos: Vector | undefined = this.get(playerSlot);
     if (pos) {
-      const obj: GameObject | undefined = Spawn.spawn(nsid, pos);
+      const obj: GameObject | undefined = TI4.spawn.spawn(nsid, pos);
       const color: Color | undefined =
         TI4.playerColor.getSlotPlasticColor(playerSlot);
 

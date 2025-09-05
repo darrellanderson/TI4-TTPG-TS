@@ -1,4 +1,4 @@
-import { LayoutObjects, Spawn } from "ttpg-darrell";
+import { LayoutObjects } from "ttpg-darrell";
 import { LayoutConfig } from "../layout-config";
 import { GameObject, ObjectType } from "@tabletop-playground/api";
 import { LayoutFighterContainers } from "./layout-fighter-containers";
@@ -13,8 +13,10 @@ export class LayoutFighterInfTgContainers {
       .setChildDistance(LayoutConfig.spacingWide)
       .setIsVertical(true);
 
-    const topGarbage: GameObject = Spawn.spawnOrThrow("container:base/garbage");
-    const bottompGarbage: GameObject = Spawn.spawnOrThrow(
+    const topGarbage: GameObject = TI4.spawn.spawnOrThrow(
+      "container:base/garbage"
+    );
+    const bottompGarbage: GameObject = TI4.spawn.spawnOrThrow(
       "container:base/garbage"
     );
 

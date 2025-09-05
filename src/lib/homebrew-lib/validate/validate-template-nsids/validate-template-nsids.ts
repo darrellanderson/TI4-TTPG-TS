@@ -1,5 +1,5 @@
 import { Card, GameObject } from "@tabletop-playground/api";
-import { DeletedItemsContainer, NSID, Spawn } from "ttpg-darrell";
+import { DeletedItemsContainer, NSID } from "ttpg-darrell";
 import { AbstractValidate } from "../abstract-validate/abstract-validate";
 
 /**
@@ -16,7 +16,7 @@ export class ValidateTemplateNsids extends AbstractValidate {
   }
 
   getErrors(errors: Array<string>): void {
-    const nsids: Array<string> = Spawn.getAllNsids();
+    const nsids: Array<string> = TI4.spawn.getAllNsids();
     for (const nsid of nsids) {
       const error: string | undefined = this._checkNsid(nsid);
       if (error) {
@@ -35,7 +35,7 @@ export class ValidateTemplateNsids extends AbstractValidate {
     if (nsid === "default") {
       return undefined; // Skip the default NSID, it is a special case.
     }
-    const obj: GameObject | undefined = Spawn.spawn(nsid);
+    const obj: GameObject | undefined = TI4.spawn.spawn(nsid);
     if (!obj && !nsid.startsWith("table:")) {
       return `NSID "${nsid}" does not spawn an object`;
     }

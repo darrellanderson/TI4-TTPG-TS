@@ -1,4 +1,4 @@
-import { LayoutObjects, Spawn } from "ttpg-darrell";
+import { LayoutObjects } from "ttpg-darrell";
 import { LayoutConfig } from "../layout-config";
 import { Container, GameObject, ObjectType } from "@tabletop-playground/api";
 
@@ -20,12 +20,12 @@ export class LayoutTradegoodContainers {
       const tokenNsid: string = `token:base/${nsidName}`;
       const containerNsid: string = `container.${tokenNsid}`;
 
-      const token: GameObject = Spawn.spawnOrThrow(tokenNsid);
+      const token: GameObject = TI4.spawn.spawnOrThrow(tokenNsid);
       let tags: Array<string> = token.getTags();
       tags.push(nsidName);
       token.setTags(tags);
 
-      const container: GameObject = Spawn.spawnOrThrow(containerNsid);
+      const container: GameObject = TI4.spawn.spawnOrThrow(containerNsid);
       containers.push(container);
 
       if (container instanceof Container) {

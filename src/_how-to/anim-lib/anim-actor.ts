@@ -1,5 +1,5 @@
 import { Color, GameObject, Rotator, Vector } from "@tabletop-playground/api";
-import { Spawn, TriggerableMulticastDelegate } from "ttpg-darrell";
+import { TriggerableMulticastDelegate } from "ttpg-darrell";
 
 export type AnimActorParams = {
   nsid: string;
@@ -39,7 +39,7 @@ export class AnimActor {
     this._params = params;
 
     const rot: Rotator = this._params.p1.findLookAtRotation(params.p0);
-    this._obj = Spawn.spawnOrThrow(params.nsid, params.p0, rot);
+    this._obj = TI4.spawn.spawnOrThrow(params.nsid, params.p0, rot);
     this._obj.setScale(new Vector(1, 1, 1).multiply(params.scale));
     this._obj.setPrimaryColor(params.color);
     this._obj.setPosition(params.p0);

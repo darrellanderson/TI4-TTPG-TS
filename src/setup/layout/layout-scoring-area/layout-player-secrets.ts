@@ -1,4 +1,4 @@
-import { LayoutObjects, Spawn } from "ttpg-darrell";
+import { LayoutObjects } from "ttpg-darrell";
 import { LayoutConfig } from "../layout-config";
 import { GameObject, ObjectType } from "@tabletop-playground/api";
 
@@ -16,7 +16,7 @@ export class LayoutPlayerSecrets {
     const secretsArray: Array<GameObject> = [];
     const topCount: number = Math.floor(playerCount / 2);
     for (let i = 0; i < playerCount; i++) {
-      const secrets: GameObject = Spawn.spawnOrThrow(
+      const secrets: GameObject = TI4.spawn.spawnOrThrow(
         "card-holder:base/player-scoring"
       );
       secrets.setOwningPlayerSlot(10 + i);

@@ -16,15 +16,16 @@ it("getDescription", () => {
 it("getErrors", () => {
   const deckNsid: string = "card.planet:my-source";
   const templateId: string = "abcd1234";
-  Spawn.inject({ [deckNsid]: templateId });
+  globalThis.TI4.spawn.inject({ [deckNsid]: templateId });
 
+  const spawnInstance: Spawn = globalThis.TI4.spawn;
   const origSpawn: (
     nsid: string,
     position?: Vector | [x: number, y: number, z: number] | undefined,
     rotation?: Rotator | [pitch: number, yaw: number, roll: number] | undefined
-  ) => GameObject | undefined = Spawn.spawn;
+  ) => GameObject | undefined = spawnInstance.spawn;
   jest
-    .spyOn(Spawn, "spawn")
+    .spyOn(spawnInstance, "spawn")
     .mockImplementation(
       (
         nsid: string,
@@ -43,7 +44,7 @@ it("getErrors", () => {
             ],
           });
         }
-        return origSpawn(nsid, position, rotation);
+        return origSpawn.apply(spawnInstance, [nsid, position, rotation]);
       }
     );
 

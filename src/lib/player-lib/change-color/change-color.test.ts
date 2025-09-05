@@ -79,18 +79,19 @@ it("_recolorGenericPromissoryCards", () => {
   );
   const holder: CardHolder = new MockCardHolder({ cards: [inHolder] });
 
-  expect(TI4.playerColor.getSlotColorName(15)).toBe("white");
+  expect(globalThis.TI4.playerColor.getSlotColorName(15)).toBe("white");
   expect(held.isValid()).toBe(true);
   expect(inHolder.isValid()).toBe(true);
 
   // Spawns some decks to find cards.
+  const spawnInstance: Spawn = globalThis.TI4.spawn;
   const origSpawn: (
     nsid: string,
     position?: Vector | [x: number, y: number, z: number] | undefined,
     rotation?: Rotator | [pitch: number, yaw: number, roll: number] | undefined
-  ) => GameObject | undefined = Spawn.spawn;
+  ) => GameObject | undefined = spawnInstance.spawn;
   jest
-    .spyOn(Spawn, "spawn")
+    .spyOn(spawnInstance, "spawn")
     .mockImplementation(
       (
         nsid: string,
@@ -121,7 +122,7 @@ it("_recolorGenericPromissoryCards", () => {
             ],
           });
         }
-        return origSpawn(nsid, position, rotation);
+        return origSpawn.apply(spawnInstance, [nsid, position, rotation]);
       }
     );
   new ChangeColor(15).changeColor("red", "#ff0000");

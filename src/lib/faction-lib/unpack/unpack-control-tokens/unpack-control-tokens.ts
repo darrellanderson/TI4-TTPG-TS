@@ -6,7 +6,7 @@ import {
   Vector,
   world,
 } from "@tabletop-playground/api";
-import { DeletedItemsContainer, Find, NSID, Spawn } from "ttpg-darrell";
+import { DeletedItemsContainer, Find, NSID } from "ttpg-darrell";
 
 import { AbstractUnpack } from "../abstract-unpack/abstract-unpack";
 import { Faction } from "../../faction/faction";
@@ -28,7 +28,7 @@ export class UnpackControlTokens extends AbstractUnpack {
     const controlTokenContainer: Container =
       this._getControlTokenContainerOrThrow();
     const controlTokenNsid: string = this.getFaction().getControlTokenNsid();
-    const controlToken: GameObject = Spawn.spawnOrThrow(controlTokenNsid);
+    const controlToken: GameObject = TI4.spawn.spawnOrThrow(controlTokenNsid);
     controlToken.setOwningPlayerSlot(this.getPlayerSlot());
     controlToken.setTags([`control(${this.getPlayerSlot()})`]);
     controlToken.setPrimaryColor(color);
@@ -47,7 +47,7 @@ export class UnpackControlTokens extends AbstractUnpack {
       );
     }
     pos.z = world.getTableHeight() + 10;
-    const scoreboardToken: GameObject = Spawn.spawnOrThrow(
+    const scoreboardToken: GameObject = TI4.spawn.spawnOrThrow(
       controlTokenNsid,
       pos,
       rot

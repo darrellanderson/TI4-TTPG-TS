@@ -6,7 +6,7 @@ import {
   Vector,
   world,
 } from "@tabletop-playground/api";
-import { DeletedItemsContainer, Find, NSID, Spawn } from "ttpg-darrell";
+import { DeletedItemsContainer, Find, NSID } from "ttpg-darrell";
 
 import { AbstractUnpack } from "../abstract-unpack/abstract-unpack";
 import { Faction } from "../../faction/faction";
@@ -28,7 +28,7 @@ export class UnpackCommandTokens extends AbstractUnpack {
       this._getCommandTokenContainerOrThrow();
     const commandTokenNsid: string = this.getFaction().getCommandTokenNsid();
     for (let i: number = 0; i < 16; i++) {
-      const commandToken: GameObject = Spawn.spawnOrThrow(commandTokenNsid);
+      const commandToken: GameObject = TI4.spawn.spawnOrThrow(commandTokenNsid);
       commandToken.setOwningPlayerSlot(this.getPlayerSlot());
       commandToken.setTags([`command(${this.getPlayerSlot()})`]);
       commandToken.setPrimaryColor(color);

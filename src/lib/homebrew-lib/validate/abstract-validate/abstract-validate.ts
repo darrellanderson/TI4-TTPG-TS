@@ -1,5 +1,5 @@
 import { Card } from "@tabletop-playground/api";
-import { DeletedItemsContainer, NSID, Spawn } from "ttpg-darrell";
+import { DeletedItemsContainer, NSID } from "ttpg-darrell";
 
 export abstract class AbstractValidate {
   abstract getCommandName(): string;
@@ -19,12 +19,12 @@ export abstract class AbstractValidate {
    * @returns
    */
   getCardNsids(cardNsidPrefix: string): Set<string> {
-    const deckNsids: Array<string> = Spawn.getAllNsids().filter(
-      (nsid: string): boolean => {
+    const deckNsids: Array<string> = TI4.spawn
+      .getAllNsids()
+      .filter((nsid: string): boolean => {
         return nsid.startsWith(cardNsidPrefix);
-      }
-    );
-    const deck: Card | undefined = Spawn.spawnMergeDecks(deckNsids);
+      });
+    const deck: Card | undefined = TI4.spawn.spawnMergeDecks(deckNsids);
     if (deck === undefined) {
       return new Set<string>();
     }

@@ -1,5 +1,5 @@
 import { GameObject, ObjectType } from "@tabletop-playground/api";
-import { LayoutObjects, Spawn } from "ttpg-darrell";
+import { LayoutObjects } from "ttpg-darrell";
 
 import { LayoutConfig } from "../layout-config";
 
@@ -11,7 +11,9 @@ export class LayoutTroveMat {
       throw new Error("must have a player slot");
     }
 
-    const troveMat: GameObject = Spawn.spawnOrThrow("mat.player:base/trove");
+    const troveMat: GameObject = TI4.spawn.spawnOrThrow(
+      "mat.player:base/trove"
+    );
 
     troveMat.setOwningPlayerSlot(playerSlot);
 

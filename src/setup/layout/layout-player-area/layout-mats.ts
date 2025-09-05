@@ -6,12 +6,7 @@ import {
   Vector,
   VerticalAlignment,
 } from "@tabletop-playground/api";
-import {
-  CardUtil,
-  DeletedItemsContainer,
-  LayoutObjects,
-  Spawn,
-} from "ttpg-darrell";
+import { CardUtil, DeletedItemsContainer, LayoutObjects } from "ttpg-darrell";
 
 import { LayoutConfig } from "../layout-config";
 import { Tech } from "../../../lib/tech-lib/tech/tech";
@@ -24,12 +19,16 @@ export class LayoutMats {
       throw new Error("must have a player slot");
     }
 
-    const buildMat: GameObject = Spawn.spawnOrThrow("mat.player:base/build");
-    const planetMat: GameObject = Spawn.spawnOrThrow("mat.player:base/planet");
-    const techMat: GameObject = Spawn.spawnOrThrow(
+    const buildMat: GameObject = TI4.spawn.spawnOrThrow(
+      "mat.player:base/build"
+    );
+    const planetMat: GameObject = TI4.spawn.spawnOrThrow(
+      "mat.player:base/planet"
+    );
+    const techMat: GameObject = TI4.spawn.spawnOrThrow(
       "mat.player:base/technology"
     );
-    const techDeckMat: GameObject = Spawn.spawnOrThrow(
+    const techDeckMat: GameObject = TI4.spawn.spawnOrThrow(
       "mat.player:base/technology-deck"
     );
 
@@ -67,7 +66,7 @@ export class LayoutMats {
   _spawnTechDeck(snapPoint: SnapPoint | undefined): void {
     if (snapPoint) {
       const pos: Vector = snapPoint.getGlobalPosition().add([0, 0, 10]);
-      const deck: GameObject = Spawn.spawnMergeDecksWithNsidPrefixOrThrow(
+      const deck: GameObject = TI4.spawn.spawnMergeDecksWithNsidPrefixOrThrow(
         "card.technology",
         pos
       );

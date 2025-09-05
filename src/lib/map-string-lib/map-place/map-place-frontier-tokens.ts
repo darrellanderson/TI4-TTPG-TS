@@ -1,4 +1,3 @@
-import { Spawn } from "ttpg-darrell";
 import { System } from "../../system-lib/system/system";
 import { Vector } from "@tabletop-playground/api";
 
@@ -18,7 +17,7 @@ export class MapPlaceFrontierTokens {
 
   static _placeFrontierToken(system: System): void {
     const pos: Vector = system.getObj().getPosition().add([0, -2.5, 10]);
-    const token = Spawn.spawn("token.attachment.system:pok/frontier", pos);
+    const token = TI4.spawn.spawn("token.attachment.system:pok/frontier", pos);
     if (token) {
       token.snapToGround();
     }

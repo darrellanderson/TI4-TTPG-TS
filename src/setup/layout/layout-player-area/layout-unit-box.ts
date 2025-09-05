@@ -5,7 +5,7 @@ import {
   ObjectType,
   Vector,
 } from "@tabletop-playground/api";
-import { ColorLib, ColorsType, LayoutObjects, Spawn } from "ttpg-darrell";
+import { ColorLib, ColorsType, LayoutObjects } from "ttpg-darrell";
 
 import { UnitType } from "../../../lib/unit-lib/schema/unit-attrs-schema";
 import { UnitAttrs } from "../../../lib/unit-lib/unit-attrs/unit-attrs";
@@ -41,7 +41,7 @@ export class LayoutUnitBox {
     }
 
     // Create the container.
-    const container: GameObject = Spawn.spawnOrThrow(containerNsid);
+    const container: GameObject = TI4.spawn.spawnOrThrow(containerNsid);
     container.setOwningPlayerSlot(playerSlot);
     container.setPrimaryColor(objColor);
     container.setRotation([0, 0, 180]); // image on top, flip because using UI instead
@@ -58,7 +58,7 @@ export class LayoutUnitBox {
     if (container instanceof Container) {
       const above: Vector = container.getPosition().add([0, 0, 10]);
       for (let i = 0; i < componentCount; i++) {
-        const platic: GameObject = Spawn.spawnOrThrow(unitNsid, above);
+        const platic: GameObject = TI4.spawn.spawnOrThrow(unitNsid, above);
         platic.setOwningPlayerSlot(playerSlot);
         platic.setPrimaryColor(objColor);
         tags = platic.getTags();

@@ -1,5 +1,5 @@
 import { Container, GameObject, world } from "@tabletop-playground/api";
-import { Find, GarbageContainer, NSID, Spawn } from "ttpg-darrell";
+import { Find, GarbageContainer, NSID } from "ttpg-darrell";
 import { SpawnMissingCards } from "../spawn-missing-cards/spawn-missing-cards";
 
 import { FactionSchemaType } from "../../faction-lib/schema/faction-schema";
@@ -91,7 +91,7 @@ export class HomebrewRegistry {
     }
 
     if (params.nsidToTemplateId) {
-      Spawn.inject(params.nsidToTemplateId);
+      TI4.spawn.inject(params.nsidToTemplateId);
     }
 
     this.addMissingItems(params);
@@ -120,7 +120,7 @@ export class HomebrewRegistry {
         const nsid: string | undefined =
           TI4.systemRegistry.tileNumberToSystemTileObjNsid(system.tile);
         if (!system.isHome && system.tile > 0 && nsid && !allNsids.has(nsid)) {
-          const obj: GameObject = Spawn.spawnOrThrow(nsid);
+          const obj: GameObject = TI4.spawn.spawnOrThrow(nsid);
           GarbageContainer.tryRecycle(obj, undefined);
         }
       });
@@ -136,7 +136,7 @@ export class HomebrewRegistry {
         (schema: PlanetAttachmentSchemaType): void => {
           const nsid: string = `token.attachment.planet:${source}/${schema.nsidName}`;
           if (!allNsids.has(nsid) && container) {
-            const obj: GameObject = Spawn.spawnOrThrow(nsid);
+            const obj: GameObject = TI4.spawn.spawnOrThrow(nsid);
             container.addObjects([obj]);
           }
         }
@@ -153,7 +153,7 @@ export class HomebrewRegistry {
         (schema: SystemAttachmentSchemaType): void => {
           const nsid: string = `token.attachment.system:${source}/${schema.nsidName}`;
           if (!allNsids.has(nsid) && container) {
-            const obj: GameObject = Spawn.spawnOrThrow(nsid);
+            const obj: GameObject = TI4.spawn.spawnOrThrow(nsid);
             container.addObjects([obj]);
           }
         }

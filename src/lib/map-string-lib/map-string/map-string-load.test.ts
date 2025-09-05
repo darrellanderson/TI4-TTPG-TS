@@ -1,5 +1,4 @@
 import { Container, GameObject, Rotator } from "@tabletop-playground/api";
-import { Spawn } from "ttpg-darrell";
 import { MockContainer, MockGameObject, Vector } from "ttpg-mock";
 
 import { MapStringEntry } from "./map-string-parser";
@@ -169,9 +168,11 @@ it("_tryMoveExistingSystemTileObj (empty system array)", () => {
 });
 
 it("_trySpawnNewSystemTileObj (spawn)", () => {
-  expect(TI4.systemRegistry.tileNumberToSystemTileObjNsid(1)).toBeDefined();
-  expect(Spawn.has("tile.system:base/1")).toBe(true);
-  expect(TI4.systemRegistry.getAllSystemsWithObjs().length).toBe(0);
+  expect(
+    globalThis.TI4.systemRegistry.tileNumberToSystemTileObjNsid(1)
+  ).toBeDefined();
+  expect(globalThis.TI4.spawn.has("tile.system:base/1")).toBe(true);
+  expect(globalThis.TI4.systemRegistry.getAllSystemsWithObjs().length).toBe(0);
 
   const load: MapStringLoad = new MapStringLoad();
   const pos: Vector = new Vector(1, 2, 3);
@@ -179,7 +180,8 @@ it("_trySpawnNewSystemTileObj (spawn)", () => {
   const success: boolean = load._trySpawnNewSystemTileObj(1, pos, rot);
   expect(success).toBe(true);
 
-  const systems: Array<System> = TI4.systemRegistry.getAllSystemsWithObjs();
+  const systems: Array<System> =
+    globalThis.TI4.systemRegistry.getAllSystemsWithObjs();
   expect(systems.length).toBe(1);
   const systemTileObj: GameObject | undefined = systems[0]?.getObj();
   expect(systemTileObj?.getTemplateMetadata()).toBe("tile.system:base/1");

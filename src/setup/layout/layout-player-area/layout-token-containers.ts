@@ -4,7 +4,7 @@ import {
   GameObject,
   ObjectType,
 } from "@tabletop-playground/api";
-import { ColorLib, ColorsType, LayoutObjects, Spawn } from "ttpg-darrell";
+import { ColorLib, ColorsType, LayoutObjects } from "ttpg-darrell";
 
 import { LayoutConfig } from "../layout-config";
 import { LayoutTradegoodContainers } from "../layout-fighter-inf-tg-containers/layout-tradegood-containers";
@@ -22,7 +22,7 @@ export class LayoutTokenContainers {
       colorLib.getColorsByPlayerSlotOrThrow(playerSlot);
     const objColor: Color = colorLib.parseColorOrThrow(colorsType.plastic);
 
-    const factionExtrasContainer: GameObject = Spawn.spawnOrThrow(
+    const factionExtrasContainer: GameObject = TI4.spawn.spawnOrThrow(
       "container:base/faction-extras"
     );
 
@@ -30,10 +30,10 @@ export class LayoutTokenContainers {
     factionExtrasContainer.setPrimaryColor(objColor);
     factionExtrasContainer.setRotation([0, 0, 180]);
 
-    const commandTokenContainer: GameObject = Spawn.spawnOrThrow(
+    const commandTokenContainer: GameObject = TI4.spawn.spawnOrThrow(
       "container.token.command:base/generic"
     );
-    const controlTokenContainer: GameObject = Spawn.spawnOrThrow(
+    const controlTokenContainer: GameObject = TI4.spawn.spawnOrThrow(
       "container.token.control:base/generic"
     );
 

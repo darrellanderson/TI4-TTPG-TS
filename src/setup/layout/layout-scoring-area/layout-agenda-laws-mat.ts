@@ -1,5 +1,5 @@
 import { GameObject, ObjectType } from "@tabletop-playground/api";
-import { LayoutObjects, Spawn } from "ttpg-darrell";
+import { LayoutObjects } from "ttpg-darrell";
 import { LayoutConfig } from "../layout-config";
 
 export class LayoutAgendaLawsMat {
@@ -10,8 +10,10 @@ export class LayoutAgendaLawsMat {
       LayoutConfig.spacingWide
     );
 
-    const mat: GameObject = Spawn.spawnOrThrow("mat:base/agenda-laws");
-    const custodiansMat: GameObject = Spawn.spawnOrThrow("mat:base/custodians");
+    const mat: GameObject = TI4.spawn.spawnOrThrow("mat:base/agenda-laws");
+    const custodiansMat: GameObject = TI4.spawn.spawnOrThrow(
+      "mat:base/custodians"
+    );
 
     this._layout
       .add(mat)

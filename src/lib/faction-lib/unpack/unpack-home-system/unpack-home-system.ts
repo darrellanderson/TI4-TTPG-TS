@@ -1,5 +1,5 @@
 import { GameObject, ObjectType, Vector } from "@tabletop-playground/api";
-import { DeletedItemsContainer, Find, Spawn } from "ttpg-darrell";
+import { DeletedItemsContainer, Find } from "ttpg-darrell";
 
 import { AbstractUnpack } from "../abstract-unpack/abstract-unpack";
 import { Faction } from "../../faction/faction";
@@ -51,7 +51,7 @@ export class UnpackHomeSystem extends AbstractUnpack {
 
   _spawnHomeSystemTile(): GameObject {
     const homeSystemTileNsid: string = this._getHomeSystemTileNsid();
-    const obj: GameObject = Spawn.spawnOrThrow(homeSystemTileNsid);
+    const obj: GameObject = TI4.spawn.spawnOrThrow(homeSystemTileNsid);
     obj.setOwningPlayerSlot(this.getPlayerSlot());
     return obj;
   }
@@ -82,7 +82,7 @@ export class UnpackHomeSystem extends AbstractUnpack {
     if (!surrogateSystemTileNsid) {
       return undefined;
     }
-    const obj: GameObject = Spawn.spawnOrThrow(surrogateSystemTileNsid);
+    const obj: GameObject = TI4.spawn.spawnOrThrow(surrogateSystemTileNsid);
     obj.setOwningPlayerSlot(this.getPlayerSlot());
     return obj;
   }

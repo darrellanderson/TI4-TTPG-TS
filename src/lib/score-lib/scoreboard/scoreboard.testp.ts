@@ -5,7 +5,6 @@ import {
   Vector,
   world,
 } from "@tabletop-playground/api";
-import { Spawn } from "ttpg-darrell";
 import { Scoreboard } from "./scoreboard";
 
 for (const obj of world.getAllObjects()) {
@@ -30,18 +29,18 @@ const posArray: Array<Vector> = [
 
 let obj: GameObject;
 
-obj = Spawn.spawnOrThrow("token:base/scoreboard", [0, 0, z]);
+obj = TI4.spawn.spawnOrThrow("token:base/scoreboard", [0, 0, z]);
 obj.setRotation(new Rotator(0, 0, 180));
 obj.snapToGround();
 const scoreboardLib: Scoreboard = new Scoreboard();
 
 posArray.forEach((pos: Vector, index: number) => {
-  obj = Spawn.spawnOrThrow("card-holder:base/player-hand", pos);
+  obj = TI4.spawn.spawnOrThrow("card-holder:base/player-hand", pos);
   obj.setOwningPlayerSlot(index + 1);
 });
 
 for (let i = 0; i < posArray.length; i++) {
-  obj = Spawn.spawnOrThrow("token.control:base/sol");
+  obj = TI4.spawn.spawnOrThrow("token.control:base/sol");
   obj.setOwningPlayerSlot(i + 1);
   obj.setPrimaryColor(world.getSlotColor(i + 1));
   const pos: Vector = scoreboardLib.scoreToPos(1, i + 1) ?? new Vector(0, 0, 0);

@@ -1,7 +1,6 @@
 import { GameObject, Package, Rotator, Vector } from "@tabletop-playground/api";
 import { MockGameObject, MockPackage, mockWorld } from "ttpg-mock";
 import { RUN_SCRIPT_NSID, RunInjectScript } from "./run-inject-script";
-import { Spawn } from "ttpg-darrell";
 
 it("constructor/init", () => {
   new RunInjectScript().init();
@@ -25,9 +24,9 @@ it("package at init time", () => {
     nsid: string,
     position?: Vector | [x: number, y: number, z: number] | undefined,
     rotation?: Rotator | [pitch: number, yaw: number, roll: number] | undefined
-  ) => GameObject | undefined = Spawn.spawn;
+  ) => GameObject | undefined = globalThis.TI4.spawn.spawn;
   jest
-    .spyOn(Spawn, "spawn")
+    .spyOn(globalThis.TI4.spawn, "spawn")
     .mockImplementation(
       (
         nsid: string,

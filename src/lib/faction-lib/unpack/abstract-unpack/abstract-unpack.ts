@@ -1,5 +1,5 @@
 import { Card, CardHolder } from "@tabletop-playground/api";
-import { Find, Spawn } from "ttpg-darrell";
+import { Find } from "ttpg-darrell";
 
 import { Faction } from "../../faction/faction";
 
@@ -25,7 +25,7 @@ export abstract class AbstractUnpack {
 
   spawnDeckAndFilterSourcesOrThrow(cardNsidPrefix: string): Card {
     const deck: Card =
-      Spawn.spawnMergeDecksWithNsidPrefixOrThrow(cardNsidPrefix);
+      TI4.spawn.spawnMergeDecksWithNsidPrefixOrThrow(cardNsidPrefix);
 
     // Remove any sources/nsids based on game config.
     TI4.removeRegistry.createRemoveFromRegistryAndConfig().removeOne(deck);

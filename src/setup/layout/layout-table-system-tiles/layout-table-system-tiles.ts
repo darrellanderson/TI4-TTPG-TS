@@ -6,7 +6,7 @@ import {
   Vector,
   world,
 } from "@tabletop-playground/api";
-import { Find, LayoutObjects, Spawn } from "ttpg-darrell";
+import { Find, LayoutObjects } from "ttpg-darrell";
 
 export class LayoutTableSystemTiles {
   private readonly _layout: LayoutObjects;
@@ -15,7 +15,7 @@ export class LayoutTableSystemTiles {
   constructor() {
     this._layout = new LayoutObjects();
 
-    const custudiansToken: GameObject = Spawn.spawnOrThrow(
+    const custudiansToken: GameObject = TI4.spawn.spawnOrThrow(
       "token:base/custodians"
     );
 

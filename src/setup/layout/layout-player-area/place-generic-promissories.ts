@@ -1,5 +1,5 @@
 import { Card, CardHolder } from "@tabletop-playground/api";
-import { CardUtil, DeletedItemsContainer, Find, Spawn } from "ttpg-darrell";
+import { CardUtil, DeletedItemsContainer, Find } from "ttpg-darrell";
 
 export class PlaceGenericPromissories {
   private readonly _playerSlot: number;
@@ -46,7 +46,7 @@ export class PlaceGenericPromissories {
 
   _getPromissoryDeck(): Card {
     const deck: Card =
-      Spawn.spawnMergeDecksWithNsidPrefixOrThrow("card.promissory");
+      TI4.spawn.spawnMergeDecksWithNsidPrefixOrThrow("card.promissory");
     return deck;
   }
 

@@ -12,7 +12,6 @@ import {
   CardUtil,
   DeletedItemsContainer,
   NSID,
-  Spawn,
 } from "ttpg-darrell";
 
 export const ACTION_YIN_ASCENDANT: string = "*Draw unused alliance";
@@ -43,7 +42,7 @@ export class RightClickYinAscendant extends AbstractRightClickCard {
     const inUseNsids: Set<string> = new Set(this._getInUseAllianceCardNsids());
 
     const deck: Card =
-      Spawn.spawnMergeDecksWithNsidPrefixOrThrow("card.alliance:");
+      TI4.spawn.spawnMergeDecksWithNsidPrefixOrThrow("card.alliance:");
     const availableNsids: Array<string> = NSID.getDeck(deck).filter(
       (nsid: string) => {
         return !inUseNsids.has(nsid);

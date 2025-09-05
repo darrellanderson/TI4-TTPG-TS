@@ -6,7 +6,7 @@ import {
   Vector,
   world,
 } from "@tabletop-playground/api";
-import { Broadcast, Find, HexType, locale, Spawn } from "ttpg-darrell";
+import { Broadcast, Find, HexType, locale } from "ttpg-darrell";
 
 import { MapStringEntry, MapStringParser } from "./map-string-parser";
 import { System } from "../../system-lib/system/system";
@@ -138,7 +138,11 @@ export class MapStringLoad {
       return false;
     }
     const above: Vector = pos.add(new Vector(0, 0, 10));
-    const systemTileObj: GameObject | undefined = Spawn.spawn(nsid, above, rot);
+    const systemTileObj: GameObject | undefined = TI4.spawn.spawn(
+      nsid,
+      above,
+      rot
+    );
     if (systemTileObj) {
       systemTileObj.setTags(["system"]);
       systemTileObj.snapToGround();
