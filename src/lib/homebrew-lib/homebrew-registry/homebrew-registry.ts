@@ -1,5 +1,5 @@
-import { Container, GameObject, world } from "@tabletop-playground/api";
-import { Find, GarbageContainer, NSID } from "ttpg-darrell";
+import { Container, GameObject, Vector, world } from "@tabletop-playground/api";
+import { Find, NSID } from "ttpg-darrell";
 import { SpawnMissingCards } from "../spawn-missing-cards/spawn-missing-cards";
 
 import { FactionSchemaType } from "../../faction-lib/schema/faction-schema";
@@ -116,12 +116,24 @@ export class HomebrewRegistry {
     }
 
     if (params.systems) {
+      const container: Container | undefined = find.findContainer(
+        "container:base/systems",
+        undefined, // no owner
+        true // skip contained
+      );
       params.systems.forEach((system: SystemSchemaType): void => {
         const nsid: string | undefined =
           TI4.systemRegistry.tileNumberToSystemTileObjNsid(system.tile);
-        if (!system.isHome && system.tile > 0 && nsid && !allNsids.has(nsid)) {
-          const obj: GameObject = TI4.spawn.spawnOrThrow(nsid);
-          GarbageContainer.tryRecycle(obj, undefined);
+        if (
+          !system.isHome &&
+          system.tile > 0 &&
+          nsid &&
+          !allNsids.has(nsid) &&
+          container
+        ) {
+          const above: Vector = container.getPosition().add([0, 0, 10]);
+          const obj: GameObject = TI4.spawn.spawnOrThrow(nsid, above);
+          container.addObjects([obj]);
         }
       });
     }
@@ -136,7 +148,8 @@ export class HomebrewRegistry {
         (schema: PlanetAttachmentSchemaType): void => {
           const nsid: string = `token.attachment.planet:${source}/${schema.nsidName}`;
           if (!allNsids.has(nsid) && container) {
-            const obj: GameObject = TI4.spawn.spawnOrThrow(nsid);
+            const above: Vector = container.getPosition().add([0, 0, 10]);
+            const obj: GameObject = TI4.spawn.spawnOrThrow(nsid, above);
             container.addObjects([obj]);
           }
         }
@@ -153,7 +166,8 @@ export class HomebrewRegistry {
         (schema: SystemAttachmentSchemaType): void => {
           const nsid: string = `token.attachment.system:${source}/${schema.nsidName}`;
           if (!allNsids.has(nsid) && container) {
-            const obj: GameObject = TI4.spawn.spawnOrThrow(nsid);
+            const above: Vector = container.getPosition().add([0, 0, 10]);
+            const obj: GameObject = TI4.spawn.spawnOrThrow(nsid, above);
             container.addObjects([obj]);
           }
         }
