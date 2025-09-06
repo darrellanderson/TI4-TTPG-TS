@@ -150,6 +150,11 @@ export class HomebrewRegistry {
           if (!allNsids.has(nsid) && container) {
             const above: Vector = container.getPosition().add([0, 0, 10]);
             const obj: GameObject = TI4.spawn.spawnOrThrow(nsid, above);
+            const tags: Array<string> = obj.getTags();
+            if (!tags.includes("exploration")) {
+              tags.push("exploration");
+              obj.setTags(tags);
+            }
             container.addObjects([obj]);
           }
         }
@@ -166,8 +171,13 @@ export class HomebrewRegistry {
         (schema: SystemAttachmentSchemaType): void => {
           const nsid: string = `token.attachment.system:${source}/${schema.nsidName}`;
           if (!allNsids.has(nsid) && container) {
-            const above: Vector = container.getPosition().add([0, 0, 10]);
+            const above: Vector = container.getPosition().add([0, -10, 10]);
             const obj: GameObject = TI4.spawn.spawnOrThrow(nsid, above);
+            const tags: Array<string> = obj.getTags();
+            if (!tags.includes("exploration")) {
+              tags.push("exploration");
+              obj.setTags(tags);
+            }
             container.addObjects([obj]);
           }
         }
