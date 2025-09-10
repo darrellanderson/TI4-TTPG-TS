@@ -38,41 +38,41 @@ export class RightClickYinAscendant extends AbstractRightClickCard {
     );
   }
 
-  _yinAscendant(object: GameObject, player: Player): void {
+  _getUnusedAllianceCard(): Card | undefined {
     const inUseNsids: Set<string> = new Set(this._getInUseAllianceCardNsids());
 
-    const deck: Card =
+    let deck: Card | undefined =
       TI4.spawn.spawnMergeDecksWithNsidPrefixOrThrow("card.alliance:");
-    const availableNsids: Array<string> = NSID.getDeck(deck).filter(
-      (nsid: string) => {
-        return !inUseNsids.has(nsid);
-      }
-    );
-    const index: number = Math.floor(Math.random() * availableNsids.length);
-    const choiceNsid: string | undefined = availableNsids[index];
-    if (choiceNsid) {
-      const cardUtil: CardUtil = new CardUtil();
-      const card: Card | undefined = cardUtil.filterCards(
-        deck,
-        (nsid: string): boolean => {
-          return nsid === choiceNsid;
-        }
-      );
 
-      if (card) {
-        const above: Vector = object.getPosition().add([0, 0, 10]);
-        card.setPosition(above);
-        card.snapToGround();
+    const cardUtil: CardUtil = new CardUtil();
+    deck = cardUtil.filterCards(deck, (nsid: string): boolean => {
+      return !inUseNsids.has(nsid);
+    });
 
-        const playerName: string = TI4.playerName.getByPlayer(player);
-        const allianeName: string = card.getCardDetails().name;
-        const msg: string = `${playerName} has gained the alliance ability ${allianeName}`;
-        const color: Color = world.getSlotColor(player.getSlot());
-        Broadcast.chatAll(msg, color);
+    if (deck) {
+      if (deck.getStackSize() === 1) {
+        return deck;
       }
+      deck.shuffle();
+      const card: Card | undefined = deck.takeCards(1);
+      DeletedItemsContainer.destroyWithoutCopying(deck);
+      return card;
     }
+  }
 
-    DeletedItemsContainer.destroyWithoutCopying(deck);
+  _yinAscendant(object: GameObject, player: Player): void {
+    const card: Card | undefined = this._getUnusedAllianceCard();
+    if (card) {
+      const above: Vector = object.getPosition().add([0, 0, 10]);
+      card.setPosition(above);
+      card.snapToGround();
+
+      const playerName: string = TI4.playerName.getByPlayer(player);
+      const allianeName: string = card.getCardDetails().name;
+      const msg: string = `${playerName} has gained the alliance ability ${allianeName}`;
+      const color: Color = world.getSlotColor(player.getSlot());
+      Broadcast.chatAll(msg, color);
+    }
   }
 
   _getInUseAllianceCardNsids(): Array<string> {
