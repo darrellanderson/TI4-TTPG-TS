@@ -18,6 +18,7 @@ import {
   Find,
   HexType,
   NSID,
+  ParsedNSID,
 } from "ttpg-darrell";
 
 import { CombatAttrs } from "../../unit-lib/unit-attrs/combat-attrs";
@@ -298,6 +299,7 @@ export class CombatRoll {
     // Find all control tokens early, reuse when asked.
     const controlTokens: Array<GameObject> = [];
     const nekroZs: Array<GameObject> = [];
+    const factionSheets: Array<GameObject> = [];
     for (const obj of world.getAllObjects(skipContained)) {
       const nsid: string = NSID.get(obj);
       if (atopApplyToAllNsids.has(nsid)) {
@@ -311,6 +313,9 @@ export class CombatRoll {
       }
       if (nsid === "token:thunders-edge/nekro.z") {
         nekroZs.push(obj);
+      }
+      if (nsid.startsWith("sheet.faction:")) {
+        factionSheets.push(obj);
       }
     }
     const getControlTokenOwner = (card: GameObject): number => {
@@ -452,26 +457,43 @@ export class CombatRoll {
     }
 
     // Nekro Zs
-    for (const nekroZ of nekroZs) {
-      const pos: Vector = nekroZ.getPosition();
-      const playerSlot: number = this.find.closestOwnedCardHolderOwner(pos);
-      const faction: Faction | undefined =
-        TI4.factionRegistry.getByPlayerSlot(playerSlot);
-      if (faction && playerSlot !== this.self.playerSlot) {
-        faction.getUnitOverrideNsids().forEach((nsid: string): void => {
-          // Add flagship (other unit-based modifiers are on cards).
-          const unitAttrsSchema: UnitAttrsSchemaType | undefined =
-            TI4.unitAttrsRegistry.rawByNsid(nsid);
-          if (
-            unitAttrsSchema !== undefined &&
-            unitAttrsSchema.unit === "flagship" &&
-            this.self.hasUnit("flagship")
-          ) {
-            maybeAddModifier(nsid, undefined, this.self.playerSlot);
+    factionSheets.forEach((factionSheet: GameObject): void => {
+      const atop: Atop = new Atop(factionSheet);
+      nekroZs.forEach((nekroZ: GameObject): void => {
+        const pos: Vector = nekroZ.getPosition();
+        if (atop.isAtop(pos)) {
+          const nsid: string = NSID.get(factionSheet);
+          const parsed: ParsedNSID | undefined = NSID.parse(nsid);
+          if (parsed) {
+            const firstPart: string | undefined = parsed.nameParts[0];
+            if (firstPart) {
+              const faction: Faction | undefined =
+                TI4.factionRegistry.getByNsidName(firstPart);
+              if (faction) {
+                faction
+                  .getUnitOverrideNsids()
+                  .forEach((unitNsid: string): void => {
+                    // Add flagship (other unit-based modifiers are on cards).
+                    const unitAttrsSchema: UnitAttrsSchemaType | undefined =
+                      TI4.unitAttrsRegistry.rawByNsid(unitNsid);
+                    if (
+                      unitAttrsSchema !== undefined &&
+                      unitAttrsSchema.unit === "flagship" &&
+                      this.self.hasUnit("flagship")
+                    ) {
+                      maybeAddModifier(
+                        unitNsid,
+                        undefined,
+                        this.self.playerSlot
+                      );
+                    }
+                  });
+              }
+            }
           }
-        });
-      }
-    }
+        }
+      });
+    });
 
     UnitModifier.sortByApplyOrder(unitModifiers);
     return unitModifiers;

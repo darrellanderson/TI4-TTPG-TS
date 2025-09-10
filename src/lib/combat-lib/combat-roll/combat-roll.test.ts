@@ -229,7 +229,7 @@ it("_findUnitPlastic", () => {
   MockGameObject.simple("unit:base/fighter");
   MockGameObject.simple("tile.system:base/1");
   MockGameObject.simple("tile.system:base/1", {
-    position: TI4.hex.toPosition("<1,0,-1>"),
+    position: globalThis.TI4.hex.toPosition("<1,0,-1>"),
   });
 
   const combatRoll: CombatRoll = new CombatRoll({
@@ -256,7 +256,7 @@ it("_findUnitAttrOverrides (standard unit upgrade)", () => {
   const combatRoll: CombatRoll = new CombatRoll(params);
 
   const nsid: string = "card.technology.unit-upgrade:base/carrier-2";
-  expect(TI4.unitAttrsRegistry.rawByNsid(nsid)).toBeDefined();
+  expect(globalThis.TI4.unitAttrsRegistry.rawByNsid(nsid)).toBeDefined();
 
   const card: Card = MockCard.simple(nsid);
   expect(card.isFaceUp()).toBe(true);
@@ -298,11 +298,11 @@ it("_findUnitAttrOverrides (only if face down)", () => {
     nsidName: "__use-override__", // required field for schemaToNsid
     onlyIfFaceDown: true, // apply only if the card is face down
   };
-  TI4.unitAttrsRegistry.load("my-source", [schema]);
+  globalThis.TI4.unitAttrsRegistry.load("my-source", [schema]);
 
   const nsid: string = "my-type:my-source/only-if-face-down";
   expect(nsid).toEqual(UnitAttrs.schemaToNsid("my-source", schema));
-  expect(TI4.unitAttrsRegistry.rawByNsid(nsid)).toBeDefined();
+  expect(globalThis.TI4.unitAttrsRegistry.rawByNsid(nsid)).toBeDefined();
 
   const card: Card = MockCard.simple(nsid);
   expect(card.isFaceUp()).toBe(true);
@@ -330,7 +330,7 @@ it("_findUnitModifiers (self, opponent)", () => {
   new MockCardHolder({ owningPlayerSlot: 2 });
   new MockCardHolder({ owningPlayerSlot: 3, position: opponentPos });
 
-  TI4.unitModifierRegistry.load("my-source", [
+  globalThis.TI4.unitModifierRegistry.load("my-source", [
     {
       name: "my-self-modifier",
       description: "my-description",
@@ -376,7 +376,7 @@ it("_findUnitModifiers (self, opponent)", () => {
 });
 
 it("_findUnitModifiers", () => {
-  TI4.unitModifierRegistry.load("my-source", [
+  globalThis.TI4.unitModifierRegistry.load("my-source", [
     {
       name: "my-modifier-name",
       description: "my-description",
@@ -390,7 +390,7 @@ it("_findUnitModifiers", () => {
     },
   ]);
   const nsid: string = "card.action:my-source/my-action";
-  expect(TI4.unitModifierRegistry.getByNsid(nsid)).toBeDefined();
+  expect(globalThis.TI4.unitModifierRegistry.getByNsid(nsid)).toBeDefined();
 
   const params: CombatRollParams = {
     rollType: "spaceCombat",
@@ -421,7 +421,7 @@ it("_findUnitModifiers", () => {
 });
 
 it("_findUnitModifiers (active/idle)", () => {
-  TI4.unitModifierRegistry.load("my-source", [
+  globalThis.TI4.unitModifierRegistry.load("my-source", [
     {
       name: "my-modifier-name",
       description: "my-description",
@@ -436,7 +436,7 @@ it("_findUnitModifiers (active/idle)", () => {
     },
   ]);
   const nsid: string = "card.action:my-source/my-action";
-  expect(TI4.unitModifierRegistry.getByNsid(nsid)).toBeDefined();
+  expect(globalThis.TI4.unitModifierRegistry.getByNsid(nsid)).toBeDefined();
 
   const params: CombatRollParams = {
     rollType: "spaceCannonOffense",
@@ -469,7 +469,7 @@ it("_findUnitModifiers (active/idle)", () => {
 });
 
 it("_findUnitModifiers (self faction promissory)", () => {
-  TI4.unitModifierRegistry.load("my-source", [
+  globalThis.TI4.unitModifierRegistry.load("my-source", [
     {
       name: "my-modifier-name",
       description: "my-description",
@@ -483,7 +483,7 @@ it("_findUnitModifiers (self faction promissory)", () => {
     },
   ]);
   const nsid: string = "card.promissory:my-source/my-test-promissory";
-  expect(TI4.unitModifierRegistry.getByNsid(nsid)).toBeDefined();
+  expect(globalThis.TI4.unitModifierRegistry.getByNsid(nsid)).toBeDefined();
 
   const sourceAndPackageId: SourceAndPackageIdSchemaType = {
     source: "my-source",
@@ -541,7 +541,7 @@ it("_findUnitModifiers (self faction promissory)", () => {
 });
 
 it("_findUnitModifiers (control token)", () => {
-  TI4.unitModifierRegistry.load("my-source", [
+  globalThis.TI4.unitModifierRegistry.load("my-source", [
     {
       name: "my-modifier",
       description: "my-description",
@@ -577,7 +577,7 @@ it("_findUnitModifiers (control token)", () => {
 });
 
 it("_findUnitModifiers (atop apply to all)", () => {
-  TI4.unitModifierRegistry.load("my-source", [
+  globalThis.TI4.unitModifierRegistry.load("my-source", [
     {
       name: "my-modifier",
       description: "my-description",
@@ -613,7 +613,7 @@ it("_findUnitModifiers (atop apply to all)", () => {
 });
 
 it("_findUnitModifiers (atop ignore)", () => {
-  TI4.unitModifierRegistry.load("my-source", [
+  globalThis.TI4.unitModifierRegistry.load("my-source", [
     {
       name: "my-modifier",
       description: "my-description",
@@ -675,7 +675,7 @@ it("_findUnitModifiers (faction ability)", () => {
     unitOverrides: [],
   });
 
-  TI4.unitModifierRegistry.load("my-source", [
+  globalThis.TI4.unitModifierRegistry.load("my-source", [
     {
       name: "my-modifier",
       description: "my-description",
@@ -724,7 +724,7 @@ it("_findUnitModifiers (faction ability opponent)", () => {
     unitOverrides: [],
   });
 
-  TI4.unitModifierRegistry.load("my-source", [
+  globalThis.TI4.unitModifierRegistry.load("my-source", [
     {
       name: "my-modifier",
       description: "my-description",
@@ -772,11 +772,11 @@ it("_findUnitModifiers (flagship)", () => {
     factionTechs: [],
     unitOverrides: ["my-flagship"],
   });
-  TI4.unitAttrsRegistry.load("my-source", [
+  globalThis.TI4.unitAttrsRegistry.load("my-source", [
     { unit: "flagship", name: "my-flagship-name", nsidName: "my-flagship" },
   ]);
 
-  TI4.unitModifierRegistry.load("my-source", [
+  globalThis.TI4.unitModifierRegistry.load("my-source", [
     {
       name: "my-modifier",
       description: "my-description",
@@ -827,11 +827,11 @@ it("_findUnitModifiers (flagship opponent)", () => {
     factionTechs: [],
     unitOverrides: ["my-flagship"],
   });
-  TI4.unitAttrsRegistry.load("my-source", [
+  globalThis.TI4.unitAttrsRegistry.load("my-source", [
     { unit: "flagship", name: "my-flagship-name", nsidName: "my-flagship" },
   ]);
 
-  TI4.unitModifierRegistry.load("my-source", [
+  globalThis.TI4.unitModifierRegistry.load("my-source", [
     {
       name: "my-modifier",
       description: "my-description",
@@ -904,7 +904,7 @@ it("applyUnitOverrides (flagship)", () => {
     unitOverrides: ["my-flagship"],
   });
 
-  TI4.unitAttrsRegistry.load("my-source", [
+  globalThis.TI4.unitAttrsRegistry.load("my-source", [
     {
       unit: "flagship",
       name: "my-flagship-name",
@@ -949,7 +949,7 @@ it("applyUnitOverrides (flagship opponent)", () => {
     unitOverrides: ["my-flagship"],
   });
 
-  TI4.unitAttrsRegistry.load("my-source", [
+  globalThis.TI4.unitAttrsRegistry.load("my-source", [
     {
       unit: "flagship",
       name: "my-flagship-name",
@@ -957,7 +957,7 @@ it("applyUnitOverrides (flagship opponent)", () => {
     },
   ]);
   expect(
-    TI4.unitAttrsRegistry.rawByNsid("unit:my-source/my-flagship")
+    globalThis.TI4.unitAttrsRegistry.rawByNsid("unit:my-source/my-flagship")
   ).toBeDefined();
 
   const combatRoll: CombatRoll = CombatRoll.createCooked({
@@ -977,7 +977,7 @@ it("applyUnitModifiers", () => {
   // Need a card holder to be closest to assign cards.
   new MockCardHolder({ owningPlayerSlot: 2 });
 
-  TI4.unitModifierRegistry.load("my-source", [
+  globalThis.TI4.unitModifierRegistry.load("my-source", [
     {
       name: "my-self-modifier",
       description: "my-description",
@@ -1010,7 +1010,7 @@ it("applyUnitModifiers (modifier throws)", () => {
   // Need a card holder to be closest to assign cards.
   new MockCardHolder({ owningPlayerSlot: 2 });
 
-  TI4.unitModifierRegistry.load("my-source", [
+  globalThis.TI4.unitModifierRegistry.load("my-source", [
     {
       name: "my-self-modifier",
       description: "my-description",
@@ -1078,15 +1078,15 @@ it("applyUnitPlastic (assign units)", () => {
   MockGameObject.simple("unit:base/cruiser", { owningPlayerSlot: 2 });
   MockGameObject.simple("unit:base/destroyer", {
     owningPlayerSlot: 1,
-    position: TI4.hex.toPosition("<1,0,-1>"),
+    position: globalThis.TI4.hex.toPosition("<1,0,-1>"),
   });
   MockGameObject.simple("unit:base/dreadnought", {
     owningPlayerSlot: 2,
-    position: TI4.hex.toPosition("<1,0,-1>"),
+    position: globalThis.TI4.hex.toPosition("<1,0,-1>"),
   });
   MockGameObject.simple("tile.system:base/1");
   MockGameObject.simple("tile.system:base/1", {
-    position: TI4.hex.toPosition("<1,0,-1>"),
+    position: globalThis.TI4.hex.toPosition("<1,0,-1>"),
   });
 
   const combatRoll: CombatRoll = new CombatRoll({
@@ -1213,9 +1213,8 @@ it("createDiceParamsArray (space)", () => {
 
 it("_pruneToUnitsClosestToPlanet", () => {
   MockGameObject.simple("tile.system:base/9");
-  const system: System | undefined = TI4.systemRegistry.getByPosition(
-    new Vector(0, 0, 0)
-  );
+  const system: System | undefined =
+    globalThis.TI4.systemRegistry.getByPosition(new Vector(0, 0, 0));
   if (!system) {
     throw new Error("system not found"); // TypeScript
   }
@@ -1286,9 +1285,8 @@ it("_checkCancelBombardment", () => {
 
 it("createDiceParamsArray (ground)", () => {
   MockGameObject.simple("tile.system:base/9");
-  const system: System | undefined = TI4.systemRegistry.getByPosition(
-    new Vector(0, 0, 0)
-  );
+  const system: System | undefined =
+    globalThis.TI4.systemRegistry.getByPosition(new Vector(0, 0, 0));
   if (!system) {
     throw new Error("system not found"); // TypeScript
   }
@@ -1368,7 +1366,7 @@ it("createDiceParamsArray (ground)", () => {
 });
 
 it("createDiceParamsArray (range, crit)", () => {
-  TI4.unitModifierRegistry.load("my-source", [
+  globalThis.TI4.unitModifierRegistry.load("my-source", [
     {
       name: "my-modifier",
       description: "my-description",
@@ -1398,12 +1396,12 @@ it("createDiceParamsArray (range, crit)", () => {
   MockCard.simple("card.action:my-source/my-nsid-name");
   MockGameObject.simple("tile.system:base/1");
   MockGameObject.simple("tile.system:base/2", {
-    position: TI4.hex.toPosition("<1,0,-1>"),
+    position: globalThis.TI4.hex.toPosition("<1,0,-1>"),
   });
   MockGameObject.simple("unit:base/pds", { owningPlayerSlot: 2 });
   MockGameObject.simple("unit:base/pds", {
     owningPlayerSlot: 2,
-    position: TI4.hex.toPosition("<1,0,-1>"),
+    position: globalThis.TI4.hex.toPosition("<1,0,-1>"),
   });
   const combatRoll: CombatRoll = CombatRoll.createCooked({
     rollType: "spaceCannonOffense",
@@ -1465,7 +1463,7 @@ it("opponent has anonymous units", () => {
   expect(combatRoll.opponent.getCount("carrier")).toBe(1);
 
   const rollingPlayerSlots: Array<number> = [];
-  TI4.events.onCombatResult.add(
+  globalThis.TI4.events.onCombatResult.add(
     (resultCombatRoll: CombatRoll, _diceResults: Array<DiceResult>): void => {
       rollingPlayerSlots.push(resultCombatRoll.self.playerSlot);
     }
@@ -1486,7 +1484,9 @@ it("nekro z", () => {
   MockGameObject.simple("token:thunders-edge/nekro.z", { position });
 
   expect(new Find().closestOwnedCardHolderOwner(position)).toBe(3);
-  expect(TI4.factionRegistry.getByPlayerSlot(3)?.getAbbr()).toBe("Naalu");
+  expect(globalThis.TI4.factionRegistry.getByPlayerSlot(3)?.getAbbr()).toBe(
+    "Naalu"
+  );
 
   MockGameObject.simple("tile/system:base/37");
   MockGameObject.simple("unit:base/flagship", { owningPlayerSlot: 2 });
