@@ -58,7 +58,7 @@ export class SystemAdjacencyNeighbor {
    */
   public removeTags(adjacency: Adjacency): void {
     // Block neighbor adjacency by placing a token on the edge between them.
-    const nsid: string = "token:hombrew.demo/neighbor-blocker";
+    const nsid: string = "token:thunders-edge/empyrean.blockade";
     const blocker: GameObject | undefined = this._find.findGameObject(nsid);
     if (blocker) {
       // Find two closest hexes, first is blocker hex.

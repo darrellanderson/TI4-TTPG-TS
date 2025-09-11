@@ -16,11 +16,11 @@ it("constructor", () => {
 
 it("addTags", () => {
   new MockGameObject({
-    position: TI4.hex.toPosition("<0,0,0>"),
+    position: globalThis.TI4.hex.toPosition("<0,0,0>"),
     templateMetadata: "tile.system:base/1",
   });
   new MockGameObject({
-    position: TI4.hex.toPosition("<1,0,-1>"),
+    position: globalThis.TI4.hex.toPosition("<1,0,-1>"),
     templateMetadata: "tile.system:base/2",
   });
   const hexToSystem: Map<HexType, System> = SystemAdjacency.getHexToSystem();
@@ -73,11 +73,11 @@ it("addTags", () => {
 
 it("hyperlanes are other systems' neighbors", () => {
   new MockGameObject({
-    position: TI4.hex.toPosition("<0,0,0>"),
+    position: globalThis.TI4.hex.toPosition("<0,0,0>"),
     templateMetadata: "tile.system:base/1",
   });
   new MockGameObject({
-    position: TI4.hex.toPosition("<1,0,-1>"),
+    position: globalThis.TI4.hex.toPosition("<1,0,-1>"),
     templateMetadata: "tile.system:pok/83", // hyperlane
   });
   const hexToSystem: Map<HexType, System> = SystemAdjacency.getHexToSystem();
@@ -199,7 +199,7 @@ it("removeTags", () => {
   expect(adjacency.hasLink(link)).toBeTruthy();
 
   new MockGameObject({
-    templateMetadata: "token:hombrew.demo/neighbor-blocker",
+    templateMetadata: "token:thunders-edge/empyrean.blockade",
     position: [1, 0, 0], // closer to <1,0,-1>
   });
   new SystemAdjacencyNeighbor().removeTags(adjacency);
