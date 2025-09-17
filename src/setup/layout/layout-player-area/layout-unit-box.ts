@@ -18,7 +18,7 @@ export class LayoutUnitBox {
     const colorLib: ColorLib = new ColorLib();
     let objColor: Color | undefined = undefined;
     if (isAnonymousUnitBox) {
-      objColor = TI4.playerColor.getAnonymousColor();
+      objColor = TI4.playerColor.getAnonymousPlasticColor();
     } else {
       const colorsType: ColorsType =
         colorLib.getColorsByPlayerSlotOrThrow(playerSlot);

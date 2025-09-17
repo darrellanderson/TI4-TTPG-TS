@@ -3,7 +3,7 @@ import { OPPONENT, placeGameObjects, SELF } from "../abstract.test";
 
 it("registry", () => {
   const nsid = "card.technology.blue:base/antimass-deflectors";
-  expect(TI4.unitModifierRegistry.getByNsid(nsid)).toBeDefined();
+  expect(globalThis.TI4.unitModifierRegistry.getByNsid(nsid)).toBeDefined();
 });
 
 it("antimass-deflectors (spaceCannonOffense)", () => {

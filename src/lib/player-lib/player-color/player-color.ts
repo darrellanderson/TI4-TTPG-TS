@@ -16,8 +16,12 @@ export class PlayerColor {
     this._namespaceId = namespaceId;
   }
 
-  getAnonymousColor(): Color {
-    return this._colorLib.parseColorOrThrow("#5D1602");
+  getAnonymousChatColor(): Color {
+    return this._colorLib.parseColorOrThrow("#C0C0C0"); // #5D1602
+  }
+
+  getAnonymousPlasticColor(): Color {
+    return this._colorLib.parseColorOrThrow("#404040"); // #5D1602
   }
 
   _getPlayerColorEntry(slot: number): PlayerColorEntry | undefined {

@@ -152,7 +152,7 @@ export class CombatRollSummary {
     const rollingPlayerSlot: number = this._combatRoll.self.playerSlot;
     let color: Color | undefined = world.getSlotColor(rollingPlayerSlot);
     if (rollingPlayerSlot === 19 || !color) {
-      color = TI4.playerColor.getAnonymousColor();
+      color = TI4.playerColor.getAnonymousChatColor();
     }
 
     Broadcast.broadcastAll(simpleSummary, color);
