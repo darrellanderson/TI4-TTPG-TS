@@ -14,19 +14,19 @@ export class RightClickGravleashManeuvers extends AbstractRightClickCard {
       _player: Player,
       identifier: string
     ): void => {
-      if (identifier.startsWith("*Choose ")) {
-        const unitType: string = identifier.substring("*Choose ".length);
+      if (identifier.startsWith("*Replace ")) {
+        const unitType: string = identifier.substring("*Replace ".length);
         _setTheCavalryUnitType(unitType);
         object.setDescription(identifier);
       }
     };
-    super(nsid, "*Choose carrier", customActionHandler);
+    super(nsid, "*Replace carrier", customActionHandler);
 
     // Other non-fighter ships.
-    this.addCustomActionName("*Choose cruiser");
-    this.addCustomActionName("*Choose destroyer");
-    this.addCustomActionName("*Choose dreadnought");
-    this.addCustomActionName("*Choose flagship");
-    this.addCustomActionName("*Choose war-sun");
+    this.addCustomActionName("*Replace cruiser");
+    this.addCustomActionName("*Replace destroyer");
+    this.addCustomActionName("*Replace dreadnought");
+    this.addCustomActionName("*Replace flagship");
+    this.addCustomActionName("*Replace war-sun");
   }
 }
