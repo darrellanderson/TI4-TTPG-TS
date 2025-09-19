@@ -1,3 +1,4 @@
+import { MockCard } from "ttpg-mock";
 import { OPPONENT, placeGameObjects, SELF } from "../abstract.test";
 import { CombatRoll } from "../../../../combat-lib/combat-roll/combat-roll";
 import { UnitAttrs } from "../../../unit-attrs/unit-attrs";
@@ -5,16 +6,31 @@ import {
   UnitAttrsSchemaType,
   UnitType,
 } from "../../../schema/unit-attrs-schema";
+import { _getTheCavalryUnitType, _setTheCavalryUnitType } from "./the-cavalry";
+
+it("get/set unit type", () => {
+  expect(_getTheCavalryUnitType()).toBe("~~none~~");
+
+  expect(_setTheCavalryUnitType("fighter")).toBe(false); // No card.
+  expect(_getTheCavalryUnitType()).toBe("~~none~~");
+
+  MockCard.simple("card.promissory:pok/the-cavalry");
+  expect(_setTheCavalryUnitType("fighter")).toBe(true);
+  expect(_getTheCavalryUnitType()).toBe("fighter");
+
+  expect(_setTheCavalryUnitType("destroyer")).toBe(true);
+  expect(_getTheCavalryUnitType()).toBe("destroyer");
+});
 
 it("memoria-1", () => {
   const memoria1: UnitAttrsSchemaType | undefined =
-    TI4.unitAttrsRegistry.rawByNsid("unit:pok/memoria");
+    globalThis.TI4.unitAttrsRegistry.rawByNsid("unit:pok/memoria");
   expect(memoria1).toBeDefined();
 });
 
 it("memoria-2", () => {
   const memoria2: UnitAttrsSchemaType | undefined =
-    TI4.unitAttrsRegistry.rawByNsid(
+    globalThis.TI4.unitAttrsRegistry.rawByNsid(
       "card.technology.unit-upgrade:pok/memoria-2"
     );
   expect(memoria2).toBeDefined();
@@ -22,20 +38,20 @@ it("memoria-2", () => {
 
 it("registry", () => {
   const nsid = "card.promissory:pok/the-cavalry";
-  expect(TI4.unitModifierRegistry.getByNsid(nsid)?.getName()).toBe(
+  expect(globalThis.TI4.unitModifierRegistry.getByNsid(nsid)?.getName()).toBe(
     "The Cavalry"
   );
 });
 
 it("registry (memoria-1)", () => {
   const memoria1: UnitAttrsSchemaType | undefined =
-    TI4.unitAttrsRegistry.rawByNsid("unit:pok/memoria");
+    globalThis.TI4.unitAttrsRegistry.rawByNsid("unit:pok/memoria");
   expect(memoria1?.name).toBe("Memoria I");
 });
 
 it("registry (memoria-2)", () => {
   const memoria2: UnitAttrsSchemaType | undefined =
-    TI4.unitAttrsRegistry.rawByNsid(
+    globalThis.TI4.unitAttrsRegistry.rawByNsid(
       "card.technology.unit-upgrade:pok/memoria-2"
     );
   expect(memoria2?.name).toBe("Memoria II");
@@ -54,7 +70,12 @@ it("default", () => {
 });
 
 it("modifier", () => {
-  placeGameObjects({ self: ["card.promissory:pok/the-cavalry"] });
+  placeGameObjects({
+    self: ["card.promissory:pok/the-cavalry"],
+    selfUnits: new Map<UnitType, number>([["destroyer", 1]]),
+  });
+  expect(_setTheCavalryUnitType("destroyer")).toBe(true);
+
   const combatRoll: CombatRoll = CombatRoll.createCooked({
     rollType: "antiFighterBarrage",
     hex: "<0,0,0>",
@@ -66,14 +87,17 @@ it("modifier", () => {
   const cavalry: UnitAttrs = combatRoll.self.unitAttrsSet.getOrThrow(
     "the-cavalry" as UnitType
   );
-  expect(cavalry.getName()).toBe("The Cavalry");
+  expect(cavalry.getName()).toBe("The Cavalry (replacing destroyer)");
 });
 
 it("modifier (memoria-2)", () => {
   placeGameObjects({
     self: ["card.promissory:pok/the-cavalry"],
+    selfUnits: new Map<UnitType, number>([["destroyer", 1]]),
     any: ["card.technology.unit-upgrade:pok/memoria-2"],
   });
+  expect(_setTheCavalryUnitType("destroyer")).toBe(true);
+
   const combatRoll: CombatRoll = CombatRoll.createCooked({
     rollType: "spaceCombat",
     hex: "<0,0,0>",
@@ -85,5 +109,5 @@ it("modifier (memoria-2)", () => {
   const cavalry: UnitAttrs = combatRoll.self.unitAttrsSet.getOrThrow(
     "the-cavalry" as UnitType
   );
-  expect(cavalry.getName()).toBe("The Cavalry II");
+  expect(cavalry.getName()).toBe("The Cavalry II (replacing destroyer)");
 });
