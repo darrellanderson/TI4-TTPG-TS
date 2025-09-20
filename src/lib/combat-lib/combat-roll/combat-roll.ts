@@ -275,6 +275,25 @@ export class CombatRoll {
       }
     }
 
+    // Neutral ships get the upgraded version.
+    if (playerSlot === 19) {
+      const unitNsids: Array<string> = [
+        "card.technology.unit-upgrade:base/war-sun-2",
+        "card.technology.unit-upgrade:base/dreadnought-2",
+        "card.technology.unit-upgrade:base/carrier-2",
+        "card.technology.unit-upgrade:base/cruiser-2",
+        "card.technology.unit-upgrade:base/destroyer-2",
+        "card.technology.unit-upgrade:base/fighter-2",
+      ];
+      for (const unitNsid of unitNsids) {
+        const attrs: UnitAttrsSchemaType | undefined =
+          TI4.unitAttrsRegistry.rawByNsid(unitNsid);
+        if (attrs) {
+          overrideAttrsArray.push(attrs);
+        }
+      }
+    }
+
     UnitAttrs.sortByOverrideOrder(overrideAttrsArray);
     return overrideAttrsArray;
   }

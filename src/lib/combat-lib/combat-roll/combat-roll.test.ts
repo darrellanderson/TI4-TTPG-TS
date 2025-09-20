@@ -324,6 +324,28 @@ it("_findUnitAttrOverrides (only if face down)", () => {
   expect(names).toEqual(["Only If Face Down"]);
 });
 
+it("_findUnitAttrOverrides (neutral player slot)", () => {
+  const params: CombatRollParams = {
+    rollType: "spaceCombat",
+    hex: "<0,0,0>",
+    activatingPlayerSlot: 1,
+    rollingPlayerSlot: 19,
+  };
+  const combatRoll: CombatRoll = new CombatRoll(params);
+
+  const overrides: Array<UnitAttrsSchemaType> =
+    combatRoll._findUnitAttrOverrides(19);
+  const names: Array<string> = overrides.map((override) => override.name);
+  expect(names).toEqual([
+    "Carrier II",
+    "Cruiser II",
+    "Destroyer II",
+    "Dreadnought II",
+    "Fighter II",
+    "War Sun",
+  ]);
+});
+
 it("_findUnitModifiers (self, opponent)", () => {
   // Need a card holder to be closest to assign cards.
   const opponentPos: Vector = new Vector(9, 0, 0);
