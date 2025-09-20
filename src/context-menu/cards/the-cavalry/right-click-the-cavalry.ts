@@ -1,12 +1,11 @@
 import { GameObject, Player } from "@tabletop-playground/api";
-import { _setTheCavalryUnitType } from "lib";
 import { AbstractRightClickCard } from "ttpg-darrell";
+import { _setTheCavalryUnitType } from "../../../lib/unit-lib/data/unit-modifiers/pok/the-cavalry";
 
 /**
- * Right click menu to set the unit type for Gravleash Maneuvers.
- * Also supports choosing best or worst to prioritize single hit or more hits.
+ * Right click menu to set the unit type for The Cavalry.
  */
-export class RightClickGravleashManeuvers extends AbstractRightClickCard {
+export class RightClickTheCavalry extends AbstractRightClickCard {
   constructor() {
     const nsid: string = "card.promissory:pok/the-cavalry";
     const customActionHandler = (
