@@ -7,3 +7,4 @@ export * from './mageon-implants';
 export * from './nano-forge';
 export * from './so-ata';
 export * from './stellar-converter';
+export * from './the-cavalry';

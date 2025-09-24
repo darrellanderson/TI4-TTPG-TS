@@ -176,14 +176,14 @@ add("pok", ViscountUnlenn);
 import { ViszElVir } from "./unit-modifiers/pok/visz-el-vir";
 add("pok", ViszElVir);
 
+import { EntropicScar } from "./unit-modifiers/thunders-edge/entropic-scar";
+add("thunders-edge", EntropicScar);
+
 import { Galvanize } from "./unit-modifiers/thunders-edge/galvanize";
 add("thunders-edge", Galvanize);
 
 import { TheEgeiro } from "./unit-modifiers/thunders-edge/the-egeiro";
 add("thunders-edge", TheEgeiro);
-
-import { AnomalyNullAbility } from "./unit-modifiers/test/anomaly-null-ability";
-add("test", AnomalyNullAbility);
 
 import { MoraleBoostExtra } from "./unit-modifiers/test/morale-boost-extra";
 add("test", MoraleBoostExtra);

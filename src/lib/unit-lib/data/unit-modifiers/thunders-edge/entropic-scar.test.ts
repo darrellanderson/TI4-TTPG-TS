@@ -1,30 +1,48 @@
 import { MockGameObject } from "ttpg-mock";
 import { OPPONENT, placeGameObjects, SELF } from "../abstract.test";
 import { CombatRoll } from "../../../../combat-lib/combat-roll/combat-roll";
+import { SourceAndPackageIdSchemaType } from "../../../../system-lib/schema/basic-types-schema";
 import { System } from "../../../../system-lib/system/system";
+import { SystemRegistry } from "../../../../system-lib/registry/system-registry";
+import { SystemSchemaType } from "../../../../system-lib/schema/system-schema";
 import {
-  _countAdjacentPdsInAnomaly,
-  _hasNullAbilityAnomaly,
-} from "./anomaly-null-ability";
+  _countAdjacentPdsInEntropicScar,
+  _isEntropicScar,
+} from "./entropic-scar";
 
-it("_hasNullAbilityAnomaly", () => {
-  MockGameObject.simple("tile.system:base/18");
-  const tile18: System | undefined =
-    TI4.systemRegistry.getBySystemTileNumber(18);
-  expect(_hasNullAbilityAnomaly(tile18)).toBe(false);
-
-  MockGameObject.simple("tile.system:base/44");
-  const tile44: System | undefined =
-    TI4.systemRegistry.getBySystemTileNumber(44);
-  expect(_hasNullAbilityAnomaly(tile44)).toBe(true);
-
-  expect(_hasNullAbilityAnomaly(undefined)).toBe(false);
+beforeEach(() => {
+  const sourceAndPackageId: SourceAndPackageIdSchemaType = {
+    source: "my-source",
+    packageId: "my-package-id",
+  };
+  const systemSchemaTypes: Array<SystemSchemaType> = [
+    {
+      tile: 1234,
+      anomalies: ["scar"],
+    },
+  ];
+  const systemRegistry: SystemRegistry = globalThis.TI4.systemRegistry;
+  systemRegistry.load(sourceAndPackageId, systemSchemaTypes);
 });
 
-it("_countAdjacentPdsInAnomaly", () => {
+it("_isEntropicScar", () => {
+  MockGameObject.simple("tile.system:base/18");
+  const tile18: System | undefined =
+    globalThis.TI4.systemRegistry.getBySystemTileNumber(18);
+  expect(_isEntropicScar(tile18)).toBe(false);
+
+  MockGameObject.simple("tile.system:my-source/1234");
+  const tile44: System | undefined =
+    globalThis.TI4.systemRegistry.getBySystemTileNumber(1234);
+  expect(_isEntropicScar(tile44)).toBe(true);
+
+  expect(_isEntropicScar(undefined)).toBe(false);
+});
+
+it("_countAdjacentPdsInEntropicScar", () => {
   placeGameObjects({
     selfUnitsAdj: new Map([["pds", 1]]),
-    systemNsidAdj: "tile.system:base/45",
+    systemNsidAdj: "tile.system:my-source/1234",
   });
   const combatRoll: CombatRoll = CombatRoll.createCooked({
     rollType: "spaceCannonOffense",
@@ -32,14 +50,7 @@ it("_countAdjacentPdsInAnomaly", () => {
     activatingPlayerSlot: OPPONENT,
     rollingPlayerSlot: SELF,
   });
-  expect(_countAdjacentPdsInAnomaly(combatRoll)).toBe(1);
-});
-
-it("registry", () => {
-  const nsid = "card.event:test/anomaly-null-ability";
-  expect(TI4.unitModifierRegistry.getByNsid(nsid)?.getName()).toBe(
-    "Anomaly Null Ability"
-  );
+  expect(_countAdjacentPdsInEntropicScar(combatRoll)).toBe(1);
 });
 
 it("default", () => {
@@ -64,12 +75,9 @@ it("default", () => {
 
 it("modifier", () => {
   placeGameObjects({
-    self: [
-      "card.technology.unit-upgrade:base/pds-2",
-      "card.event:test/anomaly-null-ability",
-    ],
+    self: ["card.technology.unit-upgrade:base/pds-2"],
     selfUnits: new Map([["pds", 1]]),
-    systemNsid: "tile.system:base/44",
+    systemNsid: "tile.system:my-source/1234",
   });
   const combatRoll: CombatRoll = CombatRoll.createCooked({
     rollType: "spaceCannonOffense",
@@ -77,10 +85,10 @@ it("modifier", () => {
     activatingPlayerSlot: OPPONENT,
     rollingPlayerSlot: SELF,
   });
-  expect(_hasNullAbilityAnomaly(combatRoll.system)).toBe(true);
-  expect(_countAdjacentPdsInAnomaly(combatRoll)).toBe(0);
+  expect(_isEntropicScar(combatRoll.system)).toBe(true);
+  expect(_countAdjacentPdsInEntropicScar(combatRoll)).toBe(0);
 
-  expect(combatRoll.getUnitModifierNames()).toEqual(["Anomaly Null Ability"]);
+  expect(combatRoll.getUnitModifierNames()).toEqual(["Entropic Scar"]);
   expect(combatRoll.self.getCount("pds")).toBe(1);
   expect(combatRoll.self.getCountAdj("pds")).toBe(0);
   expect(
@@ -90,12 +98,9 @@ it("modifier", () => {
 
 it("modifier (adj)", () => {
   placeGameObjects({
-    self: [
-      "card.technology.unit-upgrade:base/pds-2",
-      "card.event:test/anomaly-null-ability",
-    ],
+    self: ["card.technology.unit-upgrade:base/pds-2"],
     selfUnitsAdj: new Map([["pds", 1]]),
-    systemNsidAdj: "tile.system:base/44",
+    systemNsidAdj: "tile.system:my-source/1234",
   });
   const combatRoll: CombatRoll = CombatRoll.createCooked({
     rollType: "spaceCannonOffense",
@@ -103,10 +108,10 @@ it("modifier (adj)", () => {
     activatingPlayerSlot: OPPONENT,
     rollingPlayerSlot: SELF,
   });
-  expect(_hasNullAbilityAnomaly(combatRoll.system)).toBe(false);
-  expect(_countAdjacentPdsInAnomaly(combatRoll)).toBe(1);
+  expect(_isEntropicScar(combatRoll.system)).toBe(false);
+  expect(_countAdjacentPdsInEntropicScar(combatRoll)).toBe(1);
 
-  expect(combatRoll.getUnitModifierNames()).toEqual(["Anomaly Null Ability"]);
+  expect(combatRoll.getUnitModifierNames()).toEqual(["Entropic Scar"]);
   expect(combatRoll.self.getCount("pds")).toBe(0);
   expect(combatRoll.self.getCountAdj("pds")).toBe(0);
   expect(

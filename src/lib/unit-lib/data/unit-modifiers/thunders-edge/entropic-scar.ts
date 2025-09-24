@@ -1,20 +1,22 @@
-import { System } from "lib/system-lib/system/system";
+import { System } from "../../../../system-lib/system/system";
 import { CombatRoll } from "../../../../combat-lib/combat-roll/combat-roll";
 import { UnitModifierSchemaType } from "../../../schema/unit-modifier-schema";
 
-export function _hasNullAbilityAnomaly(system: System | undefined): boolean {
+export function _isEntropicScar(system: System | undefined): boolean {
   if (!system) {
     return false;
   }
   const anomalies: Array<string> = system.getAnomalies();
-  return anomalies.includes("asteroid-field");
+  return anomalies.includes("scar");
 }
 
-export function _countAdjacentPdsInAnomaly(combatRoll: CombatRoll): number {
+export function _countAdjacentPdsInEntropicScar(
+  combatRoll: CombatRoll
+): number {
   let count = 0;
   combatRoll.self.unitPlasticAdj.forEach((unitPlastic): void => {
     const system: System | undefined = unitPlastic.getSystem();
-    if (_hasNullAbilityAnomaly(system)) {
+    if (_isEntropicScar(system)) {
       count += unitPlastic.getCount();
     }
   });
@@ -24,27 +26,38 @@ export function _countAdjacentPdsInAnomaly(combatRoll: CombatRoll): number {
 /**
  * Test modifier for an anomaly (asteroid field) that suppresses an ability (space cannon).
  */
-export const AnomalyNullAbility: UnitModifierSchemaType = {
-  name: "Anomaly Null Ability",
-  description: "Anomaly suppresses an ability",
+export const EntropicScar: UnitModifierSchemaType = {
+  name: "Entropic Scar",
+  description: "Unit abilities cannot be used against units in a scar",
   owner: "self",
   priority: "mutate",
-  triggers: [{ cardClass: "event", nsidName: "anomaly-null-ability" }],
+  triggerAlways: true,
+  triggers: [],
   applies: (combatRoll: CombatRoll): boolean => {
-    return (
-      combatRoll.getRollType() === "spaceCannonOffense" &&
-      (_hasNullAbilityAnomaly(combatRoll.system) ||
-        _countAdjacentPdsInAnomaly(combatRoll) > 0)
-    );
+    const rollType: string = combatRoll.getRollType();
+    if (rollType === "spaceCannonOffense") {
+      return (
+        _isEntropicScar(combatRoll.system) ||
+        _countAdjacentPdsInEntropicScar(combatRoll) > 0
+      );
+    }
+    if (_isEntropicScar(combatRoll.system)) {
+      return (
+        rollType === "antiFighterBarrage" ||
+        rollType === "bombardment" ||
+        rollType === "spaceCannonDefense"
+      );
+    }
+    return false;
   },
   apply: (combatRoll: CombatRoll): void => {
     // Suppress adjacent.
     const pdsAdj: number = combatRoll.self.getCountAdj("pds");
-    const suppressAdj: number = _countAdjacentPdsInAnomaly(combatRoll);
+    const suppressAdj: number = _countAdjacentPdsInEntropicScar(combatRoll);
     combatRoll.self.overrideUnitCountAdj.set("pds", pdsAdj - suppressAdj);
 
     // Suppress ability for units in active system.
-    if (_hasNullAbilityAnomaly(combatRoll.system)) {
+    if (_isEntropicScar(combatRoll.system)) {
       for (const unitAttrs of combatRoll.self.unitAttrsSet.getAll()) {
         unitAttrs.setSpaceCannon(undefined);
       }
