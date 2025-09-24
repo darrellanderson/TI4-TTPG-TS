@@ -118,3 +118,26 @@ it("modifier (adj)", () => {
     combatRoll.self.unitAttrsSet.getOrThrow("pds").getSpaceCannon()
   ).toBeDefined();
 });
+
+it("modifier (space cannon defense", () => {
+  placeGameObjects({
+    self: ["card.technology.unit-upgrade:base/pds-2"],
+    selfUnits: new Map([["pds", 1]]),
+    systemNsid: "tile.system:my-source/1234",
+  });
+  const combatRoll: CombatRoll = CombatRoll.createCooked({
+    rollType: "spaceCannonDefense",
+    hex: "<0,0,0>",
+    activatingPlayerSlot: OPPONENT,
+    rollingPlayerSlot: SELF,
+  });
+  expect(_isEntropicScar(combatRoll.system)).toBe(true);
+  expect(_countAdjacentPdsInEntropicScar(combatRoll)).toBe(0);
+
+  expect(combatRoll.getUnitModifierNames()).toEqual(["Entropic Scar"]);
+  expect(combatRoll.self.getCount("pds")).toBe(1);
+  expect(combatRoll.self.getCountAdj("pds")).toBe(0);
+  expect(
+    combatRoll.self.unitAttrsSet.getOrThrow("pds").getSpaceCannon()
+  ).toBeUndefined();
+});
