@@ -3,23 +3,23 @@ import { MockGameObject, MockPlayer } from "ttpg-mock";
 import {
   ACTION_BOOM,
   NSID_BOOM_TOKEN,
-  RightClickTokenBoom,
-} from "./right-click-token-boom";
+  RightClickGalvanizeToken,
+} from "./right-click-galvanize-token";
 import { UnitPlastic } from "../../lib/unit-lib/unit-plastic/unit-plastic";
 import { HexType } from "ttpg-darrell";
 
 it("constructor/init", () => {
-  new RightClickTokenBoom().init();
+  new RightClickGalvanizeToken().init();
 });
 
 it("existing object, new object", () => {
   MockGameObject.simple(NSID_BOOM_TOKEN); // existing
-  new RightClickTokenBoom().init();
+  new RightClickGalvanizeToken().init();
   MockGameObject.simple(NSID_BOOM_TOKEN); // new
 });
 
 it("event", () => {
-  new RightClickTokenBoom().init();
+  new RightClickGalvanizeToken().init();
   const boomToken: MockGameObject = MockGameObject.simple(NSID_BOOM_TOKEN);
   const player: Player = new MockPlayer({ slot: 1 });
   boomToken._customActionAsPlayer(player, ACTION_BOOM);
@@ -33,19 +33,19 @@ it("_boom", () => {
     "token:thunders-edge/galvanize"
   );
 
-  const rightClickTokenBoom = new RightClickTokenBoom();
-  rightClickTokenBoom.init();
+  const rightClickGalvanizeToken = new RightClickGalvanizeToken();
+  rightClickGalvanizeToken.init();
 
   const plastics: Array<UnitPlastic> =
-    rightClickTokenBoom._getPlasticInHex("<0,0,0>");
+    rightClickGalvanizeToken._getPlasticInHex("<0,0,0>");
   expect(plastics.length).toBe(3);
 
   const galvanizedPlastic: UnitPlastic | undefined =
-    rightClickTokenBoom._getGalvanizedPlastic(galvanizeToken, plastics);
+    rightClickGalvanizeToken._getGalvanizedPlastic(galvanizeToken, plastics);
   expect(galvanizedPlastic?.getUnit()).toEqual("destroyer");
 
   const player: Player = new MockPlayer({ slot: 1 });
-  rightClickTokenBoom._boom(galvanizeToken, player);
+  rightClickGalvanizeToken._boom(galvanizeToken, player);
 });
 
 it("_getPlasticInHex, _getGalvanizedPlastic", () => {
@@ -57,16 +57,16 @@ it("_getPlasticInHex, _getGalvanizedPlastic", () => {
     "token:thunders-edge/galvanize"
   );
 
-  const rightClickTokenBoom = new RightClickTokenBoom();
+  const rightClickGalvanizeToken = new RightClickGalvanizeToken();
   const plastics: Array<UnitPlastic> =
-    rightClickTokenBoom._getPlasticInHex("<0,0,0>");
+    rightClickGalvanizeToken._getPlasticInHex("<0,0,0>");
   expect(plastics.length).toBe(2);
   expect(
     plastics.map((plastic: UnitPlastic): string => plastic.getObj().getId())
   ).toEqual([unitObj.getId(), galvanizeToken.getId()]);
 
   const galvanizedPlastic: UnitPlastic | undefined =
-    rightClickTokenBoom._getGalvanizedPlastic(galvanizeToken, plastics);
+    rightClickGalvanizeToken._getGalvanizedPlastic(galvanizeToken, plastics);
   expect(galvanizedPlastic).toBeDefined();
   expect(galvanizedPlastic?.getObj().getId()).toEqual(unitObj.getId());
 });
@@ -80,11 +80,11 @@ it("_getTargetPlastics", () => {
     owningPlayerSlot: 2,
   });
 
-  const rightClickTokenBoom = new RightClickTokenBoom();
+  const rightClickGalvanizeToken = new RightClickGalvanizeToken();
   const plastics: Array<UnitPlastic> =
-    rightClickTokenBoom._getPlasticInHex("<0,0,0>");
+    rightClickGalvanizeToken._getPlasticInHex("<0,0,0>");
   const targetPlastics: Array<UnitPlastic> =
-    rightClickTokenBoom._getTargetPlastics(1, plastics);
+    rightClickGalvanizeToken._getTargetPlastics(1, plastics);
   expect(targetPlastics.length).toBe(1);
   expect(
     targetPlastics.map((plastic: UnitPlastic): string =>
@@ -94,9 +94,9 @@ it("_getTargetPlastics", () => {
 });
 
 it("_isShip", () => {
-  const rightClickTokenBoom = new RightClickTokenBoom();
-  expect(rightClickTokenBoom._isShip("fighter")).toBe(true);
-  expect(rightClickTokenBoom._isShip("infantry")).toBe(false);
+  const rightClickGalvanizeToken = new RightClickGalvanizeToken();
+  expect(rightClickGalvanizeToken._isShip("fighter")).toBe(true);
+  expect(rightClickGalvanizeToken._isShip("infantry")).toBe(false);
 });
 
 it("_getHitValue", () => {
@@ -104,12 +104,22 @@ it("_getHitValue", () => {
   const playerSlot: number = 1;
   const unitModifiers: Array<string> = [];
 
-  const rightClickTokenBoom = new RightClickTokenBoom();
+  const rightClickGalvanizeToken = new RightClickGalvanizeToken();
   expect(
-    rightClickTokenBoom._getHitValue(hex, playerSlot, "fighter", unitModifiers)
+    rightClickGalvanizeToken._getHitValue(
+      hex,
+      playerSlot,
+      "fighter",
+      unitModifiers
+    )
   ).toBe(9);
   expect(
-    rightClickTokenBoom._getHitValue(hex, playerSlot, "infantry", unitModifiers)
+    rightClickGalvanizeToken._getHitValue(
+      hex,
+      playerSlot,
+      "infantry",
+      unitModifiers
+    )
   ).toBe(8);
 });
 
@@ -122,13 +132,13 @@ it("_getAreaToPlastics", () => {
     owningPlayerSlot: 1,
   });
 
-  const rightClickTokenBoom = new RightClickTokenBoom();
+  const rightClickGalvanizeToken = new RightClickGalvanizeToken();
   const plastics: Array<UnitPlastic> =
-    rightClickTokenBoom._getPlasticInHex("<0,0,0>");
+    rightClickGalvanizeToken._getPlasticInHex("<0,0,0>");
   const areaToPlastics: Map<
     string,
     Array<UnitPlastic>
-  > = rightClickTokenBoom._getAreaToPlastics(plastics);
+  > = rightClickGalvanizeToken._getAreaToPlastics(plastics);
   expect(areaToPlastics.size).toBe(2);
   expect(
     areaToPlastics.get("Space")?.map((plastic) => plastic.getObj().getId())
@@ -153,14 +163,14 @@ it("_rollBoom", () => {
     }
   );
 
-  const rightClickTokenBoom = new RightClickTokenBoom();
+  const rightClickGalvanizeToken = new RightClickGalvanizeToken();
   const plastics: Array<UnitPlastic> =
-    rightClickTokenBoom._getPlasticInHex("<0,0,0>");
+    rightClickGalvanizeToken._getPlasticInHex("<0,0,0>");
   const areaToPlastics: Map<
     string,
     Array<UnitPlastic>
-  > = rightClickTokenBoom._getAreaToPlastics(plastics);
-  rightClickTokenBoom._rollBoom(areaToPlastics, 8);
+  > = rightClickGalvanizeToken._getAreaToPlastics(plastics);
+  rightClickGalvanizeToken._rollBoom(areaToPlastics, 8);
 
   const player: Player = new MockPlayer();
   spaceObj._releaseAsPlayer(player, false);
@@ -172,6 +182,6 @@ it("_applyBoomResult", () => {
   const rollValues: Array<number> = [1, 2, 3];
   const hitValue: number = 2;
 
-  const rightClickTokenBoom = new RightClickTokenBoom();
-  rightClickTokenBoom._applyBoomResult(obj, rollValues, hitValue);
+  const rightClickGalvanizeToken = new RightClickGalvanizeToken();
+  rightClickGalvanizeToken._applyBoomResult(obj, rollValues, hitValue);
 });

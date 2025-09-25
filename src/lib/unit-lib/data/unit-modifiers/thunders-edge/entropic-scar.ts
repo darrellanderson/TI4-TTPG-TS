@@ -1,6 +1,7 @@
 import { System } from "../../../../system-lib/system/system";
 import { CombatRoll } from "../../../../combat-lib/combat-roll/combat-roll";
 import { UnitModifierSchemaType } from "../../../schema/unit-modifier-schema";
+import { CombatAttrs } from "lib/unit-lib/unit-attrs";
 
 export function _isEntropicScar(system: System | undefined): boolean {
   if (!system) {
@@ -35,19 +36,30 @@ export const EntropicScar: UnitModifierSchemaType = {
   triggers: [],
   applies: (combatRoll: CombatRoll): boolean => {
     const rollType: string = combatRoll.getRollType();
-    if (rollType === "spaceCannonOffense") {
-      return (
-        _isEntropicScar(combatRoll.system) ||
-        _countAdjacentPdsInEntropicScar(combatRoll) > 0
-      );
-    }
+
+    // Active system is entropic scar.
     if (_isEntropicScar(combatRoll.system)) {
       return (
+        rollType === "spaceCannonOffense" ||
         rollType === "antiFighterBarrage" ||
         rollType === "bombardment" ||
         rollType === "spaceCannonDefense"
       );
     }
+
+    // Adjacent system is entropic scar and space cannon offense with range.
+    if (
+      rollType === "spaceCannonOffense" &&
+      _countAdjacentPdsInEntropicScar(combatRoll) > 0
+    ) {
+      for (const unitAttrs of combatRoll.self.unitAttrsSet.getAll()) {
+        const spaceCannon: CombatAttrs | undefined = unitAttrs.getSpaceCannon();
+        if (spaceCannon && spaceCannon.getRange() > 0) {
+          return true;
+        }
+      }
+    }
+
     return false;
   },
   apply: (combatRoll: CombatRoll): void => {
@@ -59,7 +71,12 @@ export const EntropicScar: UnitModifierSchemaType = {
     // Suppress ability for units in active system.
     if (_isEntropicScar(combatRoll.system)) {
       for (const unitAttrs of combatRoll.self.unitAttrsSet.getAll()) {
-        unitAttrs.setSpaceCannon(undefined);
+        unitAttrs.setDisableSpaceCannonOffense(true);
+        unitAttrs.setDisableAntiFighterBarrage(true);
+        unitAttrs.setDisableBombardment(true);
+        unitAttrs.setDisableSpaceCannonDefense(true);
+        unitAttrs.setDisablePlanetaryShield(true);
+        unitAttrs.setDisableSustainDamage(true);
       }
     }
   },

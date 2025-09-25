@@ -22,15 +22,16 @@ import { UnitAttrs } from "../../lib/unit-lib/unit-attrs/unit-attrs";
 import { UnitPlastic } from "../../lib/unit-lib/unit-plastic/unit-plastic";
 import { Planet } from "../../lib/system-lib/planet/planet";
 
-export const NSID_BOOM_TOKEN: string = "token:homebrew.test/boom";
-export const ACTION_BOOM: string = "*Boom";
-export const TOOLTIP_BOOM: string = "Destroy units on some die roll";
+export const NSID_BOOM_TOKEN: string = "token:thunders-edge/galvanize";
+export const ACTION_BOOM: string = "*Roll Entity 4x41a Apollo";
+export const TOOLTIP_BOOM: string =
+  "Destroy units on galvanized unit's die roll";
 
 /**
- * Testing for homebrew.  Right click a token to roll a die for every unit
- * in the system, destroy on some value.
+ * Right click a token to roll a die for every unit
+ * in the system, destroy on this token's galvanized unit's value.
  */
-export class RightClickTokenBoom implements IGlobal {
+export class RightClickGalvanizeToken implements IGlobal {
   private readonly _onObjectCreated = (obj: GameObject): void => {
     this._maybeAddContextMenu(obj);
   };

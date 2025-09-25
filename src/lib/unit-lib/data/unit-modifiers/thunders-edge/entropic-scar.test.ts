@@ -92,8 +92,10 @@ it("modifier", () => {
   expect(combatRoll.self.getCount("pds")).toBe(1);
   expect(combatRoll.self.getCountAdj("pds")).toBe(0);
   expect(
-    combatRoll.self.unitAttrsSet.getOrThrow("pds").getSpaceCannon()
-  ).toBeUndefined();
+    combatRoll.self.unitAttrsSet
+      .getOrThrow("pds")
+      .getDisableSpaceCannonOffense()
+  ).toBe(true);
 });
 
 it("modifier (adj)", () => {
@@ -119,7 +121,7 @@ it("modifier (adj)", () => {
   ).toBeDefined();
 });
 
-it("modifier (space cannon defense", () => {
+it("modifier (space cannon defense)", () => {
   placeGameObjects({
     self: ["card.technology.unit-upgrade:base/pds-2"],
     selfUnits: new Map([["pds", 1]]),
@@ -138,6 +140,22 @@ it("modifier (space cannon defense", () => {
   expect(combatRoll.self.getCount("pds")).toBe(1);
   expect(combatRoll.self.getCountAdj("pds")).toBe(0);
   expect(
-    combatRoll.self.unitAttrsSet.getOrThrow("pds").getSpaceCannon()
-  ).toBeUndefined();
+    combatRoll.self.unitAttrsSet
+      .getOrThrow("pds")
+      .getDisableAntiFighterBarrage()
+  ).toBe(true);
+  expect(
+    combatRoll.self.unitAttrsSet.getOrThrow("pds").getDisableBombardment()
+  ).toBe(true);
+  expect(
+    combatRoll.self.unitAttrsSet
+      .getOrThrow("pds")
+      .getDisableSpaceCannonDefense()
+  ).toBe(true);
+  expect(
+    combatRoll.self.unitAttrsSet.getOrThrow("pds").getDisablePlanetaryShield()
+  ).toBe(true);
+  expect(
+    combatRoll.self.unitAttrsSet.getOrThrow("pds").getDisableSustainDamage()
+  ).toBe(true);
 });

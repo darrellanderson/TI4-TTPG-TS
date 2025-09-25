@@ -27,6 +27,7 @@ import {
 import { ActivateSystem } from "../context-menu/system/activate-system/activate-system";
 import { AgendaActivityMaybeResume } from "../lib/agenda-lib/agenda-activity-start/agenda-activity-start";
 import { AllBorders } from "../lib/border-lib/all-borders/all-borders";
+import { ApplyLocaleDescriptions } from "../locale/locale-descriptions";
 import { AutoStreamerCamera } from "../lib/streamer-lib/auto-streamer-camera/auto-streamer-camera";
 import { Config } from "../lib/config/config";
 import { ControlTokenSystem } from "../context-menu/system/control-token-system/control-token-system";
@@ -70,6 +71,7 @@ import { ReportRemaining } from "../context-menu/report-remaining/report-remaini
 import { RightClickAgenda } from "../context-menu/right-click-agenda/right-click-agenda";
 import { RightClickDelete } from "../context-menu/right-click-delete/right-click-delete";
 import { RightClickExplore } from "../context-menu/system/explore-system/right-click-explore";
+import { RightClickGalvanizeToken } from "../context-menu/right-click-galvanize-token/right-click-galvanize-token";
 import { RightClickIihqModernization } from "../context-menu/cards/iihq-modernization/right-click-iihq-modernization";
 import { RightClickInfantry2 } from "../context-menu/cards/infantry-2/right-click-infantry-2";
 import { RightClickLetaniWarrior2 } from "../context-menu/cards/infantry-2/right-click-letani-warrior-2";
@@ -118,7 +120,7 @@ import { RightClickMinorFactions } from "../context-menu/events/minor-factions/r
 // Breakthroughs
 import { RightClickYinAscendant } from "../context-menu/breakthroughs/yin-ascendant/right-click-yin-ascendant";
 
-import { LOCALE_CONTENT_MENUS } from "../locale/locale-context-menus";
+import { LOCALE_CONTEXT_MENUS } from "../locale/locale-context-menus";
 
 import { NSID_TO_TEMPLATE_ID } from "../nsid/nsid-to-template-id";
 
@@ -209,12 +211,13 @@ export function resetGlobalThisTI4(): TI4Class {
   globalThis.TI4 = new TI4Class();
   Object.freeze(globalThis.TI4);
 
-  TI4.locale.inject(LOCALE_CONTENT_MENUS);
+  TI4.locale.inject(LOCALE_CONTEXT_MENUS);
 
   // Run any delayed initialization, things that need globalThis.TI4 to be set.
   // These are "init" functions in the class objects.
   const iGlobals: Array<IGlobal> = [
     new ActivateSystem(),
+    new ApplyLocaleDescriptions(),
     new ControlTokenSystem(),
     new DiceGroupCleanup(),
     new DiplomacySystem(),
@@ -241,6 +244,7 @@ export function resetGlobalThisTI4(): TI4Class {
     new ReportRemaining(),
     new RightClickAgenda(),
     new RightClickExplore(),
+    new RightClickGalvanizeToken(),
     new RightClickIihqModernization(),
     new RightClickInfantry2(),
     new RightClickLetaniWarrior2(),

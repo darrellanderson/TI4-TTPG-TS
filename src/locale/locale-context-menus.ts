@@ -1,4 +1,4 @@
-export const LOCALE_CONTENT_MENUS: { [key: string]: string } = {
+export const LOCALE_CONTEXT_MENUS: { [key: string]: string } = {
   "tooltip.toggle-action-phase-timers":
     "Display the per-round action phase timers for each player",
   "tooltip.toggle-all-players-tech": "Display each players' technologies",
