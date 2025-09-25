@@ -134,7 +134,7 @@ export class StartGameUI extends AbstractUI {
     const checkBoxBoxShaped: CheckBoxUI = new CheckBoxUI(scale);
     checkBoxBoxShaped
       .getCheckBox()
-      .setText("Thunders Edge")
+      .setText("Thunder's Edge")
       .setEnabled(false)
       .setIsChecked(TI4.config.sources.includes("thunders-edge"))
       .onCheckStateChanged.add(
