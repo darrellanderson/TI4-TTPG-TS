@@ -13,11 +13,11 @@ import { GameDataUpdator } from "../../game-data-updator/game-data-updator";
 
 // Systems must exist for registry to know about planets.
 beforeEach(() => {
-  for (const tile of TI4.systemRegistry.getAllSystemTileNumbers()) {
+  for (const tile of globalThis.TI4.systemRegistry.getAllSystemTileNumbers()) {
     const nsid: string | undefined =
-      TI4.systemRegistry.tileNumberToSystemTileObjNsid(tile);
+      globalThis.TI4.systemRegistry.tileNumberToSystemTileObjNsid(tile);
     if (nsid) {
-      MockGameObject.simple(nsid);
+      MockGameObject.simple(nsid, { position: [100, 0, 0] });
     }
   }
 });

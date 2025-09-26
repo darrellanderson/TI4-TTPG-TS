@@ -524,6 +524,9 @@ export class CombatRoll {
     for (const unitAttrs of this.self.unitAttrsSet.getAll()) {
       let combatAttrs: CombatAttrs | undefined = undefined;
       switch (rollType) {
+        case "ambush":
+          combatAttrs = unitAttrs.getSpaceCombat();
+          break;
         case "antiFighterBarrage":
           if (!unitAttrs.getDisableAntiFighterBarrage()) {
             combatAttrs = unitAttrs.getAntiFighterBarrage();

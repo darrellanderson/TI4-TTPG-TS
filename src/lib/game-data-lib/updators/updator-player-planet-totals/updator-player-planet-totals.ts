@@ -1,5 +1,5 @@
 import { Card, Vector, world } from "@tabletop-playground/api";
-import { CardUtil, Find, NSID, PlayerSlot } from "ttpg-darrell";
+import { CardUtil, Find, HexType, NSID, PlayerSlot } from "ttpg-darrell";
 import { GameData, PerPlayerGameData } from "../../game-data/game-data";
 import { IGameDataUpdator } from "../../i-game-data-updator/i-game-data-updator";
 import { UpdatorPlayerPlanetTotalsType } from "./updator-player-planet-totals-type";
@@ -12,15 +12,25 @@ export class UpdatorPlayerPlanetTotals implements IGameDataUpdator {
   update(gameData: GameData): void {
     const planetCards: Array<Card> = [];
 
-    // Find planet cards in the world.
+    const systemHexes: Set<HexType> = new Set();
+    TI4.systemRegistry.getAllSystemsWithObjs().forEach((system) => {
+      const pos: Vector = system.getObj().getPosition();
+      const hex: HexType = TI4.hex.fromPosition(pos);
+      systemHexes.add(hex);
+    });
+
+    // Find planet cards in the world (not on system tiles).
     const skipContained: boolean = true;
     const allowFaceDown: boolean = true;
     for (const obj of world.getAllObjects(skipContained)) {
       const nsid: string = NSID.get(obj);
+      const pos: Vector = obj.getPosition();
+      const hex: HexType = TI4.hex.fromPosition(pos);
       if (
         obj instanceof Card &&
         nsid.startsWith("card.planet:") &&
-        this._cardUtil.isLooseCard(obj, allowFaceDown)
+        this._cardUtil.isLooseCard(obj, allowFaceDown) &&
+        !systemHexes.has(hex)
       ) {
         planetCards.push(obj);
       }

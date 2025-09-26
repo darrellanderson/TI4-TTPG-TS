@@ -14,6 +14,9 @@ function add(source: string, modifier: UnitModifierSchemaType) {
   modifiers.push(modifier);
 }
 
+import { Ambush } from "./unit-modifiers/base/ambush";
+add("base", Ambush);
+
 import { AntimassDeflectors } from "./unit-modifiers/base/antimass-deflectors";
 add("base", AntimassDeflectors);
 
