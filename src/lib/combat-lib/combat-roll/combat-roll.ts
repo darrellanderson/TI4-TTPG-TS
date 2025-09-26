@@ -607,6 +607,34 @@ export class CombatRoll {
           this.opponent.playerSlot = value;
         }
       }
+
+      // Coexist lets multiple players have units on the same planet.
+      // In that case, target the player that actually owns the planet.
+      if (candidates.size > 1 && this.getPlanetName() !== undefined) {
+        const system: System | undefined = this.system;
+        if (system) {
+          system.getPlanets().forEach((planet: Planet): void => {
+            if (planet.getName() === this.getPlanetName()) {
+              const planetCardNsid: string = planet.getPlanetCardNsid();
+              const owningPlayerSlot: number = -1;
+              const skipContained: boolean = true;
+              const planetCard: Card | undefined = this.find.findCard(
+                planetCardNsid,
+                owningPlayerSlot,
+                skipContained
+              );
+              if (planetCard) {
+                const owner: number = this.find.closestOwnedCardHolderOwner(
+                  planetCard.getPosition()
+                );
+                if (candidates.has(owner)) {
+                  this.opponent.playerSlot = owner;
+                }
+              }
+            }
+          });
+        }
+      }
     }
 
     // Fill in all units for each player.
