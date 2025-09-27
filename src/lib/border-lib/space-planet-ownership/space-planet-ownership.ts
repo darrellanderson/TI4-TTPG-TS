@@ -66,10 +66,10 @@ export class SpacePlanetOwnership {
     };
 
     const unitType: UnitType = unitPlastic.getUnit();
-    const unitAttrs: UnitAttrs = TI4.unitAttrsRegistry
+    const unitAttrs: UnitAttrs | undefined = TI4.unitAttrsRegistry
       .defaultUnitAttrsSet()
-      .getOrThrow(unitType);
-    if (!unitAttrs.isShip()) {
+      .get(unitType);
+    if (unitType === "control-token" || (unitAttrs && !unitAttrs.isShip())) {
       result.planet = unitPlastic.getPlanetClosest();
     }
     return result;
