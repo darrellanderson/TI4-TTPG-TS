@@ -82,7 +82,7 @@ export class AgendaActivityStart {
       windowTitle
     );
     abstractWindow.getMutableWindowParams().disableClose = true;
-    this._agendaWindow = abstractWindow.addHost().createWindow().attach();
+    this._agendaWindow = abstractWindow.allSlots().createWindow().attach();
 
     return this;
   }

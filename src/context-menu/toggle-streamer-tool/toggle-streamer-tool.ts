@@ -27,6 +27,6 @@ export class ToggleStreamerTool implements IGlobal {
       "tooltip.toggle-streamer-tool"
     );
 
-    abstractWindow.addHost().createWindow();
+    abstractWindow.allSlots().createWindow();
   }
 }

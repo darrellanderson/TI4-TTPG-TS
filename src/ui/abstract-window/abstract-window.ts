@@ -28,7 +28,7 @@ export class AbstractWindow {
   private readonly _createAbstractUI: CreateAbstractUIType;
   private readonly _namespaceId: NamespaceId | undefined;
   private readonly _windowParams: WindowParams;
-  private _addHost: boolean = false;
+  private _allSlots: boolean = false;
 
   static getPlayerSlotToTransform(): {
     [key: number]: {
@@ -130,8 +130,8 @@ export class AbstractWindow {
     };
   }
 
-  addHost(): this {
-    this._addHost = true;
+  allSlots(): this {
+    this._allSlots = true;
     return this;
   }
 
@@ -153,16 +153,8 @@ export class AbstractWindow {
         .map((seat) => seat.playerSlot);
     }
 
-    // Add the host player slot.
-    let host: number = -1;
-    for (const player of world.getAllPlayers()) {
-      if (player.isHost()) {
-        host = player.getSlot();
-        break;
-      }
-    }
-    if (host >= 0 && !playerSlots.includes(host) && this._addHost) {
-      playerSlots.push(host);
+    if (this._allSlots) {
+      playerSlots = new Array<number>(20).fill(0).map((_, i) => i);
     }
 
     return new Window(this._windowParams, playerSlots, this._namespaceId);
