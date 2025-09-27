@@ -1,4 +1,4 @@
-import { Rotator, Vector, Widget, world } from "@tabletop-playground/api";
+import { Rotator, Vector, Widget } from "@tabletop-playground/api";
 import {
   IWindowWidget,
   NamespaceId,
