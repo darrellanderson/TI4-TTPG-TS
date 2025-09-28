@@ -1,11 +1,11 @@
 import fs from "fs";
 import klawSync from "klaw-sync";
 
+import { CreateCardsheet } from "../../../node_modules/ttpg-darrell/build/cjs/lib-ext/create-assets/create-cardsheets/create-cardsheet";
 import {
   CardsheetCardType,
-  CreateCardsheet,
   CreateCardsheetParams,
-} from "../../../../ttpg-darrell/src/index-ext";
+} from "../../../node_modules/ttpg-darrell/build/cjs/lib-ext/create-assets/create-cardsheets/create-cardsheet-params";
 
 export class CreateDeck {
   private readonly _cardType: string;
