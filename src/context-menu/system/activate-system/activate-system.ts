@@ -64,7 +64,7 @@ export class ActivateSystem implements IGlobal {
       return false;
     }
 
-    const pos: Vector = systemTileObj.getPosition().add([0, 0, 10]);
+    const pos: Vector = systemTileObj.getPosition().add([0, 6, 10]);
     token.setPosition(pos, 1);
     token.snapToGround();
     TI4.events.onSystemActivated.trigger(system, player);

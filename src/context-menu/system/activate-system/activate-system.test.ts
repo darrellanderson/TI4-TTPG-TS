@@ -11,9 +11,11 @@ it("constructor", () => {
 
 it("activate", () => {
   let activatedTileNumber: number = -1;
-  TI4.events.onSystemActivated.add((system: System, _player: Player) => {
-    activatedTileNumber = system.getSystemTileNumber();
-  });
+  globalThis.TI4.events.onSystemActivated.add(
+    (system: System, _player: Player) => {
+      activatedTileNumber = system.getSystemTileNumber();
+    }
+  );
 
   let systemTileObj: MockGameObject;
   let success: boolean;
@@ -57,7 +59,7 @@ it("activate", () => {
   success = activateSystem.moveCommandTokenToSystem(systemTileObj, player);
   expect(success).toBe(true);
 
-  expect(tacticToken.getPosition().toString()).toBe("(X=10,Y=0,Z=0)");
+  expect(tacticToken.getPosition().toString()).toBe("(X=10,Y=6,Z=0)");
   expect(activatedTileNumber).toBe(18);
 });
 
