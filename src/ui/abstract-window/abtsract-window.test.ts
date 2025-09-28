@@ -24,7 +24,7 @@ it("constuctor, createWindow", () => {
 
   new MockPlayer({ isHost: true, slot: 1 });
   abstractWindow
-    .allSlots()
+    .addHost()
     .moveWindowLeftOfTurnOrder()
     .getMutableWindowParams().disableClose = true;
 

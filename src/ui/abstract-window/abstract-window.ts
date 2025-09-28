@@ -1,4 +1,10 @@
-import { Rotator, Vector, Widget } from "@tabletop-playground/api";
+import {
+  Player,
+  Rotator,
+  Vector,
+  Widget,
+  world,
+} from "@tabletop-playground/api";
 import {
   IWindowWidget,
   NamespaceId,
@@ -28,6 +34,7 @@ export class AbstractWindow {
   private readonly _createAbstractUI: CreateAbstractUIType;
   private readonly _namespaceId: NamespaceId | undefined;
   private readonly _windowParams: WindowParams;
+  private _addHost: boolean = false;
   private _allSlots: boolean = false;
 
   static getPlayerSlotToTransform(): {
@@ -130,6 +137,11 @@ export class AbstractWindow {
     };
   }
 
+  addHost(): this {
+    this._addHost = true;
+    return this;
+  }
+
   allSlots(): this {
     this._allSlots = true;
     return this;
@@ -153,8 +165,19 @@ export class AbstractWindow {
         .map((seat) => seat.playerSlot);
     }
 
+    if (this._addHost) {
+      world.getAllPlayers().forEach((player: Player): void => {
+        if (player.isHost()) {
+          const hostSlot: number = player.getSlot();
+          if (playerSlots && !playerSlots.includes(hostSlot)) {
+            playerSlots.push(hostSlot);
+          }
+        }
+      });
+    }
+
     if (this._allSlots) {
-      playerSlots = new Array<number>(20).fill(0).map((_, i) => i);
+      playerSlots = Array.from({ length: 20 }, (_e, i) => i);
     }
 
     return new Window(this._windowParams, playerSlots, this._namespaceId);
