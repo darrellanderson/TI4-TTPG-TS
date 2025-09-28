@@ -67,7 +67,7 @@ class StatusPad {
 
     const forwardUi = new UIElement();
     forwardUi.anchorY = 1;
-    forwardUi.position = new Vector(0, 0, 0.39); // 0, 0, 1.2
+    forwardUi.position = new Vector(0, 0, 0.5); // 0, 0, 1.2
     forwardUi.rotation = new Rotator(0, 0, 0); // 15, 0, 0
     forwardUi.scale = 0.2;
     forwardUi.widget = forwardWidget;
@@ -88,7 +88,7 @@ class StatusPad {
 
     const reverseUi = new UIElement();
     reverseUi.anchorY = 0;
-    reverseUi.position = new Vector(0, 0, 0.39);
+    reverseUi.position = new Vector(0, 0, 0.5);
     reverseUi.scale = 0.2;
     reverseUi.widget = new Border().setChild(layoutBox);
 
