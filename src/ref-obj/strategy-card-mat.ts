@@ -17,7 +17,6 @@ import { Broadcast } from "ttpg-darrell";
 import { InitiativeOrder } from "../lib/strategy-card-lib/initiative-order/initiative-order";
 import { PlaceTgsUnpicked } from "../lib/strategy-card-lib/place-tgs-unpicked/place-tgs-unpicked";
 import { ReturnStrategyCard } from "../lib/strategy-card-lib/return-strategy-card/return-strategy-card";
-import { ReadyLib } from "../lib/ready-lib/ready-lib";
 import { DealActionCards } from "../lib/action-card-lib/deal-action-cards/deal-action-cards";
 import { RefreshAllPlanets } from "../lib/system-lib/planet/refresh-all-planets";
 import { ReturnCommandTokens } from "../lib/command-token-lib/return-command-tokens/return-command-tokens";
@@ -45,7 +44,6 @@ const _initiativeOrder: InitiativeOrder = new InitiativeOrder();
 const _placeTGsUnpicked: PlaceTgsUnpicked = new PlaceTgsUnpicked();
 const _dealActionCards: DealActionCards = new DealActionCards();
 const _returnStrategyCards: ReturnStrategyCard = new ReturnStrategyCard();
-const _readyLib: ReadyLib = new ReadyLib();
 const _refreshAllPlanets: RefreshAllPlanets = new RefreshAllPlanets();
 const _returnCommandTokens: ReturnCommandTokens = new ReturnCommandTokens();
 const _addCommandTokens: AddCommandTokens = new AddCommandTokens();
@@ -93,8 +91,7 @@ refObject.onCustomAction.add(
 
       _dealActionCards.dealAllActionCards();
       _returnCommandTokens.returnAllCommandTokens(); // return before add
-      _readyLib.readyAll();
-      //_refreshAllPlanets.refresh(true); // readyLib does this
+      _refreshAllPlanets.refresh(true);
       _addCommandTokens.addAllCommandTokens();
 
       const msg: string = `${playerName} dealt action cards, command tokens`;
