@@ -49,9 +49,22 @@ export class RefreshAllPlanets {
 
       if (shouldRefresh && !Facing.isFaceUp(obj)) {
         if (obj instanceof Card) {
+          const rejectSnapPointTags: Array<string> = [];
+          if (nsid.startsWith("card.legendary-planet:")) {
+            rejectSnapPointTags.push("deck-legendary-planet");
+          } else if (nsid.startsWith("card.planet:")) {
+            rejectSnapPointTags.push("deck-planet");
+          } else if (nsid.startsWith("card.relic:")) {
+            rejectSnapPointTags.push("deck-relic");
+          }
+
           if (
             shouldRefresh &&
-            this._cardUtil.isLooseCard(obj, allowFaceDown) &&
+            this._cardUtil.isLooseCard(
+              obj,
+              allowFaceDown,
+              rejectSnapPointTags
+            ) &&
             !Facing.isFaceUp(obj)
           ) {
             const pos: Vector = obj.getPosition();
