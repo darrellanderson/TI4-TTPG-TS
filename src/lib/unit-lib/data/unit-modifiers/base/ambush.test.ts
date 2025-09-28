@@ -22,7 +22,11 @@ it("ambush", () => {
     combatRoll._getUnitToCombatAttrs();
   expect([...unitToCombatAttrs.keys()]).toContain("ambush-cruiser");
   expect([...unitToCombatAttrs.keys()]).toContain("ambush-destroyer");
+  expect([...unitToCombatAttrs.keys()]).toContain("cruiser");
+  expect([...unitToCombatAttrs.keys()]).toContain("destroyer");
 
   expect(combatRoll.self.getCount("ambush-cruiser" as UnitType)).toBe(3);
   expect(combatRoll.self.getCount("ambush-destroyer" as UnitType)).toBe(1);
+  expect(combatRoll.self.getCount("cruiser")).toBe(0);
+  expect(combatRoll.self.getCount("destroyer")).toBe(0);
 });

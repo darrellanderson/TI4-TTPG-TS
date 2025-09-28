@@ -24,6 +24,12 @@ export const Ambush: UnitModifierSchemaType = {
     const totalCount: number = cruiserCount + destroyerCount;
     const rollCount: number = Math.floor(totalCount / 2);
 
+    // Remove all normal units from the roll.
+    combatRoll.self.unitAttrsSet.getAll().forEach((unitAttrs: UnitAttrs) => {
+      const unitType: UnitType = unitAttrs.getUnit();
+      combatRoll.self.overrideUnitCountHex.set(unitType, 0);
+    });
+
     // Favor cruisers.
     const cruiserRolls: number = Math.min(cruiserCount, rollCount);
     const destroyerRolls: number = rollCount - cruiserRolls;
