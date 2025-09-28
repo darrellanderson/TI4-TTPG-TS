@@ -21,14 +21,16 @@ it("data", () => {
     "card.technology.blue:base/antimass-deflectors"
   );
   const b: Card = MockCard.simple("card.technology.blue:base/fleet-logistics");
-  const c: Card = MockCard.simple("card.technology.blue:base/gravity-drive");
+  const c1: Card = MockCard.simple("card.technology.blue:base/gravity-drive");
+  const c2: Card = MockCard.simple("card.technology.blue:base/gravity-drive");
   const d: Card = MockCard.simple(
     "card.technology.bogus:base/_does-not-exist_"
   );
 
   a.setSavedData("1", "timestamp");
   b.setSavedData("2", "timestamp");
-  c.setSavedData("2", "timestamp"); // tie
+  c1.setSavedData("2", "timestamp"); // tie
+  c2.setSavedData("3", "timestamp"); // copy, newer
   d.setSavedData("4", "timestamp");
 
   const gameData: GameData = GameDataUpdator.createGameData();

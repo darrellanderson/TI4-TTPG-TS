@@ -59,7 +59,7 @@ export class UpdatorPlayerTech implements IGameDataUpdator {
       }
     }
 
-    // Sort tech cards by creation order.
+    // Sort cards by creation order.
     techCards.sort((a: Card, b: Card): number => {
       const aTimestamp: number = UpdatorPlayerTech.getTimestamp(a);
       const bTimestamp: number = UpdatorPlayerTech.getTimestamp(b);
@@ -70,7 +70,7 @@ export class UpdatorPlayerTech implements IGameDataUpdator {
       return a.getName().localeCompare(b.getName());
     });
 
-    // Sort planet cards by player slot.
+    // Group cards by player slot.
     const playerSlotToCards: Map<number, Array<Card>> = new Map();
     techCards.forEach((card: Card): void => {
       const pos: Vector = card.getPosition();
@@ -96,7 +96,11 @@ export class UpdatorPlayerTech implements IGameDataUpdator {
             const tech: Tech | undefined = TI4.techRegistry.getByNsid(nsid);
             return tech ? tech.getName() : "";
           })
-          .filter((name: string): boolean => name.length > 0);
+          .filter((name: string): boolean => name.length > 0)
+          .filter(
+            (name: string, index: number, array: Array<string>): boolean =>
+              array.indexOf(name) === index
+          ); // unique
       }
     );
   }
