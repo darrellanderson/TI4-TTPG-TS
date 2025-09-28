@@ -15,7 +15,6 @@ export * from './homebrew-lib';
 export * from './map-string-lib';
 export * from './numpad-key-lib';
 export * from './player-lib';
-export * from './ready-lib';
 export * from './recycle-lib';
 export * from './remove-lib';
 export * from './score-lib';

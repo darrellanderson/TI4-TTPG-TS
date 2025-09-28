@@ -1,5 +1,6 @@
 // created from 'create-ts-index'
 
+export * from './ambush';
 export * from './antimass-deflectors';
 export * from './bunker';
 export * from './cmorran-norr';
