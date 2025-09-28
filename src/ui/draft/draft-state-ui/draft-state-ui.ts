@@ -54,6 +54,9 @@ const COLORS: Array<string> = [
   "#6E260E", // brown
 ];
 
+// Draft UI moved to world with a large scale, undo it for zoomed elements.
+const EXTRA_SCALE: number = 0.4;
+
 export class DraftStateUI extends AbstractUI {
   private readonly _draftState: DraftState;
   private readonly _onDraftStateChangedHandler: () => void;
@@ -195,7 +198,7 @@ export class DraftStateUI extends AbstractUI {
     color: Color
   ): CreateZoomedUiType => {
     return (scale: number): AbstractUI => {
-      return new SliceUI(slice, sliceShape, color, scale * 3.5);
+      return new SliceUI(slice, sliceShape, color, scale * 3.5 * EXTRA_SCALE);
     };
   };
 
@@ -204,7 +207,7 @@ export class DraftStateUI extends AbstractUI {
     opaque: string
   ): CreateZoomedUiType => {
     return (scale: number): AbstractUI => {
-      return new OpaqueUI(opaque, draftState, scale * 3.5);
+      return new OpaqueUI(opaque, draftState, scale * 3.5 * EXTRA_SCALE);
     };
   };
 
@@ -217,7 +220,7 @@ export class DraftStateUI extends AbstractUI {
       const mapString: string = mapStringAndHexToPlayerName.mapString;
       const hexToLabel: Map<HexType, string> =
         mapStringAndHexToPlayerName.hexToPlayerName;
-      return new MapUI(mapString, hexToLabel, scale * 2);
+      return new MapUI(mapString, hexToLabel, scale * 2 * EXTRA_SCALE);
     };
   };
 

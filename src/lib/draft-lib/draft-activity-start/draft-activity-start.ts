@@ -1,11 +1,5 @@
-import { world } from "@tabletop-playground/api";
-import { Direction, IGlobal, NamespaceId, Shuffle, Window } from "ttpg-darrell";
-import { AbstractUI } from "../../../ui/abstract-ui/abtract-ui";
-import {
-  AbstractWindow,
-  CreateAbstractUIParams,
-  CreateAbstractUIType,
-} from "../../../ui/abstract-window/abstract-window";
+import { Border, UIElement, Vector, world } from "@tabletop-playground/api";
+import { Direction, IGlobal, Shuffle } from "ttpg-darrell";
 import { DraftState } from "../draft-state/draft-state";
 import { DraftStateUI } from "../../../ui/draft/draft-state-ui/draft-state-ui";
 import { Faction } from "../../faction-lib/faction/faction";
@@ -245,11 +239,13 @@ export class DraftActivityStart {
       resolveConflictsKeleres.resolve();
     });
 
+    /*
     const create: CreateAbstractUIType = (
       params: CreateAbstractUIParams
     ): AbstractUI => {
       return new DraftStateUI(draftState, params.scale);
     };
+
     const namespaceId: NamespaceId = "@TI4/draft-window";
     const windowTitle: string = "Draft";
     const abstractWindow: AbstractWindow = new AbstractWindow(
@@ -265,6 +261,24 @@ export class DraftActivityStart {
     this._draftState.onDraftStateChanged.add(() => {
       if (!draftState.isActive()) {
         window.detach();
+      }
+    });
+    */
+
+    // Use a shared, in-world UI instead of per-player windows.
+    const scale: number = 4;
+    const ui = new UIElement();
+    ui.scale = 1 / scale;
+    ui.widget = new Border().setChild(
+      new DraftStateUI(draftState, scale).getWidget()
+    );
+    ui.position = new Vector(0, 0, world.getTableHeight() + 3);
+    world.addUI(ui);
+
+    // Close window when draft state destroyed.
+    this._draftState.onDraftStateChanged.add(() => {
+      if (!draftState.isActive()) {
+        world.removeUIElement(ui);
       }
     });
 
