@@ -60,29 +60,30 @@ export class DiplomacySystem implements IGlobal {
       }
     }
 
-    for (const container of commandTokenContainers) {
-      let token: GameObject | undefined = undefined;
-      if (container.getNumItems() > 0) {
-        const r: number = 2;
-        const pos: Vector = systemTileObj
-          .getPosition()
-          .add([0, 0, 10])
-          .add([r * Math.random(), r * Math.random(), 0]);
-        token = container.takeAt(0, pos);
-      }
-      if (!token) {
-        const playerSlot: number = container.getOwningPlayerSlot();
-        const colorName: string | undefined =
-          TI4.playerColor.getSlotColorName(playerSlot);
-        if (colorName) {
-          Broadcast.broadcastAll(
-            `No command tokens available for ${colorName}`,
-            Broadcast.ERROR
-          );
+    commandTokenContainers.forEach(
+      (container: Container, index: number): void => {
+        let token: GameObject | undefined = undefined;
+        if (container.getNumItems() > 0) {
+          const x = (index - commandTokenContainers.length / 2) * 1;
+          const pos: Vector = systemTileObj.getPosition().add([x, 5, 10]);
+          token = container.takeAt(0, pos);
         }
-        success = false;
+        if (token) {
+          token.snapToGround();
+        } else {
+          const playerSlot: number = container.getOwningPlayerSlot();
+          const colorName: string | undefined =
+            TI4.playerColor.getSlotColorName(playerSlot);
+          if (colorName) {
+            Broadcast.broadcastAll(
+              `No command tokens available for ${colorName}`,
+              Broadcast.ERROR
+            );
+          }
+          success = false;
+        }
       }
-    }
+    );
 
     return success;
   }
