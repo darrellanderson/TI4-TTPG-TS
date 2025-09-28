@@ -55,7 +55,7 @@ const COLORS: Array<string> = [
 ];
 
 // Draft UI moved to world with a large scale, undo it for zoomed elements.
-const EXTRA_SCALE: number = 0.4;
+const EXTRA_SCALE: number = 0.25;
 
 export class DraftStateUI extends AbstractUI {
   private readonly _draftState: DraftState;
