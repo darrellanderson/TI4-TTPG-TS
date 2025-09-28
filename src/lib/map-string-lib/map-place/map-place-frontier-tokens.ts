@@ -8,7 +8,7 @@ export class MapPlaceFrontierTokens {
     for (const system of TI4.systemRegistry.getAllSystemsWithObjs(
       skipContained
     )) {
-      if (system.getPlanets().length === 0) {
+      if (system.getPlanets().length === 0 && !system.isHyperlane()) {
         zeroPlanetSystems.push(system);
       }
     }
