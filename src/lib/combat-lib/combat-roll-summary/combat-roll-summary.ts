@@ -124,7 +124,8 @@ export class CombatRollSummary {
       combatRoll.getRollType()
     );
 
-    return `${playerName} rolled ${rollType} ${totalHits} hits: ${combinedUnitResults}\nModifiers: ${modifiers.join(", ")}`;
+    const hitOrHits: string = totalHits === 1 ? "hit" : "hits";
+    return `${totalHits} ${hitOrHits} from ${playerName} ${rollType}\n${combinedUnitResults}\nModifiers: ${modifiers.join(", ")}`;
   }
 
   /**
