@@ -4,14 +4,14 @@ it("constructor/init", () => {
   new StartGameWindow().init();
   process.flushTicks();
   try {
-    TI4.events.onStartGameRequest.trigger();
+    globalThis.TI4.events.onStartGameRequest.trigger();
   } catch (_e) {
     // full setup requires more state than the mock objects provide
   }
-  TI4.timer.stop();
+  globalThis.TI4.timer.stop();
 });
 
 it("constructor/init (already started)", () => {
-  TI4.config.setTimestamp(1);
+  globalThis.TI4.config.setTimestamp(1);
   new StartGameWindow().init();
 });

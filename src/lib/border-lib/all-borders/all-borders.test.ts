@@ -26,7 +26,7 @@ it("static removeAllDrawingLines", () => {
 it("constructor, event, destroy", () => {
   const allBorders = new AllBorders();
   allBorders.init();
-  TurnOrder.onTurnStateChanged.trigger(TI4.turnOrder);
+  TurnOrder.onTurnStateChanged.trigger(globalThis.TI4.turnOrder);
   allBorders.destroy();
 });
 
