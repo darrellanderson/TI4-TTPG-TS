@@ -31,9 +31,9 @@ class MyDraft implements IDraft {
 
 // Systems must exist for registry to know about them.
 beforeEach(() => {
-  for (const tile of TI4.systemRegistry.getAllSystemTileNumbers()) {
+  for (const tile of globalThis.TI4.systemRegistry.getAllSystemTileNumbers()) {
     const nsid: string | undefined =
-      TI4.systemRegistry.tileNumberToSystemTileObjNsid(tile);
+      globalThis.TI4.systemRegistry.tileNumberToSystemTileObjNsid(tile);
     if (nsid) {
       MockGameObject.simple(nsid);
     }
@@ -55,7 +55,7 @@ it("static resumeIfInProgress (false)", () => {
 });
 
 it("static resumeIfInProgress (true)", () => {
-  TI4.config.setPlayerCount(2);
+  globalThis.TI4.config.setPlayerCount(2);
   const params: DraftActivityStartParams = {
     namespaceId: "@test/test",
     draft: new MyDraft(),
@@ -94,7 +94,7 @@ it("createEmptyDraftState", () => {
 });
 
 it("createDraftState (generate all)", () => {
-  TI4.config.setPlayerCount(2);
+  globalThis.TI4.config.setPlayerCount(2);
   const params: DraftActivityStartParams = {
     namespaceId: "@test/test",
     draft: new MyDraft(),
@@ -110,7 +110,7 @@ it("createDraftState (generate all)", () => {
 });
 
 it("createDraftState (generate all)", () => {
-  TI4.config.setPlayerCount(2);
+  globalThis.TI4.config.setPlayerCount(2);
   const params: DraftActivityStartParams = {
     namespaceId: "@test/test",
     draft: new MyDraft(),
@@ -126,7 +126,7 @@ it("createDraftState (generate all)", () => {
 });
 
 it("createDraftState (minor factions)", () => {
-  TI4.config.setPlayerCount(6);
+  globalThis.TI4.config.setPlayerCount(6);
   const params: DraftActivityStartParams = {
     namespaceId: "@test/test",
     draft: new MinorFactionsDraft(),
@@ -141,7 +141,7 @@ it("createDraftState (minor factions)", () => {
 });
 
 it("createDraftState (parse all)", () => {
-  TI4.config.setPlayerCount(2);
+  globalThis.TI4.config.setPlayerCount(2);
   const params: DraftActivityStartParams = {
     namespaceId: "@test/test",
     draft: new MyDraft(),
@@ -169,11 +169,11 @@ it("resume (not in progress)", () => {
 });
 
 it("getMinorFactions", () => {
-  expect(TI4.config.sources).toContain("codex.vigil");
-  const arborec: Faction = TI4.factionRegistry.getByNsidOrThrow(
+  expect(globalThis.TI4.config.sources).toContain("codex.vigil");
+  const arborec: Faction = globalThis.TI4.factionRegistry.getByNsidOrThrow(
     "faction:base/arborec"
   );
-  const keleres: Faction = TI4.factionRegistry.getByNsidOrThrow(
+  const keleres: Faction = globalThis.TI4.factionRegistry.getByNsidOrThrow(
     "faction:codex.vigil/keleres-xxcha"
   );
   const factions: Array<Faction> = [arborec, keleres];
