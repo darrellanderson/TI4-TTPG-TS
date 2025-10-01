@@ -576,11 +576,15 @@ export class CombatRoll {
     }
 
     // If opponent is not assigned, look for units belonging to another player.
-    // (Look only at units in some "area", space or ground.)
+    // (Look only at units in same "area", space or ground.)
     if (this.opponent.playerSlot === -1) {
-      let relevant: Array<UnitPlastic> = [];
+      let relevant: Array<UnitPlastic> = unitPlastics.filter((unitPlastic) => {
+        const pos: Vector = unitPlastic.getObj().getPosition();
+        const hex: HexType = TI4.hex.fromPosition(pos);
+        return hex === this._params.hex;
+      });
       if (this._params.planetName) {
-        relevant = unitPlastics.filter((unitPlastic) => {
+        relevant = relevant.filter((unitPlastic) => {
           const planet: Planet | undefined = unitPlastic.getPlanetClosest();
           return (
             isGroundSet.has(unitPlastic.getUnit()) &&
@@ -589,7 +593,7 @@ export class CombatRoll {
           );
         });
       } else {
-        relevant = unitPlastics.filter((unitPlastic) => {
+        relevant = relevant.filter((unitPlastic) => {
           return isShipSet.has(unitPlastic.getUnit());
         });
       }
