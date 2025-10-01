@@ -100,6 +100,9 @@ export class ToggleStratCards implements IGlobal {
       const window: Window = this._createWindow(playerSlot).attach();
       window.onAllClosed.add(() => {
         this._playerSlotToWindowData.delete(playerSlot);
+
+        // If a player closes the window, clear the in-progress strategy card state.
+        this._strategyCardsState.clear(playerSlot);
       });
       const key: string = this._strategyCardsState
         .active(playerSlot)

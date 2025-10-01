@@ -69,7 +69,7 @@ it("event", () => {
     "tile.strategy-card:base/leadership"
   );
   const player: Player = new MockPlayer();
-  TI4.events.onStrategyCardPlayed.trigger(strategyCard, player);
+  globalThis.TI4.events.onStrategyCardPlayed.trigger(strategyCard, player);
 });
 
 it("add/active/remove", () => {
@@ -119,5 +119,20 @@ it("add/active/remove", () => {
   ]);
 
   strategyCardState.remove(playerSlot, 2);
+  expect(strategyCardState.active(playerSlot)).toEqual([]);
+});
+
+it("clear", () => {
+  const strategyCardState = new StrategyCardsState("@test/test");
+  const playerSlot: PlayerSlot = 10;
+
+  strategyCardState.addOrUpdate(playerSlot, 1, "1-state");
+  strategyCardState.addOrUpdate(playerSlot, 2, "2-state");
+  expect(strategyCardState.active(playerSlot)).toEqual([
+    { number: 1, state: "1-state" },
+    { number: 2, state: "2-state" },
+  ]);
+
+  strategyCardState.clear(playerSlot);
   expect(strategyCardState.active(playerSlot)).toEqual([]);
 });

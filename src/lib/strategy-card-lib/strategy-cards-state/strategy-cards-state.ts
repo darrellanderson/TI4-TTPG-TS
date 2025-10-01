@@ -199,6 +199,17 @@ export class StrategyCardsState {
     return this;
   }
 
+  clear(playerSlot: number): this {
+    const active: Array<StrategyCardNumberAndState> =
+      this._getMutableActive(playerSlot);
+    while (active.length > 0) {
+      active.pop();
+    }
+    this._save();
+    this.onStrategyCardsStateChanged.trigger();
+    return this;
+  }
+
   setLastPlayerSlotPlayed(
     strategyCardNumber: number,
     playerSlot: PlayerSlot
