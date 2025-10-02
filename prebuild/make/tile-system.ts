@@ -21,7 +21,7 @@ async function _generate1024(
     },
   })
     .composite([{ input: jpg884, blend: "over", left: 70, top: 70 }])
-    .jpeg({ quality: 90 })
+    .jpeg({ quality: 80 })
     .toFile(dst1024filename);
 }
 
@@ -42,7 +42,7 @@ async function _generate1024Shuriken(
     },
   })
     .composite([{ input: jpg884, blend: "over", left: 1, top: 1 }])
-    .jpeg({ quality: 90 })
+    .jpeg({ quality: 80 })
     .toFile(dst1024filename);
 }
 
@@ -124,9 +124,6 @@ async function processAll(): Promise<void> {
       throw new Error(`No systems found for source: ${source}`);
     }
     for (const system of systems) {
-      if (system.class !== "off-map") {
-        continue;
-      }
       if (system.tile <= 0) {
         continue;
       }
