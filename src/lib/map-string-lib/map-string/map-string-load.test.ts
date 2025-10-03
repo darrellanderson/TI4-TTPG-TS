@@ -47,13 +47,13 @@ it("_tryMoveExistingSystemTileObj (existing system)", () => {
   > = load._getTileNumberToSystemsSnapshot();
   expect(systemsSnapshot.get(1)).toBeDefined();
 
-  const success: boolean = load._tryMoveExistingSystemTileObj(
+  const placed: GameObject | undefined = load._tryMoveExistingSystemTileObj(
     1,
     pos,
     rot,
     systemsSnapshot
   );
-  expect(success).toBe(true);
+  expect(placed).toBeDefined();
   expect(systemTileObj.getPosition().toString()).toBe("(X=1,Y=2,Z=0)");
   expect(systemTileObj.getRotation().toString()).toBe("(P=4,Y=5,R=6)");
 });
@@ -77,13 +77,13 @@ it("_tryMoveExistingSystemTileObj (existing system in container)", () => {
 
   expect(systemsSnapshot.get(1)).toBeDefined();
 
-  const success: boolean = load._tryMoveExistingSystemTileObj(
+  const placed: GameObject | undefined = load._tryMoveExistingSystemTileObj(
     1,
     pos,
     rot,
     systemsSnapshot
   );
-  expect(success).toBe(true);
+  expect(placed).toBeDefined();
   expect(container.getItems().includes(systemTileObj)).toBe(false);
   expect(systemTileObj.getContainer()).toBeUndefined();
   expect(systemTileObj.getPosition().toString()).toBe("(X=1,Y=2,Z=0)");
@@ -112,13 +112,13 @@ it("_tryMoveExistingSystemTileObj (container take failure)", () => {
   // Fail the container take.
   jest.spyOn(container, "take").mockReturnValue(false);
 
-  const success: boolean = load._tryMoveExistingSystemTileObj(
+  const placed: GameObject | undefined = load._tryMoveExistingSystemTileObj(
     1,
     pos,
     rot,
     systemsSnapshot
   );
-  expect(success).toBe(false);
+  expect(placed).toBeUndefined();
 });
 
 it("_tryMoveExistingSystemTileObj (missing system array)", () => {
@@ -131,13 +131,13 @@ it("_tryMoveExistingSystemTileObj (missing system array)", () => {
   > = load._getTileNumberToSystemsSnapshot();
   expect(systemsSnapshot.get(1)).toBeUndefined();
 
-  const success: boolean = load._tryMoveExistingSystemTileObj(
+  const placed: GameObject | undefined = load._tryMoveExistingSystemTileObj(
     1,
     pos,
     rot,
     systemsSnapshot
   );
-  expect(success).toBe(false);
+  expect(placed).toBeUndefined();
 });
 
 it("_tryMoveExistingSystemTileObj (empty system array)", () => {
@@ -158,13 +158,13 @@ it("_tryMoveExistingSystemTileObj (empty system array)", () => {
   systemsSnapshot.get(1)?.pop();
   expect(systemsSnapshot.get(1)?.length).toBe(0);
 
-  const success: boolean = load._tryMoveExistingSystemTileObj(
+  const placed: GameObject | undefined = load._tryMoveExistingSystemTileObj(
     1,
     pos,
     rot,
     systemsSnapshot
   );
-  expect(success).toBe(false);
+  expect(placed).toBeUndefined();
 });
 
 it("_trySpawnNewSystemTileObj (spawn)", () => {
@@ -177,8 +177,12 @@ it("_trySpawnNewSystemTileObj (spawn)", () => {
   const load: MapStringLoad = new MapStringLoad();
   const pos: Vector = new Vector(1, 2, 3);
   const rot: Rotator = new Rotator(4, 5, 6);
-  const success: boolean = load._trySpawnNewSystemTileObj(1, pos, rot);
-  expect(success).toBe(true);
+  const placed: GameObject | undefined = load._trySpawnNewSystemTileObj(
+    1,
+    pos,
+    rot
+  );
+  expect(placed).toBeDefined();
 
   const systems: Array<System> =
     globalThis.TI4.systemRegistry.getAllSystemsWithObjs();
@@ -193,8 +197,12 @@ it("_trySpawnNewSystemTileObj (unknown nsid)", () => {
   const load: MapStringLoad = new MapStringLoad();
   const pos: Vector = new Vector(1, 2, 3);
   const rot: Rotator = new Rotator(4, 5, 6);
-  const success: boolean = load._trySpawnNewSystemTileObj(4398, pos, rot);
-  expect(success).toBe(false);
+  const placed: GameObject | undefined = load._trySpawnNewSystemTileObj(
+    4398,
+    pos,
+    rot
+  );
+  expect(placed).toBeUndefined();
 });
 
 it("load", () => {

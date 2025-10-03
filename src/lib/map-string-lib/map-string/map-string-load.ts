@@ -1,12 +1,19 @@
 import {
   Container,
   GameObject,
+  GameWorld,
   ObjectType,
   Rotator,
   Vector,
   world,
 } from "@tabletop-playground/api";
-import { Broadcast, Find, HexType, locale } from "ttpg-darrell";
+import {
+  Broadcast,
+  DeletedItemsContainer,
+  Find,
+  HexType,
+  locale,
+} from "ttpg-darrell";
 
 import { MapStringEntry, MapStringParser } from "./map-string-parser";
 import { System } from "../../system-lib/system/system";
@@ -89,17 +96,17 @@ export class MapStringLoad {
     pos: Vector,
     rot: Rotator,
     systemsSnapshot: Map<number, Array<System>>
-  ): boolean {
+  ): GameObject | undefined {
     // The snapshot tracks unused systems.  Check if we have one, if yes
     // remove it from the snapshot and use it.
     const systems: Array<System> | undefined =
       systemsSnapshot.get(systemTileNumber);
     if (!systems) {
-      return false; // no systems with that tile number
+      return undefined; // no systems with that tile number
     }
     const system: System | undefined = systems.pop();
     if (!system) {
-      return false; // no systems left with that tile number
+      return undefined; // no systems left with that tile number
     }
 
     // Found a system.  If inside container take it out.
@@ -115,7 +122,7 @@ export class MapStringLoad {
         keep
       );
       if (!success) {
-        return false;
+        return undefined;
       }
     }
     pos.z = world.getTableHeight() + 10;
@@ -124,18 +131,18 @@ export class MapStringLoad {
     systemTileObj.setRotation(rot);
     systemTileObj.snapToGround();
     systemTileObj.setObjectType(ObjectType.Ground);
-    return true;
+    return systemTileObj;
   }
 
   _trySpawnNewSystemTileObj(
     systemTileNumber: number,
     pos: Vector,
     rot: Rotator
-  ): boolean {
+  ): GameObject | undefined {
     const nsid: string | undefined =
       TI4.systemRegistry.tileNumberToSystemTileObjNsid(systemTileNumber);
     if (!nsid) {
-      return false;
+      return undefined;
     }
     const above: Vector = pos.add(new Vector(0, 0, 10));
     const systemTileObj: GameObject | undefined = TI4.spawn.spawn(
@@ -148,7 +155,7 @@ export class MapStringLoad {
       systemTileObj.snapToGround();
       systemTileObj.setObjectType(ObjectType.Ground);
     }
-    return systemTileObj !== undefined;
+    return systemTileObj;
   }
 
   public load(mapString: string): boolean {
@@ -192,6 +199,7 @@ export class MapStringLoad {
       Array<System>
     > = this._getTileNumberToSystemsSnapshot();
 
+    const systemTileObjs: Array<GameObject> = [];
     const maxStringHex: MapStringHex = new MapStringHex();
     for (let i = 0; i < entries.length; i++) {
       const entry: MapStringEntry | undefined = entries[i];
@@ -205,22 +213,49 @@ export class MapStringLoad {
           entry.side === "b" ? 180 : 0
         );
 
-        if (
-          this._tryMoveExistingSystemTileObj(
-            entry.tile,
-            pos,
-            rot,
-            systemsSnapshot
-          )
-        ) {
+        let systemTileObj: GameObject | undefined;
+        systemTileObj = this._tryMoveExistingSystemTileObj(
+          entry.tile,
+          pos,
+          rot,
+          systemsSnapshot
+        );
+        if (systemTileObj) {
+          systemTileObjs.push(systemTileObj);
           continue; // success, moved an existing tile
         }
 
-        if (this._trySpawnNewSystemTileObj(entry.tile, pos, rot)) {
+        systemTileObj = this._trySpawnNewSystemTileObj(entry.tile, pos, rot);
+        if (systemTileObj) {
+          systemTileObjs.push(systemTileObj);
           continue; // success, spawned a new tile
         }
       }
     }
+
+    if (GameWorld.getExecutionReason() !== "unittest") {
+      // Moving too many things out of a container in the same frame can cause
+      // problems with synchronization.  The host sees correct, others do not.
+      // Creating objects, however, appears to synchronize correctly.
+      // Replace all the moved objects with clones.
+      systemTileObjs.forEach((obj: GameObject): void => {
+        const json: string = obj.toJSONString();
+        const pos: Vector = obj.getPosition();
+        const rot: Rotator = obj.getRotation();
+        const objectType: ObjectType = obj.getObjectType();
+        DeletedItemsContainer.destroyWithoutCopying(obj);
+        const clone: GameObject | undefined = world.createObjectFromJSON(
+          json,
+          pos.add([0, 0, 10])
+        );
+        if (clone) {
+          clone.setRotation(rot);
+          clone.setPosition(pos);
+          clone.setObjectType(objectType);
+        }
+      });
+    }
+
     return true;
   }
 }
