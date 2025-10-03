@@ -11,7 +11,7 @@ import {
   CreateAbstractUIType,
 } from "../../../ui/abstract-window/abstract-window";
 
-const AGENDA_STATE_NAMESPACE_ID: NamespaceId = "@ti4/agenda-state";
+export const AGENDA_STATE_NAMESPACE_ID: NamespaceId = "@ti4/agenda-state";
 const AGENDA_WINDOW_NAMESPACE_ID: NamespaceId = "@ti4/agenda-window";
 
 export class AgendaActivityMaybeResume implements IGlobal {
