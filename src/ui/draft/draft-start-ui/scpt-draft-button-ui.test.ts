@@ -1,6 +1,5 @@
-import { Button, Player } from "@tabletop-playground/api";
 import { TriggerableMulticastDelegate } from "ttpg-darrell";
-import { clickAll, MockButton, MockPlayer } from "ttpg-mock";
+import { clickAll } from "ttpg-mock";
 import { Milty } from "../../../lib/draft-lib/drafts/milty";
 import { DRAFT_NAMESPACE_ID } from "../../../lib/draft-lib/draft-activity-start/draft-activity-start-params";
 import { ScptDraftButtonUI } from "./scpt-draft-button-ui";
