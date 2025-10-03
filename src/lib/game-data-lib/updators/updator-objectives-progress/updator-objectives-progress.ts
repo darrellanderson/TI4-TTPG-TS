@@ -12,7 +12,7 @@ export class UpdatorObjectivesProgress implements IGameDataUpdator {
     const progress: Array<UpdatorObjectiveProgressType> = [];
 
     const goalData: ReadonlyArray<GoalDataEntry> =
-      TI4.goalReporter.getAllGoalDataEntries();
+      TI4.goalReporter.getActiveGoalDataEntries();
     goalData.forEach((goalDataEntry: GoalDataEntry): void => {
       const goalNsid: string = goalDataEntry.nsid;
       const goalProgress: GoalProgressType | undefined =

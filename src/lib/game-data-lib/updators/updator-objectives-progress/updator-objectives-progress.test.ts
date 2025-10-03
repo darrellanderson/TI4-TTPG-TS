@@ -3,6 +3,7 @@ import { UpdatorObjectivesProgress } from "./updator-objectives-progress";
 import { GoalDataEntry } from "../../objective-progress/goal.data";
 import { GameData } from "../../game-data/game-data";
 import { GameDataUpdator } from "../../game-data-updator/game-data-updator";
+import { MockCard, MockGameObject } from "ttpg-mock";
 
 it("constructor", () => {
   new UpdatorObjectivesProgress();
@@ -94,6 +95,9 @@ it("_getObjectiveProgress", () => {
 });
 
 it("update", () => {
+  MockCard.simple("card.objective.public-1:base/sway-the-council");
+  MockGameObject.simple("mat:base/objective-1");
+
   jest.useFakeTimers();
 
   const updator: UpdatorObjectivesProgress = new UpdatorObjectivesProgress();
@@ -103,9 +107,9 @@ it("update", () => {
   updator.update(gameData);
   expect(gameData.objectivesProgress).toEqual([]);
 
-  TI4.useStreamerBuddy.setUseStreamerBuddy(true);
-  jest.advanceTimersByTime(1000);
+  globalThis.TI4.useStreamerBuddy.setUseStreamerBuddy(true);
+  jest.advanceTimersByTime(20000);
 
   updator.update(gameData);
-  expect(gameData.objectivesProgress?.length).toBeGreaterThan(0);
+  expect(gameData.objectivesProgress?.length).toBe(1);
 });

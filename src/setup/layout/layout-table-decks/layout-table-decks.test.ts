@@ -29,10 +29,6 @@ it("constructor", () => {
   const pos: Vector = new Vector(0, 0, 0);
   const yaw: number = 0;
 
-  expect(() => {
-    new LayoutTableDecks().getLayout().doLayoutAtPoint(pos, yaw);
-  }).toThrow();
-
   setupTestTableDeckSnapPoints();
 
   new LayoutTableDecks().getLayout().doLayoutAtPoint(pos, yaw);

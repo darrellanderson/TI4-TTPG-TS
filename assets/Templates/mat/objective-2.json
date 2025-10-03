@@ -67,7 +67,9 @@
             "Shape": 0,
             "FlipValidity": 0,
             "Tags": [
+                "card-objective-1",
                 "card-objective-2",
+                "card-objective-secret",
                 "deck-objective-2"
             ]
         },
@@ -81,7 +83,9 @@
             "Shape": 0,
             "FlipValidity": 0,
             "Tags": [
-                "card-objective-2"
+                "card-objective-1",
+                "card-objective-2",
+                "card-objective-secret"
             ]
         },
         {
@@ -94,7 +98,9 @@
             "Shape": 0,
             "FlipValidity": 0,
             "Tags": [
-                "card-objective-2"
+                "card-objective-1",
+                "card-objective-2",
+                "card-objective-secret"
             ]
         },
         {
@@ -107,7 +113,9 @@
             "Shape": 0,
             "FlipValidity": 0,
             "Tags": [
-                "card-objective-2"
+                "card-objective-1",
+                "card-objective-2",
+                "card-objective-secret"
             ]
         },
         {
@@ -120,7 +128,9 @@
             "Shape": 0,
             "FlipValidity": 0,
             "Tags": [
-                "card-objective-2"
+                "card-objective-1",
+                "card-objective-2",
+                "card-objective-secret"
             ]
         },
         {
@@ -133,7 +143,9 @@
             "Shape": 0,
             "FlipValidity": 0,
             "Tags": [
-                "card-objective-2"
+                "card-objective-1",
+                "card-objective-2",
+                "card-objective-secret"
             ]
         },
         {
@@ -145,7 +157,11 @@
             "RotationOffset": 0,
             "Shape": 0,
             "FlipValidity": 0,
-            "Tags": []
+            "Tags": [
+                "card-objective-1",
+                "card-objective-2",
+                "card-objective-secret"
+            ]
         }
     ],
     "ZoomViewDirection": {

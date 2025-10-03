@@ -1,6 +1,4 @@
 import {
-  CreateBoard,
-  CreateBoardParams,
   ZBaseCell,
   ZCanvasCell,
   ZColCell,
@@ -8,7 +6,9 @@ import {
   ZPaddedCell,
   ZRowCell,
   ZTextCell,
-} from "../../../ttpg-darrell/src/index-ext";
+} from "../../node_modules/ttpg-darrell/build/cjs/lib-ext/image/cell/cell-parser";
+import { CreateBoardParams } from "../../node_modules/ttpg-darrell/build/cjs/lib-ext/create-assets/create-board/create-board-params";
+import { CreateBoard } from "../../node_modules/ttpg-darrell/build/cjs/lib-ext/create-assets/create-board/create-board";
 
 const W: number = 220;
 const H: number = 308;
@@ -21,9 +21,13 @@ const DECK_EXTRA_GAP: number = SPACING; // gap + spacing on both sides
 function labeledCell(
   labelText: string,
   isDeck: boolean,
-  snapEverything?: boolean
+  snapEverything: boolean = false
 ): ZColCell {
-  const tags = snapEverything ? [] : ["card-objective-1"];
+  const tags = [
+    "card-objective-1",
+    "card-objective-2",
+    "card-objective-secret",
+  ];
   if (isDeck) {
     tags.push("deck-objective-1");
   }

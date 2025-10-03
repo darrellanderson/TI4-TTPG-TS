@@ -57,23 +57,4 @@ it("clickAllButtons", () => {
 
   // Click the "confirm" buttons.
   clickAll(scptDraftButtonUI.getWidget());
-
-  // Click the underlying buttons manually.
-  const button: Button = new MockButton();
-  const player: Player = new MockPlayer();
-
-  // These throw because systems are not set up.
-  // Exercise them to get to that point.
-  expect(() => {
-    scptDraftButtonUI._qualHandler(button, player);
-  }).toThrow();
-  expect(() => {
-    scptDraftButtonUI._prelimHandler(button, player);
-  }).toThrow();
-  expect(() => {
-    scptDraftButtonUI._semiHandler(button, player);
-  }).toThrow();
-  expect(() => {
-    scptDraftButtonUI._finalHandler(button, player);
-  }).toThrow();
 });

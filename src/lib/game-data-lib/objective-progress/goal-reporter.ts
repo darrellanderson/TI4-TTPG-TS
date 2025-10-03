@@ -1,8 +1,9 @@
 import { IGlobal } from "ttpg-darrell";
 import { GOAL_DATA_ENTRIES, GoalDataEntry } from "./goal.data";
 import { GoalProgressType } from "./goal-progress";
+import { ObjectiveToScored } from "./objective-to-scored";
 
-const GOAL_CYCLE_TIME_MSECS = 5000;
+const GOAL_CYCLE_TIME_MSECS = 10000;
 
 /**
  * Slowly cycles through the goal data entries, updates a local collection of
@@ -62,6 +63,22 @@ export class GoalReporter implements IGlobal {
 
   getAllGoalDataEntries(): ReadonlyArray<GoalDataEntry> {
     return this._goalData;
+  }
+
+  getActiveGoalDataEntries(): Array<GoalDataEntry> {
+    const objectiveNsidToScored: Map<
+      string,
+      Array<number>
+    > = new ObjectiveToScored().nsidToScored();
+
+    const activeGoalData: Array<GoalDataEntry> = this._goalData.filter(
+      (goalData: GoalDataEntry): boolean => {
+        const nsid: string = goalData.nsid;
+        return objectiveNsidToScored.has(nsid);
+      }
+    );
+
+    return activeGoalData;
   }
 
   getGoalProgress(nsid: string): GoalProgressType | undefined {
