@@ -1,5 +1,6 @@
 import { Card, GameObject, Player, Vector } from "@tabletop-playground/api";
 import {
+  Broadcast,
   Find,
   IGlobal,
   NSID,
@@ -20,11 +21,11 @@ export const ACTION_REMOVE: string = "*Remove Faction";
 export class UnpackFactionContextMenuItem implements IGlobal {
   private readonly _onCustomActionHandler = (
     obj: GameObject,
-    _player: Player,
+    player: Player,
     identifier: string
   ): void => {
     if (identifier === ACTION_UNPACK) {
-      this._unpackFaction(obj);
+      this._unpackFaction(obj, player);
     } else if (identifier === ACTION_REMOVE) {
       this._removeFaction(obj);
     }
@@ -70,9 +71,20 @@ export class UnpackFactionContextMenuItem implements IGlobal {
     return playerSlot;
   }
 
-  _unpackFaction(obj: GameObject): void {
+  _unpackFaction(obj: GameObject, player: Player): void {
     const faction: Faction = this._getFaction(obj);
     const playerSlot: number = this._getClosest(obj);
+
+    const existingFaction = TI4.factionRegistry.getByPlayerSlot(playerSlot);
+    if (existingFaction) {
+      Broadcast.chatOne(
+        player,
+        `Already has a faction: "${existingFaction.getName()}"`,
+        Broadcast.ERROR
+      );
+      return;
+    }
+
     new UnpackAll(faction, playerSlot).unpack();
   }
 
