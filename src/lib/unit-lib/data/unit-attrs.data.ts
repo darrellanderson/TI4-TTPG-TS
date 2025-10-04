@@ -420,6 +420,7 @@ export const SOURCE_TO_UNIT_ATTRS_DATA: Record<
       name: "Strike Wing Alpha II",
       unit: "destroyer",
       nsidName: "strike-wing-alpha-2",
+      antiFighterBarrage: { dice: 3, hit: 6 },
       spaceCombat: { hit: 7 },
       afbDestroyInfantryInSpace: 9,
     },
