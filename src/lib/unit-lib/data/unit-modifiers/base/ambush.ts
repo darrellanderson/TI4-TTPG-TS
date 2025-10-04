@@ -9,7 +9,7 @@ import { UnitType } from "../../../schema/unit-attrs-schema";
 
 export const Ambush: UnitModifierSchemaType = {
   name: "Ambush",
-  description: "each of two cruisers or destroyers attack",
+  description: "up to two cruisers or destroyers attack",
   triggerAlways: true,
   triggers: [],
   owner: "self",
@@ -21,8 +21,6 @@ export const Ambush: UnitModifierSchemaType = {
   apply: (combatRoll: CombatRoll): void => {
     const cruiserCount: number = combatRoll.self.getCount("cruiser");
     const destroyerCount: number = combatRoll.self.getCount("destroyer");
-    const totalCount: number = cruiserCount + destroyerCount;
-    const rollCount: number = Math.floor(totalCount / 2);
 
     // Remove all normal units from the roll.
     combatRoll.self.unitAttrsSet.getAll().forEach((unitAttrs: UnitAttrs) => {
@@ -31,8 +29,8 @@ export const Ambush: UnitModifierSchemaType = {
     });
 
     // Favor cruisers.
-    const cruiserRolls: number = Math.min(cruiserCount, rollCount);
-    const destroyerRolls: number = rollCount - cruiserRolls;
+    const cruiserRolls: number = Math.min(cruiserCount, 2);
+    const destroyerRolls: number = Math.min(destroyerCount, 2 - cruiserRolls);
 
     const cruiserUnitAttrs: UnitAttrs | undefined =
       combatRoll.self.unitAttrsSet.get("cruiser");
