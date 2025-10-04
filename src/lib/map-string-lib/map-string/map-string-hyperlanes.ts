@@ -47,7 +47,7 @@ export class MapStringHyperlanes {
       if (hyperlaneEntry && hyperlaneEntry.tile > 0) {
         const mapStringEntry: MapStringEntry | undefined =
           mapStringArray[index];
-        if (mapStringEntry && mapStringEntry.tile >= 0) {
+        if (mapStringEntry && mapStringEntry.tile !== -1) {
           move.push({ index, entry: mapStringEntry });
         }
         mapStringArray[index] = hyperlaneEntry;
@@ -56,8 +56,8 @@ export class MapStringHyperlanes {
       // Keep track of open slots in the ring.
       const mapStringEntry: MapStringEntry | undefined = mapStringArray[index];
       if (
-        (!hyperlaneEntry || hyperlaneEntry.tile <= 0) &&
-        (!mapStringEntry || mapStringEntry.tile <= 0)
+        (!hyperlaneEntry || hyperlaneEntry.tile === -1) &&
+        (!mapStringEntry || mapStringEntry.tile === -1)
       ) {
         open.add(index);
       }
@@ -97,6 +97,7 @@ export class MapStringHyperlanes {
         }
       });
     }
-    return new MapStringFormat().format(mapStringArray);
+    const result: string = new MapStringFormat().format(mapStringArray);
+    return result;
   }
 }

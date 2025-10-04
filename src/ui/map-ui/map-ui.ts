@@ -100,11 +100,6 @@ export class MapUI extends AbstractUI {
 
     const canvas: Canvas = new Canvas();
     entries.forEach((entry: MapStringEntry, index: number) => {
-      // Always skip -1, allow other negative values for tint color.
-      if (entry.tile === -1) {
-        return;
-      }
-
       const img = new ImageWidget().setImageSize(
         halfScaledHexWidth * 2 + 2,
         halfScaledHexHeight * 2 + 2
