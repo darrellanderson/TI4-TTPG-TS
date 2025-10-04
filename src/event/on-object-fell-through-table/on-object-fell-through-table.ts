@@ -6,8 +6,10 @@ export class OnObjectFellThroughTable implements IGlobal {
 
   readonly _onBeginOverlapHandler = (_zone: Zone, object: GameObject): void => {
     const objPos: Vector = object.getPosition();
-    if (objPos.x === 0 && objPos.y === 0 && objPos.z === 0) {
-      return; // "f"lip moves the object to the origin briefly.
+
+    const origin: Vector = new Vector(0, 0, 0);
+    if (origin.subtract(objPos).magnitudeSquared() < 0.1) {
+      return; // "flip" moves the object to the origin briefly.
     }
 
     // Move above table.
