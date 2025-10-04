@@ -284,6 +284,10 @@ export class Planet {
     return result;
   }
 
+  isSpaceStation(): boolean {
+    return this._params.isSpaceStation ?? false;
+  }
+
   /**
    * Set planet local position.
    *

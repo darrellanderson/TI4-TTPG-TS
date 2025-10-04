@@ -1,5 +1,6 @@
-import { System } from "../../system-lib/system/system";
 import { Vector } from "@tabletop-playground/api";
+import { Planet } from "../../system-lib/planet/planet";
+import { System } from "../../system-lib/system/system";
 
 export class MapPlaceFrontierTokens {
   static _getZeroPlanetSystems(): Array<System> {
@@ -8,7 +9,10 @@ export class MapPlaceFrontierTokens {
     for (const system of TI4.systemRegistry.getAllSystemsWithObjs(
       skipContained
     )) {
-      if (system.getPlanets().length === 0 && !system.isHyperlane()) {
+      const planets: Array<Planet> = system
+        .getPlanets()
+        .filter((planet) => !planet.isSpaceStation());
+      if (planets.length === 0 && !system.isHyperlane()) {
         zeroPlanetSystems.push(system);
       }
     }
