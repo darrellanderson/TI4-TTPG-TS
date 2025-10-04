@@ -1,4 +1,3 @@
-import { CombatAttrs, UnitAttrs } from "../../../unit-attrs";
 import {
   BestUnitWithCombatAttrs,
   CombatRoll,
@@ -38,18 +37,6 @@ export const TrrakanAunZulok: UnitModifierSchemaType = {
       combatRoll.bestHitUnitWithCombatAttrs();
     if (bestUnitWithCombatAttrs) {
       bestUnitWithCombatAttrs.combatAttrs.addExtraDice(1);
-    }
-
-    // "bestUnit" does not look adjacent.
-    const pds: UnitAttrs | undefined = combatRoll.self.unitAttrsSet.get("pds");
-    if (
-      !bestUnitWithCombatAttrs &&
-      combatRoll.getRollType() === "spaceCannonOffense" &&
-      combatRoll.self.getCountAdj("pds") > 0 &&
-      pds
-    ) {
-      const spaceCannon: CombatAttrs = pds.getSpaceCannonOrThrow();
-      spaceCannon.addExtraDice(1);
     }
   },
 };

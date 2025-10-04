@@ -752,7 +752,13 @@ export class CombatRoll {
     let bestCombatAttrs: CombatAttrs | undefined = undefined;
     let bestHit: number = Number.MAX_SAFE_INTEGER;
     for (const [unit, combatAttrs] of unitToCombatAttrs.entries()) {
-      const has: boolean = this.self.hasUnit(unit);
+      let has: boolean = this.self.hasUnit(unit);
+
+      // Look adjacent if range.
+      if (!has && combatAttrs.getRange() > 0) {
+        has = this.self.hasUnitAdj(unit);
+      }
+
       const hit: number = combatAttrs.getHit();
       if (has && hit < bestHit) {
         bestHit = hit;

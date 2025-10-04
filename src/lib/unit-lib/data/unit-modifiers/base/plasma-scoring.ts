@@ -20,10 +20,10 @@ export const PlasmaScoring: UnitModifierSchemaType = {
     );
   },
   apply: (combatRoll: CombatRoll): void => {
-    const combatAttrs: BestUnitWithCombatAttrs | undefined =
+    const bestUnitWithCombatAttrs: BestUnitWithCombatAttrs | undefined =
       combatRoll.bestHitUnitWithCombatAttrs();
-    if (combatAttrs) {
-      combatAttrs.combatAttrs.addExtraDice(1);
+    if (bestUnitWithCombatAttrs) {
+      bestUnitWithCombatAttrs.combatAttrs.addExtraDice(1);
     }
   },
 };
