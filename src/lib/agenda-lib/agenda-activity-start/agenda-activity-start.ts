@@ -26,18 +26,19 @@ export class AgendaActivityMaybeResume implements IGlobal {
 
 export class AgendaActivityStart {
   private _agendaState: AgendaState | undefined;
-  private _agendaWindow: Window | undefined = undefined;
+  private static _agendaWindow: Window | undefined = undefined;
 
   private readonly _onAgendaStateChangedHandler = (): void => {
     if (
       this._agendaState &&
       !this._agendaState.isActive() &&
-      this._agendaWindow
+      AgendaActivityStart._agendaWindow
     ) {
       this._agendaState.onAgendaStateChanged.remove(
         this._onAgendaStateChangedHandler
       );
-      this._agendaWindow.detach();
+      AgendaActivityStart._agendaWindow.detach();
+      AgendaActivityStart._agendaWindow = undefined;
     }
   };
 
@@ -59,6 +60,11 @@ export class AgendaActivityStart {
   }
 
   resume(): this {
+    if (AgendaActivityStart._agendaWindow) {
+      AgendaActivityStart._agendaWindow.detach();
+      AgendaActivityStart._agendaWindow = undefined;
+    }
+
     const agendaState: AgendaState = new AgendaState(AGENDA_STATE_NAMESPACE_ID);
 
     this._agendaState = agendaState;
@@ -82,7 +88,10 @@ export class AgendaActivityStart {
       windowTitle
     );
     abstractWindow.getMutableWindowParams().disableClose = true;
-    this._agendaWindow = abstractWindow.addHost().createWindow().attach();
+    AgendaActivityStart._agendaWindow = abstractWindow
+      .addHost()
+      .createWindow()
+      .attach();
 
     return this;
   }
