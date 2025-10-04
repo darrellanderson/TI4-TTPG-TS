@@ -21,7 +21,7 @@ export class PlayerColor {
   }
 
   getAnonymousPlasticColor(): Color {
-    return this._colorLib.parseColorOrThrow("#404040"); // #5D1602
+    return this._colorLib.parseColorOrThrow("#808080"); // #5D1602
   }
 
   _getPlayerColorEntry(slot: number): PlayerColorEntry | undefined {
