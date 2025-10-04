@@ -2,6 +2,7 @@ import {
   Card,
   GameObject,
   ObjectType,
+  Player,
   SnapPoint,
   Vector,
   VerticalAlignment,
@@ -69,6 +70,16 @@ export class LayoutMats {
       const deck: GameObject = TI4.spawn.spawnMergeDecksWithNsidPrefixOrThrow(
         "card.technology",
         pos
+      );
+
+      const actionName: string = "*Toggle Tech Chooser";
+      deck.addCustomAction(actionName);
+      deck.onCustomAction.add(
+        (_object: GameObject, player: Player, identifier: string): void => {
+          if (identifier === actionName) {
+            TI4.events.onTechChooserRequest.trigger(player.getSlot());
+          }
+        }
       );
 
       // Remove faction tech.
