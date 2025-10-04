@@ -115,6 +115,10 @@ export class RightClickRift implements IGlobal {
 
   init(): void {
     globalEvents.onObjectCreated.add(this._onObjectCreatedHandler);
+    TI4.events.onSystemChanged.add((system: System) => {
+      this._onObjectCreatedHandler(system.getObj());
+    });
+
     const skipContained: boolean = false;
     for (const obj of world.getAllObjects(skipContained)) {
       this._onObjectCreatedHandler(obj);
@@ -122,10 +126,10 @@ export class RightClickRift implements IGlobal {
   }
 
   _onObjectCreatedHandler = (obj: GameObject): void => {
+    obj.removeCustomAction(RIFT_ACTION_NAME);
+    obj.onCustomAction.remove(this._onCustomActionHandler);
     if (RightClickRift.isRiftSystemTile(obj)) {
-      obj.removeCustomAction(RIFT_ACTION_NAME);
       obj.addCustomAction(RIFT_ACTION_NAME, RIFT_ACTION_TOOLTIP);
-      obj.onCustomAction.remove(this._onCustomActionHandler);
       obj.onCustomAction.add(this._onCustomActionHandler);
     }
   };
