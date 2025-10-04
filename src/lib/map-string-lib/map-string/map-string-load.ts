@@ -7,17 +7,12 @@ import {
   Vector,
   world,
 } from "@tabletop-playground/api";
-import {
-  Broadcast,
-  DeletedItemsContainer,
-  Find,
-  HexType,
-  locale,
-} from "ttpg-darrell";
+import { Broadcast, Find, HexType, locale } from "ttpg-darrell";
 
 import { MapStringEntry, MapStringParser } from "./map-string-parser";
 import { System } from "../../system-lib/system/system";
 import { MapStringHex } from "./map-string-hex";
+import { cloneReplace } from "../../clone-replace/clone-replace";
 
 export class MapStringLoad {
   private readonly _find: Find = new Find();
@@ -239,20 +234,7 @@ export class MapStringLoad {
       // Creating objects, however, appears to synchronize correctly.
       // Replace all the moved objects with clones.
       systemTileObjs.forEach((obj: GameObject): void => {
-        const json: string = obj.toJSONString();
-        const pos: Vector = obj.getPosition();
-        const rot: Rotator = obj.getRotation();
-        const objectType: ObjectType = obj.getObjectType();
-        DeletedItemsContainer.destroyWithoutCopying(obj);
-        const clone: GameObject | undefined = world.createObjectFromJSON(
-          json,
-          pos.add([0, 0, 10])
-        );
-        if (clone) {
-          clone.setRotation(rot);
-          clone.setPosition(pos);
-          clone.setObjectType(objectType);
-        }
+        cloneReplace(obj);
       });
     }
 

@@ -12,7 +12,7 @@ export class UnpackStartingUnits extends AbstractUnpack {
     super(faction, playerSlot);
   }
 
-  _getUnitPlasticOrThrow(unit: UnitType): GameObject {
+  _getUnitPlasticOrThrow(unit: UnitType, pos: Vector): GameObject {
     const source: string = unit === "mech" ? "pok" : "base";
     const nsid: string = `container.unit:${source}/${unit}`;
 
@@ -27,7 +27,7 @@ export class UnpackStartingUnits extends AbstractUnpack {
         `Could not find container for ${unit}/${this.getPlayerSlot()}`
       );
     }
-    const obj: GameObject | undefined = container.takeAt(0, [0, 0, 0]);
+    const obj: GameObject | undefined = container.takeAt(0, pos);
     if (!obj) {
       throw new Error(
         `Could not find plastic for ${unit}/${this.getPlayerSlot()}`
@@ -51,24 +51,25 @@ export class UnpackStartingUnits extends AbstractUnpack {
   unpack() {
     const systemTileObj: GameObject = this._findHomeSystemTileOrThrow();
 
-    const unitObjs: Array<GameObject> = [];
     const startingUnits: { [unit: string]: number } =
       this.getFaction().getStartingUnits();
+
+    const totalCount: number = Object.values(startingUnits).reduce(
+      (a, b) => a + b,
+      0
+    );
+    const rotate: number = 360 / totalCount;
+    let localPos: Vector = new Vector(5, 0, 10);
     for (const [unit, count] of Object.entries(startingUnits)) {
       for (let i = 0; i < count; i++) {
-        const obj: GameObject = this._getUnitPlasticOrThrow(unit as UnitType);
-        obj.setOwningPlayerSlot(this.getPlayerSlot());
-        unitObjs.push(obj);
+        const pos: Vector = systemTileObj.localPositionToWorld(localPos);
+        const obj: GameObject = this._getUnitPlasticOrThrow(
+          unit as UnitType,
+          pos
+        );
+        obj.snapToGround();
+        localPos = localPos.rotateAngleAxis(rotate, [0, 0, 1]);
       }
-    }
-
-    const rotate: number = 360 / (unitObjs.length + 1);
-    let localPos: Vector = new Vector(5, 0, 10);
-    for (const obj of unitObjs) {
-      const pos: Vector = systemTileObj.localPositionToWorld(localPos);
-      obj.setPosition(pos);
-      obj.snapToGround();
-      localPos = localPos.rotateAngleAxis(rotate, [0, 0, 1]);
     }
   }
 
