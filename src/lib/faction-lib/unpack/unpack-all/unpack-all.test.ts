@@ -23,6 +23,9 @@ it("unpack/remove", () => {
     globalThis.TI4.factionRegistry.getByNsidOrThrow("faction:base/arborec");
   const playerSlot: number = 10;
 
+  MockGameObject.simple("mat:base/status-pad", {
+    owningPlayerSlot: playerSlot,
+  });
   new MockGameObject({
     templateMetadata: "sheet:base/command",
     owningPlayerSlot: playerSlot,

@@ -1,4 +1,9 @@
-import { GameObject, ObjectType, Vector } from "@tabletop-playground/api";
+import {
+  GameObject,
+  ObjectType,
+  Vector,
+  world,
+} from "@tabletop-playground/api";
 import { DeletedItemsContainer, Find } from "ttpg-darrell";
 
 import { AbstractUnpack } from "../abstract-unpack/abstract-unpack";
@@ -18,17 +23,15 @@ export class UnpackHomeSystem extends AbstractUnpack {
     );
   }
 
-  _findFactionSheetOrThrow(): GameObject {
-    const factionSheetNsid: string = this.getFaction().getFactionSheetNsid();
+  _findStatusPadOrThrow(): GameObject {
+    const nsid: string = "mat:base/status-pad";
     const obj: GameObject | undefined = this._find.findGameObject(
-      factionSheetNsid,
+      nsid,
       this.getPlayerSlot(),
       true
     );
     if (!obj) {
-      throw new Error(
-        `Could not find faction sheet for ${this.getPlayerSlot()}`
-      );
+      throw new Error(`Could not find status pad for ${this.getPlayerSlot()}`);
     }
     return obj;
   }
@@ -106,24 +109,27 @@ export class UnpackHomeSystem extends AbstractUnpack {
     const genericHomeSystemTile: GameObject =
       this._findGenericHomeSystemTileOrThrow();
 
-    // Get faction sheet (for surrogate, but always do for code exercise in all cases).
-    const factionSheet: GameObject = this._findFactionSheetOrThrow();
+    // Get status pad (for surrogate, but always do for code exercise in all cases).
+    const statusPad: GameObject = this._findStatusPadOrThrow();
 
     const homeSystemTileObj: GameObject = this._spawnHomeSystemTile();
     const surrogatSystemTileeObj: GameObject | undefined =
       this._spawnSurrogateSystemTile();
 
     const homePos: Vector = genericHomeSystemTile.getPosition().add([0, 0, 10]);
-    const factionSheetPos: Vector = factionSheet.getPosition().add([0, 0, 10]);
+    const dx: number = (statusPad.getPosition().x < 0 ? 1 : -1) * 15;
+    let secondHomePos: Vector = statusPad.getPosition().add([dx, 15, 10]);
+    secondHomePos = TI4.hex.toPosition(TI4.hex.fromPosition(secondHomePos));
+    secondHomePos.z = world.getTableHeight() + 10;
 
     DeletedItemsContainer.destroyWithoutCopying(genericHomeSystemTile);
     if (surrogatSystemTileeObj) {
       surrogatSystemTileeObj.setPosition(homePos);
       surrogatSystemTileeObj.snapToGround();
       surrogatSystemTileeObj.setObjectType(ObjectType.Ground);
-      homeSystemTileObj.setPosition(factionSheetPos);
+      homeSystemTileObj.setPosition(secondHomePos);
       homeSystemTileObj.snapToGround();
-      // Do not lock, player wants to move it somewhere.
+      homeSystemTileObj.setObjectType(ObjectType.Ground);
     } else {
       homeSystemTileObj.setPosition(homePos);
       homeSystemTileObj.snapToGround();

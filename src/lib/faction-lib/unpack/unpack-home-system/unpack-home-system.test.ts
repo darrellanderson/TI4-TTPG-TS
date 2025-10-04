@@ -22,6 +22,9 @@ it("unpack/remove (arborec)", () => {
     templateMetadata: "card-holder:base/player-hand",
     owningPlayerSlot: playerSlot,
   });
+  MockGameObject.simple("mat:base/status-pad", {
+    owningPlayerSlot: playerSlot,
+  });
 
   const unpack = new UnpackHomeSystem(faction, playerSlot);
   unpack.unpack();
@@ -43,6 +46,9 @@ it("unpack/remove (creuss)", () => {
 
   new MockCardHolder({
     templateMetadata: "card-holder:base/player-hand",
+    owningPlayerSlot: playerSlot,
+  });
+  MockGameObject.simple("mat:base/status-pad", {
     owningPlayerSlot: playerSlot,
   });
 
@@ -82,26 +88,23 @@ it("_findFactionSheetOrThrow", () => {
   )!;
   const playerSlot: number = 10;
 
-  const factionSheet: GameObject = MockGameObject.simple(
-    "sheet.faction:base/arborec",
-    {
-      owningPlayerSlot: playerSlot,
-    }
-  );
+  const statusPad: GameObject = MockGameObject.simple("mat:base/status-pad", {
+    owningPlayerSlot: playerSlot,
+  });
 
   const unpack = new UnpackHomeSystem(faction, playerSlot);
-  const obj = unpack._findFactionSheetOrThrow();
-  expect(obj).toBe(factionSheet);
+  const obj = unpack._findStatusPadOrThrow();
+  expect(obj).toBe(statusPad);
 });
 
-it("_findFactionSheetOrThrow (missing)", () => {
+it("_findStatusPadOrThrow (missing)", () => {
   const faction: Faction = TI4.factionRegistry.getByNsid(
     "faction:base/arborec"
   )!;
   const playerSlot: number = 10;
 
   const unpack = new UnpackHomeSystem(faction, playerSlot);
-  expect(() => unpack._findFactionSheetOrThrow()).toThrow();
+  expect(() => unpack._findStatusPadOrThrow()).toThrow();
 });
 
 it("_spawnGenericHomeSystemTileOrThrow", () => {
