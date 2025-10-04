@@ -1,4 +1,4 @@
-import { GameObject } from "@tabletop-playground/api";
+import { GameObject, Vector } from "@tabletop-playground/api";
 import { MockContainer, MockGameObject } from "ttpg-mock";
 
 import { Faction } from "../../faction/faction";
@@ -124,10 +124,10 @@ it("_getUnitPlasticOrThrow", () => {
   });
 
   let obj: GameObject;
-  obj = unpack._getUnitPlasticOrThrow("mech");
+  obj = unpack._getUnitPlasticOrThrow("mech", new Vector(0, 0, 0));
   expect(obj).toBe(mech);
 
-  obj = unpack._getUnitPlasticOrThrow("dreadnought");
+  obj = unpack._getUnitPlasticOrThrow("dreadnought", new Vector(0, 0, 0));
   expect(obj).toBe(dreadnought);
 });
 
@@ -144,7 +144,7 @@ it("_getUnitPlasticOrThrow (empty container)", () => {
   });
 
   expect(() => {
-    unpack._getUnitPlasticOrThrow("mech");
+    unpack._getUnitPlasticOrThrow("mech", new Vector(0, 0, 0));
   }).toThrow(/Could not find plastic/);
 });
 
@@ -156,7 +156,7 @@ it("_getUnitPlasticOrThrow (missing container)", () => {
   const unpack = new UnpackStartingUnits(faction, playerSlot);
 
   expect(() => {
-    unpack._getUnitPlasticOrThrow("mech");
+    unpack._getUnitPlasticOrThrow("mech", new Vector(0, 0, 0));
   }).toThrow(/Could not find container/);
 });
 
