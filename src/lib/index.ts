@@ -4,6 +4,7 @@ export * from './action-card-lib';
 export * from './agenda-lib';
 export * from './border-lib';
 export * from './build-lib';
+export * from './clone-replace';
 export * from './combat-lib';
 export * from './command-token-lib';
 export * from './config';

@@ -13,6 +13,7 @@ export * from './right-click-purge';
 export * from './right-click-rider';
 export * from './right-click-rift';
 export * from './right-click-score';
+export * from './right-click-thunders-edge';
 export * from './system';
 export * from './toggle-action-phase-times';
 export * from './toggle-all-players-tech';

@@ -69,7 +69,7 @@ import { RemoveRegistry } from "../lib/remove-lib/registry/remove-registry";
 import { ReportCommandTokenPutGet } from "../lib/command-token-lib/report-command-token-put-get/report-command-token-put-get";
 import { ReportRemaining } from "../context-menu/report-remaining/report-remaining";
 import { RightClickAgenda } from "../context-menu/right-click-agenda/right-click-agenda";
-import { RightClickDelete } from "../context-menu/right-click-delete/right-click-delete";
+//import { RightClickDelete } from "../context-menu/right-click-delete/right-click-delete";
 import { RightClickExplore } from "../context-menu/system/explore-system/right-click-explore";
 import { RightClickGalvanizeToken } from "../context-menu/right-click-galvanize-token/right-click-galvanize-token";
 import { RightClickIihqModernization } from "../context-menu/cards/iihq-modernization/right-click-iihq-modernization";
@@ -86,6 +86,7 @@ import { RightClickScorePrivate } from "../context-menu/right-click-score/right-
 import { RightClickScorePublic } from "../context-menu/right-click-score/right-click-score-public";
 import { RightClickSpecOps2 } from "../context-menu/cards/infantry-2/right-click-spec-ops-2";
 import { RightClickStellarConverter } from "../context-menu/cards/stellar-converter/right-click-stellar-converter";
+import { RightClickThundersEdge } from "../context-menu/right-click-thunders-edge/right-click-thunders-edge";
 import { RunInjectScript } from "../lib/homebrew-lib/run-inject-script/run-inject-script";
 import { RSwapSplitCombine } from "./r-swap-split-combine";
 import { ShuffleDecks } from "./shuffle-decks";
@@ -259,6 +260,7 @@ export function resetGlobalThisTI4(): TI4Class {
     new RightClickScorePublic(),
     new RightClickSpecOps2(),
     new RightClickStellarConverter(),
+    new RightClickThundersEdge(),
     new RightClickYinAscendant(),
     new RunInjectScript(),
     new RSwapSplitCombine(),
@@ -284,7 +286,7 @@ export function resetGlobalThisTI4(): TI4Class {
     new RightClickMinorFactions(),
 
     // Do these last to be below "real" right click options.
-    new RightClickDelete(),
+    //new RightClickDelete(),
   ];
 
   // Add UI and some bug workarounds to production runs.
