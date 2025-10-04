@@ -849,7 +849,10 @@ export class CombatRoll {
         count *= combatAttrs.getDice();
 
         // Account for bonus dice (e.g. plasma scoring).
-        count += combatAttrs.getExtraDice();
+        // ONLY add if count exists.
+        if (count > 0) {
+          count += combatAttrs.getExtraDice();
+        }
 
         for (let i = 0; i < count; i++) {
           const params: DiceParams = {
