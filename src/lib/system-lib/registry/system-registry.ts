@@ -17,6 +17,7 @@ import {
   SourceAndPackageIdSchemaType,
 } from "../schema/basic-types-schema";
 import { SystemTier, SystemTierType } from "../system/system-tier";
+import { cloneReplace } from "lib/clone-replace";
 
 const packageId: string = refPackageId;
 
@@ -338,5 +339,23 @@ export class SystemRegistry {
 
   isMecatolRex(tileNumber: number): boolean {
     return tileNumber === 18 || tileNumber === 112;
+  }
+
+  /**
+   * Given a system tile object, clone and replace it.
+   *
+   * The normal clone/replace *should* do this via the object delete/create
+   * events, but it does not appear to be working reliably.
+   *
+   * @param obj
+   */
+  cloneReplace(obj: GameObject): void {
+    const objId: string = obj.getId();
+    const system: System | undefined = this._systemTileObjIdToSystem.get(objId);
+    if (system) {
+      const clone: GameObject = cloneReplace(obj);
+      this._systemTileObjIdToSystem.delete(objId);
+      this._maybeRegister(clone);
+    }
   }
 }

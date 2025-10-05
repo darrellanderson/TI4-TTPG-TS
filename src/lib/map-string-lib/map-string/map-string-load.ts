@@ -12,7 +12,6 @@ import { Broadcast, Find, HexType, locale } from "ttpg-darrell";
 import { MapStringEntry, MapStringParser } from "./map-string-parser";
 import { System } from "../../system-lib/system/system";
 import { MapStringHex } from "./map-string-hex";
-import { cloneReplace } from "../../clone-replace/clone-replace";
 
 export class MapStringLoad {
   private readonly _find: Find = new Find();
@@ -234,7 +233,7 @@ export class MapStringLoad {
       // Creating objects, however, appears to synchronize correctly.
       // Replace all the moved objects with clones.
       systemTileObjs.forEach((obj: GameObject): void => {
-        cloneReplace(obj);
+        TI4.systemRegistry.cloneReplace(obj);
       });
     }
 
