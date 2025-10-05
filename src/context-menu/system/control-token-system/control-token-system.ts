@@ -1,11 +1,11 @@
 import {
-  Container,
   GameObject,
   globalEvents,
   Player,
   Vector,
   world,
 } from "@tabletop-playground/api";
+import { SpawnControlToken } from "lib";
 import { Find, IGlobal, NSID } from "ttpg-darrell";
 
 export class ControlTokenSystem implements IGlobal {
@@ -43,6 +43,7 @@ export class ControlTokenSystem implements IGlobal {
   }
 
   addControlToken(systemTileObj: GameObject, player: Player): boolean {
+    /*
     const container: Container | undefined = this._find.findContainer(
       "container.token.control:base/generic",
       player.getSlot()
@@ -63,6 +64,20 @@ export class ControlTokenSystem implements IGlobal {
       return false;
     }
     token.snapToGround();
+    */
+
+    // takeAt leaving a token on top of container?
+    // instead spawn a new one.
+
+    const playerSlot: number = player.getSlot();
+    const pos: Vector = systemTileObj.getPosition().add([0, 0, 10]);
+
+    const spawnControlToken = new SpawnControlToken();
+    const token: GameObject =
+      spawnControlToken.spawnControlTokenOrThrow(playerSlot);
+    token.setPosition(pos);
+    token.snapToGround();
+
     return true;
   }
 }
