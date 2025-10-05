@@ -5,8 +5,8 @@ import {
   Vector,
   world,
 } from "@tabletop-playground/api";
-import { SpawnControlToken } from "lib";
 import { Find, IGlobal, NSID } from "ttpg-darrell";
+import { SpawnControlToken } from "../../../lib/control-token-lib/spawn-control-token";
 
 export class ControlTokenSystem implements IGlobal {
   private readonly _find: Find = new Find();
@@ -73,8 +73,11 @@ export class ControlTokenSystem implements IGlobal {
     const pos: Vector = systemTileObj.getPosition().add([0, 0, 10]);
 
     const spawnControlToken = new SpawnControlToken();
-    const token: GameObject =
-      spawnControlToken.spawnControlTokenOrThrow(playerSlot);
+    const token: GameObject | undefined =
+      spawnControlToken.spawnControlToken(playerSlot);
+    if (!token) {
+      return false;
+    }
     token.setPosition(pos);
     token.snapToGround();
 
