@@ -48,6 +48,7 @@ import { OnCombatClicked } from "../event/on-combat-clicked/on-combat-clicked";
 import { OnCombatResult } from "../event/on-combat-result/on-combat-result";
 import { OnGameEnd } from "../event/on-game-end/on-game-end";
 //import { OnObjectFellThroughTable } from "../event/on-object-fell-through-table/on-object-fell-through-table";
+import { OnPlanetCardSingleton } from "../event/on-planet-card-singleton/on-planet-card-singleton";
 import { OnPlayerChangeColorRequest } from "../event/on-player-change-color-request/on-player-change-color-request";
 import { OnPlayerChangedColor } from "../event/on-player-changed-color/on-player-changed-color";
 import { OnSliceDraftRequest } from "../event/on-slice-draft-request/on-slice-draft-request";
@@ -229,6 +230,7 @@ export function resetGlobalThisTI4(): TI4Class {
     new OnCombatResult(),
     new OnGameEnd(),
     //new OnObjectFellThroughTable().setRelocateTo(new Vector(0, -250, 0)),
+    new OnPlanetCardSingleton(),
     new OnPlayerChangeColorRequest(),
     new OnPlayerChangedColor(),
     new OnSliceDraftRequest(),

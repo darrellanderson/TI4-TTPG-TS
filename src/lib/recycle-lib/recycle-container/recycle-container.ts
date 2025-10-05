@@ -1,3 +1,4 @@
+import { Player } from "@tabletop-playground/api";
 import { Broadcast, GarbageContainer } from "ttpg-darrell";
 import { RecycleCardAction } from "../handlers/card/action/recycle-card-action";
 import { RecycleCardAgenda } from "../handlers/card/agenda/recycle-card-agenda";
@@ -24,10 +25,10 @@ import { RecycleTokenCommand } from "../handlers/token/recycle-token-command/rec
 import { RecycleTokenControl } from "../handlers/token/recycle-token-control/recycle-token-control";
 import { RecycleTokenFighter } from "../handlers/token/recycle-token-fighter/recycle-token-fighter";
 import { RecycleTokenFrontier } from "../handlers/token/recycle-token-frontier/recycle-token-frontier";
+import { RecycleTokenGalvanize } from "../handlers/token/recycle-token-galvanize/recycle-token-galvanize";
 import { RecycleTokenInfantry } from "../handlers/token/recycle-token-infantry/recycle-token-infantry";
 import { RecycleTokenTradegood } from "../handlers/token/recycle-token-tradegood/recycle-token-tradegood";
 import { RecycleUnit } from "../handlers/unit/recycle-unit";
-import { Player } from "@tabletop-playground/api";
 
 export class RecycleContainer extends GarbageContainer {}
 
@@ -101,6 +102,7 @@ RecycleContainer.addHandler(new RecycleTokenCommand());
 RecycleContainer.addHandler(new RecycleTokenControl());
 RecycleContainer.addHandler(new RecycleTokenFighter());
 RecycleContainer.addHandler(new RecycleTokenFrontier());
+RecycleContainer.addHandler(new RecycleTokenGalvanize());
 RecycleContainer.addHandler(new RecycleTokenInfantry());
 RecycleContainer.addHandler(new RecycleTokenTradegood());
 RecycleContainer.addHandler(new RecycleUnit());

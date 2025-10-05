@@ -20,6 +20,7 @@ export class UnpackFactionExtras extends AbstractUnpack {
       const count: number = faction.getExtraCount(nsid);
       for (let i = 0; i < count; i++) {
         const obj: GameObject = TI4.spawn.spawnOrThrow(nsid);
+        obj.setOwningPlayerSlot(this.getPlayerSlot());
         extrasContainer.insert([obj]);
       }
     }

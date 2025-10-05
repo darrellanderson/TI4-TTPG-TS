@@ -27,6 +27,6 @@ export class ToggleMapTool implements IGlobal {
       "tooltip.toggle-map-tool"
     );
 
-    abstractWindow.createWindow();
+    abstractWindow.allSlots().createWindow();
   }
 }

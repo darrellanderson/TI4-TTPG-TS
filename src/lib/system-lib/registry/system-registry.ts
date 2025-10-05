@@ -17,7 +17,7 @@ import {
   SourceAndPackageIdSchemaType,
 } from "../schema/basic-types-schema";
 import { SystemTier, SystemTierType } from "../system/system-tier";
-import { cloneReplace } from "lib/clone-replace";
+import { cloneReplace } from "../../clone-replace/clone-replace";
 
 const packageId: string = refPackageId;
 
