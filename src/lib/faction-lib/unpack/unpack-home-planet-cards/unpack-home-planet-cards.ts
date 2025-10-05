@@ -41,43 +41,48 @@ export class UnpackHomePlanetCards extends AbstractUnpack {
     return deck;
   }
 
-  _getLegendaryPlanetDeckOrThrow(): Card {
+  _getLegendaryPlanetDeck(): Card | undefined {
     const deck: Card | undefined = this._find.findDeckOrDiscard(
       "deck-legendary-planet"
     );
-    if (!deck) {
-      throw new Error("Could not find legendary planet deck");
-    }
     return deck;
   }
 
   unpack(): void {
     const homePlanetCardsNsids: Array<string> =
       this._getHomePlanetCardsNsidsOrThrow();
-    let deck: Card;
-    let cardStack: Card | undefined;
 
-    deck = this._getPlanetDeckOrThrow();
-    cardStack = this._cardUtil.filterCards(deck, (nsid: string): boolean => {
-      return homePlanetCardsNsids.includes(nsid);
-    });
-    if (cardStack) {
-      const cards: Array<Card> = this._cardUtil.separateDeck(cardStack);
+    const planetDeck: Card = this._getPlanetDeckOrThrow();
+    const planetCardStack: Card | undefined = this._cardUtil.filterCards(
+      planetDeck,
+      (nsid: string): boolean => {
+        return homePlanetCardsNsids.includes(nsid);
+      }
+    );
+    if (planetCardStack) {
+      const cards: Array<Card> = this._cardUtil.separateDeck(planetCardStack);
       for (const card of cards) {
         card.setRotation([0, 0, 180]);
         this.dealToPlayerOrThrow(card);
       }
     }
 
-    deck = this._getLegendaryPlanetDeckOrThrow();
-    cardStack = this._cardUtil.filterCards(deck, (nsid: string): boolean => {
-      return homePlanetCardsNsids.includes(nsid);
-    });
-    if (cardStack) {
-      const cards: Array<Card> = this._cardUtil.separateDeck(cardStack);
-      for (const card of cards) {
-        card.setRotation([0, 0, 180]);
-        this.dealToPlayerOrThrow(card);
+    const legendaryPlanetDeck: Card | undefined =
+      this._getLegendaryPlanetDeck();
+    if (legendaryPlanetDeck) {
+      const legendaryCardStack: Card | undefined = this._cardUtil.filterCards(
+        legendaryPlanetDeck,
+        (nsid: string): boolean => {
+          return homePlanetCardsNsids.includes(nsid);
+        }
+      );
+      if (legendaryCardStack) {
+        const cards: Array<Card> =
+          this._cardUtil.separateDeck(legendaryCardStack);
+        for (const card of cards) {
+          card.setRotation([0, 0, 180]);
+          this.dealToPlayerOrThrow(card);
+        }
       }
     }
   }
