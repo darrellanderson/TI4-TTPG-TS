@@ -1,9 +1,4 @@
-import {
-  GameWorld,
-  refPackageId,
-  Vector,
-  world,
-} from "@tabletop-playground/api";
+import { GameWorld, refPackageId, world } from "@tabletop-playground/api";
 import {
   BugCardHolderAssignment,
   BugSplatRemoteReporter,
@@ -52,7 +47,7 @@ import { OnChatMessage } from "../event/on-chat-message/on-chat-message";
 import { OnCombatClicked } from "../event/on-combat-clicked/on-combat-clicked";
 import { OnCombatResult } from "../event/on-combat-result/on-combat-result";
 import { OnGameEnd } from "../event/on-game-end/on-game-end";
-import { OnObjectFellThroughTable } from "../event/on-object-fell-through-table/on-object-fell-through-table";
+//import { OnObjectFellThroughTable } from "../event/on-object-fell-through-table/on-object-fell-through-table";
 import { OnPlayerChangeColorRequest } from "../event/on-player-change-color-request/on-player-change-color-request";
 import { OnPlayerChangedColor } from "../event/on-player-changed-color/on-player-changed-color";
 import { OnSliceDraftRequest } from "../event/on-slice-draft-request/on-slice-draft-request";
@@ -233,7 +228,7 @@ export function resetGlobalThisTI4(): TI4Class {
     new OnCombatClicked(),
     new OnCombatResult(),
     new OnGameEnd(),
-    new OnObjectFellThroughTable().setRelocateTo(new Vector(0, -250, 0)),
+    //new OnObjectFellThroughTable().setRelocateTo(new Vector(0, -250, 0)),
     new OnPlayerChangeColorRequest(),
     new OnPlayerChangedColor(),
     new OnSliceDraftRequest(),
