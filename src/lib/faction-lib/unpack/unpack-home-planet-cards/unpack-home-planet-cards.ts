@@ -23,6 +23,9 @@ export class UnpackHomePlanetCards extends AbstractUnpack {
         const result: Array<string> = [];
         for (const planet of system.getPlanets()) {
           result.push(planet.getPlanetCardNsid());
+          for (const legendaryNsid of planet.getLegendaryCardNsids()) {
+            result.push(legendaryNsid);
+          }
         }
         return result;
       }
@@ -38,18 +41,38 @@ export class UnpackHomePlanetCards extends AbstractUnpack {
     return deck;
   }
 
+  _getLegendaryPlanetDeckOrThrow(): Card {
+    const deck: Card | undefined = this._find.findDeckOrDiscard(
+      "deck-legendary-planet"
+    );
+    if (!deck) {
+      throw new Error("Could not find legendary planet deck");
+    }
+    return deck;
+  }
+
   unpack(): void {
     const homePlanetCardsNsids: Array<string> =
       this._getHomePlanetCardsNsidsOrThrow();
-    const planetDeck: Card = this._getPlanetDeckOrThrow();
+    let deck: Card;
+    let cardStack: Card | undefined;
 
-    const cardStack: Card | undefined = this._cardUtil.filterCards(
-      planetDeck,
-      (nsid: string): boolean => {
-        return homePlanetCardsNsids.includes(nsid);
+    deck = this._getPlanetDeckOrThrow();
+    cardStack = this._cardUtil.filterCards(deck, (nsid: string): boolean => {
+      return homePlanetCardsNsids.includes(nsid);
+    });
+    if (cardStack) {
+      const cards: Array<Card> = this._cardUtil.separateDeck(cardStack);
+      for (const card of cards) {
+        card.setRotation([0, 0, 180]);
+        this.dealToPlayerOrThrow(card);
       }
-    );
+    }
 
+    deck = this._getLegendaryPlanetDeckOrThrow();
+    cardStack = this._cardUtil.filterCards(deck, (nsid: string): boolean => {
+      return homePlanetCardsNsids.includes(nsid);
+    });
     if (cardStack) {
       const cards: Array<Card> = this._cardUtil.separateDeck(cardStack);
       for (const card of cards) {
