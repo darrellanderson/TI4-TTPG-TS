@@ -95,7 +95,10 @@ export class SpawnMissingCards {
       const nsid: string = NSID.get(card);
       if (!dstDeckNsids.has(nsid)) {
         // Add the card to the existing deck.
-        dstDeck.addCards(card);
+        const success: boolean = dstDeck.addCards(card);
+        if (!success) {
+          console.log("Failed to add card to deck", nsid);
+        }
       } else {
         // If the card already exists, destroy it.
         DeletedItemsContainer.destroyWithoutCopying(card);
