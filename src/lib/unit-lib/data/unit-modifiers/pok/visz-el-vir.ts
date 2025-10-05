@@ -15,7 +15,7 @@ export const ViszElVir: UnitModifierSchemaType = {
   applies: (combatRoll: CombatRoll): boolean => {
     const rollType: CombatRollType = combatRoll.getRollType();
     return (
-      rollType === "groundCombat" &&
+      (rollType === "groundCombat" || rollType === "spaceCombat") &&
       combatRoll.self.hasUnit("flagship") &&
       combatRoll.self.hasUnit("mech")
     );
@@ -28,6 +28,11 @@ export const ViszElVir: UnitModifierSchemaType = {
         mechAttrs.getGroundCombat();
       if (mechGroundCombat) {
         mechGroundCombat.addDice(1);
+      }
+      const mechSpaceCombat: CombatAttrs | undefined =
+        mechAttrs.getSpaceCombat();
+      if (mechSpaceCombat) {
+        mechSpaceCombat.addDice(1);
       }
     }
   },
