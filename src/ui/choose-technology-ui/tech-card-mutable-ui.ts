@@ -40,16 +40,19 @@ export class ZoomedTechCardUI extends AbstractUI {
     );
 
     if (cardJson) {
-      const pos: Vector = new Vector(0, 0, 100);
+      const pos: Vector = new Vector(0, 0, -100);
       const card: GameObject | undefined = world.createObjectFromJSON(
         cardJson,
         pos
       );
-      if (card instanceof Card) {
-        imageWidget.setSourceCard(card);
-      }
       if (card) {
-        DeletedItemsContainer.destroyWithoutCopying(card);
+        card.freeze();
+        if (card instanceof Card) {
+          imageWidget.setSourceCard(card);
+        }
+        setTimeout(() => {
+          DeletedItemsContainer.destroyWithoutCopying(card);
+        }, 1000);
       }
     }
 
@@ -117,8 +120,12 @@ export class TechCardMutableUI extends ZoomableUiFullyClickable {
         (candidateNsid: string): boolean => techNsid === candidateNsid
       );
       if (card) {
+        card.setPosition([0, 0, -100]);
+        card.freeze();
         this.setCard(card);
-        DeletedItemsContainer.destroyWithoutCopying(card);
+        setTimeout(() => {
+          DeletedItemsContainer.destroyWithoutCopying(card);
+        }, 1000);
       }
     }
     DeletedItemsContainer.destroyWithoutCopying(deck);
