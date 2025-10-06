@@ -1,6 +1,14 @@
 import { Card, Vector, world } from "@tabletop-playground/api";
 import { CardUtil, Facing, HexType, NSID } from "ttpg-darrell";
 
+const ALSO_REFRESH_NSIDS: Set<string> = new Set([
+  "card.breakthrough:thunders-edge/deorbit-barrage",
+  "card.breakthrough:thunders-edge/psychospore",
+  "card.breakthrough:thunders-edge/resonance-generator",
+  "card.breakthrough:thunders-edge/vaults-of-the-heir",
+  "card.breakthrough:thunders-edge/visionaria-select",
+]);
+
 export class RefreshAllPlanets {
   private readonly _cardUtil: CardUtil = new CardUtil();
 
@@ -37,9 +45,17 @@ export class RefreshAllPlanets {
 
     const skipContained: boolean = true;
     const allowFaceDown: boolean = true;
+    const rejectSnapPointTags: Array<string> = [
+      "deck-legendary-planet",
+      "deck-planet",
+      "deck-relic",
+    ];
     for (const obj of world.getAllObjects(skipContained)) {
       const nsid: string = NSID.get(obj);
       let shouldRefresh: boolean = false;
+      if (alsoRefreshTechAgentRelicUnit) {
+        shouldRefresh = ALSO_REFRESH_NSIDS.has(nsid);
+      }
       for (const startsWith of startsWithEntries) {
         if (nsid.startsWith(startsWith)) {
           shouldRefresh = true;
@@ -49,15 +65,6 @@ export class RefreshAllPlanets {
 
       if (shouldRefresh && !Facing.isFaceUp(obj)) {
         if (obj instanceof Card) {
-          const rejectSnapPointTags: Array<string> = [];
-          if (nsid.startsWith("card.legendary-planet:")) {
-            rejectSnapPointTags.push("deck-legendary-planet");
-          } else if (nsid.startsWith("card.planet:")) {
-            rejectSnapPointTags.push("deck-planet");
-          } else if (nsid.startsWith("card.relic:")) {
-            rejectSnapPointTags.push("deck-relic");
-          }
-
           if (
             shouldRefresh &&
             this._cardUtil.isLooseCard(
