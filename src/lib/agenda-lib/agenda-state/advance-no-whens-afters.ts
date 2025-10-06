@@ -1,7 +1,8 @@
+import { GameWorld } from "@tabletop-playground/api";
 import { PlayerSlot } from "ttpg-darrell";
 import { AgendaState } from "./agenda-state";
 import { AgendaTurnOrder } from "../agenda-turn-order/agenda-turn-order";
-import { GameWorld } from "@tabletop-playground/api";
+import { PlayerSeatType } from "../../player-lib/player-seats/player-seats";
 
 /**
  * Advance turn and/or phase when the current player has no whens or afters
@@ -11,12 +12,18 @@ export class AdvanceNoWhensAfters {
   private readonly _agendaState: AgendaState;
   private _active: boolean = false;
 
-  private readonly _onAgendaStateChangedHandler = () => {
+  private readonly _onAgendaStateChangedHandler = (): void => {
     this.maybeAdvance();
   };
 
   constructor(agendaState: AgendaState) {
     this._agendaState = agendaState;
+  }
+
+  _getSeatPlayerSlots(): Array<PlayerSlot> {
+    return TI4.playerSeats
+      .getAllSeats()
+      .map((seat: PlayerSeatType): PlayerSlot => seat.playerSlot);
   }
 
   activate(force?: boolean): this {
@@ -33,81 +40,203 @@ export class AdvanceNoWhensAfters {
     return this;
   }
 
-  _isLastPlayerInTurnOrder(): boolean {
-    const turnOrder: Array<PlayerSlot> = TI4.turnOrder.getTurnOrder();
-    const currentTurn: PlayerSlot = TI4.turnOrder.getCurrentTurn();
-    return currentTurn === turnOrder[turnOrder.length - 1];
-  }
-
-  _anyUncommitedWhens(): boolean {
-    const playerCount: number = TI4.config.playerCount;
-    for (let seatIndex = 0; seatIndex < playerCount; seatIndex++) {
-      if (this._agendaState.getSeatNoWhens(seatIndex) === "unknown") {
-        return true;
+  /**
+   * Get player slots that have not yet committed their whens.
+   *
+   * @returns
+   */
+  getUncommittedWhens(): Array<PlayerSlot> {
+    return this._getSeatPlayerSlots().filter(
+      (_playerSlot: PlayerSlot, seatIndex: number): boolean => {
+        return this._agendaState.getSeatNoWhens(seatIndex) === "unknown";
       }
-    }
-    return false;
-  }
-
-  _isWhenPlayed(): boolean {
-    const playerCount: number = TI4.config.playerCount;
-    for (let seatIndex = 0; seatIndex < playerCount; seatIndex++) {
-      if (this._agendaState.getSeatNoWhens(seatIndex) === "play") {
-        return true;
-      }
-    }
-    return false;
-  }
-
-  _anyUncommitedAfters(): boolean {
-    const playerCount: number = TI4.config.playerCount;
-    for (let seatIndex = 0; seatIndex < playerCount; seatIndex++) {
-      if (this._agendaState.getSeatNoAfters(seatIndex) === "unknown") {
-        return true;
-      }
-    }
-    return false;
-  }
-
-  _isAfterPlayed(): boolean {
-    const playerCount: number = TI4.config.playerCount;
-    for (let seatIndex = 0; seatIndex < playerCount; seatIndex++) {
-      if (this._agendaState.getSeatNoAfters(seatIndex) === "play") {
-        return true;
-      }
-    }
-    return false;
-  }
-
-  _isSkipTurnWhen(): boolean {
-    const current: PlayerSlot = TI4.turnOrder.getCurrentTurn();
-    const seatIndex: number = TI4.playerSeats.getSeatIndexByPlayerSlot(current);
-    const unknownNoNeverPlay: "unknown" | "no" | "never" | "play" =
-      this._agendaState.getSeatNoWhens(seatIndex);
-    return (
-      unknownNoNeverPlay === "no" ||
-      unknownNoNeverPlay === "never" ||
-      unknownNoNeverPlay === "play"
     );
   }
 
-  _isSkipTurnAfter(): boolean {
-    const current: PlayerSlot = TI4.turnOrder.getCurrentTurn();
-    const seatIndex: number = TI4.playerSeats.getSeatIndexByPlayerSlot(current);
-    const unknownNoNeverPlay: "unknown" | "no" | "never" | "play" =
-      this._agendaState.getSeatNoAfters(seatIndex);
-    return (
-      unknownNoNeverPlay === "no" ||
-      unknownNoNeverPlay === "never" ||
-      unknownNoNeverPlay === "play"
+  /**
+   * Get player slots that have not yet committed their afters.
+   *
+   * @returns
+   */
+  getUncommittedAfters(): Array<PlayerSlot> {
+    return this._getSeatPlayerSlots().filter(
+      (_playerSlot: PlayerSlot, seatIndex: number): boolean => {
+        return this._agendaState.getSeatNoAfters(seatIndex) === "unknown";
+      }
     );
   }
 
-  _isSkipTurnVoting(): boolean {
+  /**
+   *
+   * @returns
+   */
+  getUncommittedVotes(): Array<PlayerSlot> {
+    return this._getSeatPlayerSlots().filter(
+      (_playerSlot: PlayerSlot, seatIndex: number): boolean => {
+        return !this._agendaState.getSeatVotesLocked(seatIndex);
+      }
+    );
+  }
+
+  /**
+   * Get what's left of the turn order, starting with the current turn.
+   *
+   * @returns
+   */
+  getRemainingTurnOrder(): Array<PlayerSlot> {
+    const order: Array<PlayerSlot> = TI4.turnOrder.getTurnOrder();
     const current: PlayerSlot = TI4.turnOrder.getCurrentTurn();
-    const seatIndex: number = TI4.playerSeats.getSeatIndexByPlayerSlot(current);
-    const voteLocked: boolean = this._agendaState.getSeatVotesLocked(seatIndex);
-    return voteLocked;
+    const currentIndex: number = order.indexOf(current);
+    if (currentIndex === -1) {
+      return order;
+    }
+    return order.slice(currentIndex);
+  }
+
+  handlePhaseWhens(): boolean {
+    if (this._agendaState.getPhase() !== "whens") {
+      return false;
+    }
+
+    const uncommittedWhens: Array<PlayerSlot> = this.getUncommittedWhens();
+
+    // Are we waiting on the current player?
+    const current: PlayerSlot = TI4.turnOrder.getCurrentTurn();
+    if (uncommittedWhens.includes(current)) {
+      return true;
+    }
+
+    // Find the next player with uncommitted whens.
+    // If we wrap, reset all "no" to "unknown".
+    if (uncommittedWhens.length > 0) {
+      const remainingTurnOrder: Array<PlayerSlot> =
+        this.getRemainingTurnOrder();
+      for (const playerSlot of remainingTurnOrder) {
+        if (uncommittedWhens.includes(playerSlot)) {
+          TI4.turnOrder.setCurrentTurn(playerSlot);
+          return true;
+        }
+      }
+      // Wrapped.
+      this._agendaState.transactThenTriggerDelayedStateChangedEvent(
+        (): void => {
+          this._resetWhens();
+          const order: Array<PlayerSlot> = TI4.turnOrder.getTurnOrder();
+          for (const playerSlot of order) {
+            if (uncommittedWhens.includes(playerSlot)) {
+              TI4.turnOrder.setTurnOrder(order, "forward", playerSlot);
+              break;
+            }
+          }
+        }
+      );
+      return true;
+    }
+
+    // No uncommitted whens, advance to afters stage.
+    this._agendaState.transactThenTriggerDelayedStateChangedEvent((): void => {
+      this._agendaState.setPhase("afters");
+
+      const order: Array<PlayerSlot> =
+        new AgendaTurnOrder().getWhensOrAftersOrder();
+      const first: PlayerSlot | undefined = order[0];
+      if (first !== undefined) {
+        TI4.turnOrder.setTurnOrder(order, "forward", first);
+      }
+    });
+    return true;
+  }
+
+  handlePhaseAfters(): boolean {
+    if (this._agendaState.getPhase() !== "afters") {
+      return false;
+    }
+
+    const uncommittedAfters: Array<PlayerSlot> = this.getUncommittedAfters();
+
+    // Are we waiting on the current player?
+    const current: PlayerSlot = TI4.turnOrder.getCurrentTurn();
+    if (uncommittedAfters.includes(current)) {
+      return true;
+    }
+
+    // Find the next player with uncommitted afters.
+    // If we wrap, reset all "no" to "unknown".
+    if (uncommittedAfters.length > 0) {
+      const remainingTurnOrder: Array<PlayerSlot> =
+        this.getRemainingTurnOrder();
+      for (const playerSlot of remainingTurnOrder) {
+        if (uncommittedAfters.includes(playerSlot)) {
+          TI4.turnOrder.setCurrentTurn(playerSlot);
+          return true;
+        }
+      }
+      // Wrapped.
+      this._agendaState.transactThenTriggerDelayedStateChangedEvent(
+        (): void => {
+          this._resetAfters();
+          const order: Array<PlayerSlot> = TI4.turnOrder.getTurnOrder();
+          for (const playerSlot of order) {
+            if (uncommittedAfters.includes(playerSlot)) {
+              TI4.turnOrder.setTurnOrder(order, "forward", playerSlot);
+              break;
+            }
+          }
+        }
+      );
+      return true;
+    }
+
+    // No uncommitted afters, advance to voting stage.
+    this._agendaState.transactThenTriggerDelayedStateChangedEvent((): void => {
+      this._agendaState.setPhase("voting");
+
+      const order: Array<PlayerSlot> = new AgendaTurnOrder().getVotingOrder();
+      const first: PlayerSlot | undefined = order[0];
+      if (first !== undefined) {
+        TI4.turnOrder.setTurnOrder(order, "forward", first);
+      }
+    });
+    return true;
+  }
+
+  handlePhaseVoting(): boolean {
+    if (this._agendaState.getPhase() !== "voting") {
+      return false;
+    }
+
+    const uncommittedVotes: Array<PlayerSlot> = this.getUncommittedVotes();
+
+    // Are we waiting on the current player?
+    const current: PlayerSlot = TI4.turnOrder.getCurrentTurn();
+    if (uncommittedVotes.includes(current)) {
+      return true;
+    }
+
+    // Find the next player with uncommitted votes.
+    // If we wrap, reset all "no" to "unknown".
+    if (uncommittedVotes.length > 0) {
+      const remainingTurnOrder: Array<PlayerSlot> =
+        this.getRemainingTurnOrder();
+      for (const playerSlot of remainingTurnOrder) {
+        if (uncommittedVotes.includes(playerSlot)) {
+          TI4.turnOrder.setCurrentTurn(playerSlot);
+          return true;
+        }
+      }
+      // Wrapped (maybe a player unlocked their vote).
+      const order: Array<PlayerSlot> = TI4.turnOrder.getTurnOrder();
+      for (const playerSlot of order) {
+        if (uncommittedVotes.includes(playerSlot)) {
+          TI4.turnOrder.setTurnOrder(order, "forward", playerSlot);
+          break;
+        }
+      }
+      return true;
+    }
+
+    // No uncommitted votes, end voting stage.
+    return false;
   }
 
   _resetWhens(): void {
@@ -130,120 +259,12 @@ export class AdvanceNoWhensAfters {
     }
   }
 
-  _maybeAdvancePhaseWhens(): boolean {
-    if (this._agendaState.getPhase() !== "whens") {
-      return false;
-    }
-
-    if (this._anyUncommitedWhens()) {
-      return false;
-    }
-
-    if (!this._isLastPlayerInTurnOrder()) {
-      return false;
-    }
-
-    // If a when was played and at the end of turn order, go again.
-    if (this._isWhenPlayed()) {
-      this._agendaState.transactThenTriggerDelayedStateChangedEvent(() => {
-        this._resetWhens();
-        TI4.turnOrder.nextTurn();
-      });
-      return true; // handled
-    }
-
-    const order: Array<PlayerSlot> =
-      new AgendaTurnOrder().getWhensOrAftersOrder();
-    const first: PlayerSlot | undefined = order[0];
-    this._agendaState.transactThenTriggerDelayedStateChangedEvent(() => {
-      if (first !== undefined) {
-        TI4.turnOrder.setTurnOrder(order, "forward", first);
-      }
-      this._agendaState.setPhase("afters");
-    });
-    return true;
-  }
-
-  _maybeAdvancePhaseAfters(): boolean {
-    if (this._agendaState.getPhase() !== "afters") {
-      return false;
-    }
-
-    if (this._anyUncommitedAfters()) {
-      return false;
-    }
-
-    if (!this._isLastPlayerInTurnOrder()) {
-      return false;
-    }
-
-    // If an after was played and at the end of turn order, go again.
-    if (this._isAfterPlayed()) {
-      this._agendaState.transactThenTriggerDelayedStateChangedEvent(() => {
-        this._resetAfters();
-        TI4.turnOrder.nextTurn();
-      });
-      return true;
-    }
-
-    const order: Array<PlayerSlot> = new AgendaTurnOrder().getVotingOrder();
-    const first: PlayerSlot | undefined = order[0];
-    this._agendaState.transactThenTriggerDelayedStateChangedEvent(() => {
-      if (first !== undefined) {
-        TI4.turnOrder.setTurnOrder(order, "forward", first);
-      }
-      this._agendaState.setPhase("voting");
-    });
-    return true;
-  }
-
-  _maybeSkipTurnWhens(): boolean {
-    if (this._agendaState.getPhase() !== "whens") {
-      return false;
-    }
-
-    if (!this._isSkipTurnWhen()) {
-      return false;
-    }
-
-    TI4.turnOrder.nextTurn();
-    return true;
-  }
-
-  _maybeSkipTurnAfters(): boolean {
-    if (this._agendaState.getPhase() !== "afters") {
-      return false;
-    }
-
-    if (!this._isSkipTurnAfter()) {
-      return false;
-    }
-
-    TI4.turnOrder.nextTurn();
-    return true;
-  }
-
-  _maybeSkipTurnVoting(): boolean {
-    if (this._agendaState.getPhase() !== "voting") {
-      return false;
-    }
-
-    if (!this._isSkipTurnVoting()) {
-      return false;
-    }
-
-    TI4.turnOrder.nextTurn();
-    return true;
-  }
-
   maybeAdvance(): boolean {
-    // Do phase advance checks first, then skip turns.
+    // Advance to next player (possible wrap and reset), or next phase.
     return (
-      this._maybeAdvancePhaseWhens() ||
-      this._maybeAdvancePhaseAfters() ||
-      this._maybeSkipTurnWhens() ||
-      this._maybeSkipTurnAfters() ||
-      this._maybeSkipTurnVoting()
+      this.handlePhaseWhens() ||
+      this.handlePhaseAfters() ||
+      this.handlePhaseVoting()
     );
   }
 }
