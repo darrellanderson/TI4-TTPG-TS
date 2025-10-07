@@ -63,6 +63,7 @@ export class RightClickRider implements IGlobal {
     OnCardBecameSingletonOrDeck.onSingletonCardMadeDeck.add(
       (obj: GameObject): void => {
         this._maybeRemoveGameObject(obj);
+        this._removeActionsOne(obj);
       }
     );
 
@@ -77,6 +78,11 @@ export class RightClickRider implements IGlobal {
       this._riderObjIds.add(obj.getId());
       obj.onCustomAction.remove(this._onCustomActionHanlder);
       obj.onCustomAction.add(this._onCustomActionHanlder);
+
+      if (this._agendaState) {
+        this._outcomeNamesJoined = ""; // force update
+        this._onAgendaStateChange(this._agendaState); // add actions if needed
+      }
     }
   }
 
@@ -108,12 +114,16 @@ export class RightClickRider implements IGlobal {
     for (const objId of this._riderObjIds) {
       const obj: GameObject | undefined = world.getObjectById(objId);
       if (obj) {
-        for (const outcomeName of this._outcomeNames) {
-          obj.removeCustomAction(outcomeName); // identifier
-        }
-        obj.removeCustomAction(ACTION_CLEAR_PREDICT);
+        this._removeActionsOne(obj);
       }
     }
+  }
+
+  _removeActionsOne(obj: GameObject): void {
+    for (const outcomeName of this._outcomeNames) {
+      obj.removeCustomAction(outcomeName); // identifier
+    }
+    obj.removeCustomAction(ACTION_CLEAR_PREDICT);
   }
 
   _addActions(): void {
