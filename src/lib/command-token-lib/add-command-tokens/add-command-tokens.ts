@@ -73,8 +73,8 @@ export class AddCommandTokens {
             slotToCount.set(owner, count);
           }
           // Return card to the owner.
-          if (this._recycleCardPromissory.canRecycle(obj)) {
-            this._recycleCardPromissory.recycle(obj);
+          if (this._recycleCardPromissory.canRecycle(obj, undefined)) {
+            this._recycleCardPromissory.recycle(obj, undefined);
           }
         }
       }

@@ -32,8 +32,8 @@ it("recycle", () => {
   expect(distance).toBeCloseTo(10);
 
   const recycle = new RecycleCardAgenda();
-  expect(recycle.canRecycle(card)).toBe(true);
-  expect(recycle.recycle(card)).toBe(true);
+  expect(recycle.canRecycle(card, undefined)).toBe(true);
+  expect(recycle.recycle(card, undefined)).toBe(true);
 
   snapPoint = card.getSnappedToPoint();
   distance = card.getPosition().distance(mat.getPosition());

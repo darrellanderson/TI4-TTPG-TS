@@ -39,11 +39,19 @@ export class RecycleCardAction extends SimpleCardGarbageHandler {
     );
   }
 
-  recycle(obj: GameObject): boolean {
+  recycle(obj: GameObject, player: Player | undefined): boolean {
     // The Ral-Nel breakthrough collects discarded action cards.
     // "During the action phase, if you have not passed, when other players
     // would discard action cards, they are placed on this card instead.
     // When you pass, take 1 action card from this card and discard the rest."
+    if (this._dataSkimmer(obj, player)) {
+      return true; // data skimmer handled the recycle
+    }
+
+    return super.recycle(obj, player);
+  }
+
+  _dataSkimmer(obj: GameObject, player: Player | undefined): boolean {
     const isAgendaPhase: boolean = AgendaState.isAgendaInProgress(
       AGENDA_STATE_NAMESPACE_ID
     );
@@ -59,6 +67,12 @@ export class RecycleCardAction extends SimpleCardGarbageHandler {
       const owner: PlayerSlot = this._myFind.closestOwnedCardHolderOwner(pos);
       const isPassed: boolean = TI4.turnOrder.getPassed(owner);
       if (!isPassed) {
+        // We have a data skimmer and the owner has not passed.
+        // Reject if the owner is the one recycling the card.
+        if (player && player.getSlot() === owner) {
+          return false; // do not handle the recycle
+        }
+
         const cardName: string = obj.getCardDetails().name;
         Broadcast.chatAll(`recycle sending ${cardName} to data skimmer`);
 
@@ -79,8 +93,7 @@ export class RecycleCardAction extends SimpleCardGarbageHandler {
         return true; // we handled the recycle
       }
     }
-
-    return super.recycle(obj);
+    return false;
   }
 
   _getExistingActionCard(pos: Vector): Card | undefined {

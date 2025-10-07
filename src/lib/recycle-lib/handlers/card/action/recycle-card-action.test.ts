@@ -34,8 +34,8 @@ it("recycle", () => {
   expect(distance).toBeCloseTo(10);
 
   const recycle = new RecycleCardAction();
-  expect(recycle.canRecycle(card)).toBe(true);
-  expect(recycle.recycle(card)).toBe(true);
+  expect(recycle.canRecycle(card, undefined)).toBe(true);
+  expect(recycle.recycle(card, undefined)).toBe(true);
 
   snapPoint = card.getSnappedToPoint();
   distance = card.getPosition().distance(mat.getPosition());
@@ -70,10 +70,10 @@ it("recycle (data skimmer)", () => {
   let success: boolean;
 
   card = MockCard.simple("card.action:my-source/my-name");
-  success = recycle.recycle(card);
+  success = recycle.recycle(card, undefined);
   expect(success).toBe(true);
 
   card = MockCard.simple("card.action:my-source/my-name");
-  success = recycle.recycle(card);
+  success = recycle.recycle(card, undefined);
   expect(success).toBe(true);
 });
