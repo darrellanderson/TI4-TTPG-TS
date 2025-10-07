@@ -89,9 +89,10 @@ export class AgendaRiderUI extends AbstractUI {
         return;
       }
       oldKey = newKey;
+
       panel.removeAllChildren();
 
-      for (const rider of agendaState.getRiders()) {
+      for (const rider of myRiders) {
         const widget: Widget | undefined = AgendaRiderUI._createRiderButton(
           rider,
           scale
