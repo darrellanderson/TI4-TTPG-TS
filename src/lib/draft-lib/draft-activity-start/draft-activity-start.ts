@@ -36,6 +36,8 @@ export class DraftActivityMaybeResume implements IGlobal {
 export class DraftActivityStart {
   private _draftState: DraftState | undefined;
 
+  private static _sharedUiElement: UIElement | undefined = undefined;
+
   static getOrGenerateSlices(
     config: string,
     numSlices: number,
@@ -265,6 +267,12 @@ export class DraftActivityStart {
     });
     */
 
+    // Watch out for duplicate UIs.
+    if (DraftActivityStart._sharedUiElement !== undefined) {
+      world.removeUIElement(DraftActivityStart._sharedUiElement);
+      DraftActivityStart._sharedUiElement = undefined;
+    }
+
     // Use a shared, in-world UI instead of per-player windows.
     const scale: number = 4;
     const ui = new UIElement();
@@ -274,11 +282,13 @@ export class DraftActivityStart {
     );
     ui.position = new Vector(0, 0, world.getTableHeight() + 3);
     world.addUI(ui);
+    DraftActivityStart._sharedUiElement = ui;
 
     // Close window when draft state destroyed.
     this._draftState.onDraftStateChanged.add(() => {
       if (!draftState.isActive()) {
         world.removeUIElement(ui);
+        DraftActivityStart._sharedUiElement = undefined;
       }
     });
 
