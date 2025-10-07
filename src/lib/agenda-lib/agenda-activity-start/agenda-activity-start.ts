@@ -29,16 +29,20 @@ export class AgendaActivityStart {
   private static _agendaWindow: Window | undefined = undefined;
 
   private readonly _onAgendaStateChangedHandler = (): void => {
-    if (
-      this._agendaState &&
-      !this._agendaState.isActive() &&
-      AgendaActivityStart._agendaWindow
-    ) {
-      this._agendaState.onAgendaStateChanged.remove(
-        this._onAgendaStateChangedHandler
-      );
-      AgendaActivityStart._agendaWindow.detach();
-      AgendaActivityStart._agendaWindow = undefined;
+    if (this._agendaState) {
+      // Close window if agenda is no longer active.
+      if (!this._agendaState.isActive() && AgendaActivityStart._agendaWindow) {
+        this._agendaState.onAgendaStateChanged.remove(
+          this._onAgendaStateChangedHandler
+        );
+        AgendaActivityStart._agendaWindow.detach();
+        AgendaActivityStart._agendaWindow = undefined;
+      }
+
+      // Destroy agenda state if agenda is complete.
+      if (this._agendaState.isComplete()) {
+        this._agendaState.destroy();
+      }
     }
   };
 

@@ -44,6 +44,7 @@ it("edit outcomes", () => {
 });
 
 it("agenda state complete", () => {
+  TI4.config.setPlayerCount(2);
   MockGameObject.simple("type:source/name|rider");
   new RightClickRider().init();
 
@@ -62,15 +63,16 @@ it("agenda state complete", () => {
   });
   expect(TI4.playerSeats.getSeatIndexByPlayerSlot(10)).toBe(0);
   expect(TI4.playerSeats.getSeatIndexByPlayerSlot(11)).toBe(1);
-  expect(ReportFinalAgendaState.isComplete(agendaState)).toBe(false);
+  expect(agendaState.isComplete()).toBe(false);
 
   agendaState.setPhase("voting");
 
   TI4.turnOrder.setTurnOrder([10, 11], "forward", 11);
-  expect(ReportFinalAgendaState.isComplete(agendaState)).toBe(false);
+  expect(agendaState.isComplete()).toBe(false);
 
+  agendaState.setSeatVotesLocked(0, true);
   agendaState.setSeatVotesLocked(1, true);
-  expect(ReportFinalAgendaState.isComplete(agendaState)).toBe(true);
+  expect(agendaState.isComplete()).toBe(true);
 });
 
 it("onCustomAction", () => {

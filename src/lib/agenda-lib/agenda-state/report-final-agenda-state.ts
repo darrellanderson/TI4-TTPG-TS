@@ -14,24 +14,6 @@ export type AgendaOutcomeSummary = {
 export class ReportFinalAgendaState {
   private readonly _agendaState: AgendaState;
 
-  static isComplete(agendaState: AgendaState): boolean {
-    const order: Array<PlayerSlot> = TI4.turnOrder.getTurnOrder();
-    const current: PlayerSlot = TI4.turnOrder.getCurrentTurn();
-    const last: PlayerSlot | undefined = order[order.length - 1];
-
-    let seatIndex: number = -1;
-    if (last !== undefined) {
-      seatIndex = TI4.playerSeats.getSeatIndexByPlayerSlot(last);
-    }
-
-    const phase: "whens" | "afters" | "voting" = agendaState.getPhase();
-    return (
-      phase === "voting" &&
-      current === last &&
-      agendaState.getSeatVotesLocked(seatIndex)
-    );
-  }
-
   static getOutcomeIndexToTotalVotes(
     agendaState: AgendaState
   ): Map<number, number> {
@@ -178,7 +160,7 @@ export class ReportFinalAgendaState {
     this._agendaState = agendaState;
 
     agendaState.onAgendaStateChanged.add(() => {
-      if (ReportFinalAgendaState.isComplete(this._agendaState)) {
+      if (this._agendaState.isComplete()) {
         const summary: string = ReportFinalAgendaState.summary(
           this._agendaState
         );

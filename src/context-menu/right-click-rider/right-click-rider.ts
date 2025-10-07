@@ -7,7 +7,6 @@ import {
 import { IGlobal, NSID, OnCardBecameSingletonOrDeck } from "ttpg-darrell";
 
 import { AgendaState } from "../../lib/agenda-lib/agenda-state/agenda-state";
-import { ReportFinalAgendaState } from "../../lib/agenda-lib/agenda-state/report-final-agenda-state";
 
 const ACTION_PREFIX_PREDICT: string = "*Predict ";
 export const ACTION_CLEAR_PREDICT: string = "*Clear Prediction";
@@ -100,7 +99,7 @@ export class RightClickRider implements IGlobal {
       this._addActions();
     }
 
-    if (ReportFinalAgendaState.isComplete(agendaState)) {
+    if (agendaState.isComplete()) {
       this._removeActions();
     }
   }

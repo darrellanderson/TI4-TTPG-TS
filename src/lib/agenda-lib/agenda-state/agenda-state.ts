@@ -115,6 +115,17 @@ export class AgendaState {
     return AgendaState.isAgendaInProgress(this._namespaceId);
   }
 
+  isComplete(): boolean {
+    let uncommitedVoters: boolean = false;
+    for (let seatIndex = 0; seatIndex < TI4.config.playerCount; seatIndex++) {
+      if (!this.getSeatVotesLocked(seatIndex)) {
+        uncommitedVoters = true;
+      }
+    }
+    const phase: "whens" | "afters" | "voting" = this.getPhase();
+    return phase === "voting" && !uncommitedVoters;
+  }
+
   getAgendaObjId(): string {
     return this._data.agendaObjId;
   }

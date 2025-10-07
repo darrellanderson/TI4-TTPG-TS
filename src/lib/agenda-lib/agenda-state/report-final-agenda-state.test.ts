@@ -14,32 +14,6 @@ it("constructor", () => {
   new ReportFinalAgendaState(agendaState);
 });
 
-it("static isComplete", () => {
-  new MockCardHolder({
-    templateMetadata: "card-holder:base/player-hand",
-    owningPlayerSlot: 10,
-    position: [-1, 0, 0],
-  });
-  new MockCardHolder({
-    templateMetadata: "card-holder:base/player-hand",
-    owningPlayerSlot: 11,
-    position: [1, 0, 0],
-  });
-  expect(TI4.playerSeats.getSeatIndexByPlayerSlot(10)).toBe(0);
-  expect(TI4.playerSeats.getSeatIndexByPlayerSlot(11)).toBe(1);
-
-  const agendaState: AgendaState = new AgendaState("@test/test");
-  expect(ReportFinalAgendaState.isComplete(agendaState)).toBe(false);
-
-  agendaState.setPhase("voting");
-
-  TI4.turnOrder.setTurnOrder([10, 11], "forward", 11);
-  expect(ReportFinalAgendaState.isComplete(agendaState)).toBe(false);
-
-  agendaState.setSeatVotesLocked(1, true);
-  expect(ReportFinalAgendaState.isComplete(agendaState)).toBe(true);
-});
-
 it("static getOutcomeIndexToTotalVotes", () => {
   const agendaState: AgendaState = new AgendaState("@test/test");
 
@@ -243,13 +217,14 @@ it("constructor/event", () => {
   const agendaState: AgendaState = new AgendaState("@test/test");
   new ReportFinalAgendaState(agendaState);
 
-  expect(ReportFinalAgendaState.isComplete(agendaState)).toBe(false);
+  expect(agendaState.isComplete()).toBe(false);
 
   agendaState.setPhase("voting");
 
   TI4.turnOrder.setTurnOrder([10, 11], "forward", 11);
-  expect(ReportFinalAgendaState.isComplete(agendaState)).toBe(false);
+  expect(agendaState.isComplete()).toBe(false);
 
+  agendaState.setSeatVotesLocked(0, true);
   agendaState.setSeatVotesLocked(1, true);
-  expect(ReportFinalAgendaState.isComplete(agendaState)).toBe(true);
+  expect(agendaState.isComplete()).toBe(true);
 });
