@@ -14,6 +14,7 @@ import { UnpackLeaders } from "../unpack-leaders/unpack-leaders";
 import { UnpackStartingTech } from "../unpack-starting-tech/unpack-starting-tech";
 import { UnpackStartingUnits } from "../unpack-starting-units/unpack-starting-units";
 import { UnpackHomePlanetCards } from "../unpack-home-planet-cards/unpack-home-planet-cards";
+import { Card, CardHolder, GameWorld } from "@tabletop-playground/api";
 
 export class UnpackAll extends AbstractUnpack {
   private readonly _unpacks: Array<AbstractUnpack>;
@@ -45,6 +46,17 @@ export class UnpackAll extends AbstractUnpack {
       unpack.unpack();
     }
     TI4.events.onFactionChanged.trigger(this.getPlayerSlot());
+
+    // Workaround for cards sometimes appearing with the wrong image
+    // in the bottom-of-screen view: most likely TTPG bug involving
+    // spawing a deck, removing cards, and placing in hand all same frame.
+    //
+    // Wait a frame, then remove/put back all cards.
+    if (GameWorld.getExecutionReason() !== "unittest") {
+      process.nextTick(() => {
+        this._resetHand();
+      });
+    }
   }
 
   remove(): void {
@@ -52,5 +64,17 @@ export class UnpackAll extends AbstractUnpack {
       unpack.remove();
     }
     TI4.events.onFactionChanged.trigger(this.getPlayerSlot());
+  }
+
+  _resetHand(): void {
+    const cardHolder: CardHolder = this.getPlayerHandHolderOrThrow();
+    const cards: Array<Card> = cardHolder.getCards();
+    while (cardHolder.getCards().length > 0) {
+      cardHolder.removeAt(0);
+    }
+    for (const card of cards) {
+      const insertIndex = cardHolder.getCards().length;
+      cardHolder.insert(card, insertIndex);
+    }
   }
 }
