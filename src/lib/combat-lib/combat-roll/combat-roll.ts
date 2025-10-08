@@ -349,6 +349,7 @@ export class CombatRoll {
 
     // Set owningPlayerSlot = -1 to look for control token or closest player.
     // Requires an object be given!
+    const seenModifierNsids: Set<string> = new Set();
     const maybeAddModifier = (
       nsid: string,
       obj: GameObject | undefined,
@@ -356,7 +357,9 @@ export class CombatRoll {
     ): void => {
       const modifier: UnitModifier | undefined =
         TI4.unitModifierRegistry.getByNsid(nsid);
-      if (modifier) {
+      if (modifier && !seenModifierNsids.has(nsid)) {
+        seenModifierNsids.add(nsid);
+
         // Only use cards when face-up.
         let useModifier: boolean = true;
         if (obj instanceof Card) {
@@ -453,15 +456,11 @@ export class CombatRoll {
         for (const abilityNsid of data.faction.getAbilityNsids()) {
           maybeAddModifier(abilityNsid, undefined, data.playerSlot);
         }
-        // Add flagship (other unit-based modifiers are on cards).
+        // Add intrinsic units (usually flagship, other unit-based modifiers are on cards).
         for (const nsid of data.faction.getUnitOverrideNsids()) {
           const unitAttrsSchema: UnitAttrsSchemaType | undefined =
             TI4.unitAttrsRegistry.rawByNsid(nsid);
-          if (
-            unitAttrsSchema !== undefined &&
-            unitAttrsSchema.unit === "flagship" &&
-            data.hasUnit("flagship")
-          ) {
+          if (unitAttrsSchema !== undefined) {
             maybeAddModifier(nsid, undefined, data.playerSlot);
           }
         }
@@ -515,6 +514,7 @@ export class CombatRoll {
     });
 
     UnitModifier.sortByApplyOrder(unitModifiers);
+
     return unitModifiers;
   }
 
