@@ -62,8 +62,6 @@ export class ReportFinalAgendaState {
       }
     }
 
-    // Sort by decreasing total votes.
-    outcomeSummaries.sort((a, b) => b.totalVotes - a.totalVotes);
     return outcomeSummaries;
   }
 
@@ -153,7 +151,15 @@ export class ReportFinalAgendaState {
         return result;
       }
     );
-    return summaries.join(", ");
+
+    const agendaCardId: string = agendaState.getAgendaObjId();
+    const agendaCard: GameObject | undefined =
+      world.getObjectById(agendaCardId);
+    if (agendaCard && agendaCard instanceof Card) {
+      const agendaCardName: string = agendaCard.getCardDetails().name;
+      summaries.unshift(`AGENDA "${agendaCardName}" results:`);
+    }
+    return summaries.join("\n");
   }
 
   constructor(agendaState: AgendaState) {

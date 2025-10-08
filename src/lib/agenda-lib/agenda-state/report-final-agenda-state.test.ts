@@ -59,16 +59,17 @@ it("static getOutcomeSummaries", () => {
       totalVotes: 13,
       votingPlayerSlots: [-1],
     },
-    {
-      outcomeIndex: 2,
-      outcomeName: "Outcome 3",
-      totalVotes: 3,
-      votingPlayerSlots: [-1],
-    },
+
     {
       outcomeIndex: 1,
       outcomeName: "Outcome 2",
       totalVotes: 2,
+      votingPlayerSlots: [-1],
+    },
+    {
+      outcomeIndex: 2,
+      outcomeName: "Outcome 3",
+      totalVotes: 3,
       votingPlayerSlots: [-1],
     },
   ]);
@@ -86,17 +87,17 @@ it("static sortOutcomeIndicesByDecreasingVoteCount", () => {
 
   agendaState.setOutcomeName(1, "Outcome 2");
   agendaState.setSeatOutcomeChoice(1, 1);
-  agendaState.setSeatVotesForOutcome(1, 2);
+  agendaState.setSeatVotesForOutcome(1, 3);
 
   agendaState.setOutcomeName(2, "Outcome 3");
   agendaState.setSeatOutcomeChoice(2, 2);
-  agendaState.setSeatVotesForOutcome(2, 3);
+  agendaState.setSeatVotesForOutcome(2, 2);
 
   expect(agendaState.getNumOutcomes()).toBe(3);
 
   expect(
     ReportFinalAgendaState.sortOutcomeIndicesByDecreasingVoteCount(agendaState)
-  ).toEqual([2, 1, 0]);
+  ).toEqual([1, 2, 0]);
 });
 
 it("static summary", () => {
@@ -133,7 +134,12 @@ it("static summary", () => {
 
   const summary: string = ReportFinalAgendaState.summary(agendaState);
   expect(summary).toBe(
-    '"Outcome 1" (votes: 13 by green), "Outcome 2" (votes: 2 by red), "Outcome 3" (votes: 3 by ???), "Outcome 4" (votes: 0 by )'
+    [
+      '"Outcome 1" (votes: 13 by green)',
+      '"Outcome 3" (votes: 3 by ???)',
+      '"Outcome 2" (votes: 2 by red)',
+      '"Outcome 4" (votes: 0 by )',
+    ].join("\n")
   );
 });
 
