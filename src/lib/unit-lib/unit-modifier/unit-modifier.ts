@@ -52,6 +52,7 @@ export class UnitModifier {
       adjust: 3,
       "adjust-late": 4,
       choose: 5,
+      "choose-late": 6,
     };
     return modifiers.sort((a, b) => {
       const aValue: number = priorityToSortValue[a.getPriority()];
