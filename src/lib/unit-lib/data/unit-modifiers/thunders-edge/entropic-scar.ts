@@ -1,7 +1,7 @@
 import { System } from "../../../../system-lib/system/system";
 import { CombatRoll } from "../../../../combat-lib/combat-roll/combat-roll";
 import { UnitModifierSchemaType } from "../../../schema/unit-modifier-schema";
-import { CombatAttrs } from "lib/unit-lib/unit-attrs";
+import { CombatAttrs } from "../../../unit-attrs";
 
 export function _isEntropicScar(system: System | undefined): boolean {
   if (!system) {

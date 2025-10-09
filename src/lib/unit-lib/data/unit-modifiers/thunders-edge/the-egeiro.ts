@@ -5,8 +5,8 @@ import {
   ControlSystemType,
   SpacePlanetOwnership,
 } from "../../../../border-lib/space-planet-ownership/space-planet-ownership";
-import { UnitAttrs } from "lib/unit-lib/unit-attrs/unit-attrs";
-import { CombatAttrs } from "lib/unit-lib/unit-attrs/combat-attrs";
+import { UnitAttrs } from "../../../unit-attrs/unit-attrs";
+import { CombatAttrs } from "../../../unit-attrs/combat-attrs";
 
 export const TheEgeiro: UnitModifierSchemaType = {
   name: "The Egeiro",
