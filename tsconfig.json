@@ -13,7 +13,6 @@
     "jsxFactory": "jsxInTTPG",
     "jsxFragmentFactory": "jsxFrag",
     "rootDir": "./src",
-    "baseUrl": "./src",
     "outDir": "./build",
     "moduleResolution": "node16",
     "isolatedModules": true,
