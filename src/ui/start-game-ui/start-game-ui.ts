@@ -39,12 +39,6 @@ export class StartGameUI extends AbstractUI {
       .setBold(true)
       .setText("TWILIGHT IMPERIUM");
 
-    const TEST_CANDIDATE: LongLabelUI = new LongLabelUI(scaledWidth, scale);
-    TEST_CANDIDATE.getText()
-      .setTextColor([1, 0.2, 0, 1])
-      .setBold(true)
-      .setText("BETA TEST, PLEASE REPORT BUGS");
-
     const helpInfo: LongRichTextUI = new LongRichTextUI(scaledWidth, scale);
     helpInfo
       .getRichText()
@@ -225,7 +219,7 @@ export class StartGameUI extends AbstractUI {
     const ui: AbstractUI = new VerticalUIBuilder()
       .setSpacing(CONFIG.SPACING * scale)
       .setHorizontalAlignment(HorizontalAlignment.Center)
-      .addUIs([gameHeader, TEST_CANDIDATE, config, startGameButton, helpInfo])
+      .addUIs([gameHeader, config, startGameButton, helpInfo])
       .build();
     super(ui.getWidget(), ui.getSize());
   }
