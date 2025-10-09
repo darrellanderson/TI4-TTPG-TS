@@ -47,7 +47,9 @@ export class LayoutUnitBoxes {
 
     if (row) {
       const garbageContainer: GameObject = TI4.spawn.spawnOrThrow(
-        "container:base/garbage"
+        "container:base/garbage",
+        undefined,
+        [0, 0, 180]
       );
       row.add(garbageContainer);
       this._layout.addAfterLayout(() => {

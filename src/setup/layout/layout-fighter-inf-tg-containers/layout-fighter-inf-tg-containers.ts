@@ -14,10 +14,14 @@ export class LayoutFighterInfTgContainers {
       .setIsVertical(true);
 
     const topGarbage: GameObject = TI4.spawn.spawnOrThrow(
-      "container:base/garbage"
+      "container:base/garbage",
+      undefined,
+      [0, 0, 180]
     );
     const bottompGarbage: GameObject = TI4.spawn.spawnOrThrow(
-      "container:base/garbage"
+      "container:base/garbage",
+      undefined,
+      [0, 0, 180]
     );
 
     this._layout
