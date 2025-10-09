@@ -118,7 +118,7 @@ export class UnpackHomeSystem extends AbstractUnpack {
 
     const homePos: Vector = genericHomeSystemTile.getPosition().add([0, 0, 10]);
     const dx: number = (statusPad.getPosition().x < 0 ? 1 : -1) * 15;
-    let secondHomePos: Vector = statusPad.getPosition().add([dx, 15, 10]);
+    let secondHomePos: Vector = statusPad.getPosition().add([dx, 35, 10]);
     secondHomePos = TI4.hex.toPosition(TI4.hex.fromPosition(secondHomePos));
     secondHomePos.z = world.getTableHeight() + 10;
 
