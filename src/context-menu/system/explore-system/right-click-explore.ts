@@ -113,7 +113,6 @@ export class RightClickExplore implements IGlobal {
 
   init(): void {
     this._isDistantSuns = RightClickExplore._checkIsDistantSuns();
-
     const skipContained = false;
     for (const obj of world.getAllObjects(skipContained)) {
       this._maybeSetCustomActions(obj);
@@ -172,7 +171,12 @@ export class RightClickExplore implements IGlobal {
       // Frontier exploration.
       const actionFrontier: string = `*Explore Frontier`;
       systemTileObj.removeCustomAction(actionFrontier);
-      if (system.getPlanets().length === 0) {
+      if (
+        system.getSystemTileNumber() > 0 &&
+        system.getPlanets().filter((planet: Planet): boolean => {
+          return !planet.isSpaceStation();
+        }).length === 0
+      ) {
         systemTileObj.addCustomAction(actionFrontier);
       }
     }
