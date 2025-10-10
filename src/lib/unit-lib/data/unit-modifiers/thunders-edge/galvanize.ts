@@ -29,7 +29,14 @@ function _getRelevantGalvanizeTokens(
     }
   }
 
-  return galvanizeTokens;
+  return galvanizeTokens.filter((galvanizeToken: UnitPlastic): boolean => {
+    const linkedPlastic: UnitPlastic | undefined =
+      galvanizeToken.getLinkedPlastic();
+    return (
+      linkedPlastic !== undefined &&
+      linkedPlastic.getOwningPlayerSlot() === combatRoll.self.playerSlot
+    );
+  });
 }
 
 export const Galvanize: UnitModifierSchemaType = {
