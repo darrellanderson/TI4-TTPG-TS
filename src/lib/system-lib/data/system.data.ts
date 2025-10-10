@@ -1295,4 +1295,578 @@ export const SOURCE_TO_SYSTEM_DATA: Record<string, Array<SystemSchemaType>> = {
       ],
     },
   ],
+
+  ["thunders-edge"]: [
+    {
+      tile: 92,
+      isHome: true,
+      planets: [
+        {
+          name: "Ordinian",
+          nsidName: "ordinian",
+          resources: 0,
+          influence: 0,
+          isLegendary: true,
+          legendaryNsidName: "4x41d-hyperion-vi",
+        },
+        {
+          name: "Revelation",
+          nsidName: "revelation",
+          isSpaceStation: true,
+          resources: 1,
+          influence: 2,
+        },
+      ],
+    },
+    {
+      tile: 93,
+      isHome: true,
+      planets: [
+        {
+          name: "Mez Lo Orz Fei Zsha",
+          nsidName: "mez-lo-orz-fei-zsha",
+          resources: 2,
+          influence: 1,
+        },
+        {
+          name: "Rep Lo Orz Qet",
+          nsidName: "rep-lo-orz-qet",
+          resources: 1,
+          influence: 3,
+        },
+      ],
+    },
+    {
+      tile: 94,
+      isHome: true,
+      wormholes: ["epsilon"],
+    },
+    {
+      tile: 95,
+      isHome: true,
+      planets: [
+        {
+          name: "Ikatena",
+          nsidName: "ikatena",
+          resources: 4,
+          influence: 4,
+        },
+      ],
+    },
+    {
+      tile: 96,
+      imgFaceDown: true,
+      isHome: true,
+      planets: [
+        {
+          name: "Cronos",
+          nsidName: "cronos",
+          resources: 2,
+          influence: 1,
+        },
+        {
+          name: "Tallin",
+          nsidName: "tallin",
+          resources: 1,
+          influence: 2,
+        },
+      ],
+      planetsFaceDown: [
+        {
+          name: "Cronos Hollow",
+          nsidName: "cronos-hollow",
+          resources: 3,
+          influence: 0,
+        },
+        {
+          name: "Tallin Hollow",
+          nsidName: "tallin-hollow",
+          resources: 3,
+          influence: 0,
+        },
+      ],
+    },
+    {
+      tile: 97,
+      planets: [
+        {
+          name: "Faunus",
+          nsidName: "faunus",
+          resources: 1,
+          influence: 3,
+          isLegendary: true,
+          legendaryNsidName: "maxis-central-control",
+          techs: ["green"],
+          traits: ["industrial"],
+        },
+      ],
+    },
+    {
+      tile: 98,
+      planets: [
+        {
+          name: "Garbozia",
+          nsidName: "garbozia",
+          resources: 2,
+          influence: 1,
+          isLegendary: true,
+          legendaryNsidName: "dok-n-pics-salvage-yard",
+          traits: ["hazardous"],
+        },
+      ],
+    },
+    {
+      tile: 99,
+      planets: [
+        {
+          name: "Emelpar",
+          nsidName: "emelpar",
+          resources: 0,
+          influence: 2,
+          isLegendary: true,
+          legendaryNsidName: "the-acropolis",
+          traits: ["cultural"],
+        },
+      ],
+    },
+    {
+      tile: 100,
+      planets: [
+        {
+          name: "Tempesta",
+          nsidName: "tempesta",
+          resources: 1,
+          influence: 1,
+          isLegendary: true,
+          legendaryNsidName: "ionian-fuel-refinery",
+          techs: ["blue"],
+          traits: ["hazardous"],
+        },
+      ],
+    },
+    {
+      tile: 101,
+      planets: [
+        {
+          name: "Olergodt",
+          nsidName: "olergodt",
+          resources: 2,
+          influence: 1,
+          techs: ["red", "yellow"],
+          traits: ["cultural", "hazardous"],
+        },
+      ],
+    },
+    {
+      tile: 102,
+      planets: [
+        {
+          name: "Andeara",
+          nsidName: "andeara",
+          resources: 1,
+          influence: 1,
+          techs: ["blue"],
+          traits: ["industrial"],
+        },
+      ],
+      wormholes: ["alpha"],
+    },
+    {
+      tile: 103,
+      planets: [
+        {
+          name: "Vira Pics III",
+          nsidName: "vira-pics-iii",
+          resources: 2,
+          influence: 3,
+          traits: ["cultural", "hazardous"],
+        },
+      ],
+    },
+    {
+      tile: 104,
+      planets: [
+        {
+          name: "Lesab",
+          nsidName: "lesab",
+          resources: 2,
+          influence: 1,
+          traits: ["hazardous", "industrial"],
+        },
+      ],
+    },
+    {
+      tile: 105,
+      planets: [
+        {
+          name: "New Terra", // careful, "Neutera" on the system tile image
+          nsidName: "new-terra",
+          resources: 1,
+          influence: 1,
+          techs: ["green"],
+          traits: ["industrial"],
+        },
+        {
+          name: "Tinnes",
+          nsidName: "tinnes",
+          resources: 2,
+          influence: 1,
+          techs: ["green"],
+          traits: ["hazardous", "industrial"],
+        },
+      ],
+    },
+    {
+      tile: 106,
+      planets: [
+        {
+          name: "Cresius",
+          nsidName: "cresius",
+          resources: 0,
+          influence: 1,
+          traits: ["hazardous"],
+        },
+        {
+          name: "Lazul Rex",
+          nsidName: "lazul-rex",
+          resources: 2,
+          influence: 2,
+          traits: ["industrial", "cultural"],
+        },
+      ],
+    },
+    {
+      tile: 107,
+      planets: [
+        {
+          name: "Tiamat",
+          nsidName: "tiamat",
+          resources: 1,
+          influence: 2,
+          techs: ["yellow", "yellow"],
+          traits: ["cultural"],
+        },
+        {
+          name: "Hercalor",
+          nsidName: "hercalor",
+          resources: 1,
+          influence: 0,
+          traits: ["industrial"],
+        },
+      ],
+    },
+    {
+      tile: 108,
+      planets: [
+        {
+          name: "Kostboth",
+          nsidName: "kostboth",
+          resources: 0,
+          influence: 1,
+          traits: ["cultural"],
+        },
+        {
+          name: "Capha",
+          nsidName: "capha",
+          resources: 3,
+          influence: 0,
+          traits: ["hazardous"],
+        },
+      ],
+    },
+    {
+      tile: 109,
+      planets: [
+        {
+          name: "Bellatrix",
+          nsidName: "bellatrix",
+          resources: 1,
+          influence: 2,
+          traits: ["cultural"],
+        },
+        {
+          name: "Tsion Station",
+          nsidName: "tsion-station",
+          resources: 1,
+          influence: 1,
+          isSpaceStation: true,
+        },
+      ],
+    },
+    {
+      tile: 110,
+      planets: [
+        {
+          name: "Elnath",
+          nsidName: "elnath",
+          resources: 2,
+          influence: 0,
+          traits: ["hazardous"],
+        },
+        {
+          name: "Horizon",
+          nsidName: "horizon",
+          resources: 1,
+          influence: 2,
+          traits: ["cultural"],
+        },
+        {
+          name: "Luthien VI",
+          nsidName: "luthien-vi",
+          resources: 3,
+          influence: 1,
+          traits: ["hazardous"],
+        },
+      ],
+    },
+    {
+      tile: 111,
+      planets: [
+        {
+          name: "Tarana",
+          nsidName: "tarana",
+          resources: 1,
+          influence: 2,
+          traits: ["cultural", "industrial"],
+        },
+        {
+          name: "Oluz Station",
+          nsidName: "oluz-station",
+          resources: 1,
+          influence: 1,
+          isSpaceStation: true,
+        },
+      ],
+    },
+    {
+      tile: 112,
+      isExcludeFromDraft: true,
+      planets: [
+        {
+          name: "Mecatol Rex",
+          nsidName: "mecatol-rex",
+          resources: 1,
+          influence: 6,
+          isLegendary: true,
+          legendaryNsidName: "the-galactic-council",
+        },
+      ],
+    },
+    {
+      tile: 113,
+      anomalies: ["gravity-rift"],
+      wormholes: ["beta"],
+    },
+    {
+      tile: 114,
+      anomalies: ["scar"],
+    },
+    {
+      tile: 115,
+      anomalies: ["asteroid-field"],
+      planets: [
+        {
+          name: "Industrex",
+          nsidName: "industrex",
+          resources: 2,
+          influence: 0,
+          techs: ["red"],
+          traits: ["industrial"],
+          isLegendary: true,
+          legendaryNsidName: "aeurex-mechanica",
+        },
+      ],
+    },
+    {
+      tile: 116,
+      anomalies: ["scar"],
+      planets: [
+        {
+          name: "Lemox",
+          nsidName: "lemox",
+          resources: 0,
+          influence: 3,
+          traits: ["industrial"],
+        },
+      ],
+    },
+    {
+      tile: 117,
+      anomalies: ["asteroid-field", "gravity-rift"],
+      planets: [
+        {
+          name: "The Watchtower",
+          nsidName: "the-watchtower",
+          resources: 1,
+          influence: 1,
+          isSpaceStation: true,
+        },
+      ],
+    },
+    {
+      tile: 118,
+      class: "off-map",
+      isHome: true,
+      wormholes: ["epsilon"],
+      planets: [
+        {
+          name: "Ahk Creuxx",
+          nsidName: "ahk-creuxx",
+          resources: 4,
+          influence: 2,
+        },
+      ],
+    },
+    {
+      tile: 119,
+      isHyperlane: true,
+      hyperlanes: { sw: ["nw"] },
+      hyperlanesFaceDown: { sw: ["nw"] },
+      imgFaceDown: true,
+    },
+    {
+      tile: 120,
+      isHyperlane: true,
+      hyperlanes: { ne: ["se"] },
+      hyperlanesFaceDown: { ne: ["se"] },
+      imgFaceDown: true,
+    },
+    {
+      tile: 121,
+      isHyperlane: true,
+      hyperlanes: { nw: ["ne"] },
+      hyperlanesFaceDown: { nw: ["ne"] },
+      imgFaceDown: true,
+    },
+    {
+      tile: 122,
+      isHyperlane: true,
+      hyperlanes: { nw: ["ne"] },
+      hyperlanesFaceDown: { nw: ["ne"] },
+      imgFaceDown: true,
+    },
+    {
+      tile: 123,
+      isHyperlane: true,
+      hyperlanes: { se: ["sw", "nw", "n"] },
+      hyperlanesFaceDown: { se: ["n", "ne", "sw"] },
+      imgFaceDown: true,
+    },
+    {
+      tile: 124,
+      isHyperlane: true,
+      hyperlanes: { sw: ["se", "ne", "n"] },
+      hyperlanesFaceDown: { sw: ["n", "ne", "se"] },
+      imgFaceDown: true,
+    },
+
+    // Fracture.
+    {
+      tile: 900,
+      class: "fracture",
+      imgFaceDown: true,
+      isExcludeFromDraft: true,
+    },
+    {
+      tile: 901,
+      class: "fracture",
+      imgFaceDown: true,
+      isExcludeFromDraft: true,
+      planets: [
+        {
+          name: "Styx",
+          nsidName: "styx",
+          resources: 4,
+          influence: 0,
+          radius: 4.88,
+          isLegendary: true,
+          legendaryNsidName: "a-song-like-marrow",
+        },
+      ],
+    },
+    {
+      tile: 902,
+      class: "fracture",
+      imgFaceDown: true,
+      isExcludeFromDraft: true,
+    },
+    {
+      tile: 903,
+      class: "fracture",
+      imgFaceDown: true,
+      isExcludeFromDraft: true,
+      isEgress: true,
+    },
+    {
+      tile: 904,
+      class: "fracture",
+      imgFaceDown: true,
+      isExcludeFromDraft: true,
+      planets: [
+        {
+          name: "Lethe",
+          nsidName: "lethe",
+          resources: 0,
+          influence: 2,
+        },
+        {
+          name: "Phlegethon",
+          nsidName: "phlegethon",
+          resources: 1,
+          influence: 2,
+        },
+      ],
+    },
+    {
+      tile: 905,
+      class: "fracture",
+      imgFaceDown: true,
+      isExcludeFromDraft: true,
+      planets: [
+        {
+          name: "Cocytus",
+          nsidName: "cocytus",
+          resources: 3,
+          influence: 0,
+        },
+      ],
+    },
+    {
+      tile: 906,
+      class: "fracture",
+      imgFaceDown: true,
+      isExcludeFromDraft: true,
+      isEgress: true,
+    },
+
+    // Planet without a system (attachment).
+    {
+      tile: -10,
+      isExcludeFromDraft: true,
+      planets: [
+        {
+          name: "Avernus",
+          nsidName: "avernus",
+          resources: 2,
+          influence: 0,
+          isLegendary: true,
+          legendaryNsidName: "the-nucleus",
+        },
+      ],
+    },
+    {
+      tile: -11,
+      isExcludeFromDraft: true,
+      planets: [
+        {
+          name: "Thunder's Edge",
+          nsidName: "thunders-edge",
+          resources: 5,
+          influence: 1,
+          isLegendary: true,
+          legendaryNsidName: "jupiter-brain",
+        },
+      ],
+    },
+  ],
 };
