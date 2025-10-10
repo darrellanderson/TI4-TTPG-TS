@@ -166,10 +166,19 @@ export class SystemRegistry {
     for (const [source, systemSchemas] of Object.entries(
       SOURCE_TO_SYSTEM_DATA
     )) {
-      const sourceAndPackageId: SourceAndPackageIdSchemaType = {
+      let sourceAndPackageId: SourceAndPackageIdSchemaType = {
         source,
         packageId,
       };
+
+      // HACK: THUNDERS EDGE SHOULD POINT TO THE ADDITIVE PACKAGE.
+      if (source === "thunders-edge") {
+        sourceAndPackageId = {
+          source,
+          packageId: "645CE2B39EA24B33B131D2AFE863C05F",
+        };
+      }
+
       this.load(sourceAndPackageId, systemSchemas);
     }
     return this;
