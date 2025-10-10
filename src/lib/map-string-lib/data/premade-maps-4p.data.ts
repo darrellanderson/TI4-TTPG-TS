@@ -3,6 +3,15 @@ import { PremadeMapType } from "./premade-map-type";
 export const PREMADE_MAPS_4P: Array<PremadeMapType> = [
   {
     playerCount: 4,
+    name: "Red vs Blue (TE)",
+    mapString:
+      "85A3 99 31 121 68 100 110 87A3 40 24 39 124 116 123 97 102 41 88A3 86A3 84 75 0 62 111 0 115 119 122 120 113 0 109 46 0 76 83 901B0 902B0 903B0 904B0 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 905B0 906B0 900B0",
+    author: "jazz",
+    comments:
+      "TE+Base+Pok, 4p uses double hyperlane maps (assumed to be for a 2v2 alliance mode game)",
+  },
+  {
+    playerCount: 4,
     name: "Chokepoint [4p PoK]",
     mapString:
       "68 91A2 88B1 89A1 84B2 83B1 65 72 62 64 67 35 66 38 45 26 63 69 85A3 43 0 87B3 48 47 46 0 39 86A0 74 0 90B2 77 50 49 0 25",

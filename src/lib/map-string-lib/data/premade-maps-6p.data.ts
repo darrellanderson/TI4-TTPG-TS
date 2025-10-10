@@ -3,6 +3,30 @@ import { PremadeMapType } from "./premade-map-type";
 export const PREMADE_MAPS_6P: Array<PremadeMapType> = [
   {
     playerCount: 6,
+    name: "Thunder Dreaming (TE)",
+    mapString:
+      "35 30 98 34 113 101 109 47 37 44 110 49 27 48 38 46 28 43 0 42 100 0 40 105 0 39 111 0 114 99 0 29 115 0 26 107 901B0 902B0 903B0 904B0 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 905B0 906B0 900B0",
+    author: "jadimjedi",
+    comments: "TE+Base Game Map w/o PoK, 6p (basic)",
+  },
+  {
+    playerCount: 6,
+    name: "Legendary (TE)",
+    mapString:
+      "98 115 100 116 99 97 37 104 36 21 69 64 47 26 110 42 39 106 40 0 114 102 0 46 101 0 43 103 0 60 113 0 19 108 0 117 901B0 902B0 903B0 904B0 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 905B0 906B0 900B0",
+    author: "relic",
+    comments: "TE+Base+Pok, 6p (this map can be as weird as wanted)",
+  },
+  {
+    playerCount: 6,
+    name: "Minor Factions (TE)",
+    mapString:
+      "111 35 115 105 99 106 116 -1 39 -1 40 -1 109 -1 101 -1 79 -1 0 107 68 0 97 117 0 110 114 0 75 100 0 113 98 0 37 77 901B0 902B0 903B0 904B0 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 905B0 906B0 900B0",
+    author: "wek",
+    comments: "6p Map that suggests which minor factions are present",
+  },
+  {
+    playerCount: 6,
     name: "14pt- Almost Half a Dozen Donuts [6p Base]",
     mapString:
       "40 45 20 32 26 33 35 34 39 21 42 28 50 44 46 49 31 41 0 43 24 0 30 29 0 25 19 0 27 37 0 36 23 0 38 22 ",
