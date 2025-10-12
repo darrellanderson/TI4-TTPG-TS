@@ -13,6 +13,7 @@ export * from './draft-lib';
 export * from './faction-lib';
 export * from './game-data-lib';
 export * from './homebrew-lib';
+export * from './icon-container';
 export * from './map-string-lib';
 export * from './numpad-key-lib';
 export * from './player-lib';
