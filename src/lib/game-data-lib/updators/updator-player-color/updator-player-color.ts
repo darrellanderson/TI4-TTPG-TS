@@ -7,9 +7,11 @@ export class UpdatorPlayerColor implements IGameDataUpdator {
       (playerData: PerPlayerGameData, seatIndex: number): void => {
         const playerSlot: number =
           TI4.playerSeats.getPlayerSlotBySeatIndex(seatIndex);
-        const colorName: string =
-          TI4.playerColor.getSlotColorNameOrThrow(playerSlot);
-        playerData.color = colorName;
+        const colorName: string | undefined =
+          TI4.playerColor.getSlotColorName(playerSlot);
+        if (colorName) {
+          playerData.color = colorName;
+        }
       }
     );
   }
