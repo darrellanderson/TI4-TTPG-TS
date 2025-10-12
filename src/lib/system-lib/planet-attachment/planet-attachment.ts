@@ -160,6 +160,10 @@ export class PlanetAttachment {
     new PlanetCardLayout().layout(planet);
   }
 
+  getDoNotLayout(): boolean {
+    return this._params.doNotLayout ?? false;
+  }
+
   /**
    * Get the token image file.
    *
