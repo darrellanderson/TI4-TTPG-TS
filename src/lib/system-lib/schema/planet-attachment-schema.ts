@@ -11,6 +11,7 @@ export const PlanetAttachmentSchema = z
     nsidName: NsidNameSchema, // NSID "token.attachment.planet:${source}/${nsidName}"
     imgFaceDown: z.boolean().optional(), // has separate back image?
     doNotAttach: z.boolean().optional(), // do not attach, or add to registry
+    doNotLayout: z.boolean().optional(), // do not include in layout
 
     influence: z.number().optional(),
     influenceFaceDown: z.number().optional(),
