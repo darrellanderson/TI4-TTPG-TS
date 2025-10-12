@@ -104,6 +104,13 @@ export class SystemAttachment {
       this.attach();
       this.doLayout();
     });
+    obj.onFlipUpright.add(() => {
+      process.nextTick(() => {
+        this.detach();
+        this.attach();
+        this.doLayout();
+      });
+    });
   }
 
   /**

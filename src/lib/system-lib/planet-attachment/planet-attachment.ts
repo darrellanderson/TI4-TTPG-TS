@@ -98,6 +98,13 @@ export class PlanetAttachment {
       this.attach(); // planet card updated during attach
       this.doLayout();
     });
+    obj.onFlipUpright.add(() => {
+      process.nextTick(() => {
+        this.detach();
+        this.attach();
+        this.doLayout();
+      });
+    });
   }
 
   /**
