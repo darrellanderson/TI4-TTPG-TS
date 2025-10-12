@@ -1,7 +1,10 @@
 import { GameObject } from "@tabletop-playground/api";
 import { Find } from "ttpg-darrell";
 
-import { FactionSchemaType } from "../schema/faction-schema";
+import {
+  BreakthroughSchemaType,
+  FactionSchemaType,
+} from "../schema/faction-schema";
 import {
   NsidNameSchemaType,
   SourceAndPackageIdSchemaType,
@@ -14,19 +17,12 @@ export class Faction {
   private readonly _find: Find = new Find();
   private readonly _injectedExtras: Map<string, number> = new Map();
 
-  private _defaultBreakthroughs: Array<string> = [];
-
   constructor(
     sourceAndPackageId: SourceAndPackageIdSchemaType,
     params: FactionSchemaType
   ) {
     this._sourceAndPackageId = sourceAndPackageId;
     this._params = params;
-  }
-
-  // XXX TEMPORARY
-  setDefaultBreakthroughs(breakthroughs: Array<string>): void {
-    this._defaultBreakthroughs = breakthroughs;
   }
 
   getAbbr(): string {
@@ -80,13 +76,16 @@ export class Faction {
     if (source === "base" || source === "pok" || source === "codex.vigil") {
       source = "thunders-edge"; // breakthrough added in TE
     }
-    return (this._params.breakthroughs ?? this._defaultBreakthroughs).map(
-      (breakthrough): string => {
-        return TI4.factionRegistry.rewriteNsid(
-          `card.breakthrough:${source}/${breakthrough}`
-        );
-      }
-    );
+    if (this._params.breakthroughs) {
+      return this._params.breakthroughs.map(
+        (breakthrough: BreakthroughSchemaType): string => {
+          return TI4.factionRegistry.rewriteNsid(
+            `card.breakthrough:${source}/${breakthrough.breakthrough}`
+          );
+        }
+      );
+    }
+    return [];
   }
 
   getCommanderNsids(): Array<string> {

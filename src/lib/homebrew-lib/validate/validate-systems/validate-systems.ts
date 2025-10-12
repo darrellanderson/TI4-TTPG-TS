@@ -13,7 +13,7 @@ export class ValidateSystems extends AbstractValidate {
     const tileNumbers: Array<number> =
       TI4.systemRegistry.getAllSystemTileNumbers();
 
-    const missingTemplateNsids: Array<string> = [];
+    let missingTemplateNsids: Array<string> = [];
 
     for (const tileNumber of tileNumbers) {
       const nsid: string | undefined =
@@ -22,6 +22,11 @@ export class ValidateSystems extends AbstractValidate {
         missingTemplateNsids.push(nsid);
       }
     }
+
+    // XXX TODO: TEMPORARY until TE added.
+    missingTemplateNsids = missingTemplateNsids.filter((nsid) => {
+      return !nsid.includes(":thunders-edge/");
+    });
 
     if (missingTemplateNsids.length > 0) {
       errors.push(

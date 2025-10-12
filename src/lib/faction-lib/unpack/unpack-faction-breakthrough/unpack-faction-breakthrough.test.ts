@@ -21,9 +21,8 @@ it("_dealBreakthroughCardsAndDeleteDeck", () => {
   const faction: Faction = TI4.factionRegistry.getByNsid("faction:base/muaat")!;
   const playerSlot: number = 10;
 
-  faction.setDefaultBreakthroughs(["my-breakthrough"]);
   const deck: Card = MockCard.simple(
-    "card.breakthrough:thunders-edge/my-breakthrough"
+    "card.breakthrough:thunders-edge/stellar-genesis"
   );
 
   const factionExtrasContainer: Container = new MockContainer({
@@ -41,7 +40,6 @@ it("_dealBreakthroughCardsAndDeleteDeck (missing)", () => {
   const faction: Faction = TI4.factionRegistry.getByNsid("faction:base/muaat")!;
   const playerSlot: number = 10;
 
-  faction.setDefaultBreakthroughs(["my-breakthrough"]);
   const deck: Card = MockCard.simple(
     "card.breakthrough:thunders-edge/__other__"
   );
@@ -90,15 +88,14 @@ it("remove", () => {
     owningPlayerSlot: playerSlot,
   });
 
-  faction.setDefaultBreakthroughs(["my-breakthrough"]);
   const card1: Card = MockCard.simple(
-    "card.breakthrough:thunders-edge/my-breakthrough"
+    "card.breakthrough:thunders-edge/stellar-genesis"
   );
   const card2: Card = MockCard.simple(
-    "card.breakthrough:thunders-edge/my-breakthrough"
+    "card.breakthrough:thunders-edge/stellar-genesis"
   );
   const card3: Card = MockCard.simple(
-    "card.breakthrough:thunders-edge/my-breakthrough"
+    "card.breakthrough:thunders-edge/stellar-genesis"
   );
 
   cardHolder.insert(card2, 0);

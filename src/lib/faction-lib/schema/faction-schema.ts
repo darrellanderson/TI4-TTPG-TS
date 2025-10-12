@@ -1,6 +1,16 @@
 import { z } from "zod";
 
 import { NsidNameSchema } from "../../system-lib/schema/basic-types-schema";
+import { TechColorSchema } from "../../tech-lib";
+
+export const BreakthroughSchema = z
+  .object({
+    breakthrough: NsidNameSchema,
+    techEquivalence: z.array(TechColorSchema), // can be empty (nekro)
+  })
+  .strict()
+  .readonly();
+export type BreakthroughSchemaType = z.infer<typeof BreakthroughSchema>;
 
 export const FactionSchema = z
   .object({
@@ -10,7 +20,7 @@ export const FactionSchema = z
     abbr: z.string().min(1), // abbreviation
 
     abilities: z.array(NsidNameSchema),
-    breakthroughs: z.array(NsidNameSchema).optional(),
+    breakthroughs: z.array(BreakthroughSchema).optional(),
     commodities: z.number().int().min(0),
     factionTechs: z.array(NsidNameSchema).min(2), // omega versions listed separately, can have more than 2
     home: z.number().int().min(0),

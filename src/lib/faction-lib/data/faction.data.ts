@@ -10,6 +10,12 @@ export const SOURCE_TO_FACTION_DATA: Record<
       name: "The Arborec",
       abbr: "Arborec",
       abilities: ["mitosis"],
+      breakthroughs: [
+        {
+          breakthrough: "psychospore",
+          techEquivalence: ["red", "green"],
+        },
+      ],
       commodities: 3,
       home: 5,
       leaders: {
@@ -36,6 +42,12 @@ export const SOURCE_TO_FACTION_DATA: Record<
       name: "The Ghosts of Creuss",
       abbr: "Creuss",
       abilities: ["quantum-entanglement", "slipstream", "creuss-gate"],
+      breakthroughs: [
+        {
+          breakthrough: "particle-synthesis",
+          techEquivalence: ["blue", "yellow"],
+        },
+      ],
       commodities: 4,
       home: 51,
       homeSurrogate: 17,
@@ -71,6 +83,12 @@ export const SOURCE_TO_FACTION_DATA: Record<
       name: "The Emirates of Hacan",
       abbr: "Hacan",
       abilities: ["masters-of-trade", "guild-ships", "arbiters"],
+      breakthroughs: [
+        {
+          breakthrough: "auto-factories",
+          techEquivalence: ["red", "yellow"],
+        },
+      ],
       commodities: 6,
       home: 16,
       leaders: {
@@ -96,6 +114,12 @@ export const SOURCE_TO_FACTION_DATA: Record<
       name: "The Universities of Jol-Nar",
       abbr: "Jol-Nar",
       abilities: ["fragile", "brilliant", "analytical"],
+      breakthroughs: [
+        {
+          breakthrough: "specialized-compounds",
+          techEquivalence: ["yellow", "green"],
+        },
+      ],
       commodities: 4,
       home: 12,
       leaders: {
@@ -127,6 +151,12 @@ export const SOURCE_TO_FACTION_DATA: Record<
       name: "The L1Z1X Mindnet",
       abbr: "L1Z1X",
       abilities: ["assimilate", "harrow"],
+      breakthroughs: [
+        {
+          breakthrough: "fealty-uplink",
+          techEquivalence: ["red", "green"],
+        },
+      ],
       commodities: 2,
       home: 6,
       leaders: {
@@ -156,6 +186,12 @@ export const SOURCE_TO_FACTION_DATA: Record<
       name: "The Barony of Letnev",
       abbr: "Letnev",
       abilities: ["munitions-reserves", "armada"],
+      breakthroughs: [
+        {
+          breakthrough: "gravleash-maneuvers",
+          techEquivalence: ["blue", "red"],
+        },
+      ],
       commodities: 2,
       home: 10,
       leaders: {
@@ -183,6 +219,12 @@ export const SOURCE_TO_FACTION_DATA: Record<
       name: "The Mentak Coalition",
       abbr: "Mentak",
       abilities: ["ambush", "pillage"],
+      breakthroughs: [
+        {
+          breakthrough: "the-tables-grace",
+          techEquivalence: ["yellow", "green"],
+        },
+      ],
       commodities: 2,
       home: 2,
       leaders: {
@@ -209,6 +251,12 @@ export const SOURCE_TO_FACTION_DATA: Record<
       name: "The Embers of Muaat",
       abbr: "Muaat",
       abilities: ["star-forge", "gashlai-physiology"],
+      breakthroughs: [
+        {
+          breakthrough: "stellar-genesis",
+          techEquivalence: ["red", "yellow"],
+        },
+      ],
       commodities: 4,
       home: 4,
       leaders: {
@@ -233,6 +281,12 @@ export const SOURCE_TO_FACTION_DATA: Record<
       name: "The Naalu Collective",
       abbr: "Naalu",
       abilities: ["telepathic", "foresight"],
+      breakthroughs: [
+        {
+          breakthrough: "mindsieve",
+          techEquivalence: ["red", "green"],
+        },
+      ],
       commodities: 3,
       home: 9,
       leaders: {
@@ -264,6 +318,12 @@ export const SOURCE_TO_FACTION_DATA: Record<
         "galactic-threat",
         "technological-singularity",
         "propagation",
+      ],
+      breakthroughs: [
+        {
+          breakthrough: "valefar-assimilator-z",
+          techEquivalence: [],
+        },
       ],
       commodities: 3,
       home: 8,
@@ -304,6 +364,12 @@ export const SOURCE_TO_FACTION_DATA: Record<
       name: "Sardakk N'orr",
       abbr: "N'orr",
       abilities: ["unrelenting"],
+      breakthroughs: [
+        {
+          breakthrough: "norr-supremacy",
+          techEquivalence: ["blue", "red"],
+        },
+      ],
       commodities: 3,
       home: 13,
       leaders: {
@@ -329,6 +395,12 @@ export const SOURCE_TO_FACTION_DATA: Record<
       name: "The Clan of Saar",
       abbr: "Saar",
       abilities: ["scavenge", "nomadic"],
+      breakthroughs: [
+        {
+          breakthrough: "deorbit-barrage",
+          techEquivalence: ["blue", "red"],
+        },
+      ],
       commodities: 3,
       home: 11,
       leaders: {
@@ -354,6 +426,12 @@ export const SOURCE_TO_FACTION_DATA: Record<
       name: "The Federation of Sol",
       abbr: "Sol",
       abilities: ["orbital-drop", "versatile"],
+      breakthroughs: [
+        {
+          breakthrough: "bellum-gloriosum",
+          techEquivalence: ["yellow", "green"],
+        },
+      ],
       commodities: 4,
       home: 1,
       leaders: {
@@ -384,6 +462,12 @@ export const SOURCE_TO_FACTION_DATA: Record<
       name: "The Winnu",
       abbr: "Winnu",
       abilities: ["blood-ties", "reclamation"],
+      breakthroughs: [
+        {
+          breakthrough: "imperator",
+          techEquivalence: ["blue", "red"],
+        },
+      ],
       commodities: 3,
       home: 7,
       leaders: {
@@ -410,6 +494,12 @@ export const SOURCE_TO_FACTION_DATA: Record<
       name: "The Xxcha Kingdom",
       abbr: "Xxcha",
       abilities: ["peace-accords", "quash"],
+      breakthroughs: [
+        {
+          breakthrough: "archons-gift",
+          techEquivalence: ["yellow", "green"],
+        },
+      ],
       commodities: 4,
       home: 14,
       leaders: {
@@ -436,6 +526,12 @@ export const SOURCE_TO_FACTION_DATA: Record<
       name: "The Yin Brotherhood",
       abbr: "Yin",
       abilities: ["indoctrination", "devotion"],
+      breakthroughs: [
+        {
+          breakthrough: "yin-ascendant",
+          techEquivalence: ["yellow", "green"],
+        },
+      ],
       commodities: 2,
       home: 3,
       leaders: {
@@ -461,6 +557,12 @@ export const SOURCE_TO_FACTION_DATA: Record<
       name: "The Yssaril Tribes",
       abbr: "Yssaril",
       abilities: ["stall-tactics", "scheming", "crafty"],
+      breakthroughs: [
+        {
+          breakthrough: "deepgloom-executable",
+          techEquivalence: ["yellow", "green"],
+        },
+      ],
       commodities: 3,
       home: 15,
       leaders: {
@@ -489,6 +591,12 @@ export const SOURCE_TO_FACTION_DATA: Record<
       name: "The Argent Flight",
       abbr: "Argent",
       abilities: ["zeal", "raid-formation"],
+      breakthroughs: [
+        {
+          breakthrough: "wing-transfer",
+          techEquivalence: ["blue", "yellow"],
+        },
+      ],
       commodities: 3,
       home: 58,
       leaders: {
@@ -515,6 +623,12 @@ export const SOURCE_TO_FACTION_DATA: Record<
       name: "The Empyrean",
       abbr: "Empyrean",
       abilities: ["voidborn", "aetherpassage", "dark-whispers"],
+      breakthroughs: [
+        {
+          breakthrough: "void-tether",
+          techEquivalence: ["green", "blue"],
+        },
+      ],
       commodities: 4,
       home: 56,
       leaders: {
@@ -540,6 +654,12 @@ export const SOURCE_TO_FACTION_DATA: Record<
       name: "The Mahact Gene-Sorcerers",
       abbr: "Mahact",
       abilities: ["edict", "imperia", "hubris"],
+      breakthroughs: [
+        {
+          breakthrough: "vaults-of-the-heir",
+          techEquivalence: ["yellow", "green"],
+        },
+      ],
       commodities: 3,
       home: 52,
       leaders: {
@@ -566,6 +686,12 @@ export const SOURCE_TO_FACTION_DATA: Record<
       name: "The Naaz-Rokha Alliance",
       abbr: "Naaz-Rokha",
       abilities: ["distant-suns", "fabrication"],
+      breakthroughs: [
+        {
+          breakthrough: "absolute-synergy",
+          techEquivalence: ["green", "blue"],
+        },
+      ],
       commodities: 3,
       home: 57,
       leaders: {
@@ -592,6 +718,12 @@ export const SOURCE_TO_FACTION_DATA: Record<
       name: "The Nomad",
       abbr: "Nomad",
       abilities: ["the-company", "future-sight"],
+      breakthroughs: [
+        {
+          breakthrough: "thunders-paradox",
+          techEquivalence: ["yellow", "green"],
+        },
+      ],
       commodities: 4,
       home: 53,
       leaders: {
@@ -622,6 +754,12 @@ export const SOURCE_TO_FACTION_DATA: Record<
       name: "The Titans of Ul",
       abbr: "Ul",
       abilities: ["terragenesis", "awaken", "coalescence"],
+      breakthroughs: [
+        {
+          breakthrough: "slumberstate-computing",
+          techEquivalence: ["yellow", "green"],
+        },
+      ],
       commodities: 2,
       home: 55,
       leaders: {
@@ -657,6 +795,12 @@ export const SOURCE_TO_FACTION_DATA: Record<
       name: "The Vuil'raith Cabal",
       abbr: "Vuil'raith",
       abilities: ["devour", "amalgamation", "riftmeld"],
+      breakthroughs: [
+        {
+          breakthrough: "alraith-ix-ianovar",
+          techEquivalence: ["red", "green"],
+        },
+      ],
       commodities: 2,
       home: 54,
       leaders: {
@@ -691,6 +835,12 @@ export const SOURCE_TO_FACTION_DATA: Record<
       name: "The Council Keleres (Argent)",
       abbr: "Keleres (Argent)",
       abilities: ["the-tribunii", "council-patronage", "laws-order"],
+      breakthroughs: [
+        {
+          breakthrough: "iihq-modernization",
+          techEquivalence: ["yellow", "green"],
+        },
+      ],
       commodities: 2,
       home: 58,
       leaders: {
@@ -719,6 +869,12 @@ export const SOURCE_TO_FACTION_DATA: Record<
       name: "The Council Keleres (Mentak)",
       abbr: "Keleres (Mentak)",
       abilities: ["the-tribunii", "council-patronage", "laws-order"],
+      breakthroughs: [
+        {
+          breakthrough: "iihq-modernization",
+          techEquivalence: ["yellow", "green"],
+        },
+      ],
       commodities: 2,
       home: 2,
       leaders: {
@@ -747,6 +903,12 @@ export const SOURCE_TO_FACTION_DATA: Record<
       name: "The Council Keleres (Xxcha)",
       abbr: "Keleres (Xxcha)",
       abilities: ["the-tribunii", "council-patronage", "laws-order"],
+      breakthroughs: [
+        {
+          breakthrough: "iihq-modernization",
+          techEquivalence: ["yellow", "green"],
+        },
+      ],
       commodities: 2,
       home: 14,
       leaders: {

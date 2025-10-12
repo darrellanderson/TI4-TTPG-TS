@@ -312,7 +312,10 @@ export class CombatRoll {
     ]);
 
     const atopIgnore: Array<GameObject> = [];
-    const atopIgnoreNsids: Set<string> = new Set(["test:test/atopIgnore"]);
+    const atopIgnoreNsids: Set<string> = new Set([
+      "test:test/atopIgnore",
+      "card.breakthrough:thunders-edge/data-skimmer",
+    ]);
 
     // Control tokens on cards take precedence over cards being near players.
     // Find all control tokens early, reuse when asked.
