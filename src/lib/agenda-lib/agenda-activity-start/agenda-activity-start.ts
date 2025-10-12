@@ -91,7 +91,9 @@ export class AgendaActivityStart {
       AGENDA_WINDOW_NAMESPACE_ID,
       windowTitle
     );
-    abstractWindow.getMutableWindowParams().disableClose = true;
+    abstractWindow
+      .moveWindowLeftOfTurnOrder()
+      .getMutableWindowParams().disableClose = true;
     AgendaActivityStart._agendaWindow = abstractWindow
       .addHost()
       .createWindow()
