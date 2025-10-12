@@ -106,7 +106,8 @@ export class AgendaAvailableVotes {
       const nsid: string = NSID.get(obj);
 
       if (
-        nsid.startsWith("card.planet:") &&
+        (nsid.startsWith("card.planet:") ||
+          nsid.startsWith("card.deepwrought-ocean:")) &&
         obj instanceof Card &&
         this._cardUtil.isLooseCard(obj, allowFaceDown, rejectSnapPointTags) &&
         !systemHexes.has(TI4.hex.fromPosition(obj.getPosition()))
@@ -144,13 +145,12 @@ export class AgendaAvailableVotes {
     const faceUpPlanetCards: Array<Card> = this._getFaceUpPlanetCards();
     for (const planetCard of faceUpPlanetCards) {
       const nsid: string = NSID.get(planetCard);
+      const pos: Vector = planetCard.getPosition();
+      const playerSlot: number = this._find.closestOwnedCardHolderOwner(pos);
 
       const planet: Planet | undefined =
         TI4.systemRegistry.getPlanetByPlanetCardNsid(nsid);
       if (planet) {
-        const pos: Vector = planetCard.getPosition();
-        const playerSlot: number = this._find.closestOwnedCardHolderOwner(pos);
-
         let votes: number = playerSlotToAvailableVotes.get(playerSlot) ?? 0;
         votes += planet.getInfluence();
         const bonus: number | undefined =
@@ -161,6 +161,10 @@ export class AgendaAvailableVotes {
         if (xxekirGromOmegaPlayerSlots.has(playerSlot)) {
           votes += planet.getResources();
         }
+        playerSlotToAvailableVotes.set(playerSlot, votes);
+      } else if (nsid.startsWith("card.deepwrought-ocean:")) {
+        let votes: number = playerSlotToAvailableVotes.get(playerSlot) ?? 0;
+        votes += 1;
         playerSlotToAvailableVotes.set(playerSlot, votes);
       }
     }

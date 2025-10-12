@@ -63,14 +63,3 @@ it("_getPlayerSlotWithFactionUnit", () => {
 
   expect(buildConsume._getPlayerSlotWithFactionUnit(unit)).toBe(1);
 });
-
-it("_getSpaceDockPlanetNames", () => {
-  const buildConsume: BuildConsume = new BuildConsume([], []);
-
-  MockGameObject.simple("tile.system:base/1");
-  MockGameObject.simple("unit:base/space-dock", { owningPlayerSlot: 1 });
-
-  const planetNames: Set<string> = buildConsume._getSpaceDockPlanetNames(1);
-  expect(planetNames.size).toBe(1);
-  expect(planetNames.has("Jord")).toBe(true);
-});

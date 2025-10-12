@@ -8,7 +8,6 @@ import { SarweenTools } from "../unit-lib/data/unit-modifiers/base/sarween-tools
 import { WarMachine } from "../unit-lib/data/unit-modifiers/codex-ordinian/war-machine";
 import { XxekirGrom } from "../unit-lib/data/unit-modifiers/codex-vigil/xxekir-grom";
 import { Faction } from "../faction-lib/faction/faction";
-import { UnitPlastic } from "../unit-lib/unit-plastic/unit-plastic";
 
 export type BuildConsumeType = "tradegood" | "planet";
 
@@ -25,12 +24,6 @@ export class BuildConsume {
 
   constructor(objs: Array<GameObject>, unitModifierNames: Array<string>) {
     this._unitModifierNames = unitModifierNames;
-
-    const bastionPlayerSlot: number = this._getPlayerSlotWithFactionUnit(
-      "unit:thunders-edge/4x41x-helios-vi"
-    );
-    const bastionSpaceDockPlanetNames: Set<string> =
-      this._getSpaceDockPlanetNames(bastionPlayerSlot);
 
     for (const obj of objs) {
       const nsid: string = NSID.get(obj);
@@ -59,12 +52,9 @@ export class BuildConsume {
           if (unitModifierNames.includes(XxekirGrom.name)) {
             value += planet.getInfluence();
           }
-
-          // Bastion space dock adds +1 to planet.
-          if (bastionSpaceDockPlanetNames.has(planet.getName())) {
-            value += 1;
-          }
         }
+      } else if (nsid.startsWith("card.deepwrought-ocean:")) {
+        value == 1;
       }
 
       if (type) {
@@ -137,30 +127,5 @@ export class BuildConsume {
         }
       });
     return bastionPlayerSlot;
-  }
-
-  _getSpaceDockPlanetNames(playerSlot: number): Set<string> {
-    const bastionSpaceDockPlanetNames: Set<string> = new Set<string>();
-
-    if (playerSlot !== -1) {
-      const plastics: Array<UnitPlastic> = UnitPlastic.getAll().filter(
-        (plastic: UnitPlastic): boolean => {
-          return (
-            plastic.getUnit() === "space-dock" &&
-            plastic.getOwningPlayerSlot() === playerSlot
-          );
-        }
-      );
-      UnitPlastic.assignPlanets(plastics);
-
-      plastics.forEach((plastic: UnitPlastic): void => {
-        const planet: Planet | undefined = plastic.getPlanetClosest();
-        if (planet) {
-          bastionSpaceDockPlanetNames.add(planet.getName());
-        }
-      });
-    }
-
-    return bastionSpaceDockPlanetNames;
   }
 }

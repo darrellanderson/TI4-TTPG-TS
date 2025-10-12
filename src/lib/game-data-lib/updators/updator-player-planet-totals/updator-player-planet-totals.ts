@@ -28,7 +28,8 @@ export class UpdatorPlayerPlanetTotals implements IGameDataUpdator {
       const hex: HexType = TI4.hex.fromPosition(pos);
       if (
         obj instanceof Card &&
-        nsid.startsWith("card.planet:") &&
+        (nsid.startsWith("card.planet:") ||
+          nsid.startsWith("card.deepwrought-ocean:")) &&
         this._cardUtil.isLooseCard(obj, allowFaceDown) &&
         !systemHexes.has(hex)
       ) {
@@ -102,6 +103,13 @@ export class UpdatorPlayerPlanetTotals implements IGameDataUpdator {
 
             if (planet.isLegendary()) {
               data.legendary += 1;
+            }
+          } else if (nsid.startsWith("card.deepwrought-ocean:")) {
+            data.influence.total += 1;
+            data.resources.total += 1;
+            if (isFaceUp) {
+              data.influence.avail += 1;
+              data.resources.avail += 1;
             }
           }
         });
