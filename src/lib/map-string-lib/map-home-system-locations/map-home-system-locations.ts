@@ -25,7 +25,7 @@ const HOME_SYSTEM_POSITIONS: Record<number, Array<HomeSystemHexes>> = {
   2: [HEX.S, HEX.N],
   3: [HEX.S, HEX.NW, HEX.NE],
   4: [HEX.SE, HEX.SW, HEX.NW, HEX.NE],
-  5: [HEX.SE, HEX.SW, HEX.NW, HEX.N, HEX.NE],
+  5: [HEX.SE, HEX.S, HEX.SW, HEX.NW, HEX.NE],
   6: [HEX.SE, HEX.S, HEX.SW, HEX.NW, HEX.N, HEX.NE],
   7: [
     // this is the rulebook funky shape

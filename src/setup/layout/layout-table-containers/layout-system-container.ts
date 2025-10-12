@@ -20,13 +20,15 @@ export class LayoutSystemContainer {
       const nsid: string | undefined =
         TI4.systemRegistry.tileNumberToSystemTileObjNsid(tileNumber);
       if (systemSchema && !systemSchema.isHome && nsid) {
-        const systemTile: GameObject = TI4.spawn.spawnOrThrow(nsid);
-        systemTiles.push(systemTile);
+        const systemTile: GameObject | undefined = TI4.spawn.spawn(nsid);
+        if (systemTile) {
+          systemTiles.push(systemTile);
 
-        tags = systemTile.getTags();
-        if (!tags.includes(tag)) {
-          tags.push(tag);
-          systemTile.setTags(tags);
+          tags = systemTile.getTags();
+          if (!tags.includes(tag)) {
+            tags.push(tag);
+            systemTile.setTags(tags);
+          }
         }
       }
     }
