@@ -198,7 +198,7 @@ export class SystemRegistry {
   public getAllDraftableSystemsFilteredByConfigSources(): Array<System> {
     const sources: Set<string> = new Set(TI4.config.sources);
     const systemTier = new SystemTier();
-    return this.getAllSystemsWithObjs().filter((system) => {
+    return this.getAllSystemsWithObjs().filter((system: System): boolean => {
       const source: string = system.getSource();
       if (!sources.has(source)) {
         return false;
