@@ -35,6 +35,7 @@ export class RefreshAllPlanets {
     const startsWithEntries: Array<string> = [
       "card.planet",
       "card.legendary-planet",
+      "card.deepwrought-ocean:",
     ];
     if (alsoRefreshTechAgentRelicUnit) {
       startsWithEntries.push("card.leader.agent:");
