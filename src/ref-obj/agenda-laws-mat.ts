@@ -57,16 +57,11 @@ export class AgendaLawsMat {
 
     // Do this AFTER getting the first snap point.
     this._zone = this._findOrCreateZone();
-    this._zone.onEndOverlap.add(this.onEndOverlapHandler);
 
     this._obj.onReleased.add(() => {
       const pos: Vector = this._firstSnapPoint.getGlobalPosition();
       pos.z = world.getTableHeight() + HEIGHT / 2;
       this._zone.setPosition(pos);
-    });
-
-    process.nextTick(() => {
-      console.log("AgendaLawsMat created", this._obj.getId());
     });
   }
 
@@ -88,14 +83,17 @@ export class AgendaLawsMat {
       zone = world.createZone(pos);
     }
 
-    const color: Color = new Color(1, 1, 1, 0.1);
-    const scale: Vector = new Vector(6, 4, HEIGHT);
-    zone.setPosition(pos);
-    zone.setColor(color);
-    zone.setId(zoneId);
-    zone.setScale(scale);
-    zone.setStacking(ZonePermission.Nobody);
-    zone.setAlwaysVisible(false);
+    process.nextTick(() => {
+      const color: Color = new Color(1, 1, 1, 0.1);
+      const scale: Vector = new Vector(6, 4, HEIGHT);
+      zone.setPosition(pos);
+      zone.setColor(color);
+      zone.setId(zoneId);
+      zone.setScale(scale);
+      zone.setStacking(ZonePermission.Nobody);
+      zone.setAlwaysVisible(false);
+      zone.onEndOverlap.add(this.onEndOverlapHandler);
+    });
     return zone;
   }
 }
