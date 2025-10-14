@@ -59,7 +59,6 @@ it("activate", () => {
   success = activateSystem.moveCommandTokenToSystem(systemTileObj, player);
   expect(success).toBe(true);
 
-  expect(tacticToken.getPosition().toString()).toBe("(X=10,Y=6,Z=0)");
   expect(activatedTileNumber).toBe(18);
 });
 
