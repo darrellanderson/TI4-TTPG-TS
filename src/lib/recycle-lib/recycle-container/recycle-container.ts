@@ -27,6 +27,7 @@ import { RecycleTokenFighter } from "../handlers/token/recycle-token-fighter/rec
 import { RecycleTokenFrontier } from "../handlers/token/recycle-token-frontier/recycle-token-frontier";
 import { RecycleTokenGalvanize } from "../handlers/token/recycle-token-galvanize/recycle-token-galvanize";
 import { RecycleTokenInfantry } from "../handlers/token/recycle-token-infantry/recycle-token-infantry";
+import { RecycleTokenSever } from "../handlers/token/recycle-token-sever/recycle-token-sever";
 import { RecycleTokenTradegood } from "../handlers/token/recycle-token-tradegood/recycle-token-tradegood";
 import { RecycleUnit } from "../handlers/unit/recycle-unit";
 
@@ -104,5 +105,6 @@ RecycleContainer.addHandler(new RecycleTokenFighter());
 RecycleContainer.addHandler(new RecycleTokenFrontier());
 RecycleContainer.addHandler(new RecycleTokenGalvanize());
 RecycleContainer.addHandler(new RecycleTokenInfantry());
+RecycleContainer.addHandler(new RecycleTokenSever());
 RecycleContainer.addHandler(new RecycleTokenTradegood());
 RecycleContainer.addHandler(new RecycleUnit());

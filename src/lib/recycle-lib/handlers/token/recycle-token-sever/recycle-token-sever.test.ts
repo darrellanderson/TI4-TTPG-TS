@@ -1,12 +1,12 @@
 import { Container, GameObject } from "@tabletop-playground/api";
 import { GarbageHandler } from "ttpg-darrell";
 import { MockContainer, MockGameObject } from "ttpg-mock";
-import { RecycleTokenGalvanize } from "./recycle-token-galvanize";
+import { RecycleTokenSever } from "./recycle-token-sever";
 
 it("recycle", () => {
   const token: GameObject = new MockGameObject({
     id: "my-token-id",
-    templateMetadata: "token:thunders-edge/galvanize",
+    templateMetadata: "token.attachment.system:thunders-edge/crimson-sever",
     owningPlayerSlot: 1,
   });
   const container: Container = new MockContainer({
@@ -14,7 +14,7 @@ it("recycle", () => {
     owningPlayerSlot: 1,
   });
 
-  const recycle: GarbageHandler = new RecycleTokenGalvanize();
+  const recycle: GarbageHandler = new RecycleTokenSever();
   expect(recycle.canRecycle(token, undefined)).toBe(true);
   expect(recycle.recycle(token, undefined)).toBe(true);
   expect(container.getItems().map((x) => x.getId())).toEqual(["my-token-id"]);
@@ -23,7 +23,7 @@ it("recycle", () => {
 it("recycle (container owner mismatch)", () => {
   const token: GameObject = new MockGameObject({
     id: "my-token-id",
-    templateMetadata: "token:thunders-edge/galvanize",
+    templateMetadata: "token.attachment.system:thunders-edge/crimson-sever",
     owningPlayerSlot: 1,
   });
   const container: Container = new MockContainer({
@@ -31,7 +31,7 @@ it("recycle (container owner mismatch)", () => {
     owningPlayerSlot: 2,
   });
 
-  const recycle: GarbageHandler = new RecycleTokenGalvanize();
+  const recycle: GarbageHandler = new RecycleTokenSever();
   expect(recycle.canRecycle(token, undefined)).toBe(true);
   expect(recycle.recycle(token, undefined)).toBe(false);
   expect(container.getItems().map((x) => x.getId())).toEqual([]);

@@ -1,5 +1,11 @@
 import { Card, Vector, world } from "@tabletop-playground/api";
-import { CardUtil, Facing, HexType, NSID } from "ttpg-darrell";
+import {
+  CardUtil,
+  Facing,
+  GarbageContainer,
+  HexType,
+  NSID,
+} from "ttpg-darrell";
 
 const ALSO_REFRESH_NSIDS: Set<string> = new Set([
   "card.breakthrough:thunders-edge/deorbit-barrage",
@@ -7,6 +13,11 @@ const ALSO_REFRESH_NSIDS: Set<string> = new Set([
   "card.breakthrough:thunders-edge/resonance-generator",
   "card.breakthrough:thunders-edge/vaults-of-the-heir",
   "card.breakthrough:thunders-edge/visionaria-select",
+]);
+
+const ALSO_RECYCLE_NSIDS: Set<string> = new Set([
+  "token.attachment.system:thunders-edge/crimson-sever",
+  "card.promissory:thunders-edge/sever",
 ]);
 
 export class RefreshAllPlanets {
@@ -86,6 +97,10 @@ export class RefreshAllPlanets {
           // This happens for units even when on system tiles.
           obj.flipOrUpright();
         }
+      }
+
+      if (alsoRefreshTechAgentRelicUnit && ALSO_RECYCLE_NSIDS.has(nsid)) {
+        GarbageContainer.tryRecycle(obj, undefined);
       }
     }
   }
