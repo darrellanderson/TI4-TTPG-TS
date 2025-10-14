@@ -850,7 +850,7 @@ export class CombatRoll {
         const hexCount: number = this.self.getCount(unit);
         const adjCount: number = this.self.getCountAdj(unit);
         let count: number = hexCount;
-        if (combatAttrs.getRange() > 0) {
+        if (combatAttrs.getRange() > 0 && !requirePlanet) {
           count += adjCount;
         }
 
