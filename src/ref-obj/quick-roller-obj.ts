@@ -9,6 +9,7 @@ import {
   Rotator,
   UIElement,
   Vector,
+  world,
 } from "@tabletop-playground/api";
 import {
   Broadcast,
@@ -143,7 +144,7 @@ class QuickRoller {
     this.update();
   }
 
-  onRollFinished(dice: Array<DiceResult>, _player: Player) {
+  onRollFinished(dice: Array<DiceResult>, player: Player) {
     console.log("onRollFinished");
 
     const firstResult: DiceResult | undefined = dice[0];
@@ -158,10 +159,12 @@ class QuickRoller {
       }
     });
 
-    const summary: string = `Target ${value}: ${formatted.join(
+    const playerName: string = TI4.playerName.getByPlayer(player);
+    const color: Color = world.getSlotColor(player.getSlot());
+    const summary: string = `${playerName} rolled ${hits} hits (need ${value}): ${formatted.join(
       ", "
-    )} (${hits} hits)`;
-    Broadcast.broadcastAll(summary);
+    )}`;
+    Broadcast.broadcastAll(summary, color);
   }
 }
 
