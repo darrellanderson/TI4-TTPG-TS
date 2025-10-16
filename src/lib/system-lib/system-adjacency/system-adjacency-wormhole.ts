@@ -1,43 +1,15 @@
-import {
-  Card,
-  GameObject,
-  globalEvents,
-  Vector,
-  world,
-} from "@tabletop-playground/api";
+import { Card, GameObject, Vector, world } from "@tabletop-playground/api";
 import { Adjacency, Atop, CardUtil, Find, HexType, NSID } from "ttpg-darrell";
 import { System } from "../system/system";
 import { UnitModifierActiveIdle } from "../../unit-lib/unit-modifier/unit-modifier-active-idle";
 import { Faction } from "../../faction-lib/faction/faction";
 import { OnSystemActivated } from "../../../event/on-system-activated/on-system-activated";
 
-for (const obj of world.getAllObjects()) {
-  const nsid: string = NSID.get(obj);
-  if (nsid === "unit:base/flagship") {
-    SystemAdjacencyWormhole.__flagshipObjIds.add(obj.getId());
-  }
-}
-
-globalEvents.onObjectCreated.add((obj: GameObject) => {
-  const nsid: string = NSID.get(obj);
-  if (nsid === "unit:base/flagship") {
-    SystemAdjacencyWormhole.__flagshipObjIds.add(obj.getId());
-  }
-});
-
-globalEvents.onObjectDestroyed.add((obj: GameObject) => {
-  const nsid: string = NSID.get(obj);
-  if (nsid === "unit:base/flagship") {
-    SystemAdjacencyWormhole.__flagshipObjIds.delete(obj.getId());
-  }
-});
-
 /**
  * Reminder: an attachment can destroy a wormhole, handled by system.ts
  */
 export class SystemAdjacencyWormhole {
   private static __combatArenaObjId: string | undefined = undefined;
-  static readonly __flagshipObjIds: Set<string> = new Set();
 
   public static WORMHOMES: Array<string> = [
     "alpha",
@@ -102,15 +74,6 @@ export class SystemAdjacencyWormhole {
     return TI4.hex.fromPosition(pos);
   }
 
-  static getFlagship(playerSlot: number): GameObject | undefined {
-    for (const objId of this.__flagshipObjIds) {
-      const obj: GameObject | undefined = world.getObjectById(objId);
-      if (obj && obj.isValid() && obj.getOwningPlayerSlot() === playerSlot) {
-        return obj;
-      }
-    }
-  }
-
   _useWormhole(wormhole: string, faction: Faction | undefined): boolean {
     if (
       wormhole === "epsilon" &&
@@ -119,6 +82,13 @@ export class SystemAdjacencyWormhole {
       return false;
     }
     return true;
+  }
+
+  _getFlagship(playerSlot: number): GameObject | undefined {
+    const nsid: string = "unit:base/flagship";
+    const owningPlayerSlot: number = playerSlot;
+    const skipContained: boolean = true;
+    return this._find.findGameObject(nsid, owningPlayerSlot, skipContained);
   }
 
   public addTags(
@@ -180,24 +150,26 @@ export class SystemAdjacencyWormhole {
   _applyCreussFlagship(adjacency: Adjacency): void {
     const creussPlayerSlot: number | undefined =
       TI4.factionRegistry.getPlayerSlotByFactionNsid("faction:base/creuss");
-    const creussFlagship: GameObject | undefined =
-      SystemAdjacencyWormhole.getFlagship(creussPlayerSlot ?? -1);
 
-    if (creussFlagship) {
-      const pos: Vector = creussFlagship.getPosition();
-      const hex: HexType = SystemAdjacencyWormhole.getSystemHex(pos);
-      adjacency.addLink({
-        src: hex,
-        dst: "delta",
-        distance: 0.5,
-        isTransit: true,
-      });
-      adjacency.addLink({
-        src: "delta",
-        dst: hex,
-        distance: 0.5,
-        isTransit: false,
-      });
+    if (creussPlayerSlot !== undefined) {
+      const creussFlagship: GameObject | undefined =
+        this._getFlagship(creussPlayerSlot);
+      if (creussFlagship) {
+        const pos: Vector = creussFlagship.getPosition();
+        const hex: HexType = SystemAdjacencyWormhole.getSystemHex(pos);
+        adjacency.addLink({
+          src: hex,
+          dst: "delta",
+          distance: 0.5,
+          isTransit: true,
+        });
+        adjacency.addLink({
+          src: "delta",
+          dst: hex,
+          distance: 0.5,
+          isTransit: false,
+        });
+      }
     }
   }
 

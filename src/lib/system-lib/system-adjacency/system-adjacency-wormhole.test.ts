@@ -1,5 +1,5 @@
-import { Card, GameObject, Player } from "@tabletop-playground/api";
-import { Adjacency, Find, HexType } from "ttpg-darrell";
+import { Card, GameObject, Player, world } from "@tabletop-playground/api";
+import { Adjacency, Find, HexType, NSID } from "ttpg-darrell";
 import {
   MockCard,
   MockCardHolder,
@@ -67,6 +67,20 @@ it("constructor", () => {
   new SystemAdjacencyWormhole();
 });
 
+it("_getFlagship", () => {
+  const flagship: GameObject = MockGameObject.simple("unit:base/flagship", {
+    id: "my-flagship",
+    owningPlayerSlot: 10,
+  });
+  expect(flagship.isValid()).toBe(true);
+  expect(NSID.get(flagship)).toBe("unit:base/flagship");
+  expect(flagship.getOwningPlayerSlot()).toBe(10);
+
+  const found: GameObject | undefined =
+    new SystemAdjacencyWormhole()._getFlagship(10);
+  expect(found).toBeDefined();
+});
+
 it("addTags", () => {
   new MockGameObject({ templateMetadata: "tile.system:base/25" }); // beta
 
@@ -121,7 +135,12 @@ it("creuss flagship", () => {
   expect(new Find().closestOwnedCardHolderOwner([0, 0, 0])).toBe(1);
 
   MockGameObject.simple("sheet.faction:base/creuss");
-  expect(TI4.factionRegistry.getByPlayerSlot(1).toBeDefined());
+  TI4.events.onFactionChanged.trigger();
+  expect(TI4.factionRegistry.getByPlayerSlot(1)).toBeDefined();
+
+  expect(
+    TI4.factionRegistry.getPlayerSlotByFactionNsid("faction:base/creuss")
+  ).toBe(1);
 
   MockGameObject.simple("unit:base/flagship", { owningPlayerSlot: 1 });
   const adjacency: Adjacency = new Adjacency();
