@@ -11,6 +11,13 @@ import { UnitModifierActiveIdle } from "../../unit-lib/unit-modifier/unit-modifi
 import { Faction } from "../../faction-lib/faction/faction";
 import { OnSystemActivated } from "../../../event/on-system-activated/on-system-activated";
 
+for (const obj of world.getAllObjects()) {
+  const nsid: string = NSID.get(obj);
+  if (nsid === "unit:base/flagship") {
+    SystemAdjacencyWormhole.__flagshipObjIds.add(obj.getId());
+  }
+}
+
 globalEvents.onObjectCreated.add((obj: GameObject) => {
   const nsid: string = NSID.get(obj);
   if (nsid === "unit:base/flagship") {
