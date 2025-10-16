@@ -1,5 +1,5 @@
 import { Card, GameObject, Vector, world } from "@tabletop-playground/api";
-import { Adjacency, Atop, CardUtil, Find, HexType, NSID } from "ttpg-darrell";
+import { Adjacency, Atop, CardUtil, Find, HexType } from "ttpg-darrell";
 import { System } from "../system/system";
 import { UnitModifierActiveIdle } from "../../unit-lib/unit-modifier/unit-modifier-active-idle";
 import { Faction } from "../../faction-lib/faction/faction";
