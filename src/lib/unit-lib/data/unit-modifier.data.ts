@@ -179,14 +179,50 @@ add("pok", ViscountUnlenn);
 import { ViszElVir } from "./unit-modifiers/pok/visz-el-vir";
 add("pok", ViszElVir);
 
+import { AgnlanOln } from "./unit-modifiers/thunders-edge/agnlan-oln";
+add("thunders-edge", AgnlanOln);
+
+import { ArozHollow } from "./unit-modifiers/thunders-edge/aroz-hollow";
+add("thunders-edge", ArozHollow);
+
+import { CosmicPhenomenae } from "./unit-modifiers/thunders-edge/cosmic-phenomenae";
+add("thunders-edge", CosmicPhenomenae);
+
 import { EntropicScar } from "./unit-modifiers/thunders-edge/entropic-scar";
 add("thunders-edge", EntropicScar);
 
 import { Galvanize } from "./unit-modifiers/thunders-edge/galvanize";
 add("thunders-edge", Galvanize);
 
+import { GravleashManeuvers } from "./unit-modifiers/thunders-edge/gravleash-maneuvers";
+add("thunders-edge", GravleashManeuvers);
+
+import { Imperator } from "./unit-modifiers/thunders-edge/imperator";
+add("thunders-edge", Imperator);
+
+import { LightrailOrdnance } from "./unit-modifiers/thunders-edge/lightrail-ordnance";
+add("thunders-edge", LightrailOrdnance);
+
+import { Linkship2 } from "./unit-modifiers/thunders-edge/linkship-2";
+add("thunders-edge", Linkship2);
+
+import { Linkship } from "./unit-modifiers/thunders-edge/linkship";
+add("thunders-edge", Linkship);
+
+import { MetaliVoidArmaments } from "./unit-modifiers/thunders-edge/metali-void-armaments";
+add("thunders-edge", MetaliVoidArmaments);
+
+import { Quietus } from "./unit-modifiers/thunders-edge/quietus";
+add("thunders-edge", Quietus);
+
 import { TheEgeiro } from "./unit-modifiers/thunders-edge/the-egeiro";
 add("thunders-edge", TheEgeiro);
+
+import { ValefarAssimilatorZ } from "./unit-modifiers/thunders-edge/valefar-assimilator-z";
+add("thunders-edge", ValefarAssimilatorZ);
+
+import { WildWildGalaxy } from "./unit-modifiers/thunders-edge/wild-wild-galaxy";
+add("thunders-edge", WildWildGalaxy);
 
 import { MoraleBoostExtra } from "./unit-modifiers/test/morale-boost-extra";
 add("test", MoraleBoostExtra);

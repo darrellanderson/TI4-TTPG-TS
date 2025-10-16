@@ -1,15 +1,36 @@
-import { Card, GameObject, Vector, world } from "@tabletop-playground/api";
-import { Adjacency, Atop, CardUtil, Find, HexType } from "ttpg-darrell";
+import {
+  Card,
+  GameObject,
+  globalEvents,
+  Vector,
+  world,
+} from "@tabletop-playground/api";
+import { Adjacency, Atop, CardUtil, Find, HexType, NSID } from "ttpg-darrell";
 import { System } from "../system/system";
 import { UnitModifierActiveIdle } from "../../unit-lib/unit-modifier/unit-modifier-active-idle";
 import { Faction } from "../../faction-lib/faction/faction";
 import { OnSystemActivated } from "../../../event/on-system-activated/on-system-activated";
+
+globalEvents.onObjectCreated.add((obj: GameObject) => {
+  const nsid: string = NSID.get(obj);
+  if (nsid === "unit:base/flagship") {
+    SystemAdjacencyWormhole.__flagshipObjIds.add(obj.getId());
+  }
+});
+
+globalEvents.onObjectDestroyed.add((obj: GameObject) => {
+  const nsid: string = NSID.get(obj);
+  if (nsid === "unit:base/flagship") {
+    SystemAdjacencyWormhole.__flagshipObjIds.delete(obj.getId());
+  }
+});
 
 /**
  * Reminder: an attachment can destroy a wormhole, handled by system.ts
  */
 export class SystemAdjacencyWormhole {
   private static __combatArenaObjId: string | undefined = undefined;
+  static readonly __flagshipObjIds: Set<string> = new Set();
 
   public static WORMHOMES: Array<string> = [
     "alpha",
@@ -72,6 +93,15 @@ export class SystemAdjacencyWormhole {
       }
     }
     return TI4.hex.fromPosition(pos);
+  }
+
+  static getFlagship(playerSlot: number): GameObject | undefined {
+    for (const objId of this.__flagshipObjIds) {
+      const obj: GameObject | undefined = world.getObjectById(objId);
+      if (obj && obj.isValid() && obj.getOwningPlayerSlot() === playerSlot) {
+        return obj;
+      }
+    }
   }
 
   _useWormhole(wormhole: string, faction: Faction | undefined): boolean {
@@ -141,7 +171,7 @@ export class SystemAdjacencyWormhole {
   }
 
   _applyCreussFlagship(adjacency: Adjacency): void {
-    const nsid: string = "unit.flagship:base/creuss";
+    const nsid: string = "unit:base/flagship";
     const playerSlot: number = -1;
     const skipContained: boolean = true;
     const creussFlagship: GameObject | undefined = this._find.findGameObject(

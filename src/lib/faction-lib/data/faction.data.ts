@@ -933,4 +933,214 @@ export const SOURCE_TO_FACTION_DATA: Record<
       ],
     },
   ],
+  ["thunders-edge"]: [
+    {
+      name: "Last Bastion",
+      nsidName: "bastion",
+      abbr: "Bastion",
+      abilities: ["liberate", "galvanize", "phoenix-standard"],
+      breakthroughs: [
+        {
+          breakthrough: "the-icon",
+          techEquivalence: ["red", "yellow"],
+        },
+      ],
+      commodities: 1,
+      factionTechs: ["4x41c-helios-v2", "proxima-targeting-vi"],
+      home: 92,
+      leaders: {
+        agents: ["dame-briar"],
+        commanders: ["nip-and-tuck"],
+        heroes: ["entity-4x41a-apollo"],
+        mechs: ["a3-valiance"],
+      },
+      promissories: ["raise-the-standard"],
+      startingTechs: [], // choose one blue or yellow with no prerequisites
+      startingUnits: {
+        dreadnought: 1,
+        carrier: 1,
+        cruiser: 1,
+        fighter: 2,
+        infantry: 3,
+        spaceDock: 1,
+      },
+      unitOverrides: ["the-egeiro", "4x41c-helios-v1"],
+      extras: [
+        {
+          nsid: "token:thunders-edge/galvanize",
+          count: 7,
+        },
+        { nsid: "token.attachment.planet:thunders-edge/helios", count: 3 },
+      ],
+    },
+
+    {
+      name: "The Ral Nel Consortium",
+      nsidName: "ralnel",
+      abbr: "Ral-Nel",
+      abilities: ["survival-instinct", "miniturization"],
+      breakthroughs: [
+        {
+          breakthrough: "data-skimmer",
+          techEquivalence: ["yellow", "green"],
+        },
+      ],
+      commodities: 4,
+      factionTechs: ["linkship-2", "nanomachines"],
+      home: 93,
+      leaders: {
+        agents: ["kan-kip-rel"],
+        commanders: ["watchful-ojz"],
+        heroes: ["signal-intrusion"],
+        mechs: ["alarum"],
+      },
+      promissories: ["nano-link-permit"],
+      startingTechs: [], // chose one red or green with no prerequisites
+      startingUnits: {
+        dreadnought: 1,
+        carrier: 1,
+        destroyer: 1,
+        fighter: 2,
+        infantry: 4,
+        spaceDock: 1,
+        pds: 2,
+      },
+      unitOverrides: ["last-dispatch", "linkship"],
+    },
+    {
+      name: "The Crimson Rebellion",
+      nsidName: "rebellion",
+      abbr: "Rebellion",
+      abilities: ["sundered", "incursion", "the-sorrow"],
+      breakthroughs: [
+        {
+          breakthrough: "resonance-generator",
+          techEquivalence: ["blue", "red"],
+        },
+      ],
+      commodities: 2,
+      factionTechs: ["exile-2", "subatomic-splicer"],
+      home: 118,
+      homeSurrogate: 94,
+      leaders: {
+        agents: ["ahk-ravin"],
+        commanders: ["ahk-siever"],
+        heroes: ["fragment-reality"],
+        mechs: ["revenant"],
+      },
+      promissories: ["sever"],
+      startingTechs: [], // choose one red or blue with no prerequisites
+      startingUnits: {
+        carrier: 1,
+        destroyer: 2,
+        fighter: 3,
+        infantry: 4,
+        spaceDock: 1,
+        pds: 1,
+      },
+      unitOverrides: ["quietus", "exile"],
+      extras: [
+        {
+          nsid: "token.attachment.system:thunders-edge/crimson-breach",
+          count: 7,
+        },
+        {
+          nsid: "token.attachment.system:thunders-edge/crimson-sever",
+          count: 1,
+        },
+      ],
+    },
+    {
+      name: "The Deepwrought Scholarate",
+      nsidName: "deepwrought",
+      abbr: "Deepwrought",
+      abilities: ["research-team", "oceanbound"],
+      breakthroughs: [
+        {
+          breakthrough: "visionaria-select",
+          techEquivalence: ["yellow", "green"],
+        },
+      ],
+      commodities: 3,
+      factionTechs: ["hydrothermal-mining", "radical-advancement"],
+      home: 95,
+      leaders: {
+        agents: ["doctor-carrina"],
+        commanders: ["aello"],
+        heroes: ["wave-function-collapse"],
+        mechs: ["eanautic"],
+      },
+      promissories: ["share-knowledge"],
+      startingTechs: [], // research tech twice
+      startingUnits: {
+        dreadnought: 1,
+        carrier: 1,
+        fighter: 4,
+        infantry: 3,
+        spaceDock: 1,
+      },
+      unitOverrides: ["dws-luminous"],
+      extras: [{ nsid: "card.deepwrought-ocean:thunders-edge/0" }],
+    },
+    {
+      name: "The Firmament",
+      nsidName: "firmament",
+      abbr: "Firmament",
+      abilities: ["plots-within-plots", "puppets-of-the-blade"],
+      breakthroughs: [
+        {
+          breakthrough: "the-sowing",
+          techEquivalence: ["yellow", "green"],
+        },
+      ],
+      commodities: 3,
+      factionTechs: ["neural-parasite", "planesplitter"],
+      home: 96,
+      leaders: {
+        agents: ["myru-vos"],
+        commanders: ["captain-aroz"],
+        heroes: ["the-blade-beckons"],
+        mechs: ["viper-ex-23"],
+      },
+      promissories: ["black-ops"],
+      startingTechs: [], // choose one yellow or green with no prerequisites
+      startingUnits: {
+        carrier: 1,
+        cruiser: 1,
+        destroyer: 1,
+        fighter: 3,
+        infantry: 3,
+        spaceDock: 1,
+      },
+      unitOverrides: ["heavens-eye"],
+      extras: [{ nsid: "card.firmament-plot:thunders-edge/0" }],
+    },
+    {
+      isExcludeFromDraft: true,
+      skipFactionReferenceCard: true,
+      name: "The Obsidian",
+      nsidName: "obsidian",
+      abbr: "Obsidian",
+      abilities: ["nocturne", "the-blades-orchestra", "marionettes"],
+      breakthroughs: [
+        {
+          breakthrough: "the-sowing",
+          techEquivalence: ["yellow", "green"],
+        },
+      ],
+      commodities: 3,
+      factionTechs: ["neural-parasite", "planesplitter"],
+      home: 96, // TODO FLIP
+      leaders: {
+        agents: ["vos-hollow"],
+        commanders: ["aroz-hollow"],
+        heroes: ["the-blade-revealed"],
+        mechs: ["viper-ex-23"],
+      },
+      promissories: ["malevolency"],
+      startingTechs: [],
+      startingUnits: {},
+      unitOverrides: ["heavens-hollow"],
+    },
+  ],
 };

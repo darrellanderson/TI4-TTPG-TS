@@ -181,6 +181,11 @@ it("validate NSIDs appear in assets/Templates", () => {
 
   const missing: Array<string> = [];
   for (const nsid of nsids) {
+    // TODO XXX REMOVE WHEN RELEASED
+    if (nsid.includes(":thunders-edge/")) {
+      continue;
+    }
+
     if (!templateNsids.has(nsid) && !templateNsids.has(nsid + ".1")) {
       missing.push(nsid);
     }

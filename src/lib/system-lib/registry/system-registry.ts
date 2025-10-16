@@ -171,7 +171,7 @@ export class SystemRegistry {
         packageId,
       };
 
-      // HACK: THUNDERS EDGE SHOULD POINT TO THE ADDITIVE PACKAGE.
+      // XXX TODO HACK: THUNDERS EDGE SHOULD POINT TO THE ADDITIVE PACKAGE.
       if (source === "thunders-edge") {
         sourceAndPackageId = {
           source,

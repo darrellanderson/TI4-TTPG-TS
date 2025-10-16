@@ -149,10 +149,19 @@ export class FactionRegistry implements IGlobal {
 
   loadDefaultData(): this {
     for (const [source, factions] of Object.entries(SOURCE_TO_FACTION_DATA)) {
-      const sourceAndPackageId: SourceAndPackageIdSchemaType = {
+      let sourceAndPackageId: SourceAndPackageIdSchemaType = {
         source,
         packageId,
       };
+
+      // XXX TODO HACK: THUNDERS EDGE SHOULD POINT TO THE ADDITIVE PACKAGE.
+      if (source === "thunders-edge") {
+        sourceAndPackageId = {
+          source,
+          packageId: "645CE2B39EA24B33B131D2AFE863C05F",
+        };
+      }
+
       this.load(sourceAndPackageId, factions);
     }
     return this;

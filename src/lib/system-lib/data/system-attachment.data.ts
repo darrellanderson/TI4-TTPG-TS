@@ -74,4 +74,53 @@ export const SOURCE_TO_SYSTEM_ATTACHMENT_DATA: Record<
       ],
     },
   ],
+  ["thunders-edge"]: [
+    {
+      name: "Avernus",
+      nsidName: "avernus",
+      planets: [
+        {
+          name: "Avernus",
+          nsidName: "avernus",
+          resources: 2,
+          influence: 0,
+          isLegendary: true,
+          legendaryNsidName: "the-nucleus",
+        },
+      ],
+      customModel: true,
+    },
+    {
+      name: "Thunder's Edge",
+      nsidName: "thunders-edge",
+      planets: [
+        {
+          name: "Thunder's Edge",
+          nsidName: "thunders-edge",
+          resources: 5,
+          influence: 1,
+          isLegendary: true,
+          legendaryNsidName: "jupiter-brain",
+        },
+      ],
+      customModel: true,
+    },
+    {
+      name: "Ingress",
+      nsidName: "ingress",
+      isIngress: true,
+    },
+    {
+      name: "Crimson Breach",
+      nsidName: "crimson-breach",
+      isBreachFaceUp: true,
+      customModel: true,
+    },
+    {
+      name: "Crimson Sever",
+      nsidName: "crimson-sever",
+      isDestroyWormhole: true,
+      customModel: true,
+    },
+  ],
 };

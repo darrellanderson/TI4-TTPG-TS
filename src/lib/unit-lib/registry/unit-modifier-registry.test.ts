@@ -221,6 +221,10 @@ it("validate NSIDs appear in assets/Templates", () => {
     if (nsid.includes(":test/")) {
       return false;
     }
+    // TODO XXX REMOVE WHEN LAUNCHED
+    if (nsid.includes(":thunders-edge/")) {
+      return false;
+    }
     return true;
   });
 

@@ -15,6 +15,11 @@ export class ValidateAttachments extends AbstractValidate {
 
     nsids = this._getPlanetAttachmentNsids();
     for (const nsid of nsids) {
+      // XXX TODO REMOVE WHEN RELEASED
+      if (nsid.includes(":thunders-edge/")) {
+        continue;
+      }
+
       if (!TI4.spawn.has(nsid)) {
         missingTemplateNsids.push(nsid);
       }
@@ -22,6 +27,11 @@ export class ValidateAttachments extends AbstractValidate {
 
     nsids = this._getSystemAttachmentNsids();
     for (const nsid of nsids) {
+      // XXX TODO REMOVE WHEN RELEASED
+      if (nsid.includes(":thunders-edge/")) {
+        continue;
+      }
+
       if (!TI4.spawn.has(nsid)) {
         missingTemplateNsids.push(nsid);
       }

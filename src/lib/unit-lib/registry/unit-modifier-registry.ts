@@ -98,6 +98,11 @@ export class UnitModifierRegistry {
   validate(errors: Array<string>): this {
     const nsids: Array<string> = [...this._nsidToSchema.keys()];
     for (const nsid of nsids) {
+      // TODO XXX REMOVE WHEN LAUNCHED
+      if (nsid.includes(":thunders-edge/")) {
+        continue;
+      }
+
       // Make sure NSID is valid.
       const parsed: ParsedNSID | undefined = NSID.parse(nsid);
       if (parsed) {

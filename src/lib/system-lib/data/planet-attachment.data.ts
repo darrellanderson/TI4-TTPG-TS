@@ -129,4 +129,23 @@ export const SOURCE_TO_PLANET_ATTACHMENT_DATA: Record<
       nsidName: "custodia-vigilia",
     },
   ],
+
+  ["thunders-edge"]: [
+    {
+      name: "Helios",
+      nsidName: "helios",
+      resources: 1,
+      resourcesFaceDown: 2,
+      imgFaceDown: true,
+      doNotLayout: true,
+    },
+    {
+      name: "Helios (Nekro)",
+      nsidName: "helios-nekro",
+      resources: 1,
+      resourcesFaceDown: 2,
+      imgFaceDown: true,
+      doNotLayout: true,
+    },
+  ],
 };
