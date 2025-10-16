@@ -22,6 +22,7 @@ import { MapRemovePlanetCards } from "../../lib/map-string-lib/map-remove/map-re
 import { MapStringLoad } from "../../lib/map-string-lib/map-string/map-string-load";
 import { MapStringSave } from "../../lib/map-string-lib/map-string/map-string-save";
 import { MapStringHyperlanes } from "../../lib/map-string-lib/map-string/map-string-hyperlanes";
+import { MoveGenericHomeSystemLocations } from "../../lib/map-string-lib/map-home-system-locations/move-generic-home-systems";
 
 import { AbstractUI, UI_SIZE } from "../abstract-ui/abtract-ui";
 import { ButtonUI } from "../button-ui/button-ui";
@@ -71,6 +72,11 @@ export class MapToolUI extends AbstractUI {
       Broadcast.chatAll(msg);
 
       const mapString: string = this._editText.getText();
+
+      // Move generic home systems first.
+      const mover = new MoveGenericHomeSystemLocations();
+      mover.moveGenerics(mapString);
+
       new MapStringLoad().load(mapString);
     }
   ).get();
