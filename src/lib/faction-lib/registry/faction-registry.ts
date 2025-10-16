@@ -5,19 +5,32 @@ import {
   SourceAndPackageIdSchemaType,
 } from "../../system-lib/schema/basic-types-schema";
 import { SOURCE_TO_FACTION_DATA } from "../data/faction.data";
-import { refPackageId, Vector, world } from "@tabletop-playground/api";
-import { Find, NSID, ParsedNSID } from "ttpg-darrell";
+import {
+  GameWorld,
+  refPackageId,
+  Vector,
+  world,
+} from "@tabletop-playground/api";
+import { Find, IGlobal, NSID, ParsedNSID } from "ttpg-darrell";
 import { REWRITE_NSIDS } from "../data/faction-nsid-rewrite.data";
 
 const packageId: string = refPackageId;
 
-export class FactionRegistry {
+export class FactionRegistry implements IGlobal {
+  private _playerSlotToFaction: Map<number, Faction> | undefined = undefined;
+
   private readonly _find: Find = new Find();
   private readonly _nsidToFaction: Map<string, Faction> = new Map();
   private readonly _nsidToRewriteNsid: Map<string, string> = new Map();
   private readonly _tileNumberToFaction: Map<number, Faction> = new Map();
 
   constructor() {}
+
+  init(): void {
+    TI4.events.onFactionChanged.add(() => {
+      this._playerSlotToFaction = undefined;
+    });
+  }
 
   getAllFactions(): Array<Faction> {
     return Array.from(this._nsidToFaction.values());
@@ -67,12 +80,22 @@ export class FactionRegistry {
   }
 
   getByPlayerSlot(playerSlot: number): Faction | undefined {
-    const playerSlotToFaction: Map<number, Faction> =
-      this.getPlayerSlotToFaction();
-    return playerSlotToFaction.get(playerSlot);
+    return this.getPlayerSlotToFaction().get(playerSlot);
+  }
+
+  getPlayerSlotByFactionNsid(nsid: string): number | undefined {
+    for (const [playerSlot, faction] of this.getPlayerSlotToFaction()) {
+      if (faction.getNsid() === nsid) {
+        return playerSlot;
+      }
+    }
   }
 
   getPlayerSlotToFaction(): Map<number, Faction> {
+    if (this._playerSlotToFaction) {
+      return this._playerSlotToFaction;
+    }
+
     const playerSlotToFaction: Map<number, Faction> = new Map();
     const skipContained: boolean = true;
     for (const obj of world.getAllObjects(skipContained)) {
@@ -86,6 +109,9 @@ export class FactionRegistry {
         const playerSlot: number = this._find.closestOwnedCardHolderOwner(pos);
         playerSlotToFaction.set(playerSlot, faction);
       }
+    }
+    if (GameWorld.getExecutionReason() !== "unittest") {
+      this._playerSlotToFaction = playerSlotToFaction;
     }
     return playerSlotToFaction;
   }
