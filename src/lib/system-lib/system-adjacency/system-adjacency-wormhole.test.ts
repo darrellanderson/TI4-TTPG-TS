@@ -1,6 +1,12 @@
 import { Card, GameObject, Player } from "@tabletop-playground/api";
-import { Adjacency, HexType } from "ttpg-darrell";
-import { MockCard, MockGameObject, MockPlayer, MockSnapPoint } from "ttpg-mock";
+import { Adjacency, Find, HexType } from "ttpg-darrell";
+import {
+  MockCard,
+  MockCardHolder,
+  MockGameObject,
+  MockPlayer,
+  MockSnapPoint,
+} from "ttpg-mock";
 
 import { Faction } from "../../faction-lib/faction/faction";
 import { System } from "../system/system";
@@ -108,7 +114,16 @@ it("faction creuss", () => {
 });
 
 it("creuss flagship", () => {
-  MockGameObject.simple("unit.flagship:base/creuss");
+  new MockCardHolder({
+    templateMetadata: "card-holder:base/player-hand",
+    owningPlayerSlot: 1,
+  });
+  expect(new Find().closestOwnedCardHolderOwner([0, 0, 0])).toBe(1);
+
+  MockGameObject.simple("sheet.faction:base/creuss");
+  expect(TI4.factionRegistry.getByPlayerSlot(1).toBeDefined());
+
+  MockGameObject.simple("unit:base/flagship", { owningPlayerSlot: 1 });
   const adjacency: Adjacency = new Adjacency();
   new SystemAdjacencyWormhole()._applyCreussFlagship(adjacency);
 

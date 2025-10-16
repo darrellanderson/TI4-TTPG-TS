@@ -171,14 +171,11 @@ export class SystemAdjacencyWormhole {
   }
 
   _applyCreussFlagship(adjacency: Adjacency): void {
-    const nsid: string = "unit:base/flagship";
-    const playerSlot: number = -1;
-    const skipContained: boolean = true;
-    const creussFlagship: GameObject | undefined = this._find.findGameObject(
-      nsid,
-      playerSlot,
-      skipContained
-    );
+    const creussPlayerSlot: number | undefined =
+      TI4.factionRegistry.getPlayerSlotByFactionNsid("faction:base/creuss");
+    const creussFlagship: GameObject | undefined =
+      SystemAdjacencyWormhole.getFlagship(creussPlayerSlot ?? -1);
+
     if (creussFlagship) {
       const pos: Vector = creussFlagship.getPosition();
       const hex: HexType = SystemAdjacencyWormhole.getSystemHex(pos);
