@@ -6,7 +6,10 @@ export class RecycleTokenSever extends GarbageHandler {
 
   canRecycle(obj: GameObject): boolean {
     const nsid: string = NSID.get(obj);
-    return nsid === "token.attachment.system:thunders-edge/crimson-sever";
+    return (
+      nsid === "token.attachment.system:thunders-edge/crimson-sever" ||
+      nsid === "token.attachment.system:thunders-edge/crimson-breach"
+    );
   }
 
   recycle(obj: GameObject): boolean {
