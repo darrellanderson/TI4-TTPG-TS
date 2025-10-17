@@ -173,6 +173,62 @@ export class SystemAdjacencyWormhole {
     }
   }
 
+  _isNekroZTokenInCreussArea(): boolean {
+    // Look for z-token.
+    const nsid: string = "token:thunders-edge/nekro.z";
+    const owner: number | undefined = undefined;
+    const skipContained: boolean = true;
+    const zToken: GameObject | undefined = this._find.findGameObject(
+      nsid,
+      owner,
+      skipContained
+    );
+    if (zToken) {
+      const zTokenPos: Vector = zToken.getPosition();
+      const zTokenPosPlayerSlot: number =
+        this._find.closestOwnedCardHolderOwner(zTokenPos);
+      const zTokenPosFaction: Faction | undefined =
+        TI4.factionRegistry.getByPlayerSlot(zTokenPosPlayerSlot);
+      if (
+        zTokenPosFaction &&
+        zTokenPosFaction.getNsid() === "faction:base/creuss"
+      ) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  _applyNekroFlagship(adjacency: Adjacency): void {
+    const nekroPlayerSlot: number | undefined =
+      TI4.factionRegistry.getPlayerSlotByFactionNsid("faction:base/nekro");
+
+    if (nekroPlayerSlot !== undefined) {
+      const nekroFlagship: GameObject | undefined =
+        this._getFlagship(nekroPlayerSlot);
+      if (nekroFlagship) {
+        if (this._isNekroZTokenInCreussArea()) {
+          // Nekro flagship with z-token in Creuss area.
+          const flagshipPos: Vector = nekroFlagship.getPosition();
+          const hex: HexType =
+            SystemAdjacencyWormhole.getSystemHex(flagshipPos);
+          adjacency.addLink({
+            src: hex,
+            dst: "delta",
+            distance: 0.5,
+            isTransit: true,
+          });
+          adjacency.addLink({
+            src: "delta",
+            dst: hex,
+            distance: 0.5,
+            isTransit: false,
+          });
+        }
+      }
+    }
+  }
+
   _applyCards(adjacency: Adjacency): void {
     let card: Card | undefined;
     const allowFaceDown: boolean = false;

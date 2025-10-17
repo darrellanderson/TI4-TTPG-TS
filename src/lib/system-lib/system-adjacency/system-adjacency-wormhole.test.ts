@@ -1,4 +1,4 @@
-import { Card, GameObject, Player, world } from "@tabletop-playground/api";
+import { Card, GameObject, Player, Vector } from "@tabletop-playground/api";
 import { Adjacency, Find, HexType, NSID } from "ttpg-darrell";
 import {
   MockCard,
@@ -145,6 +145,78 @@ it("creuss flagship", () => {
   MockGameObject.simple("unit:base/flagship", { owningPlayerSlot: 1 });
   const adjacency: Adjacency = new Adjacency();
   new SystemAdjacencyWormhole()._applyCreussFlagship(adjacency);
+
+  expect(
+    adjacency.hasLink({
+      src: "<0,0,0>",
+      dst: "delta",
+      distance: 0.5,
+      isTransit: true,
+    })
+  ).toBe(true);
+  expect(
+    adjacency.hasLink({
+      src: "delta",
+      dst: "<0,0,0>",
+      distance: 0.5,
+      isTransit: false,
+    })
+  ).toBe(true);
+});
+
+it("nekro flagship + z token creuss", () => {
+  const systemAdjacencyWormhole: SystemAdjacencyWormhole =
+    new SystemAdjacencyWormhole();
+
+  const creussSlot: number = 1;
+  const creussPos: Vector = new Vector(50, 0, 0);
+  const nekroSlot: number = 2;
+  const nekroPos: Vector = new Vector(-50, 0, 0);
+
+  // Player areas.
+  new MockCardHolder({
+    templateMetadata: "card-holder:base/player-hand",
+    owningPlayerSlot: creussSlot,
+    position: creussPos,
+  });
+  expect(new Find().closestOwnedCardHolderOwner(creussPos)).toBe(creussSlot);
+
+  new MockCardHolder({
+    templateMetadata: "card-holder:base/player-hand",
+    owningPlayerSlot: nekroSlot,
+    position: nekroPos,
+  });
+  expect(new Find().closestOwnedCardHolderOwner(nekroPos)).toBe(nekroSlot);
+
+  // Faction sheets.
+  MockGameObject.simple("sheet.faction:base/creuss", { position: creussPos });
+  MockGameObject.simple("sheet.faction:base/nekro", { position: nekroPos });
+  TI4.events.onFactionChanged.trigger();
+
+  expect(TI4.factionRegistry.getByPlayerSlot(1)?.getNsid()).toBe(
+    "faction:base/creuss"
+  );
+  expect(TI4.factionRegistry.getByPlayerSlot(2)?.getNsid()).toBe(
+    "faction:base/nekro"
+  );
+
+  // Flagship on a system tile.
+  MockGameObject.simple("tile.system:base/18");
+  const nekroFlagship: GameObject = MockGameObject.simple(
+    "unit:base/flagship",
+    { owningPlayerSlot: nekroSlot }
+  );
+  expect(systemAdjacencyWormhole._getFlagship(nekroSlot)?.getId()).toBe(
+    nekroFlagship.getId()
+  );
+
+  // Z token in Creuss area.
+  expect(systemAdjacencyWormhole._isNekroZTokenInCreussArea()).toBe(false);
+  MockGameObject.simple("token:thunders-edge/nekro.z", { position: creussPos });
+  expect(systemAdjacencyWormhole._isNekroZTokenInCreussArea()).toBe(true);
+
+  const adjacency: Adjacency = new Adjacency();
+  systemAdjacencyWormhole._applyNekroFlagship(adjacency);
 
   expect(
     adjacency.hasLink({
