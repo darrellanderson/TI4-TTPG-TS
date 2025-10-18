@@ -1,4 +1,11 @@
-import { globalEvents, Player, Vector, world } from "@tabletop-playground/api";
+import {
+  globalEvents,
+  Player,
+  PlayerPermission,
+  refPackageId,
+  Vector,
+  world,
+} from "@tabletop-playground/api";
 import { HexType, IGlobal, NamespaceId, Window } from "ttpg-darrell";
 import { AbstractUI } from "../../ui/abstract-ui/abtract-ui";
 import {
@@ -17,6 +24,8 @@ import {
 import { UnitAttrs } from "../../lib/unit-lib/unit-attrs/unit-attrs";
 import { CombatAttrs } from "../../lib/unit-lib/unit-attrs/combat-attrs";
 
+const packageId: string = refPackageId;
+
 export const ACTION_TOGGLE_COMBAT: string = "*Toggle Combat";
 
 export class ToggleCombatWindow implements IGlobal {
@@ -33,6 +42,17 @@ export class ToggleCombatWindow implements IGlobal {
       system,
       player
     );
+
+    // Add adjacent PDS2 players.
+    const adjPds2PlayerSlots: Array<number> =
+      this._getAdjPds2PlayerSlots(system);
+    for (const playerSlot of adjPds2PlayerSlots) {
+      if (!playerSlots.includes(playerSlot)) {
+        playerSlots.push(playerSlot);
+      }
+    }
+
+    // Open windows.
     if (this._window && playerSlots.length > 1) {
       for (const playerSlot of playerSlots) {
         if (!this._window.isAttachedForPlayer(playerSlot)) {
@@ -41,15 +61,16 @@ export class ToggleCombatWindow implements IGlobal {
       }
     }
 
-    // Open for PDS2 adjacent players.
-    const adjPds2PlayerSlots: Array<number> =
-      this._getAdjPds2PlayerSlots(system);
-    if (this._window) {
-      for (const playerSlot of adjPds2PlayerSlots) {
-        if (!this._window.isAttachedForPlayer(playerSlot)) {
-          this._window.toggleForPlayer(playerSlot);
-        }
-      }
+    // Play sound.
+    if (playerSlots.length > 1) {
+      const startTime: number | undefined = undefined;
+      const volume: number | undefined = undefined;
+      const loop: boolean | undefined = undefined;
+      const players: PlayerPermission | undefined =
+        new PlayerPermission().setPlayerSlots(playerSlots);
+      world
+        .importSound("combat-start.flac", packageId)
+        .play(startTime, volume, loop, players);
     }
   };
 

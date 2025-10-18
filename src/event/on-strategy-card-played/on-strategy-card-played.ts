@@ -3,9 +3,12 @@ import {
   GameObject,
   globalEvents,
   Player,
+  refPackageId,
   world,
 } from "@tabletop-playground/api";
 import { Broadcast, Facing, IGlobal, NSID } from "ttpg-darrell";
+
+const packageId: string = refPackageId;
 
 /**
  * Adds a custom action to strategy cards, and triggers an event when played.
@@ -32,6 +35,9 @@ export class OnStrategyCardPlayed implements IGlobal {
 
       // Tell listeners.
       TI4.events.onStrategyCardPlayed.trigger(object, player);
+
+      // Play sound.
+      world.importSound("strategy-card.flac", packageId).play();
     }
   };
 
