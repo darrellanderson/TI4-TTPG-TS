@@ -177,6 +177,7 @@ export class DraftStartUI extends AbstractUI {
       .setSpacing(CONFIG.SPACING * scale)
       .addUIs([customConfigLabel, customConfig])
       .build();
+    customConfig.getEditText().setMaxLength(1000);
     customConfig.getEditText().setText(params.config);
 
     const startButton: ButtonUI = new ButtonUI(scale);
