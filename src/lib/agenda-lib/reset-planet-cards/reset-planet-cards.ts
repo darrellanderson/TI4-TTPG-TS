@@ -22,7 +22,8 @@ export class ResetPlanetCards {
       const nsid: string = NSID.get(obj);
       const isCandidate: boolean =
         nsid.startsWith("card.planet:") ||
-        nsid.startsWith("card.legendary-planet:");
+        nsid.startsWith("card.legendary-planet:") ||
+        nsid.startsWith("card.deepwrought-ocean:");
       const pos: Vector = obj.getPosition();
       const hex: HexType = TI4.hex.fromPosition(pos);
 

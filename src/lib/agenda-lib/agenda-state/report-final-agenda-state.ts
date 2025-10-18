@@ -165,13 +165,17 @@ export class ReportFinalAgendaState {
   constructor(agendaState: AgendaState) {
     this._agendaState = agendaState;
 
-    agendaState.onAgendaStateChanged.add(() => {
+    const onAgendaStateChanged = (): void => {
       if (this._agendaState.isComplete()) {
+        // Only finish once.
+        agendaState.onAgendaStateChanged.remove(onAgendaStateChanged);
+
         const summary: string = ReportFinalAgendaState.summary(
           this._agendaState
         );
         Broadcast.chatAll(summary);
       }
-    });
+    };
+    agendaState.onAgendaStateChanged.add(onAgendaStateChanged);
   }
 }

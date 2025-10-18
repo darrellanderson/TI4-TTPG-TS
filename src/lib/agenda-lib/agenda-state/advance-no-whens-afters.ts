@@ -26,6 +26,12 @@ export class AdvanceNoWhensAfters {
       .map((seat: PlayerSeatType): PlayerSlot => seat.playerSlot);
   }
 
+  /**
+   * Enable automatic advancement (optional for unittests).
+   *
+   * @param force
+   * @returns
+   */
   activate(force?: boolean): this {
     if (
       !this._active &&
@@ -53,6 +59,14 @@ export class AdvanceNoWhensAfters {
     );
   }
 
+  getPlayedWhens(): Array<PlayerSlot> {
+    return this._getSeatPlayerSlots().filter(
+      (_playerSlot: PlayerSlot, seatIndex: number): boolean => {
+        return this._agendaState.getSeatNoWhens(seatIndex) === "play";
+      }
+    );
+  }
+
   /**
    * Get player slots that have not yet committed their afters.
    *
@@ -62,6 +76,14 @@ export class AdvanceNoWhensAfters {
     return this._getSeatPlayerSlots().filter(
       (_playerSlot: PlayerSlot, seatIndex: number): boolean => {
         return this._agendaState.getSeatNoAfters(seatIndex) === "unknown";
+      }
+    );
+  }
+
+  getPlayedAfters(): Array<PlayerSlot> {
+    return this._getSeatPlayerSlots().filter(
+      (_playerSlot: PlayerSlot, seatIndex: number): boolean => {
+        return this._agendaState.getSeatNoAfters(seatIndex) === "play";
       }
     );
   }
@@ -99,6 +121,7 @@ export class AdvanceNoWhensAfters {
     }
 
     const uncommittedWhens: Array<PlayerSlot> = this.getUncommittedWhens();
+    const playedWhens: Array<PlayerSlot> = this.getPlayedWhens();
 
     // Are we waiting on the current player?
     const current: PlayerSlot = TI4.turnOrder.getCurrentTurn();
@@ -108,7 +131,7 @@ export class AdvanceNoWhensAfters {
 
     // Find the next player with uncommitted whens.
     // If we wrap, reset all "no" to "unknown".
-    if (uncommittedWhens.length > 0) {
+    if (uncommittedWhens.length > 0 || playedWhens.length > 0) {
       const remainingTurnOrder: Array<PlayerSlot> =
         this.getRemainingTurnOrder();
       for (const playerSlot of remainingTurnOrder) {
@@ -153,6 +176,7 @@ export class AdvanceNoWhensAfters {
     }
 
     const uncommittedAfters: Array<PlayerSlot> = this.getUncommittedAfters();
+    const playedAfters: Array<PlayerSlot> = this.getPlayedAfters();
 
     // Are we waiting on the current player?
     const current: PlayerSlot = TI4.turnOrder.getCurrentTurn();
@@ -162,7 +186,7 @@ export class AdvanceNoWhensAfters {
 
     // Find the next player with uncommitted afters.
     // If we wrap, reset all "no" to "unknown".
-    if (uncommittedAfters.length > 0) {
+    if (uncommittedAfters.length > 0 || playedAfters.length > 0) {
       const remainingTurnOrder: Array<PlayerSlot> =
         this.getRemainingTurnOrder();
       for (const playerSlot of remainingTurnOrder) {
