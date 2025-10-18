@@ -12,7 +12,11 @@ export class MapPlaceFrontierTokens {
       const planets: Array<Planet> = system
         .getPlanets()
         .filter((planet) => !planet.isSpaceStation());
-      if (planets.length === 0 && !system.isHyperlane()) {
+      if (
+        planets.length === 0 &&
+        !system.isHyperlane() &&
+        system.getClass() !== "fracture"
+      ) {
         zeroPlanetSystems.push(system);
       }
     }
