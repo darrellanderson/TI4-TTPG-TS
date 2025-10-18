@@ -1,11 +1,6 @@
-import {
-  MockCardHolder,
-  MockContainer,
-  MockGameObject,
-  MockPlayer,
-} from "ttpg-mock";
+import { MockCardHolder, MockGameObject, MockPlayer } from "ttpg-mock";
 import { ControlTokenSystem } from "./control-token-system";
-import { Container, GameObject, Player } from "@tabletop-playground/api";
+import { Player } from "@tabletop-playground/api";
 import { Faction } from "../../../lib/faction-lib/faction/faction";
 
 it("constructor", () => {
@@ -25,19 +20,9 @@ it("addControlToken", () => {
   success = controlTokenSystem.addControlToken(systemTileObj, player);
   expect(success).toBe(false); // no control token container
 
-  const myContainer: Container = new MockContainer({
-    templateMetadata: "container.token.control:base/generic",
-    owningPlayerSlot: 10,
-  });
-
   success = controlTokenSystem.addControlToken(systemTileObj, player);
   expect(success).toBe(false); // no control token
 
-  const myToken: GameObject = new MockGameObject({
-    templateMetadata: "token.control:base/sol",
-    owningPlayerSlot: 10,
-  });
-  myContainer.insert([myToken]);
   new MockCardHolder({
     templateMetadata: "card-holder:base/player-hand",
     owningPlayerSlot: 10,
@@ -46,10 +31,8 @@ it("addControlToken", () => {
   const faction: Faction | undefined = TI4.factionRegistry.getByPlayerSlot(10);
   expect(faction).toBeDefined();
 
-  expect(myContainer.getNumItems()).toBe(1);
   success = controlTokenSystem.addControlToken(systemTileObj, player);
   expect(success).toBe(true);
-  expect(myContainer.getNumItems()).toBe(1);
 });
 
 it("custom action", () => {

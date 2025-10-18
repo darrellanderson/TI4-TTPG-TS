@@ -1,4 +1,4 @@
-import { Card, GameObject } from "@tabletop-playground/api";
+import { Card, GameObject, world } from "@tabletop-playground/api";
 import {
   CardUtil,
   DeletedItemsContainer,
@@ -89,11 +89,24 @@ export class SpawnMissingCards {
   }
 
   _addMissingCards(srcDeck: Card, dstDeck: Card): void {
+    const tableNsids: Set<string> = new Set<string>();
+    const skipContained: boolean = false;
+    for (const obj of world.getAllObjects(skipContained)) {
+      const nsid: string = NSID.get(obj);
+      tableNsids.add(nsid);
+      if (obj instanceof Card && obj.getStackSize() > 1) {
+        const deckNsids: Array<string> = NSID.getDeck(obj);
+        deckNsids.forEach((deckNsid: string): void => {
+          tableNsids.add(deckNsid);
+        });
+      }
+    }
+
     const dstDeckNsids: Set<string> = new Set(NSID.getDeck(dstDeck));
     const spawnedCards: Array<Card> = this._cardUtil.separateDeck(srcDeck);
     spawnedCards.forEach((card: Card): void => {
       const nsid: string = NSID.get(card);
-      if (!dstDeckNsids.has(nsid)) {
+      if (!dstDeckNsids.has(nsid) && !tableNsids.has(nsid)) {
         // Add the card to the existing deck.
         const success: boolean = dstDeck.addCards(card);
         if (!success) {

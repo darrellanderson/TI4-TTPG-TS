@@ -1,5 +1,4 @@
 import {
-  Container,
   GameObject,
   GameWorld,
   Player,
@@ -9,6 +8,7 @@ import {
 } from "@tabletop-playground/api";
 import { Find } from "ttpg-darrell";
 import { AdvanceScore } from "../lib/score-lib/advance-score/advance-score";
+import { SpawnControlToken } from "../lib";
 
 export class CustodiansToken {
   private readonly _obj: GameObject;
@@ -33,46 +33,32 @@ export class CustodiansToken {
   }
 
   score(playerSlot: number): void {
-    const skipContained: boolean = true;
-    const container: Container | undefined = this._find.findContainer(
-      "container.token.control:base/generic",
-      playerSlot,
-      skipContained
-    );
-    if (container) {
-      const pos: Vector = container.getPosition().add([0, 0, 10]);
-      const showAnimation: boolean = true;
-      const keep: boolean = true;
-      const controlToken: GameObject | undefined = container.takeAt(
-        0,
-        pos,
-        showAnimation,
-        keep
+    const controlToken: GameObject | undefined =
+      new SpawnControlToken().spawnControlToken(playerSlot);
+    if (controlToken) {
+      const controlTokenExtent: Vector = controlToken.getExtent(false, false);
+      const custodiansTokenExtent: Vector = this._obj.getExtent(false, false);
+      const controlD: number = Math.max(
+        controlTokenExtent.x,
+        controlTokenExtent.y
       );
-      if (controlToken) {
-        const controlTokenExtent: Vector = controlToken.getExtent(false, false);
-        const custodiansTokenExtent: Vector = this._obj.getExtent(false, false);
-        const controlD: number = Math.max(
-          controlTokenExtent.x,
-          controlTokenExtent.y
-        );
-        const custodiansD: number = Math.max(
-          custodiansTokenExtent.x,
-          custodiansTokenExtent.y
-        );
-        const d: number = custodiansD - controlD;
-        const dst: Vector = this._obj
-          .getPosition()
-          .add([
-            Math.random() * d,
-            Math.random() * d,
-            world.getTableHeight() + 10,
-          ]);
-        controlToken.setPosition(dst);
-        controlToken.snapToGround();
-      }
+      const custodiansD: number = Math.max(
+        custodiansTokenExtent.x,
+        custodiansTokenExtent.y
+      );
+      const d: number = custodiansD - controlD;
+      const dst: Vector = this._obj
+        .getPosition()
+        .add([
+          Math.random() * d,
+          Math.random() * d,
+          world.getTableHeight() + 10,
+        ]);
+      controlToken.setPosition(dst);
+      controlToken.snapToGround();
+
+      new AdvanceScore().addToScore(playerSlot, 1);
     }
-    new AdvanceScore().addToScore(playerSlot, 1);
   }
 }
 

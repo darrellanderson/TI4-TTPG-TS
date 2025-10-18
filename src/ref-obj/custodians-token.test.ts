@@ -1,5 +1,5 @@
-import { Container, GameObject, Player } from "@tabletop-playground/api";
-import { MockContainer, MockGameObject, MockPlayer } from "ttpg-mock";
+import { GameObject, Player } from "@tabletop-playground/api";
+import { MockCardHolder, MockGameObject, MockPlayer } from "ttpg-mock";
 
 import { createFromObject, CustodiansToken } from "./custodians-token";
 
@@ -9,32 +9,31 @@ it("constructor", () => {
 });
 
 it("trigger action", () => {
+  new MockGameObject({
+    templateMetadata: "sheet.faction:base/arborec",
+    owningPlayerSlot: 10,
+  });
+  new MockCardHolder({ owningPlayerSlot: 10 });
+
   const obj: MockGameObject = new MockGameObject();
   new CustodiansToken(obj);
-  const player: Player = new MockPlayer();
+  const player: Player = new MockPlayer({ slot: 10 });
   obj._customActionAsPlayer(player, "*Score");
 });
 
 it("score", () => {
-  const playerSlot: number = 3;
+  const playerSlot: number = 10;
+
+  new MockGameObject({
+    templateMetadata: "sheet.faction:base/arborec",
+    owningPlayerSlot: playerSlot,
+  });
+  new MockCardHolder({ owningPlayerSlot: playerSlot });
+
   const obj: MockGameObject = new MockGameObject();
   const custodiansToken: CustodiansToken = new CustodiansToken(obj);
 
-  const controlToken: GameObject = new MockGameObject({
-    templateMetadata: "token.control:base/sol",
-    owningPlayerSlot: playerSlot,
-  });
-  const container: Container = new MockContainer({
-    templateMetadata: "container.token.control:base/generic",
-    owningPlayerSlot: playerSlot,
-    items: [controlToken],
-  });
-
-  expect(container.getNumItems()).toBe(1);
-
   custodiansToken.score(playerSlot);
-
-  expect(container.getNumItems()).toBe(1);
 });
 
 it("createFromObject", () => {

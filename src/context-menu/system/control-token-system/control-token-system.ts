@@ -43,30 +43,7 @@ export class ControlTokenSystem implements IGlobal {
   }
 
   addControlToken(systemTileObj: GameObject, player: Player): boolean {
-    /*
-    const container: Container | undefined = this._find.findContainer(
-      "container.token.control:base/generic",
-      player.getSlot()
-    );
-    if (!container) {
-      return false;
-    }
-    const pos: Vector = systemTileObj.getPosition().add([0, 0, 10]);
-    const showAnimation: boolean = true;
-    const keep: boolean = true;
-    const token: GameObject | undefined = container.takeAt(
-      0,
-      pos,
-      showAnimation,
-      keep
-    );
-    if (!token) {
-      return false;
-    }
-    token.snapToGround();
-    */
-
-    // takeAt leaving a token on top of container?
+    // takeAt leaving a token on top of container?  fixed in ttpg update.
     // instead spawn a new one.
 
     const playerSlot: number = player.getSlot();

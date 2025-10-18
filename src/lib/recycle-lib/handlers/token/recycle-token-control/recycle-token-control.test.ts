@@ -1,6 +1,6 @@
-import { MockContainer, MockGameObject } from "ttpg-mock";
+import { MockGameObject } from "ttpg-mock";
 import { RecycleTokenControl } from "./recycle-token-control";
-import { Container, GameObject } from "@tabletop-playground/api";
+import { GameObject } from "@tabletop-playground/api";
 import { GarbageHandler } from "ttpg-darrell";
 
 it("recycle", () => {
@@ -9,30 +9,8 @@ it("recycle", () => {
     templateMetadata: "token.control:base/sol",
     owningPlayerSlot: 1,
   });
-  const container: Container = new MockContainer({
-    templateMetadata: "container.token.control:base/generic",
-    owningPlayerSlot: 1,
-  });
 
   const recycle: GarbageHandler = new RecycleTokenControl();
-  expect(recycle.canRecycle(token)).toBe(true);
-  expect(recycle.recycle(token)).toBe(true);
-  expect(container.getItems().map((x) => x.getId())).toEqual(["my-token-id"]);
-});
-
-it("recycle (container owner mismatch)", () => {
-  const token: GameObject = new MockGameObject({
-    id: "my-token-id",
-    templateMetadata: "token.control:base/sol",
-    owningPlayerSlot: 1,
-  });
-  const container: Container = new MockContainer({
-    templateMetadata: "container.token.control:base/generic",
-    owningPlayerSlot: 2,
-  });
-
-  const recycle: GarbageHandler = new RecycleTokenControl();
-  expect(recycle.canRecycle(token)).toBe(true);
-  expect(recycle.recycle(token)).toBe(false);
-  expect(container.getItems().map((x) => x.getId())).toEqual([]);
+  expect(recycle.canRecycle(token, undefined)).toBe(true);
+  expect(recycle.recycle(token, undefined)).toBe(true);
 });
