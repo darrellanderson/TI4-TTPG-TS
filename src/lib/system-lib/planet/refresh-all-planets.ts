@@ -20,6 +20,11 @@ const ALSO_RECYCLE_NSIDS: Set<string> = new Set([
   "card.promissory:thunders-edge/sever",
 ]);
 
+const DO_NOT_REFRESH_NSIDS: Set<string> = new Set([
+  "card.technology.green:thunders-edge/neural-parasite",
+  "card.technology.yellow:thunders-edge/planesplitter",
+]);
+
 export class RefreshAllPlanets {
   private readonly _cardUtil: CardUtil = new CardUtil();
 
@@ -73,6 +78,10 @@ export class RefreshAllPlanets {
           shouldRefresh = true;
           break;
         }
+      }
+
+      if (DO_NOT_REFRESH_NSIDS.has(nsid)) {
+        shouldRefresh = false;
       }
 
       if (shouldRefresh && !Facing.isFaceUp(obj)) {
