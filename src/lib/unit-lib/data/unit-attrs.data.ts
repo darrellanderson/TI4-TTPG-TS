@@ -84,7 +84,6 @@ export const SOURCE_TO_UNIT_ATTRS_DATA: Record<
       name: "Dreadnought II",
       unit: "dreadnought",
       nsidName: "dreadnought-2",
-      spaceCombat: { hit: 4 },
     },
     {
       name: "Exotrireme",

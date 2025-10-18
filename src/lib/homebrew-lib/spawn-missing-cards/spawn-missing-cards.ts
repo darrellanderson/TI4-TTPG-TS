@@ -92,13 +92,15 @@ export class SpawnMissingCards {
     const tableNsids: Set<string> = new Set<string>();
     const skipContained: boolean = false;
     for (const obj of world.getAllObjects(skipContained)) {
-      const nsid: string = NSID.get(obj);
-      tableNsids.add(nsid);
-      if (obj instanceof Card && obj.getStackSize() > 1) {
-        const deckNsids: Array<string> = NSID.getDeck(obj);
-        deckNsids.forEach((deckNsid: string): void => {
-          tableNsids.add(deckNsid);
-        });
+      if (obj !== srcDeck) {
+        const nsid: string = NSID.get(obj);
+        tableNsids.add(nsid);
+        if (obj instanceof Card && obj.getStackSize() > 1) {
+          const deckNsids: Array<string> = NSID.getDeck(obj);
+          deckNsids.forEach((deckNsid: string): void => {
+            tableNsids.add(deckNsid);
+          });
+        }
       }
     }
 
