@@ -88,7 +88,7 @@ export class RecycleCardAction extends SimpleCardGarbageHandler {
         const existingActionCard: Card | undefined =
           this._getExistingActionCard(pos);
         if (existingActionCard) {
-          const toFront: boolean = false;
+          const toFront: boolean = true;
           const offset: number = 0;
           const animate: boolean = true;
           const flipped: boolean = false;
