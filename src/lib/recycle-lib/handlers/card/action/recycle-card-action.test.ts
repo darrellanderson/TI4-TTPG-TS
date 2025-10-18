@@ -50,6 +50,36 @@ it("_getExistingActionCard", () => {
   expect(recycle._getExistingActionCard(pos)).toBe(actionCard);
 });
 
+it("_isActionPhase", () => {
+  const recycle = new RecycleCardAction();
+  expect(recycle._isActionPhase()).toBe(false);
+
+  let pos: Vector = new Vector(0, 0, 0);
+  let playerSlot: number = 10;
+
+  const add = (nsidName: string): void => {
+    MockGameObject.simple(`tile.strategy-card:base/${nsidName}`, {
+      position: pos,
+    });
+    new MockCardHolder({
+      templateMetadata: "card-holder:base/player-hand",
+      owningPlayerSlot: playerSlot,
+      position: pos,
+    });
+    pos = pos.add(new Vector(10, 0, 0));
+    playerSlot += 1;
+  };
+
+  add("leadership");
+  add("diplomacy");
+  add("politics");
+  add("construction");
+  add("trade");
+  add("warfare");
+
+  expect(recycle._isActionPhase()).toBe(true);
+});
+
 it("recycle (data skimmer)", () => {
   const recycle = new RecycleCardAction();
   const skimmerPos: Vector = new Vector(10, 0, 0);
@@ -71,7 +101,30 @@ it("recycle (data skimmer)", () => {
 
   card = MockCard.simple("card.action:my-source/my-name");
   success = recycle.recycle(card, undefined);
-  expect(success).toBe(true);
+  expect(success).toBe(false);
+
+  let pos: Vector = new Vector(0, 0, 0);
+  let playerSlot: number = 10;
+
+  const add = (nsidName: string): void => {
+    MockGameObject.simple(`tile.strategy-card:base/${nsidName}`, {
+      position: pos,
+    });
+    new MockCardHolder({
+      templateMetadata: "card-holder:base/player-hand",
+      owningPlayerSlot: playerSlot,
+      position: pos,
+    });
+    pos = pos.add(new Vector(10, 0, 0));
+    playerSlot += 1;
+  };
+
+  add("leadership");
+  add("diplomacy");
+  add("politics");
+  add("construction");
+  add("trade");
+  add("warfare");
 
   card = MockCard.simple("card.action:my-source/my-name");
   success = recycle.recycle(card, undefined);

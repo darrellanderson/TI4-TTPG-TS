@@ -15,12 +15,16 @@ import {
   PlayerSlot,
   SimpleCardGarbageHandler,
 } from "ttpg-darrell";
-import { AgendaState } from "../../../../agenda-lib/agenda-state/agenda-state";
-import { AGENDA_STATE_NAMESPACE_ID } from "../../../../agenda-lib/agenda-activity-start/agenda-activity-start";
+import {
+  InitiativeEntry,
+  InitiativeOrder,
+} from "../../../../strategy-card-lib";
 
 export class RecycleCardAction extends SimpleCardGarbageHandler {
   private readonly _myCardUtil: CardUtil = new CardUtil();
   private readonly _myFind: Find = new Find();
+  private readonly _initiativeOrder: InitiativeOrder = new InitiativeOrder();
+
   private _dataSkimmerCard: Card | undefined = undefined;
 
   constructor() {
@@ -51,14 +55,18 @@ export class RecycleCardAction extends SimpleCardGarbageHandler {
     return super.recycle(obj, player);
   }
 
+  _isActionPhase(): boolean {
+    const entries: Array<InitiativeEntry> = this._initiativeOrder.get();
+    console.log("xxx", entries.length);
+    return entries.length >= TI4.config.playerCount;
+  }
+
   _dataSkimmer(obj: GameObject, player: Player | undefined): boolean {
-    const isAgendaPhase: boolean = AgendaState.isAgendaInProgress(
-      AGENDA_STATE_NAMESPACE_ID
-    );
+    const isActionPhase: boolean = this._isActionPhase();
 
     const allowFaceDown: boolean = false;
     if (
-      !isAgendaPhase &&
+      isActionPhase &&
       obj instanceof Card &&
       this._dataSkimmerCard &&
       this._myCardUtil.isLooseCard(this._dataSkimmerCard, allowFaceDown)
