@@ -713,7 +713,7 @@ export const SOURCE_TO_TECH_DATA: Record<string, Array<TechSchemaType>> = {
       color: "unit-upgrade",
       prerequisites: { yellow: 2 },
       isFactionTech: true,
-      replacesNsidName: "space-dock",
+      replacesNsidName: "space-dock-2",
     },
     {
       name: "Agency Supply Network",
@@ -735,7 +735,7 @@ export const SOURCE_TO_TECH_DATA: Record<string, Array<TechSchemaType>> = {
       color: "unit-upgrade",
       prerequisites: { red: 2 },
       isFactionTech: true,
-      replacesNsidName: "destroyer",
+      replacesNsidName: "destroyer-2",
     },
     {
       name: "Hydrothermal Mining",
@@ -750,7 +750,7 @@ export const SOURCE_TO_TECH_DATA: Record<string, Array<TechSchemaType>> = {
       color: "unit-upgrade",
       prerequisites: { red: 2 },
       isFactionTech: true,
-      replacesNsidName: "destroyer",
+      replacesNsidName: "destroyer-2",
     },
     {
       name: "Nanomachines",
