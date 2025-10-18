@@ -72,6 +72,7 @@ export class BuildArea {
           name = name.substring(0, maxLength - 3) + "...";
         }
         this._lastActivatedActionName = "*Warp to " + name;
+        this._obj.addCustomAction(this._lastActivatedActionName);
       }
     });
 
