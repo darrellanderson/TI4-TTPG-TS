@@ -4,10 +4,6 @@ import { DeletedItemsContainer, Find } from "ttpg-darrell";
 import { AbstractUnpack } from "../abstract-unpack/abstract-unpack";
 import { Faction } from "../../faction/faction";
 
-const ANONYMOUS_EXTRA_NSIDS: Set<string> = new Set([
-  "token:thunders-edge/galvanize",
-]);
-
 export class UnpackFactionExtras extends AbstractUnpack {
   private readonly _find: Find = new Find();
 
@@ -24,9 +20,7 @@ export class UnpackFactionExtras extends AbstractUnpack {
       const count: number = faction.getExtraCount(nsid);
       for (let i = 0; i < count; i++) {
         const obj: GameObject = TI4.spawn.spawnOrThrow(nsid);
-        if (!ANONYMOUS_EXTRA_NSIDS.has(nsid)) {
-          obj.setOwningPlayerSlot(this.getPlayerSlot());
-        }
+        obj.setOwningPlayerSlot(this.getPlayerSlot());
         extrasContainer.insert([obj]);
       }
     }

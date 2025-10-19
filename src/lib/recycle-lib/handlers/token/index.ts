@@ -7,5 +7,4 @@ export * from './recycle-token-fighter';
 export * from './recycle-token-frontier';
 export * from './recycle-token-galvanize';
 export * from './recycle-token-infantry';
-export * from './recycle-token-sever';
 export * from './recycle-token-tradegood';

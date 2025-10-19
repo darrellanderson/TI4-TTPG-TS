@@ -18,6 +18,7 @@ import { RecycleCardPromissory } from "../handlers/card/promissory/recycle-card-
 import { RecycleCardRelic } from "../handlers/card/relic/recycle-card-relic";
 import { RecycleCardSecret } from "../handlers/card/secret/recycle-card-secret";
 import { RecycleCardTech } from "../handlers/card/technology/recycle-card-tech";
+import { RecycleFactionExtra } from "../handlers/faction-extra/recycle-faction-extra";
 import { RecycleStrategyCard } from "../handlers/strategy-card/recycle-strategy-card";
 import { RecycleSystemTile } from "../handlers/system-tile/recycle-system-tile";
 import { RecycleTokenAttachment } from "../handlers/token/recycle-token-attachment/recycle-token-attachment";
@@ -27,7 +28,6 @@ import { RecycleTokenFighter } from "../handlers/token/recycle-token-fighter/rec
 import { RecycleTokenFrontier } from "../handlers/token/recycle-token-frontier/recycle-token-frontier";
 import { RecycleTokenGalvanize } from "../handlers/token/recycle-token-galvanize/recycle-token-galvanize";
 import { RecycleTokenInfantry } from "../handlers/token/recycle-token-infantry/recycle-token-infantry";
-import { RecycleTokenSever } from "../handlers/token/recycle-token-sever/recycle-token-sever";
 import { RecycleTokenTradegood } from "../handlers/token/recycle-token-tradegood/recycle-token-tradegood";
 import { RecycleUnit } from "../handlers/unit/recycle-unit";
 
@@ -96,6 +96,7 @@ RecycleContainer.addHandler(new RecycleCardPromissory());
 RecycleContainer.addHandler(new RecycleCardRelic());
 RecycleContainer.addHandler(new RecycleCardSecret());
 RecycleContainer.addHandler(new RecycleCardTech());
+RecycleContainer.addHandler(new RecycleFactionExtra());
 RecycleContainer.addHandler(new RecycleStrategyCard());
 RecycleContainer.addHandler(new RecycleSystemTile());
 RecycleContainer.addHandler(new RecycleTokenAttachment());
@@ -105,6 +106,5 @@ RecycleContainer.addHandler(new RecycleTokenFighter());
 RecycleContainer.addHandler(new RecycleTokenFrontier());
 RecycleContainer.addHandler(new RecycleTokenGalvanize());
 RecycleContainer.addHandler(new RecycleTokenInfantry());
-RecycleContainer.addHandler(new RecycleTokenSever());
 RecycleContainer.addHandler(new RecycleTokenTradegood());
 RecycleContainer.addHandler(new RecycleUnit());

@@ -218,6 +218,10 @@ export class UnitPlastic {
     this._owningPlayerSlot = obj.getOwningPlayerSlot();
     this._planetClosest = undefined;
     this._planetExact = undefined;
+
+    if (this._unit === "galvanize-token") {
+      this._owningPlayerSlot = -1; // Galvanize tokens start anonymous.
+    }
   }
 
   getCount(): number {

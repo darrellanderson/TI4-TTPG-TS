@@ -1,7 +1,7 @@
 import { Container, GameObject } from "@tabletop-playground/api";
 import { GarbageHandler } from "ttpg-darrell";
 import { MockContainer, MockGameObject } from "ttpg-mock";
-import { RecycleTokenSever } from "./recycle-token-sever";
+import { RecycleFactionExtra } from "./recycle-faction-extra";
 
 it("recycle", () => {
   const token: GameObject = new MockGameObject({
@@ -14,7 +14,7 @@ it("recycle", () => {
     owningPlayerSlot: 1,
   });
 
-  const recycle: GarbageHandler = new RecycleTokenSever();
+  const recycle: GarbageHandler = new RecycleFactionExtra();
   expect(recycle.canRecycle(token, undefined)).toBe(true);
   expect(recycle.recycle(token, undefined)).toBe(true);
   expect(container.getItems().map((x) => x.getId())).toEqual(["my-token-id"]);
@@ -31,7 +31,7 @@ it("recycle (container owner mismatch)", () => {
     owningPlayerSlot: 2,
   });
 
-  const recycle: GarbageHandler = new RecycleTokenSever();
+  const recycle: GarbageHandler = new RecycleFactionExtra();
   expect(recycle.canRecycle(token, undefined)).toBe(true);
   expect(recycle.recycle(token, undefined)).toBe(false);
   expect(container.getItems().map((x) => x.getId())).toEqual([]);

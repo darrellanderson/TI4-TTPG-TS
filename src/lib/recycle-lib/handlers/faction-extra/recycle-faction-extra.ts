@@ -1,15 +1,22 @@
 import { Container, GameObject } from "@tabletop-playground/api";
 import { Find, GarbageHandler, NSID } from "ttpg-darrell";
+import { Faction } from "../../../faction-lib/faction/faction";
 
-export class RecycleTokenSever extends GarbageHandler {
+export class RecycleFactionExtra extends GarbageHandler {
   private readonly _find: Find = new Find();
+  private readonly _nsidToFaction: Set<string> = new Set();
 
   canRecycle(obj: GameObject): boolean {
+    if (this._nsidToFaction.size === 0) {
+      TI4.factionRegistry.getAllFactions().forEach((faction: Faction): void => {
+        faction.getExtras().forEach((nsid: string): void => {
+          this._nsidToFaction.add(nsid);
+        });
+      });
+    }
+
     const nsid: string = NSID.get(obj);
-    return (
-      nsid === "token.attachment.system:thunders-edge/crimson-sever" ||
-      nsid === "token.attachment.system:thunders-edge/crimson-breach"
-    );
+    return this._nsidToFaction.has(nsid);
   }
 
   recycle(obj: GameObject): boolean {
