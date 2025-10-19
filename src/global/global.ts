@@ -39,6 +39,7 @@ import { GlobalEvents } from "./global-events";
 import { GoalReporter } from "../lib/game-data-lib/objective-progress/goal-reporter";
 import { HideMouseCursor } from "../lib/streamer-lib/hide-mouse-cursor/hide-mouse-cursor";
 import { HomebrewRegistry } from "../lib/homebrew-lib/homebrew-registry/homebrew-registry";
+import { HotPotatoReduceScore } from "../context-menu/hot-potato-reduce-score/hot-potato-reduce-score";
 import { LastGameData } from "../lib/game-data-lib/last-game-data/last-game-data";
 import { NumpadKeyAll } from "../lib/numpad-key-lib/numpad-key-all/numpad-key-all";
 import { OnAgendaCard } from "../event/on-agenda-card/on-agenda-card";
@@ -243,6 +244,7 @@ export function resetGlobalThisTI4(): TI4Class {
     new RightClickAgenda(),
     new RightClickExplore(),
     new RightClickGalvanizeToken(),
+    new HotPotatoReduceScore(),
     new RightClickIihqModernization(),
     new RightClickInfantry2(),
     new RightClickLetaniWarrior2(),
