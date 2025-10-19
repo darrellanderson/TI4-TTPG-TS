@@ -4,6 +4,8 @@ import { IGlobal, NSID } from "ttpg-darrell";
 export const LOCALE_DESCRIPTIONS: { [key: string]: string } = {
   "card.leader.hero:thunders-edge/entity-4x41a-apollo":
     "Right click the galvanize token with the unit still on it to activate",
+  "card.action:thunders-edge/hack-election":
+    "Place this card faceup in your play area BEFORE the voting phase",
 };
 
 export class ApplyLocaleDescriptions implements IGlobal {

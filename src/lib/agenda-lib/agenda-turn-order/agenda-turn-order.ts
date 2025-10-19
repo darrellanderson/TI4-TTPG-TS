@@ -1,4 +1,4 @@
-import { GameObject, Vector, world } from "@tabletop-playground/api";
+import { Card, GameObject, Vector, world } from "@tabletop-playground/api";
 import { Find, NSID, PlayerSlot } from "ttpg-darrell";
 import { Faction } from "../../faction-lib/faction/faction";
 
@@ -123,6 +123,24 @@ export class AgendaTurnOrder {
     }
     for (const zealPlayerSlot of zealPlayerSlots) {
       order.unshift(zealPlayerSlot);
+    }
+
+    // If "Hack Election" is in game, that player votes last.
+    const hackElectionNsid: string = "card.action:thunders-edge/hack-election";
+    const hackElectionCard: Card | undefined = this._find.findCard(
+      hackElectionNsid,
+      undefined,
+      true
+    );
+    if (hackElectionCard) {
+      const pos: Vector = hackElectionCard.getPosition();
+      const hackElectionPlayerSlot: PlayerSlot =
+        this._find.closestOwnedCardHolderOwner(pos);
+      const index: number = order.indexOf(hackElectionPlayerSlot);
+      if (index !== -1) {
+        order.splice(index, 1);
+        order.push(hackElectionPlayerSlot);
+      }
     }
 
     return order;

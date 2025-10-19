@@ -1,4 +1,4 @@
-import { MockCardHolder, MockGameObject } from "ttpg-mock";
+import { MockCard, MockCardHolder, MockGameObject } from "ttpg-mock";
 import { AgendaTurnOrder } from "./agenda-turn-order";
 import { GameObject } from "@tabletop-playground/api";
 
@@ -137,4 +137,34 @@ it("getVotingOrder (zeal)", () => {
   const agendaTurnOrder = new AgendaTurnOrder();
   const found = agendaTurnOrder.getVotingOrder();
   expect(found).toEqual([10, 11, 12]);
+});
+
+it("getVotingOrder (hack election)", () => {
+  new MockCardHolder({
+    templateMetadata: "card-holder:base/player-hand",
+    owningPlayerSlot: 10,
+    position: [0, 1, 0],
+  });
+  new MockCardHolder({
+    templateMetadata: "card-holder:base/player-hand",
+    owningPlayerSlot: 11,
+    position: [-1, 0, 0],
+  });
+  new MockCardHolder({
+    templateMetadata: "card-holder:base/player-hand",
+    owningPlayerSlot: 12,
+    position: [0, -1, 0],
+  });
+  MockGameObject.simple("token:base/speaker", { position: [0, 1, 0] });
+
+  const agendaTurnOrder = new AgendaTurnOrder();
+  let found = agendaTurnOrder.getVotingOrder();
+  expect(found).toEqual([11, 12, 10]);
+
+  MockCard.simple("card.action:thunders-edge/hack-election", {
+    position: [-1, 0, 0],
+  });
+
+  found = agendaTurnOrder.getVotingOrder();
+  expect(found).toEqual([12, 10, 11]);
 });
