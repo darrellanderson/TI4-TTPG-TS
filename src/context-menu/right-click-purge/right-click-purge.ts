@@ -15,6 +15,11 @@ import {
   OnCardBecameSingletonOrDeck,
 } from "ttpg-darrell";
 
+// Better to use |purge nsid attibutes.
+const ALSO_PURGE_NSIDS: Set<string> = new Set<string>([
+  "card.promissory:thunders-edge/black-ops",
+]);
+
 export const PURGE_ACTION_NAME: string = "*Purge";
 
 export class RightClickPurge implements IGlobal {
@@ -44,9 +49,16 @@ export class RightClickPurge implements IGlobal {
   };
 
   public static _isPurgeable(obj: GameObject): boolean {
-    // This would be a good use for nsid attributes, however those lead to
-    // ugly additions to metadata; need to find a better way to have attrs.
     const nsid: string = NSID.get(obj);
+
+    if (ALSO_PURGE_NSIDS.has(nsid)) {
+      return true;
+    }
+
+    // NSID marked with purge.
+    if (NSID.getExtras(obj).includes("purge")) {
+      return true;
+    }
 
     // Relic fragments.
     if (
