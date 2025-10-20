@@ -124,7 +124,7 @@ export const SOURCE_TO_FACTION_DATA: Record<
       home: 12,
       leaders: {
         agents: ["doctor-sucaban"],
-        commanders: ["ta-zern"],
+        commanders: ["agnlan-oln"],
         heroes: ["rin-the-masters-legacy"],
         mechs: ["shield-paling"],
       },
