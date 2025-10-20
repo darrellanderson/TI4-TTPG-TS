@@ -36,6 +36,14 @@ export class CombatUISpace extends AbstractUI {
       }).get()
     );
 
+    const proximaTargetingUi: ButtonUI = new ButtonUI(scale);
+    proximaTargetingUi.getButton().setText("Proxima Targeting");
+    proximaTargetingUi.getButton().onClicked.add(
+      new ThrottleClickHandler<Button>((_button: Button, player: Player) => {
+        TI4.events.onCombatClicked.trigger("proximaTargeting", "???", player);
+      }).get()
+    );
+
     const antifighterBarrageUi: ButtonUI = new ButtonUI(scale);
     antifighterBarrageUi.getButton().setText("Anti-fighter Barrage");
     antifighterBarrageUi.getButton().onClicked.add(
@@ -69,6 +77,9 @@ export class CombatUISpace extends AbstractUI {
       !faction.getAbilityNsids().includes("faction-ability:base/ambush")
     ) {
       uis.splice(1, 1); // prune ambush
+    }
+    if (faction && faction.getNsid() === "faction:thunders-edge/bastion") {
+      uis.push(proximaTargetingUi);
     }
 
     const abstractUi: AbstractUI = new VerticalUIBuilder()

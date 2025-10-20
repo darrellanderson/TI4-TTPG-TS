@@ -212,6 +212,9 @@ add("thunders-edge", Linkship);
 import { MetaliVoidArmaments } from "./unit-modifiers/thunders-edge/metali-void-armaments";
 add("thunders-edge", MetaliVoidArmaments);
 
+import { ProximaTargeting } from "./unit-modifiers/thunders-edge/proxima-targeting";
+add("thunders-edge", ProximaTargeting);
+
 import { Quietus } from "./unit-modifiers/thunders-edge/quietus";
 add("thunders-edge", Quietus);
 

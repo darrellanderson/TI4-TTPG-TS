@@ -38,6 +38,7 @@ import { UnitPlastic } from "../../unit-lib/unit-plastic/unit-plastic";
 
 export type CombatRollType =
   | "ambush"
+  | "proximaTargeting"
   | "antiFighterBarrage"
   | "bombardment"
   | "spaceCannonOffense"
