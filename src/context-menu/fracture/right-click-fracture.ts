@@ -1,4 +1,5 @@
 import {
+  Card,
   Color,
   GameObject,
   globalEvents,
@@ -7,11 +8,12 @@ import {
   Vector,
   world,
 } from "@tabletop-playground/api";
-import { Broadcast, IGlobal } from "ttpg-darrell";
+import { Broadcast, Find, IGlobal } from "ttpg-darrell";
 import { System } from "../../lib/system-lib/system/system";
 import { UnitType } from "../../lib/unit-lib/schema/unit-attrs-schema";
 
-const ACTION_NAME: string = "*Deploy fracture";
+const ACTION_DEPLOY_FRACTURE: string = "*Deploy fracture";
+const ACTION_FETCH_RELIC: string = "*Fetch relic";
 
 export class RightClickFracture implements IGlobal {
   readonly _onObjectCreated = (obj: GameObject): void => {
@@ -19,25 +21,44 @@ export class RightClickFracture implements IGlobal {
       obj.getId()
     );
     if (system && system.getClass() === "fracture") {
-      obj.removeCustomAction(ACTION_NAME);
-      obj.addCustomAction(ACTION_NAME);
+      obj.removeCustomAction(ACTION_DEPLOY_FRACTURE);
+      obj.addCustomAction(ACTION_DEPLOY_FRACTURE);
       obj.onCustomAction.remove(this._onCustomAction);
       obj.onCustomAction.add(this._onCustomAction);
+
+      if (system.getPlanets().length > 0) {
+        obj.removeCustomAction(ACTION_FETCH_RELIC);
+        obj.addCustomAction(ACTION_FETCH_RELIC);
+      }
     }
   };
 
   readonly _onCustomAction = (
-    _obj: GameObject,
+    obj: GameObject,
     player: Player,
     identifier: string
   ): void => {
-    if (identifier === ACTION_NAME) {
+    if (identifier === ACTION_DEPLOY_FRACTURE) {
       const playerName: string = TI4.playerName.getByPlayer(player);
       const msg: string = `${playerName} deployed the fracture`;
       const color: Color = world.getSlotColor(player.getSlot());
       Broadcast.chatAll(msg, color);
 
       this._deployFracture();
+    }
+
+    if (identifier === ACTION_FETCH_RELIC) {
+      const find: Find = new Find();
+      const relicDeck: Card | undefined = find.findDeckOrDiscard("deck-relic");
+      if (relicDeck) {
+        const card: Card | undefined = relicDeck.takeCards(1);
+        if (card) {
+          const above: Vector = obj.getPosition().add([0, 0, 5]);
+          card.setPosition(above, 1);
+          card.setRotation([0, 0, 180], 1);
+          card.snapToGround();
+        }
+      }
     }
   };
 
@@ -56,7 +77,7 @@ export class RightClickFracture implements IGlobal {
         TI4.systemRegistry.getBySystemTileObjId(obj.getId());
       if (system && system.getClass() === "fracture") {
         console.log("xxx", system.getSystemTileNumber(), obj.isValid());
-        obj.removeCustomAction(ACTION_NAME);
+        obj.removeCustomAction(ACTION_DEPLOY_FRACTURE);
         obj.onCustomAction.remove(this._onCustomAction);
         obj.setObjectType(ObjectType.Regular);
         obj.setRotation([0, 0, 0]);
