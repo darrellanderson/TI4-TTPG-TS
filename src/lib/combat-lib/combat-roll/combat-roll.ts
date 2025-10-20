@@ -542,6 +542,9 @@ export class CombatRoll {
         case "ambush":
           combatAttrs = unitAttrs.getSpaceCombat();
           break;
+        case "proximaTargeting":
+          combatAttrs = unitAttrs.getBombardment();
+          break;
         case "antiFighterBarrage":
           if (!unitAttrs.getDisableAntiFighterBarrage()) {
             combatAttrs = unitAttrs.getAntiFighterBarrage();

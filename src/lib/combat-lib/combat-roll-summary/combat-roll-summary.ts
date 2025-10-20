@@ -113,6 +113,7 @@ export class CombatRollSummary {
 
     const rollTypeToLabel: Map<CombatRollType, string> = new Map();
     rollTypeToLabel.set("ambush", "Ambush");
+    rollTypeToLabel.set("proximaTargeting", "Proxima Targeting");
     rollTypeToLabel.set("spaceCannonOffense", "Space Cannon Offense");
     rollTypeToLabel.set("antiFighterBarrage", "Anti-Fighter Barrage");
     rollTypeToLabel.set("spaceCombat", "Space Combat");
@@ -120,9 +121,12 @@ export class CombatRollSummary {
     rollTypeToLabel.set("spaceCannonDefense", "Space Cannon Defense");
     rollTypeToLabel.set("groundCombat", "Ground Combat");
     rollTypeToLabel.set("production", "Production");
-    const rollType: string | undefined = rollTypeToLabel.get(
+    let rollType: string | undefined = rollTypeToLabel.get(
       combatRoll.getRollType()
     );
+    if (!rollType) {
+      rollType = combatRoll.getRollType();
+    }
 
     const hitOrHits: string = totalHits === 1 ? "hit" : "hits";
     return `${totalHits} ${hitOrHits} from ${playerName} ${rollType}\n${combinedUnitResults}\nModifiers: ${modifiers.join(", ")}`;
