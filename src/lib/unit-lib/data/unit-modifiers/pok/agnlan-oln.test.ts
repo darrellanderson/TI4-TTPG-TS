@@ -3,15 +3,13 @@ import { UnitModifier } from "../../../unit-modifier/unit-modifier";
 import { placeGameObjects, SELF, OPPONENT } from "../abstract.test";
 
 it("registry", () => {
-  const nsid: string = "card.leader.commander:thunders-edge/agnlan-oln";
+  const nsid: string = "card.leader.commander:pok/agnlan-oln";
   expect(TI4.unitModifierRegistry.getByNsid(nsid)).toBeDefined();
 });
 
 it("modifier", () => {
   const unitModifier: UnitModifier | undefined =
-    TI4.unitModifierRegistry.getByNsid(
-      "card.leader.commander:thunders-edge/agnlan-oln"
-    );
+    TI4.unitModifierRegistry.getByNsid("card.leader.commander:pok/agnlan-oln");
   expect(unitModifier).toBeDefined();
   if (!unitModifier) {
     throw new Error("unitModifier not found");
@@ -35,14 +33,12 @@ it("modifier", () => {
   ).toBe(false);
 
   placeGameObjects({
-    selfActive: ["card.leader.commander:thunders-edge/agnlan-oln"],
+    selfActive: ["card.leader.commander:pok/agnlan-oln"],
   });
   combatRoll = CombatRoll.createCooked(combatParams);
 
   expect(
-    combatRoll.isCommanderUnlocked(
-      "card.leader.commander:thunders-edge/agnlan-oln"
-    )
+    combatRoll.isCommanderUnlocked("card.leader.commander:pok/agnlan-oln")
   ).toBe(true);
   expect(unitModifier.applies(combatRoll)).toBe(true);
 

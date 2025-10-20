@@ -14,8 +14,7 @@ export const AgnlanOln: UnitModifierSchemaType = {
     { cardClass: "alliance", nsidName: "jolnar" },
   ],
   applies: (combatRoll: CombatRoll): boolean => {
-    const commanderNsid: string =
-      "card.leader.commander:thunders-edge/agnlan-oln";
+    const commanderNsid: string = "card.leader.commander:pok/agnlan-oln";
     const rollType: CombatRollType = combatRoll.getRollType();
     return (
       (rollType === "antiFighterBarrage" ||

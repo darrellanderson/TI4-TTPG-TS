@@ -67,7 +67,10 @@ import { ReportRemaining } from "../context-menu/report-remaining/report-remaini
 import { RightClickAgenda } from "../context-menu/right-click-agenda/right-click-agenda";
 //import { RightClickDelete } from "../context-menu/right-click-delete/right-click-delete";
 import { RightClickExplore } from "../context-menu/system/explore-system/right-click-explore";
+import { RightClickFracture } from "../context-menu/fracture/right-click-fracture";
 import { RightClickGalvanizeToken } from "../context-menu/right-click-galvanize-token/right-click-galvanize-token";
+import { RightClickGravleashManeuvers } from "../context-menu/cards/gravleash-maneuvers/right-click-gravleash-maneuvers";
+import { RightClickHotPotatoScore } from "../context-menu/right-click-score/hot-potato-score";
 import { RightClickIihqModernization } from "../context-menu/cards/iihq-modernization/right-click-iihq-modernization";
 import { RightClickInfantry2 } from "../context-menu/cards/infantry-2/right-click-infantry-2";
 import { RightClickLetaniWarrior2 } from "../context-menu/cards/infantry-2/right-click-letani-warrior-2";
@@ -75,6 +78,7 @@ import { RightClickMabanOmega } from "../context-menu/cards/maban-omega/right-cl
 import { RightClickMabanOmegaAlliance } from "../context-menu/cards/maban-omega/right-click-maban-omega-alliance";
 import { RightClickMageonImplants } from "../context-menu/cards/mageon-implants/right-click-mageon-implants";
 import { RightClickNanoForge } from "../context-menu/cards/nano-forge/right-click-nano-forge";
+import { RightClickObsidianFirmament } from "../context-menu/obsidian-firmament/right-click-obsidian-firmament";
 import { RightClickPurge } from "../context-menu/right-click-purge/right-click-purge";
 import { RightClickRider } from "../context-menu/right-click-rider/right-click-rider";
 import { RightClickRift } from "../context-menu/right-click-rift/right-click-rift";
@@ -120,7 +124,6 @@ import { RightClickYinAscendant } from "../context-menu/breakthroughs/yin-ascend
 import { LOCALE_CONTEXT_MENUS } from "../locale/locale-context-menus";
 
 import { NSID_TO_TEMPLATE_ID } from "../nsid/nsid-to-template-id";
-import { RightClickHotPotatoScore } from "../context-menu/right-click-score/hot-potato-score";
 
 const packageId: string = refPackageId;
 Find.ignoreOwnedCardHolderNsid("card-holder:base/player-scoring");
@@ -243,7 +246,9 @@ export function resetGlobalThisTI4(): TI4Class {
     new ReportRemaining(),
     new RightClickAgenda(),
     new RightClickExplore(),
+    new RightClickFracture(),
     new RightClickGalvanizeToken(),
+    new RightClickGravleashManeuvers(),
     new RightClickHotPotatoScore(),
     new RightClickIihqModernization(),
     new RightClickInfantry2(),
@@ -252,6 +257,7 @@ export function resetGlobalThisTI4(): TI4Class {
     new RightClickMabanOmegaAlliance(),
     new RightClickMageonImplants(),
     new RightClickNanoForge(),
+    new RightClickObsidianFirmament(),
     new RightClickPurge(),
     new RightClickRider(),
     new RightClickRift(),

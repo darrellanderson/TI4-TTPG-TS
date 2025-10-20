@@ -104,6 +104,9 @@ add("codex.vigil", XxekirGrom);
 import { _2ram } from "./unit-modifiers/pok/2ram";
 add("pok", _2ram);
 
+import { AgnlanOln } from "./unit-modifiers/pok/agnlan-oln";
+add("pok", AgnlanOln);
+
 import { Annihilator } from "./unit-modifiers/pok/annihilator";
 add("pok", Annihilator);
 
@@ -178,9 +181,6 @@ add("pok", ViscountUnlenn);
 
 import { ViszElVir } from "./unit-modifiers/pok/visz-el-vir";
 add("pok", ViszElVir);
-
-import { AgnlanOln } from "./unit-modifiers/thunders-edge/agnlan-oln";
-add("thunders-edge", AgnlanOln);
 
 import { ArozHollow } from "./unit-modifiers/thunders-edge/aroz-hollow";
 add("thunders-edge", ArozHollow);
