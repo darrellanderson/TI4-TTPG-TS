@@ -505,7 +505,7 @@ export const SOURCE_TO_FACTION_DATA: Record<
       leaders: {
         agents: ["ggrocuto-rinn"],
         commanders: ["elder-qanoj"],
-        heroes: ["xxekir-grom", "xxekir-grom.omega"],
+        heroes: ["xxekir-grom", "planetary-defense-nexus"],
         mechs: ["indomitus"],
       },
       promissories: ["political-favor"],
@@ -537,7 +537,7 @@ export const SOURCE_TO_FACTION_DATA: Record<
       leaders: {
         agents: ["brother-milor", "brother-milor.omega"],
         commanders: ["brother-omar", "brother-omar.omega"],
-        heroes: ["dannel-of-the-tenth", "dannel-of-the-tenth.omega"],
+        heroes: ["dannel-of-the-tenth", "quantum-dissemination"],
         mechs: ["moyins-ashes"],
       },
       promissories: ["greyfire-mutagen", "greyfire-mutagen.omega"],

@@ -91,30 +91,6 @@ it("getVotingOrder", () => {
   expect(found).toEqual([11, 12, 10]);
 });
 
-it("getVotingOrder (reverse)", () => {
-  new MockCardHolder({
-    templateMetadata: "card-holder:base/player-hand",
-    owningPlayerSlot: 10,
-    position: [0, 1, 0],
-  });
-  new MockCardHolder({
-    templateMetadata: "card-holder:base/player-hand",
-    owningPlayerSlot: 11,
-    position: [-1, 0, 0],
-  });
-  new MockCardHolder({
-    templateMetadata: "card-holder:base/player-hand",
-    owningPlayerSlot: 12,
-    position: [0, -1, 0],
-  });
-  MockGameObject.simple("token:base/speaker", { position: [0, 1, 0] });
-  MockGameObject.simple("card.action:codex.ordinian/hack-election");
-
-  const agendaTurnOrder = new AgendaTurnOrder();
-  const found = agendaTurnOrder.getVotingOrder();
-  expect(found).toEqual([12, 11, 10]);
-});
-
 it("getVotingOrder (zeal)", () => {
   new MockCardHolder({
     templateMetadata: "card-holder:base/player-hand",
@@ -161,7 +137,7 @@ it("getVotingOrder (hack election)", () => {
   let found = agendaTurnOrder.getVotingOrder();
   expect(found).toEqual([11, 12, 10]);
 
-  MockCard.simple("card.action:thunders-edge/hack-election", {
+  MockCard.simple("card.action:codex.ordinian/hack-election", {
     position: [-1, 0, 0],
   });
 

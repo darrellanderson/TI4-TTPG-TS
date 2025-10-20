@@ -203,7 +203,7 @@ it("rewrite hero omega source", () => {
   const xxcha: Faction = TI4.factionRegistry.getByNsid("faction:base/xxcha")!;
   const heroNsids: Array<string> = xxcha.getHeroNsids();
   expect(heroNsids.sort()).toEqual([
-    "card.leader.hero:codex.vigil/xxekir-grom.omega",
+    "card.leader.hero:codex.vigil/planetary-defense-nexus",
     "card.leader.hero:pok/xxekir-grom",
   ]);
 });

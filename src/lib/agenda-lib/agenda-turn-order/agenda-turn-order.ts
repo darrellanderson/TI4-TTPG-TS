@@ -126,7 +126,7 @@ export class AgendaTurnOrder {
     }
 
     // If "Hack Election" is in game, that player votes last.
-    const hackElectionNsid: string = "card.action:thunders-edge/hack-election";
+    const hackElectionNsid: string = "card.action:codex.ordinian/hack-election";
     const hackElectionCard: Card | undefined = this._find.findCard(
       hackElectionNsid,
       undefined,

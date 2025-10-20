@@ -16,6 +16,12 @@ export const REWRITE_NSIDS: Record<string, string> = {
   "card.leader.hero:pok/dannel-of-the-tenth.omega":
     "card.leader.hero:codex.vigil/dannel-of-the-tenth.omega",
 
+  // Codex updates from thunder's edge.
+  "card.leader.hero:pok/planetary-defense-nexus":
+    "card.leader.hero:codex.vigil/planetary-defense-nexus",
+  "card.leader.hero:pok/quantum-dissemination":
+    "card.leader.hero:codex.vigil/quantum-dissemination",
+
   // alliances.
   "card.alliance:pok/yin.omega": "card.alliance:codex.vigil/yin.omega",
   "card.alliance:pok/naalu.omega": "card.alliance:codex.vigil/naalu.omega",

@@ -39,8 +39,8 @@
     "HiddenTexture": "",
     "BackIndex": -3,
     "HiddenIndex": -1,
-    "NumHorizontal": 4,
-    "NumVertical": 4,
+    "NumHorizontal": 2,
+    "NumVertical": 8,
     "Width": 6.3,
     "Height": 4.2,
     "Thickness": 0.05,
@@ -65,7 +65,9 @@
         9,
         10,
         11,
-        12
+        12,
+        13,
+        14
     ],
     "CardNames": {
         "0": "Brother Milor Ω",
@@ -78,9 +80,11 @@
         "7": "Harka Leeds",
         "8": "Kuuasi Aun Jalatai",
         "9": "Odlynn Myrr",
-        "10": "Xxekir Grom Ω",
-        "11": "Iconoclast Ω",
-        "12": "Omniopiares"
+        "10": "Planetary Defense Nexus",
+        "11": "Quantum Dissemination",
+        "12": "Xxekir Grom Ω",
+        "13": "Iconoclast Ω",
+        "14": "Omniopiares"
     },
     "CardMetadata": {
         "0": "card.leader.agent:codex.vigil/brother-milor.omega",
@@ -93,9 +97,11 @@
         "7": "card.leader.hero:codex.vigil/harka-leeds",
         "8": "card.leader.hero:codex.vigil/kuuasi-aun-jalatai",
         "9": "card.leader.hero:codex.vigil/odlynn-myrr",
-        "10": "card.leader.hero:codex.vigil/xxekir-grom.omega",
-        "11": "card.leader.mech:codex.vigil/iconoclast.omega",
-        "12": "card.leader.mech:codex.vigil/omniopiares"
+        "10": "card.leader.hero:codex.vigil/planetary-defense-nexus",
+        "11": "card.leader.hero:codex.vigil/quantum-dissemination",
+        "12": "card.leader.hero:codex.vigil/xxekir-grom.omega",
+        "13": "card.leader.mech:codex.vigil/iconoclast.omega",
+        "14": "card.leader.mech:codex.vigil/omniopiares"
     },
     "CardTags": {
         "0": [
@@ -135,6 +141,12 @@
             "card-leader"
         ],
         "12": [
+            "card-leader"
+        ],
+        "13": [
+            "card-leader"
+        ],
+        "14": [
             "card-leader"
         ]
     },
