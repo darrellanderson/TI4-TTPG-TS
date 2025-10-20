@@ -108,7 +108,12 @@ export class RefreshAllPlanets {
         }
       }
 
-      if (alsoRefreshTechAgentRelicUnit && ALSO_RECYCLE_NSIDS.has(nsid)) {
+      const isInCardHolder: boolean = obj instanceof Card && obj.isInHolder();
+      if (
+        alsoRefreshTechAgentRelicUnit &&
+        ALSO_RECYCLE_NSIDS.has(nsid) &&
+        !isInCardHolder
+      ) {
         GarbageContainer.tryRecycle(obj, undefined);
       }
     }

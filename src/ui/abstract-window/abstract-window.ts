@@ -109,8 +109,9 @@ export class AbstractWindow {
 
       title: windowTitle,
       defaultTarget: "screen",
-      // Use u=0.814 to see turn order.
-      screen: { anchor: { u: 1, v: 0 }, pos: { u: 0.97, v: 0.05 } },
+      // Use u=0.814 to see turn order.  0.97 is a nice near-edge,
+      // Move left a little more than that to see some turn order.
+      screen: { anchor: { u: 1, v: 0 }, pos: { u: 0.94, v: 0.05 } },
 
       world: {
         anchor: {

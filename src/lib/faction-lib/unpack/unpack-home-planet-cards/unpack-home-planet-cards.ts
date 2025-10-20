@@ -98,5 +98,17 @@ export class UnpackHomePlanetCards extends AbstractUnpack {
         planetDeck.addCards(card);
       }
     }
+
+    const legendaryPlanetDeck: Card | undefined =
+      this._getLegendaryPlanetDeck();
+    if (legendaryPlanetDeck) {
+      for (const card of cardHolder.getCards()) {
+        const nsid: string = NSID.get(card);
+        if (nsid.startsWith("card.legendary-planet:")) {
+          card.removeFromHolder();
+          legendaryPlanetDeck.addCards(card);
+        }
+      }
+    }
   }
 }

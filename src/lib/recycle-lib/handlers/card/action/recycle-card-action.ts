@@ -88,11 +88,17 @@ export class RecycleCardAction extends SimpleCardGarbageHandler {
         const existingActionCard: Card | undefined =
           this._getExistingActionCard(pos);
         if (existingActionCard) {
+          // Report of card below falling through table when adding to deck.
+          // Move deck up, add, snap back down.
+          existingActionCard.setPosition(pos.add([0, 0, 2]));
+
           const toFront: boolean = true;
           const offset: number = 0;
           const animate: boolean = true;
           const flipped: boolean = false;
           existingActionCard.addCards(obj, toFront, offset, animate, flipped);
+
+          existingActionCard.snapToGround();
         } else {
           obj.setPosition(pos.add([0, 0, 10]));
           obj.setRotation([0, 0, 180]);
