@@ -352,7 +352,6 @@ export class CombatRoll {
 
     // Set owningPlayerSlot = -1 to look for control token or closest player.
     // Requires an object be given!
-    const seenModifierNsids: Set<string> = new Set();
     const maybeAddModifier = (
       nsid: string,
       obj: GameObject | undefined,
@@ -360,9 +359,7 @@ export class CombatRoll {
     ): void => {
       const modifier: UnitModifier | undefined =
         TI4.unitModifierRegistry.getByNsid(nsid);
-      if (modifier && !seenModifierNsids.has(nsid)) {
-        seenModifierNsids.add(nsid);
-
+      if (modifier) {
         // Only use cards when face-up.
         let useModifier: boolean = true;
         if (obj instanceof Card) {
@@ -515,6 +512,20 @@ export class CombatRoll {
         }
       });
     });
+
+    // Remove duplicates.
+    const seen: Set<string> = new Set();
+    for (let i = unitModifiers.length - 1; i >= 0; i--) {
+      const unitModifier: UnitModifier | undefined = unitModifiers[i];
+      if (unitModifier) {
+        const key: string = unitModifier.getName();
+        if (seen.has(key)) {
+          unitModifiers.splice(i, 1);
+        } else {
+          seen.add(key);
+        }
+      }
+    }
 
     UnitModifier.sortByApplyOrder(unitModifiers);
 

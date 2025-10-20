@@ -45,6 +45,7 @@ export const Galvanize: UnitModifierSchemaType = {
     "Galvanized units gain an extra die for combat rolls and unit abilities",
   owner: "any",
   priority: "adjust",
+  triggerAlways: true,
   triggers: [{ cardClass: "faction-ability", nsidName: "galvanize" }],
   applies: (combatRoll: CombatRoll): boolean => {
     const combatRollOrUnitAbility: Set<CombatRollType> = new Set([

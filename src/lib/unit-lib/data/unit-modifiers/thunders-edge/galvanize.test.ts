@@ -64,6 +64,41 @@ it("modifier", () => {
   expect(spaceCombat.getExtraDice()).toBe(1);
 });
 
+it("modifier (trigger always)", () => {
+  placeGameObjects({
+    selfUnits: new Map([["fighter", 1]]),
+  });
+
+  const token: GameObject = MockGameObject.simple(
+    "token:thunders-edge/galvanize"
+  );
+  expect(token.getOwningPlayerSlot()).toBe(-1);
+
+  const combatRoll: CombatRoll = CombatRoll.createCooked({
+    rollType: "spaceCombat",
+    hex: "<0,0,0>",
+    activatingPlayerSlot: OPPONENT,
+    rollingPlayerSlot: SELF,
+  });
+  expect(combatRoll.self.getCount("fighter")).toBe(1);
+  expect(combatRoll.self.getCount("galvanize-token")).toBe(1);
+  expect(combatRoll.getUnitModifierNames()).toEqual(["Galvanize"]);
+
+  const fighterPlastic: UnitPlastic | undefined =
+    combatRoll.self.unitPlasticHex[0];
+  if (!fighterPlastic) {
+    throw new Error("Expected fighter plastic to be defined");
+  }
+  const fighterPos: Vector = fighterPlastic.getObj().getPosition();
+  const fighterHex: HexType = TI4.hex.fromPosition(fighterPos);
+  expect(fighterHex).toBe("<0,0,0>");
+
+  const fighterUnitAttrs: UnitAttrs =
+    combatRoll.self.unitAttrsSet.getOrThrow("fighter");
+  const spaceCombat: CombatAttrs = fighterUnitAttrs.getSpaceCombatOrThrow();
+  expect(spaceCombat.getExtraDice()).toBe(1);
+});
+
 it("modifier (adj)", () => {
   placeGameObjects({
     self: [
