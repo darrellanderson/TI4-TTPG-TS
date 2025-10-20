@@ -858,7 +858,7 @@ export const SOURCE_TO_FACTION_DATA: Record<
         infantry: 2,
         spaceDock: 1,
       },
-      factionTechs: ["iihq-modernization", "agency-supply-network"],
+      factionTechs: ["executive-order", "agency-supply-network"],
       unitOverrides: ["artemiris", "omniopiares"],
       extras: [
         { nsid: "token.attachment.planet:codex.vigil/custodia-vigilia" },
@@ -892,7 +892,7 @@ export const SOURCE_TO_FACTION_DATA: Record<
         infantry: 2,
         spaceDock: 1,
       },
-      factionTechs: ["iihq-modernization", "agency-supply-network"],
+      factionTechs: ["executive-order", "agency-supply-network"],
       unitOverrides: ["artemiris", "omniopiares"],
       extras: [
         { nsid: "token.attachment.planet:codex.vigil/custodia-vigilia" },
@@ -926,7 +926,7 @@ export const SOURCE_TO_FACTION_DATA: Record<
         infantry: 2,
         spaceDock: 1,
       },
-      factionTechs: ["iihq-modernization", "agency-supply-network"],
+      factionTechs: ["executive-order", "agency-supply-network"],
       unitOverrides: ["artemiris", "omniopiares"],
       extras: [
         { nsid: "token.attachment.planet:codex.vigil/custodia-vigilia" },

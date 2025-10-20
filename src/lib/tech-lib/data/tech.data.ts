@@ -682,13 +682,21 @@ export const SOURCE_TO_TECH_DATA: Record<string, Array<TechSchemaType>> = {
       isFactionTech: true,
     },
     {
+      nsidName: "executive-order",
+      name: "Executive Order",
+      color: "yellow",
+      prerequisites: { yellow: 1 },
+      abbr: "Exec Order",
+      isFactionTech: true,
+    },
+    /*{
       nsidName: "iihq-modernization",
       name: "I.I.H.Q. Modernization",
       color: "yellow",
       prerequisites: { yellow: 1 },
       abbr: "IIQH Modern",
       isFactionTech: true,
-    },
+    },*/
   ],
   "codex.liberation": [
     {
@@ -714,20 +722,6 @@ export const SOURCE_TO_TECH_DATA: Record<string, Array<TechSchemaType>> = {
       prerequisites: { yellow: 2 },
       isFactionTech: true,
       replacesNsidName: "space-dock-2",
-    },
-    {
-      name: "Agency Supply Network",
-      nsidName: "agency-supply-network",
-      color: "yellow",
-      prerequisites: { yellow: 2 },
-      isFactionTech: true,
-    },
-    {
-      name: "Executive Order",
-      nsidName: "executive-order",
-      color: "yellow",
-      prerequisites: { yellow: 1 },
-      isFactionTech: true,
     },
     {
       name: "Exile II",
