@@ -79,6 +79,14 @@ export class DraftStartUI extends AbstractUI {
     this._params.numFactions = value;
   };
 
+  readonly _onUseFactionsOnTableChanged = (
+    _checkBox: CheckBox,
+    _player: Player,
+    checked: boolean
+  ): void => {
+    this._params.useFactionsOnTable = checked;
+  };
+
   readonly _onTextCommitted = (
     _textBox: MultilineTextBox,
     _player: Player,
@@ -180,6 +188,12 @@ export class DraftStartUI extends AbstractUI {
     customConfig.getEditText().setMaxLength(1000);
     customConfig.getEditText().setText(params.config);
 
+    const useFactionsOnTable: CheckBoxUI = new CheckBoxUI(scale);
+    useFactionsOnTable
+      .getCheckBox()
+      .setText("Use factions on table")
+      .setIsChecked(params.useFactionsOnTable || false);
+
     const startButton: ButtonUI = new ButtonUI(scale);
     startButton.getButton().setText("Start Draft");
 
@@ -192,6 +206,7 @@ export class DraftStartUI extends AbstractUI {
         numSlicesPanel,
         numFactionsPanel,
         customConfigPanel,
+        useFactionsOnTable,
         startButton,
       ])
       .build();
@@ -225,6 +240,9 @@ export class DraftStartUI extends AbstractUI {
 
     numSlices.getSlider().onValueChanged.add(this._onSliceCountChanged);
     numFactions.getSlider().onValueChanged.add(this._onFactionCountChanged);
+    useFactionsOnTable
+      .getCheckBox()
+      .onCheckStateChanged.add(this._onUseFactionsOnTableChanged);
     customConfig.getEditText().onTextCommitted.add(this._onTextCommitted);
     startButton.getButton().onClicked.add(this._onStartButtonClicked);
   }

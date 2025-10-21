@@ -28,6 +28,7 @@ export class DraftStartWindow {
     draft: new Milty(),
     numSlices: TI4.config.playerCount,
     numFactions: TI4.config.playerCount,
+    useFactionsOnTable: false,
     config: "",
   };
 

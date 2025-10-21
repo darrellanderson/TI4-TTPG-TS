@@ -1,5 +1,12 @@
 import { Border, UIElement, Vector, world } from "@tabletop-playground/api";
-import { Direction, IGlobal, Shuffle } from "ttpg-darrell";
+import {
+  CardUtil,
+  Direction,
+  IGlobal,
+  NSID,
+  ParsedNSID,
+  Shuffle,
+} from "ttpg-darrell";
 import { DraftState } from "../draft-state/draft-state";
 import { DraftStateUI } from "../../../ui/draft/draft-state-ui/draft-state-ui";
 import { Faction } from "../../faction-lib/faction/faction";
@@ -60,6 +67,32 @@ export class DraftActivityStart {
 
   static getSliceLabels(config: string): Array<string> | undefined {
     return new ParseLabels().parseLabels(config);
+  }
+
+  static getFactionsOnTable(): Array<Faction> {
+    const factions: Array<Faction> = [];
+
+    const cardUtil: CardUtil = new CardUtil();
+    const skipContained: boolean = true;
+    for (const obj of world.getAllObjects(skipContained)) {
+      if (cardUtil.isLooseCard(obj)) {
+        const nsid: string = NSID.get(obj);
+        if (nsid.startsWith("card.faction-reference:")) {
+          const parsed: ParsedNSID | undefined = NSID.parse(nsid);
+          if (!parsed) {
+            throw new Error(`bad NSID "${nsid}"`);
+          }
+          const nsidName: string = parsed.nameParts.join(".");
+          const faction: Faction | undefined =
+            TI4.factionRegistry.getByNsidName(nsidName);
+          if (faction) {
+            factions.push(faction);
+          }
+        }
+      }
+    }
+
+    return factions;
   }
 
   static getOrGenerateFactions(
@@ -169,11 +202,16 @@ export class DraftActivityStart {
     }
 
     // Factions.
-    const factions: Array<Faction> = DraftActivityStart.getOrGenerateFactions(
-      params.config,
-      params.numFactions,
-      errors
-    );
+    let factions: Array<Faction>;
+    if (params.useFactionsOnTable) {
+      factions = DraftActivityStart.getFactionsOnTable();
+    } else {
+      factions = DraftActivityStart.getOrGenerateFactions(
+        params.config,
+        params.numFactions,
+        errors
+      );
+    }
     this._draftState.setFactions(factions);
 
     if (this._draftState.getFactions().length < TI4.config.playerCount) {
