@@ -121,6 +121,7 @@ export const NSID_TO_TEMPLATE_ID: { [key: string]: string } = {
     "mat:base/status-pad": "84D5C12C94460801F0678CAE1E3C0EB8",
     "mat:base/strategy-card": "5C1019205F49EA482B06719B3330CF77",
     "mat:base/timer": "CCE415BC7748EC5EA790E7819E8DEB2E",
+    "misc:base/trophy": "922BB8D64641DE773C558190B32D4C41",
     "sheet.faction:base/arborec": "7D9CC97006657D15708220E79777EA8B",
     "sheet.faction:base/creuss": "6E6B93113548FD66F97AFDB0D84BA315",
     "sheet.faction:base/generic": "C41FA0AAA54DCEB2F66FC6BF2B3F5CD9",
