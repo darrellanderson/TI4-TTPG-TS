@@ -1,7 +1,7 @@
 {
 	"Type": "Generic",
 	"GUID": "922BB8D64641DE773C558190B32D4C41",
-	"Name": "Generic",
+	"Name": "Trophy",
 	"Metadata": "misc:base/trophy",
 	"CollisionType": "Regular",
 	"Friction": 0.7,
