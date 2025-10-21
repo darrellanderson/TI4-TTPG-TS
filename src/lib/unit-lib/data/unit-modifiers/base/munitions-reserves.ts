@@ -7,7 +7,12 @@ export const MunitionsReserves: UnitModifierSchemaType = {
   description: "Spend 2 TGs to reroll space combat misses",
   owner: "self",
   priority: "adjust",
-  triggers: [{ cardClass: "faction-ability", nsidName: "munitions-reserves" }],
+  triggers: [
+    {
+      cardClass: "custom",
+      nsidName: "card.other.portrait:base/munitions-reserves",
+    },
+  ],
   isActiveIdle: true,
   applies: (combatRoll: CombatRoll): boolean => {
     return combatRoll.getRollType() === "spaceCombat";

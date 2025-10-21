@@ -10,6 +10,7 @@ export const UnitModifierCardClass = z
     "alliance",
     "breakthrough",
     "commander",
+    "custom", // nsidName is full NSID
     "event",
     "faction-ability", // not a card
     "hero",
@@ -30,7 +31,7 @@ export type UnitModifierCardClassType = z.infer<typeof UnitModifierCardClass>;
 export const UnitModifierTrigger = z
   .object({
     cardClass: UnitModifierCardClass,
-    nsidName: NsidNameSchema,
+    nsidName: z.string(),
     overrideSource: NsidNameSchema.optional(),
   })
   .strict()

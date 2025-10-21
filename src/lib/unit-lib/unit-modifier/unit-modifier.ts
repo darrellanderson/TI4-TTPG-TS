@@ -42,6 +42,8 @@ export class UnitModifier {
         return `card.legendary-planet:${source}/${trigger.nsidName}`;
       case "unit":
         return `unit:${source}/${trigger.nsidName}`;
+      case "custom":
+        return trigger.nsidName;
     }
   }
 

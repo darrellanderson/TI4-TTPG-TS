@@ -111,25 +111,6 @@ it("load", () => {
   ).toBeInstanceOf(UnitModifierRegistry);
 });
 
-it("load (invalid)", () => {
-  const registry: UnitModifierRegistry = new UnitModifierRegistry();
-  expect(() => {
-    registry.load("source", [
-      {
-        name: "my-name",
-        description: "my-description",
-        triggers: [{ cardClass: "action", nsidName: "@@invalid" }],
-        owner: "self",
-        priority: "mutate",
-        applies: (_x: CombatRoll): boolean => {
-          return true;
-        },
-        apply: (_x: CombatRoll): void => {},
-      },
-    ]);
-  }).toThrow();
-});
-
 it("loadDefaultData", () => {
   const registry: UnitModifierRegistry = new UnitModifierRegistry();
   registry.loadDefaultData();

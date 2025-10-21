@@ -4,7 +4,7 @@ import { CombatRoll } from "../../../../combat-lib/combat-roll/combat-roll";
 import { UnitAttrs } from "../../../unit-attrs/unit-attrs";
 
 it("registry", () => {
-  const nsid = "faction-ability:base/munitions-reserves";
+  const nsid = "card.other.portrait:base/munitions-reserves";
   expect(TI4.unitModifierRegistry.getByNsid(nsid)?.getName()).toBe(
     "Munitions Reserves"
   );
@@ -27,7 +27,9 @@ it("default", () => {
 });
 
 it("modifier", () => {
-  placeGameObjects({ selfActive: ["faction-ability:base/munitions-reserves"] });
+  placeGameObjects({
+    selfActive: ["card.other.portrait:base/munitions-reserves"],
+  });
   const combatRoll: CombatRoll = CombatRoll.createCooked({
     rollType: "spaceCombat",
     hex: "<0,0,0>",

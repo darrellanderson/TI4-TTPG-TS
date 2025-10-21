@@ -44,13 +44,13 @@ export class UnitModifierActiveIdle implements IGlobal {
       // Careful not to add button twice.
       this._maybeRemoveActiveIdleButton(card, nsid);
 
-      const button: Button = new Button().setFontSize(10).setText("<?>");
+      const button: Button = new Button().setFontSize(14).setText("<?>");
 
       // Apply current state.
       const updateButton = (): void => {
         const text: string = UnitModifierActiveIdle.isActive(card)
-          ? "Active"
-          : "Idle";
+          ? "ACTIVE"
+          : "IDLE";
         button.setText(text);
       };
       updateButton();
@@ -63,6 +63,7 @@ export class UnitModifierActiveIdle implements IGlobal {
       });
 
       const ui = new UIElement();
+      ui.scale = 1 / 2;
       ui.widget = button;
 
       const extent = card.getExtent(false, false);
