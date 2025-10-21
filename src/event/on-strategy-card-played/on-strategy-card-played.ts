@@ -37,7 +37,11 @@ export class OnStrategyCardPlayed implements IGlobal {
       TI4.events.onStrategyCardPlayed.trigger(object, player);
 
       // Play sound.
-      world.importSound("strategy-card.flac", packageId).play();
+      const startTime: number = 0;
+      const volume: number = 0.5;
+      world
+        .importSound("strategy-card.flac", packageId)
+        .play(startTime, volume);
     }
   };
 

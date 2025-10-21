@@ -63,9 +63,9 @@ export class ToggleCombatWindow implements IGlobal {
 
     // Play sound.
     if (playerSlots.length > 1) {
-      const startTime: number | undefined = undefined;
-      const volume: number | undefined = undefined;
-      const loop: boolean | undefined = undefined;
+      const startTime: number | undefined = 0;
+      const volume: number | undefined = 0.5;
+      const loop: boolean | undefined = false;
       const players: PlayerPermission | undefined =
         new PlayerPermission().setPlayerSlots(playerSlots);
       world
