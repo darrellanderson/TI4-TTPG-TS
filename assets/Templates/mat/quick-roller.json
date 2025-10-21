@@ -40,7 +40,7 @@
 			{
 				"X": 4,
 				"Y": 4,
-				"Z": 2
+				"Z": 1
 			},
 			"Rotation":
 			{
@@ -119,7 +119,7 @@
 	],
 	"Collision": [
 		{
-			"Model": "token/round.obj",
+			"Model": "token/round.col.obj",
 			"Offset":
 			{
 				"X": 0,
