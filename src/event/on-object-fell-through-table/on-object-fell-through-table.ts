@@ -1,32 +1,53 @@
-import { GameObject, Vector, world, Zone } from "@tabletop-playground/api";
+import {
+  GameObject,
+  GameWorld,
+  Vector,
+  world,
+  Zone,
+} from "@tabletop-playground/api";
 import { ErrorHandler, IGlobal, NSID } from "ttpg-darrell";
 
 export class OnObjectFellThroughTable implements IGlobal {
-  private _relocateTo: Vector = new Vector(0, 0, 0);
+  private readonly _underTableAgingObjIds: Set<string> = new Set<string>();
+  private readonly _underTableAgedObjIds: Set<string> = new Set<string>();
 
-  readonly _onBeginOverlapHandler = (_zone: Zone, object: GameObject): void => {
-    const objPos: Vector = object.getPosition();
+  readonly _processObjs = (): void => {
+    const tableHeight: number = world.getTableHeight();
 
-    const origin: Vector = new Vector(0, 0, 0);
-    if (origin.subtract(objPos).magnitudeSquared() < 0.1) {
-      return; // "flip" moves the object to the origin briefly.
+    for (const objId of Array.from(this._underTableAgingObjIds)) {
+      this._underTableAgingObjIds.delete(objId);
+      const obj: GameObject | undefined = world.getObjectById(objId);
+      if (obj) {
+        const objPos: Vector = obj.getPosition();
+        if (objPos.z < tableHeight) {
+          this._underTableAgedObjIds.add(objId);
+        }
+      }
     }
 
-    // Move above table.
-    const pos: Vector = new Vector(
-      this._relocateTo.x,
-      this._relocateTo.y,
-      world.getTableHeight() + 10
-    );
-    object.setPosition(pos);
-    object.snapToGround();
+    for (const objId of Array.from(this._underTableAgedObjIds)) {
+      this._underTableAgedObjIds.delete(objId);
+      const obj: GameObject | undefined = world.getObjectById(objId);
+      if (obj) {
+        const objPos: Vector = obj.getPosition();
+        if (objPos.z < tableHeight) {
+          objPos.z = tableHeight + 10;
+          obj.setPosition(objPos);
+          obj.snapToGround();
 
-    const nsid: string = NSID.get(object);
-    const msg: string = `"${nsid}" fell through the table`;
-    ErrorHandler.onError.trigger(msg);
+          const nsid: string = NSID.get(obj);
+          const msg: string = `"${nsid}" fell through the table`;
+          ErrorHandler.onError.trigger(msg);
 
-    // Tell any listeners that the object fell through the table.
-    TI4.events.onObjectFellThroughTable.trigger(object);
+          // Tell any listeners that the object fell through the table.
+          TI4.events.onObjectFellThroughTable.trigger(obj);
+        }
+      }
+    }
+  };
+
+  readonly _onBeginOverlapHandler = (_zone: Zone, object: GameObject): void => {
+    this._underTableAgingObjIds.add(object.getId());
   };
 
   static _getTablePositionAndExtent(): {
@@ -96,8 +117,7 @@ export class OnObjectFellThroughTable implements IGlobal {
 
   /**
    * Destroy the zone (will be recreated on next load).
-   * This can be useful for testing, or before doing bulk setup that may create
-   * things at the origin (below the table).
+   * This can be useful for testing.
    */
   static destroyZone(): void {
     const zone: Zone = OnObjectFellThroughTable._findOrCreateZone();
@@ -110,10 +130,9 @@ export class OnObjectFellThroughTable implements IGlobal {
       this._onBeginOverlapHandler(zone, object);
     });
     zone.onBeginOverlap.add(this._onBeginOverlapHandler);
-  }
 
-  setRelocateTo(position: Vector): this {
-    this._relocateTo = position;
-    return this;
+    if (GameWorld.getExecutionReason() !== "unittest") {
+      setInterval(this._processObjs, 1000);
+    }
   }
 }

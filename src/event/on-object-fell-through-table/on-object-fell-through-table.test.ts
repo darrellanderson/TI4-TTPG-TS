@@ -8,7 +8,7 @@ beforeEach(() => {
 });
 
 it("constructor/init", () => {
-  new OnObjectFellThroughTable().setRelocateTo(new Vector(0, 0, 0)).init();
+  new OnObjectFellThroughTable().init();
 });
 
 it("constructor/init (with table and object below)", () => {
