@@ -1271,7 +1271,7 @@ export const SOURCE_TO_SYSTEM_DATA: Record<string, Array<SystemSchemaType>> = {
           name: "Custodia Vigilia",
           nsidName: "custodia-vigilia",
           resources: 2,
-          influence: 3,
+          influence: 2,
           isLegendary: true,
           legendaryNsidName: "custodia-vigilia",
         },
