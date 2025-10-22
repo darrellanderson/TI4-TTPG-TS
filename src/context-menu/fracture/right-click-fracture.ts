@@ -8,7 +8,7 @@ import {
   Vector,
   world,
 } from "@tabletop-playground/api";
-import { Broadcast, Find, IGlobal } from "ttpg-darrell";
+import { Broadcast, Facing, Find, IGlobal } from "ttpg-darrell";
 import { System } from "../../lib/system-lib/system/system";
 import { UnitType } from "../../lib/unit-lib/schema/unit-attrs-schema";
 
@@ -22,7 +22,9 @@ export class RightClickFracture implements IGlobal {
     );
     if (system && system.getClass() === "fracture") {
       obj.removeCustomAction(ACTION_DEPLOY_FRACTURE);
-      obj.addCustomAction(ACTION_DEPLOY_FRACTURE);
+      if (!Facing.isFaceUp(obj)) {
+        obj.addCustomAction(ACTION_DEPLOY_FRACTURE);
+      }
       obj.onCustomAction.remove(this._onCustomAction);
       obj.onCustomAction.add(this._onCustomAction);
 
@@ -76,9 +78,7 @@ export class RightClickFracture implements IGlobal {
       const system: System | undefined =
         TI4.systemRegistry.getBySystemTileObjId(obj.getId());
       if (system && system.getClass() === "fracture") {
-        console.log("xxx", system.getSystemTileNumber(), obj.isValid());
         obj.removeCustomAction(ACTION_DEPLOY_FRACTURE);
-        obj.onCustomAction.remove(this._onCustomAction);
         obj.setObjectType(ObjectType.Regular);
         obj.setRotation([0, 0, 0]);
         obj.setObjectType(ObjectType.Ground);
