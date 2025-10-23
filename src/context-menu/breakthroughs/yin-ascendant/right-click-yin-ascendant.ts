@@ -41,21 +41,25 @@ export class RightClickYinAscendant extends AbstractRightClickCard {
   _getUnusedAllianceCard(): Card | undefined {
     const inUseNsids: Set<string> = new Set(this._getInUseAllianceCardNsids());
 
-    let deck: Card | undefined =
+    const fullDeck: Card =
       TI4.spawn.spawnMergeDecksWithNsidPrefixOrThrow("card.alliance:");
 
     const cardUtil: CardUtil = new CardUtil();
-    deck = cardUtil.filterCards(deck, (nsid: string): boolean => {
-      return !inUseNsids.has(nsid);
-    });
-
-    if (deck) {
-      if (deck.getStackSize() === 1) {
-        return deck;
+    const usableDeck: Card | undefined = cardUtil.filterCards(
+      fullDeck,
+      (nsid: string): boolean => {
+        return !inUseNsids.has(nsid);
       }
-      deck.shuffle();
-      const card: Card | undefined = deck.takeCards(1);
-      DeletedItemsContainer.destroyWithoutCopying(deck);
+    );
+    DeletedItemsContainer.destroyWithoutCopying(fullDeck);
+
+    if (usableDeck) {
+      if (usableDeck.getStackSize() === 1) {
+        return usableDeck;
+      }
+      usableDeck.shuffle();
+      const card: Card | undefined = usableDeck.takeCards(1);
+      DeletedItemsContainer.destroyWithoutCopying(usableDeck);
       return card;
     }
   }
