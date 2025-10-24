@@ -42,6 +42,9 @@ export class ReportRemaining implements IGlobal {
     OnCardBecameSingletonOrDeck.onSingletonCardMadeDeck.add((card: Card) => {
       this._maybeAddContextMenuItem(card);
     });
+    OnCardBecameSingletonOrDeck.onSingletonCardCreated.add((card: Card) => {
+      this._maybeRemoveContextMenuItem(card);
+    });
   }
 
   _maybeAddContextMenuItem(obj: GameObject): void {
@@ -54,6 +57,13 @@ export class ReportRemaining implements IGlobal {
         obj.onCustomAction.remove(this._customActionHandler);
         obj.onCustomAction.add(this._customActionHandler);
       }
+    }
+  }
+
+  _maybeRemoveContextMenuItem(obj: GameObject): void {
+    if (obj instanceof Card && obj.getStackSize() === 1) {
+      obj.removeCustomAction(this._actionName);
+      obj.onCustomAction.remove(this._customActionHandler);
     }
   }
 
