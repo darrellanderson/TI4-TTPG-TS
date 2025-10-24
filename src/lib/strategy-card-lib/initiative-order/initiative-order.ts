@@ -16,6 +16,15 @@ const STRATEGY_CARD_TO_INITIATIVE: Record<NsidNameSchemaType, number> = {
   warfare: 6,
   technology: 7,
   imperial: 8,
+
+  "1-lux": 1,
+  "2-noctis": 2,
+  "3-tyrannus": 3,
+  "4-civitas": 4,
+  "5-amicus": 5,
+  "6-calamitas": 6,
+  "7-magus": 7,
+  "8-aeterna": 8,
 };
 
 const OTHER_NSID_TO_INITIATIVE: Record<string, number> = {
