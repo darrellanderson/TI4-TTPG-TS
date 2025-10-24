@@ -57,7 +57,6 @@ export class RecycleCardAction extends SimpleCardGarbageHandler {
 
   _isActionPhase(): boolean {
     const entries: Array<InitiativeEntry> = this._initiativeOrder.get();
-    console.log("xxx", entries.length);
     return entries.length >= TI4.config.playerCount;
   }
 
