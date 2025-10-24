@@ -34,6 +34,7 @@ export class ChangeColor {
     "mat:base/status-pad",
     "sheet:base/command",
     "sheet:pok/leader",
+    "tile.system:base/0",
     "unit:base/carrier",
     "unit:base/cruiser",
     "unit:base/destroyer",
