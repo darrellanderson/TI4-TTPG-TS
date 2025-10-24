@@ -23,7 +23,8 @@ export class PlanetAttachmentLayout {
       const attachment: PlanetAttachment | undefined = attachments[i];
       if (attachment && !attachment.getDoNotLayout()) {
         const offset: Vector = PlanetAttachmentLayout._getOffset(i);
-        const pos: Vector = planetPos.add(offset).add(new Vector(0, 0, 1));
+        const pos: Vector = planetPos.add(offset).add(new Vector(0, 0, 10));
+
         attachment.getObj().setPosition(pos);
         attachment.getObj().snapToGround();
         attachment.getObj().setObjectType(ObjectType.Ground);

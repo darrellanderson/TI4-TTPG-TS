@@ -180,6 +180,11 @@ export class Planet {
    * @returns
    */
   getPosition(): Vector {
+    const nsid: string = NSID.get(this._obj);
+    if (nsid.startsWith("token.attachment.system:")) {
+      return this._obj.getPosition();
+    }
+
     let localPosition = this._localPosition;
     if (this._localPositionFaceDown && !Facing.isFaceUp(this._obj)) {
       localPosition = this._localPositionFaceDown;

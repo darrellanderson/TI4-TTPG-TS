@@ -20,7 +20,7 @@ export class SystemReserveSpace {
   }
 
   lift(): this {
-    // Lift everything (except the system tile) in the area.
+    // Lift everything (except the system tile and system attachments) in the area.
     // Sort by z position (bottom to top).
     const pos: Vector = this._systemTileObj.getPosition();
     const hex: HexType = TI4.hex.fromPosition(pos);
@@ -32,7 +32,11 @@ export class SystemReserveSpace {
         const nsid: string = NSID.get(obj);
         const objPos: Vector = obj.getPosition();
         const objHex: HexType = TI4.hex.fromPosition(objPos);
-        return !nsid.startsWith("tile.system:") && objHex === hex;
+        return (
+          !nsid.startsWith("tile.system:") &&
+          !nsid.startsWith("token.attachment.system:") &&
+          objHex === hex
+        );
       })
       .sort((a, b) => a.getPosition().z - b.getPosition().z);
 
@@ -57,6 +61,7 @@ export class SystemReserveSpace {
       }
     }
     this._liftedObjs = [];
+    this._lockedLiftedObjIds.clear();
     return this;
   }
 }

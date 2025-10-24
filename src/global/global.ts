@@ -171,6 +171,8 @@ export class TI4Class {
   );
   public readonly homebrewRegistry = new HomebrewRegistry();
   public readonly lastGameData = new LastGameData();
+  public readonly systemAttachmentRegistry =
+    new SystemAttachmentRegistry().loadDefaultData(); // do this BEFORE planet attachments so they can attach to system attachments (e.g. mirage)
   public readonly planetAttachmentRegistry =
     new PlanetAttachmentRegistry().loadDefaultData();
   public readonly playerActionPhaseTime = new PlayerActionPhaseTime(
@@ -183,8 +185,6 @@ export class TI4Class {
   public readonly slashCommandRegistry =
     new SlashCommandRegistry().loadDefaultData();
   public readonly spawn = __spawn.inject(NSID_TO_TEMPLATE_ID);
-  public readonly systemAttachmentRegistry =
-    new SystemAttachmentRegistry().loadDefaultData();
   public readonly systemRegistry = new SystemRegistry().loadDefaultData();
   public readonly techRegistry = new TechRegistry().loadDefaultData();
   public readonly timer = new Timer("@timer/ti4");

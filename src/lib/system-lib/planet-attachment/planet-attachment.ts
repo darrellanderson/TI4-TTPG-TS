@@ -116,6 +116,7 @@ export class PlanetAttachment {
   attach(): boolean {
     const pos: Vector = this._obj.getPosition();
     const system: System | undefined = TI4.systemRegistry.getByPosition(pos);
+
     if (system) {
       this._planet = system.getPlanetClosest(pos);
       if (this._planet) {
