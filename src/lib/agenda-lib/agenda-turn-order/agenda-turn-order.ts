@@ -1,12 +1,6 @@
-import { Card, GameObject, Vector, world } from "@tabletop-playground/api";
-import { Find, NSID, PlayerSlot } from "ttpg-darrell";
+import { Card, GameObject, Vector } from "@tabletop-playground/api";
+import { Find, PlayerSlot } from "ttpg-darrell";
 import { Faction } from "../../faction-lib/faction/faction";
-
-// Hack Election: During this agenda, voting begins with the player to the
-// right of the speaker and continues counterclockwise.
-const REVERSE_ORDER_NSIDS: Set<string> = new Set<string>([
-  "card.action:codex.ordinian/hack-election",
-]);
 
 export class AgendaTurnOrder {
   private readonly _find: Find = new Find();
@@ -37,19 +31,6 @@ export class AgendaTurnOrder {
       throw new Error("missing speaker token seat index");
     }
     return seatIndex;
-  }
-
-  public _getVotingDirection(): 1 | -1 {
-    let dir: 1 | -1 = 1;
-    const skipContained = true;
-    for (const obj of world.getAllObjects(skipContained)) {
-      const nsid: string = NSID.get(obj);
-      if (REVERSE_ORDER_NSIDS.has(nsid)) {
-        dir = -1;
-        break;
-      }
-    }
-    return dir;
   }
 
   public _getZealPlayerSlots(): Array<PlayerSlot> {
@@ -91,21 +72,17 @@ export class AgendaTurnOrder {
    * of the current agenda.
    */
   public getVotingOrder(): Array<PlayerSlot> {
-    // Check if reversed direction.
-    const dir: 1 | -1 = this._getVotingDirection();
-
     const seatPlayerSlots: Array<PlayerSlot> = TI4.playerSeats
       .getAllSeats()
       .map((seat) => seat.playerSlot);
     const speakerSeatIndex: number = this._getSpeakerTokenSeatIndexOrThrow();
     const firstVoterIndex: number =
-      (speakerSeatIndex + dir) % seatPlayerSlots.length;
+      (speakerSeatIndex + 1) % seatPlayerSlots.length;
 
     const order: Array<PlayerSlot> = [];
     for (let i = 0; i < seatPlayerSlots.length; i++) {
       const index: number =
-        (firstVoterIndex + i * dir + seatPlayerSlots.length) %
-        seatPlayerSlots.length;
+        (firstVoterIndex + i + seatPlayerSlots.length) % seatPlayerSlots.length;
       const playerSlot: number | undefined = seatPlayerSlots[index];
       if (playerSlot !== undefined) {
         order.push(playerSlot);
