@@ -1,11 +1,11 @@
 import {
-  CreateBoard,
-  CreateBoardParams,
   ZBaseCell,
   ZImageCell,
   ZPaddedCell,
   ZRowCell,
-} from "../../../ttpg-darrell/src/index-ext";
+} from "../../node_modules/ttpg-darrell/build/cjs/lib-ext/image/cell/cell-parser/cell-schema";
+import { CreateBoardParams } from "../../node_modules/ttpg-darrell/build/cjs/lib-ext/create-assets/create-board/create-board-params";
+import { CreateBoard } from "../../node_modules/ttpg-darrell/build/cjs/lib-ext/create-assets/create-board/create-board";
 
 const W: number = 220;
 const H: number = 308;
@@ -69,7 +69,7 @@ function getLabel(labelText: string): ZBaseCell {
 function deckAndDiscard(
   cardNsidName: string,
   labelText: string,
-  symbolFile: string,
+  symbolFile: string
 ): ZBaseCell {
   const deckSlot: ZBaseCell = getSymbolSlot(symbolFile, [
     `deck-${cardNsidName}`,
@@ -90,7 +90,7 @@ function deckAndDiscard(
 function deckNoDiscard(
   cardNsidName: string,
   labelText: string,
-  symbolFile: string,
+  symbolFile: string
 ): ZBaseCell {
   const deckSlot: ZBaseCell = getSymbolSlot(symbolFile, [
     `deck-${cardNsidName}`,
@@ -113,7 +113,7 @@ function deckGrid(): ZRowCell {
       deckNoDiscard(
         "objective-secret",
         "Secret",
-        "prebuild/mat/slot/symbol-secret.png",
+        "prebuild/mat/slot/symbol-secret.png"
       ),
       deckAndDiscard("agenda", "Agenda", "prebuild/mat/slot/symbol-agenda.png"),
       deckAndDiscard("action", "Action", "prebuild/mat/slot/symbol-action.png"),

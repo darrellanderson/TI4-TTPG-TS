@@ -3,14 +3,14 @@
  */
 
 import {
-  CreateBoard,
-  CreateBoardParams,
   ZCanvasCell,
   ZColCell,
   ZImageCell,
   ZPaddedCell,
   ZTextCell,
-} from "../../../ttpg-darrell/src/index-ext";
+} from "../../node_modules/ttpg-darrell/build/cjs/lib-ext/image/cell/cell-parser/cell-schema";
+import { CreateBoardParams } from "../../node_modules/ttpg-darrell/build/cjs/lib-ext/create-assets/create-board/create-board-params";
+import { CreateBoard } from "../../node_modules/ttpg-darrell/build/cjs/lib-ext/create-assets/create-board/create-board";
 
 const PORTRAIT_W: number = 220;
 const PORTRAIT_H: number = 308;
