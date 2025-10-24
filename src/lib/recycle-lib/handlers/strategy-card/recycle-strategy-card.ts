@@ -26,11 +26,25 @@ export class RecycleStrategyCard extends GarbageHandler {
       "imperial",
     ];
 
+    const namesTF: Array<string> = [
+      "1-lux",
+      "2-noctis",
+      "3-tyrannus",
+      "4-civitas",
+      "5-amicus",
+      "6-calamitas",
+      "7-magus",
+      "8-aeterna",
+    ];
+
     const parsed: ParsedNSID | undefined = NSID.parse(nsid);
     const nameFirst: string | undefined = parsed?.nameParts[0];
-    const strategyCardIndex: number = nameFirst ? names.indexOf(nameFirst) : -1;
+    let strategyCardIndex: number = nameFirst ? names.indexOf(nameFirst) : -1;
     if (strategyCardIndex === -1) {
-      return false; // not a valid strategy card
+      strategyCardIndex = nameFirst ? namesTF.indexOf(nameFirst) : -1;
+      if (strategyCardIndex === -1) {
+        return false; // not a valid strategy card
+      }
     }
 
     const mat: GameObject | undefined = this._find.findGameObject(
