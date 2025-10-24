@@ -100,7 +100,7 @@ export class AgendaOutcomeUI extends AbstractUI {
       });
       let summary: string = `${totalVotes}`;
       if (richVotes.length > 0) {
-        summary += ` (${richVotes.join(", ")})`;
+        summary += ` [size=${fontSize}]([/size]${richVotes.join(", ")}[size=${fontSize}])[/size]`;
       }
       summary = `[b][size=${fontSize}]${summary}[/size][/b]`;
       voteSummary.getRichText().setText(summary);
