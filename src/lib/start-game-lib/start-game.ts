@@ -26,10 +26,10 @@ export class StartGame implements IGlobal {
     TI4.events.onStartGameRequest.add(this._onStartGameRequest);
   }
 
-  _applyPlayerCount(): void {
+  _applyPlayerCount(): boolean {
     const currentCount = TI4.playerSeats.getAllSeats().length;
     if (currentCount === TI4.config.playerCount) {
-      return; // already correct
+      return false; // already correct
     }
 
     scrubAll(undefined);
@@ -41,7 +41,8 @@ export class StartGame implements IGlobal {
     const playerCount: number = TI4.config.playerCount;
     const layout: LayoutAll = new LayoutAll(playerCount);
     layout.getLayout().doLayoutAtPoint(pos, yaw);
-    world.resetScripting(); // mostly for the icon containers, they move at the end of layout
+
+    return true;
   }
 
   _doRemove(): void {
