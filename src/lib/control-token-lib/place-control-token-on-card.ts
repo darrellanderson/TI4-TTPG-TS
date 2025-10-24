@@ -2,6 +2,7 @@ import {
   Card,
   Color,
   GameObject,
+  Rotator,
   Vector,
   world,
 } from "@tabletop-playground/api";
@@ -46,6 +47,9 @@ export class PlaceControlTokenOnCard {
   }
 
   place(card: Card, playerSlot: number): boolean {
+    const origPos: Vector = card.getPosition();
+    const origRot: Rotator = card.getRotation();
+
     const color: Color | undefined =
       TI4.playerColor.getSlotPlasticColor(playerSlot);
     if (color) {
@@ -58,6 +62,11 @@ export class PlaceControlTokenOnCard {
         controlToken.setPrimaryColor(color);
         controlToken.setTags([`control(${playerSlot})`]);
         controlToken.snapToGround();
+
+        // snapToGround on a card can push it down, potentially clipping it.
+        card.setPosition(origPos);
+        card.setRotation(origRot);
+
         return true;
       }
     }
