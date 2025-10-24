@@ -17,7 +17,7 @@ it("getPlasticContainer", () => {
   const r = new RSwapSplitCombine();
   const found: Container | undefined = r.getPlasticContainer(
     "infantry",
-    player
+    player.getSlot()
   );
 
   expect(found).toBe(container);

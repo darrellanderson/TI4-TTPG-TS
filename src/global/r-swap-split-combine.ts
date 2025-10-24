@@ -109,9 +109,8 @@ export class RSwapSplitCombine extends SwapSplitCombine implements IGlobal {
 
   getPlasticContainer(
     unit: "infantry" | "fighter",
-    player: Player
+    playerSlot: number
   ): Container | undefined {
-    const playerSlot: number = player.getSlot();
     const nsid: string = `container.unit:base/${unit}`;
     const skipContained: boolean = true;
     const container: Container | undefined = this._find.findContainer(
@@ -128,7 +127,7 @@ export class RSwapSplitCombine extends SwapSplitCombine implements IGlobal {
   ): GameObject | undefined {
     const container: Container | undefined = this.getPlasticContainer(
       unit,
-      player
+      player.getSlot()
     );
     let result: GameObject | undefined = undefined;
     if (container && container.getNumItems() > 0) {
@@ -139,12 +138,12 @@ export class RSwapSplitCombine extends SwapSplitCombine implements IGlobal {
 
   putPlastic(
     unit: "infantry" | "fighter",
-    player: Player,
+    _player: Player,
     obj: GameObject
   ): boolean {
     const container: Container | undefined = this.getPlasticContainer(
       unit,
-      player
+      obj.getOwningPlayerSlot()
     );
     let result: boolean = false;
     if (container) {
