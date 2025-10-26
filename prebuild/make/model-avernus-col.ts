@@ -22,7 +22,7 @@ const modelFile: string = path.join(
   "assets",
   "Models",
   "token",
-  "wormhole.obj"
+  "avernus.obj"
 );
 if (!fs.existsSync(modelFile)) {
   throw new Error(`missing "${modelFile}`);
