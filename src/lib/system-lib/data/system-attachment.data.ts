@@ -84,6 +84,7 @@ export const SOURCE_TO_SYSTEM_ATTACHMENT_DATA: Record<
           nsidName: "avernus",
           resources: 2,
           influence: 0,
+          traits: ["hazardous"],
           isLegendary: true,
           legendaryNsidName: "the-nucleus",
         },
