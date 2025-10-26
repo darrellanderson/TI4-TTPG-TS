@@ -8,6 +8,7 @@ import { SarweenTools } from "../unit-lib/data/unit-modifiers/base/sarween-tools
 import { WarMachine } from "../unit-lib/data/unit-modifiers/codex-ordinian/war-machine";
 import { XxekirGrom } from "../unit-lib/data/unit-modifiers/codex-vigil/xxekir-grom";
 import { Faction } from "../faction-lib/faction/faction";
+import { ArchonsGift } from "../unit-lib/data/unit-modifiers/thunders-edge/archons-gift";
 
 export type BuildConsumeType = "tradegood" | "planet";
 
@@ -51,6 +52,9 @@ export class BuildConsume {
           value = planet.getResources();
           if (unitModifierNames.includes(XxekirGrom.name)) {
             value += planet.getInfluence();
+          }
+          if (unitModifierNames.includes(ArchonsGift.name)) {
+            value = Math.max(planet.getResources(), planet.getInfluence());
           }
         }
       } else if (nsid.startsWith("card.deepwrought-ocean:")) {

@@ -182,6 +182,9 @@ add("pok", ViscountUnlenn);
 import { ViszElVir } from "./unit-modifiers/pok/visz-el-vir";
 add("pok", ViszElVir);
 
+import { ArchonsGift } from "./unit-modifiers/thunders-edge/archons-gift";
+add("thunders-edge", ArchonsGift);
+
 import { ArozHollow } from "./unit-modifiers/thunders-edge/aroz-hollow";
 add("thunders-edge", ArozHollow);
 

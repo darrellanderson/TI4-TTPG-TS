@@ -6,8 +6,6 @@ import {
 } from "@tabletop-playground/api";
 import { Facing, HexType, NSID } from "ttpg-darrell";
 import { CombatRoll } from "../../../../combat-lib";
-import { Faction } from "../../../../faction-lib";
-import { SystemAdjacency } from "../../../../system-lib";
 import { UnitModifierSchemaType, UnitType } from "../../../schema";
 import { UnitAttrs } from "../../../unit-attrs";
 import { UnitPlastic } from "../../../unit-plastic";
@@ -58,10 +56,7 @@ export function _getActiveBreachHexes(): Set<HexType> {
   return activeBreachHexes;
 }
 
-export function _getFlagshipHexesAndAdjacent(
-  playerSlot: number,
-  faction: Faction | undefined
-): Set<HexType> {
+export function _getFlagshipHexes(playerSlot: number): Set<HexType> {
   const flagshipHexes: Set<HexType> = new Set();
   _flagshipObjIds.forEach((id: string) => {
     const obj: GameObject | undefined = world.getObjectById(id);
@@ -76,23 +71,13 @@ export function _getFlagshipHexesAndAdjacent(
     }
   });
 
-  const systemAdjacency: SystemAdjacency = new SystemAdjacency();
-  const adjHexes: Set<HexType> = new Set();
-  flagshipHexes.forEach((hex: HexType) => {
-    systemAdjacency.getAdjHexes(hex, faction);
-  });
-
-  adjHexes.forEach((hex: HexType) => {
-    flagshipHexes.add(hex);
-  });
-
   return flagshipHexes;
 }
 
 export const Quietus: UnitModifierSchemaType = {
   name: "Quietus",
   description:
-    "When Quietus is in or adjacent to an active breach, other players' units in active breaches lose unit abilities",
+    "When Quietus is in an active breach, other players' units in active breaches lose unit abilities",
   triggers: [
     {
       cardClass: "unit",
@@ -116,14 +101,13 @@ export const Quietus: UnitModifierSchemaType = {
       return false; // not in an active breach
     }
 
-    const flagshipHexes: Set<HexType> = _getFlagshipHexesAndAdjacent(
-      combatRoll.opponent.playerSlot,
-      combatRoll.opponent.faction
+    const flagshipHexes: Set<HexType> = _getFlagshipHexes(
+      combatRoll.opponent.playerSlot
     );
-    const quietusInOrAdj: boolean = Array.from(activeBreachHexes).some((hex) =>
+    const quietusInBreach: boolean = Array.from(activeBreachHexes).some((hex) =>
       flagshipHexes.has(hex)
     );
-    return quietusInOrAdj;
+    return quietusInBreach;
   },
   apply: (combatRoll: CombatRoll): void => {
     const activeBreachHexes: Set<HexType> = _getActiveBreachHexes();

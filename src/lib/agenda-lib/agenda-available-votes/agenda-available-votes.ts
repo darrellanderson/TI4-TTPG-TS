@@ -87,6 +87,29 @@ export class AgendaAvailableVotes {
     return playerSlots;
   }
 
+  _getArchonsGiftPlayerSlots(): Set<PlayerSlot> {
+    const playerSlots: Set<PlayerSlot> = new Set<PlayerSlot>();
+
+    const skipContained: boolean = true;
+    const archonsGiftNsid: string =
+      "card.breakthrough:thunders-edge/archons-gift";
+    const allowFaceDown: boolean = false;
+    for (const obj of world.getAllObjects(skipContained)) {
+      const nsid: string = NSID.get(obj);
+      if (
+        nsid === archonsGiftNsid &&
+        obj instanceof Card &&
+        this._cardUtil.isLooseCard(obj, allowFaceDown)
+      ) {
+        const pos: Vector = obj.getPosition();
+        const playerSlot: number = this._find.closestOwnedCardHolderOwner(pos);
+        playerSlots.add(playerSlot);
+      }
+    }
+
+    return playerSlots;
+  }
+
   _getFaceUpPlanetCards(): Array<Card> {
     const cards: Array<Card> = [];
 
@@ -141,6 +164,8 @@ export class AgendaAvailableVotes {
     // Xxekir Grom Omega: add planet resources to influence.
     const xxekirGromOmegaPlayerSlots: Set<PlayerSlot> =
       this._getXxekirGromOmegaPlayerSlots();
+    const archonsGiftPlayerSlots: Set<PlayerSlot> =
+      this._getArchonsGiftPlayerSlots();
 
     const faceUpPlanetCards: Array<Card> = this._getFaceUpPlanetCards();
     for (const planetCard of faceUpPlanetCards) {
@@ -152,7 +177,11 @@ export class AgendaAvailableVotes {
         TI4.systemRegistry.getPlanetByPlanetCardNsid(nsid);
       if (planet) {
         let votes: number = playerSlotToAvailableVotes.get(playerSlot) ?? 0;
-        votes += planet.getInfluence();
+        let influence: number = planet.getInfluence();
+        if (archonsGiftPlayerSlots.has(playerSlot)) {
+          influence = Math.max(planet.getResources(), influence);
+        }
+        votes += influence;
         const bonus: number | undefined =
           playerSlotToPerPlanetBonus.get(playerSlot);
         if (bonus !== undefined) {

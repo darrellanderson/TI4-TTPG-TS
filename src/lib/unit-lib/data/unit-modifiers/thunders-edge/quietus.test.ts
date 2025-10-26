@@ -5,7 +5,7 @@ import { UnitType } from "../../../schema/unit-attrs-schema";
 import { OPPONENT, SELF, placeGameObjects } from "../abstract.test";
 import {
   _getActiveBreachHexes,
-  _getFlagshipHexesAndAdjacent,
+  _getFlagshipHexes,
   quietusInit,
 } from "./quietus";
 
@@ -40,10 +40,7 @@ it("modifier", () => {
   expect(TI4.factionRegistry.getByPlayerSlot(OPPONENT)?.getNsid()).toEqual(
     "faction:thunders-edge/rebellion"
   );
-  const flagshipHexes: Set<HexType> = _getFlagshipHexesAndAdjacent(
-    OPPONENT,
-    undefined
-  );
+  const flagshipHexes: Set<HexType> = _getFlagshipHexes(OPPONENT);
   expect(flagshipHexes.size).toBe(1);
   expect(flagshipHexes.has("<0,0,0>")).toBeTruthy();
 
