@@ -540,7 +540,7 @@ it("getWormholesWithPosition", () => {
   system.addAttachment(destroy);
   out = system.getWormholesWithPositions();
   summary = out.map((w) => `${w.wormhole}:${w.position.toString()}`);
-  expect(summary).toEqual(["beta:(X=1,Y=2,Z=3)"]);
+  expect(summary).toEqual([]);
 });
 
 it("isBreach", () => {

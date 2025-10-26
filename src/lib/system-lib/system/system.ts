@@ -507,28 +507,10 @@ export class System {
       result.push(...attachment.getWormholesWithPositions());
     }
 
-    // Attachment can destroy closest wormhole.
+    // Attachment can destroy ALL wormholes.
     for (const attachment of this._attachments) {
       if (attachment.isDestroyWormhole()) {
-        let closestIndex: number = -1;
-        let closestDsq: number = Number.MAX_VALUE;
-        for (let i = 0; i < result.length; i++) {
-          const wormholeWithPosition: WormholeWithPosition | undefined =
-            result[i];
-          if (wormholeWithPosition) {
-            const dSq: number = this._obj
-              .getPosition()
-              .subtract(wormholeWithPosition.position)
-              .magnitudeSquared();
-            if (dSq < closestDsq) {
-              closestIndex = i;
-              closestDsq = dSq;
-            }
-          }
-        }
-        if (closestIndex >= 0) {
-          result.splice(closestIndex, 1);
-        }
+        return [];
       }
     }
 
