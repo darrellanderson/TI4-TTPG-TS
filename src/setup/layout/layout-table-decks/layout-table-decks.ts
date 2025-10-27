@@ -60,14 +60,37 @@ export class LayoutTableDecks {
         eventMat.setObjectType(ObjectType.Ground);
       });
 
+    const speakerToken: GameObject =
+      TI4.spawn.spawnOrThrow("token:base/speaker");
+    const benedictionToken: GameObject = TI4.spawn.spawnOrThrow(
+      "token:twilights-fall/benediction"
+    );
+    const codex4scenario: GameObject = TI4.spawn.spawnOrThrow(
+      "container:codex.liberation/liberation-scenario"
+    );
+
+    const speakerTokenMisc: LayoutObjects = new LayoutObjects()
+      .setChildDistance(LayoutConfig.spacingWide)
+      .add(speakerToken)
+      .add(benedictionToken)
+      .add(codex4scenario);
+
+    const matTwilightsFall: GameObject = TI4.spawn.spawnOrThrow(
+      "mat.deck:twilights-fall/twilights-fall"
+    );
+
     this._layout
       .setChildDistance(LayoutConfig.spacingWide)
       .setIsVertical(true)
       .add(explorationMat)
       .add(planetsAndBase)
       .add(factionAndEvent)
+      .add(speakerTokenMisc)
+      .add(matTwilightsFall)
       .addAfterLayout(() => {
         explorationMat.setObjectType(ObjectType.Ground);
+        codex4scenario.setObjectType(ObjectType.Ground);
+        matTwilightsFall.setObjectType(ObjectType.Ground);
       });
 
     this._layout.addAfterLayout(() => {
@@ -107,29 +130,6 @@ export class LayoutTableDecks {
         "deck-faction-reference"
       );
       LayoutTableDecks._spawnDeck("card.event", "deck-event");
-    });
-
-    const speakerToken: GameObject =
-      TI4.spawn.spawnOrThrow("token:base/speaker");
-    const codex4scenario: GameObject = TI4.spawn.spawnOrThrow(
-      "container:codex.liberation/liberation-scenario"
-    );
-
-    this._layout.addAfterLayout(() => {
-      const center: Vector = this._layout.getCenter();
-      const { h } = this._layout.calculateSize();
-      let extent: Vector = speakerToken.getExtent(false, false);
-      let dx: number = h / 2 + LayoutConfig.spacingWide + extent.x;
-      let pos: Vector = center.add([-dx, 0, 10]);
-      speakerToken.setPosition(pos);
-      speakerToken.snapToGround();
-
-      extent = codex4scenario.getExtent(false, false);
-      dx = LayoutConfig.spacingWide + extent.x;
-      pos = pos.add([-dx, 0, 10]);
-      codex4scenario.setPosition(pos);
-      codex4scenario.snapToGround();
-      codex4scenario.setObjectType(ObjectType.Ground);
     });
   }
 

@@ -443,6 +443,7 @@ export const NSID_TO_TEMPLATE_ID: { [key: string]: string } = {
     "token:thunders-edge/empyrean.blockade": "F8934E410447D81CC0F9E28C4B198AB8",
     "token:thunders-edge/galvanize": "F9E412CD291E3EA559E0E77601EC398F",
     "token:thunders-edge/nekro.z": "CE3FB418BF9373F7A62B17101765739E",
+    "token:twilights-fall/benediction": "88429A92FE4063ACFB4B0A86C081C42F",
     "unit:base/carrier": "53D95BD9CBDB321E3F6FF73286D84EAA",
     "unit:base/carrier.token": "A2FA02C6F2A9067D7CA62666E90A8D24",
     "unit:base/cruiser": "8AAE971F8219561ADF87DDDCB9E1EC0E",

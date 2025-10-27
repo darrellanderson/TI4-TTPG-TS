@@ -1,124 +1,131 @@
 {
-    "Type": "Generic",
-    "GUID": "52D958B586C2D7462A9FD2ADC2468F76",
-    "Name": "Twilight's Fall Decks Mat",
-    "Metadata": "mat.deck:twilights-fall/twilights-fall",
-    "CollisionType": "Regular",
-    "Friction": 0.7,
-    "Restitution": 0.1,
-    "Density": 1,
-    "SurfaceType": "Cardboard",
-    "Roughness": 1,
-    "Metallic": 0,
-    "PrimaryColor": {
-        "R": 255,
-        "G": 255,
-        "B": 255
-    },
-    "SecondaryColor": {
-        "R": 0,
-        "G": 0,
-        "B": 0
-    },
-    "Flippable": false,
-    "AutoStraighten": false,
-    "ShouldSnap": false,
-    "ScriptName": "",
-    "Blueprint": "",
-    "Models": [
-        {
-            "Model": "uv-cube.obj",
-            "Offset": {
-                "X": 0,
-                "Y": 0,
-                "Z": 0
-            },
-            "Scale": {
-                "X": 6.463636363636364,
-                "Y": 27.654545454545456,
-                "Z": 0.25
-            },
-            "Rotation": {
-                "X": 0,
-                "Y": 0,
-                "Z": 0
-            },
-            "Texture": "mat/deck-twilights-fall/deck-twilights-fall.jpg",
-            "NormalMap": "",
-            "ExtraMap": "",
-            "ExtraMap2": "",
-            "IsTransparent": false,
-            "CastShadow": true,
-            "IsTwoSided": false,
-            "UseOverrides": true,
-            "SurfaceType": "Cardboard"
-        }
-    ],
-    "Lights": [],
-    "SnapPointsGlobal": false,
-    "SnapPoints": [
-        {
-            "X": 0.4909090909090912,
-            "Y": -10.186363636363637,
-            "Z": 0.125,
-            "Range": 3,
-            "SnapRotation": 2,
-            "RotationOffset": 0,
-            "Shape": 0,
-            "FlipValidity": 0,
-            "Tags": [
-                "deck-tf-genome",
-                "card-tf-genome"
-            ]
-        },
-        {
-            "X": 0.4909090909090912,
-            "Y": -3.3954545454545464,
-            "Z": 0.125,
-            "Range": 3,
-            "SnapRotation": 2,
-            "RotationOffset": 0,
-            "Shape": 0,
-            "FlipValidity": 0,
-            "Tags": [
-                "deck-tf-unit-upgrade",
-                "card-tf-unit-upgrade"
-            ]
-        },
-        {
-            "X": 0.4909090909090912,
-            "Y": 3.3954545454545446,
-            "Z": 0.125,
-            "Range": 3,
-            "SnapRotation": 2,
-            "RotationOffset": 0,
-            "Shape": 0,
-            "FlipValidity": 0,
-            "Tags": [
-                "deck-tf-ability",
-                "card-tf-ability"
-            ]
-        },
-        {
-            "X": 0.4909090909090912,
-            "Y": 10.186363636363634,
-            "Z": 0.125,
-            "Range": 3,
-            "SnapRotation": 2,
-            "RotationOffset": 0,
-            "Shape": 0,
-            "FlipValidity": 0,
-            "Tags": [
-                "deck-tf-paradigm",
-                "card-tf-paradigm"
-            ]
-        }
-    ],
-    "ZoomViewDirection": {
-        "X": 0,
-        "Y": 0,
-        "Z": 1
-    },
-    "GroundAccessibility": "ZoomAndContext",
-    "Tags": []
+	"Type": "Generic",
+	"GUID": "52D958B586C2D7462A9FD2ADC2468F76",
+	"Name": "Twilight's Fall Decks Mat",
+	"Metadata": "mat.deck:twilights-fall/twilights-fall",
+	"CollisionType": "Regular",
+	"Friction": 0.7,
+	"Restitution": 0.1,
+	"Density": 1,
+	"SurfaceType": "Cardboard",
+	"Roughness": 1,
+	"Metallic": 0,
+	"PrimaryColor":
+	{
+		"R": 255,
+		"G": 255,
+		"B": 255
+	},
+	"SecondaryColor":
+	{
+		"R": 0,
+		"G": 0,
+		"B": 0
+	},
+	"Flippable": false,
+	"AutoStraighten": false,
+	"ShouldSnap": false,
+	"ScriptName": "ref-obj/mat-twilights-fall.js",
+	"Blueprint": "",
+	"Models": [
+		{
+			"Model": "uv-cube.obj",
+			"Offset":
+			{
+				"X": 0,
+				"Y": 0,
+				"Z": 0
+			},
+			"Scale":
+			{
+				"X": 6.4636363636363638,
+				"Y": 27.654545454545456,
+				"Z": 0.25
+			},
+			"Rotation":
+			{
+				"X": -0,
+				"Y": 0,
+				"Z": 0
+			},
+			"Texture": "mat/deck-twilights-fall/deck-twilights-fall.jpg",
+			"NormalMap": "",
+			"ExtraMap": "",
+			"ExtraMap2": "",
+			"IsTransparent": false,
+			"CastShadow": true,
+			"IsTwoSided": false,
+			"UseOverrides": true,
+			"SurfaceType": "Cardboard"
+		}
+	],
+	"Collision": [],
+	"Lights": [],
+	"SnapPointsGlobal": false,
+	"SnapPoints": [
+		{
+			"X": 0.49090909090909118,
+			"Y": -10.186363636363637,
+			"Z": 0.125,
+			"Range": 3,
+			"SnapRotation": 2,
+			"RotationOffset": 0,
+			"Shape": 0,
+			"FlipValidity": 0,
+			"Tags": [
+				"deck-tf-genome",
+				"card-tf-genome"
+			]
+		},
+		{
+			"X": 0.49090909090909118,
+			"Y": -3.3954545454545464,
+			"Z": 0.125,
+			"Range": 3,
+			"SnapRotation": 2,
+			"RotationOffset": 0,
+			"Shape": 0,
+			"FlipValidity": 0,
+			"Tags": [
+				"deck-tf-unit-upgrade",
+				"card-tf-unit-upgrade"
+			]
+		},
+		{
+			"X": 0.49090909090909118,
+			"Y": 3.3954545454545446,
+			"Z": 0.125,
+			"Range": 3,
+			"SnapRotation": 2,
+			"RotationOffset": 0,
+			"Shape": 0,
+			"FlipValidity": 0,
+			"Tags": [
+				"deck-tf-ability",
+				"card-tf-ability"
+			]
+		},
+		{
+			"X": 0.49090909090909118,
+			"Y": 10.186363636363634,
+			"Z": 0.125,
+			"Range": 3,
+			"SnapRotation": 2,
+			"RotationOffset": 0,
+			"Shape": 0,
+			"FlipValidity": 0,
+			"Tags": [
+				"deck-tf-paradigm",
+				"card-tf-paradigm"
+			]
+		}
+	],
+	"ZoomViewDirection":
+	{
+		"X": 0,
+		"Y": 0,
+		"Z": 1
+	},
+	"GroundAccessibility": "ZoomAndContext",
+	"Tags": []
 }
