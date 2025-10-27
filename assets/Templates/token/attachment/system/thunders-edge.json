@@ -1,0 +1,97 @@
+{
+	"Type": "Generic",
+	"GUID": "221E918AEA4E8AB2FE0DEDB067723DBE",
+	"Name": "Thunder's Edge",
+	"Metadata": "token.attachment.system:thunders-edge/thunders-edge",
+	"CollisionType": "Regular",
+	"Friction": 0.7,
+	"Restitution": 0.3,
+	"Density": 1,
+	"SurfaceType": "Plastic",
+	"Roughness": 1,
+	"Metallic": 0,
+	"PrimaryColor":
+	{
+		"R": 255,
+		"G": 255,
+		"B": 255
+	},
+	"SecondaryColor":
+	{
+		"R": 0,
+		"G": 0,
+		"B": 0
+	},
+	"Flippable": true,
+	"AutoStraighten": false,
+	"ShouldSnap": true,
+	"ScriptName": "",
+	"Blueprint": "",
+	"Models": [
+		{
+			"Model": "token/thundersedge.obj",
+			"Offset":
+			{
+				"X": 0,
+				"Y": 0,
+				"Z": 0
+			},
+			"Scale":
+			{
+				"X": 5,
+				"Y": 5,
+				"Z": 5
+			},
+			"Rotation":
+			{
+				"X": -180,
+				"Y": 7.016709298534876e-15,
+				"Z": 90.000000000000014
+			},
+			"Texture": "token/attachment/system/thunders-edge.jpg",
+			"NormalMap": "",
+			"ExtraMap": "",
+			"ExtraMap2": "",
+			"IsTransparent": false,
+			"CastShadow": true,
+			"IsTwoSided": false,
+			"UseOverrides": true,
+			"SurfaceType": "Plastic"
+		}
+	],
+	"Collision": [
+		{
+			"Model": "token/thundersedge.col.obj",
+			"Offset":
+			{
+				"X": 0,
+				"Y": 0,
+				"Z": 0
+			},
+			"Scale":
+			{
+				"X": 5,
+				"Y": 5,
+				"Z": 5
+			},
+			"Rotation":
+			{
+				"X": 0,
+				"Y": 0,
+				"Z": -90.000000000000014
+			},
+			"Type": "Convex"
+		}
+	],
+	"Lights": [],
+	"SnapPointsGlobal": false,
+	"SnapPoints": [],
+	"ZoomViewDirection":
+	{
+		"X": 0,
+		"Y": 0,
+		"Z": 0
+	},
+	"GroundAccessibility": "Nothing",
+	"Tags": []
+}

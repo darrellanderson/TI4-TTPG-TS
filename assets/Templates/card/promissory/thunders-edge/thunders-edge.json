@@ -1,0 +1,82 @@
+{
+    "Type": "Card",
+    "GUID": "B4178A1F6D162F00CD55787278BF3AE0",
+    "Name": "Promissory",
+    "Metadata": "",
+    "CollisionType": "Regular",
+    "Friction": 0.7,
+    "Restitution": 0,
+    "Density": 0.5,
+    "SurfaceType": "Cardboard",
+    "Roughness": 1,
+    "Metallic": 0,
+    "PrimaryColor": {
+        "R": 255,
+        "G": 255,
+        "B": 255
+    },
+    "SecondaryColor": {
+        "R": 0,
+        "G": 0,
+        "B": 0
+    },
+    "Flippable": true,
+    "AutoStraighten": false,
+    "ShouldSnap": true,
+    "ScriptName": "",
+    "Blueprint": "",
+    "Models": [],
+    "Collision": [],
+    "SnapPointsGlobal": false,
+    "SnapPoints": [],
+    "ZoomViewDirection": {
+        "X": 0,
+        "Y": 0,
+        "Z": 0
+    },
+    "FrontTexture": "card/promissory/thunders-edge/thunders-edge.face.jpg",
+    "BackTexture": "card/promissory/thunders-edge/thunders-edge.back.jpg",
+    "HiddenTexture": "",
+    "BackIndex": -2,
+    "HiddenIndex": -1,
+    "NumHorizontal": 4,
+    "NumVertical": 2,
+    "Width": 4.2,
+    "Height": 6.3,
+    "Thickness": 0.05,
+    "HiddenInHand": true,
+    "UsedWithCardHolders": true,
+    "CanStack": true,
+    "UsePrimaryColorForSide": false,
+    "FrontTextureOverrideExposed": false,
+    "AllowFlippedInStack": false,
+    "MirrorBack": true,
+    "Model": "Rounded",
+    "Indices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+    ],
+    "CardNames": {
+        "0": "Raise the Standard",
+        "1": "Nano Link Permit",
+        "2": "Sever",
+        "3": "Share Knowledge",
+        "4": "Black Ops",
+        "5": "Malevolency"
+    },
+    "CardMetadata": {
+        "0": "card.promissory:thunders-edge/raise-the-standard",
+        "1": "card.promissory:thunders-edge/nano-link-permit",
+        "2": "card.promissory:thunders-edge/sever",
+        "3": "card.promissory:thunders-edge/share-knowledge",
+        "4": "card.promissory:thunders-edge/black-ops",
+        "5": "card.promissory:thunders-edge/malevolency"
+    },
+    "CardTags": {},
+    "GroundAccessibility": "ZoomAndContext",
+    "Tags": []
+}

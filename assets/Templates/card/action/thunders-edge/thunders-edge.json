@@ -1,0 +1,187 @@
+{
+    "Type": "Card",
+    "GUID": "9FD249BE649B9743C1197F3247237262",
+    "Name": "Action",
+    "Metadata": "",
+    "CollisionType": "Regular",
+    "Friction": 0.7,
+    "Restitution": 0,
+    "Density": 0.5,
+    "SurfaceType": "Cardboard",
+    "Roughness": 1,
+    "Metallic": 0,
+    "PrimaryColor": {
+        "R": 255,
+        "G": 255,
+        "B": 255
+    },
+    "SecondaryColor": {
+        "R": 0,
+        "G": 0,
+        "B": 0
+    },
+    "Flippable": true,
+    "AutoStraighten": false,
+    "ShouldSnap": true,
+    "ScriptName": "",
+    "Blueprint": "",
+    "Models": [],
+    "Collision": [],
+    "SnapPointsGlobal": false,
+    "SnapPoints": [],
+    "ZoomViewDirection": {
+        "X": 0,
+        "Y": 0,
+        "Z": 0
+    },
+    "FrontTexture": "card/action/thunders-edge/thunders-edge.face.jpg",
+    "BackTexture": "card/action/thunders-edge/thunders-edge.back.jpg",
+    "HiddenTexture": "",
+    "BackIndex": -2,
+    "HiddenIndex": -1,
+    "NumHorizontal": 4,
+    "NumVertical": 5,
+    "Width": 4.2,
+    "Height": 6.3,
+    "Thickness": 0.05,
+    "HiddenInHand": true,
+    "UsedWithCardHolders": true,
+    "CanStack": true,
+    "UsePrimaryColorForSide": false,
+    "FrontTextureOverrideExposed": false,
+    "AllowFlippedInStack": false,
+    "MirrorBack": true,
+    "Model": "Rounded",
+    "Indices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19
+    ],
+    "CardNames": {
+        "0": "Black Market Dealings",
+        "1": "Brilliance",
+        "2": "Crash Landing",
+        "3": "Crisis",
+        "4": "Exchange Program",
+        "5": "Extreme Duress",
+        "6": "Lie In Wait",
+        "7": "Mercenary Contract",
+        "8": "Overrule",
+        "9": "Pirate Contract.1",
+        "10": "Pirate Contract.2",
+        "11": "Pirate Contract.3",
+        "12": "Pirate Contract.4",
+        "13": "Pirate Fleet",
+        "14": "Puppets on a String",
+        "15": "Rescue",
+        "16": "Strategize.1",
+        "17": "Strategize.2",
+        "18": "Strategize.3",
+        "19": "Strategize.4"
+    },
+    "CardMetadata": {
+        "0": "card.action:thunders-edge/black-market-dealings",
+        "1": "card.action:thunders-edge/brilliance",
+        "2": "card.action:thunders-edge/crash-landing",
+        "3": "card.action:thunders-edge/crisis",
+        "4": "card.action:thunders-edge/exchange-program",
+        "5": "card.action:thunders-edge/extreme-duress",
+        "6": "card.action:thunders-edge/lie-in-wait",
+        "7": "card.action:thunders-edge/mercenary-contract",
+        "8": "card.action:thunders-edge/overrule",
+        "9": "card.action:thunders-edge/pirate-contract.1",
+        "10": "card.action:thunders-edge/pirate-contract.2",
+        "11": "card.action:thunders-edge/pirate-contract.3",
+        "12": "card.action:thunders-edge/pirate-contract.4",
+        "13": "card.action:thunders-edge/pirate-fleet",
+        "14": "card.action:thunders-edge/puppets-on-a-string",
+        "15": "card.action:thunders-edge/rescue",
+        "16": "card.action:thunders-edge/strategize.1",
+        "17": "card.action:thunders-edge/strategize.2",
+        "18": "card.action:thunders-edge/strategize.3",
+        "19": "card.action:thunders-edge/strategize.4"
+    },
+    "CardTags": {
+        "0": [
+            "card-action"
+        ],
+        "1": [
+            "card-action"
+        ],
+        "2": [
+            "card-action"
+        ],
+        "3": [
+            "card-action"
+        ],
+        "4": [
+            "card-action"
+        ],
+        "5": [
+            "card-action"
+        ],
+        "6": [
+            "card-action"
+        ],
+        "7": [
+            "card-action"
+        ],
+        "8": [
+            "card-action"
+        ],
+        "9": [
+            "card-action"
+        ],
+        "10": [
+            "card-action"
+        ],
+        "11": [
+            "card-action"
+        ],
+        "12": [
+            "card-action"
+        ],
+        "13": [
+            "card-action"
+        ],
+        "14": [
+            "card-action"
+        ],
+        "15": [
+            "card-action"
+        ],
+        "16": [
+            "card-action"
+        ],
+        "17": [
+            "card-action"
+        ],
+        "18": [
+            "card-action"
+        ],
+        "19": [
+            "card-action"
+        ]
+    },
+    "GroundAccessibility": "ZoomAndContext",
+    "Tags": [
+        "card-action"
+    ]
+}

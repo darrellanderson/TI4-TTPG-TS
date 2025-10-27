@@ -1,0 +1,247 @@
+{
+    "Type": "Card",
+    "GUID": "692DCC7087211A2C37775C8C6D0C9A0E",
+    "Name": "Breakthrough",
+    "Metadata": "",
+    "CollisionType": "Regular",
+    "Friction": 0.7,
+    "Restitution": 0,
+    "Density": 0.5,
+    "SurfaceType": "Cardboard",
+    "Roughness": 1,
+    "Metallic": 0,
+    "PrimaryColor": {
+        "R": 255,
+        "G": 255,
+        "B": 255
+    },
+    "SecondaryColor": {
+        "R": 0,
+        "G": 0,
+        "B": 0
+    },
+    "Flippable": true,
+    "AutoStraighten": false,
+    "ShouldSnap": true,
+    "ScriptName": "",
+    "Blueprint": "",
+    "Models": [],
+    "Collision": [],
+    "SnapPointsGlobal": false,
+    "SnapPoints": [],
+    "ZoomViewDirection": {
+        "X": 0,
+        "Y": 0,
+        "Z": 0
+    },
+    "FrontTexture": "card/breakthrough/thunders-edge/thunders-edge.face.jpg",
+    "BackTexture": "card/breakthrough/thunders-edge/thunders-edge.back.jpg",
+    "HiddenTexture": "",
+    "BackIndex": -3,
+    "HiddenIndex": -1,
+    "NumHorizontal": 4,
+    "NumVertical": 8,
+    "Width": 6.3,
+    "Height": 4.2,
+    "Thickness": 0.05,
+    "HiddenInHand": true,
+    "UsedWithCardHolders": true,
+    "CanStack": true,
+    "UsePrimaryColorForSide": false,
+    "FrontTextureOverrideExposed": false,
+    "AllowFlippedInStack": false,
+    "MirrorBack": true,
+    "Model": "Rounded",
+    "Indices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29
+    ],
+    "CardNames": {
+        "0": "Absolute Synergy",
+        "1": "Alraith Ix Ianovar",
+        "2": "Archons Gift",
+        "3": "Auto Factories",
+        "4": "Bellum Gloriosum",
+        "5": "Data Skimmer",
+        "6": "Deepgloom Executable",
+        "7": "Deorbit Barrage",
+        "8": "Fealty Uplink",
+        "9": "Gravleash Maneuvers",
+        "10": "Iihq Modernization",
+        "11": "Imperator",
+        "12": "Mindsieve",
+        "13": "Norr Supremacy",
+        "14": "Particle Synthesis",
+        "15": "Psychospore",
+        "16": "Resonance Generator",
+        "17": "Slumberstate Computing",
+        "18": "Specialized Compounds",
+        "19": "Stellar Genesis",
+        "20": "The Icon",
+        "21": "The Sowing",
+        "22": "The Tables Grace",
+        "23": "Thunders Paradox",
+        "24": "Valefar Assimilator Z",
+        "25": "Vaults of the Heir",
+        "26": "Visionaria Select",
+        "27": "Void Tether",
+        "28": "Wing Transfer",
+        "29": "Yin Ascendant"
+    },
+    "CardMetadata": {
+        "0": "card.breakthrough:thunders-edge/absolute-synergy",
+        "1": "card.breakthrough:thunders-edge/alraith-ix-ianovar",
+        "2": "card.breakthrough:thunders-edge/archons-gift",
+        "3": "card.breakthrough:thunders-edge/auto-factories",
+        "4": "card.breakthrough:thunders-edge/bellum-gloriosum",
+        "5": "card.breakthrough:thunders-edge/data-skimmer",
+        "6": "card.breakthrough:thunders-edge/deepgloom-executable",
+        "7": "card.breakthrough:thunders-edge/deorbit-barrage",
+        "8": "card.breakthrough:thunders-edge/fealty-uplink",
+        "9": "card.breakthrough:thunders-edge/gravleash-maneuvers",
+        "10": "card.breakthrough:thunders-edge/iihq-modernization",
+        "11": "card.breakthrough:thunders-edge/imperator",
+        "12": "card.breakthrough:thunders-edge/mindsieve",
+        "13": "card.breakthrough:thunders-edge/norr-supremacy",
+        "14": "card.breakthrough:thunders-edge/particle-synthesis",
+        "15": "card.breakthrough:thunders-edge/psychospore",
+        "16": "card.breakthrough:thunders-edge/resonance-generator",
+        "17": "card.breakthrough:thunders-edge/slumberstate-computing",
+        "18": "card.breakthrough:thunders-edge/specialized-compounds",
+        "19": "card.breakthrough:thunders-edge/stellar-genesis",
+        "20": "card.breakthrough:thunders-edge/the-icon",
+        "21": "card.breakthrough:thunders-edge/the-sowing",
+        "22": "card.breakthrough:thunders-edge/the-tables-grace",
+        "23": "card.breakthrough:thunders-edge/thunders-paradox",
+        "24": "card.breakthrough:thunders-edge/valefar-assimilator-z",
+        "25": "card.breakthrough:thunders-edge/vaults-of-the-heir",
+        "26": "card.breakthrough:thunders-edge/visionaria-select",
+        "27": "card.breakthrough:thunders-edge/void-tether",
+        "28": "card.breakthrough:thunders-edge/wing-transfer",
+        "29": "card.breakthrough:thunders-edge/yin-ascendant"
+    },
+    "CardTags": {
+        "0": [
+            "card-breakthrough"
+        ],
+        "1": [
+            "card-breakthrough"
+        ],
+        "2": [
+            "card-breakthrough"
+        ],
+        "3": [
+            "card-breakthrough"
+        ],
+        "4": [
+            "card-breakthrough"
+        ],
+        "5": [
+            "card-breakthrough"
+        ],
+        "6": [
+            "card-breakthrough"
+        ],
+        "7": [
+            "card-breakthrough"
+        ],
+        "8": [
+            "card-breakthrough"
+        ],
+        "9": [
+            "card-breakthrough"
+        ],
+        "10": [
+            "card-breakthrough"
+        ],
+        "11": [
+            "card-breakthrough"
+        ],
+        "12": [
+            "card-breakthrough"
+        ],
+        "13": [
+            "card-breakthrough"
+        ],
+        "14": [
+            "card-breakthrough"
+        ],
+        "15": [
+            "card-breakthrough"
+        ],
+        "16": [
+            "card-breakthrough"
+        ],
+        "17": [
+            "card-breakthrough"
+        ],
+        "18": [
+            "card-breakthrough"
+        ],
+        "19": [
+            "card-breakthrough"
+        ],
+        "20": [
+            "card-breakthrough"
+        ],
+        "21": [
+            "card-breakthrough"
+        ],
+        "22": [
+            "card-breakthrough"
+        ],
+        "23": [
+            "card-breakthrough"
+        ],
+        "24": [
+            "card-breakthrough"
+        ],
+        "25": [
+            "card-breakthrough"
+        ],
+        "26": [
+            "card-breakthrough"
+        ],
+        "27": [
+            "card-breakthrough"
+        ],
+        "28": [
+            "card-breakthrough"
+        ],
+        "29": [
+            "card-breakthrough"
+        ]
+    },
+    "GroundAccessibility": "ZoomAndContext",
+    "Tags": [
+        "card-breakthrough"
+    ]
+}

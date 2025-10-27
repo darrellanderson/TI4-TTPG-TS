@@ -1,0 +1,163 @@
+{
+    "Type": "Card",
+    "GUID": "52AB188C4C9D549FA73B166F08244735",
+    "Name": "Event",
+    "Metadata": "",
+    "CollisionType": "Regular",
+    "Friction": 0.7,
+    "Restitution": 0,
+    "Density": 0.5,
+    "SurfaceType": "Cardboard",
+    "Roughness": 1,
+    "Metallic": 0,
+    "PrimaryColor": {
+        "R": 255,
+        "G": 255,
+        "B": 255
+    },
+    "SecondaryColor": {
+        "R": 0,
+        "G": 0,
+        "B": 0
+    },
+    "Flippable": true,
+    "AutoStraighten": false,
+    "ShouldSnap": true,
+    "ScriptName": "",
+    "Blueprint": "",
+    "Models": [],
+    "Collision": [],
+    "SnapPointsGlobal": false,
+    "SnapPoints": [],
+    "ZoomViewDirection": {
+        "X": 0,
+        "Y": 0,
+        "Z": 0
+    },
+    "FrontTexture": "card/event/thunders-edge/thunders-edge.face.jpg",
+    "BackTexture": "card/event/thunders-edge/thunders-edge.back.jpg",
+    "HiddenTexture": "",
+    "BackIndex": -2,
+    "HiddenIndex": -1,
+    "NumHorizontal": 3,
+    "NumVertical": 6,
+    "Width": 12.9,
+    "Height": 7.5,
+    "Thickness": 0.05,
+    "HiddenInHand": true,
+    "UsedWithCardHolders": true,
+    "CanStack": true,
+    "UsePrimaryColorForSide": false,
+    "FrontTextureOverrideExposed": false,
+    "AllowFlippedInStack": false,
+    "MirrorBack": true,
+    "Model": "Rounded",
+    "Indices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15
+    ],
+    "CardNames": {
+        "0": "Advent of the War Sun",
+        "1": "Age of Fighters",
+        "2": "Call of the Void",
+        "3": "Civilized Society",
+        "4": "Conventions of War Abandoned",
+        "5": "Cosmic Phenomenae",
+        "6": "Cultural Exchange Program",
+        "7": "Dangerous Wilds",
+        "8": "Hidden Agenda",
+        "9": "Mercenaries for Hire",
+        "10": "Monuments to the Ages",
+        "11": "Rapid Mobilization",
+        "12": "Stellar Atomics",
+        "13": "Weird Wormholes",
+        "14": "Wild Wild Galaxy",
+        "15": "Zealous Orthodoxy"
+    },
+    "CardMetadata": {
+        "0": "card.event:thunders-edge/advent-of-the-war-sun",
+        "1": "card.event:thunders-edge/age-of-fighters",
+        "2": "card.event:thunders-edge/call-of-the-void",
+        "3": "card.event:thunders-edge/civilized-society",
+        "4": "card.event:thunders-edge/conventions-of-war-abandoned",
+        "5": "card.event:thunders-edge/cosmic-phenomenae",
+        "6": "card.event:thunders-edge/cultural-exchange-program",
+        "7": "card.event:thunders-edge/dangerous-wilds",
+        "8": "card.event:thunders-edge/hidden-agenda",
+        "9": "card.event:thunders-edge/mercenaries-for-hire",
+        "10": "card.event:thunders-edge/monuments-to-the-ages",
+        "11": "card.event:thunders-edge/rapid-mobilization",
+        "12": "card.event:thunders-edge/stellar-atomics",
+        "13": "card.event:thunders-edge/weird-wormholes",
+        "14": "card.event:thunders-edge/wild-wild-galaxy",
+        "15": "card.event:thunders-edge/zealous-orthodoxy"
+    },
+    "CardTags": {
+        "0": [
+            "card-event"
+        ],
+        "1": [
+            "card-event"
+        ],
+        "2": [
+            "card-event"
+        ],
+        "3": [
+            "card-event"
+        ],
+        "4": [
+            "card-event"
+        ],
+        "5": [
+            "card-event"
+        ],
+        "6": [
+            "card-event"
+        ],
+        "7": [
+            "card-event"
+        ],
+        "8": [
+            "card-event"
+        ],
+        "9": [
+            "card-event"
+        ],
+        "10": [
+            "card-event"
+        ],
+        "11": [
+            "card-event"
+        ],
+        "12": [
+            "card-event"
+        ],
+        "13": [
+            "card-event"
+        ],
+        "14": [
+            "card-event"
+        ],
+        "15": [
+            "card-event"
+        ]
+    },
+    "GroundAccessibility": "ZoomAndContext",
+    "Tags": [
+        "card-event"
+    ]
+}
