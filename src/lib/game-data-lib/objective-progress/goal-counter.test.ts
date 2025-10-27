@@ -550,7 +550,9 @@ it("countSystemsWithShipsAdjToMecatol", () => {
 });
 
 it("countSystemsWithUnitsInLegendaryMecatolOrAnomaly", () => {
-  MockGameObject.simple("tile.system:base/18", { position: [0, 0, 0] }); // mecatol
+  MockGameObject.simple("tile.system:thunders-edge/112", {
+    position: [0, 0, 0],
+  }); // mecatol
   MockGameObject.simple("tile.system:pok/65", { position: [0, 10, 0] }); // legendary
   MockGameObject.simple("tile.system:base/41", { position: [0, 20, 0] }); // anomaly
   MockGameObject.simple("unit:base/fighter", {

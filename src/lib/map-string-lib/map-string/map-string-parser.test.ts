@@ -34,7 +34,7 @@ it("parse (standard map string)", () => {
   const errors: Array<string> = [];
   const entries = new MapStringParser().parse("1 2A3", errors);
   expect(entries).toEqual([
-    { tile: 18 },
+    { tile: 112 },
     { tile: 1 },
     { rot: 3, side: "a", tile: 2 },
   ]);
@@ -51,7 +51,7 @@ it("parse (override first)", () => {
 it("parse (invalid entry)", () => {
   const errors: Array<string> = [];
   const entries = new MapStringParser().parse("<invalid> 2A3", errors);
-  expect(entries).toEqual([{ tile: 18 }, { rot: 3, side: "a", tile: 2 }]);
+  expect(entries).toEqual([{ tile: 112 }, { rot: 3, side: "a", tile: 2 }]);
   expect(errors).toEqual(["<invalid>"]);
 });
 

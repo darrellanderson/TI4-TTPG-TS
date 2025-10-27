@@ -227,6 +227,14 @@ it("unpack/remove", () => {
               }),
             ],
           });
+        } else if (nsid === "card.breakthrough:thunders-edge/0") {
+          return new MockCard({
+            cardDetails: [
+              new MockCardDetails({
+                metadata: "card.breakthrough:thunders-edge/psychospore",
+              }),
+            ],
+          });
         }
         return origSpawn.apply(spawnInstance, [nsid, position, rotation]);
       }

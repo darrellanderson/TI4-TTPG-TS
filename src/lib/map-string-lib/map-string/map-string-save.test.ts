@@ -6,7 +6,7 @@ it("constructor", () => {
 });
 
 it("mecatol center", () => {
-  new MockGameObject({ templateMetadata: "tile.system:base/18" });
+  new MockGameObject({ templateMetadata: "tile.system:thunders-edge/112" });
   const mapString: string = new MapStringSave().save();
   expect(mapString).toEqual("");
 });

@@ -748,4 +748,97 @@ export const SOURCE_TO_UNIT_ATTRS_DATA: Record<
       spaceCombat: { hit: 6 },
     },
   ],
+  "twilights-fall": [
+    {
+      name: "tf-warsun",
+      nsidName: "tf-warsun",
+      unit: "war-sun",
+      spaceCombat: { dice: 2, hit: 5 },
+      bombardment: { dice: 3, hit: 5 },
+    },
+    {
+      name: "A Strangled Whisper",
+      nsidName: "a-strangled-whisper",
+      unit: "flagship",
+      bombardment: { dice: 1, hit: 7 },
+    },
+    {
+      name: "Bone Picked Clean",
+      nsidName: "bone-picked-clean",
+      unit: "mech",
+      groundCombat: { dice: 2, hit: 5 },
+    },
+    {
+      name: "Tizona",
+      nsidName: "tizona",
+      unit: "flagship",
+      spaceCombat: { dice: 1, hit: 3 },
+    },
+    {
+      name: "Colada",
+      nsidName: "colada",
+      unit: "mech",
+    },
+    {
+      name: "Nightbloom",
+      nsidName: "nightbloom",
+      unit: "flagship",
+    },
+    {
+      name: "Lakoe's Roots",
+      nsidName: "lakoes-roots",
+      unit: "mech",
+    },
+    {
+      name: "Airo Shir Rex",
+      nsidName: "airo-shir-rex",
+      unit: "flagship",
+    },
+    {
+      name: "Starlancer II",
+      nsidName: "starlancer-ii",
+      unit: "mech",
+      hasPlanetaryShield: true,
+    },
+    {
+      name: "The Faces of Janovet",
+      nsidName: "the-faces-of-janovet",
+      unit: "flagship",
+      spaceCombat: { dice: 2, hit: 5 },
+    },
+    {
+      name: "Analyzer",
+      nsidName: "analyzer",
+      unit: "mech",
+    },
+    {
+      name: "Enigma",
+      nsidName: "enigma",
+      unit: "flagship",
+      spaceCombat: { dice: 1, hit: 7 },
+    },
+    {
+      name: "Starlancer XI",
+      nsidName: "starlancer-xi",
+      unit: "mech",
+    },
+    {
+      name: "The Scarlet Knife",
+      nsidName: "the-scarlet-knife",
+      unit: "flagship",
+      bombardment: { dice: 2, hit: 5 },
+    },
+    {
+      name: "The Sharpened Edge",
+      nsidName: "the-sharpened-edge",
+      unit: "mech",
+    },
+    {
+      name: "Scintillia",
+      nsidName: "scintillia",
+      unit: "flagship",
+      spaceCombat: { dice: 2, hit: 9 },
+    },
+    { name: "Delver", nsidName: "delver", unit: "mech" },
+  ],
 };
