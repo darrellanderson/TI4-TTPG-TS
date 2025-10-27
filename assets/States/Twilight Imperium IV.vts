@@ -21,7 +21,6 @@
 		"persistentData": "",
 		"persistentKeyData":
 		{
-			"@config/ti4": "{\"exportGameData\":true,\"gamePoints\":10,\"playerCount\":6,\"reportErrors\":true,\"sources\":[\"base\",\"pok\",\"codex.affinity\",\"codex.ordinian\",\"codex.vigil\",\"codex.liberation\"],\"timestamp\":0}",
 			"@player-color/ti4": "{\"10\":{\"colorName\":\"green\",\"target\":\"#00C60A\",\"plastic\":\"#06CC44\",\"widget\":\"#02B615\"},\"11\":{\"colorName\":\"red\",\"target\":\"#FF0505\",\"plastic\":\"#FE2221\",\"widget\":\"#FE0808\"},\"12\":{\"colorName\":\"yellow\",\"target\":\"#FFD900\",\"plastic\":\"#FEE62B\",\"widget\":\"#FEF112\"},\"13\":{\"colorName\":\"purple\",\"target\":\"#B252FF\",\"plastic\":\"#B14DFD\",\"widget\":\"#8A1EFE\"},\"14\":{\"colorName\":\"blue\",\"target\":\"#00CFFF\",\"plastic\":\"#01DBFC\",\"widget\":\"#00DEFE\"},\"15\":{\"colorName\":\"white\",\"target\":\"#F0F0F0\",\"plastic\":\"#FEFEFC\",\"widget\":\"#FEFEFE\"},\"16\":{\"colorName\":\"orange\",\"target\":\"#FF8C00\",\"plastic\":\"#FE9406\",\"widget\":\"#FE5E00\"},\"17\":{\"colorName\":\"pink\",\"target\":\"#FF74D6\",\"plastic\":\"#FE79E7\",\"widget\":\"#FE3DF8\"}}",
 			"@turn-order/ti4": "{\"a\":[],\"p\":[],\"e\":[],\"o\":[15,14,13,10,11,12],\"d\":1,\"c\":15,\"s\":0,\"n\":0}"
 		},

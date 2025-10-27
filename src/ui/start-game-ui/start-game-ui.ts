@@ -137,20 +137,23 @@ export class StartGameUI extends AbstractUI {
         }
       );
 
-    /*
-    checkBoxThundersEdge.getCheckBox().setEnabled(false);
+    //*
     const tePrivateIds: Array<string> = [
       "2B06A2A0DBB34FF7A66E5BCB8B33FE8D",
       "645CE2B39EA24B33B131D2AFE863C05F",
     ];
+    let hasTePrivate: boolean = false;
     for (const id of tePrivateIds) {
       const pkg = world.getPackageById(id);
       if (pkg) {
-        checkBoxThundersEdge.getCheckBox().setEnabled(true);
+        hasTePrivate = true;
         break;
       }
     }
-    */
+    if (!hasTePrivate) {
+      checkBoxThundersEdge.getCheckBox().setEnabled(false).setIsChecked(false);
+    }
+    //*/
 
     const checkBoxCodex1: CheckBoxUI = new CheckBoxUI(scale);
     checkBoxCodex1
