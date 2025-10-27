@@ -13,8 +13,8 @@ async function go() {
   await new CreateDeck("exploration/hazardous").go();
   await new CreateDeck("exploration/frontier").go();
   await new CreateDeck("faction-reference")
-    .setSizePx(969, 682)
-    .setSizeWorld(8.8, 6.3)
+    .setSizePx(1000, 583)
+    .setSizeWorld(8.8, 5.1)
     .go();
   await new CreateDeck("faction-token").go();
   await new CreateDeck("leader").setIsPortrait(false).go();
