@@ -4,7 +4,7 @@ import {
   GameObject,
   refContainer,
 } from "@tabletop-playground/api";
-import { CardUtil, Find } from "ttpg-darrell";
+import { CardUtil } from "ttpg-darrell";
 
 /**
  * Codex 4: Liberation of Ordinian
@@ -13,63 +13,57 @@ class ContainerLiberationScenario {
   private readonly _container: Container;
 
   private readonly _onStartGameComplete = (): void => {
-    const find: Find = new Find();
+    let nsid: string = "";
     const cardUtil: CardUtil = new CardUtil();
 
     // Move ordinian system tile, planet and legendary card here.
-    const ordinianSystemTile: GameObject | undefined = find.findGameObject(
-      "tile.system:codex.liberation/1800"
-    );
+    nsid = "tile.system:codex.liberation/1800";
+    const ordinianSystemTile: GameObject | undefined = TI4.spawn.spawn(nsid);
     if (ordinianSystemTile) {
       this._addToContainer(ordinianSystemTile);
     }
 
-    const ordinianPlanet: Card | undefined = cardUtil.fetchCard(
-      "card.planet:codex.liberation/ordinian"
-    );
+    nsid = "card.planet:codex.liberation/ordinian";
+    const ordinianPlanet: Card | undefined = cardUtil.fetchCard(nsid);
     if (ordinianPlanet) {
       this._addToContainer(ordinianPlanet);
     }
 
-    const ordinianLegendary: Card | undefined = cardUtil.fetchCard(
-      "card.legendary-planet:codex.liberation/barren-husk"
-    );
+    nsid = "card.legendary-planet:codex.liberation/barren-husk";
+    const ordinianLegendary: Card | undefined = cardUtil.fetchCard(nsid);
     if (ordinianLegendary) {
       this._addToContainer(ordinianLegendary);
     }
 
     // Spawn leaders.
-    const leaders: GameObject | undefined = TI4.spawn.spawn(
-      "card.leader:codex.liberation/0"
-    );
+    nsid = "card.leader:codex.liberation/0";
+    const leaders: GameObject | undefined = TI4.spawn.spawn(nsid);
     if (leaders) {
       this._addToContainer(leaders);
     }
 
     // Spawn techs.
-    const redTechs: GameObject | undefined = TI4.spawn.spawn(
-      "card.technology.red:codex.liberation/0"
-    );
+    nsid = "card.technology.red:codex.liberation/0";
+    const redTechs: GameObject | undefined = TI4.spawn.spawn(nsid);
     if (redTechs) {
       this._addToContainer(redTechs);
     }
-    const yellowTechs: GameObject | undefined = TI4.spawn.spawn(
-      "card.technology.yellow:codex.liberation/null-reference"
-    );
+
+    nsid = "card.technology.yellow:codex.liberation/null-reference";
+    const yellowTechs: GameObject | undefined = TI4.spawn.spawn(nsid);
     if (yellowTechs) {
       this._addToContainer(yellowTechs);
     }
 
     // Spawn objectives.
-    const public1: GameObject | undefined = TI4.spawn.spawn(
-      "card.objective.public-1:codex.liberation/liberate-ordinian"
-    );
+    nsid = "card.objective.public-1:codex.liberation/liberate-ordinian";
+    const public1: GameObject | undefined = TI4.spawn.spawn(nsid);
     if (public1) {
       this._addToContainer(public1);
     }
-    const public2: GameObject | undefined = TI4.spawn.spawn(
-      "card.objective.public-2:codex.liberation/control-ordinian"
-    );
+
+    nsid = "card.objective.public-2:codex.liberation/control-ordinian";
+    const public2: GameObject | undefined = TI4.spawn.spawn(nsid);
     if (public2) {
       this._addToContainer(public2);
     }
