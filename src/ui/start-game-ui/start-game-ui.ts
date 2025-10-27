@@ -137,6 +137,7 @@ export class StartGameUI extends AbstractUI {
         }
       );
 
+    /*
     checkBoxThundersEdge.getCheckBox().setEnabled(false);
     const tePrivateIds: Array<string> = [
       "2B06A2A0DBB34FF7A66E5BCB8B33FE8D",
@@ -149,6 +150,8 @@ export class StartGameUI extends AbstractUI {
         break;
       }
     }
+    */
+
     const checkBoxCodex1: CheckBoxUI = new CheckBoxUI(scale);
     checkBoxCodex1
       .getCheckBox()

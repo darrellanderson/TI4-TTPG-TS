@@ -41,7 +41,7 @@ export class Config {
           "codex.ordinian",
           "codex.vigil",
           "codex.liberation",
-          // "thunders-edge",
+          "thunders-edge",
         ],
         exportGameData: true,
         reportErrors: true,

@@ -60,4 +60,5 @@ export const SOURCE_TO_REMOVE_NSIDS: Record<string, Array<string>> = {
     "card.technology.red:codex.liberation/error-error",
     "card.technology.yellow:codex.liberation/null-reference",
   ],
+  ["thunders-edge"]: [],
 };
