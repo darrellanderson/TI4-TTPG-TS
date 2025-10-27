@@ -71,6 +71,14 @@ it("loadDefaultData", () => {
   expect(registry.rawByUnit("mech")).toBeDefined();
 });
 
+it("loadDefaultData (twilights fall)", () => {
+  const nsid: string = "card.tf-unit-upgrade:twilights-fall/university-war-sun";
+
+  const registry = new UnitAttrsRegistry();
+  registry.loadDefaultData();
+  expect(registry.rawByNsid(nsid)).toBeDefined();
+});
+
 it("validate (global)", () => {
   TI4.unitAttrsRegistry.validateOrThrow();
 });
