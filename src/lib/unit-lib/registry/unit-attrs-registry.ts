@@ -86,11 +86,6 @@ export class UnitAttrsRegistry {
   validate(errors: Array<string>): this {
     const nsids: Array<string> = [...this._nsidToOverrideAttrs.keys()];
     for (const nsid of nsids) {
-      // TODO XXX REMOVE WHEN ADDED
-      if (nsid.includes(":thunders-edge/")) {
-        continue;
-      }
-
       // Make sure NSID is valid.
       if (
         nsid.startsWith("card.technology") &&

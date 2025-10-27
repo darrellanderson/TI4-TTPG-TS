@@ -126,11 +126,6 @@ it("validate NSIDs appear in assets/Templates", () => {
     .filter((nsid) => nsid.startsWith("card.technology.unit-upgrade:"));
   const missing: Array<string> = [];
   for (const nsid of nsids) {
-    // TODO XXX REMOVE WHEN ADDED
-    if (nsid.includes(":thunders-edge/")) {
-      continue;
-    }
-
     if (!templateNsids.has(nsid)) {
       missing.push(nsid);
     }

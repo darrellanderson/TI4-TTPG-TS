@@ -270,17 +270,12 @@ it("validate NSIDs appear in assets/Templates", () => {
     }
   }
 
-  let missing: Array<string> = [];
+  const missing: Array<string> = [];
   for (const nsid of nsids) {
     if (!templateNsids.has(nsid) && !templateNsids.has(nsid + ".1")) {
       missing.push(nsid);
     }
   }
-
-  // XXX TODO: TEMPORARY until TE added.
-  missing = missing.filter((nsid) => {
-    return !nsid.includes(":thunders-edge/");
-  });
 
   if (missing.length > 0) {
     console.log("missing", missing.join("\n"));
