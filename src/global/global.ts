@@ -124,6 +124,7 @@ import { RightClickYinAscendant } from "../context-menu/breakthroughs/yin-ascend
 import { LOCALE_CONTEXT_MENUS } from "../locale/locale-context-menus";
 
 import { NSID_TO_TEMPLATE_ID } from "../nsid/nsid-to-template-id";
+import { OnStartThundersEdge } from "../event/on-start-thunders-edge/on-start-thunders-edge";
 
 const packageId: string = refPackageId;
 Find.ignoreOwnedCardHolderNsid("card-holder:base/player-scoring");
@@ -238,6 +239,7 @@ export function resetGlobalThisTI4(): TI4Class {
     new OnPlayerChangeColorRequest(),
     new OnPlayerChangedColor(),
     new OnSliceDraftRequest(),
+    new OnStartThundersEdge(),
     new OnStrategyCardPlayed(),
     new OnSystemActivated(),
     new OnTurnStateChanged(),

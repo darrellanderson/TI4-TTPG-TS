@@ -274,7 +274,10 @@ export const SOURCE_TO_FACTION_DATA: Record<
         "prototype-war-sun-2",
       ],
       unitOverrides: ["the-inferno", "prototype-war-sun", "ember-colossus"],
-      extras: [{ nsid: "tile.system:pok/81" }],
+      extras: [
+        { nsid: "tile.system:pok/81" },
+        { nsid: "token.attachment.system:thunders-edge/avernus" },
+      ],
     },
     {
       nsidName: "naalu",
@@ -355,6 +358,11 @@ export const SOURCE_TO_FACTION_DATA: Record<
         { nsid: "token:base/nekro-y" },
         {
           nsid: "token.attachment.system:pok/dimensional-tear.nekro",
+          count: 3,
+        },
+        { nsid: "token:thunders-edge/nekro.z", count: 7 },
+        {
+          nsid: "token.attachment.planet:thunders-edge/helios-nekro",
           count: 3,
         },
       ],
@@ -648,6 +656,12 @@ export const SOURCE_TO_FACTION_DATA: Record<
       },
       factionTechs: ["aetherstream", "voidwatch"],
       unitOverrides: ["dynamo", "watcher"],
+      extras: [
+        {
+          nsid: "token:thunders-edge/empyrean.blockade",
+          count: 2,
+        },
+      ],
     },
     {
       nsidName: "mahact",
