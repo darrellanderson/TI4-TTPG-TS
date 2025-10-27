@@ -99,7 +99,7 @@ it("validate NSIDs appear in assets/Templates", () => {
   // Scan templates for NSIDs.
   const templateNsids: Set<string> = new Set();
   const entries: readonly klawSync.Item[] = klawSync(
-    "assets/Templates/card/technology/unit-upgrade/",
+    "assets/Templates/card/technology",
     {
       nodir: true,
       traverseAll: true,

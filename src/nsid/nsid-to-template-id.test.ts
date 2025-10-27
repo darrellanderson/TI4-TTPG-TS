@@ -15,6 +15,7 @@ export function addObjectTemplatesToMockWorld(): void {
 
     if (
       nsid.startsWith("mat") ||
+      nsid.startsWith("misc") ||
       nsid.startsWith("sheet") ||
       nsid.startsWith("tile") ||
       nsid.startsWith("token") ||

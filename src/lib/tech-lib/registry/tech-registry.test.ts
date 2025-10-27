@@ -118,16 +118,13 @@ it("loadDefaultData", () => {
 it("validate NSIDs appear in assets/Templates", () => {
   // Scan templates for NSIDs.
   const templateNsids: Set<string> = new Set();
-  const entries: readonly klawSync.Item[] = klawSync(
-    "assets/Templates/card/technology",
-    {
-      nodir: true,
-      traverseAll: true,
-      filter: (item) => {
-        return item.path.endsWith(".json");
-      },
-    }
-  );
+  const entries: readonly klawSync.Item[] = klawSync("assets/Templates/card", {
+    nodir: true,
+    traverseAll: true,
+    filter: (item) => {
+      return item.path.endsWith(".json");
+    },
+  });
   const regex: RegExp = /"(card\.technology.*)"/;
   for (const entry of entries) {
     const data: Buffer = fs.readFileSync(entry.path);

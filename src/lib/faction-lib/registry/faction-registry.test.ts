@@ -266,7 +266,7 @@ it("validate starting units are UnitType", () => {
 
 it("validate NSIDs appear in assets/Templates", () => {
   // Scan templates for NSIDs.
-  const templateNsids: Set<string> = new Set();
+  const templateNsids: Set<string> = new Set(TI4.spawn.getAllNsids());
   const entries: readonly klawSync.Item[] = klawSync("assets/Templates/", {
     nodir: true,
     traverseAll: true,
