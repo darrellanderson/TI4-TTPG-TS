@@ -9,7 +9,7 @@ import { MapStringLoad } from "../../lib/map-string-lib/map-string/map-string-lo
 
 export class OnStartThundersEdge implements IGlobal {
   init(): void {
-    TI4.events.onStartGameRequest.add(() => {
+    TI4.events.onStartGameComplete.add(() => {
       if (TI4.config.sources.includes("thunders-edge")) {
         this._replaceStrategyCards();
         this._replaceMecatolRex();
@@ -82,8 +82,10 @@ export class OnStartThundersEdge implements IGlobal {
     const find: Find = new Find();
 
     // Add the fracture.
-    const fractureString: string =
+    const fractureString6: string =
       "{-1} -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 0 -1 -1 0 -1 -1 0 -1 -1 0 -1 -1 0 -1 -1 0 -1 -1 901B0 902B0 903B0 904B0 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 905B0 906B0 900B0";
+    const fractureString7: string =
+      "{-1} -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 0 -1 -1 0 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 0 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 0 -1 -1 0 -1 -1 0 -1 -1 0 -1 -1 901B0 902B0 903B0 904B0 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 905B0 906B0 900B0";
     if (
       !find.findGameObject("tile.system:thunders-edge/901", undefined, true)
     ) {
@@ -91,7 +93,11 @@ export class OnStartThundersEdge implements IGlobal {
       if (!mapStringLoad) {
         throw new Error("Failed to create MapStringLoad instance");
       }
-      mapStringLoad.load(fractureString);
+      if (TI4.config.playerCount <= 6) {
+        mapStringLoad.load(fractureString6);
+      } else {
+        mapStringLoad.load(fractureString7);
+      }
     }
   }
 }
