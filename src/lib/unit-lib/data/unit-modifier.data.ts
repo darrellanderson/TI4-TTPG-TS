@@ -241,3 +241,12 @@ add("test", SystemClassBonus);
 
 import { EchoOfAscension } from "./unit-modifiers/twilights-fall/echo-of-ascension";
 add("twilights-fall", EchoOfAscension);
+
+import { EidolonLandwaster } from "./unit-modifiers/twilights-fall/eidolon-landwaster";
+add("twilights-fall", EidolonLandwaster);
+
+import { EidolonTerminus } from "./unit-modifiers/twilights-fall/eidolon-terminus";
+add("twilights-fall", EidolonTerminus);
+
+import { ValefarPrime } from "./unit-modifiers/twilights-fall/valefar-prime";
+add("twilights-fall", ValefarPrime);
