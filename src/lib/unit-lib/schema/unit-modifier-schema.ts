@@ -23,6 +23,11 @@ export const UnitModifierCardClass = z
     "technology.red",
     "technology.yellow",
     "technology.unit-upgrade",
+    "tf-ability",
+    "tf-action",
+    "tf-genome",
+    "tf-paradigm",
+    "tf-unit-upgrade",
     "unit", // not a card
   ])
   .readonly();

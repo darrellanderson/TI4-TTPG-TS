@@ -30,6 +30,11 @@ export class UnitModifier {
       case "technology.red":
       case "technology.yellow":
       case "technology.unit-upgrade":
+      case "tf-ability":
+      case "tf-action":
+      case "tf-genome":
+      case "tf-paradigm":
+      case "tf-unit-upgrade":
         return `card.${trigger.cardClass}:${source}/${trigger.nsidName}`;
       case "agent":
       case "commander":
