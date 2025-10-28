@@ -239,6 +239,9 @@ add("test", PromissoryTarget);
 import { SystemClassBonus } from "./unit-modifiers/test/system-class-bonus";
 add("test", SystemClassBonus);
 
+import { AmbushTF } from "./unit-modifiers/twilights-fall/ambush-tf";
+add("twilights-fall", AmbushTF);
+
 import { EchoOfAscension } from "./unit-modifiers/twilights-fall/echo-of-ascension";
 add("twilights-fall", EchoOfAscension);
 
