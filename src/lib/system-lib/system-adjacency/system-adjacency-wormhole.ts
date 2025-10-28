@@ -126,6 +126,7 @@ export class SystemAdjacencyWormhole {
     this._applyCards(adjacency);
     this._applyLazaxGateFolding(adjacency);
     this._applyQuantumEntanglementTF(adjacency);
+    this._applyEnigmaticGenomeTF(adjacency);
   }
 
   _applyFaction(faction: Faction, adjacency: Adjacency): void {
@@ -317,5 +318,10 @@ export class SystemAdjacencyWormhole {
 
   _applyQuantumEntanglementTF(_adjacency: Adjacency): void {
     // TODO XXX
+  }
+
+  _applyEnigmaticGenomeTF(_adjacency: Adjacency): void {
+    // TODO XXX
+    // TODO active/idle
   }
 }

@@ -242,6 +242,9 @@ add("test", SystemClassBonus);
 import { AmbushTF } from "./unit-modifiers/twilights-fall/ambush-tf";
 add("twilights-fall", AmbushTF);
 
+import { AristocraticGenome } from "./unit-modifiers/twilights-fall/aristocratic-genome";
+add("twilights-fall", AristocraticGenome);
+
 import { EchoOfAscension } from "./unit-modifiers/twilights-fall/echo-of-ascension";
 add("twilights-fall", EchoOfAscension);
 
@@ -251,11 +254,17 @@ add("twilights-fall", EidolonLandwaster);
 import { EidolonTerminus } from "./unit-modifiers/twilights-fall/eidolon-terminus";
 add("twilights-fall", EidolonTerminus);
 
+import { HumanGenome } from "./unit-modifiers/twilights-fall/human-genome";
+add("twilights-fall", HumanGenome);
+
 import { MirrorComputingTF } from "./unit-modifiers/twilights-fall/mirror-computing-tf";
 add("twilights-fall", MirrorComputingTF);
 
 import { MunitionsReservesTF } from "./unit-modifiers/twilights-fall/munitions-reserves-tf";
 add("twilights-fall", MunitionsReservesTF);
+
+import { Trine } from "./unit-modifiers/twilights-fall/trine";
+add("twilights-fall", Trine);
 
 import { ValefarPrime } from "./unit-modifiers/twilights-fall/valefar-prime";
 add("twilights-fall", ValefarPrime);
