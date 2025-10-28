@@ -1,11 +1,49 @@
-import { Button, Player } from "@tabletop-playground/api";
-import { PlayerSlot, ThrottleClickHandler } from "ttpg-darrell";
+import {
+  Button,
+  Card,
+  GameObject,
+  Player,
+  Vector,
+  world,
+} from "@tabletop-playground/api";
+import {
+  Find,
+  NSID,
+  OnCardBecameSingletonOrDeck,
+  PlayerSlot,
+  ThrottleClickHandler,
+} from "ttpg-darrell";
 
 import { AbstractUI } from "../../abstract-ui/abtract-ui";
 import { ButtonUI } from "../../button-ui/button-ui";
 import { CONFIG } from "../../config/config";
 import { VerticalUIBuilder } from "../../panel/vertical-ui-builder";
 import { Faction } from "../../../lib/faction-lib/faction/faction";
+
+const _find: Find = new Find();
+let _tfAmbushId: string | undefined = undefined;
+
+OnCardBecameSingletonOrDeck.onSingletonCardCreated.add((card: Card): void => {
+  const nsid: string = NSID.get(card);
+  if (nsid === "card.tf-ability:twilights-fall/ambush") {
+    _tfAmbushId = card.getId();
+  }
+});
+
+function _getTfAmbushPlayerSlot(): PlayerSlot {
+  if (_tfAmbushId) {
+    const obj: GameObject | undefined = world.getObjectById(_tfAmbushId);
+    if (obj) {
+      const nsid: string = NSID.get(obj);
+      if (nsid === "card.tf-ability:twilights-fall/ambush") {
+        const pos: Vector = obj.getPosition();
+        const playerSlot: PlayerSlot = _find.closestOwnedCardHolderOwner(pos);
+        return playerSlot;
+      }
+    }
+  }
+  return -1;
+}
 
 export class CombatUISpace extends AbstractUI {
   private readonly _spaceCannonOffense: Button;
@@ -70,15 +108,33 @@ export class CombatUISpace extends AbstractUI {
       antifighterBarrageUi,
       spaceCombatUi,
     ];
+
+    let hasAmbush: boolean = false;
     const faction: Faction | undefined =
       TI4.factionRegistry.getByPlayerSlot(playerSlot);
     if (
-      !faction ||
-      !faction.getAbilityNsids().includes("faction-ability:base/ambush")
+      faction &&
+      faction.getAbilityNsids().includes("faction-ability:base/ambush")
     ) {
+      hasAmbush = true;
+    }
+    if (_getTfAmbushPlayerSlot() === playerSlot) {
+      hasAmbush = true;
+    }
+    if (!hasAmbush) {
       uis.splice(1, 1); // prune ambush
     }
-    if (faction && faction.getNsid() === "faction:thunders-edge/bastion") {
+
+    let hasProximaTargeting: boolean = false;
+    if (
+      faction &&
+      faction
+        .getFactionTechNsids()
+        .includes("card.technology.red:thunders-edge/proxima-targeting-vi")
+    ) {
+      hasProximaTargeting = true;
+    }
+    if (hasProximaTargeting) {
       uis.push(proximaTargetingUi);
     }
 
