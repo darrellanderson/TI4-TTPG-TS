@@ -7,7 +7,7 @@ import {
 import { Facing, HexType, NSID } from "ttpg-darrell";
 import { CombatRoll } from "../../../../combat-lib";
 import { UnitModifierSchemaType, UnitType } from "../../../schema";
-import { UnitAttrs } from "../../../unit-attrs";
+import { CombatAttrs, UnitAttrs } from "../../../unit-attrs";
 import { UnitPlastic } from "../../../unit-plastic";
 
 // Track breach tokens and all flagships.
@@ -97,9 +97,6 @@ export const Quietus: UnitModifierSchemaType = {
     }
 
     const activeBreachHexes: Set<HexType> = _getActiveBreachHexes();
-    if (!activeBreachHexes.has(combatRoll.getHex())) {
-      return false; // not in an active breach
-    }
 
     const flagshipHexes: Set<HexType> = _getFlagshipHexes(
       combatRoll.opponent.playerSlot
@@ -117,24 +114,33 @@ export const Quietus: UnitModifierSchemaType = {
       combatRoll.self.unitAttrsSet
         .getAll()
         .forEach((unitAttrs: UnitAttrs): void => {
-          if (unitAttrs.getSpaceCannon()) {
+          const spaceCannon: CombatAttrs | undefined =
+            unitAttrs.getSpaceCannon();
+          if (spaceCannon) {
             const unit: UnitType = unitAttrs.getUnit();
 
+            // Disable space cannon in hex.
             if (activeBreachHexes.has(combatRoll.getHex())) {
               combatRoll.self.overrideUnitCountHex.set(unit, 0);
             }
 
-            let reduceAdjCount: number = 0;
-            combatRoll.self.unitPlasticAdj.forEach(
-              (plasticAdj: UnitPlastic): void => {
-                if (activeBreachHexes.has(plasticAdj.getHex())) {
-                  reduceAdjCount++;
+            // Disable adjacent space cannons in breaches.
+            if (spaceCannon.getRange() > 0) {
+              let reduceAdjCount: number = 0;
+              combatRoll.self.unitPlasticAdj.forEach(
+                (plasticAdj: UnitPlastic): void => {
+                  if (
+                    plasticAdj.getUnit() === unit &&
+                    activeBreachHexes.has(plasticAdj.getHex())
+                  ) {
+                    reduceAdjCount++;
+                  }
                 }
-              }
-            );
-            let count: number = combatRoll.self.getCountAdj(unit);
-            count = Math.max(0, count - reduceAdjCount);
-            combatRoll.self.overrideUnitCountAdj.set(unit, count);
+              );
+              let count: number = combatRoll.self.getCountAdj(unit);
+              count = Math.max(0, count - reduceAdjCount);
+              combatRoll.self.overrideUnitCountAdj.set(unit, count);
+            }
           }
         });
     }
