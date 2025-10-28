@@ -47,10 +47,6 @@ export class AgendaActivityStart {
   };
 
   start(agendaCard: Card): boolean {
-    this._agendaState = new AgendaState(
-      AGENDA_STATE_NAMESPACE_ID
-    ).setAgendaObjId(agendaCard.getId());
-
     // Set turn order.
     const order: Array<PlayerSlot> =
       new AgendaTurnOrder().getWhensOrAftersOrder();
@@ -58,6 +54,10 @@ export class AgendaActivityStart {
     if (first !== undefined) {
       TI4.turnOrder.setTurnOrder(order, "forward", first);
     }
+
+    this._agendaState = new AgendaState(
+      AGENDA_STATE_NAMESPACE_ID
+    ).setAgendaObjId(agendaCard.getId());
 
     this.resume();
     return true;
