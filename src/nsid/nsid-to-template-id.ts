@@ -22,6 +22,7 @@ export const NSID_TO_TEMPLATE_ID: { [key: string]: string } = {
     "card.exploration.hazardous:pok/0": "30A6C390BC4CF2A79D1C9813BE05310E",
     "card.exploration.industrial:pok/0": "BFAB03503468BFFE4959A88446C68074",
     "card.faction-reference:base/0": "D73E8B922C2F861A41E39492A6B2ED11",
+    "card.faction-reference:codex.vigil/0": "657E7D6B356CEE9B0FEFFC44887387DE",
     "card.faction-reference:pok/0": "2D799EB4068A41E37D03028AECFEA3F4",
     "card.faction-reference:thunders-edge/0": "27129CADDB65BD00ABDF785A731777B2",
     "card.faction-token:base/0": "38CC4192D29DD0676BAA2B10C11343C9",
