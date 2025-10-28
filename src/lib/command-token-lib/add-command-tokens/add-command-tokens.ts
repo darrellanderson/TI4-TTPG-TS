@@ -78,6 +78,18 @@ export class AddCommandTokens {
           }
         }
       }
+
+      // Add one if tf inheritance systems.
+      if (nsid === "card.tf-ability:twilights-fall/inheritance-systems") {
+        const owner: number = this._find.closestOwnedCardHolderOwner(
+          obj.getPosition()
+        );
+        let count: number | undefined = slotToCount.get(owner);
+        if (count !== undefined) {
+          count += 1;
+          slotToCount.set(owner, count);
+        }
+      }
     }
     return slotToCount;
   }

@@ -251,5 +251,11 @@ add("twilights-fall", EidolonLandwaster);
 import { EidolonTerminus } from "./unit-modifiers/twilights-fall/eidolon-terminus";
 add("twilights-fall", EidolonTerminus);
 
+import { MirrorComputingTF } from "./unit-modifiers/twilights-fall/mirror-computing-tf";
+add("twilights-fall", MirrorComputingTF);
+
+import { MunitionsReservesTF } from "./unit-modifiers/twilights-fall/munitions-reserves-tf";
+add("twilights-fall", MunitionsReservesTF);
+
 import { ValefarPrime } from "./unit-modifiers/twilights-fall/valefar-prime";
 add("twilights-fall", ValefarPrime);

@@ -22,11 +22,15 @@ import { Faction } from "../../../lib/faction-lib/faction/faction";
 
 const _find: Find = new Find();
 let _tfAmbushId: string | undefined = undefined;
+let _tfProximaTargetingId: string | undefined = undefined;
 
 OnCardBecameSingletonOrDeck.onSingletonCardCreated.add((card: Card): void => {
   const nsid: string = NSID.get(card);
   if (nsid === "card.tf-ability:twilights-fall/ambush") {
     _tfAmbushId = card.getId();
+  }
+  if (nsid === "card.technology.red:thunders-edge/proxima-targeting-vi") {
+    _tfProximaTargetingId = card.getId();
   }
 });
 
@@ -36,6 +40,23 @@ function _getTfAmbushPlayerSlot(): PlayerSlot {
     if (obj) {
       const nsid: string = NSID.get(obj);
       if (nsid === "card.tf-ability:twilights-fall/ambush") {
+        const pos: Vector = obj.getPosition();
+        const playerSlot: PlayerSlot = _find.closestOwnedCardHolderOwner(pos);
+        return playerSlot;
+      }
+    }
+  }
+  return -1;
+}
+
+function _getTfProximaTargetingPlayerSlot(): PlayerSlot {
+  if (_tfProximaTargetingId) {
+    const obj: GameObject | undefined = world.getObjectById(
+      _tfProximaTargetingId
+    );
+    if (obj) {
+      const nsid: string = NSID.get(obj);
+      if (nsid === "card.technology.red:thunders-edge/proxima-targeting-vi") {
         const pos: Vector = obj.getPosition();
         const playerSlot: PlayerSlot = _find.closestOwnedCardHolderOwner(pos);
         return playerSlot;
@@ -132,6 +153,9 @@ export class CombatUISpace extends AbstractUI {
         .getFactionTechNsids()
         .includes("card.technology.red:thunders-edge/proxima-targeting-vi")
     ) {
+      hasProximaTargeting = true;
+    }
+    if (_getTfProximaTargetingPlayerSlot() === playerSlot) {
       hasProximaTargeting = true;
     }
     if (hasProximaTargeting) {

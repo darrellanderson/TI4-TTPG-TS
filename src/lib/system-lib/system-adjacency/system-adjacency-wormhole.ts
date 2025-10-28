@@ -124,6 +124,8 @@ export class SystemAdjacencyWormhole {
     }
     this._applyCreussFlagship(adjacency);
     this._applyCards(adjacency);
+    this._applyLazaxGateFolding(adjacency);
+    this._applyQuantumEntanglementTF(adjacency);
   }
 
   _applyFaction(faction: Faction, adjacency: Adjacency): void {
@@ -299,5 +301,21 @@ export class SystemAdjacencyWormhole {
         }
       }
     }
+  }
+
+  /**
+   * Twilight's Fall - Lazax Gate Folding
+   *
+   * During your tactical action treat legendaries you don't control as if
+   * they contain alpha and beta wormholes.
+   *
+   * @param _adjacency
+   */
+  _applyLazaxGateFolding(_adjacency: Adjacency): void {
+    // TODO XXX
+  }
+
+  _applyQuantumEntanglementTF(_adjacency: Adjacency): void {
+    // TODO XXX
   }
 }
