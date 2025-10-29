@@ -96,6 +96,8 @@ export class FactionRegistry implements IGlobal {
       return this._playerSlotToFaction;
     }
 
+    const isTwilightsFall: boolean =
+      TI4.config.sources.includes("twilights-fall");
     const playerSlotToFaction: Map<number, Faction> = new Map();
     const skipContained: boolean = true;
     for (const obj of world.getAllObjects(skipContained)) {
@@ -105,6 +107,10 @@ export class FactionRegistry implements IGlobal {
       }
       const faction: Faction | undefined = this.getByNsid(nsid);
       if (faction) {
+        if (isTwilightsFall && obj.getOwningPlayerSlot() === -1) {
+          continue; // twilights fall pre-choice faction sheet
+        }
+
         const pos: Vector = obj.getPosition();
         const playerSlot: number = this._find.closestOwnedCardHolderOwner(pos);
         playerSlotToFaction.set(playerSlot, faction);

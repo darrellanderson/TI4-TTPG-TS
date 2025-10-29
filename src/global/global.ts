@@ -131,6 +131,7 @@ import { RightClickTFUnitUpgradeSplice } from "../context-menu/tf-splice/right-c
 import { LOCALE_CONTEXT_MENUS } from "../locale/locale-context-menus";
 
 import { NSID_TO_TEMPLATE_ID } from "../nsid/nsid-to-template-id";
+import { OnStartTwilightsFall } from "../event/on-start-twilights-fall/on-start-twilights-fall";
 
 const packageId: string = refPackageId;
 Find.ignoreOwnedCardHolderNsid("card-holder:base/player-scoring");
@@ -246,6 +247,7 @@ export function resetGlobalThisTI4(): TI4Class {
     new OnPlayerChangedColor(),
     new OnSliceDraftRequest(),
     new OnStartThundersEdge(),
+    new OnStartTwilightsFall(),
     new OnStrategyCardPlayed(),
     new OnSystemActivated(),
     new OnTurnStateChanged(),

@@ -137,7 +137,18 @@ export class StartGameUI extends AbstractUI {
         }
       );
 
-    //*
+    const checkBoxTwilightsFall: CheckBoxUI = new CheckBoxUI(scale);
+    checkBoxTwilightsFall
+      .getCheckBox()
+      .setText("TE: Twilight's Fall")
+      .setIsChecked(TI4.config.sources.includes("twilights-fall"))
+      .onCheckStateChanged.add(
+        (_checkBox: CheckBox, _player: Player, isChecked: boolean): void => {
+          applySource("twilights-fall", isChecked);
+        }
+      );
+
+    //* Disable TE if missing private mod
     const tePrivateIds: Array<string> = [
       "2B06A2A0DBB34FF7A66E5BCB8B33FE8D",
       "645CE2B39EA24B33B131D2AFE863C05F",
@@ -152,6 +163,7 @@ export class StartGameUI extends AbstractUI {
     }
     if (!hasTePrivate) {
       checkBoxThundersEdge.getCheckBox().setEnabled(false).setIsChecked(false);
+      checkBoxTwilightsFall.getCheckBox().setEnabled(false).setIsChecked(false);
     }
     //*/
 
@@ -210,6 +222,7 @@ export class StartGameUI extends AbstractUI {
         gamePointsSlider,
         checkBoxPok,
         checkBoxThundersEdge,
+        checkBoxTwilightsFall,
         checkBoxCodex1,
         checkBoxCodex2,
         checkBoxCodex3,

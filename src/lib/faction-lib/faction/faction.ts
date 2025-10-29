@@ -1,4 +1,4 @@
-import { GameObject } from "@tabletop-playground/api";
+import { GameObject, world } from "@tabletop-playground/api";
 import { Find } from "ttpg-darrell";
 
 import {
@@ -16,6 +16,23 @@ export class Faction {
   private readonly _params: FactionSchemaType;
   private readonly _find: Find = new Find();
   private readonly _injectedExtras: Map<string, number> = new Map();
+
+  static getOverrideHomeSystemTileNumber(
+    playerSlot: number
+  ): number | undefined {
+    const key: string = `ohs${playerSlot}`;
+    const data: string | undefined = world.getSavedData(key);
+    return data ? parseInt(data, 10) : undefined;
+  }
+
+  static setOverrideHomeSystemTileNumber(
+    playerSlot: number,
+    tileNumber: number
+  ): void {
+    const key: string = `ohs${playerSlot}`;
+    const data: string = `${tileNumber}`;
+    world.setSavedData(data, key);
+  }
 
   constructor(
     sourceAndPackageId: SourceAndPackageIdSchemaType,
@@ -191,7 +208,11 @@ export class Faction {
   }
 
   getHomeSystemTileObj(playerSlot: number): GameObject | undefined {
-    const tileNumber: number = this.getHomeSystemTileNumber();
+    let tileNumber: number | undefined =
+      Faction.getOverrideHomeSystemTileNumber(playerSlot);
+    if (tileNumber === undefined) {
+      tileNumber = this.getHomeSystemTileNumber();
+    }
     const nsid: string | undefined =
       TI4.systemRegistry.tileNumberToSystemTileObjNsid(tileNumber);
     if (nsid) {

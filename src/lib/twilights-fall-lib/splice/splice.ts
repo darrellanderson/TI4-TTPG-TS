@@ -43,7 +43,7 @@ export class Splice {
       const dY: number = width / Math.max(count, 1);
       const z: number = world.getTableHeight() + 10;
 
-      cards.forEach((card: Card, index: number) => {
+      cards.forEach((card: Card, index: number): void => {
         const pos: Vector = new Vector(center.x, left + index * dY, z);
         card.setPosition(pos);
         card.setRotation([0, 0, 180]);

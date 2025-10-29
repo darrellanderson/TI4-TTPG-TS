@@ -2,6 +2,12 @@ import { SourceAndPackageIdSchemaType } from "../../system-lib/schema/basic-type
 import { FactionSchemaType } from "../schema/faction-schema";
 import { Faction } from "./faction";
 
+it("static get/setOverrideHomeSystemTileNumber", () => {
+  expect(Faction.getOverrideHomeSystemTileNumber(1)).toBeUndefined();
+  Faction.setOverrideHomeSystemTileNumber(1, 22);
+  expect(Faction.getOverrideHomeSystemTileNumber(1)).toEqual(22);
+});
+
 it("constructor", () => {
   const sourceAndPackageId: SourceAndPackageIdSchemaType = {
     source: "my-source",
