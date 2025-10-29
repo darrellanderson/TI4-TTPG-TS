@@ -2,7 +2,7 @@ import { Card, GameObject, Player } from "@tabletop-playground/api";
 import { AbstractRightClickDeck } from "ttpg-darrell";
 import { Splice } from "../../lib/twilights-fall-lib/splice/splice";
 
-const ACTION_PREFIX: string = "*Splice ";
+const ACTION_PREFIX: string = "*Splice Ability ";
 
 export class RightClickTFAbilitySplice extends AbstractRightClickDeck {
   constructor() {

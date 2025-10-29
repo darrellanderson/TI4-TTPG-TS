@@ -117,15 +117,20 @@ import { WhisperSpy } from "../lib/streamer-lib/whisper-spy/whisper-spy";
 // Events
 import { RightClickAgeOfExploration } from "../context-menu/events/age-of-exploration/right-click-age-of-exploration";
 import { RightClickMinorFactions } from "../context-menu/events/minor-factions/right-click-minor-factions";
+import { OnStartThundersEdge } from "../event/on-start-thunders-edge/on-start-thunders-edge";
 
 // Breakthroughs
 import { RightClickYinAscendant } from "../context-menu/breakthroughs/yin-ascendant/right-click-yin-ascendant";
 
+// Twilight's Fall
+import { RightClickTFAbilitySplice } from "../context-menu/tf-splice/right-click-tf-ability";
+import { RightClickTFGenomeSplice } from "../context-menu/tf-splice/right-click-tf-genome";
+import { RightClickTFParadigmSplice } from "../context-menu/tf-splice/right-click-tf-paradigm";
+import { RightClickTFUnitUpgradeSplice } from "../context-menu/tf-splice/right-click-tf-unit-upgrade";
+
 import { LOCALE_CONTEXT_MENUS } from "../locale/locale-context-menus";
 
 import { NSID_TO_TEMPLATE_ID } from "../nsid/nsid-to-template-id";
-import { OnStartThundersEdge } from "../event/on-start-thunders-edge/on-start-thunders-edge";
-import { RightClickTFAbilitySplice } from "../context-menu/tf-splice/right-click-tf-ability";
 
 const packageId: string = refPackageId;
 Find.ignoreOwnedCardHolderNsid("card-holder:base/player-scoring");
@@ -269,6 +274,9 @@ export function resetGlobalThisTI4(): TI4Class {
     new RightClickSpecOps2(),
     new RightClickStellarConverter(),
     new RightClickTFAbilitySplice(),
+    new RightClickTFGenomeSplice(),
+    new RightClickTFParadigmSplice(),
+    new RightClickTFUnitUpgradeSplice(),
     new RightClickThundersEdge(),
     new RightClickYinAscendant(),
     new RSwapSplitCombine(),

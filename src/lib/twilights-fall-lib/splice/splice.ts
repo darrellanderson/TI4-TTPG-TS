@@ -36,10 +36,11 @@ export class Splice {
       const center: Vector = mat.getPosition();
       center.x -= matExtent.x + deckExtent.x + 2;
 
-      const maxWidth: number = deckExtent.y * 6;
-      const width: number = Math.min(count * deckExtent.y, maxWidth);
-      const left: number = center.y - width / 2 + deckExtent.y / 2;
-      const dY: number = width / Math.max(count - 1, 1);
+      const cardWidth: number = deckExtent.y * 2;
+      const maxWidth: number = cardWidth * 6;
+      const width: number = Math.min(count * cardWidth, maxWidth);
+      const left: number = center.y - width / 2 + deckExtent.y;
+      const dY: number = width / Math.max(count, 1);
       const z: number = world.getTableHeight() + 10;
 
       cards.forEach((card: Card, index: number) => {
