@@ -125,6 +125,7 @@ import { LOCALE_CONTEXT_MENUS } from "../locale/locale-context-menus";
 
 import { NSID_TO_TEMPLATE_ID } from "../nsid/nsid-to-template-id";
 import { OnStartThundersEdge } from "../event/on-start-thunders-edge/on-start-thunders-edge";
+import { RightClickTFAbilitySplice } from "../context-menu/tf-splice/right-click-tf-ability";
 
 const packageId: string = refPackageId;
 Find.ignoreOwnedCardHolderNsid("card-holder:base/player-scoring");
@@ -267,6 +268,7 @@ export function resetGlobalThisTI4(): TI4Class {
     new RightClickScorePublic(),
     new RightClickSpecOps2(),
     new RightClickStellarConverter(),
+    new RightClickTFAbilitySplice(),
     new RightClickThundersEdge(),
     new RightClickYinAscendant(),
     new RSwapSplitCombine(),
