@@ -72,11 +72,16 @@ it("loadDefaultData", () => {
 });
 
 it("loadDefaultData (twilights fall)", () => {
-  const nsid: string = "card.tf-unit-upgrade:twilights-fall/university-war-sun";
-
   const registry = new UnitAttrsRegistry();
   registry.loadDefaultData();
-  expect(registry.rawByNsid(nsid)).toBeDefined();
+
+  // Mech are normally separate cards, not overrides.
+  const overrideNsid: string = "unit:twilights-fall/bone-picked-clean";
+  expect(registry.rawByNsid(overrideNsid)).toBeDefined();
+
+  const cardNsid: string =
+    "card.tf-unit-upgrade:twilights-fall/university-war-sun";
+  expect(registry.rawByNsid(cardNsid)).toBeDefined();
 });
 
 it("validate (global)", () => {

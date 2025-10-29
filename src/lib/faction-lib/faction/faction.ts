@@ -58,6 +58,10 @@ export class Faction {
    */
   getAllianceNsids(): Array<string> {
     let source: string = this._sourceAndPackageId.source;
+    if (source === "twilights-fall") {
+      return [];
+    }
+
     if (source === "base") {
       source = "pok"; // aliance got added in PoK
     }

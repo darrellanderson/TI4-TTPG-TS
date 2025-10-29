@@ -765,6 +765,7 @@ export const SOURCE_TO_UNIT_ATTRS_DATA: Record<
     {
       name: "Bone Picked Clean",
       nsidName: "bone-picked-clean",
+      overrideNsid: "unit:twilights-fall/bone-picked-clean",
       unit: "mech",
       groundCombat: { dice: 2, hit: 5 },
     },
@@ -777,6 +778,7 @@ export const SOURCE_TO_UNIT_ATTRS_DATA: Record<
     {
       name: "Colada",
       nsidName: "colada",
+      overrideNsid: "unit:twilights-fall/colada",
       unit: "mech",
     },
     {
@@ -787,6 +789,7 @@ export const SOURCE_TO_UNIT_ATTRS_DATA: Record<
     {
       name: "Lakoe's Roots",
       nsidName: "lakoes-roots",
+      overrideNsid: "unit:twilights-fall/lakoes-roots",
       unit: "mech",
     },
     {
@@ -797,6 +800,7 @@ export const SOURCE_TO_UNIT_ATTRS_DATA: Record<
     {
       name: "Starlancer II",
       nsidName: "starlancer-ii",
+      overrideNsid: "unit:twilights-fall/starlancer-ii",
       unit: "mech",
       hasPlanetaryShield: true,
     },
@@ -809,6 +813,7 @@ export const SOURCE_TO_UNIT_ATTRS_DATA: Record<
     {
       name: "Analyzer",
       nsidName: "analyzer",
+      overrideNsid: "unit:twilights-fall/analyzer",
       unit: "mech",
     },
     {
@@ -820,6 +825,7 @@ export const SOURCE_TO_UNIT_ATTRS_DATA: Record<
     {
       name: "Starlancer XI",
       nsidName: "starlancer-xi",
+      overrideNsid: "unit:twilights-fall/starlancer-xi",
       unit: "mech",
     },
     {
@@ -831,6 +837,7 @@ export const SOURCE_TO_UNIT_ATTRS_DATA: Record<
     {
       name: "The Sharpened Edge",
       nsidName: "the-sharpened-edge",
+      overrideNsid: "unit:twilights-fall/the-sharpened-edge",
       unit: "mech",
     },
     {
@@ -839,7 +846,12 @@ export const SOURCE_TO_UNIT_ATTRS_DATA: Record<
       unit: "flagship",
       spaceCombat: { dice: 2, hit: 9 },
     },
-    { name: "Delver", nsidName: "delver", unit: "mech" },
+    {
+      name: "Delver",
+      nsidName: "delver",
+      overrideNsid: "unit:twilights-fall/delver",
+      unit: "mech",
+    },
     // tf-unit-upgrade cards
     {
       name: "Advanced Carrier",
