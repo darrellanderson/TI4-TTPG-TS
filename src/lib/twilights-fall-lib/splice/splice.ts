@@ -49,15 +49,22 @@ export class Splice {
         card.setRotation([0, 0, 180]);
         card.snapToGround();
 
+        let tokenNsid: string | undefined = undefined;
         const nsid: string = NSID.get(card);
         if (nsid === "card.tf-ability:twilights-fall/telepathic") {
+          tokenNsid = "token:base/naalu-zero";
+        } else if (nsid === "card.tf-paradigm:twilights-fall/awakening") {
+          tokenNsid = "token.attachment.planet:pok/geoform";
+        }
+
+        if (tokenNsid !== undefined) {
           const tokenPos: Vector = card.getPosition().add([0, 0, 10]);
-          const naalu0: GameObject | undefined = TI4.spawn.spawn(
-            "token:base/naalu-zero",
+          const token: GameObject | undefined = TI4.spawn.spawn(
+            tokenNsid,
             tokenPos
           );
-          if (naalu0) {
-            naalu0.snapToGround();
+          if (token) {
+            token.snapToGround();
           }
         }
       });
