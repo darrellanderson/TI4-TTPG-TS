@@ -25,8 +25,6 @@ export const NSID_TO_TEMPLATE_ID: { [key: string]: string } = {
     "card.faction-reference:codex.vigil/0": "657E7D6B356CEE9B0FEFFC44887387DE",
     "card.faction-reference:pok/0": "2D799EB4068A41E37D03028AECFEA3F4",
     "card.faction-reference:thunders-edge/0": "27129CADDB65BD00ABDF785A731777B2",
-    "card.faction-token:base/0": "38CC4192D29DD0676BAA2B10C11343C9",
-    "card.faction-token:pok/0": "27C09736D421194C9C13095C2809701B",
     "card.firmament-plot:thunders-edge/0": "EEEC928530E10138EC317D89F64140BB",
     "card.leader.commander:thunders-edge/agnlan-oln": "B45DEF1CD73A8BBCB29FAE06EA3E1915",
     "card.leader:codex.liberation/0": "427EA706521A52EF66BF0FEA87E3F6EE",
