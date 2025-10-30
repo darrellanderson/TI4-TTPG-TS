@@ -11,7 +11,7 @@ export const ZealousTF: UnitModifierSchemaType = {
     "+1 die to a unit ability (anti-fighter barrage, bombardment, space cannon)",
   owner: "self",
   priority: "choose",
-  triggers: [{ cardClass: "promissory", nsidName: "strike-wing-ambuscade" }],
+  triggers: [{ cardClass: "tf-ability", nsidName: "zealous" }],
   isActiveIdle: true,
   applies: (combatRoll: CombatRoll): boolean => {
     const rollType: CombatRollType = combatRoll.getRollType();

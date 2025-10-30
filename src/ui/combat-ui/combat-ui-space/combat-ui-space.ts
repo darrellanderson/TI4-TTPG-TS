@@ -29,7 +29,7 @@ OnCardBecameSingletonOrDeck.onSingletonCardCreated.add((card: Card): void => {
   if (nsid === "card.tf-ability:twilights-fall/ambush") {
     _tfAmbushId = card.getId();
   }
-  if (nsid === "card.technology.red:thunders-edge/proxima-targeting-vi") {
+  if (nsid === "card.tf-ability:twilights-fall/proxima-targeting-vi") {
     _tfProximaTargetingId = card.getId();
   }
 });
@@ -56,7 +56,7 @@ function _getTfProximaTargetingPlayerSlot(): PlayerSlot {
     );
     if (obj) {
       const nsid: string = NSID.get(obj);
-      if (nsid === "card.technology.red:thunders-edge/proxima-targeting-vi") {
+      if (nsid === "card.tf-ability:twilights-fall/proxima-targeting-vi") {
         const pos: Vector = obj.getPosition();
         const playerSlot: PlayerSlot = _find.closestOwnedCardHolderOwner(pos);
         return playerSlot;

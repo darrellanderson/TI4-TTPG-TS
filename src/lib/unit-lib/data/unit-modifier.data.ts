@@ -263,6 +263,9 @@ add("twilights-fall", MirrorComputingTF);
 import { MunitionsReservesTF } from "./unit-modifiers/twilights-fall/munitions-reserves-tf";
 add("twilights-fall", MunitionsReservesTF);
 
+import { TacticalBrilliance } from "./unit-modifiers/twilights-fall/tactical-brilliance";
+add("twilights-fall", TacticalBrilliance);
+
 import { Trine } from "./unit-modifiers/twilights-fall/trine";
 add("twilights-fall", Trine);
 
