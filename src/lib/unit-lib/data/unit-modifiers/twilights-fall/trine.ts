@@ -5,7 +5,7 @@ import { UnitAttrs } from "../../../unit-attrs/unit-attrs";
 
 export const Trine: UnitModifierSchemaType = {
   name: "Trine",
-  description: "SPACE CANNON up to 2 systems away fire",
+  description: "SPACE CANNON up to 2 systems away fire (not yet automated)",
   owner: "self",
   priority: "adjust",
   triggers: [{ cardClass: "tf-action", nsidName: "trine" }],

@@ -832,7 +832,7 @@ export const SOURCE_TO_UNIT_ATTRS_DATA: Record<
       name: "The Scarlet Knife",
       nsidName: "the-scarlet-knife",
       unit: "flagship",
-      bombardment: { dice: 2, hit: 5 },
+      spaceCombat: { dice: 2, hit: 5 },
     },
     {
       name: "The Sharpened Edge",
