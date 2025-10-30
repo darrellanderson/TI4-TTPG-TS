@@ -8,7 +8,7 @@ import { UnitAttrs } from "../../../unit-attrs/unit-attrs";
 
 export const EchoOfAscension: UnitModifierSchemaType = {
   name: "Echo of Ascension",
-  description: "Flagship -1 hit, +2 dice",
+  description: "Flagship -1 hit, +1 dice",
   owner: "self",
   priority: "adjust",
   triggers: [{ cardClass: "tf-unit-upgrade", nsidName: "echo-of-ascension" }],
@@ -23,7 +23,7 @@ export const EchoOfAscension: UnitModifierSchemaType = {
       const spaceCombat: CombatAttrs | undefined = unitAttrs.getSpaceCombat();
       if (spaceCombat) {
         spaceCombat.addHit(-1);
-        spaceCombat.addDice(2);
+        spaceCombat.addDice(1);
       }
     }
   },

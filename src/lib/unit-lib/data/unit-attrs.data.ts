@@ -973,6 +973,8 @@ export const SOURCE_TO_UNIT_ATTRS_DATA: Record<
       nsidName: "prototype-war-sun",
       overrideNsid: "card.tf-unit-upgrade:twilights-fall/prototype-war-sun",
       unit: "war-sun",
+      bombardment: { dice: 3, hit: 3 },
+      spaceCombat: { dice: 3, hit: 3 },
     },
     {
       name: "Saggitaria",
@@ -1003,6 +1005,8 @@ export const SOURCE_TO_UNIT_ATTRS_DATA: Record<
       nsidName: "the-dragon-freed",
       overrideNsid: "card.tf-unit-upgrade:twilights-fall/the-dragon-freed",
       unit: "war-sun",
+      bombardment: { dice: 3, hit: 3 },
+      spaceCombat: { dice: 3, hit: 3 },
     },
     {
       name: "Triune",

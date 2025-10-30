@@ -36,7 +36,7 @@ export const EidolonTerminus: UnitModifierSchemaType = {
 
       const groundCombat: CombatAttrs | undefined = unitAttrs.getGroundCombat();
       if (groundCombat) {
-        groundCombat.addDice(1);
+        groundCombat.addHit(1);
       }
     }
   },
