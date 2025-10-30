@@ -23,6 +23,7 @@ export class UnitAttrs {
   private _produceQuantityDoesNotCountAgainstProductionLimits: number; // per unit
   private _sharedProduceQuantityDoesNotCountAgainstProductionLimits: number; // overall
   private _diceColor: Color | undefined;
+  private _capacity: number | undefined;
 
   private _isShip: boolean;
   private _isGround: boolean;
@@ -87,6 +88,7 @@ export class UnitAttrs {
     this._producePerCost = params.producePerCost ?? 1;
     this._produceQuantityDoesNotCountAgainstProductionLimits = 0;
     this._sharedProduceQuantityDoesNotCountAgainstProductionLimits = 0;
+    this._capacity = params.capacity;
 
     this._isShip = params.isShip ?? false;
     this._isGround = params.isGround ?? false;
@@ -130,6 +132,9 @@ export class UnitAttrs {
   applyOverride(override: UnitAttrsSchemaType): this {
     if (override.cost !== undefined) {
       this._cost = override.cost;
+    }
+    if (override.capacity !== undefined) {
+      this._capacity = override.capacity;
     }
     if (override.disablePlanetaryShield) {
       this._disablePlanetaryShield = true;
@@ -208,6 +213,10 @@ export class UnitAttrs {
       throw new Error("no bombardment");
     }
     return this._bombardment;
+  }
+
+  getCapacity(): number | undefined {
+    return this._capacity;
   }
 
   getComponentCount(): number {

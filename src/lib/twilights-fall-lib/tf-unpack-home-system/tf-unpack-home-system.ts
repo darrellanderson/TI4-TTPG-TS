@@ -1,6 +1,7 @@
 import { Card, GameObject, Player } from "@tabletop-playground/api";
 import {
   AbstractRightClickCard,
+  Broadcast,
   CardUtil,
   DeletedItemsContainer,
   NSID,
@@ -30,6 +31,17 @@ class RightClickTfUnpackHomeSystem extends AbstractRightClickCard {
   _unpackHomeSystem(object: GameObject, player: Player): void {
     const nsid: string = NSID.get(object);
     const playerSlot: number = player.getSlot();
+
+    const overriddenTile: number | undefined =
+      Faction.getOverrideHomeSystemTileNumber(playerSlot);
+    if (overriddenTile !== undefined) {
+      Broadcast.chatOne(
+        player,
+        "Home system already unpacked",
+        Broadcast.ERROR
+      );
+      return;
+    }
 
     const parsed: ParsedNSID | undefined = NSID.parse(nsid);
     if (parsed) {

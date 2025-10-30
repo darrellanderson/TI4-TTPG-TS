@@ -245,6 +245,9 @@ add("twilights-fall", AmbushTF);
 import { AristocraticGenome } from "./unit-modifiers/twilights-fall/aristocratic-genome";
 add("twilights-fall", AristocraticGenome);
 
+import { Colada } from "./unit-modifiers/twilights-fall/colada";
+add("twilights-fall", Colada);
+
 import { EchoOfAscension } from "./unit-modifiers/twilights-fall/echo-of-ascension";
 add("twilights-fall", EchoOfAscension);
 
@@ -262,6 +265,9 @@ add("twilights-fall", MirrorComputingTF);
 
 import { MunitionsReservesTF } from "./unit-modifiers/twilights-fall/munitions-reserves-tf";
 add("twilights-fall", MunitionsReservesTF);
+
+import { StarlancerXI } from "./unit-modifiers/twilights-fall/starlancer-xi";
+add("twilights-fall", StarlancerXI);
 
 import { TacticalBrilliance } from "./unit-modifiers/twilights-fall/tactical-brilliance";
 add("twilights-fall", TacticalBrilliance);
