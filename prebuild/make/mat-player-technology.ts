@@ -21,6 +21,7 @@ function baseCell(): ZImageCell {
     width: W,
     height: H,
     imageFile: "prebuild/mat/slot/slot-landscape.jpg",
+    snapPoints: [{}],
   };
 }
 
