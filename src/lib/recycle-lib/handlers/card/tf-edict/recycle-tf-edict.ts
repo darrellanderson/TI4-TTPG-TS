@@ -5,6 +5,7 @@ export class RecycleCardTfEdict extends SimpleCardGarbageHandler {
     super();
     this.setCardNsidPrefix("card.tf-edict:")
       .setFaceUp(true)
-      .setSnapPointTag("discard-agenda");
+      .setShuffleAfterDiscard(true) // edicts shuffle back in
+      .setSnapPointTag("deck-agenda");
   }
 }
