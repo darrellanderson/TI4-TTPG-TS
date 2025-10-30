@@ -55,8 +55,15 @@ export class TurnOrderUI {
 
   private _turnOrderWidget: TurnOrderWidget | undefined;
 
+  private _onTurnStateChanged = () => {
+    const order: Array<number> = TI4.turnOrder.getTurnOrder();
+    if (order.length !== TI4.config.playerCount) {
+      this.attachToScreen();
+    }
+  };
+
   constructor() {
-    TI4.events.onPlayerChangedColor.add(this._onPlayerChangedColorHandler);
+    TurnOrder.onTurnStateChanged.add(this._onTurnStateChanged);
   }
 
   getParams(): TurnOrderWidgetParams {
@@ -78,11 +85,15 @@ export class TurnOrderUI {
       turnOrder,
       this._params
     ).attachToScreen();
+
+    TI4.events.onPlayerChangedColor.add(this._onPlayerChangedColorHandler);
+
     return this;
   }
 
   destroy(): void {
     if (this._turnOrderWidget) {
+      this._turnOrderWidget.detach();
       this._turnOrderWidget.destroy();
       this._turnOrderWidget = undefined;
     }

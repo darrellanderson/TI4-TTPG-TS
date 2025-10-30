@@ -42,6 +42,15 @@ export class StartGame implements IGlobal {
     const layout: LayoutAll = new LayoutAll(playerCount);
     layout.getLayout().doLayoutAtPoint(pos, yaw);
 
+    // Reset turn order.
+    const order: Array<number> = TI4.playerSeats
+      .getAllSeats()
+      .map((seat) => seat.playerSlot);
+    const first: number | undefined = order[0];
+    if (first !== undefined) {
+      TI4.turnOrder.setTurnOrder(order, "forward", first);
+    }
+
     return true;
   }
 
