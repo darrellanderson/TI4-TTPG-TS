@@ -1,15 +1,14 @@
 /**
  * Combine base planet and pok legendary planet in one mat.
  */
-
 import {
-  CreateBoard,
-  CreateBoardParams,
   ZColCell,
   ZImageCell,
   ZPaddedCell,
   ZTextCell,
-} from "../../../ttpg-darrell/src/index-ext";
+} from "../../node_modules/ttpg-darrell/build/cjs/lib-ext/image/cell/cell-parser/cell-schema";
+import { CreateBoardParams } from "../../node_modules/ttpg-darrell/build/cjs/lib-ext/create-assets/create-board/create-board-params";
+import { CreateBoard } from "../../node_modules/ttpg-darrell/build/cjs/lib-ext/create-assets/create-board/create-board";
 
 const LANDSCAPE_H: number = 220;
 const LANDSCAPE_W: number = 308;

@@ -1,12 +1,12 @@
 import {
-  CreateBoard,
-  CreateBoardParams,
   ZCanvasCell,
   ZColCell,
   ZImageCell,
   ZPaddedCell,
   ZRowCell,
-} from "../../../ttpg-darrell/src/index-ext";
+} from "../../node_modules/ttpg-darrell/build/cjs/lib-ext/image/cell/cell-parser/cell-schema";
+import { CreateBoardParams } from "../../node_modules/ttpg-darrell/build/cjs/lib-ext/create-assets/create-board/create-board-params";
+import { CreateBoard } from "../../node_modules/ttpg-darrell/build/cjs/lib-ext/create-assets/create-board/create-board";
 
 const W: number = 308;
 const H: number = 220;
@@ -21,7 +21,6 @@ function baseCell(): ZImageCell {
     width: W,
     height: H,
     imageFile: "prebuild/mat/slot/slot-landscape.jpg",
-    snapPoints: [{ tags: ["card-technology"] }],
   };
 }
 
