@@ -13,6 +13,7 @@ import {
   DeletedItemsContainer,
   NSID,
 } from "ttpg-darrell";
+import { RemoveByNsidOrSource } from "../../../lib/remove-lib/remove-by-nsid-or-source/remove-by-nsid-or-source";
 
 export const ACTION_YIN_ASCENDANT: string = "*Draw unused alliance";
 
@@ -44,6 +45,11 @@ export class RightClickYinAscendant extends AbstractRightClickCard {
     const fullDeck: Card =
       TI4.spawn.spawnMergeDecksWithNsidPrefixOrThrow("card.alliance:");
 
+    // Prune out not-in-use alliances (replaced by codex).
+    const remove: RemoveByNsidOrSource =
+      TI4.removeRegistry.createRemoveFromRegistryAndConfig();
+    remove.removeOne(fullDeck);
+
     const cardUtil: CardUtil = new CardUtil();
     const usableDeck: Card | undefined = cardUtil.filterCards(
       fullDeck,
@@ -67,7 +73,7 @@ export class RightClickYinAscendant extends AbstractRightClickCard {
   _yinAscendant(object: GameObject, player: Player): void {
     const card: Card | undefined = this._getUnusedAllianceCard();
     if (card) {
-      const above: Vector = object.getPosition().add([0, 0, 10]);
+      const above: Vector = object.getPosition().add([-2, 0, 10]);
       card.setPosition(above);
       card.snapToGround();
 
@@ -86,6 +92,12 @@ export class RightClickYinAscendant extends AbstractRightClickCard {
       const nsid: string = NSID.get(obj);
       if (nsid.startsWith("card.alliance:")) {
         nsids.push(nsid);
+      }
+      // If any Keleres prevent all flavors.
+      if (nsid.startsWith("card.alliance:codex.vigil/keleres")) {
+        nsids.push("card.alliance:codex.vigil/keleres-argent");
+        nsids.push("card.alliance:codex.vigil/keleres-mentak");
+        nsids.push("card.alliance:codex.vigil/keleres-xxcha");
       }
     }
     return nsids;
