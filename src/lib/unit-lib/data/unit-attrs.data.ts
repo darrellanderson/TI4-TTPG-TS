@@ -796,6 +796,7 @@ export const SOURCE_TO_UNIT_ATTRS_DATA: Record<
       name: "Airo Shir Rex",
       nsidName: "airo-shir-rex",
       unit: "flagship",
+      antiFighterBarrage: { dice: 3, hit: 5 },
     },
     {
       name: "Starlancer II",
