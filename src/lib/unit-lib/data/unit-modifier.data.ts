@@ -266,5 +266,11 @@ add("twilights-fall", MunitionsReservesTF);
 import { Trine } from "./unit-modifiers/twilights-fall/trine";
 add("twilights-fall", Trine);
 
+import { UnrelentingTF } from "./unit-modifiers/twilights-fall/unrelenting-tf";
+add("twilights-fall", UnrelentingTF);
+
 import { ValefarPrime } from "./unit-modifiers/twilights-fall/valefar-prime";
 add("twilights-fall", ValefarPrime);
+
+import { ZealousTF } from "./unit-modifiers/twilights-fall/zealous-tf";
+add("twilights-fall", ZealousTF);
