@@ -1,5 +1,5 @@
 import { Card, GameObject, Vector, world } from "@tabletop-playground/api";
-import { Find, NSID } from "ttpg-darrell";
+import { Find } from "ttpg-darrell";
 
 export class Splice {
   splice(deck: Card, count: number): void {
@@ -48,25 +48,6 @@ export class Splice {
         card.setPosition(pos);
         card.setRotation([0, 0, 180]);
         card.snapToGround();
-
-        let tokenNsid: string | undefined = undefined;
-        const nsid: string = NSID.get(card);
-        if (nsid === "card.tf-ability:twilights-fall/telepathic") {
-          tokenNsid = "token:base/naalu-zero";
-        } else if (nsid === "card.tf-paradigm:twilights-fall/awakening") {
-          tokenNsid = "token.attachment.planet:pok/geoform";
-        }
-
-        if (tokenNsid !== undefined) {
-          const tokenPos: Vector = card.getPosition().add([0, 0, 10]);
-          const token: GameObject | undefined = TI4.spawn.spawn(
-            tokenNsid,
-            tokenPos
-          );
-          if (token) {
-            token.snapToGround();
-          }
-        }
       });
     }
   }

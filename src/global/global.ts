@@ -132,6 +132,8 @@ import { LOCALE_CONTEXT_MENUS } from "../locale/locale-context-menus";
 
 import { NSID_TO_TEMPLATE_ID } from "../nsid/nsid-to-template-id";
 import { OnStartTwilightsFall } from "../event/on-start-twilights-fall/on-start-twilights-fall";
+import { TFAwakeningGeoform } from "../context-menu/tf-fetch-tokens/tf-awakening-geoform";
+import { TFTelepathicNaalu0 } from "../context-menu/tf-fetch-tokens/tf-telepathic-naalu-0";
 
 const packageId: string = refPackageId;
 Find.ignoreOwnedCardHolderNsid("card-holder:base/player-scoring");
@@ -286,6 +288,8 @@ export function resetGlobalThisTI4(): TI4Class {
     new ShuffleDecks(),
     new StartGame(),
     new StartGameWindow(),
+    new TFAwakeningGeoform(),
+    new TFTelepathicNaalu0(),
     new ToggleActionPhaseTimes(),
     new ToggleAllPlayersTech(),
     new ToggleBorders(),
