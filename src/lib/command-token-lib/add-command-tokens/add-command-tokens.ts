@@ -90,6 +90,18 @@ export class AddCommandTokens {
           slotToCount.set(owner, count);
         }
       }
+
+      // Add one if tf versatile.
+      if (nsid === "card.tf-ability:twilights-fall/versatile") {
+        const owner: number = this._find.closestOwnedCardHolderOwner(
+          obj.getPosition()
+        );
+        let count: number | undefined = slotToCount.get(owner);
+        if (count !== undefined) {
+          count += 1;
+          slotToCount.set(owner, count);
+        }
+      }
     }
     return slotToCount;
   }

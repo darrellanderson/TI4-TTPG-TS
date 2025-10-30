@@ -60,6 +60,18 @@ export class DealActionCards {
           slotToCount.set(owner, count);
         }
       }
+
+      // Add one if tf scheming.
+      if (nsid === "card.tf-ability:twilights-fall/scheming") {
+        const owner: number = this._find.closestOwnedCardHolderOwner(
+          obj.getPosition()
+        );
+        let count: number | undefined = slotToCount.get(owner);
+        if (count !== undefined) {
+          count += 1;
+          slotToCount.set(owner, count);
+        }
+      }
     }
 
     return slotToCount;
