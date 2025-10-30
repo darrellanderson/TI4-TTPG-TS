@@ -13,12 +13,17 @@ class ContainerLiberationScenario {
   private readonly _container: Container;
 
   private readonly _onStartGameComplete = (): void => {
+    const above = this._container.getPosition().add([0, 0, 10]);
+
     let nsid: string = "";
     const cardUtil: CardUtil = new CardUtil();
 
     // Move ordinian system tile, planet and legendary card here.
     nsid = "tile.system:codex.liberation/1800";
-    const ordinianSystemTile: GameObject | undefined = TI4.spawn.spawn(nsid);
+    const ordinianSystemTile: GameObject | undefined = TI4.spawn.spawn(
+      nsid,
+      above
+    );
     if (ordinianSystemTile) {
       this._addToContainer(ordinianSystemTile);
     }
@@ -37,33 +42,33 @@ class ContainerLiberationScenario {
 
     // Spawn leaders.
     nsid = "card.leader:codex.liberation/0";
-    const leaders: GameObject | undefined = TI4.spawn.spawn(nsid);
+    const leaders: GameObject | undefined = TI4.spawn.spawn(nsid, above);
     if (leaders) {
       this._addToContainer(leaders);
     }
 
     // Spawn techs.
     nsid = "card.technology.red:codex.liberation/0";
-    const redTechs: GameObject | undefined = TI4.spawn.spawn(nsid);
+    const redTechs: GameObject | undefined = TI4.spawn.spawn(nsid, above);
     if (redTechs) {
       this._addToContainer(redTechs);
     }
 
     nsid = "card.technology.yellow:codex.liberation/null-reference";
-    const yellowTechs: GameObject | undefined = TI4.spawn.spawn(nsid);
+    const yellowTechs: GameObject | undefined = TI4.spawn.spawn(nsid, above);
     if (yellowTechs) {
       this._addToContainer(yellowTechs);
     }
 
     // Spawn objectives.
     nsid = "card.objective.public-1:codex.liberation/liberate-ordinian";
-    const public1: GameObject | undefined = TI4.spawn.spawn(nsid);
+    const public1: GameObject | undefined = TI4.spawn.spawn(nsid, above);
     if (public1) {
       this._addToContainer(public1);
     }
 
     nsid = "card.objective.public-2:codex.liberation/control-ordinian";
-    const public2: GameObject | undefined = TI4.spawn.spawn(nsid);
+    const public2: GameObject | undefined = TI4.spawn.spawn(nsid, above);
     if (public2) {
       this._addToContainer(public2);
     }
