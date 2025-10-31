@@ -99,6 +99,15 @@ export class RightClickYinAscendant extends AbstractRightClickCard {
         nsids.push("card.alliance:codex.vigil/keleres-mentak");
         nsids.push("card.alliance:codex.vigil/keleres-xxcha");
       }
+
+      // If any Obsidian or Firmament prevent both flavors.
+      if (
+        nsid === "card.alliance:thunders-edge/obsidian" ||
+        nsid === "card.alliance:thunders-edge/firmament"
+      ) {
+        nsids.push("card.alliance:thunders-edge/obsidian");
+        nsids.push("card.alliance:thunders-edge/firmament");
+      }
     }
     return nsids;
   }

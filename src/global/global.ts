@@ -134,6 +134,7 @@ import { NSID_TO_TEMPLATE_ID } from "../nsid/nsid-to-template-id";
 import { OnStartTwilightsFall } from "../event/on-start-twilights-fall/on-start-twilights-fall";
 import { TFAwakeningGeoform } from "../context-menu/tf-fetch-tokens/tf-awakening-geoform";
 import { TFTelepathicNaalu0 } from "../context-menu/tf-fetch-tokens/tf-telepathic-naalu-0";
+import { RightClickTFSupercharge } from "../context-menu/cards/tf-supercharge/tf-superchange";
 
 const packageId: string = refPackageId;
 Find.ignoreOwnedCardHolderNsid("card-holder:base/player-scoring");
@@ -280,6 +281,7 @@ export function resetGlobalThisTI4(): TI4Class {
     new RightClickTFAbilitySplice(),
     new RightClickTFGenomeSplice(),
     new RightClickTFParadigmSplice(),
+    new RightClickTFSupercharge(),
     new RightClickTFUnitUpgradeSplice(),
     new RightClickThundersEdge(),
     new RightClickYinAscendant(),
