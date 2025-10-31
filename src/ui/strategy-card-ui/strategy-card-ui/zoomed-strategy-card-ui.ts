@@ -38,6 +38,22 @@ export class ZoomedStrategyCardUI extends AbstractUI {
       image = "tile/strategy-card/strategy_07.png";
     } else if (strategyCardNumber === 8) {
       image = "tile/strategy-card/strategy_08.png";
+    } else if (strategyCardNumber === -1) {
+      image = "tile/strategy-card/1-lux.png";
+    } else if (strategyCardNumber === -2) {
+      image = "tile/strategy-card/2-noctis.png";
+    } else if (strategyCardNumber === -3) {
+      image = "tile/strategy-card/3-tyrannus.png";
+    } else if (strategyCardNumber === -4) {
+      image = "tile/strategy-card/4-civitas.png";
+    } else if (strategyCardNumber === -5) {
+      image = "tile/strategy-card/5-amicus.png";
+    } else if (strategyCardNumber === -6) {
+      image = "tile/strategy-card/6-calamitas.png";
+    } else if (strategyCardNumber === -7) {
+      image = "tile/strategy-card/7-magus.png";
+    } else if (strategyCardNumber === -8) {
+      image = "tile/strategy-card/8-aeterna.png";
     }
     if (image) {
       imageWidget.setImage(image, packageId);

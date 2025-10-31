@@ -66,7 +66,24 @@ export class StrategyCardsState {
       return 7;
     } else if (firstNamePart === "imperial") {
       return 8;
+    } else if (firstNamePart === "1-lux") {
+      return -1;
+    } else if (firstNamePart === "2-noctis") {
+      return -2;
+    } else if (firstNamePart === "3-tyrannus") {
+      return -3;
+    } else if (firstNamePart === "4-civitas") {
+      return -4;
+    } else if (firstNamePart === "5-amicus") {
+      return -5;
+    } else if (firstNamePart === "6-calamitas") {
+      return -6;
+    } else if (firstNamePart === "7-magus") {
+      return -7;
+    } else if (firstNamePart === "8-aeterna") {
+      return -8;
     }
+
     return undefined;
   }
 

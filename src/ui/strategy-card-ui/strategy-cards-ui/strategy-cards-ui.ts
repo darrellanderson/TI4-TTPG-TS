@@ -19,6 +19,14 @@ import { BodyTrade } from "../body-5-trade/body-trade";
 import { BodyWarfare } from "../body-6-warfare/body-warfare";
 import { BodyTechnology } from "../body-7-technology/body-technology";
 import { BodyImperial } from "../body-8-imperial/body-imperial";
+import { BodyLux } from "../body-1-lux/body-1-lux";
+import { BodyMagus } from "../body-7-magus/body-magus";
+import { BodyAeterna } from "../body-8-aeterna/body-aeterna";
+import { BodyAmicus } from "../body-5-amicus/body-amicus";
+import { BodyCivitas } from "../body-4-civitas/body-civitas";
+import { BodyCalamitas } from "../body-6-calamitas/body-calamitas";
+import { BodyNoctis } from "../body-2-noctis/body-noctis";
+import { BodyTyrannus } from "../body-3-tyrannus/body-tyrannus";
 
 /**
  * UI with all active strategy cards.
@@ -60,6 +68,22 @@ export class StrategyCardsUI extends AbstractUI {
         body = new BodyTechnology(strategyCardsState, playerSlot);
       } else if (strategyCardNumber === 8) {
         body = new BodyImperial(strategyCardsState, playerSlot);
+      } else if (strategyCardNumber === -1) {
+        body = new BodyLux(strategyCardsState, playerSlot);
+      } else if (strategyCardNumber === -2) {
+        body = new BodyNoctis(strategyCardsState, playerSlot);
+      } else if (strategyCardNumber === -3) {
+        body = new BodyTyrannus(strategyCardsState, playerSlot);
+      } else if (strategyCardNumber === -4) {
+        body = new BodyCivitas(strategyCardsState, playerSlot);
+      } else if (strategyCardNumber === -5) {
+        body = new BodyAmicus(strategyCardsState, playerSlot);
+      } else if (strategyCardNumber === -6) {
+        body = new BodyCalamitas(strategyCardsState, playerSlot);
+      } else if (strategyCardNumber === -7) {
+        body = new BodyMagus(strategyCardsState, playerSlot);
+      } else if (strategyCardNumber === -8) {
+        body = new BodyAeterna(strategyCardsState, playerSlot);
       }
       if (body) {
         const ui: AbstractUI = new StrategyCardUI(
