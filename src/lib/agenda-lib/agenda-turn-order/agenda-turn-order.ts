@@ -1,9 +1,10 @@
 import { Card, GameObject, Vector } from "@tabletop-playground/api";
-import { Find, PlayerSlot } from "ttpg-darrell";
+import { CardUtil, Find, PlayerSlot } from "ttpg-darrell";
 import { Faction } from "../../faction-lib/faction/faction";
 
 export class AgendaTurnOrder {
   private readonly _find: Find = new Find();
+  private readonly _cardUtil: CardUtil = new CardUtil();
 
   public _getSpeakerTokenOrThrow(): GameObject {
     const nsid: string = "token:base/speaker";
@@ -109,7 +110,16 @@ export class AgendaTurnOrder {
       undefined,
       true
     );
-    if (hackElectionCard) {
+    const allowFaceDown: boolean = false;
+    const rejectSnapPointTags: Array<string> = ["discard-action"];
+    if (
+      hackElectionCard &&
+      this._cardUtil.isLooseCard(
+        hackElectionCard,
+        allowFaceDown,
+        rejectSnapPointTags
+      )
+    ) {
       const pos: Vector = hackElectionCard.getPosition();
       const hackElectionPlayerSlot: PlayerSlot =
         this._find.closestOwnedCardHolderOwner(pos);
