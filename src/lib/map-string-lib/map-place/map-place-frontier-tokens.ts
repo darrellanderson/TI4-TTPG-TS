@@ -14,6 +14,7 @@ export class MapPlaceFrontierTokens {
         .filter((planet) => !planet.isSpaceStation());
       if (
         planets.length === 0 &&
+        system.getSystemTileNumber() > 0 &&
         !system.isHyperlane() &&
         system.getClass() !== "fracture"
       ) {

@@ -208,6 +208,9 @@ export class SystemRegistry {
     return Array.from(this._systemTileObjIdToSystem.values()).filter(
       (system) => {
         const obj: GameObject = system.getObj();
+        if (!obj.isValid()) {
+          return false;
+        }
         if (skipContained && obj.getContainer()) {
           return false;
         }
