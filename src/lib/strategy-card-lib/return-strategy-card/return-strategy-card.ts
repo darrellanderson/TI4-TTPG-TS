@@ -1,8 +1,9 @@
 import { GameObject, Vector, world } from "@tabletop-playground/api";
-import { Find, NSID } from "ttpg-darrell";
+import { CardUtil, Find, NSID } from "ttpg-darrell";
 import { RecycleStrategyCard } from "../../recycle-lib/handlers/strategy-card/recycle-strategy-card";
 
 export class ReturnStrategyCard {
+  private readonly _cardUtil: CardUtil = new CardUtil();
   private readonly _find: Find = new Find();
   private readonly _recycleStrateydCard: RecycleStrategyCard =
     new RecycleStrategyCard();
@@ -13,9 +14,14 @@ export class ReturnStrategyCard {
     let politicalStabilityOwner: number = -1;
 
     const skipContained: boolean = true;
+    const allowFaceDown: boolean = false;
+    const rejectSnapPointTags: Array<string> = ["discard-action"];
     for (const obj of world.getAllObjects(skipContained)) {
       const nsid: string = NSID.get(obj);
-      if (nsid === "card.action:base/political-stability") {
+      if (
+        nsid === "card.action:base/political-stability" &&
+        this._cardUtil.isLooseCard(obj, allowFaceDown, rejectSnapPointTags)
+      ) {
         const pos: Vector = obj.getPosition();
         politicalStabilityOwner = this._find.closestOwnedCardHolderOwner(pos);
       } else if (nsid.startsWith("tile.strategy-card:")) {

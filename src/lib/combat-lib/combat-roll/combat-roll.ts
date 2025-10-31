@@ -145,11 +145,12 @@ export class CombatRoll {
   public readonly find: Find = new Find();
 
   static createCooked(params: CombatRollParams): CombatRoll {
-    return new CombatRoll(params)
-      .applyUnitPlasticAndSetOpponentPlayerSlot() // assign opponent player slot early!
-      .applyFactions() // assign before overrides, to allow for faction units
-      .applyUnitOverries()
-      .applyUnitModifiersOrThrow(); // always do this last, reads state others set
+    const combatRoll: CombatRoll = new CombatRoll(params);
+    combatRoll.applyUnitPlasticAndSetOpponentPlayerSlot();
+    combatRoll.applyFactions();
+    combatRoll.applyUnitOverrides();
+    combatRoll.applyUnitModifiersOrThrow();
+    return combatRoll;
   }
 
   constructor(params: CombatRollParams) {
@@ -324,6 +325,10 @@ export class CombatRoll {
     const nekroZs: Array<GameObject> = [];
     const factionSheets: Array<GameObject> = [];
     for (const obj of world.getAllObjects(skipContained)) {
+      if (!obj.isValid()) {
+        continue;
+      }
+
       const nsid: string = NSID.get(obj);
       if (atopApplyToAllNsids.has(nsid)) {
         atopApplyToAll.push(obj);
@@ -706,7 +711,7 @@ export class CombatRoll {
     return this;
   }
 
-  public applyUnitOverries(): this {
+  public applyUnitOverrides(): this {
     for (const data of [this.self, this.opponent]) {
       const unitOverrides: Array<UnitAttrsSchemaType> =
         this._findUnitAttrOverrides(data.playerSlot);
@@ -722,10 +727,16 @@ export class CombatRoll {
   }
 
   public applyUnitModifiers(errors: Array<Error>): this {
+    // XXX TEMPORARY HAMMER HACK: SOMETHING CAN HANG.
+    if (this.getRollType() === "production") {
+      return this;
+    }
+
     const unitModifiers: Array<UnitModifier> = this._findUnitModifiers(
       this.self.playerSlot,
       this.opponent.playerSlot
     );
+
     for (const modifier of unitModifiers) {
       // Run each modifier in a try/catch block, an error will only suppress
       // one modifier, not the whole set (or the call stack!).
@@ -739,6 +750,7 @@ export class CombatRoll {
         errors.push(e);
       }
     }
+
     return this;
   }
 

@@ -895,7 +895,7 @@ it("applyUnitOverrides", () => {
     "Carrier"
   );
 
-  combatRoll.applyUnitOverries();
+  combatRoll.applyUnitOverrides();
   expect(combatRoll.self.unitAttrsSet.get("carrier")?.getName()).toBe(
     "Carrier II"
   );

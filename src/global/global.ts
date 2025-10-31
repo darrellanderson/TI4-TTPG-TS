@@ -135,6 +135,9 @@ import { OnStartTwilightsFall } from "../event/on-start-twilights-fall/on-start-
 import { TFAwakeningGeoform } from "../context-menu/tf-fetch-tokens/tf-awakening-geoform";
 import { TFTelepathicNaalu0 } from "../context-menu/tf-fetch-tokens/tf-telepathic-naalu-0";
 import { RightClickTFSupercharge } from "../context-menu/cards/tf-supercharge/tf-superchange";
+import { HeroDimensionalAnchor } from "../context-menu/heroes/hero-dimensional-anchor/hero-dimensional-anchor";
+import { HeroHelioCommandArray } from "../context-menu/heroes/hero-helio-command-array/hero-helio-command-array";
+import { HeroMultiverseShift } from "../context-menu/heroes/hero-multiverse-shift/hero-multiverse-shift";
 
 const packageId: string = refPackageId;
 Find.ignoreOwnedCardHolderNsid("card-holder:base/player-scoring");
@@ -235,6 +238,9 @@ export function resetGlobalThisTI4(): TI4Class {
     new DiplomacySystem(),
     // new DisplayPDSAdjacency(),
     new GameDataExport(),
+    new HeroDimensionalAnchor(),
+    new HeroHelioCommandArray(),
+    new HeroMultiverseShift(),
     new LeaveSeat(),
     new NumpadKeyAll(),
     new OnAgendaCard(),
@@ -319,7 +325,7 @@ export function resetGlobalThisTI4(): TI4Class {
     iGlobals.push(
       ...[
         new BugCardHolderAssignment("card-holder:base/player-hand"),
-        //new BugForceTransformUpdates(),
+        ////new BugForceTransformUpdates(),
         new BugUniqueCards(),
         new CreateAndAttachEndTurnButtonUI(),
         new CreateAndAttachTurnOrderUI(),

@@ -134,7 +134,7 @@ it("getSimpleSummary (extra dice)", () => {
     hex: "<0,0,0>",
     activatingPlayerSlot: 1,
     rollingPlayerSlot: 10,
-  }).applyUnitOverries();
+  }).applyUnitOverrides();
 
   const overrides: Array<UnitAttrsSchemaType> =
     combatRoll._findUnitAttrOverrides(10);
