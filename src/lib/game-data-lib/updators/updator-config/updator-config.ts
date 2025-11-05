@@ -10,7 +10,9 @@ export class UpdatorConfig implements IGameDataUpdator {
       codex1: sources.has("codex.affinity"),
       codex2: sources.has("codex.ordinian"),
       codex3: sources.has("codex.vigil"),
-      codex4: false,
+      codex4: sources.has("codex.liberation"),
+      te: sources.has("thunders-edge"),
+      tf: sources.has("twilights-fall"),
     };
     gameData.config = config;
     gameData.platform = "ttpg";

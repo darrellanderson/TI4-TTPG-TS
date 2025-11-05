@@ -4,4 +4,6 @@ export type UpdatorConfigType = {
   codex2?: boolean;
   codex3?: boolean;
   codex4?: boolean;
+  te?: boolean;
+  tf?: boolean;
 };
