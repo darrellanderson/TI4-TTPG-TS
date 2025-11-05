@@ -22,5 +22,7 @@ it("data", () => {
     codex2: false,
     codex3: false,
     codex4: false,
+    te: false,
+    tf: false,
   });
 });
