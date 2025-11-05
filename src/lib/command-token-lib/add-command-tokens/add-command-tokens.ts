@@ -1,9 +1,16 @@
-import { Container, GameObject, Vector, world } from "@tabletop-playground/api";
+import {
+  Container,
+  GameObject,
+  GameWorld,
+  Vector,
+  world,
+} from "@tabletop-playground/api";
 import { CardUtil, Find, GarbageHandler, NSID } from "ttpg-darrell";
 
 import { Faction } from "../../faction-lib/faction/faction";
 import { PlayerSeats } from "../../player-lib/player-seats/player-seats";
 import { RecycleCardPromissory } from "../../recycle-lib/handlers/card/promissory/recycle-card-promissory";
+import { cloneReplace } from "../../clone-replace";
 
 export class AddCommandTokens {
   private readonly _cardUtil: CardUtil = new CardUtil();
@@ -167,6 +174,9 @@ export class AddCommandTokens {
         container.take(commandToken, pos, showAnimation, keep)
       ) {
         commandToken.snapToGround();
+        if (GameWorld.getExecutionReason() !== "unittest") {
+          cloneReplace(commandToken);
+        }
         successCount++;
       }
       pos = pos.add([0, 2, 0]);
