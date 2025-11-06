@@ -1,5 +1,6 @@
 import {
   GameObject,
+  GameWorld,
   ObjectType,
   Rotator,
   Vector,
@@ -8,6 +9,10 @@ import {
 import { DeletedItemsContainer } from "ttpg-darrell";
 
 export function cloneReplace(obj: GameObject): GameObject {
+  if (GameWorld.getExecutionReason() === "unittest") {
+    return obj;
+  }
+
   const json: string = obj.toJSONString();
   const pos: Vector = obj.getPosition();
   const rot: Rotator = obj.getRotation();

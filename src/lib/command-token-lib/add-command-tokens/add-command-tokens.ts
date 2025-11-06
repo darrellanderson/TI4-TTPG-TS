@@ -1,10 +1,4 @@
-import {
-  Container,
-  GameObject,
-  GameWorld,
-  Vector,
-  world,
-} from "@tabletop-playground/api";
+import { Container, GameObject, Vector, world } from "@tabletop-playground/api";
 import { CardUtil, Find, GarbageHandler, NSID } from "ttpg-darrell";
 
 import { Faction } from "../../faction-lib/faction/faction";
@@ -174,9 +168,7 @@ export class AddCommandTokens {
         container.take(commandToken, pos, showAnimation, keep)
       ) {
         commandToken.snapToGround();
-        if (GameWorld.getExecutionReason() !== "unittest") {
-          cloneReplace(commandToken);
-        }
+        cloneReplace(commandToken);
         successCount++;
       }
       pos = pos.add([0, 2, 0]);

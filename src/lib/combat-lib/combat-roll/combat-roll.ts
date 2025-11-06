@@ -3,6 +3,7 @@ import {
   Color,
   GameObject,
   GameWorld,
+  globalEvents,
   Player,
   Vector,
   world,
@@ -35,6 +36,24 @@ import { UnitAttrsSet } from "../../unit-lib/unit-attrs-set/unit-attrs-set";
 import { UnitModifier } from "../../unit-lib/unit-modifier/unit-modifier";
 import { UnitModifierActiveIdle } from "../../unit-lib/unit-modifier/unit-modifier-active-idle";
 import { UnitPlastic } from "../../unit-lib/unit-plastic/unit-plastic";
+
+const __atopCache: Map<string, Atop> = new Map();
+globalEvents.onObjectDestroyed.add((obj: GameObject) => {
+  const id = obj.getId();
+  const atop = __atopCache.get(id);
+  if (atop) {
+    __atopCache.delete(id);
+  }
+});
+function __atopCacheGet(obj: GameObject): Atop {
+  const id = obj.getId();
+  let atop = __atopCache.get(id);
+  if (!atop) {
+    atop = new Atop(obj);
+    __atopCache.set(id, atop);
+  }
+  return atop;
+}
 
 export type CombatRollType =
   | "ambush"
@@ -346,10 +365,26 @@ export class CombatRoll {
         factionSheets.push(obj);
       }
     }
+
+    // Create Atop objects.
+    const atopIgnoreAtops: Array<Atop> = atopIgnore.map((obj) =>
+      __atopCacheGet(obj)
+    );
+    const atopApplyToAllAtops: Array<Atop> = atopApplyToAll.map((obj) =>
+      __atopCacheGet(obj)
+    );
+    const atopFactionSheetsAtops: Array<Atop> = factionSheets.map((obj) =>
+      __atopCacheGet(obj)
+    );
+
     const getControlTokenOwner = (card: GameObject): number => {
-      const atop: Atop = new Atop(card);
+      if (!(card instanceof Card)) {
+        return -1;
+      }
+      const atop: Atop | undefined = __atopCacheGet(card); // "new Atop" hung during a build area update
       for (const controlToken of controlTokens) {
-        if (atop.isAtop(controlToken.getPosition())) {
+        const pos: Vector = controlToken.getPosition();
+        if (atop.isAtop(pos)) {
           return controlToken.getOwningPlayerSlot();
         }
       }
@@ -365,89 +400,93 @@ export class CombatRoll {
     ): void => {
       const modifier: UnitModifier | undefined =
         TI4.unitModifierRegistry.getByNsid(nsid);
-      if (modifier) {
-        // Only use cards when face-up.
-        let useModifier: boolean = true;
-        if (obj instanceof Card) {
-          const allowFaceDown: boolean = false;
-          const rejectSnapPointTags: Array<string> = ["discard"];
-          useModifier = this._cardUtil.isLooseCard(
-            obj,
-            allowFaceDown,
-            rejectSnapPointTags
-          );
-        }
 
+      if (!modifier) {
+        return;
+      }
+
+      // Only use cards when face-up.
+      if (obj instanceof Card) {
+        const allowFaceDown: boolean = false;
+        const rejectSnapPointTags: Array<string> = ["discard"];
+        const useModifier: boolean = this._cardUtil.isLooseCard(
+          obj,
+          allowFaceDown,
+          rejectSnapPointTags
+        );
+        if (!useModifier) {
+          return;
+        }
+      }
+
+      if (
+        modifier.isActiveIdle() &&
+        obj &&
+        !UnitModifierActiveIdle.isActive(obj)
+      ) {
+        return;
+      }
+
+      // Self-promissory notes are "for sale" and not active.
+      if (nsid.startsWith("card.promissory:") && obj && this.self.faction) {
+        const pos: Vector = obj.getPosition();
+        const closest: number = this.find.closestOwnedCardHolderOwner(pos);
         if (
-          modifier.isActiveIdle() &&
-          obj &&
-          !UnitModifierActiveIdle.isActive(obj)
+          closest === selfSlot &&
+          this.self.faction.getPromissoryNsids().includes(nsid)
         ) {
-          useModifier = false;
+          return;
         }
+      }
 
-        // Self-promissory notes are "for sale" and not active.
-        if (nsid.startsWith("card.promissory:") && obj && this.self.faction) {
+      // If atopIgnore, ignore this modifier.
+      if (obj) {
+        for (const atop of atopIgnoreAtops) {
+          if (atop.isAtop(obj.getPosition())) {
+            return;
+          }
+        }
+      }
+
+      // Control token takes precedence for ownership, otherwise closest player.
+      if (owningPlayerSlot < 0 && obj) {
+        owningPlayerSlot = getControlTokenOwner(obj); // here
+        if (owningPlayerSlot < 0) {
           const pos: Vector = obj.getPosition();
-          const closest: number = this.find.closestOwnedCardHolderOwner(pos);
-          if (
-            closest === selfSlot &&
-            this.self.faction.getPromissoryNsids().includes(nsid)
-          ) {
-            useModifier = false;
+          owningPlayerSlot = this.find.closestOwnedCardHolderOwner(pos);
+        }
+      }
+
+      const isSelf: boolean = owningPlayerSlot === selfSlot;
+      const isOpponent: boolean = owningPlayerSlot === opponentSlot;
+      let requireAny: boolean = modifier.getOwner() === "any";
+      const requireSelf: boolean = modifier.getOwner() === "self";
+      const requireOpponent: boolean = modifier.getOwner() === "opponent";
+
+      // If atopApplyToAll, apply to all players.
+      if (obj) {
+        for (const atop of atopApplyToAllAtops) {
+          if (atop.isAtop(obj.getPosition())) {
+            requireAny = true;
+            break;
           }
         }
+      }
 
-        // If atopIgnore, ignore this modifier.
-        if (obj) {
-          for (const atopObj of atopIgnore) {
-            const atop: Atop = new Atop(atopObj);
-            if (atop.isAtop(obj.getPosition())) {
-              useModifier = false;
-              break;
-            }
-          }
-        }
-
-        if (useModifier) {
-          // Control token takes precedence for ownership, otherwise closest player.
-          if (obj) {
-            owningPlayerSlot = getControlTokenOwner(obj);
-            if (owningPlayerSlot < 0) {
-              const pos: Vector = obj.getPosition();
-              owningPlayerSlot = this.find.closestOwnedCardHolderOwner(pos);
-            }
-          }
-          const isSelf: boolean = owningPlayerSlot === selfSlot;
-          const isOpponent: boolean = owningPlayerSlot === opponentSlot;
-          let requireAny: boolean = modifier.getOwner() === "any";
-          const requireSelf: boolean = modifier.getOwner() === "self";
-          const requireOpponent: boolean = modifier.getOwner() === "opponent";
-
-          // If atopApplyToAll, apply to all players.
-          if (obj) {
-            for (const atopObj of atopApplyToAll) {
-              const atop: Atop = new Atop(atopObj);
-              if (atop.isAtop(obj.getPosition())) {
-                requireAny = true;
-                break;
-              }
-            }
-          }
-
-          if (
-            requireAny ||
-            (isSelf && requireSelf) ||
-            (isOpponent && requireOpponent)
-          ) {
-            unitModifiers.push(modifier);
-          }
-        }
+      if (
+        requireAny ||
+        (isSelf && requireSelf) ||
+        (isOpponent && requireOpponent)
+      ) {
+        unitModifiers.push(modifier);
       }
     };
 
     // Modifiers on table.
     for (const obj of world.getAllObjects(skipContained)) {
+      if (!obj.isValid()) {
+        continue;
+      }
       const nsid: string = NSID.get(obj);
       maybeAddModifier(nsid, obj, -1);
     }
@@ -481,8 +520,11 @@ export class CombatRoll {
     }
 
     // Nekro Zs
-    factionSheets.forEach((factionSheet: GameObject): void => {
-      const atop: Atop = new Atop(factionSheet);
+    factionSheets.forEach((factionSheet: GameObject, index: number): void => {
+      const atop: Atop | undefined = atopFactionSheetsAtops[index];
+      if (!atop) {
+        return;
+      }
       nekroZs.forEach((nekroZ: GameObject): void => {
         const pos: Vector = nekroZ.getPosition();
         if (atop.isAtop(pos)) {
@@ -728,9 +770,9 @@ export class CombatRoll {
 
   public applyUnitModifiers(errors: Array<Error>): this {
     // XXX TEMPORARY HAMMER HACK: SOMETHING CAN HANG.
-    if (this.getRollType() === "production") {
-      return this;
-    }
+    //if (this.getRollType() === "production") {
+    //return this;
+    //}
 
     const unitModifiers: Array<UnitModifier> = this._findUnitModifiers(
       this.self.playerSlot,
