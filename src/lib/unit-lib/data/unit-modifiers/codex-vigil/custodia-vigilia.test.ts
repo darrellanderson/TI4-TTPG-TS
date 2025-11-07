@@ -55,3 +55,21 @@ it("modifier (wrong roll type)", () => {
   });
   expect(combatRoll.getUnitModifierNames()).toEqual([]);
 });
+
+it("modifier (new mecatol)", () => {
+  placeGameObjects({
+    systemNsid: "tile.system:thunders-edge/112",
+    self: [
+      "card.legendary-planet:codex.vigil/custodia-vigilia",
+      "card.planet:thunders-edge/mecatol-rex",
+    ],
+  });
+  const combatRoll: CombatRoll = CombatRoll.createCooked({
+    rollType: "spaceCannonOffense",
+    hex: "<0,0,0>",
+    activatingPlayerSlot: OPPONENT,
+    rollingPlayerSlot: SELF,
+  });
+  expect(combatRoll.getUnitModifierNames()).toEqual(["Custodia Vigilia"]);
+  expect(combatRoll.self.hasUnit("custodia-vigilia" as UnitType)).toBe(true);
+});

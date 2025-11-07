@@ -20,16 +20,19 @@ export const CustodiaVigilia: UnitModifierSchemaType = {
   applies: (combatRoll: CombatRoll): boolean => {
     const rollType: CombatRollType = combatRoll.getRollType();
     const system: System | undefined = combatRoll.system;
+    const tile: number = system?.getSystemTileNumber() ?? -1;
     if (
       (rollType === "spaceCannonDefense" ||
         rollType === "spaceCannonOffense") &&
       system !== undefined &&
-      system.getSystemTileNumber() === 18
+      TI4.systemRegistry.isMecatolRex(tile)
     ) {
       // Does player control Mecatol Rex?
-      const planetCard: Card | undefined = combatRoll.find.findCard(
-        "card.planet:base/mecatol-rex"
-      );
+      const nsid: string =
+        tile === 18
+          ? "card.planet:base/mecatol-rex"
+          : "card.planet:thunders-edge/mecatol-rex";
+      const planetCard: Card | undefined = combatRoll.find.findCard(nsid);
       if (planetCard) {
         const pos: Vector = planetCard.getPosition();
         const owner: number = combatRoll.find.closestOwnedCardHolderOwner(pos);
