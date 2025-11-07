@@ -119,7 +119,7 @@ it("update", () => {
 it("report", () => {
   const mat = new MockGameObject({ owningPlayerSlot: 10 });
   const buildArea = new BuildArea(mat);
-  buildArea.report();
+  buildArea.reportRes();
 
   // Again, via custom action.
   const player = new MockPlayer();

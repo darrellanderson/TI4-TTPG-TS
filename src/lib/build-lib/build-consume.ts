@@ -16,7 +16,8 @@ export type BuildConsumeEntry = {
   obj: GameObject;
   type: BuildConsumeType;
   name: string;
-  value: number;
+  res: number;
+  inf: number;
 };
 
 export class BuildConsume {
@@ -29,19 +30,24 @@ export class BuildConsume {
     for (const obj of objs) {
       const nsid: string = NSID.get(obj);
       let type: BuildConsumeType | undefined = undefined;
-      let value: number = 0;
+      let res: number = 0;
+      let inf: number = 0;
       let name: string = "tradegood";
       if (nsid === "token:base/tradegood-commodity-1") {
         type = "tradegood";
-        value = 1;
+        res = 1;
+        inf = 1;
         if (unitModifierNames.includes(MirrorComputing.name)) {
-          value *= 2;
+          res *= 2;
+          inf *= 2;
         }
       } else if (nsid === "token:base/tradegood-commodity-3") {
         type = "tradegood";
-        value = 3;
+        res = 3;
+        inf = 3;
         if (unitModifierNames.includes(MirrorComputing.name)) {
-          value *= 2;
+          res *= 2;
+          inf *= 2;
         }
       } else if (nsid.startsWith("card.planet:")) {
         const planet: Planet | undefined =
@@ -49,16 +55,20 @@ export class BuildConsume {
         if (planet) {
           type = "planet";
           name = planet.getName();
-          value = planet.getResources();
+          res = planet.getResources();
+          inf = planet.getInfluence();
           if (unitModifierNames.includes(XxekirGrom.name)) {
-            value += planet.getInfluence();
+            res += planet.getInfluence();
+            inf += planet.getResources();
           }
           if (unitModifierNames.includes(ArchonsGift.name)) {
-            value = Math.max(planet.getResources(), planet.getInfluence());
+            res = Math.max(planet.getResources(), planet.getInfluence());
+            inf = res;
           }
         }
       } else if (nsid.startsWith("card.deepwrought-ocean:")) {
-        value == 1;
+        res = 1;
+        inf = 1;
       }
 
       if (type) {
@@ -66,7 +76,8 @@ export class BuildConsume {
           obj: obj,
           type,
           name,
-          value,
+          res,
+          inf,
         });
       }
     }
@@ -79,21 +90,27 @@ export class BuildConsume {
   getTradegoodValue(): number {
     return this._entries
       .filter((entry) => entry.type === "tradegood")
-      .reduce((acc, entry) => acc + entry.value, 0);
+      .reduce((acc, entry) => acc + entry.res, 0);
   }
 
-  getPlanetValue(): number {
+  getPlanetRes(): number {
     return this._entries
       .filter((entry) => entry.type === "planet")
-      .reduce((acc, entry) => acc + entry.value, 0);
+      .reduce((acc, entry) => acc + entry.res, 0);
   }
 
-  getTotalValue(): number {
-    return this.getTradegoodValue() + this.getPlanetValue();
+  getPlanetInf(): number {
+    return this._entries
+      .filter((entry) => entry.type === "planet")
+      .reduce((acc, entry) => acc + entry.inf, 0);
   }
 
-  getTotalValueWithModifiers(): string {
-    let total: string = this.getTotalValue().toString();
+  getTotalRes(): number {
+    return this.getTradegoodValue() + this.getPlanetRes();
+  }
+
+  getTotalResWithModifiers(): string {
+    let total: string = this.getTotalRes().toString();
     if (this._unitModifierNames.includes(SarweenTools.name)) {
       total += "+ST";
     }
@@ -103,7 +120,11 @@ export class BuildConsume {
     return total;
   }
 
-  report(): string {
+  getTotalInf(): number {
+    return this.getTradegoodValue() + this.getPlanetInf();
+  }
+
+  reportRes(): string {
     const result: Array<string> = [];
 
     const tradegoods: number = this.getTradegoodValue();
@@ -113,11 +134,29 @@ export class BuildConsume {
 
     for (const entry of this._entries) {
       if (entry.type === "planet") {
-        result.push(`${entry.name} (${entry.value})`);
+        result.push(`${entry.name} (${entry.res})`);
       }
     }
 
-    const total: string = this.getTotalValueWithModifiers();
+    const total: string = this.getTotalResWithModifiers();
+    return `consuming $${total}: ${result.join(", ")}`;
+  }
+
+  reportInf(): string {
+    const result: Array<string> = [];
+
+    const tradegoods: number = this.getTradegoodValue();
+    if (tradegoods > 0) {
+      result.push(`tradegoods (${tradegoods})`);
+    }
+
+    for (const entry of this._entries) {
+      if (entry.type === "planet") {
+        result.push(`${entry.name} (${entry.inf})`);
+      }
+    }
+
+    const total: string = this.getTotalInf().toString();
     return `consuming $${total}: ${result.join(", ")}`;
   }
 

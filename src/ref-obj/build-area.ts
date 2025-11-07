@@ -79,8 +79,11 @@ export class BuildArea {
     const togglePrivacyActionName: string = "*Toggle Privacy";
     this._obj.addCustomAction(togglePrivacyActionName);
 
-    const reportActionName: string = "*Report";
-    this._obj.addCustomAction(reportActionName);
+    const reportResActionName: string = "*Report build (resources)";
+    this._obj.addCustomAction(reportResActionName);
+
+    const reportInfActionName: string = "*Report influence";
+    this._obj.addCustomAction(reportInfActionName);
 
     const warpToHomeActionName: string = "*Warp to Home";
     this._obj.addCustomAction(warpToHomeActionName);
@@ -90,8 +93,11 @@ export class BuildArea {
         if (action === togglePrivacyActionName) {
           this.togglePrivacyMode();
         }
-        if (action === reportActionName) {
-          this.report();
+        if (action === reportResActionName) {
+          this.reportRes();
+        }
+        if (action === reportInfActionName) {
+          this.reportInf();
         }
         if (action === warpToHomeActionName) {
           this._warpToHome();
@@ -111,7 +117,7 @@ export class BuildArea {
     // Get layout position and size.
     const scale: number = 4;
     const pad: number = 0.35;
-    const fontSize: number = 5.8 * scale;
+    const fontSize: number = 5.7 * scale;
     const size = {
       w: (extent.y * 2 * 10 - pad * 20) * scale, // ui is 10x
       h: 15 * scale,
@@ -223,10 +229,11 @@ export class BuildArea {
     const { produce, consume } = this._getProduceAndConsume();
 
     const cost: number = produce.getCost();
-    const spend: string = consume.getTotalValueWithModifiers();
+    const spend: string = consume.getTotalResWithModifiers();
     const unitCount: number = produce.getPlasticCount();
+    const inf: number = consume.getTotalInf();
 
-    return `Cost: ${cost}   Resources: ${spend}  #Units: ${unitCount}`;
+    return `Cost: ${cost}  Resources: ${spend}  #Units: ${unitCount}  Influence: ${inf}`;
   }
 
   togglePrivacyMode(): this {
@@ -246,12 +253,12 @@ export class BuildArea {
     return this;
   }
 
-  update() {
+  update(): void {
     const summary: string = this.getSummary();
     this._summaryText.setText(summary);
   }
 
-  report() {
+  reportRes(): void {
     const { produce, consume } = this._getProduceAndConsume();
 
     const playerSlot: number = this._obj.getOwningPlayerSlot();
@@ -263,9 +270,21 @@ export class BuildArea {
       " " +
       [
         produce.report(),
-        consume.report(),
+        consume.reportRes(),
         `#Units: ${produce.getPlasticCount()}`,
       ].join("\n");
+    Broadcast.chatAll(msg, color);
+  }
+
+  reportInf(): void {
+    const { consume } = this._getProduceAndConsume();
+
+    const playerSlot: number = this._obj.getOwningPlayerSlot();
+    const name: string = TI4.playerColor.getSlotColorNameOrThrow(playerSlot);
+    const color: Color = world.getSlotColor(playerSlot);
+
+    const msg: string =
+      name + " influence: " + [consume.reportInf()].join("\n");
     Broadcast.chatAll(msg, color);
   }
 }
