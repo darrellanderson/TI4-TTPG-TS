@@ -125,36 +125,6 @@ export class RightClickFracture implements IGlobal {
   _getUnitPlasticOrThrow(unit: UnitType, pos: Vector): GameObject {
     const source: string = unit === "mech" ? "pok" : "base";
 
-    /*
-    const nsid: string = `container.unit:${source}/${unit}`;
-
-    const find: Find = new Find();
-    const skipContained: boolean = true;
-    const container: Container | undefined = find.findContainer(
-      nsid,
-      19,
-      skipContained
-    );
-    if (!container) {
-      throw new Error(`Could not find container for ${unit}/19`);
-    }
-
-    const takeIndex: number = 0;
-    const showAnimation: boolean = false;
-    const keep: boolean = true;
-    const obj: GameObject | undefined = container.takeAt(
-      takeIndex,
-      pos,
-      showAnimation,
-      keep
-    );
-    if (!obj) {
-      throw new Error(`Could not find plastic for ${unit}/19`);
-    }
-      */
-
-    // takeAt with keep is buggy on released TTPG.
-    // TODO remove this when fixed.
     const nsid: string = `unit:${source}/${unit}`;
     const obj: GameObject | undefined = TI4.spawn.spawn(nsid, pos);
     if (!obj) {
