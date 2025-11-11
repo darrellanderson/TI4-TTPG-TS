@@ -26,6 +26,8 @@ export class UnpackLeaders extends AbstractUnpack {
 
   unpack(): void {
     const leaderSheet: GameObject = this._findLeaderSheetOrThrow();
+    const yaw: number = leaderSheet.getRotation().yaw;
+
     const snapPoints: Array<SnapPoint> = leaderSheet.getAllSnapPoints();
     if (snapPoints.length !== 4) {
       throw new Error("Unexpected number of snap points");
@@ -39,28 +41,28 @@ export class UnpackLeaders extends AbstractUnpack {
     nsids = this.getFaction().getAgentNsids();
     snapPoint = snapPoints[3];
     if (snapPoint) {
-      const rot: Rotator = new Rotator(0, 0, 180);
+      const rot: Rotator = new Rotator(0, yaw, 180);
       this._unpackLeaders(deck, nsids, snapPoint, rot);
     }
 
     nsids = this.getFaction().getCommanderNsids();
     snapPoint = snapPoints[2];
     if (snapPoint) {
-      const rot: Rotator = new Rotator(0, 0, 0);
+      const rot: Rotator = new Rotator(0, yaw, 0);
       this._unpackLeaders(deck, nsids, snapPoint, rot);
     }
 
     nsids = this.getFaction().getHeroNsids();
     snapPoint = snapPoints[1];
     if (snapPoint) {
-      const rot: Rotator = new Rotator(0, 0, 0);
+      const rot: Rotator = new Rotator(0, yaw, 0);
       this._unpackLeaders(deck, nsids, snapPoint, rot);
     }
 
     nsids = this.getFaction().getMechNsids();
     snapPoint = snapPoints[0];
     if (snapPoint) {
-      const rot: Rotator = new Rotator(0, 0, 180);
+      const rot: Rotator = new Rotator(0, yaw, 180);
       this._unpackLeaders(deck, nsids, snapPoint, rot);
     }
 
