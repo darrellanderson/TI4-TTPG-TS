@@ -18,6 +18,7 @@ import {
 } from "../schema/basic-types-schema";
 import { SystemTier, SystemTierType } from "../system/system-tier";
 import { cloneReplace } from "../../clone-replace/clone-replace";
+import { PlanetSchemaType } from "../schema";
 
 const packageId: string = refPackageId;
 
@@ -278,6 +279,28 @@ export class SystemRegistry {
         }
       }
     }
+
+    // Negative tile numbers are a hack for planets without system tiles.
+    // Check those, create a dummy planet object.
+    for (const schemaAndSource of this._systemTileNumberToSchemaAndSource.values()) {
+      const schema: SystemSchemaType = schemaAndSource.schema;
+      const planetSchemas: Array<PlanetSchemaType> | undefined = schema.planets;
+      if (schema.tile < 0 && planetSchemas) {
+        for (const planetSchema of planetSchemas) {
+          const source: string = schemaAndSource.sourceAndPackageId.source;
+          const planetCardNsid: string = `card.planet:${source}/${planetSchema.nsidName}`;
+          if (planetCardNsid === nsid) {
+            const obj: GameObject | undefined = undefined;
+            return new Planet(
+              obj,
+              schemaAndSource.sourceAndPackageId,
+              planetSchema
+            );
+          }
+        }
+      }
+    }
+
     return undefined;
   }
 
