@@ -38,7 +38,7 @@ export class ToggleCombatWindow implements IGlobal {
     this._createWindow();
 
     // Open for players activating or with units in the system.
-    const playerSlots: Array<number> = this._getRelevantPlayerSlots(
+    const playerSlots: Set<number> = this._getRelevantPlayerSlots(
       system,
       player
     );
@@ -47,13 +47,13 @@ export class ToggleCombatWindow implements IGlobal {
     const adjPds2PlayerSlots: Array<number> =
       this._getAdjPds2PlayerSlots(system);
     for (const playerSlot of adjPds2PlayerSlots) {
-      if (!playerSlots.includes(playerSlot)) {
-        playerSlots.push(playerSlot);
+      if (!playerSlots.has(playerSlot)) {
+        playerSlots.add(playerSlot);
       }
     }
 
     // Open windows.
-    if (this._window && playerSlots.length > 1) {
+    if (this._window && playerSlots.size > 1) {
       for (const playerSlot of playerSlots) {
         if (!this._window.isAttachedForPlayer(playerSlot)) {
           this._window.toggleForPlayer(playerSlot);
@@ -62,12 +62,12 @@ export class ToggleCombatWindow implements IGlobal {
     }
 
     // Play sound.
-    if (playerSlots.length > 1) {
+    if (playerSlots.size > 1) {
       const startTime: number | undefined = 0;
       const volume: number | undefined = 0.5;
       const loop: boolean | undefined = false;
       const players: PlayerPermission | undefined =
-        new PlayerPermission().setPlayerSlots(playerSlots);
+        new PlayerPermission().setPlayerSlots(Array.from(playerSlots));
       world
         .importSound("combat-start.flac", packageId)
         .play(startTime, volume, loop, players);
@@ -132,7 +132,7 @@ export class ToggleCombatWindow implements IGlobal {
    *
    * @returns
    */
-  _getRelevantPlayerSlots(system: System, player: Player): Array<number> {
+  _getRelevantPlayerSlots(system: System, player: Player): Set<number> {
     const playersSlotsSet: Set<number> = new Set<number>();
 
     // Activating player.
@@ -147,7 +147,7 @@ export class ToggleCombatWindow implements IGlobal {
       }
     });
 
-    return Array.from(playersSlotsSet);
+    return playersSlotsSet;
   }
 
   _hasAdjPds2(system: System, playerSlot: number): boolean {
