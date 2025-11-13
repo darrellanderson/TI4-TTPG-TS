@@ -17,7 +17,7 @@ import { Facing, NSID } from "ttpg-darrell";
  * A token-less planet attachment is possible, see it for details.
  */
 export class Planet {
-  private readonly _obj: GameObject; // system tile or system attachment
+  private readonly _obj: GameObject | undefined; // system tile or system attachment
   private readonly _sourceAndPackageId: SourceAndPackageIdSchemaType;
   private readonly _params: PlanetSchemaType;
   private readonly _attachments: Array<PlanetAttachment> = [];
@@ -25,7 +25,7 @@ export class Planet {
   private _localPositionFaceDown: Vector | undefined;
 
   constructor(
-    obj: GameObject,
+    obj: GameObject | undefined,
     sourceAndPackageId: SourceAndPackageIdSchemaType,
     params: PlanetSchemaType
   ) {
@@ -38,14 +38,16 @@ export class Planet {
       throw new Error(msg);
     }
 
-    const objNsid: string = NSID.get(obj);
-    if (
-      !objNsid.startsWith("tile.system:") &&
-      !objNsid.startsWith("token.attachment.system:")
-    ) {
-      throw new Error(
-        `invalid object: "${objNsid}", expect either "tile.system:" or "token.attachment.system:" prefix`
-      );
+    if (obj) {
+      const objNsid: string = NSID.get(obj);
+      if (
+        !objNsid.startsWith("tile.system:") &&
+        !objNsid.startsWith("token.attachment.system:")
+      ) {
+        throw new Error(
+          `invalid object: "${objNsid}", expect either "tile.system:" or "token.attachment.system:" prefix`
+        );
+      }
     }
 
     this._obj = obj;
@@ -162,6 +164,9 @@ export class Planet {
    * @returns
    */
   public getObj(): GameObject {
+    if (!this._obj) {
+      throw new Error("no planet object (not a normal planet)");
+    }
     return this._obj;
   }
   /**
@@ -180,6 +185,10 @@ export class Planet {
    * @returns
    */
   getPosition(): Vector {
+    if (!this._obj) {
+      throw new Error("no planet object (not a normal planet)");
+    }
+
     const nsid: string = NSID.get(this._obj);
     if (nsid.startsWith("token.attachment.system:")) {
       return this._obj.getPosition();
@@ -212,6 +221,10 @@ export class Planet {
    * @returns
    */
   getRadius(): number {
+    if (!this._obj) {
+      throw new Error("no planet object (not a normal planet)");
+    }
+
     const localRadius: number =
       this._params.radius ?? SystemDefaults.PLANET_RADIUS;
     const worldRadius: number = this._obj.getScale().x * localRadius;
