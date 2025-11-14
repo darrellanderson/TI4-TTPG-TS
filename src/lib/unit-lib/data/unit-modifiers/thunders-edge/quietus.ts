@@ -1,54 +1,23 @@
-import {
-  GameObject,
-  globalEvents,
-  Vector,
-  world,
-} from "@tabletop-playground/api";
-import { Facing, HexType, NSID } from "ttpg-darrell";
+import { GameObject, Vector } from "@tabletop-playground/api";
+import { Facing, HexType } from "ttpg-darrell";
 import { CombatRoll } from "../../../../combat-lib";
 import { UnitModifierSchemaType, UnitType } from "../../../schema";
 import { CombatAttrs, UnitAttrs } from "../../../unit-attrs";
 import { UnitPlastic } from "../../../unit-plastic";
 
-// Track breach tokens and all flagships.
-const _breachObjIds: Set<string> = new Set();
-const _flagshipObjIds: Set<string> = new Set();
-
-function _maybeAddObjId(obj: GameObject): void {
-  const nsid: string = NSID.get(obj);
-  const id: string = obj.getId();
-  if (nsid === "token.attachment.system:thunders-edge/crimson-breach") {
-    _breachObjIds.add(id);
-  } else if (nsid === "unit:base/flagship") {
-    _flagshipObjIds.add(id); // all flagships, may not have owner yet
-  }
-}
-
-function _maybeDelObjId(obj: GameObject): void {
-  const id: string = obj.getId();
-  if (_breachObjIds.has(id)) {
-    _breachObjIds.delete(id);
-  }
-  if (_flagshipObjIds.has(id)) {
-    _flagshipObjIds.delete(id);
-  }
-}
-
-export function quietusInit(): void {
-  globalEvents.onObjectCreated.add(_maybeAddObjId);
-  globalEvents.onObjectDestroyed.add(_maybeDelObjId);
-  world.getAllObjects().forEach((obj: GameObject): void => {
-    _maybeAddObjId(obj);
-  });
-}
-quietusInit();
-
 export function _getActiveBreachHexes(): Set<HexType> {
   const activeBreachHexes: Set<HexType> = new Set();
-  _breachObjIds.forEach((id: string) => {
-    const obj: GameObject | undefined = world.getObjectById(id);
-    if (obj && !obj.getContainer() && Facing.isFaceUp(obj)) {
-      const pos: Vector = obj.getPosition();
+
+  TI4.findTracking.trackNsid(
+    "token.attachment.system:thunders-edge/crimson-breach"
+  );
+  const breachObjs: Array<GameObject> = TI4.findTracking.find(
+    "token.attachment.system:thunders-edge/crimson-breach"
+  );
+
+  breachObjs.forEach((breachObj: GameObject): void => {
+    if (!breachObj.getContainer() && Facing.isFaceUp(breachObj)) {
+      const pos: Vector = breachObj.getPosition();
       const hex: HexType = TI4.hex.fromPosition(pos);
       activeBreachHexes.add(hex);
     }
@@ -58,14 +27,17 @@ export function _getActiveBreachHexes(): Set<HexType> {
 
 export function _getFlagshipHexes(playerSlot: number): Set<HexType> {
   const flagshipHexes: Set<HexType> = new Set();
-  _flagshipObjIds.forEach((id: string) => {
-    const obj: GameObject | undefined = world.getObjectById(id);
+
+  TI4.findTracking.trackNsid("unit:base/flagship");
+  const flagshipObjs: Array<GameObject> =
+    TI4.findTracking.find("unit:base/flagship");
+
+  flagshipObjs.forEach((flagshipObj: GameObject): void => {
     if (
-      obj &&
-      !obj.getContainer() &&
-      obj.getOwningPlayerSlot() === playerSlot
+      !flagshipObj.getContainer() &&
+      flagshipObj.getOwningPlayerSlot() === playerSlot
     ) {
-      const pos: Vector = obj.getPosition();
+      const pos: Vector = flagshipObj.getPosition();
       const hex: HexType = TI4.hex.fromPosition(pos);
       flagshipHexes.add(hex);
     }

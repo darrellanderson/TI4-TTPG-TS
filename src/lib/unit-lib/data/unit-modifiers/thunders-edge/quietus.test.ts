@@ -1,13 +1,10 @@
+import { GameObject } from "@tabletop-playground/api";
 import { Find, HexType } from "ttpg-darrell";
-import { GameObject, MockGameObject } from "ttpg-mock";
+import { MockGameObject } from "ttpg-mock";
 import { CombatRollParams, CombatRoll } from "../../../../combat-lib";
 import { UnitType } from "../../../schema/unit-attrs-schema";
 import { OPPONENT, SELF, placeGameObjects } from "../abstract.test";
-import {
-  _getActiveBreachHexes,
-  _getFlagshipHexes,
-  quietusInit,
-} from "./quietus";
+import { _getActiveBreachHexes, _getFlagshipHexes } from "./quietus";
 
 it("registry", () => {
   const nsid: string = "unit:thunders-edge/quietus";
@@ -16,8 +13,6 @@ it("registry", () => {
 });
 
 it("modifier", () => {
-  quietusInit(); // globalEvents gets reset between tests, so re-init
-
   const combatParams: CombatRollParams = {
     rollType: "antiFighterBarrage",
     hex: "<0,0,0>",
