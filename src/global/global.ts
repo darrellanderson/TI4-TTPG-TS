@@ -6,6 +6,7 @@ import {
   DiceGroupCleanup,
   ErrorHandler,
   Find,
+  FindTracking,
   GlobalInit,
   Hex,
   HEX_LAYOUT_POINTY, // TTPG inverts x/y axis
@@ -176,6 +177,7 @@ export class TI4Class {
   public readonly factionRegistry = new FactionRegistry()
     .loadDefaultData()
     .loadDefaultRewriteNsid();
+  public readonly findTracking = new FindTracking();
   public readonly gameDataUpdator = new GameDataUpdator(
     GAME_DATA_UPDATORS
   ).startPeriodicUpdatesInProduction();
