@@ -66,10 +66,11 @@ export class RightClickObsidianFirmament implements IGlobal {
       Broadcast.chatAll(msg, color);
 
       const pos: Vector = obj.getPosition();
-      const playerSlot: number = obj.getOwningPlayerSlot();
       const factionSheetNsid: string = NSID.get(obj);
       const fromFirmament: boolean =
         factionSheetNsid === FACTION_SHEET_FIRMAMENT;
+
+      const playerSlot: number = new Find().closestOwnedCardHolderOwner(pos);
 
       if (fromFirmament) {
         this._remove(SWAP_FIRMAMENT);
