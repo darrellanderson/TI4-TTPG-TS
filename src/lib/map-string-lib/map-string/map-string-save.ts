@@ -14,7 +14,8 @@ export class MapStringSave {
       skipContained
     )) {
       // Ignore off-map systems.
-      if (system.getClass() === "off-map") {
+      const systemClass: string = system.getClass();
+      if (systemClass === "off-map" || systemClass === "fracture") {
         continue;
       }
 
