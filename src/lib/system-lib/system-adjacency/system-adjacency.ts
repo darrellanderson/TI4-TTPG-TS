@@ -8,13 +8,14 @@ import {
   HexType,
 } from "ttpg-darrell";
 
+import { Faction } from "../../faction-lib/faction/faction";
 import { System } from "../system/system";
 import { SystemAdjacencyBreach } from "./system-adjacency-breach";
 import { SystemAdjacencyHyperlane } from "./system-adjacency-hyperlane";
 import { SystemAdjacencyIngress } from "./system-adjacency-ingress";
 import { SystemAdjacencyNeighbor } from "./system-adjacency-neighbor";
 import { SystemAdjacencyWormhole } from "./system-adjacency-wormhole";
-import { Faction } from "../../faction-lib/faction/faction";
+import { SystemAdjacencyTFSpacialConduitCylinder } from "./system-adjacency-tf-spacial-conduit-cylinder";
 
 export class SystemAdjacency {
   private readonly _breach = new SystemAdjacencyBreach();
@@ -22,6 +23,8 @@ export class SystemAdjacency {
   private readonly _ingress = new SystemAdjacencyIngress();
   private readonly _neighbor = new SystemAdjacencyNeighbor();
   private readonly _wormhole = new SystemAdjacencyWormhole();
+  private readonly _tfSpacialConduitCylinder =
+    new SystemAdjacencyTFSpacialConduitCylinder();
 
   static getHexToSystem(): Map<HexType, System> {
     const hexToSystem: Map<HexType, System> = new Map();
