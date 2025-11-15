@@ -6,7 +6,7 @@ import { UnitModifierSchemaType } from "../../../schema/unit-modifier-schema";
 import { CombatAttrs } from "../../../unit-attrs/combat-attrs";
 import { UnitPlastic } from "../../../unit-plastic";
 
-function _numMechInSpace(combatRoll: CombatRoll): number {
+export function _numMechInSpace(combatRoll: CombatRoll): number {
   let numMechInSpace = 0;
   combatRoll.self.unitPlasticHex.forEach((plastic: UnitPlastic): void => {
     if (
@@ -34,9 +34,7 @@ export const Colada: UnitModifierSchemaType = {
   },
   apply: (combatRoll: CombatRoll): void => {
     let bestCombatAttrs: CombatAttrs | undefined;
-    for (const [_unit, unitAttrs] of combatRoll.self.unitAttrsSet
-      .getAll()
-      .entries()) {
+    for (const unitAttrs of combatRoll.self.unitAttrsSet.getAll()) {
       let combatAttrs: CombatAttrs | undefined;
       if (combatRoll.getRollType() === "spaceCombat") {
         combatAttrs = unitAttrs.getSpaceCombat();
@@ -45,7 +43,12 @@ export const Colada: UnitModifierSchemaType = {
       }
 
       const capacity: number | undefined = unitAttrs.getCapacity();
-      if (combatAttrs && capacity && capacity > 0) {
+      if (
+        combatRoll.self.hasUnit(unitAttrs.getUnit()) &&
+        combatAttrs &&
+        capacity !== undefined &&
+        capacity > 0
+      ) {
         if (
           !bestCombatAttrs ||
           combatAttrs.getHit() < bestCombatAttrs.getHit()

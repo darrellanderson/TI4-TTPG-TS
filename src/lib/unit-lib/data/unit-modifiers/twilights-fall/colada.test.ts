@@ -4,8 +4,9 @@ import {
 } from "../../../../combat-lib/combat-roll/combat-roll";
 import { UnitType } from "../../../schema/unit-attrs-schema";
 import { OPPONENT, placeGameObjects, SELF } from "../abstract.test";
+import { _numMechInSpace } from "./colada";
 
-it("2ram (registry)", () => {
+it("registry", () => {
   const nsid = "unit:twilights-fall/colada";
   expect(TI4.unitModifierRegistry.getByNsid(nsid)?.getName()).toBe("Colada");
 });
@@ -33,7 +34,9 @@ it("Colada", () => {
     ]),
     selfUnitsOffPlanet: new Map<UnitType, number>([["mech", 3]]),
   });
+
   combatRoll = CombatRoll.createCooked(params);
+  expect(_numMechInSpace(combatRoll)).toBe(3);
   expect(combatRoll.getUnitModifierNames()).toEqual(["Colada"]);
   expect(
     combatRoll.self.unitAttrsSet
