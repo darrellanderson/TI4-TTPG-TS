@@ -1144,7 +1144,7 @@ export const SOURCE_TO_FACTION_DATA: Record<
       ],
       commodities: 3,
       factionTechs: ["neural-parasite", "planesplitter"],
-      home: 96, // TODO FLIP
+      home: 96, // flipped, done by swapping from firmament
       leaders: {
         agents: ["vos-hollow"],
         commanders: ["aroz-hollow"],
