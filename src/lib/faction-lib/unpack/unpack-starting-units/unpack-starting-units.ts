@@ -4,6 +4,7 @@ import { Find, GarbageContainer, NSID } from "ttpg-darrell";
 import { UnitType } from "../../../unit-lib/schema/unit-attrs-schema";
 import { Faction } from "../../faction/faction";
 import { AbstractUnpack } from "../abstract-unpack/abstract-unpack";
+import { cloneReplace } from "../../../clone-replace";
 
 export class UnpackStartingUnits extends AbstractUnpack {
   private readonly _find: Find = new Find();
@@ -27,12 +28,13 @@ export class UnpackStartingUnits extends AbstractUnpack {
         `Could not find container for ${unit}/${this.getPlayerSlot()}`
       );
     }
-    const obj: GameObject | undefined = container.takeAt(0, pos);
+    let obj: GameObject | undefined = container.takeAt(0, pos);
     if (!obj) {
       throw new Error(
         `Could not find plastic for ${unit}/${this.getPlayerSlot()}`
       );
     }
+    obj = cloneReplace(obj);
     return obj;
   }
 

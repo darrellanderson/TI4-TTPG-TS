@@ -6,6 +6,22 @@ export class AgendaAvailableVotes {
   private readonly _cardUtil: CardUtil = new CardUtil();
   private readonly _find: Find = new Find();
 
+  constructor() {
+    TI4.findTracking.trackNsids([
+      "card.leader.commander:pok/elder-qanoj",
+      "card.alliance:pok/xxcha",
+      "card.agenda:pok/representative-government",
+      "card.agenda:base/representative-government",
+      "card.leader.hero:codex.vigil/xxekir-grom.omega",
+      "card.breakthrough:thunders-edge/archons-gift",
+      "card.relic:thunders-edge/the-triad",
+      "card.exploration.cultural:pok/cultural-relic-fragment",
+      "card.exploration.frontier:pok/unknown-relic-fragment",
+      "card.exploration.hazardous:pok/hazardous-relic-fragment",
+      "card.exploration.industrial:pok/industrial-relic-fragment",
+    ]);
+  }
+
   _getPlayerSlotToPerPlanetBonus(): Map<PlayerSlot, number> {
     const playerSlotToPerPlanetBonus = new Map<PlayerSlot, number>();
 
@@ -14,7 +30,7 @@ export class AgendaAvailableVotes {
 
     // Xxcha commander.
     nsid = "card.leader.commander:pok/elder-qanoj";
-    card = this._find.findCard(nsid);
+    card = TI4.findTracking.findCards(nsid)[0];
     const allowFaceDown: boolean = false;
     let xxchaCommanderUnlocked: boolean = card === undefined; // enable if missing (e.g. minor factions)
     if (card && this._cardUtil.isLooseCard(card, allowFaceDown)) {
@@ -25,7 +41,7 @@ export class AgendaAvailableVotes {
     }
 
     nsid = "card.alliance:pok/xxcha";
-    card = this._find.findCard(nsid);
+    card = TI4.findTracking.findCards(nsid)[0];
     if (
       card &&
       this._cardUtil.isLooseCard(card, allowFaceDown) &&
@@ -44,21 +60,18 @@ export class AgendaAvailableVotes {
       "card.agenda:pok/representative-government",
       "card.agenda:base/representative-government",
     ];
-
-    const skipContained: boolean = true;
-    for (const obj of world.getAllObjects(skipContained)) {
-      const nsid: string = NSID.get(obj);
-      if (nsids.includes(nsid) && obj instanceof Card) {
-        const allowFaceDown: boolean = false;
-        const rejectSnapPointTags: Array<string> = [
-          "discard-agenda",
-          "active-agenda",
-        ];
-        if (
-          this._cardUtil.isLooseCard(obj, allowFaceDown, rejectSnapPointTags)
-        ) {
-          return true;
-        }
+    const rejectSnapPointTags: Array<string> = [
+      "discard-agenda",
+      "active-agenda",
+    ];
+    for (const nsid of nsids) {
+      const card = TI4.findTracking.findCards(nsid)[0];
+      const allowFaceDown: boolean = false;
+      if (
+        card &&
+        this._cardUtil.isLooseCard(card, allowFaceDown, rejectSnapPointTags)
+      ) {
+        return true;
       }
     }
     return false;
@@ -67,46 +80,34 @@ export class AgendaAvailableVotes {
   _getXxekirGromOmegaPlayerSlots(): Set<PlayerSlot> {
     const playerSlots: Set<PlayerSlot> = new Set<PlayerSlot>();
 
-    const skipContained: boolean = true;
-    const xxcekirNsid: string =
-      "card.leader.hero:codex.vigil/xxekir-grom.omega";
+    const cards: Array<Card> = TI4.findTracking.findCards(
+      "card.leader.hero:codex.vigil/xxekir-grom.omega"
+    );
     const allowFaceDown: boolean = false;
-    for (const obj of world.getAllObjects(skipContained)) {
-      const nsid: string = NSID.get(obj);
-      if (
-        nsid === xxcekirNsid &&
-        obj instanceof Card &&
-        this._cardUtil.isLooseCard(obj, allowFaceDown)
-      ) {
-        const pos: Vector = obj.getPosition();
+    for (const card of cards) {
+      if (this._cardUtil.isLooseCard(card, allowFaceDown)) {
+        const pos: Vector = card.getPosition();
         const playerSlot: number = this._find.closestOwnedCardHolderOwner(pos);
         playerSlots.add(playerSlot);
       }
     }
-
     return playerSlots;
   }
 
   _getArchonsGiftPlayerSlots(): Set<PlayerSlot> {
     const playerSlots: Set<PlayerSlot> = new Set<PlayerSlot>();
 
-    const skipContained: boolean = true;
-    const archonsGiftNsid: string =
-      "card.breakthrough:thunders-edge/archons-gift";
+    const cards: Array<Card> = TI4.findTracking.findCards(
+      "card.breakthrough:thunders-edge/archons-gift"
+    );
     const allowFaceDown: boolean = false;
-    for (const obj of world.getAllObjects(skipContained)) {
-      const nsid: string = NSID.get(obj);
-      if (
-        nsid === archonsGiftNsid &&
-        obj instanceof Card &&
-        this._cardUtil.isLooseCard(obj, allowFaceDown)
-      ) {
-        const pos: Vector = obj.getPosition();
+    for (const card of cards) {
+      if (this._cardUtil.isLooseCard(card, allowFaceDown)) {
+        const pos: Vector = card.getPosition();
         const playerSlot: number = this._find.closestOwnedCardHolderOwner(pos);
         playerSlots.add(playerSlot);
       }
     }
-
     return playerSlots;
   }
 
@@ -143,6 +144,64 @@ export class AgendaAvailableVotes {
       }
     }
     return cards;
+  }
+
+  _getPlayerSlotToTriadVotes(): Map<PlayerSlot, number> {
+    const playerSlotToFragmentTypes = new Map<PlayerSlot, Set<string>>();
+    const playerSlotToTriadVotes = new Map<PlayerSlot, number>();
+    const allowFaceDown: boolean = false;
+
+    const triadCards: Array<Card> = TI4.findTracking
+      .findCards("card.relic:thunders-edge/the-triad")
+      .filter((card: Card): boolean =>
+        this._cardUtil.isLooseCard(card, allowFaceDown)
+      );
+
+    const fragmentCards: Array<Card> = [
+      ...TI4.findTracking.findCards(
+        "card.exploration.cultural:pok/cultural-relic-fragment"
+      ),
+      ...TI4.findTracking.findCards(
+        "card.exploration.frontier:pok/unknown-relic-fragment"
+      ),
+      ...TI4.findTracking.findCards(
+        "card.exploration.hazardous:pok/hazardous-relic-fragment"
+      ),
+      ...TI4.findTracking.findCards(
+        "card.exploration.industrial:pok/industrial-relic-fragment"
+      ),
+    ].filter((card: Card): boolean =>
+      this._cardUtil.isLooseCard(card, allowFaceDown)
+    );
+
+    for (const card of fragmentCards) {
+      const pos: Vector = card.getPosition();
+      const fragmentPlayerSlot: number =
+        this._find.closestOwnedCardHolderOwner(pos);
+      const fragmentTypes: Set<string> =
+        playerSlotToFragmentTypes.get(fragmentPlayerSlot) ?? new Set<string>();
+      fragmentTypes.add(NSID.get(card));
+      playerSlotToFragmentTypes.set(fragmentPlayerSlot, fragmentTypes);
+    }
+
+    const triadPlayerSlots: Set<PlayerSlot> = new Set<PlayerSlot>();
+    for (const triadCard of triadCards) {
+      const pos: Vector = triadCard.getPosition();
+      const triadPlayerSlot: number =
+        this._find.closestOwnedCardHolderOwner(pos);
+      triadPlayerSlots.add(triadPlayerSlot);
+
+      let votes: number = playerSlotToTriadVotes.get(triadPlayerSlot) ?? 0;
+      votes += 3; // +3 for the triad itself
+
+      const numberOfFragmentTypes: number =
+        playerSlotToFragmentTypes.get(triadPlayerSlot)?.size ?? 0;
+      votes += numberOfFragmentTypes; // +1 for each unique fragment type
+
+      playerSlotToTriadVotes.set(triadPlayerSlot, votes);
+    }
+
+    return playerSlotToTriadVotes;
   }
 
   getPlayerSlotToAvailableVotes(): Map<PlayerSlot, number> {
@@ -196,6 +255,15 @@ export class AgendaAvailableVotes {
         votes += 1;
         playerSlotToAvailableVotes.set(playerSlot, votes);
       }
+    }
+
+    // The Triad: 3 votes plus 1 per unique fragment type.
+    const playerSlotToTriadVotes: Map<PlayerSlot, number> =
+      this._getPlayerSlotToTriadVotes();
+    for (const [playerSlot, triadVotes] of playerSlotToTriadVotes.entries()) {
+      let votes: number = playerSlotToAvailableVotes.get(playerSlot) ?? 0;
+      votes += triadVotes;
+      playerSlotToAvailableVotes.set(playerSlot, votes);
     }
 
     // Add zero votes for any player slots not already in the map.

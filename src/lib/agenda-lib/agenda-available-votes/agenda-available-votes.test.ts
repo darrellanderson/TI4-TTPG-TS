@@ -174,3 +174,34 @@ it("getPlayerSlotToAvailableVotes (card.leader.hero:codex.vigil/xxekir)", () => 
   expect(playerSlotToAvailableVotes.size).toBe(1);
   expect(playerSlotToAvailableVotes.get(10)).toBe(4);
 });
+
+it("_getPlayerSlotToTriadVotes", () => {
+  new MockCardHolder({
+    templateMetadata: "card-holder:base/player-hand",
+    owningPlayerSlot: 10,
+  });
+  const agendaAvailableVotes = new AgendaAvailableVotes();
+  let playerSlotToTriadVotes: Map<PlayerSlot, number>;
+
+  playerSlotToTriadVotes = agendaAvailableVotes._getPlayerSlotToTriadVotes();
+  expect(playerSlotToTriadVotes.size).toBe(0);
+  expect(playerSlotToTriadVotes.get(10)).toBeUndefined();
+
+  MockCard.simple("card.relic:thunders-edge/the-triad");
+  MockCard.simple("card.breakthrough:thunders-edge/archons-gift");
+
+  playerSlotToTriadVotes = agendaAvailableVotes._getPlayerSlotToTriadVotes();
+  expect(playerSlotToTriadVotes.size).toBe(1);
+  expect(playerSlotToTriadVotes.get(10)).toBe(3);
+
+  MockCard.simple("card.exploration.cultural:pok/cultural-relic-fragment");
+  MockCard.simple("card.exploration.cultural:pok/cultural-relic-fragment");
+  MockCard.simple("card.exploration.cultural:pok/cultural-relic-fragment");
+  MockCard.simple("card.exploration.frontier:pok/unknown-relic-fragment");
+  MockCard.simple("card.exploration.hazardous:pok/hazardous-relic-fragment");
+  MockCard.simple("card.exploration.industrial:pok/industrial-relic-fragment");
+
+  playerSlotToTriadVotes = agendaAvailableVotes._getPlayerSlotToTriadVotes();
+  expect(playerSlotToTriadVotes.size).toBe(1);
+  expect(playerSlotToTriadVotes.get(10)).toBe(7);
+});
