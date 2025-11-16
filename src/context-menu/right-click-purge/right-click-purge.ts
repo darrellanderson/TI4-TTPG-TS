@@ -63,7 +63,7 @@ export class RightClickPurge implements IGlobal {
     // Relic fragments.
     if (
       nsid.startsWith("card.exploration") &&
-      nsid.includes("-relic-fragment.")
+      nsid.includes("-relic-fragment")
     ) {
       return true;
     }
