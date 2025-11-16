@@ -250,6 +250,13 @@ export class DraftActivityStart {
         params.onStart();
       }
 
+      const countdownHours: number | undefined = params.countdownHours;
+      if (countdownHours !== undefined) {
+        TI4.timer.start(countdownHours * 60 * 60, -1);
+      } else {
+        TI4.timer.start(0, 1);
+      }
+
       this.resume();
     }
 

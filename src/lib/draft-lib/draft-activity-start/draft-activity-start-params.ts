@@ -10,6 +10,7 @@ export type DraftActivityStartParams = {
   numFactions: number;
   config: string;
   useFactionsOnTable?: boolean;
+  countdownHours?: number;
 
   // Optional on-start setup.
   onStart?: () => void;
