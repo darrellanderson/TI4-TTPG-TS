@@ -27,9 +27,11 @@ export class UpdatorRound implements IGameDataUpdator {
         const tags: Array<string> = snapPoint.getTags();
         if (
           (tags.includes("card-objective-1") &&
-            !tags.includes("deck-objective-1")) ||
+            !tags.includes("deck-objective-1") &&
+            !tags.includes("snap-extra")) ||
           (tags.includes("card-objective-2") &&
-            !tags.includes("deck-objective-2"))
+            !tags.includes("deck-objective-2") &&
+            !tags.includes("snap-extra"))
         ) {
           snapPoints.push(snapPoint);
         }
@@ -41,7 +43,7 @@ export class UpdatorRound implements IGameDataUpdator {
       const obj: GameObject | undefined = snapPoint.getSnappedObject();
       if (obj) {
         const nsid: string = NSID.get(obj);
-        if (nsid.startsWith("card.objective.public")) {
+        if (nsid.startsWith("card.objective.")) {
           round += 1;
         }
       }

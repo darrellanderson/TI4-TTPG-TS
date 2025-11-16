@@ -31,6 +31,9 @@ function labeledCell(
   if (isDeck) {
     tags.push("deck-objective-1");
   }
+  if (snapEverything) {
+    tags.push("snap-extra");
+  }
   const slot: ZImageCell = {
     type: "ImageCell",
     width: W,
