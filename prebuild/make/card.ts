@@ -16,7 +16,6 @@ async function go() {
     .setSizePx(1000, 583)
     .setSizeWorld(8.8, 5.1)
     .go();
-  await new CreateDeck("faction-token").go();
   await new CreateDeck("leader").setIsPortrait(false).go();
   await new CreateDeck("legendary-planet").setIsPortrait(false).go();
   await new CreateDeck("objective/public-1").go();

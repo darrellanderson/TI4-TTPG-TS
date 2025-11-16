@@ -96,9 +96,9 @@
         "8": "card.exploration.frontier:pok/merchant-station.1",
         "9": "card.exploration.frontier:pok/merchant-station.2",
         "10": "card.exploration.frontier:pok/mirage",
-        "11": "card.exploration.frontier:pok/unknown-relic-fragment.1",
-        "12": "card.exploration.frontier:pok/unknown-relic-fragment.2",
-        "13": "card.exploration.frontier:pok/unknown-relic-fragment.3"
+        "11": "card.exploration.frontier:pok/unknown-relic-fragment",
+        "12": "card.exploration.frontier:pok/unknown-relic-fragment",
+        "13": "card.exploration.frontier:pok/unknown-relic-fragment"
     },
     "CardTags": {
         "0": [
