@@ -2,6 +2,7 @@ import { Border, UIElement, Vector, world } from "@tabletop-playground/api";
 import {
   CardUtil,
   Direction,
+  GarbageContainer,
   IGlobal,
   NSID,
   ParsedNSID,
@@ -88,6 +89,9 @@ export class DraftActivityStart {
           if (faction) {
             factions.push(faction);
           }
+
+          // Return faction reference cards to deck.
+          GarbageContainer.tryRecycle(obj, undefined);
         }
       }
     }
