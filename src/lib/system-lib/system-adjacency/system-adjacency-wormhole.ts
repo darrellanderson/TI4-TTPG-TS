@@ -1,4 +1,4 @@
-import { Card, GameObject, Vector, world } from "@tabletop-playground/api";
+import { Card, GameObject, Vector } from "@tabletop-playground/api";
 import { Adjacency, Atop, CardUtil, Find, HexType } from "ttpg-darrell";
 import { System } from "../system/system";
 import { UnitModifierActiveIdle } from "../../unit-lib/unit-modifier/unit-modifier-active-idle";
@@ -9,14 +9,12 @@ import { OnSystemActivated } from "../../../event/on-system-activated/on-system-
  * Reminder: an attachment can destroy a wormhole, handled by system.ts
  */
 export class SystemAdjacencyWormhole {
-  private static __combatArenaObjId: string | undefined = undefined;
-
-  public static WORMHOMES: Array<string> = [
+  public static WORMHOLES: Array<string> = [
     "alpha",
     "beta",
     "gamma",
     "delta",
-    "epsilon",
+    // do not include epsilon (restricted to sundered ability)
   ];
 
   private readonly _cardUtil: CardUtil = new CardUtil();
@@ -24,29 +22,8 @@ export class SystemAdjacencyWormhole {
 
   public static getCombatArenaObj(): GameObject | undefined {
     const matNsid: string = "mat:base/combat-arena";
-
-    // Check the cache.
-    if (this.__combatArenaObjId) {
-      const obj: GameObject | undefined = world.getObjectById(
-        this.__combatArenaObjId
-      );
-      if (obj && obj.isValid()) {
-        return obj;
-      }
-    }
-
-    // Scan the table.
-    const owningPlayerSlot: number = -1; // not owned by a player.
-    const skipContained: boolean = true;
-    const foundObj = new Find().findGameObject(
-      matNsid,
-      owningPlayerSlot,
-      skipContained
-    );
-    if (foundObj) {
-      this.__combatArenaObjId = foundObj.getId();
-      return foundObj;
-    }
+    TI4.findTracking.trackNsid(matNsid);
+    return TI4.findTracking.find(matNsid)[0];
   }
 
   /**
@@ -86,9 +63,14 @@ export class SystemAdjacencyWormhole {
 
   _getFlagship(playerSlot: number): GameObject | undefined {
     const nsid: string = "unit:base/flagship";
-    const owningPlayerSlot: number = playerSlot;
-    const skipContained: boolean = true;
-    return this._find.findGameObject(nsid, owningPlayerSlot, skipContained);
+    TI4.findTracking.trackNsid(nsid);
+    const objs: Array<GameObject> = TI4.findTracking.find(nsid);
+    for (const obj of objs) {
+      const ownerSlot: number = obj.getOwningPlayerSlot();
+      if (ownerSlot === playerSlot) {
+        return obj;
+      }
+    }
   }
 
   public addTags(
@@ -177,25 +159,16 @@ export class SystemAdjacencyWormhole {
   }
 
   _isNekroZTokenInCreussArea(): boolean {
-    // Look for z-token.
+    // Look for a z-token in creuss area.
     const nsid: string = "token:thunders-edge/nekro.z";
-    const owner: number | undefined = undefined;
-    const skipContained: boolean = true;
-    const zToken: GameObject | undefined = this._find.findGameObject(
-      nsid,
-      owner,
-      skipContained
-    );
-    if (zToken) {
-      const zTokenPos: Vector = zToken.getPosition();
-      const zTokenPosPlayerSlot: number =
-        this._find.closestOwnedCardHolderOwner(zTokenPos);
-      const zTokenPosFaction: Faction | undefined =
-        TI4.factionRegistry.getByPlayerSlot(zTokenPosPlayerSlot);
-      if (
-        zTokenPosFaction &&
-        zTokenPosFaction.getNsid() === "faction:base/creuss"
-      ) {
+    TI4.findTracking.trackNsid(nsid);
+    const objs: Array<GameObject> = TI4.findTracking.find(nsid);
+    for (const obj of objs) {
+      const pos: Vector = obj.getPosition();
+      const playerSlot: number = this._find.closestOwnedCardHolderOwner(pos);
+      const faction: Faction | undefined =
+        TI4.factionRegistry.getByPlayerSlot(playerSlot);
+      if (faction && faction.getNsid() === "faction:base/creuss") {
         return true;
       }
     }
@@ -233,6 +206,7 @@ export class SystemAdjacencyWormhole {
   }
 
   _applyCards(adjacency: Adjacency): void {
+    let nsid: string;
     let card: Card | undefined;
     const allowFaceDown: boolean = false;
     const rejectSnapPointTags: Array<string> = [
@@ -240,7 +214,11 @@ export class SystemAdjacencyWormhole {
       "discard-action",
     ];
 
-    card = this._find.findCard("card.agenda:base/wormhole-reconstruction");
+    nsid = "card.agenda:base/wormhole-reconstruction";
+    TI4.findTracking.trackNsid(nsid);
+    card = TI4.findTracking.findCard(
+      "card.agenda:base/wormhole-reconstruction"
+    );
     if (
       card &&
       this._cardUtil.isLooseCard(card, allowFaceDown, rejectSnapPointTags)
@@ -259,7 +237,9 @@ export class SystemAdjacencyWormhole {
       });
     }
 
-    card = this._find.findCard("card.action:base/lost-star-chart");
+    nsid = "card.action:base/lost-star-chart";
+    TI4.findTracking.trackNsid(nsid);
+    card = TI4.findTracking.findCard(nsid);
     if (
       card &&
       this._cardUtil.isLooseCard(card, allowFaceDown, rejectSnapPointTags)
@@ -283,14 +263,16 @@ export class SystemAdjacencyWormhole {
     // wormhole: You may exhaust this card; if you do, that system is
     // adjacent to all other systems that contain a wormhole during
     // this tactical action."
-    card = this._find.findCard("card.leader.agent:pok/emissary-taivra");
+    nsid = "card.leader.agent:pok/emissary-taivra";
+    TI4.findTracking.trackNsid(nsid);
+    card = TI4.findTracking.findCard(nsid);
     if (
       card &&
       this._cardUtil.isLooseCard(card, allowFaceDown, rejectSnapPointTags) &&
       UnitModifierActiveIdle.isActive(card)
     ) {
-      for (const a of SystemAdjacencyWormhole.WORMHOMES) {
-        for (const b of SystemAdjacencyWormhole.WORMHOMES) {
+      for (const a of SystemAdjacencyWormhole.WORMHOLES) {
+        for (const b of SystemAdjacencyWormhole.WORMHOLES) {
           if (a !== b) {
             adjacency.addLink({
               src: a,
@@ -313,15 +295,69 @@ export class SystemAdjacencyWormhole {
    * @param _adjacency
    */
   _applyLazaxGateFolding(_adjacency: Adjacency): void {
-    // TODO XXX
+    const allowFaceDown: boolean = false;
+    const nsid: string = "card.tf-ability:twilights-fall/lazax-gate-folding";
+    TI4.findTracking.trackNsid(nsid);
+    const card: Card | undefined = TI4.findTracking.findCard(nsid);
+    if (card && this._cardUtil.isLooseCard(card, allowFaceDown)) {
+      //
+    }
   }
 
-  _applyQuantumEntanglementTF(_adjacency: Adjacency): void {
-    // TODO XXX
+  /**
+   * Treat all systems with alpha and beta wormholes as adjacent.
+   *
+   * @param _adjacency
+   */
+  _applyQuantumEntanglementTF(adjacency: Adjacency): void {
+    const allowFaceDown: boolean = false;
+    const nsid: string = "card.tf-ability:twilights-fall/quantum-entanglement";
+    TI4.findTracking.trackNsid(nsid);
+    const card: Card | undefined = TI4.findTracking.findCard(nsid);
+    if (card && this._cardUtil.isLooseCard(card, allowFaceDown)) {
+      adjacency.addLink({
+        src: "alpha",
+        dst: "beta",
+        distance: 0,
+        isTransit: true,
+      });
+      adjacency.addLink({
+        src: "beta",
+        dst: "alpha",
+        distance: 0,
+        isTransit: true,
+      });
+    }
   }
 
-  _applyEnigmaticGenomeTF(_adjacency: Adjacency): void {
-    // TODO XXX
-    // TODO active/idle
+  /**
+   * active/idle.
+   * all wormholes are connected.
+   *
+   * @param _adjacency
+   */
+  _applyEnigmaticGenomeTF(adjacency: Adjacency): void {
+    const allowFaceDown: boolean = false;
+    const nsid: string = "card.tf-genome:twilights-fall/enigmatic-genome";
+    TI4.findTracking.trackNsid(nsid);
+    const card: Card | undefined = TI4.findTracking.findCard(nsid);
+    if (
+      card &&
+      UnitModifierActiveIdle.isActive(card) &&
+      this._cardUtil.isLooseCard(card, allowFaceDown)
+    ) {
+      for (const a of SystemAdjacencyWormhole.WORMHOLES) {
+        for (const b of SystemAdjacencyWormhole.WORMHOLES) {
+          if (a !== b) {
+            adjacency.addLink({
+              src: a,
+              dst: b,
+              distance: 0,
+              isTransit: true,
+            });
+          }
+        }
+      }
+    }
   }
 }

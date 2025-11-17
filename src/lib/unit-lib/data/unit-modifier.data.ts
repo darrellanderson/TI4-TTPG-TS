@@ -257,6 +257,9 @@ add("twilights-fall", EidolonLandwaster);
 import { EidolonTerminus } from "./unit-modifiers/twilights-fall/eidolon-terminus";
 add("twilights-fall", EidolonTerminus);
 
+import { EnigmaticGenome } from "./unit-modifiers/twilights-fall/enigmatic-genome";
+add("twilights-fall", EnigmaticGenome);
+
 import { HumanGenome } from "./unit-modifiers/twilights-fall/human-genome";
 add("twilights-fall", HumanGenome);
 

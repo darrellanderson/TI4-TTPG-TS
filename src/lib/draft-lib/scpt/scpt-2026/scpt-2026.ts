@@ -29,6 +29,7 @@ export class Scpt2026 extends AbstractScpt {
       numSlices: playerCount,
       numFactions: playerCount,
       config: `${slices.join("|")}&labels=${labels.join("|")}`,
+      countdownHours: 8,
     };
     */
     return undefined;
