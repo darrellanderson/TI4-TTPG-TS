@@ -21,7 +21,7 @@ const DELIMITER = {
 // Encode units in hexes
 export class UpdatorHexSummary implements IGameDataUpdator {
   update(gameData: GameData): void {
-    gameData.hexSummary = "foo";
+    gameData.hexSummary = this.encodeAll();
   }
 
   _getAllEntityTypes(): Array<EntityType> {
