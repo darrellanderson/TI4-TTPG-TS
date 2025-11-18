@@ -1,13 +1,15 @@
 import {
   CardHolder,
   Color,
+  GameObject,
   ObjectType,
   Player,
   refHolder,
   Rotator,
+  Vector,
   world,
 } from "@tabletop-playground/api";
-import { Broadcast, CardHolderPlayerName, NSID } from "ttpg-darrell";
+import { Broadcast, CardHolderPlayerName, Find, NSID } from "ttpg-darrell";
 
 const ROTATE_KEY_NAME: string = "__rotate__";
 
@@ -61,20 +63,46 @@ const actionHandler = (
   Broadcast.chatAll(`${playerName} rotating ${targetName}'s player area`);
 
   const rotateNsids: Set<string> = new Set([
+    "mat:base/status-pad",
     "mat.player:base/trove",
     "mat.player:base/build",
     "mat.player:base/planet",
     "mat.player:base/technology",
     "card-holder:base/player-hand",
-    "sheet.faction:base/generic",
+    //"sheet.faction:base/generic",
   ]);
 
-  const flipNsids: Set<string> = new Set([
+  const flipAndSwapNsids: Set<string> = new Set([
     "sheet:base/command",
     "sheet:pok/leader",
   ]);
 
+  // Find faction sheet.
   const skipContained: boolean = true;
+  let factionSheet: GameObject | undefined = undefined;
+  for (const obj of world.getAllObjects(skipContained)) {
+    const nsid: string = NSID.get(obj);
+    if (nsid.startsWith("sheet.faction:")) {
+      const pos: Vector = obj.getPosition();
+      const owner: number = new Find().closestOwnedCardHolderOwner(pos);
+      if (owner === clickedObjOwner) {
+        factionSheet = obj;
+        break;
+      }
+    }
+  }
+
+  // Lift faction sheet (moving command/leader sheets below it can cause issues).
+  if (factionSheet) {
+    const above: Vector = factionSheet.getPosition().add([0, 0, 10]);
+    factionSheet.setObjectType(ObjectType.Regular);
+    factionSheet.setPosition(above);
+
+    const rot: Rotator = factionSheet.getRotation();
+    rot.yaw = (rot.yaw + 180) % 360;
+    factionSheet.setRotation(rot);
+  }
+
   for (const obj of world.getAllObjects(skipContained)) {
     const nsid: string = NSID.get(obj);
     const owner: number = obj.getOwningPlayerSlot();
@@ -91,14 +119,27 @@ const actionHandler = (
       obj.setObjectType(objType);
     }
 
-    if (flipNsids.has(nsid)) {
+    if (factionSheet && flipAndSwapNsids.has(nsid)) {
+      const pos: Vector = obj.getPosition();
       const rot: Rotator = obj.getRotation();
-      rot.pitch = (rot.pitch + 180) % 360;
+
+      const centerY: number = factionSheet.getPosition().y;
+      const dy: number = centerY - pos.y;
+      pos.y = centerY + dy;
+      rot.yaw = (rot.yaw + 180) % 360;
+
       const objType: ObjectType = obj.getObjectType();
       obj.setObjectType(ObjectType.Regular);
+      obj.setPosition(pos);
       obj.setRotation(rot);
       obj.setObjectType(objType);
     }
+  }
+
+  // Lower faction sheet.
+  if (factionSheet) {
+    factionSheet.snapToGround();
+    factionSheet.setObjectType(ObjectType.Ground);
   }
 
   // Reverse card holder UI.
