@@ -4,6 +4,8 @@ import { System } from "../system/system";
 import { UnitModifierActiveIdle } from "../../unit-lib/unit-modifier/unit-modifier-active-idle";
 import { Faction } from "../../faction-lib/faction/faction";
 import { OnSystemActivated } from "../../../event/on-system-activated/on-system-activated";
+import { Planet } from "../planet/planet";
+import { ControlSystemType, SpacePlanetOwnership } from "../../border-lib";
 
 /**
  * Reminder: an attachment can destroy a wormhole, handled by system.ts
@@ -107,7 +109,7 @@ export class SystemAdjacencyWormhole {
     this._applyCreussFlagship(adjacency);
     this._applyCards(adjacency);
     this._applyLazaxGateFolding(adjacency);
-    this._applyQuantumEntanglementTF(adjacency);
+    this._applyQuantumEntanglementTF(faction, adjacency);
     this._applyEnigmaticGenomeTF(adjacency);
   }
 
@@ -294,39 +296,133 @@ export class SystemAdjacencyWormhole {
    *
    * @param _adjacency
    */
-  _applyLazaxGateFolding(_adjacency: Adjacency): void {
+  _applyLazaxGateFolding(adjacency: Adjacency): void {
     const allowFaceDown: boolean = false;
     const nsid: string = "card.tf-ability:twilights-fall/lazax-gate-folding";
     TI4.findTracking.trackNsid(nsid);
     const card: Card | undefined = TI4.findTracking.findCard(nsid);
     if (card && this._cardUtil.isLooseCard(card, allowFaceDown)) {
-      //
+      // Is it this player's tactical action?
+      const pos: Vector = card.getPosition();
+      const owner: number = this._find.closestOwnedCardHolderOwner(pos);
+      const activePlayerSlot: number | undefined =
+        TI4.turnOrder.getCurrentTurn();
+      if (activePlayerSlot === owner) {
+        const hexes: Set<HexType> = new Set();
+        const uncontrolledLegendaries: Array<Planet> =
+          this._getUncontrolledLegendaries(owner);
+        for (const planet of uncontrolledLegendaries) {
+          const planetPos: Vector = planet.getObj().getPosition();
+          const hex: HexType = TI4.hex.fromPosition(planetPos);
+          hexes.add(hex);
+        }
+
+        for (const hex of hexes) {
+          adjacency.addLink({
+            src: hex,
+            dst: "alpha",
+            distance: 0.5,
+            isTransit: true,
+          });
+          adjacency.addLink({
+            src: "alpha",
+            dst: hex,
+            distance: 0.5,
+            isTransit: false,
+          });
+          adjacency.addLink({
+            src: hex,
+            dst: "beta",
+            distance: 0.5,
+            isTransit: true,
+          });
+          adjacency.addLink({
+            src: "beta",
+            dst: hex,
+            distance: 0.5,
+            isTransit: false,
+          });
+        }
+      }
     }
   }
 
+  _getUncontrolledLegendaries(playerSlot: number): Array<Planet> {
+    const legendaries: Array<Planet> = this._getAllLegendaries();
+    const controlledPlanetNames: Set<string> =
+      this._getPlanetNamesControlledByPlayer(playerSlot);
+    return legendaries.filter((planet: Planet): boolean => {
+      return !controlledPlanetNames.has(planet.getName());
+    });
+  }
+
+  _getAllLegendaries(): Array<Planet> {
+    const legendaries: Array<Planet> = [];
+    TI4.systemRegistry
+      .getAllSystemsWithObjs()
+      .forEach((system: System): void => {
+        system.getPlanets().forEach((planet: Planet): void => {
+          if (planet.isLegendary()) {
+            legendaries.push(planet);
+          }
+        });
+      });
+    return legendaries;
+  }
+
+  _getPlanetNamesControlledByPlayer(playerSlot: number): Set<string> {
+    const planetNames: Set<string> = new Set();
+    const hexToControlSystemEntry: Map<HexType, ControlSystemType> =
+      new SpacePlanetOwnership().getHexToControlSystemEntry();
+    for (const controlSystemEntry of hexToControlSystemEntry.values()) {
+      controlSystemEntry.planetNameToOwningPlayerSlot.forEach(
+        (owningPlayerSlot: number, planetName: string) => {
+          if (owningPlayerSlot === playerSlot) {
+            planetNames.add(planetName);
+          }
+        }
+      );
+    }
+    return planetNames;
+  }
+
   /**
-   * Treat all systems with alpha and beta wormholes as adjacent.
+   * You treat all systems with alpha and beta wormholes as adjacent.
    *
    * @param _adjacency
    */
-  _applyQuantumEntanglementTF(adjacency: Adjacency): void {
+  _applyQuantumEntanglementTF(
+    faction: Faction | undefined,
+    adjacency: Adjacency
+  ): void {
     const allowFaceDown: boolean = false;
     const nsid: string = "card.tf-ability:twilights-fall/quantum-entanglement";
     TI4.findTracking.trackNsid(nsid);
     const card: Card | undefined = TI4.findTracking.findCard(nsid);
     if (card && this._cardUtil.isLooseCard(card, allowFaceDown)) {
-      adjacency.addLink({
-        src: "alpha",
-        dst: "beta",
-        distance: 0,
-        isTransit: true,
-      });
-      adjacency.addLink({
-        src: "beta",
-        dst: "alpha",
-        distance: 0,
-        isTransit: true,
-      });
+      // Owned by this faction?
+      const pos: Vector = card.getPosition();
+      const ownerSlot: number = this._find.closestOwnedCardHolderOwner(pos);
+      const ownerFaction: Faction | undefined =
+        TI4.factionRegistry.getByPlayerSlot(ownerSlot);
+      if (
+        faction &&
+        ownerFaction &&
+        faction.getNsid() === ownerFaction.getNsid()
+      ) {
+        adjacency.addLink({
+          src: "alpha",
+          dst: "beta",
+          distance: 0,
+          isTransit: true,
+        });
+        adjacency.addLink({
+          src: "beta",
+          dst: "alpha",
+          distance: 0,
+          isTransit: true,
+        });
+      }
     }
   }
 

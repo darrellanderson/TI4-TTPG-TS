@@ -133,6 +133,7 @@ export class SystemAdjacency {
     this._ingress.addTags(hexToSystem, adjacency);
     this._neighbor.addTags(hexToSystem, adjacency);
     this._wormhole.addTags(hexToSystem, adjacency, faction);
+    this._tfSpacialConduitCylinder.addTags(adjacency);
     this._neighbor.removeTags(adjacency); // adjacency blocking tokens
     return adjacency.get(hex, 1);
   }
