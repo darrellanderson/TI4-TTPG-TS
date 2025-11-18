@@ -28,6 +28,10 @@ export class AgendaActivityStart {
   private _agendaState: AgendaState | undefined;
   private static _agendaWindow: Window | undefined = undefined;
 
+  public static getAgendaWindow(): Window | undefined {
+    return AgendaActivityStart._agendaWindow;
+  }
+
   private readonly _onAgendaStateChangedHandler = (): void => {
     if (this._agendaState) {
       // Close window if agenda is no longer active.
@@ -93,7 +97,7 @@ export class AgendaActivityStart {
     );
     abstractWindow
       .moveWindowLeftOfTurnOrder()
-      .getMutableWindowParams().disableClose = true;
+      .getMutableWindowParams().disableClose = false; // allow close, there is a toggle option
     AgendaActivityStart._agendaWindow = abstractWindow
       .addHost()
       .createWindow()
