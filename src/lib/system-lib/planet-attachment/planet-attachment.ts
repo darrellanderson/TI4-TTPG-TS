@@ -99,11 +99,13 @@ export class PlanetAttachment {
       this.doLayout();
     });
     obj.onFlipUpright.add(() => {
-      process.nextTick(() => {
+      // Flip takes time, does not register as flipped until animation finishes.
+      // Wait a moment before doing reset.
+      setTimeout(() => {
         this.detach();
         this.attach();
         this.doLayout();
-      });
+      }, 1000);
     });
   }
 
