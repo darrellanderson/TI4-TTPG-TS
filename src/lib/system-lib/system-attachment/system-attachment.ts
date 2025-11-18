@@ -105,11 +105,11 @@ export class SystemAttachment {
       this.doLayout();
     });
     obj.onFlipUpright.add(() => {
-      process.nextTick(() => {
+      setTimeout(() => {
         this.detach();
         this.attach();
         this.doLayout();
-      });
+      }, 1000);
     });
   }
 
@@ -162,9 +162,12 @@ export class SystemAttachment {
       }
 
       pos.z = this._system.getObj().getPosition().z + 3;
+      this._obj.setObjectType(ObjectType.Regular);
       this._obj.setPosition(pos);
       this._obj.snapToGround();
-      this._obj.setObjectType(ObjectType.Ground);
+      if (!this._params.doNotLock) {
+        this._obj.setObjectType(ObjectType.Ground);
+      }
       reserve.drop();
     }
   }

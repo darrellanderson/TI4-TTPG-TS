@@ -116,12 +116,14 @@ export const SOURCE_TO_SYSTEM_ATTACHMENT_DATA: Record<
       nsidName: "crimson-breach",
       isBreachFaceUp: true,
       customModel: true,
+      doNotLock: true,
     },
     {
       name: "Crimson Sever",
       nsidName: "crimson-sever",
       isDestroyWormhole: true,
       customModel: true,
+      doNotLock: true,
     },
   ],
 };
