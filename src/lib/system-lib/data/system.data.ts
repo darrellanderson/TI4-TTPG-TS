@@ -257,6 +257,7 @@ export const SOURCE_TO_SYSTEM_DATA: Record<string, Array<SystemSchemaType>> = {
       // Creuss gate, linked to home system.
       tile: 17,
       isExcludeFromDraft: true,
+      isHomeSurrogate: true,
       wormholesWithPositions: [
         { wormhole: "delta", localPosition: { x: -4.9, y: 2.8 } },
       ],
@@ -1338,7 +1339,8 @@ export const SOURCE_TO_SYSTEM_DATA: Record<string, Array<SystemSchemaType>> = {
     },
     {
       tile: 94,
-      isHome: true,
+      isExcludeFromDraft: true,
+      isHomeSurrogate: true,
       wormholes: ["epsilon"],
     },
     {

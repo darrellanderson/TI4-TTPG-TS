@@ -212,7 +212,10 @@ export class MapStringLoad {
         // If home, place faction reference card instead.
         const systemSchema: SystemSchemaType | undefined =
           TI4.systemRegistry.rawBySystemTileNumber(entry.tile);
-        if (systemSchema && systemSchema.isHome) {
+        if (
+          systemSchema &&
+          (systemSchema.isHome || systemSchema.isHomeSurrogate)
+        ) {
           const faction: Faction | undefined =
             TI4.factionRegistry.getByHomeSystemTileNumber(entry.tile);
           if (faction) {
