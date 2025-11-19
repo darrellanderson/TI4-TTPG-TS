@@ -59,6 +59,9 @@ it("activate", () => {
   success = activateSystem.moveCommandTokenToSystem(systemTileObj, player);
   expect(success).toBe(true);
 
+  success = activateSystem.activateSystem(systemTileObj, player);
+  expect(success).toBe(true);
+
   expect(activatedTileNumber).toBe(18);
 });
 
