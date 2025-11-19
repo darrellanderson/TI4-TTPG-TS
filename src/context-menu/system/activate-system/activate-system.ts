@@ -13,15 +13,20 @@ import {
 } from "../../../lib/command-token-lib/command-token-counter/command-token-counter";
 import { System } from "../../../lib/system-lib/system/system";
 
+const ACTION_ACTIVATE_TOKEN: string = "*Activate System (with token)";
+const ACTION_ACTIVATE_NO_TOKEN: string = "*Activate System (no token)";
+
 export class ActivateSystem implements IGlobal {
-  private readonly _actionName: string = "*Activate System";
   private readonly _customActionHandler = (
     systemTileObj: GameObject,
     player: Player,
     actionName: string
   ) => {
-    if (actionName === this._actionName) {
+    if (actionName === ACTION_ACTIVATE_TOKEN) {
       this.moveCommandTokenToSystem(systemTileObj, player);
+      this.activateSystem(systemTileObj, player);
+    } else if (actionName === ACTION_ACTIVATE_NO_TOKEN) {
+      this.activateSystem(systemTileObj, player);
     }
   };
 
@@ -38,8 +43,10 @@ export class ActivateSystem implements IGlobal {
   _maybeAddContextMenuItem(obj: GameObject) {
     const nsid: string = NSID.get(obj);
     if (nsid.startsWith("tile.system:")) {
-      obj.removeCustomAction(this._actionName);
-      obj.addCustomAction(this._actionName);
+      obj.removeCustomAction(ACTION_ACTIVATE_TOKEN);
+      obj.addCustomAction(ACTION_ACTIVATE_TOKEN);
+      obj.removeCustomAction(ACTION_ACTIVATE_NO_TOKEN);
+      obj.addCustomAction(ACTION_ACTIVATE_NO_TOKEN);
       obj.onCustomAction.remove(this._customActionHandler);
       obj.onCustomAction.add(this._customActionHandler);
     }
@@ -71,6 +78,16 @@ export class ActivateSystem implements IGlobal {
 
     token.setPosition(pos, 1);
     token.snapToGround();
+    return true;
+  }
+
+  activateSystem(systemTileObj: GameObject, player: Player): boolean {
+    const id: string = systemTileObj.getId();
+    const system: System | undefined =
+      TI4.systemRegistry.getBySystemTileObjId(id);
+    if (!system) {
+      return false;
+    }
     TI4.events.onSystemActivated.trigger(system, player);
     return true;
   }

@@ -20,6 +20,7 @@ export const SystemSchema = z
     isExcludeFromDraft: z.boolean().optional(),
 
     isHome: z.boolean().optional(),
+    isHomeSurrogate: z.boolean().optional(),
     isHyperlane: z.boolean().optional(),
     anomalies: z.array(AnomalySchema).optional(),
     wormholes: z.array(WormholeSchema).optional(),
