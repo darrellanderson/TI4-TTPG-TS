@@ -11,13 +11,14 @@ export class Scpt2026 extends AbstractScpt {
   }
 
   getQual(): DraftActivityStartParams | undefined {
-    /*
-    const slices: Array<string> = [];
-    const labels: Array<string> = [];
+    /*const slices: Array<string> = [];
+    const labels: Array<string> = ["a", "b", "c", "d", "e", "f", "g", "h"];
 
     // Prune to player count.
-    const playerCount: number = this.getPlayerCount();
-    while (slices.length > playerCount) {
+    const numSlices: number = this.getPlayerCount();
+    const numFactions: number = this.getPlayerCount();
+
+    while (slices.length > numSlices) {
       const index: number = Math.floor(Math.random() * slices.length);
       slices.splice(index, 1);
       labels.splice(index, 1);
@@ -26,9 +27,10 @@ export class Scpt2026 extends AbstractScpt {
     return {
       namespaceId: DRAFT_NAMESPACE_ID,
       draft: new Milty(),
-      numSlices: playerCount,
-      numFactions: playerCount,
-      config: `${slices.join("|")}&labels=${labels.join("|")}`,
+      numSlices,
+      numFactions,
+      //config: `${slices.join("|")}&labels=${labels.join("|")}`,
+      config: `&labels=${labels.join("|")}`,
       countdownHours: 8,
     };
     */
