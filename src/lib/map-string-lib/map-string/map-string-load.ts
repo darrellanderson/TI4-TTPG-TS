@@ -12,6 +12,8 @@ import { Broadcast, Find, HexType, locale } from "ttpg-darrell";
 import { MapStringEntry, MapStringParser } from "./map-string-parser";
 import { System } from "../../system-lib/system/system";
 import { MapStringHex } from "./map-string-hex";
+import { SystemSchemaType } from "../../system-lib/schema/system-schema";
+import { Faction } from "../../faction-lib/faction/faction";
 
 export class MapStringLoad {
   private readonly _find: Find = new Find();
@@ -206,6 +208,19 @@ export class MapStringLoad {
           entry.rot ? entry.rot * 60 : 0,
           entry.side === "b" ? 180 : 0
         );
+
+        // If home, place faction reference card instead.
+        const systemSchema: SystemSchemaType | undefined =
+          TI4.systemRegistry.rawBySystemTileNumber(entry.tile);
+        if (systemSchema && systemSchema.isHome) {
+          const faction: Faction | undefined =
+            TI4.factionRegistry.getByHomeSystemTileNumber(entry.tile);
+          if (faction) {
+            //const nsid: string = faction.getNsid();
+            // TODO XXX place faction reference card
+          }
+          continue;
+        }
 
         let systemTileObj: GameObject | undefined;
         systemTileObj = this._tryMoveExistingSystemTileObj(
