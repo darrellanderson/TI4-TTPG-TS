@@ -86,7 +86,9 @@ export class RightClickObsidianFirmament implements IGlobal {
   readonly _onObjectCreated = (obj: GameObject): void => {
     const nsid: string = NSID.get(obj);
     if (nsid === FACTION_SHEET_OBSIDIAN || nsid === FACTION_SHEET_FIRMAMENT) {
+      obj.removeCustomAction(ACTION_NAME);
       obj.addCustomAction(ACTION_NAME);
+      obj.onCustomAction.remove(this._onCustomAction);
       obj.onCustomAction.add(this._onCustomAction);
     }
   };
