@@ -20,7 +20,7 @@ export const CmorranNorr: UnitModifierSchemaType = {
   },
   apply: (combatRoll: CombatRoll): void => {
     for (const unitAttrs of combatRoll.self.unitAttrsSet.getAll()) {
-      if (unitAttrs.isShip()) {
+      if (unitAttrs.isShip() && unitAttrs.getUnit() !== "flagship") {
         const spaceCombat: CombatAttrs | undefined = unitAttrs.getSpaceCombat();
         if (spaceCombat) {
           spaceCombat.addHit(1);
