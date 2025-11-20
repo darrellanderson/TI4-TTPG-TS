@@ -15,10 +15,6 @@ export class AgendaAvailableVotes {
       "card.leader.hero:codex.vigil/xxekir-grom.omega",
       "card.breakthrough:thunders-edge/archons-gift",
       "card.relic:thunders-edge/the-triad",
-      "card.exploration.cultural:pok/cultural-relic-fragment",
-      "card.exploration.frontier:pok/unknown-relic-fragment",
-      "card.exploration.hazardous:pok/hazardous-relic-fragment",
-      "card.exploration.industrial:pok/industrial-relic-fragment",
     ]);
   }
 
@@ -156,23 +152,29 @@ export class AgendaAvailableVotes {
       .filter((card: Card): boolean =>
         this._cardUtil.isLooseCard(card, allowFaceDown)
       );
+    if (triadCards.length === 0) {
+      return playerSlotToTriadVotes;
+    }
 
-    const fragmentCards: Array<Card> = [
-      ...TI4.findTracking.findCards(
-        "card.exploration.cultural:pok/cultural-relic-fragment"
-      ),
-      ...TI4.findTracking.findCards(
-        "card.exploration.frontier:pok/unknown-relic-fragment"
-      ),
-      ...TI4.findTracking.findCards(
-        "card.exploration.hazardous:pok/hazardous-relic-fragment"
-      ),
-      ...TI4.findTracking.findCards(
-        "card.exploration.industrial:pok/industrial-relic-fragment"
-      ),
-    ].filter((card: Card): boolean =>
-      this._cardUtil.isLooseCard(card, allowFaceDown)
-    );
+    const fragmentCards: Array<Card> = [];
+    const skipContained: boolean = true;
+    const ignoreSnapPointTags: Array<string> = [
+      "discard-exploration-cultural",
+      "discard-exploration-industrial",
+      "discard-exploration-hazardous",
+      "discard-exploration-cultural",
+    ];
+    for (const obj of world.getAllObjects(skipContained)) {
+      const nsid: string = NSID.get(obj);
+      if (
+        obj instanceof Card &&
+        nsid.startsWith("card.exploration") &&
+        nsid.includes("-relic-fragment") &&
+        this._cardUtil.isLooseCard(obj, allowFaceDown, ignoreSnapPointTags)
+      ) {
+        fragmentCards.push(obj);
+      }
+    }
 
     for (const card of fragmentCards) {
       const pos: Vector = card.getPosition();
