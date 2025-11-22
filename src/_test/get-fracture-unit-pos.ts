@@ -32,10 +32,12 @@ TI4.systemRegistry
         const nsid: string = NSID.get(plasticObj);
         const globalPos: Vector = plasticObj.getPosition();
         const localPos: Vector = systemObj.worldPositionToLocal(globalPos);
-        const x: number = localPos.x;
-        const y: number = localPos.y;
+        const x: number = Math.floor(localPos.x * 100) / 100;
+        const y: number = Math.floor(localPos.y * 100) / 100;
         out.push({ tile, nsid, x, y });
       });
   });
 
-console.log(JSON.stringify(out, null, 2));
+process.nextTick(() => {
+  console.log("setup" + JSON.stringify(out, null, 2));
+});

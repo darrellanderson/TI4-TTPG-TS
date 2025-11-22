@@ -11,6 +11,10 @@ import {
 import { Broadcast, Facing, Find, IGlobal } from "ttpg-darrell";
 import { System } from "../../lib/system-lib/system/system";
 import { UnitType } from "../../lib/unit-lib/schema/unit-attrs-schema";
+import {
+  FRACTURE_UNIT_POSITIONS,
+  FractureUnitPositionType,
+} from "./fracture-unit-positions";
 
 const ACTION_DEPLOY_FRACTURE: string = "*Deploy fracture";
 const ACTION_FETCH_RELIC: string = "*Fetch relic";
@@ -88,38 +92,24 @@ export class RightClickFracture implements IGlobal {
   }
 
   _placeUnits(systemTileObj: GameObject, tile: number): void {
-    const unitsWithCounts: { [unit: string]: number } = {};
+    const unitPositions: Array<FractureUnitPositionType> =
+      FRACTURE_UNIT_POSITIONS.filter(
+        (entry: FractureUnitPositionType): boolean => {
+          return entry.tile === tile;
+        }
+      );
 
-    if (tile === 901) {
-      unitsWithCounts["dreadnought"] = 2;
-      unitsWithCounts["destroyer"] = 1;
-      unitsWithCounts["infantry"] = 3;
-    } else if (tile === 904) {
-      unitsWithCounts["carrier"] = 1;
-      unitsWithCounts["fighter"] = 4;
-      unitsWithCounts["infantry"] = 2;
-    } else if (tile === 905) {
-      unitsWithCounts["cruiser"] = 2;
-      unitsWithCounts["infantry"] = 2;
-    }
+    unitPositions.forEach((unitPosition: FractureUnitPositionType) => {
+      const localPos: Vector = new Vector(unitPosition.x, unitPosition.y, 0);
+      const pos: Vector = systemTileObj.localPositionToWorld(localPos);
+      pos.z = pos.z + 10;
 
-    const totalCount: number = Object.values(unitsWithCounts).reduce(
-      (a, b) => a + b,
-      0
-    );
-    const rotate: number = 360 / totalCount;
-    let localPos: Vector = new Vector(5, 0, 10);
-    for (const [unit, count] of Object.entries(unitsWithCounts)) {
-      for (let i = 0; i < count; i++) {
-        const pos: Vector = systemTileObj.localPositionToWorld(localPos);
-        const obj: GameObject = this._getUnitPlasticOrThrow(
-          unit as UnitType,
-          pos
-        );
-        obj.snapToGround();
-        localPos = localPos.rotateAngleAxis(rotate, [0, 0, 1]);
-      }
-    }
+      const obj: GameObject = this._getUnitPlasticOrThrow(
+        unitPosition.unit,
+        pos
+      );
+      obj.snapToGround();
+    });
   }
 
   _getUnitPlasticOrThrow(unit: UnitType, pos: Vector): GameObject {
