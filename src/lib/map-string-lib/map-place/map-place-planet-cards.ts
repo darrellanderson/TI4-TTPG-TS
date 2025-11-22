@@ -1,6 +1,7 @@
-import { Card, Vector } from "@tabletop-playground/api";
-import { CardUtil, Find, NSID } from "ttpg-darrell";
+import { Card, GameObject, Vector } from "@tabletop-playground/api";
+import { CardUtil, Facing, Find, NSID } from "ttpg-darrell";
 import { Planet } from "../../system-lib/planet/planet";
+import { System } from "../../system-lib/system/system";
 
 export class MapPlacePlanetCards {
   private readonly _cardUtil: CardUtil = new CardUtil();
@@ -110,6 +111,20 @@ export class MapPlacePlanetCards {
 
   _placePlanetCard(planet: Planet, card: Card): void {
     const above: Vector = planet.getPosition().add([0, 0, 10]);
+
+    // Fracture systems are face down, adjust card placement for eventual flip.
+    const obj: GameObject | undefined = planet.getObj();
+    if (obj) {
+      const system: System | undefined =
+        TI4.systemRegistry.getBySystemTileObjId(obj.getId());
+      if (system && system.getClass() === "fracture" && !Facing.isFaceUp(obj)) {
+        const local: Vector = obj.worldPositionToLocal(above);
+        local.y = -local.y;
+        const world: Vector = obj.localPositionToWorld(local);
+        above.y = world.y;
+      }
+    }
+
     card.setPosition(above);
     card.snapToGround();
   }
