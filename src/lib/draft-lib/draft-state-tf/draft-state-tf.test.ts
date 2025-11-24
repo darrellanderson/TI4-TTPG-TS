@@ -1,8 +1,31 @@
 import { MockCardHolder } from "ttpg-mock";
-import { DraftStateTF } from "./draft-state-tf";
+import { DraftStateTF, OpaqueTFSchemaType } from "./draft-state-tf";
 
 it("constructor", () => {
   new DraftStateTF("@test/test");
+});
+
+it("_clearFactionRefNumber", () => {
+  const draftStateTF: DraftStateTF = new DraftStateTF("@test/test");
+  const opaqueData: OpaqueTFSchemaType = {
+    s: 1,
+    h: 2,
+    u: 3,
+  };
+
+  draftStateTF._clearFactionRefNumber(opaqueData, 2);
+  expect(opaqueData).toEqual({
+    s: 1,
+    u: 3,
+  });
+
+  draftStateTF._clearFactionRefNumber(opaqueData, 1);
+  expect(opaqueData).toEqual({
+    u: 3,
+  });
+
+  draftStateTF._clearFactionRefNumber(opaqueData, 3);
+  expect(opaqueData).toEqual({});
 });
 
 it("speaker priority", () => {

@@ -7,7 +7,7 @@ const OpaqueTFSchema = z.object({
   u: z.number().optional(), // starting units
 });
 
-type OpaqueTFSchemaType = z.infer<typeof OpaqueTFSchema>;
+export type OpaqueTFSchemaType = z.infer<typeof OpaqueTFSchema>;
 
 /**
  * Store the extra [ speaker priority, home system, starting units ] in
@@ -55,12 +55,28 @@ export class DraftStateTF extends DraftState {
     return true;
   }
 
+  _clearFactionRefNumber(
+    opaqueData: OpaqueTFSchemaType,
+    refNumber: number
+  ): void {
+    if (opaqueData.s === refNumber) {
+      opaqueData.s = undefined;
+    }
+    if (opaqueData.h === refNumber) {
+      opaqueData.h = undefined;
+    }
+    if (opaqueData.u === refNumber) {
+      opaqueData.u = undefined;
+    }
+  }
+
   setSpeakerPriority(speakerPriority: number, playerSlot: number): boolean {
     const opaqueData: OpaqueTFSchemaType | undefined =
       this._getParsedOpaqueData(playerSlot);
     if (opaqueData === undefined) {
       return false;
     }
+    this._clearFactionRefNumber(opaqueData, speakerPriority);
     opaqueData.s = speakerPriority;
     return this._setParsedOpaqueData(playerSlot, opaqueData);
   }
@@ -80,6 +96,7 @@ export class DraftStateTF extends DraftState {
     if (opaqueData === undefined) {
       return false;
     }
+    this._clearFactionRefNumber(opaqueData, homeSystem);
     opaqueData.h = homeSystem;
     return this._setParsedOpaqueData(playerSlot, opaqueData);
   }
@@ -99,6 +116,7 @@ export class DraftStateTF extends DraftState {
     if (opaqueData === undefined) {
       return false;
     }
+    this._clearFactionRefNumber(opaqueData, startingUnits);
     opaqueData.u = startingUnits;
     return this._setParsedOpaqueData(playerSlot, opaqueData);
   }
