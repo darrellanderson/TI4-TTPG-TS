@@ -1264,7 +1264,7 @@ export const SOURCE_TO_FACTION_DATA: Record<
       skipFactionReferenceCard: true,
     },
     {
-      name: "Il No Viroset",
+      name: "Il Na Viroset",
       nsidName: "tf-purple",
       abbr: "Paradox",
       abilities: [],
