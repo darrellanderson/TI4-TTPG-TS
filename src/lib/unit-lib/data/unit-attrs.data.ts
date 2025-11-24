@@ -808,8 +808,6 @@ export const SOURCE_TO_UNIT_ATTRS_DATA: Record<
       overrideNsid: "unit:twilights-fall/starlancer-ii",
       unit: "mech",
       hasPlanetaryShield: true,
-      isShip: true,
-      spaceCombat: { dice: 1, hit: 6 },
     },
     {
       name: "The Faces of Janovet",
@@ -834,6 +832,8 @@ export const SOURCE_TO_UNIT_ATTRS_DATA: Record<
       nsidName: "starlancer-xi",
       overrideNsid: "unit:twilights-fall/starlancer-xi",
       unit: "mech",
+      isShip: true,
+      spaceCombat: { dice: 1, hit: 6 },
     },
     {
       name: "The Scarlet Knife",
