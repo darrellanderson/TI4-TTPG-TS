@@ -62,6 +62,7 @@ export class UpdatorPlayerPlanetTotals implements IGameDataUpdator {
           techs: { blue: 0, red: 0, green: 0, yellow: 0 },
           traits: { cultural: 0, hazardous: 0, industrial: 0 },
           legendary: 0,
+          numPlanets: 0,
         };
 
         const cards: Array<Card> = playerSlotToCards.get(playerSlot) ?? [];
@@ -103,6 +104,10 @@ export class UpdatorPlayerPlanetTotals implements IGameDataUpdator {
 
             if (planet.isLegendary()) {
               data.legendary += 1;
+            }
+
+            if (!planet.isSpaceStation()) {
+              data.numPlanets += 1; // oceans, space stations are not planets
             }
           } else if (nsid.startsWith("card.deepwrought-ocean:")) {
             data.influence.total += 1;

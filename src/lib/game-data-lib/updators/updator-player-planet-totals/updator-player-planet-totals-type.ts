@@ -4,4 +4,5 @@ export type UpdatorPlayerPlanetTotalsType = {
   techs: { blue: number; red: number; green: number; yellow: number };
   traits: { cultural: number; hazardous: number; industrial: number };
   legendary: number;
+  numPlanets: number;
 };

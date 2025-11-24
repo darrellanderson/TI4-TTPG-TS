@@ -51,6 +51,7 @@ it("data (simple)", () => {
       resources: { avail: 4, total: 4 },
       techs: { blue: 0, green: 0, red: 0, yellow: 0 },
       traits: { cultural: 0, hazardous: 0, industrial: 0 },
+      numPlanets: 1,
     },
   });
 });
@@ -79,6 +80,7 @@ it("data (simple face down)", () => {
       resources: { avail: 0, total: 4 },
       techs: { blue: 0, green: 0, red: 0, yellow: 0 },
       traits: { cultural: 0, hazardous: 0, industrial: 0 },
+      numPlanets: 1,
     },
   });
 });
@@ -100,6 +102,7 @@ it("data (legendary)", () => {
       resources: { avail: 2, total: 2 },
       techs: { blue: 0, green: 0, red: 0, yellow: 0 },
       traits: { cultural: 1, hazardous: 0, industrial: 0 },
+      numPlanets: 1,
     },
   });
 });
@@ -121,6 +124,7 @@ it("data (tech, trait)", () => {
       resources: { avail: 1, total: 1 },
       techs: { blue: 0, green: 0, red: 0, yellow: 1 },
       traits: { cultural: 0, hazardous: 0, industrial: 1 },
+      numPlanets: 1,
     },
   });
 });

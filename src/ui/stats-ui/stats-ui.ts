@@ -19,6 +19,7 @@ class StatsEntry {
   private readonly _influence: Text;
   private readonly _tradegoods: Text;
   private readonly _commandTokens: Text;
+  private readonly _numPlanets: Text;
 
   private readonly _abstractUI: AbstractUI;
 
@@ -43,12 +44,17 @@ class StatsEntry {
       .setFontSize(fontSize)
       .setJustification(TextJustification.Center);
 
+    this._numPlanets = new Text()
+      .setFontSize(fontSize)
+      .setJustification(TextJustification.Center);
+
     const panel: Widget = new HorizontalBox()
       .addChild(this._name, 3)
       .addChild(this._resources, 2)
       .addChild(this._influence, 2)
       .addChild(this._tradegoods, 2)
-      .addChild(this._commandTokens, 3);
+      .addChild(this._commandTokens, 3)
+      .addChild(this._numPlanets, 3);
     const size: UI_SIZE = { w: 350 * scale, h: 20 * scale };
     const box: Widget = new LayoutBox()
       .setOverrideWidth(size.w)
@@ -63,6 +69,7 @@ class StatsEntry {
     this._influence.setText("Inf");
     this._tradegoods.setText("TGs");
     this._commandTokens.setText("Tokens");
+    this._numPlanets.setText("Planets");
   }
 
   getAbstractUI(): AbstractUI {
@@ -91,6 +98,7 @@ class StatsEntry {
         player.commandTokens?.strategy,
       ].join("/")
     );
+    this._numPlanets.setText(`${player.planetTotals?.numPlanets ?? ""}`);
   }
 }
 
