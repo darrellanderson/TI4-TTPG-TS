@@ -27,6 +27,29 @@ export const PREMADE_MAPS_6P: Array<PremadeMapType> = [
   },
   {
     playerCount: 6,
+    name: "The Vormal (TE)",
+    mapString:
+      "46 102 62 64 48 24 27 110 101 42 105 114 100 37 109 26 98 117 0 113 115 0 22 50 0 111 47 0 44 65 0 40 78 0 107 99",
+    author: "Liversquatch",
+  },
+  {
+    playerCount: 6,
+    name: "Melting Pot (TE)",
+    mapString:
+      "116 62 115 101 74 102 110 48 75 39 27 25 76 79 108 67 109 40 4 19 72 94 117 99 53 47 111 55 46 73 52 50 97 95 42 100",
+    author: "Liversquatch",
+  },
+  {
+    playerCount: 6,
+    name: "Sunrise (TE TF)",
+    mapString:
+      "68 29 99 39 43 98 103 108 66 113 69 31 75 65 35 64 106 48 0 102 30 0 46 80 0 49 28 0 25 109 0 50 70 0 115 78",
+    author: "Bells",
+    comments:
+      "This map is intended to be played with Twilights Fall. The map is fairly rich to enable everyone to get all the fun tools and let the lower comm factions keep up economically. There's also a distinct lack of tech specs. You will need to be mindful of the abilities you choose in case tech objectives or tech spec planets come out!",
+  },
+  {
+    playerCount: 6,
     name: "14pt- Almost Half a Dozen Donuts [6p Base]",
     mapString:
       "40 45 20 32 26 33 35 34 39 21 42 28 50 44 46 49 31 41 0 43 24 0 30 29 0 25 19 0 27 37 0 36 23 0 38 22 ",

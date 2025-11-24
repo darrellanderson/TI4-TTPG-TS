@@ -12,6 +12,14 @@ export const PREMADE_MAPS_4P: Array<PremadeMapType> = [
   },
   {
     playerCount: 4,
+    name: "I Died And Resurrected As An Evil Fish Person??? (TE)",
+    mapString:
+      "85A3 115 75 85 105 21 41 88A1 37 111 107 88 77 87 27 109 48 87A5 86A3 83A1 39 0 72 47 0 73 84A5 85 84 79 0 99 74 0 34 84A5",
+    author: "Bells",
+    comments: "3 of one color tech skip in each slice",
+  },
+  {
+    playerCount: 4,
     name: "Chokepoint [4p PoK]",
     mapString:
       "68 91A2 88B1 89A1 84B2 83B1 65 72 62 64 67 35 66 38 45 26 63 69 85A3 43 0 87B3 48 47 46 0 39 86A0 74 0 90B2 77 50 49 0 25",

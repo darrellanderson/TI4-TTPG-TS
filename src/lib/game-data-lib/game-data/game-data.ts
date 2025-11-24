@@ -40,6 +40,7 @@ export type GameData = {
 
   activeSystem?: UpdatorActiveSystemType;
   config?: UpdatorConfigType;
+  galacticEvents?: Array<string>; // event names
   hexSummary?: string;
   history?: Array<GameData>;
   laws?: Array<string>; // card names

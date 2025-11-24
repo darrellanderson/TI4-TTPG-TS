@@ -22,7 +22,7 @@ export const EchoOfAscension: UnitModifierSchemaType = {
     if (unitAttrs) {
       const spaceCombat: CombatAttrs | undefined = unitAttrs.getSpaceCombat();
       if (spaceCombat) {
-        spaceCombat.addHit(-1);
+        spaceCombat.addHit(1);
         spaceCombat.addDice(1);
       }
     }

@@ -17,7 +17,7 @@ export class PlayerTechSummary {
     // Get techs owned by the player.
     const techs: Array<Tech> = [];
     const skipContained: boolean = true;
-    const allowFaceDown: boolean = false;
+    const allowFaceDown: boolean = true;
     for (const obj of world.getAllObjects(skipContained)) {
       const nsid: string = NSID.get(obj);
       if (
