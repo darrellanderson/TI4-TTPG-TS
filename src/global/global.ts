@@ -134,9 +134,16 @@ import { LOCALE_CONTEXT_MENUS } from "../locale/locale-context-menus";
 
 import { NSID_TO_TEMPLATE_ID } from "../nsid/nsid-to-template-id";
 import { OnStartTwilightsFall } from "../event/on-start-twilights-fall/on-start-twilights-fall";
+import { TFAhkSylFier } from "../context-menu/tf-fetch-tokens/tf-ahk-syl-fier";
 import { TFAwakeningGeoform } from "../context-menu/tf-fetch-tokens/tf-awakening-geoform";
+import { TFDimensionalTear } from "../context-menu/tf-fetch-tokens/tf-dimensional-tear";
+import { TFHeliosEntity } from "../context-menu/tf-fetch-tokens/tf-helios-entity";
+import { TFSingularityX } from "../context-menu/tf-fetch-tokens/tf-singularity-x";
+import { TFSingularityY } from "../context-menu/tf-fetch-tokens/tf-singularity-y";
+import { TFSingularityZ } from "../context-menu/tf-fetch-tokens/tf-singularity-z";
 import { TFTelepathicNaalu0 } from "../context-menu/tf-fetch-tokens/tf-telepathic-naalu-0";
 import { RightClickTFSupercharge } from "../context-menu/cards/tf-supercharge/tf-superchange";
+
 import { HeroDimensionalAnchor } from "../context-menu/heroes/hero-dimensional-anchor/hero-dimensional-anchor";
 import { HeroHelioCommandArray } from "../context-menu/heroes/hero-helio-command-array/hero-helio-command-array";
 import { HeroMultiverseShift } from "../context-menu/heroes/hero-multiverse-shift/hero-multiverse-shift";
@@ -299,7 +306,13 @@ export function resetGlobalThisTI4(): TI4Class {
     new ShuffleDecks(),
     new StartGame(),
     new StartGameWindow(),
+    new TFAhkSylFier(),
     new TFAwakeningGeoform(),
+    new TFDimensionalTear(),
+    new TFHeliosEntity(),
+    new TFSingularityX(),
+    new TFSingularityY(),
+    new TFSingularityZ(),
     new TFTelepathicNaalu0(),
     new ToggleActionPhaseTimes(),
     new ToggleAgenda(),
