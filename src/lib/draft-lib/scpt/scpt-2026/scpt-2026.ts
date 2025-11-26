@@ -11,17 +11,31 @@ export class Scpt2026 extends AbstractScpt {
   }
 
   getQual(): DraftActivityStartParams | undefined {
-    /*const slices: Array<string> = [];
-    const labels: Array<string> = ["a", "b", "c", "d", "e", "f", "g", "h"];
+    const slices: Array<string> = [
+      "79,109,107,47,74",
+      "102,76,111,114,48",
+      "40,108,100,44,37",
+      "113,27,99,46,24",
+      "26,28,115,43,19",
+      "64,73,67,42,59",
+      "39,110,62,49,63",
+    ];
+    const labels: Array<string> = [
+      "The Bellagio",
+      "Triples is Best",
+      "The Tempestations",
+      "A Starpoint in your Starpoint",
+      "It's Gashlai O'clock",
+      'Atlas "Shrugged"',
+      "Fisherman's Horizon",
+    ];
 
-    // Prune to player count.
-    const numSlices: number = this.getPlayerCount();
-    const numFactions: number = this.getPlayerCount();
-
+    // Prune to player count + 1 preserving order.
+    const numSlices: number = this.getPlayerCount() + 1;
+    const numFactions: number = this.getPlayerCount() + 1;
     while (slices.length > numSlices) {
-      const index: number = Math.floor(Math.random() * slices.length);
-      slices.splice(index, 1);
-      labels.splice(index, 1);
+      slices.pop();
+      labels.pop();
     }
 
     return {
@@ -29,12 +43,9 @@ export class Scpt2026 extends AbstractScpt {
       draft: new Milty(),
       numSlices,
       numFactions,
-      //config: `${slices.join("|")}&labels=${labels.join("|")}`,
-      config: `&labels=${labels.join("|")}`,
+      config: `${slices.join("|")}&labels=${labels.join("|")}`,
       countdownHours: 8,
     };
-    */
-    return undefined;
   }
 
   getPrelim(): DraftActivityStartParams | undefined {

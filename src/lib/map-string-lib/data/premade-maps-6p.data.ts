@@ -27,6 +27,13 @@ export const PREMADE_MAPS_6P: Array<PremadeMapType> = [
   },
   {
     playerCount: 6,
+    name: "Brainiac (TE)",
+    mapString:
+      "101 19 63 114 48 37 76 80 31 40 74 47 27 24 105 50 113 107 0 39 59 0 72 46 0 97 62 0 115 102 0 34 61 0 100 44",
+    author: "Bells",
+  },
+  {
+    playerCount: 6,
     name: "The Vormal (TE)",
     mapString:
       "46 102 62 64 48 24 27 110 101 42 105 114 100 37 109 26 98 117 0 113 115 0 22 50 0 111 47 0 44 65 0 40 78 0 107 99",
