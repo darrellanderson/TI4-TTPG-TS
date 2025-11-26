@@ -251,6 +251,10 @@ export class Faction {
     return `faction:${source}/${this._params.nsidName}`;
   }
 
+  getPriority(): number | undefined {
+    return this._params.priority;
+  }
+
   getPromissoryNsids(): Array<string> {
     const source: string = this._sourceAndPackageId.source;
     return this._params.promissories.map((promissory): string => {

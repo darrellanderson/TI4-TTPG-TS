@@ -24,6 +24,7 @@ export const SOURCE_TO_FACTION_DATA: Record<
         heroes: ["letani-miasmiala"],
         mechs: ["letani-behemoth"],
       },
+      priority: 29,
       promissories: ["stymie", "stymie.omega"],
       startingTechs: ["magen-defense-grid"],
       startingUnits: {
@@ -57,6 +58,7 @@ export const SOURCE_TO_FACTION_DATA: Record<
         heroes: ["riftwalker-meian"],
         mechs: ["icarus-drive"],
       },
+      priority: 20,
       promissories: ["creuss-iff"],
       startingTechs: ["gravity-drive"],
       startingUnits: {
@@ -97,6 +99,7 @@ export const SOURCE_TO_FACTION_DATA: Record<
         heroes: ["harrugh-gefhara"],
         mechs: ["pride-of-kenara"],
       },
+      priority: 18,
       promissories: ["trade-convoys"],
       startingTechs: ["antimass-deflectors", "sarween-tools"],
       startingUnits: {
@@ -128,6 +131,7 @@ export const SOURCE_TO_FACTION_DATA: Record<
         heroes: ["rin-the-masters-legacy"],
         mechs: ["shield-paling"],
       },
+      priority: 24,
       promissories: ["research-agreement"],
       startingTechs: [
         "antimass-deflectors",
@@ -165,6 +169,7 @@ export const SOURCE_TO_FACTION_DATA: Record<
         heroes: ["the-helmsman"],
         mechs: ["annihilator"],
       },
+      priority: 5,
       promissories: [
         "cybernetic-enhancements",
         "cybernetic-enhancements.omega",
@@ -200,6 +205,7 @@ export const SOURCE_TO_FACTION_DATA: Record<
         heroes: ["darktalon-treilla"],
         mechs: ["dunlain-reaper"],
       },
+      priority: 8,
       promissories: ["war-funding", "war-funding.omega"],
       startingTechs: ["antimass-deflectors", "plasma-scoring"],
       startingUnits: {
@@ -233,6 +239,7 @@ export const SOURCE_TO_FACTION_DATA: Record<
         heroes: ["ipswitch-loose-cannon"],
         mechs: ["moll-terminus"],
       },
+      priority: 15,
       promissories: ["promise-of-protection"],
       startingTechs: ["sarween-tools", "plasma-scoring"],
       startingUnits: {
@@ -265,6 +272,7 @@ export const SOURCE_TO_FACTION_DATA: Record<
         heroes: ["adjudicator-baal"],
         mechs: ["ember-colossus"],
       },
+      priority: 14,
       promissories: ["fires-of-the-gashlai"],
       startingTechs: ["plasma-scoring"],
       startingUnits: { fighter: 2, infantry: 4, spaceDock: 1, warSun: 1 },
@@ -298,6 +306,7 @@ export const SOURCE_TO_FACTION_DATA: Record<
         heroes: ["the-oracle"],
         mechs: ["iconoclast", "iconoclast.omega"],
       },
+      priority: 28,
       promissories: ["gift-of-prescience"],
       startingTechs: ["neural-motivator", "sarween-tools"],
       startingUnits: {
@@ -336,6 +345,7 @@ export const SOURCE_TO_FACTION_DATA: Record<
         heroes: ["unitdsgnflayesh"],
         mechs: ["mordred"],
       },
+      priority: 22,
       promissories: ["antivirus"],
       startingTechs: [
         "dacxive-animators",
@@ -386,6 +396,7 @@ export const SOURCE_TO_FACTION_DATA: Record<
         heroes: ["shval-harbinger"],
         mechs: ["valkyrie-exoskeleton"],
       },
+      priority: 10,
       promissories: ["tekklar-legion"],
       startingTechs: [],
       startingUnits: {
@@ -417,6 +428,7 @@ export const SOURCE_TO_FACTION_DATA: Record<
         heroes: ["gurno-aggero"],
         mechs: ["scavenger-zeta"],
       },
+      priority: 17,
       promissories: ["raghs-call"],
       startingTechs: ["antimass-deflectors"],
       startingUnits: {
@@ -448,6 +460,7 @@ export const SOURCE_TO_FACTION_DATA: Record<
         heroes: ["jace-x-4th-air-legion"],
         mechs: ["zs-thunderbolt-m2"],
       },
+      priority: 3,
       promissories: ["military-support"],
       startingTechs: ["antimass-deflectors", "neural-motivator"],
       startingUnits: {
@@ -484,6 +497,7 @@ export const SOURCE_TO_FACTION_DATA: Record<
         heroes: ["mathis-mathinus"],
         mechs: ["reclaimer"],
       },
+      priority: 27,
       promissories: ["acquiescence", "acquiescence.omega"],
       startingTechs: [],
       startingUnits: {
@@ -516,6 +530,7 @@ export const SOURCE_TO_FACTION_DATA: Record<
         heroes: ["xxekir-grom", "planetary-defense-nexus"],
         mechs: ["indomitus"],
       },
+      priority: 26,
       promissories: ["political-favor"],
       startingTechs: ["graviton-laser-system"],
       startingUnits: {
@@ -548,6 +563,7 @@ export const SOURCE_TO_FACTION_DATA: Record<
         heroes: ["dannel-of-the-tenth", "quantum-dissemination"],
         mechs: ["moyins-ashes"],
       },
+      priority: 4,
       promissories: ["greyfire-mutagen", "greyfire-mutagen.omega"],
       startingTechs: ["sarween-tools"],
       startingUnits: {
@@ -579,6 +595,7 @@ export const SOURCE_TO_FACTION_DATA: Record<
         heroes: ["kyver-blade-and-key"],
         mechs: ["blackshade-infiltrator"],
       },
+      priority: 11,
       promissories: ["spy-net"],
       startingTechs: ["neural-motivator"],
       startingUnits: {
@@ -613,6 +630,7 @@ export const SOURCE_TO_FACTION_DATA: Record<
         heroes: ["mirik-aun-sissiri"],
         mechs: ["aerie-sentinel"],
       },
+      priority: 25,
       promissories: ["strike-wing-ambuscade"],
       startingTechs: [],
       startingUnits: {
@@ -645,6 +663,7 @@ export const SOURCE_TO_FACTION_DATA: Record<
         heroes: ["conservator-procyon"],
         mechs: ["watcher"],
       },
+      priority: 9,
       promissories: ["blood-pact", "dark-pact"],
       startingTechs: ["dark-energy-tap"],
       startingUnits: {
@@ -682,6 +701,7 @@ export const SOURCE_TO_FACTION_DATA: Record<
         heroes: ["airo-shir-aur"],
         mechs: ["starlancer"],
       },
+      priority: 1,
       promissories: ["scepter-of-dominion"],
       startingTechs: ["predictive-intelligence", "biostims"],
       startingUnits: {
@@ -714,6 +734,7 @@ export const SOURCE_TO_FACTION_DATA: Record<
         heroes: ["hesh-and-prit"],
         mechs: ["eidolon"],
       },
+      priority: 19,
       promissories: ["black-market-forgery"],
       startingTechs: ["psychoarchaeology", "ai-development-algorithm"],
       startingUnits: {
@@ -750,6 +771,7 @@ export const SOURCE_TO_FACTION_DATA: Record<
         heroes: ["ahksyl-siven"],
         mechs: ["quantum-manipulator"],
       },
+      priority: 2,
       promissories: ["the-cavalry"],
       startingTechs: ["sling-relay"],
       startingUnits: {
@@ -782,6 +804,7 @@ export const SOURCE_TO_FACTION_DATA: Record<
         heroes: ["ul-the-progenitor"],
         mechs: ["hecatoncheires"],
       },
+      priority: 13,
       promissories: ["terraform"],
       startingTechs: ["antimass-deflectors", "scanlink-drone-network"],
       startingUnits: {
@@ -823,6 +846,7 @@ export const SOURCE_TO_FACTION_DATA: Record<
         heroes: ["it-feeds-on-carrion"],
         mechs: ["reanimator"],
       },
+      priority: 6,
       promissories: ["crucible"],
       startingTechs: ["self-assembly-routines"],
       startingUnits: {
@@ -863,6 +887,7 @@ export const SOURCE_TO_FACTION_DATA: Record<
         heroes: ["kuuasi-aun-jalatai"],
         mechs: ["omniopiares"],
       },
+      priority: 23,
       promissories: ["keleres-rider"],
       startingTechs: [],
       startingUnits: {
@@ -897,6 +922,7 @@ export const SOURCE_TO_FACTION_DATA: Record<
         heroes: ["harka-leeds"],
         mechs: ["omniopiares"],
       },
+      priority: 23,
       promissories: ["keleres-rider"],
       startingTechs: [],
       startingUnits: {
@@ -931,6 +957,7 @@ export const SOURCE_TO_FACTION_DATA: Record<
         heroes: ["odlynn-myrr"],
         mechs: ["omniopiares"],
       },
+      priority: 23,
       promissories: ["keleres-rider"],
       startingTechs: [],
       startingUnits: {
@@ -968,6 +995,7 @@ export const SOURCE_TO_FACTION_DATA: Record<
         heroes: ["entity-4x41a-apollo"],
         mechs: ["a3-valiance"],
       },
+      priority: 21,
       promissories: ["raise-the-standard"],
       startingTechs: [], // choose one blue or yellow with no prerequisites
       startingUnits: {
@@ -1008,6 +1036,7 @@ export const SOURCE_TO_FACTION_DATA: Record<
         heroes: ["signal-intrusion"],
         mechs: ["alarum"],
       },
+      priority: 12,
       promissories: ["nano-link-permit"],
       startingTechs: [], // chose one red or green with no prerequisites
       startingUnits: {
@@ -1042,6 +1071,7 @@ export const SOURCE_TO_FACTION_DATA: Record<
         heroes: ["fragment-reality"],
         mechs: ["revenant"],
       },
+      priority: 16,
       promissories: ["sever"],
       startingTechs: [], // choose one red or blue with no prerequisites
       startingUnits: {
@@ -1084,6 +1114,7 @@ export const SOURCE_TO_FACTION_DATA: Record<
         heroes: ["wave-function-collapse"],
         mechs: ["eanautic"],
       },
+      priority: 7,
       promissories: ["share-knowledge"],
       startingTechs: [], // research tech twice
       startingUnits: {
@@ -1116,6 +1147,7 @@ export const SOURCE_TO_FACTION_DATA: Record<
         heroes: ["the-blade-beckons"],
         mechs: ["viper-ex-23"],
       },
+      priority: 30,
       promissories: ["black-ops"],
       startingTechs: [], // choose one yellow or green with no prerequisites
       startingUnits: {
@@ -1151,6 +1183,7 @@ export const SOURCE_TO_FACTION_DATA: Record<
         heroes: ["the-blade-revealed"],
         mechs: ["viper-ex-23"],
       },
+      priority: 30,
       promissories: ["malevolency"],
       startingTechs: [],
       startingUnits: {},

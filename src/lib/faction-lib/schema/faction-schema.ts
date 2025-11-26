@@ -34,6 +34,7 @@ export const FactionSchema = z
       })
       .strict()
       .readonly(),
+    priority: z.number().min(0).optional(), // Twilight's Fall
     promissories: z.array(NsidNameSchema),
     startingTechs: z.array(NsidNameSchema),
     startingUnits: z

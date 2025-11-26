@@ -264,6 +264,40 @@ it("validate starting units are UnitType", () => {
   }
 });
 
+it("validate priories are unique (allow collisions for keleres and firmamanet/obsidian", () => {
+  const factions: Array<Faction> = new FactionRegistry()
+    .loadDefaultData()
+    .getAllFactions();
+
+  const allowCollisions: Set<string> = new Set([
+    "faction:codex.vigil/keleres-argent",
+    "faction:codex.vigil/keleres-mentak",
+    "faction:codex.vigil/keleres-xxcha",
+    "faction:thunders-edge/firmament",
+    "faction:thunders-edge/obsidian",
+  ]);
+
+  const priorities: Set<number> = new Set();
+  for (const faction of factions) {
+    const priority = faction.getPriority();
+    const nsidName: string = faction.getNsid();
+
+    // If undefined must be Twilight's Fall.
+    if (priority === undefined) {
+      if (!nsidName.startsWith("faction:twilights-fall/")) {
+        throw new Error(`Missing priority for faction: ${nsidName}`);
+      }
+      continue;
+    }
+
+    // Check for duplicate priorities.
+    if (priorities.has(priority) && !allowCollisions.has(nsidName)) {
+      throw new Error(`Duplicate priority found: ${nsidName} ${priority}`);
+    }
+    priorities.add(priority);
+  }
+});
+
 it("validate NSIDs appear in assets/Templates", () => {
   // Scan templates for NSIDs.
   const templateNsids: Set<string> = new Set(TI4.spawn.getAllNsids());

@@ -29,6 +29,7 @@ it("constructor", () => {
       heroes: ["my-hero"],
       mechs: ["my-mech"],
     },
+    priority: 7,
     promissories: ["my-promissory"],
     startingTechs: ["antimass-deflectors"], // looks up in tech registry
     startingUnits: { carrier: 3 },
@@ -84,6 +85,7 @@ it("constructor", () => {
   ]);
   expect(faction.getName()).toEqual("my-name");
   expect(faction.getNsid()).toEqual("faction:my-source/my-nsid-name");
+  expect(faction.getPriority()).toEqual(7);
   expect(faction.getPromissoryNsids()).toEqual([
     "card.promissory:my-source/my-promissory",
   ]);
