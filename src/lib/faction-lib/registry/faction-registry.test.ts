@@ -137,6 +137,7 @@ it("loadDefaultData", () => {
   expect(
     registry.getByNsidOrThrow("faction:codex.vigil/keleres-argent")
   ).toBeDefined();
+  expect(registry.getByPriority(1)).toBeDefined();
   expect(registry.getAllFactions()).not.toHaveLength(0);
 });
 

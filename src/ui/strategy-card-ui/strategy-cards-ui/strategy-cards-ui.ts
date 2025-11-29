@@ -50,7 +50,7 @@ export class StrategyCardsUI extends AbstractUI {
         uis.push(div);
       }
 
-      const strategyCardNumber: number = numberAndState.number;
+      const strategyCardNumber: number = numberAndState.n;
       let body: AbstractStrategyCardBody | undefined = undefined;
       if (strategyCardNumber === 1) {
         body = new BodyLeadership(strategyCardsState, playerSlot);

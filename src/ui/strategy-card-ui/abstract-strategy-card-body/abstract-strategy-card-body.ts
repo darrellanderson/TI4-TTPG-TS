@@ -32,8 +32,8 @@ export abstract class AbstractStrategyCardBody {
     const numbersAndStates: Array<StrategyCardNumberAndState> =
       this._strategyCardsState.active(this._playerSlot);
     for (const numberAndState of numbersAndStates) {
-      if (numberAndState.number === this._strategyCardNumber) {
-        return numberAndState.state;
+      if (numberAndState.n === this._strategyCardNumber) {
+        return numberAndState.s;
       }
     }
     return undefined;

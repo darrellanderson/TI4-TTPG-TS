@@ -83,6 +83,15 @@ export class FactionRegistry implements IGlobal {
     return this.getPlayerSlotToFaction().get(playerSlot);
   }
 
+  getByPriority(priority: number): Faction | undefined {
+    for (const faction of this.getAllFactions()) {
+      if (faction.getPriority() === priority) {
+        return faction;
+      }
+    }
+    return undefined;
+  }
+
   getPlayerSlotByFactionNsid(nsid: string): number | undefined {
     for (const [playerSlot, faction] of this.getPlayerSlotToFaction()) {
       if (faction.getNsid() === nsid) {

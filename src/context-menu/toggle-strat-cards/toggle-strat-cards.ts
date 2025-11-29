@@ -63,7 +63,7 @@ export class ToggleStratCards implements IGlobal {
       const active: Array<StrategyCardNumberAndState> =
         this._strategyCardsState.active(playerSlot);
       const isActive: boolean = active.length > 0;
-      const key: string = active.map((s) => s.number).join(",");
+      const key: string = active.map((s) => s.n).join(",");
 
       const perPlayerWindowData: PerPlayerWindowData | undefined =
         this._playerSlotToWindowData.get(playerSlot);
@@ -103,7 +103,7 @@ export class ToggleStratCards implements IGlobal {
       });
       const key: string = this._strategyCardsState
         .active(playerSlot)
-        .map((s) => s.number)
+        .map((s) => s.n)
         .join(",");
       perPlayerWindowData = {
         activeStrategyCardsKey: key,
@@ -118,7 +118,7 @@ export class ToggleStratCards implements IGlobal {
       this._playerSlotToWindowData.get(playerSlot);
     const key: string = this._strategyCardsState
       .active(playerSlot)
-      .map((s) => s.number)
+      .map((s) => s.n)
       .join(",");
     if (
       perPlayerWindowData &&

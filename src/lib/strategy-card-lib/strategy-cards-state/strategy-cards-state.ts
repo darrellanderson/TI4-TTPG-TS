@@ -6,11 +6,43 @@ import {
   PlayerSlot,
   TriggerableMulticastDelegate,
 } from "ttpg-darrell";
+import z from "zod";
 
-export type StrategyCardNumberAndState = {
-  number: number;
-  state: string;
-};
+const StrategyCardNumberAndStateSchema = z
+  .object({
+    n: z.number(), // strategy card number
+    s: z.string(), // opaque (likely empty or JSON)
+  })
+  .strict();
+
+export type StrategyCardNumberAndState = z.infer<
+  typeof StrategyCardNumberAndStateSchema
+>;
+
+const StrategyCardsPersistentDataSchema = z
+  .object({
+    playerSlotActive: z.array(
+      // map would be better but serialization issues
+      z
+        .object({
+          p: z.number(), // player slot
+          a: z.array(StrategyCardNumberAndStateSchema), // active
+        })
+        .strict()
+    ),
+    strategyCardLastPlayed: z.array(
+      z
+        .object({
+          n: z.number(), // strategy card number
+          p: z.number(), // player slot
+        })
+        .strict()
+    ),
+  })
+  .strict();
+type StrategyCardsPersistentData = z.infer<
+  typeof StrategyCardsPersistentDataSchema
+>;
 
 /**
  * Per-player set of active strategy cards, in order of play.
@@ -19,6 +51,12 @@ export class StrategyCardsState {
   public readonly onStrategyCardsStateChanged: TriggerableMulticastDelegate<
     () => void
   > = new TriggerableMulticastDelegate<() => void>();
+
+  private readonly _persistenceKey: NamespaceId;
+  private _data: StrategyCardsPersistentData = {
+    playerSlotActive: [],
+    strategyCardLastPlayed: [],
+  };
 
   private readonly onStrategyCardPlayedHandler = (
     strategyCard: GameObject,
@@ -35,16 +73,6 @@ export class StrategyCardsState {
       }
     }
   };
-
-  private readonly _persistenceKey: NamespaceId;
-  private readonly _playerSlotToActive: Map<
-    PlayerSlot,
-    Array<StrategyCardNumberAndState>
-  > = new Map();
-  private readonly _strategyCardNumberToLastPlayerSlotPlayed: Map<
-    number,
-    PlayerSlot
-  > = new Map();
 
   static strategyCardToNumber(strategyCard: GameObject): number | undefined {
     const nsid: string = NSID.get(strategyCard);
@@ -99,70 +127,28 @@ export class StrategyCardsState {
   }
 
   _save(): void {
-    const packed = [];
-
-    const strategyCardNumberAndLastPlayerSlotPlayed: Array<number> = [];
-    for (const [strategyCardNumber, playerSlot] of this
-      ._strategyCardNumberToLastPlayerSlotPlayed) {
-      strategyCardNumberAndLastPlayerSlotPlayed.push(
-        strategyCardNumber,
-        playerSlot
-      );
-    }
-    packed.push(strategyCardNumberAndLastPlayerSlotPlayed);
-
-    // playerSlotToActive.
-    for (const [playerSlot, active] of this._playerSlotToActive.entries()) {
-      const packedEntry: Array<number | string> = [playerSlot];
-      for (const activeEntry of active) {
-        packedEntry.push(activeEntry.number, activeEntry.state);
-      }
-      packed.push(packedEntry);
-    }
-    const json: string = JSON.stringify(packed);
+    const json: string = JSON.stringify(this._data);
     world.setSavedData(json, this._persistenceKey);
   }
 
   _load(): void {
-    this._strategyCardNumberToLastPlayerSlotPlayed.clear();
-    this._playerSlotToActive.clear();
-    const json: string | undefined = world.getSavedData(this._persistenceKey);
+    const json: string = world.getSavedData(this._persistenceKey);
     if (json && json.length > 0) {
-      const entries = JSON.parse(json);
-
-      const strategyCardNumberAndLastPlayerSlotPlayed: Array<number> =
-        entries.shift();
-      while (strategyCardNumberAndLastPlayerSlotPlayed.length > 0) {
-        const strategyCardNumber: number =
-          strategyCardNumberAndLastPlayerSlotPlayed.shift() as number;
-        const playerSlot: PlayerSlot =
-          strategyCardNumberAndLastPlayerSlotPlayed.shift() as PlayerSlot;
-        this._strategyCardNumberToLastPlayerSlotPlayed.set(
-          strategyCardNumber,
-          playerSlot
-        );
-      }
-
-      for (const entry of entries) {
-        const playerSlot: number = entry.shift() as number;
-        const active: Array<StrategyCardNumberAndState> =
-          this._getMutableActive(playerSlot);
-        while (entry.length > 0) {
-          const number: number = entry.shift() as number;
-          const state: string = entry.shift() as string;
-          active.push({ number, state });
-        }
-      }
+      console.log("xxx", json);
+      const parsed = JSON.parse(json);
+      this._data = StrategyCardsPersistentDataSchema.parse(parsed);
     }
   }
 
   _getMutableActive(playerSlot: PlayerSlot): Array<StrategyCardNumberAndState> {
-    let active: Array<StrategyCardNumberAndState> | undefined =
-      this._playerSlotToActive.get(playerSlot);
-    if (!active) {
-      active = [];
-      this._playerSlotToActive.set(playerSlot, active);
+    for (const entry of this._data.playerSlotActive) {
+      if (entry.p === playerSlot) {
+        return entry.a;
+      }
     }
+
+    const active: Array<StrategyCardNumberAndState> = [];
+    this._data.playerSlotActive.push({ p: playerSlot, a: active });
     return active;
   }
 
@@ -172,8 +158,8 @@ export class StrategyCardsState {
     return active.map((entry) => {
       // clone
       return {
-        number: entry.number,
-        state: entry.state,
+        n: entry.n,
+        s: entry.s,
       };
     });
   }
@@ -188,13 +174,13 @@ export class StrategyCardsState {
     let strategyCardNumberAndState: StrategyCardNumberAndState | undefined =
       active.find(
         (entry: StrategyCardNumberAndState): boolean =>
-          entry.number === strategyCardNumber
+          entry.n === strategyCardNumber
       );
     if (!strategyCardNumberAndState) {
-      strategyCardNumberAndState = { number: strategyCardNumber, state };
+      strategyCardNumberAndState = { n: strategyCardNumber, s: state };
       active.push(strategyCardNumberAndState);
     } else {
-      strategyCardNumberAndState.state = state;
+      strategyCardNumberAndState.s = state;
     }
     this._save();
     this.onStrategyCardsStateChanged.trigger();
@@ -206,7 +192,7 @@ export class StrategyCardsState {
       this._getMutableActive(playerSlot);
     const index: number = active.findIndex(
       (entry: StrategyCardNumberAndState): boolean =>
-        entry.number === strategyCardNumber
+        entry.n === strategyCardNumber
     );
     if (index > -1) {
       active.splice(index, 1);
@@ -231,18 +217,30 @@ export class StrategyCardsState {
     strategyCardNumber: number,
     playerSlot: PlayerSlot
   ): this {
-    this._strategyCardNumberToLastPlayerSlotPlayed.set(
-      strategyCardNumber,
-      playerSlot
-    );
+    let found: boolean = false;
+    for (const entry of this._data.strategyCardLastPlayed) {
+      if (entry.n === strategyCardNumber) {
+        entry.p = playerSlot;
+        found = true;
+      }
+    }
+    if (!found) {
+      this._data.strategyCardLastPlayed.push({
+        n: strategyCardNumber,
+        p: playerSlot,
+      });
+    }
     this._save();
     this.onStrategyCardsStateChanged.trigger();
     return this;
   }
 
   getLastPlayerSlotPlayed(strategyCardNumber: number): PlayerSlot | undefined {
-    return this._strategyCardNumberToLastPlayerSlotPlayed.get(
-      strategyCardNumber
-    );
+    for (const entry of this._data.strategyCardLastPlayed) {
+      if (entry.n === strategyCardNumber) {
+        return entry.p;
+      }
+    }
+    return undefined;
   }
 }
