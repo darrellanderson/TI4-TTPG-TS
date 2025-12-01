@@ -618,6 +618,7 @@ it("countTechnologyColors", () => {
   MockCard.simple("card.technology.yellow:pok/aerie-hololattice");
   MockCard.simple("card.technology.unit-upgrade:base/carrier-2");
   MockCard.simple("card.technology.unit-upgrade:base/carrier-2");
+  MockCard.simple("card.technology.unit-upgrade:thunders-edge/linkship-2");
 
   const counts: Map<
     PlayerSlot,
@@ -629,7 +630,7 @@ it("countTechnologyColors", () => {
     green: 2,
     red: 2,
     yellow: 2,
-    unitUpgrade: 2,
+    unitUpgrade: 3,
   });
 
   // Also test goal progress.
@@ -642,7 +643,7 @@ it("countTechnologyColors", () => {
   progress = new GoalProgress().techUnitUpgrades(2);
   expect(progress).toEqual({
     header: "Unit upgrades",
-    values: [undefined, { success: true, value: 2 }],
+    values: [undefined, { success: true, value: 3 }],
   });
 });
 

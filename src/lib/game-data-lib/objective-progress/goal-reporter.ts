@@ -1,6 +1,6 @@
 import { IGlobal } from "ttpg-darrell";
 import { GOAL_DATA_ENTRIES, GoalDataEntry } from "./goal.data";
-import { GoalProgressType } from "./goal-progress";
+import { GoalProgressPerPlayerType, GoalProgressType } from "./goal-progress";
 import { ObjectiveToScored } from "./objective-to-scored";
 
 const GOAL_CYCLE_TIME_MSECS = 10000;
@@ -39,6 +39,18 @@ export class GoalReporter implements IGlobal {
     if (goalData) {
       const goalNsid: string = goalData.nsid;
       const progress: GoalProgressType = goalData.get();
+
+      const progressValues: Array<GoalProgressPerPlayerType | undefined> =
+        progress.values;
+      for (let i = 0; i < TI4.config.playerCount; i++) {
+        if (progressValues[i] === undefined) {
+          progressValues[i] = {
+            value: "-",
+            success: false,
+          };
+        }
+      }
+
       this._goalNsidToProgress.set(goalNsid, progress);
     }
 
