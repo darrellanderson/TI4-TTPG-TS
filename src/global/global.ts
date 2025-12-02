@@ -85,6 +85,7 @@ import { RightClickRider } from "../context-menu/right-click-rider/right-click-r
 import { RightClickRift } from "../context-menu/right-click-rift/right-click-rift";
 import { RightClickScorePrivate } from "../context-menu/right-click-score/right-click-score-private";
 import { RightClickScorePublic } from "../context-menu/right-click-score/right-click-score-public";
+import { RightClickSleeperToken } from "../context-menu/right-click-sleeper-token/right-click-sleeper-token";
 import { RightClickSpecOps2 } from "../context-menu/cards/infantry-2/right-click-spec-ops-2";
 import { RightClickStellarConverter } from "../context-menu/cards/stellar-converter/right-click-stellar-converter";
 import { RightClickThundersEdge } from "../context-menu/right-click-thunders-edge/right-click-thunders-edge";
@@ -292,6 +293,7 @@ export function resetGlobalThisTI4(): TI4Class {
     new RightClickRift(),
     new RightClickScorePrivate(),
     new RightClickScorePublic(),
+    new RightClickSleeperToken(),
     new RightClickSpecOps2(),
     new RightClickStellarConverter(),
     new RightClickTFAbilitySplice(),
