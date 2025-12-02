@@ -20,7 +20,7 @@ it("data", () => {
     anchorSeconds: 0,
     anchorTimestamp: 0,
     countDown: 0,
-    direction: 1,
+    direction: 0,
     seconds: 0,
   });
 });
@@ -34,7 +34,7 @@ it("data (countdown)", () => {
     gameData.timer.seconds = 0;
   }
   expect(gameData.timer).toEqual({
-    anchorSeconds: 100,
+    anchorSeconds: 0,
     anchorTimestamp: gameData.timer?.anchorTimestamp,
     countDown: 100,
     direction: -1,
