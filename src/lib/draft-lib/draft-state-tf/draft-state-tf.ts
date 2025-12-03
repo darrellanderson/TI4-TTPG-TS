@@ -90,6 +90,10 @@ export class DraftStateTF extends DraftState {
     return opaqueData.s;
   }
 
+  hasSpeakerPriority(playerSlot: number): boolean {
+    return this.getSpeakerPriority(playerSlot) !== -1;
+  }
+
   setHomeSystem(homeSystem: number, playerSlot: number): boolean {
     const opaqueData: OpaqueTFSchemaType | undefined =
       this._getParsedOpaqueData(playerSlot);
@@ -108,6 +112,10 @@ export class DraftStateTF extends DraftState {
       return -1;
     }
     return opaqueData.h;
+  }
+
+  hasHomeSystem(playerSlot: number): boolean {
+    return this.getHomeSystem(playerSlot) !== -1;
   }
 
   setStartingUnits(startingUnits: number, playerSlot: number): boolean {
@@ -130,21 +138,20 @@ export class DraftStateTF extends DraftState {
     return opaqueData.u;
   }
 
+  hasStartingUnits(playerSlot: number): boolean {
+    return this.getStartingUnits(playerSlot) !== -1;
+  }
+
   _isOpaqueDataComplete(): boolean {
     const playerSlots: Array<number> = TI4.playerSeats
       .getAllSeats()
       .map((seat) => seat.playerSlot);
     for (const playerSlot of playerSlots) {
-      const seatPriority: number = this.getSpeakerPriority(playerSlot);
-      if (seatPriority === -1) {
-        return false;
-      }
-      const seatHomeSystem: number = this.getHomeSystem(playerSlot);
-      if (seatHomeSystem === -1) {
-        return false;
-      }
-      const seatStartingUnits: number = this.getStartingUnits(playerSlot);
-      if (seatStartingUnits === -1) {
+      if (
+        !this.hasSpeakerPriority(playerSlot) ||
+        !this.hasHomeSystem(playerSlot) ||
+        !this.hasStartingUnits(playerSlot)
+      ) {
         return false;
       }
     }

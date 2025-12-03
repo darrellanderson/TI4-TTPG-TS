@@ -133,8 +133,7 @@ export class StrategyCardsState {
 
   _load(): void {
     const json: string = world.getSavedData(this._persistenceKey);
-    if (json && json.length > 0) {
-      console.log("xxx", json);
+    if (json && json.length > 0 && json[0] === "{") {
       const parsed = JSON.parse(json);
       this._data = StrategyCardsPersistentDataSchema.parse(parsed);
     }
