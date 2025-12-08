@@ -32,9 +32,17 @@ it("getParams, onCustomAction", () => {
   }
   onCustomAction(clickingPlayer, identifier, targetPlayerSlot);
 
+  turnOrderUI.destroy();
+});
+
+it("onPlayerChangedColor", () => {
+  const turnOrderUI = new TurnOrderUI();
+  turnOrderUI.attachToScreen();
+
   const playerSlot: number = 10;
   const colorName: string = "red";
   const colorHex: string = "#ff0000";
+  const clickingPlayer: Player = new MockPlayer();
   TI4.events.onPlayerChangedColor.trigger(
     playerSlot,
     colorName,
