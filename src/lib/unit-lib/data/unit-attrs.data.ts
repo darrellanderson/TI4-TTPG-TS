@@ -334,11 +334,13 @@ export const SOURCE_TO_UNIT_ATTRS_DATA: Record<
       name: "Floating Factory",
       unit: "space-dock",
       nsidName: "floating-factory",
+      isNonShipRollForRifts: true,
     },
     {
       name: "Floating Factory II",
       unit: "space-dock",
       nsidName: "floating-factory-2",
+      isNonShipRollForRifts: true,
     },
 
     // War sun

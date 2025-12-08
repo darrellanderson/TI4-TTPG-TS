@@ -287,7 +287,26 @@ it("isGround", () => {
   expect(unitAttrs.isGround()).toBe(true);
 });
 
-it("hasSustaindDamage", () => {
+it("isNonShipRollForRifts", () => {
+  const unitAttrs = new UnitAttrs({
+    name: "my-name",
+    unit: "infantry",
+    isNonShipRollForRifts: true,
+  });
+  expect(unitAttrs.isNonShipRollForRifts()).toBe(true);
+
+  unitAttrs.setIsNonShipRollForRifts(false);
+  expect(unitAttrs.isNonShipRollForRifts()).toBe(false);
+
+  unitAttrs.applyOverride({
+    name: "my-name",
+    unit: "infantry",
+    isNonShipRollForRifts: true,
+  });
+  expect(unitAttrs.isNonShipRollForRifts()).toBe(true);
+});
+
+it("hasSustainDamage", () => {
   const unitAttrs = new UnitAttrs({
     name: "my-name",
     unit: "infantry",

@@ -55,6 +55,7 @@ export const UnitAttrsSchema = z
 
     isShip: z.boolean().optional(),
     isGround: z.boolean().optional(),
+    isNonShipRollForRifts: z.boolean().optional(),
 
     hasSustainDamage: z.boolean().optional(),
     hasPlanetaryShield: z.boolean().optional(),

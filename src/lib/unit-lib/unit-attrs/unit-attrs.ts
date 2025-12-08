@@ -27,6 +27,7 @@ export class UnitAttrs {
 
   private _isShip: boolean;
   private _isGround: boolean;
+  private _isNonShipRollForRifts: boolean;
 
   private _hasSustainDamage: boolean;
   private _hasPlanetaryShield: boolean;
@@ -92,6 +93,7 @@ export class UnitAttrs {
 
     this._isShip = params.isShip ?? false;
     this._isGround = params.isGround ?? false;
+    this._isNonShipRollForRifts = params.isNonShipRollForRifts ?? false;
     this._hasSustainDamage = params.hasSustainDamage ?? false;
     this._hasPlanetaryShield = params.hasPlanetaryShield ?? false;
     this._disablePlanetaryShield = params.disablePlanetaryShield ?? false;
@@ -150,6 +152,9 @@ export class UnitAttrs {
     }
     if (override.isShip) {
       this._isShip = true;
+    }
+    if (override.isNonShipRollForRifts) {
+      this._isNonShipRollForRifts = true;
     }
     this._name = override.name;
     if (override.producePerCost) {
@@ -332,6 +337,10 @@ export class UnitAttrs {
     return this._isShip;
   }
 
+  isNonShipRollForRifts(): boolean {
+    return this._isNonShipRollForRifts;
+  }
+
   setAntiFighterBarrage(value: CombatAttrs | undefined): this {
     this._antiFighterBarrage = value;
     return this;
@@ -399,6 +408,11 @@ export class UnitAttrs {
 
   setIsShip(value: boolean): this {
     this._isShip = value;
+    return this;
+  }
+
+  setIsNonShipRollForRifts(value: boolean): this {
+    this._isNonShipRollForRifts = value;
     return this;
   }
 

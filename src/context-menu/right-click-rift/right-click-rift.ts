@@ -88,7 +88,10 @@ export class RightClickRift implements IGlobal {
         const unitAttrs: UnitAttrs | undefined = unitAttrsSet.get(
           plastic.getUnit()
         );
-        return unitAttrs !== undefined && unitAttrs.isShip();
+        if (unitAttrs === undefined) {
+          return false;
+        }
+        return unitAttrs.isShip() || unitAttrs.isNonShipRollForRifts();
       }
     );
     UnitPlastic.assignOwners(plastics);
