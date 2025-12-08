@@ -50,12 +50,12 @@ export class Milty implements IDraft {
       sliceMakeups: [MILTY_SLICE_MAKEUP],
       sliceShape: MILTY_SLICE_SHAPE,
       minAlphaWormholes: new WeightedChoice<number>([
-        { weight: 1, value: 2 },
-        { weight: 1, value: 3 },
+        { weight: 4, value: 2 },
+        { weight: 6, value: 3 },
       ]).choice(),
       minBetaWormholes: new WeightedChoice<number>([
-        { weight: 1, value: 2 },
-        { weight: 1, value: 3 },
+        { weight: 4, value: 2 },
+        { weight: 6, value: 3 },
       ]).choice(),
       minLegendary: new WeightedChoice<number>([
         { weight: 1, value: 1 },

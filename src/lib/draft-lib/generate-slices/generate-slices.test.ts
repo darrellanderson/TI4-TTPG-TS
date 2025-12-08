@@ -332,3 +332,47 @@ it("milty", () => {
     }
   }
 });
+
+/*
+// Check legendary distribution (not a real test)
+it("legendary distribution check", () => {
+  const legendaryToCount: Map<string, number> = new Map();
+  const n = 10000;
+  for (let i = 0; i <= n; i++) {
+    const generateSlices = new GenerateSlices({
+      sliceMakeups: [["high", "med", "low", "red", "red"]],
+      sliceShape: [
+        "<0,0,0>",
+        "<1,0,-1>",
+        "<2,0,-2>",
+        "<3,0,-3>",
+        "<4,0,-4>",
+        "<5,0,-5>",
+      ],
+      minAlphaWormholes: 0,
+      minBetaWormholes: 0,
+      minLegendary: 2,
+    });
+    const slices: Array<SliceTiles> = generateSlices.generateSlices(8);
+    slices.forEach((slice: SliceTiles): void => {
+      slice.forEach((tile: number): void => {
+        const system: System | undefined =
+          TI4.systemRegistry.getBySystemTileNumber(tile);
+        if (system) {
+          for (const planet of system.getPlanets()) {
+            if (planet.isLegendary()) {
+              const name: string = planet.getName();
+              legendaryToCount.set(name, (legendaryToCount.get(name) || 0) + 1);
+            }
+          }
+        }
+      });
+    });
+  }
+  const out: Array<string> = ["Legendary Distribution:"];
+  for (const [name, count] of legendaryToCount.entries()) {
+    out.push(`  ${name}: ${count}`);
+  }
+  console.log(out.join("\n"));
+});
+//*/
