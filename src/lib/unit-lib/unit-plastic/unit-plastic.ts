@@ -198,12 +198,16 @@ export class UnitPlastic {
       const hex: HexType = TI4.hex.fromPosition(system.getObj().getPosition());
       hexToSystem.set(hex, system);
     }
+    const ignoreSpaceStations: boolean = true;
     for (const entry of entries) {
       const system: System | undefined = hexToSystem.get(entry._hex);
       if (system) {
         const pos: Vector = entry._pos;
         entry._system = system;
-        entry._planetClosest = system.getPlanetClosest(pos);
+        entry._planetClosest = system.getPlanetClosest(
+          pos,
+          ignoreSpaceStations
+        );
         entry._planetExact = system.getPlanetExact(pos);
       }
     }
