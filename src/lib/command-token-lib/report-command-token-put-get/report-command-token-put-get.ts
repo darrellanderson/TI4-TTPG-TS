@@ -23,7 +23,9 @@ export class PerContainerReportCommandTokenPutGet {
   constructor(container: Container) {
     this._container = container;
 
+    container.onInserted.remove(this._onInserted);
     container.onInserted.add(this._onInserted);
+    container.onRemoved.remove(this._onRemoved);
     container.onRemoved.add(this._onRemoved);
   }
 
@@ -63,6 +65,7 @@ export class PerContainerReportCommandTokenPutGet {
     this._insertCount += _insertedObjects.length;
     if (this._timeoutHandle) {
       clearTimeout(this._timeoutHandle);
+      this._timeoutHandle = undefined;
     }
     this._timeoutHandle = setTimeout(this._report, REPORT_DELAY_MSECS);
   };
@@ -75,6 +78,7 @@ export class PerContainerReportCommandTokenPutGet {
     this._removeCount += 1;
     if (this._timeoutHandle) {
       clearTimeout(this._timeoutHandle);
+      this._timeoutHandle = undefined;
     }
     this._timeoutHandle = setTimeout(this._report, REPORT_DELAY_MSECS);
   };
