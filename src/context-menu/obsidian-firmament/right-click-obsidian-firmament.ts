@@ -80,6 +80,8 @@ export class RightClickObsidianFirmament implements IGlobal {
         this._add(SWAP_FIRMAMENT, pos, playerSlot);
       }
       this._flipAll(fromFirmament);
+
+      TI4.events.onFactionChanged.trigger(playerSlot);
     }
   };
 
