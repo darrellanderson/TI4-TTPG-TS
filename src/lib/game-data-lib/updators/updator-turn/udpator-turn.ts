@@ -9,6 +9,8 @@ export class UpdatorTurn implements IGameDataUpdator {
       TI4.playerColor.getSlotColorName(current);
     if (colorName) {
       gameData.turn = colorName;
+    } else {
+      gameData.turn = "-";
     }
   }
 }
