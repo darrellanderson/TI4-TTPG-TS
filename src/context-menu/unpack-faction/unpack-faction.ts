@@ -75,7 +75,8 @@ export class UnpackFactionContextMenuItem implements IGlobal {
     const faction: Faction = this._getFaction(obj);
     const playerSlot: number = this._getClosest(obj);
 
-    const existingFaction = TI4.factionRegistry.getByPlayerSlot(playerSlot);
+    const existingFaction: Faction | undefined =
+      TI4.factionRegistry.getByPlayerSlot(playerSlot);
     if (existingFaction) {
       Broadcast.chatOne(
         player,
