@@ -33,7 +33,10 @@ export function _getGravleashUnitType(combatRoll: CombatRoll): UnitType {
     unitType = savedData as UnitType;
 
     // If no such unit default to BEST.
-    if (!combatRoll.self.hasUnit(unitType)) {
+    if (
+      !combatRoll.self.hasUnit(unitType) &&
+      savedData !== GRAVLEASH_CHOOSE_WORST
+    ) {
       unitType = GRAVLEASH_CHOOSE_BEST;
     }
 
