@@ -46,16 +46,9 @@ export class HeroMultiverseShift extends AbstractRightClickCard {
     Broadcast.chatAll(msg, color);
 
     const zeroPlanetHexes: Set<HexType> = this._getZeroPlanetHexes();
-    const shipHexes: Set<HexType> = this._getShipHexes(playerSlot);
+    const myShipHexes: Set<HexType> = this._getShipHexes(playerSlot);
     const alreadyHaveFrontierTokenHexes: Set<HexType> =
       this._getAlreadyHaveFrontierTokenHexes();
-
-    // Prune to only the hexes that contain the player's ships.
-    for (const hex of zeroPlanetHexes) {
-      if (!shipHexes.has(hex)) {
-        zeroPlanetHexes.delete(hex);
-      }
-    }
 
     // Add frontier tokens to systems that need them.
     const z = world.getTableHeight() + 10;
@@ -71,6 +64,14 @@ export class HeroMultiverseShift extends AbstractRightClickCard {
       }
     }
 
+    // Prune to only the hexes that contain the player's ships.
+    const myZeroPlanetHexes: Set<HexType> = new Set();
+    for (const hex of zeroPlanetHexes) {
+      if (myShipHexes.has(hex)) {
+        myZeroPlanetHexes.add(hex);
+      }
+    }
+
     // Visualize the frontier tokens that need exploring.
     const skipContained: boolean = true;
     for (const obj of world.getAllObjects(skipContained)) {
@@ -78,7 +79,7 @@ export class HeroMultiverseShift extends AbstractRightClickCard {
       if (nsid === "token.attachment.system:pok/frontier") {
         const pos: Vector = obj.getPosition();
         const hex: HexType = TI4.hex.fromPosition(pos);
-        if (zeroPlanetHexes.has(hex)) {
+        if (myZeroPlanetHexes.has(hex)) {
           // Visualize the frontier token.
           new GlowingToken(obj);
         }

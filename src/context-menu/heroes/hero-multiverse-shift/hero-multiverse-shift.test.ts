@@ -30,14 +30,18 @@ it("_getZeroPlanetHexes", () => {
   MockGameObject.simple("tile.system:base/40", {
     position: TI4.hex.toPosition("<3,0,-3>"),
   });
+  MockGameObject.simple("tile.system:thunders-edge/900", {
+    position: TI4.hex.toPosition("<4,0,-4>"),
+  });
 
   const heroMultiverseShift: HeroMultiverseShift = new HeroMultiverseShift();
   const zeroPlanetHexes: Set<HexType> =
     heroMultiverseShift._getZeroPlanetHexes();
-  expect(zeroPlanetHexes.size).toEqual(3);
+  expect(zeroPlanetHexes.size).toEqual(4);
   expect(zeroPlanetHexes.has("<1,0,-1>")).toBe(true);
   expect(zeroPlanetHexes.has("<2,0,-2>")).toBe(true);
   expect(zeroPlanetHexes.has("<3,0,-3>")).toBe(true);
+  expect(zeroPlanetHexes.has("<4,0,-4>")).toBe(true);
 });
 
 it("_getAlreadyHaveFrontierTokenHexes", () => {
