@@ -141,7 +141,8 @@ export class DraftToMapString {
     seatIndexToOpaque: Map<number, string>,
     opaqueType: string | null
   ): MapStringAndHexToPlayerName {
-    const mapStringEntries: Array<string> = ["{18}"];
+    const mecatol: number = TI4.systemRegistry.getMecatolRexSystemTileNumber();
+    const mapStringEntries: Array<string> = [`{${mecatol}}`];
     const hexToPlayerName: Map<HexType, string> = new Map();
 
     // When a slice does not have assigned tiles, use blank/colored tiles.
