@@ -1,5 +1,5 @@
 import { GameObject, Player, Vector, world } from "@tabletop-playground/api";
-import { Find } from "ttpg-darrell";
+import { ErrorHandler, Find } from "ttpg-darrell";
 
 import { DraftState } from "../draft-state/draft-state";
 import { DraftToMapString } from "../draft-to-map-string/draft-to-map-string";
@@ -109,10 +109,28 @@ export class DraftActivityFinish {
   unpackFactions(): this {
     const seats: Array<PlayerSeatType> = TI4.playerSeats.getAllSeats();
     seats.forEach((seat: PlayerSeatType, index: number) => {
+      const playerSlot: number = seat.playerSlot;
       const faction: Faction | undefined =
         this._draftState.getSeatIndexToFaction(index);
       if (faction) {
-        new UnpackAll(faction, seat.playerSlot).unpack();
+        // Bug report of (default) white seat unpacking twice after a draft.
+        // Other seats are fine, just white duplicated...
+        // Unclear how that would happen, but as a precaution validate empty.
+        const existingFaction: Faction | undefined =
+          TI4.factionRegistry.getByPlayerSlot(playerSlot);
+        if (existingFaction) {
+          // This could technically happen if a player unpacked a faction
+          // before the draft.  In any case report the error to get a sense of things.
+          const errMsg: string = [
+            "Draft",
+            `found existing faction "${existingFaction.getAbbr()}"`,
+            `(wanted "${faction.getAbbr()}")`,
+            `for player slot ${playerSlot}`,
+          ].join(" ");
+          ErrorHandler.onError.trigger(errMsg);
+        } else {
+          new UnpackAll(faction, playerSlot).unpack();
+        }
       }
     });
     return this;
