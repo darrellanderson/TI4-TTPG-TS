@@ -1,4 +1,5 @@
 import { CombatRoll, CombatRollParams } from "../../../../combat-lib";
+import { UnitType } from "../../../schema/unit-attrs-schema";
 import { placeGameObjects, SELF, OPPONENT } from "../abstract.test";
 
 import {
@@ -13,6 +14,8 @@ it("registry", () => {
 
 it("modifier", () => {
   let combatRoll: CombatRoll;
+  let success: boolean;
+
   const combatParams: CombatRollParams = {
     rollType: "spaceCombat",
     hex: "<0,0,0>",
@@ -36,9 +39,15 @@ it("modifier", () => {
       ["dreadnought", 3],
     ]),
   });
-  const success: boolean = _setGravleashUnitType("fighter");
+  combatRoll = CombatRoll.createCooked(combatParams);
+
+  success = _setGravleashUnitType("flagship");
   expect(success).toBe(true);
-  expect(_getGravleashUnitType(combatRoll)).toBe("fighter");
+  expect(_getGravleashUnitType(combatRoll)).toBe("choose-best"); // missing unit, use best
+
+  success = _setGravleashUnitType("fighter");
+  expect(success).toBe(true);
+  expect(_getGravleashUnitType(combatRoll)).toBe("fighter"); // unit exists, use it
 
   combatRoll = CombatRoll.createCooked(combatParams);
   expect(combatRoll.getUnitModifierNames()).toEqual(["Gravleash Maneuvers"]);

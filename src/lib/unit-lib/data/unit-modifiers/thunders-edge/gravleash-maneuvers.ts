@@ -28,34 +28,34 @@ export function _getGravleashUnitType(combatRoll: CombatRoll): UnitType {
   );
   if (card) {
     const savedData: string = card.getSavedData("unitType");
-    if (savedData.length > 0) {
-      // Default to saved data choosing a specific unit type.
-      unitType = savedData as UnitType;
 
-      // Optionally choose best (priortize single hit) or worst (prioritize more hits).
-      let best: number = 1000;
-      let worst: number = -1000;
-      combatRoll.self.unitAttrsSet.getAll().forEach((unitAttrs: UnitAttrs) => {
-        if (
-          unitAttrs.isShip() &&
-          combatRoll.self.hasUnit(unitAttrs.getUnit())
-        ) {
-          const spaceCombat: CombatAttrs | undefined =
-            unitAttrs.getSpaceCombat();
-          if (spaceCombat) {
-            const hit: number = spaceCombat.getHit();
-            if (
-              (savedData === GRAVLEASH_CHOOSE_BEST && hit < best) ||
-              (savedData === GRAVLEASH_CHOOSE_WORST && hit > worst)
-            ) {
-              best = hit;
-              worst = hit;
-              unitType = unitAttrs.getUnit();
-            }
+    // Saved data chooses a specific unit type.
+    unitType = savedData as UnitType;
+
+    // If no such unit default to BEST.
+    if (!combatRoll.self.hasUnit(unitType)) {
+      unitType = GRAVLEASH_CHOOSE_BEST;
+    }
+
+    // Optionally choose best (priortize single hit) or worst (prioritize more hits).
+    let best: number = 1000;
+    let worst: number = -1000;
+    combatRoll.self.unitAttrsSet.getAll().forEach((unitAttrs: UnitAttrs) => {
+      if (unitAttrs.isShip() && combatRoll.self.hasUnit(unitAttrs.getUnit())) {
+        const spaceCombat: CombatAttrs | undefined = unitAttrs.getSpaceCombat();
+        if (spaceCombat) {
+          const hit: number = spaceCombat.getHit();
+          if (
+            (savedData === GRAVLEASH_CHOOSE_BEST && hit < best) ||
+            (savedData === GRAVLEASH_CHOOSE_WORST && hit > worst)
+          ) {
+            best = hit;
+            worst = hit;
+            unitType = unitAttrs.getUnit();
           }
         }
-      });
-    }
+      }
+    });
   }
   return unitType;
 }
