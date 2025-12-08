@@ -66,6 +66,7 @@ import { RemoveRegistry } from "../lib/remove-lib/registry/remove-registry";
 import { ReportCommandTokenPutGet } from "../lib/command-token-lib/report-command-token-put-get/report-command-token-put-get";
 import { ReportRemaining } from "../context-menu/report-remaining/report-remaining";
 import { RightClickAgenda } from "../context-menu/right-click-agenda/right-click-agenda";
+import { RightClickCrisis } from "../context-menu/cards/crisis/right-click-crisis";
 //import { RightClickDelete } from "../context-menu/right-click-delete/right-click-delete";
 import { RightClickExplore } from "../context-menu/system/explore-system/right-click-explore";
 import { RightClickFracture } from "../context-menu/fracture/right-click-fracture";
@@ -275,6 +276,7 @@ export function resetGlobalThisTI4(): TI4Class {
     new ReportCommandTokenPutGet(),
     new ReportRemaining(),
     new RightClickAgenda(),
+    new RightClickCrisis(),
     new RightClickExplore(),
     new RightClickFracture(),
     new RightClickGalvanizeToken(),
