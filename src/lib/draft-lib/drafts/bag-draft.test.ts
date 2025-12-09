@@ -6,7 +6,10 @@ import {
 } from "@tabletop-playground/api";
 import { PlayerSlot, Spawn } from "ttpg-darrell";
 import { MockCardHolder, MockContainer, MockGameObject } from "ttpg-mock";
-import { SliceTiles } from "../generate-slices/generate-slices";
+import {
+  GenerateSlicesParams,
+  SliceTiles,
+} from "../generate-slices/generate-slices";
 import { BagDraft } from "./bag-draft";
 
 // Systems must exist for registry to know about them.
@@ -102,11 +105,11 @@ it("_fillContainer", () => {
   expect(container.getNumItems()).toBe(0);
 
   const bagDraft: BagDraft = new BagDraft();
-  bagDraft._fillContainer(container, [19, 20]);
+  bagDraft._fillContainerSystems(container, [19, 20]);
   expect(container.getNumItems()).toBe(2);
 
   // Again, will remove from container before re-adding.
-  bagDraft._fillContainer(container, [19, 20]);
+  bagDraft._fillContainerSystems(container, [19, 20]);
   expect(container.getNumItems()).toBe(2);
 });
 
@@ -116,8 +119,15 @@ it("_fillContainer (missing systems)", () => {
 
   const bagDraft: BagDraft = new BagDraft();
   expect(() => {
-    bagDraft._fillContainer(container, [-3, -4]);
+    bagDraft._fillContainerSystems(container, [-3, -4]);
   }).toThrow();
+});
+
+it("setGenerateSlicesParams and getGenerateSlicesParams", () => {
+  const bagDraft: BagDraft = new BagDraft();
+  const params: GenerateSlicesParams = bagDraft.getGenerateSlicesParams();
+  bagDraft.setGenerateSlicesParams(params);
+  expect(bagDraft.getGenerateSlicesParams()).toEqual(params);
 });
 
 it("createDraftObjects", () => {

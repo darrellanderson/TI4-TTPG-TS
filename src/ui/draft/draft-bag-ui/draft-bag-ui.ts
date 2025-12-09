@@ -200,12 +200,12 @@ export class DraftBagUI extends AbstractUI {
     // Make up a slice shape (not used).
     const sliceShape: Array<HexType> = [];
     for (let i = 0; i < sliceMakeup.length; i++) {
-      sliceShape.push(`<${i},0,-{i}>` as HexType);
+      sliceShape.push(`<${i},0,-${i}>` as HexType);
     }
 
     return {
       sliceMakeups: [sliceMakeup],
-      sliceShape: [],
+      sliceShape,
       minAlphaWormholes: this._minAlphas.getValue(),
       minBetaWormholes: this._minBetas.getValue(),
       minLegendary: this._minLegendaries.getValue(),
