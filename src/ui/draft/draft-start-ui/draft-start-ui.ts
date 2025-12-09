@@ -122,7 +122,7 @@ export class DraftStartUI extends AbstractUI {
       new MinorFactionsDraft(),
       new Wekker(),
       new NucleusDraft(),
-      new BagDraft(),
+      //new BagDraft(), // bag draft split out to its own UI
     ];
     const draftCheckBoxUIs: Array<CheckBoxUI> = iDrafts.map(
       (idraft: IDraft): CheckBoxUI => {

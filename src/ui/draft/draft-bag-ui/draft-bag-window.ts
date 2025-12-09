@@ -55,6 +55,8 @@ export class DraftBagWindow {
       new BagDraft()
         .setContainerNsid("container:base/bag-draft")
         .setGenerateSlicesParams(this._draftBagUI.getGenerateSlicesParams())
+        .setNumFactions(this._draftBagUI.getNumFactions())
+        .setUseFactionsOnTable(this._draftBagUI.getUseFactionsOnTable())
         .createDraftObjects();
     }
   }

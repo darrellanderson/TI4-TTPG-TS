@@ -37,6 +37,7 @@ import {
   CreateAbstractUIParams,
   CreateAbstractUIType,
 } from "../abstract-window/abstract-window";
+import { DraftBagWindow } from "../draft/draft-bag-ui/draft-bag-window";
 
 export class MapToolUI extends AbstractUI {
   private readonly _editText: MultilineTextBox;
@@ -62,6 +63,13 @@ export class MapToolUI extends AbstractUI {
     (_button: Button, player: Player): void => {
       const playerSlot: number = player.getSlot();
       new DraftStartWindow().createAndAttachWindow(playerSlot);
+    }
+  ).get();
+
+  private readonly _onUseBagDraft = new ThrottleClickHandler<Button>(
+    (_button: Button, player: Player): void => {
+      const playerSlot: number = player.getSlot();
+      new DraftBagWindow().createAndAttachWindow(playerSlot);
     }
   ).get();
 
@@ -165,6 +173,12 @@ export class MapToolUI extends AbstractUI {
     const buttonSliceDraft: ButtonUI = new ButtonUI(scale);
     buttonSliceDraft.getButton().setText("Use slice draft...");
 
+    const empty: LabelUI = new LabelUI(scale);
+    empty.getText().setText("");
+
+    const buttonBagDraft: ButtonUI = new ButtonUI(scale);
+    buttonBagDraft.getButton().setText("Use bag draft...");
+
     const editText: TextBox = new TextBox()
       .setFontSize(CONFIG.FONT_SIZE * scale)
       .setMaxLength(1000);
@@ -210,6 +224,7 @@ export class MapToolUI extends AbstractUI {
       .setSpacing(CONFIG.SPACING * scale)
       .addUIs([
         buttonPremadeMap,
+        empty, // spacer
         labelUi,
         buttonLoad,
         buttonPlacePlanetCards,
@@ -222,6 +237,7 @@ export class MapToolUI extends AbstractUI {
       .setSpacing(CONFIG.SPACING * scale)
       .addUIs([
         buttonSliceDraft,
+        buttonBagDraft,
         textBoxUi,
         buttonSave,
         buttonRemovePlanetCards,
@@ -241,6 +257,7 @@ export class MapToolUI extends AbstractUI {
 
     buttonPremadeMap.getButton().onClicked.add(this._onUsePremadeMap);
     buttonSliceDraft.getButton().onClicked.add(this._onUseSliceDraft);
+    buttonBagDraft.getButton().onClicked.add(this._onUseBagDraft);
     buttonLoad.getButton().onClicked.add(this._onMapStringLoad);
     buttonPlacePlanetCards.getButton().onClicked.add(this._onPlacePlanetCards);
     buttonPlaceFrontierTokens

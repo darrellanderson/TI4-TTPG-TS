@@ -198,8 +198,8 @@ export class DraftBagUI extends AbstractUI {
     }
 
     // Make up a slice shape (not used).
-    const sliceShape: Array<HexType> = [];
-    for (let i = 0; i < sliceMakeup.length; i++) {
+    const sliceShape: Array<HexType> = ["<0,0,0>"];
+    for (let i = 1; i <= sliceMakeup.length; i++) {
       sliceShape.push(`<${i},0,-${i}>` as HexType);
     }
 

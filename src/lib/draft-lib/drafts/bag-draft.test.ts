@@ -11,6 +11,7 @@ import {
   SliceTiles,
 } from "../generate-slices/generate-slices";
 import { BagDraft } from "./bag-draft";
+import { Faction } from "../../faction-lib/faction/faction";
 
 // Systems must exist for registry to know about them.
 beforeEach(() => {
@@ -38,6 +39,15 @@ it("_getSlices", () => {
   const slices: Array<SliceTiles> = bagDraft._getSlices();
   expect(slices).toBeDefined();
   expect(slices.length).toBeGreaterThan(0);
+});
+
+it("_getFactions", () => {
+  const bagDraft: BagDraft = new BagDraft().setNumFactions(3);
+  const factions: Array<Array<Faction>> = bagDraft._getFactions();
+  expect(factions.length).toBe(6);
+  for (const factionArray of factions) {
+    expect(factionArray.length).toBe(3);
+  }
 });
 
 it("_createContainer", () => {
