@@ -111,7 +111,8 @@ it("_multiverseShift", () => {
   // Make sure new frontier token placed in the zero-planet system.
   const hexes: Set<HexType> =
     new HeroMultiverseShift()._getAlreadyHaveFrontierTokenHexes();
-  expect(hexes.size).toEqual(2);
+  expect(hexes.size).toEqual(3);
   expect(hexes.has("<1,0,-1>")).toBe(true);
   expect(hexes.has("<2,0,-2>")).toBe(true);
+  expect(hexes.has("<3,0,-3>")).toBe(true);
 });
