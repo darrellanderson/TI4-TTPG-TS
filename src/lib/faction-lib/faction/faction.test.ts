@@ -65,6 +65,9 @@ it("constructor", () => {
   expect(faction.getExtraCount("my-extra-2")).toEqual(2);
   expect(faction.getExtraCount("my-extra-3")).toEqual(0);
   expect(faction.getExtras()).toEqual(["my-extra-1", "my-extra-2"]);
+  expect(faction.getFactionReferenceCardNsid()).toEqual(
+    "card.faction-reference:my-source/my-nsid-name"
+  );
   expect(faction.getFactionSheetNsid()).toEqual(
     "sheet.faction:my-source/my-nsid-name"
   );

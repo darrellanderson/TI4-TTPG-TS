@@ -159,6 +159,11 @@ export class Faction {
     return result;
   }
 
+  getFactionReferenceCardNsid(): string {
+    const source: string = this._sourceAndPackageId.source;
+    return `card.faction-reference:${source}/${this._params.nsidName}`;
+  }
+
   getFactionSheetNsid(): string {
     const source: string = this._sourceAndPackageId.source;
     return `sheet.faction:${source}/${this._params.nsidName}`;
