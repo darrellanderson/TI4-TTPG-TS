@@ -8,7 +8,14 @@ it("default settings", () => {
     minBetaWormholes: 2,
     minLegendary: 2,
     sliceMakeups: [["red", "red", "high", "med", "low"]],
-    sliceShape: ["<0,0,-0>", "<1,0,-1>", "<2,0,-2>", "<3,0,-3>", "<4,0,-4>"],
+    sliceShape: [
+      "<0,0,0>",
+      "<1,0,-1>",
+      "<2,0,-2>",
+      "<3,0,-3>",
+      "<4,0,-4>",
+      "<5,0,-5>",
+    ],
   });
 
   expect(draftBagUi.getNumFactions()).toBe(2);
