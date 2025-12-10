@@ -34,7 +34,7 @@ refObject.addCustomAction(ACTION_DEAL_ACTION_CARDS_AND_COMMAND_TOKENS);
 refObject.addCustomAction(ACTION_RETURN_STRATEGY_CARDS);
 
 // Watch out for multiple players using the action at the same time.
-const MIN_DELAY_BETWEEN_REPEATS: number = 3000; // msecs
+const MIN_DELAY_BETWEEN_REPEATS: number = 10000; // msecs
 let _lastRefreshAllPlanetCardsTimestamp: number = 0;
 let _lastPlaceTgsTimestamp: number = 0;
 let _lastDealActionCardsTimestamp: number = 0;
