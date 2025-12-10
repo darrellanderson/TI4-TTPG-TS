@@ -69,6 +69,7 @@ import { RightClickAgenda } from "../context-menu/right-click-agenda/right-click
 import { RightClickCrisis } from "../context-menu/cards/crisis/right-click-crisis";
 //import { RightClickDelete } from "../context-menu/right-click-delete/right-click-delete";
 import { RightClickExplore } from "../context-menu/system/explore-system/right-click-explore";
+import { RightClickExtremeDuress } from "../context-menu/cards/extreme-duress/right-click-extreme-duress";
 import { RightClickFracture } from "../context-menu/fracture/right-click-fracture";
 import { RightClickGalvanizeToken } from "../context-menu/right-click-galvanize-token/right-click-galvanize-token";
 import { RightClickGravleashManeuvers } from "../context-menu/cards/gravleash-maneuvers/right-click-gravleash-maneuvers";
@@ -278,6 +279,7 @@ export function resetGlobalThisTI4(): TI4Class {
     new RightClickAgenda(),
     new RightClickCrisis(),
     new RightClickExplore(),
+    new RightClickExtremeDuress(),
     new RightClickFracture(),
     new RightClickGalvanizeToken(),
     new RightClickGravleashManeuvers(),
