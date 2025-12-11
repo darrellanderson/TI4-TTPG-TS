@@ -207,7 +207,7 @@ export class DraftStateUI extends AbstractUI {
     opaque: string
   ): CreateZoomedUiType => {
     return (scale: number): AbstractUI => {
-      return new OpaqueUI(opaque, draftState, scale * 3.5 * EXTRA_SCALE);
+      return new OpaqueUI(opaque, -1, draftState, scale * 3.5 * EXTRA_SCALE);
     };
   };
 
@@ -315,7 +315,12 @@ export class DraftStateUI extends AbstractUI {
     for (let index = 0; index < draftState.getOpaques().length; index++) {
       const opaque: string | undefined = draftState.getOpaques()[index];
       if (opaque && opaqueType !== null) {
-        const opaqueUi: AbstractUI = new OpaqueUI(opaque, draftState, scale);
+        const opaqueUi: AbstractUI = new OpaqueUI(
+          opaque,
+          index,
+          draftState,
+          scale
+        );
         const clickable = new WrappedClickableUI(opaqueUi, scale);
         clickable
           .getContentButton()
@@ -324,14 +329,16 @@ export class DraftStateUI extends AbstractUI {
           );
         opaqueButtons.push(clickable);
 
-        const createZoomedUi: CreateZoomedUiType =
-          DraftStateUI._createZoomedOpaqueUi(draftState, opaque);
-        const zoomableOpaqueButton = new ZoomableUI(
-          clickable,
-          scale,
-          createZoomedUi
-        );
-        zoomableOpaqueButtons.push(zoomableOpaqueButton);
+        if (opaqueType === "minorFactions") {
+          const createZoomedUi: CreateZoomedUiType =
+            DraftStateUI._createZoomedOpaqueUi(draftState, opaque);
+          const zoomableOpaqueButton = new ZoomableUI(
+            clickable,
+            scale,
+            createZoomedUi
+          );
+          zoomableOpaqueButtons.push(zoomableOpaqueButton);
+        }
       }
     }
 
@@ -387,8 +394,12 @@ export class DraftStateUI extends AbstractUI {
 
     if (opaqueButtons.length > 0) {
       const opaqueGrid: AbstractUI = new GridUIBuilder()
-        .addUIs(zoomableOpaqueButtons)
-        .setMaxRows(4)
+        .addUIs(
+          zoomableOpaqueButtons.length > 0
+            ? zoomableOpaqueButtons
+            : opaqueButtons
+        )
+        .setMaxRows(draftState.getOpaqueType() === "minorFactions" ? 4 : 9)
         .setSpacing(SPACING * scale)
         .build();
       panelUis = [

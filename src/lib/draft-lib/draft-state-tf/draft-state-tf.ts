@@ -1,5 +1,6 @@
 import z from "zod";
 import { DraftState } from "../draft-state/draft-state";
+import { NamespaceId } from "ttpg-darrell";
 
 const OpaqueTFSchema = z.object({
   s: z.number().optional(), // speaker priority
@@ -14,6 +15,16 @@ export type OpaqueTFSchemaType = z.infer<typeof OpaqueTFSchema>;
  * the opaque data.  Speaker position is not a direct player choice.
  */
 export class DraftStateTF extends DraftState {
+  constructor(namespaceId: NamespaceId) {
+    super(namespaceId);
+
+    // One opaque per player.
+    const opaques: Array<string> = new Array<string>(
+      TI4.config.playerCount
+    ).fill("{}");
+    this.setOpaques(opaques);
+  }
+
   _playerSlotToOpaqueIndex(playerSlot: number): number {
     const numOpaques: number = this.getOpaques().length;
     for (let i = 0; i < numOpaques; i++) {
@@ -22,7 +33,7 @@ export class DraftStateTF extends DraftState {
         return i;
       }
     }
-    return -1;
+    return -1; // not a seated player
   }
 
   _getParsedOpaqueData(playerSlot: number): OpaqueTFSchemaType | undefined {
@@ -34,7 +45,7 @@ export class DraftStateTF extends DraftState {
     const opaques: Array<string> = this.getOpaques();
     const opaque: string | undefined = opaques[opaqueIndex];
     if (opaque === undefined) {
-      return undefined;
+      return {}; // no data, use an empty one
     }
 
     return OpaqueTFSchema.parse(JSON.parse(opaque));
