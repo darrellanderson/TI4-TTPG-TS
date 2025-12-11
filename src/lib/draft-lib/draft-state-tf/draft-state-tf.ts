@@ -1,6 +1,7 @@
 import z from "zod";
 import { DraftState } from "../draft-state/draft-state";
 import { NamespaceId } from "ttpg-darrell";
+import { PlayerSeatType } from "../../player-lib/player-seats/player-seats";
 
 const OpaqueTFSchema = z.object({
   s: z.number().optional(), // speaker priority
@@ -23,6 +24,12 @@ export class DraftStateTF extends DraftState {
       TI4.config.playerCount
     ).fill("{}");
     this.setOpaques(opaques);
+
+    this.onDraftStateChanged.add(() => {
+      // Look at opaques, set seats if all have speaker priority
+      // (need all seats to qualify as complete and for finish layout).
+      this._maybeSetSeats();
+    });
   }
 
   _playerSlotToOpaqueIndex(playerSlot: number): number {
@@ -175,5 +182,56 @@ export class DraftStateTF extends DraftState {
       return false;
     }
     return super.isComplete();
+  }
+
+  /**
+   * Set player seats if all seated players have selected speaker priority.
+   */
+  _maybeSetSeats(): boolean {
+    const playerSlots: Array<number> = TI4.playerSeats
+      .getAllSeats()
+      .map((seat: PlayerSeatType): number => seat.playerSlot);
+
+    // Clear existing seat assignments.
+    playerSlots.forEach((playerSlot: number) => {
+      this.setSeatIndexToPlayerSlot(-1, playerSlot);
+    });
+
+    // Collect speaker priorities, fail if not all players have one.
+    const playerSlotAndSpeakerPriorities: Array<{
+      playerSlot: number;
+      speakerPriority: number;
+    }> = [];
+    playerSlots.forEach((playerSlot: number) => {
+      const speakerPriority: number = this.getSpeakerPriority(playerSlot);
+      if (speakerPriority >= 0) {
+        playerSlotAndSpeakerPriorities.push({
+          playerSlot: playerSlot,
+          speakerPriority: speakerPriority,
+        });
+      }
+    });
+    if (playerSlotAndSpeakerPriorities.length !== playerSlots.length) {
+      return false; // not all players have speaker priority
+    }
+
+    // Sort by speaker priority.
+    playerSlotAndSpeakerPriorities.sort(
+      (a, b) => a.speakerPriority - b.speakerPriority
+    );
+
+    // Set seats in order of speaker priority.
+    playerSlotAndSpeakerPriorities.forEach(
+      (
+        entry: { playerSlot: number; speakerPriority: number },
+        priorityIndex: number
+      ) => {
+        const seatIndex: number =
+          (priorityIndex + this.getSpeakerIndex()) % TI4.config.playerCount;
+        this.setSeatIndexToPlayerSlot(seatIndex, entry.playerSlot);
+      }
+    );
+
+    return true;
   }
 }

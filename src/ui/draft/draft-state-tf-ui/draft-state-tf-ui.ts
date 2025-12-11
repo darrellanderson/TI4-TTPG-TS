@@ -3,8 +3,6 @@ import { Broadcast, ColorLib, ThrottleClickHandler } from "ttpg-darrell";
 
 import { AbstractUI } from "../../abstract-ui/abtract-ui";
 import { ButtonUI } from "../../button-ui/button-ui";
-import { DraftActivityFinish } from "../../../lib/draft-lib/draft-activity-finish/draft-activity-finish";
-import { DraftState } from "../../../lib/draft-lib/draft-state/draft-state";
 import { Faction } from "../../../lib/faction-lib/faction/faction";
 import { FactionUI } from "../faction-ui/faction-ui";
 import { GridUIBuilder } from "../../panel/grid-ui-builder";
@@ -20,6 +18,7 @@ import { AbstractWrappedClickableUI } from "../../wrapped-clickable-ui/abstract-
 import { ConfirmButtonUI } from "../../button-ui/confirm-button-ui";
 import { OpaqueUI } from "../opaque-ui/opaque-ui";
 import { DraftStateTF } from "../../../lib/draft-lib/draft-state-tf/draft-state-tf";
+import { DraftActivityFinishTF } from "../../../lib/draft-lib/draft-activity-finish/draft-activity-finish-tf";
 
 const SPACING: number = 12;
 
@@ -76,7 +75,7 @@ export class DraftStateTfUI extends AbstractUI {
   }
 
   static _createFactionClickHandler(
-    draftState: DraftState,
+    draftState: DraftStateTF,
     sliceIndex: number
   ): (_button: ContentButton, player: Player) => void {
     const handler = (_button: ContentButton, player: Player): void => {
@@ -101,34 +100,8 @@ export class DraftStateTfUI extends AbstractUI {
     return new ThrottleClickHandler<ContentButton>(handler).get();
   }
 
-  static _createSeatClickHandler(
-    draftState: DraftState,
-    sliceIndex: number
-  ): (_button: ContentButton, player: Player) => void {
-    const handler = (_button: ContentButton, player: Player): void => {
-      const playerSlot: number = player.getSlot();
-      const currentSlot: number =
-        draftState.getSeatIndexToPlayerSlot(sliceIndex);
-      if (currentSlot === -1) {
-        // If there was a different candidate selected, clear it.
-        for (let i = 0; i < TI4.config.playerCount; i++) {
-          if (draftState.getSeatIndexToPlayerSlot(i) === playerSlot) {
-            draftState.setSeatIndexToPlayerSlot(i, -1);
-          }
-        }
-
-        // Select this candidate.
-        draftState.setSeatIndexToPlayerSlot(sliceIndex, playerSlot);
-        DraftStateTfUI._maybeAdvanceTurn(player);
-      } else if (currentSlot === playerSlot) {
-        draftState.setSeatIndexToPlayerSlot(sliceIndex, -1);
-      }
-    };
-    return new ThrottleClickHandler<ContentButton>(handler).get();
-  }
-
   static _createOpaqueClickHandler(
-    draftState: DraftState,
+    draftState: DraftStateTF,
     opaqueIndex: number
   ): (_button: ContentButton, player: Player) => void {
     const handler = (_button: ContentButton, player: Player): void => {
@@ -154,17 +127,17 @@ export class DraftStateTfUI extends AbstractUI {
   }
 
   static _createFinishClickHandler(
-    draftState: DraftState
+    draftState: DraftStateTF
   ): (button: Button, player: Player) => void {
     const handler = (_button: Button, _player: Player): void => {
       Broadcast.chatAll(`Draft finished by ${_player.getName()}`);
-      new DraftActivityFinish(draftState).finishAll();
+      new DraftActivityFinishTF(draftState).finishAll();
     };
     return new ThrottleClickHandler<Button>(handler).get();
   }
 
   static _createCancelClickHandler(
-    draftState: DraftState
+    draftState: DraftStateTF
   ): (button: Button, player: Player) => void {
     const handler = (_button: Button, _player: Player): void => {
       Broadcast.chatAll(`Draft cancelled by ${_player.getName()}`);
@@ -184,7 +157,7 @@ export class DraftStateTfUI extends AbstractUI {
   };
 
   static _createZoomedOpaqueUi = (
-    draftState: DraftState,
+    draftState: DraftStateTF,
     opaque: string
   ): CreateZoomedUiType => {
     return (scale: number): AbstractUI => {
