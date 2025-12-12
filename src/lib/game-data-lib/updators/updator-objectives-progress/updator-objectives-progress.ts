@@ -1,5 +1,5 @@
 import { GoalDataEntry } from "../../objective-progress/goal.data";
-import { GameData } from "../../game-data/game-data";
+import { GameData, PerPlayerGameData } from "../../game-data/game-data";
 import { IGameDataUpdator } from "../../i-game-data-updator/i-game-data-updator";
 import {
   GoalProgressPerPlayerType,
@@ -18,7 +18,13 @@ export class UpdatorObjectivesProgress implements IGameDataUpdator {
       const goalProgress: GoalProgressType | undefined =
         TI4.goalReporter.getGoalProgress(goalNsid);
       if (goalProgress) {
-        progress.push(this._getObjectiveProgress(goalDataEntry, goalProgress));
+        progress.push(
+          this._getObjectiveProgress(
+            goalDataEntry,
+            goalProgress,
+            gameData.players
+          )
+        );
       }
     });
 
@@ -70,29 +76,33 @@ export class UpdatorObjectivesProgress implements IGameDataUpdator {
   }
 
   /**
-   * Which seat indexes scored the goal?
+   * Which seat indexes ALREADY scored the goal?
+   * Leverage an already-existing per-playergamedata.player[].objectives.
    *
    * @param goalProgress
    * @returns
    */
-  _getProgressToScoredBy(goalProgress: GoalProgressType): Array<number> {
+  _getProgressToScoredBy(
+    goalName: string,
+    allPlayerData: Array<PerPlayerGameData>
+  ): Array<number> {
     const result: Array<number> = [];
-    goalProgress.values.forEach(
-      (
-        value: GoalProgressPerPlayerType | undefined,
-        seatIndex: number
-      ): void => {
-        if (value && value.success) {
+
+    allPlayerData.forEach(
+      (playerData: PerPlayerGameData, seatIndex: number): void => {
+        if (playerData.objectives?.includes(goalName)) {
           result.push(seatIndex);
         }
       }
     );
+
     return result;
   }
 
   _getObjectiveProgress(
     goalDataEntry: GoalDataEntry,
-    goalProgress: GoalProgressType
+    goalProgress: GoalProgressType,
+    allPlayerData: Array<PerPlayerGameData>
   ): UpdatorObjectiveProgressType {
     return {
       name: goalDataEntry.name,
@@ -102,7 +112,7 @@ export class UpdatorObjectivesProgress implements IGameDataUpdator {
         header: goalProgress.header,
         values: this._goalProgressToValues(goalProgress),
       },
-      scoredBy: this._getProgressToScoredBy(goalProgress),
+      scoredBy: this._getProgressToScoredBy(goalDataEntry.name, allPlayerData),
     };
   }
 }

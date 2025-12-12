@@ -42,18 +42,11 @@ it("_goalProgressToValues", () => {
 
 it("_getProgressToScoredBy", () => {
   const updator: UpdatorObjectivesProgress = new UpdatorObjectivesProgress();
-
-  const goalProgress: GoalProgressType = {
-    header: "my-header",
-    values: [
-      undefined,
-      { value: 2, success: false },
-      { value: 3, success: true },
-    ],
-  };
-
-  const result: Array<number> = updator._getProgressToScoredBy(goalProgress);
-  expect(result).toEqual([2]);
+  const result: Array<number> = updator._getProgressToScoredBy(
+    "myGoalName",
+    []
+  );
+  expect(result).toEqual([]);
 });
 
 it("_getObjectiveProgress", () => {
@@ -77,7 +70,7 @@ it("_getObjectiveProgress", () => {
     },
   };
 
-  const result = updator._getObjectiveProgress(goalDataEntry, goalProgress);
+  const result = updator._getObjectiveProgress(goalDataEntry, goalProgress, []);
   expect(result).toEqual({
     abbr: "my-abbr",
     name: "my-name",
@@ -89,7 +82,7 @@ it("_getObjectiveProgress", () => {
         { success: true, value: 3 },
       ],
     },
-    scoredBy: [2],
+    scoredBy: [],
     stage: 1,
   });
 });
