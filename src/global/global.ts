@@ -75,6 +75,7 @@ import { RightClickGalvanizeToken } from "../context-menu/right-click-galvanize-
 import { RightClickGravleashManeuvers } from "../context-menu/cards/gravleash-maneuvers/right-click-gravleash-maneuvers";
 import { RightClickHotPotatoScore } from "../context-menu/right-click-score/hot-potato-score";
 import { RightClickIihqModernization } from "../context-menu/cards/iihq-modernization/right-click-iihq-modernization";
+import { RightClickIihqModernizationBT } from "../context-menu/breakthroughs/iihq-modernization/iihq-modernization";
 import { RightClickInfantry2 } from "../context-menu/cards/infantry-2/right-click-infantry-2";
 import { RightClickLetaniWarrior2 } from "../context-menu/cards/infantry-2/right-click-letani-warrior-2";
 import { RightClickMabanOmega } from "../context-menu/cards/maban-omega/right-click-maban-omega";
@@ -286,6 +287,7 @@ export function resetGlobalThisTI4(): TI4Class {
     new RightClickGravleashManeuvers(),
     new RightClickHotPotatoScore(),
     new RightClickIihqModernization(),
+    new RightClickIihqModernizationBT(),
     new RightClickInfantry2(),
     new RightClickLetaniWarrior2(),
     new RightClickMabanOmega(),
