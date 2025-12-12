@@ -26,4 +26,5 @@ export * from './strategy-card-lib';
 export * from './streamer-lib';
 export * from './system-lib';
 export * from './tech-lib';
+export * from './twilights-fall-lib';
 export * from './unit-lib';

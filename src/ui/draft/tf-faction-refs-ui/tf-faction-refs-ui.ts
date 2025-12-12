@@ -9,15 +9,9 @@ import {
 } from "@tabletop-playground/api";
 import { DraftStateTF } from "../../../lib/draft-lib/draft-state-tf/draft-state-tf";
 import { AbstractUI, UI_SIZE } from "../../abstract-ui/abtract-ui";
+import { BOX_H, BOX_W } from "../faction-ui/faction-ui";
 
 const packageId: string = refPackageId;
-
-export const BOX_W: number = 110;
-export const BOX_H: number = 30;
-export const FONT_SIZE: number = BOX_H * 0.37;
-export const SPACING: number = BOX_H * 0.1;
-
-export const WRAPPED_BORDER_WIDTH: number = 4;
 
 /**
  * Twilight's Fall includes 3 faction reference numbers:

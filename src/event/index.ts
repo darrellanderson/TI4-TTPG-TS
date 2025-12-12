@@ -11,6 +11,8 @@ export * from './on-planet-card-singleton';
 export * from './on-player-change-color-request';
 export * from './on-player-changed-color';
 export * from './on-slice-draft-request';
+export * from './on-start-thunders-edge';
+export * from './on-start-twilights-fall';
 export * from './on-strategy-card-played';
 export * from './on-system-activated';
 export * from './on-turn-state-changed';

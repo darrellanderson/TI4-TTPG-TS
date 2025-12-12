@@ -1,3 +1,3 @@
 // created from 'create-ts-index'
 
-export * from "./draft-state-tf-ui";
+export * from './draft-state-tf-ui';

@@ -7,3 +7,4 @@ export * from './codex-vigil';
 export * from './pok';
 export * from './test';
 export * from './thunders-edge';
+export * from './twilights-fall';

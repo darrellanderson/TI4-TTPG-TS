@@ -3,6 +3,7 @@
 export * from './draft-activity-finish';
 export * from './draft-activity-start';
 export * from './draft-state';
+export * from './draft-state-tf';
 export * from './draft-to-map-string';
 export * from './drafts';
 export * from './generate-factions';

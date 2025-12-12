@@ -24,7 +24,7 @@ import { MapStringParser } from "../../map-string-lib/map-string/map-string-pars
 import { DraftStateTF } from "../draft-state-tf/draft-state-tf";
 import { DraftStateTfUI } from "../../../ui/draft/draft-state-tf-ui/draft-state-tf-ui";
 
-export class DraftActivityMaybeResume implements IGlobal {
+export class DraftActivityMaybeResumeTF implements IGlobal {
   init(): void {
     if (DraftStateTF.isDraftInProgress(DRAFT_NAMESPACE_ID_TF)) {
       new DraftActivityStartTF().resume();

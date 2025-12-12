@@ -2,6 +2,7 @@
 
 export * from './updator-active-system';
 export * from './updator-config';
+export * from './updator-galactic-events';
 export * from './updator-hex-summary';
 export * from './updator-history';
 export * from './updator-laws';

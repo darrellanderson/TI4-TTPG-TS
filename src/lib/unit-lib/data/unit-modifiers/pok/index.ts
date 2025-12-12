@@ -1,6 +1,7 @@
 // created from 'create-ts-index'
 
 export * from './2ram';
+export * from './agnlan-oln';
 export * from './annihilator';
 export * from './articles-of-war';
 export * from './arvicon-rex';

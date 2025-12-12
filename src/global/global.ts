@@ -150,6 +150,7 @@ import { RightClickTFSupercharge } from "../context-menu/cards/tf-supercharge/tf
 import { HeroDimensionalAnchor } from "../context-menu/heroes/hero-dimensional-anchor/hero-dimensional-anchor";
 import { HeroHelioCommandArray } from "../context-menu/heroes/hero-helio-command-array/hero-helio-command-array";
 import { HeroMultiverseShift } from "../context-menu/heroes/hero-multiverse-shift/hero-multiverse-shift";
+import { DraftActivityMaybeResumeTF } from "../lib";
 
 const packageId: string = refPackageId;
 Find.ignoreOwnedCardHolderNsid("card-holder:base/player-scoring");
@@ -365,7 +366,11 @@ export function resetGlobalThisTI4(): TI4Class {
 
   // Finally run any "after everything else" init functions.
   iGlobals.push(
-    ...[new AgendaActivityMaybeResume(), new DraftActivityMaybeResume()]
+    ...[
+      new AgendaActivityMaybeResume(),
+      new DraftActivityMaybeResume(),
+      new DraftActivityMaybeResumeTF(),
+    ]
   );
 
   for (const v of Object.values(globalThis.TI4)) {
