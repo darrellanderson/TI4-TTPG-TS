@@ -174,7 +174,10 @@ export class RightClickExplore implements IGlobal {
       if (
         system.getSystemTileNumber() > 0 &&
         system.getPlanets().filter((planet: Planet): boolean => {
-          return !planet.isSpaceStation();
+          return (
+            !planet.isSpaceStation() && // space stations are not planets
+            planet.isPrintedOnSystemTile() // planet attachments may exist with frontier tokens
+          );
         }).length === 0
       ) {
         systemTileObj.addCustomAction(actionFrontier);

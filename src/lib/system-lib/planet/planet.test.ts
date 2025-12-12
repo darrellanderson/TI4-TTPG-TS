@@ -500,6 +500,34 @@ it("isLegendaryPlanet (default)", () => {
   expect(planet.isLegendary()).toEqual(false);
 });
 
+it("isPrintedOnSystemTile (true)", () => {
+  const planet = new Planet(
+    new MockGameObject({
+      templateMetadata: "tile.system:my-source/1000",
+    }),
+    { source: "my-source", packageId: "my-package-id" },
+    {
+      name: "my-planet-name",
+      nsidName: "my-planet-card-nsid",
+    }
+  );
+  expect(planet.isPrintedOnSystemTile()).toEqual(true);
+});
+
+it("isPrintedOnSystemTile (false)", () => {
+  const planet = new Planet(
+    new MockGameObject({
+      templateMetadata: "token.attachment.system:my-source/my-planet-card-nsid",
+    }),
+    { source: "my-source", packageId: "my-package-id" },
+    {
+      name: "my-planet-name",
+      nsidName: "my-planet-card-nsid",
+    }
+  );
+  expect(planet.isPrintedOnSystemTile()).toEqual(false);
+});
+
 it("isSpaceStation (true)", () => {
   const planet = new Planet(
     new MockGameObject({

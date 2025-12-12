@@ -302,6 +302,17 @@ export class Planet {
     return result;
   }
 
+  /**
+   * Is the planet printed on the system tile? (vs an attachment)
+   *
+   * @returns
+   */
+  isPrintedOnSystemTile(): boolean {
+    return (
+      this._obj !== undefined && NSID.get(this._obj).startsWith("tile.system:")
+    );
+  }
+
   isSpaceStation(): boolean {
     return this._params.isSpaceStation ?? false;
   }
