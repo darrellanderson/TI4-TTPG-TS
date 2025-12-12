@@ -52,7 +52,7 @@ export class ZoomedTechCardUI extends AbstractUI {
         }
         setTimeout(() => {
           DeletedItemsContainer.destroyWithoutCopying(card);
-        }, 1000);
+        }, 5000);
       }
     }
 
