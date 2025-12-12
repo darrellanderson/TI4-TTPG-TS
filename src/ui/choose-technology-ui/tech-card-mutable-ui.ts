@@ -125,7 +125,7 @@ export class TechCardMutableUI extends ZoomableUiFullyClickable {
         this.setCard(card);
         setTimeout(() => {
           DeletedItemsContainer.destroyWithoutCopying(card);
-        }, 1000);
+        }, 5000);
       }
     }
     DeletedItemsContainer.destroyWithoutCopying(deck);
