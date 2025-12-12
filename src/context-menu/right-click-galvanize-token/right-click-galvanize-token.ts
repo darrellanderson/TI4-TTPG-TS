@@ -117,7 +117,7 @@ export class RightClickGalvanizeToken implements IGlobal {
   _getPlasticInHex(hex: HexType): Array<UnitPlastic> {
     const plastics: Array<UnitPlastic> = UnitPlastic.getAll().filter(
       (plastic: UnitPlastic): boolean => {
-        const plasticPos: Vector = plastic.getObj().getPosition();
+        const plasticPos: Vector = plastic.getPos();
         const plasticHex: HexType = TI4.hex.fromPosition(plasticPos);
         return plasticHex === hex;
       }

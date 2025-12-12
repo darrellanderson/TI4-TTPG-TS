@@ -644,7 +644,7 @@ export class CombatRoll {
     // (Look only at units in same "area", space or ground.)
     if (this.opponent.playerSlot === -1) {
       let relevant: Array<UnitPlastic> = unitPlastics.filter((unitPlastic) => {
-        const pos: Vector = unitPlastic.getObj().getPosition();
+        const pos: Vector = unitPlastic.getPos();
         const hex: HexType = TI4.hex.fromPosition(pos);
         return hex === this._params.hex;
       });
