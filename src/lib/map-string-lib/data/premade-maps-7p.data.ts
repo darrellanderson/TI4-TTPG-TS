@@ -3,6 +3,13 @@ import { PremadeMapType } from "./premade-map-type";
 export const PREMADE_MAPS_7P: Array<PremadeMapType> = [
   {
     playerCount: 7,
+    name: "Magi's Madness updated [TE]",
+    mapString:
+      "{85A2} 70 84A5 0 83A2 69 0 23 114 90B1 36 27 34 99 68 46 110 74 65 0 1011A1 26 44 37 66 25 43 48 97 112 78 35 101 79 49 64 115 111 80 113 98 106 0 109 87B3 86A5 107 0 108 77 39 40 117 59 0 47 100 32 0 28 91B1 905 903 902 907 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 116 -1 -1 -1 -1 -1 -1 -1 -1 -1 906 901 904",
+    author: "LexTalionis",
+  },
+  {
+    playerCount: 7,
     name: "Learn to Play [7p PoK]",
     mapString:
       "85B3 72 23 84B3 90B0 76 64 65 75 78 62 37 79 61 43 70 26 67 74 88B3 42 0 39 68 0 45 86B3 73 47 66 63 48 83B2 44 69 71 0 60 -1 -1 -1 -1 -1 -1 -1 -1 -1 35 0 40 41 0 -1 -1 0 25 -1 0 59 77",
