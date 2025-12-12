@@ -1,4 +1,9 @@
-import { Color, DrawingLine, Vector, world } from "@tabletop-playground/api";
+import {
+  Color,
+  DrawingLine,
+  GameObject,
+  Vector,
+} from "@tabletop-playground/api";
 import { HexType, PlayerSlot } from "ttpg-darrell";
 import { ControlSystemType } from "../space-planet-ownership/space-planet-ownership";
 import { Planet } from "../../system-lib/planet/planet";
@@ -24,7 +29,10 @@ export class PlanetBorders {
       return undefined; // also handles -1, -2 owners
     }
 
-    const z: number = world.getTableHeight() + 0.3;
+    const planetObj: GameObject = planet.getObj();
+    const extent: Vector = planetObj.getExtent(false, false);
+    const z: number = planetObj.getPosition().z + extent.z + 0.3;
+
     const points: Array<Vector> = planet.getPositionAsCircle();
     const line = new DrawingLine();
     line.color = color;

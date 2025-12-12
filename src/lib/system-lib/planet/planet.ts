@@ -204,7 +204,7 @@ export class Planet {
   getPositionAsCircle(): Array<Vector> {
     const points: Array<Vector> = [];
     const center: Vector = this.getPosition();
-    const r: number = this.getRadius();
+    const r: number = this.getRadius() - 0.4; // inset a bit to avoid overlapping res/inf/name
     const numPoints = 32;
     const localZ = this.getObj().getExtent(false, false).z + 0.01;
     const deltaPhi = (Math.PI * 2) / numPoints;

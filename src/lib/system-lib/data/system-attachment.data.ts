@@ -102,6 +102,7 @@ export const SOURCE_TO_SYSTEM_ATTACHMENT_DATA: Record<
           influence: 1,
           isLegendary: true,
           legendaryNsidName: "jupiter-brain",
+          radius: 5.5,
         },
       ],
       customModel: true,
