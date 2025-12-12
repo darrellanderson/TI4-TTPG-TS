@@ -6,6 +6,7 @@ export const LOCALE_DESCRIPTIONS: { [key: string]: string } = {
     "Right click the galvanize token with the unit still on it to activate",
   "card.action:thunders-edge/hack-election":
     "Place this card faceup in your play area BEFORE the voting phase",
+  "card.action:base/plague": "Type '/plague #' in chat to roll # plague dice",
 };
 
 export class ApplyLocaleDescriptions implements IGlobal {
