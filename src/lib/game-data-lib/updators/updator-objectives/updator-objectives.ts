@@ -8,7 +8,7 @@ import {
   Vector,
   world,
 } from "@tabletop-playground/api";
-import { Atop, NSID, PlayerSlot } from "ttpg-darrell";
+import { Atop, Find, NSID, PlayerSlot } from "ttpg-darrell";
 import { GameData, PerPlayerGameData } from "../../game-data/game-data";
 import { IGameDataUpdator } from "../../i-game-data-updator/i-game-data-updator";
 import { UpdatorObjectivesType } from "./updator-objectives-type";
@@ -60,6 +60,22 @@ export class UpdatorObjectives implements IGameDataUpdator {
           cardNames.push(cardName);
         }
       }
+
+      // Assign to closest player.
+      const nsid: string = NSID.get(objectiveCard);
+      if (nsid === "card.planet:thunders-edge/styx") {
+        const pos: Vector = objectiveCard.getPosition();
+        const owningPlayerSlot: number = new Find().closestOwnedCardHolderOwner(
+          pos
+        );
+        let cardNames: Array<string> | undefined =
+          playerSlotToCardNames.get(owningPlayerSlot);
+        if (!cardNames) {
+          cardNames = [];
+          playerSlotToCardNames.set(owningPlayerSlot, cardNames);
+        }
+        cardNames.push(cardName);
+      }
     }
     gameData.players.forEach(
       (playerData: PerPlayerGameData, seatIndex: number): void => {
@@ -91,6 +107,12 @@ export class UpdatorObjectives implements IGameDataUpdator {
   _getRelevantCards(): Array<Card> {
     const objectiveCards: Array<Card> = [];
 
+    const trackOtherNsids: Set<string> = new Set<string>([
+      "card.relic:pok/the-obsidian", // not scorable, but wanted for streamer display
+      "card.relic:codex.liberation/book-of-latvinia",
+      "card.planet:thunders-edge/styx",
+    ]);
+
     const skipContained: boolean = true;
     for (const obj of world.getAllObjects(skipContained)) {
       if (obj instanceof Card) {
@@ -102,7 +124,8 @@ export class UpdatorObjectives implements IGameDataUpdator {
           const tags: Array<string> = snapPoint.getTags();
           if (
             tags.includes("discard-agenda") ||
-            tags.includes("active-agenda")
+            tags.includes("active-agenda") ||
+            tags.includes("deck-planet")
           ) {
             continue;
           }
@@ -112,7 +135,7 @@ export class UpdatorObjectives implements IGameDataUpdator {
         if (
           RightClickScorePrivate.isScorablePrivate(obj) ||
           RightClickScorePublic.isScorablePublic(obj) ||
-          nsid === "card.relic:pok/the-obsidian" // not scorable, but wanted for streamer display
+          trackOtherNsids.has(nsid)
         ) {
           objectiveCards.push(obj);
         }
