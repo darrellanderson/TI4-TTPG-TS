@@ -25,10 +25,13 @@ it("_getInUseAllianceCardNsids", () => {
   let nsids: Array<string>;
 
   nsids = rightClickYinAscendant._getInUseAllianceCardNsids();
-  expect(nsids).toEqual([]);
+  expect(nsids).toEqual(["card.alliance:pok/mahact"]);
 
   MockCard.simple("card.alliance:my-source/my-name");
 
   nsids = rightClickYinAscendant._getInUseAllianceCardNsids();
-  expect(nsids).toEqual(["card.alliance:my-source/my-name"]);
+  expect(nsids).toEqual([
+    "card.alliance:pok/mahact",
+    "card.alliance:my-source/my-name",
+  ]);
 });

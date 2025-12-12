@@ -86,7 +86,9 @@ export class RightClickYinAscendant extends AbstractRightClickCard {
   }
 
   _getInUseAllianceCardNsids(): Array<string> {
-    const nsids: Array<string> = [];
+    const nsids: Array<string> = [
+      "card.alliance:pok/mahact", // always excluded
+    ];
     const skipContained: boolean = true;
     for (const obj of world.getAllObjects(skipContained)) {
       const nsid: string = NSID.get(obj);
