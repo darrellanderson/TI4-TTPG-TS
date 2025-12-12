@@ -296,6 +296,9 @@ it("custom action handler - not active commander", () => {
     templateMetadata: "card-holder:base/player-hand",
     owningPlayerSlot: 10,
   });
+  MockCard.simple("card.leader.commander:codex.vigil/maban.omega", {
+    isFaceUp: false,
+  });
 
   const mabanOmega: MyMabanOmega = new MyMabanOmega();
   mabanOmega.init();

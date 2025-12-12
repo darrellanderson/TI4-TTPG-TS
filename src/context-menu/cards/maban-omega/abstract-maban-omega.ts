@@ -49,7 +49,7 @@ export abstract class AbstractMabanOmega extends AbstractRightClickCard {
       owningPlayerSlot,
       skipContained
     );
-    return commander !== undefined && commander.isFaceUp();
+    return commander === undefined || commander.isFaceUp();
   }
 
   isOwningPlayer(object: GameObject, player: Player): boolean {
