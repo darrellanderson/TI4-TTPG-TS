@@ -269,6 +269,9 @@ add("twilights-fall", MirrorComputingTF);
 import { MunitionsReservesTF } from "./unit-modifiers/twilights-fall/munitions-reserves-tf";
 add("twilights-fall", MunitionsReservesTF);
 
+import { ProximaTargetingTF } from "./unit-modifiers/twilights-fall/proxima-targeting-tf";
+add("twilights-fall", ProximaTargetingTF);
+
 import { StarlancerXI } from "./unit-modifiers/twilights-fall/starlancer-xi";
 add("twilights-fall", StarlancerXI);
 

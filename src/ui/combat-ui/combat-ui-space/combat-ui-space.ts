@@ -1,18 +1,5 @@
-import {
-  Button,
-  Card,
-  GameObject,
-  Player,
-  Vector,
-  world,
-} from "@tabletop-playground/api";
-import {
-  Find,
-  NSID,
-  OnCardBecameSingletonOrDeck,
-  PlayerSlot,
-  ThrottleClickHandler,
-} from "ttpg-darrell";
+import { Button, GameObject, Player, Vector } from "@tabletop-playground/api";
+import { Find, PlayerSlot, ThrottleClickHandler } from "ttpg-darrell";
 
 import { AbstractUI } from "../../abstract-ui/abtract-ui";
 import { ButtonUI } from "../../button-ui/button-ui";
@@ -20,48 +7,28 @@ import { CONFIG } from "../../config/config";
 import { VerticalUIBuilder } from "../../panel/vertical-ui-builder";
 import { Faction } from "../../../lib/faction-lib/faction/faction";
 
-const _find: Find = new Find();
-let _tfAmbushId: string | undefined = undefined;
-let _tfProximaTargetingId: string | undefined = undefined;
-
-OnCardBecameSingletonOrDeck.onSingletonCardCreated.add((card: Card): void => {
-  const nsid: string = NSID.get(card);
-  if (nsid === "card.tf-ability:twilights-fall/ambush") {
-    _tfAmbushId = card.getId();
-  }
-  if (nsid === "card.tf-ability:twilights-fall/proxima-targeting-vi") {
-    _tfProximaTargetingId = card.getId();
-  }
-});
+const _find = new Find();
 
 function _getTfAmbushPlayerSlot(): PlayerSlot {
-  if (_tfAmbushId) {
-    const obj: GameObject | undefined = world.getObjectById(_tfAmbushId);
-    if (obj) {
-      const nsid: string = NSID.get(obj);
-      if (nsid === "card.tf-ability:twilights-fall/ambush") {
-        const pos: Vector = obj.getPosition();
-        const playerSlot: PlayerSlot = _find.closestOwnedCardHolderOwner(pos);
-        return playerSlot;
-      }
-    }
+  const nsid: string = "card.tf-ability:twilights-fall/ambush";
+  TI4.findTracking.trackNsid(nsid);
+  const obj: GameObject | undefined = TI4.findTracking.findCard(nsid);
+  if (obj) {
+    const pos: Vector = obj.getPosition();
+    const playerSlot: PlayerSlot = _find.closestOwnedCardHolderOwner(pos);
+    return playerSlot;
   }
   return -1;
 }
 
 function _getTfProximaTargetingPlayerSlot(): PlayerSlot {
-  if (_tfProximaTargetingId) {
-    const obj: GameObject | undefined = world.getObjectById(
-      _tfProximaTargetingId
-    );
-    if (obj) {
-      const nsid: string = NSID.get(obj);
-      if (nsid === "card.tf-ability:twilights-fall/proxima-targeting-vi") {
-        const pos: Vector = obj.getPosition();
-        const playerSlot: PlayerSlot = _find.closestOwnedCardHolderOwner(pos);
-        return playerSlot;
-      }
-    }
+  const nsid: string = "card.tf-ability:twilights-fall/proxima-targeting-vi";
+  TI4.findTracking.trackNsid(nsid);
+  const obj: GameObject | undefined = TI4.findTracking.findCard(nsid);
+  if (obj) {
+    const pos: Vector = obj.getPosition();
+    const playerSlot: PlayerSlot = _find.closestOwnedCardHolderOwner(pos);
+    return playerSlot;
   }
   return -1;
 }
@@ -99,7 +66,12 @@ export class CombatUISpace extends AbstractUI {
     proximaTargetingUi.getButton().setText("Proxima Targeting");
     proximaTargetingUi.getButton().onClicked.add(
       new ThrottleClickHandler<Button>((_button: Button, player: Player) => {
-        TI4.events.onCombatClicked.trigger("proximaTargeting", "???", player);
+        const proximaTargetingPlanetName: string = "???";
+        TI4.events.onCombatClicked.trigger(
+          "proximaTargeting",
+          proximaTargetingPlanetName,
+          player
+        );
       }).get()
     );
 

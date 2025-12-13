@@ -68,13 +68,6 @@ export class OnSystemActivated implements IGlobal {
       const pos: Vector = object.getPosition();
       const system: System | undefined = TI4.systemRegistry.getByPosition(pos);
       if (system) {
-        const state: LastActivatedType = {
-          tile: system.getSystemTileNumber(),
-          slot: player.getSlot(),
-        };
-        const json: string = JSON.stringify(state);
-        world.setSavedData(json, KEY);
-
         TI4.events.onSystemActivated.trigger(system, player);
       }
     }
@@ -108,6 +101,13 @@ export class OnSystemActivated implements IGlobal {
       this._rememberLastActivatedSystem(system, player); // do first to set static variables
       this._reportSystemActivation(system, player);
       this._displayActiveSystem(system, player);
+
+      const state: LastActivatedType = {
+        tile: system.getSystemTileNumber(),
+        slot: player.getSlot(),
+      };
+      const json: string = JSON.stringify(state);
+      world.setSavedData(json, KEY);
     });
 
     // Restore last activated system.
