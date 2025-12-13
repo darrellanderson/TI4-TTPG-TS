@@ -15,12 +15,11 @@ export class MapPlacePlanetCards {
   _getAllPlanets(): Array<Planet> {
     const planets: Array<Planet> = [];
     const skipContained: boolean = true;
-    const includeSpaceStations: boolean = true;
     TI4.systemRegistry
       .getAllSystemsWithObjs(skipContained)
       .forEach((system) => {
         if (!system.isHome()) {
-          system.getPlanets(includeSpaceStations).forEach((planet) => {
+          system.getPlanets().forEach((planet) => {
             planets.push(planet);
           });
         }

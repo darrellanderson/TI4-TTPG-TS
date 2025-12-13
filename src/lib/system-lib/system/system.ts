@@ -399,11 +399,11 @@ export class System {
    */
   getPlanetClosest(
     position: Vector,
-    ignoreSpaceStations?: boolean
+    skipSpaceStations?: boolean
   ): Planet | undefined {
     let closestPlanet: Planet | undefined = undefined;
     let closestDsq: number = Number.MAX_VALUE;
-    for (const planet of this.getPlanets(ignoreSpaceStations)) {
+    for (const planet of this.getPlanets(skipSpaceStations)) {
       const planetPosition: Vector = planet.getPosition();
       const dSq: number = position.subtract(planetPosition).magnitudeSquared();
       if (dSq < closestDsq) {
@@ -438,7 +438,7 @@ export class System {
    *
    * @returns {Array<Planet>}
    */
-  getPlanets(ignoreSpaceStations?: boolean): Array<Planet> {
+  getPlanets(skipSpaceStations?: boolean): Array<Planet> {
     let result: Array<Planet> = [];
     if (this._params.planetsFaceDown && !Facing.isFaceUp(this._obj)) {
       result.push(...this._planetsFaceDown);
@@ -451,7 +451,7 @@ export class System {
     result = result.filter(
       (planet: Planet): boolean => !planet.isDestroyedPlanet()
     );
-    if (!ignoreSpaceStations) {
+    if (skipSpaceStations) {
       result = result.filter(
         (planet: Planet): boolean => !planet.isSpaceStation()
       );
