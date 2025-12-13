@@ -626,11 +626,12 @@ it("countTechnologyColors", () => {
   > = new GoalCounter().countTechnologyColors();
   expect(counts.size).toBe(1);
   expect(counts.get(10)).toEqual({
-    blue: 2,
-    green: 2,
-    red: 2,
-    yellow: 2,
-    unitUpgrade: 3,
+    // Suppressed double-counting
+    blue: 1,
+    green: 1,
+    red: 1,
+    yellow: 1,
+    unitUpgrade: 2,
   });
 
   // Also test goal progress.
@@ -638,12 +639,12 @@ it("countTechnologyColors", () => {
   progress = new GoalProgress().twoTechInColors(2);
   expect(progress).toEqual({
     header: "BLUE/GREEN/YELLOW/RED",
-    values: [undefined, { success: true, value: "2/2/2/2" }],
+    values: [undefined, { success: false, value: "1/1/1/1" }],
   });
   progress = new GoalProgress().techUnitUpgrades(2);
   expect(progress).toEqual({
     header: "Unit upgrades",
-    values: [undefined, { success: true, value: 3 }],
+    values: [undefined, { success: true, value: 2 }],
   });
 });
 

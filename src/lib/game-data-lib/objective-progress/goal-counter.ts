@@ -962,6 +962,7 @@ export class GoalCounter {
       }
     >();
 
+    const seen: Set<string> = new Set();
     const skipContained: boolean = true;
     for (const obj of world.getAllObjects(skipContained)) {
       const nsid: string = NSID.get(obj);
@@ -970,6 +971,14 @@ export class GoalCounter {
         const pos: Vector = obj.getPosition();
         const playerSlot: PlayerSlot =
           this._find.closestOwnedCardHolderOwner(pos);
+
+        // Suppress double-counting same tech per player.
+        const seenKey: string = `${playerSlot}|${nsid}`;
+        if (seen.has(seenKey)) {
+          continue;
+        }
+        seen.add(seenKey);
+
         let entry:
           | {
               blue: number;
