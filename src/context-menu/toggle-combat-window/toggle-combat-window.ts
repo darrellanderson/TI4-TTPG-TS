@@ -143,7 +143,10 @@ export class ToggleCombatWindow implements IGlobal {
     const hex: HexType = TI4.hex.fromPosition(pos);
     UnitPlastic.getAll().forEach((unit: UnitPlastic): void => {
       if (unit.getHex() === hex) {
-        playersSlotsSet.add(unit.getOwningPlayerSlot());
+        const playerSlot: number = unit.getOwningPlayerSlot();
+        if (playerSlot >= 0) {
+          playersSlotsSet.add(playerSlot);
+        }
       }
     });
 
