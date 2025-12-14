@@ -8,7 +8,7 @@ import {
   Vector,
   world,
 } from "@tabletop-playground/api";
-import { Atop, Find, NSID, PlayerSlot } from "ttpg-darrell";
+import { Atop, Find, HexType, NSID, PlayerSlot } from "ttpg-darrell";
 import { GameData, PerPlayerGameData } from "../../game-data/game-data";
 import { IGameDataUpdator } from "../../i-game-data-updator/i-game-data-updator";
 import { UpdatorObjectivesType } from "./updator-objectives-type";
@@ -61,20 +61,26 @@ export class UpdatorObjectives implements IGameDataUpdator {
         }
       }
 
-      // Assign to closest player.
+      // Assign Styx to closest player IF not on a system tile.
       const nsid: string = NSID.get(objectiveCard);
       if (nsid === "card.planet:thunders-edge/styx") {
         const pos: Vector = objectiveCard.getPosition();
-        const owningPlayerSlot: number = new Find().closestOwnedCardHolderOwner(
-          pos
-        );
-        let cardNames: Array<string> | undefined =
-          playerSlotToCardNames.get(owningPlayerSlot);
-        if (!cardNames) {
-          cardNames = [];
-          playerSlotToCardNames.set(owningPlayerSlot, cardNames);
+        const hex: HexType = TI4.hex.fromPosition(pos);
+
+        // Ignore if on a system tile.
+        const systemHexes: Set<HexType> =
+          TI4.systemRegistry.getAllSystemHexes();
+        if (!systemHexes.has(hex)) {
+          const owningPlayerSlot: number =
+            new Find().closestOwnedCardHolderOwner(pos);
+          let cardNames: Array<string> | undefined =
+            playerSlotToCardNames.get(owningPlayerSlot);
+          if (!cardNames) {
+            cardNames = [];
+            playerSlotToCardNames.set(owningPlayerSlot, cardNames);
+          }
+          cardNames.push(cardName);
         }
-        cardNames.push(cardName);
       }
     }
     gameData.players.forEach(
@@ -115,10 +121,14 @@ export class UpdatorObjectives implements IGameDataUpdator {
 
     const skipContained: boolean = true;
     for (const obj of world.getAllObjects(skipContained)) {
+      const nsid: string = NSID.get(obj);
+
       if (obj instanceof Card) {
         if (obj.isHeld()) {
           continue;
         }
+
+        // Ignore decks and discards.
         const snapPoint: SnapPoint | undefined = obj.getSnappedToPoint();
         if (snapPoint) {
           const tags: Array<string> = snapPoint.getTags();
@@ -131,7 +141,11 @@ export class UpdatorObjectives implements IGameDataUpdator {
           }
         }
 
-        const nsid: string = NSID.get(obj);
+        // Ignore face-down objectives.
+        if (nsid.startsWith("card.objective") && !obj.isFaceUp()) {
+          continue;
+        }
+
         if (
           RightClickScorePrivate.isScorablePrivate(obj) ||
           RightClickScorePublic.isScorablePublic(obj) ||

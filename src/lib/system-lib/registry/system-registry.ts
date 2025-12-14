@@ -6,7 +6,7 @@ import {
   refPackageId,
   world,
 } from "@tabletop-playground/api";
-import { NSID } from "ttpg-darrell";
+import { HexType, NSID } from "ttpg-darrell";
 
 import { Planet } from "../planet/planet";
 import { SystemSchema, SystemSchemaType } from "../schema/system-schema";
@@ -198,6 +198,17 @@ export class SystemRegistry {
       const tier: SystemTierType = systemTier.getTier(system);
       return tier !== "other";
     });
+  }
+
+  getAllSystemHexes(): Set<HexType> {
+    const systemHexes: Set<HexType> = new Set<HexType>();
+    this.getAllSystemsWithObjs().forEach((system: System): void => {
+      const systemObj: GameObject = system.getObj();
+      const systemPos: Vector = systemObj.getPosition();
+      const hex: HexType = TI4.hex.fromPosition(systemPos);
+      systemHexes.add(hex);
+    });
+    return systemHexes;
   }
 
   /**
