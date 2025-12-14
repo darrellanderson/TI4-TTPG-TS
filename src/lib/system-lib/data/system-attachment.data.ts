@@ -89,6 +89,7 @@ export const SOURCE_TO_SYSTEM_ATTACHMENT_DATA: Record<
         },
       ],
       customModel: true,
+      doNotLock: true,
     },
     {
       name: "Thunder's Edge",
