@@ -69,6 +69,7 @@ it("_fillObjectivesType", () => {
         name: "Amass Wealth",
       }),
     ],
+    isFaceUp: true,
   });
   new MockCard({
     cardDetails: [
@@ -77,6 +78,7 @@ it("_fillObjectivesType", () => {
         name: "Achieve Supremacy",
       }),
     ],
+    isFaceUp: true,
   });
   new MockCard({
     cardDetails: [
@@ -85,6 +87,7 @@ it("_fillObjectivesType", () => {
         name: "Adapt New Strategies",
       }),
     ],
+    isFaceUp: true,
   });
   new MockCard({
     cardDetails: [
@@ -93,6 +96,7 @@ it("_fillObjectivesType", () => {
         name: "The Obsidian",
       }),
     ],
+    isFaceUp: true,
   });
   new MockCard({
     cardDetails: [
@@ -101,6 +105,7 @@ it("_fillObjectivesType", () => {
         name: "Support for the Throne",
       }),
     ],
+    isFaceUp: true,
   });
   new MockCard({
     cardDetails: [
@@ -109,6 +114,7 @@ it("_fillObjectivesType", () => {
         name: "Not Scorable",
       }),
     ],
+    isFaceUp: true,
   });
 
   const updatorObjectives = new UpdatorObjectives();
@@ -135,6 +141,8 @@ it("_fillObjectivesType (secret made public)", () => {
         name: "secret-1",
       }),
     ],
+    isFaceUp: true,
+
     snappedToPoint: new MockSnapPoint({
       parentObject: MockGameObject.simple("mat:base/objective-1"),
     }),
@@ -147,6 +155,8 @@ it("_fillObjectivesType (secret made public)", () => {
         name: "secret-2",
       }),
     ],
+    isFaceUp: true,
+
     snappedToPoint: new MockSnapPoint({
       parentObject: MockGameObject.simple("mat:base/objective-2"),
     }),
@@ -159,6 +169,8 @@ it("_fillObjectivesType (secret made public)", () => {
         name: "secret-3",
       }),
     ],
+    isFaceUp: true,
+
     snappedToPoint: new MockSnapPoint({
       parentObject: MockGameObject.simple("mat:base/agenda-laws"),
     }),
@@ -206,6 +218,8 @@ it("update", () => {
         name: "Adapt New Strategies",
       }),
     ],
+    isFaceUp: true,
+
     cardHolder,
   });
 
@@ -217,6 +231,8 @@ it("update", () => {
         name: "Amass Wealth",
       }),
     ],
+    isFaceUp: true,
+
     position: [100, 0, 0],
   });
   new MockGameObject({
