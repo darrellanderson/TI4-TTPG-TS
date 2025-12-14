@@ -8,10 +8,21 @@ export class GenerateFactions {
    * @param count
    */
   generate(count: number): Array<Faction> {
+    let sawKeleres: boolean = false;
     let factions: Array<Faction> = TI4.factionRegistry
       .getAllFactionsFilteredByConfigSources()
       .filter((faction: Faction): boolean => {
         return !faction.isExcludeFromDraft();
+      })
+      .filter((faction: Faction): boolean => {
+        const abbr: string = faction.getAbbr();
+        if (abbr.startsWith("Keleres")) {
+          if (sawKeleres) {
+            return false;
+          }
+          sawKeleres = true;
+        }
+        return true;
       });
     factions = new Shuffle<Faction>().shuffle(factions);
 
