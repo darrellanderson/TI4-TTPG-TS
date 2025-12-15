@@ -742,14 +742,30 @@ export class GoalCounter {
         }
       });
 
+    const playerSlotToUnitHexes: Map<PlayerSlot, Set<HexType>> = new Map();
     UnitPlastic.getAll().forEach((plastic: UnitPlastic): void => {
-      if (emptySystemHexes.has(plastic.getHex())) {
-        const playerSlot: PlayerSlot = plastic.getOwningPlayerSlot();
-        let count: number = result.get(playerSlot) || 0;
-        count += 1;
+      const playerSlot: PlayerSlot = plastic.getOwningPlayerSlot();
+      const hex: HexType = plastic.getHex();
+      let hexes: Set<HexType> | undefined =
+        playerSlotToUnitHexes.get(playerSlot);
+      if (!hexes) {
+        hexes = new Set();
+        playerSlotToUnitHexes.set(playerSlot, hexes);
+      }
+      hexes.add(hex);
+    });
+
+    playerSlotToUnitHexes.forEach(
+      (hexes: Set<HexType>, playerSlot: PlayerSlot): void => {
+        let count: number = 0;
+        hexes.forEach((hex: HexType): void => {
+          if (emptySystemHexes.has(hex)) {
+            count += 1;
+          }
+        });
         result.set(playerSlot, count);
       }
-    });
+    );
 
     return result;
   }
