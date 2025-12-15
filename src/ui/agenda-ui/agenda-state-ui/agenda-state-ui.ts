@@ -26,6 +26,7 @@ import { LongLabelUI } from "../../button-ui/long-label-ui";
 import { SwitcherUI } from "../../../ui/switcher-ui/switcher-ui";
 import { VerticalUIBuilder } from "../../panel/vertical-ui-builder";
 import { AgendaChooseTypeUI } from "../agenda-choose-type-ui/agenda-choose-type-ui";
+import { LongRichTextUI } from "../../button-ui/long-richtext-ui";
 
 /**
  * [waiting for: ...]
@@ -235,12 +236,12 @@ export class AgendaStateUI extends AbstractUI {
 
     const scaledWidth: number =
       CONFIG.BUTTON_WIDTH * scale * 3 + CONFIG.SPACING * 2 * scale;
-    const howTo: LongLabelUI = new LongLabelUI(scaledWidth, scale);
+    const howTo: LongRichTextUI = new LongRichTextUI(scaledWidth, scale);
     howTo
-      .getText()
+      .getRichText()
       .setJustification(TextJustification.Left)
       .setText(
-        "select outcome below, enter votes and lock; to abstain lock zero votes"
+        "Select outcome below, add votes and lock. [b]To ABSTAIN lock zero votes.[/b]"
       );
 
     return new HorizontalUIBuilder()

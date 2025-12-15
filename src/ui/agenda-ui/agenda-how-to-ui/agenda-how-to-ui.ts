@@ -27,10 +27,10 @@ export class AgendaHowToUI extends AbstractUI {
     fontSize = Math.min(fontSize, 24);
 
     const msg: string = [
-      `[b][size=${fontSize}]Play when[/size][/b] to skip to the next turn (handle then when with the table).`,
+      `[b][size=${fontSize}]Play when[/size][/b] to skip to the next turn (handle the when with the table).`,
       `[b][size=${fontSize}]No whens[/size][/b] to skip your whens this round, you get another chance next round if anyone plays a when.`,
       `[b][size=${fontSize}]Never whens[/size][/b] to skip every time.`,
-      "Repeat for afters (right click many afters to assign the outcome), then vote.",
+      "Repeat for afters (right click [b]riders[/b] to assign an outcome), then vote.",
       "You may click early, it will be processed on your turn.",
     ].join(" ");
 
