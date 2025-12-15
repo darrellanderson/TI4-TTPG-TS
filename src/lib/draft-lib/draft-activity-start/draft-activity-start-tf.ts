@@ -140,9 +140,10 @@ export class DraftActivityStartTF {
       );
     }
 
-    const speakerIndex: number = Math.floor(
-      Math.random() * TI4.config.playerCount
-    );
+    // Use a deterministic speaker index for a given timestamp and player count.
+    // In the event another draft state is created use the same speaker index.
+    const speakerIndex: number =
+      Math.floor(TI4.config.timestamp) % TI4.config.playerCount;
     this._draftState.setSpeakerIndex(speakerIndex);
 
     const success: boolean = errors.length === 0;
