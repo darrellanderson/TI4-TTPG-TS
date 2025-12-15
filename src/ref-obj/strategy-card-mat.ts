@@ -21,6 +21,7 @@ import { DealActionCards } from "../lib/action-card-lib/deal-action-cards/deal-a
 import { RefreshAllPlanets } from "../lib/system-lib/planet/refresh-all-planets";
 import { ReturnCommandTokens } from "../lib/command-token-lib/return-command-tokens/return-command-tokens";
 import { AddCommandTokens } from "../lib/command-token-lib/add-command-tokens/add-command-tokens";
+import { BootActiveAgendaCard } from "../lib/agenda-lib/boot-active-agenda-card/boot-active-agenda-card";
 
 const ACTION_REFRESH_ALL_PLANET_CARDS = "*Refresh all planet cards";
 const ACTION_PLACE_TGS = "*Place TGs and set turns";
@@ -74,6 +75,9 @@ refObject.onCustomAction.add(
       now - _lastPlaceTgsTimestamp > MIN_DELAY_BETWEEN_REPEATS
     ) {
       _lastPlaceTgsTimestamp = now;
+
+      // Remove any agenda card left on the active agenda spot.
+      new BootActiveAgendaCard().bootCardOffSpot();
 
       _initiativeOrder.setTurnOrderFromStrategyCards();
       _placeTGsUnpicked.placeTgsUnpicked();
