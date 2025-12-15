@@ -10,6 +10,7 @@ import {
   CreateAbstractUIParams,
   CreateAbstractUIType,
 } from "../../../ui/abstract-window/abstract-window";
+import { SaveRestoreTurnOrder } from "../agenda-state/save-restore-turn-order";
 
 export const AGENDA_STATE_NAMESPACE_ID: NamespaceId = "@ti4/agenda-state";
 const AGENDA_WINDOW_NAMESPACE_ID: NamespaceId = "@ti4/agenda-window";
@@ -51,6 +52,9 @@ export class AgendaActivityStart {
   };
 
   start(agendaCard: Card): boolean {
+    // Save current turn order state BEFORE updating turn order, clear passed.
+    const turnOrderState: string = SaveRestoreTurnOrder.saveAndClearPassed();
+
     // Set turn order.
     const order: Array<PlayerSlot> =
       new AgendaTurnOrder().getWhensOrAftersOrder();
@@ -59,9 +63,9 @@ export class AgendaActivityStart {
       TI4.turnOrder.setTurnOrder(order, "forward", first);
     }
 
-    this._agendaState = new AgendaState(
-      AGENDA_STATE_NAMESPACE_ID
-    ).setAgendaObjId(agendaCard.getId());
+    this._agendaState = new AgendaState(AGENDA_STATE_NAMESPACE_ID)
+      .setAgendaObjId(agendaCard.getId())
+      .setTurnOrderState(turnOrderState);
 
     this.resume();
     return true;
@@ -73,9 +77,15 @@ export class AgendaActivityStart {
       AgendaActivityStart._agendaWindow = undefined;
     }
 
-    const agendaState: AgendaState = new AgendaState(AGENDA_STATE_NAMESPACE_ID);
+    // If resuming from a save need to create agenda state.
+    // If proceeding from start it is already created.
+    if (!this._agendaState) {
+      const agendaState: AgendaState = new AgendaState(
+        AGENDA_STATE_NAMESPACE_ID
+      );
+      this._agendaState = agendaState;
+    }
 
-    this._agendaState = agendaState;
     this._agendaState.onAgendaStateChanged.add(
       this._onAgendaStateChangedHandler
     );
@@ -87,7 +97,10 @@ export class AgendaActivityStart {
       const seatIndex: number = TI4.playerSeats.getSeatIndexByPlayerSlot(
         params.playerSlot
       );
-      return new AgendaStateUI(agendaState, seatIndex, params.scale);
+      if (!this._agendaState) {
+        throw new Error("Agenda state not initialized");
+      }
+      return new AgendaStateUI(this._agendaState, seatIndex, params.scale);
     };
     const windowTitle: string = "Agenda";
     const abstractWindow: AbstractWindow = new AbstractWindow(

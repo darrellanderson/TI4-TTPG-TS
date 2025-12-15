@@ -5,6 +5,7 @@ import {
   TurnOrder,
 } from "ttpg-darrell";
 import { number, z } from "zod";
+import { SaveRestoreTurnOrder } from "./save-restore-turn-order";
 
 export const MAX_OUTCOME_NAME_LENGTH = 20;
 
@@ -34,6 +35,7 @@ const AgendaStateSchema = z.object({
   phase: AgendaPhase.default("whens"),
   riders: z.array(AgendaRiderSchema).default([]),
   seatIndexToState: z.array(AgendaSeatStateSchema.nullable()).default([]),
+  savedTurnOrder: z.string().optional(),
 });
 type AgendaStateSchemaType = z.infer<typeof AgendaStateSchema>;
 
@@ -90,11 +92,29 @@ export class AgendaState {
   }
 
   destroy(): void {
+    const turnState: string | undefined = this.getTurnOrderState();
+    this._data.savedTurnOrder = undefined; // suppress future destroy handling
+
     world.setSavedData("", this._namespaceId);
     TurnOrder.onTurnStateChanged.remove(this._onTurnStateChangedHandler);
     TI4.events.onAgendaCardRemoved.remove(this._onAgendaCardRemovedHandler);
+
     this.onAgendaStateChanged.trigger(this);
     this.onAgendaStateChanged.clear();
+
+    if (turnState !== undefined) {
+      SaveRestoreTurnOrder.restore(turnState);
+    }
+  }
+
+  setTurnOrderState(state: string): this {
+    this._data.savedTurnOrder = state;
+    this._save();
+    return this;
+  }
+
+  getTurnOrderState(): string | undefined {
+    return this._data.savedTurnOrder;
   }
 
   transactThenTriggerDelayedStateChangedEvent(f: () => void): void {

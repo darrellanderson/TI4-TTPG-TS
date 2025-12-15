@@ -52,11 +52,13 @@ export class AdvanceNoWhensAfters {
    * @returns
    */
   getUncommittedWhens(): Array<PlayerSlot> {
-    return this._getSeatPlayerSlots().filter(
-      (_playerSlot: PlayerSlot, seatIndex: number): boolean => {
+    return this._getSeatPlayerSlots()
+      .filter((_playerSlot: PlayerSlot, seatIndex: number): boolean => {
         return this._agendaState.getSeatNoWhens(seatIndex) === "unknown";
-      }
-    );
+      })
+      .filter((playerSlot: PlayerSlot): boolean => {
+        return !TI4.turnOrder.getEliminated(playerSlot);
+      });
   }
 
   getPlayedWhens(): Array<PlayerSlot> {
@@ -73,11 +75,13 @@ export class AdvanceNoWhensAfters {
    * @returns
    */
   getUncommittedAfters(): Array<PlayerSlot> {
-    return this._getSeatPlayerSlots().filter(
-      (_playerSlot: PlayerSlot, seatIndex: number): boolean => {
+    return this._getSeatPlayerSlots()
+      .filter((_playerSlot: PlayerSlot, seatIndex: number): boolean => {
         return this._agendaState.getSeatNoAfters(seatIndex) === "unknown";
-      }
-    );
+      })
+      .filter((playerSlot: PlayerSlot): boolean => {
+        return !TI4.turnOrder.getEliminated(playerSlot);
+      });
   }
 
   getPlayedAfters(): Array<PlayerSlot> {
@@ -93,11 +97,13 @@ export class AdvanceNoWhensAfters {
    * @returns
    */
   getUncommittedVotes(): Array<PlayerSlot> {
-    return this._getSeatPlayerSlots().filter(
-      (_playerSlot: PlayerSlot, seatIndex: number): boolean => {
+    return this._getSeatPlayerSlots()
+      .filter((_playerSlot: PlayerSlot, seatIndex: number): boolean => {
         return !this._agendaState.getSeatVotesLocked(seatIndex);
-      }
-    );
+      })
+      .filter((playerSlot: PlayerSlot): boolean => {
+        return !TI4.turnOrder.getEliminated(playerSlot);
+      });
   }
 
   /**

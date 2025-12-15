@@ -193,10 +193,17 @@ export class DraftActivityStartTF {
     if (!DraftStateTF.isDraftInProgress(DRAFT_NAMESPACE_ID_TF)) {
       throw new Error("Draft not in progress");
     }
-    const draftState: DraftStateTF = new DraftStateTF(DRAFT_NAMESPACE_ID_TF);
-    this._draftState = draftState;
 
-    const resolveConflictsKeleres = new ResolveConflictsKeleres(draftState);
+    // If resuming from a save need to create draft state.
+    // If proceeding from start it is already created.
+    if (!this._draftState) {
+      const draftState: DraftStateTF = new DraftStateTF(DRAFT_NAMESPACE_ID_TF);
+      this._draftState = draftState;
+    }
+
+    const resolveConflictsKeleres = new ResolveConflictsKeleres(
+      this._draftState
+    );
     this._draftState.onDraftStateChanged.add(() => {
       resolveConflictsKeleres.resolve();
     });
@@ -238,7 +245,7 @@ export class DraftActivityStartTF {
     const ui = new UIElement();
     ui.scale = 1 / scale;
     ui.widget = new Border().setChild(
-      new DraftStateTfUI(draftState, scale).getWidget()
+      new DraftStateTfUI(this._draftState, scale).getWidget()
     );
     ui.position = new Vector(0, 0, world.getTableHeight() + 3);
     world.addUI(ui);
@@ -246,7 +253,7 @@ export class DraftActivityStartTF {
 
     // Close window when draft state destroyed.
     this._draftState.onDraftStateChanged.add(() => {
-      if (!draftState.isActive()) {
+      if (!this._draftState?.isActive()) {
         world.removeUIElement(ui);
         DraftActivityStartTF._sharedUiElement = undefined;
       }

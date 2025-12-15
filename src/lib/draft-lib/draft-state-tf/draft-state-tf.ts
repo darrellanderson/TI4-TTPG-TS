@@ -24,12 +24,6 @@ export class DraftStateTF extends DraftState {
       TI4.config.playerCount
     ).fill("{}");
     this.setOpaques(opaques);
-
-    this.onDraftStateChanged.add(() => {
-      // Look at opaques, set seats if all have speaker priority
-      // (need all seats to qualify as complete and for finish layout).
-      this._maybeSetSeats();
-    });
   }
 
   _playerSlotToOpaqueIndex(playerSlot: number): number {
