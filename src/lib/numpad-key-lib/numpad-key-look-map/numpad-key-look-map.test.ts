@@ -12,7 +12,7 @@ it("look map", () => {
   mockGlobalEvents._scriptButtonPressedAsPlayer(player, 18, false, false);
 
   mockGlobalEvents._scriptButtonPressedAsPlayer(player, 19, false, false);
-  expect(player.getPosition().toString()).toBe("(X=-10,Y=0,Z=110)");
+  expect(player.getPosition().toString()).toBe("(X=-4,Y=0,Z=135)");
 
   numpadKey.destroy();
 });

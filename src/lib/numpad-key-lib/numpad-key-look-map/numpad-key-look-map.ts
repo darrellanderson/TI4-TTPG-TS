@@ -14,8 +14,8 @@ export class NumpadKeyLookMap {
     if (index !== this._key || ctrl || alt) {
       return;
     }
-    const lookAt: Vector = new Vector(0, 0, world.getTableHeight());
-    const lookFrom: Vector = lookAt.add([-10, 0, 110]);
+    const lookAt: Vector = new Vector(6, 0, world.getTableHeight());
+    const lookFrom: Vector = lookAt.add([-10, 0, 135]); // origin look and z 110 not enough for fracture
     const rot = lookFrom.findLookAtRotation(lookAt);
     player.setPositionAndRotation(lookFrom, rot);
   };

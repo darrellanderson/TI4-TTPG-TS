@@ -97,8 +97,8 @@ export class AutoStreamerCamera implements IGlobal {
   }
 
   _lookAtFullMap(): void {
-    const lookAtPos: Vector = new Vector(0, 0, world.getTableHeight());
-    this._lookAt(lookAtPos, 110);
+    const lookAtPos: Vector = new Vector(6, 0, world.getTableHeight());
+    this._lookAt(lookAtPos, 135);
   }
 
   _lookAt(pos: Vector, height: number): void {
