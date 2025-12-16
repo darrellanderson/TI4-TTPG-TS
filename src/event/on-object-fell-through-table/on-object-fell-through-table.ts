@@ -17,7 +17,7 @@ export class OnObjectFellThroughTable implements IGlobal {
     for (const objId of Array.from(this._underTableAgingObjIds)) {
       this._underTableAgingObjIds.delete(objId);
       const obj: GameObject | undefined = world.getObjectById(objId);
-      if (obj) {
+      if (obj && obj.isValid()) {
         const objPos: Vector = obj.getPosition();
         if (objPos.z < tableHeight) {
           this._underTableAgedObjIds.add(objId);
@@ -28,7 +28,7 @@ export class OnObjectFellThroughTable implements IGlobal {
     for (const objId of Array.from(this._underTableAgedObjIds)) {
       this._underTableAgedObjIds.delete(objId);
       const obj: GameObject | undefined = world.getObjectById(objId);
-      if (obj) {
+      if (obj && obj.isValid()) {
         const objPos: Vector = obj.getPosition();
         if (objPos.z < tableHeight) {
           objPos.z = tableHeight + 10;
