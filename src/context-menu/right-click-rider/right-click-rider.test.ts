@@ -7,7 +7,6 @@ import {
 } from "ttpg-mock";
 
 import { AgendaState } from "../../lib/agenda-lib/agenda-state/agenda-state";
-import { ReportFinalAgendaState } from "../../lib/agenda-lib/agenda-state/report-final-agenda-state";
 import { ACTION_CLEAR_PREDICT, RightClickRider } from "./right-click-rider";
 
 it("static _getOutcomeNames", () => {
