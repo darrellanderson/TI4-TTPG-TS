@@ -1,25 +1,29 @@
 /* eslint-disable no-console */
 
-export const startDebugTimer = (taskName = 'The task') => {
+export const startDebugTimer = (taskName = "The task") => {
   const timer = {
     startTime: new Date(),
 
     end: () => {
-      const timeMs = new Date().getTime() - timer.startTime.getTime()
-      const tmp = Math.floor(timeMs / 100)
-      const seconds = tmp / 10
+      const timeMs = new Date().getTime() - timer.startTime.getTime();
+      const tmp = Math.floor(timeMs / 100);
+      const seconds = tmp / 10;
       if (seconds === 0) {
-        console.log(`${taskName} took exactly ${timeMs} milliseconds`)
+        console.log(`${taskName} took exactly ${timeMs} milliseconds`);
       } else if (seconds === Math.floor(seconds)) {
-        console.log(`${taskName} took ${seconds}.0 seconds`)
+        console.log(`${taskName} took ${seconds}.0 seconds`);
       } else {
-        console.log(`${taskName} took ${seconds} seconds`)
+        console.log(`${taskName} took ${seconds} seconds`);
       }
     },
-  }
-  return timer
-}
+  };
+  return timer;
+};
 
 export function isTest() {
-  return process.env.JEST_WORKER_ID !== undefined
+  return (
+    typeof process !== "undefined" &&
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    (process as any).env?.JEST_WORKER_ID !== undefined
+  );
 }
