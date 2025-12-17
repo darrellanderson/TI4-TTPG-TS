@@ -44,6 +44,8 @@
     "typescript": "^5.4.5"
   },
   "dependencies": {
+    "@types/lodash": "^4.17.21",
+    "lodash": "^4.17.21",
     "ttpg-darrell": "^1.1.14",
     "zod": "3.22.4"
   },
