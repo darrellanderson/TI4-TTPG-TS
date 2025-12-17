@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/no-shadow */
 import _cloneDeep from "lodash/cloneDeep";
 import _times from "lodash/times";
 

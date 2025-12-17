@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-shadow */
 import { logWrapper } from "../../util/util-log";
 import {
   BattleInstance,
