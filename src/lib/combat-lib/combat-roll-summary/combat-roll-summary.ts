@@ -104,7 +104,10 @@ export class CombatRollSummary {
     const playerName: string = TI4.playerName.getBySlot(
       combatRoll.self.playerSlot
     );
-    const combinedUnitResults: string = unitResults.join(", ");
+    let combinedUnitResults: string = unitResults.join(", ");
+    if (combinedUnitResults.length === 0) {
+      combinedUnitResults = "<no units rolled>";
+    }
     const modifiers: Array<string> =
       combatRoll.getUnitModifierNamesWithDescriptions();
     if (modifiers.length === 0) {
