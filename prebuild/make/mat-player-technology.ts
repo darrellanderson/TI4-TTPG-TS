@@ -75,8 +75,8 @@ function technologyGrid(): ZRowCell {
     children: [
       technologyColumn("prebuild/mat/slot/symbol-tech-blue.png"),
       technologyColumn("prebuild/mat/slot/symbol-tech-green.png"),
-      technologyColumn("prebuild/mat/slot/symbol-tech-red.png"),
       technologyColumn("prebuild/mat/slot/symbol-tech-yellow.png"),
+      technologyColumn("prebuild/mat/slot/symbol-tech-red.png"),
       technologyColumn("prebuild/mat/slot/symbol-tech-unit.png"),
     ],
   };
