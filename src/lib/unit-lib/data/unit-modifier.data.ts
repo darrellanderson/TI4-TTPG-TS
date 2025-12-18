@@ -38,6 +38,9 @@ add("base", ExperimentalBattlestation);
 import { FighterPrototype } from "./unit-modifiers/base/fighter-prototype";
 add("base", FighterPrototype);
 
+import { FireTeam } from "./unit-modifiers/base/fire-team";
+add("base", FireTeam);
+
 import { FourthMoon } from "./unit-modifiers/base/fourth-moon";
 add("base", FourthMoon);
 
