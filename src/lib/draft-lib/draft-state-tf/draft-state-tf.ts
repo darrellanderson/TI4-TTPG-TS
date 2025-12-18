@@ -24,6 +24,10 @@ export class DraftStateTF extends DraftState {
       TI4.config.playerCount
     ).fill("{}");
     this.setOpaques(opaques);
+
+    this.onDraftStateChanged.add(() => {
+      this._maybeSetSeats();
+    });
   }
 
   _playerSlotToOpaqueIndex(playerSlot: number): number {
@@ -186,11 +190,6 @@ export class DraftStateTF extends DraftState {
       .getAllSeats()
       .map((seat: PlayerSeatType): number => seat.playerSlot);
 
-    // Clear existing seat assignments.
-    playerSlots.forEach((playerSlot: number) => {
-      this.setSeatIndexToPlayerSlot(-1, playerSlot);
-    });
-
     // Collect speaker priorities, fail if not all players have one.
     const playerSlotAndSpeakerPriorities: Array<{
       playerSlot: number;
@@ -205,8 +204,15 @@ export class DraftStateTF extends DraftState {
         });
       }
     });
+
     if (playerSlotAndSpeakerPriorities.length !== playerSlots.length) {
-      return false; // not all players have speaker priority
+      // not all players have speaker priority
+      for (let seatIndex = 0; seatIndex < TI4.config.playerCount; seatIndex++) {
+        if (this.getSeatIndexToPlayerSlot(seatIndex) !== -1) {
+          this.setSeatIndexToPlayerSlot(seatIndex, -1);
+        }
+      }
+      return false;
     }
 
     // Sort by speaker priority.
@@ -222,7 +228,9 @@ export class DraftStateTF extends DraftState {
       ) => {
         const seatIndex: number =
           (priorityIndex + this.getSpeakerIndex()) % TI4.config.playerCount;
-        this.setSeatIndexToPlayerSlot(seatIndex, entry.playerSlot);
+        if (this.getSeatIndexToPlayerSlot(seatIndex) !== entry.playerSlot) {
+          this.setSeatIndexToPlayerSlot(seatIndex, entry.playerSlot);
+        }
       }
     );
 
