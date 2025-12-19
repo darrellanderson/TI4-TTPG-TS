@@ -15,6 +15,11 @@ import { UpdatorObjectivesType } from "./updator-objectives-type";
 import { RightClickScorePrivate } from "../../../../context-menu/right-click-score/right-click-score-private";
 import { RightClickScorePublic } from "../../../../context-menu/right-click-score/right-click-score-public";
 
+const ASSIGN_NSIDS_TO_CLOSEST_PLAYER: Set<string> = new Set<string>([
+  "card.planet:thunders-edge/styx",
+  "card.relic:pok/the-obsidian",
+]);
+
 export class UpdatorObjectives implements IGameDataUpdator {
   update(gameData: GameData): void {
     const controlTokens: Array<GameObject> = this._getControlTokens();
@@ -61,9 +66,9 @@ export class UpdatorObjectives implements IGameDataUpdator {
         }
       }
 
-      // Assign Styx to closest player IF not on a system tile.
+      // Assign some cards to closest player IF not on a system tile.
       const nsid: string = NSID.get(objectiveCard);
-      if (nsid === "card.planet:thunders-edge/styx") {
+      if (ASSIGN_NSIDS_TO_CLOSEST_PLAYER.has(nsid)) {
         const pos: Vector = objectiveCard.getPosition();
         const hex: HexType = TI4.hex.fromPosition(pos);
 
@@ -116,6 +121,7 @@ export class UpdatorObjectives implements IGameDataUpdator {
     const trackOtherNsids: Set<string> = new Set<string>([
       "card.relic:pok/the-obsidian", // not scorable, but wanted for streamer display
       "card.relic:codex.liberation/book-of-latvinia",
+      "card.relic:pok/the-crown-of-emphidia",
       "card.planet:thunders-edge/styx",
     ]);
 
@@ -135,7 +141,8 @@ export class UpdatorObjectives implements IGameDataUpdator {
           if (
             tags.includes("discard-agenda") ||
             tags.includes("active-agenda") ||
-            tags.includes("deck-planet")
+            tags.includes("deck-planet") ||
+            tags.includes("deck-relic")
           ) {
             continue;
           }
