@@ -102,6 +102,7 @@ export class RightClickYinAscendant extends AbstractRightClickCard {
         nsids.push("card.alliance:codex.vigil/keleres-xxcha");
       }
 
+      /* Allow so long as faction not in use.
       // If any Obsidian or Firmament prevent both flavors.
       if (
         nsid === "card.alliance:thunders-edge/obsidian" ||
@@ -110,6 +111,7 @@ export class RightClickYinAscendant extends AbstractRightClickCard {
         nsids.push("card.alliance:thunders-edge/obsidian");
         nsids.push("card.alliance:thunders-edge/firmament");
       }
+      */
     }
     return nsids;
   }
