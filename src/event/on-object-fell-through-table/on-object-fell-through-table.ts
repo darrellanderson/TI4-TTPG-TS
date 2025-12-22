@@ -13,7 +13,7 @@ export class OnObjectFellThroughTable implements IGlobal {
   private _reportErrors: boolean = false;
 
   readonly _processObjs = (): void => {
-    const tableHeight: number = world.getTableHeight();
+    const tableHeight: number = world.getTableHeight() - 0.1;
 
     for (const objId of Array.from(this._underTableAgingObjIds)) {
       this._underTableAgingObjIds.delete(objId);
