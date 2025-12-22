@@ -10,6 +10,7 @@ import { ErrorHandler, IGlobal, NSID } from "ttpg-darrell";
 export class OnObjectFellThroughTable implements IGlobal {
   private readonly _underTableAgingObjIds: Set<string> = new Set<string>();
   private readonly _underTableAgedObjIds: Set<string> = new Set<string>();
+  private _reportErrors: boolean = false;
 
   readonly _processObjs = (): void => {
     const tableHeight: number = world.getTableHeight();
@@ -17,7 +18,7 @@ export class OnObjectFellThroughTable implements IGlobal {
     for (const objId of Array.from(this._underTableAgingObjIds)) {
       this._underTableAgingObjIds.delete(objId);
       const obj: GameObject | undefined = world.getObjectById(objId);
-      if (obj && obj.isValid()) {
+      if (obj && obj.isValid() && obj.getContainer() === undefined) {
         const objPos: Vector = obj.getPosition();
         if (objPos.z < tableHeight) {
           this._underTableAgedObjIds.add(objId);
@@ -28,7 +29,7 @@ export class OnObjectFellThroughTable implements IGlobal {
     for (const objId of Array.from(this._underTableAgedObjIds)) {
       this._underTableAgedObjIds.delete(objId);
       const obj: GameObject | undefined = world.getObjectById(objId);
-      if (obj && obj.isValid()) {
+      if (obj && obj.isValid() && obj.getContainer() === undefined) {
         const objPos: Vector = obj.getPosition();
         if (objPos.z < tableHeight) {
           objPos.z = tableHeight + 10;
@@ -37,7 +38,10 @@ export class OnObjectFellThroughTable implements IGlobal {
 
           const nsid: string = NSID.get(obj);
           const msg: string = `"${nsid}" fell through the table`;
-          ErrorHandler.onError.trigger(msg);
+          console.log(msg);
+          if (this._reportErrors) {
+            ErrorHandler.onError.trigger(msg);
+          }
 
           // Tell any listeners that the object fell through the table.
           TI4.events.onObjectFellThroughTable.trigger(obj);
@@ -134,5 +138,10 @@ export class OnObjectFellThroughTable implements IGlobal {
     if (GameWorld.getExecutionReason() !== "unittest") {
       setInterval(this._processObjs, 1000);
     }
+  }
+
+  setReportErrors(reportErrors: boolean): this {
+    this._reportErrors = reportErrors;
+    return this;
   }
 }
