@@ -115,6 +115,7 @@ export class CombatArenaObj {
         plastic.getObj().setPosition(dst, 1);
         plastic.getObj().snapToGround();
       }
+      TI4.events.onCombatWarpIn.trigger(this._obj);
     } else {
       Broadcast.broadcastAll("Warp in: no active system", Broadcast.ERROR);
     }
@@ -132,6 +133,7 @@ export class CombatArenaObj {
         plastic.getObj().setPosition(dst, 1);
         plastic.getObj().snapToGround();
       }
+      TI4.events.onCombatWarpOut.trigger(system);
     } else {
       Broadcast.broadcastAll("Warp out: no active system", Broadcast.ERROR);
     }

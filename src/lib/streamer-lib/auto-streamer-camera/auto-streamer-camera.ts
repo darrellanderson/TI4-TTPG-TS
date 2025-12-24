@@ -33,6 +33,14 @@ export class AutoStreamerCamera implements IGlobal {
     this._lookAtFullMap();
   };
 
+  private readonly _onCombatWarpIn = (combatArenaObj: GameObject): void => {
+    this._lookAtCombatArena(combatArenaObj);
+  };
+
+  private readonly _onCombatWarpOut = (system: System): void => {
+    this._lookAtSystem(system);
+  };
+
   constructor(namespaceId: NamespaceId) {
     this._namespaceId = namespaceId;
     this._load();
@@ -41,12 +49,16 @@ export class AutoStreamerCamera implements IGlobal {
   init(): void {
     TI4.events.onAllPlayersPassed.add(this._onAllPlayersPassed);
     TI4.events.onSystemActivated.add(this._onSystemActivated);
+    TI4.events.onCombatWarpIn.add(this._onCombatWarpIn);
+    TI4.events.onCombatWarpOut.add(this._onCombatWarpOut);
     TurnOrder.onTurnStateChanged.add(this._onTurnStateChanged);
   }
 
   destroy(): void {
     TI4.events.onAllPlayersPassed.remove(this._onAllPlayersPassed);
     TI4.events.onSystemActivated.remove(this._onSystemActivated);
+    TI4.events.onCombatWarpIn.remove(this._onCombatWarpIn);
+    TI4.events.onCombatWarpOut.remove(this._onCombatWarpOut);
     TurnOrder.onTurnStateChanged.remove(this._onTurnStateChanged);
 
     world.setSavedData("", this._namespaceId);
@@ -99,6 +111,11 @@ export class AutoStreamerCamera implements IGlobal {
   _lookAtFullMap(): void {
     const lookAtPos: Vector = new Vector(6, 0, world.getTableHeight());
     this._lookAt(lookAtPos, 135);
+  }
+
+  _lookAtCombatArena(CombatArenaObj: GameObject): void {
+    const lookAtPos: Vector = CombatArenaObj.getPosition();
+    this._lookAt(lookAtPos, 40);
   }
 
   _lookAt(pos: Vector, height: number): void {

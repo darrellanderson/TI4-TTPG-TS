@@ -70,6 +70,20 @@ export class GlobalEvents {
   >();
 
   /**
+   * Called when a player warps units into the combat arena (large system area).
+   */
+  public readonly onCombatWarpIn = new TriggerableMulticastDelegate<
+    (arenaObj: GameObject) => void
+  >();
+
+  /**
+   * Called when a player warps units out of the combat arena (large system area).
+   */
+  public readonly onCombatWarpOut = new TriggerableMulticastDelegate<
+    (system: System) => void
+  >();
+
+  /**
    * Triggered when a player scores the final pooint.
    */
   public readonly onGameEnd = new TriggerableMulticastDelegate<() => void>();
