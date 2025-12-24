@@ -23,6 +23,7 @@ export class UnitModifier {
       case "alliance":
       case "breakthrough":
       case "event":
+      case "firmament-plot":
       case "promissory":
       case "relic":
       case "technology.blue":

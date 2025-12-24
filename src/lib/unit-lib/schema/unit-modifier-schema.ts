@@ -13,6 +13,7 @@ export const UnitModifierCardClass = z
     "custom", // nsidName is full NSID
     "event",
     "faction-ability", // not a card
+    "firmament-plot",
     "hero",
     "legendary",
     "mech",

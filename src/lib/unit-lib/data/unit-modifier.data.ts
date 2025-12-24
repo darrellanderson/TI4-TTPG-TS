@@ -191,6 +191,9 @@ add("thunders-edge", ArchonsGift);
 import { ArozHollow } from "./unit-modifiers/thunders-edge/aroz-hollow";
 add("thunders-edge", ArozHollow);
 
+import { Assail } from "./unit-modifiers/thunders-edge/assail";
+add("thunders-edge", Assail);
+
 import { CosmicPhenomenae } from "./unit-modifiers/thunders-edge/cosmic-phenomenae";
 add("thunders-edge", CosmicPhenomenae);
 

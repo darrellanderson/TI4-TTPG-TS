@@ -45,7 +45,7 @@ globalEvents.onObjectDestroyed.add((obj: GameObject) => {
     __atopCache.delete(id);
   }
 });
-function __atopCacheGet(obj: GameObject): Atop {
+export function __atopCacheGet(obj: GameObject): Atop {
   const id = obj.getId();
   let atop = __atopCache.get(id);
   if (!atop) {
@@ -381,6 +381,13 @@ export class CombatRoll {
       if (!(card instanceof Card)) {
         return -1;
       }
+
+      // Restrict what kinds of cards apply.
+      const nsid: string = NSID.get(card);
+      if (!nsid.startsWith("card.agenda") && !nsid.startsWith("card.relic")) {
+        return -1;
+      }
+
       const atop: Atop | undefined = __atopCacheGet(card); // "new Atop" hung during a build area update
       for (const controlToken of controlTokens) {
         const pos: Vector = controlToken.getPosition();
