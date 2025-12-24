@@ -2,7 +2,7 @@ import { MockGameObject } from "ttpg-mock";
 import { System } from "../lib/system-lib/system/system";
 import { TI4CalcBridge } from "./ti4calc-bridge";
 
-it("one simulation battle count", () => {
+it("serialize battle", () => {
   // System.
   MockGameObject.simple("tile.system:base/19");
 
@@ -37,14 +37,108 @@ it("one simulation battle count", () => {
   if (!system) {
     throw new Error("could not get system");
   }
+  globalThis.TI4.turnOrder.setTurnOrder(
+    [selfPlayerSlot, opponentPlayerSlot],
+    "forward",
+    selfPlayerSlot
+  );
   const bridge: TI4CalcBridge = new TI4CalcBridge(system);
-  for (let i = 0; i < 100; i++) {
-    const inProgress: boolean = bridge.advanceSimulations();
-    const battleCount: number = bridge.getSimulationBattleCount();
-    const result: string = bridge.getSimulationResult();
-    console.log(`(${i}) ${battleCount} battles so far:\n${result}\n`);
-    if (!inProgress) {
-      break;
-    }
-  }
+  const json: string = bridge.serialize();
+  const parsed = JSON.parse(json);
+  expect(parsed).toEqual([
+    {
+      attacker: {
+        battleEffects: {},
+        damagedUnits: {},
+        faction: "Arborec",
+        riskDirectHit: false,
+        side: "attacker",
+        unitUpgrades: {},
+        units: {
+          carrier: 2,
+          cruiser: 0,
+          destroyer: 0,
+          dreadnought: 0,
+          fighter: 11,
+          flagship: 0,
+          infantry: 0,
+          mech: 0,
+          nonunit: 0,
+          other: 0,
+          pds: 0,
+          warsun: 0,
+        },
+      },
+      defender: {
+        battleEffects: {},
+        damagedUnits: {},
+        faction: "Arborec",
+        riskDirectHit: false,
+        side: "defender",
+        unitUpgrades: {},
+        units: {
+          carrier: 2,
+          cruiser: 0,
+          destroyer: 0,
+          dreadnought: 0,
+          fighter: 10,
+          flagship: 0,
+          infantry: 0,
+          mech: 0,
+          nonunit: 0,
+          other: 0,
+          pds: 0,
+          warsun: 0,
+        },
+      },
+      place: "Space",
+    },
+    {
+      attacker: {
+        battleEffects: {},
+        damagedUnits: {},
+        faction: "Arborec",
+        riskDirectHit: false,
+        side: "attacker",
+        unitUpgrades: {},
+        units: {
+          carrier: 2,
+          cruiser: 0,
+          destroyer: 0,
+          dreadnought: 0,
+          fighter: 11,
+          flagship: 0,
+          infantry: 0,
+          mech: 0,
+          nonunit: 0,
+          other: 0,
+          pds: 0,
+          warsun: 0,
+        },
+      },
+      defender: {
+        battleEffects: {},
+        damagedUnits: {},
+        faction: "Arborec",
+        riskDirectHit: false,
+        side: "defender",
+        unitUpgrades: {},
+        units: {
+          carrier: 0,
+          cruiser: 0,
+          destroyer: 0,
+          dreadnought: 0,
+          fighter: 0,
+          flagship: 0,
+          infantry: 0,
+          mech: 0,
+          nonunit: 0,
+          other: 0,
+          pds: 0,
+          warsun: 0,
+        },
+      },
+      place: "Ground",
+    },
+  ]);
 });

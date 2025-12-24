@@ -1,4 +1,3 @@
-import _cloneDeep from "lodash/cloneDeep";
 import {
   CombatRoll,
   CombatRollPerPlayerData,
@@ -6,132 +5,44 @@ import {
   System,
   UnitAttrs,
 } from "../lib";
-import {
-  Battle,
-  BattleInstance,
-  BattleWinner,
-  Participant,
-} from "./core/battle-types";
-import { setupBattle, startBattle } from "./core/battleSetup";
+import { Battle, Participant } from "./core/battle-types";
 import { Faction, Place } from "./core/enums";
 import { UnitType } from "./core/unit";
 import { PartialRecord } from "./util/util-types";
-
-const BATTLE_COUNT_TARGET = 20000;
-const SIMULATION_MSECS = 8; // 16 msecs for 60 FPS, leave time for engine
-
-class TI4CalcBridgeBattleSimulation {
-  private readonly _planetNameOrSpace: string | undefined;
-  private readonly _battleInstance: BattleInstance;
-  _battleCount: number = 0;
-  _attacker: number = 0;
-  _defender: number = 0;
-  _draw: number = 0;
-
-  constructor(
-    planetNameOrSpace: string | undefined,
-    battleInstance: BattleInstance
-  ) {
-    this._planetNameOrSpace = planetNameOrSpace;
-    this._battleInstance = battleInstance;
-  }
-
-  isFinished(): boolean {
-    return this._battleCount >= BATTLE_COUNT_TARGET;
-  }
-
-  _simulateOneBattle(): void {
-    const tmp = _cloneDeep(this._battleInstance);
-    const result = startBattle(tmp);
-    this._battleCount += 1;
-    switch (result.winner) {
-      case BattleWinner.attacker:
-        this._attacker += 1;
-        break;
-      case BattleWinner.draw:
-        this._draw += 1;
-        break;
-      case BattleWinner.defender:
-        this._defender += 1;
-        break;
-    }
-  }
-
-  simulatePartial(): void {
-    const now: number = Date.now();
-    const endTime: number = now + SIMULATION_MSECS;
-    while (Date.now() < endTime && this._battleCount < BATTLE_COUNT_TARGET) {
-      this._simulateOneBattle();
-    }
-  }
-}
 
 /**
  * Marshall TI4 TTPG data into ti4calc battle format.
  * https://github.com/pgsandstrom/ti4calc
  *
- * Create BattleInstance entities, use webworker's getPartialReport to simulate
- * battles collecting statistics.
+ * Create Battle entities, not the full BattleInstance versions.
  */
 export class TI4CalcBridge {
-  private readonly _simulations: Array<TI4CalcBridgeBattleSimulation> = [];
-  private _simulationCount: number = 0;
+  private readonly _battles: Array<Battle> = [];
 
   constructor(system: System) {
     // Space battle.
-    const spaceBattleInstance: BattleInstance = this._generateForPlanetOrSpace(
+    const spaceBattle: Battle = this._generateForPlanetOrSpace(
       system,
       undefined
     );
-    this._simulations.push(
-      new TI4CalcBridgeBattleSimulation(undefined, spaceBattleInstance)
-    );
+    this._battles.push(spaceBattle);
 
     // Planet battles.
     const planets: Array<Planet> = system.getPlanets();
     for (const planet of planets) {
-      const planetBattleInstance: BattleInstance =
-        this._generateForPlanetOrSpace(system, planet);
-      this._simulations.push(
-        new TI4CalcBridgeBattleSimulation(
-          planet.getName(),
-          planetBattleInstance
-        )
+      const planetBattle: Battle = this._generateForPlanetOrSpace(
+        system,
+        planet
       );
+      this._battles.push(planetBattle);
     }
   }
 
-  advanceSimulations(): boolean {
-    // Only advance one simulation at a time to avoid lag.
-    const ongoing: Array<TI4CalcBridgeBattleSimulation> =
-      this._simulations.filter((sim) => !sim.isFinished());
-    if (ongoing.length === 0) {
-      return false;
-    }
-
-    const simulation: TI4CalcBridgeBattleSimulation | undefined =
-      ongoing[this._simulationCount % ongoing.length];
-    this._simulationCount++; // ragged when a sim finishes but fine
-    if (simulation) {
-      simulation.simulatePartial();
-    }
-    return true;
-  }
-
-  getSimulationBattleCount(): number {
-    let total: number = 0;
-    for (const simulation of this._simulations) {
-      total += simulation._battleCount;
-    }
-    return total;
-  }
-
-  getSimulationResult(): string {
-    return this._simulations
-      .map((simulation): string => {
-        return `${simulation._attacker},${simulation._draw},${simulation._defender}`;
-      })
-      .join("\n");
+  /**
+   * JSON array of Battle objects by space then planets.
+   */
+  serialize(): string {
+    return JSON.stringify(this._battles);
   }
 
   _getFaction(perPlayerData: CombatRollPerPlayerData): Faction {
@@ -224,6 +135,7 @@ export class TI4CalcBridge {
       [UnitType.other]: 0,
       [UnitType.nonunit]: 0,
     };
+    console.log("Units:", JSON.stringify(units, null, 2));
     return units;
   }
 
@@ -336,7 +248,7 @@ export class TI4CalcBridge {
   _generateForPlanetOrSpace(
     system: System,
     planet: Planet | undefined
-  ): BattleInstance {
+  ): Battle {
     const place: Place = planet ? Place.ground : Place.space;
 
     const combatRoll: CombatRoll = CombatRoll.createCooked({
@@ -361,6 +273,6 @@ export class TI4CalcBridge {
       attacker: attacker,
       defender: defender,
     };
-    return setupBattle(battle);
+    return battle;
   }
 }
