@@ -10,11 +10,13 @@ import { ErrorHandler, IGlobal, NSID } from "ttpg-darrell";
 export class OnObjectFellThroughTable implements IGlobal {
   private readonly _underTableAgingObjIds: Set<string> = new Set<string>();
   private readonly _underTableAgedObjIds: Set<string> = new Set<string>();
-  private _reportErrors: boolean = false;
+  private _reportErrors: boolean = true;
 
   readonly _processObjs = (): void => {
     const tableHeight: number = world.getTableHeight() - 0.1;
 
+    // Objects might be created by scripts under the table.
+    // Give them a grace period before we start checking them.
     for (const objId of Array.from(this._underTableAgingObjIds)) {
       this._underTableAgingObjIds.delete(objId);
       const obj: GameObject | undefined = world.getObjectById(objId);
@@ -26,18 +28,20 @@ export class OnObjectFellThroughTable implements IGlobal {
       }
     }
 
+    // Now check aged objects.
     for (const objId of Array.from(this._underTableAgedObjIds)) {
       this._underTableAgedObjIds.delete(objId);
       const obj: GameObject | undefined = world.getObjectById(objId);
       if (obj && obj.isValid() && obj.getContainer() === undefined) {
         const objPos: Vector = obj.getPosition();
+        const origZ: number = objPos.z;
         if (objPos.z < tableHeight) {
           objPos.z = tableHeight + 10;
           obj.setPosition(objPos);
           obj.snapToGround();
 
           const nsid: string = NSID.get(obj);
-          const msg: string = `"${nsid}" fell through the table`;
+          const msg: string = `"${nsid}" fell through the table (${origZ} vs ${tableHeight})`;
           console.log(msg);
           if (this._reportErrors) {
             ErrorHandler.onError.trigger(msg);
