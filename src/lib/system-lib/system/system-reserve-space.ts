@@ -11,20 +11,20 @@ import { HexType, NSID } from "ttpg-darrell";
  * Used to reserve space for system/planet attachments.
  */
 export class SystemReserveSpace {
-  private readonly _systemTileObj: GameObject;
+  private readonly _attachmentObj: GameObject;
   private readonly _lockedLiftedObjIds: Set<string> = new Set();
   private _liftedObjs: Array<GameObject> = [];
 
-  constructor(systemTileObj: GameObject) {
-    this._systemTileObj = systemTileObj;
+  constructor(attachmentObj: GameObject) {
+    this._attachmentObj = attachmentObj;
   }
 
   lift(): this {
-    // Lift everything (except the system tile and system attachments) in the area.
+    // Lift everything (except the system tile and THIS system attachment) in the area.
     // Sort by z position (bottom to top).
-    const pos: Vector = this._systemTileObj.getPosition();
+    const pos: Vector = this._attachmentObj.getPosition();
     const hex: HexType = TI4.hex.fromPosition(pos);
-    const extent: Vector = this._systemTileObj.getExtent(true, false);
+    const extent: Vector = this._attachmentObj.getExtent(true, false);
     extent.z = 10;
     this._liftedObjs = world
       .boxOverlap(pos, extent)
@@ -34,7 +34,7 @@ export class SystemReserveSpace {
         const objHex: HexType = TI4.hex.fromPosition(objPos);
         return (
           !nsid.startsWith("tile.system:") &&
-          !nsid.startsWith("token.attachment.system:") &&
+          obj !== this._attachmentObj &&
           objHex === hex
         );
       })
