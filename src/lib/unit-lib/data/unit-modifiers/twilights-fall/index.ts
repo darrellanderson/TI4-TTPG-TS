@@ -10,6 +10,7 @@ export * from './enigmatic-genome';
 export * from './human-genome';
 export * from './mirror-computing-tf';
 export * from './munitions-reserves-tf';
+export * from './proxima-targeting-tf';
 export * from './starlancer-xi';
 export * from './supercharge-tf';
 export * from './tactical-brilliance';

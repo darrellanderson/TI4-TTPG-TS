@@ -2,6 +2,7 @@
 
 export * from './archons-gift';
 export * from './aroz-hollow';
+export * from './assail';
 export * from './cosmic-phenomenae';
 export * from './entropic-scar';
 export * from './galvanize';

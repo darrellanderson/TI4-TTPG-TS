@@ -8,6 +8,7 @@ export * from './conventions-of-war';
 export * from './disable';
 export * from './experimental-battlestation';
 export * from './fighter-prototype';
+export * from './fire-team';
 export * from './fourth-moon';
 export * from './fragile';
 export * from './matriarch';
