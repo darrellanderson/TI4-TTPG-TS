@@ -72,11 +72,14 @@ export class AgendaStateUI extends AbstractUI {
     const scaledWidth: number =
       CONFIG.BUTTON_WIDTH * scale * 3 + CONFIG.SPACING * 2;
     const longLabel: LongLabelUI = new LongLabelUI(scaledWidth, scale);
-    const text: Text = longLabel.getText();
+    const text: Text = longLabel
+      .getText()
+      .setBold(true)
+      .setFontSize(longLabel.getText().getFontSize() * 1.75);
 
     agendaState.onAgendaStateChanged.add(() => {
       const msg: string = agendaState.getWaitingForMessage();
-      text.setText(msg);
+      text.setText(msg.toUpperCase());
     });
 
     return new HorizontalUIBuilder()

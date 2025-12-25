@@ -107,7 +107,13 @@ export class AgendaVoteCountUI extends AbstractUI {
       votesTextBox.setEnabled(!locked);
       decrButton.setEnabled(!locked);
       incrButton.setEnabled(!locked);
-      lockButton.setText(locked ? "Unlock" : "Lock");
+      let lockText: string = "Abstain";
+      if (locked) {
+        lockText = "Unlock";
+      } else if (votes > 0) {
+        lockText = "Lock";
+      }
+      lockButton.setText(lockText);
     });
 
     super(widget, size);
