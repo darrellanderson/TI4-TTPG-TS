@@ -57,7 +57,10 @@ export class AdvanceNoWhensAfters {
         return this._agendaState.getSeatNoWhens(seatIndex) === "unknown";
       })
       .filter((playerSlot: PlayerSlot): boolean => {
-        return !TI4.turnOrder.getEliminated(playerSlot);
+        return (
+          !TI4.turnOrder.getEliminated(playerSlot) &&
+          !TI4.turnOrder.getPassed(playerSlot)
+        );
       });
   }
 
@@ -80,7 +83,10 @@ export class AdvanceNoWhensAfters {
         return this._agendaState.getSeatNoAfters(seatIndex) === "unknown";
       })
       .filter((playerSlot: PlayerSlot): boolean => {
-        return !TI4.turnOrder.getEliminated(playerSlot);
+        return (
+          !TI4.turnOrder.getEliminated(playerSlot) &&
+          !TI4.turnOrder.getPassed(playerSlot)
+        );
       });
   }
 
@@ -102,7 +108,10 @@ export class AdvanceNoWhensAfters {
         return !this._agendaState.getSeatVotesLocked(seatIndex);
       })
       .filter((playerSlot: PlayerSlot): boolean => {
-        return !TI4.turnOrder.getEliminated(playerSlot);
+        return (
+          !TI4.turnOrder.getEliminated(playerSlot) &&
+          !TI4.turnOrder.getPassed(playerSlot)
+        );
       });
   }
 
