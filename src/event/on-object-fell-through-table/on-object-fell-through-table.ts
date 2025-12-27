@@ -41,7 +41,7 @@ export class OnObjectFellThroughTable implements IGlobal {
           obj.snapToGround();
 
           const nsid: string = NSID.get(obj);
-          const msg: string = `"${nsid}" fell through the table (${origZ} vs ${tableHeight})`;
+          const msg: string = `"${nsid}" fell through the table (${origZ.toFixed(1)} vs ${tableHeight.toFixed(1)})`;
           console.log(msg);
           if (this._reportErrors) {
             ErrorHandler.onError.trigger(msg);
