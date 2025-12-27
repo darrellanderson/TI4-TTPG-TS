@@ -10,6 +10,7 @@ import { UpdatorTimerType } from "../updators/updator-timer/updator-timer-type";
 
 export type PerPlayerGameData = {
   active?: boolean;
+  alliances?: Array<string>; // player colors
   color?: string;
   commandTokens?: UpdatorPlayerCommandTokensType;
   custodiansPoints?: number;

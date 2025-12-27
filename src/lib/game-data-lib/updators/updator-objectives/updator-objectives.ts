@@ -8,7 +8,7 @@ import {
   Vector,
   world,
 } from "@tabletop-playground/api";
-import { Atop, Find, HexType, NSID, PlayerSlot } from "ttpg-darrell";
+import { Atop, CardUtil, Find, HexType, NSID, PlayerSlot } from "ttpg-darrell";
 import { GameData, PerPlayerGameData } from "../../game-data/game-data";
 import { IGameDataUpdator } from "../../i-game-data-updator/i-game-data-updator";
 import { UpdatorObjectivesType } from "./updator-objectives-type";
@@ -24,6 +24,9 @@ export class UpdatorObjectives implements IGameDataUpdator {
   update(gameData: GameData): void {
     const controlTokens: Array<GameObject> = this._getControlTokens();
     const objectiveCards: Array<Card> = this._getRelevantCards();
+
+    const find: Find = new Find();
+    const cardUtil: CardUtil = new CardUtil();
 
     // Root objectives.
     gameData.objectives = this._fillObjectivesType(objectiveCards);
@@ -77,7 +80,7 @@ export class UpdatorObjectives implements IGameDataUpdator {
           TI4.systemRegistry.getAllSystemHexes();
         if (!systemHexes.has(hex)) {
           const owningPlayerSlot: number =
-            new Find().closestOwnedCardHolderOwner(pos);
+            find.closestOwnedCardHolderOwner(pos);
           let cardNames: Array<string> | undefined =
             playerSlotToCardNames.get(owningPlayerSlot);
           if (!cardNames) {
@@ -88,6 +91,30 @@ export class UpdatorObjectives implements IGameDataUpdator {
         }
       }
     }
+
+    // Breakthrough?
+    const skipContained: boolean = true;
+    const allowFaceDown: boolean = true;
+    for (const obj of world.getAllObjects(skipContained)) {
+      const nsid: string = NSID.get(obj);
+      if (
+        nsid.startsWith("card.breakthrough:") &&
+        cardUtil.isLooseCard(obj, allowFaceDown)
+      ) {
+        const pos: Vector = obj.getPosition();
+        const owner: number = find.closestOwnedCardHolderOwner(pos);
+        let cardNames: Array<string> | undefined =
+          playerSlotToCardNames.get(owner);
+        if (!cardNames && owner >= 0) {
+          cardNames = [];
+          playerSlotToCardNames.set(owner, cardNames);
+        }
+        if (cardNames) {
+          cardNames.push("Breakthrough");
+        }
+      }
+    }
+
     gameData.players.forEach(
       (playerData: PerPlayerGameData, seatIndex: number): void => {
         const playerSlot: number =
@@ -221,6 +248,9 @@ export class UpdatorObjectives implements IGameDataUpdator {
       Other: getCardNames(other),
       Relics: getCardNames(relics),
     };
+
+    objectivesType.Other?.push("Breakthrough");
+
     return objectivesType;
   }
 }

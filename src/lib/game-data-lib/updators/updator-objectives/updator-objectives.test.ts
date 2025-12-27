@@ -125,7 +125,7 @@ it("_fillObjectivesType", () => {
     updatorObjectives._fillObjectivesType(cards);
   expect(objectivesType).toEqual({
     Agenda: [],
-    Other: ["Support for the Throne"],
+    Other: ["Support for the Throne", "Breakthrough"],
     "Public Objectives I": ["Amass Wealth"],
     "Public Objectives II": ["Achieve Supremacy"],
     Relics: ["The Obsidian"],
@@ -184,7 +184,7 @@ it("_fillObjectivesType (secret made public)", () => {
     updatorObjectives._fillObjectivesType(cards);
   expect(objectivesType).toEqual({
     Agenda: [],
-    Other: [],
+    Other: ["Breakthrough"],
     "Public Objectives I": ["secret-1", "secret-2", "secret-3"],
     "Public Objectives II": [],
     Relics: [],
@@ -247,7 +247,7 @@ it("update", () => {
   expect(gameData).toEqual({
     objectives: {
       Agenda: [],
-      Other: [],
+      Other: ["Breakthrough"],
       "Public Objectives I": ["Amass Wealth"],
       "Public Objectives II": [],
       Relics: [],

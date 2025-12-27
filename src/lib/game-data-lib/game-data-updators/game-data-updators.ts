@@ -18,6 +18,7 @@ import { UpdatorTimestamp } from "../updators/updator-timestamp/updator-timestam
 import { UpdatorTurn } from "../updators/updator-turn/udpator-turn";
 
 import { UpdatorPlayerActive } from "../updators/updator-player-active/updator-player-active";
+import { UpdatorPlayerAlliances } from "../updators/updator-player-alliances/updator-player-alliances";
 import { UpdatorPlayerColor } from "../updators/updator-player-color/updator-player-color";
 import { UpdatorPlayerCommandTokens } from "../updators/updator-player-command-tokens/updator-player-command-tokens";
 import { UpdatorPlayerCustodiansPoints } from "../updators/updator-player-custodians-points/updator-player-custodians-points";
@@ -52,6 +53,7 @@ export const GAME_DATA_UPDATORS: Array<IGameDataUpdator> = [
 
   // Per-player updators.
   new UpdatorPlayerActive(),
+  new UpdatorPlayerAlliances(),
   new UpdatorPlayerColor(),
   new UpdatorPlayerCommandTokens(),
   new UpdatorPlayerCustodiansPoints(),
