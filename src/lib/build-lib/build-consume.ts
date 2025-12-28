@@ -1,5 +1,5 @@
-import { GameObject } from "@tabletop-playground/api";
-import { NSID } from "ttpg-darrell";
+import { GameObject, Vector, world } from "@tabletop-playground/api";
+import { CardUtil, Find, NSID } from "ttpg-darrell";
 
 import { Planet } from "../system-lib/planet/planet";
 
@@ -67,8 +67,35 @@ export class BuildConsume {
           }
         }
       } else if (nsid.startsWith("card.deepwrought-ocean:")) {
+        type = "planet";
         res = 1;
         inf = 1;
+      } else if (nsid === "card.technology.red:pok/ai-development-algorithm") {
+        // This modifier adds variable resources based on unit upgrade count.
+        // Calculate this here vs unit/data/unit-modifiers.
+        let unitUpgradeCount: number = 0;
+
+        const find: Find = new Find();
+        const cardUtil: CardUtil = new CardUtil();
+        const aiDevPos: Vector = obj.getPosition();
+        const aiDevPlayerSlot: number =
+          find.closestOwnedCardHolderOwner(aiDevPos);
+        const skipContained: boolean = true;
+        for (const worldObj of world.getAllObjects(skipContained)) {
+          const worldObjNsid: string = NSID.get(worldObj);
+          if (
+            worldObjNsid.startsWith("card.technology.unit-upgrade:") &&
+            cardUtil.isLooseCard(worldObj)
+          ) {
+            const techPos: Vector = obj.getPosition();
+            const techOwner: number = find.closestOwnedCardHolderOwner(techPos);
+            if (techOwner === aiDevPlayerSlot) {
+              unitUpgradeCount += 1;
+            }
+          }
+        }
+
+        this._unitModifierNames.push(`AI(${unitUpgradeCount})`);
       }
 
       if (type) {
@@ -117,6 +144,11 @@ export class BuildConsume {
     if (this._unitModifierNames.includes(WarMachine.name)) {
       total += "+WM";
     }
+    this._unitModifierNames.forEach((modName) => {
+      if (modName.startsWith("AI(")) {
+        total += `+${modName}`;
+      }
+    });
     return total;
   }
 

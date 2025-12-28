@@ -1,5 +1,6 @@
-import { world } from "@tabletop-playground/api";
+import { Player, world } from "@tabletop-playground/api";
 import {
+  GarbageContainer,
   NamespaceId,
   TriggerableMulticastDelegate,
   TurnOrder,
@@ -50,15 +51,21 @@ export class AgendaState {
   private readonly _data: AgendaStateSchemaType;
 
   private readonly _onTurnStateChangedHandler = (): void => {
-    if (this._suppressStateChangeEvents) {
-      this._sawEventWhileSuppressed = true;
-      this.onAgendaStateChanged.trigger(this);
-    }
+    this.triggerStateChangedUnlessSuppressed();
   };
 
   private readonly _onAgendaCardRemovedHandler = (): void => {
     // If the agenda card is removed, we need to clear the agenda state.
     this.destroy();
+  };
+
+  private readonly _onGarbageRecycledHandler = (
+    objId: string,
+    _objName: string,
+    _objMetadata: string,
+    _player: Player | undefined
+  ): void => {
+    this.removeRider(objId);
   };
 
   static isAgendaInProgress(namespaceId: NamespaceId): boolean {
@@ -71,6 +78,7 @@ export class AgendaState {
 
     TurnOrder.onTurnStateChanged.add(this._onTurnStateChangedHandler);
     TI4.events.onAgendaCardRemoved.add(this._onAgendaCardRemovedHandler);
+    GarbageContainer.onRecycled.add(this._onGarbageRecycledHandler);
 
     const data: string | undefined = world.getSavedData(namespaceId);
     if (data !== undefined && data.length > 0) {
@@ -100,6 +108,7 @@ export class AgendaState {
     world.setSavedData("", this._namespaceId);
     TurnOrder.onTurnStateChanged.remove(this._onTurnStateChangedHandler);
     TI4.events.onAgendaCardRemoved.remove(this._onAgendaCardRemovedHandler);
+    GarbageContainer.onRecycled.remove(this._onGarbageRecycledHandler);
 
     this.onAgendaStateChanged.trigger(this);
     this.onAgendaStateChanged.clear();
@@ -129,6 +138,14 @@ export class AgendaState {
     if (this._sawEventWhileSuppressed) {
       this._sawEventWhileSuppressed = false;
       this.onAgendaStateChanged.trigger(this);
+    }
+  }
+
+  triggerStateChangedUnlessSuppressed(): void {
+    if (!this._suppressStateChangeEvents) {
+      this.onAgendaStateChanged.trigger(this);
+    } else {
+      this._sawEventWhileSuppressed = true;
     }
   }
 
@@ -164,9 +181,7 @@ export class AgendaState {
     }
     this._data.agendaObjId = agendaObjId;
     this._save();
-    if (!this._suppressStateChangeEvents) {
-      this.onAgendaStateChanged.trigger(this);
-    }
+    this.triggerStateChangedUnlessSuppressed();
     return this;
   }
 
@@ -187,9 +202,7 @@ export class AgendaState {
     }
     this._data.outcomeNames[index] = name;
     this._save();
-    if (!this._suppressStateChangeEvents) {
-      this.onAgendaStateChanged.trigger(this);
-    }
+    this.triggerStateChangedUnlessSuppressed();
     return this;
   }
 
@@ -203,9 +216,7 @@ export class AgendaState {
     }
     this._data.phase = phase;
     this._save();
-    if (!this._suppressStateChangeEvents) {
-      this.onAgendaStateChanged.trigger(this);
-    }
+    this.triggerStateChangedUnlessSuppressed();
     return this;
   }
 
@@ -231,9 +242,7 @@ export class AgendaState {
     }
     seatState.avail = votes;
     this._save();
-    if (!this._suppressStateChangeEvents) {
-      this.onAgendaStateChanged.trigger(this);
-    }
+    this.triggerStateChangedUnlessSuppressed();
     return this;
   }
 
@@ -270,9 +279,7 @@ export class AgendaState {
     }
     seatState.noAfters = newValue;
     this._save();
-    if (!this._suppressStateChangeEvents) {
-      this.onAgendaStateChanged.trigger(this);
-    }
+    this.triggerStateChangedUnlessSuppressed();
     return this;
   }
 
@@ -309,9 +316,7 @@ export class AgendaState {
     }
     seatState.noWhens = newValue;
     this._save();
-    if (!this._suppressStateChangeEvents) {
-      this.onAgendaStateChanged.trigger(this);
-    }
+    this.triggerStateChangedUnlessSuppressed();
     return this;
   }
 
@@ -327,9 +332,7 @@ export class AgendaState {
     }
     seatState.outcome = outcome;
     this._save();
-    if (!this._suppressStateChangeEvents) {
-      this.onAgendaStateChanged.trigger(this);
-    }
+    this.triggerStateChangedUnlessSuppressed();
     return this;
   }
 
@@ -345,9 +348,7 @@ export class AgendaState {
     }
     seatState.votes = votes;
     this._save();
-    if (!this._suppressStateChangeEvents) {
-      this.onAgendaStateChanged.trigger(this);
-    }
+    this.triggerStateChangedUnlessSuppressed();
     return this;
   }
 
@@ -363,9 +364,7 @@ export class AgendaState {
     }
     seatState.lockVotes = locked;
     this._save();
-    if (!this._suppressStateChangeEvents) {
-      this.onAgendaStateChanged.trigger(this);
-    }
+    this.triggerStateChangedUnlessSuppressed();
     return this;
   }
 
@@ -377,9 +376,7 @@ export class AgendaState {
     this.removeRider(objId);
     this._data.riders.push({ seat: seatIndex, objId, outcome });
     this._save();
-    if (!this._suppressStateChangeEvents) {
-      this.onAgendaStateChanged.trigger(this);
-    }
+    this.triggerStateChangedUnlessSuppressed();
     return this;
   }
 
@@ -390,9 +387,7 @@ export class AgendaState {
     if (index >= 0) {
       this._data.riders.splice(index, 1);
       this._save();
-      if (!this._suppressStateChangeEvents) {
-        this.onAgendaStateChanged.trigger(this);
-      }
+      this.triggerStateChangedUnlessSuppressed();
     }
     return this;
   }

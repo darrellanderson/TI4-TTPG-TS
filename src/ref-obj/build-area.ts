@@ -233,7 +233,7 @@ export class BuildArea {
     const unitCount: number = produce.getPlasticCount();
     const inf: number = consume.getTotalInf();
 
-    return `Cost: ${cost}  Resources: ${spend}  #Units: ${unitCount}  Influence: ${inf}`;
+    return `Cost: ${cost}  Res: ${spend}  #Units: ${unitCount}  Inf: ${inf}`;
   }
 
   togglePrivacyMode(): this {

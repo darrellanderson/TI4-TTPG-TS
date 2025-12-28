@@ -65,6 +65,10 @@ export class TFUnpackFaction {
   constructor(faction: Faction, playerSlot: number) {
     this._faction = faction;
     this._playerSlot = playerSlot;
+
+    console.log(
+      `TFUnpackFaction constructed for ${faction.getName()} for player slot ${playerSlot}`
+    );
   }
 
   _getPackUnpacks(): Array<AbstractUnpack> {

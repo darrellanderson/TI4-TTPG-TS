@@ -43,7 +43,12 @@ const nameToCount: Map<string, number> = new Map<string, number>();
 let reportPending: boolean = false;
 
 GarbageContainer.onRecycled.add(
-  (objName: string, objMetadata: string, player: Player | undefined): void => {
+  (
+    _objId: string,
+    objName: string,
+    objMetadata: string,
+    player: Player | undefined
+  ): void => {
     objName = objName.replace(/ \(\d\)$/, ""); // strip off card number ("morale boost (2)")
 
     // Only report player-linked recycles.
