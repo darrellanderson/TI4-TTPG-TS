@@ -13,6 +13,10 @@ class ContainerLiberationScenario {
   private readonly _container: Container;
 
   private readonly _onStartGameComplete = (): void => {
+    if (!this._container.isValid()) {
+      return; // destroyed, maybe resetting for a different player count?
+    }
+
     const above = this._container.getPosition().add([0, 0, 10]);
 
     let nsid: string = "";
@@ -83,6 +87,9 @@ class ContainerLiberationScenario {
     this._container = gameObject;
 
     TI4.events.onStartGameComplete.add(this._onStartGameComplete);
+    this._container.onDestroyed.add(() => {
+      TI4.events.onStartGameComplete.remove(this._onStartGameComplete);
+    });
   }
 
   _addToContainer(gameObject: GameObject): void {
