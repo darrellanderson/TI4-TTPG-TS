@@ -98,13 +98,17 @@ export class SystemAdjacency {
    * @param hex
    * @returns
    */
-  public getAdjHexes(hex: HexType, faction: Faction | undefined): Set<HexType> {
+  public getAdjHexes(
+    hex: HexType,
+    faction: Faction | undefined,
+    maxDistance: number = 1
+  ): Set<HexType> {
     const adjHexes: Set<HexType> = new Set();
 
     const adjacencyPaths: ReadonlyArray<AdjacencyPathType> =
-      this.getAdjacencyPaths(hex, faction);
+      this.getAdjacencyPaths(hex, faction, maxDistance);
     adjacencyPaths.forEach((adjacencyPath: AdjacencyPathType): void => {
-      if (adjacencyPath.distance === 1) {
+      if (adjacencyPath.distance > 0) {
         // Adjacency downgraded from HexType to string.
         // Verify node is HexType before using as one.
         const adjHex: HexType = adjacencyPath.node as HexType;
@@ -124,7 +128,8 @@ export class SystemAdjacency {
    */
   public getAdjacencyPaths(
     hex: HexType,
-    faction: Faction | undefined
+    faction: Faction | undefined,
+    maxDistance: number = 1
   ): ReadonlyArray<AdjacencyPathType> {
     const adjacency: Adjacency = new Adjacency();
     const hexToSystem: Map<HexType, System> = SystemAdjacency.getHexToSystem();
@@ -135,6 +140,6 @@ export class SystemAdjacency {
     this._wormhole.addTags(hexToSystem, adjacency, faction);
     this._tfSpacialConduitCylinder.addTags(adjacency);
     this._neighbor.removeTags(adjacency); // adjacency blocking tokens
-    return adjacency.get(hex, 1);
+    return adjacency.get(hex, maxDistance);
   }
 }
