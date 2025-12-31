@@ -57,6 +57,24 @@ export const PREMADE_MAPS_6P: Array<PremadeMapType> = [
   },
   {
     playerCount: 6,
+    name: "Lakoe's Garden (TE TF)",
+    mapString:
+      "75 105 110 69 76 30 78 42 50 113 49 117 48 43 47 79 46 68 0 111 74 0 62 21 0 61 102 0 31 101 0 109 24 0 63 25",
+    author: "Andcat",
+    comments:
+      "Designed specifically for Twilight's Fall, part of a series with maps inspired by each of the Mahact Kings. I wanted Lakoe's map to be a sort of 'TF beginner-friendly' map, with reasonably balanced slices, and promoting 6-way interaction around Mecatol. The theme is along the lines of 'What if Il Sae Lakoe reigned supreme and built a beautiful garden around the center of the galaxy?'",
+  },
+  {
+    playerCount: 6,
+    name: "A Sick Galaxy (TE TF)",
+    mapString:
+      "{46} 117 112 68 66 39 65 109 116 113 114 69 41 103 64 76 25 28 75 0 100 26 67 115 73 0 79 48 0 80 59 0 44 47 0 42 40 -1 -1 -1 0",
+    author: "Jasper",
+    comments:
+      "Mahact King-inspired map specifically for Twilight's Fall created for A Sickening Lurch. This is a truly asymetric map, with Mecatol Rex off-center, Thunder's Edge occupying Mecatol's usual place at the center of the board, and A Sickening Lurch assigned a home system location on the edge of the galaxy.",
+  },
+  {
+    playerCount: 6,
     name: "14pt- Almost Half a Dozen Donuts [6p Base]",
     mapString:
       "40 45 20 32 26 33 35 34 39 21 42 28 50 44 46 49 31 41 0 43 24 0 30 29 0 25 19 0 27 37 0 36 23 0 38 22 ",
@@ -397,8 +415,14 @@ export const PREMADE_MAPS_6P: Array<PremadeMapType> = [
     name: "Pamdera",
     mapString:
       "44 66 79 77 45 46 69 78 34 64 27 35 37 74 19 39 75 65 0 49 80 0 50 42 0 47 41 0 48 43 0 76 67 0 40 68",
-    sliceNames:
-      "Jeolly everra day; At my hope's end; Exiled at starpoint; Arinam for Meer, Meer for Rex; Wellonman; Hell's gate",
+    sliceNames: [
+      "Jeolly everra day",
+      "At my hope's end",
+      "Exiled at starpoint",
+      "Arinam for Meer, Meer for Rex",
+      "Wellonman",
+      "Hell's gate",
+    ],
     playerCount: 6,
     difficulty: "Advanced",
     attributes: "PoK, Low economy",
@@ -410,8 +434,14 @@ export const PREMADE_MAPS_6P: Array<PremadeMapType> = [
     name: "Twist and Turned",
     mapString:
       "33 66 25 76 59 65 68 72 79 27 35 34 67 71 26 29 43 69 40 0 78 48 0 37 47 0 39 48 0 62 41 0 61 77 0 73",
-    sliceNames:
-      "Runaway Incursion, One Sided, Hello Neighbor, One Two Three, Take what you can(,) Give Nothing Back, The Long Road",
+    sliceNames: [
+      "Runaway Incursion",
+      "One Sided",
+      "Hello Neighbor",
+      "One Two Three",
+      "Take what you can(,) Give Nothing Back",
+      "The Long Road",
+    ],
     playerCount: 6,
     difficulty: "Intermediate",
     attributes: "PoK",
@@ -453,8 +483,14 @@ export const PREMADE_MAPS_6P: Array<PremadeMapType> = [
     name: "Timewarp",
     mapString:
       "68 44 66 67 80 65 76 39 37 21 73 74 27 40 72 62 34 31 0 47 43 0 64 78 0 63 61 0 77 45 0 26 42 0 50 41",
-    sliceNames:
-      "RED - Hands on your hips GREEN - Jump to the left WHITE - Drives you insane BLUE - Step to the right PURPLE - Knees in tight YELLOW - The pelvic thrust",
+    sliceNames: [
+      "RED - Hands on your hips",
+      "GREEN - Jump to the left",
+      "WHITE - Drives you insane",
+      "BLUE - Step to the right",
+      "PURPLE - Knees in tight",
+      "YELLOW - The pelvic thrust",
+    ],
     playerCount: 6,
     difficulty: "Intermediate",
     attributes: "PoK",
@@ -466,8 +502,14 @@ export const PREMADE_MAPS_6P: Array<PremadeMapType> = [
     name: "Tension",
     mapString:
       "22 24 73 63 21 61 71 68 30 78 35 48 66 41 37 67 69 47 0 29 31 0 79 25 0 43 39 0 32 64 0 46 26 0 44 40",
-    sliceNames:
-      "belligerent boar ; ancient alligator ; bashful badger ; audacious armadillo ; blissful bat ; ambitious ape",
+    sliceNames: [
+      "belligerent boar",
+      "ancient alligator",
+      "bashful badger",
+      "audacious armadillo",
+      "blissful bat",
+      "ambitious ape",
+    ],
     playerCount: 6,
     difficulty: "Intermediate",
     attributes: "PoK",
@@ -479,8 +521,14 @@ export const PREMADE_MAPS_6P: Array<PremadeMapType> = [
     name: "Crowded Quarters",
     mapString:
       "64 73 71 26 33 32 74 45 76 80 61 44 36 43 62 41 22 42 0 46 39 0 72 30 0 49 40 0 37 28 0 47 48 0 35 69",
-    sliceNames:
-      "Brotherhood, Uncultured, it means Friend, Where's my Money, I'm Blue, One of a Kind",
+    sliceNames: [
+      "Brotherhood",
+      "Uncultured",
+      "it means Friend",
+      "Where's my Money",
+      "I'm Blue",
+      "One of a Kind",
+    ],
     playerCount: 6,
     difficulty: "Advanced",
     attributes: "PoK, Asymmetric",
@@ -492,8 +540,14 @@ export const PREMADE_MAPS_6P: Array<PremadeMapType> = [
     name: "Shakeup",
     mapString:
       "24 25 65 28 33 64 66 41 69 39 62 40 31 49 37 44 27 46 0 34 47 0 75 35 0 45 76 0 50 42 0 26 78 0 29 48",
-    sliceNames:
-      "Don't Mind Me, Personal Space, Value?, Graveyard Shift, Cozy Blanket, See you Sunday",
+    sliceNames: [
+      "Don't Mind Me",
+      "Personal Space",
+      "Value?",
+      "Graveyard Shift",
+      "Cozy Blanket",
+      "See you Sunday",
+    ],
     playerCount: 6,
     difficulty: "Intermediate",
     attributes: "PoK, Sliceable",
@@ -505,8 +559,14 @@ export const PREMADE_MAPS_6P: Array<PremadeMapType> = [
     name: "Risky Business",
     mapString:
       "20 25 39 60 32 67 38 43 37 62 76 45 28 68 72 48 30 63 0 34 35 0 41 66 0 23 77 0 74 40 0 65 31 0 26 44",
-    sliceNames:
-      "'Into the Abyz' 'Meer and Far' 'Nope Friends' 'Teq Me Ran, Tor Kan Me' 'Campbell's Primordial Soup' 'Good luck!'",
+    sliceNames: [
+      "Into the Abyz",
+      "Meer and Far",
+      "Nope Friends",
+      "Teq Me Ran, Tor Kan Me",
+      "Campbell's Primordial Soup",
+      "Good luck!",
+    ],
     playerCount: 6,
     difficulty: "Intermediate",
     attributes: "PoK, Asymmetric, Sliceable",
@@ -636,8 +696,14 @@ export const PREMADE_MAPS_6P: Array<PremadeMapType> = [
     name: "Helix",
     mapString:
       "27 75 71 38 69 72 0 -1 0 -1 0 -1 0 -1 0 -1 0 -1 36 59 26 34 45 73 61 24 44 35 39 78 37 47 50 29 79 46 -1 22 20 67 -1 48 25 77 -1 43 66 40 -1 41 62 23 -1 80 64 76 -1 49 65 42",
-    sliceNames:
-      "Biotic Beaver, Focal Fossa, Groovy Gorilla, Xenial Xerus, Trust Tahr, Hirsute Hippo",
+    sliceNames: [
+      "Biotic Beaver",
+      "Focal Fossa",
+      "Groovy Gorilla",
+      "Xenial Xerus",
+      "Trust Tahr",
+      "Hirsute Hippo",
+    ],
     playerCount: 6,
     difficulty: "Expert",
     attributes: "PoK",
@@ -691,8 +757,14 @@ export const PREMADE_MAPS_6P: Array<PremadeMapType> = [
     name: "Choose Your Own Introvert-ture",
     mapString:
       "68,49,64,77,47,24,21,40,38,37,61,44,74,22,35,63,78,34,0,39,19,0,48,23,0,46,59,0,25,20,0,43,66,0,42,26",
-    sliceNames:
-      "All Geared Up But Nowhere To Go / Gimme Arinam Meer / No, You Gimme Arinam Meer / Friends <3 / Split Decision / Cozy Corner",
+    sliceNames: [
+      "All Geared Up But Nowhere To Go",
+      "Gimme Arinam Meer",
+      "No, You Gimme Arinam Meer",
+      "Friends <3",
+      "Split Decision",
+      "Cozy Corner",
+    ],
     playerCount: 6,
     difficulty: "Intermediate",
     attributes: "PoK",
@@ -704,8 +776,14 @@ export const PREMADE_MAPS_6P: Array<PremadeMapType> = [
     name: "Mixed Player Experience Map",
     mapString:
       "28 80 44 26 67 40 66 59 64 69 31 24 75 47 29 71 65 37 0 79 50 0 76 35 0 39 48 0 34 43 0 36 45 0 74 42",
-    sliceNames:
-      "2-3 games (Intermediate #1), 5+ games (Expert #1), 5+ games (Expert #2), 0 games (Newbie), 2-3 games (Intermediate #2), 2-3 games (Intermediate #3)",
+    sliceNames: [
+      "2-3 games (Intermediate #1)",
+      "5+ games (Expert #1)",
+      "5+ games (Expert #2)",
+      "0 games (Newbie)",
+      "2-3 games (Intermediate #2)",
+      "2-3 games (Intermediate #3)",
+    ],
     playerCount: 6,
     difficulty: "Intermediate",
     attributes: "PoK, Asymmetric",
@@ -717,7 +795,14 @@ export const PREMADE_MAPS_6P: Array<PremadeMapType> = [
     name: "Rumble in the Jungle",
     mapString:
       "85A3,39,67,22,43,25,0,88A1,76,78,65,50,69,37,38,30,32,87A5,86A3,84A3,68,0,75,66,0,79,36,0,23,64,0,70,33,0,74,83A3",
-    sliceNames: "Monkey,Chimpanzee,Orangutang,Gorrilla,Baboon,Lemur",
+    sliceNames: [
+      "Monkey",
+      "Chimpanzee",
+      "Orangutang",
+      "Gorrilla",
+      "Baboon",
+      "Lemur",
+    ],
     playerCount: 6,
     difficulty: "Advanced",
     attributes: "PoK, Asymmetric",

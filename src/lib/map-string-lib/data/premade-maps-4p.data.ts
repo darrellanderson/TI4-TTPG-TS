@@ -61,7 +61,7 @@ export const PREMADE_MAPS_4P: Array<PremadeMapType> = [
     name: "The Mahact Awaken",
     mapString:
       "{43} 45 0 42 43 41 0 -1 28 39 48 40 0 44 0 48 48 26 33 -1 -1 -1 -1 60 48 23 25 75 -1 34 64 59 48 61",
-    sliceNames: "Vuil'raith, Argent, Mahact, Creuss",
+    sliceNames: ["Vuil'raith", "Argent", "Mahact", "Creuss"],
     playerCount: 4,
     difficulty: "Advanced",
     attributes: "PoK, Asymmetric",
@@ -93,7 +93,7 @@ export const PREMADE_MAPS_4P: Array<PremadeMapType> = [
     name: "Hotline Mecatol",
     mapString:
       "{83A5} 87A4 85A0 34 89A0 27 86A0 88A5 45 63 23 64 19 75 61 26 20 21 44 18 66 80 30 0 39 42 0 36 77 29 0 41 40 0 28 43 65",
-    sliceNames: "Rooster, Tiger, Cobra, Locust",
+    sliceNames: ["Rooster", "Tiger", "Cobra", "Locust"],
     playerCount: 4,
     difficulty: "Intermediate",
     attributes: "PoK",
@@ -105,7 +105,7 @@ export const PREMADE_MAPS_4P: Array<PremadeMapType> = [
     name: "Gramsci",
     mapString:
       "48,61,66,19,22,65,27,67,72,21,41,64,62,68,74,31,45,73,50,25,26,46,0,29,71,47,0,76,79,23,40,0,70,39,30,0",
-    sliceNames: "Karl, Friedrich, Antonio, John Maynard",
+    sliceNames: ["Karl", "Friedrich", "Antonio", "John Maynard"],
     playerCount: 4,
     difficulty: "Intermediate",
     attributes: "PoK",
@@ -116,7 +116,7 @@ export const PREMADE_MAPS_4P: Array<PremadeMapType> = [
     name: "Paris Commune",
     mapString:
       "46 0 38 40 35 0 65 79 76 41 21 0 66 0 73 44 25 43 85A3 84A0 78 -1 29 47 -1 69 83A0 86A0 84A0 46 -1 26 77 -1 37 83A0",
-    sliceNames: "Dombroski, Louise Michel, Varlin, Jourde",
+    sliceNames: ["Dombroski", "Louise Michel", "Varlin", "Jourde"],
     playerCount: 4,
     difficulty: "Advanced",
     attributes: "PoK",
@@ -127,7 +127,7 @@ export const PREMADE_MAPS_4P: Array<PremadeMapType> = [
     name: "2vs2 Alliance Map",
     mapString:
       "65,28,29,46,60,35,43,41,30,78,76,39,66,42,38,40,34,47,-1,-1,46,0,62,64,0,44,-1,-1,-1,46,0,37,46,0,26",
-    sliceNames: "Luhmann, Elias, Bourdieu, Butler",
+    sliceNames: ["Luhmann", "Elias", "Bourdieu", "Butler"],
     playerCount: 4,
     difficulty: "Intermediate",
     attributes: "PoK",
@@ -138,8 +138,12 @@ export const PREMADE_MAPS_4P: Array<PremadeMapType> = [
     name: "W.A.R.P. Machine",
     mapString:
       "43 62 77 68 72 26 71 91A2 79 30 65 59 76 84B2 37 41 66 22 47 64 73 61 0 40 85A5 48 0 46 39 42 49 0 25 86A2 78 0",
-    sliceNames:
-      "Planet Delta - Batman's Mellons - Quadruple Veil - Slingfluencer",
+    sliceNames: [
+      "Planet Delta",
+      "Batman's Mellons",
+      "Quadruple Veil",
+      "Slingfluencer",
+    ],
     playerCount: 4,
     difficulty: "Intermediate",
     attributes: "PoK",
@@ -226,8 +230,12 @@ export const PREMADE_MAPS_4P: Array<PremadeMapType> = [
     name: "Quadrant",
     mapString:
       "66 26 38 65 64 35 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 79 62 -1 -1 72 39 -1 -1 -1 25 45 -1 -1 34 40 -1 -1 -1 69 0 80 -1 -1 -1 78 0 20 -1 -1 -1 49 0 27 -1 -1 -1 44 0 28 -1 -1 -1 -1 46 61 -1 -1 -1 -1 -1 -1 73 42 -1 -1 -1 -1 -1 59 47 -1 -1 -1 -1 -1 -1 22 43",
-    sliceNames:
-      "Sem-Lore's Curse, The Lay of Lisis, Star's Point, Centari's Fall",
+    sliceNames: [
+      "Sem-Lore's Curse",
+      "The Lay of Lisis",
+      "Star's Point",
+      "Centari's Fall",
+    ],
     playerCount: 4,
     difficulty: "Expert",
     attributes: "PoK",

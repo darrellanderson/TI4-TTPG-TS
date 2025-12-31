@@ -70,7 +70,7 @@ export const PREMADE_MAPS_5P: Array<PremadeMapType> = [
     name: "Regicide",
     mapString:
       "{87A4} 18 20 67 27 68 60 37 45 26 31 63 32 78 23 24 74 25 44 0 66 43 50 0 29 40 0 38 85A0 71 0 39 28 0 77 80 65",
-    sliceNames: "Emperor, King, Lord, Duke, Prince",
+    sliceNames: ["Emperor", "King", "Lord", "Duke", "Prince"],
     playerCount: 5,
     difficulty: "Advanced",
     attributes: "PoK, Asymmetric",
@@ -188,7 +188,13 @@ export const PREMADE_MAPS_5P: Array<PremadeMapType> = [
     name: "Regicide",
     mapString:
       "{87A4} 18 62 20 67 23 48 34 43 74 49 27 75 77 37 40 31 26 80 0 66 44 64 0 29 39 0 63 85A0 38 0 59 28 0 24 45 65",
-    sliceNames: "The Emperor, The Duke, The Prince, The Countess, The Bishop",
+    sliceNames: [
+      "The Emperor",
+      "The Duke",
+      "The Prince",
+      "The Countess",
+      "The Bishop",
+    ],
     playerCount: 5,
     difficulty: "Advanced",
     attributes: "PoK, Asymmetric",

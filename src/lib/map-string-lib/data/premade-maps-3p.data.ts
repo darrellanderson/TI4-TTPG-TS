@@ -59,7 +59,7 @@ export const PREMADE_MAPS_3P: Array<PremadeMapType> = [
     name: "Hurts Donut",
     mapString:
       "34 83B3 76 85B2 37 88B1 90A0 41 0 78 86A5 79 0 40 91B0 42 0 39 66 48 26 24 43 75 77 50 36 59 47 38 65 49 32 62 45 69",
-    sliceNames: "Bitey & Fightey, Mean & Lean, Push & Shove",
+    sliceNames: ["Bitey & Fightey", "Mean & Lean", "Push & Shove"],
     playerCount: 3,
     difficulty: "Intermediate",
     attributes: "PoK",
@@ -71,7 +71,7 @@ export const PREMADE_MAPS_3P: Array<PremadeMapType> = [
     name: "Poor Snowflake",
     mapString:
       "-1 61 -1 65 -1 66 0 23 43 70 0 40 42 36 0 24 41 50 -1 73 79 -1 59 19 -1 45 60 -1 22 39 -1 44 25 -1 63 74",
-    sliceNames: "Saudor's Kiss, Perimeter's Edge, Quan's Corner",
+    sliceNames: ["Saudor's Kiss", "Perimeter's Edge", "Quan's Corner"],
     playerCount: 3,
     difficulty: "Advanced",
     attributes: "PoK",
@@ -83,7 +83,7 @@ export const PREMADE_MAPS_3P: Array<PremadeMapType> = [
     name: "Rich Snowflake",
     mapString:
       "-1 65 -1 62 -1 66 0 38 77 28 0 27 49 39 0 35 46 40 -1 69 79 -1 41 37 -1 45 50 -1 43 34 -1 29 42 -1 44 76",
-    sliceNames: "The industrialist, Wormholes Optional, Bereg's Domain",
+    sliceNames: ["The industrialist", "Wormholes Optional", "Bereg's Domain"],
     playerCount: 3,
     difficulty: "Intermediate",
     attributes: "PoK",

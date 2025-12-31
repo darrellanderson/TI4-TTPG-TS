@@ -39,8 +39,15 @@ export const PREMADE_MAPS_7P: Array<PremadeMapType> = [
     name: "Due in December",
     mapString:
       "-1 73 75 -1 -1 70 76 40 38 42 47 36 74 67 48 34 65 32 28 -1 29 0 80 24 0 26 -1 69 64 37 30 60 -1 43 27 39 0 31 -1 -1 -1 -1 -1 -1 -1 -1 -1 46 0 41 79 0 -1 -1 0 22 -1 0 63 44",
-    sliceNames:
-      "Industrial Center, Build the Wall, You Guys are Getting Planets, Dubs, Hazardous Area, Grab Bag, Cultural Zone",
+    sliceNames: [
+      "Industrial Center",
+      "Build the Wall",
+      "You Guys are Getting Planets",
+      "Dubs",
+      "Hazardous Area",
+      "Grab Bag",
+      "Cultural Zone",
+    ],
 
     playerCount: 7,
     difficulty: "Intermediate",
@@ -74,8 +81,15 @@ export const PREMADE_MAPS_7P: Array<PremadeMapType> = [
     name: "Joint galaxies",
     mapString:
       "{66} 88A2 26 47 25 59 48 68 90B5 63 43 27 31 18 79 75 80 21 87B1 46 74 -1 -1 -1 0 29 44 19 22 61 78 37 0 -1 -1 -1 77 65 34 40 -1 -1 -1 -1 -1 -1 42 71 39 35 41 69 67 -1 -1 -1 -1 -1 -1 62 76 45 30 0 -1 -1 -1 -1 -1 -1 -1 -1 -1 0 72 20 0 24 73 0 -1 -1 -1 -1 -1 -1 -1 -1 -1 0 64",
-    sliceNames:
-      "1o'clock green: another Vegas,3o'clock orange: the Lair,4o'clock white: the tournament standard, 6o'clock blue: It's not the brave men's choice, 8o'clock purple: No more Gravity, 9o'clock yellow: A-steroid B-tween Mecathol, 11o'clock red: PDS paradise",
+    sliceNames: [
+      "1o'clock green: another Vegas",
+      "3o'clock orange: the Lair",
+      "4o'clock white: the tournament standard",
+      "6o'clock blue: It's not the brave men's choice",
+      "8o'clock purple: No more Gravity",
+      "9o'clock yellow: A-steroid B-tween Mecathol",
+      "11o'clock red: PDS paradise",
+    ],
     playerCount: 7,
     difficulty: "Intermediate",
     attributes: "PoK",
