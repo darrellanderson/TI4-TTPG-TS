@@ -31,7 +31,7 @@ export class PlanetBorders {
 
     const planetObj: GameObject = planet.getObj();
     const extent: Vector = planetObj.getExtent(false, false);
-    const z: number = planetObj.getPosition().z + extent.z + 0.3;
+    const z: number = planetObj.getPosition().z + extent.z + 0.01;
 
     const points: Array<Vector> = planet.getPositionAsCircle();
     const line = new DrawingLine();
