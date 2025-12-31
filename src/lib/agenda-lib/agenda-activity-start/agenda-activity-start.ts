@@ -1,5 +1,5 @@
-import { Card } from "@tabletop-playground/api";
-import { IGlobal, NamespaceId, PlayerSlot, Window } from "ttpg-darrell";
+import { Card, GameObject, SnapPoint } from "@tabletop-playground/api";
+import { Find, IGlobal, NamespaceId, PlayerSlot, Window } from "ttpg-darrell";
 
 import { AbstractUI } from "../../../ui/abstract-ui/abtract-ui";
 import { AgendaState } from "../agenda-state/agenda-state";
@@ -19,34 +19,59 @@ export class AgendaActivityMaybeResume implements IGlobal {
   init(): void {
     process.nextTick(() => {
       if (AgendaState.isAgendaInProgress(AGENDA_STATE_NAMESPACE_ID)) {
-        new AgendaActivityStart().resume();
+        // Make sure agenda card is still present.  If not clear agenda state.
+        if (!this._isAgendaCardPresent()) {
+          console.log(
+            "AgendaActivityMaybeResume: Agenda card not present, destroying agenda state."
+          );
+          AgendaState.destroyAgendaState(AGENDA_STATE_NAMESPACE_ID);
+        } else {
+          new AgendaActivityStart().resume();
+        }
       }
     });
+  }
+
+  _isAgendaCardPresent(): boolean {
+    const find: Find = new Find();
+    const snapPoint: SnapPoint | undefined =
+      find.findSnapPointByTag("active-agenda");
+    if (snapPoint) {
+      const snappedObj: GameObject | undefined = snapPoint.getSnappedObject();
+      if (snappedObj && snappedObj instanceof Card) {
+        return true;
+      }
+    }
+    return false;
   }
 }
 
 export class AgendaActivityStart {
-  private _agendaState: AgendaState | undefined;
-  private static _agendaWindow: Window | undefined = undefined;
+  private static __agendaState: AgendaState | undefined;
+  private static __agendaWindow: Window | undefined = undefined;
 
   public static getAgendaWindow(): Window | undefined {
-    return AgendaActivityStart._agendaWindow;
+    return AgendaActivityStart.__agendaWindow;
   }
 
   private readonly _onAgendaStateChangedHandler = (): void => {
-    if (this._agendaState) {
+    if (AgendaActivityStart.__agendaState) {
       // Close window if agenda is no longer active.
-      if (!this._agendaState.isActive() && AgendaActivityStart._agendaWindow) {
-        this._agendaState.onAgendaStateChanged.remove(
+      if (
+        !AgendaActivityStart.__agendaState.isActive() &&
+        AgendaActivityStart.__agendaWindow
+      ) {
+        AgendaActivityStart.__agendaState.onAgendaStateChanged.remove(
           this._onAgendaStateChangedHandler
         );
-        AgendaActivityStart._agendaWindow.detach();
-        AgendaActivityStart._agendaWindow = undefined;
+        AgendaActivityStart.__agendaWindow.detach();
+        AgendaActivityStart.__agendaWindow = undefined;
       }
 
       // Destroy agenda state if agenda is complete.
-      if (this._agendaState.isComplete()) {
-        this._agendaState.destroy();
+      if (AgendaActivityStart.__agendaState.isComplete()) {
+        AgendaActivityStart.__agendaState.destroy();
+        AgendaActivityStart.__agendaState = undefined;
       }
     }
   };
@@ -63,7 +88,14 @@ export class AgendaActivityStart {
       TI4.turnOrder.setTurnOrder(order, "forward", first);
     }
 
-    this._agendaState = new AgendaState(AGENDA_STATE_NAMESPACE_ID)
+    if (AgendaActivityStart.__agendaState) {
+      AgendaActivityStart.__agendaState.destroy();
+      AgendaActivityStart.__agendaState = undefined;
+    }
+
+    AgendaActivityStart.__agendaState = new AgendaState(
+      AGENDA_STATE_NAMESPACE_ID
+    )
       .setAgendaObjId(agendaCard.getId())
       .setTurnOrderState(turnOrderState);
 
@@ -72,21 +104,20 @@ export class AgendaActivityStart {
   }
 
   resume(): this {
-    if (AgendaActivityStart._agendaWindow) {
-      AgendaActivityStart._agendaWindow.detach();
-      AgendaActivityStart._agendaWindow = undefined;
+    if (AgendaActivityStart.__agendaWindow) {
+      AgendaActivityStart.__agendaWindow.detach();
+      AgendaActivityStart.__agendaWindow = undefined;
     }
 
     // If resuming from a save need to create agenda state.
     // If proceeding from start it is already created.
-    if (!this._agendaState) {
-      const agendaState: AgendaState = new AgendaState(
+    if (!AgendaActivityStart.__agendaState) {
+      AgendaActivityStart.__agendaState = new AgendaState(
         AGENDA_STATE_NAMESPACE_ID
       );
-      this._agendaState = agendaState;
     }
 
-    this._agendaState.onAgendaStateChanged.add(
+    AgendaActivityStart.__agendaState.onAgendaStateChanged.add(
       this._onAgendaStateChangedHandler
     );
 
@@ -97,10 +128,14 @@ export class AgendaActivityStart {
       const seatIndex: number = TI4.playerSeats.getSeatIndexByPlayerSlot(
         params.playerSlot
       );
-      if (!this._agendaState) {
+      if (!AgendaActivityStart.__agendaState) {
         throw new Error("Agenda state not initialized");
       }
-      return new AgendaStateUI(this._agendaState, seatIndex, params.scale);
+      return new AgendaStateUI(
+        AgendaActivityStart.__agendaState,
+        seatIndex,
+        params.scale
+      );
     };
     const windowTitle: string = "Agenda";
     const abstractWindow: AbstractWindow = new AbstractWindow(
@@ -111,21 +146,32 @@ export class AgendaActivityStart {
     abstractWindow
       .moveWindowLeftOfTurnOrder()
       .getMutableWindowParams().disableClose = false; // allow close, there is a toggle option
-    AgendaActivityStart._agendaWindow = abstractWindow
+
+    const window: Window = (AgendaActivityStart.__agendaWindow = abstractWindow
       .addHost()
       .createWindow()
-      .attach();
+      .attach());
+
+    window.onAllClosed.add((): void => {
+      if (
+        AgendaActivityStart.__agendaState &&
+        AgendaActivityStart.__agendaState.isActive()
+      ) {
+        AgendaActivityStart.__agendaState.destroy();
+        AgendaActivityStart.__agendaState = undefined;
+      }
+    });
 
     return this;
   }
 
   destroy(): void {
-    if (this._agendaState) {
-      this._agendaState.onAgendaStateChanged.remove(
+    if (AgendaActivityStart.__agendaState) {
+      AgendaActivityStart.__agendaState.onAgendaStateChanged.remove(
         this._onAgendaStateChangedHandler
       );
-      this._agendaState.destroy();
-      this._agendaState = undefined;
+      AgendaActivityStart.__agendaState.destroy();
+      AgendaActivityStart.__agendaState = undefined;
     }
   }
 }

@@ -73,6 +73,10 @@ export class AgendaState {
     return data !== undefined && data.length > 0;
   }
 
+  static destroyAgendaState(namespaceId: NamespaceId): void {
+    world.setSavedData("", namespaceId);
+  }
+
   constructor(namespaceId: NamespaceId) {
     this._namespaceId = namespaceId;
 
