@@ -308,6 +308,7 @@ export const SOURCE_TO_UNIT_ATTRS_DATA: Record<
       unit: "pds",
       componentCount: 6,
       hasPlanetaryShield: true,
+      isGround: true,
       spaceCannon: { hit: 6 },
       diceColor: "#ff8000",
     },

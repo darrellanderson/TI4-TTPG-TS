@@ -776,11 +776,6 @@ export class CombatRoll {
   }
 
   public applyUnitModifiers(errors: Array<Error>): this {
-    // XXX TEMPORARY HAMMER HACK: SOMETHING CAN HANG.
-    //if (this.getRollType() === "production") {
-    //return this;
-    //}
-
     const unitModifiers: Array<UnitModifier> = this._findUnitModifiers(
       this.self.playerSlot,
       this.opponent.playerSlot
@@ -825,6 +820,12 @@ export class CombatRoll {
   }
 
   public bestHitUnitWithCombatAttrs(): BestUnitWithCombatAttrs | undefined {
+    // Restrict some roll types.
+    const requireClosestPlanet: boolean =
+      this.getRollType() === "spaceCannonDefense";
+    const requireGroundUnit: boolean =
+      this.getRollType() === "spaceCannonDefense";
+
     const unitToCombatAttrs: Map<UnitType, CombatAttrs> =
       this._getUnitToCombatAttrs(); // the current roll type
     let bestUnit: UnitType | undefined = undefined;
@@ -836,6 +837,30 @@ export class CombatRoll {
       // Look adjacent if range.
       if (!has && combatAttrs.getRange() > 0) {
         has = this.self.hasUnitAdj(unit);
+      }
+
+      if (requireClosestPlanet) {
+        let hasClosestPlanet: boolean = false;
+        for (const unitPlastic of this.self.unitPlasticHex) {
+          if (unitPlastic.getUnit() === unit) {
+            const planet: Planet | undefined = unitPlastic.getPlanetClosest();
+            if (planet && planet.getName() === this._params.planetName) {
+              hasClosestPlanet = true;
+              break;
+            }
+          }
+        }
+        if (!hasClosestPlanet) {
+          has = false;
+        }
+      }
+
+      if (requireGroundUnit) {
+        const unitAttrs: UnitAttrs | undefined =
+          this.self.unitAttrsSet.get(unit);
+        if (unitAttrs && !unitAttrs.isGround()) {
+          has = false;
+        }
       }
 
       const hit: number = combatAttrs.getHit();
@@ -867,6 +892,33 @@ export class CombatRoll {
       if (unitPlastic) {
         const planet: Planet | undefined = unitPlastic.getPlanetClosest();
         if (planet && planet.getName() !== this._params.planetName) {
+          this.opponent.unitPlasticHex.splice(i, 1);
+        }
+      }
+    }
+    return this;
+  }
+
+  _pruneToGroundUnits(): this {
+    for (let i = this.self.unitPlasticHex.length - 1; i >= 0; i--) {
+      const unitPlastic: UnitPlastic | undefined = this.self.unitPlasticHex[i];
+      if (unitPlastic) {
+        const unitAttrs: UnitAttrs | undefined = this.self.unitAttrsSet.get(
+          unitPlastic.getUnit()
+        );
+        if (unitAttrs && !unitAttrs.isGround()) {
+          this.self.unitPlasticHex.splice(i, 1);
+        }
+      }
+    }
+    for (let i = this.opponent.unitPlasticHex.length - 1; i >= 0; i--) {
+      const unitPlastic: UnitPlastic | undefined =
+        this.opponent.unitPlasticHex[i];
+      if (unitPlastic) {
+        const unitAttrs: UnitAttrs | undefined = this.opponent.unitAttrsSet.get(
+          unitPlastic.getUnit()
+        );
+        if (unitAttrs && !unitAttrs.isGround()) {
           this.opponent.unitPlasticHex.splice(i, 1);
         }
       }
@@ -910,6 +962,13 @@ export class CombatRoll {
       this._params.rollType === "groundCombat";
     if (requirePlanet) {
       this._pruneToUnitsClosestToPlanet();
+    }
+
+    const requireGround: boolean =
+      this._params.rollType === "spaceCannonDefense" ||
+      this._params.rollType === "groundCombat";
+    if (requireGround) {
+      this._pruneToGroundUnits();
     }
 
     if (

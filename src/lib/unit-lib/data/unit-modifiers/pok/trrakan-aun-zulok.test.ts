@@ -1,6 +1,9 @@
 import { OPPONENT, placeGameObjects, SELF } from "../abstract.test";
 import { CombatAttrs } from "../../../unit-attrs/combat-attrs";
-import { CombatRoll } from "../../../../combat-lib/combat-roll/combat-roll";
+import {
+  BestUnitWithCombatAttrs,
+  CombatRoll,
+} from "../../../../combat-lib/combat-roll/combat-roll";
 import { UnitAttrs } from "../../../unit-attrs/unit-attrs";
 
 it("registry (commander)", () => {
@@ -138,6 +141,10 @@ it("modifier (spaceCannonDefense)", () => {
   });
 
   expect(combatRoll.getUnitModifierNames()).toEqual(["Trrakan Aun Zulok"]);
+  expect(combatRoll.self.hasUnit("pds")).toBe(true);
+  const bestUnitWithCombatAttrs: BestUnitWithCombatAttrs | undefined =
+    combatRoll.bestHitUnitWithCombatAttrs();
+  expect(bestUnitWithCombatAttrs).toBeDefined();
 
   const destroyer: UnitAttrs =
     combatRoll.self.unitAttrsSet.getOrThrow("destroyer");

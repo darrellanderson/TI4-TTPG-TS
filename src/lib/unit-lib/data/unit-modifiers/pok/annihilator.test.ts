@@ -19,6 +19,7 @@ it("annihilator (bombardment)", () => {
     hex: "<0,0,0>",
     activatingPlayerSlot: OPPONENT,
     rollingPlayerSlot: SELF,
+    planetName: "Jord",
   };
   let combatRoll: CombatRoll;
 
@@ -33,9 +34,9 @@ it("annihilator (bombardment)", () => {
     selfUnitsOffPlanet: new Map([["mech", 3]]),
   });
   combatRoll = CombatRoll.createCooked(params);
+  expect(combatRoll.getUnitModifierNames()).toEqual(["Annihilator"]);
   expect(combatRoll.self.hasUnit("mech")).toBe(true);
   expect(combatRoll.self.getCount("mech")).toBe(3);
-  expect(combatRoll.getUnitModifierNames()).toEqual(["Annihilator"]);
 
   const mechAttrs: UnitAttrs | undefined =
     combatRoll.self.unitAttrsSet.get("mech");
