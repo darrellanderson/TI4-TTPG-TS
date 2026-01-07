@@ -175,6 +175,34 @@ it("getPlayerSlotToAvailableVotes (card.leader.hero:codex.vigil/xxekir)", () => 
   expect(playerSlotToAvailableVotes.get(10)).toBe(4);
 });
 
+it("space station", () => {
+  new MockCardHolder({
+    templateMetadata: "card-holder:base/player-hand",
+    owningPlayerSlot: 10,
+  });
+  MockCard.simple("card.planet:thunders-edge/tsion-station");
+
+  const agendaAvailableVotes = new AgendaAvailableVotes();
+  const playerSlotToAvailableVotes: Map<PlayerSlot, number> =
+    agendaAvailableVotes.getPlayerSlotToAvailableVotes();
+  expect(playerSlotToAvailableVotes.size).toBe(1);
+  expect(playerSlotToAvailableVotes.get(10)).toBe(1);
+});
+
+it("deepwrought ocean", () => {
+  new MockCardHolder({
+    templateMetadata: "card-holder:base/player-hand",
+    owningPlayerSlot: 10,
+  });
+  MockCard.simple("card.deepwrought-ocean:thunders-edge/brine-pool");
+
+  const agendaAvailableVotes = new AgendaAvailableVotes();
+  const playerSlotToAvailableVotes: Map<PlayerSlot, number> =
+    agendaAvailableVotes.getPlayerSlotToAvailableVotes();
+  expect(playerSlotToAvailableVotes.size).toBe(1);
+  expect(playerSlotToAvailableVotes.get(10)).toBe(1);
+});
+
 it("_getPlayerSlotToTriadVotes", () => {
   new MockCardHolder({
     templateMetadata: "card-holder:base/player-hand",

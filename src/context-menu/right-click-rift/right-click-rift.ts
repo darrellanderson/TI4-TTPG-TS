@@ -16,6 +16,7 @@ import { System } from "../../lib/system-lib/system/system";
 import { UnitAttrs } from "../../lib/unit-lib/unit-attrs/unit-attrs";
 import { UnitAttrsSet } from "../../lib/unit-lib/unit-attrs-set/unit-attrs-set";
 import { UnitPlastic } from "../../lib/unit-lib/unit-plastic/unit-plastic";
+import { Faction } from "../../lib";
 
 export const RIFT_ACTION_NAME: string = "*Rift All Ships In System";
 export const RIFT_ACTION_TOOLTIP: string =
@@ -77,8 +78,10 @@ export class RightClickRift implements IGlobal {
 
   static getShipsInRift(riftObj: GameObject): Array<GameObject> {
     const hex: HexType = TI4.hex.fromPosition(riftObj.getPosition());
+
     const unitAttrsSet: UnitAttrsSet =
       TI4.unitAttrsRegistry.defaultUnitAttrsSet();
+
     const plastics: Array<UnitPlastic> = UnitPlastic.getAll().filter(
       (plastic) => {
         const isHex: boolean = plastic.getHex() === hex;
@@ -91,6 +94,17 @@ export class RightClickRift implements IGlobal {
         if (unitAttrs === undefined) {
           return false;
         }
+
+        // Saar docks (TODO nekro copy).
+        if (plastic.getUnit() === "space-dock") {
+          const owner: number = plastic.getOwningPlayerSlot();
+          const faction: Faction | undefined =
+            TI4.factionRegistry.getByPlayerSlot(owner);
+          if (faction && faction.getNsid() === "faction:base/saar") {
+            return true;
+          }
+        }
+
         return unitAttrs.isShip() || unitAttrs.isNonShipRollForRifts();
       }
     );

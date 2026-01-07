@@ -126,8 +126,7 @@ export class AgendaAvailableVotes {
       const nsid: string = NSID.get(obj);
 
       if (
-        (nsid.startsWith("card.planet:") ||
-          nsid.startsWith("card.deepwrought-ocean:")) &&
+        nsid.startsWith("card.planet:") &&
         obj instanceof Card &&
         this._cardUtil.isLooseCard(obj, allowFaceDown, rejectSnapPointTags) &&
         !systemHexes.has(TI4.hex.fromPosition(obj.getPosition()))
@@ -252,7 +251,21 @@ export class AgendaAvailableVotes {
           votes += planet.getResources();
         }
         playerSlotToAvailableVotes.set(playerSlot, votes);
-      } else if (nsid.startsWith("card.deepwrought-ocean:")) {
+      }
+    }
+
+    // Ocean cards.
+    const skipContained: boolean = true;
+    const allowFaceDown: boolean = false;
+    for (const obj of world.getAllObjects(skipContained)) {
+      if (!this._cardUtil.isLooseCard(obj, allowFaceDown)) {
+        continue;
+      }
+      const nsid: string = NSID.get(obj);
+      const pos: Vector = obj.getPosition();
+      const playerSlot: number = this._find.closestOwnedCardHolderOwner(pos);
+
+      if (nsid.startsWith("card.deepwrought-ocean:")) {
         let votes: number = playerSlotToAvailableVotes.get(playerSlot) ?? 0;
         votes += 1;
         playerSlotToAvailableVotes.set(playerSlot, votes);
