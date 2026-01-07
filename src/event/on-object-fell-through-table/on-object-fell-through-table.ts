@@ -13,7 +13,7 @@ export class OnObjectFellThroughTable implements IGlobal {
   private _reportErrors: boolean = true;
 
   readonly _processObjs = (): void => {
-    const tableHeight: number = world.getTableHeight() - 0.1;
+    const tableHeight: number = world.getTableHeight() - 1;
 
     // Objects might be created by scripts under the table.
     // Give them a grace period before we start checking them.
