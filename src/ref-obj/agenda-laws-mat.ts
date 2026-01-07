@@ -44,6 +44,12 @@ export class AgendaLawsMat {
     }
   };
 
+  private readonly _resetZonePosition = (): void => {
+    const pos: Vector = this._firstSnapPoint.getGlobalPosition();
+    pos.z = world.getTableHeight() + HEIGHT / 2;
+    this._zone.setPosition(pos);
+  };
+
   constructor(obj: GameObject) {
     this._obj = obj;
     this._obj.onSnappedTo.add(this.onSnappedToHandler);
@@ -57,12 +63,9 @@ export class AgendaLawsMat {
 
     // Do this AFTER getting the first snap point.
     this._zone = this._findOrCreateZone();
+    process.nextTick(this._resetZonePosition);
 
-    this._obj.onReleased.add(() => {
-      const pos: Vector = this._firstSnapPoint.getGlobalPosition();
-      pos.z = world.getTableHeight() + HEIGHT / 2;
-      this._zone.setPosition(pos);
-    });
+    this._obj.onReleased.add(this._resetZonePosition);
   }
 
   _findOrCreateZone(): Zone {

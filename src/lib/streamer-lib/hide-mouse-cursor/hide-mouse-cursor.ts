@@ -26,6 +26,12 @@ export class HideMouseCursor implements IGlobal {
     this._zone = HideMouseCursor._findOrCreateZone();
     this._updateZone();
 
+    this._zone.onDestroyed.add(() => {
+      process.nextTick(() => {
+        this._zone = HideMouseCursor._findOrCreateZone();
+      });
+    });
+
     globalEvents.onPlayerJoined.add(this._updateZoneHandler);
     globalEvents.onPlayerLeft.add(this._updateZoneHandler);
     globalEvents.onPlayerSwitchedSlots.add(this._updateZoneHandler);
