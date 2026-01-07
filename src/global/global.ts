@@ -81,8 +81,11 @@ import { RightClickLetaniWarrior2 } from "../context-menu/cards/infantry-2/right
 import { RightClickMabanOmega } from "../context-menu/cards/maban-omega/right-click-maban-omega";
 import { RightClickMabanOmegaAlliance } from "../context-menu/cards/maban-omega/right-click-maban-omega-alliance";
 import { RightClickMageonImplants } from "../context-menu/cards/mageon-implants/right-click-mageon-implants";
+import { RightClickMercenaryContract } from "../context-menu/cards/mercenary-contract/mercenary-contract";
 import { RightClickNanoForge } from "../context-menu/cards/nano-forge/right-click-nano-forge";
 import { RightClickObsidianFirmament } from "../context-menu/obsidian-firmament/right-click-obsidian-firmament";
+import { RightClickPirateContract } from "../context-menu/cards/pirate-contract/pirate-contract";
+import { RightClickPirateFleet } from "../context-menu/cards/pirate-fleet/pirate-fleet";
 import { RightClickPurge } from "../context-menu/right-click-purge/right-click-purge";
 import { RightClickRider } from "../context-menu/right-click-rider/right-click-rider";
 import { RightClickRift } from "../context-menu/right-click-rift/right-click-rift";
@@ -293,8 +296,14 @@ export function resetGlobalThisTI4(): TI4Class {
     new RightClickMabanOmega(),
     new RightClickMabanOmegaAlliance(),
     new RightClickMageonImplants(),
+    new RightClickMercenaryContract(),
     new RightClickNanoForge(),
     new RightClickObsidianFirmament(),
+    new RightClickPirateContract(1),
+    new RightClickPirateContract(2),
+    new RightClickPirateContract(3),
+    new RightClickPirateContract(4),
+    new RightClickPirateFleet(),
     new RightClickPurge(),
     new RightClickRider(),
     new RightClickRift(),
