@@ -68,12 +68,24 @@ export class DraftStateUI extends AbstractUI {
     }
   };
 
+  static _isSeatedPlayer(playerSlot: number): boolean {
+    const seatIndex: number =
+      TI4.playerSeats.getSeatIndexByPlayerSlot(playerSlot);
+    return seatIndex !== -1;
+  }
+
   static _createSliceClickHandler(
     draftState: DraftState,
     sliceIndex: number
   ): (_button: ContentButton, player: Player) => void {
     const handler = (_button: ContentButton, player: Player): void => {
       const playerSlot: number = player.getSlot();
+
+      // Only seated players may select.
+      if (!DraftStateUI._isSeatedPlayer(playerSlot)) {
+        return;
+      }
+
       const currentSlot: number =
         draftState.getSliceIndexToPlayerSlot(sliceIndex);
       if (currentSlot === -1) {
@@ -100,6 +112,12 @@ export class DraftStateUI extends AbstractUI {
   ): (_button: ContentButton, player: Player) => void {
     const handler = (_button: ContentButton, player: Player): void => {
       const playerSlot: number = player.getSlot();
+
+      // Only seated players may select.
+      if (!DraftStateUI._isSeatedPlayer(playerSlot)) {
+        return;
+      }
+
       const currentSlot: number =
         draftState.getFactionIndexToPlayerSlot(sliceIndex);
       if (currentSlot === -1) {
@@ -126,6 +144,12 @@ export class DraftStateUI extends AbstractUI {
   ): (_button: ContentButton, player: Player) => void {
     const handler = (_button: ContentButton, player: Player): void => {
       const playerSlot: number = player.getSlot();
+
+      // Only seated players may select.
+      if (!DraftStateUI._isSeatedPlayer(playerSlot)) {
+        return;
+      }
+
       const currentSlot: number =
         draftState.getSeatIndexToPlayerSlot(sliceIndex);
       if (currentSlot === -1) {
@@ -152,6 +176,12 @@ export class DraftStateUI extends AbstractUI {
   ): (_button: ContentButton, player: Player) => void {
     const handler = (_button: ContentButton, player: Player): void => {
       const playerSlot: number = player.getSlot();
+
+      // Only seated players may select.
+      if (!DraftStateUI._isSeatedPlayer(playerSlot)) {
+        return;
+      }
+
       const currentSlot: number =
         draftState.getOpaqueIndexToPlayerSlot(opaqueIndex);
       if (currentSlot === -1) {
