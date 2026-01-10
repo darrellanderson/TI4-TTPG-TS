@@ -161,6 +161,15 @@ export class UpdatorObjectives implements IGameDataUpdator {
           continue;
         }
 
+        // Ignore if in player card holder (NOT scoring card holder).
+        const holder: CardHolder | undefined = obj.getHolder();
+        if (holder) {
+          const holderNsid: string = NSID.get(holder);
+          if (holderNsid === "card-holder:base/player-hand") {
+            continue;
+          }
+        }
+
         // Ignore decks and discards.
         const snapPoint: SnapPoint | undefined = obj.getSnappedToPoint();
         if (snapPoint) {
