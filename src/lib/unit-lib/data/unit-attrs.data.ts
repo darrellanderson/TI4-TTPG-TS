@@ -325,6 +325,7 @@ export const SOURCE_TO_UNIT_ATTRS_DATA: Record<
       unit: "space-dock",
       componentCount: 3,
       diceColor: "#ffff00",
+      isGround: true,
     },
     {
       name: "Space Dock II",
@@ -336,12 +337,14 @@ export const SOURCE_TO_UNIT_ATTRS_DATA: Record<
       unit: "space-dock",
       nsidName: "floating-factory",
       isNonShipRollForRifts: true,
+      isGround: false,
     },
     {
       name: "Floating Factory II",
       unit: "space-dock",
       nsidName: "floating-factory-2",
       isNonShipRollForRifts: true,
+      isGround: false,
     },
 
     // War sun
