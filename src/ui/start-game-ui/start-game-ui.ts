@@ -85,6 +85,7 @@ export class StartGameUI extends AbstractUI {
       .getCheckBox()
       .setText("Send game data")
       .setIsChecked(TI4.config.exportGameData)
+      .setIsChecked(false) // disable, permission to send to URL is not sticking
       .onCheckStateChanged.add(
         (_checkBox: CheckBox, _player: Player, isChecked: boolean): void => {
           TI4.config.setExportGameData(isChecked);
@@ -193,7 +194,12 @@ export class StartGameUI extends AbstractUI {
 
     const left: AbstractUI = new VerticalUIBuilder()
       .setSpacing(CONFIG.SPACING * scale)
-      .addUIs([numPlayersLabel, gamePointsLabel, sendGameData, sendErrors])
+      .addUIs([
+        numPlayersLabel,
+        gamePointsLabel,
+        //sendGameData,
+        sendErrors,
+      ])
       .build();
     const right: AbstractUI = new VerticalUIBuilder()
       .setSpacing(CONFIG.SPACING * scale)
