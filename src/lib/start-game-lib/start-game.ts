@@ -9,13 +9,15 @@ import { RemoveByNsidOrSource } from "../remove-lib/remove-by-nsid-or-source/rem
 import { LayoutAll } from "../../setup/layout/layout-all/layout-all";
 import { scrubAll } from "../../setup/layout/layout-all/scrub-all";
 import { Scoreboard } from "../score-lib/scoreboard/scoreboard";
+import { ShuffleDecks } from "../../global/shuffle-decks";
 
 export class StartGame implements IGlobal {
   private readonly _onStartGameRequest = (): void => {
+    this._applyPlayerCount(); // must happen before timestamp is set for shuffle
+
     TI4.config.setTimestamp(Date.now() / 1000);
     TI4.timer.start(0, 1); // count up from zero
 
-    this._applyPlayerCount();
     this._doRemove();
     this._maybeFlipScoreboard();
 
@@ -50,6 +52,9 @@ export class StartGame implements IGlobal {
     if (first !== undefined) {
       TI4.turnOrder.setTurnOrder(order, "forward", first);
     }
+
+    // Shuffle decks.
+    new ShuffleDecks().init();
 
     return true;
   }
