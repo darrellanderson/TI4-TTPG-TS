@@ -85,7 +85,6 @@ export class StartGameUI extends AbstractUI {
       .getCheckBox()
       .setText("Send game data")
       .setIsChecked(TI4.config.exportGameData)
-      .setIsChecked(false) // disable, permission to send to URL is not sticking
       .onCheckStateChanged.add(
         (_checkBox: CheckBox, _player: Player, isChecked: boolean): void => {
           TI4.config.setExportGameData(isChecked);

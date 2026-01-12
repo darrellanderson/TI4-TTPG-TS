@@ -74,7 +74,8 @@ export class Config {
   }
 
   get exportGameData(): boolean {
-    return this._config.exportGameData;
+    // return this._config.exportGameData;
+    return false; // disable by default, permission to send to URL is not sticking
   }
 
   get reportErrors(): boolean {
