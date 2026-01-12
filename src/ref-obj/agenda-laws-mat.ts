@@ -64,8 +64,10 @@ export class AgendaLawsMat {
     // Do this AFTER getting the first snap point.
     this._zone = this._findOrCreateZone();
     process.nextTick(this._resetZonePosition);
-
     this._obj.onReleased.add(this._resetZonePosition);
+
+    // Just in case setup does not happen right away.
+    setTimeout(this._resetZonePosition, 5000);
   }
 
   _findOrCreateZone(): Zone {
