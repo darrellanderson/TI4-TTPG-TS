@@ -298,12 +298,15 @@ export class RightClickExplore implements IGlobal {
         .getObj()
         .getContainer();
       const pos = planet.getPosition().add([0, 0, 10]);
-      if (container && container.take(planetAttachment.getObj(), pos)) {
-        planetAttachment.getObj().snapToGround();
-        const success: boolean = planetAttachment.attach();
-        if (success) {
-          planetAttachment.doLayout();
-        }
+      if (container) {
+        container.take(planetAttachment.getObj(), pos);
+      } else {
+        planetAttachment.getObj().setPosition(pos);
+      }
+      planetAttachment.getObj().snapToGround();
+      const success: boolean = planetAttachment.attach();
+      if (success) {
+        planetAttachment.doLayout();
       }
     }
   }
@@ -316,12 +319,15 @@ export class RightClickExplore implements IGlobal {
       const container: Container | undefined = systemAttachment
         .getObj()
         .getContainer();
-      if (container && container.take(systemAttachment.getObj(), pos)) {
-        systemAttachment.getObj().snapToGround();
-        const success: boolean = systemAttachment.attach();
-        if (success) {
-          systemAttachment.doLayout();
-        }
+      if (container) {
+        container.take(systemAttachment.getObj(), pos);
+      } else {
+        systemAttachment.getObj().setPosition(pos);
+      }
+      systemAttachment.getObj().snapToGround();
+      const success: boolean = systemAttachment.attach();
+      if (success) {
+        systemAttachment.doLayout();
       }
     }
   }
