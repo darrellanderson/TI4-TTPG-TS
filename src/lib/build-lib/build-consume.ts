@@ -80,6 +80,7 @@ export class BuildConsume {
         const aiDevPos: Vector = obj.getPosition();
         const aiDevPlayerSlot: number =
           find.closestOwnedCardHolderOwner(aiDevPos);
+        console.log("AI Dev owner:", aiDevPlayerSlot);
         const skipContained: boolean = true;
         for (const worldObj of world.getAllObjects(skipContained)) {
           const worldObjNsid: string = NSID.get(worldObj);
@@ -87,7 +88,7 @@ export class BuildConsume {
             worldObjNsid.startsWith("card.technology.unit-upgrade:") &&
             cardUtil.isLooseCard(worldObj)
           ) {
-            const techPos: Vector = obj.getPosition();
+            const techPos: Vector = worldObj.getPosition();
             const techOwner: number = find.closestOwnedCardHolderOwner(techPos);
             if (techOwner === aiDevPlayerSlot) {
               unitUpgradeCount += 1;
