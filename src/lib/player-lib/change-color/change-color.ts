@@ -139,8 +139,10 @@ export class ChangeColor {
     ];
 
     const _getPromissoryDeck = (): Card => {
-      const deck: Card =
-        TI4.spawn.spawnMergeDecksWithNsidPrefixOrThrow("card.promissory");
+      const deck: Card = TI4.spawn.spawnMergeDecksWithNsidPrefixOrThrow(
+        "card.promissory",
+        [0, 0, 100]
+      );
       return deck;
     };
     const promissoryDeck: Card = _getPromissoryDeck();
