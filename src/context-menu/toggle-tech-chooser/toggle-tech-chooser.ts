@@ -20,6 +20,21 @@ export class ToggleTechChooser implements IGlobal {
   };
 
   init(): void {
+    this._resetWindow();
+
+    // Listen for the request event.
+    TI4.events.onTechChooserRequest.add(this._onTechChooserRequestHandler);
+    TI4.events.onStartGameComplete.add((): void => {
+      this._resetWindow();
+    });
+  }
+
+  _resetWindow(): void {
+    if (this._techChooserWindow) {
+      this._techChooserWindow.destroy();
+      this._techChooserWindow = undefined;
+    }
+
     const createAbstractUI: CreateAbstractUIType = (
       params: CreateAbstractUIParams
     ): AbstractUI => {
@@ -40,8 +55,5 @@ export class ToggleTechChooser implements IGlobal {
     );
 
     this._techChooserWindow = abstractWindow.createWindow();
-
-    // Listen for the request event.
-    TI4.events.onTechChooserRequest.add(this._onTechChooserRequestHandler);
   }
 }
