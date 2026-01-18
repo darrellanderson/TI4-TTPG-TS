@@ -23,7 +23,7 @@ export class OnStartThundersEdge implements IGlobal {
 
     // Replace strategy cards.
     const construction: GameObject | undefined = find.findGameObject(
-      "tile.strategy-card:pok/construction",
+      "tile.strategy-card:base/construction",
       undefined,
       true
     );

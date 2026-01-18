@@ -12,6 +12,10 @@ export class UnpackFactionAlliance extends AbstractUnpack {
   }
 
   unpack(): void {
+    if (!TI4.config.sources.includes("pok")) {
+      return;
+    }
+
     const deck: Card = this.spawnDeckAndFilterSourcesOrThrow("card.alliance:");
     this._dealAllianceCardsAndDeleteDeck(deck);
   }

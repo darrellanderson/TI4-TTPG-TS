@@ -17,9 +17,9 @@ export class LayoutStrategyCards {
 
     const strategyCardNsids: Array<string> = [
       "tile.strategy-card:base/leadership",
-      "tile.strategy-card:codex.ordinian/diplomacy",
+      "tile.strategy-card:base/diplomacy",
       "tile.strategy-card:base/politics",
-      "tile.strategy-card:pok/construction",
+      "tile.strategy-card:base/construction",
       "tile.strategy-card:base/trade",
       "tile.strategy-card:base/warfare",
       "tile.strategy-card:base/technology",

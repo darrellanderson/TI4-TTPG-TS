@@ -25,6 +25,10 @@ export class UnpackLeaders extends AbstractUnpack {
   }
 
   unpack(): void {
+    if (!TI4.config.sources.includes("pok")) {
+      return;
+    }
+
     const leaderSheet: GameObject = this._findLeaderSheetOrThrow();
     const yaw: number = leaderSheet.getRotation().yaw;
 
