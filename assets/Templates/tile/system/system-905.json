@@ -1,7 +1,7 @@
 {
   "Type": "Generic",
   "GUID": "B987BDB4E50D86FFF874609B3EA0CD1A",
-  "Name": "",
+  "Name": "Tile 905",
   "Metadata": "tile.system:thunders-edge/905",
   "CollisionType": "Regular",
   "Friction": 0.7,
