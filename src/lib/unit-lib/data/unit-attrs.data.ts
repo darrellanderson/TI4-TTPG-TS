@@ -227,7 +227,7 @@ export const SOURCE_TO_UNIT_ATTRS_DATA: Record<
       name: "Son of Ragh", // Saar
       unit: "flagship",
       nsidName: "son-of-ragh",
-      antiFighterBarrage: { dice: 2, hit: 6 },
+      antiFighterBarrage: { dice: 4, hit: 6 },
       spaceCombat: { dice: 2, hit: 5 },
     },
     {
