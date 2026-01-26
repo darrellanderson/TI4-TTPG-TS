@@ -41,12 +41,21 @@ it("_getSlices", () => {
   expect(slices.length).toBeGreaterThan(0);
 });
 
-it("_getFactions", () => {
+it("_getFactions (3)", () => {
   const bagDraft: BagDraft = new BagDraft().setNumFactions(3);
   const factions: Array<Array<Faction>> = bagDraft._getFactions();
   expect(factions.length).toBe(6);
   for (const factionArray of factions) {
     expect(factionArray.length).toBe(3);
+  }
+});
+
+it("_getFactions (4)", () => {
+  const bagDraft: BagDraft = new BagDraft().setNumFactions(4);
+  const factions: Array<Array<Faction>> = bagDraft._getFactions();
+  expect(factions.length).toBe(6);
+  for (const factionArray of factions) {
+    expect(factionArray.length).toBe(4);
   }
 });
 

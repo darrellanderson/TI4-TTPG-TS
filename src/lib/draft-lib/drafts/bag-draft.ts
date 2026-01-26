@@ -5,7 +5,13 @@ import {
   GameObject,
   Vector,
 } from "@tabletop-playground/api";
-import { CardUtil, Find, NamespaceId, PlayerSlot } from "ttpg-darrell";
+import {
+  CardUtil,
+  DeletedItemsContainer,
+  Find,
+  NamespaceId,
+  PlayerSlot,
+} from "ttpg-darrell";
 import { DraftState } from "../draft-state/draft-state";
 import {
   GenerateSlices,
@@ -134,30 +140,36 @@ export class BagDraft implements IDraft {
       return faction.getFactionReferenceCardNsid();
     });
 
-    // Get faction reference deck.
-    const find: Find = new Find();
-    const deckFactionRefCardsAll: Card | undefined = find.findDeckOrDiscard(
-      "deck-faction-reference"
-    );
-    if (!deckFactionRefCardsAll) {
-      throw new Error("Faction reference deck not found");
-    }
+    // Find each card individually; they may be in the deck or on the table.
+    // If missing, spawn a new one.
+    const factionReferenceCards: Array<Card> = [];
 
-    // Filter out the factions we want, leave the rest alone.
     const cardUtil: CardUtil = new CardUtil();
-    const deckFactionRefCardsUse: Card | undefined = cardUtil.filterCards(
-      deckFactionRefCardsAll,
-      (nsid: string): boolean => {
-        return nsids.includes(nsid);
+    nsids.forEach((nsid: string): void => {
+      let card: Card | undefined = cardUtil.fetchCard(nsid);
+      if (!card) {
+        console.log("Faction reference card not found, spawning new:", nsid);
+
+        // Spawn a new one.
+        const pos: Vector = container.getPosition().add([0, 0, 10]);
+        const deck: GameObject | undefined =
+          TI4.spawn.spawnMergeDecksWithNsidPrefixOrThrow(
+            "card.faction-reference",
+            pos
+          );
+        card = cardUtil.fetchCard(nsid);
+        DeletedItemsContainer.destroyWithoutCopying(deck);
       }
-    );
-    if (!deckFactionRefCardsUse) {
-      throw new Error("No chosen faction reference cards found");
-    }
+      if (!card) {
+        throw new Error(
+          `Could not find/create faction reference card: ${nsid}`
+        );
+      }
+      factionReferenceCards.push(card);
+    });
 
     // Split into individual cards.
-    const cards: Array<Card> = cardUtil.separateDeck(deckFactionRefCardsUse);
-    container.addObjects(cards);
+    container.addObjects(factionReferenceCards);
   }
 
   setContainerNsid(nsid: string): this {
