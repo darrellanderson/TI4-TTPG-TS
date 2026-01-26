@@ -2,6 +2,7 @@ import {
   Button,
   CheckBox,
   HorizontalAlignment,
+  Player,
   Slider,
   TextJustification,
 } from "@tabletop-playground/api";
@@ -143,7 +144,14 @@ export class DraftBagUI extends AbstractUI {
     );
 
     const useFactionsOnTable: CheckBoxUI = new CheckBoxUI(scale);
-    useFactionsOnTable.getCheckBox().setText("Use Factions on Table");
+    useFactionsOnTable
+      .getCheckBox()
+      .setText("Use Factions on Table")
+      .onCheckStateChanged.add(
+        (_checkBox: CheckBox, _player: Player, isChecked: boolean): void => {
+          numFactions.slider.setEnabled(!isChecked);
+        }
+      );
 
     const start: ButtonUI = new ButtonUI(scale);
     start.getButton().setText("Start");
