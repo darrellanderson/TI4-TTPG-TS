@@ -112,7 +112,7 @@ export class DraftBagUI extends AbstractUI {
     const numFactions: SliderWithWrapperType = createSliderWithWrapper(
       scale,
       "Factions:",
-      1,
+      0,
       4,
       2
     );
