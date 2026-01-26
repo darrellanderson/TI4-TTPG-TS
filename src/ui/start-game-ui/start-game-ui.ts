@@ -191,6 +191,21 @@ export class StartGameUI extends AbstractUI {
         }
       );
 
+    const checkBoxCodex5: CheckBoxUI = new CheckBoxUI(scale);
+    checkBoxCodex5
+      .getCheckBox()
+      .setText("Codex 5: []")
+      .setIsChecked(TI4.config.sources.includes("codex.5"))
+      .onCheckStateChanged.add(
+        (_checkBox: CheckBox, _player: Player, isChecked: boolean): void => {
+          applySource("codex.5", isChecked);
+        }
+      );
+
+    // XXX TODO REMOVE WHEN CODEX 5 RELEASED
+    checkBoxCodex5.getCheckBox().setEnabled(false);
+    checkBoxCodex5.getCheckBox().setVisible(false);
+
     const left: AbstractUI = new VerticalUIBuilder()
       .setSpacing(CONFIG.SPACING * scale)
       .addUIs([
@@ -212,6 +227,7 @@ export class StartGameUI extends AbstractUI {
         checkBoxCodex2,
         checkBoxCodex3,
         checkBoxCodex4,
+        checkBoxCodex5,
       ])
       .build();
     const config: AbstractUI = new HorizontalUIBuilder()
