@@ -160,7 +160,16 @@ export class Faction {
   }
 
   getFactionReferenceCardNsid(): string {
-    const source: string = this._sourceAndPackageId.source;
+    let source: string = this._sourceAndPackageId.source;
+
+    const nsidName: string = this._params.nsidName;
+    // Special cases where the faction reference card is in a different source.
+    if (nsidName === "naalu" || nsidName === "xxcha" || nsidName === "yin") {
+      if (TI4.config.sources.includes("codex.vigil")) {
+        source = "codex.vigil";
+      }
+    }
+
     return `card.faction-reference:${source}/${this._params.nsidName}`;
   }
 
