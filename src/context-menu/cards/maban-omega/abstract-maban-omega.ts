@@ -11,6 +11,7 @@ import {
 import {
   AbstractRightClickCard,
   Broadcast,
+  CardUtil,
   Find,
   NSID,
   PlayerSlot,
@@ -43,13 +44,17 @@ export abstract class AbstractMabanOmega extends AbstractRightClickCard {
   isCommanderActive(): boolean {
     const nsid: string = "card.leader.commander:codex.vigil/maban.omega";
     const owningPlayerSlot: number | undefined = undefined;
-    const skipContained: boolean = false;
+    const skipContained: boolean = true;
     const commander: Card | undefined = this._find.findCard(
       nsid,
       owningPlayerSlot,
       skipContained
     );
-    return commander === undefined || commander.isFaceUp();
+    if (!commander) {
+      return true; // missing commander is considered active for alliance case
+    }
+    const allowFaceDown: boolean = false;
+    return new CardUtil().isLooseCard(commander, allowFaceDown);
   }
 
   isOwningPlayer(object: GameObject, player: Player): boolean {
