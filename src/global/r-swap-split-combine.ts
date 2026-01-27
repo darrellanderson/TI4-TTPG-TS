@@ -105,6 +105,18 @@ export class RSwapSplitCombine extends SwapSplitCombine implements IGlobal {
         this.putPlastic("infantry", player, obj);
       }
     );
+    this.addOverrideSupplyCount(
+      "unit:base/fighter",
+      (player: Player): number => {
+        return this.countPlastic("fighter", player);
+      }
+    );
+    this.addOverrideSupplyCount(
+      "unit:base/infantry",
+      (player: Player): number => {
+        return this.countPlastic("infantry", player);
+      }
+    );
   }
 
   getPlasticContainer(
@@ -149,6 +161,18 @@ export class RSwapSplitCombine extends SwapSplitCombine implements IGlobal {
     if (container) {
       container.insert([obj]);
       result = true;
+    }
+    return result;
+  }
+
+  countPlastic(unit: "infantry" | "fighter", player: Player): number {
+    const container: Container | undefined = this.getPlasticContainer(
+      unit,
+      player.getSlot()
+    );
+    let result: number = 0;
+    if (container) {
+      result = container.getNumItems();
     }
     return result;
   }
