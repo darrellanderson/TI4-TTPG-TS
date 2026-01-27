@@ -32,6 +32,7 @@ import { CreateAndAttachTurnOrderUI } from "../ui/turn-order-ui/create-and-attac
 import { DiplomacySystem } from "../context-menu/system/diplomacy-system/diplomacy-system";
 //import { DisplayPDSAdjacency } from "../context-menu/display-pds-adjacency/display-pds-adjacency";
 import { DraftActivityMaybeResume } from "../lib/draft-lib/draft-activity-start/draft-activity-start";
+import { DraftActivityMaybeResumeTF } from "../lib/draft-lib/draft-activity-start/draft-activity-start-tf";
 import { FactionRegistry } from "../lib/faction-lib/registry/faction-registry";
 import { GameDataExport } from "../lib/game-data-lib/game-data-export/game-data-export";
 import { GameDataUpdator } from "../lib/game-data-lib/game-data-updator/game-data-updator";
@@ -134,7 +135,6 @@ import { RightClickYinAscendant } from "../context-menu/breakthroughs/yin-ascend
 // Twilight's Fall
 import { RightClickTFAbilitySplice } from "../context-menu/tf-splice/right-click-tf-ability";
 import { RightClickTFGenomeSplice } from "../context-menu/tf-splice/right-click-tf-genome";
-import { RightClickTFParadigmSplice } from "../context-menu/tf-splice/right-click-tf-paradigm";
 import { RightClickTFUnitUpgradeSplice } from "../context-menu/tf-splice/right-click-tf-unit-upgrade";
 
 import { LOCALE_CONTEXT_MENUS } from "../locale/locale-context-menus";
@@ -144,6 +144,7 @@ import { OnStartTwilightsFall } from "../event/on-start-twilights-fall/on-start-
 import { TFAhkSylFier } from "../context-menu/tf-fetch-tokens/tf-ahk-syl-fier";
 import { TFAwakeningGeoform } from "../context-menu/tf-fetch-tokens/tf-awakening-geoform";
 import { TFDimensionalTear } from "../context-menu/tf-fetch-tokens/tf-dimensional-tear";
+import { TFFactionRefCardUI } from "../lib/twilights-fall-lib/tf-faction-ref-card-ui/tf-faction-ref-card-ui";
 import { TFHeliosEntity } from "../context-menu/tf-fetch-tokens/tf-helios-entity";
 import { TFSingularityX } from "../context-menu/tf-fetch-tokens/tf-singularity-x";
 import { TFSingularityY } from "../context-menu/tf-fetch-tokens/tf-singularity-y";
@@ -154,7 +155,6 @@ import { RightClickTFSupercharge } from "../context-menu/cards/tf-supercharge/tf
 import { HeroDimensionalAnchor } from "../context-menu/heroes/hero-dimensional-anchor/hero-dimensional-anchor";
 import { HeroHelioCommandArray } from "../context-menu/heroes/hero-helio-command-array/hero-helio-command-array";
 import { HeroMultiverseShift } from "../context-menu/heroes/hero-multiverse-shift/hero-multiverse-shift";
-import { DraftActivityMaybeResumeTF } from "../lib";
 
 const packageId: string = refPackageId;
 Find.ignoreOwnedCardHolderNsid("card-holder:base/player-scoring");
@@ -314,7 +314,6 @@ export function resetGlobalThisTI4(): TI4Class {
     new RightClickStellarConverter(),
     new RightClickTFAbilitySplice(),
     new RightClickTFGenomeSplice(),
-    new RightClickTFParadigmSplice(),
     new RightClickTFSupercharge(),
     new RightClickTFUnitUpgradeSplice(),
     new RightClickThundersEdge(),
@@ -327,6 +326,7 @@ export function resetGlobalThisTI4(): TI4Class {
     new TFAhkSylFier(),
     new TFAwakeningGeoform(),
     new TFDimensionalTear(),
+    //new TFFactionRefCardUI(),
     new TFHeliosEntity(),
     new TFSingularityX(),
     new TFSingularityY(),

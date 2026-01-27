@@ -76,6 +76,11 @@ export class RightClickPurge implements IGlobal {
       return true;
     }
 
+    // TF paradigms.
+    if (nsid.startsWith("card.tf-paradigm:")) {
+      return true;
+    }
+
     return false;
   }
 
