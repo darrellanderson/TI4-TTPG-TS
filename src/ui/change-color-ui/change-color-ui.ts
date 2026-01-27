@@ -68,13 +68,21 @@ export class ChangeColorUI extends AbstractUI {
         colorName,
         i
       );
-      const colorHex: string = colorsType.widget;
-      const colorUi: ColorChoiceButton = new ColorChoiceButton(colorHex, scale);
+      const colorWidgetHex: string = colorsType.target;
+      const colorTargetHex: string = colorsType.target;
+      const colorUi: ColorChoiceButton = new ColorChoiceButton(
+        colorWidgetHex,
+        scale
+      );
 
       colorUi
         .getContentButton()
         .onClicked.add(
-          ChangeColorUI._getClickHandler(targetPlayerSlot, colorName, colorHex)
+          ChangeColorUI._getClickHandler(
+            targetPlayerSlot,
+            colorName,
+            colorTargetHex
+          )
         );
 
       // Only allow colors not already in use.
