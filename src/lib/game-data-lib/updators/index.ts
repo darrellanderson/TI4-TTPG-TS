@@ -10,6 +10,7 @@ export * from './updator-map-string';
 export * from './updator-objectives';
 export * from './updator-objectives-progress';
 export * from './updator-player-active';
+export * from './updator-player-alliances';
 export * from './updator-player-color';
 export * from './updator-player-command-tokens';
 export * from './updator-player-custodians-points';
