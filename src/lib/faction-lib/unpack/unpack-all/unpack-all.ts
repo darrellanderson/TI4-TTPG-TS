@@ -45,6 +45,9 @@ export class UnpackAll extends AbstractUnpack {
     for (const unpack of this._unpacks) {
       unpack.unpack();
     }
+
+    // Clear the cache before triggering the event.
+    TI4.factionRegistry.clearFactionPlayerSlotCache();
     TI4.events.onFactionChanged.trigger(this.getPlayerSlot());
 
     // Workaround for cards sometimes appearing with the wrong image

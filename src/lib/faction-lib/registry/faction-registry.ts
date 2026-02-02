@@ -26,9 +26,13 @@ export class FactionRegistry implements IGlobal {
 
   constructor() {}
 
+  clearFactionPlayerSlotCache(): void {
+    this._playerSlotToFaction = undefined;
+  }
+
   init(): void {
     TI4.events.onFactionChanged.add(() => {
-      this._playerSlotToFaction = undefined;
+      this.clearFactionPlayerSlotCache();
     });
   }
 
