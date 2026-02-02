@@ -18,6 +18,7 @@ import {
 // Better to use |purge nsid attibutes.
 const ALSO_PURGE_NSIDS: Set<string> = new Set<string>([
   "card.promissory:thunders-edge/black-ops",
+  "card.relic:codex.liberation/book-of-latvinia",
 ]);
 
 export const PURGE_ACTION_NAME: string = "*Purge";
