@@ -5,6 +5,7 @@ import {
 } from "../../../../combat-lib/combat-roll/combat-roll";
 import { UnitAttrs } from "../../../unit-attrs/unit-attrs";
 import { UnitModifierSchemaType } from "../../../schema/unit-modifier-schema";
+import { UnitType } from "../../../schema/unit-attrs-schema";
 
 export const Matriarch: UnitModifierSchemaType = {
   name: "Matriarch",
@@ -23,13 +24,24 @@ export const Matriarch: UnitModifierSchemaType = {
   apply: (combatRoll: CombatRoll): void => {
     const fighter: UnitAttrs | undefined =
       combatRoll.self.unitAttrsSet.get("fighter");
-    if (fighter) {
+    const fighterCount: number = combatRoll.self.getCount("fighter");
+    if (fighter && fighterCount > 0) {
       const spaceCombat: CombatAttrs | undefined = fighter.getSpaceCombat();
       if (spaceCombat) {
-        fighter.setGroundCombat(
-          new CombatAttrs({
-            hit: spaceCombat.getHit(),
-          })
+        console.log("Applying Matriarch unit modifier");
+        // Add as a synthetic unit to apply to all planets.
+        combatRoll.self.addSyntheticUnit(
+          {
+            name: fighter.getName(),
+            unit: (fighter.getUnit() + " (Matriarch)") as UnitType,
+            groundCombat: {
+              hit: spaceCombat.getHit(),
+              dice: spaceCombat.getDice(),
+              crit: spaceCombat.getCrit(),
+            },
+            isGround: true,
+          },
+          fighterCount
         );
       }
     }

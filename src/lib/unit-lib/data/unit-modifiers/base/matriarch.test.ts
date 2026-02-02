@@ -1,6 +1,7 @@
 import { OPPONENT, placeGameObjects, SELF } from "../abstract.test";
 import { CombatRoll } from "../../../../combat-lib/combat-roll/combat-roll";
 import { UnitAttrs } from "../../../unit-attrs/unit-attrs";
+import { UnitType } from "../../../schema/unit-attrs-schema";
 
 it("registry", () => {
   const nsid = "unit:base/matriarch";
@@ -20,6 +21,7 @@ it("default", () => {
 
   const fighter: UnitAttrs = combatRoll.self.unitAttrsSet.getOrThrow("fighter");
   expect(fighter.getGroundCombat()).toBeUndefined();
+  expect(fighter.isGround()).toBe(false);
 });
 
 it("modifier", () => {
@@ -27,7 +29,7 @@ it("modifier", () => {
     self: ["unit:base/matriarch"],
     selfUnits: new Map([
       ["flagship", 1],
-      ["fighter", 1],
+      ["fighter", 3],
     ]),
   });
 
@@ -41,6 +43,13 @@ it("modifier", () => {
 
   expect(combatRoll.getUnitModifierNames()).toEqual(["Matriarch"]);
 
-  const fighter: UnitAttrs = combatRoll.self.unitAttrsSet.getOrThrow("fighter");
+  const fighter: UnitAttrs = combatRoll.self.unitAttrsSet.getOrThrow(
+    "fighter (Matriarch)" as UnitType
+  );
   expect(fighter.getGroundCombat()?.getHit()).toBe(9);
+  expect(fighter.isGround()).toBe(true);
+  const numFighters: number = combatRoll.self.getCount(
+    "fighter (Matriarch)" as UnitType
+  );
+  expect(numFighters).toBe(3);
 });
