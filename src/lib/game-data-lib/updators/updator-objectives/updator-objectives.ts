@@ -18,6 +18,7 @@ import { RightClickScorePublic } from "../../../../context-menu/right-click-scor
 const ASSIGN_NSIDS_TO_CLOSEST_PLAYER: Set<string> = new Set<string>([
   "card.planet:thunders-edge/styx",
   "card.relic:pok/the-obsidian",
+  "card.relic:pok/shard-of-the-throne",
 ]);
 
 export class UpdatorObjectives implements IGameDataUpdator {
