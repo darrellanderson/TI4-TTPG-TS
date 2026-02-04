@@ -66,6 +66,33 @@ it("_createControlTypeFromUnitPlastic (ground)", () => {
   expect(controlObjType.planet?.getName()).toBe("Mecatol Rex");
 });
 
+it("_createControlTypeFromUnitPlastic (control token)", () => {
+  const systemTileObj: GameObject = MockGameObject.simple(
+    "tile.system:base/18"
+  );
+  const obj: GameObject = MockGameObject.simple("token.control:base/sol", {
+    owningPlayerSlot: 13,
+  });
+
+  const plastic: UnitPlastic | undefined = UnitPlastic.getOne(obj);
+  if (!plastic) {
+    throw new Error("UnitPlastic not found");
+  }
+  UnitPlastic.assignPlanets([plastic]);
+
+  const ownership = new SpacePlanetOwnership();
+  const controlObjType: ControlObjType | undefined =
+    ownership._createControlTypeFromUnitPlastic(plastic);
+  if (!controlObjType) {
+    throw new Error("controlObjType not found");
+  }
+  expect(controlObjType.obj).toBe(obj);
+  expect(controlObjType.owningPlayerSlot).toBe(13);
+  expect(controlObjType.hex).toBe("<0,0,0>");
+  expect(controlObjType.system.getObj()).toBe(systemTileObj);
+  expect(controlObjType.planet?.getName()).toBe("Mecatol Rex");
+});
+
 it("_createControlTypeFromUnitPlastic (no system tile)", () => {
   const obj: GameObject = MockGameObject.simple("unit:base/mech", {
     owningPlayerSlot: 13,
@@ -83,53 +110,12 @@ it("_createControlTypeFromUnitPlastic (no system tile)", () => {
   expect(controlObjType).toBeUndefined();
 });
 
-it("_createControlTypeFromControlToken", () => {
-  const systemTileObj: GameObject = MockGameObject.simple(
-    "tile.system:base/18"
-  );
-  const controlToken: GameObject = MockGameObject.simple("token:base/control", {
-    owningPlayerSlot: 13,
-  });
-
-  const ownership = new SpacePlanetOwnership();
-  const controlObjType: ControlObjType | undefined =
-    ownership._createControlTypeFromControlToken(controlToken);
-  if (!controlObjType) {
-    throw new Error("controlObjType not found");
-  }
-  expect(controlObjType.obj).toBe(controlToken);
-  expect(controlObjType.owningPlayerSlot).toBe(13);
-  expect(controlObjType.hex).toBe("<0,0,0>");
-  expect(controlObjType.system.getObj()).toBe(systemTileObj);
-  expect(controlObjType.planet?.getName()).toBe("Mecatol Rex");
-});
-
-it("_createControlTypeFromControlToken (not a control token)", () => {
-  const controlToken: GameObject = MockGameObject.simple("token:base/command", {
-    owningPlayerSlot: 13,
-  });
-
-  const ownership = new SpacePlanetOwnership();
-  const controlObjType: ControlObjType | undefined =
-    ownership._createControlTypeFromControlToken(controlToken);
-  expect(controlObjType).toBeUndefined();
-});
-
-it("_createControlTypeFromControlToken (no system tile)", () => {
-  const controlToken: GameObject = MockGameObject.simple("token:base/control", {
-    owningPlayerSlot: 13,
-  });
-
-  const ownership = new SpacePlanetOwnership();
-  const controlObjType: ControlObjType | undefined =
-    ownership._createControlTypeFromControlToken(controlToken);
-  expect(controlObjType).toBeUndefined();
-});
-
 it("_getAllControlEntries", () => {
   MockGameObject.simple("tile.system:base/18");
   const unitObj: GameObject = MockGameObject.simple("unit:base/mech");
-  const controlToken: GameObject = MockGameObject.simple("token:base/control");
+  const controlToken: GameObject = MockGameObject.simple(
+    "token.control:base/sol"
+  );
 
   const ownership = new SpacePlanetOwnership();
   const controlObjTypes: Array<ControlObjType> =
@@ -143,7 +129,7 @@ it("getHexToControlSystemEntries", () => {
   MockGameObject.simple("tile.system:base/18");
   MockGameObject.simple("unit:base/destroyer", { owningPlayerSlot: 13 });
   MockGameObject.simple("unit:base/destroyer", { owningPlayerSlot: 13 });
-  MockGameObject.simple("token:base/control", { owningPlayerSlot: 14 });
+  MockGameObject.simple("token.control:base/sol", { owningPlayerSlot: 14 });
 
   const ownership = new SpacePlanetOwnership();
   const hexToControlSystemEntry: Map<HexType, ControlSystemType> =
@@ -164,7 +150,7 @@ it("getHexToControlSystemEntries (conflicting units in space, ground)", () => {
   MockGameObject.simple("tile.system:base/18");
   MockGameObject.simple("unit:base/destroyer", { owningPlayerSlot: 13 });
   MockGameObject.simple("unit:base/destroyer", { owningPlayerSlot: 14 }); // Conflict.
-  MockGameObject.simple("token:base/control", { owningPlayerSlot: 14 });
+  MockGameObject.simple("token.control:base/sol", { owningPlayerSlot: 14 });
   MockGameObject.simple("unit:pok/mech", { owningPlayerSlot: 13 }); // Conflict.
 
   const ownership = new SpacePlanetOwnership();

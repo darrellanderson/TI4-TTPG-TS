@@ -1,11 +1,12 @@
-import { GameObject, Vector, world } from "@tabletop-playground/api";
-import { HexType, NSID, PlayerSlot } from "ttpg-darrell";
+import { GameObject, Vector } from "@tabletop-playground/api";
+import { HexType, PlayerSlot } from "ttpg-darrell";
 
 import { Planet } from "../../system-lib/planet/planet";
 import { System } from "../../system-lib/system/system";
 import { UnitAttrs } from "../../unit-lib/unit-attrs/unit-attrs";
 import { UnitPlastic } from "../../unit-lib/unit-plastic/unit-plastic";
 import { UnitType } from "../../unit-lib/schema/unit-attrs-schema";
+import { UnitAttrsSet } from "../../unit-lib";
 
 /**
  * Represent a GameObject that exerts control over a planet or space area.
@@ -35,6 +36,7 @@ export type ControlSystemType = {
  */
 export class SpacePlanetOwnership {
   private readonly _hexToSystem: Map<HexType, System> = new Map();
+  private readonly _unitAttrsSet: UnitAttrsSet;
 
   constructor() {
     const skipContained: boolean = true;
@@ -46,6 +48,7 @@ export class SpacePlanetOwnership {
       const hex: HexType = TI4.hex.fromPosition(pos);
       this._hexToSystem.set(hex, system);
     }
+    this._unitAttrsSet = TI4.unitAttrsRegistry.defaultUnitAttrsSet();
   }
 
   _createControlTypeFromUnitPlastic(
@@ -66,38 +69,11 @@ export class SpacePlanetOwnership {
     };
 
     const unitType: UnitType = unitPlastic.getUnit();
-    const unitAttrs: UnitAttrs | undefined = TI4.unitAttrsRegistry
-      .defaultUnitAttrsSet()
-      .get(unitType);
+    const unitAttrs: UnitAttrs | undefined = this._unitAttrsSet.get(unitType);
     if (unitType === "control-token" || (unitAttrs && !unitAttrs.isShip())) {
       result.planet = unitPlastic.getPlanetClosest();
     }
     return result;
-  }
-
-  _createControlTypeFromControlToken(
-    controlToken: GameObject
-  ): ControlObjType | undefined {
-    const nsid: string = NSID.get(controlToken);
-    if (nsid !== "token:base/control") {
-      return undefined;
-    }
-
-    const pos: Vector = controlToken.getPosition();
-    const hex: HexType = TI4.hex.fromPosition(pos);
-    const system: System | undefined = this._hexToSystem.get(hex);
-    if (!system) {
-      return undefined;
-    }
-    const planet: Planet | undefined = system.getPlanetClosest(pos);
-
-    return {
-      obj: controlToken,
-      owningPlayerSlot: controlToken.getOwningPlayerSlot(),
-      hex,
-      system,
-      planet,
-    };
   }
 
   _getAllControlEntries(): Array<ControlObjType> {
@@ -108,15 +84,6 @@ export class SpacePlanetOwnership {
     for (const plastic of plastics) {
       const controlType: ControlObjType | undefined =
         this._createControlTypeFromUnitPlastic(plastic);
-      if (controlType) {
-        result.push(controlType);
-      }
-    }
-
-    const skipContained: boolean = true;
-    for (const obj of world.getAllObjects(skipContained)) {
-      const controlType: ControlObjType | undefined =
-        this._createControlTypeFromControlToken(obj);
       if (controlType) {
         result.push(controlType);
       }
