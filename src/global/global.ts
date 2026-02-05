@@ -95,6 +95,7 @@ import { RightClickScorePublic } from "../context-menu/right-click-score/right-c
 import { RightClickSleeperToken } from "../context-menu/right-click-sleeper-token/right-click-sleeper-token";
 import { RightClickSpecOps2 } from "../context-menu/cards/infantry-2/right-click-spec-ops-2";
 import { RightClickStellarConverter } from "../context-menu/cards/stellar-converter/right-click-stellar-converter";
+import { RightClickTheCavalry } from "../context-menu/cards/the-cavalry/right-click-the-cavalry";
 import { RightClickThundersEdge } from "../context-menu/right-click-thunders-edge/right-click-thunders-edge";
 import { RunInjectScript } from "../lib/homebrew-lib/run-inject-script/run-inject-script";
 import { RSwapSplitCombine } from "./r-swap-split-combine";
@@ -312,6 +313,7 @@ export function resetGlobalThisTI4(): TI4Class {
     new RightClickSleeperToken(),
     new RightClickSpecOps2(),
     new RightClickStellarConverter(),
+    new RightClickTheCavalry(),
     new RightClickTFAbilitySplice(),
     new RightClickTFGenomeSplice(),
     new RightClickTFSupercharge(),
