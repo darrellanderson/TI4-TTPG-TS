@@ -1,7 +1,7 @@
 import { GameObject, Vector, world } from "@tabletop-playground/api";
-import { Find, HexType, NSID, ParsedNSID } from "ttpg-darrell";
+import { HexType, NSID, ParsedNSID } from "ttpg-darrell";
 
-import { UnitSchema, UnitType } from "../schema/unit-attrs-schema";
+import { UnitType, UnitTypeValues } from "../schema/unit-attrs-schema";
 import { OnSystemActivated } from "../../../event/on-system-activated/on-system-activated";
 import { Planet } from "../../system-lib/planet/planet";
 import { System } from "../../system-lib/system/system";
@@ -12,7 +12,9 @@ import { System } from "../../system-lib/system/system";
  * optionally assign those to the closest same-hex owned unit plastic.
  */
 export class UnitPlastic {
-  private static readonly __find: Find = new Find();
+  private static readonly _unitTypeValues: ReadonlySet<string> = new Set(
+    UnitTypeValues
+  );
 
   private readonly _unit: UnitType;
   private readonly _count: number;
@@ -42,6 +44,17 @@ export class UnitPlastic {
     return closest;
   }
 
+  public static getCombatArena(): GameObject | undefined {
+    const combatArenaNsid: string = "mat:base/combat-arena";
+    TI4.findTracking.trackNsid(combatArenaNsid);
+    const combatArenas: Array<GameObject> =
+      TI4.findTracking.find(combatArenaNsid);
+    const combatArena: GameObject | undefined = combatArenas[0];
+    if (combatArena && combatArena.isValid() && !combatArena.getContainer()) {
+      return combatArena;
+    }
+  }
+
   /**
    * Convert a game object to a unit plastic entry (is it applies).
    *
@@ -56,7 +69,8 @@ export class UnitPlastic {
     if (nsid.startsWith("unit:")) {
       const parsed: ParsedNSID | undefined = NSID.parse(nsid);
       const maybeUnit: string | undefined = parsed?.nameParts[0];
-      if (UnitSchema.safeParse(maybeUnit).success) {
+
+      if (maybeUnit && UnitPlastic._unitTypeValues.has(maybeUnit)) {
         unit = maybeUnit as UnitType;
       }
     } else if (nsid.startsWith("token:base/")) {
@@ -85,12 +99,8 @@ export class UnitPlastic {
     if (unit) {
       let pos: Vector = obj.getPosition();
 
-      const skipContained: boolean = true;
-      const combatArena: GameObject | undefined = this.__find.findGameObject(
-        "mat:base/combat-arena",
-        undefined,
-        skipContained
-      );
+      const combatArena: GameObject | undefined = UnitPlastic.getCombatArena();
+
       const system: System | undefined =
         OnSystemActivated.getLastActivatedSystem();
       if (combatArena && system) {

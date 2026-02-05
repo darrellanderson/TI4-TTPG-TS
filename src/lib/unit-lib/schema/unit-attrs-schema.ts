@@ -1,23 +1,25 @@
 import { z } from "zod";
 import { NsidNameSchema } from "../../system-lib/schema/basic-types-schema";
 
-export const UnitSchema = z
-  .enum([
-    "carrier",
-    "control-token", // not a unit per-se, but useful to track for control
-    "cruiser",
-    "destroyer",
-    "dreadnought",
-    "fighter",
-    "flagship",
-    "galvanize-token", // leverage fighter/infantry token logic for closest plastic
-    "infantry",
-    "mech",
-    "pds",
-    "space-dock",
-    "war-sun",
-  ])
-  .readonly();
+// `UnitSchema.safeParse(maybeUnit).success` checks if a string is a valid UnitType,
+// but leaks memory.  So hard code the enum values here for use elsewhere.
+export const UnitTypeValues: readonly [string, ...string[]] = [
+  "carrier",
+  "control-token", // not a unit per-se, but useful to track for control
+  "cruiser",
+  "destroyer",
+  "dreadnought",
+  "fighter",
+  "flagship",
+  "galvanize-token", // leverage fighter/infantry token logic for closest plastic
+  "infantry",
+  "mech",
+  "pds",
+  "space-dock",
+  "war-sun",
+] as const;
+
+export const UnitSchema = z.enum(UnitTypeValues).readonly();
 export type UnitType = z.infer<typeof UnitSchema>;
 
 export const CombatAttrsSchema = z
