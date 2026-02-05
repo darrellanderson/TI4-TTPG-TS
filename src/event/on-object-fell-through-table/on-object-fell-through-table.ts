@@ -17,31 +17,28 @@ export class OnObjectFellThroughTable implements IGlobal {
 
     // Objects might be created by scripts under the table.
     // Give them a grace period before we start checking them.
-    for (const objId of Array.from(this._underTableAgingObjIds)) {
-      this._underTableAgingObjIds.delete(objId);
-      const obj: GameObject | undefined = world.getObjectById(objId);
-      if (obj && obj.isValid() && obj.getContainer() === undefined) {
-        const objPos: Vector = obj.getPosition();
-        if (objPos.z < tableHeight) {
-          this._underTableAgedObjIds.add(objId);
-        }
-      }
-    }
-
-    // Now check aged objects.
+    // Check aged objects.
     for (const objId of Array.from(this._underTableAgedObjIds)) {
       this._underTableAgedObjIds.delete(objId);
       const obj: GameObject | undefined = world.getObjectById(objId);
       if (obj && obj.isValid() && obj.getContainer() === undefined) {
         const objPos: Vector = obj.getPosition();
-        const origZ: number = objPos.z;
         if (objPos.z < tableHeight) {
+          const origPos: string = [
+            objPos.x.toFixed(1),
+            objPos.y.toFixed(1),
+            objPos.z.toFixed(1),
+          ].join(",");
           objPos.z = tableHeight + 10;
           obj.setPosition(objPos);
           obj.snapToGround();
 
-          const nsid: string = NSID.get(obj);
-          const msg: string = `"${nsid}" fell through the table (${origZ.toFixed(1)} vs ${tableHeight.toFixed(1)})`;
+          let nsid: string = NSID.get(obj);
+          if (nsid.length === 0) {
+            nsid = `template:${obj.getTemplateId()}`;
+          }
+
+          const msg: string = `fell through: "${nsid}" ([${origPos}] vs ${tableHeight.toFixed(1)})`;
           console.log(msg);
           if (this._reportErrors) {
             ErrorHandler.onError.trigger(msg);
@@ -49,6 +46,18 @@ export class OnObjectFellThroughTable implements IGlobal {
 
           // Tell any listeners that the object fell through the table.
           TI4.events.onObjectFellThroughTable.trigger(obj);
+        }
+      }
+    }
+
+    // Add any under-table objects to the aging list for next time.
+    for (const objId of Array.from(this._underTableAgingObjIds)) {
+      this._underTableAgingObjIds.delete(objId);
+      const obj: GameObject | undefined = world.getObjectById(objId);
+      if (obj && obj.isValid() && obj.getContainer() === undefined) {
+        const objPos: Vector = obj.getPosition();
+        if (objPos.z < tableHeight) {
+          this._underTableAgedObjIds.add(objId);
         }
       }
     }
