@@ -35,7 +35,9 @@ export class OnObjectFellThroughTable implements IGlobal {
 
           let nsid: string = NSID.get(obj);
           if (nsid.length === 0) {
-            nsid = `template:${obj.getTemplateId()}`;
+            nsid = `template!${obj.getTemplateId()}`;
+          } else {
+            nsid = nsid.replace(/:/g, "!"); // replace ':' to avoid bugsplat using as delimiter
           }
 
           const msg: string = `fell through: "${nsid}" ([${origPos}] vs ${tableHeight.toFixed(1)})`;
