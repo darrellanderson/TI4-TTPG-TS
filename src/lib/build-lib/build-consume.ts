@@ -97,6 +97,9 @@ export class BuildConsume {
         }
 
         this._unitModifierNames.push(`AI(${unitUpgradeCount})`);
+      } else if (nsid === "card.leader.agent:pok/berekar-berekon") {
+        // Winnu agent, must exhuast so only count if in area.
+        this._unitModifierNames.push(`BeBe(2)`);
       }
 
       if (type) {
