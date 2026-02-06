@@ -150,6 +150,8 @@ import { TFHeliosEntity } from "../context-menu/tf-fetch-tokens/tf-helios-entity
 import { TFSingularityX } from "../context-menu/tf-fetch-tokens/tf-singularity-x";
 import { TFSingularityY } from "../context-menu/tf-fetch-tokens/tf-singularity-y";
 import { TFSingularityZ } from "../context-menu/tf-fetch-tokens/tf-singularity-z";
+import { RightClickTFEdict } from "../context-menu/tf-splice/right-click-tf-edict";
+
 import { TFTelepathicNaalu0 } from "../context-menu/tf-fetch-tokens/tf-telepathic-naalu-0";
 import { RightClickTFSupercharge } from "../context-menu/cards/tf-supercharge/tf-superchange";
 
@@ -315,6 +317,7 @@ export function resetGlobalThisTI4(): TI4Class {
     new RightClickStellarConverter(),
     new RightClickTheCavalry(),
     new RightClickTFAbilitySplice(),
+    new RightClickTFEdict(),
     new RightClickTFGenomeSplice(),
     new RightClickTFSupercharge(),
     new RightClickTFUnitUpgradeSplice(),
