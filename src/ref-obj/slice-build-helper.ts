@@ -15,7 +15,7 @@ import {
   SystemSummaryType,
 } from "../lib/system-lib/system/system-summary";
 
-const SCALE: number = 2;
+const SCALE: number = 4;
 
 export class SliceBuildHelper {
   private readonly _obj: GameObject;
@@ -26,6 +26,7 @@ export class SliceBuildHelper {
     this._obj = obj;
     this._text = new Text()
       .setAutoWrap(false)
+      .setBold(true)
       .setFontSize(10 * SCALE)
       .setJustification(TextJustification.Center)
       .setTextColor([0, 0, 0, 1]);
