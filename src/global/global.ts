@@ -145,7 +145,7 @@ import { OnStartTwilightsFall } from "../event/on-start-twilights-fall/on-start-
 import { TFAhkSylFier } from "../context-menu/tf-fetch-tokens/tf-ahk-syl-fier";
 import { TFAwakeningGeoform } from "../context-menu/tf-fetch-tokens/tf-awakening-geoform";
 import { TFDimensionalTear } from "../context-menu/tf-fetch-tokens/tf-dimensional-tear";
-import { TFFactionRefCardUI } from "../lib/twilights-fall-lib/tf-faction-ref-card-ui/tf-faction-ref-card-ui";
+//import { TFFactionRefCardUI } from "../lib/twilights-fall-lib/tf-faction-ref-card-ui/tf-faction-ref-card-ui";
 import { TFHeliosEntity } from "../context-menu/tf-fetch-tokens/tf-helios-entity";
 import { TFSingularityX } from "../context-menu/tf-fetch-tokens/tf-singularity-x";
 import { TFSingularityY } from "../context-menu/tf-fetch-tokens/tf-singularity-y";
@@ -188,7 +188,7 @@ export class TI4Class {
 
   // Libraries.
   public readonly autoStreamerCamera = new AutoStreamerCamera(
-    "@auto-streamer-camera/ti4"
+    "@auto-streamer-camera/ti4",
   );
   public readonly borders = new AllBorders();
   public readonly config = new Config("@config/ti4");
@@ -198,11 +198,11 @@ export class TI4Class {
     .loadDefaultRewriteNsid();
   public readonly findTracking = new FindTracking();
   public readonly gameDataUpdator = new GameDataUpdator(
-    GAME_DATA_UPDATORS
+    GAME_DATA_UPDATORS,
   ).startPeriodicUpdatesInProduction();
   public readonly goalReporter = new GoalReporter();
   public readonly hideMouseCursor = new HideMouseCursor(
-    "@hide-mouse-cursor/ti4"
+    "@hide-mouse-cursor/ti4",
   );
   public readonly homebrewRegistry = new HomebrewRegistry();
   public readonly lastGameData = new LastGameData();
@@ -211,7 +211,7 @@ export class TI4Class {
   public readonly planetAttachmentRegistry =
     new PlanetAttachmentRegistry().loadDefaultData();
   public readonly playerActionPhaseTime = new PlayerActionPhaseTime(
-    "@player-action-phase-time/ti4"
+    "@player-action-phase-time/ti4",
   );
   public readonly playerColor = new PlayerColor("@player-color/ti4");
   public readonly playerName = new PlayerName();
@@ -228,7 +228,7 @@ export class TI4Class {
   public readonly unitModifierRegistry =
     new UnitModifierRegistry().loadDefaultData();
   public readonly useStreamerBuddy = new UseStreamerBuddy(
-    "@use-streamer-buddy/ti4"
+    "@use-streamer-buddy/ti4",
   );
   public readonly whisperSpy = new WhisperSpy("@whisper-spy/ti4");
 }
@@ -369,7 +369,7 @@ export function resetGlobalThisTI4(): TI4Class {
         new BugUniqueCards(),
         new CreateAndAttachEndTurnButtonUI(),
         new CreateAndAttachTurnOrderUI(),
-      ]
+      ],
     );
   }
 
@@ -386,7 +386,7 @@ export function resetGlobalThisTI4(): TI4Class {
       new AgendaActivityMaybeResume(),
       new DraftActivityMaybeResume(),
       new DraftActivityMaybeResumeTF(),
-    ]
+    ],
   );
 
   for (const v of Object.values(globalThis.TI4)) {

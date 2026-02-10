@@ -12,6 +12,7 @@ import {
 } from "@tabletop-playground/api";
 import {
   Broadcast,
+  CardUtil,
   DeletedItemsContainer,
   Find,
   GarbageContainer,
@@ -63,7 +64,7 @@ export class RightClickExplore implements IGlobal {
   private readonly _customActionHandler = (
     obj: GameObject,
     player: Player,
-    identifier: string
+    identifier: string,
   ): void => {
     if (identifier === "*Explore Frontier") {
       const frontierTokenObj: GameObject | undefined =
@@ -78,7 +79,7 @@ export class RightClickExplore implements IGlobal {
     }
 
     const system: System | undefined = TI4.systemRegistry.getBySystemTileObjId(
-      obj.getId()
+      obj.getId(),
     );
     if (system) {
       const parts: string[] = identifier.split(" ");
@@ -94,7 +95,7 @@ export class RightClickExplore implements IGlobal {
                 system,
                 planet,
                 trait as TraitSchemaType,
-                player
+                player,
               );
             }
             if (actionPart === "*Distant-Suns") {
@@ -102,7 +103,7 @@ export class RightClickExplore implements IGlobal {
                 system,
                 planet,
                 trait as TraitSchemaType,
-                player
+                player,
               );
             }
           }
@@ -134,7 +135,7 @@ export class RightClickExplore implements IGlobal {
 
   _setSystemCustomActions(systemTileObj: GameObject) {
     const system: System | undefined = TI4.systemRegistry.getBySystemTileObjId(
-      systemTileObj.getId()
+      systemTileObj.getId(),
     );
     if (system) {
       systemTileObj.onCustomAction.remove(this._customActionHandler);
@@ -192,7 +193,7 @@ export class RightClickExplore implements IGlobal {
     const deck: Card | undefined = this._find.findDeckOrDiscard(
       deckTag,
       discardTag,
-      shuffleDiscard
+      shuffleDiscard,
     );
     return deck;
   }
@@ -216,7 +217,7 @@ export class RightClickExplore implements IGlobal {
     system: System,
     planet: Planet,
     trait: TraitSchemaType,
-    player: Player
+    player: Player,
   ): void {
     let deck: Card | undefined = this._getExploreDeck(trait);
     let card: Card | undefined = undefined;
@@ -238,7 +239,7 @@ export class RightClickExplore implements IGlobal {
     trait: TraitSchemaType,
     system: System,
     planet: Planet,
-    player: Player
+    player: Player,
   ): void {
     const cardNsid: string = NSID.get(card);
     this._maybeAddPlanetAttachment(planet, cardNsid);
@@ -329,6 +330,31 @@ export class RightClickExplore implements IGlobal {
       if (success) {
         systemAttachment.doLayout();
       }
+
+      systemAttachment.getPlanets().forEach((planet: Planet): void => {
+        // If planet(s), draw planet and maybe legendary cards.
+        const _fetchCard = (nsid: string, offsetIndex: number): void => {
+          const cardUtil: CardUtil = new CardUtil();
+          const card: Card | undefined = cardUtil.fetchCard(nsid);
+          if (card) {
+            const z = world.getTableHeight() + 3;
+            const fetchPos: Vector = planet
+              .getPosition()
+              .add([0, 2 * offsetIndex, z]);
+            card.setPosition(fetchPos);
+            card.setRotation([0, 0, 180]);
+            card.snapToGround();
+          }
+        };
+
+        const planetCardNsid: string = planet.getPlanetCardNsid();
+        _fetchCard(planetCardNsid, 0);
+        planet
+          .getLegendaryCardNsids()
+          .forEach((legendaryCardNsid: string, index: number): void => {
+            _fetchCard(legendaryCardNsid, index + 1);
+          });
+      });
     }
   }
 
@@ -336,7 +362,7 @@ export class RightClickExplore implements IGlobal {
     system: System,
     planet: Planet,
     trait: TraitSchemaType,
-    player: Player
+    player: Player,
   ): void {
     let deck: Card | undefined = this._getExploreDeck(trait);
     let card1: Card | undefined = undefined;
