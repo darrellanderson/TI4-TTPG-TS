@@ -112,7 +112,7 @@ export class SliceUI extends AbstractUI {
     // Add label (below slice).
     const summaryValue: string =
       SystemSummary.getFromSystemTileNumbers(slice).getSummary();
-    const fontSize: number = halfScaledHexHeight * 0.45;
+    const fontSize: number = halfScaledHexHeight * 0.3;
     const summaryText: Text = new Text()
       .setBold(true)
       .setFontSize(fontSize)
