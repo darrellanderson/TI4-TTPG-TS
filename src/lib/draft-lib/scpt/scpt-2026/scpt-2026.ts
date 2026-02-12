@@ -49,7 +49,35 @@ export class Scpt2026 extends AbstractScpt {
   }
 
   getPrelim(): DraftActivityStartParams | undefined {
-    return undefined;
+    const slices: Array<string> = [
+      "46,34,117,65,26",
+      "64,72,48,69,45",
+      "40,29,80,35,102",
+      "49,31,103,98,113",
+      "39,60,97,116,101",
+      "79,106,68,66,61",
+    ];
+    const labels: Array<string> = [
+      "All along the Graltower",
+      "Jeol Ir Fan",
+      "Applebees",
+      "The Dump",
+      "It starts with one",
+      "Influence Shminfluence",
+    ];
+
+    // Prune to player count + 1 preserving order.
+    const numSlices: number = slices.length;
+    const numFactions: number = 7;
+
+    return {
+      namespaceId: DRAFT_NAMESPACE_ID,
+      draft: new Milty(),
+      numSlices,
+      numFactions,
+      config: `${slices.join("|")}&labels=${labels.join("|")}`,
+      countdownHours: 8,
+    };
   }
 
   getSemi(): DraftActivityStartParams | undefined {
