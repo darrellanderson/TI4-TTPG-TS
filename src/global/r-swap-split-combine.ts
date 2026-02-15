@@ -9,7 +9,11 @@ export class RSwapSplitCombine extends SwapSplitCombine implements IGlobal {
       [
         {
           src: {
-            nsids: ["token:base/infantry-1", "unit:base/infantry"],
+            nsids: [
+              "token:base/infantry-1",
+              "unit:base/infantry",
+              "unit:base/infantry.token",
+            ],
             count: 3,
           },
           dst: { nsid: "token:base/infantry-3", count: 1 },
@@ -17,7 +21,11 @@ export class RSwapSplitCombine extends SwapSplitCombine implements IGlobal {
         },
         {
           src: {
-            nsids: ["token:base/fighter-1", "unit:base/fighter"],
+            nsids: [
+              "token:base/fighter-1",
+              "unit:base/fighter",
+              "unit:base/fighter.token",
+            ],
             count: 3,
           },
           dst: { nsid: "token:base/fighter-3", count: 1 },
@@ -68,12 +76,18 @@ export class RSwapSplitCombine extends SwapSplitCombine implements IGlobal {
           repeat: false,
         },
         {
-          src: { nsids: ["unit:base/fighter"], count: 1 },
+          src: {
+            nsids: ["unit:base/fighter", "unit:base/fighter.token"],
+            count: 1,
+          },
           dst: { nsid: "token:base/fighter-1", count: 1 },
           repeat: false,
         },
         {
-          src: { nsids: ["unit:base/infantry"], count: 1 },
+          src: {
+            nsids: ["unit:base/infantry", "unit:base/infantry.token"],
+            count: 1,
+          },
           dst: { nsid: "token:base/infantry-1", count: 1 },
           repeat: false,
         },
