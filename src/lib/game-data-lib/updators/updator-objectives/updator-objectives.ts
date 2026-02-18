@@ -17,8 +17,10 @@ import { RightClickScorePublic } from "../../../../context-menu/right-click-scor
 
 const ASSIGN_NSIDS_TO_CLOSEST_PLAYER: Set<string> = new Set<string>([
   "card.planet:thunders-edge/styx",
-  "card.relic:pok/the-obsidian",
+  "card.relic:codex.liberation/book-of-latvinia",
   "card.relic:pok/shard-of-the-throne",
+  "card.relic:pok/the-crown-of-emphidia",
+  "card.relic:pok/the-obsidian",
 ]);
 
 export class UpdatorObjectives implements IGameDataUpdator {
@@ -146,13 +148,6 @@ export class UpdatorObjectives implements IGameDataUpdator {
   _getRelevantCards(): Array<Card> {
     const objectiveCards: Array<Card> = [];
 
-    const trackOtherNsids: Set<string> = new Set<string>([
-      "card.relic:pok/the-obsidian", // not scorable, but wanted for streamer display
-      "card.relic:codex.liberation/book-of-latvinia",
-      "card.relic:pok/the-crown-of-emphidia",
-      "card.planet:thunders-edge/styx",
-    ]);
-
     const skipContained: boolean = true;
     for (const obj of world.getAllObjects(skipContained)) {
       const nsid: string = NSID.get(obj);
@@ -193,7 +188,7 @@ export class UpdatorObjectives implements IGameDataUpdator {
         if (
           RightClickScorePrivate.isScorablePrivate(obj) ||
           RightClickScorePublic.isScorablePublic(obj) ||
-          trackOtherNsids.has(nsid)
+          ASSIGN_NSIDS_TO_CLOSEST_PLAYER.has(nsid)
         ) {
           objectiveCards.push(obj);
         }
