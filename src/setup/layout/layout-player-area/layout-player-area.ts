@@ -19,9 +19,9 @@ import { LayoutConfig } from "../layout-config";
 import { LayoutMats } from "./layout-mats";
 import { LayoutSheets } from "./layout-sheets";
 import { LayoutTokenContainers } from "./layout-token-containers";
-import { LayoutUnitBoxes } from "./layout-unit-boxes";
 import { PlaceGenericPromissories } from "./place-generic-promissories";
 import { LayoutRowTrovesAndStatusPad } from "./layout-row-troves-and-status-pad";
+import { LayoutUnitBoxesPlusTokens } from "./layout-unit-boxes-plus-tokens";
 
 export class LayoutPlayerArea {
   private readonly _layout: LayoutBorder;
@@ -38,7 +38,7 @@ export class LayoutPlayerArea {
     ).getLayout();
 
     // Center top to bottom.
-    const layoutUnitBoxes: LayoutObjects = new LayoutUnitBoxes(
+    const layoutUnitBoxes: LayoutObjects = new LayoutUnitBoxesPlusTokens(
       playerSlot
     ).getLayout();
     const extraSpaceBetweenBoxesAndSheets =

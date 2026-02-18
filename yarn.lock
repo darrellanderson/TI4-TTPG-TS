@@ -3547,9 +3547,9 @@ tslib@^2.3.1, tslib@^2.4.0:
   integrity sha512-oJFu94HQb+KVduSUQL7wnpmqnfmLsOA/nAh6b6EH0wCEoK0/mPeXU6c3wKDV83MkOuHPRHtSXKKU99IBazS/2w==
 
 ttpg-darrell@^1.1.14:
-  version "1.1.75"
-  resolved "https://registry.yarnpkg.com/ttpg-darrell/-/ttpg-darrell-1.1.75.tgz#930abde4867065ca0c35e2081d19c4f80fff9ee6"
-  integrity sha512-Zdr1rodO5V3dnU+nwv4I3Xxp9mqQ06ZpE8fWbGCNJRPz7QSeOyzrhC9r7Re6fgPzOuBgXxVwzWyq0lAJwKSmng==
+  version "1.1.76"
+  resolved "https://registry.yarnpkg.com/ttpg-darrell/-/ttpg-darrell-1.1.76.tgz#c56e86493a632cf2df2aae54f2a00941d50f21fb"
+  integrity sha512-LOl42SClVrunxbuu5Am1pQz5JMn7qHsLz/DVgqqGGdZdYh8wWjjhSRTsCAEOiSjRUMc7tiuTPuO7saqbNQEpoQ==
   dependencies:
     "@tabletop-playground/api" "0.41.0"
     fastest-levenshtein "^1.0.16"

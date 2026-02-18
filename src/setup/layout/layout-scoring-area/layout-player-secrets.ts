@@ -20,6 +20,7 @@ export class LayoutPlayerSecrets {
         "card-holder:base/player-scoring"
       );
       secrets.setOwningPlayerSlot(10 + i);
+      secrets.setScale([1, 1.4, 1]); // make wider (max 1.4 to fit 8p on table)
       const whichLayout: LayoutObjects = i < topCount ? secrets1 : secrets2;
       whichLayout.add(secrets);
       secretsArray.push(secrets);
