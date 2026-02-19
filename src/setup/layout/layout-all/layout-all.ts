@@ -12,6 +12,7 @@ import { LayoutTableDecks } from "../layout-table-decks/layout-table-decks";
 import { LayoutTableSystemTiles } from "../layout-table-system-tiles/layout-table-system-tiles";
 import { LayoutQuickRoller } from "../layout-quick-roller/layout-quick-roller";
 import { PlaceGenericHomeSystems } from "../layout-map-area/place-generic-home-systems";
+import { LayoutChosenFactions } from "../layout-chosen-factions/layout-chosen-factions";
 
 export class LayoutAll {
   private readonly _layout: LayoutObjects;
@@ -60,6 +61,7 @@ export class LayoutAll {
           .setIsVertical(true)
           .add(new LayoutStrategyCards().getLayout())
           .add(new LayoutQuickRoller().getLayout())
+          .add(new LayoutChosenFactions().getLayout())
       );
 
     // Top player areas invert vertical layout.
