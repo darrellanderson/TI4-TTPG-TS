@@ -142,6 +142,7 @@ export const NSID_TO_TEMPLATE_ID: { [key: string]: string } = {
     "mat.player:base/technology-deck": "B73F07EFDF172B2BAA3213E95DA70250",
     "mat.player:base/trove": "E702682C7661C189EF0772E082AECEE3",
     "mat:base/agenda-laws": "D11D18C157D2800F512D0E9C61105884",
+    "mat:base/chosen-faction": "054CE3C6BB913F0399FD27C05A0D2FCC",
     "mat:base/combat-arena": "EDB676C497988EFEDF1DFBF1550EAAB9",
     "mat:base/custodians": "C57729056C98584015FAB61A91E7A21F",
     "mat:base/objective-1": "6E0E5CA87C8C85476BCE62BB6DB2A8F5",

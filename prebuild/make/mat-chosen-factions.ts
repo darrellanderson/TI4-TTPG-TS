@@ -86,7 +86,7 @@ const params: CreateBoardParams = {
     autoWidthHeight: { pixel: REF_H, world: REF_H_WORLD },
     depth: 0.25,
   },
-  preshrink: 512,
+  preshrink: 1024,
 };
 
 async function go() {
