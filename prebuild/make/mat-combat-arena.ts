@@ -1,9 +1,9 @@
 import {
-  CreateBoard,
-  CreateBoardParams,
   ZImageCell,
   ZPaddedCell,
-} from "../../../ttpg-darrell/src/index-ext";
+} from "../../node_modules/ttpg-darrell/build/cjs/lib-ext/image/cell/cell-parser";
+import { CreateBoardParams } from "../../node_modules/ttpg-darrell/build/cjs/lib-ext/create-assets/create-board/create-board-params";
+import { CreateBoard } from "../../node_modules/ttpg-darrell/build/cjs/lib-ext/create-assets/create-board/create-board";
 
 const HEX_W_WORLD: number = 17.32 * 2;
 const HEX_H_WORLD: number = 15 * 2;
@@ -32,7 +32,7 @@ const params: CreateBoardParams = {
   templateName: "Combat Arena Mat",
   assetFilename: "mat/combat-arena",
   templateMetadata: "mat:base/combat-arena",
-  scriptName: "obj/combat-arena-obj.js",
+  scriptName: "ref-obj/combat-arena-obj.js",
   srcImage: getMat(),
   topDownWorldSize: {
     width: HEX_W_WORLD,

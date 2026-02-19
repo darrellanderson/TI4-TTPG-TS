@@ -1,6 +1,4 @@
 import {
-  CreateBoard,
-  CreateBoardParams,
   ZBaseCell,
   ZCanvasCell,
   ZColCell,
@@ -8,7 +6,9 @@ import {
   ZPaddedCell,
   ZRowCell,
   ZTextCell,
-} from "../../../ttpg-darrell/src/index-ext";
+} from "../../node_modules/ttpg-darrell/build/cjs/lib-ext/image/cell/cell-parser";
+import { CreateBoardParams } from "../../node_modules/ttpg-darrell/build/cjs/lib-ext/create-assets/create-board/create-board-params";
+import { CreateBoard } from "../../node_modules/ttpg-darrell/build/cjs/lib-ext/create-assets/create-board/create-board";
 
 const W: number = 220;
 const H: number = 308;
@@ -102,7 +102,7 @@ const params: CreateBoardParams = {
   templateName: "Agenda/Laws Mat",
   assetFilename: "mat/agenda-laws",
   templateMetadata: "mat:base/agenda-laws",
-  scriptName: "obj/agenda-laws-mat.js",
+  scriptName: "ref-obj/agenda-laws-mat.js",
   srcImage: objectiveMat(),
   topDownWorldSize: {
     autoWidthHeight: { pixel: H, world: H_WORLD },

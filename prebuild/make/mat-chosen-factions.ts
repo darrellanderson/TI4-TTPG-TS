@@ -3,13 +3,14 @@ import {
   ZColCell,
   ZImageCell,
   ZPaddedCell,
+  ZRowCell,
   ZTextCell,
 } from "../../node_modules/ttpg-darrell/build/cjs/lib-ext/image/cell/cell-parser";
 import { CreateBoardParams } from "../../node_modules/ttpg-darrell/build/cjs/lib-ext/create-assets/create-board/create-board-params";
 import { CreateBoard } from "../../node_modules/ttpg-darrell/build/cjs/lib-ext/create-assets/create-board/create-board";
 
 const REF_W_WORLD: number = 8.8;
-const REF_H_WORLD: number = 6.3;
+const REF_H_WORLD: number = 5.1;
 
 const REF_W: number = Math.round(REF_W_WORLD * (308 / 6.3));
 const REF_H: number = Math.round(REF_H_WORLD * (308 / 6.3));
@@ -22,9 +23,7 @@ function getSlot(): ZCanvasCell {
     width: 308,
     height: 220,
     imageFile: "prebuild/mat/slot/slot-landscape.jpg",
-    snapPoints: [
-      { tags: ["card-faction-reference", "deck-faction-reference"] },
-    ],
+    snapPoints: [{ tags: ["card-faction-reference"] }],
   };
   return {
     type: "CanvasCell",
@@ -32,8 +31,8 @@ function getSlot(): ZCanvasCell {
     height: REF_H,
     children: [
       {
-        left: (REF_W - 308) / 2,
-        top: (REF_H - 220) / 2,
+        left: Math.round((REF_W - 308) / 2),
+        top: Math.round((REF_H - 220) / 2),
         child: slotCell,
       },
     ],
@@ -43,7 +42,7 @@ function getSlot(): ZCanvasCell {
 function getLabel(labelText: string): ZTextCell {
   return {
     type: "TextCell",
-    width: REF_W,
+    width: REF_W * 4 + SPACING * 3,
     height: 24,
     text: labelText.toUpperCase(),
     textColor: "#ffffff",
@@ -52,11 +51,19 @@ function getLabel(labelText: string): ZTextCell {
   };
 }
 
+function factionRow(): ZRowCell {
+  return {
+    type: "RowCell",
+    spacing: SPACING,
+    children: [getSlot(), getSlot(), getSlot(), getSlot()],
+  };
+}
+
 function getGrid(): ZColCell {
   return {
     type: "ColCell",
     spacing: SPACING,
-    children: [getSlot(), getLabel("Faction")],
+    children: [factionRow(), factionRow(), getLabel("Active Factions")],
   };
 }
 
@@ -70,9 +77,10 @@ function getMat(): ZPaddedCell {
 }
 
 const params: CreateBoardParams = {
-  templateName: "Faction Reference Mat",
-  assetFilename: "mat/deck-faction-reference",
-  templateMetadata: "mat.deck:base/faction-reference",
+  templateName: "Chosen Faction Mat",
+  assetFilename: "mat/chosen-faction",
+  templateMetadata: "mat:base/chosen-faction",
+  scriptName: "ref-obj/chosen-faction-mat.js",
   srcImage: getMat(),
   topDownWorldSize: {
     autoWidthHeight: { pixel: REF_H, world: REF_H_WORLD },

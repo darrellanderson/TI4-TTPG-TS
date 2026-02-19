@@ -47,7 +47,7 @@ function getMat(): ZPaddedCell {
 const params: CreateBoardParams = {
   templateName: "Player Build Mat",
   assetFilename: "mat/player-build",
-  scriptName: "obj/build-area.js",
+  scriptName: "ref-obj/build-area.js",
   templateMetadata: "mat.player:base/build",
   srcImage: getMat(),
   topDownWorldSize: {

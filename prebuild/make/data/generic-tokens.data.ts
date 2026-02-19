@@ -47,7 +47,7 @@ export const SOURCE_TO_GENERIC_TOKENS: Record<
       name: "Speaker",
       nsidName: "speaker",
       model: "speaker",
-      script: "obj/speaker-token.js",
+      script: "ref-obj/speaker-token.js",
     },
     {
       name: "Tradegood/Commodity x1",

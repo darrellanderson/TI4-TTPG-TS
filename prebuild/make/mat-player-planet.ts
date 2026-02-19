@@ -1,12 +1,12 @@
 import {
-  CreateBoard,
-  CreateBoardParams,
   ZCanvasCell,
   ZColCell,
   ZImageCell,
   ZPaddedCell,
   ZRowCell,
-} from "../../../ttpg-darrell/src/index-ext";
+} from "../../node_modules/ttpg-darrell/build/cjs/lib-ext/image/cell/cell-parser";
+import { CreateBoardParams } from "../../node_modules/ttpg-darrell/build/cjs/lib-ext/create-assets/create-board/create-board-params";
+import { CreateBoard } from "../../node_modules/ttpg-darrell/build/cjs/lib-ext/create-assets/create-board/create-board";
 
 const W: number = 220;
 const H: number = 308;
@@ -94,7 +94,7 @@ const params: CreateBoardParams = {
   templateName: "Player Planet Mat",
   assetFilename: "mat/player-planet",
   templateMetadata: "mat.player:base/planet",
-  scriptName: "obj/planet-mat.js",
+  scriptName: "ref-obj/planet-mat.js",
   srcImage: planetMat(),
   topDownWorldSize: {
     autoWidthHeight: { pixel: H, world: H_WORLD },
