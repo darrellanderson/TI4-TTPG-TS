@@ -9,6 +9,9 @@ import {
 import { Faction } from "../lib/faction-lib/faction/faction";
 import { CardUtil, DeletedItemsContainer } from "ttpg-darrell";
 
+/**
+ * Spawn a new faction reference card on the mat for each unpacked faction.
+ */
 class ChosenFactionMat {
   private readonly _obj: GameObject;
   private readonly _onFactionChanged = (playerSlot: number): void => {
