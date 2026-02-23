@@ -11,23 +11,27 @@ export class GameDataExport implements IGlobal {
   private readonly _onGameData = (gameData: GameData): void => {
     if (
       this._sendNextGameData &&
-      TI4.config.exportGameData &&
+      (TI4.config.exportGameData || this._sawOnGameEnd) &&
       TI4.config.timestamp > 0 &&
       world.getAllPlayers().length > 0
     ) {
+      this._sawOnGameEnd = false;
       this._sendNextGameData = false;
       this._send(gameData);
     }
   };
 
   private readonly _onGameEnd = (): void => {
+    this._sawOnGameEnd = true; // clear one send
     this._sendNextGameData = true;
+    TI4.events.onGameEnd.remove(this._onGameEnd); // only send ONE post-game entry
   };
 
   private readonly _onInterval = (): void => {
     this._sendNextGameData = true;
   };
 
+  private _sawOnGameEnd: boolean = false; // send ONE post-game entry
   private _sendNextGameData: boolean = false;
   private _intervalHandle: NodeJS.Timeout | undefined = undefined;
 
@@ -50,7 +54,7 @@ export class GameDataExport implements IGlobal {
     if (executionReason !== "unittest") {
       this._intervalHandle = setInterval(
         this._onInterval,
-        EXPORT_INTERVAL_MSECS
+        EXPORT_INTERVAL_MSECS,
       );
     }
   }
