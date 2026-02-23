@@ -186,7 +186,7 @@ export class CombatRoll {
 
     this._adjHexes = new SystemAdjacency().getAdjHexes(
       params.hex,
-      this.self.faction
+      this.self.faction,
     );
 
     const pos: Vector = TI4.hex.toPosition(params.hex);
@@ -207,7 +207,7 @@ export class CombatRoll {
     const card: Card | undefined = this.find.findCard(
       cardNsid,
       owner,
-      skipContained
+      skipContained,
     );
     if (!card) {
       return true; // missing card is unlocked
@@ -231,7 +231,7 @@ export class CombatRoll {
           unitPlastic.getHex() === this._params.hex ||
           this._adjHexes.has(unitPlastic.getHex())
         );
-      }
+      },
     );
     UnitPlastic.assignOwners(unitPlastics);
     UnitPlastic.assignPlanets(unitPlastics);
@@ -255,7 +255,7 @@ export class CombatRoll {
           useAttrs = this._cardUtil.isLooseCard(
             obj,
             allowFaceDown,
-            rejectSnapPointTags
+            rejectSnapPointTags,
           );
           if (useAttrs) {
             const isFaceUp: boolean = Facing.isFaceUp(obj);
@@ -321,7 +321,7 @@ export class CombatRoll {
 
   _findUnitModifiers(
     selfSlot: number,
-    opponentSlot: number
+    opponentSlot: number,
   ): Array<UnitModifier> {
     const unitModifiers: Array<UnitModifier> = [];
     const skipContained: boolean = true;
@@ -368,13 +368,13 @@ export class CombatRoll {
 
     // Create Atop objects.
     const atopIgnoreAtops: Array<Atop> = atopIgnore.map((obj) =>
-      __atopCacheGet(obj)
+      __atopCacheGet(obj),
     );
     const atopApplyToAllAtops: Array<Atop> = atopApplyToAll.map((obj) =>
-      __atopCacheGet(obj)
+      __atopCacheGet(obj),
     );
     const atopFactionSheetsAtops: Array<Atop> = factionSheets.map((obj) =>
-      __atopCacheGet(obj)
+      __atopCacheGet(obj),
     );
 
     const getControlTokenOwner = (card: GameObject): number => {
@@ -403,7 +403,7 @@ export class CombatRoll {
     const maybeAddModifier = (
       nsid: string,
       obj: GameObject | undefined,
-      owningPlayerSlot: number
+      owningPlayerSlot: number,
     ): void => {
       const modifier: UnitModifier | undefined =
         TI4.unitModifierRegistry.getByNsid(nsid);
@@ -419,7 +419,7 @@ export class CombatRoll {
         const useModifier: boolean = this._cardUtil.isLooseCard(
           obj,
           allowFaceDown,
-          rejectSnapPointTags
+          rejectSnapPointTags,
         );
         if (!useModifier) {
           return;
@@ -557,7 +557,7 @@ export class CombatRoll {
                       maybeAddModifier(
                         unitNsid,
                         undefined,
-                        this.self.playerSlot
+                        this.self.playerSlot,
                       );
                     }
                   });
@@ -700,11 +700,11 @@ export class CombatRoll {
               const planetCard: Card | undefined = this.find.findCard(
                 planetCardNsid,
                 owningPlayerSlot,
-                skipContained
+                skipContained,
               );
               if (planetCard) {
                 const owner: number = this.find.closestOwnedCardHolderOwner(
-                  planetCard.getPosition()
+                  planetCard.getPosition(),
                 );
                 if (candidates.has(owner)) {
                   this.opponent.playerSlot = owner;
@@ -778,7 +778,7 @@ export class CombatRoll {
   public applyUnitModifiers(errors: Array<Error>): this {
     const unitModifiers: Array<UnitModifier> = this._findUnitModifiers(
       this.self.playerSlot,
-      this.opponent.playerSlot
+      this.opponent.playerSlot,
     );
 
     for (const modifier of unitModifiers) {
@@ -904,7 +904,7 @@ export class CombatRoll {
       const unitPlastic: UnitPlastic | undefined = this.self.unitPlasticHex[i];
       if (unitPlastic) {
         const unitAttrs: UnitAttrs | undefined = this.self.unitAttrsSet.get(
-          unitPlastic.getUnit()
+          unitPlastic.getUnit(),
         );
         if (unitAttrs && !unitAttrs.isGround()) {
           this.self.unitPlasticHex.splice(i, 1);
@@ -916,7 +916,7 @@ export class CombatRoll {
         this.opponent.unitPlasticHex[i];
       if (unitPlastic) {
         const unitAttrs: UnitAttrs | undefined = this.opponent.unitAttrsSet.get(
-          unitPlastic.getUnit()
+          unitPlastic.getUnit(),
         );
         if (unitAttrs && !unitAttrs.isGround()) {
           this.opponent.unitPlasticHex.splice(i, 1);
@@ -1030,7 +1030,7 @@ export class CombatRoll {
 
   public getUnitModifierNamesWithDescriptions(): Array<string> {
     return this._modifiers.map(
-      (modifier) => `${modifier.getName()} (${modifier.getDescription()})`
+      (modifier) => `${modifier.getName()} (${modifier.getDescription()})`,
     );
   }
 
@@ -1049,11 +1049,20 @@ export class CombatRoll {
 
     const callback = (
       diceResults: Array<DiceResult>,
-      _player: Player
+      _player: Player,
     ): void => {
       TI4.events.onCombatResult.trigger(this, diceResults);
 
-      if (this.opponent.playerSlot === 19) {
+      const replyRollTypes: Set<CombatRollType> = new Set([
+        "spaceCannonOffense",
+        "antiFighterBarrage",
+        "spaceCombat",
+        "groundCombat",
+      ]);
+      if (
+        this.opponent.playerSlot === 19 &&
+        replyRollTypes.has(this._params.rollType)
+      ) {
         // Opponent is anonymous units, roll for them.
         const anonRoll: CombatRoll = CombatRoll.createCooked({
           rollType: this._params.rollType,
