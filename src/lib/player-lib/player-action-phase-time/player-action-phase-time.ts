@@ -64,7 +64,7 @@ export class PlayerActionPhaseTime implements IGlobal {
   _getSeatIndexToSeconds(round: number): Array<number> {
     let seatIndexToSeconds: Array<number> | undefined =
       this._roundToSeatIndexToSeconds[round];
-    if (seatIndexToSeconds === undefined) {
+    if (!seatIndexToSeconds) {
       seatIndexToSeconds = [];
       this._roundToSeatIndexToSeconds[round] = seatIndexToSeconds;
     }
