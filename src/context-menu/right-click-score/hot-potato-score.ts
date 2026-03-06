@@ -17,6 +17,7 @@ import { AdvanceScore } from "../../lib/score-lib/advance-score/advance-score";
 const HOT_POTATO_NSIDS: Set<string> = new Set<string>([
   "card.relic:pok/shard-of-the-throne",
   "card.legendary-planet:thunders-edge/a-song-like-marrow",
+  "card.tf-action:twilights-fall/unravel",
 ]);
 
 /**
@@ -29,7 +30,7 @@ export class RightClickHotPotatoScore implements IGlobal {
   private readonly _customActionHandler = (
     obj: GameObject,
     player: Player,
-    actionName: string
+    actionName: string,
   ) => {
     if (actionName === this._actionName && obj instanceof Card) {
       this._maybeUnscore(obj);
