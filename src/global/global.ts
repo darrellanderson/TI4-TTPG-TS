@@ -135,6 +135,7 @@ import { RightClickYinAscendant } from "../context-menu/breakthroughs/yin-ascend
 
 // Twilight's Fall
 import { RightClickTFAbilitySplice } from "../context-menu/tf-splice/right-click-tf-ability";
+import { RightClickTFDragonFreed } from "../context-menu/cards/the-dragon-freed/the-dragon-freed";
 import { RightClickTFGenomeSplice } from "../context-menu/tf-splice/right-click-tf-genome";
 import { RightClickTFUnitUpgradeSplice } from "../context-menu/tf-splice/right-click-tf-unit-upgrade";
 
@@ -317,6 +318,7 @@ export function resetGlobalThisTI4(): TI4Class {
     new RightClickStellarConverter(),
     new RightClickTheCavalry(),
     new RightClickTFAbilitySplice(),
+    new RightClickTFDragonFreed(),
     new RightClickTFEdict(),
     new RightClickTFGenomeSplice(),
     new RightClickTFSupercharge(),
