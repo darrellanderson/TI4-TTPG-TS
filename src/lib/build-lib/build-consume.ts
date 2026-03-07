@@ -73,7 +73,7 @@ export class BuildConsume {
       } else if (nsid === "card.technology.red:pok/ai-development-algorithm") {
         // This modifier adds variable resources based on unit upgrade count.
         // Calculate this here vs unit/data/unit-modifiers.
-        let unitUpgradeCount: number = 0;
+        const unitUpgradeNsids: Set<string> = new Set<string>();
 
         const find: Find = new Find();
         const cardUtil: CardUtil = new CardUtil();
@@ -91,11 +91,12 @@ export class BuildConsume {
             const techPos: Vector = worldObj.getPosition();
             const techOwner: number = find.closestOwnedCardHolderOwner(techPos);
             if (techOwner === aiDevPlayerSlot) {
-              unitUpgradeCount += 1;
+              unitUpgradeNsids.add(worldObjNsid);
             }
           }
         }
 
+        const unitUpgradeCount: number = unitUpgradeNsids.size;
         this._unitModifierNames.push(`AI(${unitUpgradeCount})`);
       } else if (nsid === "card.leader.agent:pok/berekar-berekon") {
         // Winnu agent, must exhuast so only count if in area.
