@@ -15,16 +15,16 @@ import { UpdatorObjectivesType } from "./updator-objectives-type";
 import { RightClickScorePrivate } from "../../../../context-menu/right-click-score/right-click-score-private";
 import { RightClickScorePublic } from "../../../../context-menu/right-click-score/right-click-score-public";
 
-// These are not expected to move to a player scoring hand, but will count if done so.
+// These are not expected to move to a player scoring hand.
 const ASSIGN_NSIDS_TO_CLOSEST_PLAYER: Set<string> = new Set<string>([
   "card.planet:thunders-edge/styx",
-  "card.relic:codex.liberation/book-of-latvinia",
-  "card.relic:pok/shard-of-the-throne",
   "card.relic:pok/the-obsidian",
 ]);
 
 // These are "other" only counted when in a scoring hand.
 const OTHER_SCORABLE: Set<string> = new Set<string>([
+  "card.relic:codex.liberation/book-of-latvinia",
+  "card.relic:pok/shard-of-the-throne",
   "card.relic:pok/the-crown-of-emphidia",
 ]);
 
