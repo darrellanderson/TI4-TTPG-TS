@@ -3,7 +3,8 @@ import { UnitModifierSchemaType } from "../../../schema/unit-modifier-schema";
 
 export const Annihilator: UnitModifierSchemaType = {
   name: "Annihilator",
-  description: "Mech in the space area gain bombardment",
+  description:
+    "Mech in the space area gain bombardment (mech must be on planet for ground combat)",
   triggers: [{ cardClass: "mech", nsidName: "annihilator" }],
   owner: "self",
   priority: "mutate",
@@ -18,7 +19,8 @@ export const Annihilator: UnitModifierSchemaType = {
     if (combatRoll.getRollType() === "bombardment") {
       const mechCount: number = combatRoll.self.unitPlasticHex.filter(
         (plastic) =>
-          plastic.getUnit() === "mech" && plastic.getPlanetExact() === undefined
+          plastic.getUnit() === "mech" &&
+          plastic.getPlanetExact() === undefined,
       ).length;
       combatRoll.self.overrideUnitCountHex.set("mech", mechCount);
     } else if (
@@ -26,7 +28,9 @@ export const Annihilator: UnitModifierSchemaType = {
       combatRoll.planet !== undefined
     ) {
       const groundCount: number = combatRoll.self.unitPlasticHex.filter(
-        (plastic) => plastic.getPlanetExact() === combatRoll.planet
+        (plastic) =>
+          plastic.getUnit() === "mech" &&
+          plastic.getPlanetExact() === combatRoll.planet,
       ).length;
       combatRoll.self.overrideUnitCountHex.set("mech", groundCount);
     }
