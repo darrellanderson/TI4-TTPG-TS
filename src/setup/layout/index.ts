@@ -1,6 +1,7 @@
 // created from 'create-ts-index'
 
 export * from './layout-all';
+export * from './layout-chosen-factions';
 export * from './layout-combat-arena';
 export * from './layout-fighter-inf-tg-containers';
 export * from './layout-map-area';

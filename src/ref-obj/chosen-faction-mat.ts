@@ -15,6 +15,7 @@ import { CardUtil, DeletedItemsContainer } from "ttpg-darrell";
 class ChosenFactionMat {
   private readonly _obj: GameObject;
   private readonly _onFactionChanged = (playerSlot: number): void => {
+    console.log(`Chosen faction changed for player slot ${playerSlot}`);
     this._update(playerSlot);
   };
 
@@ -53,7 +54,7 @@ class ChosenFactionMat {
     const snapPoint: SnapPoint | undefined = snapPoints[seatIndex];
     if (!snapPoint) {
       throw new Error(
-        `No snap point for seat index ${seatIndex} on chosen faction mat`
+        `No snap point for seat index ${seatIndex} on chosen faction mat`,
       );
     }
     return snapPoint;
@@ -77,7 +78,7 @@ class ChosenFactionMat {
     const pos: Vector = this._obj.getPosition().add([0, 0, 10]);
     const deck: Card = TI4.spawn.spawnMergeDecksWithNsidPrefixOrThrow(
       "card.faction-reference",
-      pos
+      pos,
     );
 
     const cardUtil: CardUtil = new CardUtil();
@@ -85,7 +86,7 @@ class ChosenFactionMat {
       deck,
       (nsid: string): boolean => {
         return nsid === refCardNsid;
-      }
+      },
     );
     DeletedItemsContainer.destroyWithoutCopying(deck);
 

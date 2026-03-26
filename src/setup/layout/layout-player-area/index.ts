@@ -9,5 +9,6 @@ export * from './layout-status-pad';
 export * from './layout-token-containers';
 export * from './layout-trove-mat';
 export * from './layout-unit-box';
+export * from './layout-unit-boxes-plus-tokens';
 export * from './layout-unit-boxes';
 export * from './place-generic-promissories';

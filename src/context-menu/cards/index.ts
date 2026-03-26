@@ -15,3 +15,4 @@ export * from './so-ata';
 export * from './stellar-converter';
 export * from './tf-supercharge';
 export * from './the-cavalry';
+export * from './the-dragon-freed';
