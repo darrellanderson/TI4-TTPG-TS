@@ -415,7 +415,10 @@ export class CombatRoll {
       // Only use cards when face-up.
       if (obj instanceof Card) {
         const allowFaceDown: boolean = false;
-        const rejectSnapPointTags: Array<string> = ["discard"];
+        const rejectSnapPointTags: Array<string> = [
+          "discard-agenda",
+          "discard-action",
+        ];
         const useModifier: boolean = this._cardUtil.isLooseCard(
           obj,
           allowFaceDown,
