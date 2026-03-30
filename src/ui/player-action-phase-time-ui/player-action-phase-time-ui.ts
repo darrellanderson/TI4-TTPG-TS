@@ -81,14 +81,14 @@ export class PlayerActionPhaseTimeUI extends AbstractUI {
     const labelWeight: number = 1;
     const timeWeight: number = 0.4;
     const horizontalBox: HorizontalBox = new HorizontalBox().setChildDistance(
-      CONFIG.SPACING * scale
+      CONFIG.SPACING * scale,
     );
 
     // Round "zero" doesn't exist, use it for player names.
     // Use seat-index -1 for player names.
-    for (let round: number = 0; round <= 6; round++) {
+    for (let round: number = 0; round <= 7; round++) {
       const verticalBox: VerticalBox = new VerticalBox().setChildDistance(
-        CONFIG.SPACING * scale
+        CONFIG.SPACING * scale,
       );
       const weight: number = round === 0 ? labelWeight : timeWeight;
 
@@ -130,6 +130,7 @@ export class PlayerActionPhaseTimeUI extends AbstractUI {
   }
 
   update() {
+    // Per round times, "zero" round is player name.
     for (let round: number = 0; round <= 6; round++) {
       for (
         let seatIndex: number = -1; // extra for header
@@ -138,6 +139,15 @@ export class PlayerActionPhaseTimeUI extends AbstractUI {
       ) {
         this._updateRoundAndSeatIndex(round, seatIndex);
       }
+    }
+
+    // Final column, total time per player.
+    for (
+      let seatIndex: number = -1;
+      seatIndex < TI4.config.playerCount + 1;
+      seatIndex++
+    ) {
+      this._updateTotalForSeatIndex(seatIndex);
     }
   }
 
@@ -179,12 +189,37 @@ export class PlayerActionPhaseTimeUI extends AbstractUI {
         // Player action phase time.
         const totalSeconds: number = TI4.playerActionPhaseTime.getSeconds(
           round,
-          seatIndex
+          seatIndex,
         );
         const textString: string =
           PlayerActionPhaseTimeUI._formatTime(totalSeconds);
         text.setText(textString);
       }
+    }
+  }
+
+  _updateTotalForSeatIndex(seatIndex: number) {
+    const seatIndexToTimeText: Array<Text> | undefined =
+      this._roundToSeatIndexToTimeText[7];
+    if (!seatIndexToTimeText) {
+      return;
+    }
+    const text: Text | undefined = seatIndexToTimeText[seatIndex];
+    if (!text) {
+      return;
+    }
+    if (seatIndex === -1) {
+      text.setText("TOTAL");
+    } else if (seatIndex >= TI4.config.playerCount) {
+      text.setText("");
+    } else {
+      let totalSeconds: number = 0;
+      for (let round: number = 1; round <= 6; round++) {
+        totalSeconds += TI4.playerActionPhaseTime.getSeconds(round, seatIndex);
+      }
+      const textString: string =
+        PlayerActionPhaseTimeUI._formatTime(totalSeconds);
+      text.setText(textString);
     }
   }
 }
