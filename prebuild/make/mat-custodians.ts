@@ -1,12 +1,12 @@
 import {
-  CreateBoard,
-  CreateBoardParams,
   ZCanvasCell,
   ZColCell,
   ZImageCell,
   ZPaddedCell,
   ZTextCell,
-} from "../../../ttpg-darrell/src/index-ext";
+} from "../../node_modules/ttpg-darrell/build/cjs/lib-ext/image/cell/cell-parser/cell-schema";
+import { CreateBoardParams } from "../../node_modules/ttpg-darrell/build/cjs/lib-ext/create-assets/create-board/create-board-params";
+import { CreateBoard } from "../../node_modules/ttpg-darrell/build/cjs/lib-ext/create-assets/create-board/create-board";
 
 const TOKEN_SIZE_WORLD: number = 5.08;
 const TOKEN_SIZE: number = Math.round(TOKEN_SIZE_WORLD * (308 / 6.3));
