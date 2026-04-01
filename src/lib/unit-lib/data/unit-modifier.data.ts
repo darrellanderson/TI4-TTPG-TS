@@ -284,6 +284,9 @@ add("twilights-fall", StarlancerXI);
 import { TacticalBrilliance } from "./unit-modifiers/twilights-fall/tactical-brilliance";
 add("twilights-fall", TacticalBrilliance);
 
+import { TheFacesOfJanovet } from "./unit-modifiers/twilights-fall/the-faces-of-janovet";
+add("twilights-fall", TheFacesOfJanovet);
+
 import { Trine } from "./unit-modifiers/twilights-fall/trine";
 add("twilights-fall", Trine);
 

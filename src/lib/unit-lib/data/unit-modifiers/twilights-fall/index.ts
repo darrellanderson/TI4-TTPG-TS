@@ -14,6 +14,7 @@ export * from './proxima-targeting-tf';
 export * from './starlancer-xi';
 export * from './supercharge-tf';
 export * from './tactical-brilliance';
+export * from './the-faces-of-janovet';
 export * from './trine';
 export * from './unrelenting-tf';
 export * from './valefar-prime';
