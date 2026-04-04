@@ -151,7 +151,103 @@
         "29": "card.tf-genome:twilights-fall/temporal-genome",
         "30": "card.tf-genome:twilights-fall/valliant-genome"
     },
-    "CardTags": {},
+    "CardTags": {
+        "0": [
+            "card-tf-genome"
+        ],
+        "1": [
+            "card-tf-genome"
+        ],
+        "2": [
+            "card-tf-genome"
+        ],
+        "3": [
+            "card-tf-genome"
+        ],
+        "4": [
+            "card-tf-genome"
+        ],
+        "5": [
+            "card-tf-genome"
+        ],
+        "6": [
+            "card-tf-genome"
+        ],
+        "7": [
+            "card-tf-genome"
+        ],
+        "8": [
+            "card-tf-genome"
+        ],
+        "9": [
+            "card-tf-genome"
+        ],
+        "10": [
+            "card-tf-genome"
+        ],
+        "11": [
+            "card-tf-genome"
+        ],
+        "12": [
+            "card-tf-genome"
+        ],
+        "13": [
+            "card-tf-genome"
+        ],
+        "14": [
+            "card-tf-genome"
+        ],
+        "15": [
+            "card-tf-genome"
+        ],
+        "16": [
+            "card-tf-genome"
+        ],
+        "17": [
+            "card-tf-genome"
+        ],
+        "18": [
+            "card-tf-genome"
+        ],
+        "19": [
+            "card-tf-genome"
+        ],
+        "20": [
+            "card-tf-genome"
+        ],
+        "21": [
+            "card-tf-genome"
+        ],
+        "22": [
+            "card-tf-genome"
+        ],
+        "23": [
+            "card-tf-genome"
+        ],
+        "24": [
+            "card-tf-genome"
+        ],
+        "25": [
+            "card-tf-genome"
+        ],
+        "26": [
+            "card-tf-genome"
+        ],
+        "27": [
+            "card-tf-genome"
+        ],
+        "28": [
+            "card-tf-genome"
+        ],
+        "29": [
+            "card-tf-genome"
+        ],
+        "30": [
+            "card-tf-genome"
+        ]
+    },
     "GroundAccessibility": "ZoomAndContext",
-    "Tags": []
+    "Tags": [
+        "card-tf-genome"
+    ]
 }

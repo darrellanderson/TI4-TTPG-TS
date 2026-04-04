@@ -151,7 +151,103 @@
         "29": "card.tf-paradigm:twilights-fall/void-transference",
         "30": "card.tf-paradigm:twilights-fall/witching-hour"
     },
-    "CardTags": {},
+    "CardTags": {
+        "0": [
+            "card-tf-paradigm"
+        ],
+        "1": [
+            "card-tf-paradigm"
+        ],
+        "2": [
+            "card-tf-paradigm"
+        ],
+        "3": [
+            "card-tf-paradigm"
+        ],
+        "4": [
+            "card-tf-paradigm"
+        ],
+        "5": [
+            "card-tf-paradigm"
+        ],
+        "6": [
+            "card-tf-paradigm"
+        ],
+        "7": [
+            "card-tf-paradigm"
+        ],
+        "8": [
+            "card-tf-paradigm"
+        ],
+        "9": [
+            "card-tf-paradigm"
+        ],
+        "10": [
+            "card-tf-paradigm"
+        ],
+        "11": [
+            "card-tf-paradigm"
+        ],
+        "12": [
+            "card-tf-paradigm"
+        ],
+        "13": [
+            "card-tf-paradigm"
+        ],
+        "14": [
+            "card-tf-paradigm"
+        ],
+        "15": [
+            "card-tf-paradigm"
+        ],
+        "16": [
+            "card-tf-paradigm"
+        ],
+        "17": [
+            "card-tf-paradigm"
+        ],
+        "18": [
+            "card-tf-paradigm"
+        ],
+        "19": [
+            "card-tf-paradigm"
+        ],
+        "20": [
+            "card-tf-paradigm"
+        ],
+        "21": [
+            "card-tf-paradigm"
+        ],
+        "22": [
+            "card-tf-paradigm"
+        ],
+        "23": [
+            "card-tf-paradigm"
+        ],
+        "24": [
+            "card-tf-paradigm"
+        ],
+        "25": [
+            "card-tf-paradigm"
+        ],
+        "26": [
+            "card-tf-paradigm"
+        ],
+        "27": [
+            "card-tf-paradigm"
+        ],
+        "28": [
+            "card-tf-paradigm"
+        ],
+        "29": [
+            "card-tf-paradigm"
+        ],
+        "30": [
+            "card-tf-paradigm"
+        ]
+    },
     "GroundAccessibility": "ZoomAndContext",
-    "Tags": []
+    "Tags": [
+        "card-tf-paradigm"
+    ]
 }

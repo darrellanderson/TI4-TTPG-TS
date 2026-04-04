@@ -106,7 +106,58 @@
         "14": "card.tf-faction-tech:twilights-fall/wavelength-red",
         "15": "card.tf-faction-tech:twilights-fall/wavelength-yellow"
     },
-    "CardTags": {},
+    "CardTags": {
+        "0": [
+            "card-tf-faction-tech"
+        ],
+        "1": [
+            "card-tf-faction-tech"
+        ],
+        "2": [
+            "card-tf-faction-tech"
+        ],
+        "3": [
+            "card-tf-faction-tech"
+        ],
+        "4": [
+            "card-tf-faction-tech"
+        ],
+        "5": [
+            "card-tf-faction-tech"
+        ],
+        "6": [
+            "card-tf-faction-tech"
+        ],
+        "7": [
+            "card-tf-faction-tech"
+        ],
+        "8": [
+            "card-tf-faction-tech"
+        ],
+        "9": [
+            "card-tf-faction-tech"
+        ],
+        "10": [
+            "card-tf-faction-tech"
+        ],
+        "11": [
+            "card-tf-faction-tech"
+        ],
+        "12": [
+            "card-tf-faction-tech"
+        ],
+        "13": [
+            "card-tf-faction-tech"
+        ],
+        "14": [
+            "card-tf-faction-tech"
+        ],
+        "15": [
+            "card-tf-faction-tech"
+        ]
+    },
     "GroundAccessibility": "ZoomAndContext",
-    "Tags": []
+    "Tags": [
+        "card-tf-faction-tech"
+    ]
 }

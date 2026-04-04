@@ -79,7 +79,31 @@
         "5": "card.tf-ability:twilights-fall/yin-ascendant",
         "6": "card.tf-ability:twilights-fall/zealous"
     },
-    "CardTags": {},
+    "CardTags": {
+        "0": [
+            "card-tf-ability"
+        ],
+        "1": [
+            "card-tf-ability"
+        ],
+        "2": [
+            "card-tf-ability"
+        ],
+        "3": [
+            "card-tf-ability"
+        ],
+        "4": [
+            "card-tf-ability"
+        ],
+        "5": [
+            "card-tf-ability"
+        ],
+        "6": [
+            "card-tf-ability"
+        ]
+    },
     "GroundAccessibility": "ZoomAndContext",
-    "Tags": []
+    "Tags": [
+        "card-tf-ability"
+    ]
 }

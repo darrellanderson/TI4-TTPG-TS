@@ -178,7 +178,130 @@
         "38": "card.tf-ability:twilights-fall/terraform",
         "39": "card.tf-ability:twilights-fall/the-burning-eye"
     },
-    "CardTags": {},
+    "CardTags": {
+        "0": [
+            "card-tf-ability"
+        ],
+        "1": [
+            "card-tf-ability"
+        ],
+        "2": [
+            "card-tf-ability"
+        ],
+        "3": [
+            "card-tf-ability"
+        ],
+        "4": [
+            "card-tf-ability"
+        ],
+        "5": [
+            "card-tf-ability"
+        ],
+        "6": [
+            "card-tf-ability"
+        ],
+        "7": [
+            "card-tf-ability"
+        ],
+        "8": [
+            "card-tf-ability"
+        ],
+        "9": [
+            "card-tf-ability"
+        ],
+        "10": [
+            "card-tf-ability"
+        ],
+        "11": [
+            "card-tf-ability"
+        ],
+        "12": [
+            "card-tf-ability"
+        ],
+        "13": [
+            "card-tf-ability"
+        ],
+        "14": [
+            "card-tf-ability"
+        ],
+        "15": [
+            "card-tf-ability"
+        ],
+        "16": [
+            "card-tf-ability"
+        ],
+        "17": [
+            "card-tf-ability"
+        ],
+        "18": [
+            "card-tf-ability"
+        ],
+        "19": [
+            "card-tf-ability"
+        ],
+        "20": [
+            "card-tf-ability"
+        ],
+        "21": [
+            "card-tf-ability"
+        ],
+        "22": [
+            "card-tf-ability"
+        ],
+        "23": [
+            "card-tf-ability"
+        ],
+        "24": [
+            "card-tf-ability"
+        ],
+        "25": [
+            "card-tf-ability"
+        ],
+        "26": [
+            "card-tf-ability"
+        ],
+        "27": [
+            "card-tf-ability"
+        ],
+        "28": [
+            "card-tf-ability"
+        ],
+        "29": [
+            "card-tf-ability"
+        ],
+        "30": [
+            "card-tf-ability"
+        ],
+        "31": [
+            "card-tf-ability"
+        ],
+        "32": [
+            "card-tf-ability"
+        ],
+        "33": [
+            "card-tf-ability"
+        ],
+        "34": [
+            "card-tf-ability"
+        ],
+        "35": [
+            "card-tf-ability"
+        ],
+        "36": [
+            "card-tf-ability"
+        ],
+        "37": [
+            "card-tf-ability"
+        ],
+        "38": [
+            "card-tf-ability"
+        ],
+        "39": [
+            "card-tf-ability"
+        ]
+    },
     "GroundAccessibility": "ZoomAndContext",
-    "Tags": []
+    "Tags": [
+        "card-tf-ability"
+    ]
 }

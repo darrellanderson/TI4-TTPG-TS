@@ -151,7 +151,103 @@
         "29": "card.tf-unit-upgrade:twilights-fall/vortexer",
         "30": "card.tf-unit-upgrade:twilights-fall/yin-clone"
     },
-    "CardTags": {},
+    "CardTags": {
+        "0": [
+            "card-tf-unit-upgrade"
+        ],
+        "1": [
+            "card-tf-unit-upgrade"
+        ],
+        "2": [
+            "card-tf-unit-upgrade"
+        ],
+        "3": [
+            "card-tf-unit-upgrade"
+        ],
+        "4": [
+            "card-tf-unit-upgrade"
+        ],
+        "5": [
+            "card-tf-unit-upgrade"
+        ],
+        "6": [
+            "card-tf-unit-upgrade"
+        ],
+        "7": [
+            "card-tf-unit-upgrade"
+        ],
+        "8": [
+            "card-tf-unit-upgrade"
+        ],
+        "9": [
+            "card-tf-unit-upgrade"
+        ],
+        "10": [
+            "card-tf-unit-upgrade"
+        ],
+        "11": [
+            "card-tf-unit-upgrade"
+        ],
+        "12": [
+            "card-tf-unit-upgrade"
+        ],
+        "13": [
+            "card-tf-unit-upgrade"
+        ],
+        "14": [
+            "card-tf-unit-upgrade"
+        ],
+        "15": [
+            "card-tf-unit-upgrade"
+        ],
+        "16": [
+            "card-tf-unit-upgrade"
+        ],
+        "17": [
+            "card-tf-unit-upgrade"
+        ],
+        "18": [
+            "card-tf-unit-upgrade"
+        ],
+        "19": [
+            "card-tf-unit-upgrade"
+        ],
+        "20": [
+            "card-tf-unit-upgrade"
+        ],
+        "21": [
+            "card-tf-unit-upgrade"
+        ],
+        "22": [
+            "card-tf-unit-upgrade"
+        ],
+        "23": [
+            "card-tf-unit-upgrade"
+        ],
+        "24": [
+            "card-tf-unit-upgrade"
+        ],
+        "25": [
+            "card-tf-unit-upgrade"
+        ],
+        "26": [
+            "card-tf-unit-upgrade"
+        ],
+        "27": [
+            "card-tf-unit-upgrade"
+        ],
+        "28": [
+            "card-tf-unit-upgrade"
+        ],
+        "29": [
+            "card-tf-unit-upgrade"
+        ],
+        "30": [
+            "card-tf-unit-upgrade"
+        ]
+    },
     "GroundAccessibility": "ZoomAndContext",
-    "Tags": []
+    "Tags": [
+        "card-tf-unit-upgrade"
+    ]
 }

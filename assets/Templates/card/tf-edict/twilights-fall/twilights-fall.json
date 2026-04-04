@@ -88,7 +88,40 @@
         "8": "card.tf-edict:twilights-fall/legacy-of-ixth",
         "9": "card.tf-edict:twilights-fall/splice"
     },
-    "CardTags": {},
+    "CardTags": {
+        "0": [
+            "card-tf-edict"
+        ],
+        "1": [
+            "card-tf-edict"
+        ],
+        "2": [
+            "card-tf-edict"
+        ],
+        "3": [
+            "card-tf-edict"
+        ],
+        "4": [
+            "card-tf-edict"
+        ],
+        "5": [
+            "card-tf-edict"
+        ],
+        "6": [
+            "card-tf-edict"
+        ],
+        "7": [
+            "card-tf-edict"
+        ],
+        "8": [
+            "card-tf-edict"
+        ],
+        "9": [
+            "card-tf-edict"
+        ]
+    },
     "GroundAccessibility": "ZoomAndContext",
-    "Tags": []
+    "Tags": [
+        "card-tf-edict"
+    ]
 }

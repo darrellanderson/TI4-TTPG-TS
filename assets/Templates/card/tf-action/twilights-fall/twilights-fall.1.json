@@ -88,7 +88,40 @@
         "8": "card.tf-action:twilights-fall/unravel",
         "9": "card.tf-action:twilights-fall/vault"
     },
-    "CardTags": {},
+    "CardTags": {
+        "0": [
+            "card-tf-action"
+        ],
+        "1": [
+            "card-tf-action"
+        ],
+        "2": [
+            "card-tf-action"
+        ],
+        "3": [
+            "card-tf-action"
+        ],
+        "4": [
+            "card-tf-action"
+        ],
+        "5": [
+            "card-tf-action"
+        ],
+        "6": [
+            "card-tf-action"
+        ],
+        "7": [
+            "card-tf-action"
+        ],
+        "8": [
+            "card-tf-action"
+        ],
+        "9": [
+            "card-tf-action"
+        ]
+    },
     "GroundAccessibility": "ZoomAndContext",
-    "Tags": []
+    "Tags": [
+        "card-tf-action"
+    ]
 }

@@ -64,7 +64,16 @@
         "0": "card.tf-echo:twilights-fall/echo-of-divergence",
         "1": "card.tf-echo:twilights-fall/echo-of-sacrifice"
     },
-    "CardTags": {},
+    "CardTags": {
+        "0": [
+            "card-tf-echo"
+        ],
+        "1": [
+            "card-tf-echo"
+        ]
+    },
     "GroundAccessibility": "ZoomAndContext",
-    "Tags": []
+    "Tags": [
+        "card-tf-echo"
+    ]
 }

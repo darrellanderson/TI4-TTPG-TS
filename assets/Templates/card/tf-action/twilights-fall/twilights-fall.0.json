@@ -178,7 +178,130 @@
         "38": "card.tf-action:twilights-fall/spark.2",
         "39": "card.tf-action:twilights-fall/starflare"
     },
-    "CardTags": {},
+    "CardTags": {
+        "0": [
+            "card-tf-action"
+        ],
+        "1": [
+            "card-tf-action"
+        ],
+        "2": [
+            "card-tf-action"
+        ],
+        "3": [
+            "card-tf-action"
+        ],
+        "4": [
+            "card-tf-action"
+        ],
+        "5": [
+            "card-tf-action"
+        ],
+        "6": [
+            "card-tf-action"
+        ],
+        "7": [
+            "card-tf-action"
+        ],
+        "8": [
+            "card-tf-action"
+        ],
+        "9": [
+            "card-tf-action"
+        ],
+        "10": [
+            "card-tf-action"
+        ],
+        "11": [
+            "card-tf-action"
+        ],
+        "12": [
+            "card-tf-action"
+        ],
+        "13": [
+            "card-tf-action"
+        ],
+        "14": [
+            "card-tf-action"
+        ],
+        "15": [
+            "card-tf-action"
+        ],
+        "16": [
+            "card-tf-action"
+        ],
+        "17": [
+            "card-tf-action"
+        ],
+        "18": [
+            "card-tf-action"
+        ],
+        "19": [
+            "card-tf-action"
+        ],
+        "20": [
+            "card-tf-action"
+        ],
+        "21": [
+            "card-tf-action"
+        ],
+        "22": [
+            "card-tf-action"
+        ],
+        "23": [
+            "card-tf-action"
+        ],
+        "24": [
+            "card-tf-action"
+        ],
+        "25": [
+            "card-tf-action"
+        ],
+        "26": [
+            "card-tf-action"
+        ],
+        "27": [
+            "card-tf-action"
+        ],
+        "28": [
+            "card-tf-action"
+        ],
+        "29": [
+            "card-tf-action"
+        ],
+        "30": [
+            "card-tf-action"
+        ],
+        "31": [
+            "card-tf-action"
+        ],
+        "32": [
+            "card-tf-action"
+        ],
+        "33": [
+            "card-tf-action"
+        ],
+        "34": [
+            "card-tf-action"
+        ],
+        "35": [
+            "card-tf-action"
+        ],
+        "36": [
+            "card-tf-action"
+        ],
+        "37": [
+            "card-tf-action"
+        ],
+        "38": [
+            "card-tf-action"
+        ],
+        "39": [
+            "card-tf-action"
+        ]
+    },
     "GroundAccessibility": "ZoomAndContext",
-    "Tags": []
+    "Tags": [
+        "card-tf-action"
+    ]
 }
