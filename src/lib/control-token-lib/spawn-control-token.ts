@@ -12,6 +12,7 @@ export class SpawnControlToken {
       if (token) {
         token.setOwningPlayerSlot(playerSlot);
         token.setPrimaryColor(color);
+        token.setTags([`control(${playerSlot})`, "token-control"]);
       }
       return token;
     }
@@ -22,7 +23,7 @@ export class SpawnControlToken {
       this.spawnControlToken(playerSlot);
     if (!controlToken) {
       throw new Error(
-        `spawnControlTokenOrThrow: no control token for player slot ${playerSlot}`
+        `spawnControlTokenOrThrow: no control token for player slot ${playerSlot}`,
       );
     }
     return controlToken;

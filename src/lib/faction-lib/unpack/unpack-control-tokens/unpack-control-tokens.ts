@@ -21,7 +21,7 @@ export class UnpackControlTokens extends AbstractUnpack {
 
   unpack(): void {
     const color: Color = TI4.playerColor.getSlotPlasticColorOrThrow(
-      this.getPlayerSlot()
+      this.getPlayerSlot(),
     );
 
     // Control token in container.
@@ -30,7 +30,7 @@ export class UnpackControlTokens extends AbstractUnpack {
     const controlTokenNsid: string = this.getFaction().getControlTokenNsid();
     const controlToken: GameObject = TI4.spawn.spawnOrThrow(controlTokenNsid);
     controlToken.setOwningPlayerSlot(this.getPlayerSlot());
-    controlToken.setTags([`control(${this.getPlayerSlot()})`]);
+    controlToken.setTags([`control(${this.getPlayerSlot()})`, "token-control"]);
     controlToken.setPrimaryColor(color);
     controlTokenContainer.insert([controlToken]);
 
@@ -38,22 +38,25 @@ export class UnpackControlTokens extends AbstractUnpack {
     const scoreboard: Scoreboard = new Scoreboard();
     const pos: Vector | undefined = scoreboard.scoreToPos(
       0,
-      this.getPlayerSlot()
+      this.getPlayerSlot(),
     );
     const rot: Rotator | undefined = scoreboard.getControlTokenRotation();
     if (!pos || !rot) {
       throw new Error(
-        "Cannot find scoreboard control token position and/or rotation"
+        "Cannot find scoreboard control token position and/or rotation",
       );
     }
     pos.z = world.getTableHeight() + 10;
     const scoreboardToken: GameObject = TI4.spawn.spawnOrThrow(
       controlTokenNsid,
       pos,
-      rot
+      rot,
     );
     scoreboardToken.setOwningPlayerSlot(this.getPlayerSlot());
-    scoreboardToken.setTags([`control(${this.getPlayerSlot()})`]);
+    scoreboardToken.setTags([
+      `control(${this.getPlayerSlot()})`,
+      "token-control",
+    ]);
     scoreboardToken.setPrimaryColor(color);
     scoreboardToken.snapToGround();
   }
@@ -82,7 +85,7 @@ export class UnpackControlTokens extends AbstractUnpack {
     const container: Container | undefined = this._find.findContainer(
       nsid,
       this.getPlayerSlot(),
-      skipContained
+      skipContained,
     );
     if (!container) {
       throw new Error(`Cannot find container with nsid: ${nsid}`);
