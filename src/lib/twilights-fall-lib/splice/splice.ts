@@ -1,4 +1,4 @@
-import { Card, GameObject, Vector, world } from "@tabletop-playground/api";
+import { Card, GameObject, SnapPoint, Vector } from "@tabletop-playground/api";
 import { Find } from "ttpg-darrell";
 
 export class Splice {
@@ -11,44 +11,49 @@ export class Splice {
     const mat: GameObject | undefined = find.findGameObject(
       matNsid,
       owningPlayerSlot,
-      skipContained
+      skipContained,
     );
+    if (!mat) {
+      throw new Error(`splice: cannot find mat with nsid ${matNsid}`);
+    }
 
-    if (mat) {
-      const matExtent: Vector = mat.getExtent(false, false);
-      const deckExtent: Vector = deck.getExtent(false, false);
+    const splicePositions: Array<Vector> = mat
+      .getAllSnapPoints()
+      .filter((snapPoint: SnapPoint): boolean => {
+        return snapPoint.getTags().includes("splice-target");
+      })
+      .map((snapPoint: SnapPoint): Vector => snapPoint.getGlobalPosition());
 
-      const cards: Card[] = [];
-      for (let i = 0; i < count; i++) {
-        if (deck.getStackSize() === 1) {
-          cards.push(deck);
-          break;
-        } else {
-          const card: Card | undefined = deck.takeCards(1);
-          if (card) {
-            cards.push(card);
-          }
+    const cards: Card[] = [];
+    for (let i = 0; i < count; i++) {
+      if (deck.getStackSize() === 1) {
+        cards.push(deck);
+        break;
+      } else {
+        const card: Card | undefined = deck.takeCards(1);
+        if (card) {
+          cards.push(card);
         }
       }
-
-      count = cards.length; // potentially less than count
-
-      const center: Vector = mat.getPosition();
-      center.x -= matExtent.x + deckExtent.x + 2;
-
-      const cardWidth: number = deckExtent.y * 2;
-      const maxWidth: number = cardWidth * 6;
-      const width: number = Math.min(count * cardWidth, maxWidth);
-      const left: number = center.y - width / 2 + deckExtent.y;
-      const dY: number = width / Math.max(count, 1);
-      const z: number = world.getTableHeight() + 10;
-
-      cards.forEach((card: Card, index: number): void => {
-        const pos: Vector = new Vector(center.x, left + index * dY, z);
-        card.setPosition(pos);
-        card.setRotation([0, 0, 180]);
-        card.snapToGround();
-      });
     }
+
+    if (count > splicePositions.length) {
+      throw new Error(
+        `splice: not enough splice positions on mat for count ${count}`,
+      );
+    }
+
+    cards.forEach((card: Card, index: number): void => {
+      const pos: Vector | undefined = splicePositions[index];
+      if (!pos) {
+        throw new Error(
+          `splice: cannot find splice position for index ${index}`,
+        );
+      }
+      card.setPosition(pos.add([0, 0, 10]));
+      card.setRotation([0, 0, 180]);
+      card.snapToGround();
+      card.snap();
+    });
   }
 }

@@ -82,14 +82,22 @@ function getRowDecks(): ZRowCell {
 }
 
 function getRowSpliceTargets(): ZRowCell {
+  const slotTags: Array<string> = [
+    "splice-target",
+    "card-tf-genome",
+    "card-tf-unit-upgrade",
+    "card-tf-ability",
+    "card-tf-paradigm",
+  ];
+
   return {
     type: "RowCell",
     spacing: SPACING,
     children: [
-      _getSlotBackground([]),
-      _getSlotBackground([]),
-      _getSlotBackground([]),
-      _getSlotBackground([]),
+      _getSlotBackground(slotTags),
+      _getSlotBackground(slotTags),
+      _getSlotBackground(slotTags),
+      _getSlotBackground(slotTags),
     ],
   };
 }
