@@ -3,6 +3,7 @@
  */
 
 import {
+  ZBaseCell,
   ZColCell,
   ZImageCell,
   ZPaddedCell,
@@ -31,7 +32,7 @@ const COLOR: string = "#171717";
 
 // ?: echo (faction unpack), edict (agenda), faction-tech (faction unpack)
 
-function getSlotLandscape(tags: Array<string>): ZImageCell {
+function _getSlotBackground(tags: Array<string>): ZImageCell {
   const slotCell: ZImageCell = {
     type: "ImageCell",
     width: PORTRAIT_H,
@@ -42,7 +43,7 @@ function getSlotLandscape(tags: Array<string>): ZImageCell {
   return slotCell;
 }
 
-function getLabel(labelText: string): ZTextCell {
+function _getLabel(labelText: string): ZTextCell {
   return {
     type: "TextCell",
     width: PORTRAIT_H,
@@ -55,8 +56,8 @@ function getLabel(labelText: string): ZTextCell {
 }
 
 function getLabelLandscape(labelText: string, tags: Array<string>): ZColCell {
-  const slotCell: ZImageCell = getSlotLandscape(tags);
-  const labelCell: ZTextCell = getLabel(labelText);
+  const slotCell: ZImageCell = _getSlotBackground(tags);
+  const labelCell: ZTextCell = _getLabel(labelText);
   return {
     type: "ColCell",
     spacing: SPACING,
@@ -64,7 +65,7 @@ function getLabelLandscape(labelText: string, tags: Array<string>): ZColCell {
   };
 }
 
-function getGrid(): ZRowCell {
+function getRowDecks(): ZRowCell {
   return {
     type: "RowCell",
     spacing: SPACING,
@@ -76,6 +77,40 @@ function getGrid(): ZRowCell {
       ]),
       getLabelLandscape("Ability", ["deck-tf-ability", "card-tf-ability"]),
       getLabelLandscape("Paradigm", ["deck-tf-paradigm", "card-tf-paradigm"]),
+    ],
+  };
+}
+
+function getRowSpliceTargets(): ZRowCell {
+  return {
+    type: "RowCell",
+    spacing: SPACING,
+    children: [
+      _getSlotBackground([]),
+      _getSlotBackground([]),
+      _getSlotBackground([]),
+      _getSlotBackground([]),
+    ],
+  };
+}
+
+function getGrid(): ZColCell {
+  const gapCell: ZBaseCell = {
+    type: "SolidCell",
+    width: SPACING,
+    height: SPACING,
+    color: "#171717",
+  };
+
+  return {
+    type: "ColCell",
+    spacing: SPACING,
+    children: [
+      getRowDecks(),
+      gapCell,
+      getRowSpliceTargets(),
+      getRowSpliceTargets(),
+      getRowSpliceTargets(),
     ],
   };
 }
@@ -93,6 +128,7 @@ const params: CreateBoardParams = {
   templateName: "Twilight's Fall Decks Mat",
   assetFilename: "mat/deck-twilights-fall",
   templateMetadata: "mat.deck:twilights-fall/twilights-fall",
+  scriptName: "ref-obj/mat-twilights-fall.js",
   srcImage: getMat(),
   topDownWorldSize: {
     autoWidthHeight: { pixel: PORTRAIT_H, world: H_WORLD },
