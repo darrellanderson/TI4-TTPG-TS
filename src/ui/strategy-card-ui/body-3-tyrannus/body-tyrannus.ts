@@ -8,7 +8,7 @@ export class BodyTyrannus extends AbstractStrategyCardBody {
   }
 
   getStrategyCardName(): string {
-    return "Tryannus";
+    return "Tyrannus";
   }
 
   getBody(_scale: number): AbstractUI | undefined {
