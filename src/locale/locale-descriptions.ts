@@ -1,5 +1,6 @@
 import { GameObject, globalEvents, world } from "@tabletop-playground/api";
 import { IGlobal, NSID } from "ttpg-darrell";
+import { NSID_TO_DESCRIPTION } from "./extracted-descriptions";
 
 export const LOCALE_DESCRIPTIONS: { [key: string]: string } = {
   "card.leader.hero:thunders-edge/entity-4x41a-apollo":
@@ -17,7 +18,10 @@ export const LOCALE_DESCRIPTIONS: { [key: string]: string } = {
 export class ApplyLocaleDescriptions implements IGlobal {
   _onObjectCreated = (obj: GameObject): void => {
     const nsid: string = NSID.get(obj);
-    const description: string | undefined = LOCALE_DESCRIPTIONS[nsid];
+    let description: string | undefined = LOCALE_DESCRIPTIONS[nsid];
+    if (!description) {
+      description = NSID_TO_DESCRIPTION[nsid];
+    }
     if (description) {
       obj.setDescription(description);
     }

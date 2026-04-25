@@ -21,6 +21,10 @@
     "declaration": true,
     "declarationDir": "./build"
   },
-  "include": ["./src/**/*.ts", "./src/**/*.tsx"],
+  "include": [
+    "./src/**/*.ts",
+    "./src/**/*.tsx",
+    "prebuild/make/lib/levenshtein-distance.ts"
+  ],
   "exclude": ["./src/**/*.test.ts", "./src/**/*.d.ts"]
 }
