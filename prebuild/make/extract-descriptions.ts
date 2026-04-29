@@ -45,7 +45,17 @@ function getAllNsids(): Array<string> {
     }
   }
 
-  return allNsids;
+  return allNsids
+    .map((nsid: string): string => {
+      nsid = nsid.trim();
+      // Remove any trailing attributes after a pipe character.
+      const pipeIdx: number = nsid.indexOf("|");
+      if (pipeIdx !== -1) {
+        return nsid.substring(0, pipeIdx);
+      }
+      return nsid;
+    })
+    .filter((nsid: string): boolean => nsid.length > 0);
 }
 const ALL_NSIDS: Array<string> = getAllNsids();
 
@@ -71,7 +81,12 @@ function getNameToDescription(
 
     // Check if this object has a name and description.
     const name: string | undefined = json.Nickname;
-    const description: string | undefined = json.Description;
+    let description: string | undefined = json.Description;
+    if (description && description.endsWith(".")) {
+      // Remove trailing period to be consistent with other descriptions.
+      description = description.slice(0, -1);
+    }
+
     if (
       typeof name === "string" &&
       typeof description === "string" &&
