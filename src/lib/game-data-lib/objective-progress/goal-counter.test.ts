@@ -30,6 +30,16 @@ beforeEach(() => {
   });
 });
 
+function __spawnAllSystems() {
+  for (const tile of globalThis.TI4.systemRegistry.getAllSystemTileNumbers()) {
+    const nsid: string | undefined =
+      globalThis.TI4.systemRegistry.tileNumberToSystemTileObjNsid(tile);
+    if (nsid) {
+      MockGameObject.simple(nsid, { position: [100, 0, 0] });
+    }
+  }
+}
+
 it("_getSystemHexes", () => {
   MockGameObject.simple("tile.system:base/1");
   const systemHexes: Set<HexType> = new GoalCounter()._getSystemHexes();
@@ -38,6 +48,7 @@ it("_getSystemHexes", () => {
 });
 
 it("_getPlayerSlotToPlanetCards", () => {
+  __spawnAllSystems();
   const card: Card = MockCard.simple("card.planet:base/jord");
 
   const owner: PlayerSlot = new Find().closestOwnedCardHolderOwner([0, 0, 0]);
@@ -62,7 +73,7 @@ it("_getPlayerSlotToHomePlanetCardNsids", () => {
   expect(playerSlotToHomePlanetCardNsids.size).toBe(1);
   expect(playerSlotToHomePlanetCardNsids.get(10)?.size).toBe(1);
   expect(
-    playerSlotToHomePlanetCardNsids.get(10)?.has("card.planet:base/jord")
+    playerSlotToHomePlanetCardNsids.get(10)?.has("card.planet:base/jord"),
   ).toBe(true);
 });
 
@@ -197,6 +208,7 @@ it("countMaxNonFighterShipsInSingleSystem", () => {
 });
 
 it("countPlanetsAndGetNeighbors", () => {
+  __spawnAllSystems();
   MockCard.simple("card.planet:base/jord");
   MockCard.simple("card.planet:base/nar");
   MockCard.simple("card.planet:base/jol", { position: [0, 10, 0] });
@@ -266,9 +278,9 @@ it("countPlanetsInOthersHome", () => {
 });
 
 it("countPlanetsNonHome", () => {
-  MockGameObject.simple("tile.system:base/1", { position: [0, 10, 0] }); // need system tiles to get systems
+  __spawnAllSystems();
   MockCard.simple("card.planet:base/jord");
-  MockCard.simple("card.planet:base/primor");
+  MockCard.simple("card.planet:pok/primor");
   MockCard.simple("card.planet:codex.vigil/custodia-vigilia");
   MockGameObject.simple("sheet.faction:base/sol");
 
@@ -285,7 +297,7 @@ it("countPlanetsNonHome", () => {
   // Also test goal progress.
   const progress: GoalProgressType = new GoalProgress().planetsNonHome(
     2,
-    false
+    false,
   );
   expect(progress).toEqual({
     header: "Planets non-home",
@@ -334,11 +346,11 @@ it("countPlanetsWithAttachments", () => {
   MockCard.simple("card.planet:base/mecatol-rex");
   const attachment1: MockGameObject = MockGameObject.simple(
     "token.attachment.planet:pok/biotic-research-facility",
-    { position: [0, 10, 0] }
+    { position: [0, 10, 0] },
   );
   const attachment2: MockGameObject = MockGameObject.simple(
     "token.attachment.planet:codex.vigil/custodia-vigilia",
-    { position: [0, 10, 0] }
+    { position: [0, 10, 0] },
   );
 
   // Release to attach to a planet.
@@ -358,7 +370,7 @@ it("countPlanetsWithAttachments", () => {
 
   // Also test goal progress.
   const progress: GoalProgressType = new GoalProgress().planetsWithAttachments(
-    1
+    1,
   );
   expect(progress).toEqual({
     header: "Planets w/attach",

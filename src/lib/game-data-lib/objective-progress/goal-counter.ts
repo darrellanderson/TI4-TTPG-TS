@@ -37,7 +37,9 @@ export class GoalCounter {
     for (const obj of world.getAllObjects(skipContained)) {
       if (obj instanceof Card) {
         const nsid: string = NSID.get(obj);
-        if (nsid.startsWith("card.planet:")) {
+        const planet: Planet | undefined =
+          TI4.systemRegistry.getPlanetByPlanetCardNsid(nsid);
+        if (planet && !planet.isSpaceStation()) {
           const pos: Vector = obj.getPosition();
           const hex: HexType = TI4.hex.fromPosition(pos);
           if (!validHexes.has(hex)) {
@@ -95,7 +97,7 @@ export class GoalCounter {
         myHomePlanetNsids.forEach((nsid: string): void => {
           allHomePlanetCardNsids.add(nsid);
         });
-      }
+      },
     );
 
     return allHomePlanetCardNsids;
@@ -163,7 +165,7 @@ export class GoalCounter {
           nsid.startsWith("unit:base/flagship") ||
           nsid.startsWith("unit:base/war-sun")
         );
-      }
+      },
     );
 
     for (const plastic of plastics) {
@@ -224,7 +226,7 @@ export class GoalCounter {
     const plastics: Array<UnitPlastic> = UnitPlastic.getAll().filter(
       (plastic: UnitPlastic): boolean => {
         return nonFighterShips.has(plastic.getUnit());
-      }
+      },
     );
 
     // Group by hex.
@@ -301,7 +303,7 @@ export class GoalCounter {
         if (entry) {
           entry.planets += cards.length;
         }
-      }
+      },
     );
 
     return result;
@@ -350,7 +352,7 @@ export class GoalCounter {
   }
 
   countPlanetsNonHome(
-    excludeCustodiaVigilia: boolean
+    excludeCustodiaVigilia: boolean,
   ): Map<PlayerSlot, number> {
     const result = new Map<PlayerSlot, number>();
 
@@ -470,7 +472,7 @@ export class GoalCounter {
           }
         });
         result.set(playerSlot, count);
-      }
+      },
     );
 
     return result;
@@ -484,7 +486,7 @@ export class GoalCounter {
         return (
           plastic.getUnit() === "space-dock" || plastic.getUnit() === "pds"
         );
-      }
+      },
     );
 
     UnitPlastic.assignPlanets(structures);
@@ -527,7 +529,7 @@ export class GoalCounter {
         });
         const count: number = nonHomePlanets.size;
         result.set(playerSlot, count);
-      }
+      },
     );
 
     return result;
@@ -552,7 +554,7 @@ export class GoalCounter {
           }
         });
         result.set(playerSlot, count);
-      }
+      },
     );
 
     return result;
@@ -566,7 +568,7 @@ export class GoalCounter {
         return (
           plastic.getUnit() === "space-dock" || plastic.getUnit() === "pds"
         );
-      }
+      },
     );
 
     // Per-player structures.
@@ -589,7 +591,7 @@ export class GoalCounter {
       (playerStructures: Array<UnitPlastic>, playerSlot: PlayerSlot): void => {
         const count: number = playerStructures.length;
         result.set(playerSlot, count);
-      }
+      },
     );
 
     return result;
@@ -646,7 +648,7 @@ export class GoalCounter {
 
           result.set(playerSlot, count);
         }
-      }
+      },
     );
 
     return result;
@@ -688,7 +690,7 @@ export class GoalCounter {
     playerSlotToHomeSystemHex.forEach(
       (homeSystemHex: HexType, _playerSlot: PlayerSlot): void => {
         allHomeSystemHexes.add(homeSystemHex);
-      }
+      },
     );
 
     // Get Mecatol hex.
@@ -704,7 +706,7 @@ export class GoalCounter {
 
     // Count per-player.  (Map.forEach gets cranky with the HexType type.)
     const playerSlots: Array<PlayerSlot> = Array.from(
-      playerSlotToFlaghipOrWarSunHexes.keys()
+      playerSlotToFlaghipOrWarSunHexes.keys(),
     );
     playerSlots.forEach((playerSlot: PlayerSlot): void => {
       const hexes: Set<HexType> | undefined =
@@ -764,7 +766,7 @@ export class GoalCounter {
           }
         });
         result.set(playerSlot, count);
-      }
+      },
     );
 
     return result;
@@ -818,7 +820,7 @@ export class GoalCounter {
         TI4.factionRegistry.getByPlayerSlot(playerSlot);
       const adjHexes: Set<HexType> = systemAdjacency.getAdjHexes(
         mecatolHex,
-        faction
+        faction,
       );
 
       const shipHexes: Set<HexType> | undefined =
@@ -917,7 +919,7 @@ export class GoalCounter {
       const offMapNeighbors: Array<HexType> = Hex.neighbors(hex).filter(
         (neighbor: HexType): boolean => {
           return !mapHexes.has(neighbor);
-        }
+        },
       );
       if (offMapNeighbors.length > 0) {
         edgeHexes.add(hex);
@@ -951,7 +953,7 @@ export class GoalCounter {
           }
         }
         result.set(playerSlot, count);
-      }
+      },
     );
 
     return result;
