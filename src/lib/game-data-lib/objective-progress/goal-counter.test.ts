@@ -357,6 +357,7 @@ it("countPlanetsWithAttachments", () => {
   const player: Player = new MockPlayer();
   attachment1._releaseAsPlayer(player, false);
   attachment2._releaseAsPlayer(player, false);
+  process.flushTicks();
 
   const system: System | undefined =
     TI4.systemRegistry.getBySystemTileNumber(18);
