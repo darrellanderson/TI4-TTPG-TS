@@ -27,7 +27,15 @@ export class PlanetAttachmentLayout {
 
         attachment.getObj().setPosition(pos);
         attachment.getObj().snapToGround();
-        attachment.getObj().setObjectType(ObjectType.Ground);
+
+        let shouldLock: boolean = true;
+        if (planet.getName() === "Avernus") {
+          shouldLock = false; // Avernus moves, do not lock attachment tokens on it
+        }
+
+        if (shouldLock) {
+          attachment.getObj().setObjectType(ObjectType.Ground);
+        }
       }
     }
 

@@ -34,6 +34,7 @@ export class SystemReserveSpace {
         const objHex: HexType = TI4.hex.fromPosition(objPos);
         return (
           !nsid.startsWith("tile.system:") &&
+          !nsid.startsWith("token.attachment.system") &&
           obj !== this._attachmentObj &&
           objHex === hex
         );

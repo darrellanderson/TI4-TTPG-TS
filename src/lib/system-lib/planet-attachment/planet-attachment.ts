@@ -37,7 +37,7 @@ export class PlanetAttachment {
    */
   static schemaToNsid(
     source: string,
-    schema: PlanetAttachmentSchemaType
+    schema: PlanetAttachmentSchemaType,
   ): string {
     return `token.attachment.planet:${source}/${schema.nsidName}`;
   }
@@ -45,7 +45,7 @@ export class PlanetAttachment {
   static schemaToImg(
     sourceAndPackageId: SourceAndPackageIdSchemaType,
     schema: PlanetAttachmentSchemaType,
-    useBack: boolean
+    useBack: boolean,
   ) {
     const filename: string = `${schema.nsidName}${useBack ? ".back" : ""}.png`;
     let img = `token/attachment/planet/${filename}`;
@@ -67,7 +67,7 @@ export class PlanetAttachment {
   constructor(
     obj: GameObject,
     sourceAndPackageId: SourceAndPackageIdSchemaType,
-    params: PlanetAttachmentSchemaType
+    params: PlanetAttachmentSchemaType,
   ) {
     try {
       PlanetAttachmentSchema.parse(params); // validate the schema
@@ -80,7 +80,7 @@ export class PlanetAttachment {
 
     const nsid: string = PlanetAttachment.schemaToNsid(
       sourceAndPackageId.source,
-      params
+      params,
     );
     const objNsid: string = NSID.get(obj);
     if (nsid !== objNsid) {
@@ -95,8 +95,11 @@ export class PlanetAttachment {
       this.detach(); // planet card updated during detach
     });
     obj.onReleased.add(() => {
-      this.attach(); // planet card updated during attach
-      this.doLayout();
+      process.nextTick(() => {
+        // wait a frame so system attachments can happen first
+        this.attach(); // planet card updated during attach
+        this.doLayout();
+      });
     });
     obj.onFlipUpright.add(() => {
       // Flip takes time, does not register as flipped until animation finishes.
@@ -187,7 +190,7 @@ export class PlanetAttachment {
     return PlanetAttachment.schemaToImg(
       this._sourceAndPackageId,
       this._params,
-      useBack
+      useBack,
     );
   }
 
