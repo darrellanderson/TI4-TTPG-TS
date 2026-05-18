@@ -6,7 +6,7 @@ export abstract class AbstractScpt {
 
   abstract getQual(): DraftActivityStartParams | undefined;
   abstract getPrelim(): DraftActivityStartParams | undefined;
-  abstract getSemi(): DraftActivityStartParams | undefined;
+  abstract getSemi(index?: number): DraftActivityStartParams | undefined;
   abstract getFinal(): DraftActivityStartParams | undefined;
 
   getPlayerCount(): number {

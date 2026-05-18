@@ -12,6 +12,7 @@ import { Scpt2023 } from "../../../lib/draft-lib/scpt/scpt-2023/scpt-2023";
 import { Scpt2022 } from "../../../lib/draft-lib/scpt/scpt-2022/scpt-2022";
 import { Scpt2021 } from "../../../lib/draft-lib/scpt/scpt-2021/scpt-2021";
 import { Scpt2026 } from "../../../lib/draft-lib/scpt/scpt-2026/scpt-2026";
+import { getScptSemisUi } from "./scpt-2026-semis-ui";
 
 export class ScptDraftsUi extends AbstractUI {
   static getScptDrafts(): Array<AbstractScpt> {
@@ -28,7 +29,7 @@ export class ScptDraftsUi extends AbstractUI {
   constructor(
     scale: number,
     overrideHeight: number,
-    onDraftStarted: TriggerableMulticastDelegate<() => void>
+    onDraftStarted: TriggerableMulticastDelegate<() => void>,
   ) {
     const scaledWidth: number =
       (CONFIG.BUTTON_WIDTH * 2 + CONFIG.SPACING * 2) * scale;
@@ -45,16 +46,20 @@ export class ScptDraftsUi extends AbstractUI {
         return new ScptDraftButtonUI(
           scale,
           abstractScpt.getScptDraftParams(),
-          onDraftStarted
+          onDraftStarted,
         );
-      }
+      },
     );
     uis.unshift(label);
 
     const ui: AbstractUI = new VerticalUIBuilder()
       .setSpacing(CONFIG.SPACING * scale)
       .setOverrideHeight(overrideHeight)
-      .addUIs(uis)
+      .addUIs([
+        // Different faction pool per game, while in progress offer separately.
+        getScptSemisUi(scale, onDraftStarted),
+        ...uis,
+      ])
       .build();
 
     super(ui.getWidget(), ui.getSize());

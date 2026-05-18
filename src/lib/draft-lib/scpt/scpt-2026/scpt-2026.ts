@@ -80,8 +80,38 @@ export class Scpt2026 extends AbstractScpt {
     };
   }
 
-  getSemi(): DraftActivityStartParams | undefined {
-    return undefined;
+  getSemi(index?: number): DraftActivityStartParams | undefined {
+    const slices: Array<string> = [
+      "46,34,117,65,26",
+      "64,72,48,69,45",
+      "40,29,80,35,102",
+      "49,31,103,98,113",
+      "39,60,97,116,101",
+      "79,106,68,66,61",
+    ];
+    const labels: Array<string> = [
+      "All along the Graltower",
+      "Jeol Ir Fan",
+      "Applebees",
+      "The Dump",
+      "It starts with one",
+      "Influence Shminfluence",
+    ];
+    const factionArrays: Array<Array<string>> = [];
+
+    const numSlices: number = 6;
+    const numFactions: number = 6;
+    const factions: Array<string> | undefined =
+      factionArrays[index ?? -1] ?? []; // choose factions at random from full set if no index given
+
+    return {
+      namespaceId: DRAFT_NAMESPACE_ID,
+      draft: new Milty(),
+      numSlices,
+      numFactions,
+      config: `${slices.join("|")}&labels=${labels.join("|")}&factions=${factions.join("|")}`,
+      countdownHours: 8,
+    };
   }
 
   getFinal(): DraftActivityStartParams | undefined {
