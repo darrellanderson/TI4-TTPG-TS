@@ -18,6 +18,7 @@ export class UpdatorPlayerLeaders implements IGameDataUpdator {
         let agentActive: boolean = true;
         let commanderActive: boolean = true;
         let heroActive: boolean = true;
+        let heroPurged: boolean = true;
 
         const owningPlayerSlot: PlayerSlot | undefined = undefined;
         const skipContained: boolean = true;
@@ -29,7 +30,7 @@ export class UpdatorPlayerLeaders implements IGameDataUpdator {
             const card: Card | undefined = this._find.findCard(
               nsid,
               owningPlayerSlot,
-              skipContained
+              skipContained,
             );
             if (card && !card.isFaceUp()) {
               agentActive = false;
@@ -42,7 +43,7 @@ export class UpdatorPlayerLeaders implements IGameDataUpdator {
             const card: Card | undefined = this._find.findCard(
               nsid,
               owningPlayerSlot,
-              skipContained
+              skipContained,
             );
             if (card && !card.isFaceUp()) {
               commanderActive = false;
@@ -55,10 +56,11 @@ export class UpdatorPlayerLeaders implements IGameDataUpdator {
             const card: Card | undefined = this._find.findCard(
               nsid,
               owningPlayerSlot,
-              skipContained
+              skipContained,
             );
-            if (card && !card.isFaceUp()) {
-              heroActive = false;
+            if (card) {
+              heroActive = card.isFaceUp();
+              heroPurged = false;
             }
           }
         }
@@ -66,9 +68,13 @@ export class UpdatorPlayerLeaders implements IGameDataUpdator {
         player.leaders = {
           agent: agentActive ? "unlocked" : "locked",
           commander: commanderActive ? "unlocked" : "locked",
-          hero: heroActive ? "unlocked" : "locked",
+          hero: heroActive ? "unlocked" : "locked", // fix later: purged
         };
-      }
+
+        if (heroPurged) {
+          player.leaders.hero = "purged";
+        }
+      },
     );
   }
 }

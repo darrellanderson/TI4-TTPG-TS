@@ -14,13 +14,14 @@ const ACTION_SPAWN_UNITS: string = "*Spawn Neutral Units";
 const SPAWN_UNIT_AND_COUNT: Map<UnitType, number> = new Map([
   ["carrier", 1],
   ["cruiser", 1],
+  ["destroyer", 1],
   ["fighter", 2],
 ]);
 
 const _onCustomAction = (
   card: GameObject,
   _player: Player,
-  identifier: string
+  identifier: string,
 ): void => {
   if (identifier === ACTION_SPAWN_UNITS) {
     const color: Color = TI4.playerColor.getAnonymousPlasticColor();
