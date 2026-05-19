@@ -15,13 +15,16 @@ export class StartGame implements IGlobal {
   private readonly _onStartGameRequest = (): void => {
     this._applyPlayerCount(); // must happen before timestamp is set for shuffle
 
-    TI4.config.setTimestamp(Date.now() / 1000);
-    TI4.timer.start(0, 1); // count up from zero
+    // Give applyPlayerCount a tick to finish setup.
+    process.nextTick(() => {
+      TI4.config.setTimestamp(Date.now() / 1000);
+      TI4.timer.start(0, 1); // count up from zero
 
-    this._doRemove();
-    this._maybeFlipScoreboard();
+      this._doRemove();
+      this._maybeFlipScoreboard();
 
-    TI4.events.onStartGameComplete.trigger();
+      TI4.events.onStartGameComplete.trigger();
+    });
   };
 
   init(): void {

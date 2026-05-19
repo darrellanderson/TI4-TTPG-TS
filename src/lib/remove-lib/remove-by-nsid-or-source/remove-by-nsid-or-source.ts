@@ -1,4 +1,10 @@
-import { Card, GameObject, world } from "@tabletop-playground/api";
+import {
+  Card,
+  Container,
+  GameObject,
+  Vector,
+  world,
+} from "@tabletop-playground/api";
 import {
   CardUtil,
   DeletedItemsContainer,
@@ -50,13 +56,17 @@ export class RemoveByNsidOrSource {
     return this._removeNsids.has(nsid);
   }
 
+  getRemoveSources(): Array<string> {
+    return Array.from(this._removeSources);
+  }
+
   removeOne(obj: GameObject): this {
     // Cards.
     if (obj instanceof Card) {
       // Cards.
       const dele: Card | undefined = this._cardUtil.filterCards(
         obj,
-        this._shouldRemove
+        this._shouldRemove,
       );
       if (dele) {
         DeletedItemsContainer.destroyWithoutCopying(dele);
@@ -65,6 +75,11 @@ export class RemoveByNsidOrSource {
       // Basic objects.
       const nsid: string = NSID.get(obj);
       if (this._shouldRemove(nsid)) {
+        const container: Container | undefined = obj.getContainer();
+        if (container) {
+          const above: Vector = container.getPosition().add([0, 0, 10]);
+          container.take(obj, above);
+        }
         DeletedItemsContainer.destroyWithoutCopying(obj);
       }
     }

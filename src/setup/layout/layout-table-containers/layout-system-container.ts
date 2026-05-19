@@ -34,7 +34,7 @@ export class LayoutSystemContainer {
     }
 
     const container: GameObject = TI4.spawn.spawnOrThrow(
-      "container:base/systems"
+      "container:base/systems",
     );
     if (container instanceof Container) {
       container.setMaxItems(500);
