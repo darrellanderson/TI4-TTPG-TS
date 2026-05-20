@@ -82,22 +82,29 @@ export class Scpt2026 extends AbstractScpt {
 
   getSemi(index?: number): DraftActivityStartParams | undefined {
     const slices: Array<string> = [
-      "46,34,117,65,26",
-      "64,72,48,69,45",
-      "40,29,80,35,102",
-      "49,31,103,98,113",
-      "39,60,97,116,101",
-      "79,106,68,66,61",
+      "40,73,45,30,24",
+      "39,107,49,38,37",
+      "113,72,47,75,62",
+      "42,105,46,104,34",
+      "48,76,114,71,59",
+      "79,74,41,110,22",
     ];
     const labels: Array<string> = [
-      "All along the Graltower",
-      "Jeol Ir Fan",
-      "Applebees",
-      "The Dump",
-      "It starts with one",
-      "Influence Shminfluence",
+      "Frontiers",
+      "The Dark Brotherhood",
+      "3D Blast",
+      "R",
+      "Triple Trouble",
+      "Mania",
     ];
-    const factionArrays: Array<Array<string>> = [];
+    const factionArrays: Array<Array<string>> = [
+      ["rebellion", "creuss", "saar", "ul", "letnev", "hacan"],
+      ["ralnel", "yssaril", "mentak", "naalu", "arborec", "naazrokha"],
+      ["keleres-mentak", "muaat", "xxcha", "l1z1x", "argent", "mahact"],
+      ["bastion", "sol", "empyrean", "nomad", "winnu", "vuilraith"],
+      ["deepwrought", "jolnar", "nekro", "yin", "norr", "mahact"],
+      ["firmament", "letnev", "l1z1x", "arborec", "nomad", "nekro"],
+    ];
 
     const numSlices: number = 6;
     const numFactions: number = 6;
