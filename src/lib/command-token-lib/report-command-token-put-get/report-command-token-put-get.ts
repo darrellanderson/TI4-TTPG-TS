@@ -10,6 +10,8 @@ import { Broadcast, IGlobal, NSID } from "ttpg-darrell";
 
 const REPORT_DELAY_MSECS: number = 2000;
 
+const __containerObjIds: Set<string> = new Set<string>();
+
 /**
  * Report players' adding/removing command tokens.
  */
@@ -60,7 +62,7 @@ export class PerContainerReportCommandTokenPutGet {
   private readonly _onInserted = (
     _container: Container,
     _insertedObjects: GameObject[],
-    _player: Player
+    _player: Player,
   ): void => {
     this._insertCount += _insertedObjects.length;
     if (this._timeoutHandle) {
@@ -73,7 +75,7 @@ export class PerContainerReportCommandTokenPutGet {
   private readonly _onRemoved = (
     _container: Container,
     _removedObject: GameObject,
-    _player: Player
+    _player: Player,
   ): void => {
     this._removeCount += 1;
     if (this._timeoutHandle) {
@@ -97,11 +99,18 @@ export class ReportCommandTokenPutGet implements IGlobal {
 
   _maybeAdd(obj: GameObject): void {
     const nsid: string = NSID.get(obj);
+    const id: string = obj.getId();
     if (
       obj instanceof Container &&
-      nsid === "container.token.command:base/generic"
+      nsid === "container.token.command:base/generic" &&
+      !__containerObjIds.has(id)
     ) {
       new PerContainerReportCommandTokenPutGet(obj);
+
+      __containerObjIds.add(id);
+      obj.onDestroyed.add(() => {
+        __containerObjIds.delete(id);
+      });
     }
   }
 }
