@@ -52,7 +52,7 @@ export class SpacePlanetOwnership {
   }
 
   _createControlTypeFromUnitPlastic(
-    unitPlastic: UnitPlastic
+    unitPlastic: UnitPlastic,
   ): ControlObjType | undefined {
     const hex: HexType = unitPlastic.getHex();
     const system: System | undefined = this._hexToSystem.get(hex);
@@ -80,6 +80,7 @@ export class SpacePlanetOwnership {
     const result: Array<ControlObjType> = [];
 
     const plastics: Array<UnitPlastic> = UnitPlastic.getAll();
+    UnitPlastic.assignOwners(plastics);
     UnitPlastic.assignPlanets(plastics);
     for (const plastic of plastics) {
       const controlType: ControlObjType | undefined =
@@ -139,7 +140,7 @@ export class SpacePlanetOwnership {
           if (oldOwner === undefined || oldOwner === -1) {
             controlSystemType.planetNameToOwningPlayerSlot.set(
               planetName,
-              newOwner
+              newOwner,
             );
           } else if (oldOwner !== newOwner) {
             // Multiple control entries with different slots.
