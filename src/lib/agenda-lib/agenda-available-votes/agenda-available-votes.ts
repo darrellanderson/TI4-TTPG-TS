@@ -77,7 +77,7 @@ export class AgendaAvailableVotes {
     const playerSlots: Set<PlayerSlot> = new Set<PlayerSlot>();
 
     const cards: Array<Card> = TI4.findTracking.findCards(
-      "card.leader.hero:codex.vigil/xxekir-grom.omega"
+      "card.leader.hero:codex.vigil/xxekir-grom.omega",
     );
     const allowFaceDown: boolean = false;
     for (const card of cards) {
@@ -94,7 +94,7 @@ export class AgendaAvailableVotes {
     const playerSlots: Set<PlayerSlot> = new Set<PlayerSlot>();
 
     const cards: Array<Card> = TI4.findTracking.findCards(
-      "card.breakthrough:thunders-edge/archons-gift"
+      "card.breakthrough:thunders-edge/archons-gift",
     );
     const allowFaceDown: boolean = false;
     for (const card of cards) {
@@ -149,7 +149,7 @@ export class AgendaAvailableVotes {
     const triadCards: Array<Card> = TI4.findTracking
       .findCards("card.relic:thunders-edge/the-triad")
       .filter((card: Card): boolean =>
-        this._cardUtil.isLooseCard(card, allowFaceDown)
+        this._cardUtil.isLooseCard(card, allowFaceDown),
       );
     if (triadCards.length === 0) {
       return playerSlotToTriadVotes;
@@ -237,9 +237,10 @@ export class AgendaAvailableVotes {
         TI4.systemRegistry.getPlanetByPlanetCardNsid(nsid);
       if (planet) {
         let votes: number = playerSlotToAvailableVotes.get(playerSlot) ?? 0;
-        let influence: number = planet.getInfluence();
+        const influence: number = planet.getInfluence();
         if (archonsGiftPlayerSlots.has(playerSlot)) {
-          influence = Math.max(planet.getResources(), influence);
+          // Dane says archon's gift does not apply to agenda votes.
+          //influence = Math.max(planet.getResources(), influence);
         }
         votes += influence;
         const bonus: number | undefined =
