@@ -237,10 +237,9 @@ export class AgendaAvailableVotes {
         TI4.systemRegistry.getPlanetByPlanetCardNsid(nsid);
       if (planet) {
         let votes: number = playerSlotToAvailableVotes.get(playerSlot) ?? 0;
-        const influence: number = planet.getInfluence();
+        let influence: number = planet.getInfluence();
         if (archonsGiftPlayerSlots.has(playerSlot)) {
-          // Dane says archon's gift does not apply to agenda votes.
-          //influence = Math.max(planet.getResources(), influence);
+          influence = Math.max(planet.getResources(), influence);
         }
         votes += influence;
         const bonus: number | undefined =
