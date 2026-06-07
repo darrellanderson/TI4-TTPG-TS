@@ -1,4 +1,4 @@
-import { Card, GameObject, Vector } from "@tabletop-playground/api";
+import { Card, GameObject, Rotator, Vector } from "@tabletop-playground/api";
 import { CardUtil, Facing, Find, NSID } from "ttpg-darrell";
 import { Planet } from "../../system-lib/planet/planet";
 import { System } from "../../system-lib/system/system";
@@ -59,7 +59,7 @@ export class MapPlacePlanetCards {
 
     // Add legendary planets first, cards dealt first (below normal planets).
     const legednaryDeck: Card | undefined = this._find.findDeckOrDiscard(
-      "deck-legendary-planet"
+      "deck-legendary-planet",
     );
     if (legednaryDeck) {
       originalDecks.push(legednaryDeck);
@@ -78,7 +78,7 @@ export class MapPlacePlanetCards {
         originalDeck,
         (nsid: string): boolean => {
           return nsids.has(nsid);
-        }
+        },
       );
       if (filteredDeck && filteredDeck.getStackSize() > 0) {
         activeCardsDecks.push(filteredDeck);
@@ -126,6 +126,15 @@ export class MapPlacePlanetCards {
     }
 
     card.setPosition(above);
+
+    // Flip legendary planet cards.
+    const rot: Rotator = new Rotator(0, 0, 0);
+    const nsid: string = NSID.get(card);
+    if (nsid.startsWith("card.legendary-planet")) {
+      rot.roll = 180;
+    }
+    card.setRotation(rot);
+
     card.snapToGround();
   }
 }
