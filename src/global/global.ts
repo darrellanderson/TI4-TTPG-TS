@@ -146,7 +146,6 @@ import { OnStartTwilightsFall } from "../event/on-start-twilights-fall/on-start-
 import { TFAhkSylFier } from "../context-menu/tf-fetch-tokens/tf-ahk-syl-fier";
 import { TFAwakeningGeoform } from "../context-menu/tf-fetch-tokens/tf-awakening-geoform";
 import { TFDimensionalTear } from "../context-menu/tf-fetch-tokens/tf-dimensional-tear";
-//import { TFFactionRefCardUI } from "../lib/twilights-fall-lib/tf-faction-ref-card-ui/tf-faction-ref-card-ui";
 import { TFHeliosEntity } from "../context-menu/tf-fetch-tokens/tf-helios-entity";
 import { TFSingularityX } from "../context-menu/tf-fetch-tokens/tf-singularity-x";
 import { TFSingularityY } from "../context-menu/tf-fetch-tokens/tf-singularity-y";
