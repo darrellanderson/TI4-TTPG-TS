@@ -62,19 +62,19 @@ it("data", () => {
     players: [
       { leaders: { agent: "locked", commander: "locked", hero: "locked" } },
       {
-        leaders: { agent: "unlocked", commander: "unlocked", hero: "unlocked" },
+        leaders: { agent: "unlocked", commander: "unlocked", hero: "purged" },
       },
       {
-        leaders: { agent: "unlocked", commander: "unlocked", hero: "unlocked" },
+        leaders: { agent: "unlocked", commander: "unlocked", hero: "purged" },
       },
       {
-        leaders: { agent: "unlocked", commander: "unlocked", hero: "unlocked" },
+        leaders: { agent: "unlocked", commander: "unlocked", hero: "purged" },
       },
       {
-        leaders: { agent: "unlocked", commander: "unlocked", hero: "unlocked" },
+        leaders: { agent: "unlocked", commander: "unlocked", hero: "purged" },
       },
       {
-        leaders: { agent: "unlocked", commander: "unlocked", hero: "unlocked" },
+        leaders: { agent: "unlocked", commander: "unlocked", hero: "purged" },
       },
     ],
   });
