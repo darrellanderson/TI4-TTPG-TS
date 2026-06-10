@@ -3,6 +3,27 @@ import { PremadeMapType } from "./premade-map-type";
 export const PREMADE_MAPS_6P: Array<PremadeMapType> = [
   {
     playerCount: 6,
+    name: "SCPT KC Intergalactical 1/3 (TE)",
+    mapString:
+      "25 66 115 102 99 116 114 50 34 19 40 20 37 77 27 78 26 101 0 29 79 0 68 62 0 69 65 0 49 113 0 76 97 0 43 100",
+    author: "Elspeth & El Blasto",
+  },
+  {
+    playerCount: 6,
+    name: "SCPT KC Intergalactical 2/3 (TE)",
+    mapString:
+      "49 39 116 113 62 32 115 98 72 111 34 48 79 110 43 68 40 33 0 97 117 0 109 102 0 29 75 0 76 37 0 105 74 0 26 66",
+    author: "Elspeth & El Blasto",
+  },
+  {
+    playerCount: 6,
+    name: "SCPT KC Intergalactical 3/3 (TE)",
+    mapString:
+      "35 105 80 62 101 50 47 114 76 38 73 77 110 40 72 39 64 107 0 102 113 0 29 34 0 79 59 0 116 99 0 117 69 0 27 30",
+    author: "Elspeth & El Blasto",
+  },
+  {
+    playerCount: 6,
     name: "Thunder Dreaming (TE)",
     mapString:
       "35 30 98 34 113 101 109 47 37 44 110 49 27 48 38 46 28 43 0 42 100 0 40 105 0 39 111 0 114 99 0 29 115 0 26 107 901B0 902B0 903B0 904B0 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 905B0 906B0 900B0",
