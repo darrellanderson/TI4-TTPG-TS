@@ -1,5 +1,6 @@
 import {
   GameObject,
+  GameWorld,
   ObjectType,
   Vector,
   world,
@@ -18,7 +19,9 @@ export class StartGame implements IGlobal {
     // Give applyPlayerCount a tick to finish setup.
     process.nextTick(() => {
       TI4.config.setTimestamp(Date.now() / 1000);
-      TI4.timer.start(0, 1); // count up from zero
+      if (GameWorld.getExecutionReason() !== "unittest") {
+        TI4.timer.start(0, 1); // count up from zero
+      }
 
       this._doRemove();
       this._maybeFlipScoreboard();
