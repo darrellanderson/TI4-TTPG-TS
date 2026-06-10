@@ -8,66 +8,98 @@ import {
 import { ErrorHandler, IGlobal, NSID } from "ttpg-darrell";
 
 export class OnObjectFellThroughTable implements IGlobal {
-  private readonly _underTableAgingObjIds: Set<string> = new Set<string>();
-  private readonly _underTableAgedObjIds: Set<string> = new Set<string>();
+  private readonly _underTableObjIdToAge: Map<string, number> = new Map<
+    string,
+    number
+  >();
+  private _zone: Zone | undefined;
   private _reportErrors: boolean = true;
 
   readonly _processObjs = (): void => {
-    const tableHeight: number = world.getTableHeight() - 1;
+    // Get objects under the table.
+    const underTableObjIds: ReadonlySet<string> = this.getObjIdsUnderTable();
 
-    // Objects might be created by scripts under the table.
-    // Give them a grace period before we start checking them.
-    // Check aged objects.
-    for (const objId of Array.from(this._underTableAgedObjIds)) {
-      this._underTableAgedObjIds.delete(objId);
-      const obj: GameObject | undefined = world.getObjectById(objId);
-      if (obj && obj.isValid() && obj.getContainer() === undefined) {
-        const objPos: Vector = obj.getPosition();
-        if (objPos.z < tableHeight) {
-          const origPos: string = [
-            objPos.x.toFixed(1),
-            objPos.y.toFixed(1),
-            objPos.z.toFixed(1),
-          ].join(",");
-          objPos.z = tableHeight + 10;
-          obj.setPosition(objPos);
-          obj.snapToGround();
-
-          let nsid: string = NSID.get(obj);
-          if (nsid.length === 0) {
-            nsid = `template!${obj.getTemplateId()}`;
-          } else {
-            nsid = nsid.replace(/:/g, "!"); // replace ':' to avoid bugsplat using as delimiter
-          }
-
-          const msg: string = `fell through: "${nsid}" ([${origPos}] vs ${tableHeight.toFixed(1)})`;
-          console.log(msg);
-          if (this._reportErrors) {
-            ErrorHandler.onError.trigger(msg);
-          }
-
-          // Tell any listeners that the object fell through the table.
-          TI4.events.onObjectFellThroughTable.trigger(obj);
-        }
+    // Start tracking any new under-table objects.
+    for (const objId of underTableObjIds) {
+      if (!this._underTableObjIdToAge.has(objId)) {
+        this._underTableObjIdToAge.set(objId, 0);
       }
     }
 
-    // Add any under-table objects to the aging list for next time.
-    for (const objId of Array.from(this._underTableAgingObjIds)) {
-      this._underTableAgingObjIds.delete(objId);
-      const obj: GameObject | undefined = world.getObjectById(objId);
-      if (obj && obj.isValid() && obj.getContainer() === undefined) {
-        const objPos: Vector = obj.getPosition();
-        if (objPos.z < tableHeight) {
-          this._underTableAgedObjIds.add(objId);
-        }
+    // Stop tracking any that are no longer under the table.
+    for (const objId of this._underTableObjIdToAge.keys()) {
+      if (!underTableObjIds.has(objId)) {
+        this._underTableObjIdToAge.delete(objId);
+      }
+    }
+
+    // Age under table objects.
+    for (const [objId, age] of this._underTableObjIdToAge.entries()) {
+      this._underTableObjIdToAge.set(objId, age + 1);
+    }
+
+    // After some time, consider any remaining under-table objects as having "fallen through" and move them back above the table.
+    for (const [objId, age] of this._underTableObjIdToAge.entries()) {
+      if (age > 3) {
+        this._underTableObjIdToAge.delete(objId);
+        this.moveObjAboveTable(objId);
       }
     }
   };
 
-  readonly _onBeginOverlapHandler = (_zone: Zone, object: GameObject): void => {
-    this._underTableAgingObjIds.add(object.getId());
-  };
+  private getObjIdsUnderTable(): ReadonlySet<string> {
+    const objIds: Set<string> = new Set<string>();
+    const zone: Zone | undefined = this._zone;
+    if (zone && zone.isValid()) {
+      for (const obj of zone.getOverlappingObjects()) {
+        if (obj.isValid() && obj.getContainer() === undefined) {
+          objIds.add(obj.getId());
+        }
+      }
+    }
+    return objIds;
+  }
+
+  private moveObjAboveTable(objId: string): boolean {
+    const obj: GameObject | undefined = world.getObjectById(objId);
+    if (!obj || !obj.isValid() || obj.getContainer() !== undefined) {
+      return false;
+    }
+
+    const objPos: Vector = obj.getPosition();
+    const tableHeight: number = world.getTableHeight();
+    if (objPos.z >= tableHeight) {
+      return false;
+    }
+
+    const origPos: string = [
+      objPos.x.toFixed(1),
+      objPos.y.toFixed(1),
+      objPos.z.toFixed(1),
+    ].join(",");
+
+    objPos.z = tableHeight + 10;
+    obj.setPosition(objPos);
+    obj.snapToGround();
+
+    let nsid: string = NSID.get(obj);
+    if (nsid.length === 0) {
+      nsid = `template!${obj.getTemplateId()}`;
+    } else {
+      nsid = nsid.replace(/:/g, "!"); // replace ':' to avoid bugsplat using as delimiter
+    }
+
+    const msg: string = `fell through: "${nsid}" ([${origPos}] vs ${tableHeight.toFixed(1)})`;
+    console.log(msg);
+    if (this._reportErrors) {
+      ErrorHandler.onError.trigger(msg);
+    }
+
+    // Tell any listeners that the object fell through the table.
+    TI4.events.onObjectFellThroughTable.trigger(obj);
+
+    return true;
+  }
 
   static _getTablePositionAndExtent(): {
     tablePosition: Vector;
@@ -92,7 +124,7 @@ export class OnObjectFellThroughTable implements IGlobal {
     return result;
   }
 
-  static _findOrCreateZone(): Zone {
+  static __findOrCreateZone(): Zone {
     const zoneId: string = "__below_table__";
 
     // Find the table (by NSID).
@@ -100,7 +132,7 @@ export class OnObjectFellThroughTable implements IGlobal {
       OnObjectFellThroughTable._getTablePositionAndExtent();
     const tableHeight: number = Math.max(
       world.getTableHeight(),
-      tablePosition.z + tableExtent.z
+      tablePosition.z + tableExtent.z,
     );
 
     // Find zone.
@@ -139,16 +171,12 @@ export class OnObjectFellThroughTable implements IGlobal {
    * This can be useful for testing.
    */
   static destroyZone(): void {
-    const zone: Zone = OnObjectFellThroughTable._findOrCreateZone();
+    const zone: Zone = OnObjectFellThroughTable.__findOrCreateZone();
     zone.destroy();
   }
 
   init(): void {
-    const zone: Zone = OnObjectFellThroughTable._findOrCreateZone();
-    zone.getOverlappingObjects().forEach((object: GameObject) => {
-      this._onBeginOverlapHandler(zone, object);
-    });
-    zone.onBeginOverlap.add(this._onBeginOverlapHandler);
+    this._zone = OnObjectFellThroughTable.__findOrCreateZone();
 
     if (GameWorld.getExecutionReason() !== "unittest") {
       setInterval(this._processObjs, 1000);

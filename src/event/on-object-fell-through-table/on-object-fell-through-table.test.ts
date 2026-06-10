@@ -63,18 +63,18 @@ it("_findOrCreateZone", () => {
   expect(tablePosition.toString()).toBe("(X=1,Y=2,Z=3)");
   expect(tableExtent.toString()).toBe("(X=3.5,Y=4,Z=4.5)");
 
-  const zone: Zone = OnObjectFellThroughTable._findOrCreateZone();
+  const zone: Zone = OnObjectFellThroughTable.__findOrCreateZone();
   expect(zone).toBeDefined();
   expect(zone.getId()).toBe("__below_table__");
   expect(zone.getPosition().toString()).toBe("(X=0,Y=0,Z=0.75)");
   expect(zone.getScale().toString()).toBe("(X=6.9,Y=7.9,Z=7.5)");
 
-  const again: Zone = OnObjectFellThroughTable._findOrCreateZone();
+  const again: Zone = OnObjectFellThroughTable.__findOrCreateZone();
   expect(again).toEqual(zone); // found exisiting zone.
 });
 
 it("_findOrCreateZone (no table)", () => {
-  const zone: Zone = OnObjectFellThroughTable._findOrCreateZone();
+  const zone: Zone = OnObjectFellThroughTable.__findOrCreateZone();
   expect(zone).toBeDefined();
   expect(zone.getId()).toBe("__below_table__");
   expect(zone.getPosition().toString()).toBe("(X=0,Y=0,Z=-3)");
