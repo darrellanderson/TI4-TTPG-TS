@@ -28,7 +28,6 @@ export const Matriarch: UnitModifierSchemaType = {
     if (fighter && fighterCount > 0) {
       const spaceCombat: CombatAttrs | undefined = fighter.getSpaceCombat();
       if (spaceCombat) {
-        console.log("Applying Matriarch unit modifier");
         // Add as a synthetic unit to apply to all planets.
         combatRoll.self.addSyntheticUnit(
           {
@@ -41,7 +40,7 @@ export const Matriarch: UnitModifierSchemaType = {
             },
             isGround: true,
           },
-          fighterCount
+          fighterCount,
         );
       }
     }
