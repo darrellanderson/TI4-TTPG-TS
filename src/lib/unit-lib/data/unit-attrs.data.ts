@@ -489,7 +489,7 @@ export const SOURCE_TO_UNIT_ATTRS_DATA: Record<
 
     // Infantry
     {
-      name: "Crimsom Legionnaire",
+      name: "Crimson Legionnaire",
       unit: "infantry",
       nsidName: "crimson-legionnaire",
     },
