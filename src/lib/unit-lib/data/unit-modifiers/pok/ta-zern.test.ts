@@ -8,10 +8,12 @@ it("registry (commander)", () => {
   expect(TI4.unitModifierRegistry.getByNsid(nsid)?.getName()).toBe("Ta Zern");
 });
 
+/* changed alliance to TE version
 it("registry (alliance)", () => {
   const nsid = "card.alliance:pok/jolnar";
   expect(TI4.unitModifierRegistry.getByNsid(nsid)?.getName()).toBe("Ta Zern");
 });
+*/
 
 it("default", () => {
   placeGameObjects({});
