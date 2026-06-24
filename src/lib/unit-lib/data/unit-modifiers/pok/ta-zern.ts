@@ -14,7 +14,7 @@ export const TaZern: UnitModifierSchemaType = {
   isActiveIdle: true,
   triggers: [
     { cardClass: "commander", nsidName: "ta-zern" },
-    { cardClass: "alliance", nsidName: "jolnar" },
+    //{ cardClass: "alliance", nsidName: "jolnar" }, // use Agnlan Oln for Jolnar bc TE update
   ],
   applies: (combatRoll: CombatRoll): boolean => {
     const commanderNsid: string = "card.leader.commander:pok/ta-zern";
