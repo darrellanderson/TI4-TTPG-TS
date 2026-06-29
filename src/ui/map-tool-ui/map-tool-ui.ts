@@ -213,9 +213,7 @@ export class MapToolUI extends AbstractUI {
     })();
 
     const checkboxRotateMap: CheckBoxUI = new CheckBoxUI(scale);
-    checkboxRotateMap
-      .getCheckBox()
-      .setText("Rotate map 180 degrees (5p support)");
+    checkboxRotateMap.getCheckBox().setText("Rotate map 180");
 
     const buttonLoad: ButtonUI = new ButtonUI(scale);
     buttonLoad.getButton().setText("Load map from string");
