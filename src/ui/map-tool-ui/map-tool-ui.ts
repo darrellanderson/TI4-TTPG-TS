@@ -1,5 +1,6 @@
 import {
   Button,
+  CheckBox,
   LayoutBox,
   MultilineTextBox,
   Player,
@@ -38,10 +39,13 @@ import {
   CreateAbstractUIType,
 } from "../abstract-window/abstract-window";
 import { DraftBagWindow } from "../draft/draft-bag-ui/draft-bag-window";
+import { MapStringRotate } from "../../lib/map-string-lib/map-string/map-string-rotate";
+import { CheckBoxUI } from "../button-ui";
 
 export class MapToolUI extends AbstractUI {
   private readonly _editText: MultilineTextBox;
   private _premadeMapWindow: Window | undefined = undefined;
+  private _rotateMap: boolean = false;
 
   private readonly _onUsePremadeMap = new ThrottleClickHandler<Button>(
     (_button: Button, player: Player): void => {
@@ -51,26 +55,26 @@ export class MapToolUI extends AbstractUI {
       const abstractWindow: AbstractWindow = new AbstractWindow(
         this._createMapPremadeUI,
         namespaceId,
-        windowTitle
+        windowTitle,
       );
       this._premadeMapWindow = abstractWindow
         .createWindow([playerSlot])
         .attach();
-    }
+    },
   ).get();
 
   private readonly _onUseSliceDraft = new ThrottleClickHandler<Button>(
     (_button: Button, player: Player): void => {
       const playerSlot: number = player.getSlot();
       new DraftStartWindow().createAndAttachWindow(playerSlot);
-    }
+    },
   ).get();
 
   private readonly _onUseBagDraft = new ThrottleClickHandler<Button>(
     (_button: Button, player: Player): void => {
       const playerSlot: number = player.getSlot();
       new DraftBagWindow().createAndAttachWindow(playerSlot);
-    }
+    },
   ).get();
 
   private readonly _onMapStringLoad = new ThrottleClickHandler<Button>(
@@ -79,21 +83,25 @@ export class MapToolUI extends AbstractUI {
       const msg: string = `Map string loaded by ${playerName}`;
       Broadcast.chatAll(msg);
 
-      const mapString: string = this._editText.getText();
+      let mapString: string = this._editText.getText();
+
+      if (this._rotateMap) {
+        mapString = new MapStringRotate().rotate(mapString);
+      }
 
       // Move generic home systems first.
       const mover = new MoveGenericHomeSystemLocations();
       mover.moveGenerics(mapString);
 
       new MapStringLoad().load(mapString);
-    }
+    },
   ).get();
 
   private readonly _onMapStringSave = new ThrottleClickHandler<Button>(
     (): void => {
       const mapString: string = new MapStringSave().save();
       this._editText.setText(mapString);
-    }
+    },
   ).get();
 
   private readonly _onPlacePlanetCards = new ThrottleClickHandler<Button>(
@@ -103,7 +111,7 @@ export class MapToolUI extends AbstractUI {
       Broadcast.chatAll(msg);
 
       new MapPlacePlanetCards().placePlanetCards();
-    }
+    },
   ).get();
 
   private readonly _onPlaceFrontierTokens = new ThrottleClickHandler<Button>(
@@ -114,7 +122,7 @@ export class MapToolUI extends AbstractUI {
 
       new MapRemoveFrontierTokens().removeFrontierTokens();
       new MapPlaceFrontierTokens().placeFrontierTokens();
-    }
+    },
   ).get();
 
   private readonly _onRemovePlanetCards = new ThrottleClickHandler<Button>(
@@ -124,7 +132,7 @@ export class MapToolUI extends AbstractUI {
       Broadcast.chatAll(msg);
 
       new MapRemovePlanetCards().removePlanetCards();
-    }
+    },
   ).get();
 
   private readonly _onRemoveFrontierTokens = new ThrottleClickHandler<Button>(
@@ -134,7 +142,7 @@ export class MapToolUI extends AbstractUI {
       Broadcast.chatAll(msg);
 
       new MapRemoveFrontierTokens().removeFrontierTokens();
-    }
+    },
   ).get();
 
   private readonly _onPlaceHyperlanes = new ThrottleClickHandler<Button>(
@@ -146,7 +154,7 @@ export class MapToolUI extends AbstractUI {
       const playerCount: number = TI4.config.playerCount;
       const mapString: string = MapStringHyperlanes.get(playerCount);
       new MapStringLoad().load(mapString);
-    }
+    },
   ).get();
 
   private readonly _onClearMap = new ThrottleClickHandler<Button>(
@@ -159,8 +167,16 @@ export class MapToolUI extends AbstractUI {
       new MapRemoveFrontierTokens().removeFrontierTokens();
       new MapRemoveAllNonHomeSystems().removeAllNonHomeSystems();
       this._editText.setText("");
-    }
+    },
   ).get();
+
+  private readonly _onRotateMap = (
+    _checkBox: CheckBox,
+    _player: Player,
+    isChecked: boolean,
+  ): void => {
+    this._rotateMap = isChecked;
+  };
 
   constructor(scale: number) {
     const labelUi: LabelUI = new LabelUI(scale);
@@ -196,6 +212,11 @@ export class MapToolUI extends AbstractUI {
       }
     })();
 
+    const checkboxRotateMap: CheckBoxUI = new CheckBoxUI(scale);
+    checkboxRotateMap
+      .getCheckBox()
+      .setText("Rotate map 180 degrees (5p support)");
+
     const buttonLoad: ButtonUI = new ButtonUI(scale);
     buttonLoad.getButton().setText("Load map from string");
 
@@ -224,7 +245,7 @@ export class MapToolUI extends AbstractUI {
       .setSpacing(CONFIG.SPACING * scale)
       .addUIs([
         buttonPremadeMap,
-        empty, // spacer
+        checkboxRotateMap,
         labelUi,
         buttonLoad,
         buttonPlacePlanetCards,
@@ -272,10 +293,11 @@ export class MapToolUI extends AbstractUI {
       .getButton()
       .onClicked.add(this._onRemoveFrontierTokens);
     buttonClearMap.getButton().onClicked.add(this._onClearMap);
+    checkboxRotateMap.getCheckBox().onCheckStateChanged.add(this._onRotateMap);
   }
 
   _createMapPremadeUI: CreateAbstractUIType = (
-    params: CreateAbstractUIParams
+    params: CreateAbstractUIParams,
   ): AbstractUI => {
     const mapPremadeUi: MapPremadeUI = new MapPremadeUI(params.scale);
     mapPremadeUi.onMapString.add((mapString: string): void => {
