@@ -18,7 +18,7 @@ export const HumanGenome: UnitModifierSchemaType = {
     const best: BestUnitWithCombatAttrs | undefined =
       combatRoll.bestHitUnitWithCombatAttrs();
     if (best) {
-      best.combatAttrs.addDice(1);
+      best.combatAttrs.addExtraDice(1);
     }
   },
 };
