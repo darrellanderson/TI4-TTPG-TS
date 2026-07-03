@@ -359,6 +359,7 @@ export const SOURCE_TO_UNIT_ATTRS_DATA: Record<
       bombardment: { dice: 3, hit: 3 },
       spaceCombat: { dice: 3, hit: 3 },
       diceColor: "#ff8000",
+      cost: 12,
     },
     {
       name: "War Sun",
