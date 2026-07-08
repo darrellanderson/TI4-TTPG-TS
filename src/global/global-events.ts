@@ -55,7 +55,7 @@ export class GlobalEvents {
     (
       rollType: CombatRollType,
       planetName: string | undefined,
-      player: Player
+      player: Player,
     ) => void
   >();
 
@@ -98,6 +98,18 @@ export class GlobalEvents {
   >();
 
   /**
+   * Called when a player requests to fetch a planet card.
+   * Moves the card to an open slot on the player planet board, or if none
+   * to the center of the planet board.
+   *
+   * @param card The planet card being requested.
+   * @param playerSlot The player slot of the player who requested the planet card.
+   */
+  public readonly onFetchPlanetCardRequest = new TriggerableMulticastDelegate<
+    (card: Card, playerSlot: number) => void
+  >();
+
+  /**
    * Called after all game data updators finished this cycle.
    */
   public readonly onGameData = new TriggerableMulticastDelegate<
@@ -127,7 +139,7 @@ export class GlobalEvents {
       playerSlot: number,
       colorName: string,
       colorHex: string,
-      clickingPlayer: Player
+      clickingPlayer: Player,
     ) => void
   >();
 

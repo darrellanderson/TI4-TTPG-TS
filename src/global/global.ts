@@ -48,6 +48,7 @@ import { OnAgendaStateCreated } from "../event/on-agenda-state-created/on-agenda
 import { OnChatMessage } from "../event/on-chat-message/on-chat-message";
 import { OnCombatClicked } from "../event/on-combat-clicked/on-combat-clicked";
 import { OnCombatResult } from "../event/on-combat-result/on-combat-result";
+import { OnFetchPlanetCardRequest } from "../event/on-fetch-planet-card-request/on-fetch-planet-card-request";
 import { OnGameEnd } from "../event/on-game-end/on-game-end";
 import { OnObjectFellThroughTable } from "../event/on-object-fell-through-table/on-object-fell-through-table";
 import { OnPlanetCardSingleton } from "../event/on-planet-card-singleton/on-planet-card-singleton";
@@ -71,6 +72,7 @@ import { RightClickCrisis } from "../context-menu/cards/crisis/right-click-crisi
 //import { RightClickDelete } from "../context-menu/right-click-delete/right-click-delete";
 import { RightClickExplore } from "../context-menu/system/explore-system/right-click-explore";
 import { RightClickExtremeDuress } from "../context-menu/cards/extreme-duress/right-click-extreme-duress";
+import { RightClickFetchPlanetCard } from "../context-menu/right-click-fetch-planet-card/right-click-fetch-planet-card";
 import { RightClickFracture } from "../context-menu/fracture/right-click-fracture";
 import { RightClickGalvanizeToken } from "../context-menu/right-click-galvanize-token/right-click-galvanize-token";
 import { RightClickGravleashManeuvers } from "../context-menu/cards/gravleash-maneuvers/right-click-gravleash-maneuvers";
@@ -270,6 +272,7 @@ export function resetGlobalThisTI4(): TI4Class {
     new OnChatMessage(),
     new OnCombatClicked(),
     new OnCombatResult(),
+    new OnFetchPlanetCardRequest(),
     new OnGameEnd(),
     new OnObjectFellThroughTable(),
     new OnPlanetCardSingleton(),
@@ -288,6 +291,7 @@ export function resetGlobalThisTI4(): TI4Class {
     new RightClickCrisis(),
     new RightClickExplore(),
     new RightClickExtremeDuress(),
+    new RightClickFetchPlanetCard(),
     new RightClickFracture(),
     new RightClickGalvanizeToken(),
     new RightClickGravleashManeuvers(),
