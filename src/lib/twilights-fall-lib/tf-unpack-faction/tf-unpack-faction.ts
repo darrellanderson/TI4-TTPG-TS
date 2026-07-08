@@ -1,8 +1,9 @@
-import { Card, GameObject, Player } from "@tabletop-playground/api";
+import { Card, GameObject, Player, world } from "@tabletop-playground/api";
 import {
   AbstractRightClickCard,
   Broadcast,
   CardUtil,
+  ColorLib,
   DeletedItemsContainer,
   NSID,
   ParsedNSID,
@@ -13,6 +14,8 @@ import { UnpackFactionSheet } from "../../faction-lib/unpack/unpack-faction-shee
 import { UnpackCommandTokens } from "../../faction-lib/unpack/unpack-command-tokens/unpack-command-tokens";
 import { UnpackControlTokens } from "../../faction-lib/unpack/unpack-control-tokens/unpack-control-tokens";
 
+const USE_BLACK_COLOR_FOR_WHITE: boolean = false;
+
 const ACTION_NAME: string = "*Claim faction";
 
 class RightClickTFFactionSheet extends AbstractRightClickCard {
@@ -21,7 +24,7 @@ class RightClickTFFactionSheet extends AbstractRightClickCard {
     const customActionHandler = (
       object: GameObject,
       player: Player,
-      identifier: string
+      identifier: string,
     ): void => {
       if (identifier === ACTION_NAME) {
         this._claimFaction(object, player);
@@ -67,19 +70,11 @@ export class TFUnpackFaction {
     this._playerSlot = playerSlot;
 
     console.log(
-      `TFUnpackFaction constructed for ${faction.getName()} for player slot ${playerSlot}`
+      `TFUnpackFaction constructed for ${faction.getName()} for player slot ${playerSlot}`,
     );
   }
 
-  _getPackUnpacks(): Array<AbstractUnpack> {
-    return [
-      new UnpackFactionSheet(this._faction, this._playerSlot),
-      new UnpackCommandTokens(this._faction, this._playerSlot),
-      new UnpackControlTokens(this._faction, this._playerSlot),
-    ];
-  }
-
-  _getTechCardNsids(): Array<string> {
+  _getColorNameFromFaction(): string {
     const nsid: string = this._faction.getNsid();
     const parsed: ParsedNSID | undefined = NSID.parse(nsid);
     if (!parsed) {
@@ -92,7 +87,19 @@ export class TFUnpackFaction {
     if (!nsidName.startsWith("tf-")) {
       throw new Error(`nsidName does not start with 'tf-' for ${nsidName}`);
     }
-    const colorName: string = nsidName.substring(3);
+    return nsidName.substring(3);
+  }
+
+  _getPackUnpacks(): Array<AbstractUnpack> {
+    return [
+      new UnpackFactionSheet(this._faction, this._playerSlot),
+      new UnpackCommandTokens(this._faction, this._playerSlot),
+      new UnpackControlTokens(this._faction, this._playerSlot),
+    ];
+  }
+
+  _getTechCardNsids(): Array<string> {
+    const colorName: string = this._getColorNameFromFaction();
     return [
       `card.tf-faction-tech:twilights-fall/antimatter-${colorName}`,
       `card.tf-faction-tech:twilights-fall/wavelength-${colorName}`,
@@ -105,7 +112,7 @@ export class TFUnpackFaction {
     }
 
     const deck: Card = TI4.spawn.spawnMergeDecksWithNsidPrefixOrThrow(
-      "card.tf-faction-tech:"
+      "card.tf-faction-tech:",
     );
 
     const nsids: Array<string> = this._getTechCardNsids();
@@ -114,7 +121,7 @@ export class TFUnpackFaction {
       deck,
       (nsid: string): boolean => {
         return nsids.includes(nsid);
-      }
+      },
     );
     if (cards) {
       const split: Array<Card> = cardUtil.separateDeck(cards);
@@ -126,11 +133,48 @@ export class TFUnpackFaction {
     DeletedItemsContainer.destroyWithoutCopying(deck);
 
     TI4.events.onFactionChanged.trigger(this._playerSlot);
+
+    this._changeColorToMatchSorcerer();
   }
 
   remove(): void {
     for (const unpack of this._getPackUnpacks()) {
       unpack.remove();
     }
+  }
+
+  _changeColorToMatchSorcerer(): void {
+    const playerSlot: number = this._playerSlot;
+
+    let newColorName: string = this._getColorNameFromFaction();
+    if (newColorName === "black") {
+      newColorName = "white";
+    }
+
+    let newColorHex: string = new ColorLib().getColorsByNameOrThrow(
+      newColorName,
+      0,
+    ).target;
+    if (USE_BLACK_COLOR_FOR_WHITE && newColorName === "white") {
+      newColorHex = "#2E2626";
+    }
+
+    let clickingPlayer: Player | undefined = undefined;
+    for (const player of world.getAllPlayers()) {
+      if (player.getSlot() === playerSlot) {
+        clickingPlayer = player;
+        break;
+      }
+    }
+    if (!clickingPlayer) {
+      throw new Error(`clickingPlayer is undefined for slot ${playerSlot}`);
+    }
+
+    TI4.events.onPlayerChangedColor.trigger(
+      playerSlot,
+      newColorName,
+      newColorHex,
+      clickingPlayer,
+    );
   }
 }
