@@ -1,4 +1,5 @@
 import {
+  Card,
   CardHolder,
   Color,
   GameObject,
@@ -22,7 +23,7 @@ let cardHolderPlayerName: CardHolderPlayerName | undefined = undefined;
 process.nextTick(() => {
   if (myObj.isValid()) {
     cardHolderPlayerName = new CardHolderPlayerName(
-      myObj
+      myObj,
     ).setFontSizeAndPosition(64);
 
     const doRotate: string = myObj.getSavedData(ROTATE_KEY_NAME);
@@ -51,7 +52,7 @@ myObj.addCustomAction(ACTION_NAME);
 const actionHandler = (
   clickedObj: CardHolder,
   player: Player,
-  identifier: string
+  identifier: string,
 ): void => {
   if (identifier !== ACTION_NAME) {
     return; // not ours
@@ -153,3 +154,19 @@ const actionHandler = (
 };
 
 myObj.onCustomAction.add(actionHandler);
+
+// Move added planet and legendary cards to free slots on the player planet mat, if available.
+// This event does not trigger for all cases in the production release as of 7/6/2026 but the beta does.
+// Once the beta goes live this will work for all cases (except perhaps script insert?).
+myObj.onInserted.add(
+  (
+    holder: CardHolder,
+    insertedCard: Card,
+    player: Player,
+    index: number,
+  ): void => {
+    // TODO: TTPG only detects dropping cards on the physical holder as inserts right now.
+    // When a future update adds "1", "draw" and potentially script inserts consider
+    // triggering the OnFetchPlanetCardRequest event.
+  },
+);
