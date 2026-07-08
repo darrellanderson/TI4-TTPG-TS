@@ -47,11 +47,11 @@ export class DraftActivityStartTF {
     numSlices: number,
     generateSlicesParams: GenerateSlicesParams,
     blacklistSystemTileNumbers: Array<number>,
-    errors: Array<string>
+    errors: Array<string>,
   ): Array<SliceTiles> {
     const sliceSize: number = generateSlicesParams.sliceShape.length - 1;
     let slices: Array<SliceTiles> | undefined = new ParseSlices(
-      sliceSize
+      sliceSize,
     ).parseSlices(config, errors);
 
     if (slices === undefined) {
@@ -69,7 +69,7 @@ export class DraftActivityStartTF {
   static getOrGenerateFactions(
     config: string,
     numFactions: number,
-    errors: Array<string>
+    errors: Array<string>,
   ): Array<Faction> {
     let factions: Array<Faction> | undefined =
       new ParseFactions().parseFactions(config, errors);
@@ -110,12 +110,12 @@ export class DraftActivityStartTF {
       params.numSlices,
       sliceParams,
       blacklistSystemTileNumbers,
-      errors
+      errors,
     );
     this._draftState.setSlices(slices);
     if (this._draftState.getSlices().length < TI4.config.playerCount) {
       errors.push(
-        `Slice count (${this._draftState.getSlices().length}) is less than player count (${TI4.config.playerCount})`
+        `Slice count (${this._draftState.getSlices().length}) is less than player count (${TI4.config.playerCount})`,
       );
     }
 
@@ -130,13 +130,13 @@ export class DraftActivityStartTF {
     const factions: Array<Faction> = DraftActivityStartTF.getOrGenerateFactions(
       params.config,
       params.numFactions,
-      errors
+      errors,
     );
     this._draftState.setFactions(factions);
 
     if (this._draftState.getFactions().length < TI4.config.playerCount) {
       errors.push(
-        `Faction count (${this._draftState.getFactions().length}) is less than player count (${TI4.config.playerCount})`
+        `Faction count (${this._draftState.getFactions().length}) is less than player count (${TI4.config.playerCount})`,
       );
     }
 
@@ -152,7 +152,7 @@ export class DraftActivityStartTF {
       const playerSlots: Array<number> = TI4.playerSeats
         .getAllSeats()
         .map((seat) => seat.playerSlot);
-      const order: Array<number> = new Shuffle<number>().shuffle(playerSlots);
+      const order: Array<number> = new Shuffle<number>().shuffle(playerSlots); // TODO: BASE ON FACTION REF PRIORITY
       const direction: Direction = "snake";
       const first: number | undefined = order[0];
       if (first !== undefined) {
@@ -202,37 +202,11 @@ export class DraftActivityStartTF {
     }
 
     const resolveConflictsKeleres = new ResolveConflictsKeleres(
-      this._draftState
+      this._draftState,
     );
     this._draftState.onDraftStateChanged.add(() => {
       resolveConflictsKeleres.resolve();
     });
-
-    /*
-    const create: CreateAbstractUIType = (
-      params: CreateAbstractUIParams
-    ): AbstractUI => {
-      return new DraftStateUI(draftState, params.scale);
-    };
-
-    const namespaceId: NamespaceId = "@TI4/draft-window";
-    const windowTitle: string = "Draft";
-    const abstractWindow: AbstractWindow = new AbstractWindow(
-      create,
-      namespaceId,
-      windowTitle
-    );
-    abstractWindow.addHost().getMutableWindowParams().disableClose = true;
-    const window: Window = abstractWindow.createWindow();
-    window.attach();
-
-    // Close window when draft state destroyed.
-    this._draftState.onDraftStateChanged.add(() => {
-      if (!draftState.isActive()) {
-        window.detach();
-      }
-    });
-    */
 
     // Watch out for duplicate UIs.
     if (DraftActivityStartTF._sharedUiElement !== undefined) {
@@ -245,7 +219,7 @@ export class DraftActivityStartTF {
     const ui = new UIElement();
     ui.scale = 1 / scale;
     ui.widget = new Border().setChild(
-      new DraftStateTfUI(this._draftState, scale).getWidget()
+      new DraftStateTfUI(this._draftState, scale).getWidget(),
     );
     ui.position = new Vector(0, 0, world.getTableHeight() + 3);
     world.addUI(ui);
