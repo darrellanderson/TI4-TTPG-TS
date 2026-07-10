@@ -10,6 +10,7 @@ import {
   SourceAndPackageIdSchemaType,
 } from "../../system-lib/schema/basic-types-schema";
 import { Tech } from "../../tech-lib/tech/tech";
+import { TechColorType } from "../..";
 
 export class Faction {
   private readonly _sourceAndPackageId: SourceAndPackageIdSchemaType;
@@ -18,7 +19,7 @@ export class Faction {
   private readonly _injectedExtras: Map<string, number> = new Map();
 
   static getOverrideHomeSystemTileNumber(
-    playerSlot: number
+    playerSlot: number,
   ): number | undefined {
     const key: string = `ohs${playerSlot}`;
     const data: string | undefined = world.getSavedData(key);
@@ -27,7 +28,7 @@ export class Faction {
 
   static setOverrideHomeSystemTileNumber(
     playerSlot: number,
-    tileNumber: number
+    tileNumber: number,
   ): void {
     const key: string = `ohs${playerSlot}`;
     const data: string = `${tileNumber}`;
@@ -36,7 +37,7 @@ export class Faction {
 
   constructor(
     sourceAndPackageId: SourceAndPackageIdSchemaType,
-    params: FactionSchemaType
+    params: FactionSchemaType,
   ) {
     this._sourceAndPackageId = sourceAndPackageId;
     this._params = params;
@@ -64,7 +65,7 @@ export class Faction {
     }
     return this._params.leaders.agents.map((agent): string => {
       return TI4.factionRegistry.rewriteNsid(
-        `card.leader.agent:${source}/${agent}`
+        `card.leader.agent:${source}/${agent}`,
       );
     });
   }
@@ -92,6 +93,24 @@ export class Faction {
     return result;
   }
 
+  getBreakthroughTechEquivalences(): Array<TechColorType> {
+    const result: Array<TechColorType> = [];
+    if (this._params.breakthroughs) {
+      this._params.breakthroughs.forEach(
+        (breakthrough: BreakthroughSchemaType) => {
+          if (breakthrough.techEquivalence) {
+            breakthrough.techEquivalence.forEach(
+              (techEquivalence: TechColorType) => {
+                result.push(techEquivalence);
+              },
+            );
+          }
+        },
+      );
+    }
+    return result;
+  }
+
   getBreakthroughNsids(): Array<string> {
     let source: string = this._sourceAndPackageId.source;
     if (source === "base" || source === "pok" || source === "codex.vigil") {
@@ -101,9 +120,9 @@ export class Faction {
       return this._params.breakthroughs.map(
         (breakthrough: BreakthroughSchemaType): string => {
           return TI4.factionRegistry.rewriteNsid(
-            `card.breakthrough:${source}/${breakthrough.breakthrough}`
+            `card.breakthrough:${source}/${breakthrough.breakthrough}`,
           );
-        }
+        },
       );
     }
     return [];
@@ -116,7 +135,7 @@ export class Faction {
     }
     return this._params.leaders.commanders.map((commander): string => {
       return TI4.factionRegistry.rewriteNsid(
-        `card.leader.commander:${source}/${commander}`
+        `card.leader.commander:${source}/${commander}`,
       );
     });
   }
@@ -200,7 +219,7 @@ export class Faction {
     }
     return this._params.leaders.heroes.map((hero): string => {
       return TI4.factionRegistry.rewriteNsid(
-        `card.leader.hero:${source}/${hero}`
+        `card.leader.hero:${source}/${hero}`,
       );
     });
   }
@@ -251,7 +270,7 @@ export class Faction {
     }
     return this._params.leaders.mechs.map((mech): string => {
       return TI4.factionRegistry.rewriteNsid(
-        `card.leader.mech:${source}/${mech}`
+        `card.leader.mech:${source}/${mech}`,
       );
     });
   }
@@ -273,7 +292,7 @@ export class Faction {
     const source: string = this._sourceAndPackageId.source;
     return this._params.promissories.map((promissory): string => {
       return TI4.factionRegistry.rewriteNsid(
-        `card.promissory:${source}/${promissory}`
+        `card.promissory:${source}/${promissory}`,
       );
     });
   }

@@ -5,6 +5,7 @@ import {
   GameWorld,
   globalEvents,
   Player,
+  Vector,
   world,
 } from "@tabletop-playground/api";
 import {
@@ -12,15 +13,18 @@ import {
   CardUtil,
   DiceGroup,
   DiceGroupParams,
-  DiceParams,
   DiceResult,
   IGlobal,
   NSID,
 } from "ttpg-darrell";
 import { RightClickFracture } from "../fracture/right-click-fracture";
+import { Faction } from "../../lib/faction-lib/faction/faction";
+import { TechColorType } from "../../lib/tech-lib/schema/tech-schema";
+import { System } from "../../lib/system-lib/system/system";
 
 const ACTION_FETCH: string = "*Fetch Planet Cards";
 const ACTION_ROLL_FOR_FRACTURE: string = "*Roll for Fracture";
+const ACTION_SHOW_TECH_SYSTEMS: string = "*Show matching tech skips";
 
 export class RightClickThundersEdge implements IGlobal {
   private readonly _onObjectCreated = (obj: GameObject): void => {
@@ -36,6 +40,8 @@ export class RightClickThundersEdge implements IGlobal {
       this._fetchPlanetCard(object, player);
     } else if (identifier === ACTION_ROLL_FOR_FRACTURE) {
       this._rollForFracture(object, player);
+    } else if (identifier === ACTION_SHOW_TECH_SYSTEMS) {
+      this._highlightTechSkipsMatchingBreakthrough(player);
     }
   };
 
@@ -56,6 +62,8 @@ export class RightClickThundersEdge implements IGlobal {
       obj.addCustomAction(ACTION_FETCH);
       obj.removeCustomAction(ACTION_ROLL_FOR_FRACTURE);
       obj.addCustomAction(ACTION_ROLL_FOR_FRACTURE);
+      obj.removeCustomAction(ACTION_SHOW_TECH_SYSTEMS);
+      obj.addCustomAction(ACTION_SHOW_TECH_SYSTEMS);
       obj.onCustomAction.remove(this._onCustomAction);
       obj.onCustomAction.add(this._onCustomAction);
     }
@@ -129,7 +137,48 @@ export class RightClickThundersEdge implements IGlobal {
     new RightClickFracture()._deployFracture();
   }
 
-  _highlightTechSkipsMatchingBreakthrough(): void {
-    // TODO
+  _highlightTechSkipsMatchingBreakthrough(player: Player): void {
+    const playerSlot: number = player.getSlot();
+    const playerName: string = TI4.playerName.getBySlot(playerSlot);
+    const color: Color = world.getSlotColor(playerSlot);
+
+    const faction: Faction | undefined =
+      TI4.factionRegistry.getByPlayerSlot(playerSlot);
+    if (!faction) {
+      const msg: string = `Highlighting systems with breakthrough techs: no faction for player slot ${playerSlot}`;
+      Broadcast.chatAll(msg, color);
+      return;
+    }
+
+    const breakthroughColors: Array<TechColorType> =
+      faction.getBreakthroughTechEquivalences();
+    const msg: string = `${playerName} highlighting systems with breakthrough techs: ${breakthroughColors.join(", ")}`;
+    Broadcast.chatAll(msg, color);
+
+    const skipContained: boolean = true;
+    const positions: Array<Vector> = TI4.systemRegistry
+      .getAllSystemsWithObjs(skipContained)
+      .filter((system: System): boolean => {
+        for (const planet of system.getPlanets()) {
+          for (const techSkip of planet.getTechs()) {
+            if (breakthroughColors.includes(techSkip as TechColorType)) {
+              return true;
+            }
+          }
+        }
+        return false;
+      })
+      .map((system: System): Vector => system.getObj().getPosition());
+
+    // Ping goes away pretty quickly, show it a few times.
+    const playSound: boolean = false;
+    for (let delay = 0; delay < 10; delay += 2.5) {
+      const delayMs: number = delay * 1000;
+      setTimeout(() => {
+        positions.forEach((pos: Vector): void => {
+          world.showPing(pos, color, playSound);
+        });
+      }, delayMs);
+    }
   }
 }
