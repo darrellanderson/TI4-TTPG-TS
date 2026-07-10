@@ -5,6 +5,7 @@ import { UnitType } from "../../../unit-lib/schema/unit-attrs-schema";
 import { Faction } from "../../faction/faction";
 import { AbstractUnpack } from "../abstract-unpack/abstract-unpack";
 import { cloneReplace } from "../../../clone-replace";
+import { MapHomeSystemLocations } from "../../../map-string-lib/map-home-system-locations/map-home-system-locations";
 
 export class UnpackStartingUnits extends AbstractUnpack {
   private readonly _find: Find = new Find();
@@ -21,17 +22,17 @@ export class UnpackStartingUnits extends AbstractUnpack {
     const container: Container | undefined = this._find.findContainer(
       nsid,
       this.getPlayerSlot(),
-      skipContained
+      skipContained,
     );
     if (!container) {
       throw new Error(
-        `Could not find container for ${unit}/${this.getPlayerSlot()}`
+        `Could not find container for ${unit}/${this.getPlayerSlot()}`,
       );
     }
     let obj: GameObject | undefined = container.takeAt(0, pos);
     if (!obj) {
       throw new Error(
-        `Could not find plastic for ${unit}/${this.getPlayerSlot()}`
+        `Could not find plastic for ${unit}/${this.getPlayerSlot()}`,
       );
     }
     obj = cloneReplace(obj);
@@ -40,11 +41,18 @@ export class UnpackStartingUnits extends AbstractUnpack {
 
   _findHomeSystemTileOrThrow(): GameObject {
     const playerSlot: number = this.getPlayerSlot();
-    const systemTileObj: GameObject | undefined =
+    let systemTileObj: GameObject | undefined =
       this.getFaction().getHomeSystemTileObj(playerSlot);
+
+    // If unable to find home system, look for the generic (not yet unpacked home).
+    if (!systemTileObj) {
+      systemTileObj =
+        new MapHomeSystemLocations().findExistingGenericHomeSystem(playerSlot);
+    }
+
     if (!systemTileObj) {
       throw new Error(
-        `Could not find home system tile for ${this.getPlayerSlot()}`
+        `Could not find home system tile for ${this.getPlayerSlot()}`,
       );
     }
     return systemTileObj;
@@ -58,7 +66,7 @@ export class UnpackStartingUnits extends AbstractUnpack {
 
     const totalCount: number = Object.values(startingUnits).reduce(
       (a, b) => a + b,
-      0
+      0,
     );
     const rotate: number = 360 / totalCount;
     let localPos: Vector = new Vector(5, 0, 10);
@@ -67,7 +75,7 @@ export class UnpackStartingUnits extends AbstractUnpack {
         const pos: Vector = systemTileObj.localPositionToWorld(localPos);
         const obj: GameObject = this._getUnitPlasticOrThrow(
           unit as UnitType,
-          pos
+          pos,
         );
         obj.snapToGround();
         localPos = localPos.rotateAngleAxis(rotate, [0, 0, 1]);

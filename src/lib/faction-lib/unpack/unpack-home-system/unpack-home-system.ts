@@ -19,7 +19,7 @@ export class UnpackHomeSystem extends AbstractUnpack {
 
   _findGenericHomeSystemTileOrThrow(): GameObject {
     return new MapHomeSystemLocations().findOrSpawnGenericHomeSystemOrThrow(
-      this.getPlayerSlot()
+      this.getPlayerSlot(),
     );
   }
 
@@ -28,7 +28,7 @@ export class UnpackHomeSystem extends AbstractUnpack {
     const obj: GameObject | undefined = this._find.findGameObject(
       nsid,
       this.getPlayerSlot(),
-      true
+      true,
     );
     if (!obj) {
       throw new Error(`Could not find status pad for ${this.getPlayerSlot()}`);
@@ -38,7 +38,7 @@ export class UnpackHomeSystem extends AbstractUnpack {
 
   _spawnGenericHomeSystemTileOrThrow(): GameObject {
     return new MapHomeSystemLocations().findOrSpawnGenericHomeSystemOrThrow(
-      this.getPlayerSlot()
+      this.getPlayerSlot(),
     );
   }
 
@@ -64,11 +64,11 @@ export class UnpackHomeSystem extends AbstractUnpack {
     const obj: GameObject | undefined = this._find.findGameObject(
       homeSystemTileNsid,
       undefined,
-      true
+      true,
     );
     if (!obj) {
       throw new Error(
-        `Could not find home system tile for ${this.getPlayerSlot()}`
+        `Could not find home system tile for ${this.getPlayerSlot()}`,
       );
     }
     return obj;
@@ -98,7 +98,7 @@ export class UnpackHomeSystem extends AbstractUnpack {
       result = this._find.findGameObject(
         surrogateSystemTileNsid,
         undefined,
-        true
+        true,
       );
     }
     return result;
@@ -116,11 +116,11 @@ export class UnpackHomeSystem extends AbstractUnpack {
     const surrogatSystemTileeObj: GameObject | undefined =
       this._spawnSurrogateSystemTile();
 
-    const homePos: Vector = genericHomeSystemTile.getPosition().add([0, 0, 10]);
+    const homePos: Vector = genericHomeSystemTile.getPosition();
     const dx: number = (statusPad.getPosition().x < 0 ? 1 : -1) * 15;
     let secondHomePos: Vector = statusPad.getPosition().add([dx, 35, 10]);
     secondHomePos = TI4.hex.toPosition(TI4.hex.fromPosition(secondHomePos));
-    secondHomePos.z = world.getTableHeight() + 10;
+    secondHomePos.z = world.getTableHeight() + 8;
 
     DeletedItemsContainer.destroyWithoutCopying(genericHomeSystemTile);
     if (surrogatSystemTileeObj) {
