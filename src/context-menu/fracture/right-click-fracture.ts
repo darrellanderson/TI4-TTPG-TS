@@ -19,10 +19,12 @@ import {
 const ACTION_DEPLOY_FRACTURE: string = "*Deploy fracture";
 const ACTION_FETCH_RELIC: string = "*Fetch relic";
 
+const PRESISTENCE_KEY_IS_DEPLOYED: string = "__fractureDeployed";
+
 export class RightClickFracture implements IGlobal {
   readonly _onObjectCreated = (obj: GameObject): void => {
     const system: System | undefined = TI4.systemRegistry.getBySystemTileObjId(
-      obj.getId()
+      obj.getId(),
     );
     if (system && system.getClass() === "fracture") {
       obj.removeCustomAction(ACTION_DEPLOY_FRACTURE);
@@ -42,7 +44,7 @@ export class RightClickFracture implements IGlobal {
   readonly _onCustomAction = (
     obj: GameObject,
     player: Player,
-    identifier: string
+    identifier: string,
   ): void => {
     if (identifier === ACTION_DEPLOY_FRACTURE) {
       const playerName: string = TI4.playerName.getByPlayer(player);
@@ -68,6 +70,14 @@ export class RightClickFracture implements IGlobal {
     }
   };
 
+  _isFractureDeployed(): boolean {
+    return world.getSavedData(PRESISTENCE_KEY_IS_DEPLOYED) === "true";
+  }
+
+  _setFractureDeployed(): void {
+    world.setSavedData("true", PRESISTENCE_KEY_IS_DEPLOYED);
+  }
+
   init(): void {
     const skipContained: boolean = false;
     for (const obj of world.getAllObjects(skipContained)) {
@@ -77,6 +87,12 @@ export class RightClickFracture implements IGlobal {
   }
 
   _deployFracture(): void {
+    if (this._isFractureDeployed()) {
+      Broadcast.chatAll("Fracture has already been deployed", Broadcast.ERROR);
+      return;
+    }
+    this._setFractureDeployed();
+
     const skipContained: boolean = true;
     for (const obj of world.getAllObjects(skipContained)) {
       const system: System | undefined =
@@ -96,7 +112,7 @@ export class RightClickFracture implements IGlobal {
       FRACTURE_UNIT_POSITIONS.filter(
         (entry: FractureUnitPositionType): boolean => {
           return entry.tile === tile;
-        }
+        },
       );
 
     unitPositions.forEach((unitPosition: FractureUnitPositionType) => {
@@ -106,7 +122,7 @@ export class RightClickFracture implements IGlobal {
 
       const obj: GameObject = this._getUnitPlasticOrThrow(
         unitPosition.unit,
-        pos
+        pos,
       );
       obj.snapToGround();
     });
