@@ -19,6 +19,7 @@ export class ShuffleDecks implements IGlobal {
       "deck-objective-2",
       "deck-objective-secret",
       "deck-relic",
+      "deck-faction-reference",
     ];
 
     const find: Find = new Find();
