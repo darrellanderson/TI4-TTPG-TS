@@ -1,18 +1,47 @@
 import { GameObject, Vector, world } from "@tabletop-playground/api";
-import { Find } from "ttpg-darrell";
+import { Find, Shuffle } from "ttpg-darrell";
+
+const KEY_TF_DRAFT_FACTIONS: string = "__tfDraftFactions";
 
 export class TFSetupFactionSheets {
+  static getChosenFactionNsidNames(): Array<string> {
+    const configStr: string | undefined = world.getSavedData(
+      KEY_TF_DRAFT_FACTIONS,
+    );
+    if (!configStr) {
+      throw new Error("No saved data for chosen factions");
+    }
+    return JSON.parse(configStr);
+  }
+
+  static setChosenFactionNsidNames(
+    chosenFactionNsidNames: Array<string>,
+  ): void {
+    const configStr: string = JSON.stringify(chosenFactionNsidNames);
+    world.setSavedData(configStr, KEY_TF_DRAFT_FACTIONS);
+  }
+
+  _getFactionSheetNsid(factionNsidName: string): string {
+    return `sheet.faction:twilights-fall/${factionNsidName}`;
+  }
+
   setup(): void {
-    const nsids: Array<string> = [
-      "sheet.faction:twilights-fall/tf-black",
-      "sheet.faction:twilights-fall/tf-blue",
-      "sheet.faction:twilights-fall/tf-green",
-      "sheet.faction:twilights-fall/tf-orange",
-      "sheet.faction:twilights-fall/tf-pink",
-      "sheet.faction:twilights-fall/tf-purple",
-      "sheet.faction:twilights-fall/tf-red",
-      "sheet.faction:twilights-fall/tf-yellow",
-    ];
+    const factionNsidNames: Array<string> = [
+      "tf-black",
+      "tf-blue",
+      "tf-green",
+      "tf-orange",
+      "tf-pink",
+      "tf-purple",
+      "tf-red",
+      "tf-yellow",
+    ].sort();
+    const chosenFactionNsidNames: Array<string> = new Shuffle<string>()
+      .shuffle(factionNsidNames)
+      .slice(0, TI4.config.playerCount)
+      .sort()
+      .reverse(); // draft UI renders bottom to top
+    TFSetupFactionSheets.setChosenFactionNsidNames(chosenFactionNsidNames);
 
     const find: Find = new Find();
     const matNsid: string = "mat.deck:twilights-fall/twilights-fall";
@@ -21,34 +50,39 @@ export class TFSetupFactionSheets {
     const mat: GameObject | undefined = find.findGameObject(
       matNsid,
       owningPlayerSlot,
-      skipContained
+      skipContained,
     );
     if (!mat) {
       throw new Error(`Could not find mat for ${matNsid}`);
     }
-
-    const sheets: Array<GameObject> = nsids.map((nsid): GameObject => {
-      return TI4.spawn.spawnOrThrow(nsid);
-    });
-    const firstSheet: GameObject | undefined = sheets[0];
-    if (!firstSheet) {
-      throw new Error(`Could not find first sheet for ${nsids.join(", ")}`);
-    }
-
     const matExtent: Vector = mat.getExtent(false, false);
-    const sheetExtent: Vector = firstSheet.getExtent(false, false);
 
-    const first: Vector = mat.getPosition();
-    first.x -= matExtent.x + sheetExtent.x + 5;
-
-    const dY: number = -15;
-    const z: number = world.getTableHeight() + 10;
-
-    sheets.forEach((sheet: GameObject, index: number): void => {
-      const pos: Vector = new Vector(first.x, first.y + dY * index, z);
+    let nextPos: Vector | undefined = undefined;
+    factionNsidNames.forEach((factionNsidName: string): void => {
+      const sheetNsid: string = this._getFactionSheetNsid(factionNsidName);
+      const sheet: GameObject = TI4.spawn.spawnOrThrow(sheetNsid);
       sheet.setScale([0.5, 0.5, 1]);
-      sheet.setPosition(pos);
+
+      const sheetExtent: Vector = sheet.getExtent(false, false);
+      if (!nextPos) {
+        const bottomRightAndAbove: Vector = mat
+          .getPosition()
+          .add(new Vector(-matExtent.x, matExtent.y, 10));
+        nextPos = bottomRightAndAbove.add([
+          -sheetExtent.x - 5,
+          -sheetExtent.y,
+          0,
+        ]);
+      } else {
+        nextPos.y -= sheetExtent.y * 2 + 1;
+      }
+      sheet.setPosition(nextPos);
       sheet.snapToGround();
+
+      // If not in the chosen set, shrink more.
+      if (!chosenFactionNsidNames.includes(factionNsidName)) {
+        sheet.setScale([0.25, 0.25, 1]);
+      }
     });
   }
 }

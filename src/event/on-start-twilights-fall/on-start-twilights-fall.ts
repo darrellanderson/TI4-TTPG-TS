@@ -6,6 +6,7 @@ import { TFSetupDecks } from "../../lib/twilights-fall-lib/setup/tf-setup-decks"
 import { TFSetupStrategyCards } from "../../lib/twilights-fall-lib/setup/tf-setup-strategy-cards";
 import { TFSetupFactionSheets } from "../../lib/twilights-fall-lib/setup/tf-setup-faction-sheets";
 import { TFSetupPrune } from "../../lib/twilights-fall-lib/setup/tf-setup-prune";
+import { TFSetupMatsDraftExt } from "../../lib/twilights-fall-lib/setup/tf-setup-mats-draft-ext";
 
 export class OnStartTwilightsFall implements IGlobal {
   init(): void {
@@ -33,5 +34,6 @@ export class OnStartTwilightsFall implements IGlobal {
     new TFSetupStrategyCards().setup();
     new TFSetupFactionSheets().setup();
     new TFSetupPrune().setup();
+    new TFSetupMatsDraftExt().setup();
   }
 }

@@ -1,5 +1,6 @@
 import { Shuffle } from "ttpg-darrell";
 import { Faction } from "../../faction-lib/faction/faction";
+import { TFSetupFactionSheets } from "../../twilights-fall-lib/setup/tf-setup-faction-sheets";
 
 export class GenerateFactions {
   /**
@@ -8,6 +9,14 @@ export class GenerateFactions {
    * @param count
    */
   generate(count: number): Array<Faction> {
+    if (TI4.config.sources.includes("twilights-fall")) {
+      return TFSetupFactionSheets.getChosenFactionNsidNames().map(
+        (nsidName: string) => {
+          return TI4.factionRegistry.getByNsidNameOrThrow(nsidName);
+        },
+      );
+    }
+
     let sawKeleres: boolean = false;
     let factions: Array<Faction> = TI4.factionRegistry
       .getAllFactionsFilteredByConfigSources()
