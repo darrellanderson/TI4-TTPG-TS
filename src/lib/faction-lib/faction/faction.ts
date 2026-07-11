@@ -35,6 +35,27 @@ export class Faction {
     world.setSavedData(data, key);
   }
 
+  static getOverrideStartingUnits(
+    playerSlot: number,
+  ): Record<string, number> | undefined {
+    const key: string = `osu${playerSlot}`;
+    const copyFromFactionNSID: string | undefined = world.getSavedData(key);
+    if (copyFromFactionNSID) {
+      const copyFromFaction: Faction | undefined =
+        TI4.factionRegistry.getByNsid(copyFromFactionNSID);
+      if (copyFromFaction) {
+        return copyFromFaction.getStartingUnits(playerSlot);
+      }
+    }
+    return undefined;
+  }
+
+  static setOverrideStartingUnits(playerSlot: number, copyFrom: Faction): void {
+    const key: string = `osu${playerSlot}`;
+    const copyFromFactionNSID: string = copyFrom.getNsid();
+    world.setSavedData(copyFromFactionNSID, key);
+  }
+
   constructor(
     sourceAndPackageId: SourceAndPackageIdSchemaType,
     params: FactionSchemaType,
@@ -316,7 +337,13 @@ export class Faction {
     return result;
   }
 
-  getStartingUnits(): Record<string, number> {
+  getStartingUnits(playerSlot: number): Record<string, number> {
+    const override: Record<string, number> | undefined =
+      Faction.getOverrideStartingUnits(playerSlot);
+    if (override) {
+      return override;
+    }
+
     const result: Record<string, number> = {};
 
     // eslint-disable-next-line prefer-const

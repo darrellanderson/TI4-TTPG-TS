@@ -62,7 +62,7 @@ export class UnpackStartingUnits extends AbstractUnpack {
     const systemTileObj: GameObject = this._findHomeSystemTileOrThrow();
 
     const startingUnits: { [unit: string]: number } =
-      this.getFaction().getStartingUnits();
+      this.getFaction().getStartingUnits(this.getPlayerSlot());
 
     const totalCount: number = Object.values(startingUnits).reduce(
       (a, b) => a + b,
