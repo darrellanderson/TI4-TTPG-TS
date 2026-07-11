@@ -6,6 +6,7 @@ import {
   world,
 } from "@tabletop-playground/api";
 import {
+  Broadcast,
   CardUtil,
   Direction,
   GarbageContainer,
@@ -33,6 +34,7 @@ import {
 } from "./draft-activity-start-params";
 import { ParseBaseMap } from "../parse/parse-base-map";
 import { MapStringParser } from "../../map-string-lib/map-string/map-string-parser";
+import { InitiativeFactionRefCards } from "../../strategy-card-lib/initiative-order/initiative-faction-ref-cards";
 
 export class DraftActivityMaybeResume implements IGlobal {
   init(): void {
@@ -57,11 +59,11 @@ export class DraftActivityStart {
     numSlices: number,
     generateSlicesParams: GenerateSlicesParams,
     blacklistSystemTileNumbers: Array<number>,
-    errors: Array<string>
+    errors: Array<string>,
   ): Array<SliceTiles> {
     const sliceSize: number = generateSlicesParams.sliceShape.length - 1;
     let slices: Array<SliceTiles> | undefined = new ParseSlices(
-      sliceSize
+      sliceSize,
     ).parseSlices(config, errors);
 
     if (slices === undefined) {
@@ -108,7 +110,7 @@ export class DraftActivityStart {
   static getOrGenerateFactions(
     config: string,
     numFactions: number,
-    errors: Array<string>
+    errors: Array<string>,
   ): Array<Faction> {
     let factions: Array<Faction> | undefined =
       new ParseFactions().parseFactions(config, errors);
@@ -121,7 +123,7 @@ export class DraftActivityStart {
   static getBaseMap(config: string, errors: Array<string>): string | undefined {
     const baseMap: string | undefined = new ParseBaseMap().parseBaseMap(
       config,
-      errors
+      errors,
     );
     return baseMap;
   }
@@ -130,7 +132,7 @@ export class DraftActivityStart {
     const inUseNsids: Array<string> = factions.map(
       (faction: Faction): string => {
         return faction.getNsid();
-      }
+      },
     );
 
     if (
@@ -155,11 +157,11 @@ export class DraftActivityStart {
         );
       });
     const shuffledFactions: Array<Faction> = new Shuffle<Faction>().shuffle(
-      availableFactions
+      availableFactions,
     );
     const useFactions: Array<Faction> = shuffledFactions.slice(
       0,
-      TI4.config.playerCount
+      TI4.config.playerCount,
     );
     return useFactions.map((faction: Faction): string => {
       return faction.getHomeSystemTileNumber().toString();
@@ -181,7 +183,7 @@ export class DraftActivityStart {
     // Base map.
     const baseMap: string | undefined = DraftActivityStart.getBaseMap(
       params.config,
-      errors
+      errors,
     );
     if (baseMap !== undefined) {
       this._draftState.setBaseMap(baseMap);
@@ -199,18 +201,18 @@ export class DraftActivityStart {
       params.numSlices,
       sliceParams,
       blacklistSystemTileNumbers,
-      errors
+      errors,
     );
     this._draftState.setSlices(slices);
     if (this._draftState.getSlices().length < TI4.config.playerCount) {
       errors.push(
-        `Slice count (${this._draftState.getSlices().length}) is less than player count (${TI4.config.playerCount})`
+        `Slice count (${this._draftState.getSlices().length}) is less than player count (${TI4.config.playerCount})`,
       );
     }
 
     // Slice labels.
     const labels: Array<string> | undefined = DraftActivityStart.getSliceLabels(
-      params.config
+      params.config,
     );
     if (labels !== undefined) {
       this._draftState.setSliceLabels(labels);
@@ -224,14 +226,14 @@ export class DraftActivityStart {
       factions = DraftActivityStart.getOrGenerateFactions(
         params.config,
         params.numFactions,
-        errors
+        errors,
       );
     }
     this._draftState.setFactions(factions);
 
     if (this._draftState.getFactions().length < TI4.config.playerCount) {
       errors.push(
-        `Faction count (${this._draftState.getFactions().length}) is less than player count (${TI4.config.playerCount})`
+        `Faction count (${this._draftState.getFactions().length}) is less than player count (${TI4.config.playerCount})`,
       );
     }
 
@@ -244,7 +246,7 @@ export class DraftActivityStart {
     // Minor factions.
     if (this._draftState.getOpaqueType() === "minorFactions") {
       const opaques: Array<string> = DraftActivityStart.getMinorFactions(
-        this._draftState.getFactions()
+        this._draftState.getFactions(),
       );
       this._draftState.setOpaques(opaques);
     }
@@ -255,7 +257,20 @@ export class DraftActivityStart {
       const playerSlots: Array<number> = TI4.playerSeats
         .getAllSeats()
         .map((seat) => seat.playerSlot);
-      const order: Array<number> = new Shuffle<number>().shuffle(playerSlots);
+      let order: Array<number> = new Shuffle<number>().shuffle(playerSlots);
+
+      if (TI4.config.sources.includes("twilights-fall")) {
+        // Use faction reference card priority for turn order.
+        const initiativeFactionRefCards: InitiativeFactionRefCards =
+          new InitiativeFactionRefCards();
+        order = initiativeFactionRefCards.getInitiativeOrder(errors);
+        if (errors.length > 0) {
+          // Report errors but proceed (some players may have random priorities).
+          const msg: string = `Error creating draft turn order, proceeding with random values for players without them (cancel and restart draft after fixing if using): ${errors.join(", ")}`;
+          Broadcast.broadcastAll(msg, Broadcast.ERROR);
+        }
+      }
+
       const direction: Direction = "snake";
       const first: number | undefined = order[0];
       if (first !== undefined) {
@@ -305,7 +320,7 @@ export class DraftActivityStart {
     }
 
     const resolveConflictsKeleres = new ResolveConflictsKeleres(
-      this._draftState
+      this._draftState,
     );
     this._draftState.onDraftStateChanged.add(() => {
       resolveConflictsKeleres.resolve();
@@ -348,7 +363,7 @@ export class DraftActivityStart {
     const ui = new UIElement();
     ui.scale = 1 / scale;
     ui.widget = new Border().setChild(
-      new DraftStateUI(this._draftState, scale).getWidget()
+      new DraftStateUI(this._draftState, scale).getWidget(),
     );
     ui.position = new Vector(0, 0, world.getTableHeight() + 3);
     world.addUI(ui);

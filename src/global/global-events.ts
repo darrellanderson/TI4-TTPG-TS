@@ -139,7 +139,7 @@ export class GlobalEvents {
       playerSlot: number,
       colorName: string,
       colorHex: string,
-      clickingPlayer: Player,
+      clickingPlayer?: Player,
     ) => void
   >();
 

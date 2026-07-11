@@ -14,6 +14,10 @@ import { PlayerSeatType } from "../../player-lib/player-seats/player-seats";
 import { UnpackAll } from "../../faction-lib/unpack/unpack-all/unpack-all";
 import { System } from "../../system-lib/system/system";
 import { RightClickMinorFactions } from "../../../context-menu/events/minor-factions/right-click-minor-factions";
+import { TFSetupMatsDraftExt } from "../../twilights-fall-lib/setup/tf-setup-mats-draft-ext";
+import { TFUnpackFaction } from "../../twilights-fall-lib/tf-unpack-faction/tf-unpack-faction";
+import { TFUnpackHomeSystem } from "../../twilights-fall-lib/tf-unpack-home-system/tf-unpack-home-system";
+import { TFUnpackStartingUnits } from "../../twilights-fall-lib/tf-unpack-starting-units/tf-unpack-starting-units";
 
 export class DraftActivityFinish {
   private readonly _draftState: DraftState;
@@ -58,7 +62,7 @@ export class DraftActivityFinish {
     // Find unused player slots.
     const seats: Array<PlayerSeatType> = TI4.playerSeats.getAllSeats();
     const openSlots: Set<number> = new Set(
-      new Array(20).fill(0).map((_, i) => i)
+      new Array(20).fill(0).map((_, i) => i),
     );
     for (const player of world.getAllPlayers()) {
       openSlots.delete(player.getSlot());
@@ -108,16 +112,16 @@ export class DraftActivityFinish {
 
   unpackFactions(): this {
     const seats: Array<PlayerSeatType> = TI4.playerSeats.getAllSeats();
-    seats.forEach((seat: PlayerSeatType, index: number) => {
-      const playerSlot: number = seat.playerSlot;
+    seats.forEach((seat: PlayerSeatType, seatIndex: number) => {
+      const dstPlayerSlot: number = seat.playerSlot;
       const faction: Faction | undefined =
-        this._draftState.getSeatIndexToFaction(index);
+        this._draftState.getSeatIndexToFaction(seatIndex);
       if (faction) {
         // Bug report of (default) white seat unpacking twice after a draft.
         // Other seats are fine, just white duplicated...
         // Unclear how that would happen, but as a precaution validate empty.
         const existingFaction: Faction | undefined =
-          TI4.factionRegistry.getByPlayerSlot(playerSlot);
+          TI4.factionRegistry.getByPlayerSlot(dstPlayerSlot);
         if (existingFaction) {
           // This could technically happen if a player unpacked a faction
           // before the draft.  In any case report the error to get a sense of things.
@@ -125,21 +129,55 @@ export class DraftActivityFinish {
             "Draft",
             `found existing faction "${existingFaction.getAbbr()}"`,
             `(wanted "${faction.getAbbr()}")`,
-            `for player slot ${playerSlot}`,
+            `for player slot ${dstPlayerSlot}`,
           ].join(" ");
           ErrorHandler.onError.trigger(errMsg);
         } else {
-          new UnpackAll(faction, playerSlot).unpack();
+          this._unpackFaction(faction, dstPlayerSlot, seatIndex);
         }
       }
     });
+    TFSetupMatsDraftExt.removeAllMatsAndReferenceCards();
     return this;
+  }
+
+  _unpackFaction(
+    faction: Faction,
+    dstPlayerSlot: number,
+    chooserSeatIndex: number,
+  ): void {
+    const chooserPlayerSlot: number =
+      TI4.playerSeats.getPlayerSlotBySeatIndexOrThrow(chooserSeatIndex);
+
+    if (TI4.config.sources.includes("twilights-fall")) {
+      new TFUnpackFaction(faction, dstPlayerSlot).unpack();
+
+      const homeFaction: Faction | undefined =
+        TFSetupMatsDraftExt.getFactionChoice(
+          chooserPlayerSlot,
+          "tf-draft-home",
+        );
+      if (homeFaction) {
+        new TFUnpackHomeSystem(homeFaction, dstPlayerSlot).unpack();
+      }
+
+      const unitFaction: Faction | undefined =
+        TFSetupMatsDraftExt.getFactionChoice(
+          chooserPlayerSlot,
+          "tf-draft-starting-units",
+        );
+      if (unitFaction) {
+        new TFUnpackStartingUnits(unitFaction, dstPlayerSlot).unpack();
+      }
+    } else {
+      new UnpackAll(faction, dstPlayerSlot).unpack();
+    }
   }
 
   unpackMap(): this {
     // Get baked map string, included faction home systems.
     const mapString: string = DraftToMapString.fromDraftState(
-      this._draftState
+      this._draftState,
     ).mapString;
 
     const exclude: Set<number> = new Set();
@@ -163,7 +201,7 @@ export class DraftActivityFinish {
       }
     });
     const scrubbedMapString: string = new MapStringFormat().format(
-      mapStringEntries
+      mapStringEntries,
     );
 
     new MapStringLoad().load(scrubbedMapString);

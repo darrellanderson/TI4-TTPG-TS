@@ -41,6 +41,10 @@ export class TFSetupFactionSheets {
       .slice(0, TI4.config.playerCount)
       .sort()
       .reverse(); // draft UI renders bottom to top
+    console.log(
+      "TFSetupFactionSheets chosen factions:",
+      chosenFactionNsidNames,
+    );
     TFSetupFactionSheets.setChosenFactionNsidNames(chosenFactionNsidNames);
 
     const find: Find = new Find();

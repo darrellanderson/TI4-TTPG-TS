@@ -159,17 +159,7 @@ export class TFUnpackFaction {
       newColorHex = "#2E2626";
     }
 
-    let clickingPlayer: Player | undefined = undefined;
-    for (const player of world.getAllPlayers()) {
-      if (player.getSlot() === playerSlot) {
-        clickingPlayer = player;
-        break;
-      }
-    }
-    if (!clickingPlayer) {
-      throw new Error(`clickingPlayer is undefined for slot ${playerSlot}`);
-    }
-
+    const clickingPlayer: Player | undefined = undefined;
     TI4.events.onPlayerChangedColor.trigger(
       playerSlot,
       newColorName,

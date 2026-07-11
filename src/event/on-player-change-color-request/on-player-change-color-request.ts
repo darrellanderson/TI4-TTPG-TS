@@ -14,14 +14,14 @@ export class OnPlayerChangeColorRequest implements IGlobal {
 
   readonly _onCancelClickedHandler = (
     _button: Button,
-    _player: Player
+    _player: Player,
   ): void => {
     this._closeWindow();
   };
 
   private readonly _onPlayerChangeColorRequestHandler = (
     targetPlayerSlot: number,
-    clickingPlayer: Player
+    clickingPlayer: Player,
   ) => {
     this._closeWindow();
 
@@ -30,7 +30,7 @@ export class OnPlayerChangeColorRequest implements IGlobal {
     Broadcast.chatAll(msg);
 
     const createAbstractUi: CreateAbstractUIType = (
-      params: CreateAbstractUIParams
+      params: CreateAbstractUIParams,
     ): AbstractUI => {
       const changeColorUi = new ChangeColorUI(targetPlayerSlot, params.scale);
       const cancelButton: Button = changeColorUi.getCancelButton();
@@ -41,7 +41,7 @@ export class OnPlayerChangeColorRequest implements IGlobal {
     const abstractWindow: AbstractWindow = new AbstractWindow(
       createAbstractUi,
       namespaceId,
-      "Change Color"
+      "Change Color",
     );
     const window: Window = abstractWindow.createWindow().attach();
     this._colorChangeWindow = window;
@@ -51,7 +51,7 @@ export class OnPlayerChangeColorRequest implements IGlobal {
     _playerSlot: number,
     _colorName: string,
     _colorHex: string,
-    _clickingPlayer: Player
+    _clickingPlayer?: Player,
   ): void => {
     this._closeWindow();
   };
@@ -65,14 +65,14 @@ export class OnPlayerChangeColorRequest implements IGlobal {
 
   init(): void {
     TI4.events.onPlayerChangeColorRequest.add(
-      this._onPlayerChangeColorRequestHandler
+      this._onPlayerChangeColorRequestHandler,
     );
     TI4.events.onPlayerChangedColor.add(this._onPlayerChangedColorHandler);
   }
 
   destroy(): void {
     TI4.events.onPlayerChangeColorRequest.remove(
-      this._onPlayerChangeColorRequestHandler
+      this._onPlayerChangeColorRequestHandler,
     );
   }
 }

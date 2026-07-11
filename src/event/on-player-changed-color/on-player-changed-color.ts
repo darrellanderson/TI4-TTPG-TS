@@ -10,10 +10,12 @@ export class OnPlayerChangedColor implements IGlobal {
     playerSlot: number,
     colorName: string,
     colorHex: string,
-    clickingPlayer: Player
+    clickingPlayer?: Player,
   ) => {
-    const msg: string = `${clickingPlayer.getName()} changed a player's color`;
-    Broadcast.chatAll(msg);
+    if (clickingPlayer) {
+      const msg: string = `${clickingPlayer.getName()} changed a player's color`;
+      Broadcast.chatAll(msg);
+    }
     new ChangeColor(playerSlot).changeColor(colorName, colorHex);
 
     // Update turn order colors.
