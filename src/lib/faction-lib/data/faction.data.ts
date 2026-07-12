@@ -1194,7 +1194,7 @@ export const SOURCE_TO_FACTION_DATA: Record<
     {
       name: "A Sickening Lurch",
       nsidName: "tf-black",
-      abbr: "Raithborn",
+      abbr: "Lurch", //"Raithborn",
       abilities: [],
       commodities: 2,
       factionTechs: [],
@@ -1215,7 +1215,7 @@ export const SOURCE_TO_FACTION_DATA: Record<
     {
       name: "The Saint of Swords",
       nsidName: "tf-blue",
-      abbr: "Tempered",
+      abbr: "Swords", //"Tempered",
       abilities: [],
       commodities: 3,
       factionTechs: [],
@@ -1236,7 +1236,7 @@ export const SOURCE_TO_FACTION_DATA: Record<
     {
       name: "Il Sai Lakoe Herald of Thorns",
       nsidName: "tf-green",
-      abbr: "Blossoming",
+      abbr: "Thorns", //"Blossoming",
       abilities: [],
       commodities: 3,
       factionTechs: [],
@@ -1257,7 +1257,7 @@ export const SOURCE_TO_FACTION_DATA: Record<
     {
       name: "Radiant Aur",
       nsidName: "tf-orange",
-      abbr: "Divine",
+      abbr: "Aur", //"Divine",
       abilities: [],
       commodities: 4,
       factionTechs: [],
@@ -1278,7 +1278,7 @@ export const SOURCE_TO_FACTION_DATA: Record<
     {
       name: "El Nen Janovet",
       nsidName: "tf-pink",
-      abbr: "Replicant",
+      abbr: "Janovet", // "Replicant",
       abilities: [],
       commodities: 3,
       factionTechs: [],
@@ -1299,7 +1299,7 @@ export const SOURCE_TO_FACTION_DATA: Record<
     {
       name: "Il Na Viroset",
       nsidName: "tf-purple",
-      abbr: "Paradox",
+      abbr: "Viroset", //"Paradox",
       abilities: [],
       commodities: 4,
       factionTechs: [],
@@ -1320,7 +1320,7 @@ export const SOURCE_TO_FACTION_DATA: Record<
     {
       name: "The Ruby Monarch",
       nsidName: "tf-red",
-      abbr: "Vermilion",
+      abbr: "Monarch", //"Vermilion",
       abilities: [],
       commodities: 2,
       factionTechs: [],
@@ -1341,7 +1341,7 @@ export const SOURCE_TO_FACTION_DATA: Record<
     {
       name: "Avarice Rex",
       nsidName: "tf-yellow",
-      abbr: "Glimmering",
+      abbr: "Rex", //"Glimmering",
       abilities: [],
       commodities: 6,
       factionTechs: [],
