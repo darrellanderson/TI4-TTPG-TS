@@ -144,10 +144,10 @@ export class DraftActivityFinish {
   _unpackFaction(
     faction: Faction,
     dstPlayerSlot: number,
-    chooserSeatIndex: number,
+    seatIndex: number,
   ): void {
     const chooserPlayerSlot: number =
-      TI4.playerSeats.getPlayerSlotBySeatIndexOrThrow(chooserSeatIndex);
+      this._draftState.getSeatIndexToPlayerSlot(seatIndex);
 
     if (TI4.config.sources.includes("twilights-fall")) {
       new TFUnpackFaction(faction, dstPlayerSlot).unpack();
