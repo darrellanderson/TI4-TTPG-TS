@@ -10,6 +10,7 @@ export * from './obsidian-firmament';
 export * from './report-remaining';
 export * from './right-click-agenda';
 export * from './right-click-delete';
+export * from './right-click-fetch-planet-card';
 export * from './right-click-galvanize-token';
 export * from './right-click-purge';
 export * from './right-click-rider';

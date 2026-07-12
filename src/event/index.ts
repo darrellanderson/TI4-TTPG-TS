@@ -5,6 +5,7 @@ export * from './on-agenda-state-created';
 export * from './on-chat-message';
 export * from './on-combat-clicked';
 export * from './on-combat-result';
+export * from './on-fetch-planet-card-request';
 export * from './on-game-end';
 export * from './on-object-fell-through-table';
 export * from './on-planet-card-singleton';

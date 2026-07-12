@@ -2,5 +2,6 @@
 
 export * from './tf-setup-decks';
 export * from './tf-setup-faction-sheets';
+export * from './tf-setup-mats-draft-ext';
 export * from './tf-setup-prune';
 export * from './tf-setup-strategy-cards';
