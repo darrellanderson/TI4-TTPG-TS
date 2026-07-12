@@ -138,8 +138,12 @@ export class DraftActivityFinish {
         }
       }
     });
-    TFSetupMatsDraftExt.removeAllMatsAndReferenceCards();
-    TFSetupFactionSheets.removeMiniFactionSheets();
+
+    if (TI4.config.sources.includes("twilights-fall")) {
+      TFSetupMatsDraftExt.removeAllMatsAndReferenceCards();
+      TFSetupFactionSheets.removeMiniFactionSheets();
+    }
+
     return this;
   }
 
