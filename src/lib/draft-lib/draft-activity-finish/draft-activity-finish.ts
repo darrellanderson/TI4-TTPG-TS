@@ -18,6 +18,7 @@ import { TFSetupMatsDraftExt } from "../../twilights-fall-lib/setup/tf-setup-mat
 import { TFUnpackFaction } from "../../twilights-fall-lib/tf-unpack-faction/tf-unpack-faction";
 import { TFUnpackHomeSystem } from "../../twilights-fall-lib/tf-unpack-home-system/tf-unpack-home-system";
 import { TFUnpackStartingUnits } from "../../twilights-fall-lib/tf-unpack-starting-units/tf-unpack-starting-units";
+import { TFSetupFactionSheets } from "../../twilights-fall-lib/setup/tf-setup-faction-sheets";
 
 export class DraftActivityFinish {
   private readonly _draftState: DraftState;
@@ -138,6 +139,7 @@ export class DraftActivityFinish {
       }
     });
     TFSetupMatsDraftExt.removeAllMatsAndReferenceCards();
+    TFSetupFactionSheets.removeMiniFactionSheets();
     return this;
   }
 

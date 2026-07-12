@@ -1,7 +1,8 @@
 import { GameObject, Vector, world } from "@tabletop-playground/api";
-import { Find, Shuffle } from "ttpg-darrell";
+import { DeletedItemsContainer, Find, Shuffle } from "ttpg-darrell";
 
 const KEY_TF_DRAFT_FACTIONS: string = "__tfDraftFactions";
+const KEY_IS_MINI_FACTION_SHEET: string = "__isMiniFactionSheet";
 
 export class TFSetupFactionSheets {
   static getChosenFactionNsidNames(): Array<string> {
@@ -19,6 +20,20 @@ export class TFSetupFactionSheets {
   ): void {
     const configStr: string = JSON.stringify(chosenFactionNsidNames);
     world.setSavedData(configStr, KEY_TF_DRAFT_FACTIONS);
+  }
+
+  /**
+   * Remove the faction sheets created here, leave unpacked faction sheets in place.
+   */
+  static removeMiniFactionSheets(): void {
+    const skipContained = true;
+    for (const object of world.getAllObjects(skipContained)) {
+      const isMiniFactionSheetStr: boolean =
+        object.getSavedData(KEY_IS_MINI_FACTION_SHEET) === "true";
+      if (isMiniFactionSheetStr) {
+        DeletedItemsContainer.destroyWithoutCopying(object);
+      }
+    }
   }
 
   _getFactionSheetNsid(factionNsidName: string): string {
@@ -66,6 +81,7 @@ export class TFSetupFactionSheets {
       const sheetNsid: string = this._getFactionSheetNsid(factionNsidName);
       const sheet: GameObject = TI4.spawn.spawnOrThrow(sheetNsid);
       sheet.setScale([0.5, 0.5, 1]);
+      sheet.setSavedData("true", KEY_IS_MINI_FACTION_SHEET);
 
       const sheetExtent: Vector = sheet.getExtent(false, false);
       if (!nextPos) {
