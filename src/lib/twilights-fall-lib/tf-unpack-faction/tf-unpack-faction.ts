@@ -1,4 +1,4 @@
-import { Card, GameObject, Player, world } from "@tabletop-playground/api";
+import { Card, GameObject, Player } from "@tabletop-playground/api";
 import {
   AbstractRightClickCard,
   Broadcast,
