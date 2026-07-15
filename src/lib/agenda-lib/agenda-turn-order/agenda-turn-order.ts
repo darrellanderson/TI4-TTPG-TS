@@ -1,19 +1,59 @@
 import { Card, GameObject, Vector } from "@tabletop-playground/api";
-import { CardUtil, Find, PlayerSlot } from "ttpg-darrell";
+import { Broadcast, CardUtil, Find, PlayerSlot } from "ttpg-darrell";
 import { Faction } from "../../faction-lib/faction/faction";
+import {
+  InitiativeEntry,
+  InitiativeOrder,
+} from "../../strategy-card-lib/initiative-order/initiative-order";
 
 export class AgendaTurnOrder {
   private readonly _find: Find = new Find();
   private readonly _cardUtil: CardUtil = new CardUtil();
+  private readonly _initiativeOrder: InitiativeOrder = new InitiativeOrder();
+
+  _overrideSpeakerTokenForExecutiveOrder(): GameObject | undefined {
+    console.log("AgendaTurnOrder._overrideSpeakerTokenForExecutiveOrder()");
+    // If Exeutive Order is in play and it appears to be the action phase,
+    // treat the Executive Order card as the speaker token.
+    // "ACTION: Exhaust this card and draw the top or bottom card of the agenda
+    // deck. Players immediately vote on this agenda as if you were the speaker;
+    // you can spend trade goods and resources on this agenda as if they were votes."
+    const initiativeEntries: Array<InitiativeEntry> =
+      this._initiativeOrder.get();
+    const isActionPhase: boolean =
+      initiativeEntries.length >= TI4.config.playerCount;
+    const executiveOrderNsids: Array<string> = [
+      "card.technology.yellow:codex.vigil/executive-order",
+      "card.technology.yellow:thunders-edge/executive-order",
+    ];
+    for (const executiveOrderNsid of executiveOrderNsids) {
+      TI4.findTracking.trackNsid(executiveOrderNsid);
+      const executiveOrderCard: Card | undefined =
+        TI4.findTracking.findCard(executiveOrderNsid);
+      if (isActionPhase && executiveOrderCard) {
+        Broadcast.chatAll(
+          "Action phase and Executive Order is in play, treating it as the speaker token.",
+        );
+        return executiveOrderCard;
+      }
+    }
+    return undefined;
+  }
 
   public _getSpeakerTokenOrThrow(): GameObject {
+    const overrideSpeakerToken: GameObject | undefined =
+      this._overrideSpeakerTokenForExecutiveOrder();
+    if (overrideSpeakerToken) {
+      return overrideSpeakerToken;
+    }
+
     const nsid: string = "token:base/speaker";
     const playerSlot = undefined;
     const skipContained = true;
     const speakerToken = this._find.findGameObject(
       nsid,
       playerSlot,
-      skipContained
+      skipContained,
     );
     if (!speakerToken) {
       throw new Error("missing speaker token");
@@ -108,7 +148,7 @@ export class AgendaTurnOrder {
     const hackElectionCard: Card | undefined = this._find.findCard(
       hackElectionNsid,
       undefined,
-      true
+      true,
     );
     const allowFaceDown: boolean = false;
     const rejectSnapPointTags: Array<string> = ["discard-action"];
@@ -117,7 +157,7 @@ export class AgendaTurnOrder {
       this._cardUtil.isLooseCard(
         hackElectionCard,
         allowFaceDown,
-        rejectSnapPointTags
+        rejectSnapPointTags,
       )
     ) {
       const pos: Vector = hackElectionCard.getPosition();
