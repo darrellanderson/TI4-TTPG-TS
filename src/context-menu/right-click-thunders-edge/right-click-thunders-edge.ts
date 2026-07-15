@@ -21,7 +21,9 @@ import { RightClickFracture } from "../fracture/right-click-fracture";
 import { Faction } from "../../lib/faction-lib/faction/faction";
 import { TechColorType } from "../../lib/tech-lib/schema/tech-schema";
 import { System } from "../../lib/system-lib/system/system";
+import { SpawnControlToken } from "../../lib/control-token-lib/spawn-control-token";
 
+const ACTION_FETCH_CONTROL_TOKEN: string = "*Fetch Control Token";
 const ACTION_FETCH: string = "*Fetch Planet Cards";
 const ACTION_ROLL_FOR_FRACTURE: string = "*Roll for Fracture";
 const ACTION_SHOW_TECH_SYSTEMS: string = "*Show matching tech skips";
@@ -36,6 +38,9 @@ export class RightClickThundersEdge implements IGlobal {
     player: Player,
     identifier: string,
   ): void => {
+    if (identifier === ACTION_FETCH_CONTROL_TOKEN) {
+      this._fetchControlToken(object, player);
+    }
     if (identifier === ACTION_FETCH) {
       this._fetchPlanetCard(object, player);
     } else if (identifier === ACTION_ROLL_FOR_FRACTURE) {
@@ -58,6 +63,8 @@ export class RightClickThundersEdge implements IGlobal {
       "token.attachment.system:thunders-edge/thunders-edge";
     const nsid: string = NSID.get(obj);
     if (nsid === thundersEdgeNsid) {
+      obj.removeCustomAction(ACTION_FETCH_CONTROL_TOKEN);
+      obj.addCustomAction(ACTION_FETCH_CONTROL_TOKEN);
       obj.removeCustomAction(ACTION_FETCH);
       obj.addCustomAction(ACTION_FETCH);
       obj.removeCustomAction(ACTION_ROLL_FOR_FRACTURE);
@@ -66,6 +73,21 @@ export class RightClickThundersEdge implements IGlobal {
       obj.addCustomAction(ACTION_SHOW_TECH_SYSTEMS);
       obj.onCustomAction.remove(this._onCustomAction);
       obj.onCustomAction.add(this._onCustomAction);
+    }
+  }
+
+  _fetchControlToken(obj: GameObject, player: Player): void {
+    const pos: Vector = obj.getPosition().add([0, 0, 10]);
+    const controlToken: GameObject | undefined =
+      new SpawnControlToken().spawnControlToken(player.getSlot());
+    if (controlToken) {
+      controlToken.setPosition(pos);
+      controlToken.snapToGround();
+    } else {
+      const playerName: string = TI4.playerName.getByPlayer(player);
+      const color: Color = world.getSlotColor(player.getSlot());
+      const msg: string = `Thunder's Edge: right click ${playerName} could not fetch control token`;
+      Broadcast.chatAll(msg, color);
     }
   }
 
