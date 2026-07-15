@@ -73,7 +73,6 @@ export class StartGame implements IGlobal {
 
   _maybeFlipScoreboard(): void {
     const scoreboardLib: Scoreboard = new Scoreboard();
-    scoreboardLib.applyGamePoints(TI4.config.gamePoints);
     const scoreboard: GameObject | undefined = scoreboardLib.getScoreboard();
     if (TI4.config.gamePoints > 10 && scoreboard) {
       const above: Vector = scoreboard.getPosition().add(new Vector(0, 0, 3));
@@ -83,5 +82,6 @@ export class StartGame implements IGlobal {
       scoreboard.snapToGround();
       scoreboard.setObjectType(ObjectType.Ground);
     }
+    scoreboardLib.applyGamePoints(TI4.config.gamePoints); // AFTER flip
   }
 }
