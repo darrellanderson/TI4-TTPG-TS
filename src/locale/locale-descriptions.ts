@@ -18,11 +18,16 @@ export const LOCALE_DESCRIPTIONS: { [key: string]: string } = {
 export class ApplyLocaleDescriptions implements IGlobal {
   _onObjectCreated = (obj: GameObject): void => {
     const nsid: string = NSID.get(obj);
-    let description: string | undefined = LOCALE_DESCRIPTIONS[nsid];
-    if (!description) {
-      description = NSID_TO_DESCRIPTION[nsid];
-    }
-    if (description) {
+
+    // nsid description is "extracted", locale is extra defined here.
+    const localeDescription: string | undefined = LOCALE_DESCRIPTIONS[nsid];
+    const nsidDescription: string | undefined = NSID_TO_DESCRIPTION[nsid];
+
+    const description: string = [localeDescription, nsidDescription]
+      .filter((s: string | undefined): boolean => s !== undefined)
+      .join("\n\n");
+
+    if (description.length > 0) {
       obj.setDescription(description);
     }
   };
