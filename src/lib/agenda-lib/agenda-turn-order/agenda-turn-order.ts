@@ -1,4 +1,4 @@
-import { Card, GameObject, Vector } from "@tabletop-playground/api";
+import { Card, GameObject, Vector, world } from "@tabletop-playground/api";
 import { Broadcast, CardUtil, Find, PlayerSlot } from "ttpg-darrell";
 import { Faction } from "../../faction-lib/faction/faction";
 import {
@@ -6,45 +6,81 @@ import {
   InitiativeOrder,
 } from "../../strategy-card-lib/initiative-order/initiative-order";
 
+const KEY_OVERRIDE_SPEAKER_TOKEN_FOR_EXECUTIVE_ORDER_OBJ_ID: string =
+  "__ostfeo_id";
+
 export class AgendaTurnOrder {
   private readonly _find: Find = new Find();
   private readonly _cardUtil: CardUtil = new CardUtil();
-  private readonly _initiativeOrder: InitiativeOrder = new InitiativeOrder();
 
-  _overrideSpeakerTokenForExecutiveOrder(): GameObject | undefined {
-    console.log("AgendaTurnOrder._overrideSpeakerTokenForExecutiveOrder()");
+  /**
+   * Call once when starting an agenda.
+   * Either sets or clears the speaker token override for Executive Order.
+   *
+   * @returns boolean : true if override in progress
+   */
+  static overrideOrClearSpeakerTokenForExecutiveOrder(): boolean {
     // If Exeutive Order is in play and it appears to be the action phase,
     // treat the Executive Order card as the speaker token.
     // "ACTION: Exhaust this card and draw the top or bottom card of the agenda
     // deck. Players immediately vote on this agenda as if you were the speaker;
     // you can spend trade goods and resources on this agenda as if they were votes."
+    let overrideSpeakerTokenObjId: string = "";
+
+    // Is action phase?
     const initiativeEntries: Array<InitiativeEntry> =
-      this._initiativeOrder.get();
+      new InitiativeOrder().get();
     const isActionPhase: boolean =
       initiativeEntries.length >= TI4.config.playerCount;
-    const executiveOrderNsids: Array<string> = [
-      "card.technology.yellow:codex.vigil/executive-order",
-      "card.technology.yellow:thunders-edge/executive-order",
-    ];
-    for (const executiveOrderNsid of executiveOrderNsids) {
-      TI4.findTracking.trackNsid(executiveOrderNsid);
-      const executiveOrderCard: Card | undefined =
-        TI4.findTracking.findCard(executiveOrderNsid);
-      if (isActionPhase && executiveOrderCard) {
-        Broadcast.chatAll(
-          "Action phase and Executive Order is in play, treating it as the speaker token.",
-        );
-        return executiveOrderCard;
+
+    if (isActionPhase) {
+      const executiveOrderNsids: Array<string> = [
+        "card.technology.yellow:codex.vigil/executive-order",
+        "card.technology.yellow:thunders-edge/executive-order",
+      ];
+      TI4.findTracking.trackNsids(executiveOrderNsids);
+      const executiveOrderCards: Array<GameObject> = [];
+      for (const executiveOrderNsid of executiveOrderNsids) {
+        executiveOrderCards.push(...TI4.findTracking.find(executiveOrderNsid));
+      }
+
+      // Does active player have Executive Order in play?
+      const activePlayerSlot: PlayerSlot | undefined =
+        TI4.turnOrder.getCurrentTurn();
+      const find: Find = new Find();
+      for (const executiveOrderCard of executiveOrderCards) {
+        const pos: Vector = executiveOrderCard.getPosition();
+        const playerSlot: PlayerSlot = find.closestOwnedCardHolderOwner(pos);
+        if (playerSlot === activePlayerSlot) {
+          overrideSpeakerTokenObjId = executiveOrderCard.getId();
+          break;
+        }
       }
     }
-    return undefined;
+
+    console.log(
+      "AgendaTurnOrder.overrideOrClearSpeakerTokenForExecutiveOrder:",
+      isActionPhase,
+      overrideSpeakerTokenObjId,
+    );
+    world.setSavedData(
+      overrideSpeakerTokenObjId,
+      KEY_OVERRIDE_SPEAKER_TOKEN_FOR_EXECUTIVE_ORDER_OBJ_ID,
+    );
+    return overrideSpeakerTokenObjId.length > 0;
   }
 
   public _getSpeakerTokenOrThrow(): GameObject {
-    const overrideSpeakerToken: GameObject | undefined =
-      this._overrideSpeakerTokenForExecutiveOrder();
-    if (overrideSpeakerToken) {
-      return overrideSpeakerToken;
+    const overrideSpeakerTokenObjId: string | undefined = world.getSavedData(
+      KEY_OVERRIDE_SPEAKER_TOKEN_FOR_EXECUTIVE_ORDER_OBJ_ID,
+    );
+    if (overrideSpeakerTokenObjId && overrideSpeakerTokenObjId.length > 0) {
+      const overrideSpeakerToken: GameObject | undefined = world.getObjectById(
+        overrideSpeakerTokenObjId,
+      );
+      if (overrideSpeakerToken) {
+        return overrideSpeakerToken;
+      }
     }
 
     const nsid: string = "token:base/speaker";

@@ -22,7 +22,7 @@ export class AgendaActivityMaybeResume implements IGlobal {
         // Make sure agenda card is still present.  If not clear agenda state.
         if (!this._isAgendaCardPresent()) {
           console.log(
-            "AgendaActivityMaybeResume: Agenda card not present, destroying agenda state."
+            "AgendaActivityMaybeResume: Agenda card not present, destroying agenda state.",
           );
           AgendaState.destroyAgendaState(AGENDA_STATE_NAMESPACE_ID);
         } else {
@@ -62,7 +62,7 @@ export class AgendaActivityStart {
         AgendaActivityStart.__agendaWindow
       ) {
         AgendaActivityStart.__agendaState.onAgendaStateChanged.remove(
-          this._onAgendaStateChangedHandler
+          this._onAgendaStateChangedHandler,
         );
         AgendaActivityStart.__agendaWindow.detach();
         AgendaActivityStart.__agendaWindow = undefined;
@@ -77,6 +77,10 @@ export class AgendaActivityStart {
   };
 
   start(agendaCard: Card): boolean {
+    // If action phase and active player has executive order, mark them
+    // to override speaker for agenda.
+    AgendaTurnOrder.overrideOrClearSpeakerTokenForExecutiveOrder();
+
     // Save current turn order state BEFORE updating turn order, clear passed.
     const turnOrderState: string = SaveRestoreTurnOrder.saveAndClearPassed();
 
@@ -94,7 +98,7 @@ export class AgendaActivityStart {
     }
 
     AgendaActivityStart.__agendaState = new AgendaState(
-      AGENDA_STATE_NAMESPACE_ID
+      AGENDA_STATE_NAMESPACE_ID,
     )
       .setAgendaObjId(agendaCard.getId())
       .setTurnOrderState(turnOrderState);
@@ -113,20 +117,20 @@ export class AgendaActivityStart {
     // If proceeding from start it is already created.
     if (!AgendaActivityStart.__agendaState) {
       AgendaActivityStart.__agendaState = new AgendaState(
-        AGENDA_STATE_NAMESPACE_ID
+        AGENDA_STATE_NAMESPACE_ID,
       );
     }
 
     AgendaActivityStart.__agendaState.onAgendaStateChanged.add(
-      this._onAgendaStateChangedHandler
+      this._onAgendaStateChangedHandler,
     );
 
     // Create UI, window.
     const createAbstractUI: CreateAbstractUIType = (
-      params: CreateAbstractUIParams
+      params: CreateAbstractUIParams,
     ): AbstractUI => {
       const seatIndex: number = TI4.playerSeats.getSeatIndexByPlayerSlot(
-        params.playerSlot
+        params.playerSlot,
       );
       if (!AgendaActivityStart.__agendaState) {
         throw new Error("Agenda state not initialized");
@@ -134,14 +138,14 @@ export class AgendaActivityStart {
       return new AgendaStateUI(
         AgendaActivityStart.__agendaState,
         seatIndex,
-        params.scale
+        params.scale,
       );
     };
     const windowTitle: string = "Agenda";
     const abstractWindow: AbstractWindow = new AbstractWindow(
       createAbstractUI,
       AGENDA_WINDOW_NAMESPACE_ID,
-      windowTitle
+      windowTitle,
     );
     abstractWindow
       .moveWindowLeftOfTurnOrder()
@@ -168,7 +172,7 @@ export class AgendaActivityStart {
   destroy(): void {
     if (AgendaActivityStart.__agendaState) {
       AgendaActivityStart.__agendaState.onAgendaStateChanged.remove(
-        this._onAgendaStateChangedHandler
+        this._onAgendaStateChangedHandler,
       );
       AgendaActivityStart.__agendaState.destroy();
       AgendaActivityStart.__agendaState = undefined;
