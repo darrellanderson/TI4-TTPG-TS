@@ -122,6 +122,20 @@ export class Scpt2026 extends AbstractScpt {
   }
 
   getFinal(): DraftActivityStartParams | undefined {
-    return undefined;
+    const slices: Array<string> = [];
+    const labels: Array<string> = [];
+    const factions: Array<string> = [];
+
+    const numSlices: number = slices.length;
+    const numFactions: number = factions.length;
+
+    return {
+      namespaceId: DRAFT_NAMESPACE_ID,
+      draft: new Milty(),
+      numSlices,
+      numFactions,
+      config: `${slices.join("|")}&labels=${labels.join("|")}&factions=${factions.join("|")}`,
+      countdownHours: 9,
+    };
   }
 }
