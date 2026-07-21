@@ -122,9 +122,30 @@ export class Scpt2026 extends AbstractScpt {
   }
 
   getFinal(): DraftActivityStartParams | undefined {
-    const slices: Array<string> = [];
-    const labels: Array<string> = [];
-    const factions: Array<string> = [];
+    const slices: Array<string> = [
+      "100,111,37,67,39",
+      "40,27,117,99,107",
+      "26,31,113,115,29",
+      "76,114,106,49,64",
+      "80,102,69,46,110",
+      "35,25,116,61,68",
+    ];
+    const labels: Array<string> = [
+      "Princess Frostine",
+      "Lolly",
+      "Gramma Nutt",
+      "Gloppy",
+      "Jolly",
+      "Lord Licorice",
+    ];
+    const factions: Array<string> = [
+      "arborec",
+      "letnev",
+      "vuilraith",
+      "nomad",
+      "ralnel",
+      "bastion",
+    ];
 
     const numSlices: number = slices.length;
     const numFactions: number = factions.length;

@@ -12,7 +12,7 @@ import { Scpt2023 } from "../../../lib/draft-lib/scpt/scpt-2023/scpt-2023";
 import { Scpt2022 } from "../../../lib/draft-lib/scpt/scpt-2022/scpt-2022";
 import { Scpt2021 } from "../../../lib/draft-lib/scpt/scpt-2021/scpt-2021";
 import { Scpt2026 } from "../../../lib/draft-lib/scpt/scpt-2026/scpt-2026";
-import { getScptSemisUi } from "./scpt-2026-semis-ui";
+//import { getScptSemisUi } from "./scpt-2026-semis-ui";
 
 export class ScptDraftsUi extends AbstractUI {
   static getScptDrafts(): Array<AbstractScpt> {
@@ -57,7 +57,7 @@ export class ScptDraftsUi extends AbstractUI {
       .setOverrideHeight(overrideHeight)
       .addUIs([
         // Different faction pool per game, while in progress offer separately.
-        getScptSemisUi(scale, onDraftStarted),
+        //getScptSemisUi(scale, onDraftStarted),
         ...uis,
       ])
       .build();
