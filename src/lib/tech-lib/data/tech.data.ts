@@ -227,7 +227,7 @@ export const SOURCE_TO_TECH_DATA: Record<string, Array<TechSchemaType>> = {
       nsidName: "letani-warrior-2",
       name: "Letani Warrior II",
       color: "unit-upgrade",
-      prerequisites: { green: 1 },
+      prerequisites: { green: 2 },
       abbr: "Letani II",
       isFactionTech: true,
       replacesNsidName: "infantry-2",
