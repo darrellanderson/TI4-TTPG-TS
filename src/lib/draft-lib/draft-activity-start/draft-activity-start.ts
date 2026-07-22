@@ -359,7 +359,7 @@ export class DraftActivityStart {
     }
 
     // Use a shared, in-world UI instead of per-player windows.
-    const scale: number = 4;
+    const scale: number = 4; // GO HIGHER FOR CRISPER IMAGE (4 known safe, 16 works for D's system)
     const ui = new UIElement();
     ui.scale = 1 / scale;
     ui.widget = new Border().setChild(
