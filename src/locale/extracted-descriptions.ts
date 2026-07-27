@@ -113,8 +113,6 @@ export const NSID_TO_DESCRIPTION: { [key: string]: string } = {
     "-The target planet must be in a readied state for this card to be used\n-You may not target your own planet",
   "card.action:base/veto":
     "-This happens in the same timing window as Political Secrets. If it is played after one or more Political Secrets are played, those PS were only for the Vetoed agenda, and are returned to the owning players if the Veto is successful",
-  "card.action:codex.ordinian/hack-election":
-    "-This does not override the Flight ability Zeal. A Flight player may play this card, but they would still vote first",
   "card.action:codex.ordinian/rally":
     "-May be played on systems containing only neutral ships",
   "card.action:pok/confounding-legal-text":
