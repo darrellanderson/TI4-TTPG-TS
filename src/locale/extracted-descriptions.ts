@@ -131,8 +131,6 @@ export const NSID_TO_DESCRIPTION: { [key: string]: string } = {
     "-The players must agree on both planets",
   "card.action:thunders-edge/extreme-duress":
     '-If Coup is played to cancel this strategic action, the window of "next action" remains open until the player\'s next turn. If, at the start of the next turn, a strategic action is not made, the consequences are the same as if Coup was not played.\n-If Coup is used and a player chooses to use any of the game effects that grant a player another action, the consequences are enforced',
-  "card.action:thunders-edge/lie-in-wait":
-    '-This can be used on non-binding deals. The transaction is "resolved" when both players have fulfilled their part of the bargain',
   "card.action:thunders-edge/mercenary-contract":
     "-If a planet is returned to the deck via this card, any attachments on the planet are PURGED\n-If a Legendary planet is returned to the deck via this card, its ability card comes readied when the planet is re-explored",
   "card.action:thunders-edge/overrule":
