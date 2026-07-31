@@ -1040,6 +1040,7 @@ export const SOURCE_TO_UNIT_ATTRS_DATA: Record<
       unit: "war-sun",
       spaceCombat: { dice: 3, hit: 4 },
       bombardment: { dice: 3, hit: 4 },
+      cost: 10,
     },
     {
       name: "Vortexer",
