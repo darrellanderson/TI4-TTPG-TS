@@ -42,6 +42,7 @@ export class UpdatorObjectives implements IGameDataUpdator {
     // Per-player scored objectives.
     const playerSlotToCardNames: Map<PlayerSlot, Array<string>> = new Map();
     for (const objectiveCard of objectiveCards) {
+      const cardNsid: string = NSID.get(objectiveCard);
       const cardDetails: CardDetails = objectiveCard.getCardDetails();
       const cardName: string = cardDetails.name;
 
@@ -62,24 +63,28 @@ export class UpdatorObjectives implements IGameDataUpdator {
       }
 
       // Look for control tokens on card.
-      const atop: Atop = new Atop(objectiveCard);
-      for (const controlToken of controlTokens) {
-        const pos: Vector = controlToken.getPosition();
-        if (atop.isAtop(pos)) {
-          const owningPlayerSlot: number = controlToken.getOwningPlayerSlot();
-          let cardNames: Array<string> | undefined =
-            playerSlotToCardNames.get(owningPlayerSlot);
-          if (!cardNames) {
-            cardNames = [];
-            playerSlotToCardNames.set(owningPlayerSlot, cardNames);
+      // There's a TTPG bug where atop breaks zone overlap calculation,
+      // notably the Styx planet card isn't being detected by the build area zone.
+      // As a workaround, only look for control tokens on objective cards.
+      if (cardNsid.startsWith("card.objective")) {
+        const atop: Atop = new Atop(objectiveCard);
+        for (const controlToken of controlTokens) {
+          const pos: Vector = controlToken.getPosition();
+          if (atop.isAtop(pos)) {
+            const owningPlayerSlot: number = controlToken.getOwningPlayerSlot();
+            let cardNames: Array<string> | undefined =
+              playerSlotToCardNames.get(owningPlayerSlot);
+            if (!cardNames) {
+              cardNames = [];
+              playerSlotToCardNames.set(owningPlayerSlot, cardNames);
+            }
+            cardNames.push(cardName);
           }
-          cardNames.push(cardName);
         }
       }
 
       // Assign some cards to closest player IF not on a system tile.
-      const nsid: string = NSID.get(objectiveCard);
-      if (ASSIGN_NSIDS_TO_CLOSEST_PLAYER.has(nsid)) {
+      if (ASSIGN_NSIDS_TO_CLOSEST_PLAYER.has(cardNsid)) {
         const pos: Vector = objectiveCard.getPosition();
         const hex: HexType = TI4.hex.fromPosition(pos);
 
