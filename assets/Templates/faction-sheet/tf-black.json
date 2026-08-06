@@ -1,7 +1,7 @@
 {
   "Type": "Card",
   "GUID": "EC4366EDA19AB015FC7FA6ADDBB77DCD",
-  "Name": "Raithborn",
+  "Name": "Lurch",
   "Metadata": "sheet.faction:twilights-fall/tf-black",
   "CollisionType": "Regular",
   "Friction": 0.7,
@@ -167,11 +167,9 @@
   "MirrorBack": true,
   "EmissiveFront": false,
   "Model": "Square",
-  "Indices": [
-    0
-  ],
+  "Indices": [0],
   "CardNames": {
-    "0": "Raithborn"
+    "0": "Lurch"
   },
   "CardMetadata": {
     "0": "sheet.faction:twilights-fall/tf-black"

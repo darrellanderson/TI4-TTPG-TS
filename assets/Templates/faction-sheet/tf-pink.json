@@ -1,7 +1,7 @@
 {
   "Type": "Card",
   "GUID": "1D7ECC3B092C0A9867DD2665495E9962",
-  "Name": "Replicant",
+  "Name": "Javonet",
   "Metadata": "sheet.faction:twilights-fall/tf-pink",
   "CollisionType": "Regular",
   "Friction": 0.7,
@@ -167,11 +167,9 @@
   "MirrorBack": true,
   "EmissiveFront": false,
   "Model": "Square",
-  "Indices": [
-    0
-  ],
+  "Indices": [0],
   "CardNames": {
-    "0": "Replicant"
+    "0": "Javonet"
   },
   "CardMetadata": {
     "0": "sheet.faction:twilights-fall/tf-pink"

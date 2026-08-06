@@ -1,7 +1,7 @@
 {
   "Type": "Card",
   "GUID": "BCEB3FCD6A3F3F0D196075498EB934B8",
-  "Name": "Vermilion",
+  "Name": "Monarch",
   "Metadata": "sheet.faction:twilights-fall/tf-red",
   "CollisionType": "Regular",
   "Friction": 0.7,
@@ -167,11 +167,9 @@
   "MirrorBack": true,
   "EmissiveFront": false,
   "Model": "Square",
-  "Indices": [
-    0
-  ],
+  "Indices": [0],
   "CardNames": {
-    "0": "Vermilion"
+    "0": "Monarch"
   },
   "CardMetadata": {
     "0": "sheet.faction:twilights-fall/tf-red"

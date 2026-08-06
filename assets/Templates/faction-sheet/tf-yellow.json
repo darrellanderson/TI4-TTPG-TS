@@ -1,7 +1,7 @@
 {
   "Type": "Card",
   "GUID": "F6275F506F1E4D2963D8FFF8AB1D35A5",
-  "Name": "Glimmering",
+  "Name": "Rex",
   "Metadata": "sheet.faction:twilights-fall/tf-yellow",
   "CollisionType": "Regular",
   "Friction": 0.7,
@@ -167,11 +167,9 @@
   "MirrorBack": true,
   "EmissiveFront": false,
   "Model": "Square",
-  "Indices": [
-    0
-  ],
+  "Indices": [0],
   "CardNames": {
-    "0": "Glimmering"
+    "0": "Rex"
   },
   "CardMetadata": {
     "0": "sheet.faction:twilights-fall/tf-yellow"

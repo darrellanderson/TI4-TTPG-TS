@@ -1,7 +1,7 @@
 {
   "Type": "Card",
   "GUID": "C03D0CB4215282B6B428761BB22CDC07",
-  "Name": "Blossoming",
+  "Name": "Thorns",
   "Metadata": "sheet.faction:twilights-fall/tf-green",
   "CollisionType": "Regular",
   "Friction": 0.7,
@@ -167,11 +167,9 @@
   "MirrorBack": true,
   "EmissiveFront": false,
   "Model": "Square",
-  "Indices": [
-    0
-  ],
+  "Indices": [0],
   "CardNames": {
-    "0": "Blossoming"
+    "0": "Thorns"
   },
   "CardMetadata": {
     "0": "sheet.faction:twilights-fall/tf-green"
