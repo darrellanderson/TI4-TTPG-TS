@@ -3,6 +3,7 @@ import {
   Player,
   SnapPoint,
   Vector,
+  world,
 } from "@tabletop-playground/api";
 import {
   DeletedItemsContainer,
@@ -145,11 +146,12 @@ export class TFSetupMatsDraftExt {
   }
 
   _spawnForPlayerSlot(playerSlot: number): void {
-    const pos: Vector = this._getMapPos(playerSlot);
+    const pos: Vector = this._getMatPos(playerSlot);
     const mat: GameObject | undefined = TI4.spawn.spawnOrThrow(
       "mat:twilights-fall/tf-draft-ext",
       pos,
     );
+    mat.snapToGround();
     mat.setOwningPlayerSlot(playerSlot);
     mat.setTags([DeletedItemsContainer.IGNORE_TAG]); // if player deletes do not keep
     mat.setDescription(TF_DRAFT_EXT_DESC);
@@ -159,7 +161,7 @@ export class TFSetupMatsDraftExt {
     mat.onCustomAction.add(this._onCustomActionHandler);
   }
 
-  _getMapPos(playerSlot: number): Vector {
+  _getMatPos(playerSlot: number): Vector {
     // Find the status pad for the player slot and offset into the player area.
     const skipContained: boolean = true;
     const statusPad: GameObject | undefined = new Find().findGameObject(
@@ -180,7 +182,7 @@ export class TFSetupMatsDraftExt {
     return new Vector(
       statusPadPos.x + dir * offset,
       statusPadPos.y,
-      statusPadPos.z + 10,
+      world.getTableHeight() + 10,
     );
   }
 }
