@@ -1,3 +1,3 @@
 // created from 'create-ts-index'
 
-export * from './updator-player-tech';
+export * from './updator-player-tf';

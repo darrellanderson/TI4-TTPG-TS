@@ -22,6 +22,7 @@ export * from './updator-player-planet-totals';
 export * from './updator-player-score';
 export * from './updator-player-strategy-cards';
 export * from './updator-player-tech';
+export * from './updator-player-tf';
 export * from './updator-player-tradegoods';
 export * from './updator-player-turn-order';
 export * from './updator-round';
