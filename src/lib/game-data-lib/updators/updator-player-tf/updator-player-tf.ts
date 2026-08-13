@@ -4,6 +4,7 @@ import {
   Find,
   NSID,
   OnCardBecameSingletonOrDeck,
+  ParsedNSID,
   PlayerSlot,
 } from "ttpg-darrell";
 import { GameData, PerPlayerGameData } from "../../game-data/game-data";
@@ -40,14 +41,14 @@ export class UpdatorPlayerTF implements IGameDataUpdator {
         if (card instanceof Card && nsid.startsWith("card.tf-")) {
           UpdatorPlayerTF.setTimestamp(card);
         }
-      }
+      },
     );
   }
 
   update(gameData: GameData): void {
     const techCards: Array<Card> = [];
 
-    const skipContained: boolean = false;
+    const skipContained: boolean = true;
     const allowFaceDown: boolean = true;
     for (const obj of world.getAllObjects(skipContained)) {
       const nsid: string = NSID.get(obj);
@@ -94,15 +95,25 @@ export class UpdatorPlayerTF implements IGameDataUpdator {
         player.technologies = cards
           .map((card: Card): string => {
             const nsid: string = NSID.get(card);
-            const tech: Tech | undefined = TI4.techRegistry.getByNsid(nsid);
-            return tech ? tech.getName() : "";
+            const parsedNsid: ParsedNSID | undefined = NSID.parse(nsid);
+            let name: string = parsedNsid?.nameParts[0] ?? "";
+            name = name
+              .split("-")
+              .map((part: string): string => {
+                if (!["of", "the", "a"].includes(part)) {
+                  part = part.substring(0, 1).toUpperCase() + part.substring(1);
+                }
+                return part;
+              })
+              .join(" ");
+            return name;
           })
           .filter((name: string): boolean => name.length > 0)
           .filter(
             (name: string, index: number, array: Array<string>): boolean =>
-              array.indexOf(name) === index
+              array.indexOf(name) === index,
           ); // unique
-      }
+      },
     );
   }
 }

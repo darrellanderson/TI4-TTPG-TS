@@ -30,6 +30,7 @@ import { UpdatorPlayerPlanetTotals } from "../updators/updator-player-planet-tot
 import { UpdatorPlayerScore } from "../updators/updator-player-score/updator-player-score";
 import { UpdatorPlayerStrategyCards } from "../updators/updator-player-strategy-cards/updator-player-strategy-cards";
 import { UpdatorPlayerTech } from "../updators/updator-player-tech/updator-player-tech";
+import { UpdatorPlayerTF } from "../updators/updator-player-tf/updator-player-tf";
 import { UpdatorPlayerTradegoods } from "../updators/updator-player-tradegoods/updator-player-tradegoods";
 import { UpdatorPlayerTurnOrder } from "../updators/updator-player-turn-order/updator-player-turn-order";
 
@@ -65,6 +66,7 @@ export const GAME_DATA_UPDATORS: Array<IGameDataUpdator> = [
   new UpdatorPlayerScore(),
   new UpdatorPlayerStrategyCards(),
   new UpdatorPlayerTech(),
+  new UpdatorPlayerTF(),
   new UpdatorPlayerTradegoods(),
   new UpdatorPlayerTurnOrder(),
 ];

@@ -1,13 +1,13 @@
 import { MockCard, MockCardHolder } from "ttpg-mock";
 import { GAME_DATA_UPDATORS } from "../../game-data-updators/game-data-updators";
-import { UpdatorPlayerTech } from "./updator-player-tech";
 import { GameData } from "../../game-data/game-data";
 import { GameDataUpdator } from "../../game-data-updator/game-data-updator";
 import { Card } from "@tabletop-playground/api";
+import { UpdatorPlayerTF } from "./updator-player-tf";
 
 it("registered", () => {
   const index: number = GAME_DATA_UPDATORS.findIndex((updator) => {
-    return updator instanceof UpdatorPlayerTech;
+    return updator instanceof UpdatorPlayerTF;
   });
   expect(index).toBeGreaterThanOrEqual(0);
 });
@@ -17,14 +17,18 @@ it("data", () => {
     templateMetadata: "card-holder:base/player-hand",
     owningPlayerSlot: 10,
   });
-  const a: Card = MockCard.simple(
-    "card.technology.blue:base/antimass-deflectors"
+  const a: Card = MockCard.simple("card.tf-edict:twilights-fall/arbitrate");
+  const b: Card = MockCard.simple(
+    "card.tf-ability:twilights-fall/munitions-reserves",
   );
-  const b: Card = MockCard.simple("card.technology.blue:base/fleet-logistics");
-  const c1: Card = MockCard.simple("card.technology.blue:base/gravity-drive");
-  const c2: Card = MockCard.simple("card.technology.blue:base/gravity-drive");
+  const c1: Card = MockCard.simple(
+    "card.tf-ability:twilights-fall/nanomachines",
+  );
+  const c2: Card = MockCard.simple(
+    "card.tf-ability:twilights-fall/nanomachines",
+  );
   const d: Card = MockCard.simple(
-    "card.technology.bogus:base/_does-not-exist_"
+    "card.technology.bogus:base/_does-not-exist_",
   );
 
   a.setSavedData("1", "timestamp");
@@ -34,19 +38,19 @@ it("data", () => {
   d.setSavedData("4", "timestamp");
 
   const gameData: GameData = GameDataUpdator.createGameData();
-  new UpdatorPlayerTech().update(gameData);
+  new UpdatorPlayerTF().update(gameData);
   expect(gameData.players[0]?.technologies).toEqual([
-    "Antimass Deflectors",
-    "Fleet Logistics",
-    "Gravity Drive",
+    "Arbitrate",
+    "Munitions Reserves",
+    "Nanomachines",
   ]);
 });
 
 it("assign timestamp", () => {
-  new UpdatorPlayerTech();
+  new UpdatorPlayerTF();
 
   const a: Card = MockCard.simple(
-    "card.technology.blue:base/antimass-deflectors"
+    "card.tf-ability:twilights-fall/nanomachines",
   );
   process.flushTicks();
   const data: string = a.getSavedData("timestamp");
@@ -55,9 +59,9 @@ it("assign timestamp", () => {
 
 it("static", () => {
   const a: Card = MockCard.simple(
-    "card.technology.blue:base/antimass-deflectors"
+    "card.tf-ability:twilights-fall/nanomachines",
   );
-  expect(UpdatorPlayerTech.getTimestamp(a)).toBe(0);
+  expect(UpdatorPlayerTF.getTimestamp(a)).toBe(0);
   a.setSavedData("1", "timestamp");
-  expect(UpdatorPlayerTech.getTimestamp(a)).toBe(1);
+  expect(UpdatorPlayerTF.getTimestamp(a)).toBe(1);
 });

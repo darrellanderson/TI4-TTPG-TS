@@ -39,14 +39,14 @@ export class UpdatorPlayerTech implements IGameDataUpdator {
         if (card instanceof Card && nsid.startsWith("card.technology.")) {
           UpdatorPlayerTech.setTimestamp(card);
         }
-      }
+      },
     );
   }
 
   update(gameData: GameData): void {
     const techCards: Array<Card> = [];
 
-    const skipContained: boolean = false;
+    const skipContained: boolean = true;
     const allowFaceDown: boolean = true;
     for (const obj of world.getAllObjects(skipContained)) {
       const nsid: string = NSID.get(obj);
@@ -99,9 +99,9 @@ export class UpdatorPlayerTech implements IGameDataUpdator {
           .filter((name: string): boolean => name.length > 0)
           .filter(
             (name: string, index: number, array: Array<string>): boolean =>
-              array.indexOf(name) === index
+              array.indexOf(name) === index,
           ); // unique
-      }
+      },
     );
   }
 }
