@@ -754,7 +754,7 @@ export const SOURCE_TO_TECH_DATA: Record<string, Array<TechSchemaType>> = {
       isFactionTech: true,
     },
     {
-      name: "Neurail Parasite",
+      name: "Neural Parasite",
       nsidName: "neural-parasite",
       color: "green",
       prerequisites: {},
