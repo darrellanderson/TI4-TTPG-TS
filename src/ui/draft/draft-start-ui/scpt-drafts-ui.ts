@@ -12,11 +12,15 @@ import { Scpt2023 } from "../../../lib/draft-lib/scpt/scpt-2023/scpt-2023";
 import { Scpt2022 } from "../../../lib/draft-lib/scpt/scpt-2022/scpt-2022";
 import { Scpt2021 } from "../../../lib/draft-lib/scpt/scpt-2021/scpt-2021";
 import { Scpt2026 } from "../../../lib/draft-lib/scpt/scpt-2026/scpt-2026";
+import { Scpt2026TF } from "../../../lib/draft-lib/scpt/scpt-2026-tf/scpt-2026-tf";
+import { Scpt2027 } from "../../../lib/draft-lib/scpt/scpt-2027/scpt-2027";
 //import { getScptSemisUi } from "./scpt-2026-semis-ui";
 
 export class ScptDraftsUi extends AbstractUI {
   static getScptDrafts(): Array<AbstractScpt> {
     return [
+      new Scpt2027(),
+      new Scpt2026TF(),
       new Scpt2026(),
       new Scpt2025(),
       new Scpt2024(),
