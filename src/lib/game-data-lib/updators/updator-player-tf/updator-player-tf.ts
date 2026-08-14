@@ -1,5 +1,12 @@
-import { Card, Player, Vector, world } from "@tabletop-playground/api";
 import {
+  Card,
+  GameObject,
+  Player,
+  Vector,
+  world,
+} from "@tabletop-playground/api";
+import {
+  Atop,
   CardUtil,
   Find,
   NSID,
@@ -9,8 +16,8 @@ import {
 } from "ttpg-darrell";
 import { GameData, PerPlayerGameData } from "../../game-data/game-data";
 import { IGameDataUpdator } from "../../i-game-data-updator/i-game-data-updator";
-import { Tech } from "../../../tech-lib/tech/tech";
 import { UpdatorPlayerTech } from "../updator-player-tech";
+import { __atopCacheGet } from "../../../combat-lib/combat-roll/combat-roll";
 
 export class UpdatorPlayerTF implements IGameDataUpdator {
   private readonly _cardUtil: CardUtil = new CardUtil();
@@ -46,7 +53,8 @@ export class UpdatorPlayerTF implements IGameDataUpdator {
   }
 
   update(gameData: GameData): void {
-    const techCards: Array<Card> = [];
+    let techCards: Array<Card> = [];
+    let draftMat: GameObject | undefined = undefined;
 
     const skipContained: boolean = true;
     const allowFaceDown: boolean = true;
@@ -59,6 +67,18 @@ export class UpdatorPlayerTF implements IGameDataUpdator {
       ) {
         techCards.push(obj);
       }
+
+      if (nsid === "mat.deck:twilights-fall/twilights-fall") {
+        draftMat = obj;
+      }
+    }
+
+    // Remove any cards on the mat.
+    if (draftMat) {
+      const atop: Atop = __atopCacheGet(draftMat);
+      techCards = techCards.filter((techCard: Card): boolean => {
+        return !atop.isAtop(techCard.getPosition());
+      });
     }
 
     // Sort cards by creation order.
