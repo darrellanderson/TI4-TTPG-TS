@@ -45,7 +45,14 @@ export class UpdatorPlayerTF implements IGameDataUpdator {
     OnCardBecameSingletonOrDeck.onSingletonCardCreated.add(
       (card: Card, _player?: Player): void => {
         const nsid: string = NSID.get(card);
-        if (card instanceof Card && nsid.startsWith("card.tf-")) {
+        if (
+          (card instanceof Card && nsid.startsWith("card.tf-ability")) ||
+          (card instanceof Card && nsid.startsWith("card.tf-echo")) ||
+          (card instanceof Card && nsid.startsWith("card.tf-faction-tech")) ||
+          (card instanceof Card && nsid.startsWith("card.tf-genome")) ||
+          (card instanceof Card && nsid.startsWith("card.tf-paradigm")) ||
+          (card instanceof Card && nsid.startsWith("card.tf-unit-upgrade"))
+        ) {
           UpdatorPlayerTF.setTimestamp(card);
         }
       },

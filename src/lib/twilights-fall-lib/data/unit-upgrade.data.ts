@@ -1,0 +1,192 @@
+import { UnitUpgradeSchemaType } from "../schema/unit-upgrade-schema";
+
+export const SOURCE_TO_UNIT_UPGRADE_DATA: Record<string, Array<UnitUpgradeSchemaType>> = {
+  ["twilights-fall"]: [
+    {
+      nsidName: "advanced-carrier",
+      name: "Advanced Carrier",
+      abbr: "Adv. Carrier",
+      origin: "sol",
+    },
+    {
+      nsidName: "ahk-syl-fier",
+      name: "Ahk Syl Fier",
+      abbr: "Ahk Syl Fier",
+      origin: "creuss",
+    },
+    {
+      nsidName: "ambassador",
+      name: "Ambassador",
+      abbr: "Ambassador",
+      origin: "deepwrought",
+    },
+    {
+      nsidName: "corsair",
+      name: "Corsair",
+      abbr: "Corsair",
+      origin: "mentak",
+    },
+    {
+      nsidName: "dawncrusher",
+      name: "Dawncrusher",
+      abbr: "Dawncrusher",
+      origin: "letnev",
+    },
+    {
+      nsidName: "echo-of-ascension",
+      name: "Echo of Ascension",
+      abbr: "Echo of Ascension",
+      origin: "nomad",
+    },
+    {
+      nsidName: "eidolon-landwaster",
+      name: "Eidolon Landwaster",
+      abbr: "Eidolon Landwaster",
+      origin: "naaz-rokha",
+    },
+    {
+      nsidName: "eidolon-terminus",
+      name: "Eidolon Terminus",
+      abbr: "Eidolon Terminus",
+      origin: "vuilraith",
+    },
+    {
+      nsidName: "exile",
+      name: "Exile",
+      abbr: "Exile",
+      origin: "crimson",
+    },
+    {
+      nsidName: "exotrireme",
+      name: "Exotrireme",
+      abbr: "Exotrireme",
+      origin: "sardakk",
+    },
+    {
+      nsidName: "floating-factories",
+      name: "Floating Factories",
+      abbr: "Floating Factories",
+      origin: "saar",
+    },
+    {
+      nsidName: "guild-agents",
+      name: "Guild Agents",
+      abbr: "Guild Agents",
+      origin: "yssaril",
+    },
+    {
+      nsidName: "hel-titan",
+      name: "Hel Titan",
+      abbr: "Hel Titan",
+      origin: "titans",
+    },
+    {
+      nsidName: "helios-entity",
+      name: "Helios Entity",
+      abbr: "Helios Entity",
+      origin: "last-bastion",
+    },
+    {
+      nsidName: "hybrid-crystal-fighter",
+      name: "Hybrid Crystal Fighter",
+      abbr: "Hybrid Crystal Fighter",
+      origin: "naalu",
+    },
+    {
+      nsidName: "justicier-rail",
+      name: "Justicier Rail",
+      abbr: "Justicier Rail",
+      origin: "winnu",
+    },
+    {
+      nsidName: "keeper-matrix",
+      name: "Keeper Matrix",
+      abbr: "Keeper Matrix",
+      origin: "xxcha",
+    },
+    {
+      nsidName: "letani-warrior",
+      name: "Letani Warrior",
+      abbr: "Letani Warrior",
+      origin: "arborec",
+    },
+    {
+      nsidName: "linkship",
+      name: "Linkship",
+      abbr: "Linkship",
+      origin: "ral-nel",
+    },
+    {
+      nsidName: "morphwing",
+      name: "Morphwing",
+      abbr: "Morphwing",
+      origin: "naaz-rokha",
+    },
+    {
+      nsidName: "production-biomes",
+      name: "Production Biomes",
+      abbr: "Production Biomes",
+      origin: "hacan",
+    },
+    {
+      nsidName: "prototype-war-sun",
+      name: "Prototype War Sun",
+      abbr: "Prototype War Sun",
+      origin: "muaat",
+    },
+    {
+      nsidName: "saggitaria",
+      name: "Saggitaria",
+      abbr: "Saggitaria",
+      origin: "keleres",
+    },
+    {
+      nsidName: "strike-wing-alpha",
+      name: "Strike Wing Alpha",
+      abbr: "Strike Wing Alpha",
+      origin: "argent",
+    },
+    {
+      nsidName: "super-dreadnought",
+      name: "Super Dreadnought",
+      abbr: "Super Dreadnought",
+      origin: "l1z1x",
+    },
+    {
+      nsidName: "the-dragon-freed",
+      name: "The Dragon Freed",
+      abbr: "The Dragon Freed",
+      origin: "obsidian",
+    },
+    {
+      nsidName: "triune",
+      name: "Triune",
+      abbr: "Triune",
+      origin: "empyrean",
+    },
+    {
+      nsidName: "university-war-sun",
+      name: "University War Sun",
+      abbr: "University War Sun",
+      origin: "jol-nar",
+    },
+    {
+      nsidName: "valefar-prime",
+      name: "Valefar Prime",
+      abbr: "Valefar Prime",
+      origin: "nekro",
+    },
+    {
+      nsidName: "vortexer",
+      name: "Vortexer",
+      abbr: "Vortexer",
+      origin: "vuilraith",
+    },
+    {
+      nsidName: "yin-clone",
+      name: "Yin Clone",
+      abbr: "Yin Clone",
+      origin: "yin",
+    }
+  ],
+};
