@@ -21,7 +21,7 @@ export class LayoutTableDecks {
     const pos: Vector = snapPoint.getGlobalPosition().add([0, 0, 10]);
     const deck: GameObject = TI4.spawn.spawnMergeDecksWithNsidPrefixOrThrow(
       nsidPrefix,
-      pos
+      pos,
     );
     deck.snapToGround();
     deck.snap();
@@ -31,14 +31,14 @@ export class LayoutTableDecks {
     this._layout = new LayoutObjects();
 
     const explorationMat: GameObject = TI4.spawn.spawnOrThrow(
-      "mat.deck:pok/exploration"
+      "mat.deck:pok/exploration",
     );
     const baseMat: GameObject = TI4.spawn.spawnOrThrow("mat.deck:base/base");
     const planetMat: GameObject = TI4.spawn.spawnOrThrow(
-      "mat.deck:base/planet"
+      "mat.deck:base/planet",
     );
     const factionReferenceMat: GameObject = TI4.spawn.spawnOrThrow(
-      "mat.deck:base/faction-reference"
+      "mat.deck:base/faction-reference",
     );
     const eventMat: GameObject = TI4.spawn.spawnOrThrow("mat.deck:base/event");
 
@@ -63,10 +63,10 @@ export class LayoutTableDecks {
     const speakerToken: GameObject =
       TI4.spawn.spawnOrThrow("token:base/speaker");
     const benedictionToken: GameObject = TI4.spawn.spawnOrThrow(
-      "token:twilights-fall/benediction"
+      "token:twilights-fall/benediction",
     );
     const codex4scenario: GameObject = TI4.spawn.spawnOrThrow(
-      "container:codex.liberation/liberation-scenario"
+      "container:codex.liberation/liberation-scenario",
     );
 
     const speakerTokenMisc: LayoutObjects = new LayoutObjects()
@@ -76,7 +76,11 @@ export class LayoutTableDecks {
       .add(codex4scenario);
 
     const matTwilightsFall: GameObject = TI4.spawn.spawnOrThrow(
-      "mat.deck:twilights-fall/twilights-fall"
+      "mat.deck:twilights-fall/twilights-fall",
+    );
+
+    const matTfSpliceIntent: GameObject = TI4.spawn.spawnOrThrow(
+      "mat:twilights-fall/splice-intent",
     );
 
     this._layout
@@ -87,10 +91,12 @@ export class LayoutTableDecks {
       .add(factionAndEvent)
       .add(speakerTokenMisc)
       .add(matTwilightsFall)
+      .add(matTfSpliceIntent)
       .addAfterLayout(() => {
         explorationMat.setObjectType(ObjectType.Ground);
         codex4scenario.setObjectType(ObjectType.Ground);
         matTwilightsFall.setObjectType(ObjectType.Ground);
+        matTfSpliceIntent.setObjectType(ObjectType.Ground);
       });
 
     this._layout.addAfterLayout(() => {
@@ -98,36 +104,36 @@ export class LayoutTableDecks {
       LayoutTableDecks._spawnDeck("card.agenda", "deck-agenda");
       LayoutTableDecks._spawnDeck(
         "card.objective.secret",
-        "deck-objective-secret"
+        "deck-objective-secret",
       );
 
       LayoutTableDecks._spawnDeck("card.planet", "deck-planet");
       LayoutTableDecks._spawnDeck(
         "card.legendary-planet",
-        "deck-legendary-planet"
+        "deck-legendary-planet",
       );
 
       LayoutTableDecks._spawnDeck(
         "card.exploration.cultural",
-        "deck-exploration-cultural"
+        "deck-exploration-cultural",
       );
       LayoutTableDecks._spawnDeck(
         "card.exploration.industrial",
-        "deck-exploration-industrial"
+        "deck-exploration-industrial",
       );
       LayoutTableDecks._spawnDeck(
         "card.exploration.hazardous",
-        "deck-exploration-hazardous"
+        "deck-exploration-hazardous",
       );
       LayoutTableDecks._spawnDeck(
         "card.exploration.frontier",
-        "deck-exploration-frontier"
+        "deck-exploration-frontier",
       );
       LayoutTableDecks._spawnDeck("card.relic", "deck-relic");
 
       LayoutTableDecks._spawnDeck(
         "card.faction-reference",
-        "deck-faction-reference"
+        "deck-faction-reference",
       );
       LayoutTableDecks._spawnDeck("card.event", "deck-event");
     });
