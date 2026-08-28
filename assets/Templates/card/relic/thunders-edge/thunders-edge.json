@@ -76,7 +76,7 @@
         "2": "card.relic:thunders-edge/metali-void-armaments",
         "3": "card.relic:thunders-edge/metali-void-shielding",
         "4": "card.relic:thunders-edge/the-quantumcore",
-        "5": "card.relic:thunders-edge/the-silver-flame",
+        "5": "card.relic:thunders-edge/the-silver-flame|purge|scorable-private",
         "6": "card.relic:thunders-edge/the-triad"
     },
     "CardTags": {
