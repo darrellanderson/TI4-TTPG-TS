@@ -60,6 +60,12 @@ export class UpdatorPlayerTF implements IGameDataUpdator {
   }
 
   update(gameData: GameData): void {
+    // This updator clobbers any existing player.technologies value.
+    // Only apply if a TF game.
+    if (!TI4.config.sources.includes("twilights-fall")) {
+      return;
+    }
+
     let techCards: Array<Card> = [];
     let draftMat: GameObject | undefined = undefined;
 
