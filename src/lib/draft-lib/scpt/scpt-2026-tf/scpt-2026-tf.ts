@@ -28,8 +28,14 @@ export class Scpt2026TF extends AbstractScpt {
       "",
     ];
 
-    const numSlices: number = slices.length;
+    const numSlices: number = this.getPlayerCount();
     const numFactions: number = TI4.config.playerCount;
+
+    while (slices.length > numSlices) {
+      const index: number = Math.floor(Math.random() * slices.length);
+      slices.splice(index, 1);
+      labels.splice(index, 1);
+    }
 
     return {
       namespaceId: DRAFT_NAMESPACE_ID,
