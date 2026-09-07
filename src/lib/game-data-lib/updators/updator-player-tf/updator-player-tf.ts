@@ -139,6 +139,7 @@ export class UpdatorPlayerTF implements IGameDataUpdator {
                 return part;
               })
               .join(" ");
+            name = name.substring(0, 1).toUpperCase() + name.substring(1); // Capitalize the first letter of the entire name.
             return name;
           })
           .filter((name: string): boolean => name.length > 0)
