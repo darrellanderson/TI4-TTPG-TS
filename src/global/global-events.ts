@@ -198,4 +198,8 @@ export class GlobalEvents {
   public readonly onTechChooserRequest = new TriggerableMulticastDelegate<
     (playerSlot: number) => void
   >();
+
+  public readonly onTwilightsFallSplice = new TriggerableMulticastDelegate<
+    (deck: Card) => void
+  >();
 }

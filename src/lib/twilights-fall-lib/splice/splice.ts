@@ -55,5 +55,7 @@ export class Splice {
       card.snapToGround();
       card.snap();
     });
+
+    TI4.events.onTwilightsFallSplice.trigger(deck);
   }
 }
