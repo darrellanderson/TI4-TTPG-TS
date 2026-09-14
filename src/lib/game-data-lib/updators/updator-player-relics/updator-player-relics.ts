@@ -24,7 +24,7 @@ export class UpdatorPlayerRelics implements IGameDataUpdator {
 
         const myRelics: Array<string> = myRelicCards
           .map((relicCard: Card): string => {
-            return relicCard.getCardDetails().name;
+            return relicCard.getCardDetails().name.replace(/ \(\d+\)$/, "");
           })
           .filter((name: string) => name !== "");
 
