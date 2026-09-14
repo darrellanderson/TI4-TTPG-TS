@@ -8,7 +8,7 @@ export class OnTurnStateChanged implements IGlobal {
     // If all players have passed, reset passed and inform.
     const playerSlots: Array<PlayerSlot> = turnOrder.getTurnOrder();
     const firstActiveIndex: number = playerSlots.findIndex(
-      (playerSlot: PlayerSlot) => turnOrder.getPassed(playerSlot) === false
+      (playerSlot: PlayerSlot) => turnOrder.getPassed(playerSlot) === false,
     );
     if (firstActiveIndex === -1 && playerSlots.length > 0) {
       playerSlots.forEach((playerSlot: PlayerSlot) => {
@@ -16,7 +16,14 @@ export class OnTurnStateChanged implements IGlobal {
       });
       const msg: string = "All players have passed";
       Broadcast.broadcastAll(msg);
-      TI4.events.onAllPlayersPassed.trigger();
+
+      // Wait for all onTurnStateChanged handlers to complete before
+      // triggering onAllPlayersPassed.  The auto streamer camera looks
+      // at the full map for turn state change, and the scoring area for
+      // all players have passed.
+      process.nextTick(() => {
+        TI4.events.onAllPlayersPassed.trigger();
+      });
     }
 
     // If the active player passes, end turn.
