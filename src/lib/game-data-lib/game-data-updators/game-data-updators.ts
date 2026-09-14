@@ -27,6 +27,7 @@ import { UpdatorPlayerHandSummary } from "../updators/updator-player-hand-summar
 import { UpdatorPlayerLeaders } from "../updators/updator-player-leaders/updator-player-leaders";
 import { UpdatorPlayerName } from "../updators/updator-player-name/updator-player-name";
 import { UpdatorPlayerPlanetTotals } from "../updators/updator-player-planet-totals/updator-player-planet-totals";
+import { UpdatorPlayerRelics } from "../updators/updator-player-relics/updator-player-relics";
 import { UpdatorPlayerScore } from "../updators/updator-player-score/updator-player-score";
 import { UpdatorPlayerStrategyCards } from "../updators/updator-player-strategy-cards/updator-player-strategy-cards";
 import { UpdatorPlayerTech } from "../updators/updator-player-tech/updator-player-tech";
@@ -63,6 +64,7 @@ export const GAME_DATA_UPDATORS: Array<IGameDataUpdator> = [
   new UpdatorPlayerLeaders(),
   new UpdatorPlayerName(),
   new UpdatorPlayerPlanetTotals(),
+  new UpdatorPlayerRelics(),
   new UpdatorPlayerScore(),
   new UpdatorPlayerStrategyCards(),
   new UpdatorPlayerTech(),
