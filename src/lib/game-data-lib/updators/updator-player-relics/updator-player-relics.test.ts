@@ -29,11 +29,15 @@ it("data", () => {
   const c: Card = MockCard.simple("card.relic:pok/maw-of-worlds");
   c.setPosition([-100, 0, 0], 0);
 
+  const d: Card = MockCard.simple("card.exploration.cultural:pok/cultural-relic-fragment");
+  d.setPosition([10, 0, 0], 0);
+
   const gameData: GameData = GameDataUpdator.createGameData();
   new UpdatorPlayerRelics().update(gameData);
 
   expect(gameData.players[0]?.relics).toBeDefined();
   expect(gameData.players[0]?.relics).toContain("Shard of the Throne");
   expect(gameData.players[0]?.relics).toContain("The Crown of Emphidia");
+  expect(gameData.players[0]?.relics).toContain("Cultural Relic Fragment");
   expect(gameData.players[0]?.relics).not.toContain("Maw of Worlds");
 });
