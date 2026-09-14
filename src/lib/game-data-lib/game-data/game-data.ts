@@ -21,6 +21,7 @@ export type PerPlayerGameData = {
   leaders?: UpdatorPlayerLeadersType;
   objectives?: Array<string>; // card names
   planetTotals?: UpdatorPlayerPlanetTotalsType;
+  relics?: Array<string>; // relic card names
   score?: number;
   steamName?: string;
   strategyCards?: Array<string>; // strategy card names

@@ -19,6 +19,7 @@ export * from './updator-player-hand-summary';
 export * from './updator-player-leaders';
 export * from './updator-player-name';
 export * from './updator-player-planet-totals';
+export * from './updator-player-relics';
 export * from './updator-player-score';
 export * from './updator-player-strategy-cards';
 export * from './updator-player-tech';
