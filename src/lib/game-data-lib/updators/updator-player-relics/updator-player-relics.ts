@@ -45,7 +45,7 @@ export class UpdatorPlayerRelics implements IGameDataUpdator {
     for (const obj of world.getAllObjects(skipContained)) {
       const nsid: string = NSID.get(obj);
       if (
-        (nsid.startsWith("card.relic:") || nsid.includes("relic-fragment")) &&
+        (nsid.startsWith("card.relic:") || nsid.includes("fragment")) &&
         obj instanceof Card &&
         cardUtil.isLooseCard(obj)
       ) {
