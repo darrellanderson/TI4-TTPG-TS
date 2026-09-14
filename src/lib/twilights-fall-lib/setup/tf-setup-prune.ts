@@ -58,6 +58,8 @@ export class TFSetupPrune {
       "card.objective.secret:pok/dictate-policy",
       "card.objective.secret:pok/drive-the-debate",
       "card.objective.secret:pok/strengthen-bonds",
+      "card.faction-reference:codex.vigil/keleres-argent",
+      "card.faction-reference:codex.vigil/keleres-xxcha",
     ];
 
     const cardUtil: CardUtil = new CardUtil();

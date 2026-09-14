@@ -20,6 +20,7 @@ it("data", () => {
       MockCard.simple("card.action:base/a"),
       MockCard.simple("card.action:base/b"),
       MockCard.simple("card.action:base/c"),
+      MockCard.simple("card.tf-action:twilights-fall/0"),
       MockCard.simple("card.promissory:base/a"),
       MockCard.simple("card.promissory:base/b"),
       MockCard.simple("card.objective.secret:base/a"),
@@ -30,7 +31,7 @@ it("data", () => {
   new UpdatorPlayerHandSummary().update(gameData);
   expect(gameData).toEqual({
     players: [
-      { handSummary: { Actions: 3, Promissory: 2, "Secret Objectives": 1 } },
+      { handSummary: { Actions: 4, Promissory: 2, "Secret Objectives": 1 } },
       { handSummary: { Actions: 0, Promissory: 0, "Secret Objectives": 0 } },
       { handSummary: { Actions: 0, Promissory: 0, "Secret Objectives": 0 } },
       { handSummary: { Actions: 0, Promissory: 0, "Secret Objectives": 0 } },

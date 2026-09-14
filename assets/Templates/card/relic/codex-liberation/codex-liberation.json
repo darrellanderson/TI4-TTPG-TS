@@ -63,7 +63,7 @@
         "2": "Neuraloop"
     },
     "CardMetadata": {
-        "0": "card.relic:codex.liberation/book-of-latvinia",
+        "0": "card.relic:codex.liberation/book-of-latvinia|purge|scorable-private",
         "1": "card.relic:codex.liberation/circlet-of-the-void",
         "2": "card.relic:codex.liberation/neuraloop"
     },
