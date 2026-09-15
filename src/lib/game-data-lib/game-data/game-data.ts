@@ -27,6 +27,10 @@ export type PerPlayerGameData = {
   strategyCards?: Array<string>; // strategy card names
   strategyCardsFaceDown?: Array<string>; // strategy card names
   technologies?: Array<string>; // abbr names
+  tfAbilities?: Array<string>; // abbr names
+  tfGenomes?: Array<string>; // abbr names
+  tfParadigms?: Array<string>; // abbr names
+  tfUnitUpgrades?: Array<string>; // abbr names
   turnOrder?: number; // index in turn order array
 
   commodities?: number;
@@ -41,6 +45,7 @@ export type GameData = {
   players: Array<PerPlayerGameData>;
 
   activeSystem?: UpdatorActiveSystemType;
+  benediction?: string; // player color
   config?: UpdatorConfigType;
   galacticEvents?: Array<string>; // event names
   hexSummary?: string;

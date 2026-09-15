@@ -33,7 +33,7 @@ export class TechRegistry {
 
   load(source: NsidNameSchemaType, techSchemas: Array<TechSchemaType>): this {
     for (const techSchema of techSchemas) {
-      // Validate schema (oterhwise not validated until used).
+      // Validate schema (otherwise not validated until used).
       try {
         NsidNameSchema.parse(source);
         TechSchema.parse(techSchema);

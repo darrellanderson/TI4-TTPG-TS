@@ -770,7 +770,7 @@ export const SOURCE_TO_TECH_DATA: Record<string, Array<TechSchemaType>> = {
       customModel: true, // exclude from main tech cards
     },
     {
-      name: "Proxima Targeting Vi",
+      name: "Proxima Targeting VI",
       nsidName: "proxima-targeting-vi",
       color: "red",
       prerequisites: { red: 1 },

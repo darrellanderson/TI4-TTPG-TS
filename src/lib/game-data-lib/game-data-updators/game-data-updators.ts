@@ -1,6 +1,7 @@
 import { IGameDataUpdator } from "../i-game-data-updator/i-game-data-updator";
 
 import { UpdatorActiveSystem } from "../updators/updator-active-system/updator-active-system";
+import { UpdatorBenediction } from "../updators/updator-benediction/updator-benediction";
 import { UpdatorConfig } from "../updators/updator-config/updator-config";
 import { UpdatorGalacticEvents } from "../updators/updator-galactic-events/updator-galactic-events";
 import { UpdatorHexSummary } from "../updators/updator-hex-summary/updator-hex-summary";
@@ -31,12 +32,16 @@ import { UpdatorPlayerRelics } from "../updators/updator-player-relics/updator-p
 import { UpdatorPlayerScore } from "../updators/updator-player-score/updator-player-score";
 import { UpdatorPlayerStrategyCards } from "../updators/updator-player-strategy-cards/updator-player-strategy-cards";
 import { UpdatorPlayerTech } from "../updators/updator-player-tech/updator-player-tech";
-import { UpdatorPlayerTF } from "../updators/updator-player-tf/updator-player-tf";
+import { UpdatorPlayerTFAbilities } from "../updators/updator-player-tf-abilities/updator-player-tf-abilities";
+import { UpdatorPlayerTFGenomes } from "../updators/updator-player-tf-genomes";
+import { UpdatorPlayerTFParadigms } from "../updators/updator-player-tf-paradigms";
+import { UpdatorPlayerTFUnitUpgrades } from "../updators/updator-player-tf-unit-upgrades";
 import { UpdatorPlayerTradegoods } from "../updators/updator-player-tradegoods/updator-player-tradegoods";
 import { UpdatorPlayerTurnOrder } from "../updators/updator-player-turn-order/updator-player-turn-order";
 
 export const GAME_DATA_UPDATORS: Array<IGameDataUpdator> = [
   new UpdatorActiveSystem(),
+  new UpdatorBenediction(),
   new UpdatorConfig(),
   new UpdatorGalacticEvents(),
   new UpdatorHexSummary(),
@@ -68,7 +73,10 @@ export const GAME_DATA_UPDATORS: Array<IGameDataUpdator> = [
   new UpdatorPlayerScore(),
   new UpdatorPlayerStrategyCards(),
   new UpdatorPlayerTech(),
-  new UpdatorPlayerTF(),
+  new UpdatorPlayerTFAbilities(),
+  new UpdatorPlayerTFGenomes(),
+  new UpdatorPlayerTFParadigms(),
+  new UpdatorPlayerTFUnitUpgrades(),
   new UpdatorPlayerTradegoods(),
   new UpdatorPlayerTurnOrder(),
 ];
