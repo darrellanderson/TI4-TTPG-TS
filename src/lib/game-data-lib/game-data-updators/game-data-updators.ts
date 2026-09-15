@@ -1,6 +1,7 @@
 import { IGameDataUpdator } from "../i-game-data-updator/i-game-data-updator";
 
 import { UpdatorActiveSystem } from "../updators/updator-active-system/updator-active-system";
+import { UpdatorBenediction } from "../updators/updator-benediction/updator-benediction";
 import { UpdatorConfig } from "../updators/updator-config/updator-config";
 import { UpdatorGalacticEvents } from "../updators/updator-galactic-events/updator-galactic-events";
 import { UpdatorHexSummary } from "../updators/updator-hex-summary/updator-hex-summary";
@@ -37,6 +38,7 @@ import { UpdatorPlayerTurnOrder } from "../updators/updator-player-turn-order/up
 
 export const GAME_DATA_UPDATORS: Array<IGameDataUpdator> = [
   new UpdatorActiveSystem(),
+  new UpdatorBenediction(),
   new UpdatorConfig(),
   new UpdatorGalacticEvents(),
   new UpdatorHexSummary(),

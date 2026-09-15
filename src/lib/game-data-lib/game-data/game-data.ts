@@ -41,6 +41,7 @@ export type GameData = {
   players: Array<PerPlayerGameData>;
 
   activeSystem?: UpdatorActiveSystemType;
+  benediction?: string; // player color
   config?: UpdatorConfigType;
   galacticEvents?: Array<string>; // event names
   hexSummary?: string;
