@@ -32,7 +32,6 @@ export type PerPlayerGameData = {
   tfParadigms?: Array<string>; // abbr names
   tfUnitUpgrades?: Array<string>; // abbr names
   turnOrder?: number; // index in turn order array
-  unitUpgrades?: Array<string>; // "nsid" style unit types, e.g. "war_sun"
 
   commodities?: number;
   tradeGoods?: number;
