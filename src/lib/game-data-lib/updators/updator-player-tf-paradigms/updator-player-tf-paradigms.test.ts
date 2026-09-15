@@ -3,11 +3,11 @@ import { GAME_DATA_UPDATORS } from "../../game-data-updators/game-data-updators"
 import { GameData } from "../../game-data/game-data";
 import { GameDataUpdator } from "../../game-data-updator/game-data-updator";
 import { Card } from "@tabletop-playground/api";
-import { UpdatorPlayerTF } from "./updator-player-tf";
+import { UpdatorPlayerTFParadigms } from "./updator-player-tf-paradigms";
 
 it("registered", () => {
   const index: number = GAME_DATA_UPDATORS.findIndex((updator) => {
-    return updator instanceof UpdatorPlayerTF;
+    return updator instanceof UpdatorPlayerTFParadigms;
   });
   expect(index).toBeGreaterThanOrEqual(0);
 });
@@ -21,13 +21,13 @@ it("data", () => {
   });
   const a: Card = MockCard.simple("card.tf-edict:twilights-fall/arbitrate");
   const b: Card = MockCard.simple(
-    "card.tf-ability:twilights-fall/munitions-reserves",
+    "card.tf-paradigm:twilights-fall/extortion",
   );
   const c1: Card = MockCard.simple(
-    "card.tf-ability:twilights-fall/nanomachines",
+    "card.tf-paradigm:twilights-fall/twilight-directive",
   );
   const c2: Card = MockCard.simple(
-    "card.tf-ability:twilights-fall/nanomachines",
+    "card.tf-paradigm:twilights-fall/twilight-directive",
   );
   const d: Card = MockCard.simple(
     "card.technology.bogus:base/_does-not-exist_",
@@ -40,19 +40,18 @@ it("data", () => {
   d.setSavedData("4", "timestamp");
 
   const gameData: GameData = GameDataUpdator.createGameData();
-  new UpdatorPlayerTF().update(gameData);
-  expect(gameData.players[0]?.technologies).toEqual([
-    "Arbitrate",
-    "Munitions Reserves",
-    "Nanomachines",
+  new UpdatorPlayerTFParadigms().update(gameData);
+  expect(gameData.players[0]?.tfParadigms).toEqual([
+    "Extortion",
+    "Twilight Directive",
   ]);
 });
 
 it("assign timestamp", () => {
-  new UpdatorPlayerTF();
+  new UpdatorPlayerTFParadigms();
 
   const a: Card = MockCard.simple(
-    "card.tf-ability:twilights-fall/nanomachines",
+    "card.tf-paradigm:twilights-fall/twilight-directive",
   );
   process.flushTicks();
   const data: string = a.getSavedData("timestamp");
@@ -61,9 +60,9 @@ it("assign timestamp", () => {
 
 it("static", () => {
   const a: Card = MockCard.simple(
-    "card.tf-ability:twilights-fall/nanomachines",
+    "card.tf-paradigm:twilights-fall/twilight-directive",
   );
-  expect(UpdatorPlayerTF.getTimestamp(a)).toBe(0);
+  expect(UpdatorPlayerTFParadigms.getTimestamp(a)).toBe(0);
   a.setSavedData("1", "timestamp");
-  expect(UpdatorPlayerTF.getTimestamp(a)).toBe(1);
+  expect(UpdatorPlayerTFParadigms.getTimestamp(a)).toBe(1);
 });

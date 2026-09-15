@@ -16,10 +16,10 @@ import {
 } from "ttpg-darrell";
 import { GameData, PerPlayerGameData } from "../../game-data/game-data";
 import { IGameDataUpdator } from "../../i-game-data-updator/i-game-data-updator";
-import { UpdatorPlayerTech } from "../updator-player-tech";
 import { __atopCacheGet } from "../../../combat-lib/combat-roll/combat-roll";
+import { Paradigm } from "../../../twilights-fall-lib/twilights-fall/paradigm";
 
-export class UpdatorPlayerTF implements IGameDataUpdator {
+export class UpdatorPlayerTFParadigms implements IGameDataUpdator {
   private readonly _cardUtil: CardUtil = new CardUtil();
   private readonly _find: Find = new Find();
 
@@ -45,28 +45,20 @@ export class UpdatorPlayerTF implements IGameDataUpdator {
     OnCardBecameSingletonOrDeck.onSingletonCardCreated.add(
       (card: Card, _player?: Player): void => {
         const nsid: string = NSID.get(card);
-        if (
-          (card instanceof Card && nsid.startsWith("card.tf-ability")) ||
-          (card instanceof Card && nsid.startsWith("card.tf-echo")) ||
-          (card instanceof Card && nsid.startsWith("card.tf-faction-tech")) ||
-          (card instanceof Card && nsid.startsWith("card.tf-genome")) ||
-          (card instanceof Card && nsid.startsWith("card.tf-paradigm")) ||
-          (card instanceof Card && nsid.startsWith("card.tf-unit-upgrade"))
-        ) {
-          UpdatorPlayerTF.setTimestamp(card);
+        if (card instanceof Card && nsid.startsWith("card.tf-paradigm")) {
+          UpdatorPlayerTFParadigms.setTimestamp(card);
         }
       },
     );
   }
 
   update(gameData: GameData): void {
-    // This updator clobbers any existing player.technologies value.
     // Only apply if a TF game.
     if (!TI4.config.sources.includes("twilights-fall")) {
       return;
     }
 
-    let techCards: Array<Card> = [];
+    let paradigmCards: Array<Card> = [];
     let draftMat: GameObject | undefined = undefined;
 
     const skipContained: boolean = true;
@@ -75,10 +67,10 @@ export class UpdatorPlayerTF implements IGameDataUpdator {
       const nsid: string = NSID.get(obj);
       if (
         obj instanceof Card &&
-        nsid.startsWith("card.tf-") &&
+        nsid.startsWith("card.tf-paradigm") &&
         this._cardUtil.isLooseCard(obj, allowFaceDown)
       ) {
-        techCards.push(obj);
+        paradigmCards.push(obj);
       }
 
       if (nsid === "mat.deck:twilights-fall/twilights-fall") {
@@ -89,15 +81,15 @@ export class UpdatorPlayerTF implements IGameDataUpdator {
     // Remove any cards on the mat.
     if (draftMat) {
       const atop: Atop = __atopCacheGet(draftMat);
-      techCards = techCards.filter((techCard: Card): boolean => {
-        return !atop.isAtop(techCard.getPosition());
+      paradigmCards = paradigmCards.filter((paradigmCard: Card): boolean => {
+        return !atop.isAtop(paradigmCard.getPosition());
       });
     }
 
     // Sort cards by creation order.
-    techCards.sort((a: Card, b: Card): number => {
-      const aTimestamp: number = UpdatorPlayerTech.getTimestamp(a);
-      const bTimestamp: number = UpdatorPlayerTech.getTimestamp(b);
+    paradigmCards.sort((a: Card, b: Card): number => {
+      const aTimestamp: number = UpdatorPlayerTFParadigms.getTimestamp(a);
+      const bTimestamp: number = UpdatorPlayerTFParadigms.getTimestamp(b);
       if (aTimestamp !== bTimestamp) {
         return aTimestamp - bTimestamp;
       }
@@ -107,7 +99,7 @@ export class UpdatorPlayerTF implements IGameDataUpdator {
 
     // Group cards by player slot.
     const playerSlotToCards: Map<number, Array<Card>> = new Map();
-    techCards.forEach((card: Card): void => {
+    paradigmCards.forEach((card: Card): void => {
       const pos: Vector = card.getPosition();
       const playerSlot: PlayerSlot =
         this._find.closestOwnedCardHolderOwner(pos);
@@ -125,22 +117,11 @@ export class UpdatorPlayerTF implements IGameDataUpdator {
           TI4.playerSeats.getPlayerSlotBySeatIndex(seatIndex);
         const cards: Array<Card> = playerSlotToCards.get(playerSlot) ?? [];
 
-        player.technologies = cards
+        player.tfParadigms = cards
           .map((card: Card): string => {
             const nsid: string = NSID.get(card);
-            const parsedNsid: ParsedNSID | undefined = NSID.parse(nsid);
-            let name: string = parsedNsid?.nameParts[0] ?? "";
-            name = name
-              .split("-")
-              .map((part: string): string => {
-                if (!["of", "the", "a"].includes(part)) {
-                  part = part.substring(0, 1).toUpperCase() + part.substring(1);
-                }
-                return part;
-              })
-              .join(" ");
-            name = name.substring(0, 1).toUpperCase() + name.substring(1); // Capitalize the first letter of the entire name.
-            return name;
+            const paradigm: Paradigm | undefined = TI4.tfParadigmRegistry.getByNsid(nsid);
+            return paradigm?.getName() ?? "";
           })
           .filter((name: string): boolean => name.length > 0)
           .filter(
