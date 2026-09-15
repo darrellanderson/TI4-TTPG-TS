@@ -22,7 +22,7 @@ export class UpdatorBenediction implements IGameDataUpdator {
       const colorName: string | undefined =
         TI4.playerColor.getSlotColorName(owner);
       if (colorName) {
-        gameData.speaker = colorName;
+        gameData.benediction = colorName;
       }
     }
   }
