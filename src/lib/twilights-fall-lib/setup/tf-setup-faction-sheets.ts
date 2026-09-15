@@ -63,7 +63,7 @@ export class TFSetupFactionSheets {
     TFSetupFactionSheets.setChosenFactionNsidNames(chosenFactionNsidNames);
 
     const find: Find = new Find();
-    const matNsid: string = "mat.deck:twilights-fall/twilights-fall";
+    const matNsid: string = "mat:twilights-fall/splice-intent";
     const owningPlayerSlot: number | undefined = undefined;
     const skipContained = true;
     const mat: GameObject | undefined = find.findGameObject(

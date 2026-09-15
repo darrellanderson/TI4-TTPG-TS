@@ -40,7 +40,7 @@ it("data addSyntheticUnit", () => {
       name: "my-name",
       unit: "infantry",
     },
-    1
+    1,
   );
   expect(success).toBe(false);
 
@@ -49,7 +49,7 @@ it("data addSyntheticUnit", () => {
       name: "my-name",
       unit: "my-unit" as UnitType,
     },
-    2
+    2,
   );
   expect(success).toBe(true);
   expect(data.overrideUnitCountHex.get("my-unit" as UnitType)).toBe(2);
@@ -68,8 +68,8 @@ it("data hasUnit", () => {
       "infantry",
       1,
       new MockGameObject(),
-      new MockVector(0, 0, 0)
-    )
+      new MockVector(0, 0, 0),
+    ),
   );
   expect(data.hasUnit("infantry")).toBe(true);
   expect(data.hasUnit("fighter")).toBe(false);
@@ -90,8 +90,8 @@ it("data hasUnitAdj", () => {
       "infantry",
       1,
       new MockGameObject(),
-      new MockVector(0, 0, 0)
-    )
+      new MockVector(0, 0, 0),
+    ),
   );
   expect(data.hasUnitAdj("infantry")).toBe(true);
   expect(data.hasUnitAdj("fighter")).toBe(false);
@@ -263,7 +263,7 @@ it("_findUnitAttrOverrides (standard unit upgrade)", () => {
   const allowFaceDown: boolean = false;
   const rejectSnapPointTags: Array<string> = [];
   expect(
-    new CardUtil().isLooseCard(card, allowFaceDown, rejectSnapPointTags)
+    new CardUtil().isLooseCard(card, allowFaceDown, rejectSnapPointTags),
   ).toBe(true);
 
   let overrides: Array<UnitAttrsSchemaType> =
@@ -309,7 +309,7 @@ it("_findUnitAttrOverrides (only if face down)", () => {
   const allowFaceDown: boolean = false;
   const rejectSnapPointTags: Array<string> = [];
   expect(
-    new CardUtil().isLooseCard(card, allowFaceDown, rejectSnapPointTags)
+    new CardUtil().isLooseCard(card, allowFaceDown, rejectSnapPointTags),
   ).toBe(true);
 
   let overrides: Array<UnitAttrsSchemaType> =
@@ -389,10 +389,10 @@ it("_findUnitModifiers (self, opponent)", () => {
   });
   const unitModifiers: Array<UnitModifier> = combatRoll._findUnitModifiers(
     2,
-    3
+    3,
   );
   const names: Array<string> = unitModifiers.map((modifier) =>
-    modifier.getName()
+    modifier.getName(),
   );
   expect(names).toEqual(["my-self-modifier", "my-opponent-modifier"]);
 });
@@ -429,15 +429,15 @@ it("_findUnitModifiers", () => {
   const allowFaceDown: boolean = false;
   const rejectSnapPointTags: Array<string> = [];
   expect(
-    new CardUtil().isLooseCard(card, allowFaceDown, rejectSnapPointTags)
+    new CardUtil().isLooseCard(card, allowFaceDown, rejectSnapPointTags),
   ).toBe(true);
 
   const unitModifiers: Array<UnitModifier> = combatRoll._findUnitModifiers(
     2,
-    1
+    1,
   );
   const names: Array<string> = unitModifiers.map((modifier) =>
-    modifier.getName()
+    modifier.getName(),
   );
   expect(names).toEqual(["my-modifier-name"]);
 });
@@ -475,7 +475,7 @@ it("_findUnitModifiers (active/idle)", () => {
   const allowFaceDown: boolean = false;
   const rejectSnapPointTags: Array<string> = [];
   expect(
-    new CardUtil().isLooseCard(card, allowFaceDown, rejectSnapPointTags)
+    new CardUtil().isLooseCard(card, allowFaceDown, rejectSnapPointTags),
   ).toBe(true);
 
   let unitModifiers: Array<UnitModifier>;
@@ -549,15 +549,15 @@ it("_findUnitModifiers (self faction promissory)", () => {
   const allowFaceDown: boolean = false;
   const rejectSnapPointTags: Array<string> = [];
   expect(
-    new CardUtil().isLooseCard(card, allowFaceDown, rejectSnapPointTags)
+    new CardUtil().isLooseCard(card, allowFaceDown, rejectSnapPointTags),
   ).toBe(true);
 
   const unitModifiers: Array<UnitModifier> = combatRoll._findUnitModifiers(
     2,
-    1
+    1,
   );
   const names: Array<string> = unitModifiers.map((modifier) =>
-    modifier.getName()
+    modifier.getName(),
   );
   expect(names).toEqual([]);
 });
@@ -892,12 +892,12 @@ it("applyUnitOverrides", () => {
     rollingPlayerSlot: 2,
   });
   expect(combatRoll.self.unitAttrsSet.get("carrier")?.getName()).toBe(
-    "Carrier"
+    "Carrier",
   );
 
   combatRoll.applyUnitOverrides();
   expect(combatRoll.self.unitAttrsSet.get("carrier")?.getName()).toBe(
-    "Carrier II"
+    "Carrier II",
   );
 });
 
@@ -942,7 +942,7 @@ it("applyUnitOverrides (flagship)", () => {
     overrideSelfFaction: faction,
   });
   expect(combatRoll.self.unitAttrsSet.get("flagship")?.getName()).toBe(
-    "my-flagship-name"
+    "my-flagship-name",
   );
 });
 
@@ -979,7 +979,7 @@ it("applyUnitOverrides (flagship opponent)", () => {
     },
   ]);
   expect(
-    globalThis.TI4.unitAttrsRegistry.rawByNsid("unit:my-source/my-flagship")
+    globalThis.TI4.unitAttrsRegistry.rawByNsid("unit:my-source/my-flagship"),
   ).toBeDefined();
 
   const combatRoll: CombatRoll = CombatRoll.createCooked({
@@ -991,7 +991,7 @@ it("applyUnitOverrides (flagship opponent)", () => {
   });
   expect(combatRoll.opponent.playerSlot).toBe(1);
   expect(combatRoll.opponent.unitAttrsSet.get("flagship")?.getName()).toBe(
-    "my-flagship-name"
+    "my-flagship-name",
   );
 });
 
@@ -1471,6 +1471,19 @@ it("roll", () => {
   combatRoll.roll(player, position);
 });
 
+it("roll extra rerolls", () => {
+  const combatRoll: CombatRoll = CombatRoll.createCooked({
+    rollType: "spaceCombat",
+    hex: "<0,0,0>",
+    activatingPlayerSlot: 1,
+    rollingPlayerSlot: 2,
+  });
+  const player: Player = new MockPlayer();
+  const position: Vector = new Vector(0, 0, 0);
+  combatRoll.self.setExtraRerolls(3);
+  combatRoll.roll(player, position);
+});
+
 it("opponent has anonymous units", () => {
   MockGameObject.simple("tile/system:base/1");
   MockGameObject.simple("unit:base/carrier", { owningPlayerSlot: 2 });
@@ -1488,7 +1501,7 @@ it("opponent has anonymous units", () => {
   globalThis.TI4.events.onCombatResult.add(
     (resultCombatRoll: CombatRoll, _diceResults: Array<DiceResult>): void => {
       rollingPlayerSlots.push(resultCombatRoll.self.playerSlot);
-    }
+    },
   );
   expect(rollingPlayerSlots).toEqual([]);
 
@@ -1507,7 +1520,7 @@ it("nekro z", () => {
 
   expect(new Find().closestOwnedCardHolderOwner(position)).toBe(3);
   expect(globalThis.TI4.factionRegistry.getByPlayerSlot(3)?.getAbbr()).toBe(
-    "Naalu"
+    "Naalu",
   );
 
   MockGameObject.simple("tile/system:base/37");

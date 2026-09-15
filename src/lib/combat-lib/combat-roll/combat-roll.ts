@@ -90,6 +90,7 @@ export class CombatRollPerPlayerData {
   public readonly unitPlasticAdj: Array<UnitPlastic> = [];
   public readonly overrideUnitCountHex: Map<UnitType, number> = new Map();
   public readonly overrideUnitCountAdj: Map<UnitType, number> = new Map();
+  private _extraRerolls: number = 0;
 
   /**
    * Try to add a synthetic unit to the player's unit set.
@@ -144,6 +145,14 @@ export class CombatRollPerPlayerData {
 
   hasUnitAdj(unit: UnitType): boolean {
     return this.getCountAdj(unit) > 0;
+  }
+
+  getExtraRerolls(): number {
+    return this._extraRerolls;
+  }
+
+  setExtraRerolls(extraRerolls: number): void {
+    this._extraRerolls = extraRerolls;
   }
 }
 
@@ -1084,6 +1093,7 @@ export class CombatRoll {
       position,
       callback,
       doFakeRoll,
+      extraRerolls: this.self.getExtraRerolls(),
     };
     DiceGroup.roll(diceGroupParams);
   }

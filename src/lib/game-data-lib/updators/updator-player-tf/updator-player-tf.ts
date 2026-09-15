@@ -60,6 +60,12 @@ export class UpdatorPlayerTF implements IGameDataUpdator {
   }
 
   update(gameData: GameData): void {
+    // This updator clobbers any existing player.technologies value.
+    // Only apply if a TF game.
+    if (!TI4.config.sources.includes("twilights-fall")) {
+      return;
+    }
+
     let techCards: Array<Card> = [];
     let draftMat: GameObject | undefined = undefined;
 
@@ -133,6 +139,7 @@ export class UpdatorPlayerTF implements IGameDataUpdator {
                 return part;
               })
               .join(" ");
+            name = name.substring(0, 1).toUpperCase() + name.substring(1); // Capitalize the first letter of the entire name.
             return name;
           })
           .filter((name: string): boolean => name.length > 0)

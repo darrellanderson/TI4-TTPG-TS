@@ -19,23 +19,66 @@ it("data", () => {
   });
   holder.setPosition([10, 0, 0], 0);
 
-  const a: Card = MockCard.simple("card.relic:pok/shard-of-the-throne");
+  const holder2 = new MockCardHolder({
+    templateMetadata: "card-holder:base/player-hand",
+    owningPlayerSlot: 11,
+  });
+  holder2.setPosition([110, 0, 0], 0);
+
+  expect(TI4.playerSeats.getPlayerSlotBySeatIndex(0)).toEqual(10);
+  expect(TI4.playerSeats.getPlayerSlotBySeatIndex(1)).toEqual(11);
+
+  const a: Card = new MockCard({
+    cardDetails: [
+      {
+        metadata: "card.relic:pok/shard-of-the-throne",
+        name: "Shard of the Throne",
+      },
+    ],
+    isFaceUp: true,
+  });
+
   a.setPosition([10, 0, 0], 0);
 
-  const b: Card = MockCard.simple("card.relic:pok/the-crown-of-emphidia");
+  const b: Card = new MockCard({
+    cardDetails: [
+      {
+        metadata: "card.relic:pok/the-crown-of-emphidia",
+        name: "The Crown of Emphidia",
+      },
+    ],
+    isFaceUp: true,
+  });
   b.setPosition([10, 0, 0], 0);
 
   // Far from player 10 (which is white, player 0)
-  const c: Card = MockCard.simple("card.relic:pok/maw-of-worlds");
-  c.setPosition([-100, 0, 0], 0);
+  const c: Card = new MockCard({
+    cardDetails: [
+      {
+        metadata: "card.relic:pok/maw-of-worlds",
+        name: "Maw of Worlds",
+      },
+    ],
+    isFaceUp: true,
+  });
+  c.setPosition([110, 0, 0], 0);
 
-  const d: Card = MockCard.simple("card.exploration.cultural:pok/cultural-relic-fragment");
+  const d: Card = new MockCard({
+    cardDetails: [
+      {
+        metadata: "card.exploration.cultural:pok/cultural-relic-fragment",
+        name: "Cultural Relic Fragment",
+      },
+    ],
+    isFaceUp: true,
+  });
   d.setPosition([10, 0, 0], 0);
 
   const gameData: GameData = GameDataUpdator.createGameData();
   new UpdatorPlayerRelics().update(gameData);
 
   expect(gameData.players[0]?.relics).toBeDefined();
+  expect(gameData.players[0]?.relics.length).toBe(3);
   expect(gameData.players[0]?.relics).toContain("Shard of the Throne");
   expect(gameData.players[0]?.relics).toContain("The Crown of Emphidia");
   expect(gameData.players[0]?.relics).toContain("Cultural Relic Fragment");

@@ -19,7 +19,7 @@ export class UpdatorPlayerRelics implements IGameDataUpdator {
             const closestPlayerSlot: number =
               this._getRelicCardClosestPlayerSlot(relicCard);
             return closestPlayerSlot === playerSlot;
-          }
+          },
         );
 
         const myRelics: Array<string> = myRelicCards
@@ -29,7 +29,7 @@ export class UpdatorPlayerRelics implements IGameDataUpdator {
           .filter((name: string) => name !== "");
 
         playerData.relics = myRelics;
-      }
+      },
     );
   }
 

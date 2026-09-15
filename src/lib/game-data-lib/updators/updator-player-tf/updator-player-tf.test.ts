@@ -13,6 +13,8 @@ it("registered", () => {
 });
 
 it("data", () => {
+  TI4.config.setSources(["twilights-fall"]);
+
   new MockCardHolder({
     templateMetadata: "card-holder:base/player-hand",
     owningPlayerSlot: 10,

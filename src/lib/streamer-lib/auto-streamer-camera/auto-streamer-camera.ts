@@ -1,5 +1,11 @@
 import { GameObject, Player, Vector, world } from "@tabletop-playground/api";
-import { IGlobal, NamespaceId, PlayerSlot, TurnOrder } from "ttpg-darrell";
+import {
+  Find,
+  IGlobal,
+  NamespaceId,
+  PlayerSlot,
+  TurnOrder,
+} from "ttpg-darrell";
 
 import { Scoreboard } from "../../score-lib/scoreboard/scoreboard";
 import { System } from "../../system-lib/system/system";
@@ -24,7 +30,7 @@ export class AutoStreamerCamera implements IGlobal {
 
   private readonly _onSystemActivated = (
     system: System,
-    _player: Player
+    _player: Player,
   ): void => {
     this._lookAtSystem(system);
   };
@@ -34,11 +40,25 @@ export class AutoStreamerCamera implements IGlobal {
   };
 
   private readonly _onCombatWarpIn = (combatArenaObj: GameObject): void => {
-    this._lookAtCombatArena(combatArenaObj);
+    this._lookAtGameObject(combatArenaObj);
   };
 
   private readonly _onCombatWarpOut = (system: System): void => {
     this._lookAtSystem(system);
+  };
+
+  private readonly _onTwilightsFallSplice = (): void => {
+    const nsid: string = "mat.deck:twilights-fall/twilights-fall";
+    const owner: number | undefined = undefined;
+    const skipContained: boolean = true;
+    const spliceMat: GameObject | undefined = new Find().findGameObject(
+      nsid,
+      owner,
+      skipContained,
+    );
+    if (spliceMat) {
+      this._lookAtGameObject(spliceMat);
+    }
   };
 
   constructor(namespaceId: NamespaceId) {
@@ -52,6 +72,7 @@ export class AutoStreamerCamera implements IGlobal {
     TI4.events.onCombatWarpIn.add(this._onCombatWarpIn);
     TI4.events.onCombatWarpOut.add(this._onCombatWarpOut);
     TurnOrder.onTurnStateChanged.add(this._onTurnStateChanged);
+    TI4.events.onTwilightsFallSplice.add(this._onTwilightsFallSplice);
   }
 
   destroy(): void {
@@ -60,6 +81,7 @@ export class AutoStreamerCamera implements IGlobal {
     TI4.events.onCombatWarpIn.remove(this._onCombatWarpIn);
     TI4.events.onCombatWarpOut.remove(this._onCombatWarpOut);
     TurnOrder.onTurnStateChanged.remove(this._onTurnStateChanged);
+    TI4.events.onTwilightsFallSplice.remove(this._onTwilightsFallSplice);
 
     world.setSavedData("", this._namespaceId);
   }
@@ -113,8 +135,8 @@ export class AutoStreamerCamera implements IGlobal {
     this._lookAt(lookAtPos, 135);
   }
 
-  _lookAtCombatArena(CombatArenaObj: GameObject): void {
-    const lookAtPos: Vector = CombatArenaObj.getPosition();
+  _lookAtGameObject(gameObject: GameObject): void {
+    const lookAtPos: Vector = gameObject.getPosition();
     this._lookAt(lookAtPos, 40);
   }
 

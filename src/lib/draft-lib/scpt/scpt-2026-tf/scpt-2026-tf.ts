@@ -11,10 +11,6 @@ export class Scpt2026TF extends AbstractScpt {
   }
 
   getQual(): DraftActivityStartParams | undefined {
-    return undefined;
-  }
-
-  getPrelim(): DraftActivityStartParams | undefined {
     const slices: Array<string> = [
       "100,111,37,67,39",
       "40,27,117,99,107",
@@ -32,8 +28,14 @@ export class Scpt2026TF extends AbstractScpt {
       "",
     ];
 
-    const numSlices: number = slices.length;
+    const numSlices: number = this.getPlayerCount();
     const numFactions: number = TI4.config.playerCount;
+
+    while (slices.length > numSlices) {
+      const index: number = Math.floor(Math.random() * slices.length);
+      slices.splice(index, 1);
+      labels.splice(index, 1);
+    }
 
     return {
       namespaceId: DRAFT_NAMESPACE_ID,
@@ -43,6 +45,10 @@ export class Scpt2026TF extends AbstractScpt {
       config: `${slices.join("|")}&labels=${labels.join("|")}`,
       countdownHours: 9,
     };
+  }
+
+  getPrelim(): DraftActivityStartParams | undefined {
+    return undefined;
   }
 
   getSemi(_index?: number): DraftActivityStartParams | undefined {

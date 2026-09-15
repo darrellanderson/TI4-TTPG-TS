@@ -26,7 +26,10 @@ export class StartGame implements IGlobal {
       this._doRemove();
       this._maybeFlipScoreboard();
 
-      TI4.events.onStartGameComplete.trigger();
+      // Wait another tick to tell any listeners.
+      process.nextTick(() => {
+        TI4.events.onStartGameComplete.trigger();
+      });
     });
   };
 
