@@ -381,7 +381,7 @@ export const SOURCE_TO_TECH_DATA: Record<string, Array<TechSchemaType>> = {
     },
     {
       nsidName: "super-dreadnought-2",
-      name: "Super Dreadnought II",
+      name: "Super-Dreadnought II",
       color: "unit-upgrade",
       prerequisites: { blue: 2, yellow: 1 },
       abbr: "SuperDread II",
@@ -489,10 +489,10 @@ export const SOURCE_TO_TECH_DATA: Record<string, Array<TechSchemaType>> = {
     },
     {
       nsidName: "crimson-legionnaire-2",
-      name: "Crimsom Legionnaire II",
+      name: "Crimson Legionnaire II",
       color: "unit-upgrade",
       prerequisites: { green: 2 },
-      abbr: "Crimson Legin II",
+      abbr: "Crimson Legion. II",
       isFactionTech: true,
       replacesNsidName: "infantry-2",
     },
@@ -522,7 +522,7 @@ export const SOURCE_TO_TECH_DATA: Record<string, Array<TechSchemaType>> = {
     },
     {
       nsidName: "hel-titan-2",
-      name: "Hel Titan II",
+      name: "Hel-Titan II",
       color: "unit-upgrade",
       prerequisites: { red: 1, yellow: 1 },
       abbr: "Hel-Titan II",

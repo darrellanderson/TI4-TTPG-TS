@@ -80,6 +80,10 @@ class MatTfSpliceIntent {
       .map((seat: PlayerSeatType): PlayerSlot => seat.playerSlot);
 
     playerSlots.forEach((playerSlot: PlayerSlot, index: number): void => {
+      const faction = TI4.factionRegistry.getByPlayerSlot(playerSlot);
+      if (!faction || faction.getSource() !== "twilights-fall") {
+        return;
+      }
       const pos: Vector | undefined = this._getTokenPos(index);
       pos.z = world.getTableHeight() + 10;
       const token: GameObject | undefined =
