@@ -122,7 +122,7 @@ export class SystemAdjacency {
   }
 
   /**
-   * Get the raw adjancency results, including path taken.
+   * Get the raw adjacency results, including path taken.
    * @param hex
    * @returns
    */
