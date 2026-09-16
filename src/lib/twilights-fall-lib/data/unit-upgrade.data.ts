@@ -76,8 +76,8 @@ export const SOURCE_TO_UNIT_UPGRADE_DATA: Record<string, Array<UnitUpgradeSchema
     },
     {
       nsidName: "hel-titan",
-      name: "Hel Titan",
-      abbr: "Hel Titan",
+      name: "Hel-Titan",
+      abbr: "Hel-Titan",
       origin: "titans",
     },
     {
@@ -88,8 +88,8 @@ export const SOURCE_TO_UNIT_UPGRADE_DATA: Record<string, Array<UnitUpgradeSchema
     },
     {
       nsidName: "hybrid-crystal-fighter",
-      name: "Hybrid Crystal Fighter",
-      abbr: "Hybrid Crystal Fighter",
+      name: "Hybrid Cryst. Fight.",
+      abbr: "Hybrid Cryst. Fight.",
       origin: "naalu",
     },
     {
@@ -148,14 +148,14 @@ export const SOURCE_TO_UNIT_UPGRADE_DATA: Record<string, Array<UnitUpgradeSchema
     },
     {
       nsidName: "super-dreadnought",
-      name: "Super Dreadnought",
-      abbr: "Super Dreadnought",
+      name: "Super-Dreadnought",
+      abbr: "Super-Dreadnought",
       origin: "l1z1x",
     },
     {
       nsidName: "the-dragon-freed",
-      name: "The Dragon Freed",
-      abbr: "The Dragon Freed",
+      name: "The Dragon, Freed",
+      abbr: "The Dragon, Freed",
       origin: "obsidian",
     },
     {

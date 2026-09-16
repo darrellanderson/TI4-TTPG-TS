@@ -25,7 +25,7 @@ export const SOURCE_TO_ABILITY_DATA: Record<string, Array<AbilitySchemaType>> = 
     },
     {
       nsidName: "agency-supply-network",
-      name: "Agency Supply Network",
+      name: "Agency Sup. Net.",
       color: "yellow",
       abbr: "Agency Sup. Net.",
       origin: "keleres",
@@ -137,9 +137,9 @@ export const SOURCE_TO_ABILITY_DATA: Record<string, Array<AbilitySchemaType>> = 
     },
     {
       nsidName: "eres-siphons",
-      name: "E-res Siphons",
+      name: "E-Res Siphons",
       color: "yellow",
-      abbr: "E. Siphons",
+      abbr: "E-Res Siphons",
       origin: "jol-nar",
     },
     {
@@ -200,7 +200,7 @@ export const SOURCE_TO_ABILITY_DATA: Record<string, Array<AbilitySchemaType>> = 
     },
     {
       nsidName: "hegemonic-trade-policy",
-      name: "Hegemonic Trade Policy",
+      name: "Hegemonic T. P.",
       color: "yellow",
       abbr: "Hegemonic T.P.",
       origin: "winnu",
@@ -298,9 +298,9 @@ export const SOURCE_TO_ABILITY_DATA: Record<string, Array<AbilitySchemaType>> = 
     },
     {
       nsidName: "non-euclidean-shielding",
-      name: "Non-Euclidean Shielding",
+      name: "Non-Euc. Shielding",
       color: "red",
-      abbr: "Non-Euclidean",
+      abbr: "Non-Euc. Shielding",
       origin: "letnev",
     },
     {
@@ -368,9 +368,9 @@ export const SOURCE_TO_ABILITY_DATA: Record<string, Array<AbilitySchemaType>> = 
     },
     {
       nsidName: "quantum-datahub-node",
-      name: "Quantum Datahub Node",
+      name: "Quantum Data. Node",
       color: "yellow",
-      abbr: "Quantum Datahub",
+      abbr: "Quantum Data. Node",
       origin: "hacan",
     },
     {
@@ -382,9 +382,9 @@ export const SOURCE_TO_ABILITY_DATA: Record<string, Array<AbilitySchemaType>> = 
     },
     {
       nsidName: "quantum-entanglement",
-      name: "Quantum Entanglement",
+      name: "Quantum Entangle.",
       color: "red",
-      abbr: "Quantum Ent.",
+      abbr: "Quantum Entangle.",
       origin: "creuss",
     },
     {
@@ -466,7 +466,7 @@ export const SOURCE_TO_ABILITY_DATA: Record<string, Array<AbilitySchemaType>> = 
     },
     {
       nsidName: "spatial-conduit-cylinder",
-      name: "Spatial Conduit Cylinder",
+      name: "Spatial Con. Cyl.",
       color: "blue",
       abbr: "Spatial Con. Cyl.",
       origin: "jol-nar",
@@ -543,9 +543,9 @@ export const SOURCE_TO_ABILITY_DATA: Record<string, Array<AbilitySchemaType>> = 
     },
     {
       nsidName: "temporal-command-suite",
-      name: "Temporal Command Suite",
+      name: "Temp. Com. Suite",
       color: "yellow",
-      abbr: "Temporal Command",
+      abbr: "Temp. Com. Suite",
       origin: "nomad",
     },
     {
@@ -571,7 +571,7 @@ export const SOURCE_TO_ABILITY_DATA: Record<string, Array<AbilitySchemaType>> = 
     },
     {
       nsidName: "valkyrie-particle-weave",
-      name: "Valkyrie Particle Weave",
+      name: "Valkyrie P. W.",
       color: "red",
       abbr: "Valkyrie P.W.",
       origin: "sardakk",
