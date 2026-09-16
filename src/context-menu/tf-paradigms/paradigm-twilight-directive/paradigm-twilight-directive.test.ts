@@ -1,18 +1,18 @@
 import { Player } from "@tabletop-playground/api";
 import { MockCard, MockPlayer } from "ttpg-mock";
-import { HeroHelioCommandArray } from "./hero-helio-command-array";
+import { ParadigmTwilightDirective } from "./paradigm-twilight-directive";
 
 it("constructor, init", () => {
-  new HeroHelioCommandArray().init();
+  new ParadigmTwilightDirective().init();
 });
 
 it("right click", () => {
-  new HeroHelioCommandArray().init();
+  new ParadigmTwilightDirective().init();
   const card: MockCard = MockCard.simple(
-    "card.leader.hero:pok/jace-x-4th-air-legion"
+    "card.tf-paradigm:twilights-fall/twilight-directive"
   );
   process.flushTicks(); // card event delayed a frame
 
   const player: Player = new MockPlayer();
-  card._customActionAsPlayer(player, "*Helio Command Array");
+  card._customActionAsPlayer(player, "*Twilight Directive");
 });
