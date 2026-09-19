@@ -234,7 +234,7 @@ export const SOURCE_TO_ABILITY_DATA: Record<string, Array<AbilitySchemaType>> = 
       origin: "winnu",
     },
     {
-      nsidName: "liberator",
+      nsidName: "liberate",
       name: "Liberate",
       color: "red",
       abbr: "Liberate",
