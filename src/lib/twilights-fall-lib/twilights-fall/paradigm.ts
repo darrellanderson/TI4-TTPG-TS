@@ -18,6 +18,10 @@ export class Paradigm {
     return this._params.name;
   }
 
+  getAbbr(): string {
+    return this._params.abbr || this._params.name;
+  }
+
   getNsid(): string {
     return `card.tf-paradigm:${this._source}/${this._params.nsidName}`;
   }

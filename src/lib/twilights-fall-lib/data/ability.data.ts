@@ -25,7 +25,7 @@ export const SOURCE_TO_ABILITY_DATA: Record<string, Array<AbilitySchemaType>> = 
     },
     {
       nsidName: "agency-supply-network",
-      name: "Agency Sup. Net.",
+      name: "Agency Supply Network",
       color: "yellow",
       abbr: "Agency Sup. Net.",
       origin: "keleres",
@@ -69,7 +69,7 @@ export const SOURCE_TO_ABILITY_DATA: Record<string, Array<AbilitySchemaType>> = 
       nsidName: "bio-synthetic-synergy",
       name: "Bio-Synthetic Synergy",
       color: "green",
-      abbr: "Bio-Synthetic",
+      abbr: "Bio-Synthetic Syn.",
       origin: "last-bastion",
     },
     {
@@ -118,14 +118,14 @@ export const SOURCE_TO_ABILITY_DATA: Record<string, Array<AbilitySchemaType>> = 
       nsidName: "dimensional-splicer",
       name: "Dimensional Splicer",
       color: "red",
-      abbr: "D. Splicer",
+      abbr: "Dim. Splicer",
       origin: "creuss",
     },
     {
       nsidName: "dimensional-tear",
       name: "Dimensional Tear",
       color: "blue",
-      abbr: "D. Tear",
+      abbr: "Dim. Tear",
       origin: "vuilraith",
     },
     {
@@ -160,7 +160,7 @@ export const SOURCE_TO_ABILITY_DATA: Record<string, Array<AbilitySchemaType>> = 
       nsidName: "fleet-logistics",
       name: "Fleet Logistics",
       color: "blue",
-      abbr: "Fleet Log.",
+      abbr: "Fleet Logistics",
       origin: "keleres",
     },
     {
@@ -181,7 +181,7 @@ export const SOURCE_TO_ABILITY_DATA: Record<string, Array<AbilitySchemaType>> = 
       nsidName: "genetic-research",
       name: "Genetic Research",
       color: "green",
-      abbr: "Genetic Res.",
+      abbr: "Genetic Research",
       origin: "deepwrought",
     },
     {
@@ -200,9 +200,9 @@ export const SOURCE_TO_ABILITY_DATA: Record<string, Array<AbilitySchemaType>> = 
     },
     {
       nsidName: "hegemonic-trade-policy",
-      name: "Hegemonic T. P.",
+      name: "Hegemonic Trade Policy",
       color: "yellow",
-      abbr: "Hegemonic T.P.",
+      abbr: "Heg. Trade Pol.",
       origin: "winnu",
     },
     {
@@ -216,25 +216,25 @@ export const SOURCE_TO_ABILITY_DATA: Record<string, Array<AbilitySchemaType>> = 
       nsidName: "inheritance-systems",
       name: "Inheritance Systems",
       color: "yellow",
-      abbr: "Inherit. Systems",
+      abbr: "Inheritance Systems",
       origin: "l1z1x",
     },
     {
       nsidName: "instinct-training",
       name: "Instinct Training",
       color: "green",
-      abbr: "Instinct Train",
+      abbr: "Instinct Training",
       origin: "xxcha",
     },
     {
       nsidName: "lazax-gate-folding",
       name: "Lazax Gate Folding",
       color: "blue",
-      abbr: "Lazax Gate Fold.",
+      abbr: "Lazax Gate Folding",
       origin: "winnu",
     },
     {
-      nsidName: "liberator",
+      nsidName: "liberate",
       name: "Liberate",
       color: "red",
       abbr: "Liberate",
@@ -251,7 +251,7 @@ export const SOURCE_TO_ABILITY_DATA: Record<string, Array<AbilitySchemaType>> = 
       nsidName: "mirror-computing",
       name: "Mirror Computing",
       color: "yellow",
-      abbr: "Mirror Comp.",
+      abbr: "Mirror Computing",
       origin: "mentak",
     },
     {
@@ -265,7 +265,7 @@ export const SOURCE_TO_ABILITY_DATA: Record<string, Array<AbilitySchemaType>> = 
       nsidName: "munitions-reserves",
       name: "Munitions Reserves",
       color: "red",
-      abbr: "Munitions Res.",
+      abbr: "Munitions Reserves",
       origin: "letnev",
     },
     {
@@ -298,7 +298,7 @@ export const SOURCE_TO_ABILITY_DATA: Record<string, Array<AbilitySchemaType>> = 
     },
     {
       nsidName: "non-euclidean-shielding",
-      name: "Non-Euc. Shielding",
+      name: "Non-Euclidean Shielding",
       color: "red",
       abbr: "Non-Euc. Shielding",
       origin: "letnev",
@@ -307,7 +307,7 @@ export const SOURCE_TO_ABILITY_DATA: Record<string, Array<AbilitySchemaType>> = 
       nsidName: "nullification-field",
       name: "Nullification Field",
       color: "yellow",
-      abbr: "Null. Field",
+      abbr: "Nullification Field",
       origin: "xxcha",
     },
     {
@@ -356,7 +356,7 @@ export const SOURCE_TO_ABILITY_DATA: Record<string, Array<AbilitySchemaType>> = 
       nsidName: "proxima-targeting-vi",
       name: "Proxima Targeting VI",
       color: "red",
-      abbr: "Proxima VI",
+      abbr: "Proxima Targeting VI",
       origin: "last-bastion",
     },
     {
@@ -368,7 +368,7 @@ export const SOURCE_TO_ABILITY_DATA: Record<string, Array<AbilitySchemaType>> = 
     },
     {
       nsidName: "quantum-datahub-node",
-      name: "Quantum Data. Node",
+      name: "Quantum Datahub Node",
       color: "yellow",
       abbr: "Quantum Data. Node",
       origin: "hacan",
@@ -382,7 +382,7 @@ export const SOURCE_TO_ABILITY_DATA: Record<string, Array<AbilitySchemaType>> = 
     },
     {
       nsidName: "quantum-entanglement",
-      name: "Quantum Entangle.",
+      name: "Quantum Entanglement",
       color: "red",
       abbr: "Quantum Entangle.",
       origin: "creuss",
@@ -391,7 +391,7 @@ export const SOURCE_TO_ABILITY_DATA: Record<string, Array<AbilitySchemaType>> = 
       nsidName: "radical-advancement",
       name: "Radical Advancement",
       color: "green",
-      abbr: "Radical Adv.",
+      abbr: "Radical Advancement",
       origin: "deepwrought",
     },
     {
@@ -466,7 +466,7 @@ export const SOURCE_TO_ABILITY_DATA: Record<string, Array<AbilitySchemaType>> = 
     },
     {
       nsidName: "spatial-conduit-cylinder",
-      name: "Spatial Con. Cyl.",
+      name: "Spatial Conduit Cylinder",
       color: "blue",
       abbr: "Spatial Con. Cyl.",
       origin: "jol-nar",
@@ -475,7 +475,7 @@ export const SOURCE_TO_ABILITY_DATA: Record<string, Array<AbilitySchemaType>> = 
       nsidName: "spec-ops-training",
       name: "Spec Ops Training",
       color: "green",
-      abbr: "Spec Ops Train.",
+      abbr: "Spec Ops Training",
       origin: "sol",
     },
     {
@@ -510,7 +510,7 @@ export const SOURCE_TO_ABILITY_DATA: Record<string, Array<AbilitySchemaType>> = 
       nsidName: "subatomic-splicer",
       name: "Subatomic Splicer",
       color: "yellow",
-      abbr: "Sub. Splicer",
+      abbr: "Subatomic Splicer",
       origin: "crimson",
     },
     {
@@ -531,7 +531,7 @@ export const SOURCE_TO_ABILITY_DATA: Record<string, Array<AbilitySchemaType>> = 
       nsidName: "tactical-brilliance",
       name: "Tactical Brilliance",
       color: "red",
-      abbr: "Tact. Brilliance",
+      abbr: "Tactical Brilliance",
       origin: "jol-nar",
     },
     {
@@ -543,7 +543,7 @@ export const SOURCE_TO_ABILITY_DATA: Record<string, Array<AbilitySchemaType>> = 
     },
     {
       nsidName: "temporal-command-suite",
-      name: "Temp. Com. Suite",
+      name: "Temporal Command Suite",
       color: "yellow",
       abbr: "Temp. Com. Suite",
       origin: "nomad",
@@ -571,9 +571,9 @@ export const SOURCE_TO_ABILITY_DATA: Record<string, Array<AbilitySchemaType>> = 
     },
     {
       nsidName: "valkyrie-particle-weave",
-      name: "Valkyrie P. W.",
+      name: "Valkyrie Particle Weave",
       color: "red",
-      abbr: "Valkyrie P.W.",
+      abbr: "Valk. Part. Weave",
       origin: "sardakk",
     },
     {

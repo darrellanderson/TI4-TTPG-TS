@@ -26,11 +26,15 @@ export type PerPlayerGameData = {
   steamName?: string;
   strategyCards?: Array<string>; // strategy card names
   strategyCardsFaceDown?: Array<string>; // strategy card names
-  technologies?: Array<string>; // abbr names
-  tfAbilities?: Array<string>; // abbr names
-  tfGenomes?: Array<string>; // abbr names
-  tfParadigms?: Array<string>; // abbr names
-  tfUnitUpgrades?: Array<string>; // abbr names
+  technologies?: Array<string>; // abbr tech names
+  technologiesFaceDown?: Array<string>; // abbr tech names
+  tfAbilities?: Array<string>; // abbr tf ability names
+  tfAbilitiesFaceDown?: Array<string>; // abbr tf ability names
+  tfFactionTechs?: Array<string>; // abbr tf faction tech names
+  tfGenomes?: Array<string>; // abbr tf genome names
+  tfGenomesFaceDown?: Array<string>; // abbr tf genome names
+  tfParadigms?: Array<string>; // abbr tf paradigm names
+  tfUnitUpgrades?: Array<string>; // abbr tf unit upgrade names
   turnOrder?: number; // index in turn order array
 
   commodities?: number;

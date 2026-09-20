@@ -8,7 +8,6 @@ import {
 import {
   Atop,
   CardUtil,
-  Facing,
   Find,
   NSID,
   OnCardBecameSingletonOrDeck,
@@ -18,9 +17,9 @@ import {
 import { GameData, PerPlayerGameData } from "../../game-data/game-data";
 import { IGameDataUpdator } from "../../i-game-data-updator/i-game-data-updator";
 import { __atopCacheGet } from "../../../combat-lib/combat-roll/combat-roll";
-import { Genome } from "../../../twilights-fall-lib/twilights-fall/genome";
+import { FactionTech } from "../../../twilights-fall-lib/twilights-fall/faction-tech";
 
-export class UpdatorPlayerTFGenomes implements IGameDataUpdator {
+export class UpdatorPlayerTFFactionTechs implements IGameDataUpdator {
   private readonly _cardUtil: CardUtil = new CardUtil();
   private readonly _find: Find = new Find();
 
@@ -46,8 +45,8 @@ export class UpdatorPlayerTFGenomes implements IGameDataUpdator {
     OnCardBecameSingletonOrDeck.onSingletonCardCreated.add(
       (card: Card, _player?: Player): void => {
         const nsid: string = NSID.get(card);
-        if (card instanceof Card && nsid.startsWith("card.tf-genome")) {
-          UpdatorPlayerTFGenomes.setTimestamp(card);
+        if (card instanceof Card && nsid.startsWith("card.tf-faction-tech")) {
+          UpdatorPlayerTFFactionTechs.setTimestamp(card);
         }
       },
     );
@@ -59,7 +58,7 @@ export class UpdatorPlayerTFGenomes implements IGameDataUpdator {
       return;
     }
 
-    let genomeCards: Array<Card> = [];
+    let factionTechCards: Array<Card> = [];
     let draftMat: GameObject | undefined = undefined;
 
     const skipContained: boolean = true;
@@ -68,10 +67,10 @@ export class UpdatorPlayerTFGenomes implements IGameDataUpdator {
       const nsid: string = NSID.get(obj);
       if (
         obj instanceof Card &&
-        nsid.startsWith("card.tf-genome") &&
+        nsid.startsWith("card.tf-faction-tech") &&
         this._cardUtil.isLooseCard(obj, allowFaceDown)
       ) {
-        genomeCards.push(obj);
+        factionTechCards.push(obj);
       }
 
       if (nsid === "mat.deck:twilights-fall/twilights-fall") {
@@ -82,15 +81,15 @@ export class UpdatorPlayerTFGenomes implements IGameDataUpdator {
     // Remove any cards on the mat.
     if (draftMat) {
       const atop: Atop = __atopCacheGet(draftMat);
-      genomeCards = genomeCards.filter((genomeCard: Card): boolean => {
-        return !atop.isAtop(genomeCard.getPosition());
+      factionTechCards = factionTechCards.filter((factionTechCard: Card): boolean => {
+        return !atop.isAtop(factionTechCard.getPosition());
       });
     }
 
     // Sort cards by creation order.
-    genomeCards.sort((a: Card, b: Card): number => {
-      const aTimestamp: number = UpdatorPlayerTFGenomes.getTimestamp(a);
-      const bTimestamp: number = UpdatorPlayerTFGenomes.getTimestamp(b);
+    factionTechCards.sort((a: Card, b: Card): number => {
+      const aTimestamp: number = UpdatorPlayerTFFactionTechs.getTimestamp(a);
+      const bTimestamp: number = UpdatorPlayerTFFactionTechs.getTimestamp(b);
       if (aTimestamp !== bTimestamp) {
         return aTimestamp - bTimestamp;
       }
@@ -100,7 +99,7 @@ export class UpdatorPlayerTFGenomes implements IGameDataUpdator {
 
     // Group cards by player slot.
     const playerSlotToCards: Map<number, Array<Card>> = new Map();
-    genomeCards.forEach((card: Card): void => {
+    factionTechCards.forEach((card: Card): void => {
       const pos: Vector = card.getPosition();
       const playerSlot: PlayerSlot =
         this._find.closestOwnedCardHolderOwner(pos);
@@ -118,26 +117,11 @@ export class UpdatorPlayerTFGenomes implements IGameDataUpdator {
           TI4.playerSeats.getPlayerSlotBySeatIndex(seatIndex);
         const cards: Array<Card> = playerSlotToCards.get(playerSlot) ?? [];
 
-        player.tfGenomes = cards
+        player.tfFactionTechs = cards
           .map((card: Card): string => {
             const nsid: string = NSID.get(card);
-            const genome: Genome | undefined = TI4.tfGenomeRegistry.getByNsid(nsid);
-            return genome?.getAbbr() ?? "";
-          })
-          .filter((name: string): boolean => name.length > 0)
-          .filter(
-            (name: string, index: number, array: Array<string>): boolean =>
-              array.indexOf(name) === index,
-          ); // unique
-        player.tfGenomesFaceDown = cards
-          .filter((card: Card): boolean => {
-            const isFaceUp: boolean = Facing.isFaceUp(card);
-            return !isFaceUp;
-          })
-          .map((card: Card): string => {
-            const nsid: string = NSID.get(card);
-            const genome: Genome | undefined = TI4.tfGenomeRegistry.getByNsid(nsid);
-            return genome?.getAbbr() ?? "";
+            const factionTech: FactionTech | undefined = TI4.tfFactionTechRegistry.getByNsid(nsid);
+            return factionTech?.getAbbr() ?? "";
           })
           .filter((name: string): boolean => name.length > 0)
           .filter(

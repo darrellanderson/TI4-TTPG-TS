@@ -33,6 +33,7 @@ import { UpdatorPlayerScore } from "../updators/updator-player-score/updator-pla
 import { UpdatorPlayerStrategyCards } from "../updators/updator-player-strategy-cards/updator-player-strategy-cards";
 import { UpdatorPlayerTech } from "../updators/updator-player-tech/updator-player-tech";
 import { UpdatorPlayerTFAbilities } from "../updators/updator-player-tf-abilities/updator-player-tf-abilities";
+import { UpdatorPlayerTFFactionTechs } from "../updators/updator-player-tf-faction-techs/updator-player-tf-faction-tech";
 import { UpdatorPlayerTFGenomes } from "../updators/updator-player-tf-genomes";
 import { UpdatorPlayerTFParadigms } from "../updators/updator-player-tf-paradigms";
 import { UpdatorPlayerTFUnitUpgrades } from "../updators/updator-player-tf-unit-upgrades";
@@ -74,6 +75,7 @@ export const GAME_DATA_UPDATORS: Array<IGameDataUpdator> = [
   new UpdatorPlayerStrategyCards(),
   new UpdatorPlayerTech(),
   new UpdatorPlayerTFAbilities(),
+  new UpdatorPlayerTFFactionTechs(),
   new UpdatorPlayerTFGenomes(),
   new UpdatorPlayerTFParadigms(),
   new UpdatorPlayerTFUnitUpgrades(),

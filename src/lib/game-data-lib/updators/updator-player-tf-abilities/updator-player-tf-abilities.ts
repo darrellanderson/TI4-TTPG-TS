@@ -8,6 +8,7 @@ import {
 import {
   Atop,
   CardUtil,
+  Facing,
   Find,
   NSID,
   OnCardBecameSingletonOrDeck,
@@ -121,7 +122,22 @@ export class UpdatorPlayerTFAbilities implements IGameDataUpdator {
           .map((card: Card): string => {
             const nsid: string = NSID.get(card);
             const ability: Ability | undefined = TI4.tfAbilityRegistry.getByNsid(nsid);
-            return ability?.getName() ?? "";
+            return ability?.getAbbr() ?? "";
+          })
+          .filter((name: string): boolean => name.length > 0)
+          .filter(
+            (name: string, index: number, array: Array<string>): boolean =>
+              array.indexOf(name) === index,
+          ); // unique
+        player.tfAbilitiesFaceDown = cards
+          .filter((card: Card): boolean => {
+            const isFaceUp: boolean = Facing.isFaceUp(card);
+            return !isFaceUp;
+          })
+          .map((card: Card): string => {
+            const nsid: string = NSID.get(card);
+            const ability: Ability | undefined = TI4.tfAbilityRegistry.getByNsid(nsid);
+            return ability?.getAbbr() ?? "";
           })
           .filter((name: string): boolean => name.length > 0)
           .filter(

@@ -109,6 +109,7 @@ import { SystemAttachmentRegistry } from "../lib/system-lib/registry/system-atta
 import { SystemRegistry } from "../lib/system-lib/registry/system-registry";
 import { TechRegistry } from "../lib/tech-lib/registry/tech-registry";
 import { TFAbilityRegistry } from "../lib/twilights-fall-lib/registry";
+import { TFFactionTechRegistry } from "../lib/twilights-fall-lib/registry/tf-faction-tech-registry";
 import { TFGenomeRegistry } from "../lib/twilights-fall-lib/registry/tf-genome-registry";
 import { TFParadigmRegistry } from "../lib/twilights-fall-lib/registry/tf-paradigm-registry";
 import { TFUnitUpgradeRegistry } from "../lib/twilights-fall-lib/registry/tf-unit-upgrade-registry";
@@ -152,6 +153,7 @@ import { OnStartTwilightsFall } from "../event/on-start-twilights-fall/on-start-
 import { TFAhkSylFier } from "../context-menu/tf-fetch-tokens/tf-ahk-syl-fier";
 import { TFAwakeningGeoform } from "../context-menu/tf-fetch-tokens/tf-awakening-geoform";
 import { TFDimensionalTear } from "../context-menu/tf-fetch-tokens/tf-dimensional-tear";
+import { TFGravitationalCollapseSupernova } from "../context-menu/tf-fetch-tokens/tf-gravitational-collapse-supernova";
 import { TFHeliosEntity } from "../context-menu/tf-fetch-tokens/tf-helios-entity";
 import { TFSingularityX } from "../context-menu/tf-fetch-tokens/tf-singularity-x";
 import { TFSingularityY } from "../context-menu/tf-fetch-tokens/tf-singularity-y";
@@ -161,6 +163,12 @@ import { RightClickTFEdict } from "../context-menu/tf-splice/right-click-tf-edic
 import { TFTelepathicNaalu0 } from "../context-menu/tf-fetch-tokens/tf-telepathic-naalu-0";
 import { RightClickTFSupercharge } from "../context-menu/cards/tf-supercharge/tf-superchange";
 
+// TF Paradigms
+import { ParadigmEventHorizon } from "../context-menu/tf-paradigms/paradigm-event-horizon";
+import { ParadigmOpeningTheEye } from "../context-menu/tf-paradigms/paradigm-opening-the-eye";
+import { ParadigmTwilightDirective } from "../context-menu/tf-paradigms/paradigm-twilight-directive";
+
+// Heroes
 import { HeroDimensionalAnchor } from "../context-menu/heroes/hero-dimensional-anchor/hero-dimensional-anchor";
 import { HeroHelioCommandArray } from "../context-menu/heroes/hero-helio-command-array/hero-helio-command-array";
 import { HeroMultiverseShift } from "../context-menu/heroes/hero-multiverse-shift/hero-multiverse-shift";
@@ -229,6 +237,7 @@ export class TI4Class {
   public readonly systemRegistry = new SystemRegistry().loadDefaultData();
   public readonly techRegistry = new TechRegistry().loadDefaultData();
   public readonly tfAbilityRegistry = new TFAbilityRegistry().loadDefaultData();
+  public readonly tfFactionTechRegistry = new TFFactionTechRegistry().loadDefaultData();
   public readonly tfGenomeRegistry = new TFGenomeRegistry().loadDefaultData();
   public readonly tfParadigmRegistry = new TFParadigmRegistry().loadDefaultData();
   public readonly tfUnitUpgradeRegistry = new TFUnitUpgradeRegistry().loadDefaultData();
@@ -293,6 +302,9 @@ export function resetGlobalThisTI4(): TI4Class {
     new OnSystemActivated(),
     new OnTurnStateChanged(),
     new OnWhisper(),
+    new ParadigmEventHorizon(),
+    new ParadigmOpeningTheEye(),
+    new ParadigmTwilightDirective(),
     new ReportCommandTokenPutGet(),
     new ReportRemaining(),
     new RightClickAgenda(),
@@ -344,6 +356,7 @@ export function resetGlobalThisTI4(): TI4Class {
     new TFAhkSylFier(),
     new TFAwakeningGeoform(),
     new TFDimensionalTear(),
+    new TFGravitationalCollapseSupernova(),
     //new TFFactionRefCardUI(),
     new TFHeliosEntity(),
     new TFSingularityX(),
