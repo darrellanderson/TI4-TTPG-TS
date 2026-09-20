@@ -27,8 +27,9 @@ export type PerPlayerGameData = {
   strategyCards?: Array<string>; // strategy card names
   strategyCardsFaceDown?: Array<string>; // strategy card names
   technologies?: Array<string>; // abbr tech names
+  technologiesFaceDown?: Array<string>; // abbr tech names
   tfAbilities?: Array<string>; // abbr tf ability names
-  tfAbilitiesFaceDown: Array<string>; // abbr tf ability names
+  tfAbilitiesFaceDown?: Array<string>; // abbr tf ability names
   tfFactionTechs?: Array<string>; // abbr tf faction tech names
   tfGenomes?: Array<string>; // abbr tf genome names
   tfGenomesFaceDown?: Array<string>; // abbr tf genome names

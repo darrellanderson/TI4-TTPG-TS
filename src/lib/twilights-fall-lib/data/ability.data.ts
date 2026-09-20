@@ -69,7 +69,7 @@ export const SOURCE_TO_ABILITY_DATA: Record<string, Array<AbilitySchemaType>> = 
       nsidName: "bio-synthetic-synergy",
       name: "Bio-Synthetic Synergy",
       color: "green",
-      abbr: "Bio-Synthetic",
+      abbr: "Bio-Synthetic Syn.",
       origin: "last-bastion",
     },
     {

@@ -39,6 +39,10 @@ export class Tech {
     return this._params.name;
   }
 
+  getAbbr(): string {
+    return this._params.abbr || this._params.name;
+  }
+
   getNsid(): string {
     return `card.technology.${this._params.color}:${this._source}/${this._params.nsidName}`;
   }

@@ -1,6 +1,7 @@
 import { Card, Player, Vector, world } from "@tabletop-playground/api";
 import {
   CardUtil,
+  Facing,
   Find,
   NSID,
   OnCardBecameSingletonOrDeck,
@@ -95,6 +96,21 @@ export class UpdatorPlayerTech implements IGameDataUpdator {
             const nsid: string = NSID.get(card);
             const tech: Tech | undefined = TI4.techRegistry.getByNsid(nsid);
             return tech ? tech.getName() : "";
+          })
+          .filter((name: string): boolean => name.length > 0)
+          .filter(
+            (name: string, index: number, array: Array<string>): boolean =>
+              array.indexOf(name) === index,
+          ); // unique
+        player.technologiesFaceDown = cards
+          .filter((card: Card): boolean => {
+            const isFaceUp: boolean = Facing.isFaceUp(card);
+            return !isFaceUp;
+          })
+          .map((card: Card): string => {
+            const nsid: string = NSID.get(card);
+            const tech: Tech | undefined = TI4.techRegistry.getByNsid(nsid);
+            return tech ? tech.getAbbr() : "";
           })
           .filter((name: string): boolean => name.length > 0)
           .filter(
