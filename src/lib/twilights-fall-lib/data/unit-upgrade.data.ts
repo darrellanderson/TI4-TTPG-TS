@@ -5,7 +5,7 @@ export const SOURCE_TO_UNIT_UPGRADE_DATA: Record<string, Array<UnitUpgradeSchema
     {
       nsidName: "advanced-carrier",
       name: "Advanced Carrier",
-      abbr: "Adv. Carrier",
+      abbr: "Advanced Carrier",
       origin: "sol",
     },
     {
@@ -88,7 +88,7 @@ export const SOURCE_TO_UNIT_UPGRADE_DATA: Record<string, Array<UnitUpgradeSchema
     },
     {
       nsidName: "hybrid-crystal-fighter",
-      name: "Hybrid Cryst. Fight.",
+      name: "Hybrid Crystal Fighter",
       abbr: "Hybrid Cryst. Fight.",
       origin: "naalu",
     },

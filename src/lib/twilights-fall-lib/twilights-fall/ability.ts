@@ -22,6 +22,10 @@ export class Ability {
     return this._params.name;
   }
 
+  getAbbr(): string {
+    return this._params.abbr || this._params.name;
+  }
+
   getNsid(): string {
     return `card.tf-ability:${this._source}/${this._params.nsidName}`;
   }

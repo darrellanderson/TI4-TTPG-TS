@@ -121,7 +121,7 @@ export class UpdatorPlayerTFUnitUpgrades implements IGameDataUpdator {
           .map((card: Card): string => {
             const nsid: string = NSID.get(card);
             const unitUpgrade: UnitUpgrade | undefined = TI4.tfUnitUpgradeRegistry.getByNsid(nsid);
-            return unitUpgrade?.getName() ?? "";
+            return unitUpgrade?.getAbbr() ?? "";
           })
           .filter((name: string): boolean => name.length > 0)
           .filter(

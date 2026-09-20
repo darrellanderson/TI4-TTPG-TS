@@ -121,7 +121,7 @@ export class UpdatorPlayerTFParadigms implements IGameDataUpdator {
           .map((card: Card): string => {
             const nsid: string = NSID.get(card);
             const paradigm: Paradigm | undefined = TI4.tfParadigmRegistry.getByNsid(nsid);
-            return paradigm?.getName() ?? "";
+            return paradigm?.getAbbr() ?? "";
           })
           .filter((name: string): boolean => name.length > 0)
           .filter(

@@ -18,6 +18,10 @@ export class UnitUpgrade {
     return this._params.name;
   }
 
+  getAbbr(): string {
+    return this._params.abbr || this._params.name;
+  }
+
   getNsid(): string {
     return `card.tf-unit-upgrade:${this._source}/${this._params.nsidName}`;
   }

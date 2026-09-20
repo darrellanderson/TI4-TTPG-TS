@@ -123,9 +123,9 @@ export const SOURCE_TO_PARADIGM_DATA: Record<string, Array<ParadigmSchemaType>> 
       origin: "arborec",
     },
     {
-      nsidName: "poison-of-the-nefishim",
-      name: "Poison of the Nefishim",
-      abbr: "Poison of the Nefishim",
+      nsidName: "poison-of-the-nefishh",
+      name: "Poison of the Nefishh",
+      abbr: "Poison of the Nefishh",
       origin: "naalu",
     },
     {
