@@ -40,7 +40,7 @@ export class DealActionCards {
       // Add one if "Neural Motivator" technology.
       if (nsid === "card.technology.green:base/neural-motivator") {
         const owner: number = this._find.closestOwnedCardHolderOwner(
-          obj.getPosition()
+          obj.getPosition(),
         );
         let count: number | undefined = slotToCount.get(owner);
         if (count !== undefined) {
@@ -52,7 +52,7 @@ export class DealActionCards {
       // Add one if tf inheritance systems.
       if (nsid === "card.tf-ability:twilights-fall/inheritance-systems") {
         const owner: number = this._find.closestOwnedCardHolderOwner(
-          obj.getPosition()
+          obj.getPosition(),
         );
         let count: number | undefined = slotToCount.get(owner);
         if (count !== undefined) {
@@ -64,7 +64,7 @@ export class DealActionCards {
       // Add one if tf scheming.
       if (nsid === "card.tf-ability:twilights-fall/scheming") {
         const owner: number = this._find.closestOwnedCardHolderOwner(
-          obj.getPosition()
+          obj.getPosition(),
         );
         let count: number | undefined = slotToCount.get(owner);
         if (count !== undefined) {
@@ -107,7 +107,7 @@ export class DealActionCards {
       let deck: Card | undefined = this._find.findDeckOrDiscard(
         deckSnapPointTag,
         discardSnapPointTag,
-        shuffleDiscard
+        shuffleDiscard,
       );
       if (deck === undefined) {
         return false;
@@ -125,6 +125,10 @@ export class DealActionCards {
         // Last card, use it and release the deck.
         card = deck;
         deck = undefined;
+
+        // Even though card is being dealt to a holder, it will appear to still
+        // be on the snap point until the next frame.  Move it to prevent this.
+        card.setPosition([0, 0, world.getTableHeight() + 10]);
       }
       if (
         card !== undefined &&
