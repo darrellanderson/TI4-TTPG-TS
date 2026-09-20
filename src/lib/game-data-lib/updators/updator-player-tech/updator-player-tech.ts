@@ -95,13 +95,23 @@ export class UpdatorPlayerTech implements IGameDataUpdator {
           .map((card: Card): string => {
             const nsid: string = NSID.get(card);
             const tech: Tech | undefined = TI4.techRegistry.getByNsid(nsid);
-            return tech ? tech.getName() : "";
+            if (!tech) return "";
+            let name = tech.getName();
+            if (!Facing.isFaceUp(card)) {
+              if (name === "Planesplitter") {
+                name = "Planesplitter-Obs.";
+              } else if (name === "Neural Parasite") {
+                name = "Neural Parasite-Obs.";
+              }
+            }
+            return name;
           })
           .filter((name: string): boolean => name.length > 0)
           .filter(
             (name: string, index: number, array: Array<string>): boolean =>
               array.indexOf(name) === index,
           ); // unique
+
         player.technologiesFaceDown = cards
           .filter((card: Card): boolean => {
             const isFaceUp: boolean = Facing.isFaceUp(card);
@@ -110,7 +120,12 @@ export class UpdatorPlayerTech implements IGameDataUpdator {
           .map((card: Card): string => {
             const nsid: string = NSID.get(card);
             const tech: Tech | undefined = TI4.techRegistry.getByNsid(nsid);
-            return tech ? tech.getAbbr() : "";
+            if (!tech) return "";
+            const name = tech.getName();
+            if (name === "Planesplitter" || name === "Neural Parasite") {
+              return "";
+            }
+            return tech.getAbbr();
           })
           .filter((name: string): boolean => name.length > 0)
           .filter(
