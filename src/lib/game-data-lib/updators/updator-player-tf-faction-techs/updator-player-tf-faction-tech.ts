@@ -11,7 +11,6 @@ import {
   Find,
   NSID,
   OnCardBecameSingletonOrDeck,
-  ParsedNSID,
   PlayerSlot,
 } from "ttpg-darrell";
 import { GameData, PerPlayerGameData } from "../../game-data/game-data";
@@ -81,9 +80,11 @@ export class UpdatorPlayerTFFactionTechs implements IGameDataUpdator {
     // Remove any cards on the mat.
     if (draftMat) {
       const atop: Atop = __atopCacheGet(draftMat);
-      factionTechCards = factionTechCards.filter((factionTechCard: Card): boolean => {
-        return !atop.isAtop(factionTechCard.getPosition());
-      });
+      factionTechCards = factionTechCards.filter(
+        (factionTechCard: Card): boolean => {
+          return !atop.isAtop(factionTechCard.getPosition());
+        },
+      );
     }
 
     // Sort cards by creation order.
@@ -120,7 +121,8 @@ export class UpdatorPlayerTFFactionTechs implements IGameDataUpdator {
         player.tfFactionTechs = cards
           .map((card: Card): string => {
             const nsid: string = NSID.get(card);
-            const factionTech: FactionTech | undefined = TI4.tfFactionTechRegistry.getByNsid(nsid);
+            const factionTech: FactionTech | undefined =
+              TI4.tfFactionTechRegistry.getByNsid(nsid);
             return factionTech?.getAbbr() ?? "";
           })
           .filter((name: string): boolean => name.length > 0)
