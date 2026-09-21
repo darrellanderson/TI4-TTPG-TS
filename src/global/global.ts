@@ -68,35 +68,35 @@ import { RemoveRegistry } from "../lib/remove-lib/registry/remove-registry";
 import { ReportCommandTokenPutGet } from "../lib/command-token-lib/report-command-token-put-get/report-command-token-put-get";
 import { ReportRemaining } from "../context-menu/report-remaining/report-remaining";
 import { RightClickAgenda } from "../context-menu/right-click-agenda/right-click-agenda";
-import { RightClickCrisis } from "../context-menu/cards/crisis/right-click-crisis";
+import { RightClickCrisis } from "../context-menu/action-cards/crisis/right-click-crisis";
 //import { RightClickDelete } from "../context-menu/right-click-delete/right-click-delete";
 import { RightClickExplore } from "../context-menu/system/explore-system/right-click-explore";
-import { RightClickExtremeDuress } from "../context-menu/cards/extreme-duress/right-click-extreme-duress";
+import { RightClickExtremeDuress } from "../context-menu/action-cards/extreme-duress/right-click-extreme-duress";
 import { RightClickFetchPlanetCard } from "../context-menu/right-click-fetch-planet-card/right-click-fetch-planet-card";
 import { RightClickFracture } from "../context-menu/fracture/right-click-fracture";
 import { RightClickGalvanizeToken } from "../context-menu/right-click-galvanize-token/right-click-galvanize-token";
-import { RightClickGravleashManeuvers } from "../context-menu/cards/gravleash-maneuvers/right-click-gravleash-maneuvers";
+import { RightClickGravleashManeuvers } from "../context-menu/breakthroughs/gravleash-maneuvers/right-click-gravleash-maneuvers";
 import { RightClickHotPotatoScore } from "../context-menu/right-click-score/hot-potato-score";
-import { RightClickIihqModernization } from "../context-menu/cards/iihq-modernization/right-click-iihq-modernization";
+import { RightClickIihqModernization } from "../context-menu/techs/iihq-modernization/right-click-iihq-modernization";
 import { RightClickIihqModernizationBT } from "../context-menu/breakthroughs/iihq-modernization/iihq-modernization";
-import { RightClickInfantry2 } from "../context-menu/cards/infantry-2/right-click-infantry-2";
-import { RightClickLetaniWarrior2 } from "../context-menu/cards/infantry-2/right-click-letani-warrior-2";
-import { RightClickMabanOmega } from "../context-menu/cards/maban-omega/right-click-maban-omega";
-import { RightClickMabanOmegaAlliance } from "../context-menu/cards/maban-omega/right-click-maban-omega-alliance";
-import { RightClickMageonImplants } from "../context-menu/cards/mageon-implants/right-click-mageon-implants";
-import { RightClickMercenaryContract } from "../context-menu/cards/mercenary-contract/mercenary-contract";
-import { RightClickNanoForge } from "../context-menu/cards/nano-forge/right-click-nano-forge";
+import { RightClickInfantry2 } from "../context-menu/techs/infantry-2/right-click-infantry-2";
+import { RightClickLetaniWarrior2 } from "../context-menu/techs/infantry-2/right-click-letani-warrior-2";
+import { RightClickMabanOmega } from "../context-menu/commanders/maban-omega/right-click-maban-omega";
+import { RightClickMabanOmegaAlliance } from "../context-menu/commanders/maban-omega/right-click-maban-omega-alliance";
+import { RightClickMageonImplants } from "../context-menu/techs/mageon-implants/right-click-mageon-implants";
+import { RightClickMercenaryContract } from "../context-menu/action-cards/mercenary-contract/mercenary-contract";
+import { RightClickNanoForge } from "../context-menu/relics/nano-forge/right-click-nano-forge";
 import { RightClickObsidianFirmament } from "../context-menu/obsidian-firmament/right-click-obsidian-firmament";
-import { RightClickPirateContract } from "../context-menu/cards/pirate-contract/pirate-contract";
-import { RightClickPirateFleet } from "../context-menu/cards/pirate-fleet/pirate-fleet";
+import { RightClickPirateContract } from "../context-menu/action-cards/pirate-contract/pirate-contract";
+import { RightClickPirateFleet } from "../context-menu/action-cards/pirate-fleet/pirate-fleet";
 import { RightClickPurge } from "../context-menu/right-click-purge/right-click-purge";
 import { RightClickRider } from "../context-menu/right-click-rider/right-click-rider";
 import { RightClickRift } from "../context-menu/right-click-rift/right-click-rift";
 import { RightClickScorePrivate } from "../context-menu/right-click-score/right-click-score-private";
 import { RightClickScorePublic } from "../context-menu/right-click-score/right-click-score-public";
 import { RightClickSleeperToken } from "../context-menu/right-click-sleeper-token/right-click-sleeper-token";
-import { RightClickSpecOps2 } from "../context-menu/cards/infantry-2/right-click-spec-ops-2";
-import { RightClickStellarConverter } from "../context-menu/cards/stellar-converter/right-click-stellar-converter";
+import { RightClickSpecOps2 } from "../context-menu/techs/infantry-2/right-click-spec-ops-2";
+import { RightClickStellarConverter } from "../context-menu/relics/stellar-converter/right-click-stellar-converter";
 import { RightClickTheCavalry } from "../context-menu/cards/the-cavalry/right-click-the-cavalry";
 import { RightClickThundersEdge } from "../context-menu/right-click-thunders-edge/right-click-thunders-edge";
 import { RunInjectScript } from "../lib/homebrew-lib/run-inject-script/run-inject-script";
@@ -161,7 +161,9 @@ import { TFSingularityZ } from "../context-menu/tf-fetch-tokens/tf-singularity-z
 import { RightClickTFEdict } from "../context-menu/tf-splice/right-click-tf-edict";
 
 import { TFTelepathicNaalu0 } from "../context-menu/tf-fetch-tokens/tf-telepathic-naalu-0";
-import { RightClickTFSupercharge } from "../context-menu/cards/tf-supercharge/tf-superchange";
+import { RightClickTFNanomachines } from "../context-menu/tf-abilities/tf-nanomachines";
+import { RightClickTFSupercharge } from "../context-menu/tf-abilities/tf-supercharge/tf-supercharge";
+import { RightClickTFYinAscendant } from "../context-menu/tf-abilities/tf-yin-ascendant/tf-yin-ascendant";
 
 // TF Paradigms
 import { ParadigmEventHorizon } from "../context-menu/tf-paradigms/paradigm-event-horizon";
@@ -344,8 +346,10 @@ export function resetGlobalThisTI4(): TI4Class {
     new RightClickTFDragonFreed(),
     new RightClickTFEdict(),
     new RightClickTFGenomeSplice(),
+    new RightClickTFNanomachines(),
     new RightClickTFSupercharge(),
     new RightClickTFUnitUpgradeSplice(),
+    new RightClickTFYinAscendant(),
     new RightClickThundersEdge(),
     new RightClickYinAscendant(),
     new RSwapSplitCombine(),

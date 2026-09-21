@@ -1,5 +1,5 @@
 // created from 'create-ts-index'
 
-export * from './gravleash-maneuvers';
 export * from './iihq-modernization';
-export * from './yin-ascendant';
+export * from './infantry-2';
+export * from './mageon-implants';

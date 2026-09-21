@@ -109,8 +109,9 @@ export class SystemAdjacencyWormhole {
     this._applyCreussFlagship(adjacency);
     this._applyCards(adjacency);
     this._applyLazaxGateFolding(adjacency);
-    this._applyQuantumEntanglementTF(faction, adjacency);
     this._applyEnigmaticGenomeTF(adjacency);
+    this._applyLazaxGateFoldingTF(adjacency);
+    this._applyQuantumEntanglementTF(faction, adjacency);
   }
 
   _applyFaction(faction: Faction, adjacency: Adjacency): void {
@@ -289,6 +290,72 @@ export class SystemAdjacencyWormhole {
   }
 
   /**
+   * Lazax Gate Folding
+   *
+   * During your tactical actions, if you do not control Mecatol Rex, treat its
+   * system as if it contains alpha and beta wormholes.
+   *
+   * @param _adjacency
+   */
+  _applyLazaxGateFolding(adjacency: Adjacency): void {
+    const allowFaceDown: boolean = false;
+    const nsid: string = "card.technology.blue:base/lazax-gate-folding";
+    TI4.findTracking.trackNsid(nsid);
+    const card: Card | undefined = TI4.findTracking.findCard(nsid);
+    if (card && this._cardUtil.isLooseCard(card, allowFaceDown)) {
+      // Is it this player's tactical action?
+      const pos: Vector = card.getPosition();
+      const owner: number = this._find.closestOwnedCardHolderOwner(pos);
+      const activePlayerSlot: number | undefined =
+        TI4.turnOrder.getCurrentTurn();
+      if (activePlayerSlot === owner) {
+        const controlledPlanetNames: Set<string> =
+          this._getPlanetNamesControlledByPlayer(owner);
+        if (!controlledPlanetNames.has("Mecatol Rex")) {
+          let mecatolHex: HexType | undefined;
+          for (const system of TI4.systemRegistry.getAllSystemsWithObjs()) {
+            for (const planet of system.getPlanets()) {
+              if (planet.getName() === "Mecatol Rex") {
+                mecatolHex = TI4.hex.fromPosition(
+                  planet.getObj().getPosition(),
+                );
+                break;
+              }
+            }
+          }
+
+          if (mecatolHex) {
+            adjacency.addLink({
+              src: mecatolHex,
+              dst: "alpha",
+              distance: 0.5,
+              isTransit: true,
+            });
+            adjacency.addLink({
+              src: "alpha",
+              dst: mecatolHex,
+              distance: 0.5,
+              isTransit: false,
+            });
+            adjacency.addLink({
+              src: mecatolHex,
+              dst: "beta",
+              distance: 0.5,
+              isTransit: true,
+            });
+            adjacency.addLink({
+              src: "beta",
+              dst: mecatolHex,
+              distance: 0.5,
+              isTransit: false,
+            });
+          }
+        }
+      }
+    }
+  }
+
+  /**
    * Twilight's Fall - Lazax Gate Folding
    *
    * During your tactical action treat legendaries you don't control as if
@@ -296,7 +363,7 @@ export class SystemAdjacencyWormhole {
    *
    * @param _adjacency
    */
-  _applyLazaxGateFolding(adjacency: Adjacency): void {
+  _applyLazaxGateFoldingTF(adjacency: Adjacency): void {
     const allowFaceDown: boolean = false;
     const nsid: string = "card.tf-ability:twilights-fall/lazax-gate-folding";
     TI4.findTracking.trackNsid(nsid);

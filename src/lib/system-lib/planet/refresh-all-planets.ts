@@ -58,6 +58,7 @@ export class RefreshAllPlanets {
       startsWithEntries.push("card.relic:");
       startsWithEntries.push("card.technology.");
       startsWithEntries.push("unit:");
+      startsWithEntries.push("card.tf-ability:");
       startsWithEntries.push("card.tf-genome:");
     }
 
