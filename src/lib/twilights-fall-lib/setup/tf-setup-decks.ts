@@ -21,6 +21,7 @@ export class TFSetupDecks {
   _addDeck(cardNsidPrefix: string, snapPointTag: string): void {
     const deck: Card =
       TI4.spawn.spawnMergeDecksWithNsidPrefixOrThrow(cardNsidPrefix);
+    deck.shuffle();
 
     const snapPoint: SnapPoint | undefined =
       this._find.findSnapPointByTag(snapPointTag);
