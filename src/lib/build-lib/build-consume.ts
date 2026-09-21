@@ -148,10 +148,10 @@ export class BuildConsume {
   getTotalResWithModifiers(): string {
     let total: string = this.getTotalRes().toString();
     if (this._unitModifierNames.includes(SarweenTools.name)) {
-      total += "+ST";
+      total += "+ST(1)";
     }
     if (this._unitModifierNames.includes(WarMachine.name)) {
-      total += "+WM";
+      total += "+WM(1)";
     }
     this._unitModifierNames.forEach((modName) => {
       if (modName.startsWith("AI(")) {
