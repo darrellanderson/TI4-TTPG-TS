@@ -85,7 +85,8 @@ export class DealActionCards {
   dealAllActionCards(): Set<number> {
     const tooFewCards: Set<number> = new Set();
     for (const [slot, count] of this.getPlayerSlotToActionCardCount()) {
-      if (!this.dealActionCards(slot, count)) {
+      const isEliminated: boolean = TI4.turnOrder.getEliminated(slot);
+      if (!isEliminated && !this.dealActionCards(slot, count)) {
         tooFewCards.add(slot);
       }
     }
