@@ -20,21 +20,20 @@ export class UnpackControlTokens extends AbstractUnpack {
   }
 
   unpack(): void {
-    const color: Color = TI4.playerColor.getSlotPlasticColorOrThrow(
-      this.getPlayerSlot(),
-    );
+    this._unpackControlTokenToContainer();
+    this._unpackControlTokenToScoreboard();
+  }
 
-    // Control token in container.
+  _unpackControlTokenToContainer(): void {
     const controlTokenContainer: Container =
       this._getControlTokenContainerOrThrow();
-    const controlTokenNsid: string = this.getFaction().getControlTokenNsid();
-    const controlToken: GameObject = TI4.spawn.spawnOrThrow(controlTokenNsid);
-    controlToken.setOwningPlayerSlot(this.getPlayerSlot());
-    controlToken.setTags([`control(${this.getPlayerSlot()})`, "token-control"]);
-    controlToken.setPrimaryColor(color);
+    const pos: Vector = controlTokenContainer.getPosition().add([0, 0, 10]);
+    const rot: Rotator = new Rotator(0, 0, 0);
+    const controlToken: GameObject = this._spawnControlToken(pos, rot);
     controlTokenContainer.insert([controlToken]);
+  }
 
-    // Control token on scoreboard.
+  _unpackControlTokenToScoreboard(): void {
     const scoreboard: Scoreboard = new Scoreboard();
     const pos: Vector | undefined = scoreboard.scoreToPos(
       0,
@@ -47,18 +46,25 @@ export class UnpackControlTokens extends AbstractUnpack {
       );
     }
     pos.z = world.getTableHeight() + 10;
-    const scoreboardToken: GameObject = TI4.spawn.spawnOrThrow(
+    const scoreboardToken: GameObject = this._spawnControlToken(pos, rot);
+    scoreboardToken.snapToGround();
+  }
+
+  _spawnControlToken(pos: Vector, rot: Rotator): GameObject {
+    const color: Color = TI4.playerColor.getSlotPlasticColorOrThrow(
+      this.getPlayerSlot(),
+    );
+    const controlTokenNsid: string = this.getFaction().getControlTokenNsid();
+    const controlToken: GameObject = TI4.spawn.spawnOrThrow(
       controlTokenNsid,
       pos,
       rot,
     );
-    scoreboardToken.setOwningPlayerSlot(this.getPlayerSlot());
-    scoreboardToken.setTags([
-      `control(${this.getPlayerSlot()})`,
-      "token-control",
-    ]);
-    scoreboardToken.setPrimaryColor(color);
-    scoreboardToken.snapToGround();
+    controlToken.setOwningPlayerSlot(this.getPlayerSlot());
+    controlToken.setTags([`control(${this.getPlayerSlot()})`, "token-control"]);
+    controlToken.setPrimaryColor(color);
+
+    return controlToken;
   }
 
   remove(): void {
