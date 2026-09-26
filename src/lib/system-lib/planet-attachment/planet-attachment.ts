@@ -256,6 +256,14 @@ export class PlanetAttachment {
     return this._obj;
   }
 
+  public getOverrideBaseInfluence(): number | undefined {
+    return this._params.overrideBaseInfluence;
+  }
+
+  public getOverrideBaseResources(): number | undefined {
+    return this._params.overrideBaseResources;
+  }
+
   /**
    * Get the resources of the planet attachment.
    *

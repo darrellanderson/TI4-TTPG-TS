@@ -15,8 +15,10 @@ export const PlanetAttachmentSchema = z
 
     influence: z.number().optional(),
     influenceFaceDown: z.number().optional(),
+    overrideBaseInfluence: z.number().optional(), // replaces planet's base influence instead of adding to it
     resources: z.number().optional(),
     resourcesFaceDown: z.number().optional(),
+    overrideBaseResources: z.number().optional(), // replaces planet's base resources instead of adding to it
     techs: z.array(PlanetTechSchema).optional(),
     techsFaceDown: z.array(PlanetTechSchema).optional(),
     traits: z.array(TraitSchema).optional(),
