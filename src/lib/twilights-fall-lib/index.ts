@@ -1,6 +1,7 @@
 // created from 'create-ts-index'
 
 export * from './data';
+export * from './registry';
 export * from './schema';
 export * from './setup';
 export * from './splice';

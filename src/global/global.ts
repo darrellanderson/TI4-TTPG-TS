@@ -237,10 +237,13 @@ export class TI4Class {
   public readonly systemRegistry = new SystemRegistry().loadDefaultData();
   public readonly techRegistry = new TechRegistry().loadDefaultData();
   public readonly tfAbilityRegistry = new TFAbilityRegistry().loadDefaultData();
-  public readonly tfFactionTechRegistry = new TFFactionTechRegistry().loadDefaultData();
+  public readonly tfFactionTechRegistry =
+    new TFFactionTechRegistry().loadDefaultData();
   public readonly tfGenomeRegistry = new TFGenomeRegistry().loadDefaultData();
-  public readonly tfParadigmRegistry = new TFParadigmRegistry().loadDefaultData();
-  public readonly tfUnitUpgradeRegistry = new TFUnitUpgradeRegistry().loadDefaultData();
+  public readonly tfParadigmRegistry =
+    new TFParadigmRegistry().loadDefaultData();
+  public readonly tfUnitUpgradeRegistry =
+    new TFUnitUpgradeRegistry().loadDefaultData();
   public readonly timer = new Timer("@timer/ti4");
   public readonly turnOrder = new TurnOrder("@turn-order/ti4");
   public readonly unitAttrsRegistry = new UnitAttrsRegistry().loadDefaultData();
@@ -250,6 +253,10 @@ export class TI4Class {
     "@use-streamer-buddy/ti4",
   );
   public readonly whisperSpy = new WhisperSpy("@whisper-spy/ti4");
+
+  public readonly _doExternalInit = (iGlobal: IGlobal): void => {
+    iGlobal.init();
+  };
 }
 
 // Also place "TI4" in the global namespace.

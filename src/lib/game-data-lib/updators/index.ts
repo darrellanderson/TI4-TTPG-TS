@@ -1,6 +1,7 @@
 // created from 'create-ts-index'
 
 export * from './updator-active-system';
+export * from './updator-benediction';
 export * from './updator-config';
 export * from './updator-galactic-events';
 export * from './updator-hex-summary';
@@ -24,6 +25,10 @@ export * from './updator-player-score';
 export * from './updator-player-strategy-cards';
 export * from './updator-player-tech';
 export * from './updator-player-tf-abilities';
+export * from './updator-player-tf-faction-techs';
+export * from './updator-player-tf-genomes';
+export * from './updator-player-tf-paradigms';
+export * from './updator-player-tf-unit-upgrades';
 export * from './updator-player-tradegoods';
 export * from './updator-player-turn-order';
 export * from './updator-round';
