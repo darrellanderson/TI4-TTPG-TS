@@ -11,7 +11,7 @@ export class RemoveRegistry {
     const removeSources: Array<string> = this.getAllSources().filter(
       (source: string): boolean => {
         return !useSources.includes(source);
-      }
+      },
     );
     for (const source of removeSources) {
       remove.addSource(source);
@@ -20,6 +20,11 @@ export class RemoveRegistry {
     for (const source of useSources) {
       const nsids: Array<string> = this.getRemoveBySource(source);
       for (const nsid of nsids) {
+        if (nsid.endsWith(":*") || nsid.endsWith("/*")) {
+          remove.addNsidPrefix(nsid.slice(0, -1));
+          continue;
+        }
+
         remove.addNsid(nsid);
       }
     }

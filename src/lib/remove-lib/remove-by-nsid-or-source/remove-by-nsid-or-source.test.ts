@@ -39,6 +39,16 @@ it("delete basic by nsid", () => {
   expect(keep.isValid()).toBe(true);
 });
 
+it("delete basic by nsid prefix", () => {
+  const dele: GameObject = MockGameObject.simple("type:source.dele/name");
+  const keep: GameObject = MockGameObject.simple("type:source.keep/name");
+
+  new RemoveByNsidOrSource().addNsidPrefix("type:source.dele/").removeAll();
+
+  expect(dele.isValid()).toBe(false);
+  expect(keep.isValid()).toBe(true);
+});
+
 it("delete card by source", () => {
   const deck: Card = new MockCard({
     cardDetails: [

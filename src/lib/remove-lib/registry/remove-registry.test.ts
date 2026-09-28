@@ -84,3 +84,16 @@ it("static createFromRegistry", () => {
   expect(remove.hasSource("codex.vigil")).toBe(true);
   expect(remove.hasNsid("card.agenda:base/research-team-warfare")).toBe(true);
 });
+
+it("static createFromRegistry nsid prefix", () => {
+  const registry: RemoveRegistry = new RemoveRegistry().loadDefaultData();
+  registry.load("remove-source", ["card.agenda:base/*"]);
+
+  let remove: RemoveByNsidOrSource;
+  remove = registry.createRemoveFromRegistryAndConfig();
+  expect(remove.hasNsidPrefix("card.agenda:base/")).toBe(false);
+
+  TI4.config.setSources(["base", "pok", "remove-source"]);
+  remove = registry.createRemoveFromRegistryAndConfig();
+  expect(remove.hasNsidPrefix("card.agenda:base/")).toBe(true);
+});
