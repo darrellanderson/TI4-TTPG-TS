@@ -37,7 +37,14 @@ export class SpawnMissingCards {
       deckNsid.startsWith("card.agenda") ||
       deckNsid.startsWith("card.exploration.") ||
       deckNsid.startsWith("card.objective.") ||
-      deckNsid.startsWith("card.relic")
+      deckNsid.startsWith("card.relic") ||
+      deckNsid.startsWith("card.faction-reference") ||
+      deckNsid.startsWith("card.tf-ability") ||
+      deckNsid.startsWith("card.tf-action") ||
+      deckNsid.startsWith("card.tf-edict") ||
+      deckNsid.startsWith("card.tf-genome") ||
+      deckNsid.startsWith("card.tf-paradigm") ||
+      deckNsid.startsWith("card.tf-unit-upgrade")
     );
   }
 
