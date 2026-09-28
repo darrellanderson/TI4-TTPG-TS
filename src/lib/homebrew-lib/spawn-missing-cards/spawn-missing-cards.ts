@@ -1,5 +1,6 @@
 import { Card, GameObject, world } from "@tabletop-playground/api";
 import {
+  Broadcast,
   CardUtil,
   DeletedItemsContainer,
   Find,
@@ -50,13 +51,19 @@ export class SpawnMissingCards {
 
   spawnAndAddMissingCards(deckNsid: string): void {
     const existingDeck: Card | undefined = this._getExistingDeck(deckNsid);
-    if (existingDeck) {
-      const spawnedDeck: Card | undefined = this._spawnDeck(deckNsid);
-      if (spawnedDeck) {
-        this._addMissingCards(spawnedDeck, existingDeck);
-        if (SpawnMissingCards.shouldShuffleDeck(deckNsid)) {
-          existingDeck.shuffle();
-        }
+    if (!existingDeck) {
+      Broadcast.chatAll(
+        `No existing deck found for ${deckNsid}`,
+        Broadcast.ERROR,
+      );
+      return;
+    }
+
+    const spawnedDeck: Card | undefined = this._spawnDeck(deckNsid);
+    if (spawnedDeck) {
+      this._addMissingCards(spawnedDeck, existingDeck);
+      if (SpawnMissingCards.shouldShuffleDeck(deckNsid)) {
+        existingDeck.shuffle();
       }
     }
   }
