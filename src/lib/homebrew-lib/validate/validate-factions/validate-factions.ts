@@ -18,7 +18,7 @@ export class ValidateFactions extends AbstractValidate {
       this.getCardNsids("card.technology");
 
     const allUnitNsids: Set<string> = new Set(
-      TI4.unitAttrsRegistry.getAllNsids()
+      TI4.unitAttrsRegistry.getAllNsids(),
     );
 
     TI4.factionRegistry.getAllFactions().forEach((faction: Faction): void => {
@@ -26,26 +26,26 @@ export class ValidateFactions extends AbstractValidate {
         this._getBreakthroughNsids(faction);
       const missingBreakthroughs: Array<string> = this.getSrcMissingFromDst(
         new Set(breakthroughNsids),
-        registeredBreakthroughNsids
+        registeredBreakthroughNsids,
       );
 
       const leaderNsids: Array<string> = this._getLeaderNsids(faction);
       const missingLeaders: Array<string> = this.getSrcMissingFromDst(
         new Set(leaderNsids),
-        registeredLeaderNsids
+        registeredLeaderNsids,
       );
 
       const techNsids: Array<string> = this._getTechNsids(faction);
       const missingTech: Array<string> = this.getSrcMissingFromDst(
         new Set(techNsids),
-        registeredTechNsids
+        registeredTechNsids,
       );
 
       const otherNsids: Array<string> = this._getOtherNsids(faction);
       const missingOther: Array<string> = otherNsids.filter(
         (nsid: string): boolean => {
           return !TI4.spawn.has(nsid);
-        }
+        },
       );
 
       const missing: Array<string> = [
@@ -80,7 +80,10 @@ export class ValidateFactions extends AbstractValidate {
   }
 
   _getTechNsids(faction: Faction): Array<string> {
-    return faction.getFactionTechNsids();
+    return [
+      ...faction.getFactionTechNsids(),
+      ...faction.getStartingTechNsids(),
+    ];
   }
 
   _getOtherNsids(faction: Faction): Array<string> {

@@ -48,7 +48,7 @@ export class SpawnMissingCards {
       if (spawnedDeck) {
         this._addMissingCards(spawnedDeck, existingDeck);
         if (SpawnMissingCards.shouldShuffleDeck(deckNsid)) {
-          spawnedDeck.shuffle();
+          existingDeck.shuffle();
         }
       }
     }
