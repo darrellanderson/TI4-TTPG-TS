@@ -20,6 +20,7 @@ const packageId: string = refPackageId;
 const KEY: string = "@TI4/last-activated";
 type LastActivatedType = {
   tile: number;
+  objId: string;
   slot: number;
 };
 
@@ -30,20 +31,49 @@ const DISPLAY_SECONDS: number =
   Math.ceil(DISPLAY_SECONDS_APPROX / PULSE_SECONDS) * PULSE_SECONDS; // complete last pulse
 
 export class OnSystemActivated implements IGlobal {
-  private static __lastActivatedSystem: System | undefined;
-  private static __lastActivatingPlayerSlot: number | undefined;
-
   // System activated animation.
   private _lastActivatedTimestamp: number = -1;
   private _image: ImageWidget | undefined = undefined;
   private _ui: UIElement | undefined = undefined;
 
   static getLastActivatedSystem(): System | undefined {
-    return this.__lastActivatedSystem;
+    const state: LastActivatedType | undefined =
+      this._loadLastActivatedSystem();
+    if (state) {
+      return TI4.systemRegistry.getBySystemTileNumber(state.tile, state.objId);
+    }
+    return undefined;
   }
 
   static getLastActivatingPlayerSlot(): number | undefined {
-    return this.__lastActivatingPlayerSlot;
+    const state: LastActivatedType | undefined =
+      this._loadLastActivatedSystem();
+    if (state) {
+      return state.slot;
+    }
+    return undefined;
+  }
+
+  static _saveLastActivatedSystem(system: System, player: Player): void {
+    const state: LastActivatedType = {
+      tile: system.getSystemTileNumber(),
+      objId: system.getObj().getId(),
+      slot: player.getSlot(),
+    };
+    const json: string = JSON.stringify(state);
+    world.setSavedData(json, KEY);
+  }
+
+  static _loadLastActivatedSystem(): LastActivatedType | undefined {
+    const json: string = world.getSavedData(KEY);
+    if (json && json.length > 0) {
+      const parsed = JSON.parse(json);
+      const tile: number = parsed.tile;
+      const objId: string = parsed.objId;
+      const slot: number = parsed.slot;
+      return { tile, objId, slot };
+    }
+    return undefined;
   }
 
   /**
@@ -60,7 +90,7 @@ export class OnSystemActivated implements IGlobal {
     player: Player,
     _thrown: boolean,
     _grabPosition: Vector | [x: number, y: number, z: number],
-    _grabRotation: Rotator | [pitch: number, yaw: number, roll: number]
+    _grabRotation: Rotator | [pitch: number, yaw: number, roll: number],
   ): void => {
     const playerSlot: number = TI4.turnOrder.getCurrentTurn();
     const isActivePlayer: boolean = playerSlot === player.getSlot();
@@ -98,28 +128,10 @@ export class OnSystemActivated implements IGlobal {
 
     // Report system activation.
     TI4.events.onSystemActivated.add((system: System, player: Player): void => {
-      this._rememberLastActivatedSystem(system, player); // do first to set static variables
+      OnSystemActivated._saveLastActivatedSystem(system, player); // do first for static tracking
       this._reportSystemActivation(system, player);
       this._displayActiveSystem(system, player);
-
-      const state: LastActivatedType = {
-        tile: system.getSystemTileNumber(),
-        slot: player.getSlot(),
-      };
-      const json: string = JSON.stringify(state);
-      world.setSavedData(json, KEY);
     });
-
-    // Restore last activated system.
-    const json: string = world.getSavedData(KEY);
-    if (json && json.length > 0) {
-      const parsed = JSON.parse(json);
-      const tile: number = parsed.tile;
-      const slot: number = parsed.slot;
-      OnSystemActivated.__lastActivatedSystem =
-        TI4.systemRegistry.getBySystemTileNumber(tile);
-      OnSystemActivated.__lastActivatingPlayerSlot = slot;
-    }
   }
 
   _maybeLinkCommandToken(obj: GameObject): void {
@@ -128,11 +140,6 @@ export class OnSystemActivated implements IGlobal {
       obj.onReleased.remove(this._onReleasedHandler);
       obj.onReleased.add(this._onReleasedHandler);
     }
-  }
-
-  _rememberLastActivatedSystem(system: System, player: Player): void {
-    OnSystemActivated.__lastActivatedSystem = system;
-    OnSystemActivated.__lastActivatingPlayerSlot = player.getSlot();
   }
 
   _reportSystemActivation(system: System, player: Player): void {
