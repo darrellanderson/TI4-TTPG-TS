@@ -54,7 +54,7 @@ it("load (invalid schema)", () => {
       {
         nsidName: "@@invalid!!",
         name: "my-name",
-        color: "blue" as any,
+        color: "blue",
         origin: "my-origin",
       },
     ]);

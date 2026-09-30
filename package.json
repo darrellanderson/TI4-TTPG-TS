@@ -1,6 +1,6 @@
 {
   "name": "ti4-ttpg-ts",
-  "version": "1.0.27",
+  "version": "1.1.1",
   "description": "Twilight Imperium 4 for Tabletop Playground",
   "main": "dist/index.cjs",
   "license": "Unlicense",
@@ -50,8 +50,19 @@
     "ttpg-darrell": "^1.1.14",
     "zod": "3.22.4"
   },
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.cts",
+      "require": "./dist/index.cjs",
+      "default": "./dist/index.cjs"
+    },
+    "./mock": {
+      "types": "./dist/mock/index.d.cts",
+      "require": "./dist/mock/index.cjs",
+      "default": "./dist/mock/index.cjs"
+    }
+  },
   "files": [
-    "dist/index.cjs",
-    "dist/index.d.cts"
+    "dist"
   ]
 }
