@@ -462,7 +462,7 @@ export const SOURCE_TO_TECH_DATA: Record<string, Array<TechSchemaType>> = {
       name: "Aerie Hololattice",
       color: "yellow",
       prerequisites: { yellow: 1 },
-      abbr: "Aerie Hololattice",
+      abbr: "Aerie Holo.",
       isFactionTech: true,
     },
     {

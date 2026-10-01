@@ -96,7 +96,7 @@ export class UpdatorPlayerTech implements IGameDataUpdator {
             const nsid: string = NSID.get(card);
             const tech: Tech | undefined = TI4.techRegistry.getByNsid(nsid);
             if (!tech) return "";
-            let name = tech.getName();
+            let name = tech.getAbbr();
             if (!Facing.isFaceUp(card)) {
               if (name === "Planesplitter") {
                 name = "Planesplitter-Obs.";
