@@ -10,6 +10,7 @@ import { SystemSchemaType } from "../../system-lib/schema/system-schema";
 import { TechSchemaType } from "../../tech-lib/schema/tech-schema";
 import { UnitAttrsSchemaType } from "../../unit-lib/schema/unit-attrs-schema";
 import { UnitModifierSchemaType } from "../../unit-lib/schema/unit-modifier-schema";
+import { RemoveByNsidOrSource } from "../..";
 
 export type HomebrewModuleType = {
   // Each of source and package id uniquely identifies a module.
@@ -27,7 +28,7 @@ export type HomebrewModuleType = {
 
   technologies?: Array<TechSchemaType>;
 
-  remove?: Array<string>; // NSIDs
+  remove?: Array<string>; // NSIDs, or can end with ":*" or "/*" for a prefix ending with : or /
 
   nsidToTemplateId?: {
     [key: string]: string;
@@ -56,33 +57,33 @@ export class HomebrewRegistry {
     if (params.planetAttachments) {
       TI4.planetAttachmentRegistry.load(
         params.sourceAndPackageId,
-        params.planetAttachments
+        params.planetAttachments,
       );
     }
     if (params.systemAttachments) {
       TI4.systemAttachmentRegistry.load(
         params.sourceAndPackageId,
-        params.systemAttachments
+        params.systemAttachments,
       );
     }
 
     if (params.unitAttrs) {
       TI4.unitAttrsRegistry.load(
         params.sourceAndPackageId.source,
-        params.unitAttrs
+        params.unitAttrs,
       );
     }
     if (params.unitModifiers) {
       TI4.unitModifierRegistry.load(
         params.sourceAndPackageId.source,
-        params.unitModifiers
+        params.unitModifiers,
       );
     }
 
     if (params.technologies) {
       TI4.techRegistry.load(
         params.sourceAndPackageId.source,
-        params.technologies
+        params.technologies,
       );
     }
 
@@ -95,6 +96,12 @@ export class HomebrewRegistry {
     }
 
     this.addMissingItems(params);
+
+    if (params.remove) {
+      const remove: RemoveByNsidOrSource =
+        TI4.removeRegistry.createRemoveFromRegistryAndConfig();
+      remove.removeAll();
+    }
   }
 
   /**
@@ -119,7 +126,7 @@ export class HomebrewRegistry {
       const container: Container | undefined = find.findContainer(
         "container:base/systems",
         undefined, // no owner
-        true // skip contained
+        true, // skip contained
       );
       params.systems.forEach((system: SystemSchemaType): void => {
         const nsid: string | undefined =
@@ -142,7 +149,7 @@ export class HomebrewRegistry {
       const container: Container | undefined = find.findContainer(
         "container:pok/exploration",
         undefined, // no owner
-        true // skip contained
+        true, // skip contained
       );
       params.planetAttachments.forEach(
         (schema: PlanetAttachmentSchemaType): void => {
@@ -157,7 +164,7 @@ export class HomebrewRegistry {
             }
             container.addObjects([obj]);
           }
-        }
+        },
       );
     }
 
@@ -165,7 +172,7 @@ export class HomebrewRegistry {
       const container: Container | undefined = find.findContainer(
         "container:pok/exploration",
         undefined, // no owner
-        true // skip contained
+        true, // skip contained
       );
       params.systemAttachments.forEach(
         (schema: SystemAttachmentSchemaType): void => {
@@ -180,7 +187,7 @@ export class HomebrewRegistry {
             }
             container.addObjects([obj]);
           }
-        }
+        },
       );
     }
 

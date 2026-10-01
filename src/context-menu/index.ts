@@ -20,6 +20,7 @@ export * from './right-click-sleeper-token';
 export * from './right-click-thunders-edge';
 export * from './system';
 export * from './tf-fetch-tokens';
+export * from './tf-paradigms';
 export * from './tf-splice';
 export * from './toggle-action-phase-times';
 export * from './toggle-agenda';

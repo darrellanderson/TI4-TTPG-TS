@@ -19,6 +19,7 @@ export class RemoveByNsidOrSource {
   private readonly _cardUtil: CardUtil = new CardUtil();
   private readonly _removeSources: Set<string> = new Set();
   private readonly _removeNsids: Set<string> = new Set();
+  private readonly _removeNsidPrefixes: Set<string> = new Set();
 
   private readonly _shouldRemove = (nsid: string): boolean => {
     const parsed: ParsedNSID | undefined = NSID.parse(nsid);
@@ -26,6 +27,14 @@ export class RemoveByNsidOrSource {
     if (parsed && !remove) {
       const source = parsed.sourceParts.join(".");
       remove = this._removeSources.has(source);
+    }
+    if (!remove) {
+      for (const prefix of this._removeNsidPrefixes) {
+        if (nsid.startsWith(prefix)) {
+          remove = true;
+          break;
+        }
+      }
     }
     return remove;
   };
@@ -48,12 +57,21 @@ export class RemoveByNsidOrSource {
     return this;
   }
 
+  addNsidPrefix(nsidPrefix: string): this {
+    this._removeNsidPrefixes.add(nsidPrefix);
+    return this;
+  }
+
   hasSource(source: string): boolean {
     return this._removeSources.has(source);
   }
 
   hasNsid(nsid: string): boolean {
     return this._removeNsids.has(nsid);
+  }
+
+  hasNsidPrefix(nsidPrefix: string): boolean {
+    return this._removeNsidPrefixes.has(nsidPrefix);
   }
 
   getRemoveSources(): Array<string> {

@@ -27,7 +27,7 @@ export class Planet {
   constructor(
     obj: GameObject | undefined,
     sourceAndPackageId: SourceAndPackageIdSchemaType,
-    params: PlanetSchemaType
+    params: PlanetSchemaType,
   ) {
     try {
       PlanetSchema.parse(params); // validate the schema
@@ -45,7 +45,7 @@ export class Planet {
         !objNsid.startsWith("token.attachment.system:")
       ) {
         throw new Error(
-          `invalid object: "${objNsid}", expect either "tile.system:" or "token.attachment.system:" prefix`
+          `invalid object: "${objNsid}", expect either "tile.system:" or "token.attachment.system:" prefix`,
         );
       }
     }
@@ -58,14 +58,14 @@ export class Planet {
       this._localPosition = new Vector(
         params.localPosition.x,
         params.localPosition.y,
-        0
+        0,
       );
     }
     if (params.localPositionFaceDown) {
       this._localPositionFaceDown = new Vector(
         params.localPositionFaceDown.x,
         params.localPositionFaceDown.y,
-        0
+        0,
       );
     }
   }
@@ -122,6 +122,16 @@ export class Planet {
    */
   getInfluence(): number {
     let result: number = this._params.influence ?? 0;
+
+    // Apply any base override (last one wins).
+    for (const attachment of this._attachments) {
+      const override: number | undefined =
+        attachment.getOverrideBaseInfluence();
+      if (override !== undefined) {
+        result = override;
+      }
+    }
+
     for (const attachment of this._attachments) {
       result += attachment.getInfluence();
     }
@@ -238,9 +248,20 @@ export class Planet {
    */
   getResources(): number {
     let result: number = this._params.resources ?? 0;
+
+    // Apply any base override (last one wins).
+    for (const attachment of this._attachments) {
+      const override: number | undefined =
+        attachment.getOverrideBaseResources();
+      if (override !== undefined) {
+        result = override;
+      }
+    }
+
     for (const attachment of this._attachments) {
       result += attachment.getResources();
     }
+
     return result;
   }
 

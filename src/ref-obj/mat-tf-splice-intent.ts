@@ -51,10 +51,18 @@ class MatTfSpliceIntent {
     obj.onCustomAction.remove(this._onCustomAction);
     obj.onCustomAction.add(this._onCustomAction);
 
+    this._obj.onDestroyed.add((): void => {
+      TI4.events.onFactionChanged.remove(this._onFactionChanged);
+    });
+
     this._reset();
   }
 
   _reset(): void {
+    if (!this._obj.isValid()) {
+      return;
+    }
+
     this._removeControlTokens();
     this._spawnControlTokens();
   }

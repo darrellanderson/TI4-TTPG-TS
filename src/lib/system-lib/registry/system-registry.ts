@@ -59,14 +59,14 @@ export class SystemRegistry {
       const schemaAndSource: SchemaAndSource | undefined =
         this._systemTileNumberToSchemaAndSource.get(systemTileNumber);
       const alreadyRegistered: boolean = this._systemTileObjIdToSystem.has(
-        obj.getId()
+        obj.getId(),
       );
       if (schemaAndSource && !alreadyRegistered) {
         // Register a fresh system object for this system tile object.
         const system: System = new System(
           obj,
           schemaAndSource.sourceAndPackageId,
-          schemaAndSource.schema
+          schemaAndSource.schema,
         );
         this._systemTileObjIdToSystem.set(obj.getId(), system);
       }
@@ -91,7 +91,7 @@ export class SystemRegistry {
    */
   public load(
     sourceAndPackageId: SourceAndPackageIdSchemaType,
-    systemSchemaTypes: Array<SystemSchemaType>
+    systemSchemaTypes: Array<SystemSchemaType>,
   ): this {
     // Find all system tile objects.
     const tileToObjs: Map<number, Array<GameObject>> = new Map();
@@ -120,7 +120,7 @@ export class SystemRegistry {
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
       } catch (e: any) {
         const msg = `error: ${e.message}\nparsing: ${JSON.stringify(
-          systemSchemaType
+          systemSchemaType,
         )}`;
         throw new Error(msg);
       }
@@ -138,7 +138,7 @@ export class SystemRegistry {
           systemSchemaType.planets?.length
       ) {
         throw new Error(
-          `Face down planet count must match face up: ${tileNumber}`
+          `Face down planet count must match face up: ${tileNumber}`,
         );
       }
 
@@ -165,7 +165,7 @@ export class SystemRegistry {
    */
   public loadDefaultData(): this {
     for (const [source, systemSchemas] of Object.entries(
-      SOURCE_TO_SYSTEM_DATA
+      SOURCE_TO_SYSTEM_DATA,
     )) {
       const sourceAndPackageId: SourceAndPackageIdSchemaType = {
         source,
@@ -183,7 +183,7 @@ export class SystemRegistry {
    */
   public getAllSystemTileNumbers(): Array<number> {
     return Array.from(this._systemTileNumberToSchemaAndSource.keys()).filter(
-      (tileNumber) => tileNumber > 0
+      (tileNumber) => tileNumber > 0,
     );
   }
 
@@ -227,7 +227,7 @@ export class SystemRegistry {
           return false;
         }
         return true;
-      }
+      },
     );
   }
 
@@ -254,9 +254,15 @@ export class SystemRegistry {
     return undefined;
   }
 
-  public getBySystemTileNumber(tileNumber: number): System | undefined {
+  public getBySystemTileNumber(
+    tileNumber: number,
+    objId?: string,
+  ): System | undefined {
     for (const system of this._systemTileObjIdToSystem.values()) {
       if (system.getSystemTileNumber() === tileNumber) {
+        if (objId && system.getObj().getId() !== objId) {
+          continue;
+        }
         return system;
       }
     }
@@ -305,7 +311,7 @@ export class SystemRegistry {
             return new Planet(
               obj,
               schemaAndSource.sourceAndPackageId,
-              planetSchema
+              planetSchema,
             );
           }
         }
@@ -331,7 +337,7 @@ export class SystemRegistry {
             planetCardNsids.add(planetCardNsid);
           }
         }
-      }
+      },
     );
     return Array.from(planetCardNsids);
   }
@@ -343,7 +349,7 @@ export class SystemRegistry {
    * @returns
    */
   public rawBySystemTileNumber(
-    tileNumber: number
+    tileNumber: number,
   ): SystemSchemaType | undefined {
     const schemaAndSource =
       this._systemTileNumberToSchemaAndSource.get(tileNumber);

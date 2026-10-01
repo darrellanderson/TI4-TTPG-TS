@@ -1,21 +1,21 @@
 {
   "name": "ti4-ttpg-ts",
-  "version": "1.0.22",
+  "version": "1.1.2",
   "description": "Twilight Imperium 4 for Tabletop Playground",
-  "main": "build/index.js",
+  "main": "dist/index.js",
   "license": "Unlicense",
   "private": false,
   "scripts": {
     "setup": "ttpg-scripts setup",
     "dev": "ttpg-scripts dev",
-    "clean": "ttpg-scripts clean",
+    "clean": "ttpg-scripts clean && rm -rf dist",
     "reset": "ttpg-scripts reset",
     "build": "ttpg-scripts build",
     "purge": "ttpg-scripts purge",
     "libpack": "ttpg-scripts libpack",
     "watch": "ttpg-scripts watch",
     "index": "yarn cti ./src -e _how-to -e _test -e ref-obj -i '*.test.ts' -i '*.testp.ts' -i 'jest-setup.ts' && find . -name 'index.ts.bak' -exec rm {} \\;",
-    "prepublishOnly": "yarn index && tsc -p tsconfig.json",
+    "prepublishOnly": "yarn index && tsc -p tsconfig.json && yarn tsdown",
     "check:prettier": "prettier --check src",
     "test": "jest",
     "lint": "ESLINT_USE_FLAT_CONFIG=false eslint --ext .ts --debug src",
@@ -39,24 +39,30 @@
     "sharp": "^0.34.4",
     "ts-jest": "^29.1.1",
     "ts-node": "^10.9.2",
-    "ttpg-mock": "^1.0.48",
+    "tsdown": "^0.23.0",
+    "ttpg-mock": "^1.0.60",
     "ttpg-scripts": "^1.5.0",
     "typescript": "^5.4.5"
   },
   "dependencies": {
     "@types/lodash": "^4.17.21",
     "lodash": "^4.17.21",
-    "ttpg-darrell": "^1.1.14",
+    "ttpg-darrell": "^1.2.7",
     "zod": "3.22.4"
   },
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "require": "./dist/index.js",
+      "default": "./dist/index.js"
+    },
+    "./mock": {
+      "types": "./dist/mock/index.d.ts",
+      "require": "./dist/mock/index.js",
+      "default": "./dist/mock/index.js"
+    }
+  },
   "files": [
-    "build/**/*.js",
-    "build/**/*.js.map",
-    "build/**/*.d.ts",
-    "!build/**/*.testp.js",
-    "!build/**/*.testp.js.map",
-    "!build/**/*.testp.d.ts",
-    "!build/_test",
-    "!build/_how-to"
+    "dist"
   ]
 }
