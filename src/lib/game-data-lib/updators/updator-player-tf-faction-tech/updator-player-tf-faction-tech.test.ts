@@ -19,7 +19,9 @@ it("data", () => {
     templateMetadata: "card-holder:base/player-hand",
     owningPlayerSlot: 10,
   });
-  const a: Card = MockCard.simple("card.tf-faction-tech:twilights-fall/antimatter-black");
+  const a: Card = MockCard.simple(
+    "card.tf-faction-tech:twilights-fall/antimatter-black",
+  );
   const b: Card = MockCard.simple(
     "card.tf-faction-tech:twilights-fall/antimatter-green",
   );
