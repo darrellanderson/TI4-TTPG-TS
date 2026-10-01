@@ -1013,6 +1013,7 @@ export const SOURCE_TO_FACTION_DATA: Record<
           count: 7,
         },
         { nsid: "token.attachment.planet:thunders-edge/helios", count: 3 },
+        { nsid: "token.space-station:thunders-edge/1.bastion" },
       ],
     },
 

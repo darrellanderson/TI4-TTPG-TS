@@ -1,4 +1,4 @@
-import { Card, GameObject, Rotator, Vector } from "@tabletop-playground/api";
+import { Card, GameObject, Rotator, Vector, world } from "@tabletop-playground/api";
 import { CardUtil, Facing, Find, NSID } from "ttpg-darrell";
 import { Planet } from "../../system-lib/planet/planet";
 import { System } from "../../system-lib/system/system";
@@ -106,6 +106,34 @@ export class MapPlacePlanetCards {
           this._placePlanetCard(planet, card);
         }
       });
+    }
+
+    this._placeSpaceStationTokens();
+  }
+
+  _placeSpaceStationTokens(): void {
+    const spaceStationPlanets = this._getAllPlanets().filter((p) =>
+      p.isSpaceStation()
+    );
+
+    if (spaceStationPlanets.length === 0) {
+      return;
+    }
+
+    const spaceStationTokens = world.getAllObjects().filter((obj) => {
+      const nsid = NSID.get(obj);
+      return nsid.startsWith("token.space-station:");
+    });
+
+    for (const planet of spaceStationPlanets) {
+      const planetName = planet.getName();
+      const token = spaceStationTokens.find((t) => t.getName() === planetName);
+      if (token) {
+        const above: Vector = planet.getPosition().add([0, 0, 10]);
+
+        token.setPosition(above);
+        token.snapToGround();
+      }
     }
   }
 

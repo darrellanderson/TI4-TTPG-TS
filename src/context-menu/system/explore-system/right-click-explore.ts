@@ -41,10 +41,16 @@ export class RightClickExplore implements IGlobal {
         return true;
       }
     }
+    const skipContained = true;
+    for (const obj of world.getAllObjects(skipContained)) {
+      if (NSID.get(obj) === "card.tf-ability:twilights-fall/distant-suns") {
+        return true;
+      }
+    }
     return false;
   }
 
-  private readonly _onFactionsChanged = (): void => {
+  private readonly _updateIsDistantSuns = (): void => {
     const before: boolean = this._isDistantSuns;
     this._isDistantSuns = RightClickExplore._checkIsDistantSuns();
 
@@ -119,11 +125,21 @@ export class RightClickExplore implements IGlobal {
       this._maybeSetCustomActions(obj);
     }
     globalEvents.onObjectCreated.add((obj: GameObject): void => {
+      if (NSID.get(obj) === "card.tf-ability:twilights-fall/distant-suns") {
+        this._updateIsDistantSuns();
+      }
       this._maybeSetCustomActions(obj);
+    });
+    globalEvents.onObjectDestroyed.add((obj: GameObject): void => {
+      if (NSID.get(obj) === "card.tf-ability:twilights-fall/distant-suns") {
+        process.nextTick(() => {
+          this._updateIsDistantSuns();
+        });
+      }
     });
     TI4.events.onSystemChanged.add(this._onSystemChanged);
 
-    TI4.events.onFactionChanged.add(this._onFactionsChanged);
+    TI4.events.onFactionChanged.add(this._updateIsDistantSuns);
   }
 
   _maybeSetCustomActions(obj: GameObject): void {

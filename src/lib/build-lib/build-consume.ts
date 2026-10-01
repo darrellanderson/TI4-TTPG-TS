@@ -100,7 +100,11 @@ export class BuildConsume {
         this._unitModifierNames.push(`AI(${unitUpgradeCount})`);
       } else if (nsid === "card.leader.agent:pok/berekar-berekon") {
         // Winnu agent, must exhuast so only count if in area.
-        this._unitModifierNames.push(`BeBe(2)`);
+        this._unitModifierNames.push(`BB(2)`);
+      } else if (nsid === "card.tf-genome:twilights-fall/divine-genome") {
+        this._unitModifierNames.push("DG(2)");
+      } else if (nsid === "card.tf-ability:twilights-fall/sled-factories") {
+        this._unitModifierNames.push("SF(2)");
       }
 
       if (type) {
@@ -144,13 +148,19 @@ export class BuildConsume {
   getTotalResWithModifiers(): string {
     let total: string = this.getTotalRes().toString();
     if (this._unitModifierNames.includes(SarweenTools.name)) {
-      total += "+ST";
+      total += "+ST(1)";
     }
     if (this._unitModifierNames.includes(WarMachine.name)) {
-      total += "+WM";
+      total += "+WM(1)";
     }
     this._unitModifierNames.forEach((modName) => {
       if (modName.startsWith("AI(")) {
+        total += `+${modName}`;
+      } else if (modName.startsWith("BB(")) {
+        total += `+${modName}`;
+      } else if (modName.startsWith("DG(")) {
+        total += `+${modName}`;
+      } else if (modName.startsWith("SF(")) {
         total += `+${modName}`;
       }
     });

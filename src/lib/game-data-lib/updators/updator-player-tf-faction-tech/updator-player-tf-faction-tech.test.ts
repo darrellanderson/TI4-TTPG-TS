@@ -3,11 +3,11 @@ import { GAME_DATA_UPDATORS } from "../../game-data-updators/game-data-updators"
 import { GameData } from "../../game-data/game-data";
 import { GameDataUpdator } from "../../game-data-updator/game-data-updator";
 import { Card } from "@tabletop-playground/api";
-import { UpdatorPlayerTFFactionTechs } from "./updator-player-tf-faction-tech";
+import { UpdatorPlayerTFFactionTech } from "./updator-player-tf-faction-tech";
 
 it("registered", () => {
   const index: number = GAME_DATA_UPDATORS.findIndex((updator) => {
-    return updator instanceof UpdatorPlayerTFFactionTechs;
+    return updator instanceof UpdatorPlayerTFFactionTech;
   });
   expect(index).toBeGreaterThanOrEqual(0);
 });
@@ -19,29 +19,40 @@ it("data", () => {
     templateMetadata: "card-holder:base/player-hand",
     owningPlayerSlot: 10,
   });
-  const a: Card = MockCard.simple(
-    "card.tf-faction-tech:twilights-fall/wavelength-pink",
-  );
+  const a: Card = MockCard.simple("card.tf-faction-tech:twilights-fall/antimatter-black");
   const b: Card = MockCard.simple(
-    "card.tf-faction-tech:twilights-fall/wavelength-blue",
+    "card.tf-faction-tech:twilights-fall/antimatter-green",
+  );
+  const c1: Card = MockCard.simple(
+    "card.tf-faction-tech:twilights-fall/antimatter-purple",
+  );
+  const c2: Card = MockCard.simple(
+    "card.tf-faction-tech:twilights-fall/antimatter-purple",
+  );
+  const d: Card = MockCard.simple(
+    "card.technology.bogus:base/_does-not-exist_",
   );
 
   a.setSavedData("1", "timestamp");
   b.setSavedData("2", "timestamp");
+  c1.setSavedData("2", "timestamp"); // tie
+  c2.setSavedData("3", "timestamp"); // copy, newer
+  d.setSavedData("4", "timestamp");
 
   const gameData: GameData = GameDataUpdator.createGameData();
-  new UpdatorPlayerTFFactionTechs().update(gameData);
+  new UpdatorPlayerTFFactionTech().update(gameData);
   expect(gameData.players[0]?.tfFactionTechs).toEqual([
-    "Wavelength: Pink",
-    "Wavelength: Blue",
+    "Antimatter Black",
+    "Antimatter Green",
+    "Antimatter Purple",
   ]);
 });
 
 it("assign timestamp", () => {
-  new UpdatorPlayerTFFactionTechs();
+  new UpdatorPlayerTFFactionTech();
 
   const a: Card = MockCard.simple(
-    "card.tf-faction-tech:twilights-fall/wavelength-pink",
+    "card.tf-faction-tech:twilights-fall/antimatter-purple",
   );
   process.flushTicks();
   const data: string = a.getSavedData("timestamp");
@@ -50,9 +61,9 @@ it("assign timestamp", () => {
 
 it("static", () => {
   const a: Card = MockCard.simple(
-    "card.tf-ability:twilights-fall/nanomachines",
+    "card.tf-faction-tech:twilights-fall/antimatter-purple",
   );
-  expect(UpdatorPlayerTFFactionTechs.getTimestamp(a)).toBe(0);
+  expect(UpdatorPlayerTFFactionTech.getTimestamp(a)).toBe(0);
   a.setSavedData("1", "timestamp");
-  expect(UpdatorPlayerTFFactionTechs.getTimestamp(a)).toBe(1);
+  expect(UpdatorPlayerTFFactionTech.getTimestamp(a)).toBe(1);
 });

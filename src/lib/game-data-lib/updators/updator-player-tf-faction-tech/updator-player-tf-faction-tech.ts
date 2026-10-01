@@ -18,7 +18,7 @@ import { IGameDataUpdator } from "../../i-game-data-updator/i-game-data-updator"
 import { __atopCacheGet } from "../../../combat-lib/combat-roll/combat-roll";
 import { FactionTech } from "../../../twilights-fall-lib/twilights-fall/faction-tech";
 
-export class UpdatorPlayerTFFactionTechs implements IGameDataUpdator {
+export class UpdatorPlayerTFFactionTech implements IGameDataUpdator {
   private readonly _cardUtil: CardUtil = new CardUtil();
   private readonly _find: Find = new Find();
 
@@ -45,7 +45,7 @@ export class UpdatorPlayerTFFactionTechs implements IGameDataUpdator {
       (card: Card, _player?: Player): void => {
         const nsid: string = NSID.get(card);
         if (card instanceof Card && nsid.startsWith("card.tf-faction-tech")) {
-          UpdatorPlayerTFFactionTechs.setTimestamp(card);
+          UpdatorPlayerTFFactionTech.setTimestamp(card);
         }
       },
     );
@@ -89,8 +89,8 @@ export class UpdatorPlayerTFFactionTechs implements IGameDataUpdator {
 
     // Sort cards by creation order.
     factionTechCards.sort((a: Card, b: Card): number => {
-      const aTimestamp: number = UpdatorPlayerTFFactionTechs.getTimestamp(a);
-      const bTimestamp: number = UpdatorPlayerTFFactionTechs.getTimestamp(b);
+      const aTimestamp: number = UpdatorPlayerTFFactionTech.getTimestamp(a);
+      const bTimestamp: number = UpdatorPlayerTFFactionTech.getTimestamp(b);
       if (aTimestamp !== bTimestamp) {
         return aTimestamp - bTimestamp;
       }

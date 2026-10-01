@@ -249,23 +249,12 @@ export const NSID_TO_DESCRIPTION: { [key: string]: string } = {
   "card.technology.yellow:thunders-edge/planesplitter": "-Triggers before Coup",
   "card.technology.yellow:thunders-edge/subatomic-splicer":
     "-Cannot be used at a blockaded space dock",
-  "card.tf-ability:twilights-fall/planesplitter": "-Triggers before Coup",
+  "card.tf-ability:twilights-fall/temporal-command-suite":
+    "-Card has been errata'd to require spending a command token from anywhere on your command sheet instead of 3 influence",
   "card.tf-ability:twilights-fall/proxima-targeting-vi":
     "-All effects that modify BOMBARDMENT may be used with this ability.\n-Present means participating in this particular ground combat on this planet",
-  "card.tf-ability:twilights-fall/stellar-genesis":
-    "-If another player has units on Avernus and it is moved into a supernova, that player's units still move with the planet.\n-If Avernus is moved out of a Gravity Rift, it does not need to roll.\n-Avernus remains in play even if the Muaat player is eliminated\n-Avernus may be moved out of locked systems if the other criteria are met",
   "card.tf-ability:twilights-fall/subatomic-splicer":
     "-Cannot be used at a blockaded space dock",
-  "card.tf-genome:twilights-fall/pacific-genome":
-    "-A planet with a yellow tech specialty can be exhausted as a green prerequisite, and vice versa.\n-Psychoarchaeology does not prevent a planet with a tech specialty from being exhausted by this Breakthrough",
-  "card.tf-genome:twilights-fall/splitting-genome":
-    "-A planet with a yellow tech specialty can be exhausted as a green prerequisite, and vice versa.\n-Psychoarchaeology does not prevent a planet with a tech specialty from being exhausted by this Breakthrough",
-  "card.tf-paradigm:twilights-fall/the-winds-of-change":
-    "-TGs on this card are unaffected by Economic Equality, and do not count as Pillage targets or against the player's total TGs for the effects of Pillage\n-The effects at the start of the status phase from the Reaping are two separate effects for the purposes of Pillage\n-This does not trigger Become a Martyr",
-  "card.tf-unit-upgrade:twilights-fall/corsair":
-    "-Nekro can NOT copy Corsair via a Valefar, but the Mentak is still considered as owning Cruiser 2, which may be copied via Technology Singularity",
-  "card.tf-unit-upgrade:twilights-fall/eidolon-terminus":
-    '-Has a fleet cost of 1 if traveling alone\n-May be transported on a ship with capacity\n-May be assigned to a planet as a Ground Force\n-May be "raised" into space combat while on a planet in the system. It would not count against capacity or fleet pool\n-May be assembled at any time\n-For Articles of War interactions, visit the Rules Discussion channel to see the details',
   "token:thunders-edge/galvanize":
     "-These tokens may not be moved\n-The extra die is mandatory",
 };

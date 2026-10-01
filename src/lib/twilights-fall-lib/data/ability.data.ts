@@ -13,7 +13,7 @@ export const SOURCE_TO_ABILITY_DATA: Record<string, Array<AbilitySchemaType>> = 
       nsidName: "aerie-hololattice",
       name: "Aerie Hololattice",
       color: "yellow",
-      abbr: "Aerie Holo",
+      abbr: "Aerie Holo.",
       origin: "argent",
     },
     {

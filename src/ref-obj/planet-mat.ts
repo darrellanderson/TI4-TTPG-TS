@@ -4,8 +4,9 @@ import {
   Player,
   refObject,
   Vector,
+  world,
 } from "@tabletop-playground/api";
-import { CardUtil } from "ttpg-darrell";
+import { CardUtil, NSID } from "ttpg-darrell";
 import { System } from "../lib/system-lib/system/system";
 
 export class PlanetMat {
@@ -26,6 +27,15 @@ export class PlanetMat {
             const pos: Vector = this._obj.getPosition().add([0, 0, 10]);
             planetCard.setPosition(pos);
             planetCard?.snapToGround();
+
+            const planetName = actionName.substring("*Fetch ".length);
+            const token = world.getAllObjects().find((obj) => {
+              return NSID.get(obj).startsWith("token.space-station:") && obj.getName() === planetName;
+            });
+            if (token) {
+              token.setPosition(pos.add([0, 0, 5]));
+              token.snapToGround();
+            }
           }
         }
       }
