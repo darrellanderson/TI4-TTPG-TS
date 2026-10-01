@@ -19,7 +19,9 @@ it("data", () => {
     templateMetadata: "card-holder:base/player-hand",
     owningPlayerSlot: 10,
   });
-  const a: Card = MockCard.simple("card.tf-faction-tech:twilights-fall/antimatter-black");
+  const a: Card = MockCard.simple(
+    "card.tf-faction-tech:twilights-fall/antimatter-black",
+  );
   const b: Card = MockCard.simple(
     "card.tf-faction-tech:twilights-fall/antimatter-green",
   );
@@ -42,9 +44,9 @@ it("data", () => {
   const gameData: GameData = GameDataUpdator.createGameData();
   new UpdatorPlayerTFFactionTech().update(gameData);
   expect(gameData.players[0]?.tfFactionTechs).toEqual([
-    "Antimatter Black",
-    "Antimatter Green",
-    "Antimatter Purple",
+    "Antimatter: Black",
+    "Antimatter: Green",
+    "Antimatter: Purple",
   ]);
 });
 
