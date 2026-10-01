@@ -19,7 +19,8 @@
     "target": "ES6",
     "sourceMap": true,
     "declaration": true,
-    "declarationDir": "./build"
+    "declarationDir": "./build",
+    "types": ["jest"]
   },
   "include": ["./src/**/*.ts", "./src/**/*.tsx"],
   "exclude": ["./src/**/*.test.ts", "./src/**/*.d.ts"]

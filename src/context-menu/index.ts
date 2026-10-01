@@ -1,12 +1,15 @@
 // created from 'create-ts-index'
 
+export * from './action-cards';
 export * from './breakthroughs';
 export * from './cards';
+export * from './commanders';
 export * from './display-pds-adjacency';
 export * from './events';
 export * from './fracture';
 export * from './heroes';
 export * from './obsidian-firmament';
+export * from './relics';
 export * from './report-remaining';
 export * from './right-click-agenda';
 export * from './right-click-delete';
@@ -19,6 +22,8 @@ export * from './right-click-score';
 export * from './right-click-sleeper-token';
 export * from './right-click-thunders-edge';
 export * from './system';
+export * from './techs';
+export * from './tf-abilities';
 export * from './tf-fetch-tokens';
 export * from './tf-paradigms';
 export * from './tf-splice';
