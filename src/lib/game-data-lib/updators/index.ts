@@ -25,7 +25,7 @@ export * from './updator-player-score';
 export * from './updator-player-strategy-cards';
 export * from './updator-player-tech';
 export * from './updator-player-tf-abilities';
-export * from './updator-player-tf-faction-techs';
+export * from './updator-player-tf-faction-tech';
 export * from './updator-player-tf-genomes';
 export * from './updator-player-tf-paradigms';
 export * from './updator-player-tf-unit-upgrades';
