@@ -15,7 +15,10 @@ export const RUN_SCRIPT_NSID: string = "unit:base/carrier";
  */
 export class RunInjectScript implements IGlobal {
   readonly _onPackageAdded = (pkg: Package): void => {
-    this._maybeRunInjectScript(pkg);
+    // Wait a tick so package is fully initialized before inject script.
+    process.nextTick(() => {
+      this._maybeRunInjectScript(pkg);
+    });
   };
 
   init(): void {
@@ -29,14 +32,14 @@ export class RunInjectScript implements IGlobal {
     pkg.getScriptFiles().forEach((scriptFile: string) => {
       if (scriptFile === "inject.js" || scriptFile.endsWith("/inject.js")) {
         console.log(
-          `Running "${scriptFile}" script for package: ${pkg.getName()}`
+          `Running "${scriptFile}" script for package: ${pkg.getName()}`,
         );
 
         // If the script is inject.js, run it.
         // Create a new object, set the script to this, delete next frame.
         const obj: GameObject | undefined = TI4.spawn.spawn(
           RUN_SCRIPT_NSID,
-          [0, 0, -100]
+          [0, 0, -100],
         );
         if (obj) {
           obj.setObjectType(ObjectType.NonInteractive);
