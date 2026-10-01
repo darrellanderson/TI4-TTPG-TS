@@ -42,9 +42,9 @@ it("data", () => {
   const gameData: GameData = GameDataUpdator.createGameData();
   new UpdatorPlayerTFFactionTech().update(gameData);
   expect(gameData.players[0]?.tfFactionTechs).toEqual([
-    "Antimatter Black",
-    "Antimatter Green",
-    "Antimatter Purple",
+    "Antimatter: Black",
+    "Antimatter: Green",
+    "Antimatter: Purple",
   ]);
 });
 

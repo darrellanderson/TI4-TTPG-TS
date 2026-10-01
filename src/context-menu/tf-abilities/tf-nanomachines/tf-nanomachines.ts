@@ -15,15 +15,13 @@ export class RightClickTFNanomachines extends AbstractRightClickCard {
       identifier: string
     ): void => {
       if (identifier === ACTION_REPAIR_ALL_UNITS) {
-        const playerColorHex: string = world
-          .getSlotColor(player.getSlot())
-          .toHex();
+        const playerSlot: number = player.getSlot();
         const skipContained: boolean = true;
         for (const obj of world.getAllObjects(skipContained)) {
           const objNsid: string = NSID.get(obj);
           if (objNsid.startsWith("unit:")) {
             const isOwnedByPlayer: boolean =
-              obj.getPrimaryColor().toHex() === playerColorHex;
+              obj.getOwningPlayerSlot() === playerSlot;
             if (isOwnedByPlayer && !Facing.isFaceUp(obj)) {
               obj.flipOrUpright();
             }
