@@ -46,7 +46,7 @@ export class LayoutThundersEdgeComponents {
       "token.space-station:thunders-edge/1.1",
       "token.space-station:thunders-edge/1.2",
       "token.space-station:thunders-edge/1.3",
-      "token.space-station:thunders-edge/1.bastion",
+      //"token.space-station:thunders-edge/1.bastion", added to last bastion extras
       "token.space-station:thunders-edge/2",
     ];
     for (const nsid of spaceStationTokenNsids) {

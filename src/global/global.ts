@@ -169,6 +169,7 @@ import { RightClickTFYinAscendant } from "../context-menu/tf-abilities/tf-yin-as
 import { ParadigmEventHorizon } from "../context-menu/tf-paradigms/paradigm-event-horizon";
 import { ParadigmOpeningTheEye } from "../context-menu/tf-paradigms/paradigm-opening-the-eye";
 import { ParadigmTwilightDirective } from "../context-menu/tf-paradigms/paradigm-twilight-directive";
+import { ParadigmIntelligenceUnshackled } from "../context-menu/tf-paradigms/paradigm-intelligence-unshackled/paradigm-intelligence-unshackled";
 
 // Heroes
 import { HeroDimensionalAnchor } from "../context-menu/heroes/hero-dimensional-anchor/hero-dimensional-anchor";
@@ -307,6 +308,7 @@ export function resetGlobalThisTI4(): TI4Class {
     new ParadigmEventHorizon(),
     new ParadigmOpeningTheEye(),
     new ParadigmTwilightDirective(),
+    new ParadigmIntelligenceUnshackled(),
     new ReportCommandTokenPutGet(),
     new ReportRemaining(),
     new RightClickAgenda(),
