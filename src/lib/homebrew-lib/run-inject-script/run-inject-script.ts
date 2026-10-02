@@ -15,10 +15,7 @@ export const RUN_SCRIPT_NSID: string = "unit:base/carrier";
  */
 export class RunInjectScript implements IGlobal {
   readonly _onPackageAdded = (pkg: Package): void => {
-    // Wait a tick so package is fully initialized before inject script.
-    process.nextTick(() => {
-      this._maybeRunInjectScript(pkg);
-    });
+    this._maybeRunInjectScript(pkg);
   };
 
   init(): void {
