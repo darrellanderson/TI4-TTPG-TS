@@ -114,6 +114,7 @@ export class AgendaState {
     TI4.events.onAgendaCardRemoved.remove(this._onAgendaCardRemovedHandler);
     GarbageContainer.onRecycled.remove(this._onGarbageRecycledHandler);
 
+    this._suppressStateChangeEvents = true; // prevent any further state change events during destruction
     this.onAgendaStateChanged.trigger(this);
     this.onAgendaStateChanged.clear();
 
