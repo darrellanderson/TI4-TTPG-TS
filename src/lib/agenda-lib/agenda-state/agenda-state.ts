@@ -63,7 +63,7 @@ export class AgendaState {
     objId: string,
     _objName: string,
     _objMetadata: string,
-    _player: Player | undefined
+    _player: Player | undefined,
   ): void => {
     this.removeRider(objId);
   };
@@ -118,7 +118,11 @@ export class AgendaState {
     this.onAgendaStateChanged.clear();
 
     if (turnState !== undefined) {
-      SaveRestoreTurnOrder.restore(turnState);
+      // Streamer reported a restore crash, unclear how
+      // but attempt delay a frame to resolve above trigger.
+      process.nextTick(() => {
+        SaveRestoreTurnOrder.restore(turnState);
+      });
     }
   }
 
@@ -265,7 +269,7 @@ export class AgendaState {
 
   setSeatNoAfters(
     seatIndex: number,
-    noWhens: "unknown" | "no" | "never" | "play"
+    noWhens: "unknown" | "no" | "never" | "play",
   ): this {
     let newValue: number;
     if (noWhens === "no") {
@@ -302,7 +306,7 @@ export class AgendaState {
 
   setSeatNoWhens(
     seatIndex: number,
-    noWhens: "unknown" | "no" | "never" | "play"
+    noWhens: "unknown" | "no" | "never" | "play",
   ): this {
     let newValue: number;
     if (noWhens === "no") {
@@ -386,7 +390,7 @@ export class AgendaState {
 
   removeRider(objId: string): this {
     const index: number = this._data.riders.findIndex(
-      (rider) => rider.objId === objId
+      (rider) => rider.objId === objId,
     );
     if (index >= 0) {
       this._data.riders.splice(index, 1);
