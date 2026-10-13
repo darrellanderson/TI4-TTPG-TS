@@ -176,15 +176,23 @@ import { HeroDimensionalAnchor } from "../context-menu/heroes/hero-dimensional-a
 import { HeroHelioCommandArray } from "../context-menu/heroes/hero-helio-command-array/hero-helio-command-array";
 import { HeroMultiverseShift } from "../context-menu/heroes/hero-multiverse-shift/hero-multiverse-shift";
 
+// Unittests reset the globalThis.TI4 object before each test.
+// Only the main TI4 mod creates the global TI4 variable, other
+// mods using the ti4-ttpg-ts npm module share the same instance.
+const isTest: boolean = GameWorld.getExecutionReason() === "unittest";
+const devId: string = "F5DD9DEDA6C64881A2EEBBC273224D01";
+const prdId: string = "F5DD9DEDA6C64881A2EEBBC273224D02";
 const packageId: string = refPackageId;
+const isMainMod: boolean = packageId === devId || packageId === prdId;
+
 Find.ignoreOwnedCardHolderNsid("card-holder:base/player-scoring");
 
-if (GameWorld.getExecutionReason() !== "unittest") {
+if (isMainMod && !isTest) {
   console.log("--- Welcome to TI4 ---");
 }
 
 export function registerErrorHandler() {
-  if (GameWorld.getExecutionReason() !== "unittest") {
+  if (isMainMod && !isTest) {
     // Initialize error handing when running in production.
     new ErrorHandler().init();
     new BugSplatRemoteReporter({
@@ -268,7 +276,6 @@ declare global {
   var TI4: TI4Class;
   var __spawn: Spawn;
 }
-globalThis.__spawn = new Spawn();
 
 // Expose a reset function so tests can reset.
 // ttpg-mock resets globalEvents after each test, breaking listeners here.
@@ -438,19 +445,15 @@ export function resetGlobalThisTI4(): TI4Class {
   return globalThis.TI4;
 }
 
-// Unittests reset the globalThis.TI4 object before each test.
-// Only the main TI4 mod creates the global TI4 variable, other
-// mods using the ti4-ttpg-ts npm module share the same instance.
-const isTest: boolean = GameWorld.getExecutionReason() === "unittest";
-const devId: string = "F5DD9DEDA6C64881A2EEBBC273224D01";
-const prdId: string = "F5DD9DEDA6C64881A2EEBBC273224D02";
-const isMainMod: boolean = packageId === devId || packageId === prdId;
+if (isTest || isMainMod) {
+  globalThis.__spawn = new Spawn();
+}
+
 if (!isTest && isMainMod) {
   resetGlobalThisTI4();
   TI4.config.onConfigChanged.add(() => {
     BugSplatRemoteReporter.setEnabled(TI4.config.reportErrors);
   });
   BugSplatRemoteReporter.setEnabled(TI4.config.reportErrors);
+  world.setShowDiceRollMessages(false); // Disable default TTPG messages for dice rolls.
 }
-
-world.setShowDiceRollMessages(false); // Disable default TTPG messages for dice rolls.
