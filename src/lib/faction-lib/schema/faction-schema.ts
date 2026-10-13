@@ -63,14 +63,31 @@ export const FactionSchema = z
             count: z.number().int().min(0).optional(),
           })
           .strict()
-          .readonly()
+          .readonly(),
       )
       .optional(),
 
     isExcludeFromDraft: z.boolean().optional(),
     skipFactionReferenceCard: z.boolean().optional(), // does not have a reference card
+
+    customFactionUnpack: z
+      .function()
+      .args(z.number())
+      .returns(z.void())
+      .optional(),
+    customFactionRemove: z
+      .function()
+      .args(z.number())
+      .returns(z.void())
+      .optional(),
   })
   .strict()
   .readonly();
 
-export type FactionSchemaType = z.infer<typeof FactionSchema>;
+export type FactionSchemaType = Omit<
+  z.infer<typeof FactionSchema>,
+  "customFactionUnpack" | "customFactionRemove"
+> & {
+  customFactionUnpack?: (playerSlot: number) => void;
+  customFactionRemove?: (playerSlot: number) => void;
+};

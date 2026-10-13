@@ -18,6 +18,10 @@ export class Faction {
   private readonly _find: Find = new Find();
   private readonly _injectedExtras: Map<string, number> = new Map();
 
+  get params(): FactionSchemaType {
+    return this._params;
+  }
+
   static getOverrideHomeSystemTileNumber(
     playerSlot: number,
   ): number | undefined {
