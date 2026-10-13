@@ -125,6 +125,8 @@ export class AgendaState {
         SaveRestoreTurnOrder.restore(turnState);
       });
     }
+
+    TI4.events.onAgendaStateDestroyed.trigger();
   }
 
   setTurnOrderState(state: string): this {

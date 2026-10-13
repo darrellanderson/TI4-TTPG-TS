@@ -40,6 +40,14 @@ export class GlobalEvents {
     (agendaState: AgendaState) => void
   >();
 
+  /**
+   * Called when an agenda state is destroyed, either finishing an agenda phase
+   * or removing the card from the agenda snap point (or other future means).
+   */
+  public readonly onAgendaStateDestroyed = new TriggerableMulticastDelegate<
+    () => void
+  >();
+
   public readonly onAllPlayersPassed = new TriggerableMulticastDelegate<
     () => void
   >();
