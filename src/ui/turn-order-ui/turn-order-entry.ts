@@ -111,7 +111,7 @@ export class TurnOrderEntry extends TurnEntryWart {
     for (const initiativeEntry of initiativeEntries) {
       __playerSlotToStrategyCards.set(
         initiativeEntry.playerSlot,
-        initiativeEntry.strategyCards
+        initiativeEntry.strategyCards,
       );
     }
   }
