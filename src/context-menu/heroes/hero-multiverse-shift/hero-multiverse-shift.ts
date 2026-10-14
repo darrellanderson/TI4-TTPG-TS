@@ -5,7 +5,13 @@ import {
   Vector,
   world,
 } from "@tabletop-playground/api";
-import { AbstractRightClickCard, Broadcast, HexType, NSID } from "ttpg-darrell";
+import {
+  AbstractRightClickCard,
+  Broadcast,
+  Facing,
+  HexType,
+  NSID,
+} from "ttpg-darrell";
 import { RightClickPurge } from "../../right-click-purge/right-click-purge";
 import { UnitAttrs } from "../../../lib/unit-lib/unit-attrs/unit-attrs";
 import { UnitAttrsSet } from "../../../lib/unit-lib/unit-attrs-set/unit-attrs-set";
@@ -30,7 +36,7 @@ export class HeroMultiverseShift extends AbstractRightClickCard {
     const customActionHandler = (
       object: GameObject,
       player: Player,
-      identifier: string
+      identifier: string,
     ): void => {
       if (identifier === customActionName) {
         this._multiverseShift(object, player.getSlot());
@@ -58,7 +64,7 @@ export class HeroMultiverseShift extends AbstractRightClickCard {
         pos.z = z;
         const obj: GameObject = TI4.spawn.spawnOrThrow(
           "token.attachment.system:pok/frontier",
-          pos
+          pos,
         );
         obj.snapToGround();
       }
@@ -96,14 +102,24 @@ export class HeroMultiverseShift extends AbstractRightClickCard {
     const zeroPlanetHexes: Set<HexType> = new Set();
     const skipContained: boolean = true;
     for (const system of TI4.systemRegistry.getAllSystemsWithObjs(
-      skipContained
+      skipContained,
     )) {
-      if (system.getPlanets().length === 0) {
-        const obj: GameObject = system.getObj();
-        const pos: Vector = obj.getPosition();
-        const hex: HexType = TI4.hex.fromPosition(pos);
-        zeroPlanetHexes.add(hex);
+      if (system.getPlanets().length > 0) {
+        continue;
       }
+
+      if (system.isHyperlane()) {
+        continue;
+      }
+
+      if (!Facing.isFaceUp(system.getObj())) {
+        continue; // intended to catch face-down fracture tiles
+      }
+
+      const obj: GameObject = system.getObj();
+      const pos: Vector = obj.getPosition();
+      const hex: HexType = TI4.hex.fromPosition(pos);
+      zeroPlanetHexes.add(hex);
     }
     return zeroPlanetHexes;
   }
@@ -136,7 +152,7 @@ export class HeroMultiverseShift extends AbstractRightClickCard {
       TI4.unitAttrsRegistry.defaultUnitAttrsSet();
     for (const unitPlastic of UnitPlastic.getAll()) {
       const unitAttrs: UnitAttrs | undefined = unitAttrsSet.get(
-        unitPlastic.getUnit()
+        unitPlastic.getUnit(),
       );
       if (
         unitPlastic.getOwningPlayerSlot() === playerSlot &&
