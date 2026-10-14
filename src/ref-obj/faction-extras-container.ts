@@ -59,3 +59,6 @@ process.nextTick(() => {
 });
 
 TI4.events.onFactionChanged.add(update);
+obj.onDestroyed.add(() => {
+  TI4.events.onFactionChanged.remove(update);
+});
