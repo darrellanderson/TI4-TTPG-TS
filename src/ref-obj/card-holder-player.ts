@@ -165,10 +165,10 @@ myObj.onCustomAction.add(actionHandler);
 // Once the beta goes live this will work for all cases (except perhaps script insert?).
 myObj.onInserted.add(
   (
-    holder: CardHolder,
-    insertedCard: Card,
-    player: Player,
-    index: number,
+    _holder: CardHolder,
+    _insertedCard: Card,
+    _player: Player,
+    _index: number,
   ): void => {
     // TODO: TTPG only detects dropping cards on the physical holder as inserts right now.
     // When a future update adds "1", "draw" and potentially script inserts consider
