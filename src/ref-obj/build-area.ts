@@ -35,6 +35,26 @@ export class BuildArea {
   private _lastActivatedSystemTileObj: GameObject | undefined;
   private _lastActivatedActionName: string | undefined;
 
+  private readonly _onSystemActivatedHandler = (
+    system: System,
+    player: Player,
+  ) => {
+    if (player.getSlot() === this._obj.getOwningPlayerSlot()) {
+      this._lastActivatedSystemTileObj = system.getObj();
+      if (this._lastActivatedActionName) {
+        this._obj.removeCustomAction(this._lastActivatedActionName);
+        this._lastActivatedActionName = undefined;
+      }
+      let name: string = system.getName();
+      const maxLength: number = 30;
+      if (name.length > maxLength) {
+        name = name.substring(0, maxLength - 3) + "...";
+      }
+      this._lastActivatedActionName = "*Warp to " + name;
+      this._obj.addCustomAction(this._lastActivatedActionName);
+    }
+  };
+
   // public for testing
   _onUpdateHandler: () => void = () => {
     this.update();
@@ -59,22 +79,7 @@ export class BuildArea {
     this._zone.onBeginOverlap.add(this._onUpdateHandler);
     this._zone.onEndOverlap.add(this._onUpdateHandler);
 
-    TI4.events.onSystemActivated.add((system: System, player: Player) => {
-      if (player.getSlot() === this._obj.getOwningPlayerSlot()) {
-        this._lastActivatedSystemTileObj = system.getObj();
-        if (this._lastActivatedActionName) {
-          this._obj.removeCustomAction(this._lastActivatedActionName);
-          this._lastActivatedActionName = undefined;
-        }
-        let name: string = system.getName();
-        const maxLength: number = 30;
-        if (name.length > maxLength) {
-          name = name.substring(0, maxLength - 3) + "...";
-        }
-        this._lastActivatedActionName = "*Warp to " + name;
-        this._obj.addCustomAction(this._lastActivatedActionName);
-      }
-    });
+    TI4.events.onSystemActivated.add(this._onSystemActivatedHandler);
 
     const togglePrivacyActionName: string = "*Toggle Privacy";
     this._obj.addCustomAction(togglePrivacyActionName);
@@ -105,8 +110,13 @@ export class BuildArea {
         if (action === this._lastActivatedActionName) {
           this._warpToLastActivated();
         }
-      }
+      },
     );
+
+    this._obj.onDestroyed.add(() => {
+      TI4.events.onSystemActivated.remove(this._onSystemActivatedHandler);
+      this._zone.destroy();
+    });
 
     this.update();
   }
@@ -125,7 +135,7 @@ export class BuildArea {
     const pos: Vector = new Vector(
       extent.x - pad,
       -extent.y + pad,
-      extent.z + 0.02
+      extent.z + 0.02,
     );
 
     this._summaryText
@@ -242,11 +252,11 @@ export class BuildArea {
 
     this._zone.setAlwaysVisible(newIsPrivate);
     this._zone.setObjectVisibility(
-      newIsPrivate ? ZonePermission.OwnersOnly : ZonePermission.Everybody
+      newIsPrivate ? ZonePermission.OwnersOnly : ZonePermission.Everybody,
     );
 
     this._ui.players = new PlayerPermission().setPlayerSlots(
-      newIsPrivate ? [this._obj.getOwningPlayerSlot()] : []
+      newIsPrivate ? [this._obj.getOwningPlayerSlot()] : [],
     );
     this._obj.updateUI(this._ui);
 
@@ -291,7 +301,7 @@ export class BuildArea {
 
 export function delayedCreateBuildArea(
   obj: GameObject,
-  executionReason: string
+  executionReason: string,
 ): void {
   if (executionReason !== "unittest") {
     process.nextTick(() => {
