@@ -345,6 +345,7 @@ export class CombatRoll {
     const atopIgnoreNsids: Set<string> = new Set([
       "test:test/atopIgnore",
       "card.breakthrough:thunders-edge/data-skimmer",
+      "card.legendary-planet:thunders-edge/dok-n-pics-salvage-yard",
     ]);
 
     // Control tokens on cards take precedence over cards being near players.
