@@ -22,7 +22,7 @@ export class AgendaLawsMat {
   private readonly onSnappedToHandler = (
     object: GameObject,
     player: Player,
-    snapPoint: SnapPoint
+    snapPoint: SnapPoint,
   ): void => {
     if (object instanceof Card && snapPoint === this._firstSnapPoint) {
       console.log("onAgendaCard", object.getCardDetails().name);
@@ -33,7 +33,7 @@ export class AgendaLawsMat {
 
   private readonly onEndOverlapHandler = (
     _zone: Zone,
-    object: GameObject
+    object: GameObject,
   ): void => {
     const id: string = this._obj.getSavedData(KEY_AGENDA_CARD_OBJ_ID);
     console.log("onEndOverlapHandler", id, object.getId());
@@ -42,6 +42,33 @@ export class AgendaLawsMat {
       this._obj.setSavedData("", KEY_AGENDA_CARD_OBJ_ID);
       TI4.events.onAgendaCardRemoved.trigger();
     }
+  };
+
+  private readonly periodicVerifyAgendaCardIsStillThereHandler = (): void => {
+    const id: string = this._obj.getSavedData(KEY_AGENDA_CARD_OBJ_ID);
+    if (!id || id.length === 0) {
+      return; // no card set (normal no agenda in progress)
+    }
+
+    // Id set, we think we have an agenda card on the active agenda snap point.
+    const agendaCard: GameObject | undefined = world.getObjectById(id);
+    if (agendaCard && agendaCard instanceof Card) {
+      const snapPoint: SnapPoint | undefined = agendaCard.getSnappedToPoint();
+      if (snapPoint === this._firstSnapPoint) {
+        return; // card exists and snapped (normal agenda in progress)
+      }
+    }
+
+    // We think we have an agenda card on the snap point based on the saved id,
+    // but the linked card does not exist or is not snapped there.
+    //
+    // Normally the onEndOverlapHandler would have been called, but the
+    // id is still set so something went wrong.  Clear the agenda status.
+    console.log(
+      "Agenda card is missing or not snapped to the active agenda snap point.",
+    );
+    this._obj.setSavedData("", KEY_AGENDA_CARD_OBJ_ID);
+    TI4.events.onAgendaCardRemoved.trigger();
   };
 
   private readonly _resetZonePosition = (): void => {
@@ -67,7 +94,20 @@ export class AgendaLawsMat {
     this._obj.onReleased.add(this._resetZonePosition);
 
     // Just in case setup does not happen right away.
-    setTimeout(this._resetZonePosition, 5000);
+    const resetZoneTimer: NodeJS.Timeout = setTimeout(
+      this._resetZonePosition,
+      5000,
+    );
+    const periodicVerifyTimer: NodeJS.Timeout = setInterval(
+      this.periodicVerifyAgendaCardIsStillThereHandler,
+      3000,
+    );
+
+    this._obj.onDestroyed.add(() => {
+      clearTimeout(resetZoneTimer);
+      clearInterval(periodicVerifyTimer);
+      this._zone.destroy();
+    });
   }
 
   _findOrCreateZone(): Zone {
