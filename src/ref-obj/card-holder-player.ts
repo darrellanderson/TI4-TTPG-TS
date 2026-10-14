@@ -33,7 +33,7 @@ process.nextTick(() => {
   }
 });
 
-TI4.events.onPlayerChangedColor.add((playerSlot: number) => {
+const onPlayerChangedColorHandler = (playerSlot: number): void => {
   if (playerSlot === myObj.getOwningPlayerSlot()) {
     const color: Color | undefined =
       TI4.playerColor.getSlotWidgetColor(playerSlot);
@@ -41,6 +41,11 @@ TI4.events.onPlayerChangedColor.add((playerSlot: number) => {
       cardHolderPlayerName.setColor(color);
     }
   }
+};
+
+TI4.events.onPlayerChangedColor.add(onPlayerChangedColorHandler);
+refHolder.onDestroyed.add(() => {
+  TI4.events.onPlayerChangedColor.remove(onPlayerChangedColorHandler);
 });
 
 // Sigh, add support for rotating player area.
