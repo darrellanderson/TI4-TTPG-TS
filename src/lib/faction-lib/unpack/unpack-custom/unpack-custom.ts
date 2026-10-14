@@ -12,7 +12,13 @@ export class UnpackCustom extends AbstractUnpack {
     const customUnpackFaction: ((playerSlot: number) => void) | undefined =
       faction.params.customFactionUnpack;
     if (customUnpackFaction) {
-      customUnpackFaction(playerSlot);
+      // These are generally homebrew scripts, catch (but report!) any errors
+      // so the full unpack process can complete if this step fails.
+      try {
+        customUnpackFaction(playerSlot);
+      } catch (error) {
+        console.error(`UnpackCustom (${faction.getAbbr()}) error:`, error);
+      }
     }
   }
 
@@ -22,7 +28,13 @@ export class UnpackCustom extends AbstractUnpack {
     const customRemoveFaction: ((playerSlot: number) => void) | undefined =
       faction.params.customFactionRemove;
     if (customRemoveFaction) {
-      customRemoveFaction(playerSlot);
+      // These are generally homebrew scripts, catch (but report!) any errors
+      // so the full remove process can complete if this step fails.
+      try {
+        customRemoveFaction(playerSlot);
+      } catch (error) {
+        console.error(`UnpackCustom (${faction.getAbbr()}) error:`, error);
+      }
     }
   }
 }
