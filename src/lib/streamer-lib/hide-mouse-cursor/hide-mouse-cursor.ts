@@ -17,6 +17,15 @@ export class HideMouseCursor implements IGlobal {
     this._updateZone();
   };
 
+  readonly _onZoneDestroyedHandler: () => void = () => {
+    process.nextTick(() => {
+      this._zone = HideMouseCursor._findOrCreateZone();
+      this._zone.onDestroyed.remove(this._onZoneDestroyedHandler);
+      this._zone.onDestroyed.add(this._onZoneDestroyedHandler);
+      this._updateZone();
+    });
+  };
+
   constructor(namespaceId: NamespaceId) {
     this._namespaceId = namespaceId;
     this._load();
@@ -24,13 +33,9 @@ export class HideMouseCursor implements IGlobal {
 
   init(): void {
     this._zone = HideMouseCursor._findOrCreateZone();
+    this._zone.onDestroyed.remove(this._onZoneDestroyedHandler);
+    this._zone.onDestroyed.add(this._onZoneDestroyedHandler);
     this._updateZone();
-
-    this._zone.onDestroyed.add(() => {
-      process.nextTick(() => {
-        this._zone = HideMouseCursor._findOrCreateZone();
-      });
-    });
 
     globalEvents.onPlayerJoined.add(this._updateZoneHandler);
     globalEvents.onPlayerLeft.add(this._updateZoneHandler);
@@ -69,7 +74,7 @@ export class HideMouseCursor implements IGlobal {
 
   private _save(): void {
     const json: string = JSON.stringify(
-      Array.from(this._hideCursorPlayerNames)
+      Array.from(this._hideCursorPlayerNames),
     );
     world.setSavedData(json, this._namespaceId);
   }
@@ -128,7 +133,7 @@ export class HideMouseCursor implements IGlobal {
     const pos: Vector = new Vector(
       0,
       0,
-      world.getTableHeight() + zoneHeight / 2 - 1
+      world.getTableHeight() + zoneHeight / 2 - 1,
     );
     if (!zone) {
       zone = world.createZone(pos);
