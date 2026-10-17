@@ -24,6 +24,12 @@ export class RightClickRider implements IGlobal {
   private _outcomeNames: Array<string> = [];
   private _outcomeNamesJoined: string = "";
 
+  private readonly _onAgendaStateChangedHandler = (
+    agendaState: AgendaState
+  ): void => {
+    this._onAgendaStateChange(agendaState);
+  };
+
   public static isRider(obj: GameObject): boolean {
     const nsidExtras: Array<string> = NSID.getExtras(obj);
     return nsidExtras.includes("rider");
@@ -49,11 +55,12 @@ export class RightClickRider implements IGlobal {
     });
     TI4.events.onAgendaStateCreated.add((agendaState: AgendaState): void => {
       this._agendaState = agendaState;
-      agendaState.onAgendaStateChanged.add(
-        (_agendaState: AgendaState): void => {
-          this._onAgendaStateChange(agendaState);
-        }
-      );
+      // Remove before add: if the same AgendaState instance triggers
+      // onAgendaStateCreated more than once (e.g. resume), avoid
+      // accumulating duplicate listeners (each wrapping a new closure)
+      // on its onAgendaStateChanged delegate.
+      agendaState.onAgendaStateChanged.remove(this._onAgendaStateChangedHandler);
+      agendaState.onAgendaStateChanged.add(this._onAgendaStateChangedHandler);
     });
     OnCardBecameSingletonOrDeck.onSingletonCardCreated.add(
       (obj: GameObject): void => {
