@@ -127,6 +127,7 @@ import { ToggleTechChooser } from "../context-menu/toggle-tech-chooser/toggle-te
 import { UnitAttrsRegistry } from "../lib/unit-lib/registry/unit-attrs-registry";
 import { UnitModifierActiveIdle } from "../lib/unit-lib/unit-modifier/unit-modifier-active-idle";
 import { UnitModifierRegistry } from "../lib/unit-lib/registry/unit-modifier-registry";
+import { UnseatJoiningPlayers } from "../lib/player-lib/player-seats/unseat-joining-players";
 import { UnpackFactionContextMenuItem } from "../context-menu/unpack-faction/unpack-faction";
 import { UpdatorHistory } from "../lib/game-data-lib/updators/updator-history/updator-history";
 import { UseStreamerBuddy } from "../lib/streamer-lib/use-streamer-buddy/use-streamer-buddy";
@@ -396,6 +397,7 @@ export function resetGlobalThisTI4(): TI4Class {
     new ToggleTechChooser(),
     new UnitModifierActiveIdle(),
     new UnpackFactionContextMenuItem(),
+    new UnseatJoiningPlayers(),
     new WhisperReporter(),
 
     // Events.
