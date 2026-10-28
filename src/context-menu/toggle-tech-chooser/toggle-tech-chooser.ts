@@ -55,7 +55,8 @@ export class ToggleTechChooser implements IGlobal {
     });
 
     // Also add a per-deck context menu item to toggle the tech chooser.
-    new RightClickTechDeck(this._onTechChooserRequestHandler).init();
+    // DISABLE!  APPARENTLY DOES NOT WORK IN SOME CASES??
+    //new RightClickTechDeck(this._onTechChooserRequestHandler).init();
   }
 
   _resetWindow(): void {
