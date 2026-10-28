@@ -39,7 +39,7 @@ export class AdvanceNoWhensAfters {
     ) {
       this._active = true;
       this._agendaState.onAgendaStateChanged.add(
-        this._onAgendaStateChangedHandler
+        this._onAgendaStateChangedHandler,
       );
       this.maybeAdvance();
     }
@@ -68,7 +68,7 @@ export class AdvanceNoWhensAfters {
     return this._getSeatPlayerSlots().filter(
       (_playerSlot: PlayerSlot, seatIndex: number): boolean => {
         return this._agendaState.getSeatNoWhens(seatIndex) === "play";
-      }
+      },
     );
   }
 
@@ -94,7 +94,7 @@ export class AdvanceNoWhensAfters {
     return this._getSeatPlayerSlots().filter(
       (_playerSlot: PlayerSlot, seatIndex: number): boolean => {
         return this._agendaState.getSeatNoAfters(seatIndex) === "play";
-      }
+      },
     );
   }
 
@@ -166,7 +166,7 @@ export class AdvanceNoWhensAfters {
               break;
             }
           }
-        }
+        },
       );
       return true;
     }
@@ -221,7 +221,7 @@ export class AdvanceNoWhensAfters {
               break;
             }
           }
-        }
+        },
       );
       return true;
     }
@@ -299,6 +299,14 @@ export class AdvanceNoWhensAfters {
   }
 
   maybeAdvance(): boolean {
+    if (!this._agendaState.isActive()) {
+      return false;
+    }
+
+    if (this._agendaState.isComplete()) {
+      return false;
+    }
+
     // Advance to next player (possible wrap and reset), or next phase.
     return (
       this.handlePhaseWhens() ||
