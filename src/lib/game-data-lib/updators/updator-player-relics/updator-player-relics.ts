@@ -1,4 +1,4 @@
-import { Card, Vector, world } from "@tabletop-playground/api";
+import { Card, CardHolder, Vector, world } from "@tabletop-playground/api";
 import { GameData, PerPlayerGameData } from "../../game-data/game-data";
 import { IGameDataUpdator } from "../../i-game-data-updator/i-game-data-updator";
 import { CardUtil, Find, NSID } from "ttpg-darrell";
@@ -22,13 +22,35 @@ export class UpdatorPlayerRelics implements IGameDataUpdator {
           },
         );
 
+        const scoringCardHolder: CardHolder | undefined = this._find.findCardHolder(
+          "card-holder:base/player-scoring",
+          playerSlot,
+          true
+        );
+        if (scoringCardHolder) {
+          for (const card of scoringCardHolder.getCards()) {
+            const nsid = NSID.get(card);
+            if (nsid === "card.relic:base/shard_of_the_throne") {
+              myRelicCards.push(card);
+            }
+          }
+        }
+
         const myRelics: Array<string> = myRelicCards
           .map((relicCard: Card): string => {
             return relicCard.getCardDetails().name.replace(/ \(\d+\)$/, "");
           })
           .filter((name: string) => name !== "");
 
+        const myRelicsFaceDown: Array<string> = myRelicCards
+          .filter((relicCard: Card) => !relicCard.isFaceUp())
+          .map((relicCard: Card): string => {
+            return relicCard.getCardDetails().name.replace(/ \(\d+\)$/, "");
+          })
+          .filter((name: string) => name !== "");
+
         playerData.relics = myRelics;
+        playerData.relicsFaceDown = myRelicsFaceDown;
       },
     );
   }
@@ -44,8 +66,13 @@ export class UpdatorPlayerRelics implements IGameDataUpdator {
     const relicCards: Array<Card> = [];
     for (const obj of world.getAllObjects(skipContained)) {
       const nsid: string = NSID.get(obj);
+
+      const isRelicCard: boolean = nsid.startsWith("card.relic:");
+      const isFragmentCard: boolean =
+        nsid.startsWith("card.exploration.") && nsid.includes("relic-fragment");
+
       if (
-        (nsid.startsWith("card.relic:") || nsid.includes("fragment")) &&
+        (isRelicCard || isFragmentCard) &&
         obj instanceof Card &&
         cardUtil.isLooseCard(obj)
       ) {
