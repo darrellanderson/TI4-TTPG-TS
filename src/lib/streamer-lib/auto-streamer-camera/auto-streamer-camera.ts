@@ -28,6 +28,10 @@ export class AutoStreamerCamera implements IGlobal {
     this._lookAtScoring();
   };
 
+  private readonly _onAgendaStateDestroyed = (): void => {
+    this._lookAtFullMap();
+  };
+
   private readonly _onSystemActivated = (
     system: System,
     _player: Player,
@@ -73,6 +77,7 @@ export class AutoStreamerCamera implements IGlobal {
     TI4.events.onCombatWarpOut.add(this._onCombatWarpOut);
     TurnOrder.onTurnStateChanged.add(this._onTurnStateChanged);
     TI4.events.onTwilightsFallSplice.add(this._onTwilightsFallSplice);
+    TI4.events.onAgendaStateDestroyed.add(this._onAgendaStateDestroyed);
   }
 
   destroy(): void {
@@ -82,6 +87,7 @@ export class AutoStreamerCamera implements IGlobal {
     TI4.events.onCombatWarpOut.remove(this._onCombatWarpOut);
     TurnOrder.onTurnStateChanged.remove(this._onTurnStateChanged);
     TI4.events.onTwilightsFallSplice.remove(this._onTwilightsFallSplice);
+    TI4.events.onAgendaStateDestroyed.remove(this._onAgendaStateDestroyed);
 
     world.setSavedData("", this._namespaceId);
   }

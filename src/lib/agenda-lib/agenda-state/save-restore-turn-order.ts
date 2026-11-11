@@ -36,11 +36,19 @@ export class SaveRestoreTurnOrder {
   }
 
   static restore(savedState: string): void {
-    const parsed = JSON.parse(savedState);
-    const state: TurnOrderStateSchemaType = TurnOrderStateSchema.parse(parsed);
-    TI4.turnOrder.setTurnOrder(state.order, "forward", state.currentTurn);
-    for (const playerSlot of state.passed) {
-      TI4.turnOrder.setPassed(playerSlot, true);
+    if (savedState.length === 0) {
+      return;
+    }
+    try {
+      const parsed = JSON.parse(savedState);
+      const state: TurnOrderStateSchemaType =
+        TurnOrderStateSchema.parse(parsed);
+      TI4.turnOrder.setTurnOrder(state.order, "forward", state.currentTurn);
+      for (const playerSlot of state.passed) {
+        TI4.turnOrder.setPassed(playerSlot, true);
+      }
+    } catch (error) {
+      throw new Error(`Failed to restore turn order state: ${error}`);
     }
   }
 }

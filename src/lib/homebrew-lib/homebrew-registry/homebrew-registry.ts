@@ -102,6 +102,13 @@ export class HomebrewRegistry {
         TI4.removeRegistry.createRemoveFromRegistryAndConfig();
       remove.removeAll();
     }
+
+    console.log(
+      "HomebrewRegistry.load: Finished loading homebrew module",
+      params.sourceAndPackageId.source,
+    );
+    TI4.factionRegistry.clearFactionPlayerSlotCache();
+    TI4.config.onConfigChanged.trigger(TI4.config);
   }
 
   /**

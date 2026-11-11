@@ -3,6 +3,7 @@ import { Faction } from "../../faction/faction";
 
 import { UnpackControlTokens } from "../unpack-control-tokens/unpack-control-tokens";
 import { UnpackCommandTokens } from "../unpack-command-tokens/unpack-command-tokens";
+import { UnpackCustom } from "../unpack-custom/unpack-custom";
 import { UnpackFactionAlliance } from "../unpack-faction-alliance/unpack-faction-alliance";
 import { UnpackFactionBreakthrough } from "../unpack-faction-breakthrough/unpack-faction-breakthrough";
 import { UnpackFactionExtras } from "../unpack-faction-extras/unpack-faction-extras";
@@ -38,6 +39,9 @@ export class UnpackAll extends AbstractUnpack {
 
       // Do after unpacking home system tile.
       new UnpackHomePlanetCards(faction, playerSlot),
+
+      // Finally any custom unpack logic.
+      new UnpackCustom(faction, playerSlot),
     ];
   }
 

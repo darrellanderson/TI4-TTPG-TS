@@ -39,3 +39,4 @@ export * from './toggle-strat-cards';
 export * from './toggle-streamer-tool';
 export * from './toggle-tech-chooser';
 export * from './unpack-faction';
+export * from './right-click-fetch-components';

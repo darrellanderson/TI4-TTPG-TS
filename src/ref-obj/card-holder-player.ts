@@ -33,7 +33,7 @@ process.nextTick(() => {
   }
 });
 
-TI4.events.onPlayerChangedColor.add((playerSlot: number) => {
+const onPlayerChangedColorHandler = (playerSlot: number): void => {
   if (playerSlot === myObj.getOwningPlayerSlot()) {
     const color: Color | undefined =
       TI4.playerColor.getSlotWidgetColor(playerSlot);
@@ -41,6 +41,11 @@ TI4.events.onPlayerChangedColor.add((playerSlot: number) => {
       cardHolderPlayerName.setColor(color);
     }
   }
+};
+
+TI4.events.onPlayerChangedColor.add(onPlayerChangedColorHandler);
+refHolder.onDestroyed.add(() => {
+  TI4.events.onPlayerChangedColor.remove(onPlayerChangedColorHandler);
 });
 
 // Sigh, add support for rotating player area.
@@ -160,10 +165,10 @@ myObj.onCustomAction.add(actionHandler);
 // Once the beta goes live this will work for all cases (except perhaps script insert?).
 myObj.onInserted.add(
   (
-    holder: CardHolder,
-    insertedCard: Card,
-    player: Player,
-    index: number,
+    _holder: CardHolder,
+    _insertedCard: Card,
+    _player: Player,
+    _index: number,
   ): void => {
     // TODO: TTPG only detects dropping cards on the physical holder as inserts right now.
     // When a future update adds "1", "draw" and potentially script inserts consider

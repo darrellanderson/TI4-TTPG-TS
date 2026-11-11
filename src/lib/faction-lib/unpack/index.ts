@@ -4,6 +4,7 @@ export * from './abstract-unpack';
 export * from './unpack-all';
 export * from './unpack-command-tokens';
 export * from './unpack-control-tokens';
+export * from './unpack-custom';
 export * from './unpack-faction-alliance';
 export * from './unpack-faction-breakthrough';
 export * from './unpack-faction-extras';

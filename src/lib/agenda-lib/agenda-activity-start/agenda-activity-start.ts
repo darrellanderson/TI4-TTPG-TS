@@ -54,7 +54,14 @@ export class AgendaActivityStart {
     return AgendaActivityStart.__agendaWindow;
   }
 
-  private readonly _onAgendaStateChangedHandler = (): void => {
+  // Static (not per-instance) so repeated start()/resume() calls -- each of
+  // which may use a new AgendaActivityStart instance -- always add/remove
+  // the *same* function reference on the shared AgendaState's delegate.
+  // Using an instance method here would create a new closure per instance,
+  // so remove() could never find/undo a previous instance's listener,
+  // leaking a listener (and its captured AgendaActivityStart instance) on
+  // every start/resume.
+  private static readonly _onAgendaStateChangedHandler = (): void => {
     if (AgendaActivityStart.__agendaState) {
       // Close window if agenda is no longer active.
       if (
@@ -62,7 +69,7 @@ export class AgendaActivityStart {
         AgendaActivityStart.__agendaWindow
       ) {
         AgendaActivityStart.__agendaState.onAgendaStateChanged.remove(
-          this._onAgendaStateChangedHandler,
+          AgendaActivityStart._onAgendaStateChangedHandler,
         );
         AgendaActivityStart.__agendaWindow.detach();
         AgendaActivityStart.__agendaWindow = undefined;
@@ -121,8 +128,14 @@ export class AgendaActivityStart {
       );
     }
 
+    // Defensively remove before add to avoid accumulating duplicate
+    // listeners across repeated start()/resume() calls on the same
+    // underlying AgendaState (e.g. save/reload resume, toggle window).
+    AgendaActivityStart.__agendaState.onAgendaStateChanged.remove(
+      AgendaActivityStart._onAgendaStateChangedHandler,
+    );
     AgendaActivityStart.__agendaState.onAgendaStateChanged.add(
-      this._onAgendaStateChangedHandler,
+      AgendaActivityStart._onAgendaStateChangedHandler,
     );
 
     // Create UI, window.
@@ -172,7 +185,7 @@ export class AgendaActivityStart {
   destroy(): void {
     if (AgendaActivityStart.__agendaState) {
       AgendaActivityStart.__agendaState.onAgendaStateChanged.remove(
-        this._onAgendaStateChangedHandler,
+        AgendaActivityStart._onAgendaStateChangedHandler,
       );
       AgendaActivityStart.__agendaState.destroy();
       AgendaActivityStart.__agendaState = undefined;

@@ -36,18 +36,24 @@ export class TurnOrderUI {
     onCustomAction: (
       clickingPlayer: Player,
       identifier: string,
-      targetPlayerSlot: number
+      targetPlayerSlot: number,
     ) => {
       if (identifier === CUSTOM_ACTION_CHANGE_COLOR) {
         TI4.events.onPlayerChangeColorRequest.trigger(
           targetPlayerSlot,
-          clickingPlayer
+          clickingPlayer,
         );
       }
     },
   };
 
   private _onPlayerChangedColorHandler = () => {
+    if (this._turnOrderWidget) {
+      this._turnOrderWidget.update();
+    }
+  };
+
+  private _onConfigChangedHandler = () => {
     if (this._turnOrderWidget) {
       this._turnOrderWidget.update();
     }
@@ -65,6 +71,7 @@ export class TurnOrderUI {
   constructor() {
     TurnOrder.onTurnStateChanged.add(this._onTurnStateChanged);
     TI4.events.onPlayerChangedColor.add(this._onPlayerChangedColorHandler);
+    TI4.config.onConfigChanged.add(this._onConfigChangedHandler);
   }
 
   getParams(): TurnOrderWidgetParams {
@@ -86,7 +93,7 @@ export class TurnOrderUI {
     const turnOrder: TurnOrder = TI4.turnOrder;
     this._turnOrderWidget = new TurnOrderWidget(
       turnOrder,
-      this._params
+      this._params,
     ).attachToScreen();
 
     return this;
@@ -100,5 +107,6 @@ export class TurnOrderUI {
     }
     TurnOrder.onTurnStateChanged.remove(this._onTurnStateChanged);
     TI4.events.onPlayerChangedColor.remove(this._onPlayerChangedColorHandler);
+    TI4.config.onConfigChanged.remove(this._onConfigChangedHandler);
   }
 }

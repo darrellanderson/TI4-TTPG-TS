@@ -38,6 +38,7 @@ export class Scpt2027 extends AbstractScpt {
     while (slices.length > numSlices) {
       const index: number = Math.floor(Math.random() * slices.length);
       slices.splice(index, 1);
+      labels.splice(index, 1);
     }
 
     return {
