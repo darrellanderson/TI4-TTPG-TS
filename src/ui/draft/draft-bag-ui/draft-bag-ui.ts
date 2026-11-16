@@ -29,7 +29,7 @@ function createSliderWithWrapper(
   labelText: string,
   minValue: number,
   maxValue: number,
-  defaultValue: number
+  defaultValue: number,
 ): SliderWithWrapperType {
   const labelUi: LabelUI = new LabelUI(scale);
   labelUi
@@ -75,6 +75,7 @@ export class DraftBagUI extends AbstractUI {
   private _minLegendaries: Slider;
   private _useFactionsOnTable: CheckBox;
   private _startButton: Button;
+  private _simpleBagDraftButton: Button;
 
   constructor(scale: number) {
     const width2x: number = CONFIG.BUTTON_WIDTH * scale * 2;
@@ -86,7 +87,7 @@ export class DraftBagUI extends AbstractUI {
       "Red:",
       2,
       3,
-      2
+      2,
     );
 
     const numBluesHigh: SliderWithWrapperType = createSliderWithWrapper(
@@ -94,28 +95,28 @@ export class DraftBagUI extends AbstractUI {
       "Blue (high):",
       1,
       2,
-      1
+      1,
     );
     const numBluesMed: SliderWithWrapperType = createSliderWithWrapper(
       scale,
       "Blue (med):",
       1,
       2,
-      1
+      1,
     );
     const numBluesLow: SliderWithWrapperType = createSliderWithWrapper(
       scale,
       "Blue (low):",
       1,
       2,
-      1
+      1,
     );
     const numFactions: SliderWithWrapperType = createSliderWithWrapper(
       scale,
       "Factions:",
       0,
       4,
-      2
+      2,
     );
 
     const overallHeader: LongLabelUI = new LongLabelUI(width2x, scale);
@@ -126,21 +127,21 @@ export class DraftBagUI extends AbstractUI {
       "Alpha Wormholes:",
       0,
       3,
-      2
+      2,
     );
     const minBetas: SliderWithWrapperType = createSliderWithWrapper(
       scale,
       "Beta Wormholes:",
       0,
       3,
-      2
+      2,
     );
     const minLegendaries: SliderWithWrapperType = createSliderWithWrapper(
       scale,
       "Legendaries:",
       0,
       3,
-      2
+      2,
     );
 
     const useFactionsOnTable: CheckBoxUI = new CheckBoxUI(scale);
@@ -150,12 +151,24 @@ export class DraftBagUI extends AbstractUI {
       .onCheckStateChanged.add(
         (_checkBox: CheckBox, _player: Player, isChecked: boolean): void => {
           numFactions.slider.setEnabled(!isChecked);
-        }
+        },
       );
 
     const start: ButtonUI = new ButtonUI(scale);
     start.getButton().setText("Start");
     const startConfirm: ConfirmButtonUI = new ConfirmButtonUI(start);
+
+    const simpleExplanation: LongLabelUI = new LongLabelUI(width2x, scale);
+    simpleExplanation
+      .getText()
+      .setText("OR random 2 red 3 blue:")
+      .setBold(true);
+
+    const simpleBagDraft: ButtonUI = new ButtonUI(scale);
+    simpleBagDraft.getButton().setText("2R 3B RAW Bag Draft");
+    const simpleBagDraftConfirm: ConfirmButtonUI = new ConfirmButtonUI(
+      simpleBagDraft,
+    );
 
     const overallUi: AbstractUI = new VerticalUIBuilder()
       .addUIs([
@@ -171,6 +184,8 @@ export class DraftBagUI extends AbstractUI {
         minLegendaries.wrapper,
         useFactionsOnTable,
         startConfirm,
+        simpleExplanation,
+        simpleBagDraftConfirm,
       ])
       .setHorizontalAlignment(HorizontalAlignment.Center)
       .build();
@@ -187,6 +202,7 @@ export class DraftBagUI extends AbstractUI {
     this._minLegendaries = minLegendaries.slider;
     this._useFactionsOnTable = useFactionsOnTable.getCheckBox();
     this._startButton = start.getButton();
+    this._simpleBagDraftButton = simpleBagDraft.getButton();
   }
 
   getGenerateSlicesParams(): GenerateSlicesParams {
@@ -230,5 +246,9 @@ export class DraftBagUI extends AbstractUI {
 
   getStartButton(): Button {
     return this._startButton;
+  }
+
+  getSimpleBagDraftButton(): Button {
+    return this._simpleBagDraftButton;
   }
 }

@@ -6,6 +6,7 @@ import {
 } from "../../abstract-window/abstract-window";
 import { DraftBagUI } from "./draft-bag-ui";
 import { BagDraft } from "../../../lib";
+import { BagDraftSimple } from "../../../lib/draft-lib/drafts/bag-draft-simple";
 
 export class DraftBagWindow {
   private _draftBagUI: DraftBagUI | undefined;
@@ -22,6 +23,12 @@ export class DraftBagWindow {
       this._closeWindow();
       this._startBagDraft();
     });
+
+    this._draftBagUI.getSimpleBagDraftButton().onClicked.add(() => {
+      this._closeWindow();
+      this._startSimpleBagDraft();
+    });
+
     return this._draftBagUI;
   };
 
@@ -32,7 +39,7 @@ export class DraftBagWindow {
     const abstractWindow: AbstractWindow = new AbstractWindow(
       this._createAbstractUI,
       namespaceId,
-      "Bag Draft"
+      "Bag Draft",
     );
 
     if (this._window) {
@@ -57,6 +64,16 @@ export class DraftBagWindow {
         .setGenerateSlicesParams(this._draftBagUI.getGenerateSlicesParams())
         .setNumFactions(this._draftBagUI.getNumFactions())
         .setUseFactionsOnTable(this._draftBagUI.getUseFactionsOnTable())
+        .createDraftObjects();
+    }
+  }
+  _startSimpleBagDraft() {
+    if (this._draftBagUI) {
+      new BagDraftSimple()
+        .setContainerNsid("container:base/bag-draft")
+        //.setNumFactions(this._draftBagUI.getNumFactions())
+        //.setUseFactionsOnTable(this._draftBagUI.getUseFactionsOnTable())
+        .setNumFactions(0)
         .createDraftObjects();
     }
   }
