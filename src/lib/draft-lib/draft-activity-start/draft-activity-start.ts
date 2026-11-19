@@ -14,6 +14,7 @@ import {
   NSID,
   ParsedNSID,
   Shuffle,
+  UiScrub,
 } from "ttpg-darrell";
 import { DraftState } from "../draft-state/draft-state";
 import { DraftStateUI } from "../../../ui/draft/draft-state-ui/draft-state-ui";
@@ -373,6 +374,7 @@ export class DraftActivityStart {
     this._draftState.onDraftStateChanged.add(() => {
       if (!this._draftState?.isActive()) {
         world.removeUIElement(ui);
+        new UiScrub(ui.widget);
         DraftActivityStart._sharedUiElement = undefined;
       }
     });
