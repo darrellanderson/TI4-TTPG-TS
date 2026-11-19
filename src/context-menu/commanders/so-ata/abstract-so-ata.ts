@@ -69,6 +69,9 @@ export abstract class AbstractSoAta implements IGlobal {
           card.removeCustomAction(ACTION_REPORT_ACTION_CARDS);
           card.removeCustomAction(ACTION_REPORT_PROMISSORY_NOTES);
           card.removeCustomAction(ACTION_REPORT_SECRET_OBJECTIVES);
+          card.addCustomAction(ACTION_REPORT_ACTION_CARDS);
+          card.addCustomAction(ACTION_REPORT_PROMISSORY_NOTES);
+          card.addCustomAction(ACTION_REPORT_SECRET_OBJECTIVES);
         }
       }
     );

@@ -95,6 +95,8 @@ import { RightClickRift } from "../context-menu/right-click-rift/right-click-rif
 import { RightClickScorePrivate } from "../context-menu/right-click-score/right-click-score-private";
 import { RightClickScorePublic } from "../context-menu/right-click-score/right-click-score-public";
 import { RightClickSleeperToken } from "../context-menu/right-click-sleeper-token/right-click-sleeper-token";
+import { RightClickSoAta } from "../context-menu/commanders/so-ata/right-click-so-ata";
+import { RightClickSoAtaAlliance } from "../context-menu/commanders/so-ata/right-click-so-ata-alliance";
 import { RightClickSpecOps2 } from "../context-menu/techs/infantry-2/right-click-spec-ops-2";
 import { RightClickStellarConverter } from "../context-menu/relics/stellar-converter/right-click-stellar-converter";
 import { RightClickTheCavalry } from "../context-menu/cards/the-cavalry/right-click-the-cavalry";
@@ -356,6 +358,8 @@ export function resetGlobalThisTI4(): TI4Class {
     new RightClickScorePrivate(),
     new RightClickScorePublic(),
     new RightClickSleeperToken(),
+    new RightClickSoAta(),
+    new RightClickSoAtaAlliance(),
     new RightClickSpecOps2(),
     new RightClickStellarConverter(),
     new RightClickTheCavalry(),
